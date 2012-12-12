@@ -12,7 +12,7 @@ setup(
 	classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
 	keywords='',
 	author='Government of Canada',
-	author_email='',
+	author_email='Michel.Gendron@statcan.gc.ca',
 	url='',
 	license='MIT',
 	packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
