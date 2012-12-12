@@ -14,7 +14,7 @@ setup(
 	author='Government of Canada',
 	author_email='',
 	url='',
-	license='',
+	license='MIT',
 	packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
 	namespace_packages=['ckanext', 'ckanext.canada'],
 	include_package_data=True,
