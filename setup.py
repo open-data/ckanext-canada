@@ -27,8 +27,4 @@ setup(
         [ckan.plugins]
 	canada=ckanext.canada.plugins:DataGCCA
 	""",
-        package_dir={'ckanext.canada': '.'},
-        package_data={'ckanext.canada': [
-            'ckanext/canada/templates/*',
-            'ckanext/canada/public/*']}
 )

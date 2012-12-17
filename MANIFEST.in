@@ -1,1 +1,3 @@
 include COPYING COPYING.fr
+recursive-include ckanext/canada/public *
+recursive-include ckanext/canada/templates *
