@@ -25,6 +25,6 @@ setup(
 	entry_points=\
 	"""
         [ckan.plugins]
-	canada=ckanext.canada.plugins:DataGCCA
+	canada_public=ckanext.canada.plugins:DataGCCAPublic
 	""",
 )
