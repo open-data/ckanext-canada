@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
-<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js ie7" xmlns:i18n="http://genshi.edgewall.org/i18n" xmlns:py="http://genshi.edgewall.org/" xmlns:xi="http://www.w3.org/2001/XInclude">
+<![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js ie8" xmlns:i18n="http://genshi.edgewall.org/i18n" xmlns:py="http://genshi.edgewall.org/" xmlns:xi="http://www.w3.org/2001/XInclude">
+<![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html class="no-js" lang="en"
-xmlns:i18n="http://genshi.edgewall.org/i18n"
-xmlns:py="http://genshi.edgewall.org/"
->
-	<!--<![endif]-->
+<html class="no-js" lang="en" xmlns:i18n="http://genshi.edgewall.org/i18n" xmlns:py="http://genshi.edgewall.org/" xmlns:xi="http://www.w3.org/2001/XInclude">
+<!--<![endif]-->
+	<xi:include href="_util.html" />
 	<head>
 		<meta charset="utf-8" />
 
@@ -21,6 +23,7 @@ xmlns:py="http://genshi.edgewall.org/"
 		<meta name="dcterms.language" title="ISO639-2" content="eng" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="shortcut icon" href="${h.url_for_static(g.favicon)}" />
+		<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
 
 <!--
 		<py:choose>
@@ -33,18 +36,18 @@ xmlns:py="http://genshi.edgewall.org/"
 		</py:choose>
 -->
 		<!--[if lte IE 8]>
-		<script src="/wxt-boew/js/polyfills/html5shiv-min.js"></script>
-		<link rel="stylesheet" href="/wxt-boew/grids/css/util-ie-min.css" />
-		<link rel="stylesheet" href="/wxt-boew/js/css/pe-ap-ie-min.css" />
-		<link rel="stylesheet" href="/wxt-boew/theme-gcwu-fegc/css/theme-ie-min.css" />
+		<script src="/build/js/polyfills/html5shiv-min.js"></script>
+		<link rel="stylesheet" href="/build/grids/css/util-ie-min.css" />
+		<link rel="stylesheet" href="/build/js/css/pe-ap-ie-min.css" />
+		<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ie-min.css" />
 		<![endif]-->
 		<!--[if gt IE 8]><!-->
-		<link rel="stylesheet" href="/wxt-boew/grids/css/util-min.css" />
-		<link rel="stylesheet" href="/wxt-boew/js/css/pe-ap-min.css" />
-		<link rel="stylesheet" href="/wxt-boew/theme-gcwu-fegc/css/theme-min.css" />
+		<link rel="stylesheet" href="/build/grids/css/util-min.css" />
+		<link rel="stylesheet" href="/build/js/css/pe-ap-min.css" />
+		<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-min.css" />
 		<!--<![endif]-->
 		<noscript>
-			<link rel="stylesheet" href="/wxt-boew/theme-gcwu-fegc/css/theme-ns-min.css" />
+			<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ns-min.css" />
 		</noscript>
 
 		<py:if test="defined('optional_head')">
@@ -56,6 +59,7 @@ xmlns:py="http://genshi.edgewall.org/"
 
 	<body>
 		<div id="wb-body">
+		  
 			<div id="wb-skip">
 				<ul id="wb-tphp">
 					<li id="wb-skip1">
@@ -136,7 +140,7 @@ xmlns:py="http://genshi.edgewall.org/"
 								<div id="gcwu-psnb-in">
 									<div class="wet-boew-menubar mb-mega">
 										<div>
-											<ul class="mb-menu" data-ajax-replace="/wxt-boew/includes/menu-eng.txt">
+											<ul class="mb-menu" data-ajax-replace="/build/includes/menu-eng.txt">
 												<li>
 													<div>
 														<a href="http://wet-boew.github.com/wet-boew/index-eng.html">WET project</a>
@@ -155,21 +159,6 @@ xmlns:py="http://genshi.edgewall.org/"
 												<li>
 													<div>
 														<a href="#">Section 4</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="#">Section 5</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="#">Section 6</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="#">Section 7</a>
 													</div>
 												</li>
 											</ul>
@@ -192,79 +181,50 @@ xmlns:py="http://genshi.edgewall.org/"
 				</div>
 			</div>
 
-			<div id="wb-core">
-				<div id="wb-core-in" class="equalize">
-					<div id="wb-main" role="main">
-						<div id="wb-main-in">
-							<header>
+   <div id="wb-core">
+        <div id="wb-core-in" class="equalize">
+          <div id="wb-main" role="main">
+            <div id="wb-main-in">
+              <header>
                 <div class="span-8">
-                    <h2><a href="${h.url('home')}">${g.site_title} &mdash; ${g.site_description}</a></h2>
+                  <!-- flash messages - every page should have these at the top -->
+                  <py:with vars="messages = list(h.flash.pop_messages())">
+                    <div class="flash-messages container">
+                      <div class="alert ${m.category}" py:for="m in messages">
+                        ${h.literal(m)}
+                      </div>
+                    </div>
+                  </py:with>
                 </div>
                 <div class="clear"></div>
-								<div class="span-4">
-									<span class="ckan-logged-in" style="display: none;"> <a href="${h.url_for(controller='user',action='me')}">${h.gravatar((c.userobj.email_hash if c and c.userobj else ''),size=20)}${c.user}</a> <a href="${h.url_for('/user/_logout')}">Logout</a> </span>
-									<span class="ckan-logged-out"> <a href="${h.url_for(controller='user',action='login')}">Login</a> <a href="${h.url_for(controller='user',action='register')}">Register</a> </span>
-								</div>
-
-								<div class="span-4">
-										<span py:if="h.check_access('package_create')">${h.nav_link(_('Add a dataset'), controller='package', action='new')}</span>
-										${h.nav_link(_('Search'), controller='package', action='search', highlight_actions = 'new index')}
-										${h.nav_named_link(_('Groups'), name='%s_index' % h.default_group_type() )}
-										${h.nav_link(_('About'), controller='home', action='about')}
-									</div>
+                <div class="span-8">
+                  <div id="minornavigation">
+                  <minornavigation></minornavigation>
+                  </div>
+                </div>
                 <div class="clear"></div>
+              </header>
+               
+                <!-- Content pane (required) -->
+                <div id="content">
+                  <py:if test="defined('content')">
+                    ${content()}
+                  </py:if>
+                  <content>
+                    <p>
+                      Master content template placeholder &hellip; please replace me.
+                    </p>
+                  </content>
+                </div>
+              
+              <!-- /content -->
 
-							</header>
-						</div>
-						<py:with vars="messages = list(h.flash.pop_messages())">
-							<div class="flash-messages container">
-								<div class="alert ${m.category}" py:for="m in messages">
-									${h.literal(m)}
-								</div>
-							</div>
-						</py:with>
+            </div>
+          </div>
+        </div>
 
-						<div id="main" class="container" role="main">
-							<h1 py:if="defined('page_heading')" class="page_heading"><img py:if="defined('page_logo')" id="page-logo" src="${page_logo()}" alt="Page Logo" /> ${page_heading()} </h1>
-							<div class="row">
-								<div class="span12">
-									<div id="minornavigation">
-										<minornavigation></minornavigation>
-									</div>
-								</div>
-							</div>
+      </div>
 
-							<div class="row">
-								<div class="span9 content-outer">
-									<div id="content">
-										<py:if test="defined('content')">
-											${content()}
-										</py:if>
-										<content>
-											<p>
-												Master content template placeholder &hellip; please replace me.
-											</p>
-										</content>
-									</div>
-									<!-- /content -->
-								</div>
-								<div class="span3 sidebar-outer">
-									<div id="sidebar">
-										<ul class="widget-list">
-											<py:if test="defined('primary_sidebar_extras')">
-												${primary_sidebar_extras()}
-											</py:if>
-											<primarysidebar>
-												<!-- Primary Side Bar Goes Here -->
-											</primarysidebar>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			
 			<div id="wb-foot">
 				<div id="wb-foot-in">
@@ -398,7 +358,6 @@ xmlns:py="http://genshi.edgewall.org/"
 			<!-- eo #container -->
 
 			<div style="display:none;" id="scripts">
-				<script src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
 				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/json2.js')}"></script>
 				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.tmpl/beta1/jquery.tmpl.js')}"></script>
 				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.cookie/jquery.cookie.min.js')}"></script>
@@ -414,12 +373,13 @@ xmlns:py="http://genshi.edgewall.org/"
 				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.fileupload/20110801/jquery.fileupload.js')}"></script>
 
 				<!-- Translated js strings live inside an html template. -->
-				<!-- <xi:include href="js_strings.html" /> </xi:include> -->
+			  <xi:include href="js_strings.html" />
 				<!-- finally our application js that sets everything up-->
+				
 				<!--
-				<script type="text/javascript" src="${h.url_for_static('<xi:include href="_util.html" />/scripts/application.js?lang=${c.locale}')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/templates.js')}"></script>
-				-->
+        <script type="text/javascript" src="${h.url_for_static('/scripts/application.js?lang=${c.locale}')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/templates.js')}"></script> 
+				
 				  <script type="text/javascript">
 				    CKAN.plugins = [
 				      // Declare js array from Python string
@@ -445,6 +405,7 @@ xmlns:py="http://genshi.edgewall.org/"
 						$(".chzn-select").chosen();
 				    });
 				  </script>
+				-->
 
 				<py:if test="h.asbool(config.get('ckan.tracking_enabled', 'false'))">
 					${ h.snippet('snippets/internal-tracking.html') }
@@ -452,9 +413,9 @@ xmlns:py="http://genshi.edgewall.org/"
 				
 
 				<!-- ScriptsStart -->
-				<script src="/wxt-boew/theme-gcwu-fegc/js/theme-min.js"></script>
-				<script src="/wxt-boew/js/settings.js"></script>
-				<script src="/wxt-boew/js/pe-ap-min.js"></script>
+				<script src="/build/theme-gcwu-fegc/js/theme-min.js"></script>
+				<script src="/build/js/settings.js"></script>
+				<script src="/build/js/pe-ap-min.js"></script>
 				<!-- ScriptsEnd -->
 								
 			</div>
