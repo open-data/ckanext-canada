@@ -135,7 +135,7 @@ def main():
                     }
                 old_id_fr = reverse_bilingual_fields.get(field, None)
                 if old_id_fr:
-                    new_field['data_gc_ca_2012_fr'] = old_id_fr
+                    new_field['data_gc_ca_2012_id_fr'] = old_id_fr
                 new_section['fields'].append(new_field)
             schema_out['sections_fields'].append(new_section)
 

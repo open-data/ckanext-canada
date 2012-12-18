@@ -27,8 +27,8 @@
     {
       "fields": [
         {
-          "data_gc_ca_2012_fr": "title_fr", 
           "data_gc_ca_2012_id": "title_en", 
+          "data_gc_ca_2012_id_fr": "title_fr", 
           "help": {
             "en": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fr": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
@@ -54,8 +54,8 @@
           "type": "datepicker"
         }, 
         {
-          "data_gc_ca_2012_fr": "description_fr", 
           "data_gc_ca_2012_id": "description_en", 
+          "data_gc_ca_2012_id_fr": "description_fr", 
           "help": {
             "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
@@ -114,8 +114,8 @@
     {
       "fields": [
         {
-          "data_gc_ca_2012_fr": "program_url_fr", 
           "data_gc_ca_2012_id": "program_page_en", 
+          "data_gc_ca_2012_id_fr": "program_url_fr", 
           "help": {
             "en": "The URL for the program  that is responsible for the dataset or tool.", 
             "fr": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
@@ -128,8 +128,8 @@
           "type": "text"
         }, 
         {
-          "data_gc_ca_2012_fr": "data_dictionary_fr", 
           "data_gc_ca_2012_id": "dictionary_list:_en", 
+          "data_gc_ca_2012_id_fr": "data_dictionary_fr", 
           "help": {
             "en": "A file containing definitions of the headers (row and column) and variables used in your dataset(s). File types: .xml, .txt", 
             "fr": "Un fichier renfermant les d\u00e9finitions des titres (rangs et colonnes) et des variables appliqu\u00e9s \u00e0 votre ou vos bases de donn\u00e9es. Types de fichier : .xml, .txt."
@@ -142,8 +142,8 @@
           "type": "file"
         }, 
         {
-          "data_gc_ca_2012_fr": "supplementary_documentation_fr", 
           "data_gc_ca_2012_id": "supplementary_documentation_en", 
+          "data_gc_ca_2012_id_fr": "supplementary_documentation_fr", 
           "help": {
             "en": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
             "fr": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
@@ -163,8 +163,8 @@
     {
       "fields": [
         {
-          "data_gc_ca_2012_fr": "group_name_fr", 
           "data_gc_ca_2012_id": "group_name_en", 
+          "data_gc_ca_2012_id_fr": "group_name_fr", 
           "help": {
             "en": "A name given to multiple datasets to present them as a group or a set.", 
             "fr": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
@@ -177,8 +177,8 @@
           "type": "text"
         }, 
         {
-          "data_gc_ca_2012_fr": "data_series_url_fr", 
           "data_gc_ca_2012_id": "data_series_url_en", 
+          "data_gc_ca_2012_id_fr": "data_series_url_fr", 
           "help": {
             "en": "The URL that links to the top level in the repository in which the dataset resides.", 
             "fr": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
@@ -198,8 +198,8 @@
     {
       "fields": [
         {
-          "data_gc_ca_2012_fr": "keywords_fr", 
           "data_gc_ca_2012_id": "keywords_en", 
+          "data_gc_ca_2012_id_fr": "keywords_fr", 
           "help": {
             "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
