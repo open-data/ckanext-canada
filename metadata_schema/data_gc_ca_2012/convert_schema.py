@@ -16,7 +16,6 @@ LANGS = 'en', 'fr'
 
 schema_out = {
     'sections_fields': [],
-    'bilingual_fields': [],
     }
 
 # ('section name', [field name 1, ...]), ...
@@ -101,6 +100,7 @@ BILINGUAL_FIELDS = {
 
 def main():
     reverse_field_mapping = {v:k for k, v in FIELD_MAPPING.items()}
+    reverse_bilingual_fields = {v:k for k, v in BILINGUAL_FIELDS.items()}
 
     def lang_versions(xp):
         """
@@ -122,16 +122,21 @@ def main():
                 'section': {'en': section}, # FIXME: French version?
                 'fields': [],
                 }
-            for new_field in fields:
-                f = reverse_field_mapping[new_field]
+            for field in fields:
+                f = reverse_field_mapping[field]
                 xp = '//item[inputname="%s"]' % f
-                new_section['fields'].append({
-                    'id': new_field,
+                new_field = {
+                    'id': field,
+                    'data_gc_ca_2012_id': f,
                     'name': lang_versions(xp + '/name'),
                     'help': lang_versions(xp + '/helpcontext'),
                     'type': "".join(root.xpath(xp +
                         '/type1/inputtype[1]/text()')),
-                    })
+                    }
+                old_id_fr = reverse_bilingual_fields.get(field, None)
+                if old_id_fr:
+                    new_field['data_gc_ca_2012_fr'] = old_id_fr
+                new_section['fields'].append(new_field)
             schema_out['sections_fields'].append(new_section)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
