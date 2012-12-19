@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 """
 This script is used for a "one-time" conversion from the 2012 data.gc.ca
@@ -11,7 +11,8 @@ import lxml.etree
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCHEMA_NAME = os.path.join(HERE, 'metadata_schema.xml')
+DATA_GC_CA_2012 = os.path.join(HERE, 'data_gc_ca_2012')
+SCHEMA_NAME = os.path.join(DATA_GC_CA_2012, 'metadata_schema.xml')
 LANGS = 'en', 'fr'
 
 schema_out = {
@@ -97,25 +98,39 @@ BILINGUAL_FIELDS = {
     'group_name_fr': 'data_series_name',
     }
 
+def lang_versions(root, xp):
+    """
+    Return {'en': english_text, 'fr': french_text} dict for a given
+    xpath xp.
+    """
+    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang)
+        for lang in LANGS}
+    assert out['en'], "Not found: %s" % xp
+    assert out['fr'], "Not found: %s" % xp
+    return {k:v[0].text for k, v in out.items()}
+
+def data_gc_ca_2012_choices(name):
+    """
+    Return a list of the choices from <name>.xml like:
+    [{'data_gc_ca_2012_guid': ..., 'en': ..., 'fr': ... }, ...]
+    """
+    choices = []
+    with open(os.path.join(DATA_GC_CA_2012, name + '.xml')) as c:
+        croot = lxml.etree.parse(c)
+        for node in croot.xpath('/root/item'):
+            option = lang_versions(node, 'name')
+            option['data_gc_ca_2012_guid'] = node.get('id')
+            choices.append(option)
+    return choices
 
 def main():
     reverse_field_mapping = {v:k for k, v in FIELD_MAPPING.items()}
     reverse_bilingual_fields = {v:k for k, v in BILINGUAL_FIELDS.items()}
 
-    def lang_versions(xp):
-        """
-        Return {'en': english_text, 'fr': french_text} dict for a given
-        xpath xp.
-        """
-        out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang)
-            for lang in LANGS}
-        assert out['en'], "Not found: %s" % xp
-        assert out['fr'], "Not found: %s" % xp
-        return {k:v[0].text for k, v in out.items()}
 
     with open(SCHEMA_NAME) as s:
         root = lxml.etree.parse(s)
-        schema_out['intro'] = lang_versions('//intro')
+        schema_out['intro'] = lang_versions(root, '//intro')
 
         for section, fields in SECTIONS_FIELDS:
             new_section = {
@@ -128,14 +143,18 @@ def main():
                 new_field = {
                     'id': field,
                     'data_gc_ca_2012_id': f,
-                    'name': lang_versions(xp + '/name'),
-                    'help': lang_versions(xp + '/helpcontext'),
+                    'name': lang_versions(root, xp + '/name'),
+                    'help': lang_versions(root, xp + '/helpcontext'),
                     'type': "".join(root.xpath(xp +
                         '/type1/inputtype[1]/text()')),
                     }
                 old_id_fr = reverse_bilingual_fields.get(field, None)
                 if old_id_fr:
                     new_field['data_gc_ca_2012_id_fr'] = old_id_fr
+                if not new_field['type']:
+                    # this seems to indicate a selection from a list
+                    new_field['choices'] = data_gc_ca_2012_choices(f)
+
                 new_section['fields'].append(new_field)
             schema_out['sections_fields'].append(new_section)
 
