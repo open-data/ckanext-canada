@@ -151,9 +151,12 @@ def main():
                 old_id_fr = reverse_bilingual_fields.get(field, None)
                 if old_id_fr:
                     new_field['data_gc_ca_2012_id_fr'] = old_id_fr
+                new_field['bilingual'] = bool(old_id_fr)
+
                 if not new_field['type']:
                     # this seems to indicate a selection from a list
                     new_field['choices'] = data_gc_ca_2012_choices(f)
+                    new_field['type'] = 'choice'
 
                 new_section['fields'].append(new_field)
             schema_out['sections_fields'].append(new_section)

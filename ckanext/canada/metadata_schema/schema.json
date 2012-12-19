@@ -7,6 +7,7 @@
     {
       "fields": [
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "owner", 
           "help": {
             "en": "Email address of the individual publishing the dataset(s).", 
@@ -27,6 +28,7 @@
     {
       "fields": [
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "title_en", 
           "data_gc_ca_2012_id_fr": "title_fr", 
           "help": {
@@ -41,6 +43,7 @@
           "type": "text"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "date_released", 
           "help": {
             "en": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
@@ -54,6 +57,7 @@
           "type": "datepicker"
         }, 
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "description_en", 
           "data_gc_ca_2012_id_fr": "description_fr", 
           "help": {
@@ -68,6 +72,7 @@
           "type": "textarea"
         }, 
         {
+          "bilingual": false, 
           "choices": [
             {
               "data_gc_ca_2012_guid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30", 
@@ -95,9 +100,10 @@
             "en": "Language", 
             "fr": "Langue"
           }, 
-          "type": ""
+          "type": "choice"
         }, 
         {
+          "bilingual": false, 
           "choices": [
             {
               "data_gc_ca_2012_guid": "86EB6B9F-344C-4C3E-982D-53164994516A", 
@@ -200,9 +206,10 @@
             "en": "Subject Area", 
             "fr": "Domaine"
           }, 
-          "type": ""
+          "type": "choice"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "frequency", 
           "help": {
             "en": "The frequency at which the dataset is published.", 
@@ -223,6 +230,7 @@
     {
       "fields": [
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "program_page_en", 
           "data_gc_ca_2012_id_fr": "program_url_fr", 
           "help": {
@@ -237,6 +245,7 @@
           "type": "text"
         }, 
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "dictionary_list:_en", 
           "data_gc_ca_2012_id_fr": "data_dictionary_fr", 
           "help": {
@@ -251,6 +260,7 @@
           "type": "file"
         }, 
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "supplementary_documentation_en", 
           "data_gc_ca_2012_id_fr": "supplementary_documentation_fr", 
           "help": {
@@ -272,6 +282,7 @@
     {
       "fields": [
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "group_name_en", 
           "data_gc_ca_2012_id_fr": "group_name_fr", 
           "help": {
@@ -286,6 +297,7 @@
           "type": "text"
         }, 
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "data_series_url_en", 
           "data_gc_ca_2012_id_fr": "data_series_url_fr", 
           "help": {
@@ -307,6 +319,7 @@
     {
       "fields": [
         {
+          "bilingual": true, 
           "data_gc_ca_2012_id": "keywords_en", 
           "data_gc_ca_2012_id_fr": "keywords_fr", 
           "help": {
@@ -328,6 +341,7 @@
     {
       "fields": [
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "contact_name", 
           "help": {
             "en": "The name of the person who may be contacted for more information about the dataset.", 
@@ -341,6 +355,7 @@
           "type": "text"
         }, 
         {
+          "bilingual": false, 
           "choices": [
             {
               "data_gc_ca_2012_guid": "C3DDAD27-EFA9-41AB-9D12-12856482C0A8", 
@@ -1138,9 +1153,10 @@
             "en": "Creator (Department/Agency)", 
             "fr": "Auteur (minist\u00e8re ou organisme)"
           }, 
-          "type": ""
+          "type": "choice"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "contact_title", 
           "help": {
             "en": "The job title of the person who may be contacted for more information about the dataset.", 
@@ -1154,6 +1170,7 @@
           "type": "text"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "contact_phone", 
           "help": {
             "en": "The telephone number of the person who may be contacted for more information about the dataset.", 
@@ -1167,6 +1184,7 @@
           "type": "phone"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "contact_email", 
           "help": {
             "en": "The electronic mail address of the person who may be contacted for more information about the dataset.", 
@@ -1187,6 +1205,7 @@
     {
       "fields": [
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "time_period_start", 
           "help": {
             "en": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
@@ -1200,6 +1219,7 @@
           "type": "datepicker"
         }, 
         {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "time_period_end", 
           "help": {
             "en": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
