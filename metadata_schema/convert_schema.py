@@ -134,7 +134,7 @@ def main():
 
         for section, fields in SECTIONS_FIELDS:
             new_section = {
-                'section': {'en': section}, # FIXME: French version?
+                'name': {'en': section}, # FIXME: French version?
                 'fields': [],
                 }
             for field in fields:

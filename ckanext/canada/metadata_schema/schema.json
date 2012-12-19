@@ -21,7 +21,7 @@
           "type": "text"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Metadata Record Information"
       }
     }, 
@@ -223,7 +223,7 @@
           "type": "select"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Dataset Identification Information"
       }
     }, 
@@ -275,7 +275,7 @@
           "type": "text"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Supplemental Information"
       }
     }, 
@@ -312,7 +312,7 @@
           "type": "text"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Data Series"
       }
     }, 
@@ -334,7 +334,7 @@
           "type": "textarea"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Descriptive Keywords"
       }
     }, 
@@ -1198,7 +1198,7 @@
           "type": "email"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Contact Information"
       }
     }, 
@@ -1233,7 +1233,7 @@
           "type": "datepicker"
         }
       ], 
-      "section": {
+      "name": {
         "en": "Time Period"
       }
     }
