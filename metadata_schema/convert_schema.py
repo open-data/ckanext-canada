@@ -27,7 +27,7 @@ SECTIONS_FIELDS = [
     ("Dataset Identification Information", [
         'title',
         'date',
-        'abstract',
+        'info',
         'language',
         'thesaurus',
         'maintenance_and_update_frequency',
@@ -40,7 +40,7 @@ SECTIONS_FIELDS = [
     ("Data Series", [
         'data_series_name',
 # (see XXX below): 'issue_identification',
-        'data_series_url',
+        'url',
         ]),
     ("Descriptive Keywords", [
         'tags',
@@ -72,10 +72,10 @@ FIELD_MAPPING = {
     'date_released': 'date',
     'date_update': 'date_modified',
     'frequency': 'maintenance_and_update_frequency',
-    'description_en': 'abstract',
+    'description_en': 'info', # existing, was 'Abstract'
     'keywords_en': 'tags', # existing, was 'Keywords'
     'program_page_en': 'program_url',
-    'data_series_url_en': 'data_series_url',
+    'data_series_url_en': 'url', # existing, was 'Data Series URL'
     'dictionary_list:_en': 'data_dictionary',
     'supplementary_documentation_en': 'supplemental_information_other',
     'Geographic_Region_Name': 'geographic_region_name',
@@ -89,10 +89,10 @@ FIELD_MAPPING = {
 # '2012 French field name' : 'new corresponding english field name'
 BILINGUAL_FIELDS = {
     'title_fr': 'title',
-    'description_fr': 'abstract',
+    'description_fr': 'info',
     'keywords_fr': 'tags',
     'program_url_fr': 'program_url', # note: different than english
-    'data_series_url_fr': 'data_series_url',
+    'data_series_url_fr': 'url',
     'data_dictionary_fr': 'data_dictionary', # note: different than english
     'supplementary_documentation_fr': 'supplemental_information_other',
     'group_name_fr': 'data_series_name',
