@@ -1,3 +1,4 @@
 include COPYING COPYING.fr
+include ckanext/canada/metadata_schema/schema.json
 recursive-include ckanext/canada/public *
 recursive-include ckanext/canada/templates *
