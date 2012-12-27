@@ -125,7 +125,7 @@ ProposedField = namedtuple("ProposedField", """
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
-EXISTING_FIELDS = {
+PROPOSED_TO_EXISTING_FIELDS = {
     'dataset_uri_dataset_unique_identifier': 'url',
     'organization_name': 'author',
     'contact': 'author_email',
@@ -134,6 +134,7 @@ EXISTING_FIELDS = {
     'abstract': 'info',
     'keyword': 'tags',
     }
+EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
 # 'new field name': '2012 field name'
 FIELD_MAPPING = {
@@ -225,7 +226,7 @@ def read_proposed_fields():
             # skip the header rows
             continue
         new_name = proposed_name_to_identifier(p.property_name)
-        new_name = EXISTING_FIELDS.get(new_name, new_name)
+        new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
         assert new_name not in p, new_name
         out[new_name] = p
     return out
@@ -261,6 +262,7 @@ def main():
                 'example': p.example,
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
+                'existing': field in EXISTING_FIELDS,
                 }
             f = FIELD_MAPPING.get(field)
             if f:

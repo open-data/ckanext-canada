@@ -36,6 +36,7 @@
             "en": "Drop down: eng; CAN, fre; CAN"
           }, 
           "example": "eng: CAN", 
+          "existing": false, 
           "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The language(s) of the content of the dataset.", 
@@ -62,6 +63,7 @@
             "en": "<Uniform Resource Identifier><;><blank space><onLineFunctionCode> The on line function code is optional. Select onLineFunctionCode from \"download\", \"information\", \"offlineAccess\", \"order\", \"search\", \"upload\", \"webService\", \"emailService\", \"browsing\", \"fil"
           }, 
           "example": "http://host/path/ download", 
+          "existing": true, 
           "gc_multiplicity": "O", 
           "id": "url", 
           "iso_multiplicity": "O", 
@@ -867,6 +869,7 @@
             "en": "Free text."
           }, 
           "example": "Environment Canada", 
+          "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
@@ -894,6 +897,7 @@
             "en": "Email address of person who entered metadata"
           }, 
           "example": "Alannah.Hilt@tbs-sct.gc.ca", 
+          "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "Email address of the individual publishing the dataset(s).", 
@@ -920,6 +924,7 @@
             "en": "Default to: Government of Canada's Open Data Metadata Implementation Guide"
           }, 
           "example": "", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "id": "metadata_standard_name", 
           "iso_multiplicity": "M", 
@@ -937,6 +942,7 @@
             "en": "Drop Down: Raw, Geo, etc. (Selection will prompt specific metadata fields for extensions)"
           }, 
           "example": "Geo", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "id": "catalog_type", 
           "iso_multiplicity": "", 
@@ -966,6 +972,7 @@
             "en": "Default: ISO 19115 Topic Categories"
           }, 
           "example": "ISO 19115 Topic Categories", 
+          "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
@@ -994,6 +1001,7 @@
             "en": "Free text. The abstract is meant to be a brief narrative summary of the contents of your data. Should include a summary of:\n-Thematic Content (Theme)\n-Dataset Quality\n-Methodology\n-Temporal Extent (when)\n-Geographic Extent (where)\n-Format of the data\nGuidelines:\n-Fully describe acronyms\n-Make it clear, concise, and specific as to what the resource contains\n-Know your audience. Where possible make sure the abstract is something the general public can understand."
           }, 
           "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
@@ -1020,6 +1028,7 @@
             "en": "Free text, default to utf8"
           }, 
           "example": "8859part1", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "character_set", 
           "iso_multiplicity": "O, Repeat.", 
@@ -1038,6 +1047,7 @@
             "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
           }, 
           "example": "daily", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The frequency at which the dataset is published.", 
@@ -1076,6 +1086,7 @@
             "en": "URL"
           }, 
           "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The URL for the program  that is responsible for the dataset or tool.", 
@@ -1104,6 +1115,7 @@
             "en": "File. To populate this value a file must be uploaded."
           }, 
           "example": "HFERDatasetDefinitions.txt", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "A file containing definitions of the headers (row and column) and variables used in your dataset(s). File types: .xml, .txt", 
@@ -1132,6 +1144,7 @@
             "en": "Free text. This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports, data dictionaries, etc."
           }, 
           "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
@@ -1170,6 +1183,7 @@
             "en": "Free text"
           }, 
           "example": "CANSIM", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "A name given to multiple datasets to present them as a group or a set.", 
@@ -1196,6 +1210,7 @@
             "en": "Free text"
           }, 
           "example": "Table 502-0003", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "issue_identification", 
           "iso_multiplicity": "O", 
@@ -1215,6 +1230,7 @@
             "en": "URL"
           }, 
           "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The URL that links to the top level in the repository in which the dataset resides.", 
@@ -1344,6 +1360,7 @@
             "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
           }, 
           "example": "Agriculture", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
@@ -1380,6 +1397,7 @@
             "en": "Drop down: Farming, Biota, Boundaries, Climatology / Meterology / Atmosphere, Economy, Elevation, Environment, Geoscientific Information, Health, Imagery / Base Maps/ Earth Cover, Intelligence / Military, Inland Waters, Location, Oceans, Planning Cadastre, Society, Structure, Transportation, Utilities / Communications"
           }, 
           "example": "Farming", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "id": "topic_category", 
           "iso_multiplicity": "C", 
@@ -1409,6 +1427,7 @@
             "en": "Free text. Use 1 or 2 word phrases. Keep it lower case and avoid special characters and acronyms. \nUse keywords that refer to discipline, place, time period, theme"
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
+          "existing": true, 
           "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
@@ -1446,6 +1465,7 @@
             "en": "Free text. Surname, given name, title separated by a delimiter."
           }, 
           "example": "Kralidis, Tom", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The name of the person who may be contacted for more information about the dataset.", 
@@ -1473,6 +1493,7 @@
             "en": "Free text. Do not use unit title or name."
           }, 
           "example": "Senior Systems Scientist", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The job title of the person who may be contacted for more information about the dataset.", 
@@ -1500,6 +1521,7 @@
             "en": "The structure of the phone number is:<phoneType><;><blank space><countryCode><blank space><(><areaCode><)><localNumber> The phoneType values are optional and either \u201cvoice\u201d or \u201cTDD/TTY.\u201d"
           }, 
           "example": "voice; 1 (416)7394907", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The telephone number of the person who may be contacted for more information about the dataset.", 
@@ -1526,6 +1548,7 @@
             "en": "Free text. The structure of the facsimile number is:<countryCode><blank space><(><areaCode><)><localNumber>"
           }, 
           "example": "1 (416)7394261", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "fax_number", 
           "iso_multiplicity": "O, Repeat.", 
@@ -1543,6 +1566,7 @@
             "en": "Free text. The delivery point is described according to one of the\nfollowing: a) <addressType><;><blank space><street number><;><blank space><street name><;><blank space><floor ID><;><blank space><room/suite ID> b) <addressType><;><blank space><box number"
           }, 
           "example": "123 Main Street", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "delivery_point_civic_address", 
           "iso_multiplicity": "O", 
@@ -1560,6 +1584,7 @@
             "en": "Free text."
           }, 
           "example": "Toronto", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "city", 
           "iso_multiplicity": "O", 
@@ -1577,6 +1602,7 @@
             "en": "Free text."
           }, 
           "example": "Ontario", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "state_province", 
           "iso_multiplicity": "O", 
@@ -1594,6 +1620,7 @@
             "en": "The postal code format should follow the standard structure of the country. U.S. is: <NNNNN>{<-><NNNN>} The format in Canada is: <ANA><blank space><NAN>"
           }, 
           "example": "M3H 5T4", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "postal_code", 
           "iso_multiplicity": "O", 
@@ -1611,6 +1638,7 @@
             "en": "Free text."
           }, 
           "example": "Canada", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "country", 
           "iso_multiplicity": "O", 
@@ -1629,6 +1657,7 @@
             "en": "Free text."
           }, 
           "example": "tom.kralidis@ec.gc.ca", 
+          "existing": true, 
           "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The electronic mail address of the person who may be contacted for more information about the dataset.", 
@@ -1655,6 +1684,7 @@
             "en": ""
           }, 
           "example": "", 
+          "existing": false, 
           "gc_multiplicity": "", 
           "id": "online_resource", 
           "iso_multiplicity": "", 
@@ -1672,6 +1702,7 @@
             "en": "According to the ISO8601 representation of timeintervals by start and end time, hours of service is composed of a start and an end time in the form of: <startTime></><endTime> The start and end time representation conforms to ISO8601 extended format. In t"
           }, 
           "example": "0700h - 1500h EST", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "id": "hours_of_service", 
           "iso_multiplicity": "O", 
@@ -1689,6 +1720,7 @@
             "en": "Drop down: Resource Provider, Data Steward, Owner, Distributor, User, Originator, Point of Contact, Principal Investigator, Processor, Publisher, Author, Collaborator, Editor, Mediator, Rights Holder"
           }, 
           "example": "Point Of Contact", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "id": "roles", 
           "iso_multiplicity": "M", 
@@ -1717,6 +1749,7 @@
             "en": "Date format follows YYYY-MM-DD"
           }, 
           "example": "YYYY-MM-DD", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
@@ -1744,6 +1777,7 @@
             "en": "Date format follows YYYY-MM-DD. If date is indeterminate, can put 'unknown' or 'now'."
           }, 
           "example": "2012-01-21 or 'now'", 
+          "existing": false, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
@@ -2203,6 +2237,7 @@
             "en": "Region names to come from the 'Standard Geospatial Classification : http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm"
           }, 
           "example": "Ottawa", 
+          "existing": false, 
           "gc_multiplicity": "M", 
           "help": {
             "en": "The region that describes the geographic area covered by the dataset.", 
