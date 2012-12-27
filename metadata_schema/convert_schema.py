@@ -54,24 +54,34 @@ SECTIONS_FIELDS = [
         ]),
     ]
 
+# 'new (existing) field name': 'proposed name'
+EXISTING_FIELDS = {
+    'author_email': 'contact',
+    'maintainer_email': 'email',
+    'title': 'title',
+    'info': 'abstract',
+    'tags': 'keywords',
+    'url': 'data_series_url',
+    }
+
 # 'new field name': '2012 field name'
 FIELD_MAPPING = {
-    'author_email': 'owner', # existing, was 'Contact'
+    'author_email': 'owner',
     'individual_name': 'contact_name',
     'position_name': 'contact_title',
     'telephone_number_voice': 'contact_phone',
-    'maintainer_email': 'contact_email', # existing, was 'Email'
-    'title': 'title_en', # existing
+    'maintainer_email': 'contact_email',
+    'title': 'title_en',
     'organization_name': 'department',
     'thesaurus': 'category',
     'language': 'language__',
     'date': 'date_released',
     'date_modified': 'date_update',
     'maintenance_and_update_frequency': 'frequency',
-    'info': 'description_en', # existing, was 'Abstract'
-    'tags': 'keywords_en', # existing, was 'Keywords'
+    'info': 'description_en',
+    'tags': 'keywords_en',
     'program_url': 'program_page_en',
-    'url': 'data_series_url_en', # existing, was 'Data Series URL'
+    'url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en',
     'supplemental_information_other': 'supplementary_documentation_en',
     'geographic_region_name': 'Geographic_Region_Name',
