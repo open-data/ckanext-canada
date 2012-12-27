@@ -11,177 +11,6 @@
       "fields": [
         {
           "bilingual": false, 
-          "description": {
-            "en": "Designates either a URL link to the dataset if available or a unique identifier (such as a DOI) for the resource if one exists."
-          }, 
-          "domain_best_practice": {
-            "en": "<Uniform Resource Identifier><;><blank space><onLineFunctionCode> The on line function code is optional. Select onLineFunctionCode from \"download\", \"information\", \"offlineAccess\", \"order\", \"search\", \"upload\", \"webService\", \"emailService\", \"browsing\", \"fil"
-          }, 
-          "example": "http://host/path/ download", 
-          "gc_multiplicity": "O", 
-          "id": "name", 
-          "iso_multiplicity": "O", 
-          "nap_iso_19115_ref": "5.2.10", 
-          "proposed_name": {
-            "en": "Dataset URI (Dataset Unique Identifier)"
-          }
-        }, 
-        {
-          "bilingual": false, 
-          "data_gc_ca_2012_id": "owner", 
-          "description": {
-            "en": "The party responsible for the metadata content"
-          }, 
-          "domain_best_practice": {
-            "en": "Email address of person who entered metadata"
-          }, 
-          "example": "Alannah.Hilt@tbs-sct.gc.ca", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "Email address of the individual publishing the dataset(s).", 
-            "fr": "Adresse de courriel de la personne qui t\u00e9l\u00e9charge l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "author_email", 
-          "iso_multiplicity": "M", 
-          "name": {
-            "en": "Dataset Publisher", 
-            "fr": "Source de l'ensemble de donn\u00e9es"
-          }, 
-          "nap_iso_19115_ref": "5.2.6", 
-          "proposed_name": {
-            "en": "Contact"
-          }, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "en": "Name of the metadata standard standard or profile used"
-          }, 
-          "domain_best_practice": {
-            "en": "Default to: Government of Canada's Open Data Metadata Implementation Guide"
-          }, 
-          "example": "", 
-          "gc_multiplicity": "M", 
-          "id": "metadata_standard_name", 
-          "iso_multiplicity": "M", 
-          "nap_iso_19115_ref": "5.2.8", 
-          "proposed_name": {
-            "en": "Metadata Standard Name"
-          }
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "en": "Type of dataset"
-          }, 
-          "domain_best_practice": {
-            "en": "Drop Down: Raw, Geo, etc. (Selection will prompt specific metadata fields for extensions)"
-          }, 
-          "example": "Geo", 
-          "gc_multiplicity": "M", 
-          "id": "catalog_type", 
-          "iso_multiplicity": "", 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Catalog Type"
-          }
-        }
-      ], 
-      "name": {
-        "en": "Metadata Record Information"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section is used to describe the dataset."
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "title_en", 
-          "data_gc_ca_2012_id_fr": "title_fr", 
-          "description": {
-            "en": "Name by which the thesaurus is known"
-          }, 
-          "domain_best_practice": {
-            "en": "Default: ISO 19115 Topic Categories"
-          }, 
-          "example": "ISO 19115 Topic Categories", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
-            "fr": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
-          }, 
-          "id": "title", 
-          "iso_multiplicity": "", 
-          "name": {
-            "en": "Title English", 
-            "fr": "Titre en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Title"
-          }, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": false, 
-          "data_gc_ca_2012_id": "date_released", 
-          "description": {
-            "en": "The date of the thesaurus"
-          }, 
-          "domain_best_practice": {
-            "en": "Default: TBD"
-          }, 
-          "example": "40679.0", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
-            "fr": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
-          }, 
-          "id": "date", 
-          "iso_multiplicity": "", 
-          "name": {
-            "en": "Date Published", 
-            "fr": "Date de publication"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Date"
-          }, 
-          "type": "datepicker"
-        }, 
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "description_en", 
-          "data_gc_ca_2012_id_fr": "description_fr", 
-          "description": {
-            "en": "Provide a brief overview of the content, methodology and findings of the dataset in free text format."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text. The abstract is meant to be a brief narrative summary of the contents of your data. Should include a summary of:\n-Thematic Content (Theme)\n-Dataset Quality\n-Methodology\n-Temporal Extent (when)\n-Geographic Extent (where)\n-Format of the data\nGuidelines:\n-Fully describe acronyms\n-Make it clear, concise, and specific as to what the resource contains\n-Know your audience. Where possible make sure the abstract is something the general public can understand."
-          }, 
-          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
-            "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "info", 
-          "iso_multiplicity": "M", 
-          "name": {
-            "en": "Description English", 
-            "fr": "Description en anglais"
-          }, 
-          "nap_iso_19115_ref": "5.3.1.2", 
-          "proposed_name": {
-            "en": "Abstract"
-          }, 
-          "type": "textarea"
-        }, 
-        {
-          "bilingual": false, 
           "choices": [
             {
               "data_gc_ca_2012_guid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30", 
@@ -226,384 +55,20 @@
         }, 
         {
           "bilingual": false, 
-          "choices": [
-            {
-              "data_gc_ca_2012_guid": "86EB6B9F-344C-4C3E-982D-53164994516A", 
-              "en": "Arts, Music, Literature", 
-              "fr": "Arts, musique, litt\u00e9rature"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "04D07B59-8D90-455C-9C84-7C1DF833473B", 
-              "en": "Agriculture", 
-              "fr": "Agriculture"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE", 
-              "en": "Economics and Industry", 
-              "fr": "\u00c9conomie et industrie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697", 
-              "en": "Education and Training", 
-              "fr": "\u00c9ducation et formation"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "1BEB670E-8A73-4217-BCD2-6189F92053E2", 
-              "en": "Government and Politics", 
-              "fr": "Gouvernement et vie politique"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "7D5846DC-74D0-415A-A853-318DCD89E731", 
-              "en": "Health and Safety", 
-              "fr": "Sant\u00e9 et s\u00e9curit\u00e9"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "704B3281-511F-4FFB-85C7-D437892CECE2", 
-              "en": "History and Archaeology", 
-              "fr": "Histoire et arch\u00e9ologie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9", 
-              "en": "Information and Communications", 
-              "fr": "Information et communication"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "F97F8830-B980-4A20-9B13-D572F1C094F0", 
-              "en": "Labour", 
-              "fr": "Travail et emploi"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0", 
-              "en": "Language and Linguistics", 
-              "fr": "Langue et linguistique"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08", 
-              "en": "Law", 
-              "fr": "Droit"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1", 
-              "en": "Military", 
-              "fr": "Histoire et science militaire"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4", 
-              "en": "Nature and Environment", 
-              "fr": "Nature et environnement"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1", 
-              "en": "Persons", 
-              "fr": "Personnes"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213", 
-              "en": "Processes", 
-              "fr": "Liens et fonctions"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3", 
-              "en": "Society and Culture", 
-              "fr": "Soci\u00e9t\u00e9 et culture"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "FB6B00F0-6271-42D6-ACB7-FFE664843698", 
-              "en": "Science and Technology", 
-              "fr": "Sciences et technologie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2", 
-              "en": "Transport", 
-              "fr": "Transport"
-            }
-          ], 
-          "data_gc_ca_2012_id": "category", 
           "description": {
-            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+            "en": "Designates either a URL link to the dataset if available or a unique identifier (such as a DOI) for the resource if one exists."
           }, 
           "domain_best_practice": {
-            "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
+            "en": "<Uniform Resource Identifier><;><blank space><onLineFunctionCode> The on line function code is optional. Select onLineFunctionCode from \"download\", \"information\", \"offlineAccess\", \"order\", \"search\", \"upload\", \"webService\", \"emailService\", \"browsing\", \"fil"
           }, 
-          "example": "Agriculture", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
-            "fr": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "thesaurus", 
-          "iso_multiplicity": "", 
-          "name": {
-            "en": "Subject Area", 
-            "fr": "Domaine"
-          }, 
-          "nap_iso_19115_ref": "5.3.1.11", 
-          "proposed_name": {
-            "en": "Subject"
-          }, 
-          "type": "choice"
-        }, 
-        {
-          "bilingual": false, 
-          "data_gc_ca_2012_id": "frequency", 
-          "description": {
-            "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
-          }, 
-          "domain_best_practice": {
-            "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
-          }, 
-          "example": "daily", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The frequency at which the dataset is published.", 
-            "fr": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "maintenance_and_update_frequency", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "en": "Frequency", 
-            "fr": "Fr\u00e9quence"
-          }, 
-          "nap_iso_19115_ref": "5.6.1", 
-          "proposed_name": {
-            "en": "Maintenance and Update Frequency"
-          }, 
-          "type": "select"
-        }
-      ], 
-      "name": {
-        "en": "Dataset Identification Information"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This field can be used to provide any additional information about the dataset not captured in the form."
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "program_page_en", 
-          "data_gc_ca_2012_id_fr": "program_url_fr", 
-          "description": {
-            "en": "The URL for the Government of Canada program that is responsible for the dataset."
-          }, 
-          "domain_best_practice": {
-            "en": "URL"
-          }, 
-          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "example": "http://host/path/ download", 
           "gc_multiplicity": "O", 
-          "help": {
-            "en": "The URL for the program  that is responsible for the dataset or tool.", 
-            "fr": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
-          }, 
-          "id": "program_url", 
+          "id": "name", 
           "iso_multiplicity": "O", 
-          "name": {
-            "en": "Program URL English", 
-            "fr": "Adresse URL du programme en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
+          "nap_iso_19115_ref": "5.2.10", 
           "proposed_name": {
-            "en": "Program URL"
-          }, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "dictionary_list:_en", 
-          "data_gc_ca_2012_id_fr": "data_dictionary_fr", 
-          "description": {
-            "en": "Data dictionary-a file containing variable names, descriptions, standard vocabularies and taxonomies, units, multipliers, and other data parameters."
-          }, 
-          "domain_best_practice": {
-            "en": "File. To populate this value a file must be uploaded."
-          }, 
-          "example": "HFERDatasetDefinitions.txt", 
-          "gc_multiplicity": "O", 
-          "help": {
-            "en": "A file containing definitions of the headers (row and column) and variables used in your dataset(s). File types: .xml, .txt", 
-            "fr": "Un fichier renfermant les d\u00e9finitions des titres (rangs et colonnes) et des variables appliqu\u00e9s \u00e0 votre ou vos bases de donn\u00e9es. Types de fichier : .xml, .txt."
-          }, 
-          "id": "data_dictionary", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "en": "Data Dictionary/Variable List English", 
-            "fr": "Dictionnaire de donn\u00e9es ou liste des variables en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Data Dictionary"
-          }, 
-          "type": "file"
-        }, 
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "supplementary_documentation_en", 
-          "data_gc_ca_2012_id_fr": "supplementary_documentation_fr", 
-          "description": {
-            "en": "This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports etc."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text. This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports, data dictionaries, etc."
-          }, 
-          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
-          "gc_multiplicity": "O", 
-          "help": {
-            "en": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
-            "fr": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
-          }, 
-          "id": "supplemental_information_other", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "en": "Reference for Supplementary Documentation English", 
-            "fr": "R\u00e9f\u00e9rence pour autre documentation en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Supplemental Information-Other"
-          }, 
-          "type": "text"
-        }
-      ], 
-      "name": {
-        "en": "Supplemental Information"
-      }
-    }, 
-    {
-      "description": {
-        "en": ""
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "group_name_en", 
-          "data_gc_ca_2012_id_fr": "group_name_fr", 
-          "description": {
-            "en": "Name of the data series or aggregate dataset of which referenced."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text"
-          }, 
-          "example": "CANSIM", 
-          "gc_multiplicity": "O", 
-          "help": {
-            "en": "A name given to multiple datasets to present them as a group or a set.", 
-            "fr": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
-          }, 
-          "id": "data_series_name", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "en": "Dataset Group Name English", 
-            "fr": "Nom du groupe des ensembles de donn\u00e9es en anglais"
-          }, 
-          "nap_iso_19115_ref": "5.21.1", 
-          "proposed_name": {
-            "en": "Data Series Name"
-          }, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "data_series_url_en", 
-          "data_gc_ca_2012_id_fr": "data_series_url_fr", 
-          "description": {
-            "en": "Link (URL) to the high level repository in which the dataset resides at the agency of origin"
-          }, 
-          "domain_best_practice": {
-            "en": "URL"
-          }, 
-          "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
-          "gc_multiplicity": "O", 
-          "help": {
-            "en": "The URL that links to the top level in the repository in which the dataset resides.", 
-            "fr": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
-          }, 
-          "id": "url", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "en": "Data Series URL English", 
-            "fr": "URL anglais de l'ensemble de donn\u00e9es"
-          }, 
-          "nap_iso_19115_ref": "5.20.1", 
-          "proposed_name": {
-            "en": "Data Series URL"
-          }, 
-          "type": "text"
-        }
-      ], 
-      "name": {
-        "en": "Data Series"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section of the metadata contains keywords describing the dataset."
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "data_gc_ca_2012_id": "keywords_en", 
-          "data_gc_ca_2012_id_fr": "keywords_fr", 
-          "description": {
-            "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource. To select from a pre-defined list of keywords, select a thesaurus below.  Keywords are a repeatable element; enter as many keywords as necessary to describe the data."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text. Use 1 or 2 word phrases. Keep it lower case and avoid special characters and acronyms. \nUse keywords that refer to discipline, place, time period, theme"
-          }, 
-          "example": "Air, Air Quality, Organic Pollutants", 
-          "gc_multiplicity": "M, Repeat.", 
-          "help": {
-            "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
-            "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
-          }, 
-          "id": "tags", 
-          "iso_multiplicity": "M, Repeat.", 
-          "name": {
-            "en": "Keywords English", 
-            "fr": "Mots-cl\u00e9s en anglais"
-          }, 
-          "nap_iso_19115_ref": "5.3.6.1", 
-          "proposed_name": {
-            "en": "Keyword"
-          }, 
-          "type": "textarea"
-        }
-      ], 
-      "name": {
-        "en": "Descriptive Keywords"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section contains information about the person responsible for the data and who is considered to be a point of contact for the resource"
-      }, 
-      "fields": [
-        {
-          "bilingual": false, 
-          "data_gc_ca_2012_id": "contact_name", 
-          "description": {
-            "en": "Name of the responsible person."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text. Surname, given name, title separated by a delimiter."
-          }, 
-          "example": "Kralidis, Tom", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The name of the person who may be contacted for more information about the dataset.", 
-            "fr": "Le nom de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "individual_name", 
-          "iso_multiplicity": "C", 
-          "name": {
-            "en": "Name", 
-            "fr": "Nom"
-          }, 
-          "nap_iso_19115_ref": "5.16.1", 
-          "proposed_name": {
-            "en": "Individual Name"
-          }, 
-          "type": "text"
+            "en": "Dataset URI (Dataset Unique Identifier)"
+          }
         }, 
         {
           "bilingual": false, 
@@ -1418,6 +883,541 @@
             "en": "Organization Name"
           }, 
           "type": "choice"
+        }, 
+        {
+          "bilingual": false, 
+          "data_gc_ca_2012_id": "owner", 
+          "description": {
+            "en": "The party responsible for the metadata content"
+          }, 
+          "domain_best_practice": {
+            "en": "Email address of person who entered metadata"
+          }, 
+          "example": "Alannah.Hilt@tbs-sct.gc.ca", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "Email address of the individual publishing the dataset(s).", 
+            "fr": "Adresse de courriel de la personne qui t\u00e9l\u00e9charge l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "author_email", 
+          "iso_multiplicity": "M", 
+          "name": {
+            "en": "Dataset Publisher", 
+            "fr": "Source de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "5.2.6", 
+          "proposed_name": {
+            "en": "Contact"
+          }, 
+          "type": "text"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Name of the metadata standard standard or profile used"
+          }, 
+          "domain_best_practice": {
+            "en": "Default to: Government of Canada's Open Data Metadata Implementation Guide"
+          }, 
+          "example": "", 
+          "gc_multiplicity": "M", 
+          "id": "metadata_standard_name", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.2.8", 
+          "proposed_name": {
+            "en": "Metadata Standard Name"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Type of dataset"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop Down: Raw, Geo, etc. (Selection will prompt specific metadata fields for extensions)"
+          }, 
+          "example": "Geo", 
+          "gc_multiplicity": "M", 
+          "id": "catalog_type", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Catalog Type"
+          }
+        }
+      ], 
+      "name": {
+        "en": "Metadata Record Information"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This section is used to describe the dataset."
+      }, 
+      "fields": [
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "title_en", 
+          "data_gc_ca_2012_id_fr": "title_fr", 
+          "description": {
+            "en": "Name by which the thesaurus is known"
+          }, 
+          "domain_best_practice": {
+            "en": "Default: ISO 19115 Topic Categories"
+          }, 
+          "example": "ISO 19115 Topic Categories", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
+            "fr": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
+          }, 
+          "id": "title", 
+          "iso_multiplicity": "", 
+          "name": {
+            "en": "Title English", 
+            "fr": "Titre en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Title"
+          }, 
+          "type": "text"
+        }, 
+        {
+          "bilingual": false, 
+          "data_gc_ca_2012_id": "date_released", 
+          "description": {
+            "en": "The date of the thesaurus"
+          }, 
+          "domain_best_practice": {
+            "en": "Default: TBD"
+          }, 
+          "example": "40679.0", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
+            "fr": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
+          }, 
+          "id": "date", 
+          "iso_multiplicity": "", 
+          "name": {
+            "en": "Date Published", 
+            "fr": "Date de publication"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Date"
+          }, 
+          "type": "datepicker"
+        }, 
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "description_en", 
+          "data_gc_ca_2012_id_fr": "description_fr", 
+          "description": {
+            "en": "Provide a brief overview of the content, methodology and findings of the dataset in free text format."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. The abstract is meant to be a brief narrative summary of the contents of your data. Should include a summary of:\n-Thematic Content (Theme)\n-Dataset Quality\n-Methodology\n-Temporal Extent (when)\n-Geographic Extent (where)\n-Format of the data\nGuidelines:\n-Fully describe acronyms\n-Make it clear, concise, and specific as to what the resource contains\n-Know your audience. Where possible make sure the abstract is something the general public can understand."
+          }, 
+          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
+            "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "info", 
+          "iso_multiplicity": "M", 
+          "name": {
+            "en": "Description English", 
+            "fr": "Description en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.2", 
+          "proposed_name": {
+            "en": "Abstract"
+          }, 
+          "type": "textarea"
+        }, 
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "data_gc_ca_2012_guid": "86EB6B9F-344C-4C3E-982D-53164994516A", 
+              "en": "Arts, Music, Literature", 
+              "fr": "Arts, musique, litt\u00e9rature"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "04D07B59-8D90-455C-9C84-7C1DF833473B", 
+              "en": "Agriculture", 
+              "fr": "Agriculture"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE", 
+              "en": "Economics and Industry", 
+              "fr": "\u00c9conomie et industrie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697", 
+              "en": "Education and Training", 
+              "fr": "\u00c9ducation et formation"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "1BEB670E-8A73-4217-BCD2-6189F92053E2", 
+              "en": "Government and Politics", 
+              "fr": "Gouvernement et vie politique"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "7D5846DC-74D0-415A-A853-318DCD89E731", 
+              "en": "Health and Safety", 
+              "fr": "Sant\u00e9 et s\u00e9curit\u00e9"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "704B3281-511F-4FFB-85C7-D437892CECE2", 
+              "en": "History and Archaeology", 
+              "fr": "Histoire et arch\u00e9ologie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9", 
+              "en": "Information and Communications", 
+              "fr": "Information et communication"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "F97F8830-B980-4A20-9B13-D572F1C094F0", 
+              "en": "Labour", 
+              "fr": "Travail et emploi"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0", 
+              "en": "Language and Linguistics", 
+              "fr": "Langue et linguistique"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08", 
+              "en": "Law", 
+              "fr": "Droit"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1", 
+              "en": "Military", 
+              "fr": "Histoire et science militaire"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4", 
+              "en": "Nature and Environment", 
+              "fr": "Nature et environnement"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1", 
+              "en": "Persons", 
+              "fr": "Personnes"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213", 
+              "en": "Processes", 
+              "fr": "Liens et fonctions"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3", 
+              "en": "Society and Culture", 
+              "fr": "Soci\u00e9t\u00e9 et culture"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "FB6B00F0-6271-42D6-ACB7-FFE664843698", 
+              "en": "Science and Technology", 
+              "fr": "Sciences et technologie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2", 
+              "en": "Transport", 
+              "fr": "Transport"
+            }
+          ], 
+          "data_gc_ca_2012_id": "category", 
+          "description": {
+            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
+          }, 
+          "example": "Agriculture", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
+            "fr": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "thesaurus", 
+          "iso_multiplicity": "", 
+          "name": {
+            "en": "Subject Area", 
+            "fr": "Domaine"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.11", 
+          "proposed_name": {
+            "en": "Subject"
+          }, 
+          "type": "choice"
+        }, 
+        {
+          "bilingual": false, 
+          "data_gc_ca_2012_id": "frequency", 
+          "description": {
+            "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
+          }, 
+          "example": "daily", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The frequency at which the dataset is published.", 
+            "fr": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "maintenance_and_update_frequency", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Frequency", 
+            "fr": "Fr\u00e9quence"
+          }, 
+          "nap_iso_19115_ref": "5.6.1", 
+          "proposed_name": {
+            "en": "Maintenance and Update Frequency"
+          }, 
+          "type": "select"
+        }
+      ], 
+      "name": {
+        "en": "Dataset Identification Information"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This field can be used to provide any additional information about the dataset not captured in the form."
+      }, 
+      "fields": [
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "program_page_en", 
+          "data_gc_ca_2012_id_fr": "program_url_fr", 
+          "description": {
+            "en": "The URL for the Government of Canada program that is responsible for the dataset."
+          }, 
+          "domain_best_practice": {
+            "en": "URL"
+          }, 
+          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "gc_multiplicity": "O", 
+          "help": {
+            "en": "The URL for the program  that is responsible for the dataset or tool.", 
+            "fr": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
+          }, 
+          "id": "program_url", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Program URL English", 
+            "fr": "Adresse URL du programme en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Program URL"
+          }, 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "dictionary_list:_en", 
+          "data_gc_ca_2012_id_fr": "data_dictionary_fr", 
+          "description": {
+            "en": "Data dictionary-a file containing variable names, descriptions, standard vocabularies and taxonomies, units, multipliers, and other data parameters."
+          }, 
+          "domain_best_practice": {
+            "en": "File. To populate this value a file must be uploaded."
+          }, 
+          "example": "HFERDatasetDefinitions.txt", 
+          "gc_multiplicity": "O", 
+          "help": {
+            "en": "A file containing definitions of the headers (row and column) and variables used in your dataset(s). File types: .xml, .txt", 
+            "fr": "Un fichier renfermant les d\u00e9finitions des titres (rangs et colonnes) et des variables appliqu\u00e9s \u00e0 votre ou vos bases de donn\u00e9es. Types de fichier : .xml, .txt."
+          }, 
+          "id": "data_dictionary", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Data Dictionary/Variable List English", 
+            "fr": "Dictionnaire de donn\u00e9es ou liste des variables en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Data Dictionary"
+          }, 
+          "type": "file"
+        }, 
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "supplementary_documentation_en", 
+          "data_gc_ca_2012_id_fr": "supplementary_documentation_fr", 
+          "description": {
+            "en": "This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports etc."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports, data dictionaries, etc."
+          }, 
+          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
+          "gc_multiplicity": "O", 
+          "help": {
+            "en": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
+            "fr": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
+          }, 
+          "id": "supplemental_information_other", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Reference for Supplementary Documentation English", 
+            "fr": "R\u00e9f\u00e9rence pour autre documentation en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Supplemental Information-Other"
+          }, 
+          "type": "text"
+        }
+      ], 
+      "name": {
+        "en": "Supplemental Information"
+      }
+    }, 
+    {
+      "description": {
+        "en": ""
+      }, 
+      "fields": [
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "group_name_en", 
+          "data_gc_ca_2012_id_fr": "group_name_fr", 
+          "description": {
+            "en": "Name of the data series or aggregate dataset of which referenced."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text"
+          }, 
+          "example": "CANSIM", 
+          "gc_multiplicity": "O", 
+          "help": {
+            "en": "A name given to multiple datasets to present them as a group or a set.", 
+            "fr": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
+          }, 
+          "id": "data_series_name", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Dataset Group Name English", 
+            "fr": "Nom du groupe des ensembles de donn\u00e9es en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.21.1", 
+          "proposed_name": {
+            "en": "Data Series Name"
+          }, 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "data_series_url_en", 
+          "data_gc_ca_2012_id_fr": "data_series_url_fr", 
+          "description": {
+            "en": "Link (URL) to the high level repository in which the dataset resides at the agency of origin"
+          }, 
+          "domain_best_practice": {
+            "en": "URL"
+          }, 
+          "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
+          "gc_multiplicity": "O", 
+          "help": {
+            "en": "The URL that links to the top level in the repository in which the dataset resides.", 
+            "fr": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+          }, 
+          "id": "url", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "en": "Data Series URL English", 
+            "fr": "URL anglais de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "5.20.1", 
+          "proposed_name": {
+            "en": "Data Series URL"
+          }, 
+          "type": "text"
+        }
+      ], 
+      "name": {
+        "en": "Data Series"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This section of the metadata contains keywords describing the dataset."
+      }, 
+      "fields": [
+        {
+          "bilingual": true, 
+          "data_gc_ca_2012_id": "keywords_en", 
+          "data_gc_ca_2012_id_fr": "keywords_fr", 
+          "description": {
+            "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource. To select from a pre-defined list of keywords, select a thesaurus below.  Keywords are a repeatable element; enter as many keywords as necessary to describe the data."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. Use 1 or 2 word phrases. Keep it lower case and avoid special characters and acronyms. \nUse keywords that refer to discipline, place, time period, theme"
+          }, 
+          "example": "Air, Air Quality, Organic Pollutants", 
+          "gc_multiplicity": "M, Repeat.", 
+          "help": {
+            "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
+            "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
+          }, 
+          "id": "tags", 
+          "iso_multiplicity": "M, Repeat.", 
+          "name": {
+            "en": "Keywords English", 
+            "fr": "Mots-cl\u00e9s en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.3.6.1", 
+          "proposed_name": {
+            "en": "Keyword"
+          }, 
+          "type": "textarea"
+        }
+      ], 
+      "name": {
+        "en": "Descriptive Keywords"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This section contains information about the person responsible for the data and who is considered to be a point of contact for the resource"
+      }, 
+      "fields": [
+        {
+          "bilingual": false, 
+          "data_gc_ca_2012_id": "contact_name", 
+          "description": {
+            "en": "Name of the responsible person."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. Surname, given name, title separated by a delimiter."
+          }, 
+          "example": "Kralidis, Tom", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The name of the person who may be contacted for more information about the dataset.", 
+            "fr": "Le nom de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "individual_name", 
+          "iso_multiplicity": "C", 
+          "name": {
+            "en": "Name", 
+            "fr": "Nom"
+          }, 
+          "nap_iso_19115_ref": "5.16.1", 
+          "proposed_name": {
+            "en": "Individual Name"
+          }, 
+          "type": "text"
         }, 
         {
           "bilingual": false, 

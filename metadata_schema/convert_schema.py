@@ -26,8 +26,10 @@ SECTIONS_FIELDS = [
         #'file_identifier', - unique ID, provided by ckan as 'id'
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
+        'language',
         'name', # optional in proposed, REQUIRED here!
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
+        'author',
         'author_email',
         'metadata_standard_name',
         'catalog_type',
@@ -36,7 +38,6 @@ SECTIONS_FIELDS = [
         'title',
         'date',
         'info',
-        'language',
         'thesaurus',
         'maintenance_and_update_frequency',
         ]),
@@ -55,7 +56,6 @@ SECTIONS_FIELDS = [
         ]),
     ("Contact Information", [
         'individual_name',
-        'author',
         'position_name',
         'telephone_number_voice',
         'maintainer_email',
