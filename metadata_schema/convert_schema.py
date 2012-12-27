@@ -94,7 +94,22 @@ SECTIONS_FIELDS = [
         'begin_position',
         'end_position',
         'geographic_region_name',
+        #'north_bound_latitude', - these are handled by ckanext-spacial
+        #'south_bound_latitude',
+        #'west_bound_longitude',
+        #'east_bound_longitude',
         ]),
+    #("Constraints", [
+        #'legal_access_constraints', - handled by 'license_id'
+        #'legal_use_constraints',
+        #]),
+    #("Distribution Information", [ - these are handled by resources
+        #'linkage_url', - resource.url
+        #'transfer_size', - resource.size
+        #'protocol', - part of resource.url
+        #'description', - resource.description
+        #'format_name', - resource.resource_type
+        #'format_version', - part of resource.resource_type (?)
     ]
 
 # The field order here must match the proposed schema spreadsheet
