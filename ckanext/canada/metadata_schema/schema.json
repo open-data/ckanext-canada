@@ -5,6 +5,9 @@
   }, 
   "sections_fields": [
     {
+      "description": {
+        "en": "This section contains information about the metadata record itself."
+      }, 
       "fields": [
         {
           "bilingual": false, 
@@ -26,33 +29,62 @@
       }
     }, 
     {
+      "description": {
+        "en": "This section is used to describe the dataset."
+      }, 
       "fields": [
         {
           "bilingual": true, 
           "data_gc_ca_2012_id": "title_en", 
           "data_gc_ca_2012_id_fr": "title_fr", 
+          "description": {
+            "en": "Name by which the thesaurus is known"
+          }, 
+          "domain_best_practice": {
+            "en": "Default: ISO 19115 Topic Categories"
+          }, 
+          "example": "ISO 19115 Topic Categories", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fr": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
           }, 
           "id": "title", 
+          "iso_multiplicity": "", 
           "name": {
             "en": "Title English", 
             "fr": "Titre en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Title"
           }, 
           "type": "text"
         }, 
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "date_released", 
+          "description": {
+            "en": "The date of the thesaurus"
+          }, 
+          "domain_best_practice": {
+            "en": "Default: TBD"
+          }, 
+          "example": "40679.0", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fr": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
           }, 
           "id": "date", 
+          "iso_multiplicity": "", 
           "name": {
             "en": "Date Published", 
             "fr": "Date de publication"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Date"
           }, 
           "type": "datepicker"
         }, 
@@ -91,14 +123,27 @@
             }
           ], 
           "data_gc_ca_2012_id": "language__", 
+          "description": {
+            "en": "Language(s) used within the dataset."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: eng; CAN, fre; CAN"
+          }, 
+          "example": "eng: CAN", 
+          "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The language(s) of the content of the dataset.", 
             "fr": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "language", 
+          "iso_multiplicity": "M, Repeat.", 
           "name": {
             "en": "Language", 
             "fr": "Langue"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.9", 
+          "proposed_name": {
+            "en": "Language"
           }, 
           "type": "choice"
         }, 
@@ -211,14 +256,27 @@
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "frequency", 
+          "description": {
+            "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
+          }, 
+          "example": "daily", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The frequency at which the dataset is published.", 
             "fr": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "maintenance_and_update_frequency", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Frequency", 
             "fr": "Fr\u00e9quence"
+          }, 
+          "nap_iso_19115_ref": "5.6.1", 
+          "proposed_name": {
+            "en": "Maintenance and Update Frequency"
           }, 
           "type": "select"
         }
@@ -228,19 +286,35 @@
       }
     }, 
     {
+      "description": {
+        "en": "This field can be used to provide any additional information about the dataset not captured in the form."
+      }, 
       "fields": [
         {
           "bilingual": true, 
           "data_gc_ca_2012_id": "program_page_en", 
           "data_gc_ca_2012_id_fr": "program_url_fr", 
+          "description": {
+            "en": "The URL for the Government of Canada program that is responsible for the dataset."
+          }, 
+          "domain_best_practice": {
+            "en": "URL"
+          }, 
+          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "The URL for the program  that is responsible for the dataset or tool.", 
             "fr": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
           }, 
           "id": "program_url", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Program URL English", 
             "fr": "Adresse URL du programme en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Program URL"
           }, 
           "type": "text"
         }, 
@@ -248,14 +322,27 @@
           "bilingual": true, 
           "data_gc_ca_2012_id": "dictionary_list:_en", 
           "data_gc_ca_2012_id_fr": "data_dictionary_fr", 
+          "description": {
+            "en": "Data dictionary-a file containing variable names, descriptions, standard vocabularies and taxonomies, units, multipliers, and other data parameters."
+          }, 
+          "domain_best_practice": {
+            "en": "File. To populate this value a file must be uploaded."
+          }, 
+          "example": "HFERDatasetDefinitions.txt", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "A file containing definitions of the headers (row and column) and variables used in your dataset(s). File types: .xml, .txt", 
             "fr": "Un fichier renfermant les d\u00e9finitions des titres (rangs et colonnes) et des variables appliqu\u00e9s \u00e0 votre ou vos bases de donn\u00e9es. Types de fichier : .xml, .txt."
           }, 
           "id": "data_dictionary", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Data Dictionary/Variable List English", 
             "fr": "Dictionnaire de donn\u00e9es ou liste des variables en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Data Dictionary"
           }, 
           "type": "file"
         }, 
@@ -263,14 +350,27 @@
           "bilingual": true, 
           "data_gc_ca_2012_id": "supplementary_documentation_en", 
           "data_gc_ca_2012_id_fr": "supplementary_documentation_fr", 
+          "description": {
+            "en": "This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports etc."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports, data dictionaries, etc."
+          }, 
+          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
             "fr": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
           }, 
           "id": "supplemental_information_other", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Reference for Supplementary Documentation English", 
             "fr": "R\u00e9f\u00e9rence pour autre documentation en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Supplemental Information-Other"
           }, 
           "type": "text"
         }
@@ -280,19 +380,35 @@
       }
     }, 
     {
+      "description": {
+        "en": ""
+      }, 
       "fields": [
         {
           "bilingual": true, 
           "data_gc_ca_2012_id": "group_name_en", 
           "data_gc_ca_2012_id_fr": "group_name_fr", 
+          "description": {
+            "en": "Name of the data series or aggregate dataset of which referenced."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text"
+          }, 
+          "example": "CANSIM", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "A name given to multiple datasets to present them as a group or a set.", 
             "fr": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
           }, 
           "id": "data_series_name", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Dataset Group Name English", 
             "fr": "Nom du groupe des ensembles de donn\u00e9es en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.21.1", 
+          "proposed_name": {
+            "en": "Data Series Name"
           }, 
           "type": "text"
         }, 
@@ -317,6 +433,9 @@
       }
     }, 
     {
+      "description": {
+        "en": "This section of the metadata contains keywords describing the dataset."
+      }, 
       "fields": [
         {
           "bilingual": true, 
@@ -339,18 +458,34 @@
       }
     }, 
     {
+      "description": {
+        "en": "This section contains information about the person responsible for the data and who is considered to be a point of contact for the resource"
+      }, 
       "fields": [
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "contact_name", 
+          "description": {
+            "en": "Name of the responsible person."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. Surname, given name, title separated by a delimiter."
+          }, 
+          "example": "Kralidis, Tom", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The name of the person who may be contacted for more information about the dataset.", 
             "fr": "Le nom de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "individual_name", 
+          "iso_multiplicity": "C", 
           "name": {
             "en": "Name", 
             "fr": "Nom"
+          }, 
+          "nap_iso_19115_ref": "5.16.1", 
+          "proposed_name": {
+            "en": "Individual Name"
           }, 
           "type": "text"
         }, 
@@ -1144,42 +1279,81 @@
             }
           ], 
           "data_gc_ca_2012_id": "department", 
+          "description": {
+            "en": "Name of the responsible organization."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text."
+          }, 
+          "example": "Environment Canada", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fr": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
           }, 
           "id": "organization_name", 
+          "iso_multiplicity": "C", 
           "name": {
             "en": "Creator (Department/Agency)", 
             "fr": "Auteur (minist\u00e8re ou organisme)"
+          }, 
+          "nap_iso_19115_ref": "5.16.2", 
+          "proposed_name": {
+            "en": "Organization Name"
           }, 
           "type": "choice"
         }, 
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "contact_title", 
+          "description": {
+            "en": "Role or position of the responsible person."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. Do not use unit title or name."
+          }, 
+          "example": "Senior Systems Scientist", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The job title of the person who may be contacted for more information about the dataset.", 
             "fr": "Le titre du poste de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "position_name", 
+          "iso_multiplicity": "C", 
           "name": {
             "en": "Title", 
             "fr": "Titre"
+          }, 
+          "nap_iso_19115_ref": "5.16.3", 
+          "proposed_name": {
+            "en": "Position Name"
           }, 
           "type": "text"
         }, 
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "contact_phone", 
+          "description": {
+            "en": "Telephone number by which individuals can speak to the responsible organization or individual."
+          }, 
+          "domain_best_practice": {
+            "en": "The structure of the phone number is:<phoneType><;><blank space><countryCode><blank space><(><areaCode><)><localNumber> The phoneType values are optional and either \u201cvoice\u201d or \u201cTDD/TTY.\u201d"
+          }, 
+          "example": "voice; 1 (416)7394907", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "The telephone number of the person who may be contacted for more information about the dataset.", 
             "fr": "Le num\u00e9ro de t\u00e9l\u00e9phone de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "telephone_number_voice", 
+          "iso_multiplicity": "O, Repeat.", 
           "name": {
             "en": "Telephone Number", 
             "fr": "Num\u00e9ro de t\u00e9l\u00e9phone"
+          }, 
+          "nap_iso_19115_ref": "5.18.1", 
+          "proposed_name": {
+            "en": "Telephone Number (voice)"
           }, 
           "type": "phone"
         }, 
@@ -1203,32 +1377,61 @@
       }
     }, 
     {
+      "description": {
+        "en": "The period of the dataset content."
+      }, 
       "fields": [
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "time_period_start", 
+          "description": {
+            "en": "The date  when the dataset started."
+          }, 
+          "domain_best_practice": {
+            "en": "Date format follows YYYY-MM-DD"
+          }, 
+          "example": "YYYY-MM-DD", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fr": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
           "id": "begin_position", 
+          "iso_multiplicity": "", 
           "name": {
             "en": "Time Period Coverage Start", 
             "fr": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "nap_iso_19115_ref": "N/A", 
+          "proposed_name": {
+            "en": "Begin Position *"
           }, 
           "type": "datepicker"
         }, 
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "time_period_end", 
+          "description": {
+            "en": "The date when the dataset ended."
+          }, 
+          "domain_best_practice": {
+            "en": "Date format follows YYYY-MM-DD. If date is indeterminate, can put 'unknown' or 'now'."
+          }, 
+          "example": "2012-01-21 or 'now'", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fr": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
           "id": "end_position", 
+          "iso_multiplicity": "", 
           "name": {
             "en": "Time Period Coverage End", 
             "fr": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "nap_iso_19115_ref": "N/A", 
+          "proposed_name": {
+            "en": "End Position *"
           }, 
           "type": "datepicker"
         }

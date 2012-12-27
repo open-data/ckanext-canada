@@ -8,11 +8,16 @@ schema description as .json output on stdout.
 
 import json
 import lxml.etree
+import xlrd
 import os
+from collections import namedtuple
+from itertools import groupby
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_GC_CA_2012 = os.path.join(HERE, 'data_gc_ca_2012')
 OLD_SCHEMA_NAME = os.path.join(DATA_GC_CA_2012, 'metadata_schema.xml')
+PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
+PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
 LANGS = 'en', 'fr'
 
 # ('section name', [field name 1, ...]), ...
@@ -54,14 +59,25 @@ SECTIONS_FIELDS = [
         ]),
     ]
 
-# 'new (existing) field name': 'proposed name'
+# The field order here must match the proposed schema spreadsheet
+ProposedField = namedtuple("ProposedField", """
+    property_name
+    iso_multiplicity
+    gc_multiplicity
+    description
+    example
+    nap_iso_19115_ref
+    domain_best_practice
+    """)
+
+# 'proposed name' : 'new (existing CKAN) field name'
 EXISTING_FIELDS = {
-    'author_email': 'contact',
-    'maintainer_email': 'email',
+    'contact': 'author_email',
+    'email': 'maintainer_email',
     'title': 'title',
-    'info': 'abstract',
-    'tags': 'keywords',
-    'url': 'data_series_url',
+    'abstract': 'info',
+    'keywords': 'tags',
+    'data_series_url': 'url',
     }
 
 # 'new field name': '2012 field name'
@@ -80,9 +96,9 @@ FIELD_MAPPING = {
     'maintenance_and_update_frequency': 'frequency',
     'info': 'description_en',
     'tags': 'keywords_en',
-    'program_url': 'program_page_en',
+    'program_url': 'program_page_en', # note: different than French
     'url': 'data_series_url_en',
-    'data_dictionary': 'dictionary_list:_en',
+    'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information_other': 'supplementary_documentation_en',
     'geographic_region_name': 'Geographic_Region_Name',
     'begin_position': 'time_period_start',
@@ -97,9 +113,9 @@ BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'info': 'description_fr',
     'tags': 'keywords_fr',
-    'program_url': 'program_url_fr', # note: different than english
+    'program_url': 'program_url_fr',
     'url': 'data_series_url_fr',
-    'data_dictionary': 'data_dictionary_fr', # note: different than english
+    'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
     }
@@ -129,32 +145,79 @@ def data_gc_ca_2012_choices(name):
             choices.append(option)
     return choices
 
+def proposed_name_to_identifier(name):
+    """
+    Convert a proposed name with spaces, punctuation and capital letters
+    to a valid identifier with only lowercase letters and underscores
+
+    >>> proposed_name_to_identifier('Proposed Metadata Fields for data.gc.ca')
+    'proposed_metadata_fields_for_data_gc_ca'
+    """
+    words = (g for alpha, g in groupby(name, lambda c: c.isalpha()) if alpha)
+    return "_".join("".join(g).lower() for g in words)
+
+def read_proposed_fields():
+    """
+    Return a dict containing:
+    {'new field name': ProposedField(...), ...}
+    """
+    workbook = xlrd.open_workbook(PROPOSED_SCHEMA_NAME)
+    sheet = workbook.sheet_by_name(PROPOSED_SCHEMA_SHEET)
+    out = {}
+    for i in range(sheet.nrows):
+        row = sheet.row(i)
+        p = ProposedField(*(unicode(f.value).strip() for f in row))
+        if not p.description and not p.gc_multiplicity:
+            # skip the header rows
+            continue
+        new_name = proposed_name_to_identifier(p.property_name)
+        new_name = EXISTING_FIELDS.get(new_name, new_name)
+        out[proposed_name_to_identifier(p.property_name)] = p
+    return out
+
 def main():
     schema_out = {
         'sections_fields': [],
         }
 
-    with open(OLD_SCHEMA_NAME) as s:
-        root = lxml.etree.parse(s)
+    proposed = read_proposed_fields()
 
-    schema_out['intro'] = lang_versions(root, '//intro')
+    with open(OLD_SCHEMA_NAME) as s:
+        old_root = lxml.etree.parse(s)
+
+    schema_out['intro'] = lang_versions(old_root, '//intro')
 
     for section, fields in SECTIONS_FIELDS:
+        section_name = proposed_name_to_identifier(section)
         new_section = {
-            'name': {'en': section}, # FIXME: French version?
+            'name': {'en': section}, # FIXME: French?
+            'description': {'en': proposed[section_name].description},
             'fields': [],
             }
+
         for field in fields:
             f = FIELD_MAPPING[field]
             xp = '//item[inputname="%s"]' % f
             new_field = {
                 'id': field,
                 'data_gc_ca_2012_id': f,
-                'name': lang_versions(root, xp + '/name'),
-                'help': lang_versions(root, xp + '/helpcontext'),
-                'type': "".join(root.xpath(xp +
+                'name': lang_versions(old_root, xp + '/name'),
+                'help': lang_versions(old_root, xp + '/helpcontext'),
+                'type': "".join(old_root.xpath(xp +
                     '/type1/inputtype[1]/text()')),
                 }
+            p = proposed.get(field)
+            if p:
+                new_field.update({ # FIXME: French?
+                    'proposed_name': {'en': p.property_name},
+                    'iso_multiplicity': p.iso_multiplicity,
+                    'gc_multiplicity': p.gc_multiplicity,
+                    'description': {'en': p.description},
+                    'example': p.example,
+                    'nap_iso_19115_ref': p.nap_iso_19115_ref,
+                    'domain_best_practice': {'en': p.domain_best_practice},
+                    })
+
             old_id_fr = BILINGUAL_FIELDS.get(field, None)
             if old_id_fr:
                 new_field['data_gc_ca_2012_id_fr'] = old_id_fr
