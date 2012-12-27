@@ -12,7 +12,7 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_GC_CA_2012 = os.path.join(HERE, 'data_gc_ca_2012')
-SCHEMA_NAME = os.path.join(DATA_GC_CA_2012, 'metadata_schema.xml')
+OLD_SCHEMA_NAME = os.path.join(DATA_GC_CA_2012, 'metadata_schema.xml')
 LANGS = 'en', 'fr'
 
 # ('section name', [field name 1, ...]), ...
@@ -134,38 +134,39 @@ def main():
         'sections_fields': [],
         }
 
-    with open(SCHEMA_NAME) as s:
+    with open(OLD_SCHEMA_NAME) as s:
         root = lxml.etree.parse(s)
-        schema_out['intro'] = lang_versions(root, '//intro')
 
-        for section, fields in SECTIONS_FIELDS:
-            new_section = {
-                'name': {'en': section}, # FIXME: French version?
-                'fields': [],
+    schema_out['intro'] = lang_versions(root, '//intro')
+
+    for section, fields in SECTIONS_FIELDS:
+        new_section = {
+            'name': {'en': section}, # FIXME: French version?
+            'fields': [],
+            }
+        for field in fields:
+            f = FIELD_MAPPING[field]
+            xp = '//item[inputname="%s"]' % f
+            new_field = {
+                'id': field,
+                'data_gc_ca_2012_id': f,
+                'name': lang_versions(root, xp + '/name'),
+                'help': lang_versions(root, xp + '/helpcontext'),
+                'type': "".join(root.xpath(xp +
+                    '/type1/inputtype[1]/text()')),
                 }
-            for field in fields:
-                f = FIELD_MAPPING[field]
-                xp = '//item[inputname="%s"]' % f
-                new_field = {
-                    'id': field,
-                    'data_gc_ca_2012_id': f,
-                    'name': lang_versions(root, xp + '/name'),
-                    'help': lang_versions(root, xp + '/helpcontext'),
-                    'type': "".join(root.xpath(xp +
-                        '/type1/inputtype[1]/text()')),
-                    }
-                old_id_fr = BILINGUAL_FIELDS.get(field, None)
-                if old_id_fr:
-                    new_field['data_gc_ca_2012_id_fr'] = old_id_fr
-                new_field['bilingual'] = bool(old_id_fr)
+            old_id_fr = BILINGUAL_FIELDS.get(field, None)
+            if old_id_fr:
+                new_field['data_gc_ca_2012_id_fr'] = old_id_fr
+            new_field['bilingual'] = bool(old_id_fr)
 
-                if not new_field['type']:
-                    # this seems to indicate a selection from a list
-                    new_field['choices'] = data_gc_ca_2012_choices(f)
-                    new_field['type'] = 'choice'
+            if not new_field['type']:
+                # this seems to indicate a selection from a list
+                new_field['choices'] = data_gc_ca_2012_choices(f)
+                new_field['type'] = 'choice'
 
-                new_section['fields'].append(new_field)
-            schema_out['sections_fields'].append(new_section)
+            new_section['fields'].append(new_field)
+        schema_out['sections_fields'].append(new_section)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
