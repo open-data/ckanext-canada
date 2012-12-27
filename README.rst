@@ -16,7 +16,7 @@ Features:
 Installation:
 
 	Use CKAN Version: 1.8
-	After ever pull or fetch, use python setup.py develop just in case entry points have changed.
+	After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
 	
 
 	
