@@ -12,14 +12,27 @@
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "owner", 
+          "description": {
+            "en": "The party responsible for the metadata content"
+          }, 
+          "domain_best_practice": {
+            "en": "Email address of person who entered metadata"
+          }, 
+          "example": "Alannah.Hilt@tbs-sct.gc.ca", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "Email address of the individual publishing the dataset(s).", 
             "fr": "Adresse de courriel de la personne qui t\u00e9l\u00e9charge l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "author_email", 
+          "iso_multiplicity": "M", 
           "name": {
             "en": "Dataset Publisher", 
             "fr": "Source de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "5.2.6", 
+          "proposed_name": {
+            "en": "Contact"
           }, 
           "type": "text"
         }
@@ -92,14 +105,27 @@
           "bilingual": true, 
           "data_gc_ca_2012_id": "description_en", 
           "data_gc_ca_2012_id_fr": "description_fr", 
+          "description": {
+            "en": "Provide a brief overview of the content, methodology and findings of the dataset in free text format."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. The abstract is meant to be a brief narrative summary of the contents of your data. Should include a summary of:\n-Thematic Content (Theme)\n-Dataset Quality\n-Methodology\n-Temporal Extent (when)\n-Geographic Extent (where)\n-Format of the data\nGuidelines:\n-Fully describe acronyms\n-Make it clear, concise, and specific as to what the resource contains\n-Know your audience. Where possible make sure the abstract is something the general public can understand."
+          }, 
+          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "info", 
+          "iso_multiplicity": "M", 
           "name": {
             "en": "Description English", 
             "fr": "Description en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.2", 
+          "proposed_name": {
+            "en": "Abstract"
           }, 
           "type": "textarea"
         }, 
@@ -242,14 +268,27 @@
             }
           ], 
           "data_gc_ca_2012_id": "category", 
+          "description": {
+            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
+          }, 
+          "example": "Agriculture", 
+          "gc_multiplicity": "M", 
           "help": {
             "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fr": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "thesaurus", 
+          "iso_multiplicity": "", 
           "name": {
             "en": "Subject Area", 
             "fr": "Domaine"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.11", 
+          "proposed_name": {
+            "en": "Subject"
           }, 
           "type": "choice"
         }, 
@@ -416,14 +455,27 @@
           "bilingual": true, 
           "data_gc_ca_2012_id": "data_series_url_en", 
           "data_gc_ca_2012_id_fr": "data_series_url_fr", 
+          "description": {
+            "en": "Link (URL) to the high level repository in which the dataset resides at the agency of origin"
+          }, 
+          "domain_best_practice": {
+            "en": "URL"
+          }, 
+          "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
+          "gc_multiplicity": "O", 
           "help": {
             "en": "The URL that links to the top level in the repository in which the dataset resides.", 
             "fr": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
           }, 
           "id": "url", 
+          "iso_multiplicity": "O", 
           "name": {
             "en": "Data Series URL English", 
             "fr": "URL anglais de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "5.20.1", 
+          "proposed_name": {
+            "en": "Data Series URL"
           }, 
           "type": "text"
         }
@@ -441,14 +493,27 @@
           "bilingual": true, 
           "data_gc_ca_2012_id": "keywords_en", 
           "data_gc_ca_2012_id_fr": "keywords_fr", 
+          "description": {
+            "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource. To select from a pre-defined list of keywords, select a thesaurus below.  Keywords are a repeatable element; enter as many keywords as necessary to describe the data."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. Use 1 or 2 word phrases. Keep it lower case and avoid special characters and acronyms. \nUse keywords that refer to discipline, place, time period, theme"
+          }, 
+          "example": "Air, Air Quality, Organic Pollutants", 
+          "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
           }, 
           "id": "tags", 
+          "iso_multiplicity": "M, Repeat.", 
           "name": {
             "en": "Keywords English", 
             "fr": "Mots-cl\u00e9s en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.3.6.1", 
+          "proposed_name": {
+            "en": "Keyword"
           }, 
           "type": "textarea"
         }
@@ -1360,14 +1425,27 @@
         {
           "bilingual": false, 
           "data_gc_ca_2012_id": "contact_email", 
+          "description": {
+            "en": "Address of the electronic mailbox of the responsible organization or individual."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text."
+          }, 
+          "example": "tom.kralidis@ec.gc.ca", 
+          "gc_multiplicity": "M, Repeat.", 
           "help": {
             "en": "The electronic mail address of the person who may be contacted for more information about the dataset.", 
             "fr": "L'adresse de courriel de la personne \u00e0 qui demander des renseignements suppl\u00e9mentaires sur l\u2019ensemble de donn\u00e9es."
           }, 
           "id": "maintainer_email", 
+          "iso_multiplicity": "O, Repeat.", 
           "name": {
             "en": "Email Address", 
             "fr": "Courriel"
+          }, 
+          "nap_iso_19115_ref": "5.19.6", 
+          "proposed_name": {
+            "en": "Email *"
           }, 
           "type": "email"
         }

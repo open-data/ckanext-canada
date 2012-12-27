@@ -70,14 +70,18 @@ ProposedField = namedtuple("ProposedField", """
     domain_best_practice
     """)
 
-# 'proposed name' : 'new (existing CKAN) field name'
+# 'proposed name' : 'new or existing CKAN field name'
 EXISTING_FIELDS = {
     'contact': 'author_email',
     'email': 'maintainer_email',
     'title': 'title',
     'abstract': 'info',
-    'keywords': 'tags',
+    'keyword': 'tags',
     'data_series_url': 'url',
+
+    # XXX: quick hack, thesaurus is broken out into its own section in .xls
+    # file
+    'subject': 'thesaurus', 
     }
 
 # 'new field name': '2012 field name'
@@ -172,7 +176,8 @@ def read_proposed_fields():
             continue
         new_name = proposed_name_to_identifier(p.property_name)
         new_name = EXISTING_FIELDS.get(new_name, new_name)
-        out[proposed_name_to_identifier(p.property_name)] = p
+        assert new_name not in p, new_name
+        out[new_name] = p
     return out
 
 def main():
@@ -206,17 +211,16 @@ def main():
                 'type': "".join(old_root.xpath(xp +
                     '/type1/inputtype[1]/text()')),
                 }
-            p = proposed.get(field)
-            if p:
-                new_field.update({ # FIXME: French?
-                    'proposed_name': {'en': p.property_name},
-                    'iso_multiplicity': p.iso_multiplicity,
-                    'gc_multiplicity': p.gc_multiplicity,
-                    'description': {'en': p.description},
-                    'example': p.example,
-                    'nap_iso_19115_ref': p.nap_iso_19115_ref,
-                    'domain_best_practice': {'en': p.domain_best_practice},
-                    })
+            p = proposed[field]
+            new_field.update({ # FIXME: French?
+                'proposed_name': {'en': p.property_name},
+                'iso_multiplicity': p.iso_multiplicity,
+                'gc_multiplicity': p.gc_multiplicity,
+                'description': {'en': p.description},
+                'example': p.example,
+                'nap_iso_19115_ref': p.nap_iso_19115_ref,
+                'domain_best_practice': {'en': p.domain_best_practice},
+                })
 
             old_id_fr = BILINGUAL_FIELDS.get(field, None)
             if old_id_fr:
