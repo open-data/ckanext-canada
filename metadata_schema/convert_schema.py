@@ -23,7 +23,14 @@ LANGS = 'en', 'fr'
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
+        #'file_identifier', - unique ID, provided by ckan as 'id'
+        #'date_stamp', - revisioned by ckan, get first revision_timestamp
+        #'date_modified', - revisioned by ckan, get last revision_timestamp
+        'name', # optional in proposed, REQUIRED here!
+        #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author_email',
+        'metadata_standard_name',
+        'catalog_type',
         ]),
     ("Dataset Identification Information", [
         'title',
@@ -48,7 +55,7 @@ SECTIONS_FIELDS = [
         ]),
     ("Contact Information", [
         'individual_name',
-        'organization_name',
+        'author',
         'position_name',
         'telephone_number_voice',
         'maintainer_email',
@@ -72,6 +79,8 @@ ProposedField = namedtuple("ProposedField", """
 
 # 'proposed name' : 'new or existing CKAN field name'
 EXISTING_FIELDS = {
+    'dataset_uri_dataset_unique_identifier': 'name',
+    'organization_name': 'author',
     'contact': 'author_email',
     'email': 'maintainer_email',
     'title': 'title',
@@ -92,7 +101,7 @@ FIELD_MAPPING = {
     'telephone_number_voice': 'contact_phone',
     'maintainer_email': 'contact_email',
     'title': 'title_en',
-    'organization_name': 'department',
+    'author': 'department',
     'thesaurus': 'category',
     'language': 'language__',
     'date': 'date_released',
@@ -201,18 +210,9 @@ def main():
             }
 
         for field in fields:
-            f = FIELD_MAPPING[field]
-            xp = '//item[inputname="%s"]' % f
-            new_field = {
-                'id': field,
-                'data_gc_ca_2012_id': f,
-                'name': lang_versions(old_root, xp + '/name'),
-                'help': lang_versions(old_root, xp + '/helpcontext'),
-                'type': "".join(old_root.xpath(xp +
-                    '/type1/inputtype[1]/text()')),
-                }
             p = proposed[field]
-            new_field.update({ # FIXME: French?
+            new_field = { # FIXME: French?
+                'id': field,
                 'proposed_name': {'en': p.property_name},
                 'iso_multiplicity': p.iso_multiplicity,
                 'gc_multiplicity': p.gc_multiplicity,
@@ -220,17 +220,26 @@ def main():
                 'example': p.example,
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
-                })
+                }
+            f = FIELD_MAPPING.get(field)
+            if f:
+                xp = '//item[inputname="%s"]' % f
+                new_field.update({
+                    'data_gc_ca_2012_id': f,
+                    'name': lang_versions(old_root, xp + '/name'),
+                    'help': lang_versions(old_root, xp + '/helpcontext'),
+                    'type': "".join(old_root.xpath(xp +
+                        '/type1/inputtype[1]/text()')),
+                    })
+                if not new_field['type']:
+                    # this seems to indicate a selection from a list
+                    new_field['choices'] = data_gc_ca_2012_choices(f)
+                    new_field['type'] = 'choice'
 
             old_id_fr = BILINGUAL_FIELDS.get(field, None)
             if old_id_fr:
                 new_field['data_gc_ca_2012_id_fr'] = old_id_fr
             new_field['bilingual'] = bool(old_id_fr)
-
-            if not new_field['type']:
-                # this seems to indicate a selection from a list
-                new_field['choices'] = data_gc_ca_2012_choices(f)
-                new_field['type'] = 'choice'
 
             new_section['fields'].append(new_field)
         schema_out['sections_fields'].append(new_section)

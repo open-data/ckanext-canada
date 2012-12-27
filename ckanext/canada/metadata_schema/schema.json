@@ -11,6 +11,23 @@
       "fields": [
         {
           "bilingual": false, 
+          "description": {
+            "en": "Designates either a URL link to the dataset if available or a unique identifier (such as a DOI) for the resource if one exists."
+          }, 
+          "domain_best_practice": {
+            "en": "<Uniform Resource Identifier><;><blank space><onLineFunctionCode> The on line function code is optional. Select onLineFunctionCode from \"download\", \"information\", \"offlineAccess\", \"order\", \"search\", \"upload\", \"webService\", \"emailService\", \"browsing\", \"fil"
+          }, 
+          "example": "http://host/path/ download", 
+          "gc_multiplicity": "O", 
+          "id": "name", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.2.10", 
+          "proposed_name": {
+            "en": "Dataset URI (Dataset Unique Identifier)"
+          }
+        }, 
+        {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "owner", 
           "description": {
             "en": "The party responsible for the metadata content"
@@ -35,6 +52,40 @@
             "en": "Contact"
           }, 
           "type": "text"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Name of the metadata standard standard or profile used"
+          }, 
+          "domain_best_practice": {
+            "en": "Default to: Government of Canada's Open Data Metadata Implementation Guide"
+          }, 
+          "example": "", 
+          "gc_multiplicity": "M", 
+          "id": "metadata_standard_name", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.2.8", 
+          "proposed_name": {
+            "en": "Metadata Standard Name"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Type of dataset"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop Down: Raw, Geo, etc. (Selection will prompt specific metadata fields for extensions)"
+          }, 
+          "example": "Geo", 
+          "gc_multiplicity": "M", 
+          "id": "catalog_type", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "Catalog Type"
+          }
         }
       ], 
       "name": {
@@ -1356,7 +1407,7 @@
             "en": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fr": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
           }, 
-          "id": "organization_name", 
+          "id": "author", 
           "iso_multiplicity": "C", 
           "name": {
             "en": "Creator (Department/Agency)", 
