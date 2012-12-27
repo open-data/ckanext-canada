@@ -27,11 +27,12 @@ SECTIONS_FIELDS = [
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
         'language',
-        'name', # optional in proposed, REQUIRED here!
+        #'name', - optional in proposed, REQUIRED here!
+        'url',
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author',
         'author_email',
-        'metadata_standard_name',
+        'metadata_standard_name', # won't they all be the same?
         'catalog_type',
         ]),
     ("Dataset Identification Information", [
@@ -40,21 +41,21 @@ SECTIONS_FIELDS = [
         #'data_modified', - doesn't apply, use resource last_modified
         #'date_type', doesn't apply, (see above) and use revisioned resources
         'info',
-        #'status', use resource description (?)
+        #'status', use resource description (?) not appropriate?
         #'language', use resource name instead (?)
         'character_set', # poor name! text encoding is better. per resource?
         'maintenance_and_update_frequency',
         ]),
     ("Supplemental Information", [
         'program_url',
-        'data_dictionary',
+        'data_dictionary', # may end up as a resource
         'supplemental_information_other',
         #'additional_metadata', use extra fields instead
         ]),
     ("Data Series", [
         'data_series_name',
-        'issue_identification', # related to 'name' above
-        'url',
+        'issue_identification', # related to 'name'/'url' above
+        'data_series_url',
         ]),
     ("Thesaurus-GC Core Subject Thesaurus", [
         'subject', # TODO: create tag vocabulary for this
@@ -91,7 +92,7 @@ SECTIONS_FIELDS = [
         'roles',
         ]),
     ("Extent", [
-        'begin_position',
+        'begin_position', # need to investigate searching
         'end_position',
         'geographic_region_name',
         #'north_bound_latitude', - these are handled by ckanext-spacial
@@ -125,14 +126,13 @@ ProposedField = namedtuple("ProposedField", """
 
 # 'proposed name' : 'new or existing CKAN field name'
 EXISTING_FIELDS = {
-    'dataset_uri_dataset_unique_identifier': 'name',
+    'dataset_uri_dataset_unique_identifier': 'url',
     'organization_name': 'author',
     'contact': 'author_email',
     'email': 'maintainer_email',
     'title': 'title',
     'abstract': 'info',
     'keyword': 'tags',
-    'data_series_url': 'url',
     }
 
 # 'new field name': '2012 field name'
@@ -152,7 +152,7 @@ FIELD_MAPPING = {
     'info': 'description_en',
     'tags': 'keywords_en',
     'program_url': 'program_page_en', # note: different than French
-    'url': 'data_series_url_en',
+    'data_series_url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information_other': 'supplementary_documentation_en',
     'geographic_region_name': 'Geographic_Region_Name',
@@ -168,7 +168,7 @@ BILINGUAL_FIELDS = {
     'info': 'description_fr',
     'tags': 'keywords_fr',
     'program_url': 'program_url_fr',
-    'url': 'data_series_url_fr',
+    'data_series_url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
