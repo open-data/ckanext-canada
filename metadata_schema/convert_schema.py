@@ -36,33 +36,64 @@ SECTIONS_FIELDS = [
         ]),
     ("Dataset Identification Information", [
         'title',
-        'date',
+        #'date', - doesn't apply, use resource created or last_modified
+        #'data_modified', - doesn't apply, use resource last_modified
+        #'date_type', doesn't apply, (see above) and use revisioned resources
         'info',
-        'thesaurus',
+        #'status', use resource description (?)
+        #'language', use resource name instead (?)
+        'character_set', # poor name! text encoding is better. per resource?
         'maintenance_and_update_frequency',
         ]),
     ("Supplemental Information", [
         'program_url',
         'data_dictionary',
         'supplemental_information_other',
+        #'additional_metadata', use extra fields instead
         ]),
     ("Data Series", [
         'data_series_name',
-# (see XXX below): 'issue_identification',
+        'issue_identification', # related to 'name' above
         'url',
+        ]),
+    ("Thesaurus-GC Core Subject Thesaurus", [
+        'subject', # TODO: create tag vocabulary for this
+        #'title', - no place for these at the moment
+        #'date',
+        #'date_type',
+        #'organization_name',
+        ]),
+    ("Thesaurus-ISO Topic Category", [
+        'topic_category', # TODO: create tag vocabulary for this
+        #'title', - no place for these at the moment
+        #'date',
+        #'date_type',
+        #'organization_name',
         ]),
     ("Descriptive Keywords", [
         'tags',
+        #'type', - no place for this at the moment
         ]),
-    ("Contact Information", [
+    ("Contact Information", [ # NOTE: these can't be repeated at the moment
         'individual_name',
+        #'organization_name', - appears as 'author' above
         'position_name',
         'telephone_number_voice',
+        'fax_number',
+        'delivery_point_civic_address',
+        'city',
+        'state_province',
+        'postal_code',
+        'country',
         'maintainer_email',
+        'online_resource',
+        'hours_of_service',
+        'roles',
         ]),
-    ("Time Period", [
+    ("Extent", [
         'begin_position',
         'end_position',
+        'geographic_region_name',
         ]),
     ]
 
@@ -87,10 +118,6 @@ EXISTING_FIELDS = {
     'abstract': 'info',
     'keyword': 'tags',
     'data_series_url': 'url',
-
-    # XXX: quick hack, thesaurus is broken out into its own section in .xls
-    # file
-    'subject': 'thesaurus', 
     }
 
 # 'new field name': '2012 field name'
@@ -102,7 +129,7 @@ FIELD_MAPPING = {
     'maintainer_email': 'contact_email',
     'title': 'title_en',
     'author': 'department',
-    'thesaurus': 'category',
+    'subject': 'category',
     'language': 'language__',
     'date': 'date_released',
     'date_modified': 'date_update',
@@ -117,7 +144,6 @@ FIELD_MAPPING = {
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
-# XXX doesn't seem right: 'number_datasets': 'issue_identification',
     }
 
 

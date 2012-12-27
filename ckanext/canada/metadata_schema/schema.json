@@ -984,33 +984,6 @@
           "type": "text"
         }, 
         {
-          "bilingual": false, 
-          "data_gc_ca_2012_id": "date_released", 
-          "description": {
-            "en": "The date of the thesaurus"
-          }, 
-          "domain_best_practice": {
-            "en": "Default: TBD"
-          }, 
-          "example": "40679.0", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
-            "fr": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
-          }, 
-          "id": "date", 
-          "iso_multiplicity": "", 
-          "name": {
-            "en": "Date Published", 
-            "fr": "Date de publication"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "proposed_name": {
-            "en": "Date"
-          }, 
-          "type": "datepicker"
-        }, 
-        {
           "bilingual": true, 
           "data_gc_ca_2012_id": "description_en", 
           "data_gc_ca_2012_id_fr": "description_fr", 
@@ -1040,122 +1013,20 @@
         }, 
         {
           "bilingual": false, 
-          "choices": [
-            {
-              "data_gc_ca_2012_guid": "86EB6B9F-344C-4C3E-982D-53164994516A", 
-              "en": "Arts, Music, Literature", 
-              "fr": "Arts, musique, litt\u00e9rature"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "04D07B59-8D90-455C-9C84-7C1DF833473B", 
-              "en": "Agriculture", 
-              "fr": "Agriculture"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE", 
-              "en": "Economics and Industry", 
-              "fr": "\u00c9conomie et industrie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697", 
-              "en": "Education and Training", 
-              "fr": "\u00c9ducation et formation"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "1BEB670E-8A73-4217-BCD2-6189F92053E2", 
-              "en": "Government and Politics", 
-              "fr": "Gouvernement et vie politique"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "7D5846DC-74D0-415A-A853-318DCD89E731", 
-              "en": "Health and Safety", 
-              "fr": "Sant\u00e9 et s\u00e9curit\u00e9"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "704B3281-511F-4FFB-85C7-D437892CECE2", 
-              "en": "History and Archaeology", 
-              "fr": "Histoire et arch\u00e9ologie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9", 
-              "en": "Information and Communications", 
-              "fr": "Information et communication"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "F97F8830-B980-4A20-9B13-D572F1C094F0", 
-              "en": "Labour", 
-              "fr": "Travail et emploi"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0", 
-              "en": "Language and Linguistics", 
-              "fr": "Langue et linguistique"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08", 
-              "en": "Law", 
-              "fr": "Droit"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1", 
-              "en": "Military", 
-              "fr": "Histoire et science militaire"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4", 
-              "en": "Nature and Environment", 
-              "fr": "Nature et environnement"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1", 
-              "en": "Persons", 
-              "fr": "Personnes"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213", 
-              "en": "Processes", 
-              "fr": "Liens et fonctions"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3", 
-              "en": "Society and Culture", 
-              "fr": "Soci\u00e9t\u00e9 et culture"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "FB6B00F0-6271-42D6-ACB7-FFE664843698", 
-              "en": "Science and Technology", 
-              "fr": "Sciences et technologie"
-            }, 
-            {
-              "data_gc_ca_2012_guid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2", 
-              "en": "Transport", 
-              "fr": "Transport"
-            }
-          ], 
-          "data_gc_ca_2012_id": "category", 
           "description": {
-            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+            "en": "Full name of the character coding standard used for the dataset. Must be selected from napMD_CharacterSetCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_95)"
           }, 
           "domain_best_practice": {
-            "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
+            "en": "Free text, default to utf8"
           }, 
-          "example": "Agriculture", 
-          "gc_multiplicity": "M", 
-          "help": {
-            "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
-            "fr": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "thesaurus", 
-          "iso_multiplicity": "", 
-          "name": {
-            "en": "Subject Area", 
-            "fr": "Domaine"
-          }, 
-          "nap_iso_19115_ref": "5.3.1.11", 
+          "example": "8859part1", 
+          "gc_multiplicity": "O", 
+          "id": "character_set", 
+          "iso_multiplicity": "O, Repeat.", 
+          "nap_iso_19115_ref": "5.3.1.10", 
           "proposed_name": {
-            "en": "Subject"
-          }, 
-          "type": "choice"
+            "en": "Character Set"
+          }
         }, 
         {
           "bilingual": false, 
@@ -1317,6 +1188,23 @@
           "type": "text"
         }, 
         {
+          "bilingual": false, 
+          "description": {
+            "en": "Identification of the series' issue information"
+          }, 
+          "domain_best_practice": {
+            "en": "Free text"
+          }, 
+          "example": "Table 502-0003", 
+          "gc_multiplicity": "O", 
+          "id": "issue_identification", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.21.2", 
+          "proposed_name": {
+            "en": "Issue Identification"
+          }
+        }, 
+        {
           "bilingual": true, 
           "data_gc_ca_2012_id": "data_series_url_en", 
           "data_gc_ca_2012_id_fr": "data_series_url_fr", 
@@ -1347,6 +1235,162 @@
       ], 
       "name": {
         "en": "Data Series"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This section of the metadata contains information about the thesaurus used for describing the dataset."
+      }, 
+      "fields": [
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "data_gc_ca_2012_guid": "86EB6B9F-344C-4C3E-982D-53164994516A", 
+              "en": "Arts, Music, Literature", 
+              "fr": "Arts, musique, litt\u00e9rature"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "04D07B59-8D90-455C-9C84-7C1DF833473B", 
+              "en": "Agriculture", 
+              "fr": "Agriculture"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE", 
+              "en": "Economics and Industry", 
+              "fr": "\u00c9conomie et industrie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697", 
+              "en": "Education and Training", 
+              "fr": "\u00c9ducation et formation"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "1BEB670E-8A73-4217-BCD2-6189F92053E2", 
+              "en": "Government and Politics", 
+              "fr": "Gouvernement et vie politique"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "7D5846DC-74D0-415A-A853-318DCD89E731", 
+              "en": "Health and Safety", 
+              "fr": "Sant\u00e9 et s\u00e9curit\u00e9"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "704B3281-511F-4FFB-85C7-D437892CECE2", 
+              "en": "History and Archaeology", 
+              "fr": "Histoire et arch\u00e9ologie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9", 
+              "en": "Information and Communications", 
+              "fr": "Information et communication"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "F97F8830-B980-4A20-9B13-D572F1C094F0", 
+              "en": "Labour", 
+              "fr": "Travail et emploi"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0", 
+              "en": "Language and Linguistics", 
+              "fr": "Langue et linguistique"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08", 
+              "en": "Law", 
+              "fr": "Droit"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1", 
+              "en": "Military", 
+              "fr": "Histoire et science militaire"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4", 
+              "en": "Nature and Environment", 
+              "fr": "Nature et environnement"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1", 
+              "en": "Persons", 
+              "fr": "Personnes"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213", 
+              "en": "Processes", 
+              "fr": "Liens et fonctions"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3", 
+              "en": "Society and Culture", 
+              "fr": "Soci\u00e9t\u00e9 et culture"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "FB6B00F0-6271-42D6-ACB7-FFE664843698", 
+              "en": "Science and Technology", 
+              "fr": "Sciences et technologie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2", 
+              "en": "Transport", 
+              "fr": "Transport"
+            }
+          ], 
+          "data_gc_ca_2012_id": "category", 
+          "description": {
+            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
+          }, 
+          "example": "Agriculture", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
+            "fr": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "subject", 
+          "iso_multiplicity": "", 
+          "name": {
+            "en": "Subject Area", 
+            "fr": "Domaine"
+          }, 
+          "nap_iso_19115_ref": "5.3.1.11", 
+          "proposed_name": {
+            "en": "Subject"
+          }, 
+          "type": "choice"
+        }
+      ], 
+      "name": {
+        "en": "Thesaurus-GC Core Subject Thesaurus"
+      }
+    }, 
+    {
+      "description": {
+        "en": "This section of the metadata contains information about the thesaurus used for describing the dataset."
+      }, 
+      "fields": [
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery. This element is repeatable; select all category codes that apply to the dataset. Must be selected from napMD_TopicCategoryCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_110)"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: Farming, Biota, Boundaries, Climatology / Meterology / Atmosphere, Economy, Elevation, Environment, Geoscientific Information, Health, Imagery / Base Maps/ Earth Cover, Intelligence / Military, Inland Waters, Location, Oceans, Planning Cadastre, Society, Structure, Transportation, Utilities / Communications"
+          }, 
+          "example": "Farming", 
+          "gc_multiplicity": "M", 
+          "id": "topic_category", 
+          "iso_multiplicity": "C", 
+          "nap_iso_19115_ref": "5.3.1.11", 
+          "proposed_name": {
+            "en": "Topic Category"
+          }
+        }
+      ], 
+      "name": {
+        "en": "Thesaurus-ISO Topic Category"
       }
     }, 
     {
@@ -1475,6 +1519,108 @@
         }, 
         {
           "bilingual": false, 
+          "description": {
+            "en": "Telephone number of a facsimile machine for the responsible organization or individual."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. The structure of the facsimile number is:<countryCode><blank space><(><areaCode><)><localNumber>"
+          }, 
+          "example": "1 (416)7394261", 
+          "gc_multiplicity": "O", 
+          "id": "fax_number", 
+          "iso_multiplicity": "O, Repeat.", 
+          "nap_iso_19115_ref": "5.18.2", 
+          "proposed_name": {
+            "en": "Fax Number"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Address line for the location (as described in ISO 11180, Annex A)"
+          }, 
+          "domain_best_practice": {
+            "en": "Free text. The delivery point is described according to one of the\nfollowing: a) <addressType><;><blank space><street number><;><blank space><street name><;><blank space><floor ID><;><blank space><room/suite ID> b) <addressType><;><blank space><box number"
+          }, 
+          "example": "123 Main Street", 
+          "gc_multiplicity": "O", 
+          "id": "delivery_point_civic_address", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.19.1", 
+          "proposed_name": {
+            "en": "Delivery Point (civic address)"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "City of the location."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text."
+          }, 
+          "example": "Toronto", 
+          "gc_multiplicity": "O", 
+          "id": "city", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.19.2", 
+          "proposed_name": {
+            "en": "City"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "State, province of the location."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text."
+          }, 
+          "example": "Ontario", 
+          "gc_multiplicity": "O", 
+          "id": "state_province", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.19.3", 
+          "proposed_name": {
+            "en": "State/Province"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "ZIP or other postal code."
+          }, 
+          "domain_best_practice": {
+            "en": "The postal code format should follow the standard structure of the country. U.S. is: <NNNNN>{<-><NNNN>} The format in Canada is: <ANA><blank space><NAN>"
+          }, 
+          "example": "M3H 5T4", 
+          "gc_multiplicity": "O", 
+          "id": "postal_code", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.19.4", 
+          "proposed_name": {
+            "en": "Postal Code"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Country of the physical address."
+          }, 
+          "domain_best_practice": {
+            "en": "Free text."
+          }, 
+          "example": "Canada", 
+          "gc_multiplicity": "O", 
+          "id": "country", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.19.5", 
+          "proposed_name": {
+            "en": "Country"
+          }
+        }, 
+        {
+          "bilingual": false, 
           "data_gc_ca_2012_id": "contact_email", 
           "description": {
             "en": "Address of the electronic mailbox of the responsible organization or individual."
@@ -1499,6 +1645,57 @@
             "en": "Email *"
           }, 
           "type": "email"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Information about the online sources where the data/dataset may be obtained."
+          }, 
+          "domain_best_practice": {
+            "en": ""
+          }, 
+          "example": "", 
+          "gc_multiplicity": "", 
+          "id": "online_resource", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "5.11.1.3", 
+          "proposed_name": {
+            "en": "Online Resource"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Time period (including time zone) when individuals can contact the organization or individual."
+          }, 
+          "domain_best_practice": {
+            "en": "According to the ISO8601 representation of timeintervals by start and end time, hours of service is composed of a start and an end time in the form of: <startTime></><endTime> The start and end time representation conforms to ISO8601 extended format. In t"
+          }, 
+          "example": "0700h - 1500h EST", 
+          "gc_multiplicity": "O", 
+          "id": "hours_of_service", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.17.4", 
+          "proposed_name": {
+            "en": "Hours of Service"
+          }
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "en": "Function performed by the responsible party. Must be selected from napCI_RoleCode (Data Steward substituted for custodian) (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_90)"
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: Resource Provider, Data Steward, Owner, Distributor, User, Originator, Point of Contact, Principal Investigator, Processor, Publisher, Author, Collaborator, Editor, Mediator, Rights Holder"
+          }, 
+          "example": "Point Of Contact", 
+          "gc_multiplicity": "M", 
+          "id": "roles", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.16.5", 
+          "proposed_name": {
+            "en": "Roles *"
+          }
         }
       ], 
       "name": {
@@ -1507,7 +1704,7 @@
     }, 
     {
       "description": {
-        "en": "The period of the dataset content."
+        "en": "This section identifies both the temporal and geographical coverage of the dataset."
       }, 
       "fields": [
         {
@@ -1563,10 +1760,469 @@
             "en": "End Position *"
           }, 
           "type": "datepicker"
+        }, 
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "data_gc_ca_2012_guid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B", 
+              "en": "Canada", 
+              "fr": "Canada"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "E65D06CB-F120-43E6-B037-83F699C84BAE", 
+              "en": "Newfoundland and Labrador", 
+              "fr": "Terre-Neuve-et-Labrador"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F", 
+              "en": "Newfoundland and Labrador, Avalon Peninsula", 
+              "fr": "Terre-Neuve-et-Labrador, Avalon Peninsula"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC", 
+              "en": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
+              "fr": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4", 
+              "en": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
+              "fr": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC", 
+              "en": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
+              "fr": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255", 
+              "en": "Prince Edward Island", 
+              "fr": "\u00cele-du-Prince-\u00c9douard"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E", 
+              "en": "Nova Scotia", 
+              "fr": "Nouvelle-\u00c9cosse"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "52806552-D51A-41BD-A320-AE5DE26D253D", 
+              "en": "Nova Scotia, Cape Breton", 
+              "fr": "Nouvelle-\u00c9cosse, Cape Breton"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF", 
+              "en": "Nova Scotia, North Shore", 
+              "fr": "Nouvelle-\u00c9cosse, C\u00f4te-nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7", 
+              "en": "Nova Scotia, Annapolis Valley", 
+              "fr": "Nouvelle-\u00c9cosse, Annapolis Valley"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13", 
+              "en": "Nova Scotia, Southern", 
+              "fr": "Nouvelle-\u00c9cosse, Sud"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56", 
+              "en": "Nova Scotia, Halifax", 
+              "fr": "Nouvelle-\u00c9cosse, Halifax"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "93195680-D726-4FCE-BF92-D95F1F796B3B", 
+              "en": "New Brunswick", 
+              "fr": "Nouveau-Brunswick"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11", 
+              "en": "New Brunswick, Campbellton - Miramichi", 
+              "fr": "Nouveau-Brunswick, Campbellton - Miramichi"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C", 
+              "en": "New Brunswick, Moncton - Richibucto", 
+              "fr": "Nouveau-Brunswick, Moncton - Richibucto"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070", 
+              "en": "New Brunswick, Saint John - St. Stephen", 
+              "fr": "Nouveau-Brunswick, Saint John - St. Stephen"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4", 
+              "en": "New Brunswick, Fredericton - Oromocto", 
+              "fr": "Nouveau-Brunswick, Fredericton - Oromocto"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC", 
+              "en": "New Brunswick, Edmundston - Woodstock", 
+              "fr": "Nouveau-Brunswick, Edmundston - Woodstock"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E", 
+              "en": "Quebec", 
+              "fr": "Qu\u00e9bec"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "A875ADFB-7A71-4472-8BCF-DB1739F10521", 
+              "en": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "fr": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "7781A775-A703-47B6-B166-CE473AB24D14", 
+              "en": "Quebec, Bas-Saint-Laurent", 
+              "fr": "Qu\u00e9bec, Bas-Saint-Laurent"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134", 
+              "en": "Quebec, Capitale-Nationale", 
+              "fr": "Qu\u00e9bec, Capitale-Nationale"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56", 
+              "en": "Quebec, Chaudi\u00e8re - Appalaches", 
+              "fr": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "A2948848-C501-4982-847E-D539A4EAAA9F", 
+              "en": "Quebec, Estrie", 
+              "fr": "Qu\u00e9bec, Estrie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269", 
+              "en": "Quebec, Centre-du-Qu\u00e9bec", 
+              "fr": "Qu\u00e9bec, Centre-du-Qu\u00e9bec"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "FB14D3C7-1D22-4D91-A465-642D216EEE48", 
+              "en": "Quebec, Mont\u00e9r\u00e9gie", 
+              "fr": "Qu\u00e9bec, Mont\u00e9r\u00e9gie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645", 
+              "en": "Quebec, Montr\u00e9al", 
+              "fr": "Qu\u00e9bec, Montr\u00e9al"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF", 
+              "en": "Quebec, Laval", 
+              "fr": "Qu\u00e9bec, Laval"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "9D01047A-B571-4CC4-A295-CACED5C21136", 
+              "en": "Quebec, Lanaudi\u00e8re", 
+              "fr": "Qu\u00e9bec, Lanaudi\u00e8re"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "79F2CB43-8948-40F0-BF66-399E2073B27F", 
+              "en": "Quebec, Laurentides", 
+              "fr": "Qu\u00e9bec, Laurentides"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1", 
+              "en": "Quebec, Outaouais", 
+              "fr": "Qu\u00e9bec, Outaouais"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06", 
+              "en": "Quebec, Abitibi - T\u00e9miscamingue", 
+              "fr": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011", 
+              "en": "Quebec, Mauricie", 
+              "fr": "Qu\u00e9bec, Mauricie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "645070BF-16DD-4D87-88FE-94ECF86F41EB", 
+              "en": "Quebec, Saguenay - Lac-Saint-Jean", 
+              "fr": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "335CCEE3-4877-474C-B4F9-4C24D5086091", 
+              "en": "Quebec, C\u00f4te-Nord", 
+              "fr": "Qu\u00e9bec, C\u00f4te-Nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE", 
+              "en": "Quebec, Nord-du-Qu\u00e9bec", 
+              "fr": "Qu\u00e9bec, Nord-du-Qu\u00e9bec"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "BB22E4CF-19C4-4705-92F0-F2C602307C29", 
+              "en": "Ontario", 
+              "fr": "Ontario"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "59F96221-A0D1-4668-A769-9DAC7DFC2198", 
+              "en": "Ontario, Ottawa", 
+              "fr": "Ontario, Ottawa"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893", 
+              "en": "Ontario, Kingston - Pembroke", 
+              "fr": "Ontario, Kingston - Pembroke"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "75176775-E0E6-4938-B03E-40ECFDB399C1", 
+              "en": "Ontario, Muskoka - Kawarthas", 
+              "fr": "Ontario, Muskoka - Kawarthas"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC", 
+              "en": "Ontario, Toronto", 
+              "fr": "Ontario, Toronto"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "971A8458-0FAD-42A4-99B6-579374BF668B", 
+              "en": "Ontario, Kitchener - Waterloo - Barrie", 
+              "fr": "Ontario, Kitchener - Waterloo - Barrie"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "4004DAC2-4AE4-49B9-A4E8-F27940335530", 
+              "en": "Ontario, Hamilton - Niagara Peninsula", 
+              "fr": "Ontario, Hamilton - Niagara Peninsula"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "66CE657A-9A2B-42EB-BB89-592024C852B5", 
+              "en": "Ontario, London", 
+              "fr": "Ontario, London"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "3FDECF16-64AD-4822-8076-344711C185DB", 
+              "en": "Ontario,Windsor - Sarnia", 
+              "fr": "Ontario, Windsor - Sarnia"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "31F39CA2-4A93-4337-87A7-11EDFA53E511", 
+              "en": "Ontario, Stratford - Bruce Peninsula", 
+              "fr": "Ontario, Stratford - Bruce Peninsula"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "55D9E9C2-56E5-4293-A896-D7008F6F5710", 
+              "en": "Ontario, Northeast", 
+              "fr": "Ontario, Nord-est"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7", 
+              "en": "Ontario, Northwest", 
+              "fr": "Ontario, Nord-ouest"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744", 
+              "en": "Manitoba", 
+              "fr": "Manitoba"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "271DA932-E487-4795-9995-ADB722297359", 
+              "en": "Manitoba, Southeast", 
+              "fr": "Manitoba, Sud-est"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "85E82590-1617-47BA-B69C-22BFAFB2C00A", 
+              "en": "Manitoba, South Central", 
+              "fr": "Manitoba, Centre sud"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "1637DBB0-E991-411E-8DA3-E5373DE577CE", 
+              "en": "Manitoba, Southwest", 
+              "fr": "Manitoba, Sud-ouest"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "5374E0A8-103B-4186-81B5-ACCE63EAE455", 
+              "en": "Manitoba, North Central", 
+              "fr": "Manitoba, Centre nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04", 
+              "en": "Manitoba, Winnipeg", 
+              "fr": "Manitoba, Winnipeg"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "036FB1AA-B86D-43F9-A674-56A78388F8F2", 
+              "en": "Manitoba, Interlake", 
+              "fr": "Manitoba, Interlake"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "16155173-67AC-4624-90E5-5A2D9079123A", 
+              "en": "Manitoba, Parklands", 
+              "fr": "Manitoba, Parklands"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F", 
+              "en": "Manitoba, North", 
+              "fr": "Manitoba, Nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "E521A8DF-6169-4728-990F-25D05C8791C7", 
+              "en": "Saskatchewan", 
+              "fr": "Saskatchewan"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2", 
+              "en": "Saskatchewan, Regina - Moose Mountain", 
+              "fr": "Saskatchewan, Regina - Moose Mountain"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "193259E4-EF93-4691-8572-694914D879C4", 
+              "en": "Saskatchewan, Swift Current - Moose Jaw", 
+              "fr": "Saskatchewan, Swift Current - Moose Jaw"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "AEE97977-91A3-48B3-A085-369B9B381992", 
+              "en": "Saskatchewan, Saskatoon - Biggar", 
+              "fr": "Saskatchewan, Saskatoon - Biggar"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2", 
+              "en": "Saskatchewan, Yorkton - Melville", 
+              "fr": "Saskatchewan, Yorkton - Melville"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352", 
+              "en": "Saskatchewan, Prince Albert", 
+              "fr": "Saskatchewan, Prince Alber"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421", 
+              "en": "Saskatchewan, Northern", 
+              "fr": "Saskatchewan, Nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907", 
+              "en": "Alberta", 
+              "fr": "Alberta"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA", 
+              "en": "Alberta, Lethbridge - Medicine Hat", 
+              "fr": "Alberta, Lethbridge - Medicine Hat"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "394064E0-D465-4520-B651-CE6D28829CD5", 
+              "en": "Alberta, Camrose - Drumheller", 
+              "fr": "Alberta, Camrose - Drumheller"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC", 
+              "en": "Alberta, Calgary", 
+              "fr": "Alberta, Calgary"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "F60854D7-139C-4945-9C5F-A6D6B3027B60", 
+              "en": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "fr": "Alberta, Banff - Jasper - Rocky Mountain House"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9", 
+              "en": "Alberta, Red Deer", 
+              "fr": "Alberta, Red Deer"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "60924ED3-E829-45E5-BE8B-2608AF64B241", 
+              "en": "Alberta, Edmonton", 
+              "fr": "Alberta, Edmonton"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "5161B55F-3BF5-46F7-B461-455735F6B9B4", 
+              "en": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "fr": "Alberta, Athabasca - Grande Prairie - Peace River"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E", 
+              "en": "Alberta, Wood Buffalo - Cold Lake", 
+              "fr": "Alberta, Wood Buffalo - Cold Lake"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "C066C99E-C228-4969-82CF-5E065E884D18", 
+              "en": "British Columbia", 
+              "fr": "Colombie-Britannique"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE", 
+              "en": "British Columbia, Vancouver Island and Coast", 
+              "fr": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458", 
+              "en": "British Columbia, Lower Mainland - Southwest", 
+              "fr": "Colombie-Britannique, Lower Mainland - Sud-ouest"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2", 
+              "en": "British Columbia, Thompson - Okanagan", 
+              "fr": "Colombie-Britannique, Thompson - Okanagan"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB", 
+              "en": "British Columbia, Kootenay", 
+              "fr": "Colombie-Britannique, Kootenay"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6", 
+              "en": "British Columbia, Cariboo", 
+              "fr": "Colombie-Britannique, Cariboo"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "94E0DABF-268E-454B-B20E-727A9FF34FAB", 
+              "en": "British Columbia, North Coast", 
+              "fr": "Colombie-Britannique, C\u00f4te-nord"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C", 
+              "en": "British Columbia, Nechako", 
+              "fr": "Colombie-Britannique, Nechako"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "4284F297-5090-447A-A1E3-C339B68F5932", 
+              "en": "British Columbia, Northeast", 
+              "fr": "Colombie-Britannique, Nord-est"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10", 
+              "en": "Yukon Territory", 
+              "fr": "Territoire du Yukon"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "57D53D77-58B1-4431-97ED-9AB61C5C7940", 
+              "en": "Northwest Territories", 
+              "fr": "Territoires du Nord-Ouest"
+            }, 
+            {
+              "data_gc_ca_2012_guid": "17E062E3-39D1-4306-BEEE-1808BC6573A4", 
+              "en": "Nunavut", 
+              "fr": "Nunavut"
+            }
+          ], 
+          "data_gc_ca_2012_id": "Geographic_Region_Name", 
+          "description": {
+            "en": "The spatial region of the resource"
+          }, 
+          "domain_best_practice": {
+            "en": "Region names to come from the 'Standard Geospatial Classification : http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm"
+          }, 
+          "example": "Ottawa", 
+          "gc_multiplicity": "M", 
+          "help": {
+            "en": "The region that describes the geographic area covered by the dataset.", 
+            "fr": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
+          }, 
+          "id": "geographic_region_name", 
+          "iso_multiplicity": "", 
+          "name": {
+            "en": "Geographic Region Name", 
+            "fr": "Nom de la r\u00e9gion g\u00e9ographique"
+          }, 
+          "nap_iso_19115_ref": "N/A", 
+          "proposed_name": {
+            "en": "Geographic Region Name"
+          }, 
+          "type": "choice"
         }
       ], 
       "name": {
-        "en": "Time Period"
+        "en": "Extent"
       }
     }
   ]
