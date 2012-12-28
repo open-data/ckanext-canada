@@ -23,13 +23,23 @@ class MetadataSchema(object):
         schema_description.sections
 
     Sections are dicts with keys including 'name' and 'fields'.
+
+    A 'language_field_names' is added to the fields containing a list
+    of the CKAN form field names for all languages for this field.
     """
     def __init__(self):
         with open(_JSON_NAME) as j:
             schema = json.load(j)
 
-            self.intro = schema['intro']
-            self.sections = schema['sections_fields']
-            self.fields = []
-            for s in self.sections:
-                self.fields.extend(s['fields'])
+        self.intro = schema['intro']
+        self.languages = schema['languages']
+        self.sections = schema['sections_fields']
+        self.fields = []
+        for s in self.sections:
+            self.fields.extend(s['fields'])
+
+        for f in self.fields:
+            f['language_field_names'] = [f['id']]
+            if f['bilingual']:
+                f['language_field_names'].append("%s_%s" % (
+                    f['id'], self.languages[1]))
