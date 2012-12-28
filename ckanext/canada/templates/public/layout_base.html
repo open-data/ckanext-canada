@@ -7,426 +7,614 @@
 <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html class="no-js" lang="en" xmlns:i18n="http://genshi.edgewall.org/i18n" xmlns:py="http://genshi.edgewall.org/" xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--<![endif]-->
-	<xi:include href="_util.html" />
-	<head>
-		<meta charset="utf-8" />
+  <!--<![endif]-->
+  <xi:include href="_util.html" />
+  <head>
+    <meta charset="utf-8" />
 
-		<title>${page_title()} - ${g.site_title}</title>
-		<meta name="description" content="none" />
-		<meta name="author" content="Government of Canada" />
-		<meta name="dcterms.creator" content="Government of Canada, Treasury Board of Canada Secretariat, Chief Information Officer Branch, IT Project Review and Oversight, Web Standards Office" />
-		<meta name="dcterms.title" content="Web Experience Toolkit (WET)" />
-		<meta name="dcterms.issued" title="W3CDTF" content="2012-05-11" />
-		<meta name="dcterms.modified" title="W3CDTF" content="2012-10-10" />
-		<meta name="dcterms.subject" title="gccore" content="Internet;Standards;Design" />
-		<meta name="dcterms.language" title="ISO639-2" content="eng" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="shortcut icon" href="${h.url_for_static(g.favicon)}" />
-		<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
+    <title>${page_title()} - ${g.site_title}</title>
+    <meta name="description" content="none" />
+    <meta name="author" content="Government of Canada" />
+    <meta name="dcterms.creator" content="Government of Canada, Treasury Board of Canada Secretariat, Chief Information Officer Branch, IT Project Review and Oversight, Web Standards Office" />
+    <meta name="dcterms.title" content="Web Experience Toolkit (WET)" />
+    <meta name="dcterms.issued" title="W3CDTF" content="2012-05-11" />
+    <meta name="dcterms.modified" title="W3CDTF" content="2012-10-10" />
+    <meta name="dcterms.subject" title="gccore" content="Internet;Standards;Design" />
+    <meta name="dcterms.language" title="ISO639-2" content="eng" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="${h.url_for_static(g.favicon)}" />
+    <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
 
-<!--
-		<py:choose>
-			<py:when test="defined('optional_feed')">
-				${optional_feed()}
-			</py:when>
-			<py:otherwise>
-				<link rel="alternate" type="application/atom+xml" title="${g.site_title} - Recent Revision History" href="${h.url_for(controller='revision', action='list', format='atom', days=1)}" />
-			</py:otherwise>
-		</py:choose>
--->
-		<!--[if lte IE 8]>
-		<script src="/build/js/polyfills/html5shiv-min.js"></script>
-		<link rel="stylesheet" href="/build/grids/css/util-ie-min.css" />
-		<link rel="stylesheet" href="/build/js/css/pe-ap-ie-min.css" />
-		<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ie-min.css" />
-		<![endif]-->
-		<!--[if gt IE 8]><!-->
-		<link rel="stylesheet" href="/build/grids/css/util-min.css" />
-		<link rel="stylesheet" href="/build/js/css/pe-ap-min.css" />
-		<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-min.css" />
-		<!--<![endif]-->
-		<noscript>
-			<link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ns-min.css" />
-		</noscript>
+    <!--
+    <py:choose>
+    <py:when test="defined('optional_feed')">
+    ${optional_feed()}
+    </py:when>
+    <py:otherwise>
+    <link rel="alternate" type="application/atom+xml" title="${g.site_title} - Recent Revision History" href="${h.url_for(controller='revision', action='list', format='atom', days=1)}" />
+    </py:otherwise>
+    </py:choose>
+    -->
+    <!--[if lte IE 8]>
+    <script src="/build/js/polyfills/html5shiv-min.js"></script>
+    <link rel="stylesheet" href="/build/grids/css/util-ie-min.css" />
+    <link rel="stylesheet" href="/build/js/css/pe-ap-ie-min.css" />
+    <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ie-min.css" />
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/build/grids/css/util-min.css" />
+    <link rel="stylesheet" href="/build/js/css/pe-ap-min.css" />
+    <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-min.css" />
+    <!--<![endif]-->
+    <noscript>
+      <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ns-min.css" />
+    </noscript>
 
-		<py:if test="defined('optional_head')">
-			${optional_head()}
-		</py:if>
+    <py:if test="defined('optional_head')">
+      ${optional_head()}
+    </py:if>
 
-		${h.literal(getattr(g, 'template_head_end', ''))}
-	</head>
+    ${h.literal(getattr(g, 'template_head_end', ''))}
+  </head>
 
-	<body>
-		<div id="wb-body">
-		  
-			<div id="wb-skip">
-				<ul id="wb-tphp">
-					<li id="wb-skip1">
-						<a href="#wb-cont">Skip to main content</a>
-					</li>
-					<li id="wb-skip2">
-						<a href="#wb-nav">Skip to footer</a>
-					</li>
-				</ul>
-			</div>
+  <body>
+    <div id="wb-body">
 
-			<div id="wb-head">
-				<div id="wb-head-in">
-					<header>
-						<!-- HeaderStart -->
-						<nav role="navigation">
-							<div id="gcwu-gcnb">
-								<h2>Government of Canada navigation bar</h2>
-								<div id="gcwu-gcnb-in">
-									<div id="gcwu-gcnb-fip">
-										<div id="gcwu-sig">
-											<div id="gcwu-sig-in">
-												<div id="gcwu-sig-eng" title="Government of Canada"><img src="../../build/theme-gcwu-fegc/images/sig-eng.gif" width="214" height="20" alt="Government of Canada" />
-												</div>
-											</div>
-										</div>
-										<ul>
-											<li id="gcwu-gcnb1">
-												<a rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
-											</li>
-											<li id="gcwu-gcnb2">
-												<a rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml">Services</a>
-											</li>
-											<li id="gcwu-gcnb3">
-												<a rel="external" href="http://www.canada.gc.ca/aboutgov-ausujetgouv/depts/menu-eng.html">Departments</a>
-											</li>
-											<li id="gcwu-gcnb-lang">
-												<a href="/fr" lang="fr">Français</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</nav>
+      <div id="wb-skip">
+        <ul id="wb-tphp">
+          <li id="wb-skip1">
+            <a href="#wb-cont">Skip to main content</a>
+          </li>
+          <li id="wb-skip2">
+            <a href="#wb-nav">Skip to footer</a>
+          </li>
+        </ul>
+      </div>
 
-						<div id="gcwu-bnr" role="banner">
-							<div id="gcwu-bnr-in">
-								<div id="gcwu-wmms">
-									<div id="gcwu-wmms-in">
-										<div id="gcwu-wmms-fip" title="Symbol of the Government of Canada"><img src="../../build/theme-gcwu-fegc/images/wmms.gif" width="126" height="30" alt="Symbol of the Government of Canada" />
-										</div>
-									</div>
-								</div>
-								<div id="gcwu-title">
-									<p id="gcwu-title-in">
-										<a href="/en">Open Data</a>
-									</p>
-								</div>
-
-								<section role="search">
-									<div id="gcwu-srchbx">
-										<h2>Search</h2>
-										<form action="${h.url(controller='package', action='search')}" method="GET">
-											<div id="gcwu-srchbx-in">
-												<label for="gcwu-srch">Search website</label>
-												<input name="q" value="${c.q if hasattr(c, 'q') else ''}" class="search" placeholder="${_('Find datasets')}" id="gcwu-srch" size="27" maxlength="150" />
-												<input id="gcwu-srch-submit" name="gcwu-srch-submit" type="submit" value="Search" data-icon="search" />
-											</div>
-										</form>
-									</div>
-								</section>
-							</div>
-						</div>
-
-						<nav role="navigation">
-							<div id="gcwu-psnb">
-								<h2><span>Site </span>menu</h2>
-								<div id="gcwu-psnb-in">
-									<div class="wet-boew-menubar mb-mega">
-										<div>
-											<ul class="mb-menu" data-ajax-replace="/build/includes/menu-eng.txt">
-												<li>
-													<div>
-														<a href="http://wet-boew.github.com/wet-boew/index-eng.html">WET project</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="section2/index-eng.html">Section 2</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="#">Section 3</a>
-													</div>
-												</li>
-												<li>
-													<div>
-														<a href="#">Section 4</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div id="gcwu-bc">
-								<h2>Breadcrumb trail</h2>
-								<div id="gcwu-bc-in">
-									<ol>
-										<li>Home</li>
-									</ol>
-								</div>
-							</div>
-						</nav>
-						<!-- HeaderEnd -->
-					</header>
-				</div>
-			</div>
-
-   <div id="wb-core">
-        <div id="wb-core-in" class="equalize">
-          <div id="wb-main" role="main">
-            <div id="wb-main-in">
-              <header>
-                <div class="span-8">
-                  <!-- flash messages - every page should have these at the top -->
-                  <py:with vars="messages = list(h.flash.pop_messages())">
-                    <div class="flash-messages container">
-                      <div class="alert ${m.category}" py:for="m in messages">
-                        ${h.literal(m)}
+      <div id="wb-head">
+        <div id="wb-head-in">
+          <header>
+            <!-- HeaderStart -->
+            <nav role="navigation">
+              <div id="gcwu-gcnb">
+                <h2>Government of Canada navigation bar</h2>
+                <div id="gcwu-gcnb-in">
+                  <div id="gcwu-gcnb-fip">
+                    <div id="gcwu-sig">
+                      <div id="gcwu-sig-in">
+                        <div id="gcwu-sig-eng" title="Government of Canada"><img src="../../build/theme-gcwu-fegc/images/sig-eng.gif" width="214" height="20" alt="Government of Canada" />
+                        </div>
                       </div>
                     </div>
-                  </py:with>
-                </div>
-                <div class="clear"></div>
-                <div class="span-8">
-                  <div id="minornavigation">
-                  <minornavigation></minornavigation>
+                    <ul>
+                      <li id="gcwu-gcnb1">
+                        <a rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
+                      </li>
+                      <li id="gcwu-gcnb2">
+                        <a rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml">Services</a>
+                      </li>
+                      <li id="gcwu-gcnb3">
+                        <a rel="external" href="http://www.canada.gc.ca/aboutgov-ausujetgouv/depts/menu-eng.html">Departments</a>
+                      </li>
+                      <li id="gcwu-gcnb-lang">
+                        <a href="/fr" lang="fr">Français</a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-                <div class="clear"></div>
-              </header>
-               
-                <!-- Content pane (required) -->
-                <div id="content">
-                  <py:if test="defined('content')">
-                    ${content()}
-                  </py:if>
-                  <content>
-                    <p>
-                      Master content template placeholder &hellip; please replace me.
-                    </p>
-                  </content>
+              </div>
+            </nav>
+
+            <div id="gcwu-bnr" role="banner">
+              <div id="gcwu-bnr-in">
+                <div id="gcwu-wmms">
+                  <div id="gcwu-wmms-in">
+                    <div id="gcwu-wmms-fip" title="Symbol of the Government of Canada"><img src="../../build/theme-gcwu-fegc/images/wmms.gif" width="126" height="30" alt="Symbol of the Government of Canada" />
+                    </div>
+                  </div>
                 </div>
-              
+                <div id="gcwu-title">
+                  <p id="gcwu-title-in">
+                    <a href="/en">Open Data</a>
+                  </p>
+                </div>
+
+                <section role="search">
+                  <div id="gcwu-srchbx">
+                    <h2>Search</h2>
+                    <form action="${h.url(controller='package', action='search')}" method="GET">
+                      <div id="gcwu-srchbx-in">
+                        <label for="gcwu-srch">Search website</label>
+                        <input name="q" value="${c.q if hasattr(c, 'q') else ''}" class="search" placeholder="${_('Find datasets')}" id="gcwu-srch" size="27" maxlength="150" />
+                        <input id="gcwu-srch-submit" name="gcwu-srch-submit" type="submit" value="Search" data-icon="search" />
+                      </div>
+                    </form>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <nav role="navigation">
+              <div id="gcwu-psnb">
+                <h2><span>Site </span>menu</h2>
+                <div id="gcwu-psnb-in">
+                  <div class="wet-boew-menubar mb-mega">
+                    <div>
+                      <ul class="mb-menu">
+                        <li>
+                          <section>
+                            <h3><a href="/dataset">Browse by department</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="/dataset">Agriculture and Agri-Food Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Atlantic Canada Opportunities Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Canada Border Services Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Canada Revenue Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Canadian International Development Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Canadian Space Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Citizenship and Immigration Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Department of Finance Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Environment Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Fisheries and Oceans Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Foreign Affairs and International Trade Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Health Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Industry Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Library and Archives Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Library of Parliament</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">National Defence</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Natural Resources Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Public Safety Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Public Works and Government Services Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Statistics Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Transport Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Treasury Board of Canada Secretariat</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="/dataset">Browse by department</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="section2/index-eng.html">Browse by subject</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="/dataset">Agriculture</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Arts, Music, Literature</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Economics and Industry</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Education and Training</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Government and Politics</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Health and Safety</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">History and Archaeology</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Information and Communications</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Labour</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Language and Linguistics</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Law</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Military</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Nature and Environment</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Persons</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Processes</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Science and Technology</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Society and Culture</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Transport</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="/dataset">Browse by subject</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="#">Browse by file format</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="/dataset">CSV/Text</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">KML/KMZ</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">RDF</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">RSS/GeoRSS</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">Shapefile</a>
+                                  </li>
+                                  <li>
+                                    <a href="/dataset">XML</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="#">Browse by file format</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="section4/index-eng.html">Help</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="/help">Help</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="#">Help</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <breadcrumb>
+                <div id="gcwu-bc">
+                  <h2>Breadcrumb trail</h2>
+                  <div id="gcwu-bc-in">
+                    <ol>
+
+                      <li>
+                        <a href="${h.url_for(controller='home', action='index')}">Home</a>
+                      </li>
+
+                    </ol>
+                  </div>
+                </div>
+              </breadcrumb>
+
+            </nav>
+            <!-- HeaderEnd -->
+          </header>
+        </div>
+      </div>
+
+      <div id="wb-core">
+        <div id="wb-core-in" class="equalize">
+          <div id="wb-main" role="main" style="min-height: 1312px;">
+            <div id="wb-main-in">
+              <header>
+
+                <!-- flash messages - every page should have these at the top -->
+                <py:with vars="messages = list(h.flash.pop_messages())">
+
+                  <div py:if="messages" class="span-8">
+                    <blockquote>
+                      <div class="flash-messages container">
+                        <div class="alert ${m.category}" py:for="m in messages">
+                          ${h.literal(m)}
+                        </div>
+                      </div>
+                    </blockquote>
+                  </div>
+                  <div py:if="messages" class="clear"></div>
+                </py:with>
+
+              </header>
+
+              <minornavigation></minornavigation>
+
+              <!-- Content pane (required) -->
+              <div id="content">
+                <py:if test="defined('content')">
+                  ${content()}
+                </py:if>
+                <content>
+                  <p>
+                    Master content template placeholder &hellip; please replace me.
+                  </p>
+                </content>
+              </div>
+
               <!-- /content -->
+
+              <primarysidebar></primarysidebar>
 
             </div>
           </div>
         </div>
-
       </div>
 
-			
-			<div id="wb-foot">
-				<div id="wb-foot-in">
-					<footer>
-						<h2 id="wb-nav">Footer</h2>
-						<!-- FooterStart -->
-						<nav role="navigation">
-							<div id="gcwu-sft">
-								<h3>Site footer</h3>
-								<div id="gcwu-sft-in">
-									<div id="gcwu-tctr">
-										<ul>
-											<li class="gcwu-tc">
-												<a href="#" rel="license">Terms and conditions</a>
-											</li>
-											<li class="gcwu-tr">
-												<a href="#">Transparency</a>
-											</li>
-										</ul>
-									</div>
-									<div class="clear"></div>
-									<section>
-										<div class="span-2">
-											<h4 class="gcwu-col-head"><a href="#">About us</a></h4>
-											<ul>
-												<li>
-													<a href="#">Our Mandate</a>
-												</li>
-												<li>
-													<a href="#">The Minister</a>
-												</li>
-											</ul>
-										</div>
-									</section>
-									<section>
-										<div class="span-2">
-											<h4 class="gcwu-col-head"><a href="#">News</a></h4>
-											<ul>
-												<li>
-													<a href="#">News releases</a>
-												</li>
-												<li>
-													<a href="#">Media advisories</a>
-												</li>
-												<li>
-													<a href="#">Multimedia</a>
-												</li>
-											</ul>
-										</div>
-									</section>
-									<section>
-										<div class="span-2">
-											<h4 class="gcwu-col-head"><a href="#">Contact us</a></h4>
-											<address>
-												<ul>
-													<li>
-														<a href="#">Phone numbers</a>
-													</li>
-													<li>
-														<a href="#">Office locations</a>
-													</li>
-												</ul>
-											</address>
-										</div>
-									</section>
-									<section>
-										<div class="span-2">
-											<h4 class="gcwu-col-head"><a href="#">Stay connected</a></h4>
-											<ul>
-												<li>
-													<a rel="external" href="#">YouTube</a>
-												</li>
-												<li>
-													<a rel="external" href="#">Twitter</a>
-												</li>
-												<li>
-													<a href="#">Feeds</a>
-												</li>
-											</ul>
-										</div>
-									</section>
-								</div>
-							</div>
-						</nav>
+      <div id="wb-foot">
+        <div id="wb-foot-in">
+          <footer>
+            <h2 id="wb-nav">Footer</h2>
+            <!-- FooterStart -->
+            <nav role="navigation">
+              <div id="gcwu-sft">
+                <h3>Site footer</h3>
+                <div id="gcwu-sft-in">
+                  <div id="gcwu-tctr">
+                    <ul>
+                      <li class="gcwu-tc">
+                        <a href="#" rel="license">Terms and conditions</a>
+                      </li>
+                      <li class="gcwu-tr">
+                        <a href="#">Transparency</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="clear"></div>
+                  <section>
+                    <div class="span-2">
+                      <h4 class="gcwu-col-head"><a href="#">About us</a></h4>
+                      <ul>
+                        <li>
+                          <a href="#">Our Mandate</a>
+                        </li>
+                        <li>
+                          <a href="#">The Minister</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                  <section>
+                    <div class="span-2">
+                      <h4 class="gcwu-col-head"><a href="#">News</a></h4>
+                      <ul>
+                        <li>
+                          <a href="#">News releases</a>
+                        </li>
+                        <li>
+                          <a href="#">Media advisories</a>
+                        </li>
+                        <li>
+                          <a href="#">Multimedia</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                  <section>
+                    <div class="span-2">
+                      <h4 class="gcwu-col-head"><a href="#">Contact us</a></h4>
+                      <address>
+                        <ul>
+                          <li>
+                            <a href="#">Phone numbers</a>
+                          </li>
+                          <li>
+                            <a href="#">Office locations</a>
+                          </li>
+                        </ul>
+                      </address>
+                    </div>
+                  </section>
+                  <section>
+                    <div class="span-2">
+                      <h4 class="gcwu-col-head"><a href="#">Stay connected</a></h4>
+                      <ul>
+                        <li>
+                          <a rel="external" href="#">YouTube</a>
+                        </li>
+                        <li>
+                          <a rel="external" href="#">Twitter</a>
+                        </li>
+                        <li>
+                          <a href="#">Feeds</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </nav>
 
-						<nav role="navigation">
-							<div id="gcwu-gcft">
-								<h3>Government of Canada footer</h3>
-								<div id="gcwu-gcft-in">
-									<div id="gcwu-gcft-fip">
-										<ul>
-											<li>
-												<a rel="external" href="http://healthycanadians.gc.ca/index-eng.php"><span>Health</span>
-												<br />
-												healthycanadians.gc.ca</a>
-											</li>
-											<li>
-												<a rel="external" href="http://www.voyage.gc.ca/index-eng.asp"><span>Travel</span>
-												<br />
-												travel.gc.ca</a>
-											</li>
-											<li>
-												<a rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml"><span>Service Canada</span>
-												<br />
-												servicecanada.gc.ca</a>
-											</li>
-											<li>
-												<a rel="external" href="http://www.jobbank.gc.ca/intro-eng.aspx"><span>Jobs</span>
-												<br />
-												jobbank.gc.ca</a>
-											</li>
-											<li>
-												<a rel="external" href="http://actionplan.gc.ca/en"><span>Economy</span>
-												<br />
-												actionplan.gc.ca</a>
-											</li>
-											<li id="gcwu-gcft-ca">
-												<div>
-													<a rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</nav>
-						<!-- FooterEnd -->
-					</footer>
-				</div>
-			</div>
-			<!-- eo #container -->
+            <nav role="navigation">
+              <div id="gcwu-gcft">
+                <h3>Government of Canada footer</h3>
+                <div id="gcwu-gcft-in">
+                  <div id="gcwu-gcft-fip">
+                    <ul>
+                      <li>
+                        <a rel="external" href="http://healthycanadians.gc.ca/index-eng.php"><span>Health</span>
+                        <br />
+                        healthycanadians.gc.ca</a>
+                      </li>
+                      <li>
+                        <a rel="external" href="http://www.voyage.gc.ca/index-eng.asp"><span>Travel</span>
+                        <br />
+                        travel.gc.ca</a>
+                      </li>
+                      <li>
+                        <a rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml"><span>Service Canada</span>
+                        <br />
+                        servicecanada.gc.ca</a>
+                      </li>
+                      <li>
+                        <a rel="external" href="http://www.jobbank.gc.ca/intro-eng.aspx"><span>Jobs</span>
+                        <br />
+                        jobbank.gc.ca</a>
+                      </li>
+                      <li>
+                        <a rel="external" href="http://actionplan.gc.ca/en"><span>Economy</span>
+                        <br />
+                        actionplan.gc.ca</a>
+                      </li>
+                      <li id="gcwu-gcft-ca">
+                        <div>
+                          <a rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            <!-- FooterEnd -->
+          </footer>
+        </div>
+      </div>
+      <!-- eo #container -->
 
-			<div style="display:none;" id="scripts">
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/json2.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.tmpl/beta1/jquery.tmpl.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.cookie/jquery.cookie.min.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.chosen/0.9.7/chosen.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.placeholder/jquery.placeholder.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jqueryui/1.8.14/jquery-ui.min.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/bootstrap/2.0.3/bootstrap.min.js')}"></script>
+      <div style="display:none;" id="scripts">
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/json2.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.tmpl/beta1/jquery.tmpl.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.cookie/jquery.cookie.min.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.chosen/0.9.7/chosen.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.placeholder/jquery.placeholder.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jqueryui/1.8.14/jquery-ui.min.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/bootstrap/2.0.3/bootstrap.min.js')}"></script>
 
-				<!-- for application.js -->
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/underscore/1.1.6/underscore.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/backbone/0.5.1/backbone.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.fileupload/20110801/jquery.iframe-transport.js')}"></script>
-				<script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.fileupload/20110801/jquery.fileupload.js')}"></script>
+        <!-- for application.js -->
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/underscore/1.1.6/underscore.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/backbone/0.5.1/backbone.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.fileupload/20110801/jquery.iframe-transport.js')}"></script>
+        <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.fileupload/20110801/jquery.fileupload.js')}"></script>
 
-				<!-- Translated js strings live inside an html template. -->
-			  <xi:include href="js_strings.html" />
-				<!-- finally our application js that sets everything up-->
-				
-				<!--
+        <!-- Translated js strings live inside an html template. -->
+        <xi:include href="js_strings.html" />
+        <!-- finally our application js that sets everything up-->
+
+        <!--
         <script type="text/javascript" src="${h.url_for_static('/scripts/application.js?lang=${c.locale}')}"></script>
-        <script type="text/javascript" src="${h.url_for_static('/scripts/templates.js')}"></script> 
-				
-				  <script type="text/javascript">
-				    CKAN.plugins = [
-				      // Declare js array from Python string
-				      ${['\'%s\', '%s  for s in config.get('ckan.plugins','').split(' ')]}
-				    ];
-				    <py:if test="config.get('ckan.storage.bucket', '')">
-				    CKAN.plugins.push('storage');
-				    </py:if>
-				    CKAN.SITE_URL = '${h.url('/')}';
-				    CKAN.SITE_URL_NO_LOCALE = '${h.url('/', locale='default')}';
-				    CKAN.LANG = '${h.lang()}';
-				    // later use will add offsets with leading '/' so ensure no trailing slash
-				    CKAN.SITE_URL = CKAN.SITE_URL.replace(/\/$/, '');
-				    CKAN.SITE_URL_NO_LOCALE = CKAN.SITE_URL_NO_LOCALE.replace(/\/$/, '');
-				    $(document).ready(function() {
-				        var ckan_user = '${c.user}';
-				        if (ckan_user) {
-				            $(".ckan-logged-out").hide();
-				            $(".ckan-logged-in").show();
-				        }
-				        $('input[placeholder], textarea[placeholder]').placeholder();
-				
-						$(".chzn-select").chosen();
-				    });
-				  </script>
-				-->
+        <script type="text/javascript" src="${h.url_for_static('/scripts/templates.js')}"></script>
 
-				<py:if test="h.asbool(config.get('ckan.tracking_enabled', 'false'))">
-					${ h.snippet('snippets/internal-tracking.html') }
-				</py:if>
-				
+        <script type="text/javascript">
+        CKAN.plugins = [
+        // Declare js array from Python string
+        ${['\'%s\', '%s  for s in config.get('ckan.plugins','').split(' ')]}
+        ];
+        <py:if test="config.get('ckan.storage.bucket', '')">
+        CKAN.plugins.push('storage');
+        </py:if>
+        CKAN.SITE_URL = '${h.url('/')}';
+        CKAN.SITE_URL_NO_LOCALE = '${h.url('/', locale='default')}';
+        CKAN.LANG = '${h.lang()}';
+        // later use will add offsets with leading '/' so ensure no trailing slash
+        CKAN.SITE_URL = CKAN.SITE_URL.replace(/\/$/, '');
+        CKAN.SITE_URL_NO_LOCALE = CKAN.SITE_URL_NO_LOCALE.replace(/\/$/, '');
+        $(document).ready(function() {
+        var ckan_user = '${c.user}';
+        if (ckan_user) {
+        $(".ckan-logged-out").hide();
+        $(".ckan-logged-in").show();
+        }
+        $('input[placeholder], textarea[placeholder]').placeholder();
 
-				<!-- ScriptsStart -->
-				<script src="/build/theme-gcwu-fegc/js/theme-min.js"></script>
-				<script src="/build/js/settings.js"></script>
-				<script src="/build/js/pe-ap-min.js"></script>
-				<!-- ScriptsEnd -->
-								
-			</div>
-			<!-- #scripts -->
+        $(".chzn-select").chosen();
+        });
+        </script>
+        -->
 
-			<py:if test="defined('optional_footer')">
-				${optional_footer()}
-			</py:if>
+        <py:if test="h.asbool(config.get('ckan.tracking_enabled', 'false'))">
+          ${ h.snippet('snippets/internal-tracking.html') }
+        </py:if>
 
-			${h.literal(getattr(g, 'template_footer_end', ''))}
-		</div>
-	</body>
+        <!-- ScriptsStart -->
+        <script src="/build/theme-gcwu-fegc/js/theme-min.js"></script>
+        <script src="/build/js/settings.js"></script>
+        <script src="/build/js/pe-ap-min.js"></script>
+        <!-- ScriptsEnd -->
+
+      </div>
+      <!-- #scripts -->
+
+      <py:if test="defined('optional_footer')">
+        ${optional_footer()}
+      </py:if>
+
+      ${h.literal(getattr(g, 'template_footer_end', ''))}
+    </div>
+  </body>
 </html>
 

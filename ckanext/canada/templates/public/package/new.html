@@ -1,0 +1,28 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+  
+  <py:def function="page_title">Add - Datasets</py:def>
+  <py:def function="page_heading">Add a Dataset</py:def>
+
+  <py:def function="body_class">${h.literal('no-sidebar')}</py:def>
+
+  <py:def function="optional_head">
+    <script>
+      var resources_json = ${h.literal(c.resources_json)};
+    </script>
+  </py:def>
+
+  <div py:match="content" >
+    <div class="span-3">
+    <h3 py:if="c.error">
+      Error: ${c.error}
+    </h3>
+    ${c.form}
+    </div>
+  </div>
+
+  <xi:include href="layout.html" />
+</html>
+
