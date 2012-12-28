@@ -234,6 +234,7 @@ def read_proposed_fields():
 def main():
     schema_out = {
         'sections_fields': [],
+        'languages': list(LANGS),
         }
 
     proposed = read_proposed_fields()
