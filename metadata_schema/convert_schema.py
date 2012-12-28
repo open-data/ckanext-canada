@@ -14,8 +14,8 @@ from collections import namedtuple
 from itertools import groupby
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA_GC_CA_2012 = os.path.join(HERE, 'data_gc_ca_2012')
-OLD_SCHEMA_NAME = os.path.join(DATA_GC_CA_2012, 'metadata_schema.xml')
+PILOT = os.path.join(HERE, 'pilot')
+OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
 LANGS = 'en', 'fr'
@@ -186,17 +186,17 @@ def lang_versions(root, xp):
     assert out['fr'], "Not found: %s" % xp
     return {k:v[0].text for k, v in out.items()}
 
-def data_gc_ca_2012_choices(name):
+def pilot_choices(name):
     """
     Return a list of the choices from <name>.xml like:
-    [{'data_gc_ca_2012_guid': ..., 'en': ..., 'fr': ... }, ...]
+    [{'pilot_uuid': ..., 'en': ..., 'fr': ... }, ...]
     """
     choices = []
-    with open(os.path.join(DATA_GC_CA_2012, name + '.xml')) as c:
+    with open(os.path.join(PILOT, name + '.xml')) as c:
         croot = lxml.etree.parse(c)
         for node in croot.xpath('/root/item'):
             option = lang_versions(node, 'name')
-            option['data_gc_ca_2012_guid'] = node.get('id')
+            option['pilot_uuid'] = node.get('id')
             choices.append(option)
     return choices
 
@@ -269,7 +269,7 @@ def main():
             if f:
                 xp = '//item[inputname="%s"]' % f
                 new_field.update({
-                    'data_gc_ca_2012_id': f,
+                    'pilot_id': f,
                     'name': lang_versions(old_root, xp + '/name'),
                     'help': lang_versions(old_root, xp + '/helpcontext'),
                     'type': "".join(old_root.xpath(xp +
@@ -277,12 +277,12 @@ def main():
                     })
                 if not new_field['type']:
                     # this seems to indicate a selection from a list
-                    new_field['choices'] = data_gc_ca_2012_choices(f)
+                    new_field['choices'] = pilot_choices(f)
                     new_field['type'] = 'choice'
 
             old_id_fr = BILINGUAL_FIELDS.get(field, None)
             if old_id_fr:
-                new_field['data_gc_ca_2012_id_fr'] = old_id_fr
+                new_field['pilot_id_fr'] = old_id_fr
             new_field['bilingual'] = bool(old_id_fr)
 
             new_section['fields'].append(new_field)
