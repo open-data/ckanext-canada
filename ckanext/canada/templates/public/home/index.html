@@ -8,6 +8,8 @@ py:strip=""
     Welcome
   </py:def>
 
+  <div id="gcwu-bc" py:match="breadcrumb" style="height: 0px"></div>
+
   <div py:match="content">
 
 
@@ -34,7 +36,7 @@ py:strip=""
       <py:choose test="h.check_access('package_create')">
         <a py:when="" href="${h.url_for(controller='package', action='new')}" class="create-button">Create a dataset &raquo;</a>
         <py:otherwise>
-          <a href="${h.url_for(controller='user', action='login')}" class="create-button">Sign up &raquo;</a>
+          <a href="${h.url_for(controller='user', action='login')}" class="create-button">Sign up / Login &raquo;</a>
         </py:otherwise>
       </py:choose>
 

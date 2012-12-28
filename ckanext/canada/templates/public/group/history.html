@@ -5,8 +5,11 @@
   <py:def function="page_title">History: ${c.group.display_name}</py:def>
   <py:def function="page_heading">History: ${c.group.display_name}</py:def>
 
-  <div py:match="content" class="group">
-    <h3>
+  
+  <div py:match="content">
+    <div class="span-6">
+    <h3>${page_title()}</h3>
+    <h4>
       Revisions
       <!--p class="atom-feed-link group-history-link">
         <a
@@ -15,7 +18,7 @@
           >
           Subscribe &raquo;</a>
       </p-->
-    </h3>
+    </h4>
     <form id="group-revisions" action="diff" method="post"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -48,6 +51,7 @@
       </table>
       <input type="submit" name="diff" value="${_('Compare &raquo;')}" class="btn primary" />
     </form>
+    </div>
   </div>
 
   <py:def function="optional_feed">
@@ -55,5 +59,20 @@
       href="${h.url(controller='group', action='history', id=c.group_dict['name'], format='atom', days=7)}" />
   </py:def>
 
+
+  <div id="gcwu-bc" py:match="breadcrumb">
+    <h2>Breadcrumb trail</h2>
+    <div id="gcwu-bc-in">
+      <ol>
+        <li>
+          <a href="${h.url_for(controller='home', action='index')}">${_('Home')}</a>
+        </li>
+        <li>
+          ${page_title()}
+        </li>
+      </ol>
+    </div>
+  </div>
+  
   <xi:include href="layout.html" />
 </html>
