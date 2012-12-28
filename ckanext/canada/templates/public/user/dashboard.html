@@ -14,7 +14,7 @@
 
 
   <div py:match="content">
-    <div class="span-2">
+    <div class="span-3">
       <sidebar>
         <ul class="widget-list">
           <py:if test="defined('primary_sidebar_extras')">
@@ -26,7 +26,7 @@
         </ul>
       </sidebar>
     </div>
-    <div class="span-6">
+    <div class="span-3">
       <h2>What's going on?</h2>
       <div class="activity-stream">
         <!--checkpoint:my-dashboard-->
@@ -35,13 +35,19 @@
     </div>
   </div>
 
-  <div py:match="sidebar" class="span-2 row-start">
+  <div py:match="sidebar" class="span-3">
     
     <ul class="widget-list">
       <py:if test="defined('primary_sidebar_extras')">
         ${primary_sidebar_extras()}
       </py:if>
-      
+                        <div class="${'active' if c.action=='followers' else ''}">
+                    ${h.subnav_link(
+                    _('My Followers ({num_followers})').format(num_followers=h.follow_count('user', c.user_dict.id)),
+                    controller='user',
+                    action='followers',
+                    id=c.user_dict.name)}
+                  </div>
       <div>
         <h3>Nothing new on CKAN?</h3>
         <h4>So, why don't you ...</h4>
