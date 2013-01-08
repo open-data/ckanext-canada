@@ -32,6 +32,8 @@
               "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
             }
           ], 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Language(s) used within the dataset."
           }, 
@@ -60,6 +62,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Designates either a URL link to the dataset if available or a unique identifier (such as a DOI) for the resource if one exists."
           }, 
@@ -865,6 +869,8 @@
               "pilot_uuid": "AC76B01B-0569-4067-A427-D1F6183A8746"
             }
           ], 
+          "controlled_vocabulary_reference_en": "The Registry of Applied Terms : http://www.tbs-sct.gc.ca/fip-pcim/reg-eng.asp", 
+          "controlled_vocabulary_reference_fr": "Registre des titres d'usage : \nhttp://www.tbs-sct.gc.ca/fip-pcim/reg-fra.asp", 
           "description": {
             "en": "Name of the responsible organization."
           }, 
@@ -893,6 +899,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "The party responsible for the metadata content"
           }, 
@@ -921,6 +929,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Name of the metadata standard standard or profile used"
           }, 
@@ -939,6 +949,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Type of dataset"
           }, 
@@ -967,6 +979,8 @@
       "fields": [
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Name by which the thesaurus is known"
           }, 
@@ -996,6 +1010,8 @@
         }, 
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Provide a brief overview of the content, methodology and findings of the dataset in free text format."
           }, 
@@ -1025,6 +1041,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Full name of the character coding standard used for the dataset. Must be selected from napMD_CharacterSetCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_95)"
           }, 
@@ -1043,6 +1061,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fr": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
           "description": {
             "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
           }, 
@@ -1081,6 +1101,8 @@
       "fields": [
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "The URL for the Government of Canada program that is responsible for the dataset."
           }, 
@@ -1110,6 +1132,8 @@
         }, 
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Data dictionary-a file containing variable names, descriptions, standard vocabularies and taxonomies, units, multipliers, and other data parameters."
           }, 
@@ -1139,6 +1163,8 @@
         }, 
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports etc."
           }, 
@@ -1178,6 +1204,8 @@
       "fields": [
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Name of the data series or aggregate dataset of which referenced."
           }, 
@@ -1207,6 +1235,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Identification of the series' issue information"
           }, 
@@ -1225,6 +1255,8 @@
         }, 
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Link (URL) to the high level repository in which the dataset resides at the agency of origin"
           }, 
@@ -1356,6 +1388,8 @@
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
             }
           ], 
+          "controlled_vocabulary_reference_en": "http://www.thesaurus.gc.ca/recherche-search/mtwdk.exe?k=these&l=60&s=scat&w=90", 
+          "controlled_vocabulary_reference_fr": "http://www.thesaurus.gc.ca/recherche-search/thes-fra.html", 
           "description": {
             "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
           }, 
@@ -1394,6 +1428,8 @@
       "fields": [
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fr": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
           "description": {
             "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery. This element is repeatable; select all category codes that apply to the dataset. Must be selected from napMD_TopicCategoryCode."
           }, 
@@ -1422,6 +1458,8 @@
       "fields": [
         {
           "bilingual": true, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource. To select from a pre-defined list of keywords, select a thesaurus below.  Keywords are a repeatable element; enter as many keywords as necessary to describe the data."
           }, 
@@ -1461,6 +1499,8 @@
       "fields": [
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Name of the responsible person."
           }, 
@@ -1489,6 +1529,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Role or position of the responsible person."
           }, 
@@ -1517,6 +1559,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Telephone number by which individuals can speak to the responsible organization or individual."
           }, 
@@ -1545,6 +1589,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Telephone number of a facsimile machine for the responsible organization or individual."
           }, 
@@ -1563,6 +1609,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Address line for the location (as described in ISO 11180, Annex A)"
           }, 
@@ -1581,6 +1629,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "City of the location."
           }, 
@@ -1599,6 +1649,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "State, province of the location."
           }, 
@@ -1617,6 +1669,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "ZIP or other postal code."
           }, 
@@ -1635,6 +1689,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Country of the physical address."
           }, 
@@ -1653,6 +1709,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Address of the electronic mailbox of the responsible organization or individual."
           }, 
@@ -1681,6 +1739,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Information about the online sources where the data/dataset may be obtained."
           }, 
@@ -1699,6 +1759,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "Time period (including time zone) when individuals can contact the organization or individual."
           }, 
@@ -1717,6 +1779,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fr": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
           "description": {
             "en": "Function performed by the responsible party. Must be selected from napCI_RoleCode (Data Steward substituted for custodian) (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_90)"
           }, 
@@ -1745,6 +1809,8 @@
       "fields": [
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "The date  when the dataset started."
           }, 
@@ -1773,6 +1839,8 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_en": "", 
+          "controlled_vocabulary_reference_fr": "", 
           "description": {
             "en": "The date when the dataset ended."
           }, 
@@ -2233,6 +2301,8 @@
               "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
             }
           ], 
+          "controlled_vocabulary_reference_en": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm", 
+          "controlled_vocabulary_reference_fr": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-fra.htm", 
           "description": {
             "en": "The spatial region of the resource"
           }, 

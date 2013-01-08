@@ -267,6 +267,10 @@ def main():
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
                 'existing': field in EXISTING_FIELDS,
+                'controlled_vocabulary_reference_en':
+                    p.controlled_vocabulary_reference_en,
+                'controlled_vocabulary_reference_fr':
+                    p.controlled_vocabulary_reference_fr,
                 }
             f = FIELD_MAPPING.get(field)
             if f:
