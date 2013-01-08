@@ -125,6 +125,7 @@ ProposedField = namedtuple("ProposedField", """
     domain_best_practice
     controlled_vocabulary_reference_en
     controlled_vocabulary_reference_fr
+    implementation_plan
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
