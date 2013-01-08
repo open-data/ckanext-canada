@@ -115,6 +115,7 @@ SECTIONS_FIELDS = [
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
+    languages
     property_name
     iso_multiplicity
     gc_multiplicity
@@ -122,6 +123,8 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
+    controlled_vocabulary_reference_en
+    controlled_vocabulary_reference_fr
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'

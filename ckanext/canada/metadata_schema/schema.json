@@ -869,7 +869,7 @@
             "en": "Name of the responsible organization."
           }, 
           "domain_best_practice": {
-            "en": "Free text."
+            "en": "Drop down: List of GC Departments"
           }, 
           "example": "Environment Canada", 
           "existing": true, 
@@ -1395,7 +1395,7 @@
         {
           "bilingual": false, 
           "description": {
-            "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery. This element is repeatable; select all category codes that apply to the dataset. Must be selected from napMD_TopicCategoryCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_110)"
+            "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery. This element is repeatable; select all category codes that apply to the dataset. Must be selected from napMD_TopicCategoryCode."
           }, 
           "domain_best_practice": {
             "en": "Drop down: Farming, Biota, Boundaries, Climatology / Meterology / Atmosphere, Economy, Elevation, Environment, Geoscientific Information, Health, Imagery / Base Maps/ Earth Cover, Intelligence / Military, Inland Waters, Location, Oceans, Planning Cadastre, Society, Structure, Transportation, Utilities / Communications"
@@ -1730,7 +1730,7 @@
           "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.16.5", 
           "proposed_name": {
-            "en": "Roles *"
+            "en": "Roles"
           }
         }
       ], 
@@ -1767,7 +1767,7 @@
           "nap_iso_19115_ref": "N/A", 
           "pilot_id": "time_period_start", 
           "proposed_name": {
-            "en": "Begin Position *"
+            "en": "Begin Position"
           }, 
           "type": "datepicker"
         }, 
@@ -1795,7 +1795,7 @@
           "nap_iso_19115_ref": "N/A", 
           "pilot_id": "time_period_end", 
           "proposed_name": {
-            "en": "End Position *"
+            "en": "End Position"
           }, 
           "type": "datepicker"
         }, 
@@ -2237,7 +2237,7 @@
             "en": "The spatial region of the resource"
           }, 
           "domain_best_practice": {
-            "en": "Region names to come from the 'Standard Geospatial Classification : http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm"
+            "en": "Region names to come from the 'Standard Geospatial Classification'"
           }, 
           "example": "Ottawa", 
           "existing": false, 
