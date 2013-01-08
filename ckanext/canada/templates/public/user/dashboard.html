@@ -27,7 +27,7 @@
       </sidebar>
     </div>
     <div class="span-3">
-      <h2>What's going on?</h2>
+      <h2>${_("What's going on?")}</h2>
       <div class="activity-stream">
         <!--checkpoint:my-dashboard-->
         ${h.dashboard_activity_stream(c.user_dict['id'])}
@@ -49,8 +49,8 @@
                     id=c.user_dict.name)}
                   </div>
       <div>
-        <h3>Nothing new on CKAN?</h3>
-        <h4>So, why don't you ...</h4>
+        <h3>${_("Nothing new on Open Data?")}</h3>
+        <h4>${_("So, why don't you ...")}</h4>
         <ul>
           <li>
             <a href="${h.url(controller='package', action='new')}">Add a new dataset</a>

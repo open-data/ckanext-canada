@@ -36,18 +36,18 @@
     </py:choose>
     -->
     <!--[if lte IE 8]>
-    <script src="/build/js/polyfills/html5shiv-min.js"></script>
-    <link rel="stylesheet" href="/build/grids/css/util-ie-min.css" />
-    <link rel="stylesheet" href="/build/js/css/pe-ap-ie-min.css" />
-    <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ie-min.css" />
+    <script src="${h.url_for_static('/build/js/polyfills/html5shiv-min.js')}"></script>
+    <link rel="stylesheet" href="${h.url_for_static('/build/grids/css/util-ie-min.css')}"/>
+    <link rel="stylesheet" href="${h.url_for_static('/build/js/css/pe-ap-ie-min.css')}"/>
+    <link rel="stylesheet" href="${h.url_for_static('/build/theme-gcwu-fegc/css/theme-ie-min.css')}"/>
     <![endif]-->
     <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/build/grids/css/util-min.css" />
-    <link rel="stylesheet" href="/build/js/css/pe-ap-min.css" />
-    <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-min.css" />
+    <link rel="stylesheet" href="${h.url_for_static('/build/grids/css/util-min.css')}"/>
+    <link rel="stylesheet" href="${h.url_for_static('/build/js/css/pe-ap-min.css')}"/>
+    <link rel="stylesheet" href="${h.url_for_static('/build/theme-gcwu-fegc/css/theme-min.css')}"/>
     <!--<![endif]-->
     <noscript>
-      <link rel="stylesheet" href="/build/theme-gcwu-fegc/css/theme-ns-min.css" />
+      <link rel="stylesheet" href="${h.url_for_static('/build/theme-gcwu-fegc/css/theme-ns-min.css')}"/>
     </noscript>
 
     <py:if test="defined('optional_head')">
@@ -82,7 +82,7 @@
                   <div id="gcwu-gcnb-fip">
                     <div id="gcwu-sig">
                       <div id="gcwu-sig-in">
-                        <div id="gcwu-sig-eng" title="Government of Canada"><img src="../../build/theme-gcwu-fegc/images/sig-eng.gif" width="214" height="20" alt="Government of Canada" />
+                        <div id="gcwu-sig-eng" title="Government of Canada"><img src="${h.url_for_static('/build/theme-gcwu-fegc/images/sig-eng.gif')}" width="214" height="20" alt="Government of Canada" />
                         </div>
                       </div>
                     </div>
@@ -109,13 +109,13 @@
               <div id="gcwu-bnr-in">
                 <div id="gcwu-wmms">
                   <div id="gcwu-wmms-in">
-                    <div id="gcwu-wmms-fip" title="Symbol of the Government of Canada"><img src="../../build/theme-gcwu-fegc/images/wmms.gif" width="126" height="30" alt="Symbol of the Government of Canada" />
+                    <div id="gcwu-wmms-fip" title="Symbol of the Government of Canada"><img src="${h.url_for_static('build/theme-gcwu-fegc/images/wmms.gif')}" width="126" height="30" alt="Symbol of the Government of Canada" />
                     </div>
                   </div>
                 </div>
                 <div id="gcwu-title">
                   <p id="gcwu-title-in">
-                    <a href="/en">Open Data</a>
+                    <a href="/eng">Open Data</a>
                   </p>
                 </div>
 
@@ -143,81 +143,81 @@
                       <ul class="mb-menu">
                         <li>
                           <section>
-                            <h3><a href="/dataset">Browse by department</a></h3>
+                            <h3><a href="${h.url_for('/dataset')}">Browse by department</a></h3>
                             <div class="mb-sm">
                               <div class="span-2">
                                 <ul>
                                   <li>
-                                    <a href="/dataset">Agriculture and Agri-Food Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Agriculture and Agri-Food Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Atlantic Canada Opportunities Agency</a>
+                                    <a href="${h.url_for('/dataset')}">Atlantic Canada Opportunities Agency</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Canada Border Services Agency</a>
+                                    <a href="${h.url_for('/dataset')}">Canada Border Services Agency</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Canada Revenue Agency</a>
+                                    <a href="${h.url_for('/dataset')}">Canada Revenue Agency</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Canadian International Development Agency</a>
+                                    <a href="${h.url_for('/dataset')}">Canadian International Development Agency</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Canadian Space Agency</a>
+                                    <a href="${h.url_for('/dataset')}">Canadian Space Agency</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Citizenship and Immigration Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Citizenship and Immigration Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Department of Finance Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Department of Finance Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Environment Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Environment Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Fisheries and Oceans Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Fisheries and Oceans Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Foreign Affairs and International Trade Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Foreign Affairs and International Trade Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Health Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Health Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Industry Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Industry Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Library and Archives Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Library and Archives Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Library of Parliament</a>
+                                    <a href="${h.url_for('/dataset')}">Library of Parliament</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">National Defence</a>
+                                    <a href="${h.url_for('/dataset')}">National Defence</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Natural Resources Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Natural Resources Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Public Safety Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Public Safety Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Public Works and Government Services Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Public Works and Government Services Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Statistics Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Statistics Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Transport Canada</a>
+                                    <a href="${h.url_for('/dataset')}">Transport Canada</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Treasury Board of Canada Secretariat</a>
+                                    <a href="${h.url_for('/dataset')}">Treasury Board of Canada Secretariat</a>
                                   </li>
                                 </ul>
                               </div>
                               <div class="clear"></div>
                               <div class="mb-main-link">
-                                <a href="/dataset">Browse by department</a>
+                                <a href="${h.url_for('/dataset')}">Browse by department</a>
                               </div>
                             </div>
                           </section>
@@ -229,64 +229,64 @@
                               <div class="span-2">
                                 <ul>
                                   <li>
-                                    <a href="/dataset">Agriculture</a>
+                                    <a href="${h.url_for('/dataset')}">Agriculture</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Arts, Music, Literature</a>
+                                    <a href="${h.url_for('/dataset')}">Arts, Music, Literature</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Economics and Industry</a>
+                                    <a href="${h.url_for('/dataset')}">Economics and Industry</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Education and Training</a>
+                                    <a href="${h.url_for('/dataset')}">Education and Training</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Government and Politics</a>
+                                    <a href="${h.url_for('/dataset')}">Government and Politics</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Health and Safety</a>
+                                    <a href="${h.url_for('/dataset')}">Health and Safety</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">History and Archaeology</a>
+                                    <a href="${h.url_for('/dataset')}">History and Archaeology</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Information and Communications</a>
+                                    <a href="${h.url_for('/dataset')}">Information and Communications</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Labour</a>
+                                    <a href="${h.url_for('/dataset')}">Labour</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Language and Linguistics</a>
+                                    <a href="${h.url_for('/dataset')}">Language and Linguistics</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Law</a>
+                                    <a href="${h.url_for('/dataset')}">Law</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Military</a>
+                                    <a href="${h.url_for('/dataset')}">Military</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Nature and Environment</a>
+                                    <a href="${h.url_for('/dataset')}">Nature and Environment</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Persons</a>
+                                    <a href="${h.url_for('/dataset')}">Persons</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Processes</a>
+                                    <a href="${h.url_for('/dataset')}">Processes</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Science and Technology</a>
+                                    <a href="${h.url_for('/dataset')}">Science and Technology</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Society and Culture</a>
+                                    <a href="${h.url_for('/dataset')}">Society and Culture</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Transport</a>
+                                    <a href="${h.url_for('/dataset')}">Transport</a>
                                   </li>
                                 </ul>
                               </div>
                               <div class="clear"></div>
                               <div class="mb-main-link">
-                                <a href="/dataset">Browse by subject</a>
+                                <a href="${h.url_for('/dataset')}">Browse by subject</a>
                               </div>
                             </div>
                           </section>
@@ -298,22 +298,22 @@
                               <div class="span-2">
                                 <ul>
                                   <li>
-                                    <a href="/dataset">CSV/Text</a>
+                                    <a href="${h.url_for('/dataset')}">CSV/Text</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">KML/KMZ</a>
+                                    <a href="${h.url_for('/dataset')}">KML/KMZ</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">RDF</a>
+                                    <a href="${h.url_for('/dataset')}">RDF</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">RSS/GeoRSS</a>
+                                    <a href="${h.url_for('/dataset')}">RSS/GeoRSS</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">Shapefile</a>
+                                    <a href="${h.url_for('/dataset')}">Shapefile</a>
                                   </li>
                                   <li>
-                                    <a href="/dataset">XML</a>
+                                    <a href="${h.url_for('/dataset')}">XML</a>
                                   </li>
                                 </ul>
                               </div>
