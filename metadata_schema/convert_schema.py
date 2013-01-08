@@ -115,6 +115,7 @@ SECTIONS_FIELDS = [
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
+    languages
     property_name
     iso_multiplicity
     gc_multiplicity
@@ -122,6 +123,9 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
+    controlled_vocabulary_reference_en
+    controlled_vocabulary_reference_fr
+    implementation_plan
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
@@ -264,6 +268,10 @@ def main():
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
                 'existing': field in EXISTING_FIELDS,
+                'controlled_vocabulary_reference_en':
+                    p.controlled_vocabulary_reference_en,
+                'controlled_vocabulary_reference_fr':
+                    p.controlled_vocabulary_reference_fr,
                 }
             f = FIELD_MAPPING.get(field)
             if f:
