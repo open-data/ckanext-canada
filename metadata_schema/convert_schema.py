@@ -27,8 +27,7 @@ SECTIONS_FIELDS = [
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
         'language',
-        #'name', - optional in proposed, REQUIRED here!
-        'url',
+        'name', #- optional in proposed, REQUIRED here!
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author',
         'author_email',
@@ -40,7 +39,7 @@ SECTIONS_FIELDS = [
         #'date', - doesn't apply, use resource created or last_modified
         #'data_modified', - doesn't apply, use resource last_modified
         #'date_type', doesn't apply, (see above) and use revisioned resources
-        'info',
+        'notes',
         #'status', use resource description (?) not appropriate?
         #'language', use resource name instead (?)
         'character_set', # poor name! text encoding is better. per resource?
@@ -55,7 +54,7 @@ SECTIONS_FIELDS = [
     ("Data Series", [
         'data_series_name',
         'issue_identification', # related to 'name'/'url' above
-        'data_series_url',
+        'url',
         ]),
     ("Thesaurus-GC Core Subject Thesaurus", [
         'subject', # TODO: create tag vocabulary for this
@@ -130,13 +129,14 @@ ProposedField = namedtuple("ProposedField", """
 
 # 'proposed name' : 'new or existing CKAN field name'
 PROPOSED_TO_EXISTING_FIELDS = {
-    'dataset_uri_dataset_unique_identifier': 'url',
+    'dataset_uri_dataset_unique_identifier': 'name',
     'organization_name': 'author',
     'contact': 'author_email',
     'email': 'maintainer_email',
     'title': 'title',
-    'abstract': 'info',
+    'abstract': 'notes',
     'keyword': 'tags',
+    'data_series_url': 'url',
     }
 EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
@@ -154,10 +154,10 @@ FIELD_MAPPING = {
     'date': 'date_released',
     'date_modified': 'date_update',
     'maintenance_and_update_frequency': 'frequency',
-    'info': 'description_en',
+    'notes': 'description_en',
     'tags': 'keywords_en',
     'program_url': 'program_page_en', # note: different than French
-    'data_series_url': 'data_series_url_en',
+    'url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information_other': 'supplementary_documentation_en',
     'geographic_region_name': 'Geographic_Region_Name',
@@ -170,10 +170,10 @@ FIELD_MAPPING = {
 # 'new field name' : '2012 French field name'
 BILINGUAL_FIELDS = {
     'title': 'title_fr',
-    'info': 'description_fr',
+    'notes': 'description_fr',
     'tags': 'keywords_fr',
     'program_url': 'program_url_fr',
-    'data_series_url': 'data_series_url_fr',
+    'url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
