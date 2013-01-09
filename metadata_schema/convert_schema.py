@@ -18,7 +18,7 @@ PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
-LANGS = 'en', 'fr'
+LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
@@ -122,8 +122,8 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
-    controlled_vocabulary_reference_en
-    controlled_vocabulary_reference_fr
+    controlled_vocabulary_reference_eng
+    controlled_vocabulary_reference_fra
     implementation_plan
     """)
 
@@ -167,7 +167,7 @@ FIELD_MAPPING = {
     }
 
 
-# 'new field name' : '2012 French field name'
+# 'new field name' : 'pilot field name'
 BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'notes': 'description_fr',
@@ -181,13 +181,12 @@ BILINGUAL_FIELDS = {
 
 def lang_versions(root, xp):
     """
-    Return {'en': english_text, 'fr': french_text} dict for a given
+    Return {'eng': english_text, 'fra': french_text} dict for a given
     xpath xp.
     """
-    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang)
+    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang[:2])
         for lang in LANGS}
-    assert out['en'], "Not found: %s" % xp
-    assert out['fr'], "Not found: %s" % xp
+    assert all(out[lang] for lang in LANGS), "Not all langs found: %s" % xp
     return {k:v[0].text for k, v in out.items()}
 
 def pilot_choices(name):
@@ -268,10 +267,10 @@ def main():
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
                 'existing': field in EXISTING_FIELDS,
-                'controlled_vocabulary_reference_en':
-                    p.controlled_vocabulary_reference_en,
-                'controlled_vocabulary_reference_fr':
-                    p.controlled_vocabulary_reference_fr,
+                'controlled_vocabulary_reference_eng':
+                    p.controlled_vocabulary_reference_eng,
+                'controlled_vocabulary_reference_fra':
+                    p.controlled_vocabulary_reference_fra,
                 }
             f = FIELD_MAPPING.get(field)
             if f:
@@ -288,10 +287,10 @@ def main():
                     new_field['choices'] = pilot_choices(f)
                     new_field['type'] = 'choice'
 
-            old_id_fr = BILINGUAL_FIELDS.get(field, None)
-            if old_id_fr:
-                new_field['pilot_id_fr'] = old_id_fr
-            new_field['bilingual'] = bool(old_id_fr)
+            old_id_fra = BILINGUAL_FIELDS.get(field, None)
+            if old_id_fra:
+                new_field['pilot_id_fra'] = old_id_fra
+            new_field['bilingual'] = bool(old_id_fra)
 
             new_section['fields'].append(new_field)
         schema_out['sections_fields'].append(new_section)
