@@ -73,7 +73,7 @@
           "example": "http://host/path/ download", 
           "existing": true, 
           "gc_multiplicity": "O", 
-          "id": "url", 
+          "id": "name", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.2.10", 
           "proposed_name": {
@@ -1025,7 +1025,7 @@
             "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
           }, 
-          "id": "info", 
+          "id": "notes", 
           "iso_multiplicity": "M", 
           "name": {
             "en": "Description English", 
@@ -1264,13 +1264,13 @@
             "en": "URL"
           }, 
           "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
-          "existing": false, 
+          "existing": true, 
           "gc_multiplicity": "O", 
           "help": {
             "en": "The URL that links to the top level in the repository in which the dataset resides.", 
             "fr": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
           }, 
-          "id": "data_series_url", 
+          "id": "url", 
           "iso_multiplicity": "O", 
           "name": {
             "en": "Data Series URL English", 
