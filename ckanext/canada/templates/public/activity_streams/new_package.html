@@ -5,10 +5,14 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   py:strip=""
   >
-${h.activity_div(
-  template=_("{actor} created the dataset {object}"),
-  activity=activity,
-  actor=h.linked_user(activity.user_id),
-  object=h.dataset_link(activity.data.package),
-  )}
+
+<?python
+  import ckanext.canada.web as w
+  import ckan.lib.helpers as h
+?>
+
+${w.render_new_dataset(
+  template=_("{actor} created a new dataset: {object}"), 
+  activity=activity)}
+  
 </html>

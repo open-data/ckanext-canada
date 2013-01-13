@@ -24,7 +24,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="${h.url_for_static(g.favicon)}" />
     <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
-
+    
+    <?python
+      from pylons import config
+      base_theme_enabled = config.get('wet_base_enabled', 'no')
+      if base_theme_enabled == 'yes':
+        wet_css = '/build/theme-base/css/theme-min.css'
+        wet_no_css = '/build/theme-base/css/theme-ns-min.css'
+      else:
+        wet_css = '/build/theme-gcwu-fegc/css/theme-min.css'
+        wet_no_css = '/build/theme-gcwu-fegc/css/theme-ns-min.css'
+    ?>
+    
     <!--
     <py:choose>
     <py:when test="defined('optional_feed')">
@@ -44,10 +55,11 @@
     <!--[if gt IE 8]><!-->
     <link rel="stylesheet" href="${h.url_for_static('/build/grids/css/util-min.css')}"/>
     <link rel="stylesheet" href="${h.url_for_static('/build/js/css/pe-ap-min.css')}"/>
-    <link rel="stylesheet" href="${h.url_for_static('/build/theme-gcwu-fegc/css/theme-min.css')}"/>
+    <link rel="stylesheet" href="${h.url_for_static(wet_css)}"/>
+
     <!--<![endif]-->
     <noscript>
-      <link rel="stylesheet" href="${h.url_for_static('/build/theme-gcwu-fegc/css/theme-ns-min.css')}"/>
+      <link  rel="stylesheet" href="${h.url_for_static()}"/>
     </noscript>
 
     <py:if test="defined('optional_head')">
@@ -600,10 +612,11 @@
           ${ h.snippet('snippets/internal-tracking.html') }
         </py:if>
 
-        <!-- ScriptsStart -->
-        <script src="/build/theme-gcwu-fegc/js/theme-min.js"></script>
-        <script src="/build/js/settings.js"></script>
-        <script src="/build/js/pe-ap-min.js"></script>
+        <!-- ScriptsStart --> 
+
+        <script src="${h.url_for_static('/build/theme-gcwu-fegc/js/theme-min.js')}"></script>
+        <script src="${h.url_for_static('/build/js/settings.js')}"></script>
+        <script src="${h.url_for_static('/build/js/pe-ap-min.js')}"></script>
         <!-- ScriptsEnd -->
 
       </div>
