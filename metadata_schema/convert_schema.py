@@ -26,13 +26,13 @@ SECTIONS_FIELDS = [
         #'file_identifier', - unique ID, provided by ckan as 'id'
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
-        'language',
+        #'language', - XXX EXPORT ONLY - Always "eng; CAN, fra; CAN"
         'name', #- optional in proposed, REQUIRED here!
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
-        'author',
-        'author_email',
-        'metadata_standard_name', # won't they all be the same?
-        'catalog_type',
+        'author', # XXX set to GC Department (ckan group), no data entry
+        'author_email', # XXX set to single common email, no data entry
+        #'metadata_standard_name', - XXX EXPORT ONLY - Always same for all
+        'catalog_type', # will control field validation in the future
         ]),
     ("Dataset Identification Information", [
         'title',
@@ -41,15 +41,13 @@ SECTIONS_FIELDS = [
         #'date_type', doesn't apply, (see above) and use revisioned resources
         'notes',
         #'status', use resource description (?) not appropriate?
-        #'language', use resource name instead (?)
-        'character_set', # poor name! text encoding is better. per resource?
-        'maintenance_and_update_frequency',
+        #'character_set', not req'd: UTF-8 is our new standard encoding :-)
         ]),
     ("Supplemental Information", [
         'program_url',
-        'data_dictionary', # may end up as a resource
+        #'data_dictionary', stored as resources
         'supplemental_information_other',
-        #'additional_metadata', use extra fields instead
+        #'additional_metadata', not required (use supplemental..other field)
         ]),
     ("Data Series", [
         'data_series_name',
@@ -74,22 +72,6 @@ SECTIONS_FIELDS = [
         'tags',
         #'type', - no place for this at the moment
         ]),
-    ("Contact Information", [ # NOTE: these can't be repeated at the moment
-        'individual_name',
-        #'organization_name', - appears as 'author' above
-        'position_name',
-        'telephone_number_voice',
-        'fax_number',
-        'delivery_point_civic_address',
-        'city',
-        'state_province',
-        'postal_code',
-        'country',
-        'maintainer_email',
-        'online_resource',
-        'hours_of_service',
-        'roles',
-        ]),
     ("Extent", [
         'begin_position', # need to investigate searching
         'end_position',
@@ -110,6 +92,21 @@ SECTIONS_FIELDS = [
         #'description', - resource.description
         #'format_name', - resource.resource_type
         #'format_version', - part of resource.resource_type (?)
+    ]
+
+# Resource fields (no sections)
+RESOURCE_FIELDS = [
+    'url',
+    'size',
+    'format',
+    'language',
+    'maintenance_and_update_frequency',
+    ]
+
+EXISTING_RESOURCE_FIELDS = [
+    'url',
+    'format',
+    'size',
     ]
 
 # The field order here must match the proposed schema spreadsheet
@@ -140,7 +137,8 @@ PROPOSED_TO_EXISTING_FIELDS = {
     }
 EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
-# 'new field name': '2012 field name'
+# FOR IMPORTING ENGLISH FIELDS FROM PILOT
+# 'new field name': 'pilot field name'
 FIELD_MAPPING = {
     'author_email': 'owner',
     'individual_name': 'contact_name',
@@ -148,7 +146,7 @@ FIELD_MAPPING = {
     'telephone_number_voice': 'contact_phone',
     'maintainer_email': 'contact_email',
     'title': 'title_en',
-    'author': 'department',
+    'author': 'department', # FIXME: will this be replaced by group owner?
     'subject': 'category',
     'language': 'language__',
     'date': 'date_released',
@@ -166,7 +164,8 @@ FIELD_MAPPING = {
     'data_series_name': 'group_name_en',
     }
 
-
+# FOR IMPORTING FRENCH FIELDS FROM PILOT,
+# and marking French fields (value=None)
 # 'new field name' : 'pilot field name'
 BILINGUAL_FIELDS = {
     'title': 'title_fr',
@@ -177,6 +176,7 @@ BILINGUAL_FIELDS = {
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
+    'issue_identification': None,
     }
 
 def lang_versions(root, xp):
