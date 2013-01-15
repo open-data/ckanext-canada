@@ -104,9 +104,14 @@ RESOURCE_FIELDS = [
     ]
 
 EXISTING_RESOURCE_FIELDS = [
+    'name',
     'url',
     'format',
     'size',
+    ]
+
+BILINGUAL_RESOURCE_FIELDS = [
+    'name',
     ]
 
 # The field order here must match the proposed schema spreadsheet
@@ -140,11 +145,11 @@ EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 # FOR IMPORTING ENGLISH FIELDS FROM PILOT
 # 'new field name': 'pilot field name'
 FIELD_MAPPING = {
-    'author_email': 'owner',
+    #'author_email': 'owner',
     'individual_name': 'contact_name',
     'position_name': 'contact_title',
     'telephone_number_voice': 'contact_phone',
-    'maintainer_email': 'contact_email',
+    #'maintainer_email': 'contact_email', - will have a single common email
     'title': 'title_en',
     'author': 'department', # FIXME: will this be replaced by group owner?
     'subject': 'category',
@@ -290,7 +295,7 @@ def main():
             old_id_fra = BILINGUAL_FIELDS.get(field, None)
             if old_id_fra:
                 new_field['pilot_id_fra'] = old_id_fra
-            new_field['bilingual'] = bool(old_id_fra)
+            new_field['bilingual'] = field in BILINGUAL_FIELDS
 
             new_section['fields'].append(new_field)
         schema_out['sections_fields'].append(new_section)
