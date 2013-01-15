@@ -27,4 +27,5 @@ setup(
         [ckan.plugins]
 	canada_public=ckanext.canada.plugins:DataGCCAPublic
 	""",
+        test_suite="ckanext.canada.tests",
 )

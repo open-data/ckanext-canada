@@ -13,9 +13,9 @@ class MetadataSchema(object):
 
         from ckanext.canada.metadata_schema import schema_description
 
-    The ordered list of fields available as::
+    The ordered list of dataset fields available as::
 
-        schema_description.fields
+        schema_description.dataset_fields
 
     Fields are dicts with keys such as 'id', 'name', 'help', etc.
     The ordered list of sections are available as::
@@ -23,6 +23,10 @@ class MetadataSchema(object):
         schema_description.sections
 
     Sections are dicts with keys including 'name' and 'fields'.
+
+    The ordered list of resource fields are available as::
+
+        schema_description.resource_fields
     """
     def __init__(self):
         with open(_JSON_NAME) as j:
@@ -30,12 +34,13 @@ class MetadataSchema(object):
 
         self.intro = schema['intro']
         self.languages = schema['languages']
-        self.sections = schema['sections_fields']
-        self.fields = []
-        for s in self.sections:
-            self.fields.extend(s['fields'])
+        self.dataset_sections = schema['dataset_sections']
+        self.dataset_fields = []
+        for s in self.dataset_sections:
+            self.dataset_fields.extend(s['fields'])
+        self.resource_fields = schema['resource_fields']
 
-    def fields_by_ckan_id(self, include_existing=True, section=None):
+    def dataset_fields_by_ckan_id(self, include_existing=True, section=None):
         """
         Generate (field_name, language, field) tuples for filling
         in CKAN field information.
@@ -53,3 +58,11 @@ class MetadataSchema(object):
                 yield ("%s_%s" % (f['id'], self.languages[1]),
                     self.languages[1],
                     f)
+
+# FIXME: remove these
+for old, new in [('sections', 'dataset_sections'),
+        ('fields', 'dataset_fields'),
+        ('fields_by_ckan_id', 'dataset_fields_by_ckan_id')]:
+    def nope(self, old=old, new=new):
+        assert 0, '%s was renamed to %s' % (old, new)
+    setattr(MetadataSchema, old, property(nope))

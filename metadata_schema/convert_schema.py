@@ -18,7 +18,7 @@ PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
-LANGS = 'en', 'fr'
+LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
@@ -26,13 +26,13 @@ SECTIONS_FIELDS = [
         #'file_identifier', - unique ID, provided by ckan as 'id'
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
-        'language',
+        #'language', - XXX EXPORT ONLY - Always "eng; CAN, fra; CAN"
         'name', #- optional in proposed, REQUIRED here!
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
-        'author',
-        'author_email',
-        'metadata_standard_name', # won't they all be the same?
-        'catalog_type',
+        'author', # XXX set to GC Department (ckan group), no data entry
+        'author_email', # XXX set to single common email, no data entry
+        #'metadata_standard_name', - XXX EXPORT ONLY - Always same for all
+        'catalog_type', # will control field validation in the future
         ]),
     ("Dataset Identification Information", [
         'title',
@@ -41,15 +41,13 @@ SECTIONS_FIELDS = [
         #'date_type', doesn't apply, (see above) and use revisioned resources
         'notes',
         #'status', use resource description (?) not appropriate?
-        #'language', use resource name instead (?)
-        'character_set', # poor name! text encoding is better. per resource?
-        'maintenance_and_update_frequency',
+        #'character_set', not req'd: UTF-8 is our new standard encoding :-)
         ]),
     ("Supplemental Information", [
         'program_url',
-        'data_dictionary', # may end up as a resource
+        #'data_dictionary', stored as resources
         'supplemental_information_other',
-        #'additional_metadata', use extra fields instead
+        #'additional_metadata', not required (use supplemental..other field)
         ]),
     ("Data Series", [
         'data_series_name',
@@ -74,22 +72,6 @@ SECTIONS_FIELDS = [
         'tags',
         #'type', - no place for this at the moment
         ]),
-    ("Contact Information", [ # NOTE: these can't be repeated at the moment
-        'individual_name',
-        #'organization_name', - appears as 'author' above
-        'position_name',
-        'telephone_number_voice',
-        'fax_number',
-        'delivery_point_civic_address',
-        'city',
-        'state_province',
-        'postal_code',
-        'country',
-        'maintainer_email',
-        'online_resource',
-        'hours_of_service',
-        'roles',
-        ]),
     ("Extent", [
         'begin_position', # need to investigate searching
         'end_position',
@@ -112,6 +94,27 @@ SECTIONS_FIELDS = [
         #'format_version', - part of resource.resource_type (?)
     ]
 
+# Resource fields (no sections)
+RESOURCE_FIELDS = [
+    'url',
+    'name',
+    'size',
+    'format',
+    'language',
+    'maintenance_and_update_frequency',
+    ]
+
+EXISTING_RESOURCE_FIELDS = set([
+    'name',
+    'url',
+    'format',
+    'size',
+    ])
+
+BILINGUAL_RESOURCE_FIELDS = set([
+    'name',
+    ])
+
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
     languages
@@ -122,12 +125,14 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
-    controlled_vocabulary_reference_en
-    controlled_vocabulary_reference_fr
+    controlled_vocabulary_reference_eng
+    controlled_vocabulary_reference_fra
     implementation_plan
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
+# other dataset fields that match are assumed to be
+# the same as their proposed fields
 PROPOSED_TO_EXISTING_FIELDS = {
     'dataset_uri_dataset_unique_identifier': 'name',
     'organization_name': 'author',
@@ -137,18 +142,26 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'abstract': 'notes',
     'keyword': 'tags',
     'data_series_url': 'url',
+    # resource fields
+    'format_name': 'resource:format',
+    'transfer_size': 'resource:size',
+    'linkage_url': 'resource:url',
+    'language': 'resource:language',
+    'maintenance_and_update_frequency':
+        'resource:maintenance_and_update_frequency',
     }
 EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
-# 'new field name': '2012 field name'
+# FOR IMPORTING ENGLISH FIELDS FROM PILOT
+# 'new field name': 'pilot field name'
 FIELD_MAPPING = {
-    'author_email': 'owner',
+    #'author_email': 'owner',
     'individual_name': 'contact_name',
     'position_name': 'contact_title',
     'telephone_number_voice': 'contact_phone',
-    'maintainer_email': 'contact_email',
+    #'maintainer_email': 'contact_email', - will have a single common email
     'title': 'title_en',
-    'author': 'department',
+    'author': 'department', # FIXME: will this be replaced by group owner?
     'subject': 'category',
     'language': 'language__',
     'date': 'date_released',
@@ -166,8 +179,9 @@ FIELD_MAPPING = {
     'data_series_name': 'group_name_en',
     }
 
-
-# 'new field name' : '2012 French field name'
+# FOR IMPORTING FRENCH FIELDS FROM PILOT,
+# and marking French fields (value=None)
+# 'new field name' : 'pilot field name'
 BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'notes': 'description_fr',
@@ -177,17 +191,17 @@ BILINGUAL_FIELDS = {
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
+    'issue_identification': None,
     }
 
 def lang_versions(root, xp):
     """
-    Return {'en': english_text, 'fr': french_text} dict for a given
+    Return {'eng': english_text, 'fra': french_text} dict for a given
     xpath xp.
     """
-    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang)
+    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang[:2])
         for lang in LANGS}
-    assert out['en'], "Not found: %s" % xp
-    assert out['fr'], "Not found: %s" % xp
+    assert all(out[lang] for lang in LANGS), "Not all langs found: %s" % xp
     return {k:v[0].text for k, v in out.items()}
 
 def pilot_choices(name):
@@ -237,7 +251,8 @@ def read_proposed_fields():
 
 def main():
     schema_out = {
-        'sections_fields': [],
+        'dataset_sections': [],
+        'resource_fields': [],
         'languages': list(LANGS),
         }
 
@@ -268,10 +283,10 @@ def main():
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
                 'existing': field in EXISTING_FIELDS,
-                'controlled_vocabulary_reference_en':
-                    p.controlled_vocabulary_reference_en,
-                'controlled_vocabulary_reference_fr':
-                    p.controlled_vocabulary_reference_fr,
+                'controlled_vocabulary_reference_eng':
+                    p.controlled_vocabulary_reference_eng,
+                'controlled_vocabulary_reference_fra':
+                    p.controlled_vocabulary_reference_fra,
                 }
             f = FIELD_MAPPING.get(field)
             if f:
@@ -288,13 +303,38 @@ def main():
                     new_field['choices'] = pilot_choices(f)
                     new_field['type'] = 'choice'
 
-            old_id_fr = BILINGUAL_FIELDS.get(field, None)
-            if old_id_fr:
-                new_field['pilot_id_fr'] = old_id_fr
-            new_field['bilingual'] = bool(old_id_fr)
+            old_id_fra = BILINGUAL_FIELDS.get(field, None)
+            if old_id_fra:
+                new_field['pilot_id_fra'] = old_id_fra
+            new_field['bilingual'] = field in BILINGUAL_FIELDS
 
             new_section['fields'].append(new_field)
-        schema_out['sections_fields'].append(new_section)
+        schema_out['dataset_sections'].append(new_section)
+
+    for rfield in RESOURCE_FIELDS:
+        new_rfield = {
+            'id': rfield,
+            'existing': rfield in EXISTING_RESOURCE_FIELDS,
+            'bilingual': rfield in BILINGUAL_RESOURCE_FIELDS,
+            }
+        p = proposed.get('resource:' + rfield, None)
+        if p:
+            new_rfield.update({
+                'proposed_name': {'en': p.property_name},
+                'iso_multiplicity': p.iso_multiplicity,
+                'gc_multiplicity': p.gc_multiplicity,
+                'description': {'en': p.description},
+                'example': p.example,
+                'nap_iso_19115_ref': p.nap_iso_19115_ref,
+                'domain_best_practice': {'en': p.domain_best_practice},
+                'existing': field in EXISTING_FIELDS,
+                'controlled_vocabulary_reference_eng':
+                    p.controlled_vocabulary_reference_eng,
+                'controlled_vocabulary_reference_fra':
+                    p.controlled_vocabulary_reference_fra,
+
+                })
+        schema_out['resource_fields'].append(new_rfield)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
