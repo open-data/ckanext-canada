@@ -97,22 +97,23 @@ SECTIONS_FIELDS = [
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
     'url',
+    'name',
     'size',
     'format',
     'language',
     'maintenance_and_update_frequency',
     ]
 
-EXISTING_RESOURCE_FIELDS = [
+EXISTING_RESOURCE_FIELDS = set([
     'name',
     'url',
     'format',
     'size',
-    ]
+    ])
 
-BILINGUAL_RESOURCE_FIELDS = [
+BILINGUAL_RESOURCE_FIELDS = set([
     'name',
-    ]
+    ])
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
@@ -130,6 +131,8 @@ ProposedField = namedtuple("ProposedField", """
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
+# other dataset fields that match are assumed to be
+# the same as their proposed fields
 PROPOSED_TO_EXISTING_FIELDS = {
     'dataset_uri_dataset_unique_identifier': 'name',
     'organization_name': 'author',
@@ -139,6 +142,13 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'abstract': 'notes',
     'keyword': 'tags',
     'data_series_url': 'url',
+    # resource fields
+    'format_name': 'resource:format',
+    'transfer_size': 'resource:size',
+    'linkage_url': 'resource:url',
+    'language': 'resource:language',
+    'maintenance_and_update_frequency':
+        'resource:maintenance_and_update_frequency',
     }
 EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
@@ -299,6 +309,32 @@ def main():
 
             new_section['fields'].append(new_field)
         schema_out['sections_fields'].append(new_section)
+
+    schema_out['resources'] = []
+    for rfield in RESOURCE_FIELDS:
+        new_rfield = {
+            'id': rfield,
+            'existing': rfield in EXISTING_RESOURCE_FIELDS,
+            'bilingual': rfield in BILINGUAL_RESOURCE_FIELDS,
+            }
+        p = proposed.get('resource:' + rfield, None)
+        if p:
+            new_rfield.update({
+                'proposed_name': {'en': p.property_name},
+                'iso_multiplicity': p.iso_multiplicity,
+                'gc_multiplicity': p.gc_multiplicity,
+                'description': {'en': p.description},
+                'example': p.example,
+                'nap_iso_19115_ref': p.nap_iso_19115_ref,
+                'domain_best_practice': {'en': p.domain_best_practice},
+                'existing': field in EXISTING_FIELDS,
+                'controlled_vocabulary_reference_eng':
+                    p.controlled_vocabulary_reference_eng,
+                'controlled_vocabulary_reference_fra':
+                    p.controlled_vocabulary_reference_fra,
+
+                })
+        schema_out['resources'].append(new_rfield)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 

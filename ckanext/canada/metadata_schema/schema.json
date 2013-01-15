@@ -7,6 +7,113 @@
     "eng", 
     "fra"
   ], 
+  "resources": [
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "description": {
+        "en": "Electronic location where the resource can be found. If the dataset is available online on either the Internet or Intranet, the web address should be entered here."
+      }, 
+      "domain_best_practice": {
+        "en": "Free text."
+      }, 
+      "example": "http://www.ec.gc.ca/dataset", 
+      "existing": false, 
+      "gc_multiplicity": "M", 
+      "id": "url", 
+      "iso_multiplicity": "M", 
+      "nap_iso_19115_ref": "5.20.1", 
+      "proposed_name": {
+        "en": "Linkage (URL)"
+      }
+    }, 
+    {
+      "bilingual": true, 
+      "existing": true, 
+      "id": "name"
+    }, 
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "description": {
+        "en": "Estimated size of the transfer unit in the specified format"
+      }, 
+      "domain_best_practice": {
+        "en": "Free text."
+      }, 
+      "example": "65 MB", 
+      "existing": false, 
+      "gc_multiplicity": "M", 
+      "id": "size", 
+      "iso_multiplicity": "O", 
+      "nap_iso_19115_ref": "5.11.1.2", 
+      "proposed_name": {
+        "en": "Transfer size"
+      }
+    }, 
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "description": {
+        "en": "The name of the data transfer format(s). Select from drop down"
+      }, 
+      "domain_best_practice": {
+        "en": "Drop down"
+      }, 
+      "example": "xml", 
+      "existing": false, 
+      "gc_multiplicity": "M", 
+      "id": "format", 
+      "iso_multiplicity": "M", 
+      "nap_iso_19115_ref": "5.11.3.1", 
+      "proposed_name": {
+        "en": "Format Name"
+      }
+    }, 
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "description": {
+        "en": "Language(s) used within the dataset."
+      }, 
+      "domain_best_practice": {
+        "en": "Drop down: eng; CAN, fre; CAN"
+      }, 
+      "example": "eng: CAN", 
+      "existing": false, 
+      "gc_multiplicity": "M, Repeat.", 
+      "id": "language", 
+      "iso_multiplicity": "M, Repeat.", 
+      "nap_iso_19115_ref": "5.3.1.9", 
+      "proposed_name": {
+        "en": "Language"
+      }
+    }, 
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+      "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
+      "description": {
+        "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
+      }, 
+      "domain_best_practice": {
+        "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
+      }, 
+      "example": "daily", 
+      "existing": false, 
+      "gc_multiplicity": "M", 
+      "id": "maintenance_and_update_frequency", 
+      "iso_multiplicity": "O", 
+      "nap_iso_19115_ref": "5.6.1", 
+      "proposed_name": {
+        "en": "Maintenance and Update Frequency"
+      }
+    }
+  ], 
   "sections_fields": [
     {
       "description": {
