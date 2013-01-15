@@ -251,7 +251,8 @@ def read_proposed_fields():
 
 def main():
     schema_out = {
-        'sections_fields': [],
+        'dataset_sections': [],
+        'resource_fields': [],
         'languages': list(LANGS),
         }
 
@@ -308,9 +309,8 @@ def main():
             new_field['bilingual'] = field in BILINGUAL_FIELDS
 
             new_section['fields'].append(new_field)
-        schema_out['sections_fields'].append(new_section)
+        schema_out['dataset_sections'].append(new_section)
 
-    schema_out['resources'] = []
     for rfield in RESOURCE_FIELDS:
         new_rfield = {
             'id': rfield,
@@ -334,7 +334,7 @@ def main():
                     p.controlled_vocabulary_reference_fra,
 
                 })
-        schema_out['resources'].append(new_rfield)
+        schema_out['resource_fields'].append(new_rfield)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
