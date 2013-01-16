@@ -27,8 +27,6 @@ setup(
         [ckan.plugins]
 	canada_public=ckanext.canada.plugins:DataGCCAPublic
 
-        [nose.plugins.0.10]
-        canada_nose_plugin = ckanext.canada.nose_plugin:DataGCCANosePlugin
 	""",
         test_suite="ckanext.canada.tests",
 )
