@@ -20,7 +20,7 @@ class MetadataSchema(object):
     Fields are dicts with keys such as 'id', 'name', 'help', etc.
     The ordered list of sections are available as::
 
-        schema_description.sections
+        schema_description.dataset_sections
 
     Sections are dicts with keys including 'name' and 'fields'.
 
@@ -47,9 +47,9 @@ class MetadataSchema(object):
 
         language will be None for fields only in a single language
         """
-        fields = section.fields if section else self.fields
+        fields = section['fields'] if section else self.dataset_fields
 
-        for f in self.fields:
+        for f in self.dataset_fields:
             if include_existing or not f['existing']:
                 yield (f['id'],
                     self.languages[0] if f['bilingual'] else None,
