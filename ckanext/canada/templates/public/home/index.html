@@ -12,8 +12,7 @@ py:strip=""
 
   <div py:match="content">
 
-
-    <div class="span-4">
+    <div>
       <h1>Find data</h1>
 
       <form action="${h.url_for(controller='package', action='search')}" method="GET">
@@ -25,7 +24,7 @@ py:strip=""
       </p>
     </div>
 
-   <div class="span-4">
+   <div>
       <h1>Share data</h1>
 
       <p>
@@ -42,9 +41,7 @@ py:strip=""
 
     </div>
 
-   <div class="clear"></div>
-
-   <div class="span-4">
+   <div>
       <div class="action-box">
         <div class="action-box-inner collaborate clearfix">
           <h1>Collaborate</h1>
@@ -68,7 +65,7 @@ py:strip=""
       </div>
     </div>
 
-    <div class="span-4">
+    <div>
       <div py:if="c.groups" class="row whoelse">
 
         <h2>Who else is here?</h2>
@@ -90,7 +87,6 @@ py:strip=""
 </div> 
   </div>
 
-
-  <xi:include href="layout.html" />
+  <xi:include href="../layout_base.html" />
 </html>
 
