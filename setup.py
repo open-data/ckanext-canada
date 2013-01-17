@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.1'
+version = '0.1.2'
 
 setup(
 	name='ckanext-canada',
@@ -26,5 +26,6 @@ setup(
 	"""
         [ckan.plugins]
 	canada_public=ckanext.canada.plugins:DataGCCAPublic
+
 	""",
 )
