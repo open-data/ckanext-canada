@@ -70,7 +70,7 @@
   </head>
 
   <body>
-    <div id="wb-body">
+    <div id="wb-body-sec">
 
       <div id="wb-skip">
         <ul id="wb-tphp">
@@ -386,11 +386,10 @@
           <div id="wb-main" role="main" style="min-height: 1312px;">
             <div id="wb-main-in">
               <header>
-
                 <!-- flash messages - every page should have these at the top -->
                 <py:with vars="messages = list(h.flash.pop_messages())">
 
-                  <div py:if="messages" class="span-8">
+                  <div py:if="messages" class="span-6">
                     <blockquote>
                       <div class="flash-messages container">
                         <div class="alert ${m.category}" py:for="m in messages">
@@ -401,10 +400,7 @@
                   </div>
                   <div py:if="messages" class="clear"></div>
                 </py:with>
-
               </header>
-
-              <minornavigation></minornavigation>
 
               <!-- Content pane (required) -->
               <div id="content">
@@ -423,6 +419,9 @@
               <primarysidebar></primarysidebar>
 
             </div>
+          </div>
+          <div id="wb-sec" role="main" style="min-height: 1312px;">
+            <minornavigation></minornavigation>
           </div>
         </div>
       </div>
