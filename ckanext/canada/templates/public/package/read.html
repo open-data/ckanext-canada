@@ -14,31 +14,7 @@
   <py:def function="page_title">${c.pkg_dict.get('title', c.pkg_dict['name'])}
   - Datasets</py:def>
 
-  <py:def function="page_heading" property="dc:title">
-    ${c.pkg_dict['title']}
-  </py:def>
-
   <py:match path="primarysidebar">
-
-    <li py:if="c.pkg.license_id" id="dataset-license" class="sidebar-section">
-      <strong>License:</strong>
-        <py:choose test="">
-          <span py:when="c.pkg_dict.get('license_url')"><a
-              href="${c.pkg_dict.get('license_url')}" rel="dc:rights">${c.pkg_dict.get('license_title')}</a></span>
-          <span py:when="c.pkg.license" property="dc:rights">${c.pkg_dict.get('license_title')}</span>
-        </py:choose>
-
-        <py:if test="c.pkg_dict.get('isopen')">
-            <a href="http://opendefinition.org/okd/" title="This dataset satisfies the Open Definition.">
-              <img class="open-data" src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" alt="[Open Data]" />
-            </a>
-        </py:if>
-        <py:if test="not c.pkg_dict.get('isopen')">
-            <span class="closed">
-              ${h.icon('lock')}
-            </span>
-        </py:if>
-    </li>
 
     <li py:if="c.pkg_dict.get('tags')" class="sidebar-section">
       <h3>Tags</h3>
