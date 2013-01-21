@@ -21,3 +21,18 @@ class TestSchemaDescription(unittest.TestCase):
             self.sd.fields_by_ckan_id
         with self.assertRaises(AssertionError):
             self.sd.sections
+
+    def test_fields_by_ckan_id(self):
+        dataset_fields = list(self.sd.dataset_fields_by_ckan_id())
+        self.assertTrue(len(dataset_fields) > 10)
+
+        resource_fields = list(self.sd.resource_fields_by_ckan_id())
+        self.assertTrue(len(resource_fields) > 3)
+
+        self.assertEquals(len(dataset_fields),
+            sum(len(list(self.sd.dataset_fields_by_ckan_id(section=s)))
+                for s in self.sd.dataset_sections))
+
+        extra_dataset_fields = list(self.sd.dataset_fields_by_ckan_id(False))
+        self.assertTrue(len(dataset_fields) > len(extra_dataset_fields))
+
