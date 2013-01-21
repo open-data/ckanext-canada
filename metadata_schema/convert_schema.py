@@ -327,7 +327,6 @@ def main():
                 'example': p.example,
                 'nap_iso_19115_ref': p.nap_iso_19115_ref,
                 'domain_best_practice': {'en': p.domain_best_practice},
-                'existing': field in EXISTING_FIELDS,
                 'controlled_vocabulary_reference_eng':
                     p.controlled_vocabulary_reference_eng,
                 'controlled_vocabulary_reference_fra':

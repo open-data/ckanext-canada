@@ -1879,7 +1879,7 @@
         "en": "Free text."
       }, 
       "example": "http://www.ec.gc.ca/dataset", 
-      "existing": false, 
+      "existing": true, 
       "gc_multiplicity": "M", 
       "id": "url", 
       "iso_multiplicity": "M", 
@@ -1904,7 +1904,7 @@
         "en": "Free text."
       }, 
       "example": "65 MB", 
-      "existing": false, 
+      "existing": true, 
       "gc_multiplicity": "M", 
       "id": "size", 
       "iso_multiplicity": "O", 
@@ -1924,7 +1924,7 @@
         "en": "Drop down"
       }, 
       "example": "xml", 
-      "existing": false, 
+      "existing": true, 
       "gc_multiplicity": "M", 
       "id": "format", 
       "iso_multiplicity": "M", 
