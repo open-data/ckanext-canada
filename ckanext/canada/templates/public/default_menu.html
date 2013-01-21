@@ -32,6 +32,7 @@
                 </py:when>
                 <py:otherwise>
                   <py:if test="c.id">
+                    <py:if test="c.user_dict">
                     <li class="${'active' if c.action=='read' else ''}">
                       <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">View Profile</a>
                     </li>
@@ -42,11 +43,12 @@
                       action='followers',
                       id=c.user_dict.name)}
                     </li>
-                    <li py:if="c.user">
+                    </py:if>
+                    <li py:if="c.user and c.user_dict">
                       ${h.follow_button('user', c.user_dict.id)}
                     </li>
                   </py:if>
-                  <py:if test="not c.id">
+                  <py:if test="not c.user">
                     <li class="${'active' if c.action=='login' else ''}">
                       <a href="${h.url_for(controller='user', action='login')}">Login</a>
                     </li>

@@ -82,9 +82,7 @@ py:strip=""
             </ul>
           </section>
 
-          <section>
-            <h3><a href="#">My Account</a></h3>
-            <py:if test="c.user">
+            <section>
               <h3><a href="#">My Account</a></h3>
               <ul py:choose="c.is_myself">
                 <py:when test="True">
@@ -102,39 +100,37 @@ py:strip=""
                   </li>
 
                 </py:when>
-              <py:otherwise>
-                <py:if test="c.id">
-                    <li>
+                <py:otherwise>
+                  <py:if test="c.id">
+                    <py:if test="c.user_dict">
+                    <li class="${'active' if c.action=='read' else ''}">
                       <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">View Profile</a>
                     </li>
                     <li class="${'active' if c.action=='followers' else ''}">
                       ${h.subnav_link(
-                      _('Followers ({num_followers})').format(num_followers=h.follow_count('user', c.user_dict.id)),
+                      h.icon('authorization_group') + _('Followers ({num_followers})').format(num_followers=h.follow_count('user', c.user_dict.id)),
                       controller='user',
                       action='followers',
                       id=c.user_dict.name)}
                     </li>
-                    <li py:if="c.user">
+                    </py:if>
+                    <li py:if="c.user and c.user_dict">
                       ${h.follow_button('user', c.user_dict.id)}
+                    </li>
+                  </py:if>
+                  <py:if test="not c.user">
+                    <li class="${'active' if c.action=='login' else ''}">
+                      <a href="${h.url_for(controller='user', action='login')}">Login</a>
+                    </li>
+                    <li class="${'active' if c.action=='register' else ''}">
+                      <a href="${h.url_for(controller='user', action='register')}">Register Account</a>
                     </li>
                   </py:if>
                 </py:otherwise>
               </ul>
 
-            </py:if>
-            <py:if test="not c.user">
-            
-              <ul>
-                <li class="${'active' if c.action=='login' else ''}">
-                  <a href="${h.url_for(controller='user', action='login')}">Login</a>
-                </li>
-                <li class="${'active' if c.action=='register' else ''}">
-                  <a href="${h.url_for(controller='user', action='register')}">Register Account</a>
-                </li>
-              </ul>
-            </py:if>
+            </section>
 
-          </section>
         </div>
       </nav>
     </div>
