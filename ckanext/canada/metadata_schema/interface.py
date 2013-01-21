@@ -48,8 +48,18 @@ class MetadataSchema(object):
         language will be None for fields only in a single language
         """
         fields = section['fields'] if section else self.dataset_fields
+        return self._fields_by_ckan_id(fields, include_existing)
 
-        for f in self.dataset_fields:
+    def resource_fields_by_ckan_id(self, include_existing=True):
+        """
+        Generate (field_name, language, field) tuples for filling
+        in CKAN resource field information.
+        """
+        return self._fields_by_ckan_id(self.resource_fields, include_existing)
+
+    def _fields_by_ckan_id(self, fields, include_existing):
+        "helper for *_fields_by_ckan_id"
+        for f in fields:
             if include_existing or not f['existing']:
                 yield (f['id'],
                     self.languages[0] if f['bilingual'] else None,
@@ -59,6 +69,7 @@ class MetadataSchema(object):
                     self.languages[1],
                     f)
 
+
 # FIXME: remove these
 for old, new in [('sections', 'dataset_sections'),
         ('fields', 'dataset_fields'),
@@ -66,3 +77,5 @@ for old, new in [('sections', 'dataset_sections'),
     def nope(self, old=old, new=new):
         assert 0, '%s was renamed to %s' % (old, new)
     setattr(MetadataSchema, old, property(nope))
+
+
