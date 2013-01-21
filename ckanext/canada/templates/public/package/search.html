@@ -16,7 +16,7 @@ py:strip="">
   <py:match path="primarysidebar">
 
     <div py:if="h.check_access('package_create')">
-      <h3>Add a dataset</h3>
+      <h3>${_("Add a dataset")}</h3>
       <p>
         Do you know of a dataset that should be added to ${g.site_title}?
         <br/>
@@ -51,7 +51,9 @@ py:strip="">
 
   <div py:match="content">
     <xi:include href="search_form.html" />
+    <!-- see _facts.html. This is facets
     ${field_list()}
+     -->
     <py:if test="c.query_error">
       <p i18n:msg="item_count">
         <strong>There was an error while searching.</strong>
@@ -59,7 +61,7 @@ py:strip="">
       </p>
     </py:if>
     <py:if test="request.params">
-      <h4 i18n:msg="item_count"><strong>${c.page.item_count}</strong> datasets found</h4>
+      <h5 i18n:msg="item_count"><strong>${c.page.item_count}</strong> datasets found</h5>
     </py:if>
     <py:if test="c.page.item_count == 0 and request.params">
       <p i18n:msg="">
