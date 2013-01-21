@@ -5,72 +5,127 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 py:strip=""
 >
 
-  <py:match path="minornavigation" py:if="c.pkg">
-      <div id="wb-sec-in">
-        <nav role="navigation">
-          <h2 id="wb=nav">Secondary Menu</h2>
-          <div class="wb-sec-def">
-            <section>
-              <ul>
-                <div class="top-level">
-                  <li><a href="#">Datasets</a></li>
-                </div>
+  <py:match path="minornavigation">
+    <div id="wb-sec-in">
+      <nav role="navigation">
+        <h2 id="wb=nav">Secondary Menu</h2>
+        <div class="wb-sec-def">
+          <section py:if="c.pkg">
+            <ul>
+              <div class="top-level">
                 <li>
-                  ${h.subnav_link(_('View'), controller='package', action='read', id=c.pkg.name)}
+                  <a href="#">Datasets</a>
                 </li>
-                <py:choose test="len(c.pkg_dict.get('resources', []))==0 and not h.check_access('package_update',{'id':c.pkg.id})">
-                  <py:when test="True">
-                    <li>
-                      <a href="#" onclick="return false;">${_('Resources (0)')}</a>
-                    </li>
-                  </py:when>
-                  <py:otherwise>
-                    <li>
-                      <a href="#">${_('Resources') + ' (' + str(len(c.pkg_dict.get('resources',[]))) + ')'}</a>
-                        <ul>
-                          <li py:if="h.check_access('package_update',{'id':c.pkg.id})">
-                            ${h.link_to(_('Add / Edit resources'),
-                            h.url_for(action='editresources', id=c.pkg.name, controller='package')
-                            )}
-                          </li>
-                          <li py:for="res in c.pkg_dict.get('resources', [])">
-                            <a href="${h.url_for(controller='package', action='resource_read', id=c.pkg_dict['name'], resource_id=res['id'])}">${h.resource_display_name(res)}</a>
-                          </li>
-                        </ul>
-                    </li>
-                  </py:otherwise>
-                </py:choose>
-                <li py:if="h.asbool(config.get('ckan.dataset.show_apps_ideas', 'true'))">
-                  ${h.subnav_link(_('Apps, Ideas etc') + ' (%s)' % c.related_count, controller='related', action='list', id=c.pkg.name)}
-                </li>
-                <li>
-                  ${h.subnav_link(_('History'), controller='package', action='history', id=c.pkg.name)}
-                </li>
-                <li>
-                  ${h.subnav_link(
-                  _('Followers ({num_followers})').format(num_followers=h.follow_count('dataset', c.pkg_dict.id)),
-                  controller='package',
-                  action='followers',
-                  id=c.pkg.name)}
-                </li>
-
-                <div py:if="h.check_access('package_update',{'id':c.pkg.id})" class="top-level">
+              </div>
+              <li>
+                ${h.subnav_link(_('View'), controller='package', action='read', id=c.pkg.name)}
+              </li>
+              <py:choose test="len(c.pkg_dict.get('resources', []))==0 and not h.check_access('package_update',{'id':c.pkg.id})">
+                <py:when test="True">
                   <li>
-                    ${h.subnav_link(_('Settings'), controller='package', action='edit', id=c.pkg.name)}
+                    <a href="#" onclick="return false;">${_('Resources (0)')}</a>
                   </li>
-                </div>
-
-                <div py:if="h.check_access('package_edit_permissions',{'id':c.pkg.id})" class="top-level">
+                </py:when>
+                <py:otherwise>
                   <li>
-                    ${h.subnav_link(_('Authorization'), controller='package', action='authz', id=c.pkg.name)}
+                    <a href="#">${_('Resources') + ' (' + str(len(c.pkg_dict.get('resources',[]))) + ')'}</a>
+                    <ul>
+                      <li py:if="h.check_access('package_update',{'id':c.pkg.id})">
+                        ${h.link_to(_('Add / Edit resources'),
+                        h.url_for(action='editresources', id=c.pkg.name, controller='package')
+                        )}
+                      </li>
+                      <li py:for="res in c.pkg_dict.get('resources', [])">
+                        <a href="${h.url_for(controller='package', action='resource_read', id=c.pkg_dict['name'], resource_id=res['id'])}">${h.resource_display_name(res)}</a>
+                      </li>
+                    </ul>
                   </li>
-                </div>
+                </py:otherwise>
+              </py:choose>
+              <li py:if="h.asbool(config.get('ckan.dataset.show_apps_ideas', 'true'))">
+                ${h.subnav_link(_('Apps, Ideas etc') + ' (%s)' % c.related_count, controller='related', action='list', id=c.pkg.name)}
+              </li>
+              <li>
+                ${h.subnav_link(_('History'), controller='package', action='history', id=c.pkg.name)}
+              </li>
+              <li>
+                ${h.subnav_link(
+                _('Followers ({num_followers})').format(num_followers=h.follow_count('dataset', c.pkg_dict.id)),
+                controller='package',
+                action='followers',
+                id=c.pkg.name)}
+              </li>
 
+              <div py:if="h.check_access('package_update',{'id':c.pkg.id})" class="top-level">
+                <li>
+                  ${h.subnav_link(_('Settings'), controller='package', action='edit', id=c.pkg.name)}
+                </li>
+              </div>
+
+              <div py:if="h.check_access('package_edit_permissions',{'id':c.pkg.id})" class="top-level">
+                <li>
+                  ${h.subnav_link(_('Authorization'), controller='package', action='authz', id=c.pkg.name)}
+                </li>
+              </div>
+
+            </ul>
+          </section>
+
+          <section>
+            <py:if test="c.user">
+              <h3><a href="#">My Account</a></h3>
+              <ul py:choose="c.is_myself">
+                <py:when test="True">
+                  <li class="${'active' if c.action=='dashboard' else ''}">
+                    <a href="${h.url_for(controller='user', action='dashboard')}">Dashboard</a>
+                  </li>
+                  <li class="${'active' if c.action=='read' else ''}">
+                    <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">My Profile</a>
+                  </li>
+                  <li class="${'active' if c.action=='edit' else ''}">
+                    <a href="${h.url_for(controller='user', action='edit')}">Edit Profile</a>
+                  </li>
+                  <li>
+                    <a href="${h.url_for('/user/logout')}">Log out</a>
+                  </li>
+
+                </py:when>
+                <py:otherwise>
+                  <py:if test="c.id">
+
+                    <li>
+                      <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">View Profile</a>
+                    </li>
+                    <li class="${'active' if c.action=='followers' else ''}">
+                      ${h.subnav_link(
+                      _('Followers ({num_followers})').format(num_followers=h.follow_count('user', c.user_dict.id)),
+                      controller='user',
+                      action='followers',
+                      id=c.user_dict.name)}
+                    </li>
+                    <li py:if="c.user">
+                      ${h.follow_button('user', c.user_dict.id)}
+                    </li>
+                                </py:if>
+                </py:otherwise>
               </ul>
-            </section>
-          </div>
-        </nav>
-      </div>
+
+            </py:if>
+            <py:if test="not c.id">
+              <ul>
+                <li class="${'active' if c.action=='login' else ''}">
+                  <a href="${h.url_for(controller='user', action='login')}">Login</a>
+                </li>
+                <li class="${'active' if c.action=='register' else ''}">
+                  <a href="${h.url_for(controller='user', action='register')}">Register Account</a>
+                </li>
+              </ul>
+            </py:if>
+
+          </section>
+        </div>
+      </nav>
+    </div>
 
   </py:match>
 
