@@ -1,22 +1,33 @@
 <html
-xmlns="http://www.w3.org/1999/xhtml"
 xmlns:py="http://genshi.edgewall.org/"
 xmlns:xi="http://www.w3.org/2001/XInclude"
 py:strip=""
 >
 
+  <py:match path="breadcrumb">
+    <div id="gcwu-bc">
+      <h2>Breadcrumb trail</h2>
+      <div id="gcwu-bc-in">
+        <ol>
+
+          <li>
+            <a href="${h.url_for(controller='home', action='index')}">Home</a>
+          </li>
+
+        </ol>
+      </div>
+    </div>
+  </py:match>
+
   <py:match path="minornavigation">
+    <div id="wb-sec" style="min-height: 1312px;">
     <div id="wb-sec-in">
       <nav role="navigation">
-        <h2 id="wb=nav">Secondary Menu</h2>
+        <h2 id="wb-nav">Secondary Menu</h2>
         <div class="wb-sec-def">
           <section py:if="c.pkg">
+            <h3><a href="#">Datasets</a></h3>
             <ul>
-              <div class="top-level">
-                <li>
-                  <a href="#">Datasets</a>
-                </li>
-              </div>
               <li>
                 ${h.subnav_link(_('View'), controller='package', action='read', id=c.pkg.name)}
               </li>
@@ -72,6 +83,7 @@ py:strip=""
           </section>
 
           <section>
+            <h3><a href="#">My Account</a></h3>
             <py:if test="c.user">
               <h3><a href="#">My Account</a></h3>
               <ul py:choose="c.is_myself">
@@ -90,9 +102,8 @@ py:strip=""
                   </li>
 
                 </py:when>
-                <py:otherwise>
-                  <py:if test="c.id">
-
+              <py:otherwise>
+                <py:if test="c.id">
                     <li>
                       <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">View Profile</a>
                     </li>
@@ -106,12 +117,13 @@ py:strip=""
                     <li py:if="c.user">
                       ${h.follow_button('user', c.user_dict.id)}
                     </li>
-                                </py:if>
+                  </py:if>
                 </py:otherwise>
               </ul>
 
             </py:if>
-            <py:if test="not c.id">
+            <py:if test="not c.user">
+            
               <ul>
                 <li class="${'active' if c.action=='login' else ''}">
                   <a href="${h.url_for(controller='user', action='login')}">Login</a>
@@ -126,7 +138,7 @@ py:strip=""
         </div>
       </nav>
     </div>
-
+  </div>
   </py:match>
 
   <xi:include href="../layout.html" />
