@@ -1,0 +1,302 @@
+<html
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip=""
+  >
+        <py:match path="themeheader">
+          <header>
+            <!-- HeaderStart -->
+            <nav role="navigation">
+              <div id="gcwu-gcnb">
+                <h2>Government of Canada navigation bar</h2>
+                <div id="gcwu-gcnb-in">
+                  <div id="gcwu-gcnb-fip">
+                    <div id="gcwu-sig">
+                      <div id="gcwu-sig-in">
+                        <div id="gcwu-sig-eng" title="Government of Canada"><img src="${h.url_for_static('/build/theme-gcwu-fegc/images/sig-eng.gif')}" width="214" height="20" alt="Government of Canada" />
+                        </div>
+                      </div>
+                    </div>
+                    <ul>
+                      <li id="gcwu-gcnb1">
+                        <a rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
+                      </li>
+                      <li id="gcwu-gcnb2">
+                        <a rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml">Services</a>
+                      </li>
+                      <li id="gcwu-gcnb3">
+                        <a rel="external" href="http://www.canada.gc.ca/aboutgov-ausujetgouv/depts/menu-eng.html">Departments</a>
+                      </li>
+                      <li id="gcwu-gcnb-lang">
+                        <a href="/fr" lang="fr">Français</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            <div id="gcwu-bnr" role="banner">
+              <div id="gcwu-bnr-in">
+                <div id="gcwu-wmms">
+                  <div id="gcwu-wmms-in">
+                    <div id="gcwu-wmms-fip" title="Symbol of the Government of Canada"><img src="${h.url_for_static('build/theme-gcwu-fegc/images/wmms.gif')}" width="126" height="30" alt="Symbol of the Government of Canada" />
+                    </div>
+                  </div>
+                </div>
+                <div id="gcwu-title">
+                  <p id="gcwu-title-in">
+                    <a href="/eng">Open Data</a>
+                  </p>
+                </div>
+
+                <section role="search">
+                  <div id="gcwu-srchbx">
+                    <h2>Search</h2>
+                    <form action="${h.url(controller='package', action='search')}" method="GET">
+                      <div id="gcwu-srchbx-in">
+                        <label for="gcwu-srch">Search website</label>
+                        <input name="q" value="${c.q if hasattr(c, 'q') else ''}" class="search" placeholder="${_('Find datasets')}" id="gcwu-srch" size="27" maxlength="150" />
+                        <input id="gcwu-srch-submit" name="gcwu-srch-submit" type="submit" value="Search" data-icon="search" />
+                      </div>
+                    </form>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <nav role="navigation">
+              <div id="gcwu-psnb">
+                <h2><span>Site </span>menu</h2>
+                <div id="gcwu-psnb-in">
+                  <div class="wet-boew-menubar mb-mega">
+                    <div>
+                      <ul class="mb-menu">
+                        <li>
+                          <section>
+                            <h3><a href="${h.url_for('/dataset')}">Browse by department</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Agriculture and Agri-Food Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Atlantic Canada Opportunities Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Canada Border Services Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Canada Revenue Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Canadian International Development Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Canadian Space Agency</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Citizenship and Immigration Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Department of Finance Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Environment Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Fisheries and Oceans Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Foreign Affairs and International Trade Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Health Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Industry Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Library and Archives Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Library of Parliament</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">National Defence</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Natural Resources Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Public Safety Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Public Works and Government Services Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Statistics Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Transport Canada</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Treasury Board of Canada Secretariat</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="${h.url_for('/dataset')}">Browse by department</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="section2/index-eng.html">Browse by subject</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Agriculture</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Arts, Music, Literature</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Economics and Industry</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Education and Training</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Government and Politics</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Health and Safety</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">History and Archaeology</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Information and Communications</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Labour</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Language and Linguistics</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Law</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Military</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Nature and Environment</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Persons</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Processes</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Science and Technology</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Society and Culture</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Transport</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="${h.url_for('/dataset')}">Browse by subject</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="#">Browse by file format</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">CSV/Text</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">KML/KMZ</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">RDF</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">RSS/GeoRSS</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">Shapefile</a>
+                                  </li>
+                                  <li>
+                                    <a href="${h.url_for('/dataset')}">XML</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="#">Browse by file format</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <section>
+                            <h3><a href="section4/index-eng.html">Help</a></h3>
+                            <div class="mb-sm">
+                              <div class="span-2">
+                                <ul>
+                                  <li>
+                                    <a href="/help">Help</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="clear"></div>
+                              <div class="mb-main-link">
+                                <a href="#">Help</a>
+                              </div>
+                            </div>
+                          </section>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <breadcrumb>
+                <div id="gcwu-bc">
+                  <h2>Breadcrumb trail</h2>
+                  <div id="gcwu-bc-in">
+                    <ol>
+
+                      <li>
+                        <a href="${h.url_for(controller='home', action='index')}">Home</a>
+                      </li>
+
+                    </ol>
+                  </div>
+                </div>
+              </breadcrumb>
+
+            </nav>
+            <!-- HeaderEnd -->
+          </header>
+        </py:match>
+</html>
