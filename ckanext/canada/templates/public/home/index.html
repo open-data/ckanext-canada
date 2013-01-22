@@ -13,12 +13,24 @@ py:strip=""
   <div py:match="content">
     <div class="span-6">
 
+<!--    <?python import ipdb; ipdb.set_trace() ?>  -->
+
     <div>
       <h1>Find data</h1>
 
-      <form action="${h.url_for(controller='package', action='search')}" method="GET">
-        <input name="q" value="" class="search-field" placeholder="${_('Find datasets')}" />
-      </form>
+      <section role="search">
+
+
+          <form action="${h.url(controller='package', action='search')}" method="GET">
+            <div id="gcwu-srchbx-in">
+              <label for="gcwu-srch">Search website</label>
+              <input name="q" value="${c.q if hasattr(c, 'q') else ''}" class="search" placeholder="${_('Find datasets')}" id="gcwu-srch" size="27" maxlength="150" />
+              <input id="gcwu-srch-submit" name="gcwu-srch-submit" type="submit" value="Search" data-icon="search" />
+            </div>
+          </form>
+
+      </section>
+ 
       <p>
         ${g.site_title} contains <a href="${h.url_for(controller='package', action='search')}">${c.package_count} datasets</a> that you can
         browse, learn about and download.
