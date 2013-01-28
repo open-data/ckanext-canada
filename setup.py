@@ -26,6 +26,7 @@ setup(
 	"""
         [ckan.plugins]
 	canada_public=ckanext.canada.plugins:DataGCCAPublic
-
+        canada_internal=ckanext.canada.plugins:DataGCCAInternal
+        canada_forms=ckanext.canada.plugins:DataGCCAForms
 	""",
 )
