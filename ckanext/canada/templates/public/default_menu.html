@@ -13,26 +13,30 @@
           <div class="wb-sec-def">
 
             <section>
-              <h3><a href="#">My Account</a></h3>
+              <h3><a href="${h.url_for(controller='user', action='index')}">${_('Users')}</a></h3>
+              <!-- <?python import ipdb; ipdb.set_trace() ?>  -->  
+              <ul>
+              <!--
               <ul py:choose="c.is_myself">
                 <py:when test="True">
                   <li class="${'active' if c.action=='dashboard' else ''}">
-                    <a href="${h.url_for(controller='user', action='dashboard')}">Dashboard</a>
+                    <a href="${h.url_for(controller='user', action='dashboard')}">${_('Dashboard')}</a>
                   </li>
                   <li class="${'active' if c.action=='read' else ''}">
-                    <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">My Profile</a>
+                    <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">${_('My Profile')}</a>
                   </li>
                   <li class="${'active' if c.action=='edit' else ''}">
-                    <a href="${h.url_for(controller='user', action='edit')}">Edit Profile</a>
+                    <a href="${h.url_for(controller='user', action='edit')}">${_('Edit Profile')}</a>
                   </li>
                   <li>
-                    <a href="${h.url_for('/user/logout')}">Log out</a>
+                    <a href="${h.url_for('/user/logout')}">${_('Log out')}</a>
                   </li>
 
                 </py:when>
-                <py:otherwise>
+                <py:otherwise> -->
+                  <py:if test="c.user">
                   <py:if test="c.id">
-                    <py:if test="c.user_dict">
+                   
                     <li class="${'active' if c.action=='read' else ''}">
                       <a href="${h.url_for(controller='user', action='read', id=c.user_dict.name)}">View Profile</a>
                     </li>
@@ -43,11 +47,11 @@
                       action='followers',
                       id=c.user_dict.name)}
                     </li>
-                    </py:if>
+                    
                     <li py:if="c.user and c.user_dict">
                       ${h.follow_button('user', c.user_dict.id)}
                     </li>
-                  </py:if>
+                  </py:if></py:if>
                   <py:if test="not c.user">
                     <li class="${'active' if c.action=='login' else ''}">
                       <a href="${h.url_for(controller='user', action='login')}">Login</a>
@@ -56,7 +60,7 @@
                       <a href="${h.url_for(controller='user', action='register')}">Register Account</a>
                     </li>
                   </py:if>
-                </py:otherwise>
+               <!--  </py:otherwise> -->
               </ul>
 
             </section>

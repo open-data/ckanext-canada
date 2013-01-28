@@ -16,10 +16,10 @@
 
   <py:match path="primarysidebar">
 
-    <li py:if="c.pkg_dict.get('tags')" class="sidebar-section">
+    <div py:if="c.pkg_dict.get('tags')" class="row-end span-6">
       <h3>Tags</h3>
       ${tag_list(c.pkg_dict.get('tags', ''))}
-    </li>
+    </div>
 
     <li py:if="'groups' in c.pkg_dict" class="sidebar-section">
       <h3>Groups</h3>
