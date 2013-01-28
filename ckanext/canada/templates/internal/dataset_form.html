@@ -1,0 +1,456 @@
+<!--
+<form id="dataset-edit" method="post"
+py:attrs="{'class':'has-errors'} if errors else {}"
+xmlns:i18n="http://genshi.edgewall.org/i18n"
+xmlns:py="http://genshi.edgewall.org/"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+class="wet-boew-formvalid">
+
+class="${'tab-content' if tab_mode else ''} ${'has-errors' if errors else ''} form-horizontal"
+</form>
+-->
+<form
+py:with="tab_mode=(c.action=='edit')"
+lass="wet-boew-formvalid"
+id="dataset-edit"
+method="post"
+xmlns:i18n="http://genshi.edgewall.org/i18n"
+xmlns:py="http://genshi.edgewall.org/"
+xmlns:xi="http://www.w3.org/2001/XInclude" >
+
+  
+  <div class="error-explanation" py:if="error_summary">
+  <h2>Errors in form</h2>
+  <p>${_("The form contains invalid entries:")}</p>
+  <ul>
+  <li py:for="key, error in error_summary.items()">${"%s: %s" % (key if not key=='Name' else 'URL', error)}
+  <py:if test="key=='Resources'">
+  <ul>
+  <py:for each="idx, errordict in enumerate(errors.get('resources', []))">
+  <li py:if="errordict">
+  Resource ${idx}:
+  <ul>
+  <li py:for="thiskey, thiserror in errordict.items()">${thiskey}: <py:for each="errorinfo in thiserror">${errorinfo}; </py:for></li>
+  </ul>
+  </li>
+  </py:for>
+  </ul>
+  </py:if>
+  </li>
+  <script>var global_form_errors = ${h.dump_json(errors)};</script>
+  </ul>
+  </div>
+  
+  <h2>${_("Add a new dataset")}</h2>
+
+  <fieldset id="basic-information">
+    <legend>
+      ${_("Basic Information")}
+    </legend>
+
+    <label for="title"><span class="field-name">${_("Title")}</span> <strong>(required)</strong></label>
+    <strong for="title" class="error" py:if="errors.get('title', '')">${errors.get('title', '')}</strong>
+    <input id="title"
+      name="title" type="text"
+      value="${data.get('title', '')}"
+      required="reequired"
+      pattern="{2,}"
+      placeholder="${_('A short descriptive title for the dataset')}"/>
+      
+    <!--class="{validate:{minlength:2}}" -->
+    <label for="name"><span class="field-name">${_("URL")}</span> <strong>(required)</strong></label>
+    <code>
+      ${h.url(controller='package', action='search')+'/'}
+    </code>
+    <strong for="title" class="error" py:if="errors.get('name', '')">${errors.get('name', '')}</strong>
+    <input id="name" maxlength="100" name="name" type="text" value="${data.get('name', '')}" />
+    <p>2+ characters, lowercase, using only 'a-z0-9' and '-_'</p>
+
+    <label for="url"><span class="field-name">${_("Home Page")}</span></label>
+    <strong for="url" class="error" py:if="errors.get('url', '')">${errors.get('url', '')}</strong>
+    <input id="url" name="url" type="url" value="${data.get('url', '')}"/>
+    <p>
+      The URL for the web page describing the data (not the data itself).
+      <br/>
+      e.g. http://www.example.com/growth-figures.html
+    </p>
+
+    <label for="license_id"><span class="field-name">${_("License")}</span></label>
+    <select id="license_id" name="license_id" required="required">
+      <option value="can-01">TBS Open Date License</option>
+<!--      <py:for each="licence_desc, licence_id in c.licences">
+        <option value="${licence_id}" py:attrs="{'selected': 'selected' if data.get('license_id', '') == licence_id else None}" >${licence_desc}</option>
+</py:for>  -->
+    </select>
+
+    <label for="notes"><span class="field-name">${_("Description")}</span></label>
+    <textarea name="notes" id="notes" placeholder="${_('Start with a summary sentence ...')}">${data.get('notes','')}</textarea>
+ 
+      <p>
+        The main description of the dataset
+      </p>
+      <p>
+        It is often displayed with the dataset title. In particular, it should start with a short sentence that describes the dataset succinctly, because the first few words alone may be used in some views of the datasets.
+      </p>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>
+      ${_("Groups")}
+    </legend>
+
+    <py:for each="num, group in enumerate(data.get('groups', []))">
+      <?python
+      authorized_group = [group_authz for group_authz in c.groups_authz if group_authz['id'] == group['id']]
+      authorized_group = authorized_group[0] if authorized_group else None
+      ?>
+
+      <span py:if="'id' in group">
+        <input type="${'checkbox' if authorized_group else 'hidden'}" name="groups__${num}__id" checked="checked" value="${group['id']}" />
+        <input type="hidden" name="groups__${num}__name" value="${group.get('name', authorized_group['name'] if authorized_group else '')}" />
+      </span>
+      <label for="groups__${num}__checked" py:if="'id' in group">${group.get('name', authorized_group['name'] if authorized_group else '')}</label>
+    </py:for>
+
+    <span py:if="c.groups_available">
+      <select id="groups__${len(data.get('groups', []))}__id" name="groups__${len(data.get('groups', []))}__id">
+        <option selected="selected" value="">(None)</option>
+        <py:for each="group in c.groups_available">
+          <option value="${group['id']}" >${group['name']}</option>
+        </py:for>
+      </select> </span>
+    <p py:if="not c.groups_available">
+      <em>Cannot add any groups.</em>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>
+      ${_("Tags")}
+    </legend>
+
+    <strong for="tag_string" py:if="errors.get('tag_string', '')" class="error">${errors.get('tag_string', '')}</strong>
+    <input class="long autocomplete-tag" id="tag_string" name="tag_string" size="60" type="text"
+    value="${data.get('tag_string') or ', '.join([tag['name'] for tag in data.get('tags', []) if not tag.get('vocabulary_id')])}" />
+    <p>
+      Comma-separated terms that may link this dataset to similar ones. For more information on conventions,
+      see <a href="http://wiki.ckan.org/Managing_Datasets#Tag_Conventions">this wiki page</a>.
+      <br/>
+      e.g. pollution, rivers, water quality
+    </p>
+  </fieldset>
+
+  <dl py:if="c.genre_tags">
+    <dt>
+      <label class="field_opt" for="tags_vocab">Musical Genre</label>
+    </dt>
+    <dd>
+      <select id="genre_tags" class="chzn-select" name="genre_tags" size="60" multiple="multiple">
+        <py:for each="tag in c.genre_tags">
+          <py:choose test="">
+            <option py:when="tag in data.get('genre_tags_selected', [])" selected="selected" value="${tag}">${tag}</option>
+            <option py:otherwise="" value="${tag}">${tag}</option>
+          </py:choose>
+        </py:for>
+      </select>
+    </dd>
+    <dd class="tags-instructions field_error" py:if="errors.get('genre_tag_string', '')">
+      ${errors.get('genre_tag_string', '')}
+    </dd>
+  </dl>
+
+  <dl py:if="c.composer_tags">
+    <dt>
+      <label class="field_opt" for="tags_vocab">Composer</label>
+    </dt>
+    <dd>
+      <select id="composer_tags" class="chzn-select" name="composer_tags" size="60" multiple="multiple">
+        <py:for each="tag in c.composer_tags">
+          <py:choose test="">
+            <option py:when="tag in data.get('composer_tags_selected', [])" selected="selected" value="${tag}">${tag}</option>
+            <option py:otherwise="" value="${tag}">${tag}</option>
+          </py:choose>
+        </py:for>
+      </select>
+    </dd>
+    <dd class="tags-instructions field_error" py:if="errors.get('composer_tag_string', '')">
+      ${errors.get('composer_tag_string', '')}
+    </dd>
+  </dl>
+
+  <fieldset>
+    <section>
+      <section>
+        <div class="span-6">
+          <h3 class="background-dark margin-bottom-medium">${("Resources")}</h3>
+
+          <div class="wet-boew-tabbedinterface">
+            <ul class="tabs">
+              <li class="default">
+                <a href="#tab1">English Resource</a>
+              </li>
+              <li>
+                <a href="#tab2">French Resource</a>
+              </li>
+            </ul>
+            <div class="tabs-panel">
+              <div id="tab1">
+                <section>
+                  <h4>English Resource</h4>
+
+                  <div>
+                    <blockquote>
+                      <div class="flash-messages">
+                        <div class="alert alert-error resource-errors"></div>
+                      </div>
+                    </blockquote>
+                    
+        				    <label for="title"><span class="field-name">${_("Title")}</span> <strong>(required)</strong></label>
+        				    <strong for="title" class="error" py:if="errors.get('title', '')">${errors.get('title', '')}</strong>
+                        
+                    <div>
+                      <label for="resources__0__name"><span class="field-name">${_("Name")}</span></label>
+                      <input id="resources__0__name" name="resources__0__name" value="${data.get('resources__0__name', '')}"/>
+                    </div>
+                    
+                    <div>
+                      <label for="resources__0__description"><span class="field-name">${_("Description")}</span></label>
+                      <textarea cols="15" rows="5" id="resources__0__description" name="resources__0__description" value="${data.get('resources__0__description', '')}"></textarea>
+                    </div>   
+                    
+                    <div>
+                      <label for="resources__0__url"><span class="field-name">${_("URL")}</span></label>
+                      <input id="resources__0__url" name="resources__0__url" type="text" value="${data.get('resources__0__url', '')}"/>
+                    </div>
+                    
+                    <div>
+                      <label for="resources__0__format"><span class="field-name">${_("Format")}</span></label>
+                      <input id="resources__0__format" name="resources__0__name" value="${data.get('resources__0__name', '')}"/>
+                    </div>
+                                        
+                    <div>
+                      <label for="resources__0__resource_type"><span class="field-name">${_("Resource Type")}</span></label>
+                      <input id="resources__0__resource_type" name="resources__0__resource_type" value="${data.get('resources__0__resource_type', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__0__last_modified"><span class="field-name">${_("Last Modified")}</span></label>
+                      <input id="resources__0__last_modified" name="resources__0__last_modified" value="${data.get('resources__0__last_modified', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__0__size"><span class="field-name">${_("Size (Bytes)")}</span></label>
+                      <input id="resources__0__size" name="resources__0__size" value="${data.get('resources__0__size', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__0__mimetype"><span class="field-name">${_("Mime Type")}</span></label>
+                      <input id="resources__0__mimetype" name="resources__0__mimetype" value="${data.get('resources__0__mimetype', '')}"/>
+                    </div>  
+
+                    <div>
+                      <label for="resources__0__mimetype_inner"><span class="field-name">${_("Inner Mime Type")}</span></label>
+                      <input id="resources__0__mimetype_inner" name="resources__0__mimetype_inner" value="${data.get('resources__0__mimetype_inner', '')}"/>
+                    </div>  
+                    
+                    <div>
+                      <label for="resources__0__id"><span class="field-name">${_("ID")}</span></label>
+                      <input id="resources__0__id" name="resources__0__id" type="hidden" value="${data.get('', '')}"/>
+                    </div> 
+                    
+                    <div>
+                      <label for="resources__0__hash"><span class="field-name">${_("Hash")}</span></label>
+                      <input id="resources__0__hash" name="resources__0__id" type="hidden" value="${data.get('', '')}"/>
+                    </div> 
+
+                    <div class="control-group">
+                      <label for="" class="control-label" property="rdfs:label">Created</label>
+                      <div class="controls">
+                        <input type="text" disabled="disabled" value="" class="disabled"/>
+                      </div>
+                    </div> 
+
+                  </div> 
+                </section>
+              </div>
+              
+              <div id="tab2">
+                <section>
+                  <h4>French Resource</h4>
+
+                  <div>
+                    <blockquote>
+                      <div class="flash-messages">
+                        <div class="alert alert-error resource-errors"></div>
+                      </div>
+                    </blockquote>
+                    
+        				    <label for="title"><span class="field-name">${_("Title")}</span> <strong>(required)</strong></label>
+        				    <strong for="title" class="error" py:if="errors.get('title', '')">${errors.get('title', '')}</strong>
+                        
+                    <div>
+                      <label for="resources__1__name"><span class="field-name">${_("Name")}</span></label>
+                      <input id="resources__1__name" class="js-resource-edit-name" name="resources__1__name" value="${data.get('resources__1__name', '')}"/>
+                    </div>
+                    
+                    <div>
+                      <label for="resources__1__description"><span class="field-name">${_("Description")}</span></label>
+                      <textarea cols="15" rows="5" id="resources__1__description" name="resources__1__description" value="${data.get('resources__1__description', '')}"></textarea>
+                    </div>   
+                    
+                    <div>
+                      <label for="resources__1__url"><span class="field-name">${_("URL")}</span></label>
+                      <input id="resources__1__url" name="resources__1__url"  type="text" value="${data.get('resources__1__url', '')}"/>
+                    </div>
+                    
+                    <div>
+                      <label for="resources__1__format"><span class="field-name">${_("Format")}</span></label>
+                      <input id="resources__1__format" name="resources__1__name" value="${data.get('resources__1__name', '')}"/>
+                    </div>
+                                        
+                    <div>
+                      <label for="resources__1__resource_type"><span class="field-name">${_("Resource Type")}</span></label>
+                      <input id="resources__1__resource_type" name="resources__1__resource_type" value="${data.get('resources__1__resource_type', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__1__last_modified"><span class="field-name">${_("Last Modified")}</span></label>
+                      <input id="resources__1__last_modified" name="resources__1__last_modified" value="${data.get('resources__1__last_modified', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__1__size"><span class="field-name">${_("Size (Bytes)")}</span></label>
+                      <input id="resources__1__size" name="resources__1__size" value="${data.get('resources__1__size', '')}"/>
+                    </div>
+
+                    <div>
+                      <label for="resources__1__mimetype"><span class="field-name">${_("Mime Type")}</span></label>
+                      <input id="resources__1__mimetype" name="resources__1__mimetype" value="${data.get('resources__1__mimetype', '')}"/>
+                    </div>  
+
+                    <div>
+                      <label for="resources__1__mimetype_inner"><span class="field-name">${_("Inner Mime Type")}</span></label>
+                      <input id="resources__1__mimetype_inner" name="resources__1__mimetype_inner" value="${data.get('resources__1__mimetype_inner', '')}"/>
+                    </div>  
+                    
+                    <div>
+                      <label for="resources__1__id"><span class="field-name">${_("ID")}</span></label>
+                      <input id="resources__1__id" name="resources__1__id" type="hidden" value="${data.get('resources__1__id', '')}"/>
+                    </div> 
+                    
+                    <div>
+                      <label for="resources__1__hash"><span class="field-name">${_("Hash")}</span></label>
+                      <input id="resources__1__hash" name="resources__1__hash" type="hidden" value="${data.get('resources__1__hash', '')}"/>
+                    </div> 
+<!--
+                    <div class="control-group">
+                      <label for="" class="control-label" property="rdfs:label">Created</label>
+                      <div class="controls">
+                        <input type="text" disabled="disabled" value="" class="disabled"/>
+                      </div>
+                    </div>
+-->
+                  </div>
+
+                </section>
+                
+              </div>
+            </div> <!-- </div class="tabs-panel"> -->
+            
+          </div>
+        </div>
+      </section>
+    </section>
+  </fieldset>
+
+  <fieldset id='further-information'>
+  	<legend>${("Further Information")}</legend>
+
+    <label for="author"><span class="field-name">${_("Author")}</span></label>
+    <strong for="author" class="error" py:if="errors.get('author', '')">${errors.get('author', '')}</strong>
+    <input id="author" name="author" type="text" value="${data.get('author', '')}" />
+    <p>
+    	${_("The name of the main contact, for enquiries about this particular dataset, using the e-mail address in the following field.")}
+    </p>
+
+    <label for="author_email"><span class="field-name">${_("Author E-mail")}</span></label>
+    <strong for="author_email" class="error" py:if="errors.get('author_email', '')">${errors.get('author_email', '')}</strong>
+    <input id="author_email" name="id" type="text" value="${data.get('author_email', '')}" />
+
+    <label for="maintainer"><span class="field-name">${_("Maintainer")}</span></label>
+    <strong for="maintainer" class="error" py:if="errors.get('maintainer', '')">${errors.get('maintainer', '')}</strong>
+    <input id="maintainer" name="maintainer" type="text" value="${data.get('maintainer', '')}" />
+    <p>
+    	${_("If there is another important contact person (in addition to the person in the Author field) then provide details here.")}
+    </p>
+
+    <label for="maintainer_email"><span class="field-name">${_("Maintainer E-mail")}</span></label>
+    <strong for="maintainer_email" class="error" py:if="errors.get('maintainer_email', '')">${errors.get('maintainer_email', '')}</strong>
+    <input id="maintainer_email" name="maintainer_email" type="text" value="${data.get('maintainer_email', '')}" />
+    
+        
+    <label for="version"><span class="field-name">${_("Version")}</span></label>
+    <strong for="version" class="error" py:if="errors.get('version', '')">${errors.get('version', '')}</strong>
+    <input id="version" name="version" type="text" value="${data.get('version', '')}" />
+    <p>
+    	${_("A number representing the version (if applicable)")}
+    	<br/>
+    	${("e.g. 1.2.0")}
+    </p>
+    
+
+  </fieldset>
+
+  <fieldset id='delete' py:if="c.is_sysadmin or c.auth_for_change_state">
+    <dl>
+      <dt>
+        Delete
+      </dt>
+      <dd>
+        <p>
+          Do you really want to change the state of this dataset? &nbsp;&nbsp;
+          <button class="dataset-delete pretty-button">
+            Yes!
+          </button>
+        </p>
+        <span> This dataset is&nbsp;&nbsp;
+          <select id="state" class="dataset-delete" name="state" style="display:inline;">
+            <option py:attrs="{'selected': 'selected' if data.get('state') == 'active' else None}" value="active">active</option>
+            <option py:attrs="{'selected': 'selected' if data.get('state') == 'deleted' else None}" value="deleted">deleted</option>
+          </select> </span>
+      </dd>
+    </dl>
+  </fieldset>
+
+  <div id="unsaved-warning"></div>
+
+  <label for="log_message" class="edit-summary">Edit summary (briefly describe the changes you have made)...</label>
+  <textarea id="log_message" name="log_message" class="edit-summary short wide">${data.get('log_message', h.auto_log_message(c))}</textarea>  
+
+
+  <div style="display: none;">
+    <p>
+      Author: ${c.author}
+    </p>
+  </div>
+  <div>
+    <label>Author: ${c.author}</label>
+    <p i18n:msg="" class="hints">
+      Since you have not signed in this will just be your IP address.
+      <a href="${h.url_for(controller='user', action='login', id=None)}" target="_blank">Click here to sign in</a> before saving (opens in new window).
+    </p>
+  </div>
+
+  <div class="form-submit">
+    <input id="save" class="pretty-button primary" name="save" type="submit" value="${_('Save Changes')}" />
+    <py:if test="c.pkg">
+      <input id="cancel" class="pretty-button href-action" name="cancel" type="reset" value="${_('Cancel')}" action="${h.url_for(controller='package', action='read', id=c.pkg.name)}" />
+    </py:if>
+    <p i18n:msg="" class="hints">
+      <strong>Important:</strong> By submitting content, you agree to release your contributions under the <a href="http://opendatacommons.org/licenses/odbl/1.0/">Open Database License</a>. Please <strong>refrain </strong> from editing this page if you are <strong>not</strong> happy to do this.
+    </p>
+    <div class="clear"></div>
+  </div>
+
+</form>
