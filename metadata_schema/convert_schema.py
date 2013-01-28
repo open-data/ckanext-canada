@@ -117,17 +117,23 @@ BILINGUAL_RESOURCE_FIELDS = set([
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
-    languages
+    class_
+    sub_class
     property_name
     iso_multiplicity
     gc_multiplicity
+    type
     description
     example
     nap_iso_19115_ref
     domain_best_practice
     controlled_vocabulary_reference_eng
     controlled_vocabulary_reference_fra
-    implementation_plan
+    implementation_old
+    implementation
+    data_gov_common_core
+    json
+    rdfa_lite
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
