@@ -15,5 +15,12 @@ Installation:
 * Use CKAN Version: 1.8
 * After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
 
-	
+Plugins
+-------
+
+* ``canada_forms`` - dataset forms for data.gc.ca metadata schema
+* ``canada_public`` - base and public facing data.gc.ca templates (requires
+  ``canada_forms``)
+* ``canada_internal`` - templates for internal site and registration (requires
+  ``canada_forms`` and ``canada_public``)
 
