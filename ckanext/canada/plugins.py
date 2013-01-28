@@ -122,7 +122,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     def setup_template_variables(self, context, data_dict=None):
         """Add variables to c just prior to the template being rendered.
         """
-        lib_plugins.DefaultDatasetForm.setup_template_variables(self, context, data_dict)
+        DefaultDatasetForm.setup_template_variables(self, context, data_dict)
     
     # Implement these methods if you wish to over-ride the default values of
     # - package/read.html
