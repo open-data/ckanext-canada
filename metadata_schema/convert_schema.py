@@ -140,21 +140,40 @@ ProposedField = namedtuple("ProposedField", """
 # other dataset fields that match are assumed to be
 # the same as their proposed fields
 PROPOSED_TO_EXISTING_FIELDS = {
-    'dataset_uri_dataset_unique_identifier': 'name',
-    'organization_name': 'author',
-    'contact': 'author_email',
-    'email': 'maintainer_email',
+    'fileIdentifier': 'id',
+    'organizationName': 'author',
+    'departmentNumber': 'department_number',
+    'electronicMailAddress': 'author_email',
+    'dataSetURI': 'name',
+    'digitalObjectIdentifier': 'digital_object_identifier',
+    'catalogueType': 'catalogue_type',
     'title': 'title',
+    'datePublished': 'resource:date_published',
+    'dateModified': 'resource:modified',
     'abstract': 'notes',
+    #'subject' TBD
+    #'topicCategory' TBD
     'keyword': 'tags',
-    'data_series_url': 'url',
-    # resource fields
-    'format_name': 'resource:format',
-    'transfer_size': 'resource:size',
-    'linkage_url': 'resource:url',
-    'language': 'resource:language',
-    'maintenance_and_update_frequency':
+    'maintenanceAndUpdateFrequency':
         'resource:maintenance_and_update_frequency',
+    #'temporalElement' DEFER
+    'geographicRegion': 'geographic_region',
+    #'spatial' TBD use spatial extension 'the_geom'
+    'dataSeriesName': 'data_series_name',
+    'issueIdentification': 'data_series_issue_identification',
+    #'supplementalInformation' DEFER
+    #'program_url' DEFER
+    'License': 'license_id',
+    'URL': 'resource:url',
+    'language2': 'resource:language',
+    # resource fields
+    'transferSize': 'resource:size',
+    'formatName': 'resource:format',
+
+    'spatialRepresentationType': 'spatial_representation_type',
+    'presentationForm': 'presentation_form',
+    #'polygon' DEFER
+    'browseGraphicFileName': 'browse_graphic_url',
     }
 EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
@@ -249,7 +268,7 @@ def read_proposed_fields():
         if not p.description and not p.gc_multiplicity:
             # skip the header rows
             continue
-        new_name = proposed_name_to_identifier(p.property_name)
+        new_name = p.property_name.strip()
         new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
         assert new_name not in p, new_name
         out[new_name] = p
