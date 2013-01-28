@@ -3,21 +3,17 @@ ckanext-canada
 
 Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
-Team: 
-
-Ian Ward, Ross Thompson, Peder Jakobsen
-
+Team: Ian Ward, Ross Thompson, Peder Jakobsen
 
 Features:
 
-	Forms and Validation for GoC Metadata Schema
-	Batch import of data
+* Forms and Validation for GoC Metadata Schema (in progress)
+* Batch import of data (coming, currently in a separate extension)
 	
 Installation:
 
-	Use CKAN Version: 1.8
-	After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
-	
+* Use CKAN Version: 1.8
+* After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
 
 	
 
