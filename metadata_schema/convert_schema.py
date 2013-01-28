@@ -255,6 +255,26 @@ def read_proposed_fields():
         out[new_name] = p
     return out
 
+def field_from_proposed(p):
+    "extract proposed field information into a field dict"
+    return {
+        'proposed_name': {'en': p.property_name},
+        'proposed_type': p.type,
+        'iso_multiplicity': p.iso_multiplicity,
+        'gc_multiplicity': p.gc_multiplicity,
+        'description': {'en': p.description},
+        'example': p.example,
+        'nap_iso_19115_ref': p.nap_iso_19115_ref,
+        'domain_best_practice': {'en': p.domain_best_practice},
+        'controlled_vocabulary_reference_eng':
+            p.controlled_vocabulary_reference_eng,
+        'controlled_vocabulary_reference_fra':
+            p.controlled_vocabulary_reference_fra,
+        'implementation': p.implementation,
+        'data_gov_common_core': p.data_gov_common_core,
+        'rdfa_lite': p.rdfa_lite,
+        }
+
 def main():
     schema_out = {
         'dataset_sections': [],
@@ -279,21 +299,8 @@ def main():
 
         for field in fields:
             p = proposed[field]
-            new_field = { # FIXME: French?
-                'id': field,
-                'proposed_name': {'en': p.property_name},
-                'iso_multiplicity': p.iso_multiplicity,
-                'gc_multiplicity': p.gc_multiplicity,
-                'description': {'en': p.description},
-                'example': p.example,
-                'nap_iso_19115_ref': p.nap_iso_19115_ref,
-                'domain_best_practice': {'en': p.domain_best_practice},
-                'existing': field in EXISTING_FIELDS,
-                'controlled_vocabulary_reference_eng':
-                    p.controlled_vocabulary_reference_eng,
-                'controlled_vocabulary_reference_fra':
-                    p.controlled_vocabulary_reference_fra,
-                }
+            new_field = field_from_proposed(p)
+            new_field['existing'] = field in EXISTING_FIELDS
             f = FIELD_MAPPING.get(field)
             if f:
                 xp = '//item[inputname="%s"]' % f
@@ -325,20 +332,7 @@ def main():
             }
         p = proposed.get('resource:' + rfield, None)
         if p:
-            new_rfield.update({
-                'proposed_name': {'en': p.property_name},
-                'iso_multiplicity': p.iso_multiplicity,
-                'gc_multiplicity': p.gc_multiplicity,
-                'description': {'en': p.description},
-                'example': p.example,
-                'nap_iso_19115_ref': p.nap_iso_19115_ref,
-                'domain_best_practice': {'en': p.domain_best_practice},
-                'controlled_vocabulary_reference_eng':
-                    p.controlled_vocabulary_reference_eng,
-                'controlled_vocabulary_reference_fra':
-                    p.controlled_vocabulary_reference_fra,
-
-                })
+            new_rfield.update(field_from_proposed(p))
         schema_out['resource_fields'].append(new_rfield)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
