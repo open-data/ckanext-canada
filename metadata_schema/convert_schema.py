@@ -18,6 +18,7 @@ PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
+PROPOSED_SCHEMA_STARTS_ROW = 7
 LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
@@ -122,7 +123,7 @@ ProposedField = namedtuple("ProposedField", """
     property_name
     iso_multiplicity
     gc_multiplicity
-    type
+    type_
     description
     example
     nap_iso_19115_ref
@@ -262,15 +263,18 @@ def read_proposed_fields():
     workbook = xlrd.open_workbook(PROPOSED_SCHEMA_NAME)
     sheet = workbook.sheet_by_name(PROPOSED_SCHEMA_SHEET)
     out = {}
-    for i in range(sheet.nrows):
+    for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
         row = sheet.row(i)
         p = ProposedField(*(unicode(f.value).strip() for f in row))
-        if not p.description and not p.gc_multiplicity:
+        if not p.description and not p.type_:
             # skip the header rows
             continue
         new_name = p.property_name.strip()
         new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
-        assert new_name not in p, new_name
+        if new_name in out:
+            new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name + '2',
+                new_name) # language is duplicated
+        assert new_name not in out, (new_name, out.keys())
         out[new_name] = p
     return out
 
@@ -278,7 +282,7 @@ def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
         'proposed_name': {'en': p.property_name},
-        'proposed_type': p.type,
+        'proposed_type': p.type_,
         'iso_multiplicity': p.iso_multiplicity,
         'gc_multiplicity': p.gc_multiplicity,
         'description': {'en': p.description},
