@@ -36,12 +36,12 @@ SECTIONS_FIELDS = [
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
         ]),
-    ("Dataset Identification Information", [
+    ("Identification Information", [
         'title',
-        #'date', - doesn't apply, use resource created or last_modified
-        #'data_modified', - doesn't apply, use resource last_modified
-        #'date_type', doesn't apply, (see above) and use revisioned resources
         'notes',
+        'subject', # TODO: create tag vocabulary for this
+        'tags',
+        'topic_category', # TODO: create tag vocabulary for this
         #'status', use resource description (?) not appropriate?
         #'character_set', not req'd: UTF-8 is our new standard encoding :-)
         ]),
@@ -57,21 +57,18 @@ SECTIONS_FIELDS = [
         'url',
         ]),
     ("Thesaurus-GC Core Subject Thesaurus", [
-        'subject', # TODO: create tag vocabulary for this
         #'title', - no place for these at the moment
         #'date',
         #'date_type',
         #'organization_name',
         ]),
     ("Thesaurus-ISO Topic Category", [
-        'topic_category', # TODO: create tag vocabulary for this
         #'title', - no place for these at the moment
         #'date',
         #'date_type',
         #'organization_name',
         ]),
     ("Descriptive Keywords", [
-        'tags',
         #'type', - no place for this at the moment
         ]),
     ("Extent", [
