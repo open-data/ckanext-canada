@@ -49,16 +49,14 @@ SECTIONS_FIELDS = [
         'data_series_name',
         'data_series_issue_identification',
         'supplemental_information',
-
+        'url',
+        'license_id',
         ]),
     ("Supplemental Information", [
-        'program_url',
         #'data_dictionary', stored as resources
         #'additional_metadata', not required (use supplemental..other field)
         ]),
     ("Data Series", [
-        'issue_identification', # related to 'name'/'url' above
-        'url',
         ]),
     ("Thesaurus-GC Core Subject Thesaurus", [
         #'title', - no place for these at the moment
