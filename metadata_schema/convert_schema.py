@@ -13,6 +13,8 @@ import os
 from collections import namedtuple
 from itertools import groupby
 
+from ckan.logic.schema import default_package_schema
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
@@ -83,6 +85,8 @@ BILINGUAL_RESOURCE_FIELDS = set([
     'name',
     ])
 
+EXISTING_FIELDS = set(default_package_schema().keys())
+
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
     class_
@@ -143,7 +147,6 @@ PROPOSED_TO_EXISTING_FIELDS = {
     #'polygon' DEFER
     'browseGraphicFileName': 'browse_graphic_url',
     }
-EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
 # FOR IMPORTING ENGLISH FIELDS FROM PILOT
 # 'new field name': 'pilot field name'
