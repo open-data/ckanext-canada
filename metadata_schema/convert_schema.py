@@ -114,7 +114,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'electronicMailAddress': 'author_email',
     'dataSetURI': 'name',
     'digitalObjectIdentifier': 'digital_object_identifier',
-    'catalogueType': 'catalogue_type',
+    'catalogueType': 'catalog_type',
     'title': 'title',
     'datePublished': 'resource:date_published',
     'dateModified': 'resource:modified',
