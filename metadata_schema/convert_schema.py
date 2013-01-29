@@ -316,7 +316,7 @@ def main():
         section_name = proposed_name_to_identifier(section)
         new_section = {
             'name': {'en': section}, # FIXME: French?
-            'description': {'en': proposed[section_name].description},
+            'description': {}, # no longer available
             'fields': [],
             }
 
