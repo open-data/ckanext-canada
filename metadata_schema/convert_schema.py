@@ -119,8 +119,8 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'datePublished': 'resource:date_published',
     'dateModified': 'resource:modified',
     'abstract': 'notes',
-    #'subject' TBD
-    #'topicCategory' TBD
+    'subject': 'subject',
+    'topicCategory': 'topic_category',
     'keyword': 'tags',
     'maintenanceAndUpdateFrequency':
         'resource:maintenance_and_update_frequency',
