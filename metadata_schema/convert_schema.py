@@ -218,6 +218,7 @@ BILINGUAL_FIELDS = {
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information_other': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
+    'data_series_issue_identification': None,
     'issue_identification': None,
     }
 
