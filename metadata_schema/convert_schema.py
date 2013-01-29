@@ -163,7 +163,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     #'spatial' TBD use spatial extension 'the_geom'
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
-    #'supplementalInformation' DEFER
+    'supplementalInformation': 'supplemental_information', # marked DEFER?
     'program_url': 'url', # marked DEFER?
     'License': 'license_id',
     'URL': 'resource:url',
@@ -199,7 +199,7 @@ FIELD_MAPPING = {
     'program_url': 'program_page_en', # note: different than French
     'url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
-    'supplemental_information_other': 'supplementary_documentation_en',
+    'supplemental_information': 'supplementary_documentation_en',
     'geographic_region_name': 'Geographic_Region_Name',
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
@@ -216,7 +216,7 @@ BILINGUAL_FIELDS = {
     'program_url': 'program_url_fr',
     'url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
-    'supplemental_information_other': 'supplementary_documentation_fr',
+    'supplemental_information': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
     'data_series_issue_identification': None,
     'issue_identification': None,
