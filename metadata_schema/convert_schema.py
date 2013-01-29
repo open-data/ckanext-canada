@@ -45,12 +45,18 @@ SECTIONS_FIELDS = [
         'maintenance_and_update_frequency',
         #'temporal_elevment',
         'geographic_region',
-        #'the_geom', # spatial extension
         'data_series_name',
         'data_series_issue_identification',
         'supplemental_information',
         'url',
         'license_id',
+        ]),
+    ("Geospatial Additional Fields", [
+        'spatial_representation_type',
+        'presentation_form',
+        #'the_geom', # spatial extension
+        #'bounding_polygon', - maybe, if must be different than the_geom
+        'browse_graphic_url',
         ]),
     ]
 
