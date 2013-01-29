@@ -1,7 +1,7 @@
 TARGET = ../ckanext/canada/metadata_schema/schema.json
 
 all:
-	./convert_schema.py > json.tmp || rm json.tmp && false
+	./convert_schema.py > json.tmp || (rm json.tmp && false)
 	mv json.tmp ${TARGET}
 
 update-proposed:
