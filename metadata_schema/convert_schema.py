@@ -52,47 +52,6 @@ SECTIONS_FIELDS = [
         'url',
         'license_id',
         ]),
-    ("Supplemental Information", [
-        #'data_dictionary', stored as resources
-        #'additional_metadata', not required (use supplemental..other field)
-        ]),
-    ("Data Series", [
-        ]),
-    ("Thesaurus-GC Core Subject Thesaurus", [
-        #'title', - no place for these at the moment
-        #'date',
-        #'date_type',
-        #'organization_name',
-        ]),
-    ("Thesaurus-ISO Topic Category", [
-        #'title', - no place for these at the moment
-        #'date',
-        #'date_type',
-        #'organization_name',
-        ]),
-    ("Descriptive Keywords", [
-        #'type', - no place for this at the moment
-        ]),
-    ("Extent", [
-        'begin_position', # need to investigate searching
-        'end_position',
-        'geographic_region_name',
-        #'north_bound_latitude', - these are handled by ckanext-spacial
-        #'south_bound_latitude',
-        #'west_bound_longitude',
-        #'east_bound_longitude',
-        ]),
-    #("Constraints", [
-        #'legal_access_constraints', - handled by 'license_id'
-        #'legal_use_constraints',
-        #]),
-    #("Distribution Information", [ - these are handled by resources
-        #'linkage_url', - resource.url
-        #'transfer_size', - resource.size
-        #'protocol', - part of resource.url
-        #'description', - resource.description
-        #'format_name', - resource.resource_type
-        #'format_version', - part of resource.resource_type (?)
     ]
 
 # Resource fields (no sections)
