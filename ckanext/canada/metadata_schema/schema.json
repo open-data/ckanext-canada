@@ -2167,9 +2167,9 @@
         "en": "free text, YYYY-MM-DD"
       }, 
       "example": "41143.0", 
-      "existing": false, 
+      "existing": true, 
       "gc_multiplicity": "O", 
-      "id": "modified", 
+      "id": "last_modified", 
       "implementation": "existing RESOURCE field \u2018modified\u2019", 
       "iso_multiplicity": "", 
       "nap_iso_19115_ref": "", 

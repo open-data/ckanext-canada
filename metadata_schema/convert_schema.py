@@ -70,7 +70,7 @@ RESOURCE_FIELDS = [
     'format',
     'language',
     'date_published', # ADMIN-only field that will control publishing
-    'modified',
+    'last_modified',
     ]
 
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
@@ -115,7 +115,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'catalogueType': 'catalog_type',
     'title': 'title',
     'datePublished': 'resource:date_published',
-    'dateModified': 'resource:modified',
+    'dateModified': 'resource:last_modified',
     'abstract': 'notes',
     'subject': 'subject',
     'topicCategory': 'topic_category',
