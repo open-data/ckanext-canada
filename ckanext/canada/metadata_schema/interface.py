@@ -40,6 +40,12 @@ class MetadataSchema(object):
             self.dataset_fields.extend(s['fields'])
         self.resource_fields = schema['resource_fields']
 
+        for f in self.dataset_fields:
+            if 'choices' not in f:
+                continue
+            f['choices_by_pilot_uuid'] = {
+                    c['pilot_uuid']:c for c in f['choices']}
+
         self.all_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
                      in self.dataset_fields_by_ckan_id(include_existing=True))
