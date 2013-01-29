@@ -7,7 +7,7 @@ class TestSchemaDescription(unittest.TestCase):
         self.sd = schema_description
 
     def test_schema_has_data(self):
-        self.assertTrue(len(self.sd.dataset_sections) > 3)
+        self.assertTrue(len(self.sd.dataset_sections) > 2)
         self.assertTrue(len(self.sd.dataset_fields) > 10)
         self.assertTrue(len(self.sd.resource_fields) > 3)
         for f in self.sd.dataset_sections:

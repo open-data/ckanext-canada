@@ -1,7 +1,8 @@
 TARGET = ../ckanext/canada/metadata_schema/schema.json
 
 all:
-	./convert_schema.py > ${TARGET}
+	./convert_schema.py > json.tmp || (rm json.tmp && false)
+	mv json.tmp ${TARGET}
 
 update-proposed:
 	# NOTE: This only works inside the gc.ca network
