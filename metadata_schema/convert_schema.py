@@ -138,7 +138,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'transferSize': 'resource:size',
     'formatName': 'resource:format',
 
-    'spatialRepresentationType': 'spatial_representation_type',
+    'spatialRespresentionType': 'spatial_representation_type',
     'presentationForm': 'presentation_form',
     #'polygon' DEFER
     'browseGraphicFileName': 'browse_graphic_url',
