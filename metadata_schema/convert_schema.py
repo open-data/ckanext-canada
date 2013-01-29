@@ -13,7 +13,7 @@ import os
 from collections import namedtuple
 from itertools import groupby
 
-from ckan.logic.schema import default_package_schema
+from ckan.logic.schema import default_package_schema, default_resource_schema
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PILOT = os.path.join(HERE, 'pilot')
@@ -73,19 +73,13 @@ RESOURCE_FIELDS = [
     'modified',
     ]
 
-EXISTING_RESOURCE_FIELDS = set([
-    'name',
-    'url',
-    'format',
-    'size',
-    'modified',
-    ])
+EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 
 BILINGUAL_RESOURCE_FIELDS = set([
     'name',
     ])
 
-EXISTING_FIELDS = set(default_package_schema().keys())
+EXISTING_FIELDS = set(default_package_schema())
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
