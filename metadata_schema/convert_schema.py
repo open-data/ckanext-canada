@@ -101,6 +101,8 @@ RESOURCE_FIELDS = [
     'format',
     'language',
     'maintenance_and_update_frequency',
+    'date_published', # ADMIN-only field that will control publishing
+    'modified',
     ]
 
 EXISTING_RESOURCE_FIELDS = set([
@@ -108,6 +110,7 @@ EXISTING_RESOURCE_FIELDS = set([
     'url',
     'format',
     'size',
+    'modified',
     ])
 
 BILINGUAL_RESOURCE_FIELDS = set([
