@@ -17,6 +17,7 @@
           "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "id", 
           "implementation": "existing dataset field \u2018id\u2019", 
           "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.2.1", 
@@ -61,6 +62,7 @@
             "eng": "The language(s) of the content of the dataset.", 
             "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
           }, 
+          "id": "language", 
           "implementation": "new field \u2018language\u2019 set to \u201ceng; CAN|fra; CAN\u201d for all datasets", 
           "iso_multiplicity": "M", 
           "name": {
@@ -881,6 +883,7 @@
             "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
           }, 
+          "id": "author", 
           "implementation": "existing dataset field \u2018author\u2019 and a Group assigned to the dataset", 
           "iso_multiplicity": "M", 
           "name": {
@@ -910,6 +913,7 @@
           "example": "", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "department_number", 
           "implementation": "new dataset field \u2018department_number\u2019", 
           "iso_multiplicity": "", 
           "nap_iso_19115_ref": "", 
@@ -933,6 +937,7 @@
           "example": "od-do@tbs-sct.gc.ca", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "author_email", 
           "implementation": "exsiting dataset field \u2018email\u2019 set to the same value (TBD) for all datasets", 
           "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.19.6", 
@@ -956,6 +961,7 @@
           "example": "http://host/path/ download", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "name", 
           "implementation": "existing dataset field \u2018name\u2019, calculated and hidden from the registry UI", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.2.10", 
@@ -979,6 +985,7 @@
           "example": "", 
           "existing": true, 
           "gc_multiplicity": "O", 
+          "id": "digital_object_identifier", 
           "implementation": "new dataset field \u2018data_object_identifier\u2019", 
           "iso_multiplicity": "N\\A", 
           "nap_iso_19115_ref": "", 
@@ -1002,6 +1009,7 @@
           "example": "Geo", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "catalog_type", 
           "implementation": "new dataset field \u2018catalogue_type\u2019", 
           "iso_multiplicity": "", 
           "nap_iso_19115_ref": "", 
@@ -1037,6 +1045,7 @@
             "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
           }, 
+          "id": "title", 
           "implementation": "existing CKAN field \"title\"\nFRENCH: new field \"title_fr\"", 
           "iso_multiplicity": "M", 
           "name": {
@@ -1071,6 +1080,7 @@
             "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
           }, 
+          "id": "notes", 
           "implementation": "existing dataset field \u2018notes\u2019 and new dataset field \u2018notes_fra\u2019", 
           "iso_multiplicity": "M", 
           "name": {
@@ -1197,6 +1207,7 @@
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
           }, 
+          "id": "subject", 
           "implementation": "new dataset keyword field \u2018subject\u2019 with new keyword vocabulary", 
           "iso_multiplicity": "M, Repeat.", 
           "name": {
@@ -1226,6 +1237,7 @@
           "example": "Farming", 
           "existing": true, 
           "gc_multiplicity": "O, Repeat.", 
+          "id": "topic_category", 
           "implementation": "new dataset keyword field \u2018topic_category\u2019 with new keyword vocabulary", 
           "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.3.1.11", 
@@ -1253,6 +1265,7 @@
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
           }, 
+          "id": "tags", 
           "implementation": "existing dataset field \u2018keywords\u2019 with UI that forces entering both English and French", 
           "iso_multiplicity": "O", 
           "name": {
@@ -1287,6 +1300,7 @@
             "eng": "The frequency at which the dataset is published.", 
             "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
           }, 
+          "id": "maintenance_and_update_frequency", 
           "implementation": "new dataset field \u2018maintenance_and_update_frequency\u2019", 
           "iso_multiplicity": "O", 
           "name": {
@@ -1752,6 +1766,7 @@
             "eng": "The region that describes the geographic area covered by the dataset.", 
             "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
           }, 
+          "id": "geographic_region", 
           "implementation": "new dataset field \u2018geographic_region\u2019", 
           "iso_multiplicity": "", 
           "name": {
@@ -1785,6 +1800,7 @@
             "eng": "A name given to multiple datasets to present them as a group or a set.", 
             "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
           }, 
+          "id": "data_series_name", 
           "implementation": "new dataset field \u2018data_series_name\u2019 and new dataset field \u2018data_series_name_fra\u2019", 
           "iso_multiplicity": "O", 
           "name": {
@@ -1815,6 +1831,7 @@
           "example": "Table 502-0003", 
           "existing": true, 
           "gc_multiplicity": "O", 
+          "id": "data_series_issue_identification", 
           "implementation": "new dataset field \u2018data_series_issue_identification\u2019 and new dataset field \u2018data_series_issue_identification_fra\u2019", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.21.2", 
@@ -1842,6 +1859,7 @@
             "eng": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
             "fra": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
           }, 
+          "id": "supplemental_information", 
           "implementation": "defer", 
           "iso_multiplicity": "O, Repeat.", 
           "name": {
@@ -1876,6 +1894,7 @@
             "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
             "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
           }, 
+          "id": "url", 
           "implementation": "defer", 
           "iso_multiplicity": "", 
           "name": {
@@ -1906,6 +1925,7 @@
           "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "license_id", 
           "implementation": "existing dataset field \u2018license_id\u2019", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.4.1.1", 
@@ -1937,6 +1957,7 @@
           "example": "vector", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "spatial_representation_type", 
           "implementation": "new dataset field \u2018spatial_representation_type\u2019", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.3.1.7", 
@@ -1960,6 +1981,7 @@
           "example": "documentDigital", 
           "existing": true, 
           "gc_multiplicity": "M", 
+          "id": "presentation_form", 
           "implementation": "new dataset field \u2018presentation_form\u2019", 
           "iso_multiplicity": "O", 
           "nap_iso_19115_ref": "5.14.8", 
@@ -1983,6 +2005,7 @@
           "example": "Product dependant", 
           "existing": true, 
           "gc_multiplicity": "C", 
+          "id": "browse_graphic_url", 
           "implementation": "replace with new dataset field \u2018browse_graphic_url\u2019 which will point to a TBD common X, Y resolution jpg, gif or png image hosted elsewhere", 
           "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.3.5.1", 

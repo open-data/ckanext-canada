@@ -291,6 +291,7 @@ def main():
         for field in fields:
             p = proposed[field]
             new_field = field_from_proposed(p)
+            new_field['id'] = field
             new_field['existing'] = field in EXISTING_FIELDS
             f = FIELD_MAPPING.get(field)
             if f:
