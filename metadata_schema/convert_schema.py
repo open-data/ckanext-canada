@@ -24,15 +24,16 @@ LANGS = 'eng', 'fra'
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
-        #'file_identifier', - unique ID, provided by ckan as 'id'
+        'id', # unique ID,
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
-        #'language', - XXX EXPORT ONLY - Always "eng; CAN, fra; CAN"
-        'name', #- optional in proposed, REQUIRED here!
+        'language', # Always "eng; CAN|fra; CAN"
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author', # XXX set to GC Department (ckan group), no data entry
+        'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
-        #'metadata_standard_name', - XXX EXPORT ONLY - Always same for all
+        'name', #- optional in proposed, REQUIRED here!
+        'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
         ]),
     ("Dataset Identification Information", [
