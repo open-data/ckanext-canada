@@ -166,7 +166,7 @@ FIELD_MAPPING = {
     'url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information': 'supplementary_documentation_en',
-    'geographic_region_name': 'Geographic_Region_Name',
+    'geographic_region': 'Geographic_Region_Name',
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
