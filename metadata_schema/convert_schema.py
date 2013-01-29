@@ -40,19 +40,23 @@ SECTIONS_FIELDS = [
         'title',
         'notes',
         'subject', # TODO: create tag vocabulary for this
-        'tags',
         'topic_category', # TODO: create tag vocabulary for this
-        #'status', use resource description (?) not appropriate?
-        #'character_set', not req'd: UTF-8 is our new standard encoding :-)
+        'tags',
+        'maintenance_and_update_frequency',
+        #'temporal_elevment',
+        'geographic_region',
+        #'the_geom', # spatial extension
+        'data_series_name',
+        'data_series_issue_identification',
+        'supplemental_information',
+
         ]),
     ("Supplemental Information", [
         'program_url',
         #'data_dictionary', stored as resources
-        'supplemental_information_other',
         #'additional_metadata', not required (use supplemental..other field)
         ]),
     ("Data Series", [
-        'data_series_name',
         'issue_identification', # related to 'name'/'url' above
         'url',
         ]),
@@ -100,7 +104,6 @@ RESOURCE_FIELDS = [
     'size',
     'format',
     'language',
-    'maintenance_and_update_frequency',
     'date_published', # ADMIN-only field that will control publishing
     'modified',
     ]
