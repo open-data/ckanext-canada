@@ -13,85 +13,53 @@ import os
 from collections import namedtuple
 from itertools import groupby
 
+from ckan.logic.schema import default_package_schema, default_resource_schema
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
+PROPOSED_SCHEMA_STARTS_ROW = 7
 LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
-        #'file_identifier', - unique ID, provided by ckan as 'id'
+        'id', # unique ID,
         #'date_stamp', - revisioned by ckan, get first revision_timestamp
         #'date_modified', - revisioned by ckan, get last revision_timestamp
-        #'language', - XXX EXPORT ONLY - Always "eng; CAN, fra; CAN"
-        'name', #- optional in proposed, REQUIRED here!
+        'language', # Always "eng; CAN|fra; CAN"
         #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author', # XXX set to GC Department (ckan group), no data entry
+        'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
-        #'metadata_standard_name', - XXX EXPORT ONLY - Always same for all
+        'name', #- optional in proposed, REQUIRED here!
+        'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
         ]),
-    ("Dataset Identification Information", [
+    ("Identification Information", [
         'title',
-        #'date', - doesn't apply, use resource created or last_modified
-        #'data_modified', - doesn't apply, use resource last_modified
-        #'date_type', doesn't apply, (see above) and use revisioned resources
         'notes',
-        #'status', use resource description (?) not appropriate?
-        #'character_set', not req'd: UTF-8 is our new standard encoding :-)
-        ]),
-    ("Supplemental Information", [
-        'program_url',
-        #'data_dictionary', stored as resources
-        'supplemental_information_other',
-        #'additional_metadata', not required (use supplemental..other field)
-        ]),
-    ("Data Series", [
-        'data_series_name',
-        'issue_identification', # related to 'name'/'url' above
-        'url',
-        ]),
-    ("Thesaurus-GC Core Subject Thesaurus", [
         'subject', # TODO: create tag vocabulary for this
-        #'title', - no place for these at the moment
-        #'date',
-        #'date_type',
-        #'organization_name',
-        ]),
-    ("Thesaurus-ISO Topic Category", [
         'topic_category', # TODO: create tag vocabulary for this
-        #'title', - no place for these at the moment
-        #'date',
-        #'date_type',
-        #'organization_name',
-        ]),
-    ("Descriptive Keywords", [
         'tags',
-        #'type', - no place for this at the moment
+        'maintenance_and_update_frequency',
+        #'temporal_elevment',
+        'geographic_region',
+        'data_series_name',
+        'data_series_issue_identification',
+        'supplemental_information',
+        'url',
+        'license_id',
         ]),
-    ("Extent", [
-        'begin_position', # need to investigate searching
-        'end_position',
-        'geographic_region_name',
-        #'north_bound_latitude', - these are handled by ckanext-spacial
-        #'south_bound_latitude',
-        #'west_bound_longitude',
-        #'east_bound_longitude',
+    ("Geospatial Additional Fields", [
+        'spatial_representation_type',
+        'presentation_form',
+        #'the_geom', # spatial extension
+        #'bounding_polygon', - maybe, if must be different than the_geom
+        'browse_graphic_url',
         ]),
-    #("Constraints", [
-        #'legal_access_constraints', - handled by 'license_id'
-        #'legal_use_constraints',
-        #]),
-    #("Distribution Information", [ - these are handled by resources
-        #'linkage_url', - resource.url
-        #'transfer_size', - resource.size
-        #'protocol', - part of resource.url
-        #'description', - resource.description
-        #'format_name', - resource.resource_type
-        #'format_version', - part of resource.resource_type (?)
     ]
 
 # Resource fields (no sections)
@@ -101,56 +69,78 @@ RESOURCE_FIELDS = [
     'size',
     'format',
     'language',
-    'maintenance_and_update_frequency',
+    'date_published', # ADMIN-only field that will control publishing
+    'last_modified',
     ]
 
-EXISTING_RESOURCE_FIELDS = set([
-    'name',
-    'url',
-    'format',
-    'size',
-    ])
+EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 
 BILINGUAL_RESOURCE_FIELDS = set([
     'name',
     ])
 
+EXISTING_FIELDS = set(default_package_schema())
+
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
-    languages
+    class_
+    sub_class
     property_name
     iso_multiplicity
     gc_multiplicity
+    type_
     description
     example
     nap_iso_19115_ref
     domain_best_practice
     controlled_vocabulary_reference_eng
     controlled_vocabulary_reference_fra
-    implementation_plan
+    implementation_old
+    implementation
+    data_gov_common_core
+    json
+    rdfa_lite
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
 # other dataset fields that match are assumed to be
 # the same as their proposed fields
 PROPOSED_TO_EXISTING_FIELDS = {
-    'dataset_uri_dataset_unique_identifier': 'name',
-    'organization_name': 'author',
-    'contact': 'author_email',
-    'email': 'maintainer_email',
+    'fileIdentifier': 'id',
+    'organizationName': 'author',
+    'departmentNumber': 'department_number',
+    'electronicMailAddress': 'author_email',
+    'dataSetURI': 'name',
+    'digitalObjectIdentifier': 'digital_object_identifier',
+    'catalogueType': 'catalog_type',
     'title': 'title',
+    'datePublished': 'resource:date_published',
+    'dateModified': 'resource:last_modified',
     'abstract': 'notes',
+    'subject': 'subject',
+    'topicCategory': 'topic_category',
     'keyword': 'tags',
-    'data_series_url': 'url',
+    'maintenanceAndUpdateFrequency':
+        'maintenance_and_update_frequency',
+    #'temporalElement' DEFER
+    'geographicRegion': 'geographic_region',
+    #'spatial' TBD use spatial extension 'the_geom'
+    'dataSeriesName': 'data_series_name',
+    'issueIdentification': 'data_series_issue_identification',
+    'supplementalInformation': 'supplemental_information', # marked DEFER?
+    'programURL': 'url', # marked DEFER?
+    'Licence': 'license_id',
+    'URL': 'resource:url',
+    'language2': 'resource:language',
     # resource fields
-    'format_name': 'resource:format',
-    'transfer_size': 'resource:size',
-    'linkage_url': 'resource:url',
-    'language': 'resource:language',
-    'maintenance_and_update_frequency':
-        'resource:maintenance_and_update_frequency',
+    'transferSize': 'resource:size',
+    'formatName': 'resource:format',
+
+    'spatialRespresentionType': 'spatial_representation_type',
+    'presentationForm': 'presentation_form',
+    #'polygon' DEFER
+    'browseGraphicFileName': 'browse_graphic_url',
     }
-EXISTING_FIELDS = set(PROPOSED_TO_EXISTING_FIELDS.values())
 
 # FOR IMPORTING ENGLISH FIELDS FROM PILOT
 # 'new field name': 'pilot field name'
@@ -172,8 +162,8 @@ FIELD_MAPPING = {
     'program_url': 'program_page_en', # note: different than French
     'url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
-    'supplemental_information_other': 'supplementary_documentation_en',
-    'geographic_region_name': 'Geographic_Region_Name',
+    'supplemental_information': 'supplementary_documentation_en',
+    'geographic_region': 'Geographic_Region_Name',
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
@@ -189,8 +179,9 @@ BILINGUAL_FIELDS = {
     'program_url': 'program_url_fr',
     'url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
-    'supplemental_information_other': 'supplementary_documentation_fr',
+    'supplemental_information': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
+    'data_series_issue_identification': None,
     'issue_identification': None,
     }
 
@@ -237,17 +228,40 @@ def read_proposed_fields():
     workbook = xlrd.open_workbook(PROPOSED_SCHEMA_NAME)
     sheet = workbook.sheet_by_name(PROPOSED_SCHEMA_SHEET)
     out = {}
-    for i in range(sheet.nrows):
+    for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
         row = sheet.row(i)
         p = ProposedField(*(unicode(f.value).strip() for f in row))
-        if not p.description and not p.gc_multiplicity:
+        if not p.description and not p.type_:
             # skip the header rows
             continue
-        new_name = proposed_name_to_identifier(p.property_name)
+        new_name = p.property_name.strip()
         new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
-        assert new_name not in p, new_name
+        if new_name in out:
+            new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name + '2',
+                new_name) # language is duplicated
+        assert new_name not in out, (new_name, out.keys())
         out[new_name] = p
     return out
+
+def field_from_proposed(p):
+    "extract proposed field information into a field dict"
+    return {
+        'proposed_name': {'en': p.property_name},
+        'proposed_type': p.type_,
+        'iso_multiplicity': p.iso_multiplicity,
+        'gc_multiplicity': p.gc_multiplicity,
+        'description': {'en': p.description},
+        'example': p.example,
+        'nap_iso_19115_ref': p.nap_iso_19115_ref,
+        'domain_best_practice': {'en': p.domain_best_practice},
+        'controlled_vocabulary_reference_eng':
+            p.controlled_vocabulary_reference_eng,
+        'controlled_vocabulary_reference_fra':
+            p.controlled_vocabulary_reference_fra,
+        'implementation': p.implementation,
+        'data_gov_common_core': p.data_gov_common_core,
+        'rdfa_lite': p.rdfa_lite,
+        }
 
 def main():
     schema_out = {
@@ -267,27 +281,15 @@ def main():
         section_name = proposed_name_to_identifier(section)
         new_section = {
             'name': {'en': section}, # FIXME: French?
-            'description': {'en': proposed[section_name].description},
+            'description': {}, # no longer available
             'fields': [],
             }
 
         for field in fields:
             p = proposed[field]
-            new_field = { # FIXME: French?
-                'id': field,
-                'proposed_name': {'en': p.property_name},
-                'iso_multiplicity': p.iso_multiplicity,
-                'gc_multiplicity': p.gc_multiplicity,
-                'description': {'en': p.description},
-                'example': p.example,
-                'nap_iso_19115_ref': p.nap_iso_19115_ref,
-                'domain_best_practice': {'en': p.domain_best_practice},
-                'existing': field in EXISTING_FIELDS,
-                'controlled_vocabulary_reference_eng':
-                    p.controlled_vocabulary_reference_eng,
-                'controlled_vocabulary_reference_fra':
-                    p.controlled_vocabulary_reference_fra,
-                }
+            new_field = field_from_proposed(p)
+            new_field['id'] = field
+            new_field['existing'] = field in EXISTING_FIELDS
             f = FIELD_MAPPING.get(field)
             if f:
                 xp = '//item[inputname="%s"]' % f
@@ -319,20 +321,7 @@ def main():
             }
         p = proposed.get('resource:' + rfield, None)
         if p:
-            new_rfield.update({
-                'proposed_name': {'en': p.property_name},
-                'iso_multiplicity': p.iso_multiplicity,
-                'gc_multiplicity': p.gc_multiplicity,
-                'description': {'en': p.description},
-                'example': p.example,
-                'nap_iso_19115_ref': p.nap_iso_19115_ref,
-                'domain_best_practice': {'en': p.domain_best_practice},
-                'controlled_vocabulary_reference_eng':
-                    p.controlled_vocabulary_reference_eng,
-                'controlled_vocabulary_reference_fra':
-                    p.controlled_vocabulary_reference_fra,
-
-                })
+            new_rfield.update(field_from_proposed(p))
         schema_out['resource_fields'].append(new_rfield)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
