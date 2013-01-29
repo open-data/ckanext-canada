@@ -131,7 +131,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'issueIdentification': 'data_series_issue_identification',
     'supplementalInformation': 'supplemental_information', # marked DEFER?
     'programURL': 'url', # marked DEFER?
-    'License': 'license_id',
+    'Licence': 'license_id',
     'URL': 'resource:url',
     'language2': 'resource:language',
     # resource fields
