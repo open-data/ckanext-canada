@@ -1,5 +1,12 @@
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+import ckan.logic.schema as ckan_schema  
+from ckan.lib.base import c, model
+import ckan.logic as logic
+import ckan.logic.schema as ckan_schema
+import ckan.lib.plugins as lib_plugins
+import ckan.logic.converters as converters
+
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -91,7 +98,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         into a format suitable for the form (optional)
         """
         # return logic.schema.form_to_db_package_schema()
-        #schema = package_form_schema()
+#        schema = package_form_schema()
         
         schema = ckan_schema.db_to_form_package_schema()
         
