@@ -123,7 +123,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'topicCategory': 'topic_category',
     'keyword': 'tags',
     'maintenanceAndUpdateFrequency':
-        'resource:maintenance_and_update_frequency',
+        'maintenance_and_update_frequency',
     #'temporalElement' DEFER
     'geographicRegion': 'geographic_region',
     #'spatial' TBD use spatial extension 'the_geom'
