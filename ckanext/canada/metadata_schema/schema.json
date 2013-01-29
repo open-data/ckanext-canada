@@ -1,29 +1,80 @@
 {
   "dataset_sections": [
     {
-      "description": {
-        "en": "This section contains information about the metadata record itself."
-      }, 
+      "description": {}, 
       "fields": [
         {
           "bilingual": false, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
           "description": {
-            "en": "Designates either a URL link to the dataset if available or a unique identifier (such as a DOI) for the resource if one exists."
+            "en": "Unique identifier for this metadata file."
           }, 
           "domain_best_practice": {
-            "en": "<Uniform Resource Identifier><;><blank space><onLineFunctionCode> The on line function code is optional. Select onLineFunctionCode from \"download\", \"information\", \"offlineAccess\", \"order\", \"search\", \"upload\", \"webService\", \"emailService\", \"browsing\", \"fil"
+            "en": "Automatically generated. Each metadata record shall have a unique identifier, such as a universal unique identifier (UUID), to distinguish it from other resources."
           }, 
-          "example": "http://host/path/ download", 
+          "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
           "existing": true, 
-          "gc_multiplicity": "O", 
-          "id": "name", 
-          "iso_multiplicity": "O", 
-          "nap_iso_19115_ref": "5.2.10", 
+          "gc_multiplicity": "M", 
+          "implementation": "existing dataset field \u2018id\u2019", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.2.1", 
           "proposed_name": {
-            "en": "Dataset URI (Dataset Unique Identifier)"
-          }
+            "en": "fileIdentifier"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "eng": "English", 
+              "fra": "Anglais", 
+              "pilot_uuid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30"
+            }, 
+            {
+              "eng": "French", 
+              "fra": "Fran\u00e7ais", 
+              "pilot_uuid": "FA6486B4-8A2A-4DA4-A727-E4EA3D29BF71"
+            }, 
+            {
+              "eng": "Bilingual (English and French)", 
+              "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
+              "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
+            }
+          ], 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Language", 
+          "description": {
+            "en": "The language of the metadata, composed of an ISO639-2/T three letter language code and an ISO3166-1 three letter country code."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: eng; CAN, fre; CAN"
+          }, 
+          "example": "eng; CAN", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "help": {
+            "eng": "The language(s) of the content of the dataset.", 
+            "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
+          }, 
+          "implementation": "new field \u2018language\u2019 set to \u201ceng; CAN|fra; CAN\u201d for all datasets", 
+          "iso_multiplicity": "M", 
+          "name": {
+            "eng": "Language", 
+            "fra": "Langue"
+          }, 
+          "nap_iso_19115_ref": "5.2.2", 
+          "pilot_id": "language__", 
+          "proposed_name": {
+            "en": "language"
+          }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "rdfa_lite": "dcat:language", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -816,21 +867,22 @@
           ], 
           "controlled_vocabulary_reference_eng": "The Registry of Applied Terms : http://www.tbs-sct.gc.ca/fip-pcim/reg-eng.asp", 
           "controlled_vocabulary_reference_fra": "Registre des titres d'usage : \nhttp://www.tbs-sct.gc.ca/fip-pcim/reg-fra.asp", 
+          "data_gov_common_core": "Publisher", 
           "description": {
-            "en": "Name of the responsible organization."
+            "en": "The organization directly responsible for metadata maintenance."
           }, 
           "domain_best_practice": {
             "en": "Drop down: List of GC Departments"
           }, 
-          "example": "Environment Canada", 
+          "example": "Treasury Board of Canada Secretariat", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
           }, 
-          "id": "author", 
-          "iso_multiplicity": "C", 
+          "implementation": "existing dataset field \u2018author\u2019 and a Group assigned to the dataset", 
+          "iso_multiplicity": "M", 
           "name": {
             "eng": "Creator (Department/Agency)", 
             "fra": "Auteur (minist\u00e8re ou organisme)"
@@ -838,49 +890,126 @@
           "nap_iso_19115_ref": "5.16.2", 
           "pilot_id": "department", 
           "proposed_name": {
-            "en": "Organization Name"
+            "en": "organizationName"
           }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "rdfa_lite": "foaf:Organization", 
           "type": "choice"
         }, 
         {
           "bilingual": false, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
           "description": {
-            "en": "The party responsible for the metadata content"
+            "en": "Unique number assigned to each department (proposed to use GOS deperatmental identifier, number to assist in identifing department in URI)"
           }, 
           "domain_best_practice": {
-            "en": "Email address of person who entered metadata"
+            "en": "Automatically generated from organizationName\n(numbering system TBD)"
           }, 
-          "example": "Alannah.Hilt@tbs-sct.gc.ca", 
+          "example": "", 
           "existing": true, 
           "gc_multiplicity": "M", 
-          "id": "author_email", 
-          "iso_multiplicity": "M", 
-          "nap_iso_19115_ref": "5.2.6", 
+          "implementation": "new dataset field \u2018department_number\u2019", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
           "proposed_name": {
-            "en": "Contact"
-          }
+            "en": "departmentNumber"
+          }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "rdfa_lite": ""
         }, 
         {
           "bilingual": false, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Contact Email", 
           "description": {
-            "en": "Type of dataset"
+            "en": "The electronic mailbox address of the responsible organization or individual (each department will be required to create an open data email, as this field will be searchable)"
+          }, 
+          "domain_best_practice": {
+            "en": "free text"
+          }, 
+          "example": "od-do@tbs-sct.gc.ca", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "implementation": "exsiting dataset field \u2018email\u2019 set to the same value (TBD) for all datasets", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.19.6", 
+          "proposed_name": {
+            "en": "electronicMailAddress"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "foaf:mbox"
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Unique Identifier", 
+          "description": {
+            "en": "Uniform Resource Identifier for the resource"
+          }, 
+          "domain_best_practice": {
+            "en": "Automically generated by system following defined format"
+          }, 
+          "example": "http://host/path/ download", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "implementation": "existing dataset field \u2018name\u2019, calculated and hidden from the registry UI", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.2.10", 
+          "proposed_name": {
+            "en": "dataSetURI"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcterms:identifier"
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "DOI assigned to file"
+          }, 
+          "domain_best_practice": {
+            "en": "free text"
+          }, 
+          "example": "", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "implementation": "new dataset field \u2018data_object_identifier\u2019", 
+          "iso_multiplicity": "N\\A", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "digitalObjectIdentifier"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "The type of metadata schema used to describe the resource"
           }, 
           "domain_best_practice": {
             "en": "Drop Down: Raw, Geo, etc. (Selection will prompt specific metadata fields for extensions)"
           }, 
           "example": "Geo", 
-          "existing": false, 
+          "existing": true, 
           "gc_multiplicity": "M", 
-          "id": "catalog_type", 
+          "implementation": "new dataset field \u2018catalogue_type\u2019", 
           "iso_multiplicity": "", 
           "nap_iso_19115_ref": "", 
           "proposed_name": {
-            "en": "Catalog Type"
-          }
+            "en": "catalogueType"
+          }, 
+          "proposed_type": "GC derived field", 
+          "rdfa_lite": ""
         }
       ], 
       "name": {
@@ -888,50 +1017,52 @@
       }
     }, 
     {
-      "description": {
-        "en": "This section is used to describe the dataset."
-      }, 
+      "description": {}, 
       "fields": [
         {
           "bilingual": true, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Title", 
           "description": {
-            "en": "Name by which the thesaurus is known"
+            "en": "The full, official name by which the cited resource is known."
           }, 
           "domain_best_practice": {
-            "en": "Default: ISO 19115 Topic Categories"
+            "en": "free text"
           }, 
-          "example": "ISO 19115 Topic Categories", 
+          "example": "Canada Boarder Wait Times", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "help": {
             "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
           }, 
-          "id": "title", 
-          "iso_multiplicity": "", 
+          "implementation": "existing CKAN field \"title\"\nFRENCH: new field \"title_fr\"", 
+          "iso_multiplicity": "M", 
           "name": {
             "eng": "Title English", 
             "fra": "Titre en anglais"
           }, 
-          "nap_iso_19115_ref": "", 
+          "nap_iso_19115_ref": "5.14.1", 
           "pilot_id": "title_en", 
           "pilot_id_fra": "title_fr", 
           "proposed_name": {
-            "en": "Title"
+            "en": "title"
           }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:title", 
           "type": "text"
         }, 
         {
           "bilingual": true, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Description", 
           "description": {
-            "en": "Provide a brief overview of the content, methodology and findings of the dataset in free text format."
+            "en": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
           }, 
           "domain_best_practice": {
-            "en": "Free text. The abstract is meant to be a brief narrative summary of the contents of your data. Should include a summary of:\n-Thematic Content (Theme)\n-Dataset Quality\n-Methodology\n-Temporal Extent (when)\n-Geographic Extent (where)\n-Format of the data\nGuidelines:\n-Fully describe acronyms\n-Make it clear, concise, and specific as to what the resource contains\n-Know your audience. Where possible make sure the abstract is something the general public can understand."
+            "en": "free text."
           }, 
           "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
           "existing": true, 
@@ -940,7 +1071,7 @@
             "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
           }, 
-          "id": "notes", 
+          "implementation": "existing dataset field \u2018notes\u2019 and new dataset field \u2018notes_fra\u2019", 
           "iso_multiplicity": "M", 
           "name": {
             "eng": "Description English", 
@@ -950,184 +1081,12 @@
           "pilot_id": "description_en", 
           "pilot_id_fra": "description_fr", 
           "proposed_name": {
-            "en": "Abstract"
+            "en": "abstract"
           }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:description", 
           "type": "textarea"
-        }
-      ], 
-      "name": {
-        "en": "Dataset Identification Information"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This field can be used to provide any additional information about the dataset not captured in the form."
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "The URL for the Government of Canada program that is responsible for the dataset."
-          }, 
-          "domain_best_practice": {
-            "en": "URL"
-          }, 
-          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The URL for the program  that is responsible for the dataset or tool.", 
-            "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
-          }, 
-          "id": "program_url", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "eng": "Program URL English", 
-            "fra": "Adresse URL du programme en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "pilot_id": "program_page_en", 
-          "pilot_id_fra": "program_url_fr", 
-          "proposed_name": {
-            "en": "Program URL"
-          }, 
-          "type": "text"
         }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports etc."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text. This field can be used to provide any additional information about the dataset not captured in the form. Use it to link to program information, data quality reports, data dictionaries, etc."
-          }, 
-          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
-            "fra": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
-          }, 
-          "id": "supplemental_information_other", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "eng": "Reference for Supplementary Documentation English", 
-            "fra": "R\u00e9f\u00e9rence pour autre documentation en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "pilot_id": "supplementary_documentation_en", 
-          "pilot_id_fra": "supplementary_documentation_fr", 
-          "proposed_name": {
-            "en": "Supplemental Information-Other"
-          }, 
-          "type": "text"
-        }
-      ], 
-      "name": {
-        "en": "Supplemental Information"
-      }
-    }, 
-    {
-      "description": {
-        "en": ""
-      }, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "Name of the data series or aggregate dataset of which referenced."
-          }, 
-          "domain_best_practice": {
-            "en": "Free text"
-          }, 
-          "example": "CANSIM", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "A name given to multiple datasets to present them as a group or a set.", 
-            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
-          }, 
-          "id": "data_series_name", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "eng": "Dataset Group Name English", 
-            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
-          }, 
-          "nap_iso_19115_ref": "5.21.1", 
-          "pilot_id": "group_name_en", 
-          "pilot_id_fra": "group_name_fr", 
-          "proposed_name": {
-            "en": "Data Series Name"
-          }, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "Identification of the series' issue information"
-          }, 
-          "domain_best_practice": {
-            "en": "Free text"
-          }, 
-          "example": "Table 502-0003", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "id": "issue_identification", 
-          "iso_multiplicity": "O", 
-          "nap_iso_19115_ref": "5.21.2", 
-          "proposed_name": {
-            "en": "Issue Identification"
-          }
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "Link (URL) to the high level repository in which the dataset resides at the agency of origin"
-          }, 
-          "domain_best_practice": {
-            "en": "URL"
-          }, 
-          "example": "http://www.hc-sc.gc.ca/dhp-mps/medeff/databasdon/extract_extrait-eng.php", 
-          "existing": true, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
-            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
-          }, 
-          "id": "url", 
-          "iso_multiplicity": "O", 
-          "name": {
-            "eng": "Data Series URL English", 
-            "fra": "URL anglais de l'ensemble de donn\u00e9es"
-          }, 
-          "nap_iso_19115_ref": "5.20.1", 
-          "pilot_id": "data_series_url_en", 
-          "pilot_id_fra": "data_series_url_fr", 
-          "proposed_name": {
-            "en": "Data Series URL"
-          }, 
-          "type": "text"
-        }
-      ], 
-      "name": {
-        "en": "Data Series"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section of the metadata contains information about the thesaurus used for describing the dataset."
-      }, 
-      "fields": [
         {
           "bilingual": false, 
           "choices": [
@@ -1224,21 +1183,22 @@
           ], 
           "controlled_vocabulary_reference_eng": "http://www.thesaurus.gc.ca/recherche-search/mtwdk.exe?k=these&l=60&s=scat&w=90", 
           "controlled_vocabulary_reference_fra": "http://www.thesaurus.gc.ca/recherche-search/thes-fra.html", 
+          "data_gov_common_core": "Category", 
           "description": {
-            "en": "Main subject of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery."
+            "en": "Main subject of the dataset. Select the most appropriate category from the list provided."
           }, 
           "domain_best_practice": {
             "en": "Drop down: Arts/ Music/ Literature,  Agriculture, Economics and Industry, Education and Training, Form descriptors, Government and Politics, Health and Safety , History and Archaeology, Information and Communications, Labour, Language and Linguistics, Law, Military, Nature and Environment, Persons, Processes, Society and Culture, Science and Technology, Transport"
           }, 
           "example": "Agriculture", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
+          "existing": true, 
+          "gc_multiplicity": "M, Repeat.", 
           "help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
           }, 
-          "id": "subject", 
-          "iso_multiplicity": "", 
+          "implementation": "new dataset keyword field \u2018subject\u2019 with new keyword vocabulary", 
+          "iso_multiplicity": "M, Repeat.", 
           "name": {
             "eng": "Subject Area", 
             "fra": "Domaine"
@@ -1246,59 +1206,45 @@
           "nap_iso_19115_ref": "5.3.1.11", 
           "pilot_id": "category", 
           "proposed_name": {
-            "en": "Subject"
+            "en": "subject"
           }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "rdfa_lite": "dcat:theme", 
           "type": "choice"
-        }
-      ], 
-      "name": {
-        "en": "Thesaurus-GC Core Subject Thesaurus"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section of the metadata contains information about the thesaurus used for describing the dataset."
-      }, 
-      "fields": [
+        }, 
         {
           "bilingual": false, 
           "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
           "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
+          "data_gov_common_core": "", 
           "description": {
-            "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. These categories help to group datasets for easier discovery. This element is repeatable; select all category codes that apply to the dataset. Must be selected from napMD_TopicCategoryCode."
+            "en": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. Must be selected from napMD_TopicCategoryCode."
           }, 
           "domain_best_practice": {
             "en": "Drop down: Farming, Biota, Boundaries, Climatology / Meterology / Atmosphere, Economy, Elevation, Environment, Geoscientific Information, Health, Imagery / Base Maps/ Earth Cover, Intelligence / Military, Inland Waters, Location, Oceans, Planning Cadastre, Society, Structure, Transportation, Utilities / Communications"
           }, 
           "example": "Farming", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "topic_category", 
-          "iso_multiplicity": "C", 
+          "existing": true, 
+          "gc_multiplicity": "O, Repeat.", 
+          "implementation": "new dataset keyword field \u2018topic_category\u2019 with new keyword vocabulary", 
+          "iso_multiplicity": "M", 
           "nap_iso_19115_ref": "5.3.1.11", 
           "proposed_name": {
-            "en": "Topic Category"
-          }
-        }
-      ], 
-      "name": {
-        "en": "Thesaurus-ISO Topic Category"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section of the metadata contains keywords describing the dataset."
-      }, 
-      "fields": [
+            "en": "topicCategory"
+          }, 
+          "proposed_type": "CodeList napMD_TopicCategoryCode", 
+          "rdfa_lite": ""
+        }, 
         {
           "bilingual": true, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Tags", 
           "description": {
-            "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource. To select from a pre-defined list of keywords, select a thesaurus below.  Keywords are a repeatable element; enter as many keywords as necessary to describe the data."
+            "en": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource."
           }, 
           "domain_best_practice": {
-            "en": "Free text. Use 1 or 2 word phrases. Keep it lower case and avoid special characters and acronyms. \nUse keywords that refer to discipline, place, time period, theme"
+            "en": "free text."
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
           "existing": true, 
@@ -1307,8 +1253,8 @@
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
           }, 
-          "id": "tags", 
-          "iso_multiplicity": "M, Repeat.", 
+          "implementation": "existing dataset field \u2018keywords\u2019 with UI that forces entering both English and French", 
+          "iso_multiplicity": "O", 
           "name": {
             "eng": "Keywords English", 
             "fra": "Mots-cl\u00e9s en anglais"
@@ -1317,79 +1263,44 @@
           "pilot_id": "keywords_en", 
           "pilot_id_fra": "keywords_fr", 
           "proposed_name": {
-            "en": "Keyword"
+            "en": "keyword"
           }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcat:keywords", 
           "type": "textarea"
-        }
-      ], 
-      "name": {
-        "en": "Descriptive Keywords"
-      }
-    }, 
-    {
-      "description": {
-        "en": "This section identifies both the temporal and geographical coverage of the dataset."
-      }, 
-      "fields": [
-        {
-          "bilingual": false, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "description": {
-            "en": "The date  when the dataset started."
-          }, 
-          "domain_best_practice": {
-            "en": "Date format follows YYYY-MM-DD"
-          }, 
-          "example": "YYYY-MM-DD", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
-            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
-          }, 
-          "id": "begin_position", 
-          "iso_multiplicity": "", 
-          "name": {
-            "eng": "Time Period Coverage Start", 
-            "fra": "Couverture de la p\u00e9riode de temps"
-          }, 
-          "nap_iso_19115_ref": "N/A", 
-          "pilot_id": "time_period_start", 
-          "proposed_name": {
-            "en": "Begin Position"
-          }, 
-          "type": "datepicker"
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
+          "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
+          "data_gov_common_core": "Frequency", 
           "description": {
-            "en": "The date when the dataset ended."
+            "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. Must be selected from napMD_MaintenanceFrequencyCode."
           }, 
           "domain_best_practice": {
-            "en": "Date format follows YYYY-MM-DD. If date is indeterminate, can put 'unknown' or 'now'."
+            "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
           }, 
-          "example": "2012-01-21 or 'now'", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
+          "example": "daily", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
           "help": {
-            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
-            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+            "eng": "The frequency at which the dataset is published.", 
+            "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
           }, 
-          "id": "end_position", 
-          "iso_multiplicity": "", 
+          "implementation": "new dataset field \u2018maintenance_and_update_frequency\u2019", 
+          "iso_multiplicity": "O", 
           "name": {
-            "eng": "Time Period Coverage End", 
-            "fra": "Couverture de la p\u00e9riode de temps"
+            "eng": "Frequency", 
+            "fra": "Fr\u00e9quence"
           }, 
-          "nap_iso_19115_ref": "N/A", 
-          "pilot_id": "time_period_end", 
+          "nap_iso_19115_ref": "5.6.1", 
+          "pilot_id": "frequency", 
           "proposed_name": {
-            "en": "End Position"
+            "en": "maintenanceAndUpdateFrequency"
           }, 
-          "type": "datepicker"
+          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
+          "rdfa_lite": "dct:accuralPeriodicity", 
+          "type": "select"
         }, 
         {
           "bilingual": false, 
@@ -1827,20 +1738,21 @@
           ], 
           "controlled_vocabulary_reference_eng": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm", 
           "controlled_vocabulary_reference_fra": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-fra.htm", 
+          "data_gov_common_core": "Spatial", 
           "description": {
             "en": "The spatial region of the resource"
           }, 
           "domain_best_practice": {
-            "en": "Region names to come from the 'Standard Geospatial Classification'"
+            "en": "Drop Down?\nRegion names to come from the 'Standard Geographical Classification'"
           }, 
           "example": "Ottawa", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
           "help": {
             "eng": "The region that describes the geographic area covered by the dataset.", 
             "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
           }, 
-          "id": "geographic_region_name", 
+          "implementation": "new dataset field \u2018geographic_region\u2019", 
           "iso_multiplicity": "", 
           "name": {
             "eng": "Geographic Region Name", 
@@ -1849,13 +1761,240 @@
           "nap_iso_19115_ref": "N/A", 
           "pilot_id": "Geographic_Region_Name", 
           "proposed_name": {
-            "en": "Geographic Region Name"
+            "en": "geographicRegion"
           }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "rdfa_lite": "dcterms:spatial", 
           "type": "choice"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "Name of the publication series or aggregate dataset of which the referenced dataset is a part."
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "CANSIM", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "help": {
+            "eng": "A name given to multiple datasets to present them as a group or a set.", 
+            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
+          }, 
+          "implementation": "new dataset field \u2018data_series_name\u2019 and new dataset field \u2018data_series_name_fra\u2019", 
+          "iso_multiplicity": "O", 
+          "name": {
+            "eng": "Dataset Group Name English", 
+            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
+          }, 
+          "nap_iso_19115_ref": "5.21.1", 
+          "pilot_id": "group_name_en", 
+          "pilot_id_fra": "group_name_fr", 
+          "proposed_name": {
+            "en": "dataSeriesName"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "Identification of the series\u2019 issue information."
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "Table 502-0003", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "implementation": "new dataset field \u2018data_series_issue_identification\u2019 and new dataset field \u2018data_series_issue_identification_fra\u2019", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.21.2", 
+          "proposed_name": {
+            "en": "issueIdentification"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Documentation URL", 
+          "description": {
+            "en": "Other descriptive information about the dataset. This field can be used to provide any additional information about the resource. For example, a link to program information, data quality reports etc."
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
+          "existing": true, 
+          "gc_multiplicity": "O, Repeat.", 
+          "help": {
+            "eng": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
+            "fra": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
+          }, 
+          "implementation": "defer", 
+          "iso_multiplicity": "O, Repeat.", 
+          "name": {
+            "eng": "Reference for Supplementary Documentation English", 
+            "fra": "R\u00e9f\u00e9rence pour autre documentation en anglais"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "pilot_id": "supplementary_documentation_en", 
+          "pilot_id_fra": "supplementary_documentation_fr", 
+          "proposed_name": {
+            "en": "supplementalInformation"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcat:dataDictionary", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Homepage URL", 
+          "description": {
+            "en": "The URL for the Government of Canada program that is responsible for the dataset."
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "help": {
+            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
+            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+          }, 
+          "implementation": "defer", 
+          "iso_multiplicity": "", 
+          "name": {
+            "eng": "Data Series URL English", 
+            "fra": "URL anglais de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "pilot_id": "data_series_url_en", 
+          "pilot_id_fra": "data_series_url_fr", 
+          "proposed_name": {
+            "en": "programURL"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": "foaf:homepage", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "License", 
+          "description": {
+            "en": "The limitations or constraints on the use of or access to the resource."
+          }, 
+          "domain_best_practice": {
+            "en": "Default: Constraints outlined in: Government of Canada Open Data Licence Agreement (URL:\u2026)"
+          }, 
+          "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "implementation": "existing dataset field \u2018license_id\u2019", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.4.1.1", 
+          "proposed_name": {
+            "en": "Licence"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcterms:license"
         }
       ], 
       "name": {
-        "en": "Extent"
+        "en": "Identification Information"
+      }
+    }, 
+    {
+      "description": {}, 
+      "fields": [
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "Object(s) used to represent the\ngeographic information. Select spatialRepresentationType from\nnapMD_SpatialRepresentationTypeCode."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: vector, grid, textTable, tin, stereoModel, video"
+          }, 
+          "example": "vector", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "implementation": "new dataset field \u2018spatial_representation_type\u2019", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.3.1.7", 
+          "proposed_name": {
+            "en": "spatialRespresentionType"
+          }, 
+          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "The form in which the resource is available. Select presentation form from napC I_PresentationFormCode."
+          }, 
+          "domain_best_practice": {
+            "en": "Drop down: documentDigital, documentHardcopy, imageDigital, imageHardcopy, mapDigital, mapHardcopy, modelDigital, modelHardcopy, profileDigital, profileHardcopy, tableDigital, tableHardcopy, videoDigital, videoHardcopy, audioDigital, audioHardcopy, multimediaDigital, multimediaHardcopy, diagramDigital, diagramHardcopy"
+          }, 
+          "example": "documentDigital", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "implementation": "new dataset field \u2018presentation_form\u2019", 
+          "iso_multiplicity": "O", 
+          "nap_iso_19115_ref": "5.14.8", 
+          "proposed_name": {
+            "en": "presentationForm"
+          }, 
+          "proposed_type": "CodeList\nnapCI_PresentationFormCode", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
+            "en": "Name of the graphic file provided to illustrate the\nresource."
+          }, 
+          "domain_best_practice": {
+            "en": "The attribute fileName shall include path or URL to access the graphic file and the file type extension, e.g. \u201caGraphicFile.png.\u201d If the file type is not well known then it should be described within the attribute fileType. The file type should be a graphic file type (see CodeList napMD_FileFormatCode)."
+          }, 
+          "example": "Product dependant", 
+          "existing": true, 
+          "gc_multiplicity": "C", 
+          "implementation": "replace with new dataset field \u2018browse_graphic_url\u2019 which will point to a TBD common X, Y resolution jpg, gif or png image hosted elsewhere", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.3.5.1", 
+          "proposed_name": {
+            "en": "browseGraphicFileName"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": ""
+        }
+      ], 
+      "name": {
+        "en": "Geospatial Additional Fields"
       }
     }
   ], 
@@ -1872,21 +2011,25 @@
       "bilingual": false, 
       "controlled_vocabulary_reference_eng": "", 
       "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "Download URL", 
       "description": {
         "en": "Electronic location where the resource can be found. If the dataset is available online on either the Internet or Intranet, the web address should be entered here."
       }, 
       "domain_best_practice": {
-        "en": "Free text."
+        "en": "free text."
       }, 
       "example": "http://www.ec.gc.ca/dataset", 
       "existing": true, 
-      "gc_multiplicity": "M", 
+      "gc_multiplicity": "M, Repeat.", 
       "id": "url", 
+      "implementation": "existing RESOURCE field \u2018url\u2019", 
       "iso_multiplicity": "M", 
       "nap_iso_19115_ref": "5.20.1", 
       "proposed_name": {
-        "en": "Linkage (URL)"
-      }
+        "en": "URL"
+      }, 
+      "proposed_type": "URL", 
+      "rdfa_lite": "dcat:download"
     }, 
     {
       "bilingual": true, 
@@ -1897,81 +2040,121 @@
       "bilingual": false, 
       "controlled_vocabulary_reference_eng": "", 
       "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "Size", 
       "description": {
         "en": "Estimated size of the transfer unit in the specified format"
       }, 
       "domain_best_practice": {
-        "en": "Free text."
+        "en": "free text."
       }, 
       "example": "65 MB", 
       "existing": true, 
-      "gc_multiplicity": "M", 
+      "gc_multiplicity": "M, Repeat.", 
       "id": "size", 
+      "implementation": "existing RESOURCE field \u2018size\u2019 (in bytes)", 
       "iso_multiplicity": "O", 
       "nap_iso_19115_ref": "5.11.1.2", 
       "proposed_name": {
-        "en": "Transfer size"
-      }
+        "en": "transferSize"
+      }, 
+      "proposed_type": "Real", 
+      "rdfa_lite": "dcat:size"
     }, 
     {
       "bilingual": false, 
       "controlled_vocabulary_reference_eng": "", 
       "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "Format", 
       "description": {
-        "en": "The name of the data transfer format(s). Select from drop down"
+        "en": "Name of the data transfer format."
       }, 
       "domain_best_practice": {
-        "en": "Drop down"
+        "en": "Drop down:\n(List TBD)"
       }, 
       "example": "xml", 
       "existing": true, 
-      "gc_multiplicity": "M", 
+      "gc_multiplicity": "M, Repeat.", 
       "id": "format", 
+      "implementation": "existing RESOURCE field \u2018mimetype\u2019 and existing RESOURCE field \u2018mimetype_inner\u2019", 
       "iso_multiplicity": "M", 
-      "nap_iso_19115_ref": "5.11.3.1", 
+      "nap_iso_19115_ref": "5.11.3.2", 
       "proposed_name": {
-        "en": "Format Name"
-      }
+        "en": "formatName"
+      }, 
+      "proposed_type": "MD_Format", 
+      "rdfa_lite": "dcterms:format"
     }, 
     {
       "bilingual": false, 
       "controlled_vocabulary_reference_eng": "", 
       "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "", 
       "description": {
-        "en": "Language(s) used within the dataset."
+        "en": "Language of the dataset"
       }, 
       "domain_best_practice": {
-        "en": "Drop down: eng; CAN, fre; CAN"
+        "en": "Drop down: eng; CAN, fre; CAN, bilingual, no language"
       }, 
       "example": "eng: CAN", 
       "existing": false, 
       "gc_multiplicity": "M, Repeat.", 
       "id": "language", 
+      "implementation": "new RESOURCE field \u2018language\u2019", 
       "iso_multiplicity": "M, Repeat.", 
       "nap_iso_19115_ref": "5.3.1.9", 
       "proposed_name": {
-        "en": "Language"
-      }
+        "en": "language"
+      }, 
+      "proposed_type": "free text (CharacterString)", 
+      "rdfa_lite": ""
     }, 
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
-      "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "Release Data", 
       "description": {
-        "en": "Frequency with which changes and additions are made to the resource after the initial resource is completed. For continuous monitoring data, select the appropriate value which best describes how often data is collected.  Must be selected from napMD_MaintenanceFrequencyCode. (http://www.fgdc.gov/nap/metadata/register/registerItemClasses.html#IC_102)"
+        "en": "The date in which the event or action occurred"
       }, 
       "domain_best_practice": {
-        "en": "Drop down: continual, daily, weekly, fortnightly, monthly, quarterly, biannually, as needed, irregular, not planned, unknown, semimonthly"
+        "en": "free text, YYYY-MM-DD"
       }, 
-      "example": "daily", 
+      "example": "41132.0", 
       "existing": false, 
-      "gc_multiplicity": "M", 
-      "id": "maintenance_and_update_frequency", 
-      "iso_multiplicity": "O", 
-      "nap_iso_19115_ref": "5.6.1", 
+      "gc_multiplicity": "M, Repeat.", 
+      "id": "date_published", 
+      "implementation": "new RESOURCE field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
+      "iso_multiplicity": "M, Repeat.", 
+      "nap_iso_19115_ref": "5.15.1", 
       "proposed_name": {
-        "en": "Maintenance and Update Frequency"
-      }
+        "en": "datePublished"
+      }, 
+      "proposed_type": "Date (see B.4)", 
+      "rdfa_lite": "dct:issued"
+    }, 
+    {
+      "bilingual": false, 
+      "controlled_vocabulary_reference_eng": "", 
+      "controlled_vocabulary_reference_fra": "", 
+      "data_gov_common_core": "Last Update", 
+      "description": {
+        "en": "The date in which the resource was modified."
+      }, 
+      "domain_best_practice": {
+        "en": "free text, YYYY-MM-DD"
+      }, 
+      "example": "41143.0", 
+      "existing": true, 
+      "gc_multiplicity": "O", 
+      "id": "modified", 
+      "implementation": "existing RESOURCE field \u2018modified\u2019", 
+      "iso_multiplicity": "", 
+      "nap_iso_19115_ref": "", 
+      "proposed_name": {
+        "en": "dateModified"
+      }, 
+      "proposed_type": "Date", 
+      "rdfa_lite": "dcterms:modified"
     }
   ]
 }
