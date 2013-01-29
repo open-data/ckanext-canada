@@ -36,3 +36,11 @@ class TestSchemaDescription(unittest.TestCase):
         extra_dataset_fields = list(self.sd.dataset_fields_by_ckan_id(False))
         self.assertTrue(len(dataset_fields) > len(extra_dataset_fields))
 
+    def test_choices_by_pilot_uuid(self):
+        fields_with_choices = [
+            f for f in self.sd.dataset_fields if 'choices' in f]
+        self.assertTrue(len(fields_with_choices) > 2)
+        for f in fields_with_choices:
+            a_choice = f['choices'][0]
+            self.assertTrue(
+                f['choices_by_pilot_uuid'][a_choice['pilot_uuid']] == a_choice)
