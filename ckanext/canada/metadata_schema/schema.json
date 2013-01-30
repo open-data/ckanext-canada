@@ -1243,6 +1243,103 @@
         }, 
         {
           "bilingual": false, 
+          "choices": [
+            {
+              "eng": "farming", 
+              "fra": "agriculture", 
+              "id": "far"
+            }, 
+            {
+              "eng": "biota", 
+              "fra": "biote", 
+              "id": "bio"
+            }, 
+            {
+              "eng": "boundaries", 
+              "fra": "fronti\u00e8res", 
+              "id": "bou"
+            }, 
+            {
+              "eng": "climatologyMeteorologyAtmosphere", 
+              "fra": "climatologieM\u00e9t\u00e9orologieAtmosph\u00e8re", 
+              "id": "cli"
+            }, 
+            {
+              "eng": "economy", 
+              "fra": "\u00e9conomie", 
+              "id": "eco"
+            }, 
+            {
+              "eng": "elevation", 
+              "fra": "\u00e9l\u00e9vation", 
+              "id": "ele"
+            }, 
+            {
+              "eng": "environment", 
+              "fra": "environnement", 
+              "id": "env"
+            }, 
+            {
+              "eng": "geoscientificInformation", 
+              "fra": "informationG\u00e9oscientifique", 
+              "id": "geo"
+            }, 
+            {
+              "eng": "health", 
+              "fra": "sant\u00e9", 
+              "id": "hea"
+            }, 
+            {
+              "eng": "imageryBaseMapsEarthCover", 
+              "fra": "imagerieCarteDeBaseCouvertureTerrestre", 
+              "id": "ima"
+            }, 
+            {
+              "eng": "intelligenceMilitary", 
+              "fra": "renseignementsMilitaires", 
+              "id": "int"
+            }, 
+            {
+              "eng": "inlandWaters", 
+              "fra": "eauxInt\u00e9rieures", 
+              "id": "inl"
+            }, 
+            {
+              "eng": "location", 
+              "fra": "localisation", 
+              "id": "loc"
+            }, 
+            {
+              "eng": "oceans", 
+              "fra": "oc\u00e9ans", 
+              "id": "oce"
+            }, 
+            {
+              "eng": "planningCadastre", 
+              "fra": "am\u00e9nagementCadastre", 
+              "id": "pla"
+            }, 
+            {
+              "eng": "society", 
+              "fra": "soci\u00e9t\u00e9", 
+              "id": "soc"
+            }, 
+            {
+              "eng": "structure", 
+              "fra": "structures", 
+              "id": "str"
+            }, 
+            {
+              "eng": "transportation", 
+              "fra": "transport", 
+              "id": "tra"
+            }, 
+            {
+              "eng": "utilitiesCommunication", 
+              "fra": "servicesCommunication", 
+              "id": "uti"
+            }
+          ], 
           "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
           "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
           "data_gov_common_core": "", 
@@ -1263,7 +1360,8 @@
             "en": "topicCategory"
           }, 
           "proposed_type": "CodeList napMD_TopicCategoryCode", 
-          "rdfa_lite": ""
+          "rdfa_lite": "", 
+          "type": "keywords"
         }, 
         {
           "bilingual": true, 

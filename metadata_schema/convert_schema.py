@@ -265,6 +265,10 @@ def field_from_proposed(p):
         'rdfa_lite': p.rdfa_lite,
         }
 
+def camelcase_to_proper_name(name):
+    # FIXME: implement this
+    return name
+
 def apply_field_customizations(schema_out):
     """
     Make customizations to fields not extracted from proposed
@@ -291,6 +295,20 @@ def apply_field_customizations(schema_out):
 
         (target,) = (c for c in subject['choices'] if c['eng'] == eng)
         target['id'] = k
+
+    topic_category = get_field('topic_category')
+    topic_category['type'] = 'keywords'
+    topic_category['choices'] = [{
+            'id': eng[:3],
+            'eng': camelcase_to_proper_name(eng),
+            'fra': camelcase_to_proper_name(fra),
+            }
+            for eng, fra in zip(
+                vocabularies.ISO_TOPIC_CATEGORIES['eng'],
+                vocabularies.ISO_TOPIC_CATEGORIES['fra'],
+            )
+        ]
+
 
 
 def main():
