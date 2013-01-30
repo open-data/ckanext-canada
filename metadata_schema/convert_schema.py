@@ -275,11 +275,14 @@ def apply_field_customizations(schema_out):
         vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
         }
 
-    (subject,) = (f
-        for s in schema_out['dataset_sections']
-        for f in s['fields']
-        if f['id'] == 'subject')
+    def get_field(field_id):
+        (field,) = (f
+            for s in schema_out['dataset_sections']
+            for f in s['fields']
+            if f['id'] == field_id)
+        return field
 
+    subject = get_field('subject')
     subject['type'] = 'keywords'
     for k, eng in sorted(vocabularies.GC_CORE_SUBJECT_THESAURUS['eng'].items()):
 
