@@ -275,6 +275,21 @@ def apply_field_customizations(schema_out):
         vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
         }
 
+    (subject,) = (f
+        for s in schema_out['dataset_sections']
+        for f in s['fields']
+        if f['id'] == 'subject')
+
+    subject['type'] = 'keywords'
+    for k, eng in sorted(vocabularies.GC_CORE_SUBJECT_THESAURUS['eng'].items()):
+
+        if k not in vocabularies.GC_CORE_SUBJECT_THESAURUS['fra']:
+            continue # no "form descriptors" in french
+
+        (target,) = (c for c in subject['choices'] if c['eng'] == eng)
+        target['id'] = k
+
+
 def main():
     schema_out = {
         'dataset_sections': [],
