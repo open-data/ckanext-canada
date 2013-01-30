@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+VOCABULARY_GC_CORE_SUBJECT_THESAURUS = u'gc_core_subject_thesaurus'
+VOCABULARY_ISO_TOPIC_CATEGORIES = u'iso_topic_categories'
+
 GC_CORE_SUBJECT_THESAURUS = {
     'eng': {
         'AA': u'Arts, Music, Literature',
