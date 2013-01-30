@@ -10,6 +10,7 @@ import json
 import lxml.etree
 import xlrd
 import os
+import re
 from collections import namedtuple
 from itertools import groupby
 
@@ -266,8 +267,12 @@ def field_from_proposed(p):
         }
 
 def camelcase_to_proper_name(name):
-    # FIXME: implement this
-    return name
+    """
+    >>> camelcase_to_proper_name(u"imageryBaseMapsEarthCover")
+    u"Imagery Base Maps Earth Cover"
+    """
+    # NOTE: this doesn't work if the uppercase letter is non-ascii
+    return re.sub(r'([A-Z])', r' \1', name).title()
 
 def apply_field_customizations(schema_out):
     """
