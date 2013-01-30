@@ -15,6 +15,8 @@ from itertools import groupby
 
 from ckan.logic.schema import default_package_schema, default_resource_schema
 
+import vocabularies
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
@@ -263,6 +265,16 @@ def field_from_proposed(p):
         'rdfa_lite': p.rdfa_lite,
         }
 
+def apply_field_customizations(schema_out):
+    """
+    Make customizations to fields not extracted from proposed
+    or pilot information
+    """
+    schema_out['vocabularies'] = {
+        vocabularies.VOCABULARY_GC_CORE_SUBJECT_THESAURUS: 'subject',
+        vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
+        }
+
 def main():
     schema_out = {
         'dataset_sections': [],
@@ -323,6 +335,8 @@ def main():
         if p:
             new_rfield.update(field_from_proposed(p))
         schema_out['resource_fields'].append(new_rfield)
+
+    apply_field_customizations(schema_out)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 

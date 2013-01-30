@@ -2179,5 +2179,9 @@
       "proposed_type": "Date", 
       "rdfa_lite": "dcterms:modified"
     }
-  ]
+  ], 
+  "vocabularies": {
+    "gc_core_subject_thesaurus": "subject", 
+    "iso_topic_categories": "topic_category"
+  }
 }
