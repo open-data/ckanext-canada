@@ -1103,91 +1103,109 @@
             {
               "eng": "Arts, Music, Literature", 
               "fra": "Arts, musique, litt\u00e9rature", 
+              "id": "AA", 
               "pilot_uuid": "86EB6B9F-344C-4C3E-982D-53164994516A"
             }, 
             {
               "eng": "Agriculture", 
               "fra": "Agriculture", 
+              "id": "AG", 
               "pilot_uuid": "04D07B59-8D90-455C-9C84-7C1DF833473B"
             }, 
             {
               "eng": "Economics and Industry", 
               "fra": "\u00c9conomie et industrie", 
+              "id": "EC", 
               "pilot_uuid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE"
             }, 
             {
               "eng": "Education and Training", 
               "fra": "\u00c9ducation et formation", 
+              "id": "ET", 
               "pilot_uuid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697"
             }, 
             {
               "eng": "Government and Politics", 
               "fra": "Gouvernement et vie politique", 
+              "id": "GV", 
               "pilot_uuid": "1BEB670E-8A73-4217-BCD2-6189F92053E2"
             }, 
             {
               "eng": "Health and Safety", 
               "fra": "Sant\u00e9 et s\u00e9curit\u00e9", 
+              "id": "HE", 
               "pilot_uuid": "7D5846DC-74D0-415A-A853-318DCD89E731"
             }, 
             {
               "eng": "History and Archaeology", 
               "fra": "Histoire et arch\u00e9ologie", 
+              "id": "HI", 
               "pilot_uuid": "704B3281-511F-4FFB-85C7-D437892CECE2"
             }, 
             {
               "eng": "Information and Communications", 
               "fra": "Information et communication", 
+              "id": "IN", 
               "pilot_uuid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9"
             }, 
             {
               "eng": "Labour", 
               "fra": "Travail et emploi", 
+              "id": "LB", 
               "pilot_uuid": "F97F8830-B980-4A20-9B13-D572F1C094F0"
             }, 
             {
               "eng": "Language and Linguistics", 
               "fra": "Langue et linguistique", 
+              "id": "LN", 
               "pilot_uuid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0"
             }, 
             {
               "eng": "Law", 
               "fra": "Droit", 
+              "id": "LW", 
               "pilot_uuid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08"
             }, 
             {
               "eng": "Military", 
               "fra": "Histoire et science militaire", 
+              "id": "MI", 
               "pilot_uuid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1"
             }, 
             {
               "eng": "Nature and Environment", 
               "fra": "Nature et environnement", 
+              "id": "NE", 
               "pilot_uuid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4"
             }, 
             {
               "eng": "Persons", 
               "fra": "Personnes", 
+              "id": "PE", 
               "pilot_uuid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1"
             }, 
             {
               "eng": "Processes", 
               "fra": "Liens et fonctions", 
+              "id": "PR", 
               "pilot_uuid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213"
             }, 
             {
               "eng": "Society and Culture", 
               "fra": "Soci\u00e9t\u00e9 et culture", 
+              "id": "SO", 
               "pilot_uuid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3"
             }, 
             {
               "eng": "Science and Technology", 
               "fra": "Sciences et technologie", 
+              "id": "ST", 
               "pilot_uuid": "FB6B00F0-6271-42D6-ACB7-FFE664843698"
             }, 
             {
               "eng": "Transport", 
               "fra": "Transport", 
+              "id": "TR", 
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
             }
           ], 
@@ -1221,10 +1239,107 @@
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
           "rdfa_lite": "dcat:theme", 
-          "type": "choice"
+          "type": "keywords"
         }, 
         {
           "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Farming", 
+              "fra": "Agriculture", 
+              "id": "far"
+            }, 
+            {
+              "eng": "Biota", 
+              "fra": "Biote", 
+              "id": "bio"
+            }, 
+            {
+              "eng": "Boundaries", 
+              "fra": "Fronti\u00e8res", 
+              "id": "bou"
+            }, 
+            {
+              "eng": "Climatology Meteorology Atmosphere", 
+              "fra": "Climatologie M\u00e9t\u00e9orologie Atmosph\u00e8re", 
+              "id": "cli"
+            }, 
+            {
+              "eng": "Economy", 
+              "fra": "\u00c9conomie", 
+              "id": "eco"
+            }, 
+            {
+              "eng": "Elevation", 
+              "fra": "\u00c9l\u00e9vation", 
+              "id": "ele"
+            }, 
+            {
+              "eng": "Environment", 
+              "fra": "Environnement", 
+              "id": "env"
+            }, 
+            {
+              "eng": "Geoscientific Information", 
+              "fra": "Information G\u00e9oscientifique", 
+              "id": "geo"
+            }, 
+            {
+              "eng": "Health", 
+              "fra": "Sant\u00e9", 
+              "id": "hea"
+            }, 
+            {
+              "eng": "Imagery Base Maps Earth Cover", 
+              "fra": "Imagerie Carte De Base Couverture Terrestre", 
+              "id": "ima"
+            }, 
+            {
+              "eng": "Intelligence Military", 
+              "fra": "Renseignements Militaires", 
+              "id": "int"
+            }, 
+            {
+              "eng": "Inland Waters", 
+              "fra": "Eaux Int\u00e9rieures", 
+              "id": "inl"
+            }, 
+            {
+              "eng": "Location", 
+              "fra": "Localisation", 
+              "id": "loc"
+            }, 
+            {
+              "eng": "Oceans", 
+              "fra": "Oc\u00e9ans", 
+              "id": "oce"
+            }, 
+            {
+              "eng": "Planning Cadastre", 
+              "fra": "Am\u00e9nagement Cadastre", 
+              "id": "pla"
+            }, 
+            {
+              "eng": "Society", 
+              "fra": "Soci\u00e9t\u00e9", 
+              "id": "soc"
+            }, 
+            {
+              "eng": "Structure", 
+              "fra": "Structures", 
+              "id": "str"
+            }, 
+            {
+              "eng": "Transportation", 
+              "fra": "Transport", 
+              "id": "tra"
+            }, 
+            {
+              "eng": "Utilities Communication", 
+              "fra": "Services Communication", 
+              "id": "uti"
+            }
+          ], 
           "controlled_vocabulary_reference_eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
           "controlled_vocabulary_reference_fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html", 
           "data_gov_common_core": "", 
@@ -1245,7 +1360,8 @@
             "en": "topicCategory"
           }, 
           "proposed_type": "CodeList napMD_TopicCategoryCode", 
-          "rdfa_lite": ""
+          "rdfa_lite": "", 
+          "type": "keywords"
         }, 
         {
           "bilingual": true, 
@@ -2179,5 +2295,9 @@
       "proposed_type": "Date", 
       "rdfa_lite": "dcterms:modified"
     }
-  ]
+  ], 
+  "vocabularies": {
+    "gc_core_subject_thesaurus": "subject", 
+    "iso_topic_categories": "topic_category"
+  }
 }

@@ -10,10 +10,13 @@ import json
 import lxml.etree
 import xlrd
 import os
+import re
 from collections import namedtuple
 from itertools import groupby
 
 from ckan.logic.schema import default_package_schema, default_resource_schema
+
+import vocabularies
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PILOT = os.path.join(HERE, 'pilot')
@@ -263,6 +266,56 @@ def field_from_proposed(p):
         'rdfa_lite': p.rdfa_lite,
         }
 
+def camelcase_to_proper_name(name):
+    """
+    >>> camelcase_to_proper_name(u"imageryBaseMapsEarthCover")
+    u"Imagery Base Maps Earth Cover"
+    """
+    # NOTE: this doesn't work if the uppercase letter is non-ascii
+    return re.sub(r'([A-Z])', r' \1', name).title()
+
+def apply_field_customizations(schema_out):
+    """
+    Make customizations to fields not extracted from proposed
+    or pilot information
+    """
+    schema_out['vocabularies'] = {
+        vocabularies.VOCABULARY_GC_CORE_SUBJECT_THESAURUS: 'subject',
+        vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
+        }
+
+    def get_field(field_id):
+        (field,) = (f
+            for s in schema_out['dataset_sections']
+            for f in s['fields']
+            if f['id'] == field_id)
+        return field
+
+    subject = get_field('subject')
+    subject['type'] = 'keywords'
+    for k, eng in sorted(vocabularies.GC_CORE_SUBJECT_THESAURUS['eng'].items()):
+
+        if k not in vocabularies.GC_CORE_SUBJECT_THESAURUS['fra']:
+            continue # no "form descriptors" in french
+
+        (target,) = (c for c in subject['choices'] if c['eng'] == eng)
+        target['id'] = k
+
+    topic_category = get_field('topic_category')
+    topic_category['type'] = 'keywords'
+    topic_category['choices'] = [{
+            'id': eng[:3],
+            'eng': camelcase_to_proper_name(eng),
+            'fra': camelcase_to_proper_name(fra),
+            }
+            for eng, fra in zip(
+                vocabularies.ISO_TOPIC_CATEGORIES['eng'],
+                vocabularies.ISO_TOPIC_CATEGORIES['fra'],
+            )
+        ]
+
+
+
 def main():
     schema_out = {
         'dataset_sections': [],
@@ -323,6 +376,8 @@ def main():
         if p:
             new_rfield.update(field_from_proposed(p))
         schema_out['resource_fields'].append(new_rfield)
+
+    apply_field_customizations(schema_out)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
