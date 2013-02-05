@@ -30,13 +30,10 @@ LANGS = 'eng', 'fra'
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
         'id', # unique ID,
-        #'date_stamp', - revisioned by ckan, get first revision_timestamp
-        #'date_modified', - revisioned by ckan, get last revision_timestamp
-        'language', # Always "eng; CAN|fra; CAN"
-        #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
+        #'language', - Always "eng; CAN|fra; CAN"
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
-        'author_email', # XXX set to single common email, no data entry
+        #'author_email', - XXX set to single common email, no data entry
         'name', #- optional in proposed, REQUIRED here!
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
@@ -48,19 +45,20 @@ SECTIONS_FIELDS = [
         'topic_category', # TODO: create tag vocabulary for this
         'tags',
         'maintenance_and_update_frequency',
-        #'temporal_elevment',
+        'temporal_element',
         'geographic_region',
         'data_series_name',
         'data_series_issue_identification',
-        'supplemental_information',
+        'documentation_url',
+        'related_document_url',
         'url',
+        'endpoint_url',
         'license_id',
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
         'presentation_form',
-        #'the_geom', # spatial extension
-        #'bounding_polygon', - maybe, if must be different than the_geom
+        'the_geom', # spatial extension
         'browse_graphic_url',
         ]),
     ]
@@ -82,7 +80,8 @@ BILINGUAL_RESOURCE_FIELDS = set([
     'name',
     ])
 
-EXISTING_FIELDS = set(default_package_schema())
+EXISTING_FIELDS = set(default_package_schema()
+    ) | set(['the_geom'])
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
@@ -125,16 +124,20 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'keyword': 'tags',
     'maintenanceAndUpdateFrequency':
         'maintenance_and_update_frequency',
-    #'temporalElement' DEFER
+    'temporalElement': 'temporal_element',
     'geographicRegion': 'geographic_region',
-    #'spatial' TBD use spatial extension 'the_geom'
+    'spatial': 'the_geom',
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
-    'supplementalInformation': 'supplemental_information', # marked DEFER?
-    'programURL': 'url', # marked DEFER?
+    #'supplementalInformation': 'supplemental_information', - no applicable mapping
+    'documentationUrl': 'documentation_url',
+    'relatedDocuments': 'related_document_url',
+    'programURL': 'url',
+    'endpoint': 'endpoint_url',
     'Licence': 'license_id',
     'URL': 'resource:url',
-    'language2': 'resource:language',
+    #'language2': 'resource:language',
+    'language': 'resource:language',
     # resource fields
     'transferSize': 'resource:size',
     'formatName': 'resource:format',
@@ -162,8 +165,8 @@ FIELD_MAPPING = {
     'maintenance_and_update_frequency': 'frequency',
     'notes': 'description_en',
     'tags': 'keywords_en',
-    'program_url': 'program_page_en', # note: different than French
-    'url': 'data_series_url_en',
+    'url': 'program_page_en', # note: different than French
+    'documentation_url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information': 'supplementary_documentation_en',
     'geographic_region': 'Geographic_Region_Name',
@@ -179,13 +182,15 @@ BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'notes': 'description_fr',
     'tags': 'keywords_fr',
-    'program_url': 'program_url_fr',
-    'url': 'data_series_url_fr',
+    'url': 'program_url_fr',
+    'documentation_url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',
     'data_series_issue_identification': None,
     'issue_identification': None,
+    'related_document_url': None,
+    'endpoint_url': None,
     }
 
 def lang_versions(root, xp):
