@@ -30,10 +30,7 @@ LANGS = 'eng', 'fra'
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
         'id', # unique ID,
-        #'date_stamp', - revisioned by ckan, get first revision_timestamp
-        #'date_modified', - revisioned by ckan, get last revision_timestamp
         'language', # Always "eng; CAN|fra; CAN"
-        #'heirarchy_level', - doesn't apply, ckan has 1-n resources per
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
@@ -48,7 +45,7 @@ SECTIONS_FIELDS = [
         'topic_category', # TODO: create tag vocabulary for this
         'tags',
         'maintenance_and_update_frequency',
-        #'temporal_elevment',
+        'temporal_element',
         'geographic_region',
         'data_series_name',
         'data_series_issue_identification',
@@ -125,7 +122,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'keyword': 'tags',
     'maintenanceAndUpdateFrequency':
         'maintenance_and_update_frequency',
-    #'temporalElement' DEFER
+    'temporalElement': 'temporal_element',
     'geographicRegion': 'geographic_region',
     #'spatial' TBD use spatial extension 'the_geom'
     'dataSeriesName': 'data_series_name',

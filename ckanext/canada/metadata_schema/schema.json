@@ -1434,6 +1434,30 @@
         }, 
         {
           "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Temporal", 
+          "description": {
+            "en": "The time period related to the dataset content."
+          }, 
+          "domain_best_practice": {
+            "en": "free text, YYYY-MM-DD"
+          }, 
+          "example": "YYYY-MM-DD-YYYY-MM-DD", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "temporal_element", 
+          "implementation": "defer", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.13.5", 
+          "proposed_name": {
+            "en": "temporalElement"
+          }, 
+          "proposed_type": "EX_TemporalExtent", 
+          "rdfa_lite": "decterms:temporal"
+        }, 
+        {
+          "bilingual": false, 
           "choices": [
             {
               "eng": "Canada", 
