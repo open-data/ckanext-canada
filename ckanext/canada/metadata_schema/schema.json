@@ -2137,6 +2137,30 @@
           "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "", 
           "description": {
+            "en": "This field combines coordinates of the geographic bounding box in one fieldWestern most coordinate of the dataset extent."
+          }, 
+          "domain_best_practice": {
+            "en": "Default to Canada's coordinates (West bound domain is [-180, 180])"
+          }, 
+          "example": "", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "id": "the_geom", 
+          "implementation": "existing spatial dataset field \u2018the_geom\u2019", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "5.13.3.5", 
+          "proposed_name": {
+            "en": "spatial"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
             "en": "Name of the graphic file provided to illustrate the\nresource."
           }, 
           "domain_best_practice": {
