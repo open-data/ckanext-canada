@@ -1985,41 +1985,6 @@
           "bilingual": true, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
-          "data_gov_common_core": "Documentation URL", 
-          "description": {
-            "en": "Other descriptive information about the dataset. This field can be used to provide any additional information about the resource. For example, a link to program information, data quality reports etc."
-          }, 
-          "domain_best_practice": {
-            "en": "free text."
-          }, 
-          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
-          "existing": false, 
-          "gc_multiplicity": "O, Repeat.", 
-          "help": {
-            "eng": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
-            "fra": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
-          }, 
-          "id": "supplemental_information", 
-          "implementation": "defer", 
-          "iso_multiplicity": "O, Repeat.", 
-          "name": {
-            "eng": "Reference for Supplementary Documentation English", 
-            "fra": "R\u00e9f\u00e9rence pour autre documentation en anglais"
-          }, 
-          "nap_iso_19115_ref": "", 
-          "pilot_id": "supplementary_documentation_en", 
-          "pilot_id_fra": "supplementary_documentation_fr", 
-          "proposed_name": {
-            "en": "supplementalInformation"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcat:dataDictionary", 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "Homepage URL", 
           "description": {
             "en": "The URL for the Government of Canada program that is responsible for the dataset."

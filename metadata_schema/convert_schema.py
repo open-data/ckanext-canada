@@ -49,7 +49,6 @@ SECTIONS_FIELDS = [
         'geographic_region',
         'data_series_name',
         'data_series_issue_identification',
-        'supplemental_information',
         'url',
         'license_id',
         ]),
@@ -127,8 +126,8 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'spatial': 'the_geom',
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
-    'supplementalInformation': 'supplemental_information', # marked DEFER?
-    'programURL': 'url', # marked DEFER?
+    #'supplementalInformation': 'supplemental_information', - no applicable mapping
+    'programURL': 'url',
     'Licence': 'license_id',
     'URL': 'resource:url',
     'language2': 'resource:language',
