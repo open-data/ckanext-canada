@@ -30,10 +30,10 @@ LANGS = 'eng', 'fra'
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
         'id', # unique ID,
-        'language', # Always "eng; CAN|fra; CAN"
+        #'language', - Always "eng; CAN|fra; CAN"
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
-        'author_email', # XXX set to single common email, no data entry
+        #'author_email', - XXX set to single common email, no data entry
         'name', #- optional in proposed, REQUIRED here!
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
@@ -130,7 +130,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'programURL': 'url',
     'Licence': 'license_id',
     'URL': 'resource:url',
-    'language2': 'resource:language',
+    'language': 'resource:language',
     # resource fields
     'transferSize': 'resource:size',
     'formatName': 'resource:format',
