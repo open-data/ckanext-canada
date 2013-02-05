@@ -2001,6 +2001,30 @@
           "type": "text"
         }, 
         {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Access Point", 
+          "description": {
+            "en": "Endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory"
+          }, 
+          "domain_best_practice": {
+            "en": "free text"
+          }, 
+          "example": "URL", 
+          "existing": false, 
+          "gc_multiplicity": "M, cond.", 
+          "id": "endpoint_url", 
+          "implementation": "", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "endpoint"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": "dcat:webService"
+        }, 
+        {
           "bilingual": false, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 

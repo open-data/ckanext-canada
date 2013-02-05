@@ -52,6 +52,7 @@ SECTIONS_FIELDS = [
         'documentation_url',
         'related_document_url',
         'url',
+        'endpoint_url',
         'license_id',
         ]),
     ("Geospatial Additional Fields", [
@@ -132,6 +133,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'documentationUrl': 'documentation_url',
     'relatedDocuments': 'related_document_url',
     'programURL': 'url',
+    'endpoint': 'endpoint_url',
     'Licence': 'license_id',
     'URL': 'resource:url',
     #'language2': 'resource:language',
@@ -188,6 +190,7 @@ BILINGUAL_FIELDS = {
     'data_series_issue_identification': None,
     'issue_identification': None,
     'related_document_url': None,
+    'endpoint_url': None,
     }
 
 def lang_versions(root, xp):
