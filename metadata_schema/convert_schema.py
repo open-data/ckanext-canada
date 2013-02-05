@@ -162,8 +162,8 @@ FIELD_MAPPING = {
     'maintenance_and_update_frequency': 'frequency',
     'notes': 'description_en',
     'tags': 'keywords_en',
-    'program_url': 'program_page_en', # note: different than French
-    'url': 'data_series_url_en',
+    'url': 'program_page_en', # note: different than French
+    'documentation_url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information': 'supplementary_documentation_en',
     'geographic_region': 'Geographic_Region_Name',
@@ -179,8 +179,8 @@ BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'notes': 'description_fr',
     'tags': 'keywords_fr',
-    'program_url': 'program_url_fr',
-    'url': 'data_series_url_fr',
+    'url': 'program_url_fr',
+    'documentation_url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
     'supplemental_information': 'supplementary_documentation_fr',
     'data_series_name': 'group_name_fr',

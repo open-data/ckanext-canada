@@ -2007,19 +2007,19 @@
           "existing": true, 
           "gc_multiplicity": "O", 
           "help": {
-            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
-            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+            "eng": "The URL for the program  that is responsible for the dataset or tool.", 
+            "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
           }, 
           "id": "url", 
           "implementation": "defer", 
           "iso_multiplicity": "", 
           "name": {
-            "eng": "Data Series URL English", 
-            "fra": "URL anglais de l'ensemble de donn\u00e9es"
+            "eng": "Program URL English", 
+            "fra": "Adresse URL du programme en anglais"
           }, 
           "nap_iso_19115_ref": "", 
-          "pilot_id": "data_series_url_en", 
-          "pilot_id_fra": "data_series_url_fr", 
+          "pilot_id": "program_page_en", 
+          "pilot_id_fra": "program_url_fr", 
           "proposed_name": {
             "en": "programURL"
           }, 
