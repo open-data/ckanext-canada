@@ -12,7 +12,7 @@
             "en": "Unique identifier for this metadata file."
           }, 
           "domain_best_practice": {
-            "en": "Automatically generated. Each metadata record shall have a unique identifier, such as a universal unique identifier (UUID), to distinguish it from other resources."
+            "en": "Automatically generated. Each metadata record shall have a unique identifier, such as a universal unique identifier (UUID)"
           }, 
           "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
           "existing": true, 
@@ -26,57 +26,6 @@
           }, 
           "proposed_type": "free text (CharacterString)", 
           "rdfa_lite": ""
-        }, 
-        {
-          "bilingual": false, 
-          "choices": [
-            {
-              "eng": "English", 
-              "fra": "Anglais", 
-              "pilot_uuid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30"
-            }, 
-            {
-              "eng": "French", 
-              "fra": "Fran\u00e7ais", 
-              "pilot_uuid": "FA6486B4-8A2A-4DA4-A727-E4EA3D29BF71"
-            }, 
-            {
-              "eng": "Bilingual (English and French)", 
-              "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
-              "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
-            }
-          ], 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "data_gov_common_core": "Language", 
-          "description": {
-            "en": "The language of the metadata, composed of an ISO639-2/T three letter language code and an ISO3166-1 three letter country code."
-          }, 
-          "domain_best_practice": {
-            "en": "Drop down: eng; CAN, fre; CAN"
-          }, 
-          "example": "eng; CAN", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The language(s) of the content of the dataset.", 
-            "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "language", 
-          "implementation": "new field \u2018language\u2019 set to \u201ceng; CAN|fra; CAN\u201d for all datasets", 
-          "iso_multiplicity": "M", 
-          "name": {
-            "eng": "Language", 
-            "fra": "Langue"
-          }, 
-          "nap_iso_19115_ref": "5.2.2", 
-          "pilot_id": "language__", 
-          "proposed_name": {
-            "en": "language"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "dcat:language", 
-          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -905,7 +854,7 @@
           "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "", 
           "description": {
-            "en": "Unique number assigned to each department (proposed to use GOS deperatmental identifier, number to assist in identifing department in URI)"
+            "en": "Unique number assigned to each department"
           }, 
           "domain_best_practice": {
             "en": "Automatically generated from organizationName\n(numbering system TBD)"
@@ -922,30 +871,6 @@
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
           "rdfa_lite": ""
-        }, 
-        {
-          "bilingual": false, 
-          "controlled_vocabulary_reference_eng": "", 
-          "controlled_vocabulary_reference_fra": "", 
-          "data_gov_common_core": "Contact Email", 
-          "description": {
-            "en": "The electronic mailbox address of the responsible organization or individual (each department will be required to create an open data email, as this field will be searchable)"
-          }, 
-          "domain_best_practice": {
-            "en": "free text"
-          }, 
-          "example": "od-do@tbs-sct.gc.ca", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "id": "author_email", 
-          "implementation": "exsiting dataset field \u2018email\u2019 set to the same value (TBD) for all datasets", 
-          "iso_multiplicity": "M", 
-          "nap_iso_19115_ref": "5.19.6", 
-          "proposed_name": {
-            "en": "electronicMailAddress"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "foaf:mbox"
         }, 
         {
           "bilingual": false, 
@@ -1010,7 +935,7 @@
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "catalog_type", 
-          "implementation": "new dataset field \u2018catalogue_type\u2019", 
+          "implementation": "new dataset field \u2018catalog_type\u2019", 
           "iso_multiplicity": "", 
           "nap_iso_19115_ref": "", 
           "proposed_name": {
@@ -1220,7 +1145,7 @@
           }, 
           "example": "Agriculture", 
           "existing": false, 
-          "gc_multiplicity": "M, Repeat.", 
+          "gc_multiplicity": "M, Rep.", 
           "help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1351,7 +1276,7 @@
           }, 
           "example": "Farming", 
           "existing": false, 
-          "gc_multiplicity": "O, Repeat.", 
+          "gc_multiplicity": "O, Rep.", 
           "id": "topic_category", 
           "implementation": "new dataset keyword field \u2018topic_category\u2019 with new keyword vocabulary", 
           "iso_multiplicity": "M", 
@@ -1376,13 +1301,13 @@
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
           "existing": true, 
-          "gc_multiplicity": "M, Repeat.", 
+          "gc_multiplicity": "M, Rep.", 
           "help": {
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
           }, 
           "id": "tags", 
-          "implementation": "existing dataset field \u2018keywords\u2019 with UI that forces entering both English and French", 
+          "implementation": "existing dataset field \u2018tags\u2019 with UI that forces entering both English and French versions of every keyword", 
           "iso_multiplicity": "O", 
           "name": {
             "eng": "Keywords English", 
@@ -1431,6 +1356,30 @@
           "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
           "rdfa_lite": "dct:accuralPeriodicity", 
           "type": "select"
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Temporal", 
+          "description": {
+            "en": "The time period related to the dataset content."
+          }, 
+          "domain_best_practice": {
+            "en": "free text, YYYY-MM-DD"
+          }, 
+          "example": "YYYY-MM-DD-YYYY-MM-DD", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "temporal_element", 
+          "implementation": "defer", 
+          "iso_multiplicity": "M", 
+          "nap_iso_19115_ref": "5.13.5", 
+          "proposed_name": {
+            "en": "temporalElement"
+          }, 
+          "proposed_type": "EX_TemporalExtent", 
+          "rdfa_lite": "decterms:temporal"
         }, 
         {
           "bilingual": false, 
@@ -1963,34 +1912,58 @@
           "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "Documentation URL", 
           "description": {
-            "en": "Other descriptive information about the dataset. This field can be used to provide any additional information about the resource. For example, a link to program information, data quality reports etc."
+            "en": "URL to documentation for the dataset or API. At a minimum, this should include a data dictionary and / or documentation on the API."
           }, 
           "domain_best_practice": {
             "en": "free text."
           }, 
-          "example": "More information on the monitoring program can be found at http://www.ec.gc.ca/program.", 
+          "example": "URL", 
           "existing": false, 
-          "gc_multiplicity": "O, Repeat.", 
+          "gc_multiplicity": "O", 
           "help": {
-            "eng": "A URL or bibliographic citation for technical documentation associated with this dataset. This may include the study design, instrumentation, implementation, limitations, and use of the dataset or tool. In the case of multiple documents or URLs, delimit with commas.", 
-            "fra": "L'adresse URL ou la r\u00e9f\u00e9rence bibliographique des documents techniques associ\u00e9s \u00e0 l\u2019ensemble de donn\u00e9es. Il peut s'agir de la m\u00e9thodologie, de l'instrumentation, de la mise en \u0153uvre, des limites et de l'utilisation de l\u2019ensemble de donn\u00e9es ou de l'outil. S'il y a de nombreux documents ou adresses URL, veuillez les s\u00e9parer par une virgule."
+            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
+            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
           }, 
-          "id": "supplemental_information", 
-          "implementation": "defer", 
+          "id": "documentation_url", 
+          "implementation": "", 
           "iso_multiplicity": "O, Repeat.", 
           "name": {
-            "eng": "Reference for Supplementary Documentation English", 
-            "fra": "R\u00e9f\u00e9rence pour autre documentation en anglais"
+            "eng": "Data Series URL English", 
+            "fra": "URL anglais de l'ensemble de donn\u00e9es"
           }, 
           "nap_iso_19115_ref": "", 
-          "pilot_id": "supplementary_documentation_en", 
-          "pilot_id_fra": "supplementary_documentation_fr", 
+          "pilot_id": "data_series_url_en", 
+          "pilot_id_fra": "data_series_url_fr", 
           "proposed_name": {
-            "en": "supplementalInformation"
+            "en": "documentationUrl"
           }, 
           "proposed_type": "free text (CharacterString)", 
           "rdfa_lite": "dcat:dataDictionary", 
           "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Related Documents", 
+          "description": {
+            "en": "Related documents such as developer documentation"
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "URL", 
+          "existing": false, 
+          "gc_multiplicity": "O, Rep.", 
+          "id": "related_document_url", 
+          "implementation": "", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "relatedDocuments"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": "dcterms:references"
         }, 
         {
           "bilingual": true, 
@@ -2007,25 +1980,49 @@
           "existing": true, 
           "gc_multiplicity": "O", 
           "help": {
-            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
-            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+            "eng": "The URL for the program  that is responsible for the dataset or tool.", 
+            "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
           }, 
           "id": "url", 
           "implementation": "defer", 
           "iso_multiplicity": "", 
           "name": {
-            "eng": "Data Series URL English", 
-            "fra": "URL anglais de l'ensemble de donn\u00e9es"
+            "eng": "Program URL English", 
+            "fra": "Adresse URL du programme en anglais"
           }, 
           "nap_iso_19115_ref": "", 
-          "pilot_id": "data_series_url_en", 
-          "pilot_id_fra": "data_series_url_fr", 
+          "pilot_id": "program_page_en", 
+          "pilot_id_fra": "program_url_fr", 
           "proposed_name": {
             "en": "programURL"
           }, 
           "proposed_type": "", 
           "rdfa_lite": "foaf:homepage", 
           "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Access Point", 
+          "description": {
+            "en": "Endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory"
+          }, 
+          "domain_best_practice": {
+            "en": "free text"
+          }, 
+          "example": "URL", 
+          "existing": false, 
+          "gc_multiplicity": "M, cond.", 
+          "id": "endpoint_url", 
+          "implementation": "", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "endpoint"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": "dcat:webService"
         }, 
         {
           "bilingual": false, 
@@ -2113,6 +2110,30 @@
           "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "", 
           "description": {
+            "en": "This field combines coordinates of the geographic bounding box in one fieldWestern most coordinate of the dataset extent."
+          }, 
+          "domain_best_practice": {
+            "en": "Default to Canada's coordinates (West bound domain is [-180, 180])"
+          }, 
+          "example": "", 
+          "existing": true, 
+          "gc_multiplicity": "O", 
+          "id": "the_geom", 
+          "implementation": "existing spatial dataset field \u2018the_geom\u2019", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "5.13.3.5", 
+          "proposed_name": {
+            "en": "spatial"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": ""
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "", 
+          "description": {
             "en": "Name of the graphic file provided to illustrate the\nresource."
           }, 
           "domain_best_practice": {
@@ -2159,7 +2180,7 @@
       }, 
       "example": "http://www.ec.gc.ca/dataset", 
       "existing": true, 
-      "gc_multiplicity": "M, Repeat.", 
+      "gc_multiplicity": "M, Rep.", 
       "id": "url", 
       "implementation": "existing RESOURCE field \u2018url\u2019", 
       "iso_multiplicity": "M", 
@@ -2188,7 +2209,7 @@
       }, 
       "example": "65 MB", 
       "existing": true, 
-      "gc_multiplicity": "M, Repeat.", 
+      "gc_multiplicity": "M, Rep.", 
       "id": "size", 
       "implementation": "existing RESOURCE field \u2018size\u2019 (in bytes)", 
       "iso_multiplicity": "O", 
@@ -2212,9 +2233,9 @@
       }, 
       "example": "xml", 
       "existing": true, 
-      "gc_multiplicity": "M, Repeat.", 
+      "gc_multiplicity": "M, Rep.", 
       "id": "format", 
-      "implementation": "existing RESOURCE field \u2018mimetype\u2019 and existing RESOURCE field \u2018mimetype_inner\u2019", 
+      "implementation": "existing RESOURCE field \u2018format\u2019", 
       "iso_multiplicity": "M", 
       "nap_iso_19115_ref": "5.11.3.2", 
       "proposed_name": {
@@ -2236,7 +2257,7 @@
       }, 
       "example": "eng: CAN", 
       "existing": false, 
-      "gc_multiplicity": "M, Repeat.", 
+      "gc_multiplicity": "M, Rep.", 
       "id": "language", 
       "implementation": "new RESOURCE field \u2018language\u2019", 
       "iso_multiplicity": "M, Repeat.", 
@@ -2260,7 +2281,7 @@
       }, 
       "example": "41132.0", 
       "existing": false, 
-      "gc_multiplicity": "M, Repeat.", 
+      "gc_multiplicity": "M", 
       "id": "date_published", 
       "implementation": "new RESOURCE field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
       "iso_multiplicity": "M, Repeat.", 
