@@ -49,6 +49,8 @@ SECTIONS_FIELDS = [
         'geographic_region',
         'data_series_name',
         'data_series_issue_identification',
+        'documentation_url',
+        'related_document_url',
         'url',
         'license_id',
         ]),
@@ -127,9 +129,12 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
     #'supplementalInformation': 'supplemental_information', - no applicable mapping
+    'documentationUrl': 'documentation_url',
+    'relatedDocuments': 'related_document_url',
     'programURL': 'url',
     'Licence': 'license_id',
     'URL': 'resource:url',
+    #'language2': 'resource:language',
     'language': 'resource:language',
     # resource fields
     'transferSize': 'resource:size',
@@ -182,6 +187,7 @@ BILINGUAL_FIELDS = {
     'data_series_name': 'group_name_fr',
     'data_series_issue_identification': None,
     'issue_identification': None,
+    'related_document_url': None,
     }
 
 def lang_versions(root, xp):

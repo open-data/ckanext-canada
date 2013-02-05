@@ -1910,6 +1910,65 @@
           "bilingual": true, 
           "controlled_vocabulary_reference_eng": "", 
           "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Documentation URL", 
+          "description": {
+            "en": "URL to documentation for the dataset or API. At a minimum, this should include a data dictionary and / or documentation on the API."
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "URL", 
+          "existing": false, 
+          "gc_multiplicity": "O", 
+          "help": {
+            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
+            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+          }, 
+          "id": "documentation_url", 
+          "implementation": "", 
+          "iso_multiplicity": "O, Repeat.", 
+          "name": {
+            "eng": "Data Series URL English", 
+            "fra": "URL anglais de l'ensemble de donn\u00e9es"
+          }, 
+          "nap_iso_19115_ref": "", 
+          "pilot_id": "data_series_url_en", 
+          "pilot_id_fra": "data_series_url_fr", 
+          "proposed_name": {
+            "en": "documentationUrl"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcat:dataDictionary", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
+          "data_gov_common_core": "Related Documents", 
+          "description": {
+            "en": "Related documents such as developer documentation"
+          }, 
+          "domain_best_practice": {
+            "en": "free text."
+          }, 
+          "example": "URL", 
+          "existing": false, 
+          "gc_multiplicity": "O, Rep.", 
+          "id": "related_document_url", 
+          "implementation": "", 
+          "iso_multiplicity": "", 
+          "nap_iso_19115_ref": "", 
+          "proposed_name": {
+            "en": "relatedDocuments"
+          }, 
+          "proposed_type": "", 
+          "rdfa_lite": "dcterms:references"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference_eng": "", 
+          "controlled_vocabulary_reference_fra": "", 
           "data_gov_common_core": "Homepage URL", 
           "description": {
             "en": "The URL for the Government of Canada program that is responsible for the dataset."
