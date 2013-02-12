@@ -256,20 +256,19 @@ def read_proposed_fields():
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
-        'proposed_name': {'en': p.property_name, 'fr': p.property_name_fra},
+        'proposed_name': {'eng': p.property_name, 'fra': p.property_name_fra},
         'proposed_type': p.type_,
         'iso_multiplicity': p.iso_multiplicity,
         'gc_multiplicity': p.gc_multiplicity,
-        'description': {'en': p.description},
+        'description': {'eng': p.description},
         'example': p.example,
         'nap_iso_19115_ref': p.nap_iso_19115_ref,
-        'domain_best_practice': {'en': p.domain_best_practice},
-        'controlled_vocabulary_reference_eng':
-            p.controlled_vocabulary_reference_eng,
-        'controlled_vocabulary_reference_fra':
-            p.controlled_vocabulary_reference_fra,
-        'implementation': p.implementation, 
-        'implementation_fra': p.implementation_fra,
+        'domain_best_practice': {'eng': p.domain_best_practice},
+        'controlled_vocabulary_reference': {
+            'eng': p.controlled_vocabulary_reference_eng,
+            'fra': p.controlled_vocabulary_reference_fra,
+            },
+        'implementation': {'eng': p.implementation, 'fra': p.implementation_fra},
         'data_gov_common_core': p.data_gov_common_core,
         'rdfa_lite': p.rdfa_lite,
         'name_space': p.name_space,
