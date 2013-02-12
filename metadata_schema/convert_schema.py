@@ -30,10 +30,10 @@ LANGS = 'eng', 'fra'
 SECTIONS_FIELDS = [
     ("Metadata Record Information", [
         'id', # unique ID,
-        #'language', - Always "eng; CAN|fra; CAN"
+        'language', # Always "eng; CAN|fra; CAN"
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
-        #'author_email', - XXX set to single common email, no data entry
+        'author_email', # XXX set to single common email, no data entry
         'name', #- optional in proposed, REQUIRED here!
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
@@ -89,6 +89,7 @@ ProposedField = namedtuple("ProposedField", """
     sub_class
     property_name
     iso_multiplicity
+    property_name_fra
     gc_multiplicity
     type_
     description
@@ -97,8 +98,10 @@ ProposedField = namedtuple("ProposedField", """
     domain_best_practice
     controlled_vocabulary_reference_eng
     controlled_vocabulary_reference_fra
-    implementation_old
+    blank
+    name_space
     implementation
+    implementation_fra
     data_gov_common_core
     json
     rdfa_lite
@@ -111,7 +114,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'fileIdentifier': 'id',
     'organizationName': 'author',
     'departmentNumber': 'department_number',
-    'electronicMailAddress': 'author_email',
+    'electronicMail Address': 'author_email',
     'dataSetURI': 'name',
     'digitalObjectIdentifier': 'digital_object_identifier',
     'catalogueType': 'catalog_type',
@@ -121,7 +124,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'abstract': 'notes',
     'subject': 'subject',
     'topicCategory': 'topic_category',
-    'keyword': 'tags',
+    'keywords': 'tags',
     'maintenanceAndUpdateFrequency':
         'maintenance_and_update_frequency',
     'temporalElement': 'temporal_element',
@@ -130,14 +133,13 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
     #'supplementalInformation': 'supplemental_information', - no applicable mapping
-    'documentationUrl': 'documentation_url',
-    'relatedDocuments': 'related_document_url',
+    'documentationURL': 'documentation_url',
+    'relatedDocumentsURL': 'related_document_url',
     'programURL': 'url',
     'endpoint': 'endpoint_url',
-    'Licence': 'license_id',
-    'URL': 'resource:url',
-    #'language2': 'resource:language',
-    'language': 'resource:language',
+    'license': 'license_id',
+    'accessURL': 'resource:url',
+    'language2': 'resource:language',
     # resource fields
     'transferSize': 'resource:size',
     'formatName': 'resource:format',
@@ -254,7 +256,7 @@ def read_proposed_fields():
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
-        'proposed_name': {'en': p.property_name},
+        'proposed_name': {'en': p.property_name, 'fr': p.property_name_fra},
         'proposed_type': p.type_,
         'iso_multiplicity': p.iso_multiplicity,
         'gc_multiplicity': p.gc_multiplicity,
@@ -266,9 +268,11 @@ def field_from_proposed(p):
             p.controlled_vocabulary_reference_eng,
         'controlled_vocabulary_reference_fra':
             p.controlled_vocabulary_reference_fra,
-        'implementation': p.implementation,
+        'implementation': p.implementation, 
+        'implementation_fra': p.implementation_fra,
         'data_gov_common_core': p.data_gov_common_core,
         'rdfa_lite': p.rdfa_lite,
+        'name_space': p.name_space,
         }
 
 def camelcase_to_proper_name(name):
