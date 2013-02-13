@@ -42,5 +42,7 @@ class TestSchemaDescription(unittest.TestCase):
         self.assertTrue(len(fields_with_choices) > 2)
         for f in fields_with_choices:
             a_choice = f['choices'][0]
+            if not f['choices_by_pilot_uuid']:
+                continue
             self.assertTrue(
                 f['choices_by_pilot_uuid'][a_choice['pilot_uuid']] == a_choice)
