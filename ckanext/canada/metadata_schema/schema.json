@@ -2283,6 +2283,37 @@
           }, 
           "proposed_type": "free text (CharacterString)", 
           "rdfa_lite": "dcterms:license"
+        }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "Release Data", 
+          "description": {
+            "eng": "The date in which the event or action occurred"
+          }, 
+          "domain_best_practice": {
+            "eng": "free text, YYYY-MM-DD"
+          }, 
+          "example": "41132.0", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "date_published", 
+          "implementation": {
+            "eng": "new RESOURCE field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
+            "fra": ""
+          }, 
+          "iso_multiplicity": "M, Repeat.", 
+          "name_space": "sdo:datePublished", 
+          "nap_iso_19115_ref": "5.15.1", 
+          "proposed_name": {
+            "eng": "datePublished", 
+            "fra": "datePublication"
+          }, 
+          "proposed_type": "Date (see B.4)", 
+          "rdfa_lite": "dct:issued"
         }
       ], 
       "name": {
@@ -2559,37 +2590,6 @@
       }, 
       "proposed_type": "free text (CharacterString)", 
       "rdfa_lite": ""
-    }, 
-    {
-      "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
-      "data_gov_common_core": "Release Data", 
-      "description": {
-        "eng": "The date in which the event or action occurred"
-      }, 
-      "domain_best_practice": {
-        "eng": "free text, YYYY-MM-DD"
-      }, 
-      "example": "41132.0", 
-      "existing": false, 
-      "gc_multiplicity": "M", 
-      "id": "date_published", 
-      "implementation": {
-        "eng": "new RESOURCE field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
-        "fra": ""
-      }, 
-      "iso_multiplicity": "M, Repeat.", 
-      "name_space": "sdo:datePublished", 
-      "nap_iso_19115_ref": "5.15.1", 
-      "proposed_name": {
-        "eng": "datePublished", 
-        "fra": "datePublication"
-      }, 
-      "proposed_type": "Date (see B.4)", 
-      "rdfa_lite": "dct:issued"
     }, 
     {
       "bilingual": false, 

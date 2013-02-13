@@ -54,6 +54,7 @@ SECTIONS_FIELDS = [
         'url',
         'endpoint_url',
         'license_id',
+        'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
@@ -70,7 +71,6 @@ RESOURCE_FIELDS = [
     'size',
     'format',
     'language',
-    'date_published', # ADMIN-only field that will control publishing
     'last_modified',
     ]
 
@@ -119,7 +119,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'digitalObjectIdentifier': 'digital_object_identifier',
     'catalogueType': 'catalog_type',
     'title': 'title',
-    'datePublished': 'resource:date_published',
+    'datePublished': 'date_published',
     'dateModified': 'resource:last_modified',
     'abstract': 'notes',
     'subject': 'subject',
