@@ -44,7 +44,7 @@ class MetadataSchema(object):
             if 'choices' not in f:
                 continue
             f['choices_by_pilot_uuid'] = {
-                    c['pilot_uuid']:c for c in f['choices']}
+                c['pilot_uuid']:c for c in f['choices'] if 'pilot_uuid' in c}
 
         self.all_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
