@@ -7,7 +7,9 @@ import ckan.logic.schema as ckan_schema
 import ckan.lib.plugins as lib_plugins
 from ckan.logic.converters import convert_from_extras
 from ckan.lib.navl.validators import ignore_missing
+from ckan.plugins import toolkit
 
+from ckanext.canada.metadata_schema import schema_description
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -99,5 +101,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add variables to c just prior to the template being rendered.
         """
         DefaultDatasetForm.setup_template_variables(self, context, data_dict)
+
+        toolkit.c.schema_description = schema_description
 
 
