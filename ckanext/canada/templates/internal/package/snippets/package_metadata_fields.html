@@ -1,15 +1,16 @@
-{% import 'macros/form.html' as form %}
 {# vim: set filetype=jinja sw=2 sts=2: #}
+{% import 'macros/form.html' as form %}
+{% import 'macros/canada_form.html' as cform %}
 
 <h1>1</h1>
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.1) %}
-  <p>{{ id }}, {{ lang }}</p>
+  {{ cform.formfield(id, lang, field) }}
 {% endfor %}
 <h1>2</h1>
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.2) %}
-  <p>{{ id }}, {{ lang }}</p>
+  {{ cform.formfield(id, lang, field) }}
 {% endfor %}
 
 {% if data.owner_org %}
