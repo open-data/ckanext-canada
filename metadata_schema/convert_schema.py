@@ -64,6 +64,11 @@ SECTIONS_FIELDS = [
         ]),
     ]
 
+# override calculated values
+FIELD_OVERRIDES = {
+    'tags': {'bilingual': False},
+    }
+
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
     'url',
@@ -369,6 +374,7 @@ def main():
             if old_id_fra:
                 new_field['pilot_id_fra'] = old_id_fra
             new_field['bilingual'] = field in BILINGUAL_FIELDS
+            new_field.update(FIELD_OVERRIDES.get(field, {}))
 
             new_section['fields'].append(new_field)
         schema_out['dataset_sections'].append(new_section)
@@ -382,6 +388,7 @@ def main():
         p = proposed.get('resource:' + rfield, None)
         if p:
             new_rfield.update(field_from_proposed(p))
+        new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
     apply_field_customizations(schema_out)
