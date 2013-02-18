@@ -28,7 +28,7 @@ LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
-    ("Metadata Record Information", [
+    ("Primary Fields", [
         'id', # unique ID,
         'language', # Always "eng; CAN|fra; CAN"
         'author', # XXX set to GC Department (ckan group), no data entry
@@ -37,23 +37,23 @@ SECTIONS_FIELDS = [
         'name', #- optional in proposed, REQUIRED here!
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
-        ]),
-    ("Identification Information", [
         'title',
         'notes',
         'subject', # TODO: create tag vocabulary for this
         'topic_category', # TODO: create tag vocabulary for this
         'tags',
+        'license_id',
+        'data_series_name',
+        'data_series_issue_identification',
+        ]),
+    ("Additional Fields", [
         'maintenance_and_update_frequency',
         'temporal_element',
         'geographic_region',
-        'data_series_name',
-        'data_series_issue_identification',
         'documentation_url',
         'related_document_url',
         'url',
         'endpoint_url',
-        'license_id',
         'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
