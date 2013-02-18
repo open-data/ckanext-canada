@@ -67,30 +67,30 @@
           "example": "eng; CAN", 
           "existing": false, 
           "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The language(s) of the content of the dataset.", 
-            "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
-          }, 
           "id": "language", 
           "implementation": {
             "eng": "", 
             "fra": ""
           }, 
           "iso_multiplicity": "M", 
-          "name": {
+          "name_space": "tbd", 
+          "nap_iso_19115_ref": "5.2.2", 
+          "pilot_help": {
+            "eng": "The language(s) of the content of the dataset.", 
+            "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "language__", 
+          "pilot_name": {
             "eng": "Language", 
             "fra": "Langue"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "5.2.2", 
-          "pilot_id": "language__", 
+          "pilot_type": "choice", 
           "proposed_name": {
             "eng": "language", 
             "fra": "langue"
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "", 
-          "type": "choice"
+          "rdfa_lite": ""
         }, 
         {
           "bilingual": false, 
@@ -895,30 +895,30 @@
           "example": "Treasury Board of Canada Secretariat", 
           "existing": true, 
           "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
-            "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
-          }, 
           "id": "author", 
           "implementation": {
             "eng": "existing dataset field \u2018author\u2019 and a Group assigned to the dataset", 
             "fra": ""
           }, 
           "iso_multiplicity": "M", 
-          "name": {
+          "name_space": "sdo:organization", 
+          "nap_iso_19115_ref": "5.16.2", 
+          "pilot_help": {
+            "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
+            "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
+          }, 
+          "pilot_id": "department", 
+          "pilot_name": {
             "eng": "Creator (Department/Agency)", 
             "fra": "Auteur (minist\u00e8re ou organisme)"
           }, 
-          "name_space": "sdo:organization", 
-          "nap_iso_19115_ref": "5.16.2", 
-          "pilot_id": "department", 
+          "pilot_type": "choice", 
           "proposed_name": {
             "eng": "organizationName", 
             "fra": "nomOrganisation"
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "foaf:Organization", 
-          "type": "choice"
+          "rdfa_lite": "foaf:Organization"
         }, 
         {
           "bilingual": false, 
@@ -998,31 +998,31 @@
           "example": "Canada Boarder Wait Times", 
           "existing": true, 
           "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
-            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
-          }, 
           "id": "title", 
           "implementation": {
             "eng": "existing dataset field \"title\"\nFRENCH: new field \"title_fra\"", 
             "fra": "new dataset field 'title_fra'"
           }, 
           "iso_multiplicity": "M", 
-          "name": {
+          "name_space": "sdo:name\n(ds:dataset ??)", 
+          "nap_iso_19115_ref": "5.14.1", 
+          "pilot_help": {
+            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
+            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
+          }, 
+          "pilot_id": "title_en", 
+          "pilot_id_fra": "title_fr", 
+          "pilot_name": {
             "eng": "Title English", 
             "fra": "Titre en anglais"
           }, 
-          "name_space": "sdo:name\n(ds:dataset ??)", 
-          "nap_iso_19115_ref": "5.14.1", 
-          "pilot_id": "title_en", 
-          "pilot_id_fra": "title_fr", 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "title", 
             "fra": "titre"
           }, 
           "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:title", 
-          "type": "text"
+          "rdfa_lite": "dct:title"
         }, 
         {
           "bilingual": false, 
@@ -1071,31 +1071,31 @@
           "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
           "existing": true, 
           "gc_multiplicity": "M", 
-          "help": {
-            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
-            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
-          }, 
           "id": "notes", 
           "implementation": {
             "eng": "existing dataset field \u2018notes\u2019", 
             "fra": "new dataset field 'notes_fra'"
           }, 
           "iso_multiplicity": "M", 
-          "name": {
+          "name_space": "sdo:description", 
+          "nap_iso_19115_ref": "5.3.1.2", 
+          "pilot_help": {
+            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
+            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "description_en", 
+          "pilot_id_fra": "description_fr", 
+          "pilot_name": {
             "eng": "Description English", 
             "fra": "Description en anglais"
           }, 
-          "name_space": "sdo:description", 
-          "nap_iso_19115_ref": "5.3.1.2", 
-          "pilot_id": "description_en", 
-          "pilot_id_fra": "description_fr", 
+          "pilot_type": "textarea", 
           "proposed_name": {
             "eng": "abstract", 
             "fra": "r\u00e9sum\u00e9"
           }, 
           "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:description", 
-          "type": "textarea"
+          "rdfa_lite": "dct:description"
         }, 
         {
           "bilingual": false, 
@@ -1285,23 +1285,24 @@
           "example": "Agriculture", 
           "existing": false, 
           "gc_multiplicity": "M, Rep.", 
-          "help": {
-            "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
-            "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
-          }, 
           "id": "subject", 
           "implementation": {
             "eng": "new dataset keyword field \u2018subject\u2019 with new keyword vocabulary", 
             "fra": ""
           }, 
           "iso_multiplicity": "M, Repeat.", 
-          "name": {
+          "name_space": "sdo:about", 
+          "nap_iso_19115_ref": "5.3.1.11", 
+          "pilot_help": {
+            "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
+            "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "category", 
+          "pilot_name": {
             "eng": "Subject Area", 
             "fra": "Domaine"
           }, 
-          "name_space": "sdo:about", 
-          "nap_iso_19115_ref": "5.3.1.11", 
-          "pilot_id": "category", 
+          "pilot_type": "choice", 
           "proposed_name": {
             "eng": "subject", 
             "fra": "sujet"
@@ -1455,31 +1456,31 @@
           "example": "Air, Air Quality, Organic Pollutants", 
           "existing": true, 
           "gc_multiplicity": "M, Rep.", 
-          "help": {
-            "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
-            "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
-          }, 
           "id": "tags", 
           "implementation": {
             "eng": "existing dataset field \u2018tags\u2019 with UI that forces entering both English and French versions of every keyword", 
             "fra": "new dataset field 'tags_fra'"
           }, 
           "iso_multiplicity": "O", 
-          "name": {
+          "name_space": "sdo:keywords", 
+          "nap_iso_19115_ref": "5.3.6.1", 
+          "pilot_help": {
+            "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
+            "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
+          }, 
+          "pilot_id": "keywords_en", 
+          "pilot_id_fra": "keywords_fr", 
+          "pilot_name": {
             "eng": "Keywords English", 
             "fra": "Mots-cl\u00e9s en anglais"
           }, 
-          "name_space": "sdo:keywords", 
-          "nap_iso_19115_ref": "5.3.6.1", 
-          "pilot_id": "keywords_en", 
-          "pilot_id_fra": "keywords_fr", 
+          "pilot_type": "textarea", 
           "proposed_name": {
             "eng": "keywords", 
             "fra": "motsCl\u00e9s"
           }, 
           "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcat:keywords", 
-          "type": "textarea"
+          "rdfa_lite": "dcat:keywords"
         }, 
         {
           "bilingual": false, 
@@ -1528,31 +1529,31 @@
           "example": "CANSIM", 
           "existing": false, 
           "gc_multiplicity": "O", 
-          "help": {
-            "eng": "A name given to multiple datasets to present them as a group or a set.", 
-            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
-          }, 
           "id": "data_series_name", 
           "implementation": {
             "eng": "new dataset field \u2018data_series_name\u2019", 
             "fra": "new dataset field \u2018data_series_name_fra\u2019"
           }, 
           "iso_multiplicity": "O", 
-          "name": {
+          "name_space": "tbd\nds:catalog??", 
+          "nap_iso_19115_ref": "5.21.1", 
+          "pilot_help": {
+            "eng": "A name given to multiple datasets to present them as a group or a set.", 
+            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
+          }, 
+          "pilot_id": "group_name_en", 
+          "pilot_id_fra": "group_name_fr", 
+          "pilot_name": {
             "eng": "Dataset Group Name English", 
             "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
           }, 
-          "name_space": "tbd\nds:catalog??", 
-          "nap_iso_19115_ref": "5.21.1", 
-          "pilot_id": "group_name_en", 
-          "pilot_id_fra": "group_name_fr", 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "dataSeriesName", 
             "fra": "nonS\u00e9rieDonn\u00e9es"
           }, 
           "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "", 
-          "type": "text"
+          "rdfa_lite": ""
         }, 
         {
           "bilingual": true, 
@@ -1609,30 +1610,30 @@
           "example": "daily", 
           "existing": false, 
           "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The frequency at which the dataset is published.", 
-            "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
-          }, 
           "id": "maintenance_and_update_frequency", 
           "implementation": {
             "eng": "new dataset field \u2018maintenance_and_update_frequency\u2019", 
             "fra": ""
           }, 
           "iso_multiplicity": "O", 
-          "name": {
+          "name_space": "dct:accuralPeriodicity", 
+          "nap_iso_19115_ref": "5.6.1", 
+          "pilot_help": {
+            "eng": "The frequency at which the dataset is published.", 
+            "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "frequency", 
+          "pilot_name": {
             "eng": "Frequency", 
             "fra": "Fr\u00e9quence"
           }, 
-          "name_space": "dct:accuralPeriodicity", 
-          "nap_iso_19115_ref": "5.6.1", 
-          "pilot_id": "frequency", 
+          "pilot_type": "select", 
           "proposed_name": {
             "eng": "maintenanceAndUpdateFrequency", 
             "fra": "fr\u00e9quenceMise\u00c0Jour"
           }, 
           "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
-          "rdfa_lite": "dct:accuralPeriodicity", 
-          "type": "select"
+          "rdfa_lite": "dct:accuralPeriodicity"
         }, 
         {
           "bilingual": false, 
@@ -2113,30 +2114,30 @@
           "example": "Ottawa", 
           "existing": false, 
           "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The region that describes the geographic area covered by the dataset.", 
-            "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
-          }, 
           "id": "geographic_region", 
           "implementation": {
             "eng": "new dataset field \u2018geographic_region\u2019", 
             "fra": ""
           }, 
           "iso_multiplicity": "", 
-          "name": {
+          "name_space": "tbd", 
+          "nap_iso_19115_ref": "N/A", 
+          "pilot_help": {
+            "eng": "The region that describes the geographic area covered by the dataset.", 
+            "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "Geographic_Region_Name", 
+          "pilot_name": {
             "eng": "Geographic Region Name", 
             "fra": "Nom de la r\u00e9gion g\u00e9ographique"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "N/A", 
-          "pilot_id": "Geographic_Region_Name", 
+          "pilot_type": "choice", 
           "proposed_name": {
             "eng": "geographicRegion", 
             "fra": "r\u00e9gionG\u00e9ographique"
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "dcterms:spatial", 
-          "type": "choice"
+          "rdfa_lite": "dcterms:spatial"
         }, 
         {
           "bilingual": true, 
@@ -2154,31 +2155,31 @@
           "example": "URL", 
           "existing": false, 
           "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
-            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
-          }, 
           "id": "documentation_url", 
           "implementation": {
             "eng": "new dataset field 'documentation_url'", 
             "fra": "new dataset field 'documentation_url_fra'"
           }, 
           "iso_multiplicity": "O, Repeat.", 
-          "name": {
+          "name_space": "dcat:dataDictionary", 
+          "nap_iso_19115_ref": "", 
+          "pilot_help": {
+            "eng": "The URL that links to the top level in the repository in which the dataset resides.", 
+            "fra": "L'adresse URL qui \u00e9tablit des liens avec le niveau sup\u00e9rieur du d\u00e9p\u00f4t dans lequel l\u2019ensemble de donn\u00e9es est vers\u00e9e."
+          }, 
+          "pilot_id": "data_series_url_en", 
+          "pilot_id_fra": "data_series_url_fr", 
+          "pilot_name": {
             "eng": "Data Series URL English", 
             "fra": "URL anglais de l'ensemble de donn\u00e9es"
           }, 
-          "name_space": "dcat:dataDictionary", 
-          "nap_iso_19115_ref": "", 
-          "pilot_id": "data_series_url_en", 
-          "pilot_id_fra": "data_series_url_fr", 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "documentationURL", 
             "fra": "URLdocumentation"
           }, 
           "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcat:dataDictionary", 
-          "type": "text"
+          "rdfa_lite": "dcat:dataDictionary"
         }, 
         {
           "bilingual": true, 
@@ -2227,31 +2228,31 @@
           "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
           "existing": true, 
           "gc_multiplicity": "O", 
-          "help": {
-            "eng": "The URL for the program  that is responsible for the dataset or tool.", 
-            "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
-          }, 
           "id": "url", 
           "implementation": {
             "eng": "existing dataset field 'url'", 
             "fra": "new dataset field name 'url_fra'"
           }, 
           "iso_multiplicity": "", 
-          "name": {
+          "name_space": "sdo:url", 
+          "nap_iso_19115_ref": "", 
+          "pilot_help": {
+            "eng": "The URL for the program  that is responsible for the dataset or tool.", 
+            "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
+          }, 
+          "pilot_id": "program_page_en", 
+          "pilot_id_fra": "program_url_fr", 
+          "pilot_name": {
             "eng": "Program URL English", 
             "fra": "Adresse URL du programme en anglais"
           }, 
-          "name_space": "sdo:url", 
-          "nap_iso_19115_ref": "", 
-          "pilot_id": "program_page_en", 
-          "pilot_id_fra": "program_url_fr", 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "programURL", 
             "fra": "URLprogramme"
           }, 
           "proposed_type": "", 
-          "rdfa_lite": "foaf:homepage", 
-          "type": "text"
+          "rdfa_lite": "foaf:homepage"
         }, 
         {
           "bilingual": true, 

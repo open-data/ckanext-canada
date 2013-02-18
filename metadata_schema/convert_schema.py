@@ -360,15 +360,15 @@ def main():
                 xp = '//item[inputname="%s"]' % f
                 new_field.update({
                     'pilot_id': f,
-                    'name': lang_versions(old_root, xp + '/name'),
-                    'help': lang_versions(old_root, xp + '/helpcontext'),
-                    'type': "".join(old_root.xpath(xp +
+                    'pilot_name': lang_versions(old_root, xp + '/name'),
+                    'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
+                    'pilot_type': "".join(old_root.xpath(xp +
                         '/type1/inputtype[1]/text()')),
                     })
-                if not new_field['type']:
+                if not new_field['pilot_type']:
                     # this seems to indicate a selection from a list
                     new_field['choices'] = pilot_choices(f)
-                    new_field['type'] = 'choice'
+                    new_field['pilot_type'] = 'choice'
 
             old_id_fra = BILINGUAL_FIELDS.get(field, None)
             if old_id_fra:
