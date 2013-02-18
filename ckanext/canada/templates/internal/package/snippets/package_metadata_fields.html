@@ -1,5 +1,5 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/form.html' as form %}
+{# vim: set filetype=jinja sw=2 sts=2: #}
 
 <h1>1</h1>
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
@@ -32,10 +32,6 @@
 {{ form.input('maintainer', label=_('Maintainer'), id='field-maintainer', placeholder=_('Joe Bloggs'), value=data.maintainer, error=errors.maintainer, classes=['control-medium']) }}
 
 {{ form.input('maintainer_email', label=_('Maintainer Email'), id='field-maintainer-email', placeholder=_('joe@example.com'), value=data.maintainer_email, error=errors.maintainer_email, classes=['control-medium']) }}
-
-{% block custom_fields %}
-  {% snippet 'snippets/custom_form_fields.html', extras=data.extras, errors=errors, limit=3 %}
-{% endblock %}
 
 
   {% block dataset_fields %}
