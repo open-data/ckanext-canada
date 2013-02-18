@@ -28,41 +28,46 @@ LANGS = 'eng', 'fra'
 
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
-    ("Metadata Record Information", [
+    ("Primary Fields", [
         'id', # unique ID,
         'language', # Always "eng; CAN|fra; CAN"
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
+        'title',
         'name', #- optional in proposed, REQUIRED here!
+        'notes',
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
-        ]),
-    ("Identification Information", [
-        'title',
-        'notes',
         'subject', # TODO: create tag vocabulary for this
         'topic_category', # TODO: create tag vocabulary for this
         'tags',
+        'license_id',
+        'data_series_name',
+        'data_series_issue_identification',
+        ]),
+    ("Additional Fields", [
         'maintenance_and_update_frequency',
         'temporal_element',
         'geographic_region',
-        'data_series_name',
-        'data_series_issue_identification',
         'documentation_url',
         'related_document_url',
         'url',
         'endpoint_url',
-        'license_id',
         'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
         'presentation_form',
-        'the_geom', # spatial extension
+        'spatial',
         'browse_graphic_url',
         ]),
     ]
+
+# override calculated values
+FIELD_OVERRIDES = {
+    'tags': {'bilingual': False},
+    }
 
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
@@ -81,7 +86,7 @@ BILINGUAL_RESOURCE_FIELDS = set([
     ])
 
 EXISTING_FIELDS = set(default_package_schema()
-    ) | set(['the_geom'])
+    ) | set(['spatial'])
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
@@ -129,7 +134,6 @@ PROPOSED_TO_EXISTING_FIELDS = {
         'maintenance_and_update_frequency',
     'temporalElement': 'temporal_element',
     'geographicRegion': 'geographic_region',
-    'spatial': 'the_geom',
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
     #'supplementalInformation': 'supplemental_information', - no applicable mapping
@@ -370,6 +374,7 @@ def main():
             if old_id_fra:
                 new_field['pilot_id_fra'] = old_id_fra
             new_field['bilingual'] = field in BILINGUAL_FIELDS
+            new_field.update(FIELD_OVERRIDES.get(field, {}))
 
             new_section['fields'].append(new_field)
         schema_out['dataset_sections'].append(new_section)
@@ -383,6 +388,7 @@ def main():
         p = proposed.get('resource:' + rfield, None)
         if p:
             new_rfield.update(field_from_proposed(p))
+        new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
     apply_field_customizations(schema_out)

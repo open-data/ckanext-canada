@@ -9,10 +9,10 @@ Features:
 
 * Forms and Validation for GoC Metadata Schema (in progress)
 * Batch import of data (coming, currently in a separate extension)
-	
+
 Installation:
 
-* Use CKAN Version: 1.8
+* Use CKAN Version: 2.0+
 * After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
 
 Plugins
