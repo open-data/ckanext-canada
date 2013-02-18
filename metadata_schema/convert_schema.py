@@ -59,7 +59,7 @@ SECTIONS_FIELDS = [
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
         'presentation_form',
-        'the_geom', # spatial extension
+        'spatial',
         'browse_graphic_url',
         ]),
     ]
@@ -81,7 +81,7 @@ BILINGUAL_RESOURCE_FIELDS = set([
     ])
 
 EXISTING_FIELDS = set(default_package_schema()
-    ) | set(['the_geom'])
+    ) | set(['spatial'])
 
 # The field order here must match the proposed schema spreadsheet
 ProposedField = namedtuple("ProposedField", """
@@ -129,7 +129,6 @@ PROPOSED_TO_EXISTING_FIELDS = {
         'maintenance_and_update_frequency',
     'temporalElement': 'temporal_element',
     'geographicRegion': 'geographic_region',
-    'spatial': 'the_geom',
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
     #'supplementalInformation': 'supplemental_information', - no applicable mapping
