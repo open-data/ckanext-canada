@@ -21,6 +21,25 @@
   {% if id in ('id', 'language', 'license_id', 'author_email', 'author',
                'department_number') %}
     {# None of these fields are required for data entry #}
+  {% elif id == 'name' %}
+    {% do kwargs.update({
+      'prepend': '/data/dataset/',
+      'attrs': {'data-module': 'slug-preview-slug',
+                'data-module-prefix': 'data.gc.ca/data/dataset/',
+                'data-module-placeholder': '<dataset>',}, 
+      }) %}
+    {{ form.prepend(id, **kwargs) }}
+  {% elif id in ('notes', 'notes_fra') %}
+    {{ form.markdown(id, **kwargs) }}
+  {% elif id in ('subject', 'topic_category', 'tags') %}
+    {% do kwargs.update({
+      'value': data[id + '_string'],
+      'classes': ['control-full'],
+      'attrs': {'data-module': 'autocomplete',
+                'data-module-tags': '',
+                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
+      }) %}
+    {{ form.input(id, **kwargs) }}
   {% else %}
     {{ form.input(id, **kwargs) }}
   {% endif %}
