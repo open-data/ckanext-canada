@@ -983,6 +983,48 @@
           "rdfa_lite": "foaf:mbox"
         }, 
         {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "Title", 
+          "description": {
+            "eng": "The full, official name by which the cited resource is known."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text"
+          }, 
+          "example": "Canada Boarder Wait Times", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "help": {
+            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
+            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
+          }, 
+          "id": "title", 
+          "implementation": {
+            "eng": "existing dataset field \"title\"\nFRENCH: new field \"title_fra\"", 
+            "fra": "new dataset field 'title_fra'"
+          }, 
+          "iso_multiplicity": "M", 
+          "name": {
+            "eng": "Title English", 
+            "fra": "Titre en anglais"
+          }, 
+          "name_space": "sdo:name\n(ds:dataset ??)", 
+          "nap_iso_19115_ref": "5.14.1", 
+          "pilot_id": "title_en", 
+          "pilot_id_fra": "title_fr", 
+          "proposed_name": {
+            "eng": "title", 
+            "fra": "titre"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:title", 
+          "type": "text"
+        }, 
+        {
           "bilingual": false, 
           "controlled_vocabulary_reference": {
             "eng": "", 
@@ -1012,6 +1054,48 @@
           }, 
           "proposed_type": "free text (CharacterString)", 
           "rdfa_lite": "dcterms:identifier"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "Description", 
+          "description": {
+            "eng": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text."
+          }, 
+          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "help": {
+            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
+            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "notes", 
+          "implementation": {
+            "eng": "existing dataset field \u2018notes\u2019", 
+            "fra": "new dataset field 'notes_fra'"
+          }, 
+          "iso_multiplicity": "M", 
+          "name": {
+            "eng": "Description English", 
+            "fra": "Description en anglais"
+          }, 
+          "name_space": "sdo:description", 
+          "nap_iso_19115_ref": "5.3.1.2", 
+          "pilot_id": "description_en", 
+          "pilot_id_fra": "description_fr", 
+          "proposed_name": {
+            "eng": "abstract", 
+            "fra": "r\u00e9sum\u00e9"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:description", 
+          "type": "textarea"
         }, 
         {
           "bilingual": false, 
@@ -1074,90 +1158,6 @@
           }, 
           "proposed_type": "GC derived field", 
           "rdfa_lite": ""
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "data_gov_common_core": "Title", 
-          "description": {
-            "eng": "The full, official name by which the cited resource is known."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text"
-          }, 
-          "example": "Canada Boarder Wait Times", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
-            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
-          }, 
-          "id": "title", 
-          "implementation": {
-            "eng": "existing dataset field \"title\"\nFRENCH: new field \"title_fra\"", 
-            "fra": "new dataset field 'title_fra'"
-          }, 
-          "iso_multiplicity": "M", 
-          "name": {
-            "eng": "Title English", 
-            "fra": "Titre en anglais"
-          }, 
-          "name_space": "sdo:name\n(ds:dataset ??)", 
-          "nap_iso_19115_ref": "5.14.1", 
-          "pilot_id": "title_en", 
-          "pilot_id_fra": "title_fr", 
-          "proposed_name": {
-            "eng": "title", 
-            "fra": "titre"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:title", 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "data_gov_common_core": "Description", 
-          "description": {
-            "eng": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
-          }, 
-          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "help": {
-            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
-            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "notes", 
-          "implementation": {
-            "eng": "existing dataset field \u2018notes\u2019", 
-            "fra": "new dataset field 'notes_fra'"
-          }, 
-          "iso_multiplicity": "M", 
-          "name": {
-            "eng": "Description English", 
-            "fra": "Description en anglais"
-          }, 
-          "name_space": "sdo:description", 
-          "nap_iso_19115_ref": "5.3.1.2", 
-          "pilot_id": "description_en", 
-          "pilot_id_fra": "description_fr", 
-          "proposed_name": {
-            "eng": "abstract", 
-            "fra": "r\u00e9sum\u00e9"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:description", 
-          "type": "textarea"
         }, 
         {
           "bilingual": false, 

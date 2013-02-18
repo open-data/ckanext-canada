@@ -34,11 +34,11 @@ SECTIONS_FIELDS = [
         'author', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
+        'title',
         'name', #- optional in proposed, REQUIRED here!
+        'notes',
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
-        'title',
-        'notes',
         'subject', # TODO: create tag vocabulary for this
         'topic_category', # TODO: create tag vocabulary for this
         'tags',
