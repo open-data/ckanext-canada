@@ -1,5 +1,27 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
+{% import 'macros/form.html' as form %}
 
-{% macro formfield(id, lang, field) %}
-  <p>{{ id }}, {{ lang }}</p>
+{% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
+  {% set kwargs = {
+    'label': id,
+    'placeholder': field.example,
+    'value': data[id],
+    'error': errors[id],
+    'id': 'field-' + id,
+    'classes': ['control-medium'],
+    } %}
+  {% if field.data_gov_common_core %}
+    {% do kwargs.update({'label': field.data_gov_common_core}) %}
+  {% endif %}
+
+  {% if lang %}
+    {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
+  {% endif %}
+
+  {% if id in ('id', 'language', 'license_id', 'author_email', 'author',
+               'department_number') %}
+    {# None of these fields are required for data entry #}
+  {% else %}
+    {{ form.input(id, **kwargs) }}
+  {% endif %}
 {% endmacro %}

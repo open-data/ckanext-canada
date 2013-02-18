@@ -5,12 +5,12 @@
 <h1>1</h1>
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.1) %}
-  {{ cform.formfield(id, lang, field) }}
+  {{ cform.formfield(id, lang, field, data, errors) }}
 {% endfor %}
 <h1>2</h1>
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.2) %}
-  {{ cform.formfield(id, lang, field) }}
+  {{ cform.formfield(id, lang, field, data, errors) }}
 {% endfor %}
 
 {% if data.owner_org %}
