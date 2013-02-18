@@ -983,6 +983,48 @@
           "rdfa_lite": "foaf:mbox"
         }, 
         {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "Title", 
+          "description": {
+            "eng": "The full, official name by which the cited resource is known."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text"
+          }, 
+          "example": "Canada Boarder Wait Times", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "help": {
+            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
+            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
+          }, 
+          "id": "title", 
+          "implementation": {
+            "eng": "existing dataset field \"title\"\nFRENCH: new field \"title_fra\"", 
+            "fra": "new dataset field 'title_fra'"
+          }, 
+          "iso_multiplicity": "M", 
+          "name": {
+            "eng": "Title English", 
+            "fra": "Titre en anglais"
+          }, 
+          "name_space": "sdo:name\n(ds:dataset ??)", 
+          "nap_iso_19115_ref": "5.14.1", 
+          "pilot_id": "title_en", 
+          "pilot_id_fra": "title_fr", 
+          "proposed_name": {
+            "eng": "title", 
+            "fra": "titre"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:title", 
+          "type": "text"
+        }, 
+        {
           "bilingual": false, 
           "controlled_vocabulary_reference": {
             "eng": "", 
@@ -1012,6 +1054,48 @@
           }, 
           "proposed_type": "free text (CharacterString)", 
           "rdfa_lite": "dcterms:identifier"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "Description", 
+          "description": {
+            "eng": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text."
+          }, 
+          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "help": {
+            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
+            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
+          }, 
+          "id": "notes", 
+          "implementation": {
+            "eng": "existing dataset field \u2018notes\u2019", 
+            "fra": "new dataset field 'notes_fra'"
+          }, 
+          "iso_multiplicity": "M", 
+          "name": {
+            "eng": "Description English", 
+            "fra": "Description en anglais"
+          }, 
+          "name_space": "sdo:description", 
+          "nap_iso_19115_ref": "5.3.1.2", 
+          "pilot_id": "description_en", 
+          "pilot_id_fra": "description_fr", 
+          "proposed_name": {
+            "eng": "abstract", 
+            "fra": "r\u00e9sum\u00e9"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dct:description", 
+          "type": "textarea"
         }, 
         {
           "bilingual": false, 
@@ -1074,98 +1158,6 @@
           }, 
           "proposed_type": "GC derived field", 
           "rdfa_lite": ""
-        }
-      ], 
-      "name": {
-        "en": "Metadata Record Information"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "data_gov_common_core": "Title", 
-          "description": {
-            "eng": "The full, official name by which the cited resource is known."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text"
-          }, 
-          "example": "Canada Boarder Wait Times", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "help": {
-            "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
-            "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
-          }, 
-          "id": "title", 
-          "implementation": {
-            "eng": "existing dataset field \"title\"\nFRENCH: new field \"title_fra\"", 
-            "fra": "new dataset field 'title_fra'"
-          }, 
-          "iso_multiplicity": "M", 
-          "name": {
-            "eng": "Title English", 
-            "fra": "Titre en anglais"
-          }, 
-          "name_space": "sdo:name\n(ds:dataset ??)", 
-          "nap_iso_19115_ref": "5.14.1", 
-          "pilot_id": "title_en", 
-          "pilot_id_fra": "title_fr", 
-          "proposed_name": {
-            "eng": "title", 
-            "fra": "titre"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:title", 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "data_gov_common_core": "Description", 
-          "description": {
-            "eng": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
-          }, 
-          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "help": {
-            "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
-            "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
-          }, 
-          "id": "notes", 
-          "implementation": {
-            "eng": "existing dataset field \u2018notes\u2019", 
-            "fra": "new dataset field 'notes_fra'"
-          }, 
-          "iso_multiplicity": "M", 
-          "name": {
-            "eng": "Description English", 
-            "fra": "Description en anglais"
-          }, 
-          "name_space": "sdo:description", 
-          "nap_iso_19115_ref": "5.3.1.2", 
-          "pilot_id": "description_en", 
-          "pilot_id_fra": "description_fr", 
-          "proposed_name": {
-            "eng": "abstract", 
-            "fra": "r\u00e9sum\u00e9"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:description", 
-          "type": "textarea"
         }, 
         {
           "bilingual": false, 
@@ -1448,7 +1440,7 @@
           "type": "keywords"
         }, 
         {
-          "bilingual": true, 
+          "bilingual": false, 
           "controlled_vocabulary_reference": {
             "eng": "", 
             "fra": ""
@@ -1489,6 +1481,118 @@
           "rdfa_lite": "dcat:keywords", 
           "type": "textarea"
         }, 
+        {
+          "bilingual": false, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "License", 
+          "description": {
+            "eng": "The limitations or constraints on the use of or access to the resource."
+          }, 
+          "domain_best_practice": {
+            "eng": "Default: Constraints outlined in: Government of Canada Open Data Licence Agreement (URL:\u2026)"
+          }, 
+          "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+          "existing": true, 
+          "gc_multiplicity": "M", 
+          "id": "license_id", 
+          "implementation": {
+            "eng": "existing dataset field \u2018license_id\u2019", 
+            "fra": ""
+          }, 
+          "iso_multiplicity": "licen", 
+          "name_space": "dc:license", 
+          "nap_iso_19115_ref": "5.4.1.1", 
+          "proposed_name": {
+            "eng": "license", 
+            "fra": "licence"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "dcterms:license"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "", 
+          "description": {
+            "eng": "Name of the publication series or aggregate dataset of which the referenced dataset is a part."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text."
+          }, 
+          "example": "CANSIM", 
+          "existing": false, 
+          "gc_multiplicity": "O", 
+          "help": {
+            "eng": "A name given to multiple datasets to present them as a group or a set.", 
+            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
+          }, 
+          "id": "data_series_name", 
+          "implementation": {
+            "eng": "new dataset field \u2018data_series_name\u2019", 
+            "fra": "new dataset field \u2018data_series_name_fra\u2019"
+          }, 
+          "iso_multiplicity": "O", 
+          "name": {
+            "eng": "Dataset Group Name English", 
+            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
+          }, 
+          "name_space": "tbd\nds:catalog??", 
+          "nap_iso_19115_ref": "5.21.1", 
+          "pilot_id": "group_name_en", 
+          "pilot_id_fra": "group_name_fr", 
+          "proposed_name": {
+            "eng": "dataSeriesName", 
+            "fra": "nonS\u00e9rieDonn\u00e9es"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": "", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "controlled_vocabulary_reference": {
+            "eng": "", 
+            "fra": ""
+          }, 
+          "data_gov_common_core": "", 
+          "description": {
+            "eng": "Identification of the series\u2019 issue information."
+          }, 
+          "domain_best_practice": {
+            "eng": "free text."
+          }, 
+          "example": "Table 502-0003", 
+          "existing": false, 
+          "gc_multiplicity": "O", 
+          "id": "data_series_issue_identification", 
+          "implementation": {
+            "eng": "new dataset field \u2018data_series_issue_identification\u2019", 
+            "fra": "new dataset field \u2018data_series_issue_identification_fra\u2019"
+          }, 
+          "iso_multiplicity": "O", 
+          "name_space": "tbd", 
+          "nap_iso_19115_ref": "5.21.2", 
+          "proposed_name": {
+            "eng": "issueIdentification", 
+            "fra": "identificationPublication"
+          }, 
+          "proposed_type": "free text (CharacterString)", 
+          "rdfa_lite": ""
+        }
+      ], 
+      "name": {
+        "en": "Primary Fields"
+      }
+    }, 
+    {
+      "description": {}, 
+      "fields": [
         {
           "bilingual": false, 
           "controlled_vocabulary_reference": {
@@ -2040,79 +2144,6 @@
             "eng": "", 
             "fra": ""
           }, 
-          "data_gov_common_core": "", 
-          "description": {
-            "eng": "Name of the publication series or aggregate dataset of which the referenced dataset is a part."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
-          }, 
-          "example": "CANSIM", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "help": {
-            "eng": "A name given to multiple datasets to present them as a group or a set.", 
-            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
-          }, 
-          "id": "data_series_name", 
-          "implementation": {
-            "eng": "new dataset field \u2018data_series_name\u2019", 
-            "fra": "new dataset field \u2018data_series_name_fra\u2019"
-          }, 
-          "iso_multiplicity": "O", 
-          "name": {
-            "eng": "Dataset Group Name English", 
-            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
-          }, 
-          "name_space": "tbd\nds:catalog??", 
-          "nap_iso_19115_ref": "5.21.1", 
-          "pilot_id": "group_name_en", 
-          "pilot_id_fra": "group_name_fr", 
-          "proposed_name": {
-            "eng": "dataSeriesName", 
-            "fra": "nonS\u00e9rieDonn\u00e9es"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "", 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "data_gov_common_core": "", 
-          "description": {
-            "eng": "Identification of the series\u2019 issue information."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
-          }, 
-          "example": "Table 502-0003", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "id": "data_series_issue_identification", 
-          "implementation": {
-            "eng": "new dataset field \u2018data_series_issue_identification\u2019", 
-            "fra": "new dataset field \u2018data_series_issue_identification_fra\u2019"
-          }, 
-          "iso_multiplicity": "O", 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "5.21.2", 
-          "proposed_name": {
-            "eng": "issueIdentification", 
-            "fra": "identificationPublication"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
-        }, 
-        {
-          "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Documentation URL", 
           "description": {
             "eng": "URL to documentation for the dataset or API. At a minimum, this should include a data dictionary and / or documentation on the API."
@@ -2259,37 +2290,6 @@
             "eng": "", 
             "fra": ""
           }, 
-          "data_gov_common_core": "License", 
-          "description": {
-            "eng": "The limitations or constraints on the use of or access to the resource."
-          }, 
-          "domain_best_practice": {
-            "eng": "Default: Constraints outlined in: Government of Canada Open Data Licence Agreement (URL:\u2026)"
-          }, 
-          "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
-          "existing": true, 
-          "gc_multiplicity": "M", 
-          "id": "license_id", 
-          "implementation": {
-            "eng": "existing dataset field \u2018license_id\u2019", 
-            "fra": ""
-          }, 
-          "iso_multiplicity": "licen", 
-          "name_space": "dc:license", 
-          "nap_iso_19115_ref": "5.4.1.1", 
-          "proposed_name": {
-            "eng": "license", 
-            "fra": "licence"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcterms:license"
-        }, 
-        {
-          "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Release Data", 
           "description": {
             "eng": "The date in which the event or action occurred"
@@ -2317,7 +2317,7 @@
         }
       ], 
       "name": {
-        "en": "Identification Information"
+        "en": "Additional Fields"
       }
     }, 
     {
@@ -2401,7 +2401,7 @@
           "example": "", 
           "existing": true, 
           "gc_multiplicity": "O", 
-          "id": "the_geom", 
+          "id": "spatial", 
           "implementation": {
             "eng": "ENGLISH: existing spatial dataset field \u2018spatial\u2019", 
             "fra": ""

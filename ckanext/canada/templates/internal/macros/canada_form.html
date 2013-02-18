@@ -1,0 +1,46 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
+{% import 'macros/form.html' as form %}
+
+{% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
+  {% set kwargs = {
+    'label': id,
+    'placeholder': field.example,
+    'value': data[id],
+    'error': errors[id],
+    'id': 'field-' + id,
+    'classes': ['control-medium'],
+    } %}
+  {% if field.data_gov_common_core %}
+    {% do kwargs.update({'label': field.data_gov_common_core}) %}
+  {% endif %}
+
+  {% if lang %}
+    {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
+  {% endif %}
+
+  {% if id in ('id', 'language', 'license_id', 'author_email', 'author',
+               'department_number') %}
+    {# None of these fields are required for data entry #}
+  {% elif id == 'name' %}
+    {% do kwargs.update({
+      'prepend': '/data/dataset/',
+      'attrs': {'data-module': 'slug-preview-slug',
+                'data-module-prefix': 'data.gc.ca/data/dataset/',
+                'data-module-placeholder': '<dataset>',}, 
+      }) %}
+    {{ form.prepend(id, **kwargs) }}
+  {% elif id in ('notes', 'notes_fra') %}
+    {{ form.markdown(id, **kwargs) }}
+  {% elif id in ('subject', 'topic_category', 'tags') %}
+    {% do kwargs.update({
+      'value': data[id + '_string'],
+      'classes': ['control-full'],
+      'attrs': {'data-module': 'autocomplete',
+                'data-module-tags': '',
+                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
+      }) %}
+    {{ form.input(id, **kwargs) }}
+  {% else %}
+    {{ form.input(id, **kwargs) }}
+  {% endif %}
+{% endmacro %}
