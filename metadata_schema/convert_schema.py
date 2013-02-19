@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 
 """
 This script is used for a "one-time" conversion from the 2012 data.gc.ca
@@ -23,6 +24,7 @@ PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
+PROPOSED_VOCABULARY_SHEET = 'Controlled Vocabulary'
 PROPOSED_SCHEMA_STARTS_ROW = 7
 LANGS = 'eng', 'fra'
 
@@ -101,9 +103,6 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
-    controlled_vocabulary_reference_eng
-    controlled_vocabulary_reference_fra
-    blank
     name_space
     implementation
     implementation_fra
@@ -234,12 +233,38 @@ def proposed_name_to_identifier(name):
     words = (g for alpha, g in groupby(name, lambda c: c.isalpha()) if alpha)
     return "_".join("".join(g).lower() for g in words)
 
-def read_proposed_fields():
+def camel_to_label(ccname):
     """
-    Return a dict containing:
-    {'new field name': ProposedField(...), ...}
+    Convert a camelcase name with irregularities from our proposed xml file
+    to a field label with spaces
+
+    >>> camel_to_label(u'relatedDocumentsURL')
+    u'Related Documents URL'
+    >>> camel_to_label(u'URLdocumentsConnexes')
+    u'URL Documents Connexes'
+    >>> camel_to_label(u'URIJeuDonnées')
+    u'URI Jue Données'
+    """
+    special = (u'URL', u'URI')
+    for s in special:
+        if s in ccname:
+            return (u' '+s+u' ').join(
+                camel_to_label(w) for w in ccname.split(s)).strip()
+    out = list(ccname[:1])
+    for a, b in zip(ccname, ccname[1:]):
+        if a.islower() and b.isupper():
+            out.append(u' ')
+        out.append(b)
+    return u''.join(out).title()
+
+def read_proposed_fields_vocab():
+    """
+    Return (proposed field dict, vocabulary dict)
     """
     workbook = xlrd.open_workbook(PROPOSED_SCHEMA_NAME)
+    vocab = vocabularies.read_from_sheet(
+        workbook.sheet_by_name(PROPOSED_VOCABULARY_SHEET))
+
     sheet = workbook.sheet_by_name(PROPOSED_SCHEMA_SHEET)
     out = {}
     for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
@@ -255,7 +280,8 @@ def read_proposed_fields():
                 new_name) # language is duplicated
         assert new_name not in out, (new_name, out.keys())
         out[new_name] = p
-    return out
+    return out, {PROPOSED_TO_EXISTING_FIELDS.get(k, k): v
+        for k,v in vocab.iteritems()}
 
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
@@ -268,25 +294,17 @@ def field_from_proposed(p):
         'example': p.example,
         'nap_iso_19115_ref': p.nap_iso_19115_ref,
         'domain_best_practice': {'eng': p.domain_best_practice},
-        'controlled_vocabulary_reference': {
-            'eng': p.controlled_vocabulary_reference_eng,
-            'fra': p.controlled_vocabulary_reference_fra,
-            },
         'implementation': {'eng': p.implementation, 'fra': p.implementation_fra},
         'data_gov_common_core': p.data_gov_common_core,
         'rdfa_lite': p.rdfa_lite,
         'name_space': p.name_space,
+        'label': {
+            'eng': camel_to_label(p.property_name),
+            'fra': camel_to_label(p.property_name_fra),
+            },
         }
 
-def camelcase_to_proper_name(name):
-    """
-    >>> camelcase_to_proper_name(u"imageryBaseMapsEarthCover")
-    u"Imagery Base Maps Earth Cover"
-    """
-    # NOTE: this doesn't work if the uppercase letter is non-ascii
-    return re.sub(r'([A-Z])', r' \1', name).title()
-
-def apply_field_customizations(schema_out):
+def apply_field_customizations(schema_out, vocab):
     """
     Make customizations to fields not extracted from proposed
     or pilot information
@@ -305,26 +323,32 @@ def apply_field_customizations(schema_out):
 
     subject = get_field('subject')
     subject['type'] = 'keywords'
-    for k, eng in sorted(vocabularies.GC_CORE_SUBJECT_THESAURUS['eng'].items()):
-
-        if k not in vocabularies.GC_CORE_SUBJECT_THESAURUS['fra']:
-            continue # no "form descriptors" in french
-
-        (target,) = (c for c in subject['choices'] if c['eng'] == eng)
-        target['id'] = k
 
     topic_category = get_field('topic_category')
     topic_category['type'] = 'keywords'
-    topic_category['choices'] = [{
-            'id': eng[:3],
-            'eng': camelcase_to_proper_name(eng),
-            'fra': camelcase_to_proper_name(fra),
-            }
-            for eng, fra in zip(
-                vocabularies.ISO_TOPIC_CATEGORIES['eng'],
-                vocabularies.ISO_TOPIC_CATEGORIES['fra'],
-            )
-        ]
+
+    def merge(c1, c2):
+        out = []
+        ekeys = {}
+        for d in c1:
+            od = dict(d)
+            out.append(od)
+            ekeys[od['eng']] = od
+        for d in c2:
+            target = ekeys.get(d['eng'])
+            if target:
+                target.update(d)
+            else:
+                out.append(d)
+        return out
+
+    for field, choices in vocab.iteritems():
+        if field == 'language':
+            continue
+        f = get_field(field)
+        if 'choices' in f:
+            choices = merge(f['choices'], choices)
+        f['choices'] = choices
 
 
 
@@ -335,7 +359,7 @@ def main():
         'languages': list(LANGS),
         }
 
-    proposed = read_proposed_fields()
+    proposed, vocab = read_proposed_fields_vocab()
 
     with open(OLD_SCHEMA_NAME) as s:
         old_root = lxml.etree.parse(s)
@@ -360,15 +384,15 @@ def main():
                 xp = '//item[inputname="%s"]' % f
                 new_field.update({
                     'pilot_id': f,
-                    'name': lang_versions(old_root, xp + '/name'),
-                    'help': lang_versions(old_root, xp + '/helpcontext'),
-                    'type': "".join(old_root.xpath(xp +
+                    'pilot_name': lang_versions(old_root, xp + '/name'),
+                    'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
+                    'pilot_type': "".join(old_root.xpath(xp +
                         '/type1/inputtype[1]/text()')),
                     })
-                if not new_field['type']:
+                if not new_field['pilot_type']:
                     # this seems to indicate a selection from a list
                     new_field['choices'] = pilot_choices(f)
-                    new_field['type'] = 'choice'
+                    new_field['pilot_type'] = 'choice'
 
             old_id_fra = BILINGUAL_FIELDS.get(field, None)
             if old_id_fra:
@@ -391,7 +415,7 @@ def main():
         new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
-    apply_field_customizations(schema_out)
+    apply_field_customizations(schema_out, vocab)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 

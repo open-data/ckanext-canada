@@ -3,16 +3,13 @@
 
 {% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
   {% set kwargs = {
-    'label': id,
-    'placeholder': field.example,
+    'label': field.label[client_lang],
+    'placeholder': field.example if lang != 'fra' else '', # FIXME
     'value': data[id],
     'error': errors[id],
     'id': 'field-' + id,
     'classes': ['control-medium'],
     } %}
-  {% if field.data_gov_common_core %}
-    {% do kwargs.update({'label': field.data_gov_common_core}) %}
-  {% endif %}
 
   {% if lang %}
     {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
@@ -31,6 +28,16 @@
     {{ form.prepend(id, **kwargs) }}
   {% elif id in ('notes', 'notes_fra') %}
     {{ form.markdown(id, **kwargs) }}
+  {% elif field.choices %}
+    {% do kwargs.update({'options':[], 'selected':data[id]}) %}
+    {# kwargs form.select doesn't support #}
+    {% do kwargs.pop('value') %}
+    {% do kwargs.pop('placeholder') %}
+    {% for c in field.choices %}
+      {% do kwargs.options.append({
+        'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+    {% endfor %}
+    {{ form.select(id, **kwargs) }}
   {% elif id in ('subject', 'topic_category', 'tags') %}
     {% do kwargs.update({
       'value': data[id + '_string'],
