@@ -24,6 +24,7 @@ PILOT = os.path.join(HERE, 'pilot')
 OLD_SCHEMA_NAME = os.path.join(PILOT, 'metadata_schema.xml')
 PROPOSED_SCHEMA_NAME = os.path.join(HERE, 'proposed', 'proposed_schema.xls')
 PROPOSED_SCHEMA_SHEET = 'Metadata Schema'
+PROPOSED_VOCABULARY_SHEET = 'Controlled Vocabulary'
 PROPOSED_SCHEMA_STARTS_ROW = 7
 LANGS = 'eng', 'fra'
 
@@ -256,12 +257,14 @@ def camel_to_label(ccname):
         out.append(b)
     return u''.join(out).title()
 
-def read_proposed_fields():
+def read_proposed_fields_vocab():
     """
-    Return a dict containing:
-    {'new field name': ProposedField(...), ...}
+    Return (proposed field dict, vocabulary dict)
     """
     workbook = xlrd.open_workbook(PROPOSED_SCHEMA_NAME)
+    vocab = vocabularies.read_from_sheet(
+        workbook.sheet_by_name(PROPOSED_VOCABULARY_SHEET))
+
     sheet = workbook.sheet_by_name(PROPOSED_SCHEMA_SHEET)
     out = {}
     for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
@@ -277,7 +280,8 @@ def read_proposed_fields():
                 new_name) # language is duplicated
         assert new_name not in out, (new_name, out.keys())
         out[new_name] = p
-    return out
+    return out, {PROPOSED_TO_EXISTING_FIELDS.get(k, k): v
+        for k,v in vocab.iteritems()}
 
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
@@ -300,7 +304,7 @@ def field_from_proposed(p):
             },
         }
 
-def apply_field_customizations(schema_out):
+def apply_field_customizations(schema_out, vocab):
     """
     Make customizations to fields not extracted from proposed
     or pilot information
@@ -340,6 +344,29 @@ def apply_field_customizations(schema_out):
             )
         ]
 
+    def merge(c1, c2):
+        out = []
+        ekeys = {}
+        for d in c1:
+            od = dict(d)
+            out.append(od)
+            ekeys[od['eng']] = od
+        for d in c2:
+            target = ekeys.get(d['eng'])
+            if target:
+                target.update(d)
+            else:
+                out.append(d)
+        return out
+
+    for field, choices in vocab.iteritems():
+        if field == 'language':
+            continue
+        f = get_field(field)
+        if 'choices' in f:
+            choices = merge(f['choices'], choices)
+        f['choices'] = choices
+
 
 
 def main():
@@ -349,7 +376,7 @@ def main():
         'languages': list(LANGS),
         }
 
-    proposed = read_proposed_fields()
+    proposed, vocab = read_proposed_fields_vocab()
 
     with open(OLD_SCHEMA_NAME) as s:
         old_root = lxml.etree.parse(s)
@@ -405,7 +432,7 @@ def main():
         new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
-    apply_field_customizations(schema_out)
+    apply_field_customizations(schema_out, vocab)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
