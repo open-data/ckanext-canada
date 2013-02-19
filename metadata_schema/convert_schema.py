@@ -333,16 +333,6 @@ def apply_field_customizations(schema_out, vocab):
 
     topic_category = get_field('topic_category')
     topic_category['type'] = 'keywords'
-    topic_category['choices'] = [{
-            'id': eng[:3],
-            'eng': camel_to_label(eng),
-            'fra': camel_to_label(fra),
-            }
-            for eng, fra in zip(
-                vocabularies.ISO_TOPIC_CATEGORIES['eng'],
-                vocabularies.ISO_TOPIC_CATEGORIES['fra'],
-            )
-        ]
 
     def merge(c1, c2):
         out = []
