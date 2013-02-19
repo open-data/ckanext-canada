@@ -4,7 +4,7 @@
 {% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
   {% set kwargs = {
     'label': field.label[client_lang],
-    'placeholder': field.example if lang != 'fra' else '', # FIXME
+    'placeholder': field.example if lang != 'fra' else '', 
     'value': data[id],
     'error': errors[id],
     'id': 'field-' + id,
