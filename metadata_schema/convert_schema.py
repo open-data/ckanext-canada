@@ -323,13 +323,6 @@ def apply_field_customizations(schema_out, vocab):
 
     subject = get_field('subject')
     subject['type'] = 'keywords'
-    for k, eng in sorted(vocabularies.GC_CORE_SUBJECT_THESAURUS['eng'].items()):
-
-        if k not in vocabularies.GC_CORE_SUBJECT_THESAURUS['fra']:
-            continue # no "form descriptors" in french
-
-        (target,) = (c for c in subject['choices'] if c['eng'] == eng)
-        target['id'] = k
 
     topic_category = get_field('topic_category')
     topic_category['type'] = 'keywords'
