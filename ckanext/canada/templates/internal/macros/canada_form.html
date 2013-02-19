@@ -4,7 +4,7 @@
 {% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
   {% set kwargs = {
     'label': field.label[client_lang],
-    'placeholder': field.example if lang != 'fra' else '', # FIXME
+    'placeholder': field.example if lang != 'fra' else '', 
     'value': data[id],
     'error': errors[id],
     'id': 'field-' + id,
@@ -15,9 +15,10 @@
     {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
   {% endif %}
 
+  {% set widget = form.input %}
   {% if id in ('id', 'language', 'license_id', 'author_email', 'author',
                'department_number') %}
-    {# None of these fields are required for data entry #}
+    {% set widget = none %}
   {% elif id == 'name' %}
     {% do kwargs.update({
       'prepend': '/data/dataset/',
@@ -25,9 +26,9 @@
                 'data-module-prefix': 'data.gc.ca/data/dataset/',
                 'data-module-placeholder': '<dataset>',}, 
       }) %}
-    {{ form.prepend(id, **kwargs) }}
+    {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
-    {{ form.markdown(id, **kwargs) }}
+    {% set widget = form.markdown %}
   {% elif field.choices %}
     {% do kwargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
@@ -35,9 +36,10 @@
     {% do kwargs.pop('placeholder') %}
     {% for c in field.choices %}
       {% do kwargs.options.append({
+        'text': c[client_lang],
         'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
     {% endfor %}
-    {{ form.select(id, **kwargs) }}
+    {% set widget = form.select %}
   {% elif id in ('subject', 'topic_category', 'tags') %}
     {% do kwargs.update({
       'value': data[id + '_string'],
@@ -46,8 +48,15 @@
                 'data-module-tags': '',
                 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
       }) %}
-    {{ form.input(id, **kwargs) }}
-  {% else %}
-    {{ form.input(id, **kwargs) }}
+  {% endif %}
+
+  {% if widget %}
+    {% call widget(id, **kwargs) %}
+      {% if lang != 'eng' and field.description %}
+        <span class="info-block icon-large icon-info-sign">
+          {{ field.description[client_lang] }}
+        </span>
+      {% endif %}
+    {% endcall %}
   {% endif %}
 {% endmacro %}
