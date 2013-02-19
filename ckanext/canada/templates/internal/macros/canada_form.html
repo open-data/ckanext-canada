@@ -35,6 +35,7 @@
     {% do kwargs.pop('placeholder') %}
     {% for c in field.choices %}
       {% do kwargs.options.append({
+        'text': c[client_lang],
         'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
     {% endfor %}
     {{ form.select(id, **kwargs) }}
