@@ -300,14 +300,6 @@ def field_from_proposed(p):
             },
         }
 
-def camelcase_to_proper_name(name):
-    """
-    >>> camelcase_to_proper_name(u"imageryBaseMapsEarthCover")
-    u"Imagery Base Maps Earth Cover"
-    """
-    # NOTE: this doesn't work if the uppercase letter is non-ascii
-    return re.sub(r'([A-Z])', r' \1', name).title()
-
 def apply_field_customizations(schema_out):
     """
     Make customizations to fields not extracted from proposed
@@ -339,8 +331,8 @@ def apply_field_customizations(schema_out):
     topic_category['type'] = 'keywords'
     topic_category['choices'] = [{
             'id': eng[:3],
-            'eng': camelcase_to_proper_name(eng),
-            'fra': camelcase_to_proper_name(fra),
+            'eng': camel_to_label(eng),
+            'fra': camel_to_label(fra),
             }
             for eng, fra in zip(
                 vocabularies.ISO_TOPIC_CATEGORIES['eng'],
