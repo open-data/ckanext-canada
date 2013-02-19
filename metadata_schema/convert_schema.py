@@ -102,9 +102,6 @@ ProposedField = namedtuple("ProposedField", """
     example
     nap_iso_19115_ref
     domain_best_practice
-    controlled_vocabulary_reference_eng
-    controlled_vocabulary_reference_fra
-    blank
     name_space
     implementation
     implementation_fra
@@ -293,10 +290,6 @@ def field_from_proposed(p):
         'example': p.example,
         'nap_iso_19115_ref': p.nap_iso_19115_ref,
         'domain_best_practice': {'eng': p.domain_best_practice},
-        'controlled_vocabulary_reference': {
-            'eng': p.controlled_vocabulary_reference_eng,
-            'fra': p.controlled_vocabulary_reference_fra,
-            },
         'implementation': {'eng': p.implementation, 'fra': p.implementation_fra},
         'data_gov_common_core': p.data_gov_common_core,
         'rdfa_lite': p.rdfa_lite,

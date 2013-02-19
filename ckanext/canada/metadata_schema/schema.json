@@ -5,10 +5,6 @@
       "fields": [
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Unique identifier for this metadata file."
@@ -57,10 +53,6 @@
               "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
             }
           ], 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "The language of the metadata, composed of an ISO639-2/T three letter language code and an ISO3166-1 three letter country code."
@@ -889,10 +881,6 @@
               "pilot_uuid": "AC76B01B-0569-4067-A427-D1F6183A8746"
             }
           ], 
-          "controlled_vocabulary_reference": {
-            "eng": "The Registry of Applied Terms : http://www.tbs-sct.gc.ca/fip-pcim/reg-eng.asp", 
-            "fra": "Registre des titres d'usage : \nhttp://www.tbs-sct.gc.ca/fip-pcim/reg-fra.asp"
-          }, 
           "data_gov_common_core": "Publisher", 
           "description": {
             "eng": "The organization directly responsible for metadata maintenance."
@@ -934,10 +922,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Unique number assigned to each department"
@@ -969,10 +953,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Contact Email", 
           "description": {
             "eng": "The electronic mailbox address of the responsible organization or individual (each department will be required to create an open data email)"
@@ -1004,10 +984,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Title", 
           "description": {
             "eng": "The full, official name by which the cited resource is known."
@@ -1050,10 +1026,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Unique Identifier", 
           "description": {
             "eng": "Uniform Resource Identifier for the resource"
@@ -1085,10 +1057,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Description", 
           "description": {
             "eng": "An account of the content of an information resource: a brief overview of the content, methodology and findings of the dataset."
@@ -1131,10 +1099,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "DOI assigned to file"
@@ -1166,10 +1130,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "The type of metadata schema used to describe the resource"
@@ -1311,10 +1271,6 @@
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
             }
           ], 
-          "controlled_vocabulary_reference": {
-            "eng": "http://www.thesaurus.gc.ca/recherche-search/mtwdk.exe?k=these&l=60&s=scat&w=90", 
-            "fra": "http://www.thesaurus.gc.ca/recherche-search/thes-fra.html"
-          }, 
           "data_gov_common_core": "Category", 
           "description": {
             "eng": "Main subject of the dataset. Select the most appropriate category from the list provided."
@@ -1454,10 +1410,6 @@
               "id": "uti"
             }
           ], 
-          "controlled_vocabulary_reference": {
-            "eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
-            "fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html"
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Main theme(s) of the dataset. Select the most appropriate category from the list provided. Must be selected from napMD_TopicCategoryCode."
@@ -1490,10 +1442,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Tags", 
           "description": {
             "eng": "Commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource."
@@ -1536,10 +1484,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "License", 
           "description": {
             "eng": "The limitations or constraints on the use of or access to the resource."
@@ -1571,10 +1515,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Name of the publication series or aggregate dataset of which the referenced dataset is a part."
@@ -1617,10 +1557,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Identification of the series\u2019 issue information."
@@ -1660,10 +1596,6 @@
       "fields": [
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
-            "fra": "http://nap.geogratis.gc.ca/metadata/register/codelists-fra.html"
-          }, 
           "data_gov_common_core": "Frequency", 
           "description": {
             "eng": "Frequency with which changes and additions are made to the resource after the initial resource is completed. Must be selected from napMD_MaintenanceFrequencyCode."
@@ -1705,10 +1637,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Temporal", 
           "description": {
             "eng": "The time period related to the dataset content."
@@ -2172,10 +2100,6 @@
               "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
             }
           ], 
-          "controlled_vocabulary_reference": {
-            "eng": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-eng.htm", 
-            "fra": "http://www.statcan.gc.ca/subjects-sujets/standard-norme/sgc-cgt/2011/map-carte-index-fra.htm"
-          }, 
           "data_gov_common_core": "Spatial", 
           "description": {
             "eng": "The spatial region of the resource"
@@ -2217,10 +2141,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Documentation URL", 
           "description": {
             "eng": "URL to documentation for the dataset or API. At a minimum, this should include a data dictionary and / or documentation on the API."
@@ -2263,10 +2183,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Related Documents", 
           "description": {
             "eng": "Related documents such as developer documentation"
@@ -2298,10 +2214,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Homepage URL", 
           "description": {
             "eng": "The URL for the Government of Canada program that is responsible for the dataset."
@@ -2344,10 +2256,6 @@
         }, 
         {
           "bilingual": true, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Access Point", 
           "description": {
             "eng": "Endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory"
@@ -2379,10 +2287,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "Release Data", 
           "description": {
             "eng": "The date in which the event or action occurred"
@@ -2395,7 +2299,7 @@
           "gc_multiplicity": "M", 
           "id": "date_published", 
           "implementation": {
-            "eng": "new RESOURCE field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
+            "eng": "new dataset field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
             "fra": ""
           }, 
           "iso_multiplicity": "M, Repeat.", 
@@ -2422,10 +2326,6 @@
       "fields": [
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Object(s) used to represent the\ngeographic information. Select spatialRepresentationType from\nnapMD_SpatialRepresentationTypeCode."
@@ -2457,10 +2357,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "http://nap.geogratis.gc.ca/metadata/register/codelists-eng.html", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "The form in which the resource is available. Select presentation form from napC I_PresentationFormCode."
@@ -2492,13 +2388,9 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
-            "eng": "This field combines coordinates of the geographic bounding box in one fieldWestern most coordinate of the dataset extent."
+            "eng": "This field combines coordinates of the geographic bounding box in one field"
           }, 
           "domain_best_practice": {
             "eng": "Default to Canada's coordinates (West bound domain is [-180, 180])"
@@ -2527,10 +2419,6 @@
         }, 
         {
           "bilingual": false, 
-          "controlled_vocabulary_reference": {
-            "eng": "", 
-            "fra": ""
-          }, 
           "data_gov_common_core": "", 
           "description": {
             "eng": "Name of the graphic file provided to illustrate the\nresource."
@@ -2577,10 +2465,6 @@
   "resource_fields": [
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
       "data_gov_common_core": "Download URL", 
       "description": {
         "eng": "Electronic location where the resource can be found. If the dataset is available online on either the Internet or Intranet, the web address should be entered here."
@@ -2617,10 +2501,6 @@
     }, 
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
       "data_gov_common_core": "Size", 
       "description": {
         "eng": "Estimated size of the transfer unit in the specified format"
@@ -2652,10 +2532,6 @@
     }, 
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
       "data_gov_common_core": "Format", 
       "description": {
         "eng": "Name of the data transfer format."
@@ -2687,10 +2563,6 @@
     }, 
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
       "data_gov_common_core": "", 
       "description": {
         "eng": "Language of the dataset"
@@ -2722,10 +2594,6 @@
     }, 
     {
       "bilingual": false, 
-      "controlled_vocabulary_reference": {
-        "eng": "", 
-        "fra": ""
-      }, 
       "data_gov_common_core": "Last Update", 
       "description": {
         "eng": "The date in which the resource was modified."
