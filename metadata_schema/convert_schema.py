@@ -343,10 +343,13 @@ def apply_field_customizations(schema_out, vocab):
         return out
 
     for field, choices in vocab.iteritems():
+        f = get_field(field)
         if field == 'language':
             continue
-        f = get_field(field)
-        if 'choices' in f:
+        elif field == 'geographic_region':
+            # prefer proposed.xls ordering
+            choices = merge(choices, f['choices'])
+        elif 'choices' in f:
             choices = merge(f['choices'], choices)
         f['choices'] = choices
 
