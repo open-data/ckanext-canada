@@ -10,7 +10,9 @@
   <!-- Pass schema_description to package_metadata_fields.html.
   FIXME: If CKAN would pass c to package_metadata_fields.html anyway, we
   wouldn't need to override this template here. -->
-  {% snippet 'package/snippets/package_metadata_fields.html', data=data, errors=errors, groups_available=groups_available, schema_description=schema_description %}
+  {% snippet 'package/snippets/package_metadata_fields.html', data=data,
+    errors=errors, groups_available=groups_available,
+    schema_description=schema_description, language=language %}
 
   <div class="form-actions">
     {# TODO: Go back to previous resource form #}
