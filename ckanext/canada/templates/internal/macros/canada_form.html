@@ -2,6 +2,8 @@
 {% import 'macros/form.html' as form %}
 
 {% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
+  {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
+
   {% set kwargs = {
     'label': field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
@@ -29,18 +31,7 @@
     {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif field.choices %}
-    {% do kwargs.update({'options':[], 'selected':data[id]}) %}
-    {# kwargs form.select doesn't support #}
-    {% do kwargs.pop('value') %}
-    {% do kwargs.pop('placeholder') %}
-    {% for c in field.choices %}
-      {% do kwargs.options.append({
-        'text': c[client_lang],
-        'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
-    {% endfor %}
-    {% set widget = form.select %}
-  {% elif id in ('subject', 'topic_category', 'tags') %}
+  {% elif id == 'tags' %} {# or field.vocabulary %}#}
     {% do kwargs.update({
       'value': data[id + '_string'],
       'classes': ['control-full'],
@@ -48,6 +39,31 @@
                 'data-module-tags': '',
                 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
       }) %}
+  {% elif field.choices %}
+    {% do kwargs.update({'options':[], 'selected':data[id]}) %}
+    {# kwargs form.select doesn't support #}
+    {% do kwargs.pop('value') %}
+    {% do kwargs.pop('placeholder') %}
+    {% for c in field.choices %}
+      {% set indent = '' %}
+      {% set skip = false %}
+      {# Try to make geographic region selection nicer-looking #}
+      {% if id == 'geographic_region' %}
+        {% if not c.id %}
+          {% set skip = true %}
+        {% elif c.id > 99 %}
+          {% set indent = ': : ' %}
+        {% elif c.id > 9 %}
+          {% set indent = ': ' %}
+        {% endif %}
+      {% endif %}
+      {% if not skip %}
+        {% do kwargs.options.append({
+          'text': indent + c[client_lang],
+          'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+      {% endif %}
+    {% endfor %}
+    {% set widget = form.select %}
   {% endif %}
 
   {% if widget %}

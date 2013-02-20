@@ -41,8 +41,7 @@ class TestSchemaDescription(unittest.TestCase):
             f for f in self.sd.dataset_fields if 'choices' in f]
         self.assertTrue(len(fields_with_choices) > 2)
         for f in fields_with_choices:
-            a_choice = f['choices'][0]
             if not f['choices_by_pilot_uuid']:
                 continue
-            self.assertTrue(
-                f['choices_by_pilot_uuid'][a_choice['pilot_uuid']] == a_choice)
+            uuid, a_choice = f['choices_by_pilot_uuid'].items()[0]
+            self.assertTrue(a_choice['pilot_uuid'] == uuid)

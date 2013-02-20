@@ -6,9 +6,10 @@ need to override this block here. -->
 {% block basic_fields %}
 {% snippet 'package/snippets/package_basic_fields.html', data=data,
     errors=errors, licences=c.licences, groups_available=c.groups_available,
-    schema_description=c.schema_description %}
+    schema_description=c.schema_description, language=c.language %}
 {% endblock %}
 {% block metadata_fields %}
   {% snippet 'package/snippets/package_metadata_fields.html', data=data,
-    errors=errors, schema_description=c.schema_description %}
+    errors=errors, schema_description=c.schema_description,
+    language=c.language %}
 {% endblock %}
