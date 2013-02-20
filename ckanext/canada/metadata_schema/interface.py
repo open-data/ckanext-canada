@@ -42,8 +42,10 @@ class MetadataSchema(object):
 
         self.dataset_field_by_id = {f['id']: f for f in self.dataset_fields}
 
-        self.vocabularies = {k:self.dataset_field_by_id[v]['choices']
-            for k, v in schema['vocabularies'].iteritems()}
+        self.vocabularies = {}
+        for k, v in schema['vocabularies'].iteritems():
+            self.vocabularies[k] = self.dataset_field_by_id[v]['choices']
+            self.dataset_field_by_id[v]['vocabulary'] = k
 
         for f in self.dataset_fields:
             if 'choices' not in f:
