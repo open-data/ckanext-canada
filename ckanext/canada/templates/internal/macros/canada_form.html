@@ -37,9 +37,23 @@
     {% do kwargs.pop('value') %}
     {% do kwargs.pop('placeholder') %}
     {% for c in field.choices %}
-      {% do kwargs.options.append({
-        'text': c[client_lang],
-        'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+      {% set indent = '' %}
+      {% set skip = false %}
+      {# Try to make geographic region selection nicer-looking #}
+      {% if id == 'geographic_region' %}
+        {% if not c.id %}
+          {% set skip = true %}
+        {% elif c.id > 99 %}
+          {% set indent = ': : ' %}
+        {% elif c.id > 9 %}
+          {% set indent = ': ' %}
+        {% endif %}
+      {% endif %}
+      {% if not skip %}
+        {% do kwargs.options.append({
+          'text': indent + c[client_lang],
+          'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+      {% endif %}
     {% endfor %}
     {% set widget = form.select %}
   {% elif id in ('subject', 'topic_category', 'tags') %}
