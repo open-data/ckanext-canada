@@ -2003,451 +2003,15 @@
           "bilingual": false, 
           "choices": [
             {
-              "eng": "Canada", 
-              "fra": "Canada", 
-              "pilot_uuid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B"
+              "eng": "Atlantic", 
+              "fra": "Atlantique", 
+              "id": 1
             }, 
             {
               "eng": "Newfoundland and Labrador", 
               "fra": "Terre-Neuve-et-Labrador", 
               "id": 10, 
               "pilot_uuid": "E65D06CB-F120-43E6-B037-83F699C84BAE"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, Avalon Peninsula", 
-              "fra": "Terre-Neuve-et-Labrador, Avalon Peninsula", 
-              "pilot_uuid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
-              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
-              "pilot_uuid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
-              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
-              "pilot_uuid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
-              "fra": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
-              "pilot_uuid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC"
-            }, 
-            {
-              "eng": "Prince Edward Island", 
-              "fra": "\u00cele-du-Prince-\u00c9douard", 
-              "id": 11, 
-              "pilot_uuid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255"
-            }, 
-            {
-              "eng": "Nova Scotia", 
-              "fra": "Nouvelle-\u00c9cosse", 
-              "id": 12, 
-              "pilot_uuid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E"
-            }, 
-            {
-              "eng": "Nova Scotia, Cape Breton", 
-              "fra": "Nouvelle-\u00c9cosse, Cape Breton", 
-              "pilot_uuid": "52806552-D51A-41BD-A320-AE5DE26D253D"
-            }, 
-            {
-              "eng": "Nova Scotia, North Shore", 
-              "fra": "Nouvelle-\u00c9cosse, C\u00f4te-nord", 
-              "pilot_uuid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF"
-            }, 
-            {
-              "eng": "Nova Scotia, Annapolis Valley", 
-              "fra": "Nouvelle-\u00c9cosse, Annapolis Valley", 
-              "pilot_uuid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7"
-            }, 
-            {
-              "eng": "Nova Scotia, Southern", 
-              "fra": "Nouvelle-\u00c9cosse, Sud", 
-              "pilot_uuid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13"
-            }, 
-            {
-              "eng": "Nova Scotia, Halifax", 
-              "fra": "Nouvelle-\u00c9cosse, Halifax", 
-              "pilot_uuid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56"
-            }, 
-            {
-              "eng": "New Brunswick", 
-              "fra": "Nouveau-Brunswick", 
-              "id": 13, 
-              "pilot_uuid": "93195680-D726-4FCE-BF92-D95F1F796B3B"
-            }, 
-            {
-              "eng": "New Brunswick, Campbellton - Miramichi", 
-              "fra": "Nouveau-Brunswick, Campbellton - Miramichi", 
-              "pilot_uuid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11"
-            }, 
-            {
-              "eng": "New Brunswick, Moncton - Richibucto", 
-              "fra": "Nouveau-Brunswick, Moncton - Richibucto", 
-              "pilot_uuid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C"
-            }, 
-            {
-              "eng": "New Brunswick, Saint John - St. Stephen", 
-              "fra": "Nouveau-Brunswick, Saint John - St. Stephen", 
-              "pilot_uuid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070"
-            }, 
-            {
-              "eng": "New Brunswick, Fredericton - Oromocto", 
-              "fra": "Nouveau-Brunswick, Fredericton - Oromocto", 
-              "pilot_uuid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4"
-            }, 
-            {
-              "eng": "New Brunswick, Edmundston - Woodstock", 
-              "fra": "Nouveau-Brunswick, Edmundston - Woodstock", 
-              "pilot_uuid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC"
-            }, 
-            {
-              "eng": "Quebec", 
-              "fra": "Quebec", 
-              "id": 24, 
-              "pilot_uuid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E"
-            }, 
-            {
-              "eng": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
-              "fra": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
-              "pilot_uuid": "A875ADFB-7A71-4472-8BCF-DB1739F10521"
-            }, 
-            {
-              "eng": "Quebec, Bas-Saint-Laurent", 
-              "fra": "Qu\u00e9bec, Bas-Saint-Laurent", 
-              "pilot_uuid": "7781A775-A703-47B6-B166-CE473AB24D14"
-            }, 
-            {
-              "eng": "Quebec, Capitale-Nationale", 
-              "fra": "Qu\u00e9bec, Capitale-Nationale", 
-              "pilot_uuid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134"
-            }, 
-            {
-              "eng": "Quebec, Chaudi\u00e8re - Appalaches", 
-              "fra": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
-              "pilot_uuid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56"
-            }, 
-            {
-              "eng": "Quebec, Estrie", 
-              "fra": "Qu\u00e9bec, Estrie", 
-              "pilot_uuid": "A2948848-C501-4982-847E-D539A4EAAA9F"
-            }, 
-            {
-              "eng": "Quebec, Centre-du-Qu\u00e9bec", 
-              "fra": "Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
-              "pilot_uuid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269"
-            }, 
-            {
-              "eng": "Quebec, Mont\u00e9r\u00e9gie", 
-              "fra": "Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
-              "pilot_uuid": "FB14D3C7-1D22-4D91-A465-642D216EEE48"
-            }, 
-            {
-              "eng": "Quebec, Montr\u00e9al", 
-              "fra": "Qu\u00e9bec, Montr\u00e9al", 
-              "pilot_uuid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645"
-            }, 
-            {
-              "eng": "Quebec, Laval", 
-              "fra": "Qu\u00e9bec, Laval", 
-              "pilot_uuid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF"
-            }, 
-            {
-              "eng": "Quebec, Lanaudi\u00e8re", 
-              "fra": "Qu\u00e9bec, Lanaudi\u00e8re", 
-              "pilot_uuid": "9D01047A-B571-4CC4-A295-CACED5C21136"
-            }, 
-            {
-              "eng": "Quebec, Laurentides", 
-              "fra": "Qu\u00e9bec, Laurentides", 
-              "pilot_uuid": "79F2CB43-8948-40F0-BF66-399E2073B27F"
-            }, 
-            {
-              "eng": "Quebec, Outaouais", 
-              "fra": "Qu\u00e9bec, Outaouais", 
-              "pilot_uuid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1"
-            }, 
-            {
-              "eng": "Quebec, Abitibi - T\u00e9miscamingue", 
-              "fra": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
-              "pilot_uuid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06"
-            }, 
-            {
-              "eng": "Quebec, Mauricie", 
-              "fra": "Qu\u00e9bec, Mauricie", 
-              "pilot_uuid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011"
-            }, 
-            {
-              "eng": "Quebec, Saguenay - Lac-Saint-Jean", 
-              "fra": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
-              "pilot_uuid": "645070BF-16DD-4D87-88FE-94ECF86F41EB"
-            }, 
-            {
-              "eng": "Quebec, C\u00f4te-Nord", 
-              "fra": "Qu\u00e9bec, C\u00f4te-Nord", 
-              "pilot_uuid": "335CCEE3-4877-474C-B4F9-4C24D5086091"
-            }, 
-            {
-              "eng": "Quebec, Nord-du-Qu\u00e9bec", 
-              "fra": "Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
-              "pilot_uuid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE"
-            }, 
-            {
-              "eng": "Ontario", 
-              "fra": "Ontario", 
-              "id": 35, 
-              "pilot_uuid": "BB22E4CF-19C4-4705-92F0-F2C602307C29"
-            }, 
-            {
-              "eng": "Ontario, Ottawa", 
-              "fra": "Ontario, Ottawa", 
-              "pilot_uuid": "59F96221-A0D1-4668-A769-9DAC7DFC2198"
-            }, 
-            {
-              "eng": "Ontario, Kingston - Pembroke", 
-              "fra": "Ontario, Kingston - Pembroke", 
-              "pilot_uuid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893"
-            }, 
-            {
-              "eng": "Ontario, Muskoka - Kawarthas", 
-              "fra": "Ontario, Muskoka - Kawarthas", 
-              "pilot_uuid": "75176775-E0E6-4938-B03E-40ECFDB399C1"
-            }, 
-            {
-              "eng": "Ontario, Toronto", 
-              "fra": "Ontario, Toronto", 
-              "pilot_uuid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC"
-            }, 
-            {
-              "eng": "Ontario, Kitchener - Waterloo - Barrie", 
-              "fra": "Ontario, Kitchener - Waterloo - Barrie", 
-              "pilot_uuid": "971A8458-0FAD-42A4-99B6-579374BF668B"
-            }, 
-            {
-              "eng": "Ontario, Hamilton - Niagara Peninsula", 
-              "fra": "Ontario, Hamilton - Niagara Peninsula", 
-              "pilot_uuid": "4004DAC2-4AE4-49B9-A4E8-F27940335530"
-            }, 
-            {
-              "eng": "Ontario, London", 
-              "fra": "Ontario, London", 
-              "pilot_uuid": "66CE657A-9A2B-42EB-BB89-592024C852B5"
-            }, 
-            {
-              "eng": "Ontario,Windsor - Sarnia", 
-              "fra": "Ontario, Windsor - Sarnia", 
-              "pilot_uuid": "3FDECF16-64AD-4822-8076-344711C185DB"
-            }, 
-            {
-              "eng": "Ontario, Stratford - Bruce Peninsula", 
-              "fra": "Ontario, Stratford - Bruce Peninsula", 
-              "pilot_uuid": "31F39CA2-4A93-4337-87A7-11EDFA53E511"
-            }, 
-            {
-              "eng": "Ontario, Northeast", 
-              "fra": "Ontario, Nord-est", 
-              "pilot_uuid": "55D9E9C2-56E5-4293-A896-D7008F6F5710"
-            }, 
-            {
-              "eng": "Ontario, Northwest", 
-              "fra": "Ontario, Nord-ouest", 
-              "pilot_uuid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7"
-            }, 
-            {
-              "eng": "Manitoba", 
-              "fra": "Manitoba", 
-              "id": 46, 
-              "pilot_uuid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744"
-            }, 
-            {
-              "eng": "Manitoba, Southeast", 
-              "fra": "Manitoba, Sud-est", 
-              "pilot_uuid": "271DA932-E487-4795-9995-ADB722297359"
-            }, 
-            {
-              "eng": "Manitoba, South Central", 
-              "fra": "Manitoba, Centre sud", 
-              "pilot_uuid": "85E82590-1617-47BA-B69C-22BFAFB2C00A"
-            }, 
-            {
-              "eng": "Manitoba, Southwest", 
-              "fra": "Manitoba, Sud-ouest", 
-              "pilot_uuid": "1637DBB0-E991-411E-8DA3-E5373DE577CE"
-            }, 
-            {
-              "eng": "Manitoba, North Central", 
-              "fra": "Manitoba, Centre nord", 
-              "pilot_uuid": "5374E0A8-103B-4186-81B5-ACCE63EAE455"
-            }, 
-            {
-              "eng": "Manitoba, Winnipeg", 
-              "fra": "Manitoba, Winnipeg", 
-              "pilot_uuid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04"
-            }, 
-            {
-              "eng": "Manitoba, Interlake", 
-              "fra": "Manitoba, Interlake", 
-              "pilot_uuid": "036FB1AA-B86D-43F9-A674-56A78388F8F2"
-            }, 
-            {
-              "eng": "Manitoba, Parklands", 
-              "fra": "Manitoba, Parklands", 
-              "pilot_uuid": "16155173-67AC-4624-90E5-5A2D9079123A"
-            }, 
-            {
-              "eng": "Manitoba, North", 
-              "fra": "Manitoba, Nord", 
-              "pilot_uuid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F"
-            }, 
-            {
-              "eng": "Saskatchewan", 
-              "fra": "Saskatchewan", 
-              "id": 47, 
-              "pilot_uuid": "E521A8DF-6169-4728-990F-25D05C8791C7"
-            }, 
-            {
-              "eng": "Saskatchewan, Regina - Moose Mountain", 
-              "fra": "Saskatchewan, Regina - Moose Mountain", 
-              "pilot_uuid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2"
-            }, 
-            {
-              "eng": "Saskatchewan, Swift Current - Moose Jaw", 
-              "fra": "Saskatchewan, Swift Current - Moose Jaw", 
-              "pilot_uuid": "193259E4-EF93-4691-8572-694914D879C4"
-            }, 
-            {
-              "eng": "Saskatchewan, Saskatoon - Biggar", 
-              "fra": "Saskatchewan, Saskatoon - Biggar", 
-              "pilot_uuid": "AEE97977-91A3-48B3-A085-369B9B381992"
-            }, 
-            {
-              "eng": "Saskatchewan, Yorkton - Melville", 
-              "fra": "Saskatchewan, Yorkton - Melville", 
-              "pilot_uuid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2"
-            }, 
-            {
-              "eng": "Saskatchewan, Prince Albert", 
-              "fra": "Saskatchewan, Prince Alber", 
-              "pilot_uuid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352"
-            }, 
-            {
-              "eng": "Saskatchewan, Northern", 
-              "fra": "Saskatchewan, Nord", 
-              "pilot_uuid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421"
-            }, 
-            {
-              "eng": "Alberta", 
-              "fra": "Alberta", 
-              "id": 48, 
-              "pilot_uuid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907"
-            }, 
-            {
-              "eng": "Alberta, Lethbridge - Medicine Hat", 
-              "fra": "Alberta, Lethbridge - Medicine Hat", 
-              "pilot_uuid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA"
-            }, 
-            {
-              "eng": "Alberta, Camrose - Drumheller", 
-              "fra": "Alberta, Camrose - Drumheller", 
-              "pilot_uuid": "394064E0-D465-4520-B651-CE6D28829CD5"
-            }, 
-            {
-              "eng": "Alberta, Calgary", 
-              "fra": "Alberta, Calgary", 
-              "pilot_uuid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC"
-            }, 
-            {
-              "eng": "Alberta, Banff - Jasper - Rocky Mountain House", 
-              "fra": "Alberta, Banff - Jasper - Rocky Mountain House", 
-              "pilot_uuid": "F60854D7-139C-4945-9C5F-A6D6B3027B60"
-            }, 
-            {
-              "eng": "Alberta, Red Deer", 
-              "fra": "Alberta, Red Deer", 
-              "pilot_uuid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9"
-            }, 
-            {
-              "eng": "Alberta, Edmonton", 
-              "fra": "Alberta, Edmonton", 
-              "pilot_uuid": "60924ED3-E829-45E5-BE8B-2608AF64B241"
-            }, 
-            {
-              "eng": "Alberta, Athabasca - Grande Prairie - Peace River", 
-              "fra": "Alberta, Athabasca - Grande Prairie - Peace River", 
-              "pilot_uuid": "5161B55F-3BF5-46F7-B461-455735F6B9B4"
-            }, 
-            {
-              "eng": "Alberta, Wood Buffalo - Cold Lake", 
-              "fra": "Alberta, Wood Buffalo - Cold Lake", 
-              "pilot_uuid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E"
-            }, 
-            {
-              "eng": "British Columbia", 
-              "fra": "Colombie-Britannique", 
-              "id": 59, 
-              "pilot_uuid": "C066C99E-C228-4969-82CF-5E065E884D18"
-            }, 
-            {
-              "eng": "British Columbia, Vancouver Island and Coast", 
-              "fra": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
-              "pilot_uuid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE"
-            }, 
-            {
-              "eng": "British Columbia, Lower Mainland - Southwest", 
-              "fra": "Colombie-Britannique, Lower Mainland - Sud-ouest", 
-              "pilot_uuid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458"
-            }, 
-            {
-              "eng": "British Columbia, Thompson - Okanagan", 
-              "fra": "Colombie-Britannique, Thompson - Okanagan", 
-              "pilot_uuid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2"
-            }, 
-            {
-              "eng": "British Columbia, Kootenay", 
-              "fra": "Colombie-Britannique, Kootenay", 
-              "pilot_uuid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB"
-            }, 
-            {
-              "eng": "British Columbia, Cariboo", 
-              "fra": "Colombie-Britannique, Cariboo", 
-              "pilot_uuid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6"
-            }, 
-            {
-              "eng": "British Columbia, North Coast", 
-              "fra": "Colombie-Britannique, C\u00f4te-nord", 
-              "pilot_uuid": "94E0DABF-268E-454B-B20E-727A9FF34FAB"
-            }, 
-            {
-              "eng": "British Columbia, Nechako", 
-              "fra": "Colombie-Britannique, Nechako", 
-              "pilot_uuid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C"
-            }, 
-            {
-              "eng": "British Columbia, Northeast", 
-              "fra": "Colombie-Britannique, Nord-est", 
-              "pilot_uuid": "4284F297-5090-447A-A1E3-C339B68F5932"
-            }, 
-            {
-              "eng": "Yukon Territory", 
-              "fra": "Territoire du Yukon", 
-              "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
-            }, 
-            {
-              "eng": "Northwest Territories", 
-              "fra": "Territories du Nord-Ouest", 
-              "id": 61, 
-              "pilot_uuid": "57D53D77-58B1-4431-97ED-9AB61C5C7940"
-            }, 
-            {
-              "eng": "Nunavut", 
-              "fra": "Nunavut", 
-              "id": 62, 
-              "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
-            }, 
-            {
-              "eng": "Atlantic", 
-              "fra": "Atlantique", 
-              "id": 1
             }, 
             {
               "eng": "Division No. 1", 
@@ -2504,6 +2068,12 @@
               "fra": "Division No. 11"
             }, 
             {
+              "eng": "Prince Edward Island", 
+              "fra": "\u00cele-du-Prince-\u00c9douard", 
+              "id": 11, 
+              "pilot_uuid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255"
+            }, 
+            {
               "eng": "Kings", 
               "fra": "Kings", 
               "id": 1101
@@ -2517,6 +2087,12 @@
               "eng": "Prince", 
               "fra": "Prince", 
               "id": 1103
+            }, 
+            {
+              "eng": "Nova Scotia", 
+              "fra": "Nouvelle-\u00c9cosse", 
+              "id": 12, 
+              "pilot_uuid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E"
             }, 
             {
               "eng": "Shelburne", 
@@ -2609,6 +2185,12 @@
               "id": 1218
             }, 
             {
+              "eng": "New Brunswick", 
+              "fra": "Nouveau-Brunswick", 
+              "id": 13, 
+              "pilot_uuid": "93195680-D726-4FCE-BF92-D95F1F796B3B"
+            }, 
+            {
               "eng": "Saint John", 
               "fra": "Saint John", 
               "id": 1301
@@ -2682,6 +2264,17 @@
               "eng": "Gloucester", 
               "fra": "Gloucester", 
               "id": 1315
+            }, 
+            {
+              "eng": "Quebec", 
+              "fra": "Quebec", 
+              "id": 2
+            }, 
+            {
+              "eng": "Quebec", 
+              "fra": "Qu\u00e9bec", 
+              "id": 24, 
+              "pilot_uuid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E"
             }, 
             {
               "eng": "Les \u00celes-de-la-Madeleine", 
@@ -3174,6 +2767,17 @@
               "id": 2499
             }, 
             {
+              "eng": "Ontario", 
+              "fra": "Ontario", 
+              "id": 3
+            }, 
+            {
+              "eng": "Ontario", 
+              "fra": "Ontario", 
+              "id": 35, 
+              "pilot_uuid": "BB22E4CF-19C4-4705-92F0-F2C602307C29"
+            }, 
+            {
               "eng": "Stormont, Dundas and Glengarry", 
               "fra": "Stormont, Dundas and Glengarry", 
               "id": 3501
@@ -3424,6 +3028,12 @@
               "id": 4
             }, 
             {
+              "eng": "Manitoba", 
+              "fra": "Manitoba", 
+              "id": 46, 
+              "pilot_uuid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744"
+            }, 
+            {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
               "id": 4601
@@ -3539,6 +3149,12 @@
               "id": 4623
             }, 
             {
+              "eng": "Saskatchewan", 
+              "fra": "Saskatchewan", 
+              "id": 47, 
+              "pilot_uuid": "E521A8DF-6169-4728-990F-25D05C8791C7"
+            }, 
+            {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
               "id": 4701
@@ -3627,6 +3243,12 @@
               "eng": "Division No. 18", 
               "fra": "Division No. 18", 
               "id": 4718
+            }, 
+            {
+              "eng": "Alberta", 
+              "fra": "Alberta", 
+              "id": 48, 
+              "pilot_uuid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907"
             }, 
             {
               "eng": "Division No. 1", 
@@ -3722,6 +3344,17 @@
               "eng": "Division No. 19", 
               "fra": "Division No. 19", 
               "id": 4819
+            }, 
+            {
+              "eng": "British Columbia", 
+              "fra": "Colombie-Britannique", 
+              "id": 5
+            }, 
+            {
+              "eng": "British Columbia", 
+              "fra": "Colombie-Britannique", 
+              "id": 59, 
+              "pilot_uuid": "C066C99E-C228-4969-82CF-5E065E884D18"
             }, 
             {
               "eng": "East Kootenay", 
@@ -3884,6 +3517,12 @@
               "id": 6001
             }, 
             {
+              "eng": "Northwest Territories", 
+              "fra": "Territoires du Nord-Ouest", 
+              "id": 61, 
+              "pilot_uuid": "57D53D77-58B1-4431-97ED-9AB61C5C7940"
+            }, 
+            {
               "eng": "Region 1", 
               "fra": "Region 1", 
               "id": 6101
@@ -3914,6 +3553,12 @@
               "id": 6106
             }, 
             {
+              "eng": "Nunavut", 
+              "fra": "Nunavut", 
+              "id": 62, 
+              "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
+            }, 
+            {
               "eng": "Baffin", 
               "fra": "Baffin", 
               "id": 6204
@@ -3927,6 +3572,376 @@
               "eng": "Kitikmeot", 
               "fra": "Kitikmeot", 
               "id": 6208
+            }, 
+            {
+              "eng": "Canada", 
+              "fra": "Canada", 
+              "pilot_uuid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, Avalon Peninsula", 
+              "fra": "Terre-Neuve-et-Labrador, Avalon Peninsula", 
+              "pilot_uuid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
+              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
+              "pilot_uuid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
+              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
+              "pilot_uuid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
+              "fra": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
+              "pilot_uuid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC"
+            }, 
+            {
+              "eng": "Nova Scotia, Cape Breton", 
+              "fra": "Nouvelle-\u00c9cosse, Cape Breton", 
+              "pilot_uuid": "52806552-D51A-41BD-A320-AE5DE26D253D"
+            }, 
+            {
+              "eng": "Nova Scotia, North Shore", 
+              "fra": "Nouvelle-\u00c9cosse, C\u00f4te-nord", 
+              "pilot_uuid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF"
+            }, 
+            {
+              "eng": "Nova Scotia, Annapolis Valley", 
+              "fra": "Nouvelle-\u00c9cosse, Annapolis Valley", 
+              "pilot_uuid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7"
+            }, 
+            {
+              "eng": "Nova Scotia, Southern", 
+              "fra": "Nouvelle-\u00c9cosse, Sud", 
+              "pilot_uuid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13"
+            }, 
+            {
+              "eng": "Nova Scotia, Halifax", 
+              "fra": "Nouvelle-\u00c9cosse, Halifax", 
+              "pilot_uuid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56"
+            }, 
+            {
+              "eng": "New Brunswick, Campbellton - Miramichi", 
+              "fra": "Nouveau-Brunswick, Campbellton - Miramichi", 
+              "pilot_uuid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11"
+            }, 
+            {
+              "eng": "New Brunswick, Moncton - Richibucto", 
+              "fra": "Nouveau-Brunswick, Moncton - Richibucto", 
+              "pilot_uuid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C"
+            }, 
+            {
+              "eng": "New Brunswick, Saint John - St. Stephen", 
+              "fra": "Nouveau-Brunswick, Saint John - St. Stephen", 
+              "pilot_uuid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070"
+            }, 
+            {
+              "eng": "New Brunswick, Fredericton - Oromocto", 
+              "fra": "Nouveau-Brunswick, Fredericton - Oromocto", 
+              "pilot_uuid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4"
+            }, 
+            {
+              "eng": "New Brunswick, Edmundston - Woodstock", 
+              "fra": "Nouveau-Brunswick, Edmundston - Woodstock", 
+              "pilot_uuid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC"
+            }, 
+            {
+              "eng": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "fra": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "pilot_uuid": "A875ADFB-7A71-4472-8BCF-DB1739F10521"
+            }, 
+            {
+              "eng": "Quebec, Bas-Saint-Laurent", 
+              "fra": "Qu\u00e9bec, Bas-Saint-Laurent", 
+              "pilot_uuid": "7781A775-A703-47B6-B166-CE473AB24D14"
+            }, 
+            {
+              "eng": "Quebec, Capitale-Nationale", 
+              "fra": "Qu\u00e9bec, Capitale-Nationale", 
+              "pilot_uuid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134"
+            }, 
+            {
+              "eng": "Quebec, Chaudi\u00e8re - Appalaches", 
+              "fra": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
+              "pilot_uuid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56"
+            }, 
+            {
+              "eng": "Quebec, Estrie", 
+              "fra": "Qu\u00e9bec, Estrie", 
+              "pilot_uuid": "A2948848-C501-4982-847E-D539A4EAAA9F"
+            }, 
+            {
+              "eng": "Quebec, Centre-du-Qu\u00e9bec", 
+              "fra": "Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
+              "pilot_uuid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269"
+            }, 
+            {
+              "eng": "Quebec, Mont\u00e9r\u00e9gie", 
+              "fra": "Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
+              "pilot_uuid": "FB14D3C7-1D22-4D91-A465-642D216EEE48"
+            }, 
+            {
+              "eng": "Quebec, Montr\u00e9al", 
+              "fra": "Qu\u00e9bec, Montr\u00e9al", 
+              "pilot_uuid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645"
+            }, 
+            {
+              "eng": "Quebec, Laval", 
+              "fra": "Qu\u00e9bec, Laval", 
+              "pilot_uuid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF"
+            }, 
+            {
+              "eng": "Quebec, Lanaudi\u00e8re", 
+              "fra": "Qu\u00e9bec, Lanaudi\u00e8re", 
+              "pilot_uuid": "9D01047A-B571-4CC4-A295-CACED5C21136"
+            }, 
+            {
+              "eng": "Quebec, Laurentides", 
+              "fra": "Qu\u00e9bec, Laurentides", 
+              "pilot_uuid": "79F2CB43-8948-40F0-BF66-399E2073B27F"
+            }, 
+            {
+              "eng": "Quebec, Outaouais", 
+              "fra": "Qu\u00e9bec, Outaouais", 
+              "pilot_uuid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1"
+            }, 
+            {
+              "eng": "Quebec, Abitibi - T\u00e9miscamingue", 
+              "fra": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
+              "pilot_uuid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06"
+            }, 
+            {
+              "eng": "Quebec, Mauricie", 
+              "fra": "Qu\u00e9bec, Mauricie", 
+              "pilot_uuid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011"
+            }, 
+            {
+              "eng": "Quebec, Saguenay - Lac-Saint-Jean", 
+              "fra": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
+              "pilot_uuid": "645070BF-16DD-4D87-88FE-94ECF86F41EB"
+            }, 
+            {
+              "eng": "Quebec, C\u00f4te-Nord", 
+              "fra": "Qu\u00e9bec, C\u00f4te-Nord", 
+              "pilot_uuid": "335CCEE3-4877-474C-B4F9-4C24D5086091"
+            }, 
+            {
+              "eng": "Quebec, Nord-du-Qu\u00e9bec", 
+              "fra": "Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
+              "pilot_uuid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE"
+            }, 
+            {
+              "eng": "Ontario, Ottawa", 
+              "fra": "Ontario, Ottawa", 
+              "pilot_uuid": "59F96221-A0D1-4668-A769-9DAC7DFC2198"
+            }, 
+            {
+              "eng": "Ontario, Kingston - Pembroke", 
+              "fra": "Ontario, Kingston - Pembroke", 
+              "pilot_uuid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893"
+            }, 
+            {
+              "eng": "Ontario, Muskoka - Kawarthas", 
+              "fra": "Ontario, Muskoka - Kawarthas", 
+              "pilot_uuid": "75176775-E0E6-4938-B03E-40ECFDB399C1"
+            }, 
+            {
+              "eng": "Ontario, Toronto", 
+              "fra": "Ontario, Toronto", 
+              "pilot_uuid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC"
+            }, 
+            {
+              "eng": "Ontario, Kitchener - Waterloo - Barrie", 
+              "fra": "Ontario, Kitchener - Waterloo - Barrie", 
+              "pilot_uuid": "971A8458-0FAD-42A4-99B6-579374BF668B"
+            }, 
+            {
+              "eng": "Ontario, Hamilton - Niagara Peninsula", 
+              "fra": "Ontario, Hamilton - Niagara Peninsula", 
+              "pilot_uuid": "4004DAC2-4AE4-49B9-A4E8-F27940335530"
+            }, 
+            {
+              "eng": "Ontario, London", 
+              "fra": "Ontario, London", 
+              "pilot_uuid": "66CE657A-9A2B-42EB-BB89-592024C852B5"
+            }, 
+            {
+              "eng": "Ontario,Windsor - Sarnia", 
+              "fra": "Ontario, Windsor - Sarnia", 
+              "pilot_uuid": "3FDECF16-64AD-4822-8076-344711C185DB"
+            }, 
+            {
+              "eng": "Ontario, Stratford - Bruce Peninsula", 
+              "fra": "Ontario, Stratford - Bruce Peninsula", 
+              "pilot_uuid": "31F39CA2-4A93-4337-87A7-11EDFA53E511"
+            }, 
+            {
+              "eng": "Ontario, Northeast", 
+              "fra": "Ontario, Nord-est", 
+              "pilot_uuid": "55D9E9C2-56E5-4293-A896-D7008F6F5710"
+            }, 
+            {
+              "eng": "Ontario, Northwest", 
+              "fra": "Ontario, Nord-ouest", 
+              "pilot_uuid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7"
+            }, 
+            {
+              "eng": "Manitoba, Southeast", 
+              "fra": "Manitoba, Sud-est", 
+              "pilot_uuid": "271DA932-E487-4795-9995-ADB722297359"
+            }, 
+            {
+              "eng": "Manitoba, South Central", 
+              "fra": "Manitoba, Centre sud", 
+              "pilot_uuid": "85E82590-1617-47BA-B69C-22BFAFB2C00A"
+            }, 
+            {
+              "eng": "Manitoba, Southwest", 
+              "fra": "Manitoba, Sud-ouest", 
+              "pilot_uuid": "1637DBB0-E991-411E-8DA3-E5373DE577CE"
+            }, 
+            {
+              "eng": "Manitoba, North Central", 
+              "fra": "Manitoba, Centre nord", 
+              "pilot_uuid": "5374E0A8-103B-4186-81B5-ACCE63EAE455"
+            }, 
+            {
+              "eng": "Manitoba, Winnipeg", 
+              "fra": "Manitoba, Winnipeg", 
+              "pilot_uuid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04"
+            }, 
+            {
+              "eng": "Manitoba, Interlake", 
+              "fra": "Manitoba, Interlake", 
+              "pilot_uuid": "036FB1AA-B86D-43F9-A674-56A78388F8F2"
+            }, 
+            {
+              "eng": "Manitoba, Parklands", 
+              "fra": "Manitoba, Parklands", 
+              "pilot_uuid": "16155173-67AC-4624-90E5-5A2D9079123A"
+            }, 
+            {
+              "eng": "Manitoba, North", 
+              "fra": "Manitoba, Nord", 
+              "pilot_uuid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F"
+            }, 
+            {
+              "eng": "Saskatchewan, Regina - Moose Mountain", 
+              "fra": "Saskatchewan, Regina - Moose Mountain", 
+              "pilot_uuid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2"
+            }, 
+            {
+              "eng": "Saskatchewan, Swift Current - Moose Jaw", 
+              "fra": "Saskatchewan, Swift Current - Moose Jaw", 
+              "pilot_uuid": "193259E4-EF93-4691-8572-694914D879C4"
+            }, 
+            {
+              "eng": "Saskatchewan, Saskatoon - Biggar", 
+              "fra": "Saskatchewan, Saskatoon - Biggar", 
+              "pilot_uuid": "AEE97977-91A3-48B3-A085-369B9B381992"
+            }, 
+            {
+              "eng": "Saskatchewan, Yorkton - Melville", 
+              "fra": "Saskatchewan, Yorkton - Melville", 
+              "pilot_uuid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2"
+            }, 
+            {
+              "eng": "Saskatchewan, Prince Albert", 
+              "fra": "Saskatchewan, Prince Alber", 
+              "pilot_uuid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352"
+            }, 
+            {
+              "eng": "Saskatchewan, Northern", 
+              "fra": "Saskatchewan, Nord", 
+              "pilot_uuid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421"
+            }, 
+            {
+              "eng": "Alberta, Lethbridge - Medicine Hat", 
+              "fra": "Alberta, Lethbridge - Medicine Hat", 
+              "pilot_uuid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA"
+            }, 
+            {
+              "eng": "Alberta, Camrose - Drumheller", 
+              "fra": "Alberta, Camrose - Drumheller", 
+              "pilot_uuid": "394064E0-D465-4520-B651-CE6D28829CD5"
+            }, 
+            {
+              "eng": "Alberta, Calgary", 
+              "fra": "Alberta, Calgary", 
+              "pilot_uuid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC"
+            }, 
+            {
+              "eng": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "fra": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "pilot_uuid": "F60854D7-139C-4945-9C5F-A6D6B3027B60"
+            }, 
+            {
+              "eng": "Alberta, Red Deer", 
+              "fra": "Alberta, Red Deer", 
+              "pilot_uuid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9"
+            }, 
+            {
+              "eng": "Alberta, Edmonton", 
+              "fra": "Alberta, Edmonton", 
+              "pilot_uuid": "60924ED3-E829-45E5-BE8B-2608AF64B241"
+            }, 
+            {
+              "eng": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "fra": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "pilot_uuid": "5161B55F-3BF5-46F7-B461-455735F6B9B4"
+            }, 
+            {
+              "eng": "Alberta, Wood Buffalo - Cold Lake", 
+              "fra": "Alberta, Wood Buffalo - Cold Lake", 
+              "pilot_uuid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E"
+            }, 
+            {
+              "eng": "British Columbia, Vancouver Island and Coast", 
+              "fra": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
+              "pilot_uuid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE"
+            }, 
+            {
+              "eng": "British Columbia, Lower Mainland - Southwest", 
+              "fra": "Colombie-Britannique, Lower Mainland - Sud-ouest", 
+              "pilot_uuid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458"
+            }, 
+            {
+              "eng": "British Columbia, Thompson - Okanagan", 
+              "fra": "Colombie-Britannique, Thompson - Okanagan", 
+              "pilot_uuid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2"
+            }, 
+            {
+              "eng": "British Columbia, Kootenay", 
+              "fra": "Colombie-Britannique, Kootenay", 
+              "pilot_uuid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB"
+            }, 
+            {
+              "eng": "British Columbia, Cariboo", 
+              "fra": "Colombie-Britannique, Cariboo", 
+              "pilot_uuid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6"
+            }, 
+            {
+              "eng": "British Columbia, North Coast", 
+              "fra": "Colombie-Britannique, C\u00f4te-nord", 
+              "pilot_uuid": "94E0DABF-268E-454B-B20E-727A9FF34FAB"
+            }, 
+            {
+              "eng": "British Columbia, Nechako", 
+              "fra": "Colombie-Britannique, Nechako", 
+              "pilot_uuid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C"
+            }, 
+            {
+              "eng": "British Columbia, Northeast", 
+              "fra": "Colombie-Britannique, Nord-est", 
+              "pilot_uuid": "4284F297-5090-447A-A1E3-C339B68F5932"
+            }, 
+            {
+              "eng": "Yukon Territory", 
+              "fra": "Territoire du Yukon", 
+              "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
             }
           ], 
           "data_gov_common_core": "Spatial", 

@@ -1,7 +1,11 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound
-import package_form
+
+import logging
+import re
+
+from ckanext.canada.metadata_schema import schema_description
 
 class CanadaCommand(CkanCommand):
     """
@@ -26,4 +30,28 @@ class CanadaCommand(CkanCommand):
         self._load_config()
 
         if cmd == 'create-vocabularies':
+            for name, terms in schema_description.vocabularies.iteritems():
+                self.create_vocabulary(name, terms)
+
+    def create_vocabulary(self, name, terms):
+        user = get_action('get_site_user')({'ignore_auth': True}, ())
+        context = {'user': user['name']}
+        try:
+            vocab = get_action('vocabulary_show')(context, {'id': name})
+            logging.info("{name} vocabulary exists, skipping".format(name=name))
+            return
+            #for t in vocab['tags']:
+            #    get_action('tag_delete')(context, {'id': t['id'],})
+            #get_action('vocabulary_delete')(context, {'id': vocab['id']})
+        except NotFound:
             pass
+        logging.info('creating {name} vocabulary'.format(name=name))
+        vocab = get_action('vocabulary_create')(context, {'name': name})
+        for term in terms:
+            t = term['eng'] + u'  ' + term['fra']
+            t = re.sub('[^\w \-.]', '', t, 0, re.UNICODE)
+            get_action('tag_create')(context, {
+                'name': t,
+                'vocabulary_id': vocab['id'],
+                })
+
