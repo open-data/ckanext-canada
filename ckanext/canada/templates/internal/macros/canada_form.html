@@ -31,6 +31,14 @@
     {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
+  {% elif id == 'tags' %} {# or field.vocabulary %}#}
+    {% do kwargs.update({
+      'value': data[id + '_string'],
+      'classes': ['control-full'],
+      'attrs': {'data-module': 'autocomplete',
+                'data-module-tags': '',
+                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
+      }) %}
   {% elif field.choices %}
     {% do kwargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
@@ -56,14 +64,6 @@
       {% endif %}
     {% endfor %}
     {% set widget = form.select %}
-  {% elif id in ('subject', 'topic_category', 'tags') %}
-    {% do kwargs.update({
-      'value': data[id + '_string'],
-      'classes': ['control-full'],
-      'attrs': {'data-module': 'autocomplete',
-                'data-module-tags': '',
-                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
-      }) %}
   {% endif %}
 
   {% if widget %}
