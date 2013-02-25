@@ -69,9 +69,7 @@
   {% if widget %}
     {% call widget(id, **kwargs) %}
       {% if lang != 'eng' and field.description %}
-        <span class="info-block icon-large icon-info-sign">
-          {{ field.description[client_lang] }}
-        </span>
+        {{ form.info(field.description[client_lang]) }}
       {% endif %}
     {% endcall %}
   {% endif %}
