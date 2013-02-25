@@ -5,6 +5,7 @@
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
   {% set kwargs = {
+    'name': id,
     'label': field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
     'value': data[id],
@@ -32,8 +33,10 @@
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
   {% elif id == 'tags' %} {# or field.vocabulary %}#}
+    {# special case name "tag_string" for tags #}
     {% do kwargs.update({
-      'value': data[id + '_string'],
+      'name': 'tag_string', 
+      'value': data['tag_string'],
       'classes': ['control-full'],
       'attrs': {'data-module': 'autocomplete',
                 'data-module-tags': '',
@@ -67,11 +70,9 @@
   {% endif %}
 
   {% if widget %}
-    {% call widget(id, **kwargs) %}
+    {% call widget(**kwargs) %}
       {% if lang != 'eng' and field.description %}
-        <span class="info-block icon-large icon-info-sign">
-          {{ field.description[client_lang] }}
-        </span>
+        {{ form.info(field.description[client_lang]) }}
       {% endif %}
     {% endcall %}
   {% endif %}
