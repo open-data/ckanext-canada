@@ -5,7 +5,7 @@ from ckan.lib.base import c, model
 import ckan.logic as logic
 import ckan.logic.schema as ckan_schema
 import ckan.lib.plugins as lib_plugins
-from ckan.logic.converters import convert_from_extras
+from ckan.logic.converters import convert_from_extras, convert_to_extras
 from ckan.lib.navl.validators import ignore_missing
 from ckan.plugins import toolkit
 
@@ -53,17 +53,13 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         registers itself as the default (above).
         """
         return []
-
-
-
+    
     def form_to_db_schema(self):
         """
         Add our custom fields for validation from the form
         """
         schema = super(DataGCCAForms, self).form_to_db_schema()
-        schema.update({
-            'published_by': [unicode],
-        })
+        self._schema_update(schema, form_to_db=True)
         return schema
 
     def db_to_form_schema(self):
@@ -71,10 +67,27 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for converting from the db
         """
         schema = super(DataGCCAForms, self).db_to_form_schema()
-        schema.update({
-            'published_by': [convert_from_extras, ignore_missing],
-        })
+        self._schema_update(schema, form_to_db=False)
         return schema
+
+    def _schema_update(self, schema, form_to_db):
+        """
+        schema: schema dict to update
+        form_to_db: True for form_to_db_schema, False for db_to_form_schema
+        """
+        for name, lang, field in schema_description.dataset_fields_by_ckan_id():
+            if name in ('id', 'language'):
+                continue
+            if name in schema:
+                continue
+            if form_to_db:
+                schema[name] = [unicode, ignore_missing, convert_to_extras]
+            else:
+                schema[name] = [convert_from_extras, ignore_missing]
+        for name in ('maintainer', 'author', 'author_email',
+                'maintainer_email', 'license_id', 'department_number'):
+            del schema[name]
+
 
 
     def setup_template_variables(self, context, data_dict=None):
