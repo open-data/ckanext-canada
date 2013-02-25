@@ -55,41 +55,22 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         return []
 
 
-    def form_to_db_schema_options(self, options):
-        # boilerplate for updating schema
-        schema = lib_plugins.DefaultDatasetForm.form_to_db_schema_options(
-            self, options)
-        return self._form_to_db_schema_update(schema)
 
-    def form_to_db_schema(self, options):
-        # boilerplate for updating schema
-        schema = lib_plugins.DefaultDatasetForm.form_to_db_schema()
-        return self._form_to_db_schema_update(schema)
-
-    def db_to_form_schema_options(self, options):
-        # boilerplate for updating schema
-        schema = lib_plugins.DefaultDatasetForm.db_to_form_schema_options(
-            self, options)
-        return self._db_to_form_schema_update(schema)
-
-    def db_to_form_schema(self):
-        # boilerplate for updating schema
-        schema = logic.schema.db_to_form_package_schema()
-        return self._db_to_form_schema_update(schema)
-
-    def _form_to_db_schema_update(self, schema):
+    def form_to_db_schema(self):
         """
         Add our custom fields for validation from the form
         """
+        schema = super(DataGCCAForms, self).form_to_db_schema()
         schema.update({
             'published_by': [unicode],
         })
         return schema
 
-    def _db_to_form_schema_update(self, schema):
+    def db_to_form_schema(self):
         """
         Add our custom fields for converting from the db
         """
+        schema = super(DataGCCAForms, self).db_to_form_schema()
         schema.update({
             'published_by': [convert_from_extras, ignore_missing],
         })
