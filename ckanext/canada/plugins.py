@@ -1,9 +1,5 @@
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
-import ckan.logic.schema as ckan_schema
-from ckan.lib.base import c, model
-import ckan.logic as logic
-import ckan.logic.schema as ckan_schema
 import ckan.lib.plugins as lib_plugins
 from ckan.logic.converters import convert_from_extras, convert_to_extras
 from ckan.lib.navl.validators import ignore_missing
