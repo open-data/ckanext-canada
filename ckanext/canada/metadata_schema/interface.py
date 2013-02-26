@@ -40,7 +40,8 @@ class MetadataSchema(object):
             self.dataset_fields.extend(s['fields'])
         self.resource_fields = schema['resource_fields']
 
-        self.dataset_field_by_id = {f['id']: f for f in self.dataset_fields}
+        self.dataset_field_by_id = dict((f['id'], f)
+            for f in self.dataset_fields)
 
         self.vocabularies = {}
         for k, v in schema['vocabularies'].iteritems():
@@ -50,8 +51,8 @@ class MetadataSchema(object):
         for f in self.dataset_fields:
             if 'choices' not in f:
                 continue
-            f['choices_by_pilot_uuid'] = {
-                c['pilot_uuid']:c for c in f['choices'] if 'pilot_uuid' in c}
+            f['choices_by_pilot_uuid'] = dict((c['pilot_uuid'], c)
+                for c in f['choices'] if 'pilot_uuid' in c)
 
         self.all_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
