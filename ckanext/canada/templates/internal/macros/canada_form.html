@@ -61,9 +61,17 @@
         {% endif %}
       {% endif %}
       {% if not skip %}
-        {% do kwargs.options.append({
-          'text': indent + c[client_lang],
-          'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+        {% if field.vocabulary %}
+          {# temporary select-only-one interface #}
+          {% do kwargs.update({'selected': data[id][0]}) %}
+          {% do kwargs.options.append({
+            'text': indent + c[client_lang],
+            'value': c.eng + '  ' + c.fra}) %}
+        {% else %}
+          {% do kwargs.options.append({
+            'text': indent + c[client_lang],
+            'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
+        {% endif %}
       {% endif %}
     {% endfor %}
     {% set widget = form.select %}
