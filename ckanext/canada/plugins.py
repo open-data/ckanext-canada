@@ -1,8 +1,8 @@
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
-from ckan.logic.converters import convert_from_extras, convert_to_extras
-from ckan.lib.navl.validators import ignore_missing
+from ckan.logic import converters
+from ckan.lib.navl import validators
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
@@ -75,15 +75,29 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             if name in ('id', 'language'):
                 continue
             if name in schema:
-                continue
-            if form_to_db:
-                schema[name] = [unicode, ignore_missing, convert_to_extras]
+                continue # don't modify existing fields.. yet
+
+            if 'vocabulary' in field:
+                schema[name] = [
+                        converters.convert_to_tags(field['vocabulary'])
+                    ] if form_to_db else [
+                        converters.convert_from_tags(field['vocabulary'])
+                    ]
             else:
-                schema[name] = [convert_from_extras, ignore_missing]
+                schema[name] = [
+                        unicode, 
+                        validators.ignore_missing, 
+                        converters.convert_to_extras,
+                    ] if form_to_db else [
+                        converters.convert_from_extras,
+                        validators.ignore_missing
+                    ]
         for name in ('maintainer', 'author', 'author_email',
                 'maintainer_email', 'license_id', 'department_number'):
             del schema[name]
 
+        if not form_to_db:
+            schema['tags']['__extras'].append(converters.free_tags_only)
 
 
     def setup_template_variables(self, context, data_dict=None):
