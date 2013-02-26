@@ -49,7 +49,7 @@ class CanadaCommand(CkanCommand):
         vocab = get_action('vocabulary_create')(context, {'name': name})
         for term in terms:
             t = term['eng'] + u'  ' + term['fra']
-            t = re.sub('[^\w \-.]', '', t, 0, re.UNICODE)
+            t = re.sub(u'[,/]', u'', t, 0)
             get_action('tag_create')(context, {
                 'name': t,
                 'vocabulary_id': vocab['id'],
