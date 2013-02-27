@@ -85,12 +85,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                     ]
             else:
                 schema[name] = [
-                        unicode, 
                         validators.ignore_missing, 
+                        unicode, 
                         converters.convert_to_extras,
                     ] if form_to_db else [
+                        validators.ignore_missing,
                         converters.convert_from_extras,
-                        validators.ignore_missing
                     ]
         for name in ('maintainer', 'author', 'author_email',
                 'maintainer_email', 'license_id', 'department_number'):
