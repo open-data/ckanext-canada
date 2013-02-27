@@ -48,8 +48,9 @@ class CanadaCommand(CkanCommand):
         logging.info('creating {name} vocabulary'.format(name=name))
         vocab = get_action('vocabulary_create')(context, {'name': name})
         for term in terms:
-            t = term['eng'] + u'  ' + term['fra']
-            t = re.sub('[^\w \-.]', '', t, 0, re.UNICODE)
+            t = u'  '.join(
+                re.sub(u'[,/]', u'', t).replace(u'  ', u' ')
+                for t in (term['eng'], term['fra']))
             get_action('tag_create')(context, {
                 'name': t,
                 'vocabulary_id': vocab['id'],

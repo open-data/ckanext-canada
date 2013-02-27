@@ -63,7 +63,7 @@
       {% if not skip %}
         {% if field.vocabulary %}
           {# temporary select-only-one interface #}
-          {% do kwargs.update({'selected': data[id][0]}) %}
+          {% do kwargs.update({'selected': data.get(id,[''])[0]}) %}
           {% do kwargs.options.append({
             'text': indent + c[client_lang],
             'value': c.eng + '  ' + c.fra}) %}

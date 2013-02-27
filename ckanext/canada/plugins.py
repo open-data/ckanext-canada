@@ -85,12 +85,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                     ]
             else:
                 schema[name] = [
-                        unicode, 
                         validators.ignore_missing, 
+                        unicode, 
                         converters.convert_to_extras,
                     ] if form_to_db else [
+                        validators.ignore_missing,
                         converters.convert_from_extras,
-                        validators.ignore_missing
                     ]
         for name in ('maintainer', 'author', 'author_email',
                 'maintainer_email', 'license_id', 'department_number'):
@@ -108,4 +108,9 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
 
         toolkit.c.schema_description = schema_description
 
+    def check_data_dict(self, data_dict, schema=None):
+        # XXX: do nothing here because DefaultDatasetForm's check_data_dict()
+        # breaks with the new three-stage dataset creation when using
+        # convert_to_extras.
+        pass
 
