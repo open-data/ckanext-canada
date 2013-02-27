@@ -15,6 +15,13 @@ Installation:
 * Use CKAN Version: 2.0+
 * After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
 
+From a clean database you must run::
+
+   paster canada create-vocabularies -c <path to config file>
+
+Once to create the tag vocabularies this extension requires before loading
+any data.
+
 Plugins
 -------
 
