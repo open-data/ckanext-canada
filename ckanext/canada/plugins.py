@@ -19,22 +19,28 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
 
+
 class DataGCCAInternal(p.SingletonPlugin):
     """
     Plugin for internal version of data.gc.ca site, aka the "registry"
     This plugin requires the DataGCCAPublic and DataGCCAForms plugins
     """
-    p.implements(p.IConfigurer)
-
-    def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
-
+    pass
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
+    p.implements(p.IConfigurable)
+    p.implements(p.IConfigurer)
     p.implements(p.IDatasetForm, inherit=True)
+
+    def update_config(self, config):
+        p.toolkit.add_template_directory(config, 'templates/internal')
+
+    def configure(self, config):
+        jinja_globals = config['pylons.app_globals'].jinja_env.globals
+        jinja_globals['schema_description'] = schema_description
 
     def is_fallback(self):
         """
@@ -100,19 +106,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             schema['tags']['__extras'].append(converters.free_tags_only)
 
 
-    def setup_template_variables(self, context, data_dict=None):
-        """
-        Add variables to c just prior to the template being rendered.
-        """
-        DefaultDatasetForm.setup_template_variables(self, context, data_dict)
-
-        toolkit.c.schema_description = schema_description
-
     def check_data_dict(self, data_dict, schema=None):
         # XXX: do nothing here because DefaultDatasetForm's check_data_dict()
         # breaks with the new three-stage dataset creation when using
         # convert_to_extras.
         pass
+
 
 class DataGCCAPackageController(p.SingletonPlugin):
     p.implements(p.IPackageController)

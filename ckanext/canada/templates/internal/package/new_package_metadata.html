@@ -1,9 +1,0 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
-{% ckan_extends %}
-
-<!-- Pass c.schema_description to package_metadata_form.html.
-FIXME: If ckan passed c to package_metadata_form.html anyway, we wouldn't need
-to override this block here. -->
-{% block form %}{{ h.snippet('package/snippets/package_metadata_form.html',
-  data=data, errors=errors, include_metadata=false, pkg_name=pkg_name, 
-  schema_description=c.schema_description, language=c.language) }}{% endblock %}
