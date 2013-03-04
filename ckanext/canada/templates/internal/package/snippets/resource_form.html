@@ -1,0 +1,10 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
+{% ckan_extends %}
+{% import 'macros/canada_form.html' as cform %}
+
+{% block metadata_fields %}
+  {% for id, lang, field in schema_description.resource_fields_by_ckan_id(
+      false) %}
+    {{ cform.formfield(id, lang, field, data, errors, language) }}
+  {% endfor %}
+{% endblock %}
