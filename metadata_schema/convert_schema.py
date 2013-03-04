@@ -69,6 +69,16 @@ SECTIONS_FIELDS = [
 # override calculated values
 FIELD_OVERRIDES = {
     'tags': {'bilingual': False},
+    'resource:language': {
+        'choices': [
+            { "id": "", "eng": u"No language", "fra": u"Acune langue", },
+            { "id": "eng; CAN", "eng": u"English", "fra": u"Anglais", },
+            { "id": "fra; CAN", "eng": u"French", "fra": u"Fran\u00e7ais", },
+            { "id": "eng; CAN | fra; CAN",
+              "eng": u"Bilingual (English and French)",
+              "fra": u"Bilingue (Anglais et Fran\u00e7ais)", },
+            ]
+        }
     }
 
 # Resource fields (no sections)

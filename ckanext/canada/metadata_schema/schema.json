@@ -4536,6 +4536,28 @@
     }, 
     {
       "bilingual": false, 
+      "choices": [
+        {
+          "eng": "No language", 
+          "fra": "Acune langue", 
+          "id": ""
+        }, 
+        {
+          "eng": "English", 
+          "fra": "Anglais", 
+          "id": "eng; CAN"
+        }, 
+        {
+          "eng": "French", 
+          "fra": "Fran\u00e7ais", 
+          "id": "fra; CAN"
+        }, 
+        {
+          "eng": "Bilingual (English and French)", 
+          "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
+          "id": "eng; CAN | fra; CAN"
+        }
+      ], 
       "data_gov_common_core": "", 
       "description": {
         "eng": "Language of the dataset"
