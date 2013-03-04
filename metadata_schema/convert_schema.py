@@ -203,10 +203,10 @@ def lang_versions(root, xp):
     Return {'eng': english_text, 'fra': french_text} dict for a given
     xpath xp.
     """
-    out = {lang:root.xpath(xp + '[@xml:lang="%s"]' % lang[:2])
-        for lang in LANGS}
+    out = dict((lang, root.xpath(xp + '[@xml:lang="%s"]' % lang[:2]))
+        for lang in LANGS)
     assert all(out[lang] for lang in LANGS), "Not all langs found: %s" % xp
-    return {k:v[0].text for k, v in out.items()}
+    return dict((k, v[0].text) for k, v in out.items())
 
 def pilot_choices(name):
     """
@@ -280,8 +280,8 @@ def read_proposed_fields_vocab():
                 new_name) # language is duplicated
         assert new_name not in out, (new_name, out.keys())
         out[new_name] = p
-    return out, {PROPOSED_TO_EXISTING_FIELDS.get(k, k): v
-        for k,v in vocab.iteritems()}
+    return out, dict((PROPOSED_TO_EXISTING_FIELDS.get(k, k), v)
+        for k,v in vocab.iteritems())
 
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
