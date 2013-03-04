@@ -3,8 +3,28 @@
 {% import 'macros/canada_form.html' as cform %}
 
 {% block metadata_fields %}
-  {% for id, lang, field in schema_description.resource_fields_by_ckan_id(
-      false) %}
-    {{ cform.formfield(id, lang, field, data, errors, language) }}
-  {% endfor %}
+  {{ cform.formfield('name_fra', 'fra', {
+      'description': {'eng':'', 'fra':''},
+      'example': '',
+      'label': {'eng':'', 'fra':''},
+      }, data, errors, language) }}
+  {{ cform.formfield('language2', none, {
+      'description': {'eng':'', 'fra':''},
+      'example': '',
+      'label': {'eng':'Language', 'fra':''},
+      'choices': [
+        {
+          "eng": "English",
+          "fra": "Anglais",
+        },
+        {
+          "eng": "French",
+          "fra": "Français",
+        },
+        {
+          "eng": "Bilingual (English and French)",
+          "fra": "Bilingue (Anglais et Français)",
+        }
+      ]
+    }, data, errors, language) }}
 {% endblock %}

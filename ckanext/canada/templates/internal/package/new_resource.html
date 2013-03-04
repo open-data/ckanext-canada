@@ -1,8 +1,0 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
-{% ckan_extends %}
-
-{% block form %}{{ h.snippet('package/snippets/resource_form.html',
-  data=data, errors=errors, error_summary=error_summary, 
-  include_metadata=false, pkg_name=pkg_name, stage=stage,
-  allow_upload=logged_in,
-  schema_description=c.schema_description, language=c.language) }}{% endblock %}
