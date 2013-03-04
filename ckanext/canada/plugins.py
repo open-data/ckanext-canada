@@ -114,3 +114,50 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         # convert_to_extras.
         pass
 
+class DataGCCAPackageController(p.SingletonPlugin):
+    p.implements(p.IPackageController)
+    
+    def read(self, entity):
+        pass
+
+    def create(self, entity):
+        pass
+
+    def edit(self, entity):
+        pass
+
+    def authz_add_role(self, object_role):
+        pass
+
+    def authz_remove_role(self, object_role):
+        pass
+
+    def delete(self, entity):
+        pass
+
+    def before_search(self, search_params):
+        return search_params
+
+    def after_search(self, search_results, search_params):
+        return search_results
+
+    def before_index(self, data_dict):
+        pass
+
+    def before_view(self, pkg_dict):
+        return pkg_dict
+
+    def after_create(self, context, data_dict):
+        return data_dict
+
+    def after_update(self, context, data_dict):
+        return data_dict
+
+    def after_delete(self, context, data_dict):
+        return data_dict
+
+    def after_show(self, context, data_dict):
+        return data_dict
+
+    def update_facet_titles(self, facet_titles):
+        return facet_titles
