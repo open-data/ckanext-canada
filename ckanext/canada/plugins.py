@@ -141,7 +141,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
-        pass
+        return data_dict
 
     def before_view(self, pkg_dict):
         return pkg_dict
