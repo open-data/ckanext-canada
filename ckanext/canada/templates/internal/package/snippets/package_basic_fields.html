@@ -3,5 +3,8 @@
 
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.0) %}
-  {{ cform.formfield(id, lang, field, data, errors, language) }}
+  {% if id not in ('id', 'language', 'license_id', 'author_email', 'author',
+               'department_number') %}
+    {{ cform.formfield(id, lang, field, data, errors, language) }}
+  {% endif %}
 {% endfor %}
