@@ -74,7 +74,6 @@ FIELD_OVERRIDES = {
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
     'url',
-    'name',
     'size',
     'format',
     'language',
@@ -84,7 +83,6 @@ RESOURCE_FIELDS = [
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 
 BILINGUAL_RESOURCE_FIELDS = set([
-    'name',
     ])
 
 EXISTING_FIELDS = set(default_package_schema()
