@@ -19,10 +19,7 @@
   {% endif %}
 
   {% set widget = form.input %}
-  {% if id in ('id', 'language', 'license_id', 'author_email', 'author',
-               'department_number') %}
-    {% set widget = none %}
-  {% elif id == 'name' %}
+  {% if id == 'name' %}
     {% do kwargs.update({
       'prepend': '/data/dataset/',
       'attrs': {'data-module': 'slug-preview-slug',
