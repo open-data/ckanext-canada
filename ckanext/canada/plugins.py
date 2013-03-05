@@ -25,18 +25,18 @@ class DataGCCAInternal(p.SingletonPlugin):
     Plugin for internal version of data.gc.ca site, aka the "registry"
     This plugin requires the DataGCCAPublic and DataGCCAForms plugins
     """
-    pass
+    p.implements(p.IConfigurer)
+
+    def update_config(self, config):
+        p.toolkit.add_template_directory(config, 'templates/internal')
+
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
     p.implements(p.IConfigurable)
-    p.implements(p.IConfigurer)
     p.implements(p.IDatasetForm, inherit=True)
-
-    def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
 
     def configure(self, config):
         jinja_globals = config['pylons.app_globals'].jinja_env.globals

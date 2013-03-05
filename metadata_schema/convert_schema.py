@@ -362,6 +362,24 @@ def apply_field_customizations(schema_out, vocab):
         f['choices'] = choices
 
 
+def add_keys_for_choices(f):
+    """
+    Add a 'key' key to each choice in f['choices'] that will be used
+    as the value to actually store in the DB + use with the API
+    """
+    if f.get('type') == 'keywords':
+        for c in f['choices']:
+            # keywords have strict limits on valid characters
+            c['key'] = u'  '.join(
+                re.sub(u'[,/]', u'', c[lang]).replace(u'  ', u' ')
+                for lang in LANGS)
+    else:            
+        for c in f['choices']:
+            # use the text itself for now (both when different)
+            c['key'] = c[LANGS[0]]
+            if c['key'] != c[LANGS[1]]:
+                c['key'] += ' | ' + c[LANGS[1]]
+
 
 def main():
     schema_out = {
@@ -427,6 +445,14 @@ def main():
         schema_out['resource_fields'].append(new_rfield)
 
     apply_field_customizations(schema_out, vocab)
+
+    # add keys for choices
+    for f in schema_out['resource_fields'] + [df
+            for sec in schema_out['dataset_sections']
+            for df in sec['fields']]:
+        if 'choices' not in f:
+            continue
+        add_keys_for_choices(f)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 

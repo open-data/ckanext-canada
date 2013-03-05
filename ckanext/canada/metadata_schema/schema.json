@@ -40,16 +40,19 @@
             {
               "eng": "English", 
               "fra": "Anglais", 
+              "key": "English | Anglais", 
               "pilot_uuid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30"
             }, 
             {
               "eng": "French", 
               "fra": "Fran\u00e7ais", 
+              "key": "French | Fran\u00e7ais", 
               "pilot_uuid": "FA6486B4-8A2A-4DA4-A727-E4EA3D29BF71"
             }, 
             {
               "eng": "Bilingual (English and French)", 
               "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
+              "key": "Bilingual (English and French) | Bilingue (Anglais et Fran\u00e7ais)", 
               "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
             }
           ], 
@@ -99,1042 +102,1227 @@
               "eng": "Atlantic Canada Opportunities Agency", 
               "fra": "Agence de promotion \u00e9conomique du Canada atlantique", 
               "id": "ACOA-APECA", 
+              "key": "Atlantic Canada Opportunities Agency | Agence de promotion \u00e9conomique du Canada atlantique", 
               "pilot_uuid": "C3DDAD27-EFA9-41AB-9D12-12856482C0A8"
             }, 
             {
               "eng": "Agriculture and Agri-Food Canada", 
               "fra": "Agriculture et Agroalimentaire Canada", 
               "id": "AAFC-AAC", 
+              "key": "Agriculture and Agri-Food Canada | Agriculture et Agroalimentaire Canada", 
               "pilot_uuid": "2ABCCA59-6C57-4886-99E7-85EC6C719218"
             }, 
             {
               "eng": "Atlantic Pilotage Authority Canada", 
               "fra": "Administration de pilotage de l'Atlantique Canada", 
               "id": "APA-APA", 
+              "key": "Atlantic Pilotage Authority Canada | Administration de pilotage de l'Atlantique Canada", 
               "pilot_uuid": "ED979C5D-69C9-48A4-A3E8-F69C71D8C3D6"
             }, 
             {
               "eng": "Canadian Artists and Producers Professional Relations Tribunal", 
               "fra": "Tribunal canadien des relations professionnelles artistes-producteurs", 
               "id": "CAPPRT-TCRPAP", 
+              "key": "Canadian Artists and Producers Professional Relations Tribunal | Tribunal canadien des relations professionnelles artistes-producteurs", 
               "pilot_uuid": "0F2D6642-8818-4671-B4EF-253F1F47AB1D"
             }, 
             {
               "eng": "Canadian Transportation Agency", 
               "fra": "Office des transports du Canada", 
               "id": "CTA-OTC", 
+              "key": "Canadian Transportation Agency | Office des transports du Canada", 
               "pilot_uuid": "18CECF2C-DE86-43E2-8B4D-5B1E4C9EDD84"
             }, 
             {
               "eng": "Office of the Auditor General of Canada", 
               "fra": "Bureau du v\u00e9rificateur g\u00e9n\u00e9ral du Canada", 
               "id": "OAG-BVG", 
+              "key": "Office of the Auditor General of Canada | Bureau du v\u00e9rificateur g\u00e9n\u00e9ral du Canada", 
               "pilot_uuid": "4DDD2FC7-A8EA-4633-841B-248A5F792540"
             }, 
             {
               "eng": "Canadian International Trade Tribunal", 
               "fra": "Tribunal canadien du commerce ext\u00e9rieur", 
               "id": "CITT-TCCE", 
+              "key": "Canadian International Trade Tribunal | Tribunal canadien du commerce ext\u00e9rieur", 
               "pilot_uuid": "8D7884DB-F877-467B-957D-501EC94ACA6D"
             }, 
             {
               "eng": "Business Development Bank of Canada", 
               "fra": "Banque de d\u00e9veloppement du Canada", 
               "id": "BDC-BDC", 
+              "key": "Business Development Bank of Canada | Banque de d\u00e9veloppement du Canada", 
               "pilot_uuid": "A4DA1974-0BC6-4398-A8F9-049F422A6A92"
             }, 
             {
               "eng": "Blue Water Bridge Canada", 
               "fra": "Pont Blue Water Canada", 
               "id": "BWBC-PBWC", 
+              "key": "Blue Water Bridge Canada | Pont Blue Water Canada", 
               "pilot_uuid": "87CDEC17-64E6-4613-999D-152A033A80C0"
             }, 
             {
               "eng": "Courts Administration Service", 
               "fra": "Service administratif des tribunaux judiciaires", 
               "id": "CAS-SATJ", 
+              "key": "Courts Administration Service | Service administratif des tribunaux judiciaires", 
               "pilot_uuid": "4EFC4A27-695B-4AB7-B25D-252B3D85FE2D"
             }, 
             {
               "eng": "Transportation Appeal Tribunal of Canada", 
               "fra": "Tribunal d'appel des transports du Canada", 
               "id": "TATC-TATC", 
+              "key": "Transportation Appeal Tribunal of Canada | Tribunal d'appel des transports du Canada", 
               "pilot_uuid": "90819721-E2B5-48FF-AD4D-E8828C05947A"
             }, 
             {
               "eng": "Canadian Air Transport Security Authority", 
               "fra": "Administration canadienne de la s\u00fbret\u00e9 du transport a\u00e9rien", 
               "id": "CATSA-ACSTA", 
+              "key": "Canadian Air Transport Security Authority | Administration canadienne de la s\u00fbret\u00e9 du transport a\u00e9rien", 
               "pilot_uuid": "130002B1-6961-4764-A041-744D87E89157"
             }, 
             {
               "eng": "Cape Breton Development Corporation", 
               "fra": "Soci\u00e9t\u00e9 de d\u00e9veloppement du Cap-Breton", 
+              "key": "Cape Breton Development Corporation | Soci\u00e9t\u00e9 de d\u00e9veloppement du Cap-Breton", 
               "pilot_uuid": "D13A6C8E-78E7-4A06-878D-8172E25D57AD"
             }, 
             {
               "eng": "Canada Border Services Agency", 
               "fra": "Agence des services frontaliers du Canada", 
               "id": "CBSA-ASFC", 
+              "key": "Canada Border Services Agency | Agence des services frontaliers du Canada", 
               "pilot_uuid": "33DD2B45-8215-44E1-9C60-D7E829B6D48E"
             }, 
             {
               "eng": "Canadian Commercial Corporation", 
               "fra": "Corporation commerciale canadienne", 
               "id": "CCC-CCC", 
+              "key": "Canadian Commercial Corporation | Corporation commerciale canadienne", 
               "pilot_uuid": "5EDE278A-55CB-49A3-9BF0-0D0DFC3A73D6"
             }, 
             {
               "eng": "Canadian Centre for Occupational Health and Safety", 
               "fra": "Centre canadien d'hygi\u00e8ne et de s\u00e9curit\u00e9 au travail", 
               "id": "CCOHS-CCHST", 
+              "key": "Canadian Centre for Occupational Health and Safety | Centre canadien d'hygi\u00e8ne et de s\u00e9curit\u00e9 au travail", 
               "pilot_uuid": "5FEE6EF8-AA76-4351-818D-00589C947075"
             }, 
             {
               "eng": "Canada Revenue Agency", 
               "fra": "Agence du revenu du Canada", 
               "id": "CRA-ARC", 
+              "key": "Canada Revenue Agency | Agence du revenu du Canada", 
               "pilot_uuid": "88B6EE4B-AA19-475B-B92A-2A80260806C2"
             }, 
             {
               "eng": "Canadian Dairy Commission", 
               "fra": "Commission canadienne du lait", 
               "id": "CDC-CCL", 
+              "key": "Canadian Dairy Commission | Commission canadienne du lait", 
               "pilot_uuid": "BFEDF818-5D2D-4478-A8F9-A7FF8D6B727F"
             }, 
             {
               "eng": "Canada Development Investment Corporation", 
               "fra": "Corporation de d\u00e9veloppement des investissements du Canada", 
               "id": "CDEV-CDEV", 
+              "key": "Canada Development Investment Corporation | Corporation de d\u00e9veloppement des investissements du Canada", 
               "pilot_uuid": "2195E34B-E37F-4A34-A26B-15E9E487FE22"
             }, 
             {
               "eng": "Canada Deposit Insurance Corporation", 
               "fra": "Soci\u00e9t\u00e9 d'assurance-d\u00e9p\u00f4ts du Canada", 
               "id": "CDIC-SADC", 
+              "key": "Canada Deposit Insurance Corporation | Soci\u00e9t\u00e9 d'assurance-d\u00e9p\u00f4ts du Canada", 
               "pilot_uuid": "9A7F872D-4071-4919-87C9-BE04BE38A124"
             }, 
             {
               "eng": "Canada Employment and Insurance Commission", 
               "fra": "Commission de l'assurance-emploi du Canada", 
+              "key": "Canada Employment and Insurance Commission | Commission de l'assurance-emploi du Canada", 
               "pilot_uuid": "39BF9A7F-D41D-45F1-8E33-F12B71EF1B5F"
             }, 
             {
               "eng": "Office of the Chief Electoral Officer", 
               "fra": "Bureau du directeur g\u00e9n\u00e9ral des \u00e9lections", 
               "id": "elections-elections", 
+              "key": "Office of the Chief Electoral Officer | Bureau du directeur g\u00e9n\u00e9ral des \u00e9lections", 
               "pilot_uuid": "177F4C5D-5EB5-469F-B0DB-7CBF3CC313F9"
             }, 
             {
               "eng": "Canadian Firearms Centre", 
               "fra": "Centre canadien des armes \u00e0 feu", 
+              "key": "Canadian Firearms Centre | Centre canadien des armes \u00e0 feu", 
               "pilot_uuid": "580576A5-3879-48AA-B774-7D33D96A9E34"
             }, 
             {
               "eng": "Financial Transactions and Reports Analysis Centre of Canada", 
               "fra": "Centre d'analyse des op\u00e9rations et d\u00e9clarations financi\u00e8res du Canada", 
               "id": "FINTRAC-CANAFE", 
+              "key": "Financial Transactions and Reports Analysis Centre of Canada | Centre d'analyse des op\u00e9rations et d\u00e9clarations financi\u00e8res du Canada", 
               "pilot_uuid": "0C38B176-A05C-4462-8F16-AE8335F1A332"
             }, 
             {
               "eng": "Canadian Forces Grievance Board", 
               "fra": "Comit\u00e9 des griefs des Forces canadiennes", 
               "id": "CFGB-CGFC", 
+              "key": "Canadian Forces Grievance Board | Comit\u00e9 des griefs des Forces canadiennes", 
               "pilot_uuid": "C3C6F115-462E-40EE-AE9C-1957152F52E5"
             }, 
             {
               "eng": "Canadian Grain Commission", 
               "fra": "Commission canadienne des grains", 
               "id": "CGC-CCG", 
+              "key": "Canadian Grain Commission | Commission canadienne des grains", 
               "pilot_uuid": "196FF0D1-A29E-48AD-829D-24D93D656EAF"
             }, 
             {
               "eng": "Parks Canada", 
               "fra": "Parcs Canada", 
               "id": "PC-PC", 
+              "key": "Parks Canada | Parcs Canada", 
               "pilot_uuid": "B578A1C3-FDCF-4F36-89E2-3B2E75020C43"
             }, 
             {
               "eng": "Canadian Human Rights Commission", 
               "fra": "Commission canadienne des droits de la personne", 
               "id": "CHRC-CCDP", 
+              "key": "Canadian Human Rights Commission | Commission canadienne des droits de la personne", 
               "pilot_uuid": "7989CBA8-1F59-47C1-B9BC-F5FA9A0E03E7"
             }, 
             {
               "eng": "Canadian Intergovernmental Conference Secretariat", 
               "fra": "Secr\u00e9tariat des conf\u00e9rences intergouvernementales canadiennes", 
               "id": "CICS-SCIC", 
+              "key": "Canadian Intergovernmental Conference Secretariat | Secr\u00e9tariat des conf\u00e9rences intergouvernementales canadiennes", 
               "pilot_uuid": "AB62517F-41BF-49DA-AB49-4C03B9C2E683"
             }, 
             {
               "eng": "Canada Lands Company Limited", 
               "fra": "Soci\u00e9t\u00e9 immobili\u00e8re du Canada Limit\u00e9e", 
               "id": "", 
+              "key": "Canada Lands Company Limited | Soci\u00e9t\u00e9 immobili\u00e8re du Canada Limit\u00e9e", 
               "pilot_uuid": "CEC34510-FAAB-4722-9787-0245DD0CFA58"
             }, 
             {
               "eng": "Canada Industrial Relations Board", 
               "fra": "Conseil canadien des relations industrielles", 
               "id": "CIRB-CCRI", 
+              "key": "Canada Industrial Relations Board | Conseil canadien des relations industrielles", 
               "pilot_uuid": "5B074ECE-DC3C-4091-A90E-7E419A186B38"
             }, 
             {
               "eng": "Canadian Museum of Civilization", 
               "fra": "Mus\u00e9e canadien des civilisations", 
               "id": "CMC-MCC", 
+              "key": "Canadian Museum of Civilization | Mus\u00e9e canadien des civilisations", 
               "pilot_uuid": "4EA922BD-53C4-4905-848B-9329B98A0441"
             }, 
             {
               "eng": "Canada Mortgage and Housing Corporation", 
               "fra": "Soci\u00e9t\u00e9 canadienne d'hypoth\u00e8ques et de logement", 
               "id": "CMHC-SCHL", 
+              "key": "Canada Mortgage and Housing Corporation | Soci\u00e9t\u00e9 canadienne d'hypoth\u00e8ques et de logement", 
               "pilot_uuid": "05AFE8D4-BE53-4853-B529-A79C78757969"
             }, 
             {
               "eng": "Canadian Museum of Nature", 
               "fra": "Mus\u00e9e canadien de la nature", 
               "id": "CMN-MCN", 
+              "key": "Canadian Museum of Nature | Mus\u00e9e canadien de la nature", 
               "pilot_uuid": "1A781743-7F0F-4A50-B620-CCCEE18D709C"
             }, 
             {
               "eng": "Canadian Nuclear Safety Commission", 
               "fra": "Commission canadienne de s\u00fbret\u00e9 nucl\u00e9aire", 
               "id": "CNSC-CCSN", 
+              "key": "Canadian Nuclear Safety Commission | Commission canadienne de s\u00fbret\u00e9 nucl\u00e9aire", 
               "pilot_uuid": "261F1DF4-DD3A-4DAD-939B-55B4F2853FBB"
             }, 
             {
               "eng": "Office of the Commissioner of Official Languages", 
               "fra": "Commissariat aux langues officielles", 
               "id": "OCOL-CLO", 
+              "key": "Office of the Commissioner of Official Languages | Commissariat aux langues officielles", 
               "pilot_uuid": "E45B1486-67DB-431A-96C5-E127DF594DBA"
             }, 
             {
               "eng": "Copyright Board Canada", 
               "fra": "Commission du droit d'auteur Canada", 
               "id": "CB-CDA", 
+              "key": "Copyright Board Canada | Commission du droit d'auteur Canada", 
               "pilot_uuid": "0560B521-A423-4A01-A993-F8AA2EA353F5"
             }, 
             {
               "eng": "Canada Post Corporation", 
               "fra": "Soci\u00e9t\u00e9 canadienne des postes", 
+              "key": "Canada Post Corporation | Soci\u00e9t\u00e9 canadienne des postes", 
               "pilot_uuid": "4DC4D375-140A-49FD-B629-A960F7C80C2F"
             }, 
             {
               "eng": "Canadian Institutes of Health Research", 
               "fra": "Instituts de recherche en sant\u00e9 du Canada", 
               "id": "CIHR-IRSC", 
+              "key": "Canadian Institutes of Health Research | Instituts de recherche en sant\u00e9 du Canada", 
               "pilot_uuid": "D767E220-09B6-4AE0-97B2-7E94683DB117"
             }, 
             {
               "eng": "Canadian Space Agency", 
               "fra": "Agence spatiale canadienne", 
               "id": "CSA-ASC", 
+              "key": "Canadian Space Agency | Agence spatiale canadienne", 
               "pilot_uuid": "95F65CF9-ED6A-4630-9C1A-8339FDB15CF0"
             }, 
             {
               "eng": "Office of the Communications Security Establishment Commissioner", 
               "fra": "Bureau du commissaire du Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
               "id": "OCSEC-BCCST", 
+              "key": "Office of the Communications Security Establishment Commissioner | Bureau du commissaire du Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
               "pilot_uuid": "626F5B6F-4BC3-4622-A60C-EA10FDCCAA90"
             }, 
             {
               "eng": "Canadian Security Intelligence Service", 
               "fra": "Service canadien du renseignement de s\u00e9curit\u00e9", 
               "id": "CSIS-SCRS", 
+              "key": "Canadian Security Intelligence Service | Service canadien du renseignement de s\u00e9curit\u00e9", 
               "pilot_uuid": "F06CF54B-F618-4358-8F47-82B54D2979B7"
             }, 
             {
               "eng": "Canada School of Public Service", 
               "fra": "\u00c9cole de la fonction publique du Canada", 
               "id": "CSPS-EFPC", 
+              "key": "Canada School of Public Service | \u00c9cole de la fonction publique du Canada", 
               "pilot_uuid": "892B1E0C-3389-4C9F-A6F0-92FE653016C1"
             }, 
             {
               "eng": "NAFTA Secretariat - Canadian Section", 
               "fra": "Secr\u00e9tariat de l'AL\u00c9NA - Section canadienne", 
+              "key": "NAFTA Secretariat - Canadian Section | Secr\u00e9tariat de l'AL\u00c9NA - Section canadienne", 
               "pilot_uuid": "9D30D013-21D1-407A-B63E-7520567643B1"
             }, 
             {
               "eng": "Defence Construction Canada", 
               "fra": "Construction de D\u00e9fense Canada", 
               "id": "DCC-CDC", 
+              "key": "Defence Construction Canada | Construction de D\u00e9fense Canada", 
               "pilot_uuid": "AA37FA1C-BC8C-4196-9AC2-33B873C8C7A7"
             }, 
             {
               "eng": "Fisheries and Oceans Canada", 
               "fra": "P\u00eaches et Oc\u00e9ans Canada", 
               "id": "DFO-MPO", 
+              "key": "Fisheries and Oceans Canada | P\u00eaches et Oc\u00e9ans Canada", 
               "pilot_uuid": "E56460A0-2055-4BF4-A693-EA238E0746E7"
             }, 
             {
               "eng": "National Defence", 
               "fra": "D\u00e9fense nationale", 
               "id": "DND-MDN", 
+              "key": "National Defence | D\u00e9fense nationale", 
               "pilot_uuid": "4CAEC647-C069-4C25-B1CD-17F648E5DBC0"
             }, 
             {
               "eng": "Environment Canada", 
               "fra": "Environnement Canada", 
               "id": "EC-EC", 
+              "key": "Environment Canada | Environnement Canada", 
               "pilot_uuid": "49E2ADF4-AD7A-43EB-85C8-6433D37ED62C"
             }, 
             {
               "eng": "Industry Canada", 
               "fra": "Industrie Canada", 
               "id": "IC-IC", 
+              "key": "Industry Canada | Industrie Canada", 
               "pilot_uuid": "06CC519C-E56E-4FC8-8B9C-BE0A461E3CD9"
             }, 
             {
               "eng": "Veterans Affairs Canada", 
               "fra": "Anciens Combattants Canada", 
               "id": "VAC-ACC", 
+              "key": "Veterans Affairs Canada | Anciens Combattants Canada", 
               "pilot_uuid": "EADD6F05-3BE4-4AF6-AD22-4045878B73CB"
             }, 
             {
               "eng": "Canadian Environmental Assessment Agency", 
               "fra": "Agence canadienne d'\u00e9valuation environnementale", 
               "id": "CEAA-ACEE", 
+              "key": "Canadian Environmental Assessment Agency | Agence canadienne d'\u00e9valuation environnementale", 
               "pilot_uuid": "04F792C7-7836-4581-94ED-00BCCB22AB5D"
             }, 
             {
               "eng": "Enterprise Cape Breton Corporation", 
               "fra": "Soci\u00e9t\u00e9 d'expansion du Cap-Breton", 
               "id": "", 
+              "key": "Enterprise Cape Breton Corporation | Soci\u00e9t\u00e9 d'expansion du Cap-Breton", 
               "pilot_uuid": "5BDA4BD0-A57D-4CFF-9DCB-51B9ABD7F5A4"
             }, 
             {
               "eng": "Export Development Canada", 
               "fra": "Exportation et d\u00e9veloppement Canada", 
               "id": "EDC-EDC", 
+              "key": "Export Development Canada | Exportation et d\u00e9veloppement Canada", 
               "pilot_uuid": "978E1BC5-401F-4AF2-A8A5-BFBBEF62C818"
             }, 
             {
               "eng": "National Energy Board", 
               "fra": "Office national de l'\u00e9nergie", 
               "id": "NEB-ONE", 
+              "key": "National Energy Board | Office national de l'\u00e9nergie", 
               "pilot_uuid": "A3EE9522-882F-47B0-BA7D-83420DC8577C"
             }, 
             {
               "eng": "Foreign Affairs and International Trade Canada", 
               "fra": "Affaires \u00e9trang\u00e8res et Commerce international Canada", 
               "id": "DFAIT-MAECI", 
+              "key": "Foreign Affairs and International Trade Canada | Affaires \u00e9trang\u00e8res et Commerce international Canada", 
               "pilot_uuid": "1514CBB9-9EC7-42AC-9E31-B97E78926ACC"
             }, 
             {
               "eng": "The Federal Bridge Corporation Limited", 
               "fra": "La Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux Limit\u00e9e", 
+              "key": "The Federal Bridge Corporation Limited | La Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux Limit\u00e9e", 
               "pilot_uuid": "1AF141F6-695B-459E-BA90-061669597CDD"
             }, 
             {
               "eng": "Financial Consumer Agency of Canada", 
               "fra": "Agence de la consommation en mati\u00e8re financi\u00e8re du Canada", 
               "id": "FCAC-ACFC", 
+              "key": "Financial Consumer Agency of Canada | Agence de la consommation en mati\u00e8re financi\u00e8re du Canada", 
               "pilot_uuid": "F5FFE147-68EC-4DC5-AA38-825F432002DC"
             }, 
             {
               "eng": "Farm Credit Canada", 
               "fra": "Financement agricole Canada", 
               "id": "FCC-FAC", 
+              "key": "Farm Credit Canada | Financement agricole Canada", 
               "pilot_uuid": "215F5DF1-C82F-4B31-8899-735916A9C80C"
             }, 
             {
               "eng": "Freshwater Fish Marketing Corporation", 
               "fra": "Office de commercialisation du poisson d'eau douce", 
               "id": "FFMC-OCPED", 
+              "key": "Freshwater Fish Marketing Corporation | Office de commercialisation du poisson d'eau douce", 
               "pilot_uuid": "532D7148-51C2-458B-96C5-04DE52571FB0"
             }, 
             {
               "eng": "Department of Finance Canada", 
               "fra": "Minist\u00e8re des Finances Canada", 
               "id": "FIN-FIN", 
+              "key": "Department of Finance Canada | Minist\u00e8re des Finances Canada", 
               "pilot_uuid": "05D03DCB-5906-4555-A5A1-84D86E9E94DD"
             }, 
             {
               "eng": "Office of the Commissioner for Federal Judicial Affairs Canada", 
               "fra": "Commissariat \u00e0 la magistrature f\u00e9d\u00e9rale Canada", 
               "id": "FJA-CMF", 
+              "key": "Office of the Commissioner for Federal Judicial Affairs Canada | Commissariat \u00e0 la magistrature f\u00e9d\u00e9rale Canada", 
               "pilot_uuid": "CDCD07C8-6C96-4A4C-81C1-A03616CE28D1"
             }, 
             {
               "eng": "Farm Products Council of Canada", 
               "fra": "Conseil des produits agricoles du Canada", 
               "id": "FPCC-CPAC", 
+              "key": "Farm Products Council of Canada | Conseil des produits agricoles du Canada", 
               "pilot_uuid": "DFCB28FB-9A1F-48E4-8C3D-A916257CA7CF"
             }, 
             {
               "eng": "Federal-Provincial Relations Office", 
               "fra": "Bureau des relations f\u00e9d\u00e9rales-provinciales", 
+              "key": "Federal-Provincial Relations Office | Bureau des relations f\u00e9d\u00e9rales-provinciales", 
               "pilot_uuid": "F0A67BEA-5738-4041-9993-F72E48B7216A"
             }, 
             {
               "eng": "Economic Development Agency of Canada for the Regions of Quebec", 
               "fra": "Agence de d\u00e9veloppement \u00e9conomique du Canada pour les r\u00e9gions du Qu\u00e9bec", 
               "id": "CED-DEC", 
+              "key": "Economic Development Agency of Canada for the Regions of Quebec | Agence de d\u00e9veloppement \u00e9conomique du Canada pour les r\u00e9gions du Qu\u00e9bec", 
               "pilot_uuid": "5F75CE60-887A-43DC-B182-95FFB80407D0"
             }, 
             {
               "eng": "Office of the Governor General's Secretary", 
               "fra": "Bureau du secr\u00e9taire du gouverneur g\u00e9n\u00e9ral", 
+              "key": "Office of the Governor General's Secretary | Bureau du secr\u00e9taire du gouverneur g\u00e9n\u00e9ral", 
               "pilot_uuid": "416B0B50-1187-4AA4-BE75-2BA6BDDEE6D6"
             }, 
             {
               "eng": "Great Lakes Pilotage Authority Canada", 
               "fra": "Administration de pilotage des Grands Lacs Canada", 
               "id": "GLPA-APGL", 
+              "key": "Great Lakes Pilotage Authority Canada | Administration de pilotage des Grands Lacs Canada", 
               "pilot_uuid": "2F265480-9433-4458-9B0C-CB3E4872C89B"
             }, 
             {
               "eng": "Office of the Grain Transportation Agency Administrator", 
               "fra": "Bureau de l'administrateur de l'Office du transport du grain", 
+              "key": "Office of the Grain Transportation Agency Administrator | Bureau de l'administrateur de l'Office du transport du grain", 
               "pilot_uuid": "9FF36BDB-50CF-472D-BB5D-7811FFF96392"
             }, 
             {
               "eng": "House of Commons (staff of the)", 
               "fra": "Chambre des communes (employ\u00e9s de la)", 
+              "key": "House of Commons (staff of the) | Chambre des communes (employ\u00e9s de la)", 
               "pilot_uuid": "15145359-E00F-42EA-9952-5ACA68819150"
             }, 
             {
               "eng": "Human Rights Tribunal of Canada", 
               "fra": "Tribunal des droits de la personne du Canada", 
               "id": "HRTC-TDPC", 
+              "key": "Human Rights Tribunal of Canada | Tribunal des droits de la personne du Canada", 
               "pilot_uuid": "26F0D053-27F8-4EDE-B279-156E80C41A90"
             }, 
             {
               "eng": "Human Resources and Skills Development Canada", 
               "fra": "Ressources humaines et D\u00e9veloppement des comp\u00e9tences Canada", 
               "id": "HRSDC-RHDCC", 
+              "key": "Human Resources and Skills Development Canada | Ressources humaines et D\u00e9veloppement des comp\u00e9tences Canada", 
               "pilot_uuid": "055ADCD8-8FDA-40DA-A5B7-689FF7DB57A6"
             }, 
             {
               "eng": "Indian Affairs and Northern Development Canada", 
               "fra": "Affaires indiennes et du Nord Canada", 
+              "key": "Indian Affairs and Northern Development Canada | Affaires indiennes et du Nord Canada", 
               "pilot_uuid": "809762D6-E9F1-4421-AFAA-9BBC7D06C3B6"
             }, 
             {
               "eng": "Canadian Food Inspection Agency", 
               "fra": "Agence canadienne d'inspection des aliments", 
               "id": "CFIA-ACIA", 
+              "key": "Canadian Food Inspection Agency | Agence canadienne d'inspection des aliments", 
               "pilot_uuid": "90D94FD0-5E79-4DBB-AF2A-B1DC881749FA"
             }, 
             {
               "eng": "Canadian International Development Agency", 
               "fra": "Agence canadienne de d\u00e9veloppement international", 
               "id": "CIDA-ACDI", 
+              "key": "Canadian International Development Agency | Agence canadienne de d\u00e9veloppement international", 
               "pilot_uuid": "58C9589E-CFC7-437D-AB50-1EBD11E08D9D"
             }, 
             {
               "eng": "Citizenship and Immigration Canada", 
               "fra": "Citoyennet\u00e9 et Immigration Canada", 
               "id": "CIC-CIC", 
+              "key": "Citizenship and Immigration Canada | Citoyennet\u00e9 et Immigration Canada", 
               "pilot_uuid": "51383040-F4F9-4B96-9E6B-2D70AAFB522A"
             }, 
             {
               "eng": "Infrastructure Canada", 
               "fra": "Infrastructure Canada", 
+              "key": "Infrastructure Canada", 
               "pilot_uuid": "A058C598-5712-4BE7-B311-60AFD13E2517"
             }, 
             {
               "eng": "Offices of the Information and Privacy Commissioners of Canada", 
               "fra": "Commissariats \u00e0 l\u2019information et \u00e0 la protection de la vie priv\u00e9e au Canada", 
               "id": "OPC-CPVP", 
+              "key": "Offices of the Information and Privacy Commissioners of Canada | Commissariats \u00e0 l\u2019information et \u00e0 la protection de la vie priv\u00e9e au Canada", 
               "pilot_uuid": "1E85EDF7-8D3C-4E68-8B47-D17B5A69BD42"
             }, 
             {
               "eng": "Office of Indian Residential Schools Resolution of Canada", 
               "fra": "Bureau du Canada sur le r\u00e8glement des questions des pensionnats autochtones", 
+              "key": "Office of Indian Residential Schools Resolution of Canada | Bureau du Canada sur le r\u00e8glement des questions des pensionnats autochtones", 
               "pilot_uuid": "0FA571F4-763E-4C4A-91ED-EEE10F36ECB6"
             }, 
             {
               "eng": "Immigration and Refugee Board of Canada", 
               "fra": "Commission de l'immigration et du statut de r\u00e9fugi\u00e9 du Canada", 
               "id": "IRB-CISR", 
+              "key": "Immigration and Refugee Board of Canada | Commission de l'immigration et du statut de r\u00e9fugi\u00e9 du Canada", 
               "pilot_uuid": "E93D81B4-C6FC-475E-904A-825F56A4902F"
             }, 
             {
               "eng": "Department of International Trade", 
               "fra": "Minist\u00e8re du Commerce international", 
+              "key": "Department of International Trade | Minist\u00e8re du Commerce international", 
               "pilot_uuid": "0A99B7EA-DA3A-4521-B6EC-A435D87D290F"
             }, 
             {
               "eng": "Department of Justice", 
               "fra": "Minist\u00e8re de la Justice", 
+              "key": "Department of Justice | Minist\u00e8re de la Justice", 
               "pilot_uuid": "E06236C6-9A38-46E7-9525-9C13DDB32F2B"
             }, 
             {
               "eng": "Library and Archives Canada", 
               "fra": "Biblioth\u00e8que et Archives Canada", 
               "id": "LAC-BAC", 
+              "key": "Library and Archives Canada | Biblioth\u00e8que et Archives Canada", 
               "pilot_uuid": "75BDAB68-199F-4C06-92A3-E1E6769B0B8E"
             }, 
             {
               "eng": "Law Commission of Canada", 
               "fra": "Commission du droit du Canada", 
               "id": "", 
+              "key": "Law Commission of Canada | Commission du droit du Canada", 
               "pilot_uuid": "DB890CD6-68E6-4765-81B5-0061F904F0B9"
             }, 
             {
               "eng": "Laurentian Pilotage Authority Canada", 
               "fra": "Administration de pilotage des Laurentides Canada", 
               "id": "LPA-APL", 
+              "key": "Laurentian Pilotage Authority Canada | Administration de pilotage des Laurentides Canada", 
               "pilot_uuid": "B2EE0266-52E2-430B-A344-7237274F6104"
             }, 
             {
               "eng": "Marine Atlantic Inc.", 
               "fra": "Marine Atlantique S.C.C.", 
               "id": "", 
+              "key": "Marine Atlantic Inc. | Marine Atlantique S.C.C.", 
               "pilot_uuid": "1D15328A-ACFB-4793-8ABD-19D0A287A6AC"
             }, 
             {
               "eng": "Hazardous Materials Information Review Commission Canada", 
               "fra": "Conseil de contr\u00f4le des renseignements relatifs aux mati\u00e8res dangereuses Canada", 
               "id": "HMIRC-CCRMD", 
+              "key": "Hazardous Materials Information Review Commission Canada | Conseil de contr\u00f4le des renseignements relatifs aux mati\u00e8res dangereuses Canada", 
               "pilot_uuid": "A1A99158-C6CB-44F3-A1A9-0B474776E7A0"
             }, 
             {
               "eng": "Royal Canadian Mint", 
               "fra": "Monnaie royale canadienne", 
               "id": "", 
+              "key": "Royal Canadian Mint | Monnaie royale canadienne", 
               "pilot_uuid": "3BFB10CE-F739-4836-ABEF-FFF4C1CDA62E"
             }, 
             {
               "eng": "Transport Canada", 
               "fra": "Transports Canada", 
               "id": "TC-TC", 
+              "key": "Transport Canada | Transports Canada", 
               "pilot_uuid": "AEAE485F-42DE-4D33-AFA3-F8A3A76FC663"
             }, 
             {
               "eng": "Military Police Complaints Commission of Canada", 
               "fra": "Commission d'examen des plaintes concernant la police militaire du Canada", 
               "id": "MPCC-CPPM", 
+              "key": "Military Police Complaints Commission of Canada | Commission d'examen des plaintes concernant la police militaire du Canada", 
               "pilot_uuid": "88E53539-2A56-4169-B682-C11DF3CB405F"
             }, 
             {
               "eng": "National Battlefields Commission", 
               "fra": "Commission des champs de bataille nationaux", 
+              "key": "National Battlefields Commission | Commission des champs de bataille nationaux", 
               "pilot_uuid": "D0F142C5-1605-4D5E-836C-D5A6CC7B3F51"
             }, 
             {
               "eng": "National Capital Commission", 
               "fra": "Commission de la capitale nationale", 
               "id": "NCC-CCN", 
+              "key": "National Capital Commission | Commission de la capitale nationale", 
               "pilot_uuid": "5409DA6C-F5D7-45A7-9DE2-7242D6464C74"
             }, 
             {
               "eng": "National Round Table on the Environment and the Economy", 
               "fra": "Table ronde nationale sur l'environnement et l'\u00e9conomie", 
               "id": "", 
+              "key": "National Round Table on the Environment and the Economy | Table ronde nationale sur l'environnement et l'\u00e9conomie", 
               "pilot_uuid": "9F10D599-6C3E-4780-9652-12BE4BD3634E"
             }, 
             {
               "eng": "National Film Board", 
               "fra": "Office national du film", 
               "id": "NFB-ONF", 
+              "key": "National Film Board | Office national du film", 
               "pilot_uuid": "581B66BD-5C64-4F1F-86C8-D653A1539EAD"
             }, 
             {
               "eng": "National Gallery of Canada", 
               "fra": "Mus\u00e9e des beaux-arts du Canada", 
               "id": "NGC-MBAC", 
+              "key": "National Gallery of Canada | Mus\u00e9e des beaux-arts du Canada", 
               "pilot_uuid": "3339DA23-42CD-4C47-BE17-6389004E08C1"
             }, 
             {
               "eng": "Canada Science and Technology Museum", 
               "fra": "Mus\u00e9e des sciences et de la technologie du Canada", 
               "id": "CSTM-MSTC", 
+              "key": "Canada Science and Technology Museum | Mus\u00e9e des sciences et de la technologie du Canada", 
               "pilot_uuid": "6FDF2204-B9E0-40C3-8D1D-F23E08D7A072"
             }, 
             {
               "eng": "Northern Pipeline Agency", 
               "fra": "Administration du pipe-line du Nord", 
+              "key": "Northern Pipeline Agency | Administration du pipe-line du Nord", 
               "pilot_uuid": "E8CEAB02-96E8-421B-9292-D466DCAC67D6"
             }, 
             {
               "eng": "Parole Board of Canada", 
               "fra": "Commission des lib\u00e9rations conditionnelles du Canada", 
               "id": "PBC-CLCC", 
+              "key": "Parole Board of Canada | Commission des lib\u00e9rations conditionnelles du Canada", 
               "pilot_uuid": "6AF7EAE0-2351-43BB-AD44-262BDDD45E08"
             }, 
             {
               "eng": "National Research Council Canada", 
               "fra": "Conseil national de recherches Canada", 
               "id": "NRC-CNRC", 
+              "key": "National Research Council Canada | Conseil national de recherches Canada", 
               "pilot_uuid": "EF74C91F-8B81-4C59-8D5F-17094D96F057"
             }, 
             {
               "eng": "Sciences and Engineering Research Canada", 
               "fra": "Recherches en sciences et en g\u00e9nie Canada", 
+              "key": "Sciences and Engineering Research Canada | Recherches en sciences et en g\u00e9nie Canada", 
               "pilot_uuid": "949C5777-E4B9-4A9F-BF34-FBDF8ACA49B2"
             }, 
             {
               "eng": "Rhe Correctional Investigator Canada", 
               "fra": "L'Enqu\u00eateur correctionnel Canada", 
+              "key": "Rhe Correctional Investigator Canada | L'Enqu\u00eateur correctionnel Canada", 
               "pilot_uuid": "0AC978F4-EFC8-475C-9A04-CEB94126275D"
             }, 
             {
               "eng": "Canadian Heritage", 
               "fra": "Patrimoine canadien", 
               "id": "PCH-PCH", 
+              "key": "Canadian Heritage | Patrimoine canadien", 
               "pilot_uuid": "9EEB1859-D658-4E1B-A0E0-45CFAB4E3E5A"
             }, 
             {
               "eng": "Privy Council Office", 
               "fra": "Bureau du Conseil priv\u00e9", 
               "id": "", 
+              "key": "Privy Council Office | Bureau du Conseil priv\u00e9", 
               "pilot_uuid": "26DF0856-0FA2-404C-87E9-21443F333990"
             }, 
             {
               "eng": "Correctional Service of Canada", 
               "fra": "Service correctionnel du Canada", 
               "id": "CSC-SCC", 
+              "key": "Correctional Service of Canada | Service correctionnel du Canada", 
               "pilot_uuid": "3EEE5483-9B34-492D-AE39-3C378F3C2354"
             }, 
             {
               "eng": "Public Health Agency of Canada", 
               "fra": "Agence de la sant\u00e9 publique du Canada", 
               "id": "PHAC-ASPC", 
+              "key": "Public Health Agency of Canada | Agence de la sant\u00e9 publique du Canada", 
               "pilot_uuid": "1C71053B-AA64-4646-956B-41631C396018"
             }, 
             {
               "eng": "Canadian Polar Commission", 
               "fra": "Commission canadienne des affaires polaires", 
               "id": "POLAR-POLAIRE", 
+              "key": "Canadian Polar Commission | Commission canadienne des affaires polaires", 
               "pilot_uuid": "1B0F90FF-3458-47A6-99FD-28AF6E006D75"
             }, 
             {
               "eng": "Pacific Pilotage Authority Canada", 
               "fra": "Administration de pilotage du Pacifique Canada", 
               "id": "PPA-APP", 
+              "key": "Pacific Pilotage Authority Canada | Administration de pilotage du Pacifique Canada", 
               "pilot_uuid": "4256F094-418D-4995-BB27-DE4D8B969644"
             }, 
             {
               "eng": "Public Service Commission of Canada", 
               "fra": "Commission de la fonction publique du Canada", 
               "id": "PSC-CFP", 
+              "key": "Public Service Commission of Canada | Commission de la fonction publique du Canada", 
               "pilot_uuid": "2FFBA23B-83C0-425B-8846-952A407F3D6E"
             }, 
             {
               "eng": "Public Safety Canada", 
               "fra": "S\u00e9curit\u00e9 publique Canada", 
               "id": "PS-SP", 
+              "key": "Public Safety Canada | S\u00e9curit\u00e9 publique Canada", 
               "pilot_uuid": "7C0AF243-753A-465F-8D46-C4FF7397D9B6"
             }, 
             {
               "eng": "Public Service Staffing Tribunal", 
               "fra": "Tribunal de la dotation de la fonction publique", 
               "id": "PSST-TDFP", 
+              "key": "Public Service Staffing Tribunal | Tribunal de la dotation de la fonction publique", 
               "pilot_uuid": "1676844B-E41C-49C2-956C-14056AE1DF3C"
             }, 
             {
               "eng": "Patented Medicine Prices Review Board Canada", 
               "fra": "Conseil d'examen du prix des m\u00e9dicaments brevet\u00e9s Canada", 
               "id": "", 
+              "key": "Patented Medicine Prices Review Board Canada | Conseil d'examen du prix des m\u00e9dicaments brevet\u00e9s Canada", 
               "pilot_uuid": "13A37B05-6384-45FF-A2AE-2DE2CD380B59"
             }, 
             {
               "eng": "Queens Quay West Land Corporation", 
               "fra": "Queens Quay West Land Corporation", 
+              "key": "Queens Quay West Land Corporation", 
               "pilot_uuid": "A74B7444-C582-4890-B430-EE828CB449D0"
             }, 
             {
               "eng": "Royal Canadian Mounted Police", 
               "fra": "Gendarmerie royale du Canada", 
               "id": "RCMP-GRC", 
+              "key": "Royal Canadian Mounted Police | Gendarmerie royale du Canada", 
               "pilot_uuid": "32365B12-5BF6-4B3A-AD1F-F5DAD76D2FDB"
             }, 
             {
               "eng": "Registry of the Competition Tribunal", 
               "fra": "Greffe du Tribunal de la concurrence", 
               "id": "RCT-GTC", 
+              "key": "Registry of the Competition Tribunal | Greffe du Tribunal de la concurrence", 
               "pilot_uuid": "760A68FA-0D34-4D8F-A146-294238D3C9EB"
             }, 
             {
               "eng": "RCMP External Review Committee", 
               "fra": "Comit\u00e9 externe d'examen de la GRC", 
               "id": "ERC-CEE", 
+              "key": "RCMP External Review Committee | Comit\u00e9 externe d'examen de la GRC", 
               "pilot_uuid": "FE709A24-3483-49EF-9A04-8F61D0C2806F"
             }, 
             {
               "eng": "RCMP Public Complaints Commission", 
               "fra": "Commission des plaintes du public contre la GRC", 
+              "key": "RCMP Public Complaints Commission | Commission des plaintes du public contre la GRC", 
               "pilot_uuid": "05EA1D97-E217-4B46-8EFC-B2C0AB4D9A7C"
             }, 
             {
               "eng": "Natural Resources Canada", 
               "fra": "Ressources naturelles Canada", 
               "id": "NRCan-RNCan", 
+              "key": "Natural Resources Canada | Ressources naturelles Canada", 
               "pilot_uuid": "9391E0A2-9717-4755-B548-4499C21F917B"
             }, 
             {
               "eng": "Canadian Radio-television and Telecommunications Commission", 
               "fra": "Conseil de la radiodiffusion et des t\u00e9l\u00e9communications canadiennes", 
               "id": "CRTC-CRTC", 
+              "key": "Canadian Radio-television and Telecommunications Commission | Conseil de la radiodiffusion et des t\u00e9l\u00e9communications canadiennes", 
               "pilot_uuid": "DFDD27DD-1BE6-4735-A763-F3D3360A46FE"
             }, 
             {
               "eng": "Ridley Terminals Inc.", 
               "fra": "Ridley Terminals Inc.", 
               "id": "", 
+              "key": "Ridley Terminals Inc.", 
               "pilot_uuid": "6B59D745-BFBA-4C90-B593-06CA740C7C0A"
             }, 
             {
               "eng": "Standards Council of Canada", 
               "fra": "Conseil canadien des normes", 
               "id": "SCC-CCN-SCC-CCN", 
+              "key": "Standards Council of Canada | Conseil canadien des normes", 
               "pilot_uuid": "72F1CD74-BCD8-410F-9C67-D27AFDC2CA40"
             }, 
             {
               "eng": "The Senate of Canada", 
               "fra": "Le S\u00e9nat du Canada", 
+              "key": "The Senate of Canada | Le S\u00e9nat du Canada", 
               "pilot_uuid": "8376DE9F-FF32-474D-A8AF-45FCAD4B4D9E"
             }, 
             {
               "eng": "Health Canada", 
               "fra": "Sant\u00e9 Canada", 
               "id": "HC-SC", 
+              "key": "Health Canada | Sant\u00e9 Canada", 
               "pilot_uuid": "BD26DB5E-82D2-42C1-99BB-08FCF6068FEE"
             }, 
             {
               "eng": "Office of the Superintendent of Financial Institutions", 
               "fra": "Bureau du surintendant des institutions financi\u00e8res", 
+              "key": "Office of the Superintendent of Financial Institutions | Bureau du surintendant des institutions financi\u00e8res", 
               "pilot_uuid": "4F01090B-C049-4CAF-9C6C-D00312B23DCB"
             }, 
             {
               "eng": "Security Intelligence Review Committee", 
               "fra": "Comit\u00e9 de surveillance des activit\u00e9s de renseignement de s\u00e9curit\u00e9", 
               "id": "SIRC-CSARS", 
+              "key": "Security Intelligence Review Committee | Comit\u00e9 de surveillance des activit\u00e9s de renseignement de s\u00e9curit\u00e9", 
               "pilot_uuid": "ED7F55BA-ECDA-4599-8358-6D767B54E0CC"
             }, 
             {
               "eng": "Department of the Solicitor General", 
               "fra": "Minist\u00e8re du Solliciteur g\u00e9n\u00e9ral", 
+              "key": "Department of the Solicitor General | Minist\u00e8re du Solliciteur g\u00e9n\u00e9ral", 
               "pilot_uuid": "F1ECFFDC-3C38-4F66-A7BC-F3BFB4643EA7"
             }, 
             {
               "eng": "Public Service Labour Relations Board", 
               "fra": "Commission des relations de travail dans la fonction publique", 
               "id": "PSLRB-CRTFP", 
+              "key": "Public Service Labour Relations Board | Commission des relations de travail dans la fonction publique", 
               "pilot_uuid": "E359FC5E-4894-427A-AC68-013C197F47D7"
             }, 
             {
               "eng": "Social Sciences and Humanities Research Council", 
               "fra": "Conseil de recherches en sciences humaines", 
+              "key": "Social Sciences and Humanities Research Council | Conseil de recherches en sciences humaines", 
               "pilot_uuid": "DF295E03-841D-49BE-AAE6-32BB6AC093FB"
             }, 
             {
               "eng": "Statistics Canada", 
               "fra": "Statistique Canada", 
               "id": "StatCan-StatCan", 
+              "key": "Statistics Canada | Statistique Canada", 
               "pilot_uuid": "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
             }, 
             {
               "eng": "Registrar of the Supreme Court of Canada", 
               "fra": "Registraire de la Cour supr\u00eame du Canada", 
+              "key": "Registrar of the Supreme Court of Canada | Registraire de la Cour supr\u00eame du Canada", 
               "pilot_uuid": "6FAAC6D8-0E3C-4223-8280-CD9C057C5BA2"
             }, 
             {
               "eng": "Public Works and Government Services Canada", 
               "fra": "Travaux publics et Services gouvernementaux Canada", 
               "id": "PWGSC-TPSGC", 
+              "key": "Public Works and Government Services Canada | Travaux publics et Services gouvernementaux Canada", 
               "pilot_uuid": "39C93B4D-4F69-4F43-A5B6-FFF89E8B0DF2"
             }, 
             {
               "eng": "Status of Women Canada", 
               "fra": "Condition f\u00e9minine Canada", 
               "id": "SWC-CFC", 
+              "key": "Status of Women Canada | Condition f\u00e9minine Canada", 
               "pilot_uuid": "B3B6BBB7-2A9B-466E-B454-254408A21280"
             }, 
             {
               "eng": "Treasury Board of Canada Secretariat", 
               "fra": "Secr\u00e9tariat du Conseil du Tr\u00e9sor du Canada", 
               "id": "TBS-SCT", 
+              "key": "Treasury Board of Canada Secretariat | Secr\u00e9tariat du Conseil du Tr\u00e9sor du Canada", 
               "pilot_uuid": "81765FCD-32B3-4708-A593-3AA00705E62B"
             }, 
             {
               "eng": "Canadian Tourism Commission", 
               "fra": "Commission canadienne du tourisme", 
               "id": "", 
+              "key": "Canadian Tourism Commission | Commission canadienne du tourisme", 
               "pilot_uuid": "D34A790C-A2E2-48C1-80D8-705205E3D979"
             }, 
             {
               "eng": "Transportation Safety Board of Canada", 
               "fra": "Bureau de la s\u00e9curit\u00e9 des transports du Canada", 
               "id": "TSB-BST", 
+              "key": "Transportation Safety Board of Canada | Bureau de la s\u00e9curit\u00e9 des transports du Canada", 
               "pilot_uuid": "6D84AB23-F352-42EF-9F6E-F025F17F9675"
             }, 
             {
               "eng": "VIA Rail Canada Inc.", 
               "fra": "VIA Rail Canada Inc.", 
               "id": "", 
+              "key": "VIA Rail Canada Inc.", 
               "pilot_uuid": "E3AC5F42-93AA-4076-B4FE-9B2740013443"
             }, 
             {
               "eng": "Western Economic Diversification Canada", 
               "fra": "Diversification de l'\u00e9conomie de l'Ouest Canada", 
               "id": "WD-DEO", 
+              "key": "Western Economic Diversification Canada | Diversification de l'\u00e9conomie de l'Ouest Canada", 
               "pilot_uuid": "45F867DE-3495-40D1-9A9F-CE66FBF27F28"
             }, 
             {
               "eng": "Bank of Canada", 
               "fra": "Banque du Canada", 
+              "key": "Bank of Canada | Banque du Canada", 
               "pilot_uuid": "1F735557-3CE7-45ED-8B3D-6595569C499E"
             }, 
             {
               "eng": "Canada Emission Reduction Incentives Agency", 
               "fra": "Agence canadienne pour l'incitation \u00e0 la r\u00e9duction des \u00e9missions", 
               "id": "", 
+              "key": "Canada Emission Reduction Incentives Agency | Agence canadienne pour l'incitation \u00e0 la r\u00e9duction des \u00e9missions", 
               "pilot_uuid": "4E732FFD-F001-4612-8421-2840CE1E8D34"
             }, 
             {
               "eng": "International Joint Commission", 
               "fra": "Commission mixte internationale", 
+              "key": "International Joint Commission | Commission mixte internationale", 
               "pilot_uuid": "23C90D07-066C-42D4-BAD3-D7BE17443845"
             }, 
             {
               "eng": "Library of Parliament", 
               "fra": "Biblioth\u00e8que du Parlement", 
+              "key": "Library of Parliament | Biblioth\u00e8que du Parlement", 
               "pilot_uuid": "0C002E0E-05B9-4B3B-86FC-23AD8BABD461"
             }, 
             {
               "eng": "Communications Security Establishment", 
               "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
+              "key": "Communications Security Establishment | Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
               "pilot_uuid": "321F1015-551D-45A0-B1B7-C1FDFCB20F66"
             }, 
             {
               "eng": "Indian Claims Commission", 
               "fra": "Commission des revendications des Indiens", 
+              "key": "Indian Claims Commission | Commission des revendications des Indiens", 
               "pilot_uuid": "EC4CCCE9-38B2-400F-8ED2-9307441ECBEE"
             }, 
             {
               "eng": "Office of the Superintendent of Bankruptcy", 
               "fra": "Bureau du surintendant des faillites", 
+              "key": "Office of the Superintendent of Bankruptcy | Bureau du surintendant des faillites", 
               "pilot_uuid": "96D94142-C276-483D-8E14-558C06C4C5BD"
             }, 
             {
               "eng": "International Development Research Centre", 
               "fra": "Le centre de recherches pour le d\u00e9veloppement international", 
+              "key": "International Development Research Centre | Le centre de recherches pour le d\u00e9veloppement international", 
               "pilot_uuid": "CB93C0EB-BE8B-4F65-9734-F9437BB568DA"
             }, 
             {
               "eng": "Public Sector Integrity Canada", 
               "fra": "Int\u00e9grit\u00e9 du secteur public Canada", 
+              "key": "Public Sector Integrity Canada | Int\u00e9grit\u00e9 du secteur public Canada", 
               "pilot_uuid": "4546A1CF-6F6C-4CA9-9905-1471152AA6FE"
             }, 
             {
               "eng": "Assisted Human Reproduction Canada", 
               "fra": "Procr\u00e9ation assist\u00e9e Canada", 
+              "key": "Assisted Human Reproduction Canada | Procr\u00e9ation assist\u00e9e Canada", 
               "pilot_uuid": "5BE47F8E-2F44-4A2D-BD3C-C0073B1E41DF"
             }, 
             {
               "eng": "Office of the Conflict of Interest and Ethics Commissioner", 
               "fra": "Bureau du Commissaire aux conflits d'int\u00e9r\u00eats et \u00e0 l'\u00e9thique", 
+              "key": "Office of the Conflict of Interest and Ethics Commissioner | Bureau du Commissaire aux conflits d'int\u00e9r\u00eats et \u00e0 l'\u00e9thique", 
               "pilot_uuid": "09B96B7E-ED17-4487-AA75-D3791607BF3C"
             }, 
             {
               "eng": "Public Prosecution Service of Canada", 
               "fra": "Service des poursuites p\u00e9nales du Canada", 
               "id": "PPSC-SPPC", 
+              "key": "Public Prosecution Service of Canada | Service des poursuites p\u00e9nales du Canada", 
               "pilot_uuid": "3E9C5012-AD1D-452C-9432-4C3A66E5F1F8"
             }, 
             {
               "eng": "Indian Oil and Gas Canada", 
               "fra": "P\u00e9trole et gaz des Indiens Canada", 
+              "key": "Indian Oil and Gas Canada | P\u00e9trole et gaz des Indiens Canada", 
               "pilot_uuid": "16852FA5-6300-4C92-B70D-9173098BA34E"
             }, 
             {
               "eng": "Public Servants Disclosure Protection Tribunal Canada", 
               "fra": "Tribunal de la protection des fonctionnaires divulgateurs Canada", 
               "id": "PSDPTC-TPFDC", 
+              "key": "Public Servants Disclosure Protection Tribunal Canada | Tribunal de la protection des fonctionnaires divulgateurs Canada", 
               "pilot_uuid": "2EABB728-4065-45CB-BD57-F9DC195D5325"
             }, 
             {
               "eng": "Office of the Procurement Ombudsman", 
               "fra": "Bureau de l'ombudsman de l'approvisionnement", 
+              "key": "Office of the Procurement Ombudsman | Bureau de l'ombudsman de l'approvisionnement", 
               "pilot_uuid": "CE455963-65F9-4D47-A8EC-43A606B958B3"
             }, 
             {
               "eng": "Atomic Energy of Canada Limited", 
               "fra": "\u00c9nergie atomique du Canada, Limit\u00e9e", 
               "id": "", 
+              "key": "Atomic Energy of Canada Limited | \u00c9nergie atomique du Canada, Limit\u00e9e", 
               "pilot_uuid": "D623814A-10A8-439D-9A33-181CE5390B11"
             }, 
             {
               "eng": "Office of the Commissioner of Lobbying Canada", 
               "fra": "Commissariat au lobbying du Canada", 
+              "key": "Office of the Commissioner of Lobbying Canada | Commissariat au lobbying du Canada", 
               "pilot_uuid": "6B85304C-C856-463D-A6DB-463091FEE549"
             }, 
             {
               "eng": "Registry of the Specific Claims Tribunal of Canada", 
               "fra": "Greffe du Tribunal des revendications particuli\u00e8res du Canada", 
               "id": "SCT-TRP", 
+              "key": "Registry of the Specific Claims Tribunal of Canada | Greffe du Tribunal des revendications particuli\u00e8res du Canada", 
               "pilot_uuid": "0CA4C1A6-F751-438A-B215-000245174A3C"
             }, 
             {
               "eng": "Truth and Reconciliation Commission Secretariat", 
               "fra": "Secr\u00e9tariat de la commission de la v\u00e9rit\u00e9 et de la r\u00e9conciliation", 
+              "key": "Truth and Reconciliation Commission Secretariat | Secr\u00e9tariat de la commission de la v\u00e9rit\u00e9 et de la r\u00e9conciliation", 
               "pilot_uuid": "6CFF19F1-799B-474D-86EE-4A7D917E9889"
             }, 
             {
               "eng": "Federal Economic Development Agency for Southern Ontario", 
               "fra": "Agence f\u00e9d\u00e9rale de d\u00e9veloppement \u00e9conomique pour le Sud de l'Ontario", 
               "id": "FedDev Ontario-FedDev Ontario", 
+              "key": "Federal Economic Development Agency for Southern Ontario | Agence f\u00e9d\u00e9rale de d\u00e9veloppement \u00e9conomique pour le Sud de l'Ontario", 
               "pilot_uuid": "1918B8AE-B298-4809-B5DB-43100F93AEAC"
             }, 
             {
               "eng": "Canadian Northern Economic Development Agency", 
               "fra": "Agence canadienne de d\u00e9veloppement \u00e9conomique du Nord", 
               "id": "CanNor-CanNor", 
+              "key": "Canadian Northern Economic Development Agency | Agence canadienne de d\u00e9veloppement \u00e9conomique du Nord", 
               "pilot_uuid": "63CFF5A6-FB76-4938-91EB-010D3C0673DE"
             }, 
             {
               "eng": "Canadian Coast Guard (an Agency of Fisheries and Oceans Canada)", 
               "fra": "Garde C\u00f4ti\u00e8re Canadienne (une agence de P\u00eaches et Oc\u00e9ans Canada)", 
+              "key": "Canadian Coast Guard (an Agency of Fisheries and Oceans Canada) | Garde C\u00f4ti\u00e8re Canadienne (une agence de P\u00eaches et Oc\u00e9ans Canada)", 
               "pilot_uuid": "70429896-42A7-4D29-821D-7D9563AA3229"
             }, 
             {
               "eng": "Infrastructure Canada", 
               "fra": "Infrastructure Canada", 
               "id": "INFC-INFC", 
+              "key": "Infrastructure Canada", 
               "pilot_uuid": "AC76B01B-0569-4067-A427-D1F6183A8746"
             }, 
             {
               "eng": "Aboriginal Affairs and Northern Development Canada", 
               "fra": "Affaires autochtones et D\u00e9veloppement du Nord Canada", 
-              "id": "AANDC-AADNC"
+              "id": "AANDC-AADNC", 
+              "key": "Aboriginal Affairs and Northern Development Canada | Affaires autochtones et D\u00e9veloppement du Nord Canada"
             }, 
             {
               "eng": "Department of Justice Canada", 
               "fra": "Minist\u00e8re de la Justice Canada", 
-              "id": "JUS-JUS"
+              "id": "JUS-JUS", 
+              "key": "Department of Justice Canada | Minist\u00e8re de la Justice Canada"
             }, 
             {
               "eng": "Department of Social Development", 
               "fra": "Minist\u00e8re du D\u00e9veloppement social", 
-              "id": ""
+              "id": "", 
+              "key": "Department of Social Development | Minist\u00e8re du D\u00e9veloppement social"
             }, 
             {
               "eng": "Treasury Board", 
               "fra": "Conseil du Tr\u00e9sor", 
-              "id": "TB-CT"
+              "id": "TB-CT", 
+              "key": "Treasury Board | Conseil du Tr\u00e9sor"
             }, 
             {
               "eng": "Communications Security Establishment Canada", 
               "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada", 
-              "id": "CSEC-CSTC"
+              "id": "CSEC-CSTC", 
+              "key": "Communications Security Establishment Canada | Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada"
             }, 
             {
               "eng": "Indian Residential Schools Truth and Reconciliation Commission", 
               "fra": "Commission de v\u00e9rit\u00e9 et de r\u00e9conciliation relative aux pensionnats indiens", 
-              "id": ""
+              "id": "", 
+              "key": "Indian Residential Schools Truth and Reconciliation Commission | Commission de v\u00e9rit\u00e9 et de r\u00e9conciliation relative aux pensionnats indiens"
             }, 
             {
               "eng": "Northern Pipeline Agency Canada", 
               "fra": "Administration du pipe-line du Nord Canada", 
-              "id": "NPA-APN"
+              "id": "NPA-APN", 
+              "key": "Northern Pipeline Agency Canada | Administration du pipe-line du Nord Canada"
             }, 
             {
               "eng": "Office of the Commissioner of Lobbying of Canada", 
               "fra": "Commissariat au lobbying du Canada", 
-              "id": "OCL-CAL"
+              "id": "OCL-CAL", 
+              "key": "Office of the Commissioner of Lobbying of Canada | Commissariat au lobbying du Canada"
             }, 
             {
               "eng": "The Correctional Investigator Canada", 
               "fra": "L'Enqu\u00eateur correctionnel Canada", 
-              "id": "OCI-BEC"
+              "id": "OCI-BEC", 
+              "key": "The Correctional Investigator Canada | L'Enqu\u00eateur correctionnel Canada"
             }, 
             {
               "eng": "Office of the Secretary to the Governor General", 
               "fra": "Bureau du secr\u00e9taire du gouverneur g\u00e9n\u00e9ral", 
-              "id": "OSGG-BSGG"
+              "id": "OSGG-BSGG", 
+              "key": "Office of the Secretary to the Governor General | Bureau du secr\u00e9taire du gouverneur g\u00e9n\u00e9ral"
             }, 
             {
               "eng": "Office of the Public Sector Integrity Commissioner of Canada", 
               "fra": "Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada", 
-              "id": "PSIC-ISPC"
+              "id": "PSIC-ISPC", 
+              "key": "Office of the Public Sector Integrity Commissioner of Canada | Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada"
             }, 
             {
               "eng": "Office of the Superintendent of Financial Institutions Canada", 
               "fra": "Bureau du surintendant des institutions financi\u00e8res Canada", 
-              "id": "OSFI-BSIF"
+              "id": "OSFI-BSIF", 
+              "key": "Office of the Superintendent of Financial Institutions Canada | Bureau du surintendant des institutions financi\u00e8res Canada"
             }, 
             {
               "eng": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act", 
               "fra": "Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame", 
-              "id": "SCC-CSC"
+              "id": "SCC-CSC", 
+              "key": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act | Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame"
             }, 
             {
               "eng": "Commission for Public Complaints Against the Royal Canadian Mounted Police", 
               "fra": "Commission des plaintes du public contre la Gendarmerie royale du Canada", 
-              "id": "CPC-CPP"
+              "id": "CPC-CPP", 
+              "key": "Commission for Public Complaints Against the Royal Canadian Mounted Police | Commission des plaintes du public contre la Gendarmerie royale du Canada"
             }, 
             {
               "eng": "Shared Services Canada", 
               "fra": "Services partag\u00e9s Canada", 
-              "id": "SSC-SPC"
+              "id": "SSC-SPC", 
+              "key": "Shared Services Canada | Services partag\u00e9s Canada"
             }, 
             {
               "eng": "Veterans Review and Appeal Board", 
               "fra": "Tribunal des anciens combattants (r\u00e9vision et appel)", 
-              "id": "VRAB-TACRA"
+              "id": "VRAB-TACRA", 
+              "key": "Veterans Review and Appeal Board | Tribunal des anciens combattants (r\u00e9vision et appel)"
             }, 
             {
               "eng": "Canada Employment Insurance Commission", 
               "fra": "Commission de l'assurance-emploi du Canada", 
-              "id": "CEIC-CAEC"
+              "id": "CEIC-CAEC", 
+              "key": "Canada Employment Insurance Commission | Commission de l'assurance-emploi du Canada"
             }, 
             {
               "eng": "Science and Engineering Research Canada", 
               "fra": "Recherches en sciences et en g\u00e9nie Canada", 
-              "id": "SERC-RSGC"
+              "id": "SERC-RSGC", 
+              "key": "Science and Engineering Research Canada | Recherches en sciences et en g\u00e9nie Canada"
             }, 
             {
               "eng": "Social Sciences and Humanities Research Council of Canada", 
               "fra": "Conseil de recherches en sciences humaines du Canada", 
-              "id": "SSHRC-CRSH"
+              "id": "SSHRC-CRSH", 
+              "key": "Social Sciences and Humanities Research Council of Canada | Conseil de recherches en sciences humaines du Canada"
             }, 
             {
               "eng": "The National Battlefields Commission", 
               "fra": "Commission des champs de bataille nationaux", 
-              "id": "NBC-CCBN"
+              "id": "NBC-CCBN", 
+              "key": "The National Battlefields Commission | Commission des champs de bataille nationaux"
             }, 
             {
               "eng": "Canada Employment Insurance Financing Board", 
               "fra": "Office de financement de l'assurance-emploi du Canada", 
-              "id": ""
+              "id": "", 
+              "key": "Canada Employment Insurance Financing Board | Office de financement de l'assurance-emploi du Canada"
             }, 
             {
               "eng": "Canadian Museum for Human Rights", 
               "fra": "Mus\u00e9e canadien pour les droits de la personne", 
-              "id": "CMHR-MCDP"
+              "id": "CMHR-MCDP", 
+              "key": "Canadian Museum for Human Rights | Mus\u00e9e canadien pour les droits de la personne"
             }, 
             {
               "eng": "Canadian Museum of Immigration at Pier 21", 
               "fra": "Mus\u00e9e canadien de l'immigration du Quai 21", 
-              "id": "CMIP-MCIQ"
+              "id": "CMIP-MCIQ", 
+              "key": "Canadian Museum of Immigration at Pier 21 | Mus\u00e9e canadien de l'immigration du Quai 21"
             }, 
             {
               "eng": "Corporation for the Mitigation of Mackenzie Gas Project Impacts", 
               "fra": "Soci\u00e9t\u00e9 d'att\u00e9nuation des r\u00e9percussions du projet gazier Mackenzie", 
-              "id": ""
+              "id": "", 
+              "key": "Corporation for the Mitigation of Mackenzie Gas Project Impacts | Soci\u00e9t\u00e9 d'att\u00e9nuation des r\u00e9percussions du projet gazier Mackenzie"
             }, 
             {
               "eng": "First Nations Statistical Institute", 
               "fra": "Institut de la statistique des premi\u00e8res nations", 
-              "id": ""
+              "id": "", 
+              "key": "First Nations Statistical Institute | Institut de la statistique des premi\u00e8res nations"
             }, 
             {
               "eng": "Federal Bridge Corporation", 
               "fra": "Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux", 
-              "id": "FBCL-SPFL"
+              "id": "FBCL-SPFL", 
+              "key": "Federal Bridge Corporation | Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux"
             }, 
             {
               "eng": "Windsor-Detroit Bridge Authority", 
               "fra": "Autorit\u00e9 du pont Windsor-D\u00e9troit", 
-              "id": ""
+              "id": "", 
+              "key": "Windsor-Detroit Bridge Authority | Autorit\u00e9 du pont Windsor-D\u00e9troit"
             }, 
             {
               "eng": "Canada Post", 
               "fra": "Postes Canada", 
-              "id": "CPC-SCP"
+              "id": "CPC-SCP", 
+              "key": "Canada Post | Postes Canada"
             }
           ], 
           "data_gov_common_core": "Publisher", 
@@ -1389,11 +1577,13 @@
           "choices": [
             {
               "eng": "Data", 
-              "fra": "Donn\u00e9es"
+              "fra": "Donn\u00e9es", 
+              "key": "Data | Donn\u00e9es"
             }, 
             {
               "eng": "Geo Data", 
-              "fra": "G\u00e9o"
+              "fra": "G\u00e9o", 
+              "key": "Geo Data | G\u00e9o"
             }
           ], 
           "data_gov_common_core": "", 
@@ -1432,108 +1622,126 @@
               "eng": "Arts, Music, Literature", 
               "fra": "Arts, musique, litt\u00e9rature", 
               "id": "AA", 
+              "key": "Arts Music Literature  Arts musique litt\u00e9rature", 
               "pilot_uuid": "86EB6B9F-344C-4C3E-982D-53164994516A"
             }, 
             {
               "eng": "Agriculture", 
               "fra": "Agriculture", 
               "id": "AG", 
+              "key": "Agriculture  Agriculture", 
               "pilot_uuid": "04D07B59-8D90-455C-9C84-7C1DF833473B"
             }, 
             {
               "eng": "Economics and Industry", 
               "fra": "\u00c9conomie et industrie", 
               "id": "EC", 
+              "key": "Economics and Industry  \u00c9conomie et industrie", 
               "pilot_uuid": "3AC17C98-F356-4CC8-BAEB-886037E5C2EE"
             }, 
             {
               "eng": "Education and Training", 
               "fra": "\u00c9ducation et formation", 
               "id": "ET", 
+              "key": "Education and Training  \u00c9ducation et formation", 
               "pilot_uuid": "0AA56AD7-4CB3-4F7E-A741-9503231BC697"
             }, 
             {
               "eng": "Government and Politics", 
               "fra": "Gouvernement et vie politique", 
               "id": "GV", 
+              "key": "Government and Politics  Gouvernement et vie politique", 
               "pilot_uuid": "1BEB670E-8A73-4217-BCD2-6189F92053E2"
             }, 
             {
               "eng": "Health and Safety", 
               "fra": "Sant\u00e9 et s\u00e9curit\u00e9", 
               "id": "HE", 
+              "key": "Health and Safety  Sant\u00e9 et s\u00e9curit\u00e9", 
               "pilot_uuid": "7D5846DC-74D0-415A-A853-318DCD89E731"
             }, 
             {
               "eng": "History and Archaeology", 
               "fra": "Histoire et arch\u00e9ologie", 
               "id": "HI", 
+              "key": "History and Archaeology  Histoire et arch\u00e9ologie", 
               "pilot_uuid": "704B3281-511F-4FFB-85C7-D437892CECE2"
             }, 
             {
               "eng": "Information and Communications", 
               "fra": "Information et communication", 
               "id": "IN", 
+              "key": "Information and Communications  Information et communication", 
               "pilot_uuid": "70B236D3-B7CE-443C-89C2-FEE7277F41C9"
             }, 
             {
               "eng": "Labour", 
               "fra": "Travail et emploi", 
               "id": "LB", 
+              "key": "Labour  Travail et emploi", 
               "pilot_uuid": "F97F8830-B980-4A20-9B13-D572F1C094F0"
             }, 
             {
               "eng": "Language and Linguistics", 
               "fra": "Langue et linguistique", 
               "id": "LN", 
+              "key": "Language and Linguistics  Langue et linguistique", 
               "pilot_uuid": "43BB3E2A-DA38-4005-9A57-8CBEB60F5FE0"
             }, 
             {
               "eng": "Law", 
               "fra": "Droit", 
               "id": "LW", 
+              "key": "Law  Droit", 
               "pilot_uuid": "BBBDFE5C-9EC2-4393-A801-5866D176CF08"
             }, 
             {
               "eng": "Military", 
               "fra": "Histoire et science militaire", 
               "id": "MI", 
+              "key": "Military  Histoire et science militaire", 
               "pilot_uuid": "8ACBA39A-BD70-4113-98F8-8A8A11E095C1"
             }, 
             {
               "eng": "Nature and Environment", 
               "fra": "Nature et environnement", 
               "id": "NE", 
+              "key": "Nature and Environment  Nature et environnement", 
               "pilot_uuid": "9E3985CD-58EC-4DBA-AF73-5711AF379DE4"
             }, 
             {
               "eng": "Persons", 
               "fra": "Personnes", 
               "id": "PE", 
+              "key": "Persons  Personnes", 
               "pilot_uuid": "BEF4D60C-E2D1-46B9-96C0-B55902F076F1"
             }, 
             {
               "eng": "Processes", 
               "fra": "Liens et fonctions", 
               "id": "PR", 
+              "key": "Processes  Liens et fonctions", 
               "pilot_uuid": "D1EFA3C1-FC9D-4E53-9BD4-90434626D213"
             }, 
             {
               "eng": "Society and Culture", 
               "fra": "Soci\u00e9t\u00e9 et culture", 
               "id": "SO", 
+              "key": "Society and Culture  Soci\u00e9t\u00e9 et culture", 
               "pilot_uuid": "8C3A29E9-292D-47E3-8163-51FF8AB4E6D3"
             }, 
             {
               "eng": "Science and Technology", 
               "fra": "Sciences et technologie", 
               "id": "ST", 
+              "key": "Science and Technology  Sciences et technologie", 
               "pilot_uuid": "FB6B00F0-6271-42D6-ACB7-FFE664843698"
             }, 
             {
               "eng": "Transport", 
               "fra": "Transport", 
               "id": "TR", 
+              "key": "Transport  Transport", 
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
             }
           ], 
@@ -1583,97 +1791,116 @@
             {
               "eng": "Farming", 
               "fra": "Agriculture", 
-              "id": 642
+              "id": 642, 
+              "key": "Farming  Agriculture"
             }, 
             {
               "eng": "Biota", 
               "fra": "Biote", 
-              "id": 643
+              "id": 643, 
+              "key": "Biota  Biote"
             }, 
             {
               "eng": "Boundaries", 
               "fra": "Fronti\u00e8res", 
-              "id": 644
+              "id": 644, 
+              "key": "Boundaries  Fronti\u00e8res"
             }, 
             {
               "eng": "Climatology / Meteorology / Atmosphere", 
               "fra": "Climatologie / M\u00e9t\u00e9orologie / Atmosph\u00e8re", 
-              "id": 645
+              "id": 645, 
+              "key": "Climatology Meteorology Atmosphere  Climatologie M\u00e9t\u00e9orologie Atmosph\u00e8re"
             }, 
             {
               "eng": "Economy", 
               "fra": "\u00c9conomie", 
-              "id": 646
+              "id": 646, 
+              "key": "Economy  \u00c9conomie"
             }, 
             {
               "eng": "Elevation", 
               "fra": "\u00c9l\u00e9vation", 
-              "id": 647
+              "id": 647, 
+              "key": "Elevation  \u00c9l\u00e9vation"
             }, 
             {
               "eng": "Environment", 
               "fra": "Environnement", 
-              "id": 648
+              "id": 648, 
+              "key": "Environment  Environnement"
             }, 
             {
               "eng": "Geoscientific Information", 
               "fra": "Information g\u00e9oscientifique", 
-              "id": 649
+              "id": 649, 
+              "key": "Geoscientific Information  Information g\u00e9oscientifique"
             }, 
             {
               "eng": "Health", 
               "fra": "Sant\u00e9", 
-              "id": 650
+              "id": 650, 
+              "key": "Health  Sant\u00e9"
             }, 
             {
               "eng": "Imagery Base Maps Earth Cover", 
               "fra": "Imagerie carte de base couverture terrestre", 
-              "id": 651
+              "id": 651, 
+              "key": "Imagery Base Maps Earth Cover  Imagerie carte de base couverture terrestre"
             }, 
             {
               "eng": "Intelligence Military", 
               "fra": "Renseignements militaires", 
-              "id": 652
+              "id": 652, 
+              "key": "Intelligence Military  Renseignements militaires"
             }, 
             {
               "eng": "Inland Waters", 
               "fra": "Eaux int\u00e9rieures", 
-              "id": 653
+              "id": 653, 
+              "key": "Inland Waters  Eaux int\u00e9rieures"
             }, 
             {
               "eng": "Location", 
               "fra": "Localisation", 
-              "id": 654
+              "id": 654, 
+              "key": "Location  Localisation"
             }, 
             {
               "eng": "Oceans", 
               "fra": "Oc\u00e9ans", 
-              "id": 655
+              "id": 655, 
+              "key": "Oceans  Oc\u00e9ans"
             }, 
             {
               "eng": "Planning Cadastre", 
               "fra": "Am\u00e9nagement cadastre", 
-              "id": 656
+              "id": 656, 
+              "key": "Planning Cadastre  Am\u00e9nagement cadastre"
             }, 
             {
               "eng": "Society", 
               "fra": "Soci\u00e9t\u00e9", 
-              "id": 657
+              "id": 657, 
+              "key": "Society  Soci\u00e9t\u00e9"
             }, 
             {
               "eng": "Structure", 
               "fra": "Structures", 
-              "id": 658
+              "id": 658, 
+              "key": "Structure  Structures"
             }, 
             {
               "eng": "Transportation", 
               "fra": "Transport", 
-              "id": 659
+              "id": 659, 
+              "key": "Transportation  Transport"
             }, 
             {
               "eng": "Utilities Communication", 
               "fra": "Services communication", 
-              "id": 660
+              "id": 660, 
+              "key": "Utilities Communication  Services communication"
             }
           ], 
           "data_gov_common_core": "", 
@@ -1866,67 +2093,80 @@
             {
               "eng": "Continual", 
               "fra": "Continue", 
-              "id": 532
+              "id": 532, 
+              "key": "Continual | Continue"
             }, 
             {
               "eng": "Daily", 
               "fra": "Quotidien", 
-              "id": 533
+              "id": 533, 
+              "key": "Daily | Quotidien"
             }, 
             {
               "eng": "Weekly", 
               "fra": "Hebdomadaire", 
-              "id": 534
+              "id": 534, 
+              "key": "Weekly | Hebdomadaire"
             }, 
             {
               "eng": "Fortnightly", 
               "fra": "Quinzomadaire", 
-              "id": 535
+              "id": 535, 
+              "key": "Fortnightly | Quinzomadaire"
             }, 
             {
               "eng": "Monthly", 
               "fra": "Mensuel", 
-              "id": 536
+              "id": 536, 
+              "key": "Monthly | Mensuel"
             }, 
             {
               "eng": "Quarterly", 
               "fra": "Trimestriel", 
-              "id": 537
+              "id": 537, 
+              "key": "Quarterly | Trimestriel"
             }, 
             {
               "eng": "Biannually", 
               "fra": "Semestriel", 
-              "id": 538
+              "id": 538, 
+              "key": "Biannually | Semestriel"
             }, 
             {
               "eng": "Annually", 
               "fra": "Annuel", 
-              "id": 539
+              "id": 539, 
+              "key": "Annually | Annuel"
             }, 
             {
               "eng": "As Needed", 
               "fra": "Au besoin", 
-              "id": 540
+              "id": 540, 
+              "key": "As Needed | Au besoin"
             }, 
             {
               "eng": "Irregular", 
               "fra": "Irr\u00e9gulier", 
-              "id": 541
+              "id": 541, 
+              "key": "Irregular | Irr\u00e9gulier"
             }, 
             {
               "eng": "Not Planned", 
               "fra": "Non planifi\u00e9", 
-              "id": 542
+              "id": 542, 
+              "key": "Not Planned | Non planifi\u00e9"
             }, 
             {
               "eng": "Unknown", 
               "fra": "Inconnu", 
-              "id": 543
+              "id": 543, 
+              "key": "Unknown | Inconnu"
             }, 
             {
               "eng": "Semimonthly", 
               "fra": "Bimensuel", 
-              "id": 544
+              "id": 544, 
+              "key": "Semimonthly | Bimensuel"
             }
           ], 
           "data_gov_common_core": "Frequency", 
@@ -2005,1942 +2245,2328 @@
             {
               "eng": "Atlantic", 
               "fra": "Atlantique", 
-              "id": 1
+              "id": 1, 
+              "key": "Atlantic | Atlantique"
             }, 
             {
               "eng": "Newfoundland and Labrador", 
               "fra": "Terre-Neuve-et-Labrador", 
               "id": 10, 
+              "key": "Newfoundland and Labrador | Terre-Neuve-et-Labrador", 
               "pilot_uuid": "E65D06CB-F120-43E6-B037-83F699C84BAE"
             }, 
             {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
-              "id": 1001
+              "id": 1001, 
+              "key": "Division No. 1"
             }, 
             {
               "eng": "Division No. 2", 
               "fra": "Division No. 2", 
-              "id": 1002
+              "id": 1002, 
+              "key": "Division No. 2"
             }, 
             {
               "eng": "Division No. 3", 
               "fra": "Division No. 3", 
-              "id": 1003
+              "id": 1003, 
+              "key": "Division No. 3"
             }, 
             {
               "eng": "Division No. 4", 
               "fra": "Division No. 4", 
-              "id": 1004
+              "id": 1004, 
+              "key": "Division No. 4"
             }, 
             {
               "eng": "Division No. 5", 
               "fra": "Division No. 5", 
-              "id": 1005
+              "id": 1005, 
+              "key": "Division No. 5"
             }, 
             {
               "eng": "Division No. 6", 
               "fra": "Division No. 6", 
-              "id": 1006
+              "id": 1006, 
+              "key": "Division No. 6"
             }, 
             {
               "eng": "Division No. 7", 
               "fra": "Division No. 7", 
-              "id": 1007
+              "id": 1007, 
+              "key": "Division No. 7"
             }, 
             {
               "eng": "Division No. 8", 
               "fra": "Division No. 8", 
-              "id": 1008
+              "id": 1008, 
+              "key": "Division No. 8"
             }, 
             {
               "eng": "Division No. 9", 
               "fra": "Division No. 9", 
-              "id": 1009
+              "id": 1009, 
+              "key": "Division No. 9"
             }, 
             {
               "eng": "Division No. 10", 
               "fra": "Division No. 10", 
-              "id": 1010
+              "id": 1010, 
+              "key": "Division No. 10"
             }, 
             {
               "eng": "Division No. 11", 
-              "fra": "Division No. 11"
+              "fra": "Division No. 11", 
+              "key": "Division No. 11"
             }, 
             {
               "eng": "Prince Edward Island", 
               "fra": "\u00cele-du-Prince-\u00c9douard", 
               "id": 11, 
+              "key": "Prince Edward Island | \u00cele-du-Prince-\u00c9douard", 
               "pilot_uuid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255"
             }, 
             {
               "eng": "Kings", 
               "fra": "Kings", 
-              "id": 1101
+              "id": 1101, 
+              "key": "Kings"
             }, 
             {
               "eng": "Queens", 
               "fra": "Queens", 
-              "id": 1102
+              "id": 1102, 
+              "key": "Queens"
             }, 
             {
               "eng": "Prince", 
               "fra": "Prince", 
-              "id": 1103
+              "id": 1103, 
+              "key": "Prince"
             }, 
             {
               "eng": "Nova Scotia", 
               "fra": "Nouvelle-\u00c9cosse", 
               "id": 12, 
+              "key": "Nova Scotia | Nouvelle-\u00c9cosse", 
               "pilot_uuid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E"
             }, 
             {
               "eng": "Shelburne", 
               "fra": "Shelburne", 
-              "id": 1201
+              "id": 1201, 
+              "key": "Shelburne"
             }, 
             {
               "eng": "Yarmouth", 
               "fra": "Yarmouth", 
-              "id": 1202
+              "id": 1202, 
+              "key": "Yarmouth"
             }, 
             {
               "eng": "Digby", 
               "fra": "Digby", 
-              "id": 1203
+              "id": 1203, 
+              "key": "Digby"
             }, 
             {
               "eng": "Queens", 
               "fra": "Queens", 
-              "id": 1204
+              "id": 1204, 
+              "key": "Queens"
             }, 
             {
               "eng": "Annapolis", 
               "fra": "Annapolis", 
-              "id": 1205
+              "id": 1205, 
+              "key": "Annapolis"
             }, 
             {
               "eng": "Lunenburg", 
               "fra": "Lunenburg", 
-              "id": 1206
+              "id": 1206, 
+              "key": "Lunenburg"
             }, 
             {
               "eng": "Kings", 
               "fra": "Kings", 
-              "id": 1207
+              "id": 1207, 
+              "key": "Kings"
             }, 
             {
               "eng": "Hants", 
               "fra": "Hants", 
-              "id": 1208
+              "id": 1208, 
+              "key": "Hants"
             }, 
             {
               "eng": "Halifax", 
               "fra": "Halifax", 
-              "id": 1209
+              "id": 1209, 
+              "key": "Halifax"
             }, 
             {
               "eng": "Colchester", 
               "fra": "Colchester", 
-              "id": 1210
+              "id": 1210, 
+              "key": "Colchester"
             }, 
             {
               "eng": "Cumberland", 
               "fra": "Cumberland", 
-              "id": 1211
+              "id": 1211, 
+              "key": "Cumberland"
             }, 
             {
               "eng": "Pictou", 
               "fra": "Pictou", 
-              "id": 1212
+              "id": 1212, 
+              "key": "Pictou"
             }, 
             {
               "eng": "Guysborough", 
               "fra": "Guysborough", 
-              "id": 1213
+              "id": 1213, 
+              "key": "Guysborough"
             }, 
             {
               "eng": "Antigonish", 
               "fra": "Antigonish", 
-              "id": 1214
+              "id": 1214, 
+              "key": "Antigonish"
             }, 
             {
               "eng": "Inverness", 
               "fra": "Inverness", 
-              "id": 1215
+              "id": 1215, 
+              "key": "Inverness"
             }, 
             {
               "eng": "Richmond", 
               "fra": "Richmond", 
-              "id": 1216
+              "id": 1216, 
+              "key": "Richmond"
             }, 
             {
               "eng": "Cape Breton", 
               "fra": "Cape Breton", 
-              "id": 1217
+              "id": 1217, 
+              "key": "Cape Breton"
             }, 
             {
               "eng": "Victoria", 
               "fra": "Victoria", 
-              "id": 1218
+              "id": 1218, 
+              "key": "Victoria"
             }, 
             {
               "eng": "New Brunswick", 
               "fra": "Nouveau-Brunswick", 
               "id": 13, 
+              "key": "New Brunswick | Nouveau-Brunswick", 
               "pilot_uuid": "93195680-D726-4FCE-BF92-D95F1F796B3B"
             }, 
             {
               "eng": "Saint John", 
               "fra": "Saint John", 
-              "id": 1301
+              "id": 1301, 
+              "key": "Saint John"
             }, 
             {
               "eng": "Charlotte", 
               "fra": "Charlotte", 
-              "id": 1302
+              "id": 1302, 
+              "key": "Charlotte"
             }, 
             {
               "eng": "Sunbury", 
               "fra": "Sunbury", 
-              "id": 1303
+              "id": 1303, 
+              "key": "Sunbury"
             }, 
             {
               "eng": "Queens", 
               "fra": "Queens", 
-              "id": 1304
+              "id": 1304, 
+              "key": "Queens"
             }, 
             {
               "eng": "Kings", 
               "fra": "Kings", 
-              "id": 1305
+              "id": 1305, 
+              "key": "Kings"
             }, 
             {
               "eng": "Albert", 
               "fra": "Albert", 
-              "id": 1306
+              "id": 1306, 
+              "key": "Albert"
             }, 
             {
               "eng": "Westmorland", 
               "fra": "Westmorland", 
-              "id": 1307
+              "id": 1307, 
+              "key": "Westmorland"
             }, 
             {
               "eng": "Kent", 
               "fra": "Kent", 
-              "id": 1308
+              "id": 1308, 
+              "key": "Kent"
             }, 
             {
               "eng": "Northumberland", 
               "fra": "Northumberland", 
-              "id": 1309
+              "id": 1309, 
+              "key": "Northumberland"
             }, 
             {
               "eng": "York", 
               "fra": "York", 
-              "id": 1310
+              "id": 1310, 
+              "key": "York"
             }, 
             {
               "eng": "Carleton", 
               "fra": "Carleton", 
-              "id": 1311
+              "id": 1311, 
+              "key": "Carleton"
             }, 
             {
               "eng": "Victoria", 
               "fra": "Victoria", 
-              "id": 1312
+              "id": 1312, 
+              "key": "Victoria"
             }, 
             {
               "eng": "Madawaska", 
               "fra": "Madawaska", 
-              "id": 1313
+              "id": 1313, 
+              "key": "Madawaska"
             }, 
             {
               "eng": "Restigouche", 
               "fra": "Restigouche", 
-              "id": 1314
+              "id": 1314, 
+              "key": "Restigouche"
             }, 
             {
               "eng": "Gloucester", 
               "fra": "Gloucester", 
-              "id": 1315
+              "id": 1315, 
+              "key": "Gloucester"
             }, 
             {
               "eng": "Quebec", 
               "fra": "Quebec", 
-              "id": 2
+              "id": 2, 
+              "key": "Quebec"
             }, 
             {
               "eng": "Quebec", 
               "fra": "Qu\u00e9bec", 
               "id": 24, 
+              "key": "Quebec | Qu\u00e9bec", 
               "pilot_uuid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E"
             }, 
             {
               "eng": "Les \u00celes-de-la-Madeleine", 
               "fra": "Les \u00celes-de-la-Madeleine", 
-              "id": 2401
+              "id": 2401, 
+              "key": "Les \u00celes-de-la-Madeleine"
             }, 
             {
               "eng": "Le Rocher-Perc\u00e9", 
               "fra": "Le Rocher-Perc\u00e9", 
-              "id": 2402
+              "id": 2402, 
+              "key": "Le Rocher-Perc\u00e9"
             }, 
             {
               "eng": "La C\u00f4te-de-Gasp\u00e9", 
               "fra": "La C\u00f4te-de-Gasp\u00e9", 
-              "id": 2403
+              "id": 2403, 
+              "key": "La C\u00f4te-de-Gasp\u00e9"
             }, 
             {
               "eng": "La Haute-Gasp\u00e9sie", 
               "fra": "La Haute-Gasp\u00e9sie", 
-              "id": 2404
+              "id": 2404, 
+              "key": "La Haute-Gasp\u00e9sie"
             }, 
             {
               "eng": "Bonaventure", 
               "fra": "Bonaventure", 
-              "id": 2405
+              "id": 2405, 
+              "key": "Bonaventure"
             }, 
             {
               "eng": "Avignon", 
               "fra": "Avignon", 
-              "id": 2406
+              "id": 2406, 
+              "key": "Avignon"
             }, 
             {
               "eng": "La Matap\u00e9dia", 
               "fra": "La Matap\u00e9dia", 
-              "id": 2407
+              "id": 2407, 
+              "key": "La Matap\u00e9dia"
             }, 
             {
               "eng": "Matane", 
               "fra": "Matane", 
-              "id": 2408
+              "id": 2408, 
+              "key": "Matane"
             }, 
             {
               "eng": "La Mitis", 
               "fra": "La Mitis", 
-              "id": 2409
+              "id": 2409, 
+              "key": "La Mitis"
             }, 
             {
               "eng": "Rimouski-Neigette", 
               "fra": "Rimouski-Neigette", 
-              "id": 2410
+              "id": 2410, 
+              "key": "Rimouski-Neigette"
             }, 
             {
               "eng": "Les Basques", 
               "fra": "Les Basques", 
-              "id": 2411
+              "id": 2411, 
+              "key": "Les Basques"
             }, 
             {
               "eng": "Rivi\u00e8re-du-Loup", 
               "fra": "Rivi\u00e8re-du-Loup", 
-              "id": 2412
+              "id": 2412, 
+              "key": "Rivi\u00e8re-du-Loup"
             }, 
             {
               "eng": "T\u00e9miscouata", 
               "fra": "T\u00e9miscouata", 
-              "id": 2413
+              "id": 2413, 
+              "key": "T\u00e9miscouata"
             }, 
             {
               "eng": "Kamouraska", 
               "fra": "Kamouraska", 
-              "id": 2414
+              "id": 2414, 
+              "key": "Kamouraska"
             }, 
             {
               "eng": "Charlevoix-Est", 
               "fra": "Charlevoix-Est", 
-              "id": 2415
+              "id": 2415, 
+              "key": "Charlevoix-Est"
             }, 
             {
               "eng": "Charlevoix", 
               "fra": "Charlevoix", 
-              "id": 2416
+              "id": 2416, 
+              "key": "Charlevoix"
             }, 
             {
               "eng": "L'Islet", 
               "fra": "L'Islet", 
-              "id": 2417
+              "id": 2417, 
+              "key": "L'Islet"
             }, 
             {
               "eng": "Montmagny", 
               "fra": "Montmagny", 
-              "id": 2418
+              "id": 2418, 
+              "key": "Montmagny"
             }, 
             {
               "eng": "Bellechasse", 
               "fra": "Bellechasse", 
-              "id": 2419
+              "id": 2419, 
+              "key": "Bellechasse"
             }, 
             {
               "eng": "L'\u00cele-d'Orl\u00e9ans", 
               "fra": "L'\u00cele-d'Orl\u00e9ans", 
-              "id": 2420
+              "id": 2420, 
+              "key": "L'\u00cele-d'Orl\u00e9ans"
             }, 
             {
               "eng": "La C\u00f4te-de-Beaupr\u00e9", 
               "fra": "La C\u00f4te-de-Beaupr\u00e9", 
-              "id": 2421
+              "id": 2421, 
+              "key": "La C\u00f4te-de-Beaupr\u00e9"
             }, 
             {
               "eng": "La Jacques-Cartier", 
               "fra": "La Jacques-Cartier", 
-              "id": 2422
+              "id": 2422, 
+              "key": "La Jacques-Cartier"
             }, 
             {
               "eng": "Qu\u00e9bec", 
               "fra": "Qu\u00e9bec", 
-              "id": 2423
+              "id": 2423, 
+              "key": "Qu\u00e9bec"
             }, 
             {
               "eng": "L\u00e9vis", 
               "fra": "L\u00e9vis", 
-              "id": 2425
+              "id": 2425, 
+              "key": "L\u00e9vis"
             }, 
             {
               "eng": "La Nouvelle-Beauce", 
               "fra": "La Nouvelle-Beauce", 
-              "id": 2426
+              "id": 2426, 
+              "key": "La Nouvelle-Beauce"
             }, 
             {
               "eng": "Robert-Cliche", 
               "fra": "Robert-Cliche", 
-              "id": 2427
+              "id": 2427, 
+              "key": "Robert-Cliche"
             }, 
             {
               "eng": "Les Etchemins", 
               "fra": "Les Etchemins", 
-              "id": 2428
+              "id": 2428, 
+              "key": "Les Etchemins"
             }, 
             {
               "eng": "Beauce-Sartigan", 
               "fra": "Beauce-Sartigan", 
-              "id": 2429
+              "id": 2429, 
+              "key": "Beauce-Sartigan"
             }, 
             {
               "eng": "Le Granit", 
               "fra": "Le Granit", 
-              "id": 2430
+              "id": 2430, 
+              "key": "Le Granit"
             }, 
             {
               "eng": "Les Appalaches", 
               "fra": "Les Appalaches", 
-              "id": 2431
+              "id": 2431, 
+              "key": "Les Appalaches"
             }, 
             {
               "eng": "L'\u00c9rable", 
               "fra": "L'\u00c9rable", 
-              "id": 2432
+              "id": 2432, 
+              "key": "L'\u00c9rable"
             }, 
             {
               "eng": "Lotbini\u00e8re", 
               "fra": "Lotbini\u00e8re", 
-              "id": 2433
+              "id": 2433, 
+              "key": "Lotbini\u00e8re"
             }, 
             {
               "eng": "Portneuf", 
               "fra": "Portneuf", 
-              "id": 2434
+              "id": 2434, 
+              "key": "Portneuf"
             }, 
             {
               "eng": "M\u00e9kinac", 
               "fra": "M\u00e9kinac", 
-              "id": 2435
+              "id": 2435, 
+              "key": "M\u00e9kinac"
             }, 
             {
               "eng": "Shawinigan", 
               "fra": "Shawinigan", 
-              "id": 2436
+              "id": 2436, 
+              "key": "Shawinigan"
             }, 
             {
               "eng": "Francheville", 
               "fra": "Francheville", 
-              "id": 2437
+              "id": 2437, 
+              "key": "Francheville"
             }, 
             {
               "eng": "B\u00e9cancour", 
               "fra": "B\u00e9cancour", 
-              "id": 2438
+              "id": 2438, 
+              "key": "B\u00e9cancour"
             }, 
             {
               "eng": "Arthabaska", 
               "fra": "Arthabaska", 
-              "id": 2439
+              "id": 2439, 
+              "key": "Arthabaska"
             }, 
             {
               "eng": "Les Sources", 
               "fra": "Les Sources", 
-              "id": 2440
+              "id": 2440, 
+              "key": "Les Sources"
             }, 
             {
               "eng": "Le Haut-Saint-Fran\u00e7ois", 
               "fra": "Le Haut-Saint-Fran\u00e7ois", 
-              "id": 2441
+              "id": 2441, 
+              "key": "Le Haut-Saint-Fran\u00e7ois"
             }, 
             {
               "eng": "Le Val-Saint-Fran\u00e7ois", 
               "fra": "Le Val-Saint-Fran\u00e7ois", 
-              "id": 2442
+              "id": 2442, 
+              "key": "Le Val-Saint-Fran\u00e7ois"
             }, 
             {
               "eng": "Sherbrooke", 
               "fra": "Sherbrooke", 
-              "id": 2443
+              "id": 2443, 
+              "key": "Sherbrooke"
             }, 
             {
               "eng": "Coaticook", 
               "fra": "Coaticook", 
-              "id": 2444
+              "id": 2444, 
+              "key": "Coaticook"
             }, 
             {
               "eng": "Memphr\u00e9magog", 
               "fra": "Memphr\u00e9magog", 
-              "id": 2445
+              "id": 2445, 
+              "key": "Memphr\u00e9magog"
             }, 
             {
               "eng": "Brome-Missisquoi", 
               "fra": "Brome-Missisquoi", 
-              "id": 2446
+              "id": 2446, 
+              "key": "Brome-Missisquoi"
             }, 
             {
               "eng": "La Haute-Yamaska", 
               "fra": "La Haute-Yamaska", 
-              "id": 2447
+              "id": 2447, 
+              "key": "La Haute-Yamaska"
             }, 
             {
               "eng": "Acton", 
               "fra": "Acton", 
-              "id": 2448
+              "id": 2448, 
+              "key": "Acton"
             }, 
             {
               "eng": "Drummond", 
               "fra": "Drummond", 
-              "id": 2449
+              "id": 2449, 
+              "key": "Drummond"
             }, 
             {
               "eng": "Nicolet-Yamaska", 
               "fra": "Nicolet-Yamaska", 
-              "id": 2450
+              "id": 2450, 
+              "key": "Nicolet-Yamaska"
             }, 
             {
               "eng": "Maskinong\u00e9", 
               "fra": "Maskinong\u00e9", 
-              "id": 2451
+              "id": 2451, 
+              "key": "Maskinong\u00e9"
             }, 
             {
               "eng": "D'Autray", 
               "fra": "D'Autray", 
-              "id": 2452
+              "id": 2452, 
+              "key": "D'Autray"
             }, 
             {
               "eng": "Pierre-De Saurel", 
               "fra": "Pierre-De Saurel", 
-              "id": 2453
+              "id": 2453, 
+              "key": "Pierre-De Saurel"
             }, 
             {
               "eng": "Les Maskoutains", 
               "fra": "Les Maskoutains", 
-              "id": 2454
+              "id": 2454, 
+              "key": "Les Maskoutains"
             }, 
             {
               "eng": "Rouville", 
               "fra": "Rouville", 
-              "id": 2455
+              "id": 2455, 
+              "key": "Rouville"
             }, 
             {
               "eng": "Le Haut-Richelieu", 
               "fra": "Le Haut-Richelieu", 
-              "id": 2456
+              "id": 2456, 
+              "key": "Le Haut-Richelieu"
             }, 
             {
               "eng": "La Vall\u00e9e-du-Richelieu", 
               "fra": "La Vall\u00e9e-du-Richelieu", 
-              "id": 2457
+              "id": 2457, 
+              "key": "La Vall\u00e9e-du-Richelieu"
             }, 
             {
               "eng": "Longueuil", 
               "fra": "Longueuil", 
-              "id": 2458
+              "id": 2458, 
+              "key": "Longueuil"
             }, 
             {
               "eng": "Lajemmerais", 
               "fra": "Lajemmerais", 
-              "id": 2459
+              "id": 2459, 
+              "key": "Lajemmerais"
             }, 
             {
               "eng": "L'Assomption", 
               "fra": "L'Assomption", 
-              "id": 2460
+              "id": 2460, 
+              "key": "L'Assomption"
             }, 
             {
               "eng": "Joliette", 
               "fra": "Joliette", 
-              "id": 2461
+              "id": 2461, 
+              "key": "Joliette"
             }, 
             {
               "eng": "Matawinie", 
               "fra": "Matawinie", 
-              "id": 2462
+              "id": 2462, 
+              "key": "Matawinie"
             }, 
             {
               "eng": "Montcalm", 
               "fra": "Montcalm", 
-              "id": 2463
+              "id": 2463, 
+              "key": "Montcalm"
             }, 
             {
               "eng": "Les Moulins", 
               "fra": "Les Moulins", 
-              "id": 2464
+              "id": 2464, 
+              "key": "Les Moulins"
             }, 
             {
               "eng": "Laval", 
               "fra": "Laval", 
-              "id": 2465
+              "id": 2465, 
+              "key": "Laval"
             }, 
             {
               "eng": "Montr\u00e9al", 
               "fra": "Montr\u00e9al", 
-              "id": 2466
+              "id": 2466, 
+              "key": "Montr\u00e9al"
             }, 
             {
               "eng": "Roussillon", 
               "fra": "Roussillon", 
-              "id": 2467
+              "id": 2467, 
+              "key": "Roussillon"
             }, 
             {
               "eng": "Les Jardins-de-Napierville", 
               "fra": "Les Jardins-de-Napierville", 
-              "id": 2468
+              "id": 2468, 
+              "key": "Les Jardins-de-Napierville"
             }, 
             {
               "eng": "Le Haut-Saint-Laurent", 
               "fra": "Le Haut-Saint-Laurent", 
-              "id": 2469
+              "id": 2469, 
+              "key": "Le Haut-Saint-Laurent"
             }, 
             {
               "eng": "Beauharnois-Salaberry", 
               "fra": "Beauharnois-Salaberry", 
-              "id": 2470
+              "id": 2470, 
+              "key": "Beauharnois-Salaberry"
             }, 
             {
               "eng": "Vaudreuil-Soulanges", 
               "fra": "Vaudreuil-Soulanges", 
-              "id": 2471
+              "id": 2471, 
+              "key": "Vaudreuil-Soulanges"
             }, 
             {
               "eng": "Deux-Montagnes", 
               "fra": "Deux-Montagnes", 
-              "id": 2472
+              "id": 2472, 
+              "key": "Deux-Montagnes"
             }, 
             {
               "eng": "Th\u00e9r\u00e8se-De Blainville", 
               "fra": "Th\u00e9r\u00e8se-De Blainville", 
-              "id": 2473
+              "id": 2473, 
+              "key": "Th\u00e9r\u00e8se-De Blainville"
             }, 
             {
               "eng": "Mirabel", 
               "fra": "Mirabel", 
-              "id": 2474
+              "id": 2474, 
+              "key": "Mirabel"
             }, 
             {
               "eng": "La Rivi\u00e8re-du-Nord", 
               "fra": "La Rivi\u00e8re-du-Nord", 
-              "id": 2475
+              "id": 2475, 
+              "key": "La Rivi\u00e8re-du-Nord"
             }, 
             {
               "eng": "Argenteuil", 
               "fra": "Argenteuil", 
-              "id": 2476
+              "id": 2476, 
+              "key": "Argenteuil"
             }, 
             {
               "eng": "Les Pays-d'en-Haut", 
               "fra": "Les Pays-d'en-Haut", 
-              "id": 2477
+              "id": 2477, 
+              "key": "Les Pays-d'en-Haut"
             }, 
             {
               "eng": "Les Laurentides", 
               "fra": "Les Laurentides", 
-              "id": 2478
+              "id": 2478, 
+              "key": "Les Laurentides"
             }, 
             {
               "eng": "Antoine-Labelle", 
               "fra": "Antoine-Labelle", 
-              "id": 2479
+              "id": 2479, 
+              "key": "Antoine-Labelle"
             }, 
             {
               "eng": "Papineau", 
               "fra": "Papineau", 
-              "id": 2480
+              "id": 2480, 
+              "key": "Papineau"
             }, 
             {
               "eng": "Gatineau", 
               "fra": "Gatineau", 
-              "id": 2481
+              "id": 2481, 
+              "key": "Gatineau"
             }, 
             {
               "eng": "Les Collines-de-l'Outaouais", 
               "fra": "Les Collines-de-l'Outaouais", 
-              "id": 2482
+              "id": 2482, 
+              "key": "Les Collines-de-l'Outaouais"
             }, 
             {
               "eng": "La Vall\u00e9e-de-la-Gatineau", 
               "fra": "La Vall\u00e9e-de-la-Gatineau", 
-              "id": 2483
+              "id": 2483, 
+              "key": "La Vall\u00e9e-de-la-Gatineau"
             }, 
             {
               "eng": "Pontiac", 
               "fra": "Pontiac", 
-              "id": 2484
+              "id": 2484, 
+              "key": "Pontiac"
             }, 
             {
               "eng": "T\u00e9miscamingue", 
               "fra": "T\u00e9miscamingue", 
-              "id": 2485
+              "id": 2485, 
+              "key": "T\u00e9miscamingue"
             }, 
             {
               "eng": "Rouyn-Noranda", 
               "fra": "Rouyn-Noranda", 
-              "id": 2486
+              "id": 2486, 
+              "key": "Rouyn-Noranda"
             }, 
             {
               "eng": "Abitibi-Ouest", 
               "fra": "Abitibi-Ouest", 
-              "id": 2487
+              "id": 2487, 
+              "key": "Abitibi-Ouest"
             }, 
             {
               "eng": "Abitibi", 
               "fra": "Abitibi", 
-              "id": 2488
+              "id": 2488, 
+              "key": "Abitibi"
             }, 
             {
               "eng": "La Vall\u00e9e-de-l'Or", 
               "fra": "La Vall\u00e9e-de-l'Or", 
-              "id": 2489
+              "id": 2489, 
+              "key": "La Vall\u00e9e-de-l'Or"
             }, 
             {
               "eng": "La Tuque", 
               "fra": "La Tuque", 
-              "id": 2490
+              "id": 2490, 
+              "key": "La Tuque"
             }, 
             {
               "eng": "Le Domaine-du-Roy", 
               "fra": "Le Domaine-du-Roy", 
-              "id": 2491
+              "id": 2491, 
+              "key": "Le Domaine-du-Roy"
             }, 
             {
               "eng": "Maria-Chapdelaine", 
               "fra": "Maria-Chapdelaine", 
-              "id": 2492
+              "id": 2492, 
+              "key": "Maria-Chapdelaine"
             }, 
             {
               "eng": "Lac-Saint-Jean-Est", 
               "fra": "Lac-Saint-Jean-Est", 
-              "id": 2493
+              "id": 2493, 
+              "key": "Lac-Saint-Jean-Est"
             }, 
             {
               "eng": "Le Saguenay-et-son-Fjord", 
               "fra": "Le Saguenay-et-son-Fjord", 
-              "id": 2494
+              "id": 2494, 
+              "key": "Le Saguenay-et-son-Fjord"
             }, 
             {
               "eng": "La Haute-C\u00f4te-Nord", 
               "fra": "La Haute-C\u00f4te-Nord", 
-              "id": 2495
+              "id": 2495, 
+              "key": "La Haute-C\u00f4te-Nord"
             }, 
             {
               "eng": "Manicouagan", 
               "fra": "Manicouagan", 
-              "id": 2496
+              "id": 2496, 
+              "key": "Manicouagan"
             }, 
             {
               "eng": "Sept-Rivi\u00e8res--Caniapiscau", 
               "fra": "Sept-Rivi\u00e8res--Caniapiscau", 
-              "id": 2497
+              "id": 2497, 
+              "key": "Sept-Rivi\u00e8res--Caniapiscau"
             }, 
             {
               "eng": "Minganie--Le Golfe-du-Saint-Laurent", 
               "fra": "Minganie--Le Golfe-du-Saint-Laurent", 
-              "id": 2498
+              "id": 2498, 
+              "key": "Minganie--Le Golfe-du-Saint-Laurent"
             }, 
             {
               "eng": "Nord-du-Qu\u00e9bec", 
               "fra": "Nord-du-Qu\u00e9bec", 
-              "id": 2499
+              "id": 2499, 
+              "key": "Nord-du-Qu\u00e9bec"
             }, 
             {
               "eng": "Ontario", 
               "fra": "Ontario", 
-              "id": 3
+              "id": 3, 
+              "key": "Ontario"
             }, 
             {
               "eng": "Ontario", 
               "fra": "Ontario", 
               "id": 35, 
+              "key": "Ontario", 
               "pilot_uuid": "BB22E4CF-19C4-4705-92F0-F2C602307C29"
             }, 
             {
               "eng": "Stormont, Dundas and Glengarry", 
               "fra": "Stormont, Dundas and Glengarry", 
-              "id": 3501
+              "id": 3501, 
+              "key": "Stormont, Dundas and Glengarry"
             }, 
             {
               "eng": "Prescott and Russell", 
               "fra": "Prescott and Russell", 
-              "id": 3502
+              "id": 3502, 
+              "key": "Prescott and Russell"
             }, 
             {
               "eng": "Ottawa", 
               "fra": "Ottawa", 
-              "id": 3506
+              "id": 3506, 
+              "key": "Ottawa"
             }, 
             {
               "eng": "Leeds and Grenville", 
               "fra": "Leeds and Grenville", 
-              "id": 3507
+              "id": 3507, 
+              "key": "Leeds and Grenville"
             }, 
             {
               "eng": "Lanark", 
               "fra": "Lanark", 
-              "id": 3509
+              "id": 3509, 
+              "key": "Lanark"
             }, 
             {
               "eng": "Frontenac", 
               "fra": "Frontenac", 
-              "id": 3510
+              "id": 3510, 
+              "key": "Frontenac"
             }, 
             {
               "eng": "Lennox and Addington", 
               "fra": "Lennox and Addington", 
-              "id": 3511
+              "id": 3511, 
+              "key": "Lennox and Addington"
             }, 
             {
               "eng": "Hastings", 
               "fra": "Hastings", 
-              "id": 3512
+              "id": 3512, 
+              "key": "Hastings"
             }, 
             {
               "eng": "Prince Edward", 
               "fra": "Prince Edward", 
-              "id": 3513
+              "id": 3513, 
+              "key": "Prince Edward"
             }, 
             {
               "eng": "Northumberland", 
               "fra": "Northumberland", 
-              "id": 3514
+              "id": 3514, 
+              "key": "Northumberland"
             }, 
             {
               "eng": "Peterborough", 
               "fra": "Peterborough", 
-              "id": 3515
+              "id": 3515, 
+              "key": "Peterborough"
             }, 
             {
               "eng": "Kawartha Lakes", 
               "fra": "Kawartha Lakes", 
-              "id": 3516
+              "id": 3516, 
+              "key": "Kawartha Lakes"
             }, 
             {
               "eng": "Durham", 
               "fra": "Durham", 
-              "id": 3518
+              "id": 3518, 
+              "key": "Durham"
             }, 
             {
               "eng": "York", 
               "fra": "York", 
-              "id": 3519
+              "id": 3519, 
+              "key": "York"
             }, 
             {
               "eng": "Toronto", 
               "fra": "Toronto", 
-              "id": 3520
+              "id": 3520, 
+              "key": "Toronto"
             }, 
             {
               "eng": "Peel", 
               "fra": "Peel", 
-              "id": 3521
+              "id": 3521, 
+              "key": "Peel"
             }, 
             {
               "eng": "Dufferin", 
               "fra": "Dufferin", 
-              "id": 3522
+              "id": 3522, 
+              "key": "Dufferin"
             }, 
             {
               "eng": "Wellington", 
               "fra": "Wellington", 
-              "id": 3523
+              "id": 3523, 
+              "key": "Wellington"
             }, 
             {
               "eng": "Halton", 
               "fra": "Halton", 
-              "id": 3524
+              "id": 3524, 
+              "key": "Halton"
             }, 
             {
               "eng": "Hamilton", 
               "fra": "Hamilton", 
-              "id": 3525
+              "id": 3525, 
+              "key": "Hamilton"
             }, 
             {
               "eng": "Niagara", 
               "fra": "Niagara", 
-              "id": 3526
+              "id": 3526, 
+              "key": "Niagara"
             }, 
             {
               "eng": "Haldimand-Norfolk", 
               "fra": "Haldimand-Norfolk", 
-              "id": 3528
+              "id": 3528, 
+              "key": "Haldimand-Norfolk"
             }, 
             {
               "eng": "Brant", 
               "fra": "Brant", 
-              "id": 3529
+              "id": 3529, 
+              "key": "Brant"
             }, 
             {
               "eng": "Waterloo", 
               "fra": "Waterloo", 
-              "id": 3530
+              "id": 3530, 
+              "key": "Waterloo"
             }, 
             {
               "eng": "Perth", 
               "fra": "Perth", 
-              "id": 3531
+              "id": 3531, 
+              "key": "Perth"
             }, 
             {
               "eng": "Oxford", 
               "fra": "Oxford", 
-              "id": 3532
+              "id": 3532, 
+              "key": "Oxford"
             }, 
             {
               "eng": "Elgin", 
               "fra": "Elgin", 
-              "id": 3534
+              "id": 3534, 
+              "key": "Elgin"
             }, 
             {
               "eng": "Chatham-Kent", 
               "fra": "Chatham-Kent", 
-              "id": 3536
+              "id": 3536, 
+              "key": "Chatham-Kent"
             }, 
             {
               "eng": "Essex", 
               "fra": "Essex", 
-              "id": 3537
+              "id": 3537, 
+              "key": "Essex"
             }, 
             {
               "eng": "Lambton", 
               "fra": "Lambton", 
-              "id": 3538
+              "id": 3538, 
+              "key": "Lambton"
             }, 
             {
               "eng": "Middlesex", 
               "fra": "Middlesex", 
-              "id": 3539
+              "id": 3539, 
+              "key": "Middlesex"
             }, 
             {
               "eng": "Huron", 
               "fra": "Huron", 
-              "id": 3540
+              "id": 3540, 
+              "key": "Huron"
             }, 
             {
               "eng": "Bruce", 
               "fra": "Bruce", 
-              "id": 3541
+              "id": 3541, 
+              "key": "Bruce"
             }, 
             {
               "eng": "Grey", 
               "fra": "Grey", 
-              "id": 3542
+              "id": 3542, 
+              "key": "Grey"
             }, 
             {
               "eng": "Simcoe", 
               "fra": "Simcoe", 
-              "id": 3543
+              "id": 3543, 
+              "key": "Simcoe"
             }, 
             {
               "eng": "Muskoka", 
               "fra": "Muskoka", 
-              "id": 3544
+              "id": 3544, 
+              "key": "Muskoka"
             }, 
             {
               "eng": "Haliburton", 
               "fra": "Haliburton", 
-              "id": 3546
+              "id": 3546, 
+              "key": "Haliburton"
             }, 
             {
               "eng": "Renfrew", 
               "fra": "Renfrew", 
-              "id": 3547
+              "id": 3547, 
+              "key": "Renfrew"
             }, 
             {
               "eng": "Nipissing", 
               "fra": "Nipissing", 
-              "id": 3548
+              "id": 3548, 
+              "key": "Nipissing"
             }, 
             {
               "eng": "Parry Sound", 
               "fra": "Parry Sound", 
-              "id": 3549
+              "id": 3549, 
+              "key": "Parry Sound"
             }, 
             {
               "eng": "Manitoulin", 
               "fra": "Manitoulin", 
-              "id": 3551
+              "id": 3551, 
+              "key": "Manitoulin"
             }, 
             {
               "eng": "Sudbury", 
               "fra": "Sudbury", 
-              "id": 3552
+              "id": 3552, 
+              "key": "Sudbury"
             }, 
             {
               "eng": "Greater Sudbury", 
               "fra": "Greater Sudbury", 
-              "id": 3553
+              "id": 3553, 
+              "key": "Greater Sudbury"
             }, 
             {
               "eng": "Timiskaming", 
               "fra": "Timiskaming", 
-              "id": 3554
+              "id": 3554, 
+              "key": "Timiskaming"
             }, 
             {
               "eng": "Cochrane", 
               "fra": "Cochrane", 
-              "id": 3556
+              "id": 3556, 
+              "key": "Cochrane"
             }, 
             {
               "eng": "Algoma", 
               "fra": "Algoma", 
-              "id": 3557
+              "id": 3557, 
+              "key": "Algoma"
             }, 
             {
               "eng": "Thunder Bay", 
               "fra": "Thunder Bay", 
-              "id": 3558
+              "id": 3558, 
+              "key": "Thunder Bay"
             }, 
             {
               "eng": "Rainy River", 
               "fra": "Rainy River", 
-              "id": 3559
+              "id": 3559, 
+              "key": "Rainy River"
             }, 
             {
               "eng": "Kenora", 
               "fra": "Kenora", 
-              "id": 3560
+              "id": 3560, 
+              "key": "Kenora"
             }, 
             {
               "eng": "Praries", 
               "fra": "Praries", 
-              "id": 4
+              "id": 4, 
+              "key": "Praries"
             }, 
             {
               "eng": "Manitoba", 
               "fra": "Manitoba", 
               "id": 46, 
+              "key": "Manitoba", 
               "pilot_uuid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744"
             }, 
             {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
-              "id": 4601
+              "id": 4601, 
+              "key": "Division No. 1"
             }, 
             {
               "eng": "Division No. 2", 
               "fra": "Division No. 2", 
-              "id": 4602
+              "id": 4602, 
+              "key": "Division No. 2"
             }, 
             {
               "eng": "Division No. 3", 
               "fra": "Division No. 3", 
-              "id": 4603
+              "id": 4603, 
+              "key": "Division No. 3"
             }, 
             {
               "eng": "Division No. 4", 
               "fra": "Division No. 4", 
-              "id": 4604
+              "id": 4604, 
+              "key": "Division No. 4"
             }, 
             {
               "eng": "Division No. 5", 
               "fra": "Division No. 5", 
-              "id": 4605
+              "id": 4605, 
+              "key": "Division No. 5"
             }, 
             {
               "eng": "Division No. 6", 
               "fra": "Division No. 6", 
-              "id": 4606
+              "id": 4606, 
+              "key": "Division No. 6"
             }, 
             {
               "eng": "Division No. 7", 
               "fra": "Division No. 7", 
-              "id": 4607
+              "id": 4607, 
+              "key": "Division No. 7"
             }, 
             {
               "eng": "Division No. 8", 
               "fra": "Division No. 8", 
-              "id": 4608
+              "id": 4608, 
+              "key": "Division No. 8"
             }, 
             {
               "eng": "Division No. 9", 
               "fra": "Division No. 9", 
-              "id": 4609
+              "id": 4609, 
+              "key": "Division No. 9"
             }, 
             {
               "eng": "Division No. 10", 
               "fra": "Division No. 10", 
-              "id": 4610
+              "id": 4610, 
+              "key": "Division No. 10"
             }, 
             {
               "eng": "Division No. 11", 
               "fra": "Division No. 11", 
-              "id": 4611
+              "id": 4611, 
+              "key": "Division No. 11"
             }, 
             {
               "eng": "Division No. 12", 
               "fra": "Division No. 12", 
-              "id": 4612
+              "id": 4612, 
+              "key": "Division No. 12"
             }, 
             {
               "eng": "Division No. 13", 
               "fra": "Division No. 13", 
-              "id": 4613
+              "id": 4613, 
+              "key": "Division No. 13"
             }, 
             {
               "eng": "Division No. 14", 
               "fra": "Division No. 14", 
-              "id": 4614
+              "id": 4614, 
+              "key": "Division No. 14"
             }, 
             {
               "eng": "Division No. 15", 
               "fra": "Division No. 15", 
-              "id": 4615
+              "id": 4615, 
+              "key": "Division No. 15"
             }, 
             {
               "eng": "Division No. 16", 
               "fra": "Division No. 16", 
-              "id": 4616
+              "id": 4616, 
+              "key": "Division No. 16"
             }, 
             {
               "eng": "Division No. 17", 
               "fra": "Division No. 17", 
-              "id": 4617
+              "id": 4617, 
+              "key": "Division No. 17"
             }, 
             {
               "eng": "Division No. 18", 
               "fra": "Division No. 18", 
-              "id": 4618
+              "id": 4618, 
+              "key": "Division No. 18"
             }, 
             {
               "eng": "Division No. 19", 
               "fra": "Division No. 19", 
-              "id": 4619
+              "id": 4619, 
+              "key": "Division No. 19"
             }, 
             {
               "eng": "Division No. 20", 
               "fra": "Division No. 20", 
-              "id": 4620
+              "id": 4620, 
+              "key": "Division No. 20"
             }, 
             {
               "eng": "Division No. 21", 
               "fra": "Division No. 21", 
-              "id": 4621
+              "id": 4621, 
+              "key": "Division No. 21"
             }, 
             {
               "eng": "Division No. 22", 
               "fra": "Division No. 22", 
-              "id": 4622
+              "id": 4622, 
+              "key": "Division No. 22"
             }, 
             {
               "eng": "Division No. 23", 
               "fra": "Division No. 23", 
-              "id": 4623
+              "id": 4623, 
+              "key": "Division No. 23"
             }, 
             {
               "eng": "Saskatchewan", 
               "fra": "Saskatchewan", 
               "id": 47, 
+              "key": "Saskatchewan", 
               "pilot_uuid": "E521A8DF-6169-4728-990F-25D05C8791C7"
             }, 
             {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
-              "id": 4701
+              "id": 4701, 
+              "key": "Division No. 1"
             }, 
             {
               "eng": "Division No. 2", 
               "fra": "Division No. 2", 
-              "id": 4702
+              "id": 4702, 
+              "key": "Division No. 2"
             }, 
             {
               "eng": "Division No. 3", 
               "fra": "Division No. 3", 
-              "id": 4703
+              "id": 4703, 
+              "key": "Division No. 3"
             }, 
             {
               "eng": "Division No. 4", 
               "fra": "Division No. 4", 
-              "id": 4704
+              "id": 4704, 
+              "key": "Division No. 4"
             }, 
             {
               "eng": "Division No. 5", 
               "fra": "Division No. 5", 
-              "id": 4705
+              "id": 4705, 
+              "key": "Division No. 5"
             }, 
             {
               "eng": "Division No. 6", 
               "fra": "Division No. 6", 
-              "id": 4706
+              "id": 4706, 
+              "key": "Division No. 6"
             }, 
             {
               "eng": "Division No. 7", 
               "fra": "Division No. 7", 
-              "id": 4707
+              "id": 4707, 
+              "key": "Division No. 7"
             }, 
             {
               "eng": "Division No. 8", 
               "fra": "Division No. 8", 
-              "id": 4708
+              "id": 4708, 
+              "key": "Division No. 8"
             }, 
             {
               "eng": "Division No. 9", 
               "fra": "Division No. 9", 
-              "id": 4709
+              "id": 4709, 
+              "key": "Division No. 9"
             }, 
             {
               "eng": "Division No. 10", 
               "fra": "Division No. 10", 
-              "id": 4710
+              "id": 4710, 
+              "key": "Division No. 10"
             }, 
             {
               "eng": "Division No. 11", 
               "fra": "Division No. 11", 
-              "id": 4711
+              "id": 4711, 
+              "key": "Division No. 11"
             }, 
             {
               "eng": "Division No. 12", 
               "fra": "Division No. 12", 
-              "id": 4712
+              "id": 4712, 
+              "key": "Division No. 12"
             }, 
             {
               "eng": "Division No. 13", 
               "fra": "Division No. 13", 
-              "id": 4713
+              "id": 4713, 
+              "key": "Division No. 13"
             }, 
             {
               "eng": "Division No. 14", 
               "fra": "Division No. 14", 
-              "id": 4714
+              "id": 4714, 
+              "key": "Division No. 14"
             }, 
             {
               "eng": "Division No. 15", 
               "fra": "Division No. 15", 
-              "id": 4715
+              "id": 4715, 
+              "key": "Division No. 15"
             }, 
             {
               "eng": "Division No. 16", 
               "fra": "Division No. 16", 
-              "id": 4716
+              "id": 4716, 
+              "key": "Division No. 16"
             }, 
             {
               "eng": "Division No. 17", 
               "fra": "Division No. 17", 
-              "id": 4717
+              "id": 4717, 
+              "key": "Division No. 17"
             }, 
             {
               "eng": "Division No. 18", 
               "fra": "Division No. 18", 
-              "id": 4718
+              "id": 4718, 
+              "key": "Division No. 18"
             }, 
             {
               "eng": "Alberta", 
               "fra": "Alberta", 
               "id": 48, 
+              "key": "Alberta", 
               "pilot_uuid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907"
             }, 
             {
               "eng": "Division No. 1", 
               "fra": "Division No. 1", 
-              "id": 4801
+              "id": 4801, 
+              "key": "Division No. 1"
             }, 
             {
               "eng": "Division No. 2", 
               "fra": "Division No. 2", 
-              "id": 4802
+              "id": 4802, 
+              "key": "Division No. 2"
             }, 
             {
               "eng": "Division No. 3", 
               "fra": "Division No. 3", 
-              "id": 4803
+              "id": 4803, 
+              "key": "Division No. 3"
             }, 
             {
               "eng": "Division No. 4", 
               "fra": "Division No. 4", 
-              "id": 4804
+              "id": 4804, 
+              "key": "Division No. 4"
             }, 
             {
               "eng": "Division No. 5", 
               "fra": "Division No. 5", 
-              "id": 4805
+              "id": 4805, 
+              "key": "Division No. 5"
             }, 
             {
               "eng": "Division No. 6", 
               "fra": "Division No. 6", 
-              "id": 4806
+              "id": 4806, 
+              "key": "Division No. 6"
             }, 
             {
               "eng": "Division No. 7", 
               "fra": "Division No. 7", 
-              "id": 4807
+              "id": 4807, 
+              "key": "Division No. 7"
             }, 
             {
               "eng": "Division No. 8", 
               "fra": "Division No. 8", 
-              "id": 4808
+              "id": 4808, 
+              "key": "Division No. 8"
             }, 
             {
               "eng": "Division No. 9", 
               "fra": "Division No. 9", 
-              "id": 4809
+              "id": 4809, 
+              "key": "Division No. 9"
             }, 
             {
               "eng": "Division No. 10", 
               "fra": "Division No. 10", 
-              "id": 4810
+              "id": 4810, 
+              "key": "Division No. 10"
             }, 
             {
               "eng": "Division No. 11", 
               "fra": "Division No. 11", 
-              "id": 4811
+              "id": 4811, 
+              "key": "Division No. 11"
             }, 
             {
               "eng": "Division No. 12", 
               "fra": "Division No. 12", 
-              "id": 4812
+              "id": 4812, 
+              "key": "Division No. 12"
             }, 
             {
               "eng": "Division No. 13", 
               "fra": "Division No. 13", 
-              "id": 4813
+              "id": 4813, 
+              "key": "Division No. 13"
             }, 
             {
               "eng": "Division No. 14", 
               "fra": "Division No. 14", 
-              "id": 4814
+              "id": 4814, 
+              "key": "Division No. 14"
             }, 
             {
               "eng": "Division No. 15", 
               "fra": "Division No. 15", 
-              "id": 4815
+              "id": 4815, 
+              "key": "Division No. 15"
             }, 
             {
               "eng": "Division No. 16", 
               "fra": "Division No. 16", 
-              "id": 4816
+              "id": 4816, 
+              "key": "Division No. 16"
             }, 
             {
               "eng": "Division No. 17", 
               "fra": "Division No. 17", 
-              "id": 4817
+              "id": 4817, 
+              "key": "Division No. 17"
             }, 
             {
               "eng": "Division No. 18", 
               "fra": "Division No. 18", 
-              "id": 4818
+              "id": 4818, 
+              "key": "Division No. 18"
             }, 
             {
               "eng": "Division No. 19", 
               "fra": "Division No. 19", 
-              "id": 4819
+              "id": 4819, 
+              "key": "Division No. 19"
             }, 
             {
               "eng": "British Columbia", 
               "fra": "Colombie-Britannique", 
-              "id": 5
+              "id": 5, 
+              "key": "British Columbia | Colombie-Britannique"
             }, 
             {
               "eng": "British Columbia", 
               "fra": "Colombie-Britannique", 
               "id": 59, 
+              "key": "British Columbia | Colombie-Britannique", 
               "pilot_uuid": "C066C99E-C228-4969-82CF-5E065E884D18"
             }, 
             {
               "eng": "East Kootenay", 
               "fra": "East Kootenay", 
-              "id": 5901
+              "id": 5901, 
+              "key": "East Kootenay"
             }, 
             {
               "eng": "Central Kootenay", 
               "fra": "Central Kootenay", 
-              "id": 5903
+              "id": 5903, 
+              "key": "Central Kootenay"
             }, 
             {
               "eng": "Kootenay Boundary", 
               "fra": "Kootenay Boundary", 
-              "id": 5905
+              "id": 5905, 
+              "key": "Kootenay Boundary"
             }, 
             {
               "eng": "Okanagan-Similkameen", 
               "fra": "Okanagan-Similkameen", 
-              "id": 5907
+              "id": 5907, 
+              "key": "Okanagan-Similkameen"
             }, 
             {
               "eng": "Fraser Valley", 
               "fra": "Fraser Valley", 
-              "id": 5909
+              "id": 5909, 
+              "key": "Fraser Valley"
             }, 
             {
               "eng": "Greater Vancouver", 
               "fra": "Greater Vancouver", 
-              "id": 5915
+              "id": 5915, 
+              "key": "Greater Vancouver"
             }, 
             {
               "eng": "Capital", 
               "fra": "Capital", 
-              "id": 5917
+              "id": 5917, 
+              "key": "Capital"
             }, 
             {
               "eng": "Cowichan Valley", 
               "fra": "Cowichan Valley", 
-              "id": 5919
+              "id": 5919, 
+              "key": "Cowichan Valley"
             }, 
             {
               "eng": "Nanaimo", 
               "fra": "Nanaimo", 
-              "id": 5921
+              "id": 5921, 
+              "key": "Nanaimo"
             }, 
             {
               "eng": "Alberni-Clayoquot", 
               "fra": "Alberni-Clayoquot", 
-              "id": 5923
+              "id": 5923, 
+              "key": "Alberni-Clayoquot"
             }, 
             {
               "eng": "Strathcona", 
               "fra": "Strathcona", 
-              "id": 5924
+              "id": 5924, 
+              "key": "Strathcona"
             }, 
             {
               "eng": "Comox Valley", 
               "fra": "Comox Valley", 
-              "id": 5926
+              "id": 5926, 
+              "key": "Comox Valley"
             }, 
             {
               "eng": "Powell River", 
               "fra": "Powell River", 
-              "id": 5927
+              "id": 5927, 
+              "key": "Powell River"
             }, 
             {
               "eng": "Sunshine Coast", 
               "fra": "Sunshine Coast", 
-              "id": 5929
+              "id": 5929, 
+              "key": "Sunshine Coast"
             }, 
             {
               "eng": "Squamish-Lillooet", 
               "fra": "Squamish-Lillooet", 
-              "id": 5931
+              "id": 5931, 
+              "key": "Squamish-Lillooet"
             }, 
             {
               "eng": "Thompson-Nicola", 
               "fra": "Thompson-Nicola", 
-              "id": 5933
+              "id": 5933, 
+              "key": "Thompson-Nicola"
             }, 
             {
               "eng": "Central Okanagan", 
               "fra": "Central Okanagan", 
-              "id": 5935
+              "id": 5935, 
+              "key": "Central Okanagan"
             }, 
             {
               "eng": "North Okanagan", 
               "fra": "North Okanagan", 
-              "id": 5937
+              "id": 5937, 
+              "key": "North Okanagan"
             }, 
             {
               "eng": "Columbia-Shuswap", 
               "fra": "Columbia-Shuswap", 
-              "id": 5939
+              "id": 5939, 
+              "key": "Columbia-Shuswap"
             }, 
             {
               "eng": "Cariboo", 
               "fra": "Cariboo", 
-              "id": 5941
+              "id": 5941, 
+              "key": "Cariboo"
             }, 
             {
               "eng": "Mount Waddington", 
               "fra": "Mount Waddington", 
-              "id": 5943
+              "id": 5943, 
+              "key": "Mount Waddington"
             }, 
             {
               "eng": "Central Coast", 
               "fra": "Central Coast", 
-              "id": 5945
+              "id": 5945, 
+              "key": "Central Coast"
             }, 
             {
               "eng": "Skeena-Queen Charlotte", 
               "fra": "Skeena-Queen Charlotte", 
-              "id": 5947
+              "id": 5947, 
+              "key": "Skeena-Queen Charlotte"
             }, 
             {
               "eng": "Kitimat-Stikine", 
               "fra": "Kitimat-Stikine", 
-              "id": 5949
+              "id": 5949, 
+              "key": "Kitimat-Stikine"
             }, 
             {
               "eng": "Bulkley-Nechako", 
               "fra": "Bulkley-Nechako", 
-              "id": 5951
+              "id": 5951, 
+              "key": "Bulkley-Nechako"
             }, 
             {
               "eng": "Fraser-Fort George", 
               "fra": "Fraser-Fort George", 
-              "id": 5953
+              "id": 5953, 
+              "key": "Fraser-Fort George"
             }, 
             {
               "eng": "Peace River", 
               "fra": "Peace River", 
-              "id": 5955
+              "id": 5955, 
+              "key": "Peace River"
             }, 
             {
               "eng": "Stikine", 
               "fra": "Stikine", 
-              "id": 5957
+              "id": 5957, 
+              "key": "Stikine"
             }, 
             {
               "eng": "Northern Rockies", 
               "fra": "Northern Rockies", 
-              "id": 5959
+              "id": 5959, 
+              "key": "Northern Rockies"
             }, 
             {
               "eng": "Territories", 
               "fra": "Territories", 
-              "id": 6
+              "id": 6, 
+              "key": "Territories"
             }, 
             {
               "eng": "Yukon", 
               "fra": "Yukon", 
-              "id": 60
+              "id": 60, 
+              "key": "Yukon"
             }, 
             {
               "eng": "Yukon", 
               "fra": "Yukon", 
-              "id": 6001
+              "id": 6001, 
+              "key": "Yukon"
             }, 
             {
               "eng": "Northwest Territories", 
               "fra": "Territoires du Nord-Ouest", 
               "id": 61, 
+              "key": "Northwest Territories | Territoires du Nord-Ouest", 
               "pilot_uuid": "57D53D77-58B1-4431-97ED-9AB61C5C7940"
             }, 
             {
               "eng": "Region 1", 
               "fra": "Region 1", 
-              "id": 6101
+              "id": 6101, 
+              "key": "Region 1"
             }, 
             {
               "eng": "Region 2", 
               "fra": "Region 2", 
-              "id": 6102
+              "id": 6102, 
+              "key": "Region 2"
             }, 
             {
               "eng": "Region 3", 
               "fra": "Region 3", 
-              "id": 6103
+              "id": 6103, 
+              "key": "Region 3"
             }, 
             {
               "eng": "Region 4", 
               "fra": "Region 4", 
-              "id": 6104
+              "id": 6104, 
+              "key": "Region 4"
             }, 
             {
               "eng": "Region 5", 
               "fra": "Region 5", 
-              "id": 6105
+              "id": 6105, 
+              "key": "Region 5"
             }, 
             {
               "eng": "Region 6", 
               "fra": "Region 6", 
-              "id": 6106
+              "id": 6106, 
+              "key": "Region 6"
             }, 
             {
               "eng": "Nunavut", 
               "fra": "Nunavut", 
               "id": 62, 
+              "key": "Nunavut", 
               "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
             }, 
             {
               "eng": "Baffin", 
               "fra": "Baffin", 
-              "id": 6204
+              "id": 6204, 
+              "key": "Baffin"
             }, 
             {
               "eng": "Keewatin", 
               "fra": "Keewatin", 
-              "id": 6205
+              "id": 6205, 
+              "key": "Keewatin"
             }, 
             {
               "eng": "Kitikmeot", 
               "fra": "Kitikmeot", 
-              "id": 6208
+              "id": 6208, 
+              "key": "Kitikmeot"
             }, 
             {
               "eng": "Canada", 
               "fra": "Canada", 
+              "key": "Canada", 
               "pilot_uuid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B"
             }, 
             {
               "eng": "Newfoundland and Labrador, Avalon Peninsula", 
               "fra": "Terre-Neuve-et-Labrador, Avalon Peninsula", 
+              "key": "Newfoundland and Labrador, Avalon Peninsula | Terre-Neuve-et-Labrador, Avalon Peninsula", 
               "pilot_uuid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F"
             }, 
             {
               "eng": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
               "fra": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
+              "key": "Newfoundland and Labrador, South Coast - Burin Peninsula | Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
               "pilot_uuid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC"
             }, 
             {
               "eng": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
               "fra": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
+              "key": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador | Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
               "pilot_uuid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4"
             }, 
             {
               "eng": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
               "fra": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
+              "key": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay | Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
               "pilot_uuid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC"
             }, 
             {
               "eng": "Nova Scotia, Cape Breton", 
               "fra": "Nouvelle-\u00c9cosse, Cape Breton", 
+              "key": "Nova Scotia, Cape Breton | Nouvelle-\u00c9cosse, Cape Breton", 
               "pilot_uuid": "52806552-D51A-41BD-A320-AE5DE26D253D"
             }, 
             {
               "eng": "Nova Scotia, North Shore", 
               "fra": "Nouvelle-\u00c9cosse, C\u00f4te-nord", 
+              "key": "Nova Scotia, North Shore | Nouvelle-\u00c9cosse, C\u00f4te-nord", 
               "pilot_uuid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF"
             }, 
             {
               "eng": "Nova Scotia, Annapolis Valley", 
               "fra": "Nouvelle-\u00c9cosse, Annapolis Valley", 
+              "key": "Nova Scotia, Annapolis Valley | Nouvelle-\u00c9cosse, Annapolis Valley", 
               "pilot_uuid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7"
             }, 
             {
               "eng": "Nova Scotia, Southern", 
               "fra": "Nouvelle-\u00c9cosse, Sud", 
+              "key": "Nova Scotia, Southern | Nouvelle-\u00c9cosse, Sud", 
               "pilot_uuid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13"
             }, 
             {
               "eng": "Nova Scotia, Halifax", 
               "fra": "Nouvelle-\u00c9cosse, Halifax", 
+              "key": "Nova Scotia, Halifax | Nouvelle-\u00c9cosse, Halifax", 
               "pilot_uuid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56"
             }, 
             {
               "eng": "New Brunswick, Campbellton - Miramichi", 
               "fra": "Nouveau-Brunswick, Campbellton - Miramichi", 
+              "key": "New Brunswick, Campbellton - Miramichi | Nouveau-Brunswick, Campbellton - Miramichi", 
               "pilot_uuid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11"
             }, 
             {
               "eng": "New Brunswick, Moncton - Richibucto", 
               "fra": "Nouveau-Brunswick, Moncton - Richibucto", 
+              "key": "New Brunswick, Moncton - Richibucto | Nouveau-Brunswick, Moncton - Richibucto", 
               "pilot_uuid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C"
             }, 
             {
               "eng": "New Brunswick, Saint John - St. Stephen", 
               "fra": "Nouveau-Brunswick, Saint John - St. Stephen", 
+              "key": "New Brunswick, Saint John - St. Stephen | Nouveau-Brunswick, Saint John - St. Stephen", 
               "pilot_uuid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070"
             }, 
             {
               "eng": "New Brunswick, Fredericton - Oromocto", 
               "fra": "Nouveau-Brunswick, Fredericton - Oromocto", 
+              "key": "New Brunswick, Fredericton - Oromocto | Nouveau-Brunswick, Fredericton - Oromocto", 
               "pilot_uuid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4"
             }, 
             {
               "eng": "New Brunswick, Edmundston - Woodstock", 
               "fra": "Nouveau-Brunswick, Edmundston - Woodstock", 
+              "key": "New Brunswick, Edmundston - Woodstock | Nouveau-Brunswick, Edmundston - Woodstock", 
               "pilot_uuid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC"
             }, 
             {
               "eng": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
               "fra": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "key": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine | Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
               "pilot_uuid": "A875ADFB-7A71-4472-8BCF-DB1739F10521"
             }, 
             {
               "eng": "Quebec, Bas-Saint-Laurent", 
               "fra": "Qu\u00e9bec, Bas-Saint-Laurent", 
+              "key": "Quebec, Bas-Saint-Laurent | Qu\u00e9bec, Bas-Saint-Laurent", 
               "pilot_uuid": "7781A775-A703-47B6-B166-CE473AB24D14"
             }, 
             {
               "eng": "Quebec, Capitale-Nationale", 
               "fra": "Qu\u00e9bec, Capitale-Nationale", 
+              "key": "Quebec, Capitale-Nationale | Qu\u00e9bec, Capitale-Nationale", 
               "pilot_uuid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134"
             }, 
             {
               "eng": "Quebec, Chaudi\u00e8re - Appalaches", 
               "fra": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
+              "key": "Quebec, Chaudi\u00e8re - Appalaches | Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
               "pilot_uuid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56"
             }, 
             {
               "eng": "Quebec, Estrie", 
               "fra": "Qu\u00e9bec, Estrie", 
+              "key": "Quebec, Estrie | Qu\u00e9bec, Estrie", 
               "pilot_uuid": "A2948848-C501-4982-847E-D539A4EAAA9F"
             }, 
             {
               "eng": "Quebec, Centre-du-Qu\u00e9bec", 
               "fra": "Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
+              "key": "Quebec, Centre-du-Qu\u00e9bec | Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
               "pilot_uuid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269"
             }, 
             {
               "eng": "Quebec, Mont\u00e9r\u00e9gie", 
               "fra": "Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
+              "key": "Quebec, Mont\u00e9r\u00e9gie | Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
               "pilot_uuid": "FB14D3C7-1D22-4D91-A465-642D216EEE48"
             }, 
             {
               "eng": "Quebec, Montr\u00e9al", 
               "fra": "Qu\u00e9bec, Montr\u00e9al", 
+              "key": "Quebec, Montr\u00e9al | Qu\u00e9bec, Montr\u00e9al", 
               "pilot_uuid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645"
             }, 
             {
               "eng": "Quebec, Laval", 
               "fra": "Qu\u00e9bec, Laval", 
+              "key": "Quebec, Laval | Qu\u00e9bec, Laval", 
               "pilot_uuid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF"
             }, 
             {
               "eng": "Quebec, Lanaudi\u00e8re", 
               "fra": "Qu\u00e9bec, Lanaudi\u00e8re", 
+              "key": "Quebec, Lanaudi\u00e8re | Qu\u00e9bec, Lanaudi\u00e8re", 
               "pilot_uuid": "9D01047A-B571-4CC4-A295-CACED5C21136"
             }, 
             {
               "eng": "Quebec, Laurentides", 
               "fra": "Qu\u00e9bec, Laurentides", 
+              "key": "Quebec, Laurentides | Qu\u00e9bec, Laurentides", 
               "pilot_uuid": "79F2CB43-8948-40F0-BF66-399E2073B27F"
             }, 
             {
               "eng": "Quebec, Outaouais", 
               "fra": "Qu\u00e9bec, Outaouais", 
+              "key": "Quebec, Outaouais | Qu\u00e9bec, Outaouais", 
               "pilot_uuid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1"
             }, 
             {
               "eng": "Quebec, Abitibi - T\u00e9miscamingue", 
               "fra": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
+              "key": "Quebec, Abitibi - T\u00e9miscamingue | Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
               "pilot_uuid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06"
             }, 
             {
               "eng": "Quebec, Mauricie", 
               "fra": "Qu\u00e9bec, Mauricie", 
+              "key": "Quebec, Mauricie | Qu\u00e9bec, Mauricie", 
               "pilot_uuid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011"
             }, 
             {
               "eng": "Quebec, Saguenay - Lac-Saint-Jean", 
               "fra": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
+              "key": "Quebec, Saguenay - Lac-Saint-Jean | Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
               "pilot_uuid": "645070BF-16DD-4D87-88FE-94ECF86F41EB"
             }, 
             {
               "eng": "Quebec, C\u00f4te-Nord", 
               "fra": "Qu\u00e9bec, C\u00f4te-Nord", 
+              "key": "Quebec, C\u00f4te-Nord | Qu\u00e9bec, C\u00f4te-Nord", 
               "pilot_uuid": "335CCEE3-4877-474C-B4F9-4C24D5086091"
             }, 
             {
               "eng": "Quebec, Nord-du-Qu\u00e9bec", 
               "fra": "Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
+              "key": "Quebec, Nord-du-Qu\u00e9bec | Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
               "pilot_uuid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE"
             }, 
             {
               "eng": "Ontario, Ottawa", 
               "fra": "Ontario, Ottawa", 
+              "key": "Ontario, Ottawa", 
               "pilot_uuid": "59F96221-A0D1-4668-A769-9DAC7DFC2198"
             }, 
             {
               "eng": "Ontario, Kingston - Pembroke", 
               "fra": "Ontario, Kingston - Pembroke", 
+              "key": "Ontario, Kingston - Pembroke", 
               "pilot_uuid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893"
             }, 
             {
               "eng": "Ontario, Muskoka - Kawarthas", 
               "fra": "Ontario, Muskoka - Kawarthas", 
+              "key": "Ontario, Muskoka - Kawarthas", 
               "pilot_uuid": "75176775-E0E6-4938-B03E-40ECFDB399C1"
             }, 
             {
               "eng": "Ontario, Toronto", 
               "fra": "Ontario, Toronto", 
+              "key": "Ontario, Toronto", 
               "pilot_uuid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC"
             }, 
             {
               "eng": "Ontario, Kitchener - Waterloo - Barrie", 
               "fra": "Ontario, Kitchener - Waterloo - Barrie", 
+              "key": "Ontario, Kitchener - Waterloo - Barrie", 
               "pilot_uuid": "971A8458-0FAD-42A4-99B6-579374BF668B"
             }, 
             {
               "eng": "Ontario, Hamilton - Niagara Peninsula", 
               "fra": "Ontario, Hamilton - Niagara Peninsula", 
+              "key": "Ontario, Hamilton - Niagara Peninsula", 
               "pilot_uuid": "4004DAC2-4AE4-49B9-A4E8-F27940335530"
             }, 
             {
               "eng": "Ontario, London", 
               "fra": "Ontario, London", 
+              "key": "Ontario, London", 
               "pilot_uuid": "66CE657A-9A2B-42EB-BB89-592024C852B5"
             }, 
             {
               "eng": "Ontario,Windsor - Sarnia", 
               "fra": "Ontario, Windsor - Sarnia", 
+              "key": "Ontario,Windsor - Sarnia | Ontario, Windsor - Sarnia", 
               "pilot_uuid": "3FDECF16-64AD-4822-8076-344711C185DB"
             }, 
             {
               "eng": "Ontario, Stratford - Bruce Peninsula", 
               "fra": "Ontario, Stratford - Bruce Peninsula", 
+              "key": "Ontario, Stratford - Bruce Peninsula", 
               "pilot_uuid": "31F39CA2-4A93-4337-87A7-11EDFA53E511"
             }, 
             {
               "eng": "Ontario, Northeast", 
               "fra": "Ontario, Nord-est", 
+              "key": "Ontario, Northeast | Ontario, Nord-est", 
               "pilot_uuid": "55D9E9C2-56E5-4293-A896-D7008F6F5710"
             }, 
             {
               "eng": "Ontario, Northwest", 
               "fra": "Ontario, Nord-ouest", 
+              "key": "Ontario, Northwest | Ontario, Nord-ouest", 
               "pilot_uuid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7"
             }, 
             {
               "eng": "Manitoba, Southeast", 
               "fra": "Manitoba, Sud-est", 
+              "key": "Manitoba, Southeast | Manitoba, Sud-est", 
               "pilot_uuid": "271DA932-E487-4795-9995-ADB722297359"
             }, 
             {
               "eng": "Manitoba, South Central", 
               "fra": "Manitoba, Centre sud", 
+              "key": "Manitoba, South Central | Manitoba, Centre sud", 
               "pilot_uuid": "85E82590-1617-47BA-B69C-22BFAFB2C00A"
             }, 
             {
               "eng": "Manitoba, Southwest", 
               "fra": "Manitoba, Sud-ouest", 
+              "key": "Manitoba, Southwest | Manitoba, Sud-ouest", 
               "pilot_uuid": "1637DBB0-E991-411E-8DA3-E5373DE577CE"
             }, 
             {
               "eng": "Manitoba, North Central", 
               "fra": "Manitoba, Centre nord", 
+              "key": "Manitoba, North Central | Manitoba, Centre nord", 
               "pilot_uuid": "5374E0A8-103B-4186-81B5-ACCE63EAE455"
             }, 
             {
               "eng": "Manitoba, Winnipeg", 
               "fra": "Manitoba, Winnipeg", 
+              "key": "Manitoba, Winnipeg", 
               "pilot_uuid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04"
             }, 
             {
               "eng": "Manitoba, Interlake", 
               "fra": "Manitoba, Interlake", 
+              "key": "Manitoba, Interlake", 
               "pilot_uuid": "036FB1AA-B86D-43F9-A674-56A78388F8F2"
             }, 
             {
               "eng": "Manitoba, Parklands", 
               "fra": "Manitoba, Parklands", 
+              "key": "Manitoba, Parklands", 
               "pilot_uuid": "16155173-67AC-4624-90E5-5A2D9079123A"
             }, 
             {
               "eng": "Manitoba, North", 
               "fra": "Manitoba, Nord", 
+              "key": "Manitoba, North | Manitoba, Nord", 
               "pilot_uuid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F"
             }, 
             {
               "eng": "Saskatchewan, Regina - Moose Mountain", 
               "fra": "Saskatchewan, Regina - Moose Mountain", 
+              "key": "Saskatchewan, Regina - Moose Mountain", 
               "pilot_uuid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2"
             }, 
             {
               "eng": "Saskatchewan, Swift Current - Moose Jaw", 
               "fra": "Saskatchewan, Swift Current - Moose Jaw", 
+              "key": "Saskatchewan, Swift Current - Moose Jaw", 
               "pilot_uuid": "193259E4-EF93-4691-8572-694914D879C4"
             }, 
             {
               "eng": "Saskatchewan, Saskatoon - Biggar", 
               "fra": "Saskatchewan, Saskatoon - Biggar", 
+              "key": "Saskatchewan, Saskatoon - Biggar", 
               "pilot_uuid": "AEE97977-91A3-48B3-A085-369B9B381992"
             }, 
             {
               "eng": "Saskatchewan, Yorkton - Melville", 
               "fra": "Saskatchewan, Yorkton - Melville", 
+              "key": "Saskatchewan, Yorkton - Melville", 
               "pilot_uuid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2"
             }, 
             {
               "eng": "Saskatchewan, Prince Albert", 
               "fra": "Saskatchewan, Prince Alber", 
+              "key": "Saskatchewan, Prince Albert | Saskatchewan, Prince Alber", 
               "pilot_uuid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352"
             }, 
             {
               "eng": "Saskatchewan, Northern", 
               "fra": "Saskatchewan, Nord", 
+              "key": "Saskatchewan, Northern | Saskatchewan, Nord", 
               "pilot_uuid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421"
             }, 
             {
               "eng": "Alberta, Lethbridge - Medicine Hat", 
               "fra": "Alberta, Lethbridge - Medicine Hat", 
+              "key": "Alberta, Lethbridge - Medicine Hat", 
               "pilot_uuid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA"
             }, 
             {
               "eng": "Alberta, Camrose - Drumheller", 
               "fra": "Alberta, Camrose - Drumheller", 
+              "key": "Alberta, Camrose - Drumheller", 
               "pilot_uuid": "394064E0-D465-4520-B651-CE6D28829CD5"
             }, 
             {
               "eng": "Alberta, Calgary", 
               "fra": "Alberta, Calgary", 
+              "key": "Alberta, Calgary", 
               "pilot_uuid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC"
             }, 
             {
               "eng": "Alberta, Banff - Jasper - Rocky Mountain House", 
               "fra": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "key": "Alberta, Banff - Jasper - Rocky Mountain House", 
               "pilot_uuid": "F60854D7-139C-4945-9C5F-A6D6B3027B60"
             }, 
             {
               "eng": "Alberta, Red Deer", 
               "fra": "Alberta, Red Deer", 
+              "key": "Alberta, Red Deer", 
               "pilot_uuid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9"
             }, 
             {
               "eng": "Alberta, Edmonton", 
               "fra": "Alberta, Edmonton", 
+              "key": "Alberta, Edmonton", 
               "pilot_uuid": "60924ED3-E829-45E5-BE8B-2608AF64B241"
             }, 
             {
               "eng": "Alberta, Athabasca - Grande Prairie - Peace River", 
               "fra": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "key": "Alberta, Athabasca - Grande Prairie - Peace River", 
               "pilot_uuid": "5161B55F-3BF5-46F7-B461-455735F6B9B4"
             }, 
             {
               "eng": "Alberta, Wood Buffalo - Cold Lake", 
               "fra": "Alberta, Wood Buffalo - Cold Lake", 
+              "key": "Alberta, Wood Buffalo - Cold Lake", 
               "pilot_uuid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E"
             }, 
             {
               "eng": "British Columbia, Vancouver Island and Coast", 
               "fra": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
+              "key": "British Columbia, Vancouver Island and Coast | Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
               "pilot_uuid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE"
             }, 
             {
               "eng": "British Columbia, Lower Mainland - Southwest", 
               "fra": "Colombie-Britannique, Lower Mainland - Sud-ouest", 
+              "key": "British Columbia, Lower Mainland - Southwest | Colombie-Britannique, Lower Mainland - Sud-ouest", 
               "pilot_uuid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458"
             }, 
             {
               "eng": "British Columbia, Thompson - Okanagan", 
               "fra": "Colombie-Britannique, Thompson - Okanagan", 
+              "key": "British Columbia, Thompson - Okanagan | Colombie-Britannique, Thompson - Okanagan", 
               "pilot_uuid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2"
             }, 
             {
               "eng": "British Columbia, Kootenay", 
               "fra": "Colombie-Britannique, Kootenay", 
+              "key": "British Columbia, Kootenay | Colombie-Britannique, Kootenay", 
               "pilot_uuid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB"
             }, 
             {
               "eng": "British Columbia, Cariboo", 
               "fra": "Colombie-Britannique, Cariboo", 
+              "key": "British Columbia, Cariboo | Colombie-Britannique, Cariboo", 
               "pilot_uuid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6"
             }, 
             {
               "eng": "British Columbia, North Coast", 
               "fra": "Colombie-Britannique, C\u00f4te-nord", 
+              "key": "British Columbia, North Coast | Colombie-Britannique, C\u00f4te-nord", 
               "pilot_uuid": "94E0DABF-268E-454B-B20E-727A9FF34FAB"
             }, 
             {
               "eng": "British Columbia, Nechako", 
               "fra": "Colombie-Britannique, Nechako", 
+              "key": "British Columbia, Nechako | Colombie-Britannique, Nechako", 
               "pilot_uuid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C"
             }, 
             {
               "eng": "British Columbia, Northeast", 
               "fra": "Colombie-Britannique, Nord-est", 
+              "key": "British Columbia, Northeast | Colombie-Britannique, Nord-est", 
               "pilot_uuid": "4284F297-5090-447A-A1E3-C339B68F5932"
             }, 
             {
               "eng": "Yukon Territory", 
               "fra": "Territoire du Yukon", 
+              "key": "Yukon Territory | Territoire du Yukon", 
               "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
             }
           ], 
@@ -4174,32 +4800,38 @@
             {
               "eng": "Vector", 
               "fra": "Vecteur", 
-              "id": 635
+              "id": 635, 
+              "key": "Vector | Vecteur"
             }, 
             {
               "eng": "Grid", 
               "fra": "Grille", 
-              "id": 636
+              "id": 636, 
+              "key": "Grid | Grille"
             }, 
             {
               "eng": "Text Table", 
               "fra": "Texte table", 
-              "id": 637
+              "id": 637, 
+              "key": "Text Table | Texte table"
             }, 
             {
               "eng": "Tin", 
               "fra": "Tin", 
-              "id": 638
+              "id": 638, 
+              "key": "Tin"
             }, 
             {
               "eng": "Stero Model", 
               "fra": "St\u00e9r\u00e9omod\u00e8le", 
-              "id": 639
+              "id": 639, 
+              "key": "Stero Model | St\u00e9r\u00e9omod\u00e8le"
             }, 
             {
               "eng": "Video", 
               "fra": "Vid\u00e9o", 
-              "id": 640
+              "id": 640, 
+              "key": "Video | Vid\u00e9o"
             }
           ], 
           "data_gov_common_core": "", 
@@ -4237,102 +4869,122 @@
             {
               "eng": "Document Digital", 
               "fra": "Document num\u00e9rique", 
-              "id": 387
+              "id": 387, 
+              "key": "Document Digital | Document num\u00e9rique"
             }, 
             {
               "eng": "Document Hardcopy", 
               "fra": "Document papier", 
-              "id": 388
+              "id": 388, 
+              "key": "Document Hardcopy | Document papier"
             }, 
             {
               "eng": "Image Digital", 
               "fra": "Image num\u00e9rique", 
-              "id": 389
+              "id": 389, 
+              "key": "Image Digital | Image num\u00e9rique"
             }, 
             {
               "eng": "Image Hardcopy", 
               "fra": "Image papier", 
-              "id": 390
+              "id": 390, 
+              "key": "Image Hardcopy | Image papier"
             }, 
             {
               "eng": "Map Digital", 
               "fra": "Carte num\u00e9rique", 
-              "id": 391
+              "id": 391, 
+              "key": "Map Digital | Carte num\u00e9rique"
             }, 
             {
               "eng": "Map Hardcopy", 
               "fra": "Carte papier", 
-              "id": 392
+              "id": 392, 
+              "key": "Map Hardcopy | Carte papier"
             }, 
             {
               "eng": "Model Digital", 
               "fra": "Mod\u00e8le num\u00e9rique", 
-              "id": 393
+              "id": 393, 
+              "key": "Model Digital | Mod\u00e8le num\u00e9rique"
             }, 
             {
               "eng": "Model Hardcopy", 
               "fra": "Maquette", 
-              "id": 394
+              "id": 394, 
+              "key": "Model Hardcopy | Maquette"
             }, 
             {
               "eng": "Profile Digital", 
               "fra": "Profil num\u00e9rique", 
-              "id": 395
+              "id": 395, 
+              "key": "Profile Digital | Profil num\u00e9rique"
             }, 
             {
               "eng": "Profile Hardcopy", 
               "fra": "Profil papier", 
-              "id": 396
+              "id": 396, 
+              "key": "Profile Hardcopy | Profil papier"
             }, 
             {
               "eng": "Table Digital", 
               "fra": "Table num\u00e9rique", 
-              "id": 397
+              "id": 397, 
+              "key": "Table Digital | Table num\u00e9rique"
             }, 
             {
               "eng": "Table Hardcopy", 
               "fra": "Table papier", 
-              "id": 398
+              "id": 398, 
+              "key": "Table Hardcopy | Table papier"
             }, 
             {
               "eng": "Video Digital", 
               "fra": "Vid\u00e9o num\u00e9rique", 
-              "id": 399
+              "id": 399, 
+              "key": "Video Digital | Vid\u00e9o num\u00e9rique"
             }, 
             {
               "eng": "Video Hardcopy", 
               "fra": "Vid\u00e9o film", 
-              "id": 400
+              "id": 400, 
+              "key": "Video Hardcopy | Vid\u00e9o film"
             }, 
             {
               "eng": "Audio Digital", 
               "fra": "Audio num\u00e9rique", 
-              "id": 401
+              "id": 401, 
+              "key": "Audio Digital | Audio num\u00e9rique"
             }, 
             {
               "eng": "Audio Hardcopy", 
               "fra": "Audio analogique", 
-              "id": 402
+              "id": 402, 
+              "key": "Audio Hardcopy | Audio analogique"
             }, 
             {
               "eng": "Multimedia Digital", 
               "fra": "Multim\u00e9dia num\u00e9rique", 
-              "id": 403
+              "id": 403, 
+              "key": "Multimedia Digital | Multim\u00e9dia num\u00e9rique"
             }, 
             {
               "eng": "Multimedia Hardcopy", 
               "fra": "Multim\u00e9dia analogique", 
-              "id": 404
+              "id": 404, 
+              "key": "Multimedia Hardcopy | Multim\u00e9dia analogique"
             }, 
             {
               "eng": "Diagram Digital", 
               "fra": "Diagramme num\u00e9rique", 
-              "id": 405
+              "id": 405, 
+              "key": "Diagram Digital | Diagramme num\u00e9rique"
             }, 
             {
               "eng": "Diagram Hardcopy", 
               "fra": "Diagramme papier", 
-              "id": 406
+              "id": 406, 
+              "key": "Diagram Hardcopy | Diagramme papier"
             }
           ], 
           "data_gov_common_core": "", 
@@ -4540,22 +5192,26 @@
         {
           "eng": "No language", 
           "fra": "Acune langue", 
-          "id": ""
+          "id": "", 
+          "key": "No language | Acune langue"
         }, 
         {
           "eng": "English", 
           "fra": "Anglais", 
-          "id": "eng; CAN"
+          "id": "eng; CAN", 
+          "key": "English | Anglais"
         }, 
         {
           "eng": "French", 
           "fra": "Fran\u00e7ais", 
-          "id": "fra; CAN"
+          "id": "fra; CAN", 
+          "key": "French | Fran\u00e7ais"
         }, 
         {
           "eng": "Bilingual (English and French)", 
           "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
-          "id": "eng; CAN | fra; CAN"
+          "id": "eng; CAN | fra; CAN", 
+          "key": "Bilingual (English and French) | Bilingue (Anglais et Fran\u00e7ais)"
         }
       ], 
       "data_gov_common_core": "", 
