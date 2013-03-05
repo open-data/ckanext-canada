@@ -19,22 +19,28 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
 
+
 class DataGCCAInternal(p.SingletonPlugin):
     """
     Plugin for internal version of data.gc.ca site, aka the "registry"
     This plugin requires the DataGCCAPublic and DataGCCAForms plugins
     """
-    p.implements(p.IConfigurer)
-
-    def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
-
+    pass
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
+    p.implements(p.IConfigurable)
+    p.implements(p.IConfigurer)
     p.implements(p.IDatasetForm, inherit=True)
+
+    def update_config(self, config):
+        p.toolkit.add_template_directory(config, 'templates/internal')
+
+    def configure(self, config):
+        jinja_globals = config['pylons.app_globals'].jinja_env.globals
+        jinja_globals['schema_description'] = schema_description
 
     def is_fallback(self):
         """
@@ -100,17 +106,57 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             schema['tags']['__extras'].append(converters.free_tags_only)
 
 
-    def setup_template_variables(self, context, data_dict=None):
-        """
-        Add variables to c just prior to the template being rendered.
-        """
-        DefaultDatasetForm.setup_template_variables(self, context, data_dict)
-
-        toolkit.c.schema_description = schema_description
-
     def check_data_dict(self, data_dict, schema=None):
         # XXX: do nothing here because DefaultDatasetForm's check_data_dict()
         # breaks with the new three-stage dataset creation when using
         # convert_to_extras.
         pass
 
+
+class DataGCCAPackageController(p.SingletonPlugin):
+    p.implements(p.IPackageController)
+    
+    def read(self, entity):
+        pass
+
+    def create(self, entity):
+        pass
+
+    def edit(self, entity):
+        pass
+
+    def authz_add_role(self, object_role):
+        pass
+
+    def authz_remove_role(self, object_role):
+        pass
+
+    def delete(self, entity):
+        pass
+
+    def before_search(self, search_params):
+        return search_params
+
+    def after_search(self, search_results, search_params):
+        return search_results
+
+    def before_index(self, data_dict):
+        return data_dict
+
+    def before_view(self, pkg_dict):
+        return pkg_dict
+
+    def after_create(self, context, data_dict):
+        return data_dict
+
+    def after_update(self, context, data_dict):
+        return data_dict
+
+    def after_delete(self, context, data_dict):
+        return data_dict
+
+    def after_show(self, context, data_dict):
+        return data_dict
+
+    def update_facet_titles(self, facet_titles):
+        return facet_titles
