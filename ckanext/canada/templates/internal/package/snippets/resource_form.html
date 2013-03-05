@@ -5,6 +5,6 @@
 {% block basic_fields %}
   {% for id, lang, field in schema_description.resource_fields_by_ckan_id(
       true) %}
-    {{ cform.formfield(id, lang, field, data, errors, language) }}
+    {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
   {% endfor %}
 {% endblock %}

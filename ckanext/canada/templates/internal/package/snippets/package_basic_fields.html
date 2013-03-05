@@ -5,6 +5,6 @@
     true, schema_description.dataset_sections.0) %}
   {% if id not in ('id', 'language', 'license_id', 'author_email', 'author',
                'department_number') %}
-    {{ cform.formfield(id, lang, field, data, errors, language) }}
+    {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
   {% endif %}
 {% endfor %}

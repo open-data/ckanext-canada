@@ -3,11 +3,11 @@
 
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.1) %}
-  {{ cform.formfield(id, lang, field, data, errors, language) }}
+  {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
 {% endfor %}
 
 {% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
     true, schema_description.dataset_sections.2) %}
-  {{ cform.formfield(id, lang, field, data, errors, language) }}
+  {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
 {% endfor %}
 
