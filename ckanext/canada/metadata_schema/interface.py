@@ -126,12 +126,4 @@ class MetadataSchema(object):
             yield ckan_field_name, pilot_field_name, field
 
 
-# FIXME: remove these
-for old, new in [('sections', 'dataset_sections'),
-        ('fields', 'dataset_fields'),
-        ('fields_by_ckan_id', 'dataset_fields_by_ckan_id')]:
-    def nope(self, old=old, new=new):
-        assert 0, '%s was renamed to %s' % (old, new)
-    setattr(MetadataSchema, old, property(nope))
-
 

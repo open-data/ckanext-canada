@@ -13,15 +13,6 @@ class TestSchemaDescription(unittest.TestCase):
         for f in self.sd.dataset_sections:
             self.assertTrue(len(f['fields']) > 0)
 
-    # FIXME: remove this
-    def test_old_attribute_names(self):
-        with self.assertRaises(AssertionError):
-            self.sd.fields
-        with self.assertRaises(AssertionError):
-            self.sd.fields_by_ckan_id
-        with self.assertRaises(AssertionError):
-            self.sd.sections
-
     def test_fields_by_ckan_id(self):
         dataset_fields = list(self.sd.dataset_fields_by_ckan_id())
         self.assertTrue(len(dataset_fields) > 10)
