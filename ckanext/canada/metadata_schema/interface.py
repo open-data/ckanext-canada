@@ -48,7 +48,7 @@ class MetadataSchema(object):
             self.vocabularies[k] = self.dataset_field_by_id[v]['choices']
             self.dataset_field_by_id[v]['vocabulary'] = k
 
-        for f in self.dataset_fields:
+        for f in self.dataset_fields + self.resource_fields:
             if 'choices' not in f:
                 continue
             f['choices_by_pilot_uuid'] = dict((c['pilot_uuid'], c)
