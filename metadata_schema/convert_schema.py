@@ -428,6 +428,18 @@ def main():
 
     apply_field_customizations(schema_out, vocab)
 
+    # add keys for choices
+    for f in schema_out['resource_fields'] + [df
+            for sec in schema_out['dataset_sections']
+            for df in sec['fields']]:
+        if 'choices' not in f:
+            continue
+        for c in f['choices']:
+            # use the text itself for now
+            c['key'] = c[LANGS[0]]
+            if c['key'] != c[LANGS[1]]:
+                c['key'] += ' | ' + c[LANGS[1]]
+
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
 print main()
