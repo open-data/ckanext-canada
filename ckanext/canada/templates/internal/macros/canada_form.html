@@ -61,14 +61,10 @@
         {% if field.vocabulary %}
           {# temporary select-only-one interface #}
           {% do kwargs.update({'selected': data.get(id,[''])[0]}) %}
-          {% do kwargs.options.append({
-            'text': indent + c[client_lang],
-            'value': c.eng + '  ' + c.fra}) %}
-        {% else %}
-          {% do kwargs.options.append({
-            'text': indent + c[client_lang],
-            'value': c.eng + ' | ' + c.fra if c.eng != c.fra else c.eng}) %}
         {% endif %}
+        {% do kwargs.options.append({
+          'text': indent + c[client_lang],
+          'value': c.key}) %}
       {% endif %}
     {% endfor %}
     {% set widget = form.select %}
