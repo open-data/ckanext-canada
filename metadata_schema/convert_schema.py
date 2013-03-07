@@ -163,7 +163,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
 
 # FOR IMPORTING ENGLISH FIELDS FROM PILOT
 # 'new field name': 'pilot field name'
-FIELD_MAPPING = {
+PILOT_FIELD_MAPPING = {
     #'author_email': 'owner',
     'individual_name': 'contact_name',
     'position_name': 'contact_title',
@@ -186,6 +186,9 @@ FIELD_MAPPING = {
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
+    'resource:url': 'dataset_link_en_1',
+    'resource:format': 'dataset_format_1',
+    'resource:size': 'dataset_size_en_1',
     }
 
 # FOR IMPORTING FRENCH FIELDS FROM PILOT,
@@ -380,6 +383,25 @@ def add_keys_for_choices(f):
             if c['key'] != c[LANGS[1]]:
                 c['key'] += ' | ' + c[LANGS[1]]
 
+def field_from_pilot(field_name, old_root):
+    f = PILOT_FIELD_MAPPING.get(field_name)
+    if not f:
+        return {}
+
+    xp = '//item[inputname="%s"]' % f
+    new_field = {
+        'pilot_id': f,
+        'pilot_name': lang_versions(old_root, xp + '/name'),
+        'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
+        'pilot_type': "".join(old_root.xpath(xp +
+            '/type1/inputtype[1]/text()')),
+        }
+    if not new_field['pilot_type']:
+        # this seems to indicate a selection from a list
+        new_field['choices'] = pilot_choices(f)
+        new_field['pilot_type'] = 'choice'
+    return new_field
+
 
 def main():
     schema_out = {
@@ -408,20 +430,7 @@ def main():
             new_field = field_from_proposed(p)
             new_field['id'] = field
             new_field['existing'] = field in EXISTING_FIELDS
-            f = FIELD_MAPPING.get(field)
-            if f:
-                xp = '//item[inputname="%s"]' % f
-                new_field.update({
-                    'pilot_id': f,
-                    'pilot_name': lang_versions(old_root, xp + '/name'),
-                    'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
-                    'pilot_type': "".join(old_root.xpath(xp +
-                        '/type1/inputtype[1]/text()')),
-                    })
-                if not new_field['pilot_type']:
-                    # this seems to indicate a selection from a list
-                    new_field['choices'] = pilot_choices(f)
-                    new_field['pilot_type'] = 'choice'
+            new_field.update(field_from_pilot(field, old_root))
 
             old_id_fra = BILINGUAL_FIELDS.get(field, None)
             if old_id_fra:
@@ -441,6 +450,7 @@ def main():
         p = proposed.get('resource:' + rfield, None)
         if p:
             new_rfield.update(field_from_proposed(p))
+        new_rfield.update(field_from_pilot('resource:' + rfield, old_root))
         new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 

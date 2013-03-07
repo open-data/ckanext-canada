@@ -5117,6 +5117,16 @@
       }, 
       "name_space": "sdo:contentURL", 
       "nap_iso_19115_ref": "5.20.1", 
+      "pilot_help": {
+        "eng": "The URL pointing to the dataset in the GC repository or website in which it was originally published.  The field accept a single URL formated as follow : http://www.domain_name/resource_path/file_name.ext.", 
+        "fra": "L'adresse URL menant \u00e0 l\u2019ensemble de donn\u00e9es dans le d\u00e9p\u00f4t du GC ou le site Web o\u00f9 elle a d'abord \u00e9t\u00e9 publi\u00e9e.  Ce champ n'accepte qu'une seule adresse respectant le format suivant : http://www.nom_du_domaine/chemin_de_la_ressource/nom_du_fichier.ext."
+      }, 
+      "pilot_id": "dataset_link_en_1", 
+      "pilot_name": {
+        "eng": "Dataset Access Link (URL)", 
+        "fra": "Lien d'acc\u00e8s \u00e0 l'ensemble de donn\u00e9es (adresse URL)"
+      }, 
+      "pilot_type": "text", 
       "proposed_name": {
         "eng": "accessURL", 
         "fra": "URLAcc\u00e8s"
@@ -5148,6 +5158,16 @@
       }, 
       "name_space": "sdo:contentSize", 
       "nap_iso_19115_ref": "5.11.1.2", 
+      "pilot_help": {
+        "eng": "The total size of the dataset in megabytes (MB).", 
+        "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
+      }, 
+      "pilot_id": "dataset_size_en_1", 
+      "pilot_name": {
+        "eng": "Dataset Size", 
+        "fra": "Taille de l'ensemble de donn\u00e9es"
+      }, 
+      "pilot_type": "text", 
       "proposed_name": {
         "eng": "transferSize", 
         "fra": "tailleTransmission"
@@ -5157,6 +5177,50 @@
     }, 
     {
       "bilingual": false, 
+      "choices": [
+        {
+          "eng": "CSV/Text", 
+          "fra": "CSV/Texte", 
+          "key": "CSV/Text | CSV/Texte", 
+          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
+        }, 
+        {
+          "eng": "GeoTIFF", 
+          "fra": "GeoTIFF", 
+          "key": "GeoTIFF", 
+          "pilot_uuid": "A6727501-C214-4D73-995B-0B3EC8CB24F9"
+        }, 
+        {
+          "eng": "KML/KMZ", 
+          "fra": "KML/KMZ", 
+          "key": "KML/KMZ", 
+          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
+        }, 
+        {
+          "eng": "RDF", 
+          "fra": "RDF", 
+          "key": "RDF", 
+          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
+        }, 
+        {
+          "eng": "RSS/GeoRSS", 
+          "fra": "RSS/GeoRSS", 
+          "key": "RSS/GeoRSS", 
+          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
+        }, 
+        {
+          "eng": "Shapefile", 
+          "fra": "Shapefile", 
+          "key": "Shapefile", 
+          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
+        }, 
+        {
+          "eng": "XML", 
+          "fra": "XML", 
+          "key": "XML", 
+          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
+        }
+      ], 
       "data_gov_common_core": "Format", 
       "description": {
         "eng": "Name of the data transfer format."
@@ -5179,6 +5243,16 @@
       }, 
       "name_space": "sdo:encodingFormat", 
       "nap_iso_19115_ref": "5.11.3.2", 
+      "pilot_help": {
+        "eng": "Name of the physical or digital manifestation (format) of the dataset.", 
+        "fra": "Nom du format de la version imprim\u00e9e ou num\u00e9rique de l\u2019ensemble de donn\u00e9es."
+      }, 
+      "pilot_id": "dataset_format_1", 
+      "pilot_name": {
+        "eng": "Dataset Format", 
+        "fra": "Format de l'ensemble de donn\u00e9es"
+      }, 
+      "pilot_type": "choice", 
       "proposed_name": {
         "eng": "formatName", 
         "fra": "nomFormat"
