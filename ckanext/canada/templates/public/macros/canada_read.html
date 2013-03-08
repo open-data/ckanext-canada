@@ -16,7 +16,7 @@
 {%- endmacro -%}
 
 {%- macro field_id(id, pkg, client_lang) -%}
-  {{- field(schema_description.dataset_field_by_id[id], pkg) -}}
+  {{- field(schema_description.dataset_field_by_id[id], pkg, client_lang) -}}
 {%- endmacro -%}
 
 {%- macro field_label(field, client_lang) -%}
