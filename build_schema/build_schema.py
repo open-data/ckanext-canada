@@ -67,16 +67,6 @@ SECTIONS_FIELDS = [
 # override calculated values
 FIELD_OVERRIDES = {
     'tags': {'bilingual': False},
-    'resource:language': {
-        'choices': [
-            { "id": "", "eng": u"No language", "fra": u"Acune langue", },
-            { "id": "eng; CAN", "eng": u"English", "fra": u"Anglais", },
-            { "id": "fra; CAN", "eng": u"French", "fra": u"Fran\u00e7ais", },
-            { "id": "eng; CAN | fra; CAN",
-              "eng": u"Bilingual (English and French)",
-              "fra": u"Bilingue (Anglais et Fran\u00e7ais)", },
-            ]
-        }
     }
 
 # Resource fields (no sections)
@@ -328,7 +318,9 @@ def apply_field_customizations(schema_out, vocab):
         except ValueError:
             continue
         if field == 'language':
-            continue
+            (f,) = (f
+                for f in schema_out['resource_fields']
+                if f['id'] == 'language')
         elif field == 'geographic_region':
             # prefer proposed.xls ordering
             choices = merge(choices, f['choices'])
