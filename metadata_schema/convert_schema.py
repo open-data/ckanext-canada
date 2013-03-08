@@ -281,10 +281,7 @@ def field_from_proposed(p):
         'gc_multiplicity': p.gc_multiplicity,
         'description': {'eng': p.description, 'fra': p.description_fra},
         'example': p.example,
-        'label': {
-            'eng': p.property_label,
-            'fra': p.property_label_fra,
-            },
+        'label': {'eng': p.property_label, 'fra': p.property_label_fra},
         }
 
 def apply_field_customizations(schema_out, vocab):
@@ -351,7 +348,7 @@ def add_keys_for_choices(f):
             c['key'] = u'  '.join(
                 re.sub(u'[,/]', u'', c[lang]).replace(u'  ', u' ')
                 for lang in LANGS)
-    else:            
+    else:
         for c in f['choices']:
             # use the text itself for now (both when different)
             c['key'] = c[LANGS[0]]
