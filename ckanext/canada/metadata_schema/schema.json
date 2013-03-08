@@ -5,35 +5,23 @@
       "fields": [
         {
           "bilingual": false, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "A unique phrase or string which uniquely identifies the metadata file.", 
             "fra": "Une locution ou un syntagme unique qui identifie le fichier de m\u00e9tadonn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Automatically generated. Each metadata record shall have a unique identifier."
           }, 
           "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "id", 
-          "implementation": {
-            "eng": "existing dataset field \u2018id\u2019, where possible calculated from existing unique i.d. (e.g. geogratis uri)", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants\u00a0\u00ab\u00a0id\u00a0\u00bb, lorsque possible, calcul\u00e9 \u00e0 partir de l\u2019identificateur unique (p. ex., geogratis uri)"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "File Identifier", 
             "fra": "Identificateur de fichier"
           }, 
-          "name_space": "dcterms:identifier", 
-          "nap_iso_19115_ref": "5.2.1", 
           "proposed_name": {
             "eng": "fileIdentifier", 
             "fra": "Identifiant M\u00e9tadonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": false, 
@@ -57,29 +45,18 @@
               "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
             }
           ], 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The language of the metadata", 
             "fra": "La langue des m\u00e9tadonn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Automatically generated"
           }, 
           "example": "eng; CAN", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "language", 
-          "implementation": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Language", 
             "fra": "Langue"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "5.2.2", 
           "pilot_help": {
             "eng": "The language(s) of the content of the dataset.", 
             "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
@@ -94,8 +71,7 @@
             "eng": "language", 
             "fra": "langue"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "CodeList\n(CharacterString)"
         }, 
         {
           "bilingual": false, 
@@ -1327,29 +1303,18 @@
               "key": "Canada Post | Postes Canada"
             }
           ], 
-          "data_gov_common_core": "Publisher", 
           "description": {
             "eng": "The organization directly responsible for the datasets and for metadata maintenance.", 
             "fra": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9es et de la maintenance des m\u00e9tadonn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "Treasury Board of Canada Secretariat", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "author", 
-          "implementation": {
-            "eng": "existing dataset field \u2018author\u2019 and a Group assigned to the dataset", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants  \u00ab\u00a0author\u00a0\u00bb et groupe assign\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Organization Name", 
             "fra": "Nom de l\u2019organisation"
           }, 
-          "name_space": "sdo:organization", 
-          "nap_iso_19115_ref": "5.16.2", 
           "pilot_help": {
             "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
@@ -1364,98 +1329,62 @@
             "eng": "organizationName", 
             "fra": "nomOrganisation"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "foaf:Organization"
+          "proposed_type": "CodeList\n(CharacterString)"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The unique number assigned to each department", 
             "fra": "Le num\u00e9ro unique assign\u00e9 \u00e0 chaque minist\u00e8re"
-          }, 
-          "domain_best_practice": {
-            "eng": "Automatically generated from organizationName\n(numbering system TBD)"
           }, 
           "example": "", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "department_number", 
-          "implementation": {
-            "eng": "new dataset field \u2018department_number\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab department_number\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Department Number", 
             "fra": "Num\u00e9ro du minist\u00e8re"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "", 
           "proposed_name": {
             "eng": "departmentNumber", 
             "fra": "num\u00e9roD\u00e9partment"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "CodeList\n(CharacterString)"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "Contact Email", 
           "description": {
             "eng": "The electronic mail address of the responsible organization or individual.", 
             "fra": "L\u2019adresse \u00e9lectronique de l\u2019organisation ou de la personne responsable"
-          }, 
-          "domain_best_practice": {
-            "eng": "Default: tbd (e.g. od-do@tbs-sct.gc.ca)"
           }, 
           "example": "od-do@tbs-sct.gc.ca", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "author_email", 
-          "implementation": {
-            "eng": "exisiting dataset field \u2018author_email\u2019 set to the same value (TBD) for all datasets", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0author_email\u00a0\u00bb - m\u00eame valeur (\u00e0 d\u00e9terminer) pour tous les ensembles de donn\u00e9es"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Electronic Mail Address", 
             "fra": "Adresse \u00e9lectronique"
           }, 
-          "name_space": "foaf:mbox", 
-          "nap_iso_19115_ref": "5.19.6", 
           "proposed_name": {
             "eng": "electronicMail Address", 
             "fra": "adresseCourrier\u00c9lectronique"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "foaf:mbox"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "Title", 
           "description": {
             "eng": "The name by which the cited dataset is know", 
             "fra": "Nom connue de l\u2019ensemble de donn\u00e9es cit\u00e9e"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text"
           }, 
           "example": "Canada Border Wait Times", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "title", 
-          "implementation": {
-            "eng": "existing dataset field \"title\"", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0title\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Title", 
             "fra": "Titre"
           }, 
-          "name_space": "sdo:name\n(ds:dataset ??)", 
-          "nap_iso_19115_ref": "5.14.1", 
           "pilot_help": {
             "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
@@ -1471,66 +1400,42 @@
             "eng": "title", 
             "fra": "titre"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:title"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "Unique Identifier", 
           "description": {
             "eng": "The Uniform Resource Identifier for the dataset along with its on line function code.", 
             "fra": "L\u2019identificateur de ressource uniforme de l\u2019ensemble de donn\u00e9es, ainsi que son code de fonction en ligne"
-          }, 
-          "domain_best_practice": {
-            "eng": "Automically generated by system following defined format"
           }, 
           "example": "http://host/path/ download", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "name", 
-          "implementation": {
-            "eng": "existing dataset field \u2018name\u2019, imported if existing (e.g. geogratis) or calculated and hidden from the registry UI", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants  \u00ab\u00a0name\u00a0\u00bb, import\u00e9 s\u2019il existe (p. ex., geogratis) ou calcul\u00e9 et cach\u00e9 du registre d\u2019URI"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Dataset URI", 
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
-          "name_space": "dcterms:identifier", 
-          "nap_iso_19115_ref": "5.2.10", 
           "proposed_name": {
             "eng": "dataSetURI", 
             "fra": "URIJeuDonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcterms:identifier"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "Description", 
           "description": {
             "eng": "A brief narrative summary of the dataset\u2019s contents", 
             "fra": "Un bref r\u00e9sum\u00e9 narratif du contenu de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
           }, 
           "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "notes", 
-          "implementation": {
-            "eng": "existing dataset field \u2018notes\u2019", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0notes\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Abstract", 
             "fra": "R\u00e9sum\u00e9"
           }, 
-          "name_space": "sdo:description", 
-          "nap_iso_19115_ref": "5.3.1.2", 
           "pilot_help": {
             "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
@@ -1546,40 +1451,27 @@
             "eng": "abstract", 
             "fra": "r\u00e9sum\u00e9"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dct:description"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
             "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text"
           }, 
           "example": "", 
           "existing": false, 
           "gc_multiplicity": "O", 
           "id": "digital_object_identifier", 
-          "implementation": {
-            "eng": "new dataset field \u2018data_object_identifier\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0data_object_identifier\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "N\\A", 
           "label": {
             "eng": "Digital Object Identifier", 
             "fra": "Identificateur d\u2019objet num\u00e9rique"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "", 
           "proposed_name": {
             "eng": "digitalObjectIdentifier", 
             "fra": "identificateurObjetNum\u00e9rique"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": false, 
@@ -1595,35 +1487,23 @@
               "key": "Geo Data | G\u00e9o"
             }
           ], 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The type of catalogue to which the metadata record belongs: Raw, Geo", 
             "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es\u00a0: Raw, Geo"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "Geo", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "catalog_type", 
-          "implementation": {
-            "eng": "new dataset field \u2018catalog_type\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0catalog_type\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Catalogue Type", 
             "fra": "Type de catalogue"
           }, 
-          "name_space": "tbd\n\n(ds:catalog ??)", 
-          "nap_iso_19115_ref": "", 
           "proposed_name": {
             "eng": "catalogueType", 
             "fra": "typeCatalogue"
           }, 
-          "proposed_type": "GC derived field", 
-          "rdfa_lite": ""
+          "proposed_type": "GC derived field"
         }, 
         {
           "bilingual": false, 
@@ -1755,29 +1635,18 @@
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
             }
           ], 
-          "data_gov_common_core": "Category", 
           "description": {
             "eng": "The main subject(s) of the dataset.", 
             "fra": "Le principal sujet (ou les principaux sujets) de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "Agriculture", 
           "existing": false, 
           "gc_multiplicity": "M, Rep.", 
           "id": "subject", 
-          "implementation": {
-            "eng": "new dataset keyword field \u2018subject\u2019 with new keyword vocabulary", 
-            "fra": "Nouveau champ \u00e0 mot cl\u00e9 de l\u2019ensemble de donn\u00e9es \u00ab\u00a0subject\u00a0\u00bb, avec nouveau vocabulaire"
-          }, 
-          "iso_multiplicity": "M, Repeat.", 
           "label": {
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "name_space": "sdo:about", 
-          "nap_iso_19115_ref": "5.3.1.11", 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1793,7 +1662,6 @@
             "fra": "sujet"
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "dcat:theme", 
           "type": "keywords"
         }, 
         {
@@ -1914,62 +1782,39 @@
               "key": "Utilities Communication  Services communication"
             }
           ], 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The main theme(s) of the dataset.", 
             "fra": "Le th\u00e8me principal (ou les  th\u00e8mes principaux) de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "Farming", 
           "existing": false, 
           "gc_multiplicity": "O, Rep.", 
           "id": "topic_category", 
-          "implementation": {
-            "eng": "new dataset keyword field \u2018topic_category\u2019 with new keyword vocabulary", 
-            "fra": "Nouveau champ \u00e0 mot cl\u00e9 de l\u2019ensemble de donn\u00e9es \u00ab\u00a0topic_category\u00a0\u00bb, avec nouveau vocabulaire"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Topic Category", 
             "fra": "Cat\u00e9gorie de sujet"
           }, 
-          "name_space": "dcat:theme ??", 
-          "nap_iso_19115_ref": "5.3.1.11", 
           "proposed_name": {
             "eng": "topicCategory", 
             "fra": "cat\u00e9gorieTh\u00e9matique"
           }, 
           "proposed_type": "CodeList napMD_TopicCategoryCode", 
-          "rdfa_lite": "", 
           "type": "keywords"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "Tags", 
           "description": {
             "eng": "The commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource.", 
             "fra": "Les mots utilis\u00e9s de fa\u00e7on commune, des locutions, ou des mots officiels utilis\u00e9s pour d\u00e9crire le sujet de la ressource."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
           "existing": true, 
           "gc_multiplicity": "M, Rep.", 
           "id": "tags", 
-          "implementation": {
-            "eng": "existing dataset field \u2018tags\u2019 with UI that forces entering both English and French versions of every keyword", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab tags\u00a0\u00bb avec UI qui permet d'entrer les deux versions anglaise et fran\u00e7aise de tous les mots cl\u00e9s"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Keywords", 
             "fra": "Mots cl\u00e9s"
           }, 
-          "name_space": "sdo:keywords", 
-          "nap_iso_19115_ref": "5.3.6.1", 
           "pilot_help": {
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
@@ -1985,66 +1830,42 @@
             "eng": "keywords", 
             "fra": "motsCl\u00e9s"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcat:keywords"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "License", 
           "description": {
             "eng": "The limitations or constraints on the use of the resource.", 
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
-          }, 
-          "domain_best_practice": {
-            "eng": "Default: Constraints outlined in: Government of Canada Open Data Licence Agreement (URL:\u2026)"
           }, 
           "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
           "existing": true, 
           "gc_multiplicity": "M", 
           "id": "license_id", 
-          "implementation": {
-            "eng": "existing dataset field \u2018license_id\u2019", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0licence_id\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "licen", 
           "label": {
             "eng": "License", 
             "fra": "Licence"
           }, 
-          "name_space": "dc:license", 
-          "nap_iso_19115_ref": "5.4.1.1", 
           "proposed_name": {
             "eng": "license", 
             "fra": "licence"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": "dcterms:license"
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The name of the series, or aggregate dataset, of which the dataset is a part", 
             "fra": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
           }, 
           "example": "CANSIM", 
           "existing": false, 
           "gc_multiplicity": "O", 
           "id": "data_series_name", 
-          "implementation": {
-            "eng": "new dataset field \u2018data_series_name\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab data_series_name\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Data Series Name", 
             "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
           }, 
-          "name_space": "tbd\nds:catalog??", 
-          "nap_iso_19115_ref": "5.21.1", 
           "pilot_help": {
             "eng": "A name given to multiple datasets to present them as a group or a set.", 
             "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
@@ -2060,40 +1881,27 @@
             "eng": "dataSeriesName", 
             "fra": "nonS\u00e9rieDonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "free text (CharacterString)"
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The identification of the series\u2019 issue information.", 
             "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
           }, 
           "example": "Table 502-0003", 
           "existing": false, 
           "gc_multiplicity": "O", 
           "id": "data_series_issue_identification", 
-          "implementation": {
-            "eng": "new dataset field \u2018data_series_issue_identification\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab data_series_issue_identification\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Issue Identification", 
             "fra": "Identification de l\u2019enjeu"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "5.21.2", 
           "proposed_name": {
             "eng": "issueIdentification", 
             "fra": "identificationPublication"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "free text (CharacterString)"
         }
       ], 
       "name": {
@@ -2185,29 +1993,18 @@
               "key": "Semimonthly | Bimensuel"
             }
           ], 
-          "data_gov_common_core": "Frequency", 
           "description": {
             "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
             "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "daily", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "maintenance_and_update_frequency", 
-          "implementation": {
-            "eng": "new dataset field \u2018maintenance_and_update_frequency\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0maintenance_and_update_frequency\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Maintainence and Update Frequency", 
             "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
           }, 
-          "name_space": "dct:accuralPeriodicity", 
-          "nap_iso_19115_ref": "5.6.1", 
           "pilot_help": {
             "eng": "The frequency at which the dataset is published.", 
             "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
@@ -2222,40 +2019,27 @@
             "eng": "maintenanceAndUpdateFrequency", 
             "fra": "fr\u00e9quenceMise\u00c0Jour"
           }, 
-          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
-          "rdfa_lite": "dct:accuralPeriodicity"
+          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "Temporal", 
           "description": {
             "eng": "The time period related to the dataset content.", 
             "fra": "La p\u00e9riode de temps li\u00e9e au contenu de l\u2019ensemble de donn\u00e9es."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text, YYYY-MM-DD/YYYY-MM-DD"
           }, 
           "example": "YYYY-MM-DD/YYYY-MM-DD", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "temporal_element", 
-          "implementation": {
-            "eng": "new dataset field 'temporal_element'", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0temporal_element\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Temporal Element", 
             "fra": "\u00c9l\u00e9ment temporel"
           }, 
-          "name_space": "ds:temporal", 
-          "nap_iso_19115_ref": "5.13.5", 
           "proposed_name": {
             "eng": "temporalElement", 
             "fra": "\u00e9lementTemporalle"
           }, 
-          "proposed_type": "EX_TemporalExtent", 
-          "rdfa_lite": "decterms:temporal"
+          "proposed_type": "EX_TemporalExtent"
         }, 
         {
           "bilingual": false, 
@@ -4588,29 +4372,18 @@
               "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
             }
           ], 
-          "data_gov_common_core": "Spatial", 
           "description": {
             "eng": "The geographic area of the dataset", 
             "fra": "La r\u00e9gion g\u00e9ographique de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "Ottawa", 
           "existing": false, 
           "gc_multiplicity": "O", 
           "id": "geographic_region", 
-          "implementation": {
-            "eng": "new dataset field \u2018geographic_region\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0geographic_region\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Geographic Region", 
             "fra": "R\u00e9gion g\u00e9ographique"
           }, 
-          "name_space": "tbd", 
-          "nap_iso_19115_ref": "N/A", 
           "pilot_help": {
             "eng": "The region that describes the geographic area covered by the dataset.", 
             "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
@@ -4625,34 +4398,22 @@
             "eng": "geographicRegion", 
             "fra": "r\u00e9gionG\u00e9ographique"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
-          "rdfa_lite": "dcterms:spatial"
+          "proposed_type": "CodeList\n(CharacterString)"
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "Homepage URL", 
           "description": {
             "eng": "The URL for the Government of Canada program that is responsible for the dataset.", 
             "fra": "L\u2019adresse URL du programme du gouvernement du Canada responsable de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text."
           }, 
           "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
           "existing": true, 
           "gc_multiplicity": "O", 
           "id": "url", 
-          "implementation": {
-            "eng": "existing dataset field 'url'", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0url\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Program URL", 
             "fra": "URL des documents connexes"
           }, 
-          "name_space": "sdo:url", 
-          "nap_iso_19115_ref": "", 
           "pilot_help": {
             "eng": "The URL for the program  that is responsible for the dataset or tool.", 
             "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
@@ -4668,72 +4429,47 @@
             "eng": "programURL", 
             "fra": "URLprogramme"
           }, 
-          "proposed_type": "", 
-          "rdfa_lite": "foaf:homepage"
+          "proposed_type": ""
         }, 
         {
           "bilingual": true, 
-          "data_gov_common_core": "Access Point", 
           "description": {
             "eng": "The endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory", 
             "fra": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API).\n(Si l\u2019utilisateur coche \u00ab oui \u00bb au champ \u00ab interrogeable \u00bb, alors ce champ est obligatoire.)"
-          }, 
-          "domain_best_practice": {
-            "eng": "free text"
           }, 
           "example": "URL", 
           "existing": false, 
           "gc_multiplicity": "M, cond.", 
           "id": "endpoint_url", 
-          "implementation": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Endpoint", 
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
-          "name_space": "dcat:webService", 
-          "nap_iso_19115_ref": "", 
           "proposed_name": {
             "eng": "endpoint", 
             "fra": ""
           }, 
-          "proposed_type": "", 
-          "rdfa_lite": "dcat:webService"
+          "proposed_type": ""
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "Release Data", 
           "description": {
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
-          }, 
-          "domain_best_practice": {
-            "eng": "free text, YYYY-MM-DD"
           }, 
           "example": "41132.0", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "date_published", 
-          "implementation": {
-            "eng": "new dataset field \u2018date_published\u2019 that will affect how resources and datasets move to the portal, TBS-users only", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0date_published \u00bb\u00a0 qui aura une incidence sur la fa\u00e7on dont les ressources et les ensembles de donn\u00e9es sont d\u00e9plac\u00e9s vers le portail, utilisateurs du SCT seulement"
-          }, 
-          "iso_multiplicity": "M, Repeat.", 
           "label": {
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
-          "name_space": "sdo:datePublished", 
-          "nap_iso_19115_ref": "5.15.1", 
           "proposed_name": {
             "eng": "datePublished", 
             "fra": "datePublication"
           }, 
-          "proposed_type": "Date (see B.4)", 
-          "rdfa_lite": "dct:issued"
+          "proposed_type": "Date (see B.4)"
         }
       ], 
       "name": {
@@ -4783,35 +4519,23 @@
               "key": "Video | Vid\u00e9o"
             }
           ], 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The object(s) used to represent the\ngeographic information.", 
             "fra": "L\u2019objet utilis\u00e9 (ou les objets utilis\u00e9s) pour repr\u00e9senter l\u2019information g\u00e9ographique"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "vector", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "spatial_representation_type", 
-          "implementation": {
-            "eng": "new dataset field \u2018spatial_representation_type\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0spatial_representation_type\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "name_space": "", 
-          "nap_iso_19115_ref": "5.3.1.7", 
           "proposed_name": {
             "eng": "spatialRespresentionType", 
             "fra": "typeRepr\u00e9sentatiobSpatiale"
           }, 
-          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode", 
-          "rdfa_lite": ""
+          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode"
         }, 
         {
           "bilingual": false, 
@@ -4937,99 +4661,63 @@
               "key": "Diagram Hardcopy | Diagramme papier"
             }
           ], 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The form in which the resource is available.", 
             "fra": "Le format dans lequel la ressource est disponible"
-          }, 
-          "domain_best_practice": {
-            "eng": "Drop down : Controlled vocab."
           }, 
           "example": "documentDigital", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "presentation_form", 
-          "implementation": {
-            "eng": "new dataset field \u2018presentation_form\u2019", 
-            "fra": "Nouveau champ de l\u2019ensemble de donn\u00e9es \u00ab\u00a0presentation_form\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "O", 
           "label": {
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "name_space": "", 
-          "nap_iso_19115_ref": "5.14.8", 
           "proposed_name": {
             "eng": "presentationForm", 
             "fra": "formePr\u00e9sentation"
           }, 
-          "proposed_type": "CodeList\nnapCI_PresentationFormCode", 
-          "rdfa_lite": ""
+          "proposed_type": "CodeList\nnapCI_PresentationFormCode"
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
             "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
-          }, 
-          "domain_best_practice": {
-            "eng": "Default to Canada's coordinates (West bound domain is [-180, 180])"
           }, 
           "example": "", 
           "existing": true, 
           "gc_multiplicity": "O", 
           "id": "spatial", 
-          "implementation": {
-            "eng": "existing dataset field \u2018spatial\u2019", 
-            "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0spatial\u00a0\u00bb"
-          }, 
-          "iso_multiplicity": "", 
           "label": {
             "eng": "Spatial", 
             "fra": "\u00c9l\u00e9ment spatial"
           }, 
-          "name_space": "ds:spatial", 
-          "nap_iso_19115_ref": "5.13.3.5", 
           "proposed_name": {
             "eng": "spatial", 
             "fra": "spatiale"
           }, 
-          "proposed_type": "", 
-          "rdfa_lite": ""
+          "proposed_type": ""
         }, 
         {
           "bilingual": false, 
-          "data_gov_common_core": "", 
           "description": {
             "eng": "The name of the graphic file provided to illustrate the resource.", 
             "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
-          }, 
-          "domain_best_practice": {
-            "eng": "The attribute fileName shall include path or URL to access the graphic file and the file type extension, e.g. \u201caGraphicFile.png.\u201d If the file type is not well known then it should be described within the attribute fileType. The file type should be a graphic file type (see CodeList napMD_FileFormatCode)."
           }, 
           "example": "Product dependant", 
           "existing": false, 
           "gc_multiplicity": "C", 
           "id": "browse_graphic_url", 
-          "implementation": {
-            "eng": "replace with new dataset field \u2018browse_graphic_url\u2019 which will point to a TBD common X, Y resolution jpg, gif or png image hosted elsewhere", 
-            "fra": "remplacer par un nouveau champ de l'ensemble de donn\u00e9es \u00abbrowse_graphic_url\u00bb\u00a0\u2026"
-          }, 
-          "iso_multiplicity": "M", 
           "label": {
             "eng": "Browse Graphic File Name", 
             "fra": "Recherche du nom du fichier graphique"
           }, 
-          "name_space": "", 
-          "nap_iso_19115_ref": "5.3.5.1", 
           "proposed_name": {
             "eng": "browseGraphicFileName", 
             "fra": "NomFichierIllustration"
           }, 
-          "proposed_type": "free text (CharacterString)", 
-          "rdfa_lite": ""
+          "proposed_type": "free text (CharacterString)"
         }
       ], 
       "name": {
@@ -5048,29 +4736,18 @@
   "resource_fields": [
     {
       "bilingual": false, 
-      "data_gov_common_core": "Download URL", 
       "description": {
         "eng": "The electronic location where the resource can be found.", 
         "fra": "L\u2019endroit \u00e9lectronique o\u00f9 se trouve la ressource."
-      }, 
-      "domain_best_practice": {
-        "eng": "free text."
       }, 
       "example": "http://www.ec.gc.ca/dataset", 
       "existing": true, 
       "gc_multiplicity": "M, Rep.", 
       "id": "url", 
-      "implementation": {
-        "eng": "existing resource field \u2018url\u2019", 
-        "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0url\u00a0\u00bb"
-      }, 
-      "iso_multiplicity": "M", 
       "label": {
         "eng": "Access URL", 
         "fra": "URL d\u2019acc\u00e8s"
       }, 
-      "name_space": "sdo:contentURL", 
-      "nap_iso_19115_ref": "5.20.1", 
       "pilot_help": {
         "eng": "The URL pointing to the dataset in the GC repository or website in which it was originally published.  The field accept a single URL formated as follow : http://www.domain_name/resource_path/file_name.ext.", 
         "fra": "L'adresse URL menant \u00e0 l\u2019ensemble de donn\u00e9es dans le d\u00e9p\u00f4t du GC ou le site Web o\u00f9 elle a d'abord \u00e9t\u00e9 publi\u00e9e.  Ce champ n'accepte qu'une seule adresse respectant le format suivant : http://www.nom_du_domaine/chemin_de_la_ressource/nom_du_fichier.ext."
@@ -5085,34 +4762,22 @@
         "eng": "accessURL", 
         "fra": "URLAcc\u00e8s"
       }, 
-      "proposed_type": "URL", 
-      "rdfa_lite": "dcat:download"
+      "proposed_type": "URL"
     }, 
     {
       "bilingual": false, 
-      "data_gov_common_core": "Size", 
       "description": {
         "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65 000 000", 
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
-      }, 
-      "domain_best_practice": {
-        "eng": "free text."
       }, 
       "example": "65 MB", 
       "existing": true, 
       "gc_multiplicity": "M, Rep.", 
       "id": "size", 
-      "implementation": {
-        "eng": "existing resource field \u2018size\u2019 (in bytes)", 
-        "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0size\u00a0\u00bb (en octets)"
-      }, 
-      "iso_multiplicity": "O", 
       "label": {
         "eng": "Transfer Size", 
         "fra": "Taille du transfert"
       }, 
-      "name_space": "sdo:contentSize", 
-      "nap_iso_19115_ref": "5.11.1.2", 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
@@ -5127,8 +4792,7 @@
         "eng": "transferSize", 
         "fra": "tailleTransmission"
       }, 
-      "proposed_type": "Real", 
-      "rdfa_lite": "dcat:size"
+      "proposed_type": "Real"
     }, 
     {
       "bilingual": false, 
@@ -5176,29 +4840,18 @@
           "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }
       ], 
-      "data_gov_common_core": "Format", 
       "description": {
         "eng": "Name of the data transfer format.", 
         "fra": "Nom du format pour le transfert de donn\u00e9es"
-      }, 
-      "domain_best_practice": {
-        "eng": "Drop down : Controlled vocab."
       }, 
       "example": "xml", 
       "existing": true, 
       "gc_multiplicity": "M, Rep.", 
       "id": "format", 
-      "implementation": {
-        "eng": "existing resource field \u2018format\u2019", 
-        "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0format\u00a0\u00bb"
-      }, 
-      "iso_multiplicity": "M", 
       "label": {
         "eng": "Formal Name", 
         "fra": "Nom officiel"
       }, 
-      "name_space": "sdo:encodingFormat", 
-      "nap_iso_19115_ref": "5.11.3.2", 
       "pilot_help": {
         "eng": "Name of the physical or digital manifestation (format) of the dataset.", 
         "fra": "Nom du format de la version imprim\u00e9e ou num\u00e9rique de l\u2019ensemble de donn\u00e9es."
@@ -5213,8 +4866,7 @@
         "eng": "formatName", 
         "fra": "nomFormat"
       }, 
-      "proposed_type": "MD_Format", 
-      "rdfa_lite": "dcterms:format"
+      "proposed_type": "MD_Format"
     }, 
     {
       "bilingual": false, 
@@ -5244,67 +4896,43 @@
           "key": "Bilingual (English and French) | Bilingue (Anglais et Fran\u00e7ais)"
         }
       ], 
-      "data_gov_common_core": "", 
       "description": {
         "eng": "The language of the resourcet.", 
         "fra": "La langue de la ressource"
-      }, 
-      "domain_best_practice": {
-        "eng": "Drop down : Controlled vocab."
       }, 
       "example": "eng: CAN", 
       "existing": false, 
       "gc_multiplicity": "M, Rep.", 
       "id": "language", 
-      "implementation": {
-        "eng": "new resource field \u2018language\u2019", 
-        "fra": "Nouveau champ de ressource \u00ab\u00a0language\u00a0\u00bb"
-      }, 
-      "iso_multiplicity": "M, Repeat.", 
       "label": {
         "eng": "Language", 
         "fra": "Langue"
       }, 
-      "name_space": "sdo:inLanguage", 
-      "nap_iso_19115_ref": "5.3.1.9", 
       "proposed_name": {
         "eng": "language", 
         "fra": "langue"
       }, 
-      "proposed_type": "free text (CharacterString)", 
-      "rdfa_lite": ""
+      "proposed_type": "free text (CharacterString)"
     }, 
     {
       "bilingual": false, 
-      "data_gov_common_core": "Last Update", 
       "description": {
         "eng": "The date in which the resource was modified.", 
         "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
-      }, 
-      "domain_best_practice": {
-        "eng": "free text, YYYY-MM-DD"
       }, 
       "example": "41143.0", 
       "existing": true, 
       "gc_multiplicity": "O", 
       "id": "last_modified", 
-      "implementation": {
-        "eng": "existing resource field \u2018modified\u2019", 
-        "fra": "champ de l\u2019ensemble de donn\u00e9es existants \u00ab\u00a0modified\u00a0\u00bb"
-      }, 
-      "iso_multiplicity": "", 
       "label": {
         "eng": "Date Modified", 
         "fra": "Date de modification"
       }, 
-      "name_space": "sdo:dateModified", 
-      "nap_iso_19115_ref": "", 
       "proposed_name": {
         "eng": "dateModified", 
         "fra": "dateModification"
       }, 
-      "proposed_type": "Date", 
-      "rdfa_lite": "dcterms:modified"
+      "proposed_type": "Date"
     }
   ], 
   "vocabularies": {
