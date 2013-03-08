@@ -14,6 +14,17 @@
     </h1>
   </section>
 
+  <section id="dataset-resources" class="resources module-content">
+    <h3>{{ _('Data and Resources') }}</h3>
+    {% if pkg.resources %}
+      <ul class="resource-list">
+        {% for resource in pkg.resources %}
+          {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource %}    
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+
   {% for f in schema_description.dataset_fields %}
     {% if f.id not in ('title', 'name', 'language', 'author_email' ) %}
       <section id="dataset-{{ f.id }}" class="resources module-content">
