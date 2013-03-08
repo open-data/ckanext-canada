@@ -4798,6 +4798,153 @@
       "bilingual": false, 
       "choices": [
         {
+          "eng": "CSV", 
+          "fra": "CSV", 
+          "key": "CSV"
+        }, 
+        {
+          "eng": "DOC", 
+          "fra": "DOC", 
+          "key": "DOC"
+        }, 
+        {
+          "eng": "EXE", 
+          "fra": "EXE", 
+          "key": "EXE"
+        }, 
+        {
+          "eng": "GeoRSS", 
+          "fra": "GeoRSS", 
+          "key": "GeoRSS"
+        }, 
+        {
+          "eng": "GIF", 
+          "fra": "GIF", 
+          "key": "GIF"
+        }, 
+        {
+          "eng": "HTML", 
+          "fra": "HTML", 
+          "key": "HTML"
+        }, 
+        {
+          "eng": "IATI", 
+          "fra": "IATI", 
+          "key": "IATI"
+        }, 
+        {
+          "eng": "JPG", 
+          "fra": "JPG", 
+          "key": "JPG"
+        }, 
+        {
+          "eng": "JSON", 
+          "fra": "JSON", 
+          "key": "JSON"
+        }, 
+        {
+          "eng": "KML / KMZ", 
+          "fra": "KML / KMZ", 
+          "key": "KML / KMZ"
+        }, 
+        {
+          "eng": "NetCDF", 
+          "fra": "NetCDF", 
+          "key": "NetCDF"
+        }, 
+        {
+          "eng": "ODP", 
+          "fra": "ODP", 
+          "key": "ODP"
+        }, 
+        {
+          "eng": "ODS", 
+          "fra": "ODS", 
+          "key": "ODS"
+        }, 
+        {
+          "eng": "ODT", 
+          "fra": "ODT", 
+          "key": "ODT"
+        }, 
+        {
+          "eng": "PDF", 
+          "fra": "PDF", 
+          "key": "PDF"
+        }, 
+        {
+          "eng": "PNG", 
+          "fra": "PNG", 
+          "key": "PNG"
+        }, 
+        {
+          "eng": "PPT", 
+          "fra": "PPT", 
+          "key": "PPT"
+        }, 
+        {
+          "eng": "RDF", 
+          "fra": "RDF", 
+          "key": "RDF", 
+          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
+        }, 
+        {
+          "eng": "RDFa", 
+          "fra": "RDFa", 
+          "key": "RDFa"
+        }, 
+        {
+          "eng": "RSS", 
+          "fra": "RSS", 
+          "key": "RSS"
+        }, 
+        {
+          "eng": "RTF", 
+          "fra": "RTF", 
+          "key": "RTF"
+        }, 
+        {
+          "eng": "SAV", 
+          "fra": "SAV", 
+          "key": "SAV"
+        }, 
+        {
+          "eng": "SHP", 
+          "fra": "SHP", 
+          "key": "SHP"
+        }, 
+        {
+          "eng": "SQL", 
+          "fra": "SQL", 
+          "key": "SQL"
+        }, 
+        {
+          "eng": "TXT", 
+          "fra": "TXT", 
+          "key": "TXT"
+        }, 
+        {
+          "eng": "XLS", 
+          "fra": "XLS", 
+          "key": "XLS"
+        }, 
+        {
+          "eng": "XLSM", 
+          "fra": "XLSM", 
+          "key": "XLSM"
+        }, 
+        {
+          "eng": "XML", 
+          "fra": "XML", 
+          "key": "XML", 
+          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
+        }, 
+        {
+          "eng": "Zip", 
+          "fra": "Zip", 
+          "key": "Zip"
+        }, 
+        {
           "eng": "CSV/Text", 
           "fra": "CSV/Texte", 
           "key": "CSV/Text | CSV/Texte", 
@@ -4816,12 +4963,6 @@
           "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
         }, 
         {
-          "eng": "RDF", 
-          "fra": "RDF", 
-          "key": "RDF", 
-          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
-        }, 
-        {
           "eng": "RSS/GeoRSS", 
           "fra": "RSS/GeoRSS", 
           "key": "RSS/GeoRSS", 
@@ -4832,12 +4973,6 @@
           "fra": "Shapefile", 
           "key": "Shapefile", 
           "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
-        }, 
-        {
-          "eng": "XML", 
-          "fra": "XML", 
-          "key": "XML", 
-          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }
       ], 
       "description": {

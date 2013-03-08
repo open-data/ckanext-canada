@@ -291,6 +291,12 @@ def apply_field_customizations(schema_out, vocab):
             if f['id'] == field_id)
         return field
 
+    def get_resource_field(field_id):
+        (field,) = (f
+            for f in schema_out['resource_fields']
+            if f['id'] == field_id)
+        return field
+
     subject = get_field('subject')
     subject['type'] = 'keywords'
 
@@ -313,15 +319,14 @@ def apply_field_customizations(schema_out, vocab):
         return out
 
     for field, choices in vocab.iteritems():
-        try:
-            f = get_field(field)
-        except ValueError:
-            continue
         if field == 'language':
-            (f,) = (f
-                for f in schema_out['resource_fields']
-                if f['id'] == 'language')
-        elif field == 'geographic_region':
+            f = get_resource_field('language')
+        elif field == 'FileName':
+            f = get_resource_field('format')
+        else:
+            f = get_field(field)
+
+        if field in ('geographic_region', 'FileName'):
             # prefer proposed.xls ordering
             choices = merge(choices, f['choices'])
         elif 'choices' in f:
