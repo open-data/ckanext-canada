@@ -304,7 +304,7 @@ def field_from_proposed(p):
         'proposed_type': p.type_,
         'iso_multiplicity': p.iso_multiplicity,
         'gc_multiplicity': p.gc_multiplicity,
-        'description': {'eng': p.description},
+        'description': {'eng': p.description, 'fra': p.description_fra},
         'example': p.example,
         'nap_iso_19115_ref': p.nap_iso_19115_ref,
         'domain_best_practice': {'eng': p.domain_best_practice},
