@@ -64,6 +64,22 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         self._schema_update(schema, form_to_db=True)
         return schema
 
+    def form_to_db_schema_api_create(self):
+        """
+        Add our custom fields for validation/conversion from the api
+        """
+        schema = super(DataGCCAForms, self).form_to_db_schema_api_create()
+        self._schema_update(schema, form_to_db=True)
+        return schema
+
+    def form_to_db_schema_api_update(self):
+        """
+        Add our custom fields for validation/conversion from the api
+        """
+        schema = super(DataGCCAForms, self).form_to_db_schema_api_update()
+        self._schema_update(schema, form_to_db=True)
+        return schema
+
     def db_to_form_schema(self):
         """
         Add our custom fields for converting from the db
