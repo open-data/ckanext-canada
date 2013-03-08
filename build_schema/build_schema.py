@@ -52,8 +52,6 @@ SECTIONS_FIELDS = [
         'maintenance_and_update_frequency',
         'temporal_element',
         'geographic_region',
-        'documentation_url',
-        'related_document_url',
         'url',
         'endpoint_url',
         'date_published', # ADMIN-only field that will control publishing
@@ -69,16 +67,6 @@ SECTIONS_FIELDS = [
 # override calculated values
 FIELD_OVERRIDES = {
     'tags': {'bilingual': False},
-    'resource:language': {
-        'choices': [
-            { "id": "", "eng": u"No language", "fra": u"Acune langue", },
-            { "id": "eng; CAN", "eng": u"English", "fra": u"Anglais", },
-            { "id": "fra; CAN", "eng": u"French", "fra": u"Fran\u00e7ais", },
-            { "id": "eng; CAN | fra; CAN",
-              "eng": u"Bilingual (English and French)",
-              "fra": u"Bilingue (Anglais et Fran\u00e7ais)", },
-            ]
-        }
     }
 
 # Resource fields (no sections)
@@ -103,20 +91,25 @@ ProposedField = namedtuple("ProposedField", """
     class_
     sub_class
     property_name
+    property_label
     iso_multiplicity
     property_name_fra
+    property_label_fra
     gc_multiplicity
     type_
     description
+    description_fra
     example
     nap_iso_19115_ref
     domain_best_practice
     name_space
     implementation
     implementation_fra
+    fra_implementation
     data_gov_common_core
     json
     rdfa_lite
+    fra_implementation_fra
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
@@ -163,7 +156,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
 
 # FOR IMPORTING ENGLISH FIELDS FROM PILOT
 # 'new field name': 'pilot field name'
-FIELD_MAPPING = {
+PILOT_FIELD_MAPPING = {
     #'author_email': 'owner',
     'individual_name': 'contact_name',
     'position_name': 'contact_title',
@@ -186,6 +179,9 @@ FIELD_MAPPING = {
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
+    'resource:url': 'dataset_link_en_1',
+    'resource:format': 'dataset_format_1',
+    'resource:size': 'dataset_size_en_1',
     }
 
 # FOR IMPORTING FRENCH FIELDS FROM PILOT,
@@ -241,30 +237,6 @@ def proposed_name_to_identifier(name):
     words = (g for alpha, g in groupby(name, lambda c: c.isalpha()) if alpha)
     return "_".join("".join(g).lower() for g in words)
 
-def camel_to_label(ccname):
-    """
-    Convert a camelcase name with irregularities from our proposed xml file
-    to a field label with spaces
-
-    >>> camel_to_label(u'relatedDocumentsURL')
-    u'Related Documents URL'
-    >>> camel_to_label(u'URLdocumentsConnexes')
-    u'URL Documents Connexes'
-    >>> camel_to_label(u'URIJeuDonnées')
-    u'URI Jue Données'
-    """
-    special = (u'URL', u'URI')
-    for s in special:
-        if s in ccname:
-            return (u' '+s+u' ').join(
-                camel_to_label(w) for w in ccname.split(s)).strip()
-    out = list(ccname[:1])
-    for a, b in zip(ccname, ccname[1:]):
-        if a.islower() and b.isupper():
-            out.append(u' ')
-        out.append(b)
-    return u''.join(out).title()
-
 def read_proposed_fields_vocab():
     """
     Return (proposed field dict, vocabulary dict)
@@ -296,20 +268,10 @@ def field_from_proposed(p):
     return {
         'proposed_name': {'eng': p.property_name, 'fra': p.property_name_fra},
         'proposed_type': p.type_,
-        'iso_multiplicity': p.iso_multiplicity,
         'gc_multiplicity': p.gc_multiplicity,
-        'description': {'eng': p.description},
+        'description': {'eng': p.description, 'fra': p.description_fra},
         'example': p.example,
-        'nap_iso_19115_ref': p.nap_iso_19115_ref,
-        'domain_best_practice': {'eng': p.domain_best_practice},
-        'implementation': {'eng': p.implementation, 'fra': p.implementation_fra},
-        'data_gov_common_core': p.data_gov_common_core,
-        'rdfa_lite': p.rdfa_lite,
-        'name_space': p.name_space,
-        'label': {
-            'eng': camel_to_label(p.property_name),
-            'fra': camel_to_label(p.property_name_fra),
-            },
+        'label': {'eng': p.property_label, 'fra': p.property_label_fra},
         }
 
 def apply_field_customizations(schema_out, vocab):
@@ -329,6 +291,12 @@ def apply_field_customizations(schema_out, vocab):
             if f['id'] == field_id)
         return field
 
+    def get_resource_field(field_id):
+        (field,) = (f
+            for f in schema_out['resource_fields']
+            if f['id'] == field_id)
+        return field
+
     subject = get_field('subject')
     subject['type'] = 'keywords'
 
@@ -336,14 +304,18 @@ def apply_field_customizations(schema_out, vocab):
     topic_category['type'] = 'keywords'
 
     def merge(c1, c2):
+        def norm(t):
+            if t == "Shapefile":
+                return "SHP"
+            return t.split('/')[0].strip()
         out = []
         ekeys = {}
         for d in c1:
             od = dict(d)
             out.append(od)
-            ekeys[od['eng']] = od
+            ekeys[norm(od['eng'])] = od
         for d in c2:
-            target = ekeys.get(d['eng'])
+            target = ekeys.get(norm(d['eng']))
             if target:
                 target.update(d)
             else:
@@ -351,10 +323,14 @@ def apply_field_customizations(schema_out, vocab):
         return out
 
     for field, choices in vocab.iteritems():
-        f = get_field(field)
         if field == 'language':
-            continue
-        elif field == 'geographic_region':
+            f = get_resource_field('language')
+        elif field == 'FileName':
+            f = get_resource_field('format')
+        else:
+            f = get_field(field)
+
+        if field in ('geographic_region',):
             # prefer proposed.xls ordering
             choices = merge(choices, f['choices'])
         elif 'choices' in f:
@@ -373,12 +349,31 @@ def add_keys_for_choices(f):
             c['key'] = u'  '.join(
                 re.sub(u'[,/]', u'', c[lang]).replace(u'  ', u' ')
                 for lang in LANGS)
-    else:            
+    else:
         for c in f['choices']:
             # use the text itself for now (both when different)
             c['key'] = c[LANGS[0]]
             if c['key'] != c[LANGS[1]]:
                 c['key'] += ' | ' + c[LANGS[1]]
+
+def field_from_pilot(field_name, old_root):
+    f = PILOT_FIELD_MAPPING.get(field_name)
+    if not f:
+        return {}
+
+    xp = '//item[inputname="%s"]' % f
+    new_field = {
+        'pilot_id': f,
+        'pilot_name': lang_versions(old_root, xp + '/name'),
+        'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
+        'pilot_type': "".join(old_root.xpath(xp +
+            '/type1/inputtype[1]/text()')),
+        }
+    if not new_field['pilot_type']:
+        # this seems to indicate a selection from a list
+        new_field['choices'] = pilot_choices(f)
+        new_field['pilot_type'] = 'choice'
+    return new_field
 
 
 def main():
@@ -408,20 +403,7 @@ def main():
             new_field = field_from_proposed(p)
             new_field['id'] = field
             new_field['existing'] = field in EXISTING_FIELDS
-            f = FIELD_MAPPING.get(field)
-            if f:
-                xp = '//item[inputname="%s"]' % f
-                new_field.update({
-                    'pilot_id': f,
-                    'pilot_name': lang_versions(old_root, xp + '/name'),
-                    'pilot_help': lang_versions(old_root, xp + '/helpcontext'),
-                    'pilot_type': "".join(old_root.xpath(xp +
-                        '/type1/inputtype[1]/text()')),
-                    })
-                if not new_field['pilot_type']:
-                    # this seems to indicate a selection from a list
-                    new_field['choices'] = pilot_choices(f)
-                    new_field['pilot_type'] = 'choice'
+            new_field.update(field_from_pilot(field, old_root))
 
             old_id_fra = BILINGUAL_FIELDS.get(field, None)
             if old_id_fra:
@@ -441,6 +423,7 @@ def main():
         p = proposed.get('resource:' + rfield, None)
         if p:
             new_rfield.update(field_from_proposed(p))
+        new_rfield.update(field_from_pilot('resource:' + rfield, old_root))
         new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
