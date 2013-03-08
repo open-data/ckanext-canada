@@ -1,35 +1,53 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{%- macro field(field, pkg, client_lang) -%}
-  {%- if field.bilingual -%}
+
+{#
+Render the field value for the given dataset or resource field object
+and client language, either from a language-specific field value or by
+splitting the value on '|' for single-choice options.
+
+Doesn't handle tag values, for those see tag_field and tag_vocab_field
+below.
+#}
+{%- macro field(f, pkg, client_lang) -%}
+  {%- if f.bilingual -%}
     {% if client_lang == 'fr' -%}
-      {{- pkg[field.id + '_fra'] -}}
+      {{- pkg[f.id + '_fra'] -}}
     {%- else -%}
-      {{- pkg[field.id] -}}
+      {{- pkg[f.id] -}}
     {%- endif -%}
   {%- else -%}
-    {%- if ' | ' in pkg[field.id] -%}
-      {{- pkg[field.id].split(' | ')[1 if client_lang == 'fr' else 0] -}}
+    {%- if ' | ' in pkg[f.id] -%}
+      {{- pkg[f.id].split(' | ')[1 if client_lang == 'fr' else 0] -}}
     {%- else -%}
-      {{- pkg[field.id] -}}
+      {{- pkg[f.id] -}}
     {%- endif -%}
   {%- endif -%}
 {%- endmacro -%}
 
+{#
+Render the field value for a given dataset field id
+#}
 {%- macro field_id(id, pkg, client_lang) -%}
   {{- field(schema_description.dataset_field_by_id[id], pkg, client_lang) -}}
 {%- endmacro -%}
 
-{%- macro field_label(field, client_lang) -%}
+{#
+Render the field label for the given field object and client language
+#}
+{%- macro field_label(f, client_lang) -%}
   {%- if client_lang == 'fr' -%}
-    {{- field.label.fra -}}
+    {{- f.label.fra -}}
   {%- else -%}
-    {{- field.label.eng -}}
+    {{- f.label.eng -}}
   {%- endif -%}
 {%- endmacro -%}
 
-{%- macro tag_field(field, pkg, client_lang) -%}
+{#
+Render a list of tags for the client language
+#}
+{%- macro tag_field(pkg, client_lang) -%}
   <ul class='tag-list well'>
-    {%- for tag in pkg[field.id] -%}
+    {%- for tag in pkg.tags -%}
       <li>
         <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
           %}">{{ tag.display_name.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
@@ -38,9 +56,13 @@
   </ul>
 {%- endmacro -%}
 
-{%- macro tag_vocab_field(field, pkg, client_lang) -%}
+{#
+Render a list of tag vocabulary tags for given field object and client
+language
+#}
+{%- macro tag_vocab_field(f, pkg, client_lang) -%}
   <ul class='tag-list well'>
-    {%- for tag in pkg[field.id] -%}
+    {%- for tag in pkg[f.id] -%}
       <li>
         <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
           %}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
