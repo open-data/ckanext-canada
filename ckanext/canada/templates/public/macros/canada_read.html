@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% macro field(field, pkg, client_lang) -%}
+{%- macro field(field, pkg, client_lang) -%}
   {%- if field.bilingual -%}
     {% if client_lang == 'fr' -%}
       {{- pkg[field.id + '_fra'] -}}
@@ -13,16 +13,38 @@
       {{- pkg[field.id] -}}
     {%- endif -%}
   {%- endif -%}
-{%- endmacro %}
+{%- endmacro -%}
 
-{% macro field_id(id, pkg, client_lang) -%}
+{%- macro field_id(id, pkg, client_lang) -%}
   {{- field(schema_description.dataset_field_by_id[id], pkg) -}}
-{%- endmacro %}
+{%- endmacro -%}
 
-{% macro field_label(field, client_lang) -%}
+{%- macro field_label(field, client_lang) -%}
   {%- if client_lang == 'fr' -%}
     {{- field.label.fra -}}
   {%- else -%}
     {{- field.label.eng -}}
   {%- endif -%}
-{%- endmacro %}
+{%- endmacro -%}
+
+{%- macro tag_field(field, pkg, client_lang) -%}
+  <ul class='tag-list well'>
+    {%- for tag in pkg[field.id] -%}
+      <li>
+        <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
+          %}">{{ tag.display_name.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endmacro -%}
+
+{%- macro tag_vocab_field(field, pkg, client_lang) -%}
+  <ul class='tag-list well'>
+    {%- for tag in pkg[field.id] -%}
+      <li>
+        <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
+          %}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endmacro -%}
