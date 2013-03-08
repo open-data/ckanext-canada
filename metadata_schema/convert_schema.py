@@ -247,30 +247,6 @@ def proposed_name_to_identifier(name):
     words = (g for alpha, g in groupby(name, lambda c: c.isalpha()) if alpha)
     return "_".join("".join(g).lower() for g in words)
 
-def camel_to_label(ccname):
-    """
-    Convert a camelcase name with irregularities from our proposed xml file
-    to a field label with spaces
-
-    >>> camel_to_label(u'relatedDocumentsURL')
-    u'Related Documents URL'
-    >>> camel_to_label(u'URLdocumentsConnexes')
-    u'URL Documents Connexes'
-    >>> camel_to_label(u'URIJeuDonnées')
-    u'URI Jue Données'
-    """
-    special = (u'URL', u'URI')
-    for s in special:
-        if s in ccname:
-            return (u' '+s+u' ').join(
-                camel_to_label(w) for w in ccname.split(s)).strip()
-    out = list(ccname[:1])
-    for a, b in zip(ccname, ccname[1:]):
-        if a.islower() and b.isupper():
-            out.append(u' ')
-        out.append(b)
-    return u''.join(out).title()
-
 def read_proposed_fields_vocab():
     """
     Return (proposed field dict, vocabulary dict)
