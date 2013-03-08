@@ -17,16 +17,15 @@
   {% for f in schema_description.dataset_fields %}
     {% if f.id not in ('title', 'name', 'language', 'author_email' ) %}
       <section id="dataset-{{ f.id }}" class="resources module-content">
+        <div>
+          <strong>{{ cr.field_label(f, client_lang) }}</strong>:
+        </div>
         {%- if f.id == 'tags' -%}
-          <div><strong>{{ cr.field_label(f, client_lang) }}</strong>:</div>
-          {{- cr.tag_field(f, pkg, client_lang) -}}
+          {{ cr.tag_field(f, pkg, client_lang) }}
         {%- elif f.type == 'keywords' -%}
-          <div><strong>{{ cr.field_label(f, client_lang) }}</strong>:</div>
-          {{- cr.tag_vocab_field(f, pkg, client_lang) -}}
+          {{ cr.tag_vocab_field(f, pkg, client_lang) }}
         {%- else -%}
-          <p><strong>{{ cr.field_label(f, client_lang) }}</strong>:
-            {{- cr.field(f, pkg, client_lang) -}}
-          </p>
+          {{ cr.field(f, pkg, client_lang) }}
         {%- endif -%}
       </section>
     {% endif %}
