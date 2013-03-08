@@ -1,9 +1,17 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% macro field(field, pkg, client_lang) -%}
-  {%- if field.bilingual and client_lang == 'fr' -%}
-    {{- pkg[field.id + '_fra'] -}}
+  {%- if field.bilingual -%}
+    {% if client_lang == 'fr' -%}
+      {{- pkg[field.id + '_fra'] -}}
+    {%- else -%}
+      {{- pkg[field.id] -}}
+    {%- endif -%}
   {%- else -%}
-    {{- pkg[field.id] -}}
+    {%- if ' | ' in pkg[field.id] -%}
+      {{- pkg[field.id].split(' | ')[1 if client_lang == 'fr' else 0] -}}
+    {%- else -%}
+      {{- pkg[field.id] -}}
+    {%- endif -%}
   {%- endif -%}
 {%- endmacro %}
 
