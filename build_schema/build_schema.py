@@ -304,14 +304,18 @@ def apply_field_customizations(schema_out, vocab):
     topic_category['type'] = 'keywords'
 
     def merge(c1, c2):
+        def norm(t):
+            if t == "Shapefile":
+                return "SHP"
+            return t.split('/')[0].strip()
         out = []
         ekeys = {}
         for d in c1:
             od = dict(d)
             out.append(od)
-            ekeys[od['eng']] = od
+            ekeys[norm(od['eng'])] = od
         for d in c2:
-            target = ekeys.get(d['eng'])
+            target = ekeys.get(norm(d['eng']))
             if target:
                 target.update(d)
             else:
@@ -326,7 +330,7 @@ def apply_field_customizations(schema_out, vocab):
         else:
             f = get_field(field)
 
-        if field in ('geographic_region', 'FileName'):
+        if field in ('geographic_region',):
             # prefer proposed.xls ordering
             choices = merge(choices, f['choices'])
         elif 'choices' in f:

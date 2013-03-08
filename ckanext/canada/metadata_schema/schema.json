@@ -4800,7 +4800,44 @@
         {
           "eng": "CSV", 
           "fra": "CSV", 
-          "key": "CSV"
+          "key": "CSV", 
+          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
+        }, 
+        {
+          "eng": "GeoTIFF", 
+          "fra": "GeoTIFF", 
+          "key": "GeoTIFF", 
+          "pilot_uuid": "A6727501-C214-4D73-995B-0B3EC8CB24F9"
+        }, 
+        {
+          "eng": "KML / KMZ", 
+          "fra": "KML / KMZ", 
+          "key": "KML / KMZ", 
+          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
+        }, 
+        {
+          "eng": "RDF", 
+          "fra": "RDF", 
+          "key": "RDF", 
+          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
+        }, 
+        {
+          "eng": "RSS", 
+          "fra": "RSS", 
+          "key": "RSS", 
+          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
+        }, 
+        {
+          "eng": "SHP", 
+          "fra": "SHP", 
+          "key": "SHP", 
+          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
+        }, 
+        {
+          "eng": "XML", 
+          "fra": "XML", 
+          "key": "XML", 
+          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }, 
         {
           "eng": "DOC", 
@@ -4843,11 +4880,6 @@
           "key": "JSON"
         }, 
         {
-          "eng": "KML / KMZ", 
-          "fra": "KML / KMZ", 
-          "key": "KML / KMZ"
-        }, 
-        {
           "eng": "NetCDF", 
           "fra": "NetCDF", 
           "key": "NetCDF"
@@ -4883,20 +4915,9 @@
           "key": "PPT"
         }, 
         {
-          "eng": "RDF", 
-          "fra": "RDF", 
-          "key": "RDF", 
-          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
-        }, 
-        {
           "eng": "RDFa", 
           "fra": "RDFa", 
           "key": "RDFa"
-        }, 
-        {
-          "eng": "RSS", 
-          "fra": "RSS", 
-          "key": "RSS"
         }, 
         {
           "eng": "RTF", 
@@ -4907,11 +4928,6 @@
           "eng": "SAV", 
           "fra": "SAV", 
           "key": "SAV"
-        }, 
-        {
-          "eng": "SHP", 
-          "fra": "SHP", 
-          "key": "SHP"
         }, 
         {
           "eng": "SQL", 
@@ -4934,45 +4950,9 @@
           "key": "XLSM"
         }, 
         {
-          "eng": "XML", 
-          "fra": "XML", 
-          "key": "XML", 
-          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
-        }, 
-        {
           "eng": "Zip", 
           "fra": "Zip", 
           "key": "Zip"
-        }, 
-        {
-          "eng": "CSV/Text", 
-          "fra": "CSV/Texte", 
-          "key": "CSV/Text | CSV/Texte", 
-          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
-        }, 
-        {
-          "eng": "GeoTIFF", 
-          "fra": "GeoTIFF", 
-          "key": "GeoTIFF", 
-          "pilot_uuid": "A6727501-C214-4D73-995B-0B3EC8CB24F9"
-        }, 
-        {
-          "eng": "KML/KMZ", 
-          "fra": "KML/KMZ", 
-          "key": "KML/KMZ", 
-          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
-        }, 
-        {
-          "eng": "RSS/GeoRSS", 
-          "fra": "RSS/GeoRSS", 
-          "key": "RSS/GeoRSS", 
-          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
-        }, 
-        {
-          "eng": "Shapefile", 
-          "fra": "Shapefile", 
-          "key": "Shapefile", 
-          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
         }
       ], 
       "description": {
