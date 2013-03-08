@@ -52,8 +52,6 @@ SECTIONS_FIELDS = [
         'maintenance_and_update_frequency',
         'temporal_element',
         'geographic_region',
-        'documentation_url',
-        'related_document_url',
         'url',
         'endpoint_url',
         'date_published', # ADMIN-only field that will control publishing
@@ -103,20 +101,25 @@ ProposedField = namedtuple("ProposedField", """
     class_
     sub_class
     property_name
+    property_label
     iso_multiplicity
     property_name_fra
+    property_label_fra
     gc_multiplicity
     type_
     description
+    description_fra
     example
     nap_iso_19115_ref
     domain_best_practice
     name_space
     implementation
     implementation_fra
+    fra_implementation
     data_gov_common_core
     json
     rdfa_lite
+    fra_implementation_fra
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
@@ -354,7 +357,10 @@ def apply_field_customizations(schema_out, vocab):
         return out
 
     for field, choices in vocab.iteritems():
-        f = get_field(field)
+        try:
+            f = get_field(field)
+        except ValueError:
+            continue
         if field == 'language':
             continue
         elif field == 'geographic_region':
