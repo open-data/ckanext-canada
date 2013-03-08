@@ -23,7 +23,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "File Identifier", 
-            "fra": "Identifiant M\u00e9tadonn\u00e9es"
+            "fra": "Identificateur de fichier"
           }, 
           "name_space": "dcterms:identifier", 
           "nap_iso_19115_ref": "5.2.1", 
@@ -1343,7 +1343,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "Organization Name", 
-            "fra": "Nom Organisation"
+            "fra": "Nom de l\u2019organisation"
           }, 
           "name_space": "sdo:organization", 
           "nap_iso_19115_ref": "5.16.2", 
@@ -1384,7 +1384,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Department Number", 
-            "fra": "Num\u00e9ro D\u00e9partment"
+            "fra": "Num\u00e9ro du minist\u00e8re"
           }, 
           "name_space": "tbd", 
           "nap_iso_19115_ref": "", 
@@ -1415,7 +1415,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "Electronic Mail Address", 
-            "fra": "Adresse Courrier \u00c9lectronique"
+            "fra": "Adresse \u00e9lectronique"
           }, 
           "name_space": "foaf:mbox", 
           "nap_iso_19115_ref": "5.19.6", 
@@ -1487,8 +1487,8 @@
           }, 
           "iso_multiplicity": "O", 
           "label": {
-            "eng": "Data Set URI", 
-            "fra": "URI Jeu Donn\u00e9es"
+            "eng": "Dataset URI", 
+            "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
           "name_space": "dcterms:identifier", 
           "nap_iso_19115_ref": "5.2.10", 
@@ -1561,7 +1561,7 @@
           "iso_multiplicity": "N\\A", 
           "label": {
             "eng": "Digital Object Identifier", 
-            "fra": "Identificateur Objet Num\u00e9rique"
+            "fra": "Identificateur d\u2019objet num\u00e9rique"
           }, 
           "name_space": "tbd", 
           "nap_iso_19115_ref": "", 
@@ -1604,7 +1604,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Catalogue Type", 
-            "fra": "Type Catalogue"
+            "fra": "Type de catalogue"
           }, 
           "name_space": "tbd\n\n(ds:catalog ??)", 
           "nap_iso_19115_ref": "", 
@@ -1921,7 +1921,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "Topic Category", 
-            "fra": "Cat\u00e9gorie Th\u00e9matique"
+            "fra": "Cat\u00e9gorie de sujet"
           }, 
           "name_space": "dcat:theme ??", 
           "nap_iso_19115_ref": "5.3.1.11", 
@@ -1953,7 +1953,7 @@
           "iso_multiplicity": "O", 
           "label": {
             "eng": "Keywords", 
-            "fra": "Mots Cl\u00e9s"
+            "fra": "Mots cl\u00e9s"
           }, 
           "name_space": "sdo:keywords", 
           "nap_iso_19115_ref": "5.3.6.1", 
@@ -2026,7 +2026,7 @@
           "iso_multiplicity": "O", 
           "label": {
             "eng": "Data Series Name", 
-            "fra": "Non S\u00e9rie Donn\u00e9es"
+            "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
           }, 
           "name_space": "tbd\nds:catalog??", 
           "nap_iso_19115_ref": "5.21.1", 
@@ -2068,7 +2068,7 @@
           "iso_multiplicity": "O", 
           "label": {
             "eng": "Issue Identification", 
-            "fra": "Identification Publication"
+            "fra": "Identification de l\u2019enjeu"
           }, 
           "name_space": "tbd", 
           "nap_iso_19115_ref": "5.21.2", 
@@ -2186,8 +2186,8 @@
           }, 
           "iso_multiplicity": "O", 
           "label": {
-            "eng": "Maintenance And Update Frequency", 
-            "fra": "Fr\u00e9quence Mise \u00c0jour"
+            "eng": "Maintainence and Update Frequency", 
+            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
           }, 
           "name_space": "dct:accuralPeriodicity", 
           "nap_iso_19115_ref": "5.6.1", 
@@ -2228,7 +2228,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "Temporal Element", 
-            "fra": "\u00c9lement Temporalle"
+            "fra": "\u00c9l\u00e9ment temporel"
           }, 
           "name_space": "ds:temporal", 
           "nap_iso_19115_ref": "5.13.5", 
@@ -4588,7 +4588,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Geographic Region", 
-            "fra": "R\u00e9gion G\u00e9ographique"
+            "fra": "R\u00e9gion g\u00e9ographique"
           }, 
           "name_space": "tbd", 
           "nap_iso_19115_ref": "N/A", 
@@ -4629,7 +4629,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Program URL", 
-            "fra": "URL Programme"
+            "fra": "URL des documents connexes"
           }, 
           "name_space": "sdo:url", 
           "nap_iso_19115_ref": "", 
@@ -4671,7 +4671,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Endpoint", 
-            "fra": ""
+            "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
           "name_space": "dcat:webService", 
           "nap_iso_19115_ref": "", 
@@ -4702,7 +4702,7 @@
           "iso_multiplicity": "M, Repeat.", 
           "label": {
             "eng": "Date Published", 
-            "fra": "Date Publication"
+            "fra": "Date de publication"
           }, 
           "name_space": "sdo:datePublished", 
           "nap_iso_19115_ref": "5.15.1", 
@@ -4778,8 +4778,8 @@
           }, 
           "iso_multiplicity": "O", 
           "label": {
-            "eng": "Spatial Respresention Type", 
-            "fra": "Type Repr\u00e9sentatiob Spatiale"
+            "eng": "Spatial Representation Type", 
+            "fra": "Type de repr\u00e9sentation spatiale"
           }, 
           "name_space": "", 
           "nap_iso_19115_ref": "5.3.1.7", 
@@ -4932,7 +4932,7 @@
           "iso_multiplicity": "O", 
           "label": {
             "eng": "Presentation Form", 
-            "fra": "Forme Pr\u00e9sentation"
+            "fra": "Type de repr\u00e9sentation spatiale"
           }, 
           "name_space": "", 
           "nap_iso_19115_ref": "5.14.8", 
@@ -4963,7 +4963,7 @@
           "iso_multiplicity": "", 
           "label": {
             "eng": "Spatial", 
-            "fra": "Spatiale"
+            "fra": "\u00c9l\u00e9ment spatial"
           }, 
           "name_space": "ds:spatial", 
           "nap_iso_19115_ref": "5.13.3.5", 
@@ -4994,7 +4994,7 @@
           "iso_multiplicity": "M", 
           "label": {
             "eng": "Browse Graphic File Name", 
-            "fra": "Nom Fichier Illustration"
+            "fra": "Recherche du nom du fichier graphique"
           }, 
           "name_space": "", 
           "nap_iso_19115_ref": "5.3.5.1", 
@@ -5040,7 +5040,7 @@
       "iso_multiplicity": "M", 
       "label": {
         "eng": "Access URL", 
-        "fra": "URL Acc\u00e8s"
+        "fra": "URL d\u2019acc\u00e8s"
       }, 
       "name_space": "sdo:contentURL", 
       "nap_iso_19115_ref": "5.20.1", 
@@ -5081,7 +5081,7 @@
       "iso_multiplicity": "O", 
       "label": {
         "eng": "Transfer Size", 
-        "fra": "Taille Transmission"
+        "fra": "Taille du transfert"
       }, 
       "name_space": "sdo:contentSize", 
       "nap_iso_19115_ref": "5.11.1.2", 
@@ -5165,8 +5165,8 @@
       }, 
       "iso_multiplicity": "M", 
       "label": {
-        "eng": "Format Name", 
-        "fra": "Nom Format"
+        "eng": "Formal Name", 
+        "fra": "Nom officiel"
       }, 
       "name_space": "sdo:encodingFormat", 
       "nap_iso_19115_ref": "5.11.3.2", 
@@ -5264,7 +5264,7 @@
       "iso_multiplicity": "", 
       "label": {
         "eng": "Date Modified", 
-        "fra": "Date Modification"
+        "fra": "Date de modification"
       }, 
       "name_space": "sdo:dateModified", 
       "nap_iso_19115_ref": "", 

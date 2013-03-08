@@ -313,8 +313,8 @@ def field_from_proposed(p):
         'rdfa_lite': p.rdfa_lite,
         'name_space': p.name_space,
         'label': {
-            'eng': camel_to_label(p.property_name),
-            'fra': camel_to_label(p.property_name_fra),
+            'eng': p.property_label,
+            'fra': p.property_label_fra,
             },
         }
 
