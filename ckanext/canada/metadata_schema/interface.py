@@ -42,6 +42,8 @@ class MetadataSchema(object):
 
         self.dataset_field_by_id = dict((f['id'], f)
             for f in self.dataset_fields)
+        self.resource_field_by_id = dict((f['id'], f)
+            for f in self.resource_fields)
 
         self.vocabularies = {}
         for k, v in schema['vocabularies'].iteritems():
