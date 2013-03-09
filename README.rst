@@ -27,7 +27,7 @@ Plugins
 
 * ``canada_forms`` - dataset forms for data.gc.ca metadata schema
 * ``canada_public`` - base and public facing data.gc.ca templates (requires
-  ``canada_forms``)
+  ``canada_forms`` and ``wet_theme`` from ckanext-wet-boew)
 * ``canada_internal`` - templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
 
