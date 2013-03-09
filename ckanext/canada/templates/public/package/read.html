@@ -19,7 +19,8 @@
     {% if pkg.resources %}
       <ul class="resource-list">
         {% for resource in pkg.resources %}
-          {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource %}    
+          {% snippet 'package/snippets/resource_item.html',
+            pkg=pkg, res=resource, client_lang=client_lang %}
         {% endfor %}
       </ul>
     {% endif %}
