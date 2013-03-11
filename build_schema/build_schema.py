@@ -307,7 +307,7 @@ def apply_field_customizations(schema_out, vocab):
         def norm(t):
             if t == "Shapefile":
                 return "SHP"
-            return t.split('/')[0].strip()
+            return t.split('/')[0].strip()[:35]
         out = []
         ekeys = {}
         for d in c1:
