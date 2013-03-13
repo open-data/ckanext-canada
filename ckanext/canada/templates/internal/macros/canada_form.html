@@ -77,13 +77,11 @@ client_lang - language from h.lang(): 'en' or 'fr'
     {% set widget = multi_checkbox_field if field.vocabulary else form.select %}
   {% endif %}
 
-  {% if widget %}
-    {% call widget(**inputargs) %}
-      {% if field.description %}
-        {{ form.info(field.description[client_lang]) }}
-      {% endif %}
-    {% endcall %}
-  {% endif %}
+  {% call widget(**inputargs) %}
+    {% if field.description %}
+      {{ form.info(field.description[client_lang]) }}
+    {% endif %}
+  {% endcall %}
 {% endmacro %}
 
 {#
