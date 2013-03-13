@@ -102,6 +102,9 @@ def _schema_update(schema, form_to_db):
     form_to_db: True for form_to_db_schema, False for db_to_form_schema
     """
     for name, lang, field in schema_description.dataset_fields_by_ckan_id():
+        if name in schema:
+            continue # don't modify existing fields.. yet
+
         v = _schema_field_validators(name, lang, field, form_to_db)
         if v is not None:
             schema[name] = v
@@ -119,8 +122,6 @@ def _schema_field_validators(name, lang, field, form_to_db):
     """
     if name in ('id', 'language'):
         return
-    if name in schema:
-        return # don't modify existing fields.. yet
 
     if 'vocabulary' in field:
         if form_to_db:
