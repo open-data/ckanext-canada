@@ -1,10 +1,21 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/form.html' as form %}
 
-{% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
+{#
+Automatic form field creation with schema_description field and form data
+
+id          - CKAN dataset or resource field id
+lang        - language of this field for fields available in both languages
+              as separate fields: none, 'eng' or 'fra'
+field       - schema_description field dict for this CKAN field
+data        - dict containing form data by CKAN field id
+errors      - dict containing form errors by CKAN field id
+client_lang - language from h.lang(): 'en' or 'fr'
+#}
+{% macro formfield(id, lang, field, data, errors, client_lang) %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
-  {% set kwargs = {
+  {% set inputargs = {
     'name': id,
     'label': field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
@@ -15,12 +26,12 @@
     } %}
 
   {% if lang %}
-    {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
+    {% do inputargs.update({'label': inputargs.label + ' ' + lang|upper}) %}
   {% endif %}
 
   {% set widget = form.input %}
   {% if id == 'name' %}
-    {% do kwargs.update({
+    {% do inputargs.update({
       'prepend': '/data/dataset/',
       'attrs': {'data-module': 'slug-preview-slug',
                 'data-module-prefix': 'data.gc.ca/data/dataset/',
@@ -29,9 +40,9 @@
     {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif id == 'tags' %} {# or field.vocabulary %}#}
+  {% elif id == 'tags' %} 
     {# special case name "tag_string" for tags #}
-    {% do kwargs.update({
+    {% do inputargs.update({
       'name': 'tag_string', 
       'value': data['tag_string'],
       'classes': ['control-full'],
@@ -40,10 +51,10 @@
                 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
       }) %}
   {% elif field.choices %}
-    {% do kwargs.update({'options':[], 'selected':data[id]}) %}
+    {% do inputargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
-    {% do kwargs.pop('value') %}
-    {% do kwargs.pop('placeholder') %}
+    {% do inputargs.pop('value') %}
+    {% do inputargs.pop('placeholder') %}
     {% for c in field.choices %}
       {% set indent = '' %}
       {% set skip = false %}
@@ -58,23 +69,50 @@
         {% endif %}
       {% endif %}
       {% if not skip %}
-        {% if field.vocabulary %}
-          {# temporary select-only-one interface #}
-          {% do kwargs.update({'selected': data.get(id,[''])[0]}) %}
-        {% endif %}
-        {% do kwargs.options.append({
+        {% do inputargs.options.append({
           'text': indent + c[client_lang],
           'value': c.key}) %}
       {% endif %}
     {% endfor %}
-    {% set widget = form.select %}
+    {% set widget = multi_checkbox_field if field.vocabulary else form.select %}
   {% endif %}
 
-  {% if widget %}
-    {% call widget(**kwargs) %}
-      {% if lang != 'eng' and field.description %}
-        {{ form.info(field.description[client_lang]) }}
-      {% endif %}
-    {% endcall %}
-  {% endif %}
+  {% call widget(**inputargs) %}
+    {% if field.description %}
+      {{ form.info(field.description[client_lang]) }}
+    {% endif %}
+  {% endcall %}
+{% endmacro %}
+
+{#
+Create a group of checkboxes for a tag vocabulary field with all the
+currently chosen options checked
+
+name        - The name of the form parameter.
+id          - The id to use on the input and label. Convention is to prefix with 'field-'.
+label       - The human readable label.
+options     - A list/tuple of fields to be used as <options>.
+selected    - The value of the selected <option>.
+error       - A list of error strings for the field or just true to highlight the field.
+classes     - An array of classes to apply to the control-group.
+#}
+{% macro multi_checkbox_field(name, id, label, options, selected, error,
+    classes=[], attrs=[]) %}
+  {%- set extra_html = caller() if caller -%}
+  <div class="control-group{{ " error" if error }}">
+    <label class="control-label">{{ label }}</label>
+    <div class="controls">
+      {% for o in options %}
+        <label class="checkbox" for="{{ name }}-{{ loop.index0 }}"
+            style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+          <input id="{{ name }}-{{ loop.index0 }}" type="checkbox" name="{{ name 
+              }}" value="{{ o.value | empty_and_escape }}" {{
+              "checked " if o.value in selected }} />
+          {{ o.text }}
+        </label>
+      {% endfor %}
+      {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
+      {{ extra_html }}
+    </div>
+  </div>
 {% endmacro %}
