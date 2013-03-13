@@ -29,7 +29,7 @@
     {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif id == 'tags' %} {# or field.vocabulary %}#}
+  {% elif id == 'tags' %} 
     {# special case name "tag_string" for tags #}
     {% do kwargs.update({
       'name': 'tag_string', 
@@ -39,6 +39,10 @@
                 'data-module-tags': '',
                 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
       }) %}
+  {% elif field.vocabulary %}
+    {# subject and topic_category fields #}
+    {{ multi_checkbox_field(id, field, data, client_lang, kwargs) }}
+    {% set widget = none %}
   {% elif field.choices %}
     {% do kwargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
@@ -58,10 +62,6 @@
         {% endif %}
       {% endif %}
       {% if not skip %}
-        {% if field.vocabulary %}
-          {# temporary select-only-one interface #}
-          {% do kwargs.update({'selected': data.get(id,[''])[0]}) %}
-        {% endif %}
         {% do kwargs.options.append({
           'text': indent + c[client_lang],
           'value': c.key}) %}
@@ -77,4 +77,29 @@
       {% endif %}
     {% endcall %}
   {% endif %}
+{% endmacro %}
+
+{#
+Create a group of checkboxes for a tag vocabulary field with all the
+currently chosen options checked
+#}
+{% macro multi_checkbox_field(id, field, data, client_lang, inputargs) %}
+  <div class="control-group{{ " error" if inputargs.error }}">
+    <label class="control-label">{{ inputargs.label }}</label>
+    <div class="controls">
+      {% for c in field.choices %}
+        <label class="checkbox" for="{{ id }}-{{ loop.index0 }}"
+            style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+          <input id="{{ id }}-{{ loop.index0 }}" type="checkbox" name="{{ id 
+              }}" value="{{ c.key | empty_and_escape }}" {{
+              "checked " if c.key in data.get(id, []) }} />
+          {{ c[client_lang] }}
+        </label>
+      {% endfor %}
+      {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
+      {% if field.description %}
+        {{ form.info(field.description[client_lang]) }}
+      {% endif %}
+    </div>
+  </div>
 {% endmacro %}
