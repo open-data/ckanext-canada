@@ -72,7 +72,7 @@
 
   {% if widget %}
     {% call widget(**kwargs) %}
-      {% if lang != 'eng' and field.description %}
+      {% if field.description %}
         {{ form.info(field.description[client_lang]) }}
       {% endif %}
     {% endcall %}
