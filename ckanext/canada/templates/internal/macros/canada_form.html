@@ -90,12 +90,13 @@ client_lang -- language from h.lang(): 'en' or 'fr'
 Create a group of checkboxes for a tag vocabulary field with all the
 currently chosen options checked
 
-id -- CKAN dataset or resource field id
-field -- schema_description field dict for this CKAN field
-data -- dict containing form data by CKAN field id
-client_lang -- 'eng' or 'fra'
-inputargs -- keyword argument dict that would have been passed to form
-             method, as prepared by formfield macro above
+name        - The name of the form parameter.
+id          - The id to use on the input and label. Convention is to prefix with 'field-'.
+label       - The human readable label.
+options     - A list/tuple of fields to be used as <options>.
+selected    - The value of the selected <option>.
+error       - A list of error strings for the field or just true to highlight the field.
+classes     - An array of classes to apply to the control-group.
 #}
 {% macro multi_checkbox_field(name, id, label, options, selected, error,
     classes=[], attrs=[]) %}
