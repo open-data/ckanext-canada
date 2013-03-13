@@ -4,7 +4,7 @@
 {% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
-  {% set kwargs = {
+  {% set inputargs = {
     'name': id,
     'label': field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
@@ -15,12 +15,12 @@
     } %}
 
   {% if lang %}
-    {% do kwargs.update({'label': kwargs.label + ' ' + lang|upper}) %}
+    {% do inputargs.update({'label': inputargs.label + ' ' + lang|upper}) %}
   {% endif %}
 
   {% set widget = form.input %}
   {% if id == 'name' %}
-    {% do kwargs.update({
+    {% do inputargs.update({
       'prepend': '/data/dataset/',
       'attrs': {'data-module': 'slug-preview-slug',
                 'data-module-prefix': 'data.gc.ca/data/dataset/',
@@ -31,7 +31,7 @@
     {% set widget = form.markdown %}
   {% elif id == 'tags' %} 
     {# special case name "tag_string" for tags #}
-    {% do kwargs.update({
+    {% do inputargs.update({
       'name': 'tag_string', 
       'value': data['tag_string'],
       'classes': ['control-full'],
@@ -41,13 +41,13 @@
       }) %}
   {% elif field.vocabulary %}
     {# subject and topic_category fields #}
-    {{ multi_checkbox_field(id, field, data, client_lang, kwargs) }}
+    {{ multi_checkbox_field(id, field, data, client_lang, inputargs) }}
     {% set widget = none %}
   {% elif field.choices %}
-    {% do kwargs.update({'options':[], 'selected':data[id]}) %}
+    {% do inputargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
-    {% do kwargs.pop('value') %}
-    {% do kwargs.pop('placeholder') %}
+    {% do inputargs.pop('value') %}
+    {% do inputargs.pop('placeholder') %}
     {% for c in field.choices %}
       {% set indent = '' %}
       {% set skip = false %}
@@ -62,7 +62,7 @@
         {% endif %}
       {% endif %}
       {% if not skip %}
-        {% do kwargs.options.append({
+        {% do inputargs.options.append({
           'text': indent + c[client_lang],
           'value': c.key}) %}
       {% endif %}
@@ -71,7 +71,7 @@
   {% endif %}
 
   {% if widget %}
-    {% call widget(**kwargs) %}
+    {% call widget(**inputargs) %}
       {% if field.description %}
         {{ form.info(field.description[client_lang]) }}
       {% endif %}
