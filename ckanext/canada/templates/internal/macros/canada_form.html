@@ -1,7 +1,18 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/form.html' as form %}
 
-{% macro formfield(id, lang, field, data, errors, client_lang='eng') %}
+{#
+Automatic form field creation with schema_description field and form data
+
+id -- CKAN dataset or resource field id
+lang -- language of this field for fields available in both languages
+        as separate fields: none, 'eng' or 'fra'
+field -- schema_description field dict for this CKAN field
+data -- dict containing form data by CKAN field id
+errors -- dict containing form errors by CKAN field id
+client_lang -- language from h.lang(): 'en' or 'fr'
+#}
+{% macro formfield(id, lang, field, data, errors, client_lang) %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
   {% set inputargs = {
@@ -82,6 +93,13 @@
 {#
 Create a group of checkboxes for a tag vocabulary field with all the
 currently chosen options checked
+
+id -- CKAN dataset or resource field id
+field -- schema_description field dict for this CKAN field
+data -- dict containing form data by CKAN field id
+client_lang -- 'eng' or 'fra'
+inputargs -- keyword argument dict that would have been passed to form
+             method, as prepared by formfield macro above
 #}
 {% macro multi_checkbox_field(id, field, data, client_lang, inputargs) %}
   <div class="control-group{{ " error" if inputargs.error }}">
