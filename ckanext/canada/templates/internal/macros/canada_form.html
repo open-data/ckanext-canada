@@ -50,10 +50,6 @@ client_lang -- language from h.lang(): 'en' or 'fr'
                 'data-module-tags': '',
                 'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
       }) %}
-  {% elif field.vocabulary %}
-    {# subject and topic_category fields #}
-    {{ multi_checkbox_field(id, field, data, client_lang, inputargs) }}
-    {% set widget = none %}
   {% elif field.choices %}
     {% do inputargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
@@ -78,7 +74,7 @@ client_lang -- language from h.lang(): 'en' or 'fr'
           'value': c.key}) %}
       {% endif %}
     {% endfor %}
-    {% set widget = form.select %}
+    {% set widget = multi_checkbox_field if field.vocabulary else form.select %}
   {% endif %}
 
   {% if widget %}
@@ -101,23 +97,23 @@ client_lang -- 'eng' or 'fra'
 inputargs -- keyword argument dict that would have been passed to form
              method, as prepared by formfield macro above
 #}
-{% macro multi_checkbox_field(id, field, data, client_lang, inputargs) %}
-  <div class="control-group{{ " error" if inputargs.error }}">
-    <label class="control-label">{{ inputargs.label }}</label>
+{% macro multi_checkbox_field(name, id, label, options, selected, error,
+    classes=[], attrs=[]) %}
+  {%- set extra_html = caller() if caller -%}
+  <div class="control-group{{ " error" if error }}">
+    <label class="control-label">{{ label }}</label>
     <div class="controls">
-      {% for c in field.choices %}
-        <label class="checkbox" for="{{ id }}-{{ loop.index0 }}"
+      {% for o in options %}
+        <label class="checkbox" for="{{ name }}-{{ loop.index0 }}"
             style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
-          <input id="{{ id }}-{{ loop.index0 }}" type="checkbox" name="{{ id 
-              }}" value="{{ c.key | empty_and_escape }}" {{
-              "checked " if c.key in data.get(id, []) }} />
-          {{ c[client_lang] }}
+          <input id="{{ name }}-{{ loop.index0 }}" type="checkbox" name="{{ name 
+              }}" value="{{ o.value | empty_and_escape }}" {{
+              "checked " if o.value in selected }} />
+          {{ o.text }}
         </label>
       {% endfor %}
       {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
-      {% if field.description %}
-        {{ form.info(field.description[client_lang]) }}
-      {% endif %}
+      {{ extra_html }}
     </div>
   </div>
 {% endmacro %}
