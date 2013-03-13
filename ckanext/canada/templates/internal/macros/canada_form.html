@@ -4,13 +4,13 @@
 {#
 Automatic form field creation with schema_description field and form data
 
-id -- CKAN dataset or resource field id
-lang -- language of this field for fields available in both languages
-        as separate fields: none, 'eng' or 'fra'
-field -- schema_description field dict for this CKAN field
-data -- dict containing form data by CKAN field id
-errors -- dict containing form errors by CKAN field id
-client_lang -- language from h.lang(): 'en' or 'fr'
+id          - CKAN dataset or resource field id
+lang        - language of this field for fields available in both languages
+              as separate fields: none, 'eng' or 'fra'
+field       - schema_description field dict for this CKAN field
+data        - dict containing form data by CKAN field id
+errors      - dict containing form errors by CKAN field id
+client_lang - language from h.lang(): 'en' or 'fr'
 #}
 {% macro formfield(id, lang, field, data, errors, client_lang) %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
