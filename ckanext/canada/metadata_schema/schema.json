@@ -895,9 +895,10 @@
               "pilot_uuid": "BD26DB5E-82D2-42C1-99BB-08FCF6068FEE"
             }, 
             {
-              "eng": "Office of the Superintendent of Financial Institutions", 
-              "fra": "Bureau du surintendant des institutions financi\u00e8res", 
-              "key": "Office of the Superintendent of Financial Institutions | Bureau du surintendant des institutions financi\u00e8res", 
+              "eng": "Office of the Superintendent of Financial Institutions Canada", 
+              "fra": "Bureau du surintendant des institutions financi\u00e8res Canada", 
+              "id": "OSFI-BSIF", 
+              "key": "Office of the Superintendent of Financial Institutions Canada | Bureau du surintendant des institutions financi\u00e8res Canada", 
               "pilot_uuid": "4F01090B-C049-4CAF-9C6C-D00312B23DCB"
             }, 
             {
@@ -921,9 +922,10 @@
               "pilot_uuid": "E359FC5E-4894-427A-AC68-013C197F47D7"
             }, 
             {
-              "eng": "Social Sciences and Humanities Research Council", 
-              "fra": "Conseil de recherches en sciences humaines", 
-              "key": "Social Sciences and Humanities Research Council | Conseil de recherches en sciences humaines", 
+              "eng": "Social Sciences and Humanities Research Council of Canada", 
+              "fra": "Conseil de recherches en sciences humaines du Canada", 
+              "id": "SSHRC-CRSH", 
+              "key": "Social Sciences and Humanities Research Council of Canada | Conseil de recherches en sciences humaines du Canada", 
               "pilot_uuid": "DF295E03-841D-49BE-AAE6-32BB6AC093FB"
             }, 
             {
@@ -934,9 +936,10 @@
               "pilot_uuid": "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
             }, 
             {
-              "eng": "Registrar of the Supreme Court of Canada", 
-              "fra": "Registraire de la Cour supr\u00eame du Canada", 
-              "key": "Registrar of the Supreme Court of Canada | Registraire de la Cour supr\u00eame du Canada", 
+              "eng": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act", 
+              "fra": "Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame", 
+              "id": "SCC-CSC", 
+              "key": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act | Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame", 
               "pilot_uuid": "6FAAC6D8-0E3C-4223-8280-CD9C057C5BA2"
             }, 
             {
@@ -1014,9 +1017,10 @@
               "pilot_uuid": "0C002E0E-05B9-4B3B-86FC-23AD8BABD461"
             }, 
             {
-              "eng": "Communications Security Establishment", 
-              "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
-              "key": "Communications Security Establishment | Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
+              "eng": "Communications Security Establishment Canada", 
+              "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada", 
+              "id": "CSEC-CSTC", 
+              "key": "Communications Security Establishment Canada | Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada", 
               "pilot_uuid": "321F1015-551D-45A0-B1B7-C1FDFCB20F66"
             }, 
             {
@@ -1089,9 +1093,10 @@
               "pilot_uuid": "D623814A-10A8-439D-9A33-181CE5390B11"
             }, 
             {
-              "eng": "Office of the Commissioner of Lobbying Canada", 
+              "eng": "Office of the Commissioner of Lobbying of Canada", 
               "fra": "Commissariat au lobbying du Canada", 
-              "key": "Office of the Commissioner of Lobbying Canada | Commissariat au lobbying du Canada", 
+              "id": "OCL-CAL", 
+              "key": "Office of the Commissioner of Lobbying of Canada | Commissariat au lobbying du Canada", 
               "pilot_uuid": "6B85304C-C856-463D-A6DB-463091FEE549"
             }, 
             {
@@ -1159,12 +1164,6 @@
               "key": "Treasury Board | Conseil du Tr\u00e9sor"
             }, 
             {
-              "eng": "Communications Security Establishment Canada", 
-              "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada", 
-              "id": "CSEC-CSTC", 
-              "key": "Communications Security Establishment Canada | Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada"
-            }, 
-            {
               "eng": "Indian Residential Schools Truth and Reconciliation Commission", 
               "fra": "Commission de v\u00e9rit\u00e9 et de r\u00e9conciliation relative aux pensionnats indiens", 
               "id": "", 
@@ -1175,12 +1174,6 @@
               "fra": "Administration du pipe-line du Nord Canada", 
               "id": "NPA-APN", 
               "key": "Northern Pipeline Agency Canada | Administration du pipe-line du Nord Canada"
-            }, 
-            {
-              "eng": "Office of the Commissioner of Lobbying of Canada", 
-              "fra": "Commissariat au lobbying du Canada", 
-              "id": "OCL-CAL", 
-              "key": "Office of the Commissioner of Lobbying of Canada | Commissariat au lobbying du Canada"
             }, 
             {
               "eng": "The Correctional Investigator Canada", 
@@ -1199,18 +1192,6 @@
               "fra": "Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada", 
               "id": "PSIC-ISPC", 
               "key": "Office of the Public Sector Integrity Commissioner of Canada | Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada"
-            }, 
-            {
-              "eng": "Office of the Superintendent of Financial Institutions Canada", 
-              "fra": "Bureau du surintendant des institutions financi\u00e8res Canada", 
-              "id": "OSFI-BSIF", 
-              "key": "Office of the Superintendent of Financial Institutions Canada | Bureau du surintendant des institutions financi\u00e8res Canada"
-            }, 
-            {
-              "eng": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act", 
-              "fra": "Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame", 
-              "id": "SCC-CSC", 
-              "key": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act | Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame"
             }, 
             {
               "eng": "Commission for Public Complaints Against the Royal Canadian Mounted Police", 
@@ -1241,12 +1222,6 @@
               "fra": "Recherches en sciences et en g\u00e9nie Canada", 
               "id": "SERC-RSGC", 
               "key": "Science and Engineering Research Canada | Recherches en sciences et en g\u00e9nie Canada"
-            }, 
-            {
-              "eng": "Social Sciences and Humanities Research Council of Canada", 
-              "fra": "Conseil de recherches en sciences humaines du Canada", 
-              "id": "SSHRC-CRSH", 
-              "key": "Social Sciences and Humanities Research Council of Canada | Conseil de recherches en sciences humaines du Canada"
             }, 
             {
               "eng": "The National Battlefields Commission", 
