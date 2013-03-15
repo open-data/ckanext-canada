@@ -1,11 +1,19 @@
+from pylons import c
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
-from ckan.logic import converters
-from ckan.lib.navl import validators
+from ckan.logic.converters import (free_tags_only, convert_from_tags,
+    convert_to_tags, convert_from_extras, convert_to_extras)
+from ckan.lib.navl.validators import ignore_missing
+from ckan.lib.navl.dictization_functions import Invalid, missing
+from ckan.new_authz import is_sysadmin
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
+
+
+ORG_MAY_PUBLISH_KEY = 'publish'
+ORG_MAY_PUBLISH_VALUE = 'True'
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -61,7 +69,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for validation from the form
         """
         schema = super(DataGCCAForms, self).form_to_db_schema()
-        self._schema_update(schema, form_to_db=True)
+        _schema_update(schema, form_to_db=True)
         return schema
 
     def form_to_db_schema_api_create(self):
@@ -69,7 +77,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for validation/conversion from the api
         """
         schema = super(DataGCCAForms, self).form_to_db_schema_api_create()
-        self._schema_update(schema, form_to_db=True)
+        _schema_update(schema, form_to_db=True)
         return schema
 
     def form_to_db_schema_api_update(self):
@@ -77,7 +85,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for validation/conversion from the api
         """
         schema = super(DataGCCAForms, self).form_to_db_schema_api_update()
-        self._schema_update(schema, form_to_db=True)
+        _schema_update(schema, form_to_db=True)
         return schema
 
     def db_to_form_schema(self):
@@ -85,48 +93,91 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for converting from the db
         """
         schema = super(DataGCCAForms, self).db_to_form_schema()
-        self._schema_update(schema, form_to_db=False)
+        _schema_update(schema, form_to_db=False)
         return schema
-
-    def _schema_update(self, schema, form_to_db):
-        """
-        schema: schema dict to update
-        form_to_db: True for form_to_db_schema, False for db_to_form_schema
-        """
-        for name, lang, field in schema_description.dataset_fields_by_ckan_id():
-            if name in ('id', 'language'):
-                continue
-            if name in schema:
-                continue # don't modify existing fields.. yet
-
-            if 'vocabulary' in field:
-                schema[name] = [
-                        converters.convert_to_tags(field['vocabulary'])
-                    ] if form_to_db else [
-                        converters.convert_from_tags(field['vocabulary'])
-                    ]
-            else:
-                schema[name] = [
-                        validators.ignore_missing, 
-                        unicode, 
-                        converters.convert_to_extras,
-                    ] if form_to_db else [
-                        converters.convert_from_extras,
-                        validators.ignore_missing,
-                    ]
-        for name in ('maintainer', 'author', 'author_email',
-                'maintainer_email', 'license_id', 'department_number'):
-            del schema[name]
-
-        if not form_to_db:
-            schema['tags']['__extras'].append(converters.free_tags_only)
-
-
+    
     def check_data_dict(self, data_dict, schema=None):
         # XXX: do nothing here because DefaultDatasetForm's check_data_dict()
         # breaks with the new three-stage dataset creation when using
         # convert_to_extras.
         pass
+
+
+def _schema_update(schema, form_to_db):
+    """
+    schema: schema dict to update
+    form_to_db: True for form_to_db_schema, False for db_to_form_schema
+    """
+    for name, lang, field in schema_description.dataset_fields_by_ckan_id():
+        if name in schema:
+            continue # don't modify existing fields.. yet
+
+        v = _schema_field_validators(name, lang, field)
+        if v is not None:
+            schema[name] = v[0] if form_to_db else v[1]
+
+    for name in ('maintainer', 'author', 'author_email',
+            'maintainer_email', 'license_id', 'department_number'):
+        del schema[name]
+
+    if not form_to_db:
+        schema['tags']['__extras'].append(free_tags_only)
+
+def _schema_field_validators(name, lang, field):
+    """
+    return a tuple with lists of validators for the field:
+    one for form_to_db and one for db_to_form, or None to leave 
+    both lists unchanged
+    """
+    if name in ('id', 'language'):
+        return
+
+    if name == 'date_published':
+        return ([protect_date_published, ignore_missing, convert_to_extras],
+            [convert_from_extras, ignore_missing])
+
+    if 'vocabulary' in field:
+        return (
+            [convert_to_tags(field['vocabulary'])],
+            [convert_from_tags(field['vocabulary'])])
+
+    return (
+        [ignore_missing, unicode, convert_to_extras],
+        [convert_from_extras, ignore_missing])
+
+
+def protect_date_published(key, data, errors, context):
+    """
+    Ensure the date_published is not changed by an unauthorized user.
+    """
+    if is_sysadmin(context['user']):
+        return
+    original = ''
+    package = context.get('package')
+    if package:
+        original = package.extras.get('date_published', '')
+    value = data.get(key, '')
+    if value is missing:
+        value = ''
+    if original == value:
+        return
+
+    for g in c.userobj.get_groups():
+        if not g.is_organization:
+            continue
+        if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
+            return
+
+    raise Invalid('Cannot change value of key from %s to %s. '
+                  'This key is read-only' % (original, value))
+
+
+def ignore_missing_only_sysadmin(key, data, errors, context):
+    """
+    Ignore missing field *only* if the user is a sysadmin.
+    """
+    if is_sysadmin(context['user']):
+        return ignore_missing(key, data, errors, context)
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
@@ -176,3 +227,4 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
+
