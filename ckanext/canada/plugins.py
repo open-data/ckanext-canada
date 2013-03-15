@@ -2,8 +2,9 @@ from pylons import c
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
-from ckan.logic import converters
-from ckan.lib.navl import validators
+from ckan.logic.converters import (free_tags_only, convert_from_tags,
+    convert_to_tags, convert_from_extras, convert_to_extras)
+from ckan.lib.navl.validators import ignore_missing
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
@@ -114,7 +115,7 @@ def _schema_update(schema, form_to_db):
         del schema[name]
 
     if not form_to_db:
-        schema['tags']['__extras'].append(converters.free_tags_only)
+        schema['tags']['__extras'].append(free_tags_only)
 
 def _schema_field_validators(name, lang, field):
     """
@@ -127,18 +128,12 @@ def _schema_field_validators(name, lang, field):
 
     if 'vocabulary' in field:
         return (
-            [converters.convert_to_tags(field['vocabulary'])],
-            [converters.convert_from_tags(field['vocabulary'])])
+            [convert_to_tags(field['vocabulary'])],
+            [convert_from_tags(field['vocabulary'])])
 
     return (
-        [
-            validators.ignore_missing, 
-            unicode, 
-            converters.convert_to_extras,
-        ], [
-            converters.convert_from_extras,
-            validators.ignore_missing,
-        ])
+        [ignore_missing, unicode, convert_to_extras],
+        [convert_from_extras, ignore_missing])
 
 
 def ignore_missing_only_sysadmin(key, data, errors, context):
@@ -146,7 +141,7 @@ def ignore_missing_only_sysadmin(key, data, errors, context):
     Ignore missing field *only* if the user is a sysadmin.
     """
     if c.is_sysadmin(context['user']):
-        return validators.ignore_missing(key, data, errors, context)
+        return ignore_missing(key, data, errors, context)
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
