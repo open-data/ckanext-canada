@@ -5,7 +5,8 @@ import ckan.lib.plugins as lib_plugins
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing
-from ckan.lib.navl.dictization_functions import Invalid
+from ckan.lib.navl.dictization_functions import Invalid, missing
+from ckan.new_authz import is_sysadmin
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
@@ -128,8 +129,8 @@ def _schema_field_validators(name, lang, field):
         return
 
     if name == 'date_published':
-        return ([protect_date_published, convert_to_extras],
-            [convert_from_extras])
+        return ([protect_date_published, ignore_missing, convert_to_extras],
+            [convert_from_extras, ignore_missing])
 
     if 'vocabulary' in field:
         return (
@@ -145,11 +146,15 @@ def protect_date_published(key, data, errors, context):
     """
     Ensure the date_published is not changed by an unauthorized user.
     """
+    if is_sysadmin(context['user']):
+        return
     original = ''
-    value = data.get(key, '')
     package = context.get('package')
     if package:
-        original = package.extras['date_published']
+        original = package.extras.get('date_published', '')
+    value = data.get(key, '')
+    if value is missing:
+        value = ''
     if original != value:
         raise Invalid('Cannot change value of key from %s to %s. '
                       'This key is read-only' % (original, value))
@@ -159,7 +164,7 @@ def ignore_missing_only_sysadmin(key, data, errors, context):
     """
     Ignore missing field *only* if the user is a sysadmin.
     """
-    if c.is_sysadmin(context['user']):
+    if is_sysadmin(context['user']):
         return ignore_missing(key, data, errors, context)
 
 
