@@ -11,6 +11,10 @@ from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
 
+
+ORG_MAY_PUBLISH_KEY = 'publish'
+ORG_MAY_PUBLISH_VALUE = 'True'
+
 class DataGCCAPublic(p.SingletonPlugin):
     """
     Plugin for public-facing version of data.gc.ca site, aka the "portal"
@@ -155,9 +159,17 @@ def protect_date_published(key, data, errors, context):
     value = data.get(key, '')
     if value is missing:
         value = ''
-    if original != value:
-        raise Invalid('Cannot change value of key from %s to %s. '
-                      'This key is read-only' % (original, value))
+    if original == value:
+        return
+
+    for g in c.userobj.get_groups():
+        if not g.is_organization:
+            continue
+        if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
+            return
+
+    raise Invalid('Cannot change value of key from %s to %s. '
+                  'This key is read-only' % (original, value))
 
 
 def ignore_missing_only_sysadmin(key, data, errors, context):
