@@ -105,9 +105,9 @@ def _schema_update(schema, form_to_db):
         if name in schema:
             continue # don't modify existing fields.. yet
 
-        v = _schema_field_validators(name, lang, field, form_to_db)
+        v = _schema_field_validators(name, lang, field)
         if v is not None:
-            schema[name] = v
+            schema[name] = v[0] if form_to_db else v[1]
 
     for name in ('maintainer', 'author', 'author_email',
             'maintainer_email', 'license_id', 'department_number'):
@@ -116,30 +116,29 @@ def _schema_update(schema, form_to_db):
     if not form_to_db:
         schema['tags']['__extras'].append(converters.free_tags_only)
 
-def _schema_field_validators(name, lang, field, form_to_db):
+def _schema_field_validators(name, lang, field):
     """
-    return a list of validators for the field, or None to leave unchanged
+    return a tuple with lists of validators for the field:
+    one for form_to_db and one for db_to_form, or None to leave 
+    both lists unchanged
     """
     if name in ('id', 'language'):
         return
 
     if 'vocabulary' in field:
-        if form_to_db:
-            return [converters.convert_to_tags(field['vocabulary'])]
-        else:
-            return [converters.convert_from_tags(field['vocabulary'])]
+        return (
+            [converters.convert_to_tags(field['vocabulary'])],
+            [converters.convert_from_tags(field['vocabulary'])])
 
-    if form_to_db:
-        return [
+    return (
+        [
             validators.ignore_missing, 
             unicode, 
             converters.convert_to_extras,
-            ]
-    else:
-        return [
+        ], [
             converters.convert_from_extras,
             validators.ignore_missing,
-        ]
+        ])
 
 
 def ignore_missing_only_sysadmin(key, data, errors, context):
