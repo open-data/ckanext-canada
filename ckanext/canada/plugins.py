@@ -63,7 +63,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         Add our custom fields for validation from the form
         """
         schema = super(DataGCCAForms, self).form_to_db_schema()
-        self._schema_update(schema, form_to_db=True)
+        _schema_update(schema, form_to_db=True)
         return schema
 
     def form_to_db_schema_api_create(self):
