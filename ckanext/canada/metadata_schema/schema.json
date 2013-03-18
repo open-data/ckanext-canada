@@ -1877,6 +1877,26 @@
             "fra": "identificationPublication"
           }, 
           "proposed_type": "free text (CharacterString)"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was issued.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
+          }, 
+          "example": "2012-08-11", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "date_published", 
+          "label": {
+            "eng": "Date Published", 
+            "fra": "Date de publication"
+          }, 
+          "proposed_name": {
+            "eng": "datePublished", 
+            "fra": "datePublication"
+          }, 
+          "proposed_type": "Date (see B.4)"
         }
       ], 
       "name": {
@@ -1999,19 +2019,39 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The time period related to the dataset content.", 
-            "fra": "La p\u00e9riode de temps li\u00e9e au contenu de l\u2019ensemble de donn\u00e9es."
+            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
-          "example": "YYYY-MM-DD/YYYY-MM-DD", 
+          "example": "YYYY-MM-DD", 
           "existing": false, 
           "gc_multiplicity": "M", 
-          "id": "temporal_element", 
+          "id": "time_period_coverage_start", 
           "label": {
-            "eng": "Temporal Element", 
-            "fra": "\u00c9l\u00e9ment temporel"
+            "eng": "Time Period Coverage Start", 
+            "fra": "Couverture de la p\u00e9riode de temps"
           }, 
           "proposed_name": {
-            "eng": "temporalElement", 
+            "eng": "timePeriodCoverageStart", 
+            "fra": "\u00e9lementTemporalle"
+          }, 
+          "proposed_type": "EX_TemporalExtent"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "example": "YYYY-MM-DD", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "time_period_coverage_end", 
+          "label": {
+            "eng": "Time Period Coverage End", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "proposed_name": {
+            "eng": "timePeriodCoverageEnd", 
             "fra": "\u00e9lementTemporalle"
           }, 
           "proposed_type": "EX_TemporalExtent"
@@ -2095,6 +2135,7 @@
             {
               "eng": "Division No. 11", 
               "fra": "Division No. 11", 
+              "id": 1100, 
               "key": "Division No. 11"
             }, 
             {
@@ -4425,26 +4466,6 @@
             "fra": ""
           }, 
           "proposed_type": ""
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The date in which the resource was issued.", 
-            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
-          }, 
-          "example": "41132.0", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "date_published", 
-          "label": {
-            "eng": "Date Published", 
-            "fra": "Date de publication"
-          }, 
-          "proposed_name": {
-            "eng": "datePublished", 
-            "fra": "datePublication"
-          }, 
-          "proposed_type": "Date (see B.4)"
         }
       ], 
       "name": {
@@ -4711,6 +4732,43 @@
   "resource_fields": [
     {
       "bilingual": false, 
+      "choices": [
+        {
+          "eng": "File", 
+          "fra": "File", 
+          "key": "file"
+        }, 
+        {
+          "eng": "Doc", 
+          "fra": "Doc", 
+          "key": "doc"
+        }, 
+        {
+          "eng": "API", 
+          "fra": "API", 
+          "key": "api"
+        }
+      ], 
+      "description": {
+        "eng": "The type of resource.", 
+        "fra": "Le type de ressource"
+      }, 
+      "example": "API", 
+      "existing": true, 
+      "gc_multiplicity": "M, Rep.", 
+      "id": "resource_type", 
+      "label": {
+        "eng": "Resource Type", 
+        "fra": "Type de ressource"
+      }, 
+      "proposed_name": {
+        "eng": "resourceType", 
+        "fra": ""
+      }, 
+      "proposed_type": ""
+    }, 
+    {
+      "bilingual": false, 
       "description": {
         "eng": "The electronic location where the resource can be found.", 
         "fra": "L\u2019endroit \u00e9lectronique o\u00f9 se trouve la ressource."
@@ -4742,10 +4800,10 @@
     {
       "bilingual": false, 
       "description": {
-        "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65 000 000", 
+        "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65000000", 
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
       }, 
-      "example": "65 MB", 
+      "example": "65000000", 
       "existing": true, 
       "gc_multiplicity": "M, Rep.", 
       "id": "size", 
@@ -4939,7 +4997,7 @@
       "gc_multiplicity": "M, Rep.", 
       "id": "format", 
       "label": {
-        "eng": "Formal Name", 
+        "eng": "Format Name", 
         "fra": "Nom officiel"
       }, 
       "pilot_help": {
@@ -5009,7 +5067,7 @@
         "eng": "The date in which the resource was modified.", 
         "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
       }, 
-      "example": "41143.0", 
+      "example": "2012-08-22", 
       "existing": true, 
       "gc_multiplicity": "O", 
       "id": "last_modified", 

@@ -133,18 +133,22 @@ def _schema_field_validators(name, lang, field):
         return
 
     if name == 'date_published':
-        return ([protect_date_published, ignore_missing, convert_to_extras],
-            [convert_from_extras, ignore_missing])
+        return ([treat_missing_as_empty, protect_date_published,
+                 unicode, convert_to_extras],
+                [convert_from_extras, ignore_missing])
 
     if 'vocabulary' in field:
-        return (
-            [convert_to_tags(field['vocabulary'])],
-            [convert_from_tags(field['vocabulary'])])
+        return ([convert_to_tags(field['vocabulary'])],
+                [convert_from_tags(field['vocabulary'])])
 
-    return (
-        [ignore_missing, unicode, convert_to_extras],
-        [convert_from_extras, ignore_missing])
+    return ([ignore_missing, unicode, convert_to_extras],
+            [convert_from_extras, ignore_missing])
 
+
+def treat_missing_as_empty(key, data, errors, context):
+    value = data.get(key, '')
+    if value is missing:
+        data[key] = ''
 
 def protect_date_published(key, data, errors, context):
     """
@@ -157,8 +161,6 @@ def protect_date_published(key, data, errors, context):
     if package:
         original = package.extras.get('date_published', '')
     value = data.get(key, '')
-    if value is missing:
-        value = ''
     if original == value:
         return
 

@@ -41,20 +41,21 @@ SECTIONS_FIELDS = [
         'notes',
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
-        'subject', # TODO: create tag vocabulary for this
-        'topic_category', # TODO: create tag vocabulary for this
+        'subject', 
+        'topic_category', 
         'tags',
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
+        'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Additional Fields", [
         'maintenance_and_update_frequency',
-        'temporal_element',
+        'time_period_coverage_start',
+        'time_period_coverage_end',
         'geographic_region',
         'url',
         'endpoint_url',
-        'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
@@ -67,10 +68,16 @@ SECTIONS_FIELDS = [
 # override calculated values
 FIELD_OVERRIDES = {
     'tags': {'bilingual': False},
+    'resource:resource_type': {'choices': [ # should match normal CKAN values
+        {'eng': 'File', 'fra': 'File', 'key': 'file'},
+        {'eng': 'Doc', 'fra': 'Doc', 'key': 'doc'},
+        {'eng': 'API', 'fra': 'API', 'key': 'api'},
+        ]},
     }
 
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
+    'resource_type',
     'url',
     'size',
     'format',
@@ -100,7 +107,6 @@ ProposedField = namedtuple("ProposedField", """
     description
     description_fra
     example
-    nap_iso_19115_ref
     domain_best_practice
     name_space
     implementation
@@ -132,7 +138,8 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'keywords': 'tags',
     'maintenanceAndUpdateFrequency':
         'maintenance_and_update_frequency',
-    'temporalElement': 'temporal_element',
+    'timePeriodCoverageStart': 'time_period_coverage_start',
+    'timePeriodCoverageEnd': 'time_period_coverage_end',
     'geographicRegion': 'geographic_region',
     'dataSeriesName': 'data_series_name',
     'issueIdentification': 'data_series_issue_identification',
@@ -150,6 +157,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
 
     'spatialRespresentionType': 'spatial_representation_type',
     'presentationForm': 'presentation_form',
+    'resourceType': 'resource:resource_type',
     #'polygon' DEFER
     'browseGraphicFileName': 'browse_graphic_url',
     }
@@ -249,11 +257,23 @@ def read_proposed_fields_vocab():
     out = {}
     for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
         row = sheet.row(i)
-        p = ProposedField(*(unicode(f.value).strip() for f in row))
+        values = []
+        for f in row:
+            if f.ctype == xlrd.XL_CELL_DATE:
+                values.append("%04d-%02d-%02d" %
+                    xlrd.xldate_as_tuple(f.value, workbook.datemode)[:3])
+            elif f.ctype == xlrd.XL_CELL_NUMBER:
+                values.append(int(f.value))
+            else:
+                values.append(f.value)
+        p = ProposedField(*(unicode(v).strip() for v in values))
+
         if not p.description and not p.type_:
             # skip the header rows
             continue
         new_name = p.property_name.strip()
+        if not new_name:
+            continue
         new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
         if new_name in out:
             new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name + '2',
@@ -325,8 +345,8 @@ def apply_field_customizations(schema_out, vocab):
     for field, choices in vocab.iteritems():
         if field == 'language':
             f = get_resource_field('language')
-        elif field == 'FileName':
-            f = get_resource_field('format')
+        elif field.startswith('resource:'):
+            f = get_resource_field(field[9:])
         else:
             f = get_field(field)
 
@@ -338,6 +358,23 @@ def apply_field_customizations(schema_out, vocab):
         f['choices'] = choices
 
 
+def apply_field_overrides(schema_out):
+    """
+    Apply fixes to proposed data from FIELD_OVERRIDES
+    """
+    for section in schema_out['dataset_sections']:
+        for f in section['fields']:
+            f.update(FIELD_OVERRIDES.get(f['id'], {}))
+    for f in schema_out['resource_fields']:
+        f.update(FIELD_OVERRIDES.get('resource:' + f['id'], {}))
+
+def clean_tag_part(t):
+    """
+    Remove all special characters not accepted in tags and collapse
+    all spaces to a single space
+    """
+    return u''.join(re.findall(u' ?[\w\-.]+', t, re.UNICODE)).lstrip()
+
 def add_keys_for_choices(f):
     """
     Add a 'key' key to each choice in f['choices'] that will be used
@@ -346,9 +383,7 @@ def add_keys_for_choices(f):
     if f.get('type') == 'keywords':
         for c in f['choices']:
             # keywords have strict limits on valid characters
-            c['key'] = u'  '.join(
-                re.sub(u'[,/]', u'', c[lang]).replace(u'  ', u' ')
-                for lang in LANGS)
+            c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
     else:
         for c in f['choices']:
             # use the text itself for now (both when different)
@@ -409,7 +444,6 @@ def main():
             if old_id_fra:
                 new_field['pilot_id_fra'] = old_id_fra
             new_field['bilingual'] = field in BILINGUAL_FIELDS
-            new_field.update(FIELD_OVERRIDES.get(field, {}))
 
             new_section['fields'].append(new_field)
         schema_out['dataset_sections'].append(new_section)
@@ -424,7 +458,6 @@ def main():
         if p:
             new_rfield.update(field_from_proposed(p))
         new_rfield.update(field_from_pilot('resource:' + rfield, old_root))
-        new_rfield.update(FIELD_OVERRIDES.get('resource:' + rfield, {}))
         schema_out['resource_fields'].append(new_rfield)
 
     apply_field_customizations(schema_out, vocab)
@@ -436,6 +469,8 @@ def main():
         if 'choices' not in f:
             continue
         add_keys_for_choices(f)
+
+    apply_field_overrides(schema_out)
 
     return json.dumps(schema_out, sort_keys=True, indent=2)
 
