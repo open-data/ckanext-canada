@@ -47,6 +47,7 @@ SECTIONS_FIELDS = [
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
+        'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Additional Fields", [
         'maintenance_and_update_frequency',
@@ -54,7 +55,6 @@ SECTIONS_FIELDS = [
         'geographic_region',
         'url',
         'endpoint_url',
-        'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',

@@ -1877,6 +1877,26 @@
             "fra": "identificationPublication"
           }, 
           "proposed_type": "free text (CharacterString)"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was issued.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
+          }, 
+          "example": "41132.0", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "date_published", 
+          "label": {
+            "eng": "Date Published", 
+            "fra": "Date de publication"
+          }, 
+          "proposed_name": {
+            "eng": "datePublished", 
+            "fra": "datePublication"
+          }, 
+          "proposed_type": "Date (see B.4)"
         }
       ], 
       "name": {
@@ -4425,26 +4445,6 @@
             "fra": ""
           }, 
           "proposed_type": ""
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The date in which the resource was issued.", 
-            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
-          }, 
-          "example": "41132.0", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "date_published", 
-          "label": {
-            "eng": "Date Published", 
-            "fra": "Date de publication"
-          }, 
-          "proposed_name": {
-            "eng": "datePublished", 
-            "fra": "datePublication"
-          }, 
-          "proposed_type": "Date (see B.4)"
         }
       ], 
       "name": {
