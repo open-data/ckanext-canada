@@ -41,8 +41,8 @@ SECTIONS_FIELDS = [
         'notes',
         'digital_object_identifier', # "datacite" identifier
         'catalog_type', # will control field validation in the future
-        'subject', # TODO: create tag vocabulary for this
-        'topic_category', # TODO: create tag vocabulary for this
+        'subject', 
+        'topic_category', 
         'tags',
         'license_id',
         'data_series_name',
