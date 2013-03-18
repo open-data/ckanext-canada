@@ -257,9 +257,17 @@ def read_proposed_fields_vocab():
     out = {}
     for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
         row = sheet.row(i)
-        p = ProposedField(*(unicode(
-            int(f.value) if isinstance(f.value, float) else f.value
-            ).strip() for f in row))
+        values = []
+        for f in row:
+            if f.ctype == xlrd.XL_CELL_DATE:
+                values.append("%04d-%02d-%02d" %
+                    xlrd.xldate_as_tuple(f.value, workbook.datemode)[:3])
+            elif f.ctype == xlrd.XL_CELL_NUMBER:
+                values.append(int(f.value))
+            else:
+                values.append(f.value)
+        p = ProposedField(*(unicode(v).strip() for v in values))
+
         if not p.description and not p.type_:
             # skip the header rows
             continue

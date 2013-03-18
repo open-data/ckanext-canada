@@ -1884,7 +1884,7 @@
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
           }, 
-          "example": "41132", 
+          "example": "2012-08-11", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "date_published", 
@@ -5067,7 +5067,7 @@
         "eng": "The date in which the resource was modified.", 
         "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
       }, 
-      "example": "41143", 
+      "example": "2012-08-22", 
       "existing": true, 
       "gc_multiplicity": "O", 
       "id": "last_modified", 
