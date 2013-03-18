@@ -338,6 +338,13 @@ def apply_field_customizations(schema_out, vocab):
         f['choices'] = choices
 
 
+def clean_tag_part(t):
+    """
+    Remove all special characters not accepted in tags and collapse
+    all spaces to a single space
+    """
+    return u''.join(re.findall(u' ?[\w\-.]+', t, re.UNICODE)).lstrip()
+
 def add_keys_for_choices(f):
     """
     Add a 'key' key to each choice in f['choices'] that will be used
@@ -346,9 +353,7 @@ def add_keys_for_choices(f):
     if f.get('type') == 'keywords':
         for c in f['choices']:
             # keywords have strict limits on valid characters
-            c['key'] = u'  '.join(
-                re.sub(u'[,/]', u'', c[lang]).replace(u'  ', u' ')
-                for lang in LANGS)
+            c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
     else:
         for c in f['choices']:
             # use the text itself for now (both when different)
