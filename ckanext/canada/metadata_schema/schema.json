@@ -1884,7 +1884,7 @@
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
           }, 
-          "example": "41132.0", 
+          "example": "41132", 
           "existing": false, 
           "gc_multiplicity": "M", 
           "id": "date_published", 
@@ -4803,7 +4803,7 @@
         "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65000000", 
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
       }, 
-      "example": "65000000.0", 
+      "example": "65000000", 
       "existing": true, 
       "gc_multiplicity": "M, Rep.", 
       "id": "size", 
@@ -5067,7 +5067,7 @@
         "eng": "The date in which the resource was modified.", 
         "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
       }, 
-      "example": "41143.0", 
+      "example": "41143", 
       "existing": true, 
       "gc_multiplicity": "O", 
       "id": "last_modified", 

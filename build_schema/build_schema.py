@@ -257,7 +257,9 @@ def read_proposed_fields_vocab():
     out = {}
     for i in range(PROPOSED_SCHEMA_STARTS_ROW, sheet.nrows):
         row = sheet.row(i)
-        p = ProposedField(*(unicode(f.value).strip() for f in row))
+        p = ProposedField(*(unicode(
+            int(f.value) if isinstance(f.value, float) else f.value
+            ).strip() for f in row))
         if not p.description and not p.type_:
             # skip the header rows
             continue
