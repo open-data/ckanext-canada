@@ -302,6 +302,7 @@ def apply_field_customizations(schema_out, vocab):
     schema_out['vocabularies'] = {
         vocabularies.VOCABULARY_GC_CORE_SUBJECT_THESAURUS: 'subject',
         vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
+        vocabularies.VOCABULARY_GC_GEOGRAPHIC_REGION: 'geographic_region',
         }
 
     def get_field(field_id):
