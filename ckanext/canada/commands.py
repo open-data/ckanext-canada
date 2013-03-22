@@ -17,7 +17,8 @@ class CanadaCommand(CkanCommand):
 
         paster canada create-vocabularies [-c <path to config file>]
                       delete-vocabularies
-                      load-datasets <ckan user> <.jl source> [<lines to skip>]
+                      load-datasets <ckan user> <.jl source>
+                                    [<lines to skip> [<lines to load>]]
                       load-random-datasets <ckan user>
     """
     summary = __doc__.split('\n')[0]
@@ -81,14 +82,18 @@ class CanadaCommand(CkanCommand):
                 'vocabulary_id': vocab['id'],
                 })
 
-    def load_datasets(self, username, jl_source, skip_lines=0):
+    def load_datasets(self, username, jl_source, skip_lines=0, max_count=None):
         skip_lines = int(skip_lines)
+        if max_count is not None:
+            max_count = int(max_count)
         count = 0
         total = 0.0
 
         for num, line in enumerate(open(jl_source)):
             if num < skip_lines:
                 continue
+            if max_count is not None and count >= max_count:
+                break
             print "line %d:" % num,
             try:
                 start = time.time()
