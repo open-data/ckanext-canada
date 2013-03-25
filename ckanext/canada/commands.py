@@ -97,8 +97,9 @@ class CanadaCommand(CkanCommand):
             print "line %d:" % num,
             try:
                 start = time.time()
-                context = {'user': username}
-                response = get_action('package_create')(context, json.loads(line))
+                context = {'user': username, 'return_id_only': True}
+                pkg = json.loads(line)
+                response = get_action('package_create')(context, pkg)
             except ValidationError, e:
                 print str(e)
             else:
