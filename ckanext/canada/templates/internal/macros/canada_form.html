@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/form.html' as form %}
+{% import 'macros/form_wet.html' as form %}
 
 {#
 Automatic form field creation with schema_description field and form data
@@ -99,11 +99,12 @@ classes     - An array of classes to apply to the control-group.
 {% macro multi_checkbox_field(name, id, label, options, selected, error,
     classes=[], attrs=[]) %}
   {%- set extra_html = caller() if caller -%}
-  <div class="control-group{{ " error" if error }}">
-    <label class="control-label">{{ label }}</label>
-    <div class="controls">
+    <div class="control-group{{ " error" if error }}"></div>
+    <h4>{{ label }}</h4>
+    <div class="span-1 row-start"></div>
+    <div class="controls span-4 row-end">
       {% for o in options %}
-        <label class="checkbox" for="{{ name }}-{{ loop.index0 }}"
+        <label class="form-checkbox" for="{{ name }}-{{ loop.index0 }}"
             style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
           <input id="{{ name }}-{{ loop.index0 }}" type="checkbox" name="{{ name 
               }}" value="{{ o.value | empty_and_escape }}" {{
@@ -114,5 +115,5 @@ classes     - An array of classes to apply to the control-group.
       {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
       {{ extra_html }}
     </div>
-  </div>
+    <div class="clear"></div>
 {% endmacro %}
