@@ -9,3 +9,8 @@ tune-database-clear-solr:
 	bash -c "`tuning/psql_args.py development.ini`" < tuning/what_to_alter.sql
 	paster canada create-vocabularies
 	paster --plugin=ckan sysadmin add admin
+
+production-database-init:
+	paster --plugin=ckan db init
+	paster --plugin=ckan search-index clear
+	paster canada create-vocabularies
