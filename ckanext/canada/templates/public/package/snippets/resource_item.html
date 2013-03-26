@@ -5,13 +5,19 @@
 {% set lang_field = schema_description.resource_field_by_id['language'] %}
 {% set format_field = schema_description.resource_field_by_id['format'] %}
 
-<li class="resource-item">
+<div class="span-1 row-start align-right">
   {% block resource_item_title %}
-  <a class="heading" href="{{ url }}">
-    {{ res.url | truncate(50) }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ res.format }}</span>
+  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
+    <span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ res.format }}
+    </span>
+  </a>
+</div>
+<div class="span-5 row-end ">
+  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
+    {{ h.resource_display_name(res) | truncate(100) }}
     {{ h.popular('views', res.tracking_summary.total, min=10) }}
   </a>
-  {% endblock %}
+  {% endblock resource_item_title %}
   <p class="description">
     {{ cr.field_label(format_field, client_lang) }}:
     {{ cr.field(format_field, res, client_lang) }},
@@ -20,22 +26,17 @@
   </p>
   {% block resource_item_explore %}
   <div class="dropdown btn-group">
-    <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      <i class="icon-share-alt"></i>
-      {{ _('Explore') }}
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
+    <ul class="menu-horizontal">
       {% block resource_item_explore_links %}
       <li>
-        <a href="{{ url }}">
-          <i class="icon-bar-chart"></i>
+        <a href="{{ url }}" class="button">
+          <span class="wb-icon-table"></span>
           {{ _('Preview') }}
         </a>
       </li>
       <li>
-        <a href="{{ res.url }}" class="resource-url-analytics" target="_blank">
-          <i class="icon-download"></i>
+        <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank">
+          <span class="wb-icon-drive-download"></span>
           {{ _('Download') }}
         </a>
       </li>
@@ -43,4 +44,4 @@
     </ul>
   </div>
   {% endblock %}
-</li>
+</div>

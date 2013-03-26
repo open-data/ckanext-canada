@@ -46,10 +46,10 @@ Render the field label for the given field object and client language
 Render a list of tags for the client language
 #}
 {%- macro tag_field(pkg, client_lang) -%}
-  <ul class='tag-list well'>
+  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
     {%- for tag in pkg.tags -%}
       <li>
-        <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
+        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.name
           %}">{{ tag.display_name.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
       </li>
     {%- endfor -%}
@@ -61,10 +61,10 @@ Render a list of tag vocabulary tags for given field object and client
 language
 #}
 {%- macro tag_vocab_field(f, pkg, client_lang) -%}
-  <ul class='tag-list well'>
+  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
     {%- for tag in pkg[f.id] -%}
       <li>
-        <a class="tag" href="{% url_for controller='package', action='search', tags=tag.name
+        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.name
           %}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
       </li>
     {%- endfor -%}
