@@ -382,6 +382,9 @@ def add_keys_for_choices(f):
         for c in f['choices']:
             # keywords have strict limits on valid characters
             c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
+            # XXX: hack for geographic region
+            if f['id'] == 'geographic_region' and 'id' in c:
+                c['key'] = u'%s  %s' % (c['key'], c['id'])
     else:
         for c in f['choices']:
             # use the text itself for now (both when different)
