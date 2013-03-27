@@ -1637,7 +1637,7 @@
             "fra": "sujet"
           }, 
           "proposed_type": "CodeList\n(CharacterString)", 
-          "type": "keywords"
+          "type": "tag_vocabulary"
         }, 
         {
           "bilingual": false, 
@@ -1774,7 +1774,7 @@
             "fra": "cat\u00e9gorieTh\u00e9matique"
           }, 
           "proposed_type": "CodeList napMD_TopicCategoryCode", 
-          "type": "keywords"
+          "type": "tag_vocabulary"
         }, 
         {
           "bilingual": false, 
@@ -1877,6 +1877,2349 @@
             "fra": "identificationPublication"
           }, 
           "proposed_type": "free text (CharacterString)"
+        }, 
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Atlantic", 
+              "fra": "Atlantique", 
+              "id": 1, 
+              "key": "Atlantic  Atlantique"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador", 
+              "fra": "Terre-Neuve-et-Labrador", 
+              "id": 10, 
+              "key": "Newfoundland and Labrador  Terre-Neuve-et-Labrador", 
+              "pilot_uuid": "E65D06CB-F120-43E6-B037-83F699C84BAE"
+            }, 
+            {
+              "eng": "Division No. 1", 
+              "fra": "Division No. 1", 
+              "id": 1001, 
+              "key": "Newfoundland and Labrador - Division No. 1  Terre-Neuve-et-Labrador - Division No. 1"
+            }, 
+            {
+              "eng": "Division No. 2", 
+              "fra": "Division No. 2", 
+              "id": 1002, 
+              "key": "Newfoundland and Labrador - Division No. 2  Terre-Neuve-et-Labrador - Division No. 2"
+            }, 
+            {
+              "eng": "Division No. 3", 
+              "fra": "Division No. 3", 
+              "id": 1003, 
+              "key": "Newfoundland and Labrador - Division No. 3  Terre-Neuve-et-Labrador - Division No. 3"
+            }, 
+            {
+              "eng": "Division No. 4", 
+              "fra": "Division No. 4", 
+              "id": 1004, 
+              "key": "Newfoundland and Labrador - Division No. 4  Terre-Neuve-et-Labrador - Division No. 4"
+            }, 
+            {
+              "eng": "Division No. 5", 
+              "fra": "Division No. 5", 
+              "id": 1005, 
+              "key": "Newfoundland and Labrador - Division No. 5  Terre-Neuve-et-Labrador - Division No. 5"
+            }, 
+            {
+              "eng": "Division No. 6", 
+              "fra": "Division No. 6", 
+              "id": 1006, 
+              "key": "Newfoundland and Labrador - Division No. 6  Terre-Neuve-et-Labrador - Division No. 6"
+            }, 
+            {
+              "eng": "Division No. 7", 
+              "fra": "Division No. 7", 
+              "id": 1007, 
+              "key": "Newfoundland and Labrador - Division No. 7  Terre-Neuve-et-Labrador - Division No. 7"
+            }, 
+            {
+              "eng": "Division No. 8", 
+              "fra": "Division No. 8", 
+              "id": 1008, 
+              "key": "Newfoundland and Labrador - Division No. 8  Terre-Neuve-et-Labrador - Division No. 8"
+            }, 
+            {
+              "eng": "Division No. 9", 
+              "fra": "Division No. 9", 
+              "id": 1009, 
+              "key": "Newfoundland and Labrador - Division No. 9  Terre-Neuve-et-Labrador - Division No. 9"
+            }, 
+            {
+              "eng": "Division No. 10", 
+              "fra": "Division No. 10", 
+              "id": 1010, 
+              "key": "Newfoundland and Labrador - Division No. 10  Terre-Neuve-et-Labrador - Division No. 10"
+            }, 
+            {
+              "eng": "Division No. 11", 
+              "fra": "Division No. 11", 
+              "id": 1011, 
+              "key": "Newfoundland and Labrador - Division No. 11  Terre-Neuve-et-Labrador - Division No. 11"
+            }, 
+            {
+              "eng": "Prince Edward Island", 
+              "fra": "\u00cele-du-Prince-\u00c9douard", 
+              "id": 11, 
+              "key": "Prince Edward Island  \u00cele-du-Prince-\u00c9douard", 
+              "pilot_uuid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255"
+            }, 
+            {
+              "eng": "Kings", 
+              "fra": "Kings", 
+              "id": 1101, 
+              "key": "Prince Edward Island - Kings  \u00cele-du-Prince-\u00c9douard - Kings"
+            }, 
+            {
+              "eng": "Queens", 
+              "fra": "Queens", 
+              "id": 1102, 
+              "key": "Prince Edward Island - Queens  \u00cele-du-Prince-\u00c9douard - Queens"
+            }, 
+            {
+              "eng": "Prince", 
+              "fra": "Prince", 
+              "id": 1103, 
+              "key": "Prince Edward Island - Prince  \u00cele-du-Prince-\u00c9douard - Prince"
+            }, 
+            {
+              "eng": "Nova Scotia", 
+              "fra": "Nouvelle-\u00c9cosse", 
+              "id": 12, 
+              "key": "Nova Scotia  Nouvelle-\u00c9cosse", 
+              "pilot_uuid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E"
+            }, 
+            {
+              "eng": "Shelburne", 
+              "fra": "Shelburne", 
+              "id": 1201, 
+              "key": "Nova Scotia - Shelburne  Nouvelle-\u00c9cosse - Shelburne"
+            }, 
+            {
+              "eng": "Yarmouth", 
+              "fra": "Yarmouth", 
+              "id": 1202, 
+              "key": "Nova Scotia - Yarmouth  Nouvelle-\u00c9cosse - Yarmouth"
+            }, 
+            {
+              "eng": "Digby", 
+              "fra": "Digby", 
+              "id": 1203, 
+              "key": "Nova Scotia - Digby  Nouvelle-\u00c9cosse - Digby"
+            }, 
+            {
+              "eng": "Queens", 
+              "fra": "Queens", 
+              "id": 1204, 
+              "key": "Nova Scotia - Queens  Nouvelle-\u00c9cosse - Queens"
+            }, 
+            {
+              "eng": "Annapolis", 
+              "fra": "Annapolis", 
+              "id": 1205, 
+              "key": "Nova Scotia - Annapolis  Nouvelle-\u00c9cosse - Annapolis"
+            }, 
+            {
+              "eng": "Lunenburg", 
+              "fra": "Lunenburg", 
+              "id": 1206, 
+              "key": "Nova Scotia - Lunenburg  Nouvelle-\u00c9cosse - Lunenburg"
+            }, 
+            {
+              "eng": "Kings", 
+              "fra": "Kings", 
+              "id": 1207, 
+              "key": "Nova Scotia - Kings  Nouvelle-\u00c9cosse - Kings"
+            }, 
+            {
+              "eng": "Hants", 
+              "fra": "Hants", 
+              "id": 1208, 
+              "key": "Nova Scotia - Hants  Nouvelle-\u00c9cosse - Hants"
+            }, 
+            {
+              "eng": "Halifax", 
+              "fra": "Halifax", 
+              "id": 1209, 
+              "key": "Nova Scotia - Halifax  Nouvelle-\u00c9cosse - Halifax"
+            }, 
+            {
+              "eng": "Colchester", 
+              "fra": "Colchester", 
+              "id": 1210, 
+              "key": "Nova Scotia - Colchester  Nouvelle-\u00c9cosse - Colchester"
+            }, 
+            {
+              "eng": "Cumberland", 
+              "fra": "Cumberland", 
+              "id": 1211, 
+              "key": "Nova Scotia - Cumberland  Nouvelle-\u00c9cosse - Cumberland"
+            }, 
+            {
+              "eng": "Pictou", 
+              "fra": "Pictou", 
+              "id": 1212, 
+              "key": "Nova Scotia - Pictou  Nouvelle-\u00c9cosse - Pictou"
+            }, 
+            {
+              "eng": "Guysborough", 
+              "fra": "Guysborough", 
+              "id": 1213, 
+              "key": "Nova Scotia - Guysborough  Nouvelle-\u00c9cosse - Guysborough"
+            }, 
+            {
+              "eng": "Antigonish", 
+              "fra": "Antigonish", 
+              "id": 1214, 
+              "key": "Nova Scotia - Antigonish  Nouvelle-\u00c9cosse - Antigonish"
+            }, 
+            {
+              "eng": "Inverness", 
+              "fra": "Inverness", 
+              "id": 1215, 
+              "key": "Nova Scotia - Inverness  Nouvelle-\u00c9cosse - Inverness"
+            }, 
+            {
+              "eng": "Richmond", 
+              "fra": "Richmond", 
+              "id": 1216, 
+              "key": "Nova Scotia - Richmond  Nouvelle-\u00c9cosse - Richmond"
+            }, 
+            {
+              "eng": "Cape Breton", 
+              "fra": "Cape Breton", 
+              "id": 1217, 
+              "key": "Nova Scotia - Cape Breton  Nouvelle-\u00c9cosse - Cape Breton"
+            }, 
+            {
+              "eng": "Victoria", 
+              "fra": "Victoria", 
+              "id": 1218, 
+              "key": "Nova Scotia - Victoria  Nouvelle-\u00c9cosse - Victoria"
+            }, 
+            {
+              "eng": "New Brunswick", 
+              "fra": "Nouveau-Brunswick", 
+              "id": 13, 
+              "key": "New Brunswick  Nouveau-Brunswick", 
+              "pilot_uuid": "93195680-D726-4FCE-BF92-D95F1F796B3B"
+            }, 
+            {
+              "eng": "Saint John", 
+              "fra": "Saint John", 
+              "id": 1301, 
+              "key": "New Brunswick - Saint John  Nouveau-Brunswick - Saint John"
+            }, 
+            {
+              "eng": "Charlotte", 
+              "fra": "Charlotte", 
+              "id": 1302, 
+              "key": "New Brunswick - Charlotte  Nouveau-Brunswick - Charlotte"
+            }, 
+            {
+              "eng": "Sunbury", 
+              "fra": "Sunbury", 
+              "id": 1303, 
+              "key": "New Brunswick - Sunbury  Nouveau-Brunswick - Sunbury"
+            }, 
+            {
+              "eng": "Queens", 
+              "fra": "Queens", 
+              "id": 1304, 
+              "key": "New Brunswick - Queens  Nouveau-Brunswick - Queens"
+            }, 
+            {
+              "eng": "Kings", 
+              "fra": "Kings", 
+              "id": 1305, 
+              "key": "New Brunswick - Kings  Nouveau-Brunswick - Kings"
+            }, 
+            {
+              "eng": "Albert", 
+              "fra": "Albert", 
+              "id": 1306, 
+              "key": "New Brunswick - Albert  Nouveau-Brunswick - Albert"
+            }, 
+            {
+              "eng": "Westmorland", 
+              "fra": "Westmorland", 
+              "id": 1307, 
+              "key": "New Brunswick - Westmorland  Nouveau-Brunswick - Westmorland"
+            }, 
+            {
+              "eng": "Kent", 
+              "fra": "Kent", 
+              "id": 1308, 
+              "key": "New Brunswick - Kent  Nouveau-Brunswick - Kent"
+            }, 
+            {
+              "eng": "Northumberland", 
+              "fra": "Northumberland", 
+              "id": 1309, 
+              "key": "New Brunswick - Northumberland  Nouveau-Brunswick - Northumberland"
+            }, 
+            {
+              "eng": "York", 
+              "fra": "York", 
+              "id": 1310, 
+              "key": "New Brunswick - York  Nouveau-Brunswick - York"
+            }, 
+            {
+              "eng": "Carleton", 
+              "fra": "Carleton", 
+              "id": 1311, 
+              "key": "New Brunswick - Carleton  Nouveau-Brunswick - Carleton"
+            }, 
+            {
+              "eng": "Victoria", 
+              "fra": "Victoria", 
+              "id": 1312, 
+              "key": "New Brunswick - Victoria  Nouveau-Brunswick - Victoria"
+            }, 
+            {
+              "eng": "Madawaska", 
+              "fra": "Madawaska", 
+              "id": 1313, 
+              "key": "New Brunswick - Madawaska  Nouveau-Brunswick - Madawaska"
+            }, 
+            {
+              "eng": "Restigouche", 
+              "fra": "Restigouche", 
+              "id": 1314, 
+              "key": "New Brunswick - Restigouche  Nouveau-Brunswick - Restigouche"
+            }, 
+            {
+              "eng": "Gloucester", 
+              "fra": "Gloucester", 
+              "id": 1315, 
+              "key": "New Brunswick - Gloucester  Nouveau-Brunswick - Gloucester"
+            }, 
+            {
+              "eng": "Quebec", 
+              "fra": "Quebec", 
+              "id": 2, 
+              "key": "Quebec  Quebec", 
+              "pilot_uuid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E"
+            }, 
+            {
+              "eng": "Les \u00celes-de-la-Madeleine", 
+              "fra": "Les \u00celes-de-la-Madeleine", 
+              "id": 2401, 
+              "key": "Quebec - Les \u00celes-de-la-Madeleine  Qu\u00e9bec - Les \u00celes-de-la-Madeleine"
+            }, 
+            {
+              "eng": "Le Rocher-Perc\u00e9", 
+              "fra": "Le Rocher-Perc\u00e9", 
+              "id": 2402, 
+              "key": "Quebec - Le Rocher-Perc\u00e9  Qu\u00e9bec - Le Rocher-Perc\u00e9"
+            }, 
+            {
+              "eng": "La C\u00f4te-de-Gasp\u00e9", 
+              "fra": "La C\u00f4te-de-Gasp\u00e9", 
+              "id": 2403, 
+              "key": "Quebec - La C\u00f4te-de-Gasp\u00e9  Qu\u00e9bec - La C\u00f4te-de-Gasp\u00e9"
+            }, 
+            {
+              "eng": "La Haute-Gasp\u00e9sie", 
+              "fra": "La Haute-Gasp\u00e9sie", 
+              "id": 2404, 
+              "key": "Quebec - La Haute-Gasp\u00e9sie  Qu\u00e9bec - La Haute-Gasp\u00e9sie"
+            }, 
+            {
+              "eng": "Bonaventure", 
+              "fra": "Bonaventure", 
+              "id": 2405, 
+              "key": "Quebec - Bonaventure  Qu\u00e9bec - Bonaventure"
+            }, 
+            {
+              "eng": "Avignon", 
+              "fra": "Avignon", 
+              "id": 2406, 
+              "key": "Quebec - Avignon  Qu\u00e9bec - Avignon"
+            }, 
+            {
+              "eng": "La Matap\u00e9dia", 
+              "fra": "La Matap\u00e9dia", 
+              "id": 2407, 
+              "key": "Quebec - La Matap\u00e9dia  Qu\u00e9bec - La Matap\u00e9dia"
+            }, 
+            {
+              "eng": "Matane", 
+              "fra": "Matane", 
+              "id": 2408, 
+              "key": "Quebec - Matane  Qu\u00e9bec - Matane"
+            }, 
+            {
+              "eng": "La Mitis", 
+              "fra": "La Mitis", 
+              "id": 2409, 
+              "key": "Quebec - La Mitis  Qu\u00e9bec - La Mitis"
+            }, 
+            {
+              "eng": "Rimouski-Neigette", 
+              "fra": "Rimouski-Neigette", 
+              "id": 2410, 
+              "key": "Quebec - Rimouski-Neigette  Qu\u00e9bec - Rimouski-Neigette"
+            }, 
+            {
+              "eng": "Les Basques", 
+              "fra": "Les Basques", 
+              "id": 2411, 
+              "key": "Quebec - Les Basques  Qu\u00e9bec - Les Basques"
+            }, 
+            {
+              "eng": "Rivi\u00e8re-du-Loup", 
+              "fra": "Rivi\u00e8re-du-Loup", 
+              "id": 2412, 
+              "key": "Quebec - Rivi\u00e8re-du-Loup  Qu\u00e9bec - Rivi\u00e8re-du-Loup"
+            }, 
+            {
+              "eng": "T\u00e9miscouata", 
+              "fra": "T\u00e9miscouata", 
+              "id": 2413, 
+              "key": "Quebec - T\u00e9miscouata  Qu\u00e9bec - T\u00e9miscouata"
+            }, 
+            {
+              "eng": "Kamouraska", 
+              "fra": "Kamouraska", 
+              "id": 2414, 
+              "key": "Quebec - Kamouraska  Qu\u00e9bec - Kamouraska"
+            }, 
+            {
+              "eng": "Charlevoix-Est", 
+              "fra": "Charlevoix-Est", 
+              "id": 2415, 
+              "key": "Quebec - Charlevoix-Est  Qu\u00e9bec - Charlevoix-Est"
+            }, 
+            {
+              "eng": "Charlevoix", 
+              "fra": "Charlevoix", 
+              "id": 2416, 
+              "key": "Quebec - Charlevoix  Qu\u00e9bec - Charlevoix"
+            }, 
+            {
+              "eng": "L'Islet", 
+              "fra": "L'Islet", 
+              "id": 2417, 
+              "key": "Quebec - LIslet  Qu\u00e9bec - LIslet"
+            }, 
+            {
+              "eng": "Montmagny", 
+              "fra": "Montmagny", 
+              "id": 2418, 
+              "key": "Quebec - Montmagny  Qu\u00e9bec - Montmagny"
+            }, 
+            {
+              "eng": "Bellechasse", 
+              "fra": "Bellechasse", 
+              "id": 2419, 
+              "key": "Quebec - Bellechasse  Qu\u00e9bec - Bellechasse"
+            }, 
+            {
+              "eng": "L'\u00cele-d'Orl\u00e9ans", 
+              "fra": "L'\u00cele-d'Orl\u00e9ans", 
+              "id": 2420, 
+              "key": "Quebec - L\u00cele-dOrl\u00e9ans  Qu\u00e9bec - L\u00cele-dOrl\u00e9ans"
+            }, 
+            {
+              "eng": "La C\u00f4te-de-Beaupr\u00e9", 
+              "fra": "La C\u00f4te-de-Beaupr\u00e9", 
+              "id": 2421, 
+              "key": "Quebec - La C\u00f4te-de-Beaupr\u00e9  Qu\u00e9bec - La C\u00f4te-de-Beaupr\u00e9"
+            }, 
+            {
+              "eng": "La Jacques-Cartier", 
+              "fra": "La Jacques-Cartier", 
+              "id": 2422, 
+              "key": "Quebec - La Jacques-Cartier  Qu\u00e9bec - La Jacques-Cartier"
+            }, 
+            {
+              "eng": "Qu\u00e9bec", 
+              "fra": "Qu\u00e9bec", 
+              "id": 2423, 
+              "key": "Quebec - Qu\u00e9bec  Qu\u00e9bec - Qu\u00e9bec"
+            }, 
+            {
+              "eng": "L\u00e9vis", 
+              "fra": "L\u00e9vis", 
+              "id": 2425, 
+              "key": "Quebec - L\u00e9vis  Qu\u00e9bec - L\u00e9vis"
+            }, 
+            {
+              "eng": "La Nouvelle-Beauce", 
+              "fra": "La Nouvelle-Beauce", 
+              "id": 2426, 
+              "key": "Quebec - La Nouvelle-Beauce  Qu\u00e9bec - La Nouvelle-Beauce"
+            }, 
+            {
+              "eng": "Robert-Cliche", 
+              "fra": "Robert-Cliche", 
+              "id": 2427, 
+              "key": "Quebec - Robert-Cliche  Qu\u00e9bec - Robert-Cliche"
+            }, 
+            {
+              "eng": "Les Etchemins", 
+              "fra": "Les Etchemins", 
+              "id": 2428, 
+              "key": "Quebec - Les Etchemins  Qu\u00e9bec - Les Etchemins"
+            }, 
+            {
+              "eng": "Beauce-Sartigan", 
+              "fra": "Beauce-Sartigan", 
+              "id": 2429, 
+              "key": "Quebec - Beauce-Sartigan  Qu\u00e9bec - Beauce-Sartigan"
+            }, 
+            {
+              "eng": "Le Granit", 
+              "fra": "Le Granit", 
+              "id": 2430, 
+              "key": "Quebec - Le Granit  Qu\u00e9bec - Le Granit"
+            }, 
+            {
+              "eng": "Les Appalaches", 
+              "fra": "Les Appalaches", 
+              "id": 2431, 
+              "key": "Quebec - Les Appalaches  Qu\u00e9bec - Les Appalaches"
+            }, 
+            {
+              "eng": "L'\u00c9rable", 
+              "fra": "L'\u00c9rable", 
+              "id": 2432, 
+              "key": "Quebec - L\u00c9rable  Qu\u00e9bec - L\u00c9rable"
+            }, 
+            {
+              "eng": "Lotbini\u00e8re", 
+              "fra": "Lotbini\u00e8re", 
+              "id": 2433, 
+              "key": "Quebec - Lotbini\u00e8re  Qu\u00e9bec - Lotbini\u00e8re"
+            }, 
+            {
+              "eng": "Portneuf", 
+              "fra": "Portneuf", 
+              "id": 2434, 
+              "key": "Quebec - Portneuf  Qu\u00e9bec - Portneuf"
+            }, 
+            {
+              "eng": "M\u00e9kinac", 
+              "fra": "M\u00e9kinac", 
+              "id": 2435, 
+              "key": "Quebec - M\u00e9kinac  Qu\u00e9bec - M\u00e9kinac"
+            }, 
+            {
+              "eng": "Shawinigan", 
+              "fra": "Shawinigan", 
+              "id": 2436, 
+              "key": "Quebec - Shawinigan  Qu\u00e9bec - Shawinigan"
+            }, 
+            {
+              "eng": "Francheville", 
+              "fra": "Francheville", 
+              "id": 2437, 
+              "key": "Quebec - Francheville  Qu\u00e9bec - Francheville"
+            }, 
+            {
+              "eng": "B\u00e9cancour", 
+              "fra": "B\u00e9cancour", 
+              "id": 2438, 
+              "key": "Quebec - B\u00e9cancour  Qu\u00e9bec - B\u00e9cancour"
+            }, 
+            {
+              "eng": "Arthabaska", 
+              "fra": "Arthabaska", 
+              "id": 2439, 
+              "key": "Quebec - Arthabaska  Qu\u00e9bec - Arthabaska"
+            }, 
+            {
+              "eng": "Les Sources", 
+              "fra": "Les Sources", 
+              "id": 2440, 
+              "key": "Quebec - Les Sources  Qu\u00e9bec - Les Sources"
+            }, 
+            {
+              "eng": "Le Haut-Saint-Fran\u00e7ois", 
+              "fra": "Le Haut-Saint-Fran\u00e7ois", 
+              "id": 2441, 
+              "key": "Quebec - Le Haut-Saint-Fran\u00e7ois  Qu\u00e9bec - Le Haut-Saint-Fran\u00e7ois"
+            }, 
+            {
+              "eng": "Le Val-Saint-Fran\u00e7ois", 
+              "fra": "Le Val-Saint-Fran\u00e7ois", 
+              "id": 2442, 
+              "key": "Quebec - Le Val-Saint-Fran\u00e7ois  Qu\u00e9bec - Le Val-Saint-Fran\u00e7ois"
+            }, 
+            {
+              "eng": "Sherbrooke", 
+              "fra": "Sherbrooke", 
+              "id": 2443, 
+              "key": "Quebec - Sherbrooke  Qu\u00e9bec - Sherbrooke"
+            }, 
+            {
+              "eng": "Coaticook", 
+              "fra": "Coaticook", 
+              "id": 2444, 
+              "key": "Quebec - Coaticook  Qu\u00e9bec - Coaticook"
+            }, 
+            {
+              "eng": "Memphr\u00e9magog", 
+              "fra": "Memphr\u00e9magog", 
+              "id": 2445, 
+              "key": "Quebec - Memphr\u00e9magog  Qu\u00e9bec - Memphr\u00e9magog"
+            }, 
+            {
+              "eng": "Brome-Missisquoi", 
+              "fra": "Brome-Missisquoi", 
+              "id": 2446, 
+              "key": "Quebec - Brome-Missisquoi  Qu\u00e9bec - Brome-Missisquoi"
+            }, 
+            {
+              "eng": "La Haute-Yamaska", 
+              "fra": "La Haute-Yamaska", 
+              "id": 2447, 
+              "key": "Quebec - La Haute-Yamaska  Qu\u00e9bec - La Haute-Yamaska"
+            }, 
+            {
+              "eng": "Acton", 
+              "fra": "Acton", 
+              "id": 2448, 
+              "key": "Quebec - Acton  Qu\u00e9bec - Acton"
+            }, 
+            {
+              "eng": "Drummond", 
+              "fra": "Drummond", 
+              "id": 2449, 
+              "key": "Quebec - Drummond  Qu\u00e9bec - Drummond"
+            }, 
+            {
+              "eng": "Nicolet-Yamaska", 
+              "fra": "Nicolet-Yamaska", 
+              "id": 2450, 
+              "key": "Quebec - Nicolet-Yamaska  Qu\u00e9bec - Nicolet-Yamaska"
+            }, 
+            {
+              "eng": "Maskinong\u00e9", 
+              "fra": "Maskinong\u00e9", 
+              "id": 2451, 
+              "key": "Quebec - Maskinong\u00e9  Qu\u00e9bec - Maskinong\u00e9"
+            }, 
+            {
+              "eng": "D'Autray", 
+              "fra": "D'Autray", 
+              "id": 2452, 
+              "key": "Quebec - DAutray  Qu\u00e9bec - DAutray"
+            }, 
+            {
+              "eng": "Pierre-De Saurel", 
+              "fra": "Pierre-De Saurel", 
+              "id": 2453, 
+              "key": "Quebec - Pierre-De Saurel  Qu\u00e9bec - Pierre-De Saurel"
+            }, 
+            {
+              "eng": "Les Maskoutains", 
+              "fra": "Les Maskoutains", 
+              "id": 2454, 
+              "key": "Quebec - Les Maskoutains  Qu\u00e9bec - Les Maskoutains"
+            }, 
+            {
+              "eng": "Rouville", 
+              "fra": "Rouville", 
+              "id": 2455, 
+              "key": "Quebec - Rouville  Qu\u00e9bec - Rouville"
+            }, 
+            {
+              "eng": "Le Haut-Richelieu", 
+              "fra": "Le Haut-Richelieu", 
+              "id": 2456, 
+              "key": "Quebec - Le Haut-Richelieu  Qu\u00e9bec - Le Haut-Richelieu"
+            }, 
+            {
+              "eng": "La Vall\u00e9e-du-Richelieu", 
+              "fra": "La Vall\u00e9e-du-Richelieu", 
+              "id": 2457, 
+              "key": "Quebec - La Vall\u00e9e-du-Richelieu  Qu\u00e9bec - La Vall\u00e9e-du-Richelieu"
+            }, 
+            {
+              "eng": "Longueuil", 
+              "fra": "Longueuil", 
+              "id": 2458, 
+              "key": "Quebec - Longueuil  Qu\u00e9bec - Longueuil"
+            }, 
+            {
+              "eng": "Lajemmerais", 
+              "fra": "Lajemmerais", 
+              "id": 2459, 
+              "key": "Quebec - Lajemmerais  Qu\u00e9bec - Lajemmerais"
+            }, 
+            {
+              "eng": "L'Assomption", 
+              "fra": "L'Assomption", 
+              "id": 2460, 
+              "key": "Quebec - LAssomption  Qu\u00e9bec - LAssomption"
+            }, 
+            {
+              "eng": "Joliette", 
+              "fra": "Joliette", 
+              "id": 2461, 
+              "key": "Quebec - Joliette  Qu\u00e9bec - Joliette"
+            }, 
+            {
+              "eng": "Matawinie", 
+              "fra": "Matawinie", 
+              "id": 2462, 
+              "key": "Quebec - Matawinie  Qu\u00e9bec - Matawinie"
+            }, 
+            {
+              "eng": "Montcalm", 
+              "fra": "Montcalm", 
+              "id": 2463, 
+              "key": "Quebec - Montcalm  Qu\u00e9bec - Montcalm"
+            }, 
+            {
+              "eng": "Les Moulins", 
+              "fra": "Les Moulins", 
+              "id": 2464, 
+              "key": "Quebec - Les Moulins  Qu\u00e9bec - Les Moulins"
+            }, 
+            {
+              "eng": "Laval", 
+              "fra": "Laval", 
+              "id": 2465, 
+              "key": "Quebec - Laval  Qu\u00e9bec - Laval"
+            }, 
+            {
+              "eng": "Montr\u00e9al", 
+              "fra": "Montr\u00e9al", 
+              "id": 2466, 
+              "key": "Quebec - Montr\u00e9al  Qu\u00e9bec - Montr\u00e9al"
+            }, 
+            {
+              "eng": "Roussillon", 
+              "fra": "Roussillon", 
+              "id": 2467, 
+              "key": "Quebec - Roussillon  Qu\u00e9bec - Roussillon"
+            }, 
+            {
+              "eng": "Les Jardins-de-Napierville", 
+              "fra": "Les Jardins-de-Napierville", 
+              "id": 2468, 
+              "key": "Quebec - Les Jardins-de-Napierville  Qu\u00e9bec - Les Jardins-de-Napierville"
+            }, 
+            {
+              "eng": "Le Haut-Saint-Laurent", 
+              "fra": "Le Haut-Saint-Laurent", 
+              "id": 2469, 
+              "key": "Quebec - Le Haut-Saint-Laurent  Qu\u00e9bec - Le Haut-Saint-Laurent"
+            }, 
+            {
+              "eng": "Beauharnois-Salaberry", 
+              "fra": "Beauharnois-Salaberry", 
+              "id": 2470, 
+              "key": "Quebec - Beauharnois-Salaberry  Qu\u00e9bec - Beauharnois-Salaberry"
+            }, 
+            {
+              "eng": "Vaudreuil-Soulanges", 
+              "fra": "Vaudreuil-Soulanges", 
+              "id": 2471, 
+              "key": "Quebec - Vaudreuil-Soulanges  Qu\u00e9bec - Vaudreuil-Soulanges"
+            }, 
+            {
+              "eng": "Deux-Montagnes", 
+              "fra": "Deux-Montagnes", 
+              "id": 2472, 
+              "key": "Quebec - Deux-Montagnes  Qu\u00e9bec - Deux-Montagnes"
+            }, 
+            {
+              "eng": "Th\u00e9r\u00e8se-De Blainville", 
+              "fra": "Th\u00e9r\u00e8se-De Blainville", 
+              "id": 2473, 
+              "key": "Quebec - Th\u00e9r\u00e8se-De Blainville  Qu\u00e9bec - Th\u00e9r\u00e8se-De Blainville"
+            }, 
+            {
+              "eng": "Mirabel", 
+              "fra": "Mirabel", 
+              "id": 2474, 
+              "key": "Quebec - Mirabel  Qu\u00e9bec - Mirabel"
+            }, 
+            {
+              "eng": "La Rivi\u00e8re-du-Nord", 
+              "fra": "La Rivi\u00e8re-du-Nord", 
+              "id": 2475, 
+              "key": "Quebec - La Rivi\u00e8re-du-Nord  Qu\u00e9bec - La Rivi\u00e8re-du-Nord"
+            }, 
+            {
+              "eng": "Argenteuil", 
+              "fra": "Argenteuil", 
+              "id": 2476, 
+              "key": "Quebec - Argenteuil  Qu\u00e9bec - Argenteuil"
+            }, 
+            {
+              "eng": "Les Pays-d'en-Haut", 
+              "fra": "Les Pays-d'en-Haut", 
+              "id": 2477, 
+              "key": "Quebec - Les Pays-den-Haut  Qu\u00e9bec - Les Pays-den-Haut"
+            }, 
+            {
+              "eng": "Les Laurentides", 
+              "fra": "Les Laurentides", 
+              "id": 2478, 
+              "key": "Quebec - Les Laurentides  Qu\u00e9bec - Les Laurentides"
+            }, 
+            {
+              "eng": "Antoine-Labelle", 
+              "fra": "Antoine-Labelle", 
+              "id": 2479, 
+              "key": "Quebec - Antoine-Labelle  Qu\u00e9bec - Antoine-Labelle"
+            }, 
+            {
+              "eng": "Papineau", 
+              "fra": "Papineau", 
+              "id": 2480, 
+              "key": "Quebec - Papineau  Qu\u00e9bec - Papineau"
+            }, 
+            {
+              "eng": "Gatineau", 
+              "fra": "Gatineau", 
+              "id": 2481, 
+              "key": "Quebec - Gatineau  Qu\u00e9bec - Gatineau"
+            }, 
+            {
+              "eng": "Les Collines-de-l'Outaouais", 
+              "fra": "Les Collines-de-l'Outaouais", 
+              "id": 2482, 
+              "key": "Quebec - Les Collines-de-lOutaouais  Qu\u00e9bec - Les Collines-de-lOutaouais"
+            }, 
+            {
+              "eng": "La Vall\u00e9e-de-la-Gatineau", 
+              "fra": "La Vall\u00e9e-de-la-Gatineau", 
+              "id": 2483, 
+              "key": "Quebec - La Vall\u00e9e-de-la-Gatineau  Qu\u00e9bec - La Vall\u00e9e-de-la-Gatineau"
+            }, 
+            {
+              "eng": "Pontiac", 
+              "fra": "Pontiac", 
+              "id": 2484, 
+              "key": "Quebec - Pontiac  Qu\u00e9bec - Pontiac"
+            }, 
+            {
+              "eng": "T\u00e9miscamingue", 
+              "fra": "T\u00e9miscamingue", 
+              "id": 2485, 
+              "key": "Quebec - T\u00e9miscamingue  Qu\u00e9bec - T\u00e9miscamingue"
+            }, 
+            {
+              "eng": "Rouyn-Noranda", 
+              "fra": "Rouyn-Noranda", 
+              "id": 2486, 
+              "key": "Quebec - Rouyn-Noranda  Qu\u00e9bec - Rouyn-Noranda"
+            }, 
+            {
+              "eng": "Abitibi-Ouest", 
+              "fra": "Abitibi-Ouest", 
+              "id": 2487, 
+              "key": "Quebec - Abitibi-Ouest  Qu\u00e9bec - Abitibi-Ouest"
+            }, 
+            {
+              "eng": "Abitibi", 
+              "fra": "Abitibi", 
+              "id": 2488, 
+              "key": "Quebec - Abitibi  Qu\u00e9bec - Abitibi"
+            }, 
+            {
+              "eng": "La Vall\u00e9e-de-l'Or", 
+              "fra": "La Vall\u00e9e-de-l'Or", 
+              "id": 2489, 
+              "key": "Quebec - La Vall\u00e9e-de-lOr  Qu\u00e9bec - La Vall\u00e9e-de-lOr"
+            }, 
+            {
+              "eng": "La Tuque", 
+              "fra": "La Tuque", 
+              "id": 2490, 
+              "key": "Quebec - La Tuque  Qu\u00e9bec - La Tuque"
+            }, 
+            {
+              "eng": "Le Domaine-du-Roy", 
+              "fra": "Le Domaine-du-Roy", 
+              "id": 2491, 
+              "key": "Quebec - Le Domaine-du-Roy  Qu\u00e9bec - Le Domaine-du-Roy"
+            }, 
+            {
+              "eng": "Maria-Chapdelaine", 
+              "fra": "Maria-Chapdelaine", 
+              "id": 2492, 
+              "key": "Quebec - Maria-Chapdelaine  Qu\u00e9bec - Maria-Chapdelaine"
+            }, 
+            {
+              "eng": "Lac-Saint-Jean-Est", 
+              "fra": "Lac-Saint-Jean-Est", 
+              "id": 2493, 
+              "key": "Quebec - Lac-Saint-Jean-Est  Qu\u00e9bec - Lac-Saint-Jean-Est"
+            }, 
+            {
+              "eng": "Le Saguenay-et-son-Fjord", 
+              "fra": "Le Saguenay-et-son-Fjord", 
+              "id": 2494, 
+              "key": "Quebec - Le Saguenay-et-son-Fjord  Qu\u00e9bec - Le Saguenay-et-son-Fjord"
+            }, 
+            {
+              "eng": "La Haute-C\u00f4te-Nord", 
+              "fra": "La Haute-C\u00f4te-Nord", 
+              "id": 2495, 
+              "key": "Quebec - La Haute-C\u00f4te-Nord  Qu\u00e9bec - La Haute-C\u00f4te-Nord"
+            }, 
+            {
+              "eng": "Manicouagan", 
+              "fra": "Manicouagan", 
+              "id": 2496, 
+              "key": "Quebec - Manicouagan  Qu\u00e9bec - Manicouagan"
+            }, 
+            {
+              "eng": "Sept-Rivi\u00e8res--Caniapiscau", 
+              "fra": "Sept-Rivi\u00e8res--Caniapiscau", 
+              "id": 2497, 
+              "key": "Quebec - Sept-Rivi\u00e8res--Caniapiscau  Qu\u00e9bec - Sept-Rivi\u00e8res--Caniapiscau"
+            }, 
+            {
+              "eng": "Minganie--Le Golfe-du-Saint-Laurent", 
+              "fra": "Minganie--Le Golfe-du-Saint-Laurent", 
+              "id": 2498, 
+              "key": "Quebec - Minganie--Le Golfe-du-Saint-Laurent  Qu\u00e9bec - Minganie--Le Golfe-du-Saint-Laurent"
+            }, 
+            {
+              "eng": "Nord-du-Qu\u00e9bec", 
+              "fra": "Nord-du-Qu\u00e9bec", 
+              "id": 2499, 
+              "key": "Quebec - Nord-du-Qu\u00e9bec  Qu\u00e9bec - Nord-du-Qu\u00e9bec"
+            }, 
+            {
+              "eng": "Ontario", 
+              "fra": "Ontario", 
+              "id": 3, 
+              "key": "Ontario  Ontario", 
+              "pilot_uuid": "BB22E4CF-19C4-4705-92F0-F2C602307C29"
+            }, 
+            {
+              "eng": "Stormont, Dundas and Glengarry", 
+              "fra": "Stormont, Dundas and Glengarry", 
+              "id": 3501, 
+              "key": "Ontario - Stormont Dundas and Glengarry  Ontario - Stormont Dundas and Glengarry"
+            }, 
+            {
+              "eng": "Prescott and Russell", 
+              "fra": "Prescott and Russell", 
+              "id": 3502, 
+              "key": "Ontario - Prescott and Russell  Ontario - Prescott and Russell"
+            }, 
+            {
+              "eng": "Ottawa", 
+              "fra": "Ottawa", 
+              "id": 3506, 
+              "key": "Ontario - Ottawa  Ontario - Ottawa"
+            }, 
+            {
+              "eng": "Leeds and Grenville", 
+              "fra": "Leeds and Grenville", 
+              "id": 3507, 
+              "key": "Ontario - Leeds and Grenville  Ontario - Leeds and Grenville"
+            }, 
+            {
+              "eng": "Lanark", 
+              "fra": "Lanark", 
+              "id": 3509, 
+              "key": "Ontario - Lanark  Ontario - Lanark"
+            }, 
+            {
+              "eng": "Frontenac", 
+              "fra": "Frontenac", 
+              "id": 3510, 
+              "key": "Ontario - Frontenac  Ontario - Frontenac"
+            }, 
+            {
+              "eng": "Lennox and Addington", 
+              "fra": "Lennox and Addington", 
+              "id": 3511, 
+              "key": "Ontario - Lennox and Addington  Ontario - Lennox and Addington"
+            }, 
+            {
+              "eng": "Hastings", 
+              "fra": "Hastings", 
+              "id": 3512, 
+              "key": "Ontario - Hastings  Ontario - Hastings"
+            }, 
+            {
+              "eng": "Prince Edward", 
+              "fra": "Prince Edward", 
+              "id": 3513, 
+              "key": "Ontario - Prince Edward  Ontario - Prince Edward"
+            }, 
+            {
+              "eng": "Northumberland", 
+              "fra": "Northumberland", 
+              "id": 3514, 
+              "key": "Ontario - Northumberland  Ontario - Northumberland"
+            }, 
+            {
+              "eng": "Peterborough", 
+              "fra": "Peterborough", 
+              "id": 3515, 
+              "key": "Ontario - Peterborough  Ontario - Peterborough"
+            }, 
+            {
+              "eng": "Kawartha Lakes", 
+              "fra": "Kawartha Lakes", 
+              "id": 3516, 
+              "key": "Ontario - Kawartha Lakes  Ontario - Kawartha Lakes"
+            }, 
+            {
+              "eng": "Durham", 
+              "fra": "Durham", 
+              "id": 3518, 
+              "key": "Ontario - Durham  Ontario - Durham"
+            }, 
+            {
+              "eng": "York", 
+              "fra": "York", 
+              "id": 3519, 
+              "key": "Ontario - York  Ontario - York"
+            }, 
+            {
+              "eng": "Toronto", 
+              "fra": "Toronto", 
+              "id": 3520, 
+              "key": "Ontario - Toronto  Ontario - Toronto"
+            }, 
+            {
+              "eng": "Peel", 
+              "fra": "Peel", 
+              "id": 3521, 
+              "key": "Ontario - Peel  Ontario - Peel"
+            }, 
+            {
+              "eng": "Dufferin", 
+              "fra": "Dufferin", 
+              "id": 3522, 
+              "key": "Ontario - Dufferin  Ontario - Dufferin"
+            }, 
+            {
+              "eng": "Wellington", 
+              "fra": "Wellington", 
+              "id": 3523, 
+              "key": "Ontario - Wellington  Ontario - Wellington"
+            }, 
+            {
+              "eng": "Halton", 
+              "fra": "Halton", 
+              "id": 3524, 
+              "key": "Ontario - Halton  Ontario - Halton"
+            }, 
+            {
+              "eng": "Hamilton", 
+              "fra": "Hamilton", 
+              "id": 3525, 
+              "key": "Ontario - Hamilton  Ontario - Hamilton"
+            }, 
+            {
+              "eng": "Niagara", 
+              "fra": "Niagara", 
+              "id": 3526, 
+              "key": "Ontario - Niagara  Ontario - Niagara"
+            }, 
+            {
+              "eng": "Haldimand-Norfolk", 
+              "fra": "Haldimand-Norfolk", 
+              "id": 3528, 
+              "key": "Ontario - Haldimand-Norfolk  Ontario - Haldimand-Norfolk"
+            }, 
+            {
+              "eng": "Brant", 
+              "fra": "Brant", 
+              "id": 3529, 
+              "key": "Ontario - Brant  Ontario - Brant"
+            }, 
+            {
+              "eng": "Waterloo", 
+              "fra": "Waterloo", 
+              "id": 3530, 
+              "key": "Ontario - Waterloo  Ontario - Waterloo"
+            }, 
+            {
+              "eng": "Perth", 
+              "fra": "Perth", 
+              "id": 3531, 
+              "key": "Ontario - Perth  Ontario - Perth"
+            }, 
+            {
+              "eng": "Oxford", 
+              "fra": "Oxford", 
+              "id": 3532, 
+              "key": "Ontario - Oxford  Ontario - Oxford"
+            }, 
+            {
+              "eng": "Elgin", 
+              "fra": "Elgin", 
+              "id": 3534, 
+              "key": "Ontario - Elgin  Ontario - Elgin"
+            }, 
+            {
+              "eng": "Chatham-Kent", 
+              "fra": "Chatham-Kent", 
+              "id": 3536, 
+              "key": "Ontario - Chatham-Kent  Ontario - Chatham-Kent"
+            }, 
+            {
+              "eng": "Essex", 
+              "fra": "Essex", 
+              "id": 3537, 
+              "key": "Ontario - Essex  Ontario - Essex"
+            }, 
+            {
+              "eng": "Lambton", 
+              "fra": "Lambton", 
+              "id": 3538, 
+              "key": "Ontario - Lambton  Ontario - Lambton"
+            }, 
+            {
+              "eng": "Middlesex", 
+              "fra": "Middlesex", 
+              "id": 3539, 
+              "key": "Ontario - Middlesex  Ontario - Middlesex"
+            }, 
+            {
+              "eng": "Huron", 
+              "fra": "Huron", 
+              "id": 3540, 
+              "key": "Ontario - Huron  Ontario - Huron"
+            }, 
+            {
+              "eng": "Bruce", 
+              "fra": "Bruce", 
+              "id": 3541, 
+              "key": "Ontario - Bruce  Ontario - Bruce"
+            }, 
+            {
+              "eng": "Grey", 
+              "fra": "Grey", 
+              "id": 3542, 
+              "key": "Ontario - Grey  Ontario - Grey"
+            }, 
+            {
+              "eng": "Simcoe", 
+              "fra": "Simcoe", 
+              "id": 3543, 
+              "key": "Ontario - Simcoe  Ontario - Simcoe"
+            }, 
+            {
+              "eng": "Muskoka", 
+              "fra": "Muskoka", 
+              "id": 3544, 
+              "key": "Ontario - Muskoka  Ontario - Muskoka"
+            }, 
+            {
+              "eng": "Haliburton", 
+              "fra": "Haliburton", 
+              "id": 3546, 
+              "key": "Ontario - Haliburton  Ontario - Haliburton"
+            }, 
+            {
+              "eng": "Renfrew", 
+              "fra": "Renfrew", 
+              "id": 3547, 
+              "key": "Ontario - Renfrew  Ontario - Renfrew"
+            }, 
+            {
+              "eng": "Nipissing", 
+              "fra": "Nipissing", 
+              "id": 3548, 
+              "key": "Ontario - Nipissing  Ontario - Nipissing"
+            }, 
+            {
+              "eng": "Parry Sound", 
+              "fra": "Parry Sound", 
+              "id": 3549, 
+              "key": "Ontario - Parry Sound  Ontario - Parry Sound"
+            }, 
+            {
+              "eng": "Manitoulin", 
+              "fra": "Manitoulin", 
+              "id": 3551, 
+              "key": "Ontario - Manitoulin  Ontario - Manitoulin"
+            }, 
+            {
+              "eng": "Sudbury", 
+              "fra": "Sudbury", 
+              "id": 3552, 
+              "key": "Ontario - Sudbury  Ontario - Sudbury"
+            }, 
+            {
+              "eng": "Greater Sudbury", 
+              "fra": "Greater Sudbury", 
+              "id": 3553, 
+              "key": "Ontario - Greater Sudbury  Ontario - Greater Sudbury"
+            }, 
+            {
+              "eng": "Timiskaming", 
+              "fra": "Timiskaming", 
+              "id": 3554, 
+              "key": "Ontario - Timiskaming  Ontario - Timiskaming"
+            }, 
+            {
+              "eng": "Cochrane", 
+              "fra": "Cochrane", 
+              "id": 3556, 
+              "key": "Ontario - Cochrane  Ontario - Cochrane"
+            }, 
+            {
+              "eng": "Algoma", 
+              "fra": "Algoma", 
+              "id": 3557, 
+              "key": "Ontario - Algoma  Ontario - Algoma"
+            }, 
+            {
+              "eng": "Thunder Bay", 
+              "fra": "Thunder Bay", 
+              "id": 3558, 
+              "key": "Ontario - Thunder Bay  Ontario - Thunder Bay"
+            }, 
+            {
+              "eng": "Rainy River", 
+              "fra": "Rainy River", 
+              "id": 3559, 
+              "key": "Ontario - Rainy River  Ontario - Rainy River"
+            }, 
+            {
+              "eng": "Kenora", 
+              "fra": "Kenora", 
+              "id": 3560, 
+              "key": "Ontario - Kenora  Ontario - Kenora"
+            }, 
+            {
+              "eng": "Praries", 
+              "fra": "Praries", 
+              "id": 4, 
+              "key": "Praries  Praries"
+            }, 
+            {
+              "eng": "Manitoba", 
+              "fra": "Manitoba", 
+              "id": 46, 
+              "key": "Manitoba  Manitoba", 
+              "pilot_uuid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744"
+            }, 
+            {
+              "eng": "Division No. 1", 
+              "fra": "Division No. 1", 
+              "id": 4601, 
+              "key": "Manitoba - Division No. 1  Manitoba - Division No. 1"
+            }, 
+            {
+              "eng": "Division No. 2", 
+              "fra": "Division No. 2", 
+              "id": 4602, 
+              "key": "Manitoba - Division No. 2  Manitoba - Division No. 2"
+            }, 
+            {
+              "eng": "Division No. 3", 
+              "fra": "Division No. 3", 
+              "id": 4603, 
+              "key": "Manitoba - Division No. 3  Manitoba - Division No. 3"
+            }, 
+            {
+              "eng": "Division No. 4", 
+              "fra": "Division No. 4", 
+              "id": 4604, 
+              "key": "Manitoba - Division No. 4  Manitoba - Division No. 4"
+            }, 
+            {
+              "eng": "Division No. 5", 
+              "fra": "Division No. 5", 
+              "id": 4605, 
+              "key": "Manitoba - Division No. 5  Manitoba - Division No. 5"
+            }, 
+            {
+              "eng": "Division No. 6", 
+              "fra": "Division No. 6", 
+              "id": 4606, 
+              "key": "Manitoba - Division No. 6  Manitoba - Division No. 6"
+            }, 
+            {
+              "eng": "Division No. 7", 
+              "fra": "Division No. 7", 
+              "id": 4607, 
+              "key": "Manitoba - Division No. 7  Manitoba - Division No. 7"
+            }, 
+            {
+              "eng": "Division No. 8", 
+              "fra": "Division No. 8", 
+              "id": 4608, 
+              "key": "Manitoba - Division No. 8  Manitoba - Division No. 8"
+            }, 
+            {
+              "eng": "Division No. 9", 
+              "fra": "Division No. 9", 
+              "id": 4609, 
+              "key": "Manitoba - Division No. 9  Manitoba - Division No. 9"
+            }, 
+            {
+              "eng": "Division No. 10", 
+              "fra": "Division No. 10", 
+              "id": 4610, 
+              "key": "Manitoba - Division No. 10  Manitoba - Division No. 10"
+            }, 
+            {
+              "eng": "Division No. 11", 
+              "fra": "Division No. 11", 
+              "id": 4611, 
+              "key": "Manitoba - Division No. 11  Manitoba - Division No. 11"
+            }, 
+            {
+              "eng": "Division No. 12", 
+              "fra": "Division No. 12", 
+              "id": 4612, 
+              "key": "Manitoba - Division No. 12  Manitoba - Division No. 12"
+            }, 
+            {
+              "eng": "Division No. 13", 
+              "fra": "Division No. 13", 
+              "id": 4613, 
+              "key": "Manitoba - Division No. 13  Manitoba - Division No. 13"
+            }, 
+            {
+              "eng": "Division No. 14", 
+              "fra": "Division No. 14", 
+              "id": 4614, 
+              "key": "Manitoba - Division No. 14  Manitoba - Division No. 14"
+            }, 
+            {
+              "eng": "Division No. 15", 
+              "fra": "Division No. 15", 
+              "id": 4615, 
+              "key": "Manitoba - Division No. 15  Manitoba - Division No. 15"
+            }, 
+            {
+              "eng": "Division No. 16", 
+              "fra": "Division No. 16", 
+              "id": 4616, 
+              "key": "Manitoba - Division No. 16  Manitoba - Division No. 16"
+            }, 
+            {
+              "eng": "Division No. 17", 
+              "fra": "Division No. 17", 
+              "id": 4617, 
+              "key": "Manitoba - Division No. 17  Manitoba - Division No. 17"
+            }, 
+            {
+              "eng": "Division No. 18", 
+              "fra": "Division No. 18", 
+              "id": 4618, 
+              "key": "Manitoba - Division No. 18  Manitoba - Division No. 18"
+            }, 
+            {
+              "eng": "Division No. 19", 
+              "fra": "Division No. 19", 
+              "id": 4619, 
+              "key": "Manitoba - Division No. 19  Manitoba - Division No. 19"
+            }, 
+            {
+              "eng": "Division No. 20", 
+              "fra": "Division No. 20", 
+              "id": 4620, 
+              "key": "Manitoba - Division No. 20  Manitoba - Division No. 20"
+            }, 
+            {
+              "eng": "Division No. 21", 
+              "fra": "Division No. 21", 
+              "id": 4621, 
+              "key": "Manitoba - Division No. 21  Manitoba - Division No. 21"
+            }, 
+            {
+              "eng": "Division No. 22", 
+              "fra": "Division No. 22", 
+              "id": 4622, 
+              "key": "Manitoba - Division No. 22  Manitoba - Division No. 22"
+            }, 
+            {
+              "eng": "Division No. 23", 
+              "fra": "Division No. 23", 
+              "id": 4623, 
+              "key": "Manitoba - Division No. 23  Manitoba - Division No. 23"
+            }, 
+            {
+              "eng": "Saskatchewan", 
+              "fra": "Saskatchewan", 
+              "id": 47, 
+              "key": "Saskatchewan  Saskatchewan", 
+              "pilot_uuid": "E521A8DF-6169-4728-990F-25D05C8791C7"
+            }, 
+            {
+              "eng": "Division No. 1", 
+              "fra": "Division No. 1", 
+              "id": 4701, 
+              "key": "Saskatchewan - Division No. 1  Saskatchewan - Division No. 1"
+            }, 
+            {
+              "eng": "Division No. 2", 
+              "fra": "Division No. 2", 
+              "id": 4702, 
+              "key": "Saskatchewan - Division No. 2  Saskatchewan - Division No. 2"
+            }, 
+            {
+              "eng": "Division No. 3", 
+              "fra": "Division No. 3", 
+              "id": 4703, 
+              "key": "Saskatchewan - Division No. 3  Saskatchewan - Division No. 3"
+            }, 
+            {
+              "eng": "Division No. 4", 
+              "fra": "Division No. 4", 
+              "id": 4704, 
+              "key": "Saskatchewan - Division No. 4  Saskatchewan - Division No. 4"
+            }, 
+            {
+              "eng": "Division No. 5", 
+              "fra": "Division No. 5", 
+              "id": 4705, 
+              "key": "Saskatchewan - Division No. 5  Saskatchewan - Division No. 5"
+            }, 
+            {
+              "eng": "Division No. 6", 
+              "fra": "Division No. 6", 
+              "id": 4706, 
+              "key": "Saskatchewan - Division No. 6  Saskatchewan - Division No. 6"
+            }, 
+            {
+              "eng": "Division No. 7", 
+              "fra": "Division No. 7", 
+              "id": 4707, 
+              "key": "Saskatchewan - Division No. 7  Saskatchewan - Division No. 7"
+            }, 
+            {
+              "eng": "Division No. 8", 
+              "fra": "Division No. 8", 
+              "id": 4708, 
+              "key": "Saskatchewan - Division No. 8  Saskatchewan - Division No. 8"
+            }, 
+            {
+              "eng": "Division No. 9", 
+              "fra": "Division No. 9", 
+              "id": 4709, 
+              "key": "Saskatchewan - Division No. 9  Saskatchewan - Division No. 9"
+            }, 
+            {
+              "eng": "Division No. 10", 
+              "fra": "Division No. 10", 
+              "id": 4710, 
+              "key": "Saskatchewan - Division No. 10  Saskatchewan - Division No. 10"
+            }, 
+            {
+              "eng": "Division No. 11", 
+              "fra": "Division No. 11", 
+              "id": 4711, 
+              "key": "Saskatchewan - Division No. 11  Saskatchewan - Division No. 11"
+            }, 
+            {
+              "eng": "Division No. 12", 
+              "fra": "Division No. 12", 
+              "id": 4712, 
+              "key": "Saskatchewan - Division No. 12  Saskatchewan - Division No. 12"
+            }, 
+            {
+              "eng": "Division No. 13", 
+              "fra": "Division No. 13", 
+              "id": 4713, 
+              "key": "Saskatchewan - Division No. 13  Saskatchewan - Division No. 13"
+            }, 
+            {
+              "eng": "Division No. 14", 
+              "fra": "Division No. 14", 
+              "id": 4714, 
+              "key": "Saskatchewan - Division No. 14  Saskatchewan - Division No. 14"
+            }, 
+            {
+              "eng": "Division No. 15", 
+              "fra": "Division No. 15", 
+              "id": 4715, 
+              "key": "Saskatchewan - Division No. 15  Saskatchewan - Division No. 15"
+            }, 
+            {
+              "eng": "Division No. 16", 
+              "fra": "Division No. 16", 
+              "id": 4716, 
+              "key": "Saskatchewan - Division No. 16  Saskatchewan - Division No. 16"
+            }, 
+            {
+              "eng": "Division No. 17", 
+              "fra": "Division No. 17", 
+              "id": 4717, 
+              "key": "Saskatchewan - Division No. 17  Saskatchewan - Division No. 17"
+            }, 
+            {
+              "eng": "Division No. 18", 
+              "fra": "Division No. 18", 
+              "id": 4718, 
+              "key": "Saskatchewan - Division No. 18  Saskatchewan - Division No. 18"
+            }, 
+            {
+              "eng": "Alberta", 
+              "fra": "Alberta", 
+              "id": 48, 
+              "key": "Alberta  Alberta", 
+              "pilot_uuid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907"
+            }, 
+            {
+              "eng": "Division No. 1", 
+              "fra": "Division No. 1", 
+              "id": 4801, 
+              "key": "Alberta - Division No. 1  Alberta - Division No. 1"
+            }, 
+            {
+              "eng": "Division No. 2", 
+              "fra": "Division No. 2", 
+              "id": 4802, 
+              "key": "Alberta - Division No. 2  Alberta - Division No. 2"
+            }, 
+            {
+              "eng": "Division No. 3", 
+              "fra": "Division No. 3", 
+              "id": 4803, 
+              "key": "Alberta - Division No. 3  Alberta - Division No. 3"
+            }, 
+            {
+              "eng": "Division No. 4", 
+              "fra": "Division No. 4", 
+              "id": 4804, 
+              "key": "Alberta - Division No. 4  Alberta - Division No. 4"
+            }, 
+            {
+              "eng": "Division No. 5", 
+              "fra": "Division No. 5", 
+              "id": 4805, 
+              "key": "Alberta - Division No. 5  Alberta - Division No. 5"
+            }, 
+            {
+              "eng": "Division No. 6", 
+              "fra": "Division No. 6", 
+              "id": 4806, 
+              "key": "Alberta - Division No. 6  Alberta - Division No. 6"
+            }, 
+            {
+              "eng": "Division No. 7", 
+              "fra": "Division No. 7", 
+              "id": 4807, 
+              "key": "Alberta - Division No. 7  Alberta - Division No. 7"
+            }, 
+            {
+              "eng": "Division No. 8", 
+              "fra": "Division No. 8", 
+              "id": 4808, 
+              "key": "Alberta - Division No. 8  Alberta - Division No. 8"
+            }, 
+            {
+              "eng": "Division No. 9", 
+              "fra": "Division No. 9", 
+              "id": 4809, 
+              "key": "Alberta - Division No. 9  Alberta - Division No. 9"
+            }, 
+            {
+              "eng": "Division No. 10", 
+              "fra": "Division No. 10", 
+              "id": 4810, 
+              "key": "Alberta - Division No. 10  Alberta - Division No. 10"
+            }, 
+            {
+              "eng": "Division No. 11", 
+              "fra": "Division No. 11", 
+              "id": 4811, 
+              "key": "Alberta - Division No. 11  Alberta - Division No. 11"
+            }, 
+            {
+              "eng": "Division No. 12", 
+              "fra": "Division No. 12", 
+              "id": 4812, 
+              "key": "Alberta - Division No. 12  Alberta - Division No. 12"
+            }, 
+            {
+              "eng": "Division No. 13", 
+              "fra": "Division No. 13", 
+              "id": 4813, 
+              "key": "Alberta - Division No. 13  Alberta - Division No. 13"
+            }, 
+            {
+              "eng": "Division No. 14", 
+              "fra": "Division No. 14", 
+              "id": 4814, 
+              "key": "Alberta - Division No. 14  Alberta - Division No. 14"
+            }, 
+            {
+              "eng": "Division No. 15", 
+              "fra": "Division No. 15", 
+              "id": 4815, 
+              "key": "Alberta - Division No. 15  Alberta - Division No. 15"
+            }, 
+            {
+              "eng": "Division No. 16", 
+              "fra": "Division No. 16", 
+              "id": 4816, 
+              "key": "Alberta - Division No. 16  Alberta - Division No. 16"
+            }, 
+            {
+              "eng": "Division No. 17", 
+              "fra": "Division No. 17", 
+              "id": 4817, 
+              "key": "Alberta - Division No. 17  Alberta - Division No. 17"
+            }, 
+            {
+              "eng": "Division No. 18", 
+              "fra": "Division No. 18", 
+              "id": 4818, 
+              "key": "Alberta - Division No. 18  Alberta - Division No. 18"
+            }, 
+            {
+              "eng": "Division No. 19", 
+              "fra": "Division No. 19", 
+              "id": 4819, 
+              "key": "Alberta - Division No. 19  Alberta - Division No. 19"
+            }, 
+            {
+              "eng": "British Columbia", 
+              "fra": "Colombie-Britannique", 
+              "id": 5, 
+              "key": "British Columbia  Colombie-Britannique", 
+              "pilot_uuid": "C066C99E-C228-4969-82CF-5E065E884D18"
+            }, 
+            {
+              "eng": "East Kootenay", 
+              "fra": "East Kootenay", 
+              "id": 5901, 
+              "key": "British Columbia - East Kootenay  Colombie-Britannique - East Kootenay"
+            }, 
+            {
+              "eng": "Central Kootenay", 
+              "fra": "Central Kootenay", 
+              "id": 5903, 
+              "key": "British Columbia - Central Kootenay  Colombie-Britannique - Central Kootenay"
+            }, 
+            {
+              "eng": "Kootenay Boundary", 
+              "fra": "Kootenay Boundary", 
+              "id": 5905, 
+              "key": "British Columbia - Kootenay Boundary  Colombie-Britannique - Kootenay Boundary"
+            }, 
+            {
+              "eng": "Okanagan-Similkameen", 
+              "fra": "Okanagan-Similkameen", 
+              "id": 5907, 
+              "key": "British Columbia - Okanagan-Similkameen  Colombie-Britannique - Okanagan-Similkameen"
+            }, 
+            {
+              "eng": "Fraser Valley", 
+              "fra": "Fraser Valley", 
+              "id": 5909, 
+              "key": "British Columbia - Fraser Valley  Colombie-Britannique - Fraser Valley"
+            }, 
+            {
+              "eng": "Greater Vancouver", 
+              "fra": "Greater Vancouver", 
+              "id": 5915, 
+              "key": "British Columbia - Greater Vancouver  Colombie-Britannique - Greater Vancouver"
+            }, 
+            {
+              "eng": "Capital", 
+              "fra": "Capital", 
+              "id": 5917, 
+              "key": "British Columbia - Capital  Colombie-Britannique - Capital"
+            }, 
+            {
+              "eng": "Cowichan Valley", 
+              "fra": "Cowichan Valley", 
+              "id": 5919, 
+              "key": "British Columbia - Cowichan Valley  Colombie-Britannique - Cowichan Valley"
+            }, 
+            {
+              "eng": "Nanaimo", 
+              "fra": "Nanaimo", 
+              "id": 5921, 
+              "key": "British Columbia - Nanaimo  Colombie-Britannique - Nanaimo"
+            }, 
+            {
+              "eng": "Alberni-Clayoquot", 
+              "fra": "Alberni-Clayoquot", 
+              "id": 5923, 
+              "key": "British Columbia - Alberni-Clayoquot  Colombie-Britannique - Alberni-Clayoquot"
+            }, 
+            {
+              "eng": "Strathcona", 
+              "fra": "Strathcona", 
+              "id": 5924, 
+              "key": "British Columbia - Strathcona  Colombie-Britannique - Strathcona"
+            }, 
+            {
+              "eng": "Comox Valley", 
+              "fra": "Comox Valley", 
+              "id": 5926, 
+              "key": "British Columbia - Comox Valley  Colombie-Britannique - Comox Valley"
+            }, 
+            {
+              "eng": "Powell River", 
+              "fra": "Powell River", 
+              "id": 5927, 
+              "key": "British Columbia - Powell River  Colombie-Britannique - Powell River"
+            }, 
+            {
+              "eng": "Sunshine Coast", 
+              "fra": "Sunshine Coast", 
+              "id": 5929, 
+              "key": "British Columbia - Sunshine Coast  Colombie-Britannique - Sunshine Coast"
+            }, 
+            {
+              "eng": "Squamish-Lillooet", 
+              "fra": "Squamish-Lillooet", 
+              "id": 5931, 
+              "key": "British Columbia - Squamish-Lillooet  Colombie-Britannique - Squamish-Lillooet"
+            }, 
+            {
+              "eng": "Thompson-Nicola", 
+              "fra": "Thompson-Nicola", 
+              "id": 5933, 
+              "key": "British Columbia - Thompson-Nicola  Colombie-Britannique - Thompson-Nicola"
+            }, 
+            {
+              "eng": "Central Okanagan", 
+              "fra": "Central Okanagan", 
+              "id": 5935, 
+              "key": "British Columbia - Central Okanagan  Colombie-Britannique - Central Okanagan"
+            }, 
+            {
+              "eng": "North Okanagan", 
+              "fra": "North Okanagan", 
+              "id": 5937, 
+              "key": "British Columbia - North Okanagan  Colombie-Britannique - North Okanagan"
+            }, 
+            {
+              "eng": "Columbia-Shuswap", 
+              "fra": "Columbia-Shuswap", 
+              "id": 5939, 
+              "key": "British Columbia - Columbia-Shuswap  Colombie-Britannique - Columbia-Shuswap"
+            }, 
+            {
+              "eng": "Cariboo", 
+              "fra": "Cariboo", 
+              "id": 5941, 
+              "key": "British Columbia - Cariboo  Colombie-Britannique - Cariboo"
+            }, 
+            {
+              "eng": "Mount Waddington", 
+              "fra": "Mount Waddington", 
+              "id": 5943, 
+              "key": "British Columbia - Mount Waddington  Colombie-Britannique - Mount Waddington"
+            }, 
+            {
+              "eng": "Central Coast", 
+              "fra": "Central Coast", 
+              "id": 5945, 
+              "key": "British Columbia - Central Coast  Colombie-Britannique - Central Coast"
+            }, 
+            {
+              "eng": "Skeena-Queen Charlotte", 
+              "fra": "Skeena-Queen Charlotte", 
+              "id": 5947, 
+              "key": "British Columbia - Skeena-Queen Charlotte  Colombie-Britannique - Skeena-Queen Charlotte"
+            }, 
+            {
+              "eng": "Kitimat-Stikine", 
+              "fra": "Kitimat-Stikine", 
+              "id": 5949, 
+              "key": "British Columbia - Kitimat-Stikine  Colombie-Britannique - Kitimat-Stikine"
+            }, 
+            {
+              "eng": "Bulkley-Nechako", 
+              "fra": "Bulkley-Nechako", 
+              "id": 5951, 
+              "key": "British Columbia - Bulkley-Nechako  Colombie-Britannique - Bulkley-Nechako"
+            }, 
+            {
+              "eng": "Fraser-Fort George", 
+              "fra": "Fraser-Fort George", 
+              "id": 5953, 
+              "key": "British Columbia - Fraser-Fort George  Colombie-Britannique - Fraser-Fort George"
+            }, 
+            {
+              "eng": "Peace River", 
+              "fra": "Peace River", 
+              "id": 5955, 
+              "key": "British Columbia - Peace River  Colombie-Britannique - Peace River"
+            }, 
+            {
+              "eng": "Stikine", 
+              "fra": "Stikine", 
+              "id": 5957, 
+              "key": "British Columbia - Stikine  Colombie-Britannique - Stikine"
+            }, 
+            {
+              "eng": "Northern Rockies", 
+              "fra": "Northern Rockies", 
+              "id": 5959, 
+              "key": "British Columbia - Northern Rockies  Colombie-Britannique - Northern Rockies"
+            }, 
+            {
+              "eng": "Territories", 
+              "fra": "Territories", 
+              "id": 6, 
+              "key": "Territories  Territories"
+            }, 
+            {
+              "eng": "Yukon", 
+              "fra": "Yukon", 
+              "id": 60, 
+              "key": "Yukon  Yukon"
+            }, 
+            {
+              "eng": "Yukon", 
+              "fra": "Yukon", 
+              "id": 6001, 
+              "key": "Yukon - Yukon  Yukon - Yukon"
+            }, 
+            {
+              "eng": "Northwest Territories", 
+              "fra": "Territoires du Nord-Ouest", 
+              "id": 61, 
+              "key": "Northwest Territories  Territoires du Nord-Ouest", 
+              "pilot_uuid": "57D53D77-58B1-4431-97ED-9AB61C5C7940"
+            }, 
+            {
+              "eng": "Region 1", 
+              "fra": "Region 1", 
+              "id": 6101, 
+              "key": "Northwest Territories - Region 1  Territoires du Nord-Ouest - Region 1"
+            }, 
+            {
+              "eng": "Region 2", 
+              "fra": "Region 2", 
+              "id": 6102, 
+              "key": "Northwest Territories - Region 2  Territoires du Nord-Ouest - Region 2"
+            }, 
+            {
+              "eng": "Region 3", 
+              "fra": "Region 3", 
+              "id": 6103, 
+              "key": "Northwest Territories - Region 3  Territoires du Nord-Ouest - Region 3"
+            }, 
+            {
+              "eng": "Region 4", 
+              "fra": "Region 4", 
+              "id": 6104, 
+              "key": "Northwest Territories - Region 4  Territoires du Nord-Ouest - Region 4"
+            }, 
+            {
+              "eng": "Region 5", 
+              "fra": "Region 5", 
+              "id": 6105, 
+              "key": "Northwest Territories - Region 5  Territoires du Nord-Ouest - Region 5"
+            }, 
+            {
+              "eng": "Region 6", 
+              "fra": "Region 6", 
+              "id": 6106, 
+              "key": "Northwest Territories - Region 6  Territoires du Nord-Ouest - Region 6"
+            }, 
+            {
+              "eng": "Nunavut", 
+              "fra": "Nunavut", 
+              "id": 62, 
+              "key": "Nunavut  Nunavut", 
+              "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
+            }, 
+            {
+              "eng": "Baffin", 
+              "fra": "Baffin", 
+              "id": 6204, 
+              "key": "Nunavut - Baffin  Nunavut - Baffin"
+            }, 
+            {
+              "eng": "Keewatin", 
+              "fra": "Keewatin", 
+              "id": 6205, 
+              "key": "Nunavut - Keewatin  Nunavut - Keewatin"
+            }, 
+            {
+              "eng": "Kitikmeot", 
+              "fra": "Kitikmeot", 
+              "id": 6208, 
+              "key": "Nunavut - Kitikmeot  Nunavut - Kitikmeot"
+            }, 
+            {
+              "eng": "Canada", 
+              "fra": "Canada", 
+              "key": "Canada  Canada", 
+              "pilot_uuid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, Avalon Peninsula", 
+              "fra": "Terre-Neuve-et-Labrador, Avalon Peninsula", 
+              "key": "Newfoundland and Labrador Avalon Peninsula  Terre-Neuve-et-Labrador Avalon Peninsula", 
+              "pilot_uuid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
+              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
+              "key": "Newfoundland and Labrador South Coast - Burin Peninsula  Terre-Neuve-et-Labrador C\u00f4te-sud - Burin Peninsula", 
+              "pilot_uuid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
+              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
+              "key": "Newfoundland and Labrador West Coast - Northern Peninsula - Labrador  Terre-Neuve-et-Labrador C\u00f4te-ouest - Northern Peninsula - Labrador", 
+              "pilot_uuid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4"
+            }, 
+            {
+              "eng": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
+              "fra": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
+              "key": "Newfoundland and Labrador Notre Dame - Central Bonavista Bay  Terre-Neuve-et-Labrador Notre Dame - Central Bonavista Bay", 
+              "pilot_uuid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC"
+            }, 
+            {
+              "eng": "Nova Scotia, Cape Breton", 
+              "fra": "Nouvelle-\u00c9cosse, Cape Breton", 
+              "key": "Nova Scotia Cape Breton  Nouvelle-\u00c9cosse Cape Breton", 
+              "pilot_uuid": "52806552-D51A-41BD-A320-AE5DE26D253D"
+            }, 
+            {
+              "eng": "Nova Scotia, North Shore", 
+              "fra": "Nouvelle-\u00c9cosse, C\u00f4te-nord", 
+              "key": "Nova Scotia North Shore  Nouvelle-\u00c9cosse C\u00f4te-nord", 
+              "pilot_uuid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF"
+            }, 
+            {
+              "eng": "Nova Scotia, Annapolis Valley", 
+              "fra": "Nouvelle-\u00c9cosse, Annapolis Valley", 
+              "key": "Nova Scotia Annapolis Valley  Nouvelle-\u00c9cosse Annapolis Valley", 
+              "pilot_uuid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7"
+            }, 
+            {
+              "eng": "Nova Scotia, Southern", 
+              "fra": "Nouvelle-\u00c9cosse, Sud", 
+              "key": "Nova Scotia Southern  Nouvelle-\u00c9cosse Sud", 
+              "pilot_uuid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13"
+            }, 
+            {
+              "eng": "Nova Scotia, Halifax", 
+              "fra": "Nouvelle-\u00c9cosse, Halifax", 
+              "key": "Nova Scotia Halifax  Nouvelle-\u00c9cosse Halifax", 
+              "pilot_uuid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56"
+            }, 
+            {
+              "eng": "New Brunswick, Campbellton - Miramichi", 
+              "fra": "Nouveau-Brunswick, Campbellton - Miramichi", 
+              "key": "New Brunswick Campbellton - Miramichi  Nouveau-Brunswick Campbellton - Miramichi", 
+              "pilot_uuid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11"
+            }, 
+            {
+              "eng": "New Brunswick, Moncton - Richibucto", 
+              "fra": "Nouveau-Brunswick, Moncton - Richibucto", 
+              "key": "New Brunswick Moncton - Richibucto  Nouveau-Brunswick Moncton - Richibucto", 
+              "pilot_uuid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C"
+            }, 
+            {
+              "eng": "New Brunswick, Saint John - St. Stephen", 
+              "fra": "Nouveau-Brunswick, Saint John - St. Stephen", 
+              "key": "New Brunswick Saint John - St. Stephen  Nouveau-Brunswick Saint John - St. Stephen", 
+              "pilot_uuid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070"
+            }, 
+            {
+              "eng": "New Brunswick, Fredericton - Oromocto", 
+              "fra": "Nouveau-Brunswick, Fredericton - Oromocto", 
+              "key": "New Brunswick Fredericton - Oromocto  Nouveau-Brunswick Fredericton - Oromocto", 
+              "pilot_uuid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4"
+            }, 
+            {
+              "eng": "New Brunswick, Edmundston - Woodstock", 
+              "fra": "Nouveau-Brunswick, Edmundston - Woodstock", 
+              "key": "New Brunswick Edmundston - Woodstock  Nouveau-Brunswick Edmundston - Woodstock", 
+              "pilot_uuid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC"
+            }, 
+            {
+              "eng": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "fra": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "key": "Quebec Gasp\u00e9sie - \u00celes-de-la-Madeleine  Qu\u00e9bec Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
+              "pilot_uuid": "A875ADFB-7A71-4472-8BCF-DB1739F10521"
+            }, 
+            {
+              "eng": "Quebec, Bas-Saint-Laurent", 
+              "fra": "Qu\u00e9bec, Bas-Saint-Laurent", 
+              "key": "Quebec Bas-Saint-Laurent  Qu\u00e9bec Bas-Saint-Laurent", 
+              "pilot_uuid": "7781A775-A703-47B6-B166-CE473AB24D14"
+            }, 
+            {
+              "eng": "Quebec, Capitale-Nationale", 
+              "fra": "Qu\u00e9bec, Capitale-Nationale", 
+              "key": "Quebec Capitale-Nationale  Qu\u00e9bec Capitale-Nationale", 
+              "pilot_uuid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134"
+            }, 
+            {
+              "eng": "Quebec, Chaudi\u00e8re - Appalaches", 
+              "fra": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
+              "key": "Quebec Chaudi\u00e8re - Appalaches  Qu\u00e9bec Chaudi\u00e8re - Appalaches", 
+              "pilot_uuid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56"
+            }, 
+            {
+              "eng": "Quebec, Estrie", 
+              "fra": "Qu\u00e9bec, Estrie", 
+              "key": "Quebec Estrie  Qu\u00e9bec Estrie", 
+              "pilot_uuid": "A2948848-C501-4982-847E-D539A4EAAA9F"
+            }, 
+            {
+              "eng": "Quebec, Centre-du-Qu\u00e9bec", 
+              "fra": "Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
+              "key": "Quebec Centre-du-Qu\u00e9bec  Qu\u00e9bec Centre-du-Qu\u00e9bec", 
+              "pilot_uuid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269"
+            }, 
+            {
+              "eng": "Quebec, Mont\u00e9r\u00e9gie", 
+              "fra": "Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
+              "key": "Quebec Mont\u00e9r\u00e9gie  Qu\u00e9bec Mont\u00e9r\u00e9gie", 
+              "pilot_uuid": "FB14D3C7-1D22-4D91-A465-642D216EEE48"
+            }, 
+            {
+              "eng": "Quebec, Montr\u00e9al", 
+              "fra": "Qu\u00e9bec, Montr\u00e9al", 
+              "key": "Quebec Montr\u00e9al  Qu\u00e9bec Montr\u00e9al", 
+              "pilot_uuid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645"
+            }, 
+            {
+              "eng": "Quebec, Laval", 
+              "fra": "Qu\u00e9bec, Laval", 
+              "key": "Quebec Laval  Qu\u00e9bec Laval", 
+              "pilot_uuid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF"
+            }, 
+            {
+              "eng": "Quebec, Lanaudi\u00e8re", 
+              "fra": "Qu\u00e9bec, Lanaudi\u00e8re", 
+              "key": "Quebec Lanaudi\u00e8re  Qu\u00e9bec Lanaudi\u00e8re", 
+              "pilot_uuid": "9D01047A-B571-4CC4-A295-CACED5C21136"
+            }, 
+            {
+              "eng": "Quebec, Laurentides", 
+              "fra": "Qu\u00e9bec, Laurentides", 
+              "key": "Quebec Laurentides  Qu\u00e9bec Laurentides", 
+              "pilot_uuid": "79F2CB43-8948-40F0-BF66-399E2073B27F"
+            }, 
+            {
+              "eng": "Quebec, Outaouais", 
+              "fra": "Qu\u00e9bec, Outaouais", 
+              "key": "Quebec Outaouais  Qu\u00e9bec Outaouais", 
+              "pilot_uuid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1"
+            }, 
+            {
+              "eng": "Quebec, Abitibi - T\u00e9miscamingue", 
+              "fra": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
+              "key": "Quebec Abitibi - T\u00e9miscamingue  Qu\u00e9bec Abitibi - T\u00e9miscamingue", 
+              "pilot_uuid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06"
+            }, 
+            {
+              "eng": "Quebec, Mauricie", 
+              "fra": "Qu\u00e9bec, Mauricie", 
+              "key": "Quebec Mauricie  Qu\u00e9bec Mauricie", 
+              "pilot_uuid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011"
+            }, 
+            {
+              "eng": "Quebec, Saguenay - Lac-Saint-Jean", 
+              "fra": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
+              "key": "Quebec Saguenay - Lac-Saint-Jean  Qu\u00e9bec Saguenay - Lac-Saint-Jean", 
+              "pilot_uuid": "645070BF-16DD-4D87-88FE-94ECF86F41EB"
+            }, 
+            {
+              "eng": "Quebec, C\u00f4te-Nord", 
+              "fra": "Qu\u00e9bec, C\u00f4te-Nord", 
+              "key": "Quebec C\u00f4te-Nord  Qu\u00e9bec C\u00f4te-Nord", 
+              "pilot_uuid": "335CCEE3-4877-474C-B4F9-4C24D5086091"
+            }, 
+            {
+              "eng": "Quebec, Nord-du-Qu\u00e9bec", 
+              "fra": "Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
+              "key": "Quebec Nord-du-Qu\u00e9bec  Qu\u00e9bec Nord-du-Qu\u00e9bec", 
+              "pilot_uuid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE"
+            }, 
+            {
+              "eng": "Ontario, Ottawa", 
+              "fra": "Ontario, Ottawa", 
+              "key": "Ontario Ottawa  Ontario Ottawa", 
+              "pilot_uuid": "59F96221-A0D1-4668-A769-9DAC7DFC2198"
+            }, 
+            {
+              "eng": "Ontario, Kingston - Pembroke", 
+              "fra": "Ontario, Kingston - Pembroke", 
+              "key": "Ontario Kingston - Pembroke  Ontario Kingston - Pembroke", 
+              "pilot_uuid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893"
+            }, 
+            {
+              "eng": "Ontario, Muskoka - Kawarthas", 
+              "fra": "Ontario, Muskoka - Kawarthas", 
+              "key": "Ontario Muskoka - Kawarthas  Ontario Muskoka - Kawarthas", 
+              "pilot_uuid": "75176775-E0E6-4938-B03E-40ECFDB399C1"
+            }, 
+            {
+              "eng": "Ontario, Toronto", 
+              "fra": "Ontario, Toronto", 
+              "key": "Ontario Toronto  Ontario Toronto", 
+              "pilot_uuid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC"
+            }, 
+            {
+              "eng": "Ontario, Kitchener - Waterloo - Barrie", 
+              "fra": "Ontario, Kitchener - Waterloo - Barrie", 
+              "key": "Ontario Kitchener - Waterloo - Barrie  Ontario Kitchener - Waterloo - Barrie", 
+              "pilot_uuid": "971A8458-0FAD-42A4-99B6-579374BF668B"
+            }, 
+            {
+              "eng": "Ontario, Hamilton - Niagara Peninsula", 
+              "fra": "Ontario, Hamilton - Niagara Peninsula", 
+              "key": "Ontario Hamilton - Niagara Peninsula  Ontario Hamilton - Niagara Peninsula", 
+              "pilot_uuid": "4004DAC2-4AE4-49B9-A4E8-F27940335530"
+            }, 
+            {
+              "eng": "Ontario, London", 
+              "fra": "Ontario, London", 
+              "key": "Ontario London  Ontario London", 
+              "pilot_uuid": "66CE657A-9A2B-42EB-BB89-592024C852B5"
+            }, 
+            {
+              "eng": "Ontario,Windsor - Sarnia", 
+              "fra": "Ontario, Windsor - Sarnia", 
+              "key": "OntarioWindsor - Sarnia  Ontario Windsor - Sarnia", 
+              "pilot_uuid": "3FDECF16-64AD-4822-8076-344711C185DB"
+            }, 
+            {
+              "eng": "Ontario, Stratford - Bruce Peninsula", 
+              "fra": "Ontario, Stratford - Bruce Peninsula", 
+              "key": "Ontario Stratford - Bruce Peninsula  Ontario Stratford - Bruce Peninsula", 
+              "pilot_uuid": "31F39CA2-4A93-4337-87A7-11EDFA53E511"
+            }, 
+            {
+              "eng": "Ontario, Northeast", 
+              "fra": "Ontario, Nord-est", 
+              "key": "Ontario Northeast  Ontario Nord-est", 
+              "pilot_uuid": "55D9E9C2-56E5-4293-A896-D7008F6F5710"
+            }, 
+            {
+              "eng": "Ontario, Northwest", 
+              "fra": "Ontario, Nord-ouest", 
+              "key": "Ontario Northwest  Ontario Nord-ouest", 
+              "pilot_uuid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7"
+            }, 
+            {
+              "eng": "Manitoba, Southeast", 
+              "fra": "Manitoba, Sud-est", 
+              "key": "Manitoba Southeast  Manitoba Sud-est", 
+              "pilot_uuid": "271DA932-E487-4795-9995-ADB722297359"
+            }, 
+            {
+              "eng": "Manitoba, South Central", 
+              "fra": "Manitoba, Centre sud", 
+              "key": "Manitoba South Central  Manitoba Centre sud", 
+              "pilot_uuid": "85E82590-1617-47BA-B69C-22BFAFB2C00A"
+            }, 
+            {
+              "eng": "Manitoba, Southwest", 
+              "fra": "Manitoba, Sud-ouest", 
+              "key": "Manitoba Southwest  Manitoba Sud-ouest", 
+              "pilot_uuid": "1637DBB0-E991-411E-8DA3-E5373DE577CE"
+            }, 
+            {
+              "eng": "Manitoba, North Central", 
+              "fra": "Manitoba, Centre nord", 
+              "key": "Manitoba North Central  Manitoba Centre nord", 
+              "pilot_uuid": "5374E0A8-103B-4186-81B5-ACCE63EAE455"
+            }, 
+            {
+              "eng": "Manitoba, Winnipeg", 
+              "fra": "Manitoba, Winnipeg", 
+              "key": "Manitoba Winnipeg  Manitoba Winnipeg", 
+              "pilot_uuid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04"
+            }, 
+            {
+              "eng": "Manitoba, Interlake", 
+              "fra": "Manitoba, Interlake", 
+              "key": "Manitoba Interlake  Manitoba Interlake", 
+              "pilot_uuid": "036FB1AA-B86D-43F9-A674-56A78388F8F2"
+            }, 
+            {
+              "eng": "Manitoba, Parklands", 
+              "fra": "Manitoba, Parklands", 
+              "key": "Manitoba Parklands  Manitoba Parklands", 
+              "pilot_uuid": "16155173-67AC-4624-90E5-5A2D9079123A"
+            }, 
+            {
+              "eng": "Manitoba, North", 
+              "fra": "Manitoba, Nord", 
+              "key": "Manitoba North  Manitoba Nord", 
+              "pilot_uuid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F"
+            }, 
+            {
+              "eng": "Saskatchewan, Regina - Moose Mountain", 
+              "fra": "Saskatchewan, Regina - Moose Mountain", 
+              "key": "Saskatchewan Regina - Moose Mountain  Saskatchewan Regina - Moose Mountain", 
+              "pilot_uuid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2"
+            }, 
+            {
+              "eng": "Saskatchewan, Swift Current - Moose Jaw", 
+              "fra": "Saskatchewan, Swift Current - Moose Jaw", 
+              "key": "Saskatchewan Swift Current - Moose Jaw  Saskatchewan Swift Current - Moose Jaw", 
+              "pilot_uuid": "193259E4-EF93-4691-8572-694914D879C4"
+            }, 
+            {
+              "eng": "Saskatchewan, Saskatoon - Biggar", 
+              "fra": "Saskatchewan, Saskatoon - Biggar", 
+              "key": "Saskatchewan Saskatoon - Biggar  Saskatchewan Saskatoon - Biggar", 
+              "pilot_uuid": "AEE97977-91A3-48B3-A085-369B9B381992"
+            }, 
+            {
+              "eng": "Saskatchewan, Yorkton - Melville", 
+              "fra": "Saskatchewan, Yorkton - Melville", 
+              "key": "Saskatchewan Yorkton - Melville  Saskatchewan Yorkton - Melville", 
+              "pilot_uuid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2"
+            }, 
+            {
+              "eng": "Saskatchewan, Prince Albert", 
+              "fra": "Saskatchewan, Prince Alber", 
+              "key": "Saskatchewan Prince Albert  Saskatchewan Prince Alber", 
+              "pilot_uuid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352"
+            }, 
+            {
+              "eng": "Saskatchewan, Northern", 
+              "fra": "Saskatchewan, Nord", 
+              "key": "Saskatchewan Northern  Saskatchewan Nord", 
+              "pilot_uuid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421"
+            }, 
+            {
+              "eng": "Alberta, Lethbridge - Medicine Hat", 
+              "fra": "Alberta, Lethbridge - Medicine Hat", 
+              "key": "Alberta Lethbridge - Medicine Hat  Alberta Lethbridge - Medicine Hat", 
+              "pilot_uuid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA"
+            }, 
+            {
+              "eng": "Alberta, Camrose - Drumheller", 
+              "fra": "Alberta, Camrose - Drumheller", 
+              "key": "Alberta Camrose - Drumheller  Alberta Camrose - Drumheller", 
+              "pilot_uuid": "394064E0-D465-4520-B651-CE6D28829CD5"
+            }, 
+            {
+              "eng": "Alberta, Calgary", 
+              "fra": "Alberta, Calgary", 
+              "key": "Alberta Calgary  Alberta Calgary", 
+              "pilot_uuid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC"
+            }, 
+            {
+              "eng": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "fra": "Alberta, Banff - Jasper - Rocky Mountain House", 
+              "key": "Alberta Banff - Jasper - Rocky Mountain House  Alberta Banff - Jasper - Rocky Mountain House", 
+              "pilot_uuid": "F60854D7-139C-4945-9C5F-A6D6B3027B60"
+            }, 
+            {
+              "eng": "Alberta, Red Deer", 
+              "fra": "Alberta, Red Deer", 
+              "key": "Alberta Red Deer  Alberta Red Deer", 
+              "pilot_uuid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9"
+            }, 
+            {
+              "eng": "Alberta, Edmonton", 
+              "fra": "Alberta, Edmonton", 
+              "key": "Alberta Edmonton  Alberta Edmonton", 
+              "pilot_uuid": "60924ED3-E829-45E5-BE8B-2608AF64B241"
+            }, 
+            {
+              "eng": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "fra": "Alberta, Athabasca - Grande Prairie - Peace River", 
+              "key": "Alberta Athabasca - Grande Prairie - Peace River  Alberta Athabasca - Grande Prairie - Peace River", 
+              "pilot_uuid": "5161B55F-3BF5-46F7-B461-455735F6B9B4"
+            }, 
+            {
+              "eng": "Alberta, Wood Buffalo - Cold Lake", 
+              "fra": "Alberta, Wood Buffalo - Cold Lake", 
+              "key": "Alberta Wood Buffalo - Cold Lake  Alberta Wood Buffalo - Cold Lake", 
+              "pilot_uuid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E"
+            }, 
+            {
+              "eng": "British Columbia, Vancouver Island and Coast", 
+              "fra": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
+              "key": "British Columbia Vancouver Island and Coast  Colombie-Britannique \u00cele de Vancouver et la c\u00f4te", 
+              "pilot_uuid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE"
+            }, 
+            {
+              "eng": "British Columbia, Lower Mainland - Southwest", 
+              "fra": "Colombie-Britannique, Lower Mainland - Sud-ouest", 
+              "key": "British Columbia Lower Mainland - Southwest  Colombie-Britannique Lower Mainland - Sud-ouest", 
+              "pilot_uuid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458"
+            }, 
+            {
+              "eng": "British Columbia, Thompson - Okanagan", 
+              "fra": "Colombie-Britannique, Thompson - Okanagan", 
+              "key": "British Columbia Thompson - Okanagan  Colombie-Britannique Thompson - Okanagan", 
+              "pilot_uuid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2"
+            }, 
+            {
+              "eng": "British Columbia, Kootenay", 
+              "fra": "Colombie-Britannique, Kootenay", 
+              "key": "British Columbia Kootenay  Colombie-Britannique Kootenay", 
+              "pilot_uuid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB"
+            }, 
+            {
+              "eng": "British Columbia, Cariboo", 
+              "fra": "Colombie-Britannique, Cariboo", 
+              "key": "British Columbia Cariboo  Colombie-Britannique Cariboo", 
+              "pilot_uuid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6"
+            }, 
+            {
+              "eng": "British Columbia, North Coast", 
+              "fra": "Colombie-Britannique, C\u00f4te-nord", 
+              "key": "British Columbia North Coast  Colombie-Britannique C\u00f4te-nord", 
+              "pilot_uuid": "94E0DABF-268E-454B-B20E-727A9FF34FAB"
+            }, 
+            {
+              "eng": "British Columbia, Nechako", 
+              "fra": "Colombie-Britannique, Nechako", 
+              "key": "British Columbia Nechako  Colombie-Britannique Nechako", 
+              "pilot_uuid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C"
+            }, 
+            {
+              "eng": "British Columbia, Northeast", 
+              "fra": "Colombie-Britannique, Nord-est", 
+              "key": "British Columbia Northeast  Colombie-Britannique Nord-est", 
+              "pilot_uuid": "4284F297-5090-447A-A1E3-C339B68F5932"
+            }, 
+            {
+              "eng": "Yukon Territory", 
+              "fra": "Territoire du Yukon", 
+              "key": "Yukon Territory  Territoire du Yukon", 
+              "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
+            }
+          ], 
+          "description": {
+            "eng": "The geographic area of the dataset", 
+            "fra": "La r\u00e9gion g\u00e9ographique de l\u2019ensemble de donn\u00e9es"
+          }, 
+          "example": "Ottawa", 
+          "existing": false, 
+          "gc_multiplicity": "O", 
+          "id": "geographic_region", 
+          "label": {
+            "eng": "Geographic Region", 
+            "fra": "R\u00e9gion g\u00e9ographique"
+          }, 
+          "pilot_help": {
+            "eng": "The region that describes the geographic area covered by the dataset.", 
+            "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "Geographic_Region_Name", 
+          "pilot_name": {
+            "eng": "Geographic Region Name", 
+            "fra": "Nom de la r\u00e9gion g\u00e9ographique"
+          }, 
+          "pilot_type": "choice", 
+          "proposed_name": {
+            "eng": "geographicRegion", 
+            "fra": "r\u00e9gionG\u00e9ographique"
+          }, 
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "type": "tag_vocabulary"
         }, 
         {
           "bilingual": false, 
@@ -2057,2366 +4400,6 @@
           "proposed_type": "EX_TemporalExtent"
         }, 
         {
-          "bilingual": false, 
-          "choices": [
-            {
-              "eng": "Atlantic", 
-              "fra": "Atlantique", 
-              "id": 1, 
-              "key": "Atlantic | Atlantique"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador", 
-              "fra": "Terre-Neuve-et-Labrador", 
-              "id": 10, 
-              "key": "Newfoundland and Labrador | Terre-Neuve-et-Labrador", 
-              "pilot_uuid": "E65D06CB-F120-43E6-B037-83F699C84BAE"
-            }, 
-            {
-              "eng": "Division No. 1", 
-              "fra": "Division No. 1", 
-              "id": 1001, 
-              "key": "Division No. 1"
-            }, 
-            {
-              "eng": "Division No. 2", 
-              "fra": "Division No. 2", 
-              "id": 1002, 
-              "key": "Division No. 2"
-            }, 
-            {
-              "eng": "Division No. 3", 
-              "fra": "Division No. 3", 
-              "id": 1003, 
-              "key": "Division No. 3"
-            }, 
-            {
-              "eng": "Division No. 4", 
-              "fra": "Division No. 4", 
-              "id": 1004, 
-              "key": "Division No. 4"
-            }, 
-            {
-              "eng": "Division No. 5", 
-              "fra": "Division No. 5", 
-              "id": 1005, 
-              "key": "Division No. 5"
-            }, 
-            {
-              "eng": "Division No. 6", 
-              "fra": "Division No. 6", 
-              "id": 1006, 
-              "key": "Division No. 6"
-            }, 
-            {
-              "eng": "Division No. 7", 
-              "fra": "Division No. 7", 
-              "id": 1007, 
-              "key": "Division No. 7"
-            }, 
-            {
-              "eng": "Division No. 8", 
-              "fra": "Division No. 8", 
-              "id": 1008, 
-              "key": "Division No. 8"
-            }, 
-            {
-              "eng": "Division No. 9", 
-              "fra": "Division No. 9", 
-              "id": 1009, 
-              "key": "Division No. 9"
-            }, 
-            {
-              "eng": "Division No. 10", 
-              "fra": "Division No. 10", 
-              "id": 1010, 
-              "key": "Division No. 10"
-            }, 
-            {
-              "eng": "Division No. 11", 
-              "fra": "Division No. 11", 
-              "id": 1100, 
-              "key": "Division No. 11"
-            }, 
-            {
-              "eng": "Prince Edward Island", 
-              "fra": "\u00cele-du-Prince-\u00c9douard", 
-              "id": 11, 
-              "key": "Prince Edward Island | \u00cele-du-Prince-\u00c9douard", 
-              "pilot_uuid": "35FAF1BD-CB0D-4182-B3A0-E605945D6255"
-            }, 
-            {
-              "eng": "Kings", 
-              "fra": "Kings", 
-              "id": 1101, 
-              "key": "Kings"
-            }, 
-            {
-              "eng": "Queens", 
-              "fra": "Queens", 
-              "id": 1102, 
-              "key": "Queens"
-            }, 
-            {
-              "eng": "Prince", 
-              "fra": "Prince", 
-              "id": 1103, 
-              "key": "Prince"
-            }, 
-            {
-              "eng": "Nova Scotia", 
-              "fra": "Nouvelle-\u00c9cosse", 
-              "id": 12, 
-              "key": "Nova Scotia | Nouvelle-\u00c9cosse", 
-              "pilot_uuid": "9CEE89B4-BF49-4262-9CCB-FD7294B01B0E"
-            }, 
-            {
-              "eng": "Shelburne", 
-              "fra": "Shelburne", 
-              "id": 1201, 
-              "key": "Shelburne"
-            }, 
-            {
-              "eng": "Yarmouth", 
-              "fra": "Yarmouth", 
-              "id": 1202, 
-              "key": "Yarmouth"
-            }, 
-            {
-              "eng": "Digby", 
-              "fra": "Digby", 
-              "id": 1203, 
-              "key": "Digby"
-            }, 
-            {
-              "eng": "Queens", 
-              "fra": "Queens", 
-              "id": 1204, 
-              "key": "Queens"
-            }, 
-            {
-              "eng": "Annapolis", 
-              "fra": "Annapolis", 
-              "id": 1205, 
-              "key": "Annapolis"
-            }, 
-            {
-              "eng": "Lunenburg", 
-              "fra": "Lunenburg", 
-              "id": 1206, 
-              "key": "Lunenburg"
-            }, 
-            {
-              "eng": "Kings", 
-              "fra": "Kings", 
-              "id": 1207, 
-              "key": "Kings"
-            }, 
-            {
-              "eng": "Hants", 
-              "fra": "Hants", 
-              "id": 1208, 
-              "key": "Hants"
-            }, 
-            {
-              "eng": "Halifax", 
-              "fra": "Halifax", 
-              "id": 1209, 
-              "key": "Halifax"
-            }, 
-            {
-              "eng": "Colchester", 
-              "fra": "Colchester", 
-              "id": 1210, 
-              "key": "Colchester"
-            }, 
-            {
-              "eng": "Cumberland", 
-              "fra": "Cumberland", 
-              "id": 1211, 
-              "key": "Cumberland"
-            }, 
-            {
-              "eng": "Pictou", 
-              "fra": "Pictou", 
-              "id": 1212, 
-              "key": "Pictou"
-            }, 
-            {
-              "eng": "Guysborough", 
-              "fra": "Guysborough", 
-              "id": 1213, 
-              "key": "Guysborough"
-            }, 
-            {
-              "eng": "Antigonish", 
-              "fra": "Antigonish", 
-              "id": 1214, 
-              "key": "Antigonish"
-            }, 
-            {
-              "eng": "Inverness", 
-              "fra": "Inverness", 
-              "id": 1215, 
-              "key": "Inverness"
-            }, 
-            {
-              "eng": "Richmond", 
-              "fra": "Richmond", 
-              "id": 1216, 
-              "key": "Richmond"
-            }, 
-            {
-              "eng": "Cape Breton", 
-              "fra": "Cape Breton", 
-              "id": 1217, 
-              "key": "Cape Breton"
-            }, 
-            {
-              "eng": "Victoria", 
-              "fra": "Victoria", 
-              "id": 1218, 
-              "key": "Victoria"
-            }, 
-            {
-              "eng": "New Brunswick", 
-              "fra": "Nouveau-Brunswick", 
-              "id": 13, 
-              "key": "New Brunswick | Nouveau-Brunswick", 
-              "pilot_uuid": "93195680-D726-4FCE-BF92-D95F1F796B3B"
-            }, 
-            {
-              "eng": "Saint John", 
-              "fra": "Saint John", 
-              "id": 1301, 
-              "key": "Saint John"
-            }, 
-            {
-              "eng": "Charlotte", 
-              "fra": "Charlotte", 
-              "id": 1302, 
-              "key": "Charlotte"
-            }, 
-            {
-              "eng": "Sunbury", 
-              "fra": "Sunbury", 
-              "id": 1303, 
-              "key": "Sunbury"
-            }, 
-            {
-              "eng": "Queens", 
-              "fra": "Queens", 
-              "id": 1304, 
-              "key": "Queens"
-            }, 
-            {
-              "eng": "Kings", 
-              "fra": "Kings", 
-              "id": 1305, 
-              "key": "Kings"
-            }, 
-            {
-              "eng": "Albert", 
-              "fra": "Albert", 
-              "id": 1306, 
-              "key": "Albert"
-            }, 
-            {
-              "eng": "Westmorland", 
-              "fra": "Westmorland", 
-              "id": 1307, 
-              "key": "Westmorland"
-            }, 
-            {
-              "eng": "Kent", 
-              "fra": "Kent", 
-              "id": 1308, 
-              "key": "Kent"
-            }, 
-            {
-              "eng": "Northumberland", 
-              "fra": "Northumberland", 
-              "id": 1309, 
-              "key": "Northumberland"
-            }, 
-            {
-              "eng": "York", 
-              "fra": "York", 
-              "id": 1310, 
-              "key": "York"
-            }, 
-            {
-              "eng": "Carleton", 
-              "fra": "Carleton", 
-              "id": 1311, 
-              "key": "Carleton"
-            }, 
-            {
-              "eng": "Victoria", 
-              "fra": "Victoria", 
-              "id": 1312, 
-              "key": "Victoria"
-            }, 
-            {
-              "eng": "Madawaska", 
-              "fra": "Madawaska", 
-              "id": 1313, 
-              "key": "Madawaska"
-            }, 
-            {
-              "eng": "Restigouche", 
-              "fra": "Restigouche", 
-              "id": 1314, 
-              "key": "Restigouche"
-            }, 
-            {
-              "eng": "Gloucester", 
-              "fra": "Gloucester", 
-              "id": 1315, 
-              "key": "Gloucester"
-            }, 
-            {
-              "eng": "Quebec", 
-              "fra": "Quebec", 
-              "id": 2, 
-              "key": "Quebec"
-            }, 
-            {
-              "eng": "Quebec", 
-              "fra": "Qu\u00e9bec", 
-              "id": 24, 
-              "key": "Quebec | Qu\u00e9bec", 
-              "pilot_uuid": "AE7449B2-457A-4FAB-BB3E-BB51890C938E"
-            }, 
-            {
-              "eng": "Les \u00celes-de-la-Madeleine", 
-              "fra": "Les \u00celes-de-la-Madeleine", 
-              "id": 2401, 
-              "key": "Les \u00celes-de-la-Madeleine"
-            }, 
-            {
-              "eng": "Le Rocher-Perc\u00e9", 
-              "fra": "Le Rocher-Perc\u00e9", 
-              "id": 2402, 
-              "key": "Le Rocher-Perc\u00e9"
-            }, 
-            {
-              "eng": "La C\u00f4te-de-Gasp\u00e9", 
-              "fra": "La C\u00f4te-de-Gasp\u00e9", 
-              "id": 2403, 
-              "key": "La C\u00f4te-de-Gasp\u00e9"
-            }, 
-            {
-              "eng": "La Haute-Gasp\u00e9sie", 
-              "fra": "La Haute-Gasp\u00e9sie", 
-              "id": 2404, 
-              "key": "La Haute-Gasp\u00e9sie"
-            }, 
-            {
-              "eng": "Bonaventure", 
-              "fra": "Bonaventure", 
-              "id": 2405, 
-              "key": "Bonaventure"
-            }, 
-            {
-              "eng": "Avignon", 
-              "fra": "Avignon", 
-              "id": 2406, 
-              "key": "Avignon"
-            }, 
-            {
-              "eng": "La Matap\u00e9dia", 
-              "fra": "La Matap\u00e9dia", 
-              "id": 2407, 
-              "key": "La Matap\u00e9dia"
-            }, 
-            {
-              "eng": "Matane", 
-              "fra": "Matane", 
-              "id": 2408, 
-              "key": "Matane"
-            }, 
-            {
-              "eng": "La Mitis", 
-              "fra": "La Mitis", 
-              "id": 2409, 
-              "key": "La Mitis"
-            }, 
-            {
-              "eng": "Rimouski-Neigette", 
-              "fra": "Rimouski-Neigette", 
-              "id": 2410, 
-              "key": "Rimouski-Neigette"
-            }, 
-            {
-              "eng": "Les Basques", 
-              "fra": "Les Basques", 
-              "id": 2411, 
-              "key": "Les Basques"
-            }, 
-            {
-              "eng": "Rivi\u00e8re-du-Loup", 
-              "fra": "Rivi\u00e8re-du-Loup", 
-              "id": 2412, 
-              "key": "Rivi\u00e8re-du-Loup"
-            }, 
-            {
-              "eng": "T\u00e9miscouata", 
-              "fra": "T\u00e9miscouata", 
-              "id": 2413, 
-              "key": "T\u00e9miscouata"
-            }, 
-            {
-              "eng": "Kamouraska", 
-              "fra": "Kamouraska", 
-              "id": 2414, 
-              "key": "Kamouraska"
-            }, 
-            {
-              "eng": "Charlevoix-Est", 
-              "fra": "Charlevoix-Est", 
-              "id": 2415, 
-              "key": "Charlevoix-Est"
-            }, 
-            {
-              "eng": "Charlevoix", 
-              "fra": "Charlevoix", 
-              "id": 2416, 
-              "key": "Charlevoix"
-            }, 
-            {
-              "eng": "L'Islet", 
-              "fra": "L'Islet", 
-              "id": 2417, 
-              "key": "L'Islet"
-            }, 
-            {
-              "eng": "Montmagny", 
-              "fra": "Montmagny", 
-              "id": 2418, 
-              "key": "Montmagny"
-            }, 
-            {
-              "eng": "Bellechasse", 
-              "fra": "Bellechasse", 
-              "id": 2419, 
-              "key": "Bellechasse"
-            }, 
-            {
-              "eng": "L'\u00cele-d'Orl\u00e9ans", 
-              "fra": "L'\u00cele-d'Orl\u00e9ans", 
-              "id": 2420, 
-              "key": "L'\u00cele-d'Orl\u00e9ans"
-            }, 
-            {
-              "eng": "La C\u00f4te-de-Beaupr\u00e9", 
-              "fra": "La C\u00f4te-de-Beaupr\u00e9", 
-              "id": 2421, 
-              "key": "La C\u00f4te-de-Beaupr\u00e9"
-            }, 
-            {
-              "eng": "La Jacques-Cartier", 
-              "fra": "La Jacques-Cartier", 
-              "id": 2422, 
-              "key": "La Jacques-Cartier"
-            }, 
-            {
-              "eng": "Qu\u00e9bec", 
-              "fra": "Qu\u00e9bec", 
-              "id": 2423, 
-              "key": "Qu\u00e9bec"
-            }, 
-            {
-              "eng": "L\u00e9vis", 
-              "fra": "L\u00e9vis", 
-              "id": 2425, 
-              "key": "L\u00e9vis"
-            }, 
-            {
-              "eng": "La Nouvelle-Beauce", 
-              "fra": "La Nouvelle-Beauce", 
-              "id": 2426, 
-              "key": "La Nouvelle-Beauce"
-            }, 
-            {
-              "eng": "Robert-Cliche", 
-              "fra": "Robert-Cliche", 
-              "id": 2427, 
-              "key": "Robert-Cliche"
-            }, 
-            {
-              "eng": "Les Etchemins", 
-              "fra": "Les Etchemins", 
-              "id": 2428, 
-              "key": "Les Etchemins"
-            }, 
-            {
-              "eng": "Beauce-Sartigan", 
-              "fra": "Beauce-Sartigan", 
-              "id": 2429, 
-              "key": "Beauce-Sartigan"
-            }, 
-            {
-              "eng": "Le Granit", 
-              "fra": "Le Granit", 
-              "id": 2430, 
-              "key": "Le Granit"
-            }, 
-            {
-              "eng": "Les Appalaches", 
-              "fra": "Les Appalaches", 
-              "id": 2431, 
-              "key": "Les Appalaches"
-            }, 
-            {
-              "eng": "L'\u00c9rable", 
-              "fra": "L'\u00c9rable", 
-              "id": 2432, 
-              "key": "L'\u00c9rable"
-            }, 
-            {
-              "eng": "Lotbini\u00e8re", 
-              "fra": "Lotbini\u00e8re", 
-              "id": 2433, 
-              "key": "Lotbini\u00e8re"
-            }, 
-            {
-              "eng": "Portneuf", 
-              "fra": "Portneuf", 
-              "id": 2434, 
-              "key": "Portneuf"
-            }, 
-            {
-              "eng": "M\u00e9kinac", 
-              "fra": "M\u00e9kinac", 
-              "id": 2435, 
-              "key": "M\u00e9kinac"
-            }, 
-            {
-              "eng": "Shawinigan", 
-              "fra": "Shawinigan", 
-              "id": 2436, 
-              "key": "Shawinigan"
-            }, 
-            {
-              "eng": "Francheville", 
-              "fra": "Francheville", 
-              "id": 2437, 
-              "key": "Francheville"
-            }, 
-            {
-              "eng": "B\u00e9cancour", 
-              "fra": "B\u00e9cancour", 
-              "id": 2438, 
-              "key": "B\u00e9cancour"
-            }, 
-            {
-              "eng": "Arthabaska", 
-              "fra": "Arthabaska", 
-              "id": 2439, 
-              "key": "Arthabaska"
-            }, 
-            {
-              "eng": "Les Sources", 
-              "fra": "Les Sources", 
-              "id": 2440, 
-              "key": "Les Sources"
-            }, 
-            {
-              "eng": "Le Haut-Saint-Fran\u00e7ois", 
-              "fra": "Le Haut-Saint-Fran\u00e7ois", 
-              "id": 2441, 
-              "key": "Le Haut-Saint-Fran\u00e7ois"
-            }, 
-            {
-              "eng": "Le Val-Saint-Fran\u00e7ois", 
-              "fra": "Le Val-Saint-Fran\u00e7ois", 
-              "id": 2442, 
-              "key": "Le Val-Saint-Fran\u00e7ois"
-            }, 
-            {
-              "eng": "Sherbrooke", 
-              "fra": "Sherbrooke", 
-              "id": 2443, 
-              "key": "Sherbrooke"
-            }, 
-            {
-              "eng": "Coaticook", 
-              "fra": "Coaticook", 
-              "id": 2444, 
-              "key": "Coaticook"
-            }, 
-            {
-              "eng": "Memphr\u00e9magog", 
-              "fra": "Memphr\u00e9magog", 
-              "id": 2445, 
-              "key": "Memphr\u00e9magog"
-            }, 
-            {
-              "eng": "Brome-Missisquoi", 
-              "fra": "Brome-Missisquoi", 
-              "id": 2446, 
-              "key": "Brome-Missisquoi"
-            }, 
-            {
-              "eng": "La Haute-Yamaska", 
-              "fra": "La Haute-Yamaska", 
-              "id": 2447, 
-              "key": "La Haute-Yamaska"
-            }, 
-            {
-              "eng": "Acton", 
-              "fra": "Acton", 
-              "id": 2448, 
-              "key": "Acton"
-            }, 
-            {
-              "eng": "Drummond", 
-              "fra": "Drummond", 
-              "id": 2449, 
-              "key": "Drummond"
-            }, 
-            {
-              "eng": "Nicolet-Yamaska", 
-              "fra": "Nicolet-Yamaska", 
-              "id": 2450, 
-              "key": "Nicolet-Yamaska"
-            }, 
-            {
-              "eng": "Maskinong\u00e9", 
-              "fra": "Maskinong\u00e9", 
-              "id": 2451, 
-              "key": "Maskinong\u00e9"
-            }, 
-            {
-              "eng": "D'Autray", 
-              "fra": "D'Autray", 
-              "id": 2452, 
-              "key": "D'Autray"
-            }, 
-            {
-              "eng": "Pierre-De Saurel", 
-              "fra": "Pierre-De Saurel", 
-              "id": 2453, 
-              "key": "Pierre-De Saurel"
-            }, 
-            {
-              "eng": "Les Maskoutains", 
-              "fra": "Les Maskoutains", 
-              "id": 2454, 
-              "key": "Les Maskoutains"
-            }, 
-            {
-              "eng": "Rouville", 
-              "fra": "Rouville", 
-              "id": 2455, 
-              "key": "Rouville"
-            }, 
-            {
-              "eng": "Le Haut-Richelieu", 
-              "fra": "Le Haut-Richelieu", 
-              "id": 2456, 
-              "key": "Le Haut-Richelieu"
-            }, 
-            {
-              "eng": "La Vall\u00e9e-du-Richelieu", 
-              "fra": "La Vall\u00e9e-du-Richelieu", 
-              "id": 2457, 
-              "key": "La Vall\u00e9e-du-Richelieu"
-            }, 
-            {
-              "eng": "Longueuil", 
-              "fra": "Longueuil", 
-              "id": 2458, 
-              "key": "Longueuil"
-            }, 
-            {
-              "eng": "Lajemmerais", 
-              "fra": "Lajemmerais", 
-              "id": 2459, 
-              "key": "Lajemmerais"
-            }, 
-            {
-              "eng": "L'Assomption", 
-              "fra": "L'Assomption", 
-              "id": 2460, 
-              "key": "L'Assomption"
-            }, 
-            {
-              "eng": "Joliette", 
-              "fra": "Joliette", 
-              "id": 2461, 
-              "key": "Joliette"
-            }, 
-            {
-              "eng": "Matawinie", 
-              "fra": "Matawinie", 
-              "id": 2462, 
-              "key": "Matawinie"
-            }, 
-            {
-              "eng": "Montcalm", 
-              "fra": "Montcalm", 
-              "id": 2463, 
-              "key": "Montcalm"
-            }, 
-            {
-              "eng": "Les Moulins", 
-              "fra": "Les Moulins", 
-              "id": 2464, 
-              "key": "Les Moulins"
-            }, 
-            {
-              "eng": "Laval", 
-              "fra": "Laval", 
-              "id": 2465, 
-              "key": "Laval"
-            }, 
-            {
-              "eng": "Montr\u00e9al", 
-              "fra": "Montr\u00e9al", 
-              "id": 2466, 
-              "key": "Montr\u00e9al"
-            }, 
-            {
-              "eng": "Roussillon", 
-              "fra": "Roussillon", 
-              "id": 2467, 
-              "key": "Roussillon"
-            }, 
-            {
-              "eng": "Les Jardins-de-Napierville", 
-              "fra": "Les Jardins-de-Napierville", 
-              "id": 2468, 
-              "key": "Les Jardins-de-Napierville"
-            }, 
-            {
-              "eng": "Le Haut-Saint-Laurent", 
-              "fra": "Le Haut-Saint-Laurent", 
-              "id": 2469, 
-              "key": "Le Haut-Saint-Laurent"
-            }, 
-            {
-              "eng": "Beauharnois-Salaberry", 
-              "fra": "Beauharnois-Salaberry", 
-              "id": 2470, 
-              "key": "Beauharnois-Salaberry"
-            }, 
-            {
-              "eng": "Vaudreuil-Soulanges", 
-              "fra": "Vaudreuil-Soulanges", 
-              "id": 2471, 
-              "key": "Vaudreuil-Soulanges"
-            }, 
-            {
-              "eng": "Deux-Montagnes", 
-              "fra": "Deux-Montagnes", 
-              "id": 2472, 
-              "key": "Deux-Montagnes"
-            }, 
-            {
-              "eng": "Th\u00e9r\u00e8se-De Blainville", 
-              "fra": "Th\u00e9r\u00e8se-De Blainville", 
-              "id": 2473, 
-              "key": "Th\u00e9r\u00e8se-De Blainville"
-            }, 
-            {
-              "eng": "Mirabel", 
-              "fra": "Mirabel", 
-              "id": 2474, 
-              "key": "Mirabel"
-            }, 
-            {
-              "eng": "La Rivi\u00e8re-du-Nord", 
-              "fra": "La Rivi\u00e8re-du-Nord", 
-              "id": 2475, 
-              "key": "La Rivi\u00e8re-du-Nord"
-            }, 
-            {
-              "eng": "Argenteuil", 
-              "fra": "Argenteuil", 
-              "id": 2476, 
-              "key": "Argenteuil"
-            }, 
-            {
-              "eng": "Les Pays-d'en-Haut", 
-              "fra": "Les Pays-d'en-Haut", 
-              "id": 2477, 
-              "key": "Les Pays-d'en-Haut"
-            }, 
-            {
-              "eng": "Les Laurentides", 
-              "fra": "Les Laurentides", 
-              "id": 2478, 
-              "key": "Les Laurentides"
-            }, 
-            {
-              "eng": "Antoine-Labelle", 
-              "fra": "Antoine-Labelle", 
-              "id": 2479, 
-              "key": "Antoine-Labelle"
-            }, 
-            {
-              "eng": "Papineau", 
-              "fra": "Papineau", 
-              "id": 2480, 
-              "key": "Papineau"
-            }, 
-            {
-              "eng": "Gatineau", 
-              "fra": "Gatineau", 
-              "id": 2481, 
-              "key": "Gatineau"
-            }, 
-            {
-              "eng": "Les Collines-de-l'Outaouais", 
-              "fra": "Les Collines-de-l'Outaouais", 
-              "id": 2482, 
-              "key": "Les Collines-de-l'Outaouais"
-            }, 
-            {
-              "eng": "La Vall\u00e9e-de-la-Gatineau", 
-              "fra": "La Vall\u00e9e-de-la-Gatineau", 
-              "id": 2483, 
-              "key": "La Vall\u00e9e-de-la-Gatineau"
-            }, 
-            {
-              "eng": "Pontiac", 
-              "fra": "Pontiac", 
-              "id": 2484, 
-              "key": "Pontiac"
-            }, 
-            {
-              "eng": "T\u00e9miscamingue", 
-              "fra": "T\u00e9miscamingue", 
-              "id": 2485, 
-              "key": "T\u00e9miscamingue"
-            }, 
-            {
-              "eng": "Rouyn-Noranda", 
-              "fra": "Rouyn-Noranda", 
-              "id": 2486, 
-              "key": "Rouyn-Noranda"
-            }, 
-            {
-              "eng": "Abitibi-Ouest", 
-              "fra": "Abitibi-Ouest", 
-              "id": 2487, 
-              "key": "Abitibi-Ouest"
-            }, 
-            {
-              "eng": "Abitibi", 
-              "fra": "Abitibi", 
-              "id": 2488, 
-              "key": "Abitibi"
-            }, 
-            {
-              "eng": "La Vall\u00e9e-de-l'Or", 
-              "fra": "La Vall\u00e9e-de-l'Or", 
-              "id": 2489, 
-              "key": "La Vall\u00e9e-de-l'Or"
-            }, 
-            {
-              "eng": "La Tuque", 
-              "fra": "La Tuque", 
-              "id": 2490, 
-              "key": "La Tuque"
-            }, 
-            {
-              "eng": "Le Domaine-du-Roy", 
-              "fra": "Le Domaine-du-Roy", 
-              "id": 2491, 
-              "key": "Le Domaine-du-Roy"
-            }, 
-            {
-              "eng": "Maria-Chapdelaine", 
-              "fra": "Maria-Chapdelaine", 
-              "id": 2492, 
-              "key": "Maria-Chapdelaine"
-            }, 
-            {
-              "eng": "Lac-Saint-Jean-Est", 
-              "fra": "Lac-Saint-Jean-Est", 
-              "id": 2493, 
-              "key": "Lac-Saint-Jean-Est"
-            }, 
-            {
-              "eng": "Le Saguenay-et-son-Fjord", 
-              "fra": "Le Saguenay-et-son-Fjord", 
-              "id": 2494, 
-              "key": "Le Saguenay-et-son-Fjord"
-            }, 
-            {
-              "eng": "La Haute-C\u00f4te-Nord", 
-              "fra": "La Haute-C\u00f4te-Nord", 
-              "id": 2495, 
-              "key": "La Haute-C\u00f4te-Nord"
-            }, 
-            {
-              "eng": "Manicouagan", 
-              "fra": "Manicouagan", 
-              "id": 2496, 
-              "key": "Manicouagan"
-            }, 
-            {
-              "eng": "Sept-Rivi\u00e8res--Caniapiscau", 
-              "fra": "Sept-Rivi\u00e8res--Caniapiscau", 
-              "id": 2497, 
-              "key": "Sept-Rivi\u00e8res--Caniapiscau"
-            }, 
-            {
-              "eng": "Minganie--Le Golfe-du-Saint-Laurent", 
-              "fra": "Minganie--Le Golfe-du-Saint-Laurent", 
-              "id": 2498, 
-              "key": "Minganie--Le Golfe-du-Saint-Laurent"
-            }, 
-            {
-              "eng": "Nord-du-Qu\u00e9bec", 
-              "fra": "Nord-du-Qu\u00e9bec", 
-              "id": 2499, 
-              "key": "Nord-du-Qu\u00e9bec"
-            }, 
-            {
-              "eng": "Ontario", 
-              "fra": "Ontario", 
-              "id": 3, 
-              "key": "Ontario"
-            }, 
-            {
-              "eng": "Ontario", 
-              "fra": "Ontario", 
-              "id": 35, 
-              "key": "Ontario", 
-              "pilot_uuid": "BB22E4CF-19C4-4705-92F0-F2C602307C29"
-            }, 
-            {
-              "eng": "Stormont, Dundas and Glengarry", 
-              "fra": "Stormont, Dundas and Glengarry", 
-              "id": 3501, 
-              "key": "Stormont, Dundas and Glengarry"
-            }, 
-            {
-              "eng": "Prescott and Russell", 
-              "fra": "Prescott and Russell", 
-              "id": 3502, 
-              "key": "Prescott and Russell"
-            }, 
-            {
-              "eng": "Ottawa", 
-              "fra": "Ottawa", 
-              "id": 3506, 
-              "key": "Ottawa"
-            }, 
-            {
-              "eng": "Leeds and Grenville", 
-              "fra": "Leeds and Grenville", 
-              "id": 3507, 
-              "key": "Leeds and Grenville"
-            }, 
-            {
-              "eng": "Lanark", 
-              "fra": "Lanark", 
-              "id": 3509, 
-              "key": "Lanark"
-            }, 
-            {
-              "eng": "Frontenac", 
-              "fra": "Frontenac", 
-              "id": 3510, 
-              "key": "Frontenac"
-            }, 
-            {
-              "eng": "Lennox and Addington", 
-              "fra": "Lennox and Addington", 
-              "id": 3511, 
-              "key": "Lennox and Addington"
-            }, 
-            {
-              "eng": "Hastings", 
-              "fra": "Hastings", 
-              "id": 3512, 
-              "key": "Hastings"
-            }, 
-            {
-              "eng": "Prince Edward", 
-              "fra": "Prince Edward", 
-              "id": 3513, 
-              "key": "Prince Edward"
-            }, 
-            {
-              "eng": "Northumberland", 
-              "fra": "Northumberland", 
-              "id": 3514, 
-              "key": "Northumberland"
-            }, 
-            {
-              "eng": "Peterborough", 
-              "fra": "Peterborough", 
-              "id": 3515, 
-              "key": "Peterborough"
-            }, 
-            {
-              "eng": "Kawartha Lakes", 
-              "fra": "Kawartha Lakes", 
-              "id": 3516, 
-              "key": "Kawartha Lakes"
-            }, 
-            {
-              "eng": "Durham", 
-              "fra": "Durham", 
-              "id": 3518, 
-              "key": "Durham"
-            }, 
-            {
-              "eng": "York", 
-              "fra": "York", 
-              "id": 3519, 
-              "key": "York"
-            }, 
-            {
-              "eng": "Toronto", 
-              "fra": "Toronto", 
-              "id": 3520, 
-              "key": "Toronto"
-            }, 
-            {
-              "eng": "Peel", 
-              "fra": "Peel", 
-              "id": 3521, 
-              "key": "Peel"
-            }, 
-            {
-              "eng": "Dufferin", 
-              "fra": "Dufferin", 
-              "id": 3522, 
-              "key": "Dufferin"
-            }, 
-            {
-              "eng": "Wellington", 
-              "fra": "Wellington", 
-              "id": 3523, 
-              "key": "Wellington"
-            }, 
-            {
-              "eng": "Halton", 
-              "fra": "Halton", 
-              "id": 3524, 
-              "key": "Halton"
-            }, 
-            {
-              "eng": "Hamilton", 
-              "fra": "Hamilton", 
-              "id": 3525, 
-              "key": "Hamilton"
-            }, 
-            {
-              "eng": "Niagara", 
-              "fra": "Niagara", 
-              "id": 3526, 
-              "key": "Niagara"
-            }, 
-            {
-              "eng": "Haldimand-Norfolk", 
-              "fra": "Haldimand-Norfolk", 
-              "id": 3528, 
-              "key": "Haldimand-Norfolk"
-            }, 
-            {
-              "eng": "Brant", 
-              "fra": "Brant", 
-              "id": 3529, 
-              "key": "Brant"
-            }, 
-            {
-              "eng": "Waterloo", 
-              "fra": "Waterloo", 
-              "id": 3530, 
-              "key": "Waterloo"
-            }, 
-            {
-              "eng": "Perth", 
-              "fra": "Perth", 
-              "id": 3531, 
-              "key": "Perth"
-            }, 
-            {
-              "eng": "Oxford", 
-              "fra": "Oxford", 
-              "id": 3532, 
-              "key": "Oxford"
-            }, 
-            {
-              "eng": "Elgin", 
-              "fra": "Elgin", 
-              "id": 3534, 
-              "key": "Elgin"
-            }, 
-            {
-              "eng": "Chatham-Kent", 
-              "fra": "Chatham-Kent", 
-              "id": 3536, 
-              "key": "Chatham-Kent"
-            }, 
-            {
-              "eng": "Essex", 
-              "fra": "Essex", 
-              "id": 3537, 
-              "key": "Essex"
-            }, 
-            {
-              "eng": "Lambton", 
-              "fra": "Lambton", 
-              "id": 3538, 
-              "key": "Lambton"
-            }, 
-            {
-              "eng": "Middlesex", 
-              "fra": "Middlesex", 
-              "id": 3539, 
-              "key": "Middlesex"
-            }, 
-            {
-              "eng": "Huron", 
-              "fra": "Huron", 
-              "id": 3540, 
-              "key": "Huron"
-            }, 
-            {
-              "eng": "Bruce", 
-              "fra": "Bruce", 
-              "id": 3541, 
-              "key": "Bruce"
-            }, 
-            {
-              "eng": "Grey", 
-              "fra": "Grey", 
-              "id": 3542, 
-              "key": "Grey"
-            }, 
-            {
-              "eng": "Simcoe", 
-              "fra": "Simcoe", 
-              "id": 3543, 
-              "key": "Simcoe"
-            }, 
-            {
-              "eng": "Muskoka", 
-              "fra": "Muskoka", 
-              "id": 3544, 
-              "key": "Muskoka"
-            }, 
-            {
-              "eng": "Haliburton", 
-              "fra": "Haliburton", 
-              "id": 3546, 
-              "key": "Haliburton"
-            }, 
-            {
-              "eng": "Renfrew", 
-              "fra": "Renfrew", 
-              "id": 3547, 
-              "key": "Renfrew"
-            }, 
-            {
-              "eng": "Nipissing", 
-              "fra": "Nipissing", 
-              "id": 3548, 
-              "key": "Nipissing"
-            }, 
-            {
-              "eng": "Parry Sound", 
-              "fra": "Parry Sound", 
-              "id": 3549, 
-              "key": "Parry Sound"
-            }, 
-            {
-              "eng": "Manitoulin", 
-              "fra": "Manitoulin", 
-              "id": 3551, 
-              "key": "Manitoulin"
-            }, 
-            {
-              "eng": "Sudbury", 
-              "fra": "Sudbury", 
-              "id": 3552, 
-              "key": "Sudbury"
-            }, 
-            {
-              "eng": "Greater Sudbury", 
-              "fra": "Greater Sudbury", 
-              "id": 3553, 
-              "key": "Greater Sudbury"
-            }, 
-            {
-              "eng": "Timiskaming", 
-              "fra": "Timiskaming", 
-              "id": 3554, 
-              "key": "Timiskaming"
-            }, 
-            {
-              "eng": "Cochrane", 
-              "fra": "Cochrane", 
-              "id": 3556, 
-              "key": "Cochrane"
-            }, 
-            {
-              "eng": "Algoma", 
-              "fra": "Algoma", 
-              "id": 3557, 
-              "key": "Algoma"
-            }, 
-            {
-              "eng": "Thunder Bay", 
-              "fra": "Thunder Bay", 
-              "id": 3558, 
-              "key": "Thunder Bay"
-            }, 
-            {
-              "eng": "Rainy River", 
-              "fra": "Rainy River", 
-              "id": 3559, 
-              "key": "Rainy River"
-            }, 
-            {
-              "eng": "Kenora", 
-              "fra": "Kenora", 
-              "id": 3560, 
-              "key": "Kenora"
-            }, 
-            {
-              "eng": "Praries", 
-              "fra": "Praries", 
-              "id": 4, 
-              "key": "Praries"
-            }, 
-            {
-              "eng": "Manitoba", 
-              "fra": "Manitoba", 
-              "id": 46, 
-              "key": "Manitoba", 
-              "pilot_uuid": "06EFC55A-8AEB-42D2-90B8-5A6283BE4744"
-            }, 
-            {
-              "eng": "Division No. 1", 
-              "fra": "Division No. 1", 
-              "id": 4601, 
-              "key": "Division No. 1"
-            }, 
-            {
-              "eng": "Division No. 2", 
-              "fra": "Division No. 2", 
-              "id": 4602, 
-              "key": "Division No. 2"
-            }, 
-            {
-              "eng": "Division No. 3", 
-              "fra": "Division No. 3", 
-              "id": 4603, 
-              "key": "Division No. 3"
-            }, 
-            {
-              "eng": "Division No. 4", 
-              "fra": "Division No. 4", 
-              "id": 4604, 
-              "key": "Division No. 4"
-            }, 
-            {
-              "eng": "Division No. 5", 
-              "fra": "Division No. 5", 
-              "id": 4605, 
-              "key": "Division No. 5"
-            }, 
-            {
-              "eng": "Division No. 6", 
-              "fra": "Division No. 6", 
-              "id": 4606, 
-              "key": "Division No. 6"
-            }, 
-            {
-              "eng": "Division No. 7", 
-              "fra": "Division No. 7", 
-              "id": 4607, 
-              "key": "Division No. 7"
-            }, 
-            {
-              "eng": "Division No. 8", 
-              "fra": "Division No. 8", 
-              "id": 4608, 
-              "key": "Division No. 8"
-            }, 
-            {
-              "eng": "Division No. 9", 
-              "fra": "Division No. 9", 
-              "id": 4609, 
-              "key": "Division No. 9"
-            }, 
-            {
-              "eng": "Division No. 10", 
-              "fra": "Division No. 10", 
-              "id": 4610, 
-              "key": "Division No. 10"
-            }, 
-            {
-              "eng": "Division No. 11", 
-              "fra": "Division No. 11", 
-              "id": 4611, 
-              "key": "Division No. 11"
-            }, 
-            {
-              "eng": "Division No. 12", 
-              "fra": "Division No. 12", 
-              "id": 4612, 
-              "key": "Division No. 12"
-            }, 
-            {
-              "eng": "Division No. 13", 
-              "fra": "Division No. 13", 
-              "id": 4613, 
-              "key": "Division No. 13"
-            }, 
-            {
-              "eng": "Division No. 14", 
-              "fra": "Division No. 14", 
-              "id": 4614, 
-              "key": "Division No. 14"
-            }, 
-            {
-              "eng": "Division No. 15", 
-              "fra": "Division No. 15", 
-              "id": 4615, 
-              "key": "Division No. 15"
-            }, 
-            {
-              "eng": "Division No. 16", 
-              "fra": "Division No. 16", 
-              "id": 4616, 
-              "key": "Division No. 16"
-            }, 
-            {
-              "eng": "Division No. 17", 
-              "fra": "Division No. 17", 
-              "id": 4617, 
-              "key": "Division No. 17"
-            }, 
-            {
-              "eng": "Division No. 18", 
-              "fra": "Division No. 18", 
-              "id": 4618, 
-              "key": "Division No. 18"
-            }, 
-            {
-              "eng": "Division No. 19", 
-              "fra": "Division No. 19", 
-              "id": 4619, 
-              "key": "Division No. 19"
-            }, 
-            {
-              "eng": "Division No. 20", 
-              "fra": "Division No. 20", 
-              "id": 4620, 
-              "key": "Division No. 20"
-            }, 
-            {
-              "eng": "Division No. 21", 
-              "fra": "Division No. 21", 
-              "id": 4621, 
-              "key": "Division No. 21"
-            }, 
-            {
-              "eng": "Division No. 22", 
-              "fra": "Division No. 22", 
-              "id": 4622, 
-              "key": "Division No. 22"
-            }, 
-            {
-              "eng": "Division No. 23", 
-              "fra": "Division No. 23", 
-              "id": 4623, 
-              "key": "Division No. 23"
-            }, 
-            {
-              "eng": "Saskatchewan", 
-              "fra": "Saskatchewan", 
-              "id": 47, 
-              "key": "Saskatchewan", 
-              "pilot_uuid": "E521A8DF-6169-4728-990F-25D05C8791C7"
-            }, 
-            {
-              "eng": "Division No. 1", 
-              "fra": "Division No. 1", 
-              "id": 4701, 
-              "key": "Division No. 1"
-            }, 
-            {
-              "eng": "Division No. 2", 
-              "fra": "Division No. 2", 
-              "id": 4702, 
-              "key": "Division No. 2"
-            }, 
-            {
-              "eng": "Division No. 3", 
-              "fra": "Division No. 3", 
-              "id": 4703, 
-              "key": "Division No. 3"
-            }, 
-            {
-              "eng": "Division No. 4", 
-              "fra": "Division No. 4", 
-              "id": 4704, 
-              "key": "Division No. 4"
-            }, 
-            {
-              "eng": "Division No. 5", 
-              "fra": "Division No. 5", 
-              "id": 4705, 
-              "key": "Division No. 5"
-            }, 
-            {
-              "eng": "Division No. 6", 
-              "fra": "Division No. 6", 
-              "id": 4706, 
-              "key": "Division No. 6"
-            }, 
-            {
-              "eng": "Division No. 7", 
-              "fra": "Division No. 7", 
-              "id": 4707, 
-              "key": "Division No. 7"
-            }, 
-            {
-              "eng": "Division No. 8", 
-              "fra": "Division No. 8", 
-              "id": 4708, 
-              "key": "Division No. 8"
-            }, 
-            {
-              "eng": "Division No. 9", 
-              "fra": "Division No. 9", 
-              "id": 4709, 
-              "key": "Division No. 9"
-            }, 
-            {
-              "eng": "Division No. 10", 
-              "fra": "Division No. 10", 
-              "id": 4710, 
-              "key": "Division No. 10"
-            }, 
-            {
-              "eng": "Division No. 11", 
-              "fra": "Division No. 11", 
-              "id": 4711, 
-              "key": "Division No. 11"
-            }, 
-            {
-              "eng": "Division No. 12", 
-              "fra": "Division No. 12", 
-              "id": 4712, 
-              "key": "Division No. 12"
-            }, 
-            {
-              "eng": "Division No. 13", 
-              "fra": "Division No. 13", 
-              "id": 4713, 
-              "key": "Division No. 13"
-            }, 
-            {
-              "eng": "Division No. 14", 
-              "fra": "Division No. 14", 
-              "id": 4714, 
-              "key": "Division No. 14"
-            }, 
-            {
-              "eng": "Division No. 15", 
-              "fra": "Division No. 15", 
-              "id": 4715, 
-              "key": "Division No. 15"
-            }, 
-            {
-              "eng": "Division No. 16", 
-              "fra": "Division No. 16", 
-              "id": 4716, 
-              "key": "Division No. 16"
-            }, 
-            {
-              "eng": "Division No. 17", 
-              "fra": "Division No. 17", 
-              "id": 4717, 
-              "key": "Division No. 17"
-            }, 
-            {
-              "eng": "Division No. 18", 
-              "fra": "Division No. 18", 
-              "id": 4718, 
-              "key": "Division No. 18"
-            }, 
-            {
-              "eng": "Alberta", 
-              "fra": "Alberta", 
-              "id": 48, 
-              "key": "Alberta", 
-              "pilot_uuid": "7AF5C505-DE6F-4F49-8568-E09DD42C3907"
-            }, 
-            {
-              "eng": "Division No. 1", 
-              "fra": "Division No. 1", 
-              "id": 4801, 
-              "key": "Division No. 1"
-            }, 
-            {
-              "eng": "Division No. 2", 
-              "fra": "Division No. 2", 
-              "id": 4802, 
-              "key": "Division No. 2"
-            }, 
-            {
-              "eng": "Division No. 3", 
-              "fra": "Division No. 3", 
-              "id": 4803, 
-              "key": "Division No. 3"
-            }, 
-            {
-              "eng": "Division No. 4", 
-              "fra": "Division No. 4", 
-              "id": 4804, 
-              "key": "Division No. 4"
-            }, 
-            {
-              "eng": "Division No. 5", 
-              "fra": "Division No. 5", 
-              "id": 4805, 
-              "key": "Division No. 5"
-            }, 
-            {
-              "eng": "Division No. 6", 
-              "fra": "Division No. 6", 
-              "id": 4806, 
-              "key": "Division No. 6"
-            }, 
-            {
-              "eng": "Division No. 7", 
-              "fra": "Division No. 7", 
-              "id": 4807, 
-              "key": "Division No. 7"
-            }, 
-            {
-              "eng": "Division No. 8", 
-              "fra": "Division No. 8", 
-              "id": 4808, 
-              "key": "Division No. 8"
-            }, 
-            {
-              "eng": "Division No. 9", 
-              "fra": "Division No. 9", 
-              "id": 4809, 
-              "key": "Division No. 9"
-            }, 
-            {
-              "eng": "Division No. 10", 
-              "fra": "Division No. 10", 
-              "id": 4810, 
-              "key": "Division No. 10"
-            }, 
-            {
-              "eng": "Division No. 11", 
-              "fra": "Division No. 11", 
-              "id": 4811, 
-              "key": "Division No. 11"
-            }, 
-            {
-              "eng": "Division No. 12", 
-              "fra": "Division No. 12", 
-              "id": 4812, 
-              "key": "Division No. 12"
-            }, 
-            {
-              "eng": "Division No. 13", 
-              "fra": "Division No. 13", 
-              "id": 4813, 
-              "key": "Division No. 13"
-            }, 
-            {
-              "eng": "Division No. 14", 
-              "fra": "Division No. 14", 
-              "id": 4814, 
-              "key": "Division No. 14"
-            }, 
-            {
-              "eng": "Division No. 15", 
-              "fra": "Division No. 15", 
-              "id": 4815, 
-              "key": "Division No. 15"
-            }, 
-            {
-              "eng": "Division No. 16", 
-              "fra": "Division No. 16", 
-              "id": 4816, 
-              "key": "Division No. 16"
-            }, 
-            {
-              "eng": "Division No. 17", 
-              "fra": "Division No. 17", 
-              "id": 4817, 
-              "key": "Division No. 17"
-            }, 
-            {
-              "eng": "Division No. 18", 
-              "fra": "Division No. 18", 
-              "id": 4818, 
-              "key": "Division No. 18"
-            }, 
-            {
-              "eng": "Division No. 19", 
-              "fra": "Division No. 19", 
-              "id": 4819, 
-              "key": "Division No. 19"
-            }, 
-            {
-              "eng": "British Columbia", 
-              "fra": "Colombie-Britannique", 
-              "id": 5, 
-              "key": "British Columbia | Colombie-Britannique"
-            }, 
-            {
-              "eng": "British Columbia", 
-              "fra": "Colombie-Britannique", 
-              "id": 59, 
-              "key": "British Columbia | Colombie-Britannique", 
-              "pilot_uuid": "C066C99E-C228-4969-82CF-5E065E884D18"
-            }, 
-            {
-              "eng": "East Kootenay", 
-              "fra": "East Kootenay", 
-              "id": 5901, 
-              "key": "East Kootenay"
-            }, 
-            {
-              "eng": "Central Kootenay", 
-              "fra": "Central Kootenay", 
-              "id": 5903, 
-              "key": "Central Kootenay"
-            }, 
-            {
-              "eng": "Kootenay Boundary", 
-              "fra": "Kootenay Boundary", 
-              "id": 5905, 
-              "key": "Kootenay Boundary"
-            }, 
-            {
-              "eng": "Okanagan-Similkameen", 
-              "fra": "Okanagan-Similkameen", 
-              "id": 5907, 
-              "key": "Okanagan-Similkameen"
-            }, 
-            {
-              "eng": "Fraser Valley", 
-              "fra": "Fraser Valley", 
-              "id": 5909, 
-              "key": "Fraser Valley"
-            }, 
-            {
-              "eng": "Greater Vancouver", 
-              "fra": "Greater Vancouver", 
-              "id": 5915, 
-              "key": "Greater Vancouver"
-            }, 
-            {
-              "eng": "Capital", 
-              "fra": "Capital", 
-              "id": 5917, 
-              "key": "Capital"
-            }, 
-            {
-              "eng": "Cowichan Valley", 
-              "fra": "Cowichan Valley", 
-              "id": 5919, 
-              "key": "Cowichan Valley"
-            }, 
-            {
-              "eng": "Nanaimo", 
-              "fra": "Nanaimo", 
-              "id": 5921, 
-              "key": "Nanaimo"
-            }, 
-            {
-              "eng": "Alberni-Clayoquot", 
-              "fra": "Alberni-Clayoquot", 
-              "id": 5923, 
-              "key": "Alberni-Clayoquot"
-            }, 
-            {
-              "eng": "Strathcona", 
-              "fra": "Strathcona", 
-              "id": 5924, 
-              "key": "Strathcona"
-            }, 
-            {
-              "eng": "Comox Valley", 
-              "fra": "Comox Valley", 
-              "id": 5926, 
-              "key": "Comox Valley"
-            }, 
-            {
-              "eng": "Powell River", 
-              "fra": "Powell River", 
-              "id": 5927, 
-              "key": "Powell River"
-            }, 
-            {
-              "eng": "Sunshine Coast", 
-              "fra": "Sunshine Coast", 
-              "id": 5929, 
-              "key": "Sunshine Coast"
-            }, 
-            {
-              "eng": "Squamish-Lillooet", 
-              "fra": "Squamish-Lillooet", 
-              "id": 5931, 
-              "key": "Squamish-Lillooet"
-            }, 
-            {
-              "eng": "Thompson-Nicola", 
-              "fra": "Thompson-Nicola", 
-              "id": 5933, 
-              "key": "Thompson-Nicola"
-            }, 
-            {
-              "eng": "Central Okanagan", 
-              "fra": "Central Okanagan", 
-              "id": 5935, 
-              "key": "Central Okanagan"
-            }, 
-            {
-              "eng": "North Okanagan", 
-              "fra": "North Okanagan", 
-              "id": 5937, 
-              "key": "North Okanagan"
-            }, 
-            {
-              "eng": "Columbia-Shuswap", 
-              "fra": "Columbia-Shuswap", 
-              "id": 5939, 
-              "key": "Columbia-Shuswap"
-            }, 
-            {
-              "eng": "Cariboo", 
-              "fra": "Cariboo", 
-              "id": 5941, 
-              "key": "Cariboo"
-            }, 
-            {
-              "eng": "Mount Waddington", 
-              "fra": "Mount Waddington", 
-              "id": 5943, 
-              "key": "Mount Waddington"
-            }, 
-            {
-              "eng": "Central Coast", 
-              "fra": "Central Coast", 
-              "id": 5945, 
-              "key": "Central Coast"
-            }, 
-            {
-              "eng": "Skeena-Queen Charlotte", 
-              "fra": "Skeena-Queen Charlotte", 
-              "id": 5947, 
-              "key": "Skeena-Queen Charlotte"
-            }, 
-            {
-              "eng": "Kitimat-Stikine", 
-              "fra": "Kitimat-Stikine", 
-              "id": 5949, 
-              "key": "Kitimat-Stikine"
-            }, 
-            {
-              "eng": "Bulkley-Nechako", 
-              "fra": "Bulkley-Nechako", 
-              "id": 5951, 
-              "key": "Bulkley-Nechako"
-            }, 
-            {
-              "eng": "Fraser-Fort George", 
-              "fra": "Fraser-Fort George", 
-              "id": 5953, 
-              "key": "Fraser-Fort George"
-            }, 
-            {
-              "eng": "Peace River", 
-              "fra": "Peace River", 
-              "id": 5955, 
-              "key": "Peace River"
-            }, 
-            {
-              "eng": "Stikine", 
-              "fra": "Stikine", 
-              "id": 5957, 
-              "key": "Stikine"
-            }, 
-            {
-              "eng": "Northern Rockies", 
-              "fra": "Northern Rockies", 
-              "id": 5959, 
-              "key": "Northern Rockies"
-            }, 
-            {
-              "eng": "Territories", 
-              "fra": "Territories", 
-              "id": 6, 
-              "key": "Territories"
-            }, 
-            {
-              "eng": "Yukon", 
-              "fra": "Yukon", 
-              "id": 60, 
-              "key": "Yukon"
-            }, 
-            {
-              "eng": "Yukon", 
-              "fra": "Yukon", 
-              "id": 6001, 
-              "key": "Yukon"
-            }, 
-            {
-              "eng": "Northwest Territories", 
-              "fra": "Territoires du Nord-Ouest", 
-              "id": 61, 
-              "key": "Northwest Territories | Territoires du Nord-Ouest", 
-              "pilot_uuid": "57D53D77-58B1-4431-97ED-9AB61C5C7940"
-            }, 
-            {
-              "eng": "Region 1", 
-              "fra": "Region 1", 
-              "id": 6101, 
-              "key": "Region 1"
-            }, 
-            {
-              "eng": "Region 2", 
-              "fra": "Region 2", 
-              "id": 6102, 
-              "key": "Region 2"
-            }, 
-            {
-              "eng": "Region 3", 
-              "fra": "Region 3", 
-              "id": 6103, 
-              "key": "Region 3"
-            }, 
-            {
-              "eng": "Region 4", 
-              "fra": "Region 4", 
-              "id": 6104, 
-              "key": "Region 4"
-            }, 
-            {
-              "eng": "Region 5", 
-              "fra": "Region 5", 
-              "id": 6105, 
-              "key": "Region 5"
-            }, 
-            {
-              "eng": "Region 6", 
-              "fra": "Region 6", 
-              "id": 6106, 
-              "key": "Region 6"
-            }, 
-            {
-              "eng": "Nunavut", 
-              "fra": "Nunavut", 
-              "id": 62, 
-              "key": "Nunavut", 
-              "pilot_uuid": "17E062E3-39D1-4306-BEEE-1808BC6573A4"
-            }, 
-            {
-              "eng": "Baffin", 
-              "fra": "Baffin", 
-              "id": 6204, 
-              "key": "Baffin"
-            }, 
-            {
-              "eng": "Keewatin", 
-              "fra": "Keewatin", 
-              "id": 6205, 
-              "key": "Keewatin"
-            }, 
-            {
-              "eng": "Kitikmeot", 
-              "fra": "Kitikmeot", 
-              "id": 6208, 
-              "key": "Kitikmeot"
-            }, 
-            {
-              "eng": "Canada", 
-              "fra": "Canada", 
-              "key": "Canada", 
-              "pilot_uuid": "6D37004F-8D36-4221-B10C-5B3FA1B8071B"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, Avalon Peninsula", 
-              "fra": "Terre-Neuve-et-Labrador, Avalon Peninsula", 
-              "key": "Newfoundland and Labrador, Avalon Peninsula | Terre-Neuve-et-Labrador, Avalon Peninsula", 
-              "pilot_uuid": "F3128678-B7C8-44FA-A773-B3CB5B924F0F"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, South Coast - Burin Peninsula", 
-              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
-              "key": "Newfoundland and Labrador, South Coast - Burin Peninsula | Terre-Neuve-et-Labrador, C\u00f4te-sud - Burin Peninsula", 
-              "pilot_uuid": "A653F3DE-EA64-4EA5-8576-729F2C93C1FC"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador", 
-              "fra": "Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
-              "key": "Newfoundland and Labrador, West Coast - Northern Peninsula - Labrador | Terre-Neuve-et-Labrador, C\u00f4te-ouest - Northern Peninsula - Labrador", 
-              "pilot_uuid": "949769F4-2319-4EBB-BB05-53CE5A7B06D4"
-            }, 
-            {
-              "eng": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay", 
-              "fra": "Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
-              "key": "Newfoundland and Labrador, Notre Dame - Central Bonavista Bay | Terre-Neuve-et-Labrador, Notre Dame - Central Bonavista Bay", 
-              "pilot_uuid": "80C385BB-0BA0-4B75-A0D9-AFA29991B8FC"
-            }, 
-            {
-              "eng": "Nova Scotia, Cape Breton", 
-              "fra": "Nouvelle-\u00c9cosse, Cape Breton", 
-              "key": "Nova Scotia, Cape Breton | Nouvelle-\u00c9cosse, Cape Breton", 
-              "pilot_uuid": "52806552-D51A-41BD-A320-AE5DE26D253D"
-            }, 
-            {
-              "eng": "Nova Scotia, North Shore", 
-              "fra": "Nouvelle-\u00c9cosse, C\u00f4te-nord", 
-              "key": "Nova Scotia, North Shore | Nouvelle-\u00c9cosse, C\u00f4te-nord", 
-              "pilot_uuid": "CB3CBA33-C3EE-45DA-AEF8-E51A1A0638FF"
-            }, 
-            {
-              "eng": "Nova Scotia, Annapolis Valley", 
-              "fra": "Nouvelle-\u00c9cosse, Annapolis Valley", 
-              "key": "Nova Scotia, Annapolis Valley | Nouvelle-\u00c9cosse, Annapolis Valley", 
-              "pilot_uuid": "758F2CCF-C5E6-4A49-B98A-8E906F625DB7"
-            }, 
-            {
-              "eng": "Nova Scotia, Southern", 
-              "fra": "Nouvelle-\u00c9cosse, Sud", 
-              "key": "Nova Scotia, Southern | Nouvelle-\u00c9cosse, Sud", 
-              "pilot_uuid": "68A34CFB-D3B7-4334-ADAD-38FA3B9D1D13"
-            }, 
-            {
-              "eng": "Nova Scotia, Halifax", 
-              "fra": "Nouvelle-\u00c9cosse, Halifax", 
-              "key": "Nova Scotia, Halifax | Nouvelle-\u00c9cosse, Halifax", 
-              "pilot_uuid": "D1CC41D9-6E95-4BBB-9BE7-DB95F6F71D56"
-            }, 
-            {
-              "eng": "New Brunswick, Campbellton - Miramichi", 
-              "fra": "Nouveau-Brunswick, Campbellton - Miramichi", 
-              "key": "New Brunswick, Campbellton - Miramichi | Nouveau-Brunswick, Campbellton - Miramichi", 
-              "pilot_uuid": "06165AFC-6C3C-4A7F-B4D3-40E39F1F8E11"
-            }, 
-            {
-              "eng": "New Brunswick, Moncton - Richibucto", 
-              "fra": "Nouveau-Brunswick, Moncton - Richibucto", 
-              "key": "New Brunswick, Moncton - Richibucto | Nouveau-Brunswick, Moncton - Richibucto", 
-              "pilot_uuid": "2E57A55D-8E3F-4479-A893-487D8B3E8B5C"
-            }, 
-            {
-              "eng": "New Brunswick, Saint John - St. Stephen", 
-              "fra": "Nouveau-Brunswick, Saint John - St. Stephen", 
-              "key": "New Brunswick, Saint John - St. Stephen | Nouveau-Brunswick, Saint John - St. Stephen", 
-              "pilot_uuid": "8EF1632B-D474-4A2B-B8CF-5821AF5C9070"
-            }, 
-            {
-              "eng": "New Brunswick, Fredericton - Oromocto", 
-              "fra": "Nouveau-Brunswick, Fredericton - Oromocto", 
-              "key": "New Brunswick, Fredericton - Oromocto | Nouveau-Brunswick, Fredericton - Oromocto", 
-              "pilot_uuid": "BCC17FAA-FF85-49B3-981D-F22D31D511C4"
-            }, 
-            {
-              "eng": "New Brunswick, Edmundston - Woodstock", 
-              "fra": "Nouveau-Brunswick, Edmundston - Woodstock", 
-              "key": "New Brunswick, Edmundston - Woodstock | Nouveau-Brunswick, Edmundston - Woodstock", 
-              "pilot_uuid": "E4EB8445-908A-49A1-9F7F-CAA820FC67FC"
-            }, 
-            {
-              "eng": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
-              "fra": "Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
-              "key": "Quebec, Gasp\u00e9sie - \u00celes-de-la-Madeleine | Qu\u00e9bec, Gasp\u00e9sie - \u00celes-de-la-Madeleine", 
-              "pilot_uuid": "A875ADFB-7A71-4472-8BCF-DB1739F10521"
-            }, 
-            {
-              "eng": "Quebec, Bas-Saint-Laurent", 
-              "fra": "Qu\u00e9bec, Bas-Saint-Laurent", 
-              "key": "Quebec, Bas-Saint-Laurent | Qu\u00e9bec, Bas-Saint-Laurent", 
-              "pilot_uuid": "7781A775-A703-47B6-B166-CE473AB24D14"
-            }, 
-            {
-              "eng": "Quebec, Capitale-Nationale", 
-              "fra": "Qu\u00e9bec, Capitale-Nationale", 
-              "key": "Quebec, Capitale-Nationale | Qu\u00e9bec, Capitale-Nationale", 
-              "pilot_uuid": "4A345505-D9A1-4FEC-BF18-8D1FF07CB134"
-            }, 
-            {
-              "eng": "Quebec, Chaudi\u00e8re - Appalaches", 
-              "fra": "Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
-              "key": "Quebec, Chaudi\u00e8re - Appalaches | Qu\u00e9bec, Chaudi\u00e8re - Appalaches", 
-              "pilot_uuid": "2F07ECB7-4372-4029-A1B4-B87C6CE8DB56"
-            }, 
-            {
-              "eng": "Quebec, Estrie", 
-              "fra": "Qu\u00e9bec, Estrie", 
-              "key": "Quebec, Estrie | Qu\u00e9bec, Estrie", 
-              "pilot_uuid": "A2948848-C501-4982-847E-D539A4EAAA9F"
-            }, 
-            {
-              "eng": "Quebec, Centre-du-Qu\u00e9bec", 
-              "fra": "Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
-              "key": "Quebec, Centre-du-Qu\u00e9bec | Qu\u00e9bec, Centre-du-Qu\u00e9bec", 
-              "pilot_uuid": "C982ABC4-7DB9-4F6A-AEC2-8F7E46B80269"
-            }, 
-            {
-              "eng": "Quebec, Mont\u00e9r\u00e9gie", 
-              "fra": "Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
-              "key": "Quebec, Mont\u00e9r\u00e9gie | Qu\u00e9bec, Mont\u00e9r\u00e9gie", 
-              "pilot_uuid": "FB14D3C7-1D22-4D91-A465-642D216EEE48"
-            }, 
-            {
-              "eng": "Quebec, Montr\u00e9al", 
-              "fra": "Qu\u00e9bec, Montr\u00e9al", 
-              "key": "Quebec, Montr\u00e9al | Qu\u00e9bec, Montr\u00e9al", 
-              "pilot_uuid": "A5B86BB5-C3F5-4044-8CA0-66DB522EF645"
-            }, 
-            {
-              "eng": "Quebec, Laval", 
-              "fra": "Qu\u00e9bec, Laval", 
-              "key": "Quebec, Laval | Qu\u00e9bec, Laval", 
-              "pilot_uuid": "286A141F-70A9-4ED4-89E3-90DD5A90B9EF"
-            }, 
-            {
-              "eng": "Quebec, Lanaudi\u00e8re", 
-              "fra": "Qu\u00e9bec, Lanaudi\u00e8re", 
-              "key": "Quebec, Lanaudi\u00e8re | Qu\u00e9bec, Lanaudi\u00e8re", 
-              "pilot_uuid": "9D01047A-B571-4CC4-A295-CACED5C21136"
-            }, 
-            {
-              "eng": "Quebec, Laurentides", 
-              "fra": "Qu\u00e9bec, Laurentides", 
-              "key": "Quebec, Laurentides | Qu\u00e9bec, Laurentides", 
-              "pilot_uuid": "79F2CB43-8948-40F0-BF66-399E2073B27F"
-            }, 
-            {
-              "eng": "Quebec, Outaouais", 
-              "fra": "Qu\u00e9bec, Outaouais", 
-              "key": "Quebec, Outaouais | Qu\u00e9bec, Outaouais", 
-              "pilot_uuid": "43D8228A-5DC4-4A0D-9CB7-ECA2F4E8A5D1"
-            }, 
-            {
-              "eng": "Quebec, Abitibi - T\u00e9miscamingue", 
-              "fra": "Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
-              "key": "Quebec, Abitibi - T\u00e9miscamingue | Qu\u00e9bec, Abitibi - T\u00e9miscamingue", 
-              "pilot_uuid": "5E733630-FFFD-471C-90AD-F5F3FC3D7C06"
-            }, 
-            {
-              "eng": "Quebec, Mauricie", 
-              "fra": "Qu\u00e9bec, Mauricie", 
-              "key": "Quebec, Mauricie | Qu\u00e9bec, Mauricie", 
-              "pilot_uuid": "D7BAB7C5-CA8B-4AC9-B5FB-173C7563E011"
-            }, 
-            {
-              "eng": "Quebec, Saguenay - Lac-Saint-Jean", 
-              "fra": "Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
-              "key": "Quebec, Saguenay - Lac-Saint-Jean | Qu\u00e9bec, Saguenay - Lac-Saint-Jean", 
-              "pilot_uuid": "645070BF-16DD-4D87-88FE-94ECF86F41EB"
-            }, 
-            {
-              "eng": "Quebec, C\u00f4te-Nord", 
-              "fra": "Qu\u00e9bec, C\u00f4te-Nord", 
-              "key": "Quebec, C\u00f4te-Nord | Qu\u00e9bec, C\u00f4te-Nord", 
-              "pilot_uuid": "335CCEE3-4877-474C-B4F9-4C24D5086091"
-            }, 
-            {
-              "eng": "Quebec, Nord-du-Qu\u00e9bec", 
-              "fra": "Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
-              "key": "Quebec, Nord-du-Qu\u00e9bec | Qu\u00e9bec, Nord-du-Qu\u00e9bec", 
-              "pilot_uuid": "36767DAB-B71E-4144-BCF1-7EF6B51A59AE"
-            }, 
-            {
-              "eng": "Ontario, Ottawa", 
-              "fra": "Ontario, Ottawa", 
-              "key": "Ontario, Ottawa", 
-              "pilot_uuid": "59F96221-A0D1-4668-A769-9DAC7DFC2198"
-            }, 
-            {
-              "eng": "Ontario, Kingston - Pembroke", 
-              "fra": "Ontario, Kingston - Pembroke", 
-              "key": "Ontario, Kingston - Pembroke", 
-              "pilot_uuid": "CEE37552-0AC1-42D2-86C8-B2EBEB858893"
-            }, 
-            {
-              "eng": "Ontario, Muskoka - Kawarthas", 
-              "fra": "Ontario, Muskoka - Kawarthas", 
-              "key": "Ontario, Muskoka - Kawarthas", 
-              "pilot_uuid": "75176775-E0E6-4938-B03E-40ECFDB399C1"
-            }, 
-            {
-              "eng": "Ontario, Toronto", 
-              "fra": "Ontario, Toronto", 
-              "key": "Ontario, Toronto", 
-              "pilot_uuid": "6BAFE4BB-FDDF-489F-B123-E1E493E790AC"
-            }, 
-            {
-              "eng": "Ontario, Kitchener - Waterloo - Barrie", 
-              "fra": "Ontario, Kitchener - Waterloo - Barrie", 
-              "key": "Ontario, Kitchener - Waterloo - Barrie", 
-              "pilot_uuid": "971A8458-0FAD-42A4-99B6-579374BF668B"
-            }, 
-            {
-              "eng": "Ontario, Hamilton - Niagara Peninsula", 
-              "fra": "Ontario, Hamilton - Niagara Peninsula", 
-              "key": "Ontario, Hamilton - Niagara Peninsula", 
-              "pilot_uuid": "4004DAC2-4AE4-49B9-A4E8-F27940335530"
-            }, 
-            {
-              "eng": "Ontario, London", 
-              "fra": "Ontario, London", 
-              "key": "Ontario, London", 
-              "pilot_uuid": "66CE657A-9A2B-42EB-BB89-592024C852B5"
-            }, 
-            {
-              "eng": "Ontario,Windsor - Sarnia", 
-              "fra": "Ontario, Windsor - Sarnia", 
-              "key": "Ontario,Windsor - Sarnia | Ontario, Windsor - Sarnia", 
-              "pilot_uuid": "3FDECF16-64AD-4822-8076-344711C185DB"
-            }, 
-            {
-              "eng": "Ontario, Stratford - Bruce Peninsula", 
-              "fra": "Ontario, Stratford - Bruce Peninsula", 
-              "key": "Ontario, Stratford - Bruce Peninsula", 
-              "pilot_uuid": "31F39CA2-4A93-4337-87A7-11EDFA53E511"
-            }, 
-            {
-              "eng": "Ontario, Northeast", 
-              "fra": "Ontario, Nord-est", 
-              "key": "Ontario, Northeast | Ontario, Nord-est", 
-              "pilot_uuid": "55D9E9C2-56E5-4293-A896-D7008F6F5710"
-            }, 
-            {
-              "eng": "Ontario, Northwest", 
-              "fra": "Ontario, Nord-ouest", 
-              "key": "Ontario, Northwest | Ontario, Nord-ouest", 
-              "pilot_uuid": "D8A000DF-4852-49A5-BB03-B93CC563FBF7"
-            }, 
-            {
-              "eng": "Manitoba, Southeast", 
-              "fra": "Manitoba, Sud-est", 
-              "key": "Manitoba, Southeast | Manitoba, Sud-est", 
-              "pilot_uuid": "271DA932-E487-4795-9995-ADB722297359"
-            }, 
-            {
-              "eng": "Manitoba, South Central", 
-              "fra": "Manitoba, Centre sud", 
-              "key": "Manitoba, South Central | Manitoba, Centre sud", 
-              "pilot_uuid": "85E82590-1617-47BA-B69C-22BFAFB2C00A"
-            }, 
-            {
-              "eng": "Manitoba, Southwest", 
-              "fra": "Manitoba, Sud-ouest", 
-              "key": "Manitoba, Southwest | Manitoba, Sud-ouest", 
-              "pilot_uuid": "1637DBB0-E991-411E-8DA3-E5373DE577CE"
-            }, 
-            {
-              "eng": "Manitoba, North Central", 
-              "fra": "Manitoba, Centre nord", 
-              "key": "Manitoba, North Central | Manitoba, Centre nord", 
-              "pilot_uuid": "5374E0A8-103B-4186-81B5-ACCE63EAE455"
-            }, 
-            {
-              "eng": "Manitoba, Winnipeg", 
-              "fra": "Manitoba, Winnipeg", 
-              "key": "Manitoba, Winnipeg", 
-              "pilot_uuid": "EAF1AC09-370A-4146-B049-FA59FA1F5B04"
-            }, 
-            {
-              "eng": "Manitoba, Interlake", 
-              "fra": "Manitoba, Interlake", 
-              "key": "Manitoba, Interlake", 
-              "pilot_uuid": "036FB1AA-B86D-43F9-A674-56A78388F8F2"
-            }, 
-            {
-              "eng": "Manitoba, Parklands", 
-              "fra": "Manitoba, Parklands", 
-              "key": "Manitoba, Parklands", 
-              "pilot_uuid": "16155173-67AC-4624-90E5-5A2D9079123A"
-            }, 
-            {
-              "eng": "Manitoba, North", 
-              "fra": "Manitoba, Nord", 
-              "key": "Manitoba, North | Manitoba, Nord", 
-              "pilot_uuid": "404E352F-B648-40F5-8B56-1A0B07B2DE5F"
-            }, 
-            {
-              "eng": "Saskatchewan, Regina - Moose Mountain", 
-              "fra": "Saskatchewan, Regina - Moose Mountain", 
-              "key": "Saskatchewan, Regina - Moose Mountain", 
-              "pilot_uuid": "1AE83DB1-ECAC-4426-A246-C793A606D1E2"
-            }, 
-            {
-              "eng": "Saskatchewan, Swift Current - Moose Jaw", 
-              "fra": "Saskatchewan, Swift Current - Moose Jaw", 
-              "key": "Saskatchewan, Swift Current - Moose Jaw", 
-              "pilot_uuid": "193259E4-EF93-4691-8572-694914D879C4"
-            }, 
-            {
-              "eng": "Saskatchewan, Saskatoon - Biggar", 
-              "fra": "Saskatchewan, Saskatoon - Biggar", 
-              "key": "Saskatchewan, Saskatoon - Biggar", 
-              "pilot_uuid": "AEE97977-91A3-48B3-A085-369B9B381992"
-            }, 
-            {
-              "eng": "Saskatchewan, Yorkton - Melville", 
-              "fra": "Saskatchewan, Yorkton - Melville", 
-              "key": "Saskatchewan, Yorkton - Melville", 
-              "pilot_uuid": "4934F180-D0E4-4217-A3F4-75E196DCF4D2"
-            }, 
-            {
-              "eng": "Saskatchewan, Prince Albert", 
-              "fra": "Saskatchewan, Prince Alber", 
-              "key": "Saskatchewan, Prince Albert | Saskatchewan, Prince Alber", 
-              "pilot_uuid": "46A7F06F-2AB3-4DBD-8069-AF6B588C6352"
-            }, 
-            {
-              "eng": "Saskatchewan, Northern", 
-              "fra": "Saskatchewan, Nord", 
-              "key": "Saskatchewan, Northern | Saskatchewan, Nord", 
-              "pilot_uuid": "69B4A85A-DF1B-479F-B9E9-C8B89B692421"
-            }, 
-            {
-              "eng": "Alberta, Lethbridge - Medicine Hat", 
-              "fra": "Alberta, Lethbridge - Medicine Hat", 
-              "key": "Alberta, Lethbridge - Medicine Hat", 
-              "pilot_uuid": "4DB9A4E6-6E6A-46F5-9CCD-2FA508DF95EA"
-            }, 
-            {
-              "eng": "Alberta, Camrose - Drumheller", 
-              "fra": "Alberta, Camrose - Drumheller", 
-              "key": "Alberta, Camrose - Drumheller", 
-              "pilot_uuid": "394064E0-D465-4520-B651-CE6D28829CD5"
-            }, 
-            {
-              "eng": "Alberta, Calgary", 
-              "fra": "Alberta, Calgary", 
-              "key": "Alberta, Calgary", 
-              "pilot_uuid": "5DF525C4-F8F7-4224-9D38-882B87CC20FC"
-            }, 
-            {
-              "eng": "Alberta, Banff - Jasper - Rocky Mountain House", 
-              "fra": "Alberta, Banff - Jasper - Rocky Mountain House", 
-              "key": "Alberta, Banff - Jasper - Rocky Mountain House", 
-              "pilot_uuid": "F60854D7-139C-4945-9C5F-A6D6B3027B60"
-            }, 
-            {
-              "eng": "Alberta, Red Deer", 
-              "fra": "Alberta, Red Deer", 
-              "key": "Alberta, Red Deer", 
-              "pilot_uuid": "DD16DC3F-CEBA-47A9-AE36-F8E70978EFA9"
-            }, 
-            {
-              "eng": "Alberta, Edmonton", 
-              "fra": "Alberta, Edmonton", 
-              "key": "Alberta, Edmonton", 
-              "pilot_uuid": "60924ED3-E829-45E5-BE8B-2608AF64B241"
-            }, 
-            {
-              "eng": "Alberta, Athabasca - Grande Prairie - Peace River", 
-              "fra": "Alberta, Athabasca - Grande Prairie - Peace River", 
-              "key": "Alberta, Athabasca - Grande Prairie - Peace River", 
-              "pilot_uuid": "5161B55F-3BF5-46F7-B461-455735F6B9B4"
-            }, 
-            {
-              "eng": "Alberta, Wood Buffalo - Cold Lake", 
-              "fra": "Alberta, Wood Buffalo - Cold Lake", 
-              "key": "Alberta, Wood Buffalo - Cold Lake", 
-              "pilot_uuid": "1CF90823-601B-4C2E-8FC7-C89C89874F6E"
-            }, 
-            {
-              "eng": "British Columbia, Vancouver Island and Coast", 
-              "fra": "Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
-              "key": "British Columbia, Vancouver Island and Coast | Colombie-Britannique, \u00cele de Vancouver et la c\u00f4te", 
-              "pilot_uuid": "DB4EDAA0-7BDD-4BEA-8389-83F22A4F33EE"
-            }, 
-            {
-              "eng": "British Columbia, Lower Mainland - Southwest", 
-              "fra": "Colombie-Britannique, Lower Mainland - Sud-ouest", 
-              "key": "British Columbia, Lower Mainland - Southwest | Colombie-Britannique, Lower Mainland - Sud-ouest", 
-              "pilot_uuid": "9518430C-F0E7-4BB8-A6D0-31A3883B0458"
-            }, 
-            {
-              "eng": "British Columbia, Thompson - Okanagan", 
-              "fra": "Colombie-Britannique, Thompson - Okanagan", 
-              "key": "British Columbia, Thompson - Okanagan | Colombie-Britannique, Thompson - Okanagan", 
-              "pilot_uuid": "AD2C7807-4427-42F4-AE8A-2285BFA21BD2"
-            }, 
-            {
-              "eng": "British Columbia, Kootenay", 
-              "fra": "Colombie-Britannique, Kootenay", 
-              "key": "British Columbia, Kootenay | Colombie-Britannique, Kootenay", 
-              "pilot_uuid": "25FE72D2-E8FF-4313-ABFC-3A955B8F92FB"
-            }, 
-            {
-              "eng": "British Columbia, Cariboo", 
-              "fra": "Colombie-Britannique, Cariboo", 
-              "key": "British Columbia, Cariboo | Colombie-Britannique, Cariboo", 
-              "pilot_uuid": "F04C8179-3D93-41AB-B1C7-A0A13047EEC6"
-            }, 
-            {
-              "eng": "British Columbia, North Coast", 
-              "fra": "Colombie-Britannique, C\u00f4te-nord", 
-              "key": "British Columbia, North Coast | Colombie-Britannique, C\u00f4te-nord", 
-              "pilot_uuid": "94E0DABF-268E-454B-B20E-727A9FF34FAB"
-            }, 
-            {
-              "eng": "British Columbia, Nechako", 
-              "fra": "Colombie-Britannique, Nechako", 
-              "key": "British Columbia, Nechako | Colombie-Britannique, Nechako", 
-              "pilot_uuid": "EF0326DA-31D0-4444-B526-533DD9CC7F7C"
-            }, 
-            {
-              "eng": "British Columbia, Northeast", 
-              "fra": "Colombie-Britannique, Nord-est", 
-              "key": "British Columbia, Northeast | Colombie-Britannique, Nord-est", 
-              "pilot_uuid": "4284F297-5090-447A-A1E3-C339B68F5932"
-            }, 
-            {
-              "eng": "Yukon Territory", 
-              "fra": "Territoire du Yukon", 
-              "key": "Yukon Territory | Territoire du Yukon", 
-              "pilot_uuid": "6ECB03C0-0AAC-49D5-89A8-CE9210C45B10"
-            }
-          ], 
-          "description": {
-            "eng": "The geographic area of the dataset", 
-            "fra": "La r\u00e9gion g\u00e9ographique de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "example": "Ottawa", 
-          "existing": false, 
-          "gc_multiplicity": "O", 
-          "id": "geographic_region", 
-          "label": {
-            "eng": "Geographic Region", 
-            "fra": "R\u00e9gion g\u00e9ographique"
-          }, 
-          "pilot_help": {
-            "eng": "The region that describes the geographic area covered by the dataset.", 
-            "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
-          }, 
-          "pilot_id": "Geographic_Region_Name", 
-          "pilot_name": {
-            "eng": "Geographic Region Name", 
-            "fra": "Nom de la r\u00e9gion g\u00e9ographique"
-          }, 
-          "pilot_type": "choice", 
-          "proposed_name": {
-            "eng": "geographicRegion", 
-            "fra": "r\u00e9gionG\u00e9ographique"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)"
-        }, 
-        {
           "bilingual": true, 
           "description": {
             "eng": "The URL for the Government of Canada program that is responsible for the dataset.", 
@@ -4463,6 +4446,26 @@
           }, 
           "proposed_name": {
             "eng": "endpoint", 
+            "fra": ""
+          }, 
+          "proposed_type": ""
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "(describe me)", 
+            "fra": "(translate me)"
+          }, 
+          "example": "1", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "ready_to_publish", 
+          "label": {
+            "eng": "Ready to Publish", 
+            "fra": "(translate me)"
+          }, 
+          "proposed_name": {
+            "eng": "readyToPublish", 
             "fra": ""
           }, 
           "proposed_type": ""
@@ -5084,6 +5087,7 @@
   ], 
   "vocabularies": {
     "gc_core_subject_thesaurus": "subject", 
+    "gc_geographic_region": "geographic_region", 
     "iso_topic_categories": "topic_category"
   }
 }

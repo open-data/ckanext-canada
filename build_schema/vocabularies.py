@@ -2,6 +2,7 @@
 
 VOCABULARY_GC_CORE_SUBJECT_THESAURUS = u'gc_core_subject_thesaurus'
 VOCABULARY_ISO_TOPIC_CATEGORIES = u'iso_topic_categories'
+VOCABULARY_GC_GEOGRAPHIC_REGION = u'gc_geographic_region'
 
 
 def read_from_sheet(sheet):

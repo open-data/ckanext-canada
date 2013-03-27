@@ -47,15 +47,16 @@ SECTIONS_FIELDS = [
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
+        'geographic_region',
         'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Additional Fields", [
         'maintenance_and_update_frequency',
         'time_period_coverage_start',
         'time_period_coverage_end',
-        'geographic_region',
         'url',
         'endpoint_url',
+        'ready_to_publish',
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
@@ -111,11 +112,9 @@ ProposedField = namedtuple("ProposedField", """
     name_space
     implementation
     implementation_fra
-    fra_implementation
     data_gov_common_core
     json
     rdfa_lite
-    fra_implementation_fra
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
@@ -131,6 +130,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'catalogueType': 'catalog_type',
     'title': 'title',
     'datePublished': 'date_published',
+    'readyToPublish': 'ready_to_publish',
     'dateModified': 'resource:last_modified',
     'abstract': 'notes',
     'subject': 'subject',
@@ -302,6 +302,7 @@ def apply_field_customizations(schema_out, vocab):
     schema_out['vocabularies'] = {
         vocabularies.VOCABULARY_GC_CORE_SUBJECT_THESAURUS: 'subject',
         vocabularies.VOCABULARY_ISO_TOPIC_CATEGORIES: 'topic_category',
+        vocabularies.VOCABULARY_GC_GEOGRAPHIC_REGION: 'geographic_region',
         }
 
     def get_field(field_id):
@@ -317,11 +318,8 @@ def apply_field_customizations(schema_out, vocab):
             if f['id'] == field_id)
         return field
 
-    subject = get_field('subject')
-    subject['type'] = 'keywords'
-
-    topic_category = get_field('topic_category')
-    topic_category['type'] = 'keywords'
+    for fname in schema_out['vocabularies'].values():
+        get_field(fname)['type'] = 'tag_vocabulary'
 
     def merge(c1, c2):
         def norm(t):
@@ -380,7 +378,32 @@ def add_keys_for_choices(f):
     Add a 'key' key to each choice in f['choices'] that will be used
     as the value to actually store in the DB + use with the API
     """
-    if f.get('type') == 'keywords':
+    # XXX more custom geographic_region hacks
+    if f['id'] == 'geographic_region':
+        province_group = None
+        province = None
+        new_choices = []
+        for c in f['choices']:
+            cid = c.get('id', 0)
+            if 0 < cid < 10:
+                province_group = c
+            elif 10 <= cid < 100:
+                province = c
+                # remove duplicated province items from choices
+                if any(c[lang] == province_group[lang] for lang in LANGS):
+                    if 'pilot_uuid' in c:
+                        province_group['pilot_uuid'] = c['pilot_uuid']
+                    continue
+            if 1000 <= cid:
+                c['key'] = u'  '.join(
+                    clean_tag_part(province[lang] + ' - ' + c[lang])
+                    for lang in LANGS)
+            else:
+                c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
+            new_choices.append(c)
+        f['choices'] = new_choices
+
+    elif f.get('type') == 'tag_vocabulary':
         for c in f['choices']:
             # keywords have strict limits on valid characters
             c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)

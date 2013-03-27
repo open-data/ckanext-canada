@@ -2,7 +2,6 @@ from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound, ValidationError
 
-import logging
 import re
 import json
 import time
@@ -88,13 +87,16 @@ class CanadaCommand(CkanCommand):
         context = {'user': user['name']}
         try:
             vocab = get_action('vocabulary_show')(context, {'id': name})
-            logging.info("{name} vocabulary exists, skipping".format(name=name))
+            print "{name} vocabulary exists, skipping".format(name=name)
             return
         except NotFound:
             pass
-        logging.info('creating {name} vocabulary'.format(name=name))
+        print 'creating {name} vocabulary'.format(name=name)
         vocab = get_action('vocabulary_create')(context, {'name': name})
         for term in terms:
+            # don't create items that only existed in pilot
+            if 'id' not in term:
+                continue
             get_action('tag_create')(context, {
                 'name': term['key'],
                 'vocabulary_id': vocab['id'],
