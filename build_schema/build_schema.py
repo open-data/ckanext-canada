@@ -318,11 +318,8 @@ def apply_field_customizations(schema_out, vocab):
             if f['id'] == field_id)
         return field
 
-    subject = get_field('subject')
-    subject['type'] = 'keywords'
-
-    topic_category = get_field('topic_category')
-    topic_category['type'] = 'keywords'
+    for fname in schema_out['vocabularies'].values():
+        get_field(fname)['type'] = 'keywords'
 
     def merge(c1, c2):
         def norm(t):
