@@ -112,11 +112,9 @@ ProposedField = namedtuple("ProposedField", """
     name_space
     implementation
     implementation_fra
-    fra_implementation
     data_gov_common_core
     json
     rdfa_lite
-    fra_implementation_fra
     """)
 
 # 'proposed name' : 'new or existing CKAN field name'
