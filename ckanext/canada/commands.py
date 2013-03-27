@@ -2,12 +2,16 @@ from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound, ValidationError
 import paste.script
+from paste.script.util.logging_config import fileConfig
 
 import logging
+import os
 import re
 import json
 import time
-import multiprocessing
+import subprocess
+import sys
+import select
 
 from ckanext.canada.metadata_schema import schema_description
 
@@ -74,6 +78,12 @@ class CanadaCommand(CkanCommand):
             except KeyboardInterrupt:
                 # this will happen a lot while we work on performance
                 pass
+        
+        elif cmd == 'load-dataset-worker':
+            try:
+                self.load_dataset_worker(self.args[1])
+            except KeyboardInterrupt:
+                pass
 
         elif cmd == 'load-random-datasets':
             try:
@@ -83,6 +93,21 @@ class CanadaCommand(CkanCommand):
                 pass
         else:
             print self.__doc__
+
+
+    def _app_config(self):
+        """
+        This is the first part of CkanCommand._load_config()
+        """
+        from paste.deploy import appconfig
+        if not self.options.config:
+            msg = 'No config file supplied'
+            raise self.BadCommand(msg)
+        self.filename = os.path.abspath(self.options.config)
+        if not os.path.exists(self.filename):
+            raise AssertionError('Config filename %r does not exist.' % self.filename)
+        fileConfig(self.filename)
+        conf = appconfig('config:' + self.filename)
 
     def delete_vocabulary(self, name):
         user = get_action('get_site_user')({'ignore_auth': True}, ())
@@ -116,8 +141,9 @@ class CanadaCommand(CkanCommand):
         count = 0
         success_count = 0
         total = 0.0
-        context = {'user': username, 'return_id_only': True}
-        pool = multiprocessing.Pool(self.options.processes)
+        workers = []
+        processing = []
+        worker_fds = {}
         
         def line_reader():
             for num, line in enumerate(open(jl_source)):
@@ -125,11 +151,64 @@ class CanadaCommand(CkanCommand):
                     continue
                 if max_count is not None and count >= max_count:
                     break
-                yield num, line, context
+                yield num, line
 
-        load_iterator = pool.imap_unordered(_load_dataset, line_reader())
-        for num, duration, error in load_iterator:
-            print num, duration, error
+        def print_status(num, result):
+            print processing, num, result
+
+        for num, line in line_reader():
+            if len(workers) < self.options.processes:
+                p = subprocess.Popen([sys.argv[0], 
+                    'canada', 'load-dataset-worker', username],
+                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+                worker_fds[p.stdout] = len(workers)
+                workers.append(p)
+                processing.append(num)
+                p.stdin.write(line)
+                p.stdin.flush()
+                continue
+
+            readable, _, _ = select.select(worker_fds, [], [])
+            for fd in readable:
+                wnum = worker_fds[fd]
+                p = workers[wnum]
+                finished_num = processing[wnum]
+                result = p.stdout.readline()
+                processing[wnum] = num
+                print_status(finished_num, result)
+                p.stdin.write(line)
+                break
+
+        while worker_fds:
+            readable, _, _ = select.select(worker_fds, [], [])
+            for fd in readable:
+                wnum = worker_fds[fd]
+                p = workers[wnum]
+                finished_num = processing[wnum]
+                result = p.stdout.readline()
+                processing[wnum] = None
+                del worker_fds[p.stdout]
+                print_status(finished_num, result)
+                p.stdin.close()
+                p.communicate()
+
+    def load_dataset_worker(self, username):
+        """
+        a process that accepts lines of json on stdin which is parsed and
+        passed to the package_create action.  it produces lines of json
+        which are the responses from each action call.
+        """
+        context = {'user': username, 'return_id_only': True}
+        sys.stderr.write("waiting\n")
+        for line in iter(sys.stdin.readline, ''):
+            try:
+                pkg = json.loads(line)
+                response = get_action('package_create')(context, pkg)
+            except ValidationError, e:
+                sys.stdout.write(unicode(e).encode('utf-8') + '\n')
+            else:
+                sys.stdout.write(json.dumps(response) + '\n')
+            sys.stdout.flush()
 
     def load_rando(self, username):
         count = 0
@@ -184,15 +263,3 @@ class CanadaCommand(CkanCommand):
             response = get_action('group_delete')(context, organization)
         except NotFound:
             pass
-
-def _load_dataset(arg):
-    num, line, context = arg
-    try:
-        start = time.time()
-        pkg = json.loads(line)
-        response = get_action('package_create')(context, pkg)
-    except ValidationError, e:
-        return num, None, str(e)
-    end = time.time()
-    return num, end - start, None
-
