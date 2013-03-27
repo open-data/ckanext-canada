@@ -97,9 +97,6 @@ class CanadaCommand(CkanCommand):
             # don't create items that only existed in pilot
             if 'id' not in term:
                 continue
-            # or items that aren't supposed to be created here
-            if 'key' not in term:
-                continue
             get_action('tag_create')(context, {
                 'name': term['key'],
                 'vocabulary_id': vocab['id'],

@@ -382,14 +382,17 @@ def add_keys_for_choices(f):
     if f['id'] == 'geographic_region':
         province_group = None
         province = None
+        new_choices = []
         for c in f['choices']:
             cid = c.get('id', 0)
             if 0 < cid < 10:
                 province_group = c
             elif 10 <= cid < 100:
                 province = c
-                # remove duplicated province items from options
+                # remove duplicated province items from choices
                 if any(c[lang] == province_group[lang] for lang in LANGS):
+                    if 'pilot_uuid' in c:
+                        province_group['pilot_uuid'] = c['pilot_uuid']
                     continue
             if 1000 <= cid:
                 c['key'] = u'  '.join(
@@ -397,6 +400,9 @@ def add_keys_for_choices(f):
                     for lang in LANGS)
             else:
                 c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
+            new_choices.append(c)
+        f['choices'] = new_choices
+
     elif f.get('type') == 'tag_vocabulary':
         for c in f['choices']:
             # keywords have strict limits on valid characters
