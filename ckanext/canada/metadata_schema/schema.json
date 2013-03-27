@@ -1880,184 +1880,6 @@
         }, 
         {
           "bilingual": false, 
-          "description": {
-            "eng": "The date in which the resource was issued.", 
-            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
-          }, 
-          "example": "2012-08-11", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "date_published", 
-          "label": {
-            "eng": "Date Published", 
-            "fra": "Date de publication"
-          }, 
-          "proposed_name": {
-            "eng": "datePublished", 
-            "fra": "datePublication"
-          }, 
-          "proposed_type": "Date (see B.4)"
-        }
-      ], 
-      "name": {
-        "en": "Primary Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
-        {
-          "bilingual": false, 
-          "choices": [
-            {
-              "eng": "Continual", 
-              "fra": "Continue", 
-              "id": 532, 
-              "key": "Continual | Continue"
-            }, 
-            {
-              "eng": "Daily", 
-              "fra": "Quotidien", 
-              "id": 533, 
-              "key": "Daily | Quotidien"
-            }, 
-            {
-              "eng": "Weekly", 
-              "fra": "Hebdomadaire", 
-              "id": 534, 
-              "key": "Weekly | Hebdomadaire"
-            }, 
-            {
-              "eng": "Fortnightly", 
-              "fra": "Quinzomadaire", 
-              "id": 535, 
-              "key": "Fortnightly | Quinzomadaire"
-            }, 
-            {
-              "eng": "Monthly", 
-              "fra": "Mensuel", 
-              "id": 536, 
-              "key": "Monthly | Mensuel"
-            }, 
-            {
-              "eng": "Quarterly", 
-              "fra": "Trimestriel", 
-              "id": 537, 
-              "key": "Quarterly | Trimestriel"
-            }, 
-            {
-              "eng": "Biannually", 
-              "fra": "Semestriel", 
-              "id": 538, 
-              "key": "Biannually | Semestriel"
-            }, 
-            {
-              "eng": "Annually", 
-              "fra": "Annuel", 
-              "id": 539, 
-              "key": "Annually | Annuel"
-            }, 
-            {
-              "eng": "As Needed", 
-              "fra": "Au besoin", 
-              "id": 540, 
-              "key": "As Needed | Au besoin"
-            }, 
-            {
-              "eng": "Irregular", 
-              "fra": "Irr\u00e9gulier", 
-              "id": 541, 
-              "key": "Irregular | Irr\u00e9gulier"
-            }, 
-            {
-              "eng": "Not Planned", 
-              "fra": "Non planifi\u00e9", 
-              "id": 542, 
-              "key": "Not Planned | Non planifi\u00e9"
-            }, 
-            {
-              "eng": "Unknown", 
-              "fra": "Inconnu", 
-              "id": 543, 
-              "key": "Unknown | Inconnu"
-            }, 
-            {
-              "eng": "Semimonthly", 
-              "fra": "Bimensuel", 
-              "id": 544, 
-              "key": "Semimonthly | Bimensuel"
-            }
-          ], 
-          "description": {
-            "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
-            "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
-          }, 
-          "example": "daily", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "maintenance_and_update_frequency", 
-          "label": {
-            "eng": "Maintainence and Update Frequency", 
-            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
-          }, 
-          "pilot_help": {
-            "eng": "The frequency at which the dataset is published.", 
-            "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
-          }, 
-          "pilot_id": "frequency", 
-          "pilot_name": {
-            "eng": "Frequency", 
-            "fra": "Fr\u00e9quence"
-          }, 
-          "pilot_type": "select", 
-          "proposed_name": {
-            "eng": "maintenanceAndUpdateFrequency", 
-            "fra": "fr\u00e9quenceMise\u00c0Jour"
-          }, 
-          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
-            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
-          }, 
-          "example": "YYYY-MM-DD", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "time_period_coverage_start", 
-          "label": {
-            "eng": "Time Period Coverage Start", 
-            "fra": "Couverture de la p\u00e9riode de temps"
-          }, 
-          "proposed_name": {
-            "eng": "timePeriodCoverageStart", 
-            "fra": "\u00e9lementTemporalle"
-          }, 
-          "proposed_type": "EX_TemporalExtent"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
-            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
-          }, 
-          "example": "YYYY-MM-DD", 
-          "existing": false, 
-          "gc_multiplicity": "M", 
-          "id": "time_period_coverage_end", 
-          "label": {
-            "eng": "Time Period Coverage End", 
-            "fra": "Couverture de la p\u00e9riode de temps"
-          }, 
-          "proposed_name": {
-            "eng": "timePeriodCoverageEnd", 
-            "fra": "\u00e9lementTemporalle"
-          }, 
-          "proposed_type": "EX_TemporalExtent"
-        }, 
-        {
-          "bilingual": false, 
           "choices": [
             {
               "eng": "Atlantic", 
@@ -4415,6 +4237,184 @@
             "fra": "r\u00e9gionG\u00e9ographique"
           }, 
           "proposed_type": "CodeList\n(CharacterString)"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was issued.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
+          }, 
+          "example": "2012-08-11", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "date_published", 
+          "label": {
+            "eng": "Date Published", 
+            "fra": "Date de publication"
+          }, 
+          "proposed_name": {
+            "eng": "datePublished", 
+            "fra": "datePublication"
+          }, 
+          "proposed_type": "Date (see B.4)"
+        }
+      ], 
+      "name": {
+        "en": "Primary Fields"
+      }
+    }, 
+    {
+      "description": {}, 
+      "fields": [
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Continual", 
+              "fra": "Continue", 
+              "id": 532, 
+              "key": "Continual | Continue"
+            }, 
+            {
+              "eng": "Daily", 
+              "fra": "Quotidien", 
+              "id": 533, 
+              "key": "Daily | Quotidien"
+            }, 
+            {
+              "eng": "Weekly", 
+              "fra": "Hebdomadaire", 
+              "id": 534, 
+              "key": "Weekly | Hebdomadaire"
+            }, 
+            {
+              "eng": "Fortnightly", 
+              "fra": "Quinzomadaire", 
+              "id": 535, 
+              "key": "Fortnightly | Quinzomadaire"
+            }, 
+            {
+              "eng": "Monthly", 
+              "fra": "Mensuel", 
+              "id": 536, 
+              "key": "Monthly | Mensuel"
+            }, 
+            {
+              "eng": "Quarterly", 
+              "fra": "Trimestriel", 
+              "id": 537, 
+              "key": "Quarterly | Trimestriel"
+            }, 
+            {
+              "eng": "Biannually", 
+              "fra": "Semestriel", 
+              "id": 538, 
+              "key": "Biannually | Semestriel"
+            }, 
+            {
+              "eng": "Annually", 
+              "fra": "Annuel", 
+              "id": 539, 
+              "key": "Annually | Annuel"
+            }, 
+            {
+              "eng": "As Needed", 
+              "fra": "Au besoin", 
+              "id": 540, 
+              "key": "As Needed | Au besoin"
+            }, 
+            {
+              "eng": "Irregular", 
+              "fra": "Irr\u00e9gulier", 
+              "id": 541, 
+              "key": "Irregular | Irr\u00e9gulier"
+            }, 
+            {
+              "eng": "Not Planned", 
+              "fra": "Non planifi\u00e9", 
+              "id": 542, 
+              "key": "Not Planned | Non planifi\u00e9"
+            }, 
+            {
+              "eng": "Unknown", 
+              "fra": "Inconnu", 
+              "id": 543, 
+              "key": "Unknown | Inconnu"
+            }, 
+            {
+              "eng": "Semimonthly", 
+              "fra": "Bimensuel", 
+              "id": 544, 
+              "key": "Semimonthly | Bimensuel"
+            }
+          ], 
+          "description": {
+            "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
+            "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
+          }, 
+          "example": "daily", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "maintenance_and_update_frequency", 
+          "label": {
+            "eng": "Maintainence and Update Frequency", 
+            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
+          }, 
+          "pilot_help": {
+            "eng": "The frequency at which the dataset is published.", 
+            "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
+          }, 
+          "pilot_id": "frequency", 
+          "pilot_name": {
+            "eng": "Frequency", 
+            "fra": "Fr\u00e9quence"
+          }, 
+          "pilot_type": "select", 
+          "proposed_name": {
+            "eng": "maintenanceAndUpdateFrequency", 
+            "fra": "fr\u00e9quenceMise\u00c0Jour"
+          }, 
+          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "example": "YYYY-MM-DD", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "time_period_coverage_start", 
+          "label": {
+            "eng": "Time Period Coverage Start", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "proposed_name": {
+            "eng": "timePeriodCoverageStart", 
+            "fra": "\u00e9lementTemporalle"
+          }, 
+          "proposed_type": "EX_TemporalExtent"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "example": "YYYY-MM-DD", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "time_period_coverage_end", 
+          "label": {
+            "eng": "Time Period Coverage End", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "proposed_name": {
+            "eng": "timePeriodCoverageEnd", 
+            "fra": "\u00e9lementTemporalle"
+          }, 
+          "proposed_type": "EX_TemporalExtent"
         }, 
         {
           "bilingual": true, 

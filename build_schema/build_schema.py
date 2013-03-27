@@ -47,13 +47,13 @@ SECTIONS_FIELDS = [
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
+        'geographic_region',
         'date_published', # ADMIN-only field that will control publishing
         ]),
     ("Additional Fields", [
         'maintenance_and_update_frequency',
         'time_period_coverage_start',
         'time_period_coverage_end',
-        'geographic_region',
         'url',
         'endpoint_url',
         'ready_to_publish',
