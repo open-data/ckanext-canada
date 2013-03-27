@@ -319,7 +319,7 @@ def apply_field_customizations(schema_out, vocab):
         return field
 
     for fname in schema_out['vocabularies'].values():
-        get_field(fname)['type'] = 'keywords'
+        get_field(fname)['type'] = 'tag_vocabulary'
 
     def merge(c1, c2):
         def norm(t):
@@ -378,7 +378,7 @@ def add_keys_for_choices(f):
     Add a 'key' key to each choice in f['choices'] that will be used
     as the value to actually store in the DB + use with the API
     """
-    if f.get('type') == 'keywords':
+    if f.get('type') == 'tag_vocabulary':
         for c in f['choices']:
             # keywords have strict limits on valid characters
             c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
