@@ -47,7 +47,15 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'create-organizations':
             for org in schema_description.dataset_field_by_id['author']['choices']:
+                if 'id' not in org:
+                    continue
                 self.create_organization(org)
+
+        elif cmd == 'delete-organizations':
+            for org in schema_description.dataset_field_by_id['author']['choices']:
+                if 'id' not in org:
+                    continue
+                self.delete_organization(org)
 
         elif cmd == 'load-datasets':
             try:
@@ -148,8 +156,6 @@ class CanadaCommand(CkanCommand):
                 print "%f, %f" % (end - start, total / count)
 
     def create_organization(self, org):
-        if 'id' not in org:
-            return
         organization = {
             'name':org['id'].lower(),
             'title':org['id'],
@@ -161,3 +167,14 @@ class CanadaCommand(CkanCommand):
             response = get_action('organization_create')(context, organization)
         except ValidationError, e:
             print unicode(e).encode('utf-8')
+
+    def delete_organization(self, org):
+        user = get_action('get_site_user')({'ignore_auth': True}, ())
+        context = {'user': user['name']}
+        try:
+            organization = get_action('organization_show')(context, {
+                'id':org['id'].lower()})
+            get_action('organization_delete')(context, organization)
+        except NotFound:
+            pass
+
