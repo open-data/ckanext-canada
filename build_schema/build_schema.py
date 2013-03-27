@@ -56,6 +56,7 @@ SECTIONS_FIELDS = [
         'geographic_region',
         'url',
         'endpoint_url',
+        'ready_to_publish',
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
@@ -131,6 +132,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'catalogueType': 'catalog_type',
     'title': 'title',
     'datePublished': 'date_published',
+    'readyToPublish': 'ready_to_publish',
     'dateModified': 'resource:last_modified',
     'abstract': 'notes',
     'subject': 'subject',

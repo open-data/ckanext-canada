@@ -4466,6 +4466,26 @@
             "fra": ""
           }, 
           "proposed_type": ""
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "(describe me)", 
+            "fra": "(translate me)"
+          }, 
+          "example": "1", 
+          "existing": false, 
+          "gc_multiplicity": "M", 
+          "id": "ready_to_publish", 
+          "label": {
+            "eng": "Ready to Publish", 
+            "fra": "(translate me)"
+          }, 
+          "proposed_name": {
+            "eng": "readyToPublish", 
+            "fra": ""
+          }, 
+          "proposed_type": ""
         }
       ], 
       "name": {
