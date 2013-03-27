@@ -378,13 +378,29 @@ def add_keys_for_choices(f):
     Add a 'key' key to each choice in f['choices'] that will be used
     as the value to actually store in the DB + use with the API
     """
-    if f.get('type') == 'tag_vocabulary':
+    # XXX more custom geographic_region hacks
+    if f['id'] == 'geographic_region':
+        province_group = None
+        province = None
+        for c in f['choices']:
+            cid = c.get('id', 0)
+            if 0 < cid < 10:
+                province_group = c
+            elif 10 <= cid < 100:
+                province = c
+                # remove duplicated province items from options
+                if any(c[lang] == province_group[lang] for lang in LANGS):
+                    continue
+            if 1000 <= cid:
+                c['key'] = u'  '.join(
+                    clean_tag_part(province[lang] + ' - ' + c[lang])
+                    for lang in LANGS)
+            else:
+                c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
+    elif f.get('type') == 'tag_vocabulary':
         for c in f['choices']:
             # keywords have strict limits on valid characters
             c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
-            # XXX: hack for geographic region
-            if f['id'] == 'geographic_region' and 'id' in c:
-                c['key'] = u'%s  %s' % (c['key'], c['id'])
     else:
         for c in f['choices']:
             # use the text itself for now (both when different)
