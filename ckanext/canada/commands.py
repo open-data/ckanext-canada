@@ -18,7 +18,6 @@ class CanadaCommand(CkanCommand):
         paster canada create-vocabularies [-c <path to config file>]
                       delete-vocabularies
                       create-organizations
-                      delete-organizations
                       load-datasets <ckan user> <.jl source>
                                     [<lines to skip> [<lines to load>]]
                       load-random-datasets <ckan user>
@@ -52,6 +51,9 @@ class CanadaCommand(CkanCommand):
                 self.create_organization(org)
 
         elif cmd == 'delete-organizations':
+            raise NotImplementedError(
+                "Sorry, this can't be implemented properly until group "
+                "purging is implemented in CKAN")
             for org in schema_description.dataset_field_by_id['author']['choices']:
                 if 'id' not in org:
                     continue
@@ -166,7 +168,7 @@ class CanadaCommand(CkanCommand):
         try:
             response = get_action('organization_create')(context, organization)
         except ValidationError, e:
-            print unicode(e).encode('utf-8')
+            print organization['name'], unicode(e).encode('utf-8')
 
     def delete_organization(self, org):
         user = get_action('get_site_user')({'ignore_auth': True}, ())
@@ -174,7 +176,7 @@ class CanadaCommand(CkanCommand):
         try:
             organization = get_action('organization_show')(context, {
                 'id':org['id'].lower()})
-            get_action('organization_delete')(context, organization)
+            response = get_action('group_delete')(context, organization)
         except NotFound:
             pass
 
