@@ -1,11 +1,13 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound, ValidationError
+import paste.script
 
 import logging
 import re
 import json
 import time
+import multiprocessing
 
 from ckanext.canada.metadata_schema import schema_description
 
@@ -20,10 +22,17 @@ class CanadaCommand(CkanCommand):
                       create-organizations
                       load-datasets <ckan user> <.jl source>
                                     [<lines to skip> [<lines to load>]]
+                                    [-p <processes>]
                       load-random-datasets <ckan user>
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
+
+    parser = paste.script.command.Command.standard_parser(verbose=True)
+    parser.add_option('-c', '--config', dest='config',
+        default='development.ini', help='Config file to use.')
+    parser.add_option('-p', '--processes', dest='processes',
+        default=1, type="int")
 
     def command(self):
         '''
@@ -105,26 +114,22 @@ class CanadaCommand(CkanCommand):
         if max_count is not None:
             max_count = int(max_count)
         count = 0
+        success_count = 0
         total = 0.0
+        context = {'user': username, 'return_id_only': True}
+        pool = multiprocessing.Pool(self.options.processes)
+        
+        def line_reader():
+            for num, line in enumerate(open(jl_source)):
+                if num < skip_lines:
+                    continue
+                if max_count is not None and count >= max_count:
+                    break
+                yield num, line, context
 
-        for num, line in enumerate(open(jl_source)):
-            if num < skip_lines:
-                continue
-            if max_count is not None and count >= max_count:
-                break
-            print "line %d:" % num,
-            try:
-                start = time.time()
-                context = {'user': username, 'return_id_only': True}
-                pkg = json.loads(line)
-                response = get_action('package_create')(context, pkg)
-            except ValidationError, e:
-                print str(e)
-            else:
-                end = time.time()
-                count += 1
-                total += end - start
-                print "%f seconds, %f average" % (end - start, total / count)
+        load_iterator = pool.imap_unordered(_load_dataset, line_reader())
+        for num, duration, error in load_iterator:
+            print num, duration, error
 
     def load_rando(self, username):
         count = 0
@@ -179,4 +184,15 @@ class CanadaCommand(CkanCommand):
             response = get_action('group_delete')(context, organization)
         except NotFound:
             pass
+
+def _load_dataset(arg):
+    num, line, context = arg
+    try:
+        start = time.time()
+        pkg = json.loads(line)
+        response = get_action('package_create')(context, pkg)
+    except ValidationError, e:
+        return num, None, str(e)
+    end = time.time()
+    return num, end - start, None
 
