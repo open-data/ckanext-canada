@@ -17,6 +17,7 @@ class CanadaCommand(CkanCommand):
 
         paster canada create-vocabularies [-c <path to config file>]
                       delete-vocabularies
+                      create-organizations
                       load-datasets <ckan user> <.jl source>
                                     [<lines to skip> [<lines to load>]]
                       load-random-datasets <ckan user>
@@ -39,23 +40,40 @@ class CanadaCommand(CkanCommand):
             for name in schema_description.vocabularies:
                 self.delete_vocabulary(name)
 
-        if cmd == 'create-vocabularies':
+        elif cmd == 'create-vocabularies':
             for name, terms in schema_description.vocabularies.iteritems():
                 self.create_vocabulary(name, terms)
 
-        if cmd == 'load-datasets':
+        elif cmd == 'create-organizations':
+            for org in schema_description.dataset_field_by_id['author']['choices']:
+                if 'id' not in org:
+                    continue
+                self.create_organization(org)
+
+        elif cmd == 'delete-organizations':
+            raise NotImplementedError(
+                "Sorry, this can't be implemented properly until group "
+                "purging is implemented in CKAN")
+            for org in schema_description.dataset_field_by_id['author']['choices']:
+                if 'id' not in org:
+                    continue
+                self.delete_organization(org)
+
+        elif cmd == 'load-datasets':
             try:
                 self.load_datasets(self.args[1], self.args[2], *self.args[3:])
             except KeyboardInterrupt:
                 # this will happen a lot while we work on performance
                 pass
 
-        if cmd == 'load-random-datasets':
+        elif cmd == 'load-random-datasets':
             try:
                 self.load_rando(self.args[1])
             except KeyboardInterrupt:
                 # this will happen a lot while we work on performance
                 pass
+        else:
+            print self.__doc__
 
     def delete_vocabulary(self, name):
         user = get_action('get_site_user')({'ignore_auth': True}, ())
@@ -130,7 +148,7 @@ class CanadaCommand(CkanCommand):
                     'maintainer_email': '',
                     'license_id': ''})
             except ValidationError, e:
-                print str(e)
+                print unicode(e).encode('utf-8')
             else:
                 end = time.time()
                 count += 1
@@ -138,3 +156,27 @@ class CanadaCommand(CkanCommand):
                 log.write("%f\n" % (end - start,))
                 log.flush()
                 print "%f, %f" % (end - start, total / count)
+
+    def create_organization(self, org):
+        organization = {
+            'name':org['id'].lower(),
+            'title':org['id'],
+            'description':org['key'],
+            }
+        user = get_action('get_site_user')({'ignore_auth': True}, ())
+        context = {'user': user['name']}
+        try:
+            response = get_action('organization_create')(context, organization)
+        except ValidationError, e:
+            print organization['name'], unicode(e).encode('utf-8')
+
+    def delete_organization(self, org):
+        user = get_action('get_site_user')({'ignore_auth': True}, ())
+        context = {'user': user['name']}
+        try:
+            organization = get_action('organization_show')(context, {
+                'id':org['id'].lower()})
+            response = get_action('group_delete')(context, organization)
+        except NotFound:
+            pass
+
