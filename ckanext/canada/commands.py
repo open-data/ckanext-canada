@@ -154,7 +154,7 @@ class CanadaCommand(CkanCommand):
                 yield num, line
 
         def print_status(num, result):
-            print processing, num, result
+            print processing, num, result.strip()
 
         for num, line in line_reader():
             if len(workers) < self.options.processes:
@@ -198,17 +198,19 @@ class CanadaCommand(CkanCommand):
         passed to the package_create action.  it produces lines of json
         which are the responses from each action call.
         """
-        context = {'user': username, 'return_id_only': True}
-        sys.stderr.write("waiting\n")
         for line in iter(sys.stdin.readline, ''):
+            context = {'user': username, 'return_id_only': True}
+            pkg = json.loads(line)
             try:
-                pkg = json.loads(line)
                 response = get_action('package_create')(context, pkg)
             except ValidationError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             else:
-                sys.stdout.write(json.dumps(response) + '\n')
-            sys.stdout.flush()
+                sys.stdout.write(response + '\n')
+            try:
+                sys.stdout.flush()
+            except IOError:
+                break
 
     def load_rando(self, username):
         count = 0
