@@ -63,18 +63,29 @@ client_lang - language from h.lang(): 'en' or 'fr'
         {% if not c.id %}
           {% set skip = true %}
         {% elif c.id > 99 %}
-          {% set indent = ': : ' %}
+          {% set level = 2 %}
         {% elif c.id > 9 %}
-          {% set indent = ': ' %}
+          {% set level = 1 %}
+        {% else %}
+          {% set level = 0 %}
         {% endif %}
       {% endif %}
       {% if not skip %}
         {% do inputargs.options.append({
-          'text': indent + c[client_lang],
-          'value': c.key}) %}
+          'text': c[client_lang],
+          'value': c.key,
+          'level': level}) 
+        %}
       {% endif %}
+      
     {% endfor %}
-    {% set widget = multi_checkbox_field if field.vocabulary else form.select %}
+    {% if id == 'geographic_region' %}
+      {% set widget = geo_checkbox_field %}
+    {% elif field.vocabulary %}
+      {% set widget = multi_checkbox_field %}
+    {% else %}
+      {% set widget = form.select %}
+    {% endif %}
   {% endif %}
 
   {% call widget(**inputargs) %}
@@ -116,4 +127,71 @@ classes     - An array of classes to apply to the control-group.
       {{ extra_html }}
     </div>
     <div class="clear"></div>
+{% endmacro %}
+
+{% macro geo_checkbox_field(name, id, label, options, selected, error,
+    classes=[], attrs=[]) %}
+  {%- set extra_html = caller() if caller -%}
+    <div class="control-group{{ " error" if error }}"></div>
+    <h4>{{ label }}</h4>
+    <div class="span-1 row-start"></div>
+    <div class="controls span-4 row-end">
+      {% set last_level = options[0].level %}
+      {% for o in options %}
+        {% set checked = True if o.value in selected %}
+        
+        {% if o.level == last_level -1 %}
+        </details>
+        {% elif o.level == last_level -2 %}
+          </details>
+        </details>
+        {% endif %}
+        
+        {% if o.level == 0 %}
+        <details class="span-4">
+          <summary>
+            {{ geo_checkbox(name, option = o, index = loop.index0, checked = checked) }}
+          </summary>
+          <div class="clear"></div>
+        {% elif o.level == 1 %}
+          <details class="span-4">
+            <summary class="indent-large">
+              {{ geo_checkbox(name, option = o, index = loop.index0, checked = checked) }}
+            </summary>
+            <div class="clear"></div>
+        {% elif o.level == 2 %}
+          {{ geo_checkbox(name, option = o, index = loop.index0, checked = checked) }}
+        {% endif %}
+        
+        {% set last_level = o.level %}
+        
+        {% if False %}
+        <label>{{o.level}}</label>
+        <label class="form-checkbox" for="{{ name }}-{{ loop.index0 }}"
+            style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+          <input id="{{ name }}-{{ loop.index0 }}" type="checkbox" name="{{ name 
+              }}" value="{{ o.value | empty_and_escape }}" {{
+              "checked " if o.value in selected }} />
+          {{ o.text }}
+        </label>
+        {% endif %}
+        
+      {% endfor %}
+      {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
+      {{ extra_html }}
+    </div>
+    <div class="clear"></div>
+{% endmacro %}
+
+{% macro geo_checkbox(name, id='', option='', index=0, checked=false, placeholder='', error="", classes=[], attrs={}) %}
+  
+  <label class="form-checkbox {{'indent-xlarge' if option.level == 2}}" style=" line-height:1em; {{'float: left;
+  padding-right: 10px;' if option.level < 2}} " for="{{ name }}-{{ index}}"
+      style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+    <input id="{{ name }}-{{ index }}" type="checkbox" name="{{ name 
+        }}" value="{{ option.value | empty_and_escape }}" {{
+        "checked " if checked }} />
+    {{ option.text }}
+  </label>
+  
 {% endmacro %}
