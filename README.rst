@@ -38,3 +38,36 @@ Plugins
   templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
 
+
+Loading Data
+------------
+
+These are the steps we use to import data faster during development.
+Choose the ones you like, there are no dependencies.
+
+1. use the latest version of ckan from the
+   `canada-v2.0 branch <https://github.com/open-data/ckan/tree/canada-v2.0>`_
+   for fixes related to importing tags (~30% faster)
+
+2. disable solr updates while importing with the following lines in your
+   development.ini (~15% faster)::
+
+     ckan.search.automatic_indexing = false
+     ckan.search.solr_commit = false
+
+   With this change you need to remember to run 
+   ``paster --plugin ckan search-index rebuild`` (or ``rebuild_fast``)
+   after the import, and remove the changes to development.ini.
+
+3. Drop the indexes on the database while importing (~40% faster)
+
+   Apply the changes in ``tuning/contraints.sql`` and
+   ``tuning/what_to_alter.sql`` to your database.
+
+4. Do the import in parallel with the load-datasets command (close to linear
+   scaling until you hit cpu or disk I/O limits):
+
+   For example load 150K records from "nrcan-1.jl" in parallel with three
+   processes::
+
+     paster canada load-datasets ckanuser nrcan-1.jl 0 150000 -p 3
