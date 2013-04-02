@@ -17,10 +17,11 @@ Installation:
 
 From a clean database you must run::
 
-   paster canada create-vocabularies -c <path to config file>
+   paster canada create-vocabularies
+   paster canada create-organizations
 
-Once to create the tag vocabularies this extension requires before loading
-any data.
+Once to create the tag vocabularies and organizations this extension requires
+before loading any data.
 
 Plugins
 -------
