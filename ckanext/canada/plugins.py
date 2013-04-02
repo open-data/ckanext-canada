@@ -88,12 +88,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         _schema_update(schema, form_to_db=False)
         return schema
     
-    def check_data_dict(self, data_dict, schema=None):
-        # XXX: do nothing here because DefaultDatasetForm's check_data_dict()
-        # breaks with the new three-stage dataset creation when using
-        # convert_to_extras.
-        pass
-
 
 def _schema_update(schema, form_to_db):
     """
