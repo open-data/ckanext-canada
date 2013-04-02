@@ -10,6 +10,8 @@ from ckan.new_authz import is_sysadmin
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
+from ckanext.canada.logic import (group_show, organization_show,
+    changed_packages_activity_list_since)
 
 
 ORG_MAY_PUBLISH_KEY = 'publish'
@@ -44,11 +46,26 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     Plugin for dataset forms for Canada's metadata schema
     """
     p.implements(p.IConfigurable)
+    p.implements(p.IActions)
     p.implements(p.IDatasetForm, inherit=True)
+
+    # IConfigurable
 
     def configure(self, config):
         jinja_globals = config['pylons.app_globals'].jinja_env.globals
         jinja_globals['schema_description'] = schema_description
+
+    # IActions
+
+    def get_actions(self):
+        return {
+            'group_show': group_show,
+            'organization_show': organization_show,
+            'changed_packages_activity_list_since':
+                changed_packages_activity_list_since,
+            }
+
+    # IDatasetForm
 
     def is_fallback(self):
         """
