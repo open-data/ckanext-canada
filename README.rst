@@ -8,7 +8,7 @@ Team: Ian Ward, Ross Thompson, Peder Jakobsen, Denis Zgonjanin
 Features:
 
 * Forms and Validation for GoC Metadata Schema (in progress)
-* Batch import of data (coming, currently in a separate extension)
+* Batch import of data
 
 Installation:
 
