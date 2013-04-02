@@ -3,12 +3,12 @@ ckanext-canada
 
 Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
-Team: Ian Ward, Ross Thompson, Peder Jakobsen
+Team: Ian Ward, Ross Thompson, Peder Jakobsen, Denis Zgonjanin
 
 Features:
 
 * Forms and Validation for GoC Metadata Schema (in progress)
-* Batch import of data (coming, currently in a separate extension)
+* Batch import of data
 
 Installation:
 
@@ -17,17 +17,57 @@ Installation:
 
 From a clean database you must run::
 
-   paster canada create-vocabularies -c <path to config file>
+   paster canada create-vocabularies
+   paster canada create-organizations
 
-Once to create the tag vocabularies this extension requires before loading
-any data.
+Once to create the tag vocabularies and organizations this extension requires
+before loading any data.
 
 Plugins
 -------
 
-* ``canada_forms`` - dataset forms for data.gc.ca metadata schema
-* ``canada_public`` - base and public facing data.gc.ca templates (requires
-  ``canada_forms`` and ``wet_theme`` from ckanext-wet-boew)
-* ``canada_internal`` - templates for internal site and registration (requires
+``canada_forms``
+  dataset forms for data.gc.ca metadata schema
+
+``canada_public``
+  base and public facing data.gc.ca templates (requires
+  ``canada_forms`` and ``wet_theme`` from 
+  `ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_ )
+
+``canada_internal``
+  templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
 
+
+Loading Data
+------------
+
+These are the steps we use to import data faster during development.
+Choose the ones you like, there are no dependencies.
+
+1. use the latest version of ckan from the
+   `canada-v2.0 branch <https://github.com/open-data/ckan/tree/canada-v2.0>`_
+   for fixes related to importing tags (~30% faster)
+
+2. disable solr updates while importing with the following lines in your
+   development.ini (~15% faster)::
+
+     ckan.search.automatic_indexing = false
+     ckan.search.solr_commit = false
+
+   With this change you need to remember to run 
+   ``paster --plugin ckan search-index rebuild`` (or ``rebuild_fast``)
+   after the import, and remove the changes to development.ini.
+
+3. Drop the indexes on the database while importing (~40% faster)
+
+   Apply the changes in ``tuning/contraints.sql`` and
+   ``tuning/what_to_alter.sql`` to your database.
+
+4. Do the import in parallel with the load-datasets command (close to linear
+   scaling until you hit cpu or disk I/O limits):
+
+   For example load 150K records from "nrcan-1.jl" in parallel with three
+   processes::
+
+     paster canada load-datasets ckanuser nrcan-1.jl 0 150000 -p 3
