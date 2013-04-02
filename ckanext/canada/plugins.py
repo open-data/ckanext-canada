@@ -10,7 +10,8 @@ from ckan.new_authz import is_sysadmin
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.logic import group_show, organization_show
+from ckanext.canada.logic import (group_show, organization_show,
+    changed_packages_activity_list_since)
 
 
 ORG_MAY_PUBLISH_KEY = 'publish'
@@ -60,6 +61,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         return {
             'group_show': group_show,
             'organization_show': organization_show,
+            'changed_packages_activity_list_since':
+                changed_packages_activity_list_since,
             }
 
     # IDatasetForm
