@@ -138,8 +138,6 @@ class CanadaCommand(CkanCommand):
         skip_lines = int(skip_lines)
         if max_count is not None:
             max_count = int(max_count)
-        count = 0
-        success_count = 0
         total = 0.0
         workers = []
         processing = []
@@ -149,7 +147,7 @@ class CanadaCommand(CkanCommand):
             for num, line in enumerate(open(jl_source)):
                 if num < skip_lines:
                     continue
-                if max_count is not None and count >= max_count:
+                if max_count is not None and num >= skip_lines + max_count:
                     break
                 yield num, line
 
