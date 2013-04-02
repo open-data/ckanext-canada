@@ -188,7 +188,6 @@ class CanadaCommand(CkanCommand):
                 del worker_fds[p.stdout]
                 print_status(finished_num, result)
                 p.stdin.close()
-                p.communicate()
 
     def load_dataset_worker(self, username):
         """
