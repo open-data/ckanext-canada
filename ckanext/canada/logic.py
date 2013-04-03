@@ -36,7 +36,7 @@ def changed_packages_activity_list_since(context, data_dict):
         raise ValidationError({'since_time':e.error})
 
     # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_list_hard_limit', 31))
+    limit = int(config.get('ckan.activity_list_hard_limit', 63))
 
     activity_objects = _changed_packages_activity_list_since(
         since_time, limit)
