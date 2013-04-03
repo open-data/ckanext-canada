@@ -1,6 +1,7 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound, ValidationError
+from ckan.logic.validators import isodate
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -11,6 +12,8 @@ import time
 import subprocess
 import sys
 import select
+import urllib2
+from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 
@@ -26,7 +29,11 @@ class CanadaCommand(CkanCommand):
                       load-datasets <ckan user> <.jl source>
                                     [<lines to skip> [<lines to load>]]
                                     [-p <processes>]
-                      load-random-datasets <ckan user>
+                      portal-update <registry server> [<last activity date>]
+                                    [-p <processes>]
+
+        * processes defaults to 1
+        * last activity date defaults to 7 days ago
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -79,6 +86,13 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'load-random-datasets':
             self.load_rando(self.args[1])
+
+        elif cmd == 'portal-update':
+            self.portal_update(self.args[1], *self.args[2:])
+
+        elif cmd == 'portal-update-worker':
+            self.portal_update_worker(self.args[1])
+
         else:
             print self.__doc__
 
@@ -209,6 +223,43 @@ class CanadaCommand(CkanCommand):
                 sys.stdout.flush()
             except IOError:
                 break
+
+    def portal_update(self, source, activity_date=None):
+        # local time :-(
+        if activity_date:
+            activity_date = isodate(activity_date, None)
+        else:
+            activity_date = datetime.now() - timedelta(days=7)
+        print self._changed_package_ids_since(source, activity_date)
+
+
+    def _changed_package_ids_since(self, source, since_time):
+        """
+        Query source ckan instance for packages changed since_time.
+        returns (package ids, next since_time to query)
+        """
+        url = source + '/api/action/changed_packages_activity_list_since'
+        data = json.dumps({
+            'since_time': since_time.isoformat(),
+            })
+        header = {'Content-Type': 'application/json'}
+        req = urllib2.Request(url, data, headers=header)
+        data = json.loads(urllib2.urlopen(req).read())
+
+        id_set = set()
+        package_ids = []
+        for result in data['result']:
+            package_id = result['data']['package']['id']
+            if package_id in id_set:
+                continue
+            id_set.add(package_id)
+            package_ids.append(package_id)
+
+        if data['result']:
+            since_time = data['result'][-1]['timestamp']
+
+        return package_ids, since_time
+
 
     def load_rando(self, username):
         count = 0
