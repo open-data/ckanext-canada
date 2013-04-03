@@ -72,24 +72,13 @@ class CanadaCommand(CkanCommand):
                 self.delete_organization(org)
 
         elif cmd == 'load-datasets':
-            try:
-                self.load_datasets(self.args[1], self.args[2], *self.args[3:])
-            except KeyboardInterrupt:
-                # this will happen a lot while we work on performance
-                pass
+            self.load_datasets(self.args[1], self.args[2], *self.args[3:])
         
         elif cmd == 'load-dataset-worker':
-            try:
-                self.load_dataset_worker(self.args[1])
-            except KeyboardInterrupt:
-                pass
+            self.load_dataset_worker(self.args[1])
 
         elif cmd == 'load-random-datasets':
-            try:
-                self.load_rando(self.args[1])
-            except KeyboardInterrupt:
-                # this will happen a lot while we work on performance
-                pass
+            self.load_rando(self.args[1])
         else:
             print self.__doc__
 
@@ -168,7 +157,11 @@ class CanadaCommand(CkanCommand):
                 p.stdin.flush()
                 continue
 
-            readable, _, _ = select.select(worker_fds, [], [])
+            try:
+                readable, _, _ = select.select(worker_fds, [], [])
+            except KeyboardInterrupt:
+                return
+
             for fd in readable:
                 wnum = worker_fds[fd]
                 p = workers[wnum]
@@ -180,7 +173,10 @@ class CanadaCommand(CkanCommand):
                 break
 
         while worker_fds:
-            readable, _, _ = select.select(worker_fds, [], [])
+            try:
+                readable, _, _ = select.select(worker_fds, [], [])
+            except KeyboardInterrupt:
+                return
             for fd in readable:
                 wnum = worker_fds[fd]
                 p = workers[wnum]
@@ -204,6 +200,8 @@ class CanadaCommand(CkanCommand):
                 response = get_action('package_create')(context, pkg)
             except ValidationError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
+            except KeyboardInterrupt:
+                return
             else:
                 sys.stdout.write(response + '\n')
             try:
@@ -234,6 +232,8 @@ class CanadaCommand(CkanCommand):
                     'license_id': ''})
             except ValidationError, e:
                 print unicode(e).encode('utf-8')
+            except KeyboardInterrupt:
+                return
             else:
                 end = time.time()
                 count += 1
