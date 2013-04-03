@@ -145,6 +145,14 @@ class CanadaCommand(CkanCommand):
         def print_status(num, result):
             print processing, num, result.strip()
 
+        def finish_processing(fd):
+            wnum = worker_fds[fd]
+            p = workers[wnum]
+            finished_num = processing[wnum]
+            result = p.stdout.readline()
+            print_status(finished_num, result)
+            return p, wnum
+
         for num, line in line_reader():
             if len(workers) < self.options.processes:
                 p = subprocess.Popen([sys.argv[0], 
@@ -163,28 +171,21 @@ class CanadaCommand(CkanCommand):
                 return
 
             for fd in readable:
-                wnum = worker_fds[fd]
-                p = workers[wnum]
-                finished_num = processing[wnum]
-                result = p.stdout.readline()
+                p, wnum = finish_processing(fd)
                 processing[wnum] = num
-                print_status(finished_num, result)
                 p.stdin.write(line)
                 break
 
+        # wind down remaining workers
         while worker_fds:
             try:
                 readable, _, _ = select.select(worker_fds, [], [])
             except KeyboardInterrupt:
                 return
             for fd in readable:
-                wnum = worker_fds[fd]
-                p = workers[wnum]
-                finished_num = processing[wnum]
-                result = p.stdout.readline()
+                p, wnum = finish_processing(fd)
                 processing[wnum] = None
                 del worker_fds[p.stdout]
-                print_status(finished_num, result)
                 p.stdin.close()
 
     def load_dataset_worker(self, username):
