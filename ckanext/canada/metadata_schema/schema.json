@@ -4367,7 +4367,7 @@
           }, 
           "example": "YYYY-MM-DD", 
           "existing": false, 
-          "gc_multiplicity": "M", 
+          "gc_multiplicity": "O, R", 
           "id": "time_period_coverage_start", 
           "label": {
             "eng": "Time Period Coverage Start", 
@@ -4387,7 +4387,7 @@
           }, 
           "example": "YYYY-MM-DD", 
           "existing": false, 
-          "gc_multiplicity": "M", 
+          "gc_multiplicity": "O, R", 
           "id": "time_period_coverage_end", 
           "label": {
             "eng": "Time Period Coverage End", 
@@ -4684,7 +4684,7 @@
             "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
             "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
           }, 
-          "example": "", 
+          "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
           "existing": true, 
           "gc_multiplicity": "O", 
           "id": "spatial", 

@@ -15,7 +15,7 @@ import re
 from collections import namedtuple
 from itertools import groupby
 
-from ckan.logic.schema import default_package_schema, default_resource_schema
+from ckan.logic.schema import default_create_package_schema, default_resource_schema
 
 import vocabularies
 
@@ -91,7 +91,7 @@ EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 BILINGUAL_RESOURCE_FIELDS = set([
     ])
 
-EXISTING_FIELDS = set(default_package_schema()
+EXISTING_FIELDS = set(default_create_package_schema()
     ) | set(['spatial'])
 
 # The field order here must match the proposed schema spreadsheet
