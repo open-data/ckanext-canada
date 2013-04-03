@@ -53,21 +53,25 @@ Requirements
    - `open-data/ckan <https://github.com/open-data/ckan>`_
    - canada-v2.0
    - * stats
+ * - Spatial extension
+   - `open-data/ckanext-spatial <https://github.com/open-data/ckanext-spatial>`_
+   - release-v2.0
+   - * spatial_metadata
+     * spatial_query
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
    - master
    - * canada_forms
      * canada_internal
      * canada_public
- * - WET theme
+ * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
    - master
    - * wet_theme
- * - Spatial extension
-   - `open-data/ckanext-spatial <https://github.com/open-data/ckanext-spatial>`_
-   - release-v2.0
-   - * spatial_metadata
-     * spatial_query
+ * - WET-BOEW
+   - `open-data/wet-boew <https://github.com/open-data/wet-boew>`_
+   - master
+   - N/A
 
 
 Loading Data
