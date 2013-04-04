@@ -9,13 +9,12 @@ import os
 import re
 import json
 import time
-import subprocess
 import sys
-import select
 import urllib2
 from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
+from ckanext.canada.workers import worker_pool
 
 class CanadaCommand(CkanCommand):
     """
@@ -143,10 +142,6 @@ class CanadaCommand(CkanCommand):
         skip_lines = int(skip_lines)
         if max_count is not None:
             max_count = int(max_count)
-        total = 0.0
-        workers = []
-        processing = []
-        worker_fds = {}
         
         def line_reader():
             for num, line in enumerate(open(jl_source)):
@@ -156,51 +151,15 @@ class CanadaCommand(CkanCommand):
                     break
                 yield num, line
 
-        def print_status(num, result):
-            print processing, num, result.strip()
+        pool = worker_pool(
+            [sys.argv[0], 'canada', 'load-dataset-worker', username],
+            self.options.processes,
+            line_reader(),
+            )
 
-        def finish_processing(fd):
-            wnum = worker_fds[fd]
-            p = workers[wnum]
-            finished_num = processing[wnum]
-            result = p.stdout.readline()
-            print_status(finished_num, result)
-            return p, wnum
+        for job_ids, finished, result in pool:
+            print job_ids, finished, result.strip()
 
-        for num, line in line_reader():
-            if len(workers) < self.options.processes:
-                p = subprocess.Popen([sys.argv[0], 
-                    'canada', 'load-dataset-worker', username],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-                worker_fds[p.stdout] = len(workers)
-                workers.append(p)
-                processing.append(num)
-                p.stdin.write(line)
-                p.stdin.flush()
-                continue
-
-            try:
-                readable, _, _ = select.select(worker_fds, [], [])
-            except KeyboardInterrupt:
-                return
-
-            for fd in readable:
-                p, wnum = finish_processing(fd)
-                processing[wnum] = num
-                p.stdin.write(line)
-                break
-
-        # wind down remaining workers
-        while worker_fds:
-            try:
-                readable, _, _ = select.select(worker_fds, [], [])
-            except KeyboardInterrupt:
-                return
-            for fd in readable:
-                p, wnum = finish_processing(fd)
-                processing[wnum] = None
-                del worker_fds[p.stdout]
-                p.stdin.close()
 
     def load_dataset_worker(self, username):
         """
