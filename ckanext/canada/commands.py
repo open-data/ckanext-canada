@@ -289,6 +289,8 @@ class CanadaCommand(CkanCommand):
         header = {'Content-Type': 'application/json'}
         now = datetime.now()
 
+        site_user = get_action('get_site_user')({'ignore_auth': True}, ())
+
         def trim_package(pkg):
             """
             remove keys from pkg that we don't care about when comparing
@@ -342,9 +344,8 @@ class CanadaCommand(CkanCommand):
                 result = 'unchanged'
             elif target_pkg is None:
                 # CREATE
-                user = get_action('get_site_user')({'ignore_auth': True}, ())
                 context = {
-                    'user': user['name'],
+                    'user': site_user['name'],
                     'schema': dict(create_package_schema(), id=[not_empty]),
                     'return_id_only': True,
                     }
@@ -352,21 +353,14 @@ class CanadaCommand(CkanCommand):
                 result = 'created'
             elif source_pkg is None:
                 # DELETE
-                user = get_action('get_site_user')({'ignore_auth': True}, ())
-                context = {
-                    'user': user['name'],
-                    }
+                context = {'user': site_user['name']}
                 response = get_action('package_delete')(context, {'id': package_id.strip()})
                 result = 'deleted'
             elif source_pkg == target_pkg:
                 result = 'unchanged'
             else:
                 # UPDATE
-                user = get_action('get_site_user')({'ignore_auth': True}, ())
-                context = {
-                    'user': user['name'],
-                    'return_id_only': True,
-                    }
+                context = {'user': site_user['name'], 'return_id_only': True}
                 response = get_action('package_update')(context, source_pkg)
                 result = 'updated'
 
