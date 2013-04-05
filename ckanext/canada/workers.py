@@ -9,23 +9,25 @@ def worker_pool(popen_arg, num_workers, job_iterable,
 
     popen_arg - parameter to pass to subprocess.Popen when creating workers
     num_workers - maximum number of workers to create
-    job_iterable - iterable producing (job id, job string) tuples
-    stop_when_jobs_done - the generator exits when all jobs are done
-    stop_on_keyboard_interrupt - the generator exits on KeyboardIterrupt
+    job_iterable - iterable producing (job id, job string) tuples where
+                   job string should include a single trailing newline
+    stop_when_jobs_done - True: generator exits when all jobs are done
+    stop_on_keyboard_interrupt - True: generator exits on KeyboardIterrupt
 
-    job string should include a single trailing newline.
-
-    accepted to send(): job iterable or None, when a new job iterable
-    is sent it will replace the previous one used for assigning jobs.
+    accepted to send(): job iterable or None, when a new job iterable is 
+    sent it will replace the previous one used for assigning jobs to workers
 
     This generator blocks until there is a result from one of the workers.
 
-    yields (current worker job id list, finished job id, job result) tuples
+    yields (currently processing job id list, finished job id, job result)
+    tuples as jobs are completed, or (None, None, None) when no jobs remain
+    to be completed and stop_when_jobs_done is False.
 
-    worker job id list will include None if some workers are idle.
-    job result will include trailing newline.
+    currently processing job id list will include None if some workers are
+    idle.  job result will include trailing newline.
 
-    when all workers
+    when no jobs remain to be completed and stop_when_jobs_done is False a
+    new job iterable must be sent to this generator with send().
     """
     workers = []
     job_ids = []
@@ -73,8 +75,8 @@ def worker_pool(popen_arg, num_workers, job_iterable,
             if all(i is None for i in job_ids):
                 if stop_when_jobs_done:
                     return
+                new_jobs = yield (None, None, None)
                 # require new jobs to be submitted
-                new_jobs = yield (job_ids, None, None)
                 job_iter = iter(new_jobs)
                 assign_jobs()
                 continue

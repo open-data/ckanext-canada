@@ -79,7 +79,7 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'load-datasets':
             self.load_datasets(self.args[1], self.args[2], *self.args[3:])
-        
+
         elif cmd == 'load-dataset-worker':
             self.load_dataset_worker(self.args[1])
 
@@ -142,7 +142,7 @@ class CanadaCommand(CkanCommand):
         skip_lines = int(skip_lines)
         if max_count is not None:
             max_count = int(max_count)
-        
+
         def line_reader():
             for num, line in enumerate(open(jl_source)):
                 if num < skip_lines:
@@ -184,18 +184,62 @@ class CanadaCommand(CkanCommand):
                 break
 
     def portal_update(self, source, activity_date=None):
-        # local time :-(
+        """
+        collect batches of package ids modified at source since activity_date
+        and apply the package updates to the local CKAN instance for all
+        packages with published_date set to any time in the past.
+        """
         if activity_date:
+            # XXX local time :-(
             activity_date = isodate(activity_date, None)
         else:
             activity_date = datetime.now() - timedelta(days=7)
-        print self._changed_package_ids_since(source, activity_date)
 
+        seen_package_id_set = set()
 
-    def _changed_package_ids_since(self, source, since_time):
+        def changed_package_id_runs(start_date):
+            while True:
+                package_ids, next_date = self._changed_package_ids_since(
+                    source, start_date, seen_package_id_set)
+                if next_date is None:
+                    return
+                yield package_ids, next_date
+                start_date = next_date
+
+        pool = worker_pool(
+            [sys.argv[0], 'canada', 'portal-update-worker', source],
+            self.options.processes,
+            [],
+            stop_when_jobs_done=False,
+            stop_on_keyboard_interrupt=False,
+            )
+        pool.next() # advance generator so we may call send() below
+
+        for package_ids, next_date in changed_package_id_runs(activity_date):
+            stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+
+            job_ids, finished, result = pool.send((i, i) for i in package_ids)
+            while result is not None:
+                stats[result.strip()] += 1
+                job_ids, finished, result = pool.next()
+
+            print next_date, sorted(stats.items())
+
+    def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
         """
         Query source ckan instance for packages changed since_time.
-        returns (package ids, next since_time to query)
+        returns (package ids, next since_time to query) or (None, None)
+        when no more changes are found.
+
+        source - URL of CKAN source, e.g. 'http://registry.statcan.gc.ca'
+        since_time - local datetime to start looking for changes
+        seen_id_set - set of package ids already processed, this set is
+                      modified by calling this function
+
+        If all the package ids found were included in seen_id_set this
+        function will return an empty list of package ids.  Note that
+        this is different than when no more changes found and (None, None)
+        is returned.
         """
         url = source + '/api/action/changed_packages_activity_list_since'
         data = json.dumps({
@@ -205,17 +249,22 @@ class CanadaCommand(CkanCommand):
         req = urllib2.Request(url, data, headers=header)
         data = json.loads(urllib2.urlopen(req).read())
 
-        id_set = set()
+        if not seen_id_set:
+            seen_id_set = set()
+
+        if not data['result']:
+            return None
+
         package_ids = []
         for result in data['result']:
             package_id = result['data']['package']['id']
-            if package_id in id_set:
+            if package_id in seen_id_set:
                 continue
-            id_set.add(package_id)
+            seen_id_set.add(package_id)
             package_ids.append(package_id)
 
         if data['result']:
-            since_time = data['result'][-1]['timestamp']
+            since_time = isodate(data['result'][-1]['timestamp'], None)
 
         return package_ids, since_time
 
