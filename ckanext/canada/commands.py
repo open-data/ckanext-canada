@@ -309,7 +309,6 @@ class CanadaCommand(CkanCommand):
 
 
         for package_id in iter(sys.stdin.readline, ''):
-            sys.stderr.write(package_id)
             data = json.dumps({
                 'id': package_id.strip(),
                 })
@@ -362,7 +361,13 @@ class CanadaCommand(CkanCommand):
             elif source_pkg == target_pkg:
                 result = 'unchanged'
             else:
-                # FIXME: actually update
+                # UPDATE
+                user = get_action('get_site_user')({'ignore_auth': True}, ())
+                context = {
+                    'user': user['name'],
+                    'return_id_only': True,
+                    }
+                response = get_action('package_update')(context, source_pkg)
                 result = 'updated'
 
             sys.stdout.write(result + '\n')
