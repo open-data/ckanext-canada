@@ -259,7 +259,7 @@ class CanadaCommand(CkanCommand):
         req = urllib2.Request(url, data, headers=header)
         data = json.loads(urllib2.urlopen(req).read())
 
-        if not seen_id_set:
+        if seen_id_set is None:
             seen_id_set = set()
 
         if not data['result']:
