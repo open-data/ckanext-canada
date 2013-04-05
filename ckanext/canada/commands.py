@@ -223,10 +223,13 @@ class CanadaCommand(CkanCommand):
             stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
             jobs = ((i, i + '\n') for i in package_ids)
-            job_ids, finished, result = pool.send(jobs)
-            while result is not None:
-                stats[result.strip()] += 1
-                job_ids, finished, result = pool.next()
+            try:
+                job_ids, finished, result = pool.send(jobs)
+                while result is not None:
+                    stats[result.strip()] += 1
+                    job_ids, finished, result = pool.next()
+            except KeyboardInterrupt:
+                break
 
             print next_date.isoformat(),
             print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
@@ -308,7 +311,6 @@ class CanadaCommand(CkanCommand):
                 for k in ['resource_group_id', 'revision_id',
                         'revision_timestamp']:
                     del r[k]
-
 
         for package_id in iter(sys.stdin.readline, ''):
             data = json.dumps({
