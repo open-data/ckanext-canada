@@ -16,7 +16,7 @@ below.
       {{- pkg[f.id] -}}
     {%- endif -%}
   {%- else -%}
-    {%- if ' | ' in pkg[f.id] -%}
+    {%- if pkg[f.id] != None and ' | ' in pkg[f.id] -%}
       {{- pkg[f.id].split(' | ')[1 if client_lang == 'fr' else 0] -}}
     {%- else -%}
       {{- pkg[f.id] -}}
