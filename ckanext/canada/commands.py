@@ -1,6 +1,6 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
-from ckan.logic import get_action, NotFound, ValidationError
+from ckan.logic import get_action, NotFound, ValidationError, NotAuthorized
 from ckan.logic.validators import isodate
 from ckan.lib.navl.validators import not_empty
 import paste.script
@@ -309,7 +309,7 @@ class CanadaCommand(CkanCommand):
 
 
         for package_id in iter(sys.stdin.readline, ''):
-            #sys.stderr.write(package_id)
+            sys.stderr.write(package_id)
             data = json.dumps({
                 'id': package_id.strip(),
                 })
@@ -334,7 +334,7 @@ class CanadaCommand(CkanCommand):
 
             try:
                 target_pkg = get_action('package_show')({}, {'id': package_id.strip()})
-            except NotFound:
+            except (NotFound, NotAuthorized):
                 target_pkg = None
 
             trim_package(target_pkg)
@@ -352,7 +352,12 @@ class CanadaCommand(CkanCommand):
                 response = get_action('package_create')(context, source_pkg)
                 result = 'created'
             elif source_pkg is None:
-                # FIXME: actually delete
+                # DELETE
+                user = get_action('get_site_user')({'ignore_auth': True}, ())
+                context = {
+                    'user': user['name'],
+                    }
+                response = get_action('package_delete')(context, {'id': package_id.strip()})
                 result = 'deleted'
             elif source_pkg == target_pkg:
                 result = 'unchanged'
