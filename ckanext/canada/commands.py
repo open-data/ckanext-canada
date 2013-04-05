@@ -2,6 +2,7 @@ from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic import get_action, NotFound, ValidationError
 from ckan.logic.validators import isodate
+from ckan.lib.navl.validators import not_empty
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -15,6 +16,7 @@ from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
+from ckanext.canada.plugins import create_package_schema
 
 class CanadaCommand(CkanCommand):
     """
@@ -287,6 +289,25 @@ class CanadaCommand(CkanCommand):
         header = {'Content-Type': 'application/json'}
         now = datetime.now()
 
+        def trim_package(pkg):
+            """
+            remove keys from pkg that we don't care about when comparing
+            or updating/creating packages.
+            """
+            if not pkg:
+                return
+            for k in ['extras', 'metadata_modified', 'metadata_created',
+                    'revision_id', 'revision_timestamp']:
+                del pkg[k]
+            for t in pkg.get('tags', []):
+                for k in ['id', 'revision_timestamp']:
+                    del t[k]
+            for r in pkg['resources']:
+                for k in ['resource_group_id', 'revision_id',
+                        'revision_timestamp']:
+                    del r[k]
+
+
         for package_id in iter(sys.stdin.readline, ''):
             #sys.stderr.write(package_id)
             data = json.dumps({
@@ -303,8 +324,9 @@ class CanadaCommand(CkanCommand):
                 else:
                     raise
 
+            trim_package(source_pkg)
+
             if source_pkg:
-                del source_pkg['extras']
                 # treat unpublished packages same as deleted packages
                 if not source_pkg['date_published'] or isodate(
                         source_pkg['date_published'], None) > now:
@@ -315,21 +337,27 @@ class CanadaCommand(CkanCommand):
             except NotFound:
                 target_pkg = None
 
+            trim_package(target_pkg)
+
             if target_pkg is None and source_pkg is None:
                 result = 'unchanged'
             elif target_pkg is None:
-                # FIXME: actually create
+                # CREATE
+                user = get_action('get_site_user')({'ignore_auth': True}, ())
+                context = {
+                    'user': user['name'],
+                    'schema': dict(create_package_schema(), id=[not_empty]),
+                    'return_id_only': True,
+                    }
+                response = get_action('package_create')(context, source_pkg)
                 result = 'created'
             elif source_pkg is None:
                 # FIXME: actually delete
                 result = 'deleted'
+            elif source_pkg == target_pkg:
+                result = 'unchanged'
             else:
-                # FIXME: actually update, maybe
-                import pprint
-                for k in set(source_pkg) | set(target_pkg):
-                    if source_pkg.get(k) != target_pkg.get(k):
-                        pprint.pprint((k, source_pkg.get(k), target_pkg.get(k)), stream=sys.stderr)
-                fail
+                # FIXME: actually update
                 result = 'updated'
 
             sys.stdout.write(result + '\n')
