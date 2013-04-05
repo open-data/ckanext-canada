@@ -152,7 +152,8 @@ class CanadaCommand(CkanCommand):
                 yield num, line
 
         pool = worker_pool(
-            [sys.argv[0], 'canada', 'load-dataset-worker', username],
+            [sys.argv[0], 'canada', 'load-dataset-worker', username,
+             '-c', self.options.config],
             self.options.processes,
             line_reader(),
             )
@@ -207,7 +208,8 @@ class CanadaCommand(CkanCommand):
                 start_date = next_date
 
         pool = worker_pool(
-            [sys.argv[0], 'canada', 'portal-update-worker', source],
+            [sys.argv[0], 'canada', 'portal-update-worker', source,
+             '-c', self.options.config],
             self.options.processes,
             [],
             stop_when_jobs_done=False,
@@ -283,15 +285,54 @@ class CanadaCommand(CkanCommand):
         """
         url = source + '/api/action/package_show'
         header = {'Content-Type': 'application/json'}
+        now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
+            #sys.stderr.write(package_id)
             data = json.dumps({
                 'id': package_id.strip(),
                 })
             req = urllib2.Request(url, data, headers=header)
-            data = json.loads(urllib2.urlopen(req).read())
+            try:
+                data = json.loads(urllib2.urlopen(req).read())
+                source_pkg = data['result']
+            except urllib2.HTTPError, err:
+                if err.code == 403:
+                    # accessing deleted packages sends 403 to anon users
+                    source_pkg = None
+                else:
+                    raise
 
-            sys.stdout.write('unchanged\n')
+            if source_pkg:
+                del source_pkg['extras']
+                # treat unpublished packages same as deleted packages
+                if not source_pkg['date_published'] or isodate(
+                        source_pkg['date_published'], None) > now:
+                    source_pkg = None
+
+            try:
+                target_pkg = get_action('package_show')({}, {'id': package_id.strip()})
+            except NotFound:
+                target_pkg = None
+
+            if target_pkg is None and source_pkg is None:
+                result = 'unchanged'
+            elif target_pkg is None:
+                # FIXME: actually create
+                result = 'created'
+            elif source_pkg is None:
+                # FIXME: actually delete
+                result = 'deleted'
+            else:
+                # FIXME: actually update, maybe
+                import pprint
+                for k in set(source_pkg) | set(target_pkg):
+                    if source_pkg.get(k) != target_pkg.get(k):
+                        pprint.pprint((k, source_pkg.get(k), target_pkg.get(k)), stream=sys.stderr)
+                fail
+                result = 'updated'
+
+            sys.stdout.write(result + '\n')
             try:
                 sys.stdout.flush()
             except IOError:
