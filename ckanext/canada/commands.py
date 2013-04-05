@@ -1,6 +1,8 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
-from ckan.logic import get_action, NotFound, ValidationError
+from ckan.logic import get_action, NotFound, ValidationError, NotAuthorized
+from ckan.logic.validators import isodate
+from ckan.lib.navl.validators import not_empty
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -8,11 +10,13 @@ import os
 import re
 import json
 import time
-import subprocess
 import sys
-import select
+import urllib2
+from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
+from ckanext.canada.workers import worker_pool
+from ckanext.canada.plugins import create_package_schema
 
 class CanadaCommand(CkanCommand):
     """
@@ -26,7 +30,11 @@ class CanadaCommand(CkanCommand):
                       load-datasets <ckan user> <.jl source>
                                     [<lines to skip> [<lines to load>]]
                                     [-p <processes>]
-                      load-random-datasets <ckan user>
+                      portal-update <registry server> [<last activity date>]
+                                    [-p <processes>]
+
+        * processes defaults to 1
+        * last activity date defaults to 7 days ago
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -72,24 +80,20 @@ class CanadaCommand(CkanCommand):
                 self.delete_organization(org)
 
         elif cmd == 'load-datasets':
-            try:
-                self.load_datasets(self.args[1], self.args[2], *self.args[3:])
-            except KeyboardInterrupt:
-                # this will happen a lot while we work on performance
-                pass
-        
+            self.load_datasets(self.args[1], self.args[2], *self.args[3:])
+
         elif cmd == 'load-dataset-worker':
-            try:
-                self.load_dataset_worker(self.args[1])
-            except KeyboardInterrupt:
-                pass
+            self.load_dataset_worker(self.args[1])
 
         elif cmd == 'load-random-datasets':
-            try:
-                self.load_rando(self.args[1])
-            except KeyboardInterrupt:
-                # this will happen a lot while we work on performance
-                pass
+            self.load_rando(self.args[1])
+
+        elif cmd == 'portal-update':
+            self.portal_update(self.args[1], *self.args[2:])
+
+        elif cmd == 'portal-update-worker':
+            self.portal_update_worker(self.args[1])
+
         else:
             print self.__doc__
 
@@ -140,11 +144,7 @@ class CanadaCommand(CkanCommand):
         skip_lines = int(skip_lines)
         if max_count is not None:
             max_count = int(max_count)
-        total = 0.0
-        workers = []
-        processing = []
-        worker_fds = {}
-        
+
         def line_reader():
             for num, line in enumerate(open(jl_source)):
                 if num < skip_lines:
@@ -153,43 +153,16 @@ class CanadaCommand(CkanCommand):
                     break
                 yield num, line
 
-        def print_status(num, result):
-            print processing, num, result.strip()
+        pool = worker_pool(
+            [sys.argv[0], 'canada', 'load-dataset-worker', username,
+             '-c', self.options.config],
+            self.options.processes,
+            line_reader(),
+            )
 
-        for num, line in line_reader():
-            if len(workers) < self.options.processes:
-                p = subprocess.Popen([sys.argv[0], 
-                    'canada', 'load-dataset-worker', username],
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-                worker_fds[p.stdout] = len(workers)
-                workers.append(p)
-                processing.append(num)
-                p.stdin.write(line)
-                p.stdin.flush()
-                continue
+        for job_ids, finished, result in pool:
+            print job_ids, finished, result.strip()
 
-            readable, _, _ = select.select(worker_fds, [], [])
-            for fd in readable:
-                wnum = worker_fds[fd]
-                p = workers[wnum]
-                finished_num = processing[wnum]
-                result = p.stdout.readline()
-                processing[wnum] = num
-                print_status(finished_num, result)
-                p.stdin.write(line)
-                break
-
-        while worker_fds:
-            readable, _, _ = select.select(worker_fds, [], [])
-            for fd in readable:
-                wnum = worker_fds[fd]
-                p = workers[wnum]
-                finished_num = processing[wnum]
-                result = p.stdout.readline()
-                processing[wnum] = None
-                del worker_fds[p.stdout]
-                print_status(finished_num, result)
-                p.stdin.close()
 
     def load_dataset_worker(self, username):
         """
@@ -204,12 +177,201 @@ class CanadaCommand(CkanCommand):
                 response = get_action('package_create')(context, pkg)
             except ValidationError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
+            except KeyboardInterrupt:
+                return
             else:
                 sys.stdout.write(response + '\n')
             try:
                 sys.stdout.flush()
             except IOError:
                 break
+
+    def portal_update(self, source, activity_date=None):
+        """
+        collect batches of package ids modified at source since activity_date
+        and apply the package updates to the local CKAN instance for all
+        packages with published_date set to any time in the past.
+        """
+        if activity_date:
+            # XXX local time :-(
+            activity_date = isodate(activity_date, None)
+        else:
+            activity_date = datetime.now() - timedelta(days=7)
+
+        seen_package_id_set = set()
+
+        def changed_package_id_runs(start_date):
+            while True:
+                package_ids, next_date = self._changed_package_ids_since(
+                    source, start_date, seen_package_id_set)
+                if next_date is None:
+                    return
+                yield package_ids, next_date
+                start_date = next_date
+
+        pool = worker_pool(
+            [sys.argv[0], 'canada', 'portal-update-worker', source,
+             '-c', self.options.config],
+            self.options.processes,
+            [],
+            stop_when_jobs_done=False,
+            stop_on_keyboard_interrupt=False,
+            )
+        pool.next() # advance generator so we may call send() below
+
+        for package_ids, next_date in changed_package_id_runs(activity_date):
+            stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+
+            jobs = ((i, i + '\n') for i in package_ids)
+            try:
+                job_ids, finished, result = pool.send(jobs)
+                while result is not None:
+                    stats[result.strip()] += 1
+                    job_ids, finished, result = pool.next()
+            except KeyboardInterrupt:
+                break
+
+            print next_date.isoformat(),
+            print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+
+
+    def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
+        """
+        Query source ckan instance for packages changed since_time.
+        returns (package ids, next since_time to query) or (None, None)
+        when no more changes are found.
+
+        source - URL of CKAN source, e.g. 'http://registry.statcan.gc.ca'
+        since_time - local datetime to start looking for changes
+        seen_id_set - set of package ids already processed, this set is
+                      modified by calling this function
+
+        If all the package ids found were included in seen_id_set this
+        function will return an empty list of package ids.  Note that
+        this is different than when no more changes found and (None, None)
+        is returned.
+        """
+        url = source + '/api/action/changed_packages_activity_list_since'
+        data = json.dumps({
+            'since_time': since_time.isoformat(),
+            })
+        header = {'Content-Type': 'application/json'}
+        req = urllib2.Request(url, data, headers=header)
+        data = json.loads(urllib2.urlopen(req).read())
+
+        if seen_id_set is None:
+            seen_id_set = set()
+
+        if not data['result']:
+            return None, None
+
+        package_ids = []
+        for result in data['result']:
+            package_id = result['data']['package']['id']
+            if package_id in seen_id_set:
+                continue
+            seen_id_set.add(package_id)
+            package_ids.append(package_id)
+
+        if data['result']:
+            since_time = isodate(data['result'][-1]['timestamp'], None)
+
+        return package_ids, since_time
+
+
+    def portal_update_worker(self, source):
+        """
+        a process that accepts package ids on stdin which are passed to
+        the package_show API on the remote CKAN instance and compared
+        to the local version of the same package.  The local package is
+        then created, updated, deleted or left unchanged.  This process
+        outputs that action as a string 'created', 'updated', 'deleted'
+        or 'unchanged'
+        """
+        url = source + '/api/action/package_show'
+        header = {'Content-Type': 'application/json'}
+        now = datetime.now()
+
+        site_user = get_action('get_site_user')({'ignore_auth': True}, ())
+
+        def trim_package(pkg):
+            """
+            remove keys from pkg that we don't care about when comparing
+            or updating/creating packages.
+            """
+            if not pkg:
+                return
+            for k in ['extras', 'metadata_modified', 'metadata_created',
+                    'revision_id', 'revision_timestamp']:
+                del pkg[k]
+            for t in pkg.get('tags', []):
+                for k in ['id', 'revision_timestamp']:
+                    del t[k]
+            for r in pkg['resources']:
+                for k in ['resource_group_id', 'revision_id',
+                        'revision_timestamp']:
+                    del r[k]
+
+        for package_id in iter(sys.stdin.readline, ''):
+            data = json.dumps({
+                'id': package_id.strip(),
+                })
+            req = urllib2.Request(url, data, headers=header)
+            try:
+                data = json.loads(urllib2.urlopen(req).read())
+                source_pkg = data['result']
+            except urllib2.HTTPError, err:
+                if err.code == 403:
+                    # accessing deleted packages sends 403 to anon users
+                    source_pkg = None
+                else:
+                    raise
+
+            trim_package(source_pkg)
+
+            if source_pkg:
+                # treat unpublished packages same as deleted packages
+                if not source_pkg['date_published'] or isodate(
+                        source_pkg['date_published'], None) > now:
+                    source_pkg = None
+
+            try:
+                target_pkg = get_action('package_show')({}, {'id': package_id.strip()})
+            except (NotFound, NotAuthorized):
+                target_pkg = None
+
+            trim_package(target_pkg)
+
+            if target_pkg is None and source_pkg is None:
+                result = 'unchanged'
+            elif target_pkg is None:
+                # CREATE
+                context = {
+                    'user': site_user['name'],
+                    'schema': dict(create_package_schema(), id=[not_empty]),
+                    'return_id_only': True,
+                    }
+                response = get_action('package_create')(context, source_pkg)
+                result = 'created'
+            elif source_pkg is None:
+                # DELETE
+                context = {'user': site_user['name']}
+                response = get_action('package_delete')(context, {'id': package_id.strip()})
+                result = 'deleted'
+            elif source_pkg == target_pkg:
+                result = 'unchanged'
+            else:
+                # UPDATE
+                context = {'user': site_user['name'], 'return_id_only': True}
+                response = get_action('package_update')(context, source_pkg)
+                result = 'updated'
+
+            sys.stdout.write(result + '\n')
+            try:
+                sys.stdout.flush()
+            except IOError:
+                break
+
 
     def load_rando(self, username):
         count = 0
@@ -234,6 +396,8 @@ class CanadaCommand(CkanCommand):
                     'license_id': ''})
             except ValidationError, e:
                 print unicode(e).encode('utf-8')
+            except KeyboardInterrupt:
+                return
             else:
                 end = time.time()
                 count += 1
