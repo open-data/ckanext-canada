@@ -32,34 +32,51 @@ def worker_pool(popen_arg, num_workers, job_iterable,
     worker_fds = {}
     job_iter = iter(job_iterable)
 
+    def start_job(worker=None):
+        """
+        assign a job to exiting or newly created worker subprocess.
+
+        returns (job_id, worker) or (None, None) when no more jobs
+        """
+        job_id, job_str = next(job_iter, (None, None))
+        if job_str is None:
+            return None, None
+        if not worker:
+            worker = subprocess.Popen(popen_arg,
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        worker.stdin.write(job_str)
+        worker.stdin.flush()
+        return (job_id, worker)
+
     def assign_jobs():
-        while len(workers) < num_workers or None in job_ids:
-            job_id, job_str = next(job_iter, (None, None))
-            if job_str is None:
-                break
-            if len(workers) < num_workers:
-                # spin up new worker
-                w = subprocess.Popen(popen_arg,
-                    stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-                worker_fds[w.stdout] = len(workers)
-                workers.append(w)
-                job_ids.append(job_id)
-            else:
-                wnum = job_ids.index(None)
-                w = workers[wnum]
-                job_ids[wnum] = job_id
-            w.stdin.write(job_str)
-            w.stdin.flush()
+        """
+        start as many jobs as possible given maximum/idle workers
+        and available jobs
+        """
+        while None in job_ids:
+            wnum = job_ids.index(None)
+            job_ids[wnum], w = start_job(workers[wnum])
+            if w is None:
+                return
+
+        while len(workers) < num_workers:
+            job_id, w = start_job()
+            if w is None:
+                return
+            worker_fds[w.stdout] = len(workers)
+            workers.append(w)
+            job_ids.append(job_id)
 
     try:
+        assign_jobs()
         while True:
-            assign_jobs()
             if all(i is None for i in job_ids):
                 if stop_when_jobs_done:
                     return
-                # allow new jobs to be submitted
+                # require new jobs to be submitted
                 new_jobs = yield (job_ids, None, None)
                 job_iter = iter(new_jobs)
+                assign_jobs()
                 continue
 
             try:
@@ -74,12 +91,12 @@ def worker_pool(popen_arg, num_workers, job_iterable,
             w = workers[wnum]
             result = w.stdout.readline()
             finished = job_ids[wnum]
-            job_ids[wnum] = None
-            assign_jobs()
+            job_ids[wnum], _ = start_job(w)
 
             new_jobs = yield (job_ids, finished, result)
             if new_jobs:
                 job_iter = iter(new_jobs)
+                assign_jobs()
 
     finally:
         for w in workers:
