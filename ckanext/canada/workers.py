@@ -14,7 +14,7 @@ def worker_pool(popen_arg, num_workers, job_iterable,
     stop_when_jobs_done - True: generator exits when all jobs are done
     stop_on_keyboard_interrupt - True: generator exits on KeyboardIterrupt
 
-    accepted to send(): job iterable or None, when a new job iterable is 
+    accepted to send(): job iterable or None, when a new job iterable is
     sent it will replace the previous one used for assigning jobs to workers
 
     This generator blocks until there is a result from one of the workers.

@@ -218,12 +218,15 @@ class CanadaCommand(CkanCommand):
         for package_ids, next_date in changed_package_id_runs(activity_date):
             stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
-            job_ids, finished, result = pool.send((i, i) for i in package_ids)
+            jobs = ((i, i + '\n') for i in package_ids)
+            job_ids, finished, result = pool.send(jobs)
             while result is not None:
                 stats[result.strip()] += 1
                 job_ids, finished, result = pool.next()
 
-            print next_date, sorted(stats.items())
+            print next_date.isoformat(),
+            print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+
 
     def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
         """
@@ -253,7 +256,7 @@ class CanadaCommand(CkanCommand):
             seen_id_set = set()
 
         if not data['result']:
-            return None
+            return None, None
 
         package_ids = []
         for result in data['result']:
@@ -267,6 +270,32 @@ class CanadaCommand(CkanCommand):
             since_time = isodate(data['result'][-1]['timestamp'], None)
 
         return package_ids, since_time
+
+
+    def portal_update_worker(self, source):
+        """
+        a process that accepts package ids on stdin which are passed to
+        the package_show API on the remote CKAN instance and compared
+        to the local version of the same package.  The local package is
+        then created, updated, deleted or left unchanged.  This process
+        outputs that action as a string 'created', 'updated', 'deleted'
+        or 'unchanged'
+        """
+        url = source + '/api/action/package_show'
+        header = {'Content-Type': 'application/json'}
+
+        for package_id in iter(sys.stdin.readline, ''):
+            data = json.dumps({
+                'id': package_id.strip(),
+                })
+            req = urllib2.Request(url, data, headers=header)
+            data = json.loads(urllib2.urlopen(req).read())
+
+            sys.stdout.write('unchanged\n')
+            try:
+                sys.stdout.flush()
+            except IOError:
+                break
 
 
     def load_rando(self, username):
