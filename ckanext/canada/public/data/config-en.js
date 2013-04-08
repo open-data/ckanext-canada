@@ -18,7 +18,7 @@
  */
 var wet_boew_geomap = {
 	// OPTIONAL: note that Geomap will provide a default basemap if not specified here.
-	/*
+
 	basemap : {
 		title: 'CBMT',
 		type: 'wms',
@@ -37,16 +37,17 @@ var wet_boew_geomap = {
 			numZoomLevels: 12
 		}
 	},
-	*/
-	/*
+
+/*
 	basemap : {
 		title: 'WMS Demo',
 		type: 'wms',
 		url: 'http://vmap0.tiles.osgeo.org/wms/vmap0',
 		layers: 'basic'
 	},
-	*/	
-	overlays : [		
+*/
+	overlays : [  
+  /*
 		{
 			title: 'KML Demo EN',
 			caption: 'This is a sample KML file loaded locally by Geomap.',
@@ -104,20 +105,25 @@ var wet_boew_geomap = {
 				author: 'Author'
 			}
 		},
-                {
-                        title: 'GeoJSON Provinces EN',
-                        caption: 'Sample GeoJSON from City of Ottawa',
-                        type: 'geojson',
-                        url: 'http://localhost/data/data/province.geojson',
-                        visible: true,
-                        zoom: true,
-                        tab: true,
-                        datatable: true,
-                        attributes: {
-                               title: 'Name'
-                        }
-                },
-		{
+  */    
+    {
+      title: 'GeoJSON Provinces EN',
+      caption: 'Sample GeoJSON from City of Ottawa',
+      type: 'geojson',
+      url: 'http://localhost:8088/data/data/provinces.js',
+      visible: true,
+      zoom: true,
+      tab: true,
+      datatable: true,
+      attributes: {
+        name: 'Name' /*,
+        code: 'Code',
+        cartodb_id: 'ID',
+        created_at: 'Created',
+        updated_at: 'Last updated' */
+      }
+    },
+		 /* {
 			title: 'GeoJSON (CartoDB) EN',
 			caption: 'This is a sample dataset loaded from a remote GeoJSON resource, in this case traffic cameras in the city of Ottawa from the CartoDB API.',
 			type: 'geojson',					
@@ -142,7 +148,6 @@ var wet_boew_geomap = {
 				init: { 'pointRadius': '15', 'externalGraphic': '/data/data/icons/trafficcamera.png', 'fillOpacity': 1.0 },
 				select: { 'pointRadius': '15', 'externalGraphic': '/data/data/icons/trafficcamera_active.png', 'fillOpacity': 1.0 }
 			}
-			/*
 			// unique value style
 			style: {
 				type: 'unique',
@@ -173,8 +178,8 @@ var wet_boew_geomap = {
 				}],
 				select: {'pointRadius': '30', 'externalGraphic': '../../OverIcon.png', 'label': "Selected", 'fillOpacity': 0.90}
 			}
-			*/
 		}		
+      */		
 	]
 };
 
