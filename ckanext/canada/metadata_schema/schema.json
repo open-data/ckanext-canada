@@ -1872,6 +1872,16 @@
             "eng": "Issue Identification", 
             "fra": "Identification de l\u2019enjeu"
           }, 
+          "pilot_help": {
+            "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
+            "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
+          }, 
+          "pilot_id": "deptIdentifier", 
+          "pilot_name": {
+            "eng": "Department Generated Identifier", 
+            "fra": "Identificateur unique g\u00e9n\u00e9r\u00e9 par le d\u00e9partement"
+          }, 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "issueIdentification", 
             "fra": "identificationPublication"
@@ -4235,6 +4245,16 @@
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
+          "pilot_help": {
+            "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
+            "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "date_released", 
+          "pilot_name": {
+            "eng": "Date Published", 
+            "fra": "Date de publication"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "datePublished", 
             "fra": "datePublication"
@@ -4373,6 +4393,16 @@
             "eng": "Time Period Coverage Start", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "pilot_help": {
+            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "time_period_start", 
+          "pilot_name": {
+            "eng": "Time Period Coverage Start", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "timePeriodCoverageStart", 
             "fra": "\u00e9lementTemporalle"
@@ -4393,6 +4423,16 @@
             "eng": "Time Period Coverage End", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "pilot_help": {
+            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "time_period_end", 
+          "pilot_name": {
+            "eng": "Time Period Coverage End", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "timePeriodCoverageEnd", 
             "fra": "\u00e9lementTemporalle"
