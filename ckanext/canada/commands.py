@@ -69,7 +69,7 @@ class CanadaCommand(CkanCommand):
                 if 'id' not in org:
                     continue
                 if not org['id']:
-                    print "skipping", org
+                    print "skipping", org['key'].encode('utf-8')
                 else:
                     self.create_organization(org)
 
