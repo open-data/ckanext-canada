@@ -24,17 +24,19 @@ class CanadaCommand(CkanCommand):
 
     Usage::
 
-        paster canada create-vocabularies [-c <path to config file>]
+        paster canada create-vocabularies
                       delete-vocabularies
                       create-organizations
-                      load-datasets <ckan user> <.jl source>
+                      load-datasets <.jl source file>
                                     [<lines to skip> [<lines to load>]]
-                                    [-p <processes>]
+                                    [-p <processes>] [-u <ckan user>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <processes>]
 
-        * processes defaults to 1
-        * last activity date defaults to 7 days ago
+        * all commands take optional [-c <path to ckan config file>]
+        * <processes> defaults to 1
+        * <last activity date> defaults to 7 days ago
+        * <ckan user> defaults to the system user
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -44,6 +46,8 @@ class CanadaCommand(CkanCommand):
         default='development.ini', help='Config file to use.')
     parser.add_option('-p', '--processes', dest='processes',
         default=1, type="int")
+    parser.add_option('-u', '--ckan-user', dest='ckan_user',
+        default=None)
 
     def command(self):
         '''
@@ -83,10 +87,10 @@ class CanadaCommand(CkanCommand):
                 self.delete_organization(org)
 
         elif cmd == 'load-datasets':
-            self.load_datasets(self.args[1], self.args[2], *self.args[3:])
+            self.load_datasets(self.args[1], *self.args[2:])
 
         elif cmd == 'load-dataset-worker':
-            self.load_dataset_worker(self.args[1])
+            self.load_dataset_worker()
 
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
@@ -138,7 +142,7 @@ class CanadaCommand(CkanCommand):
                 vocabulary_id=vocab['id'],
                 )
 
-    def load_datasets(self, username, jl_source, skip_lines=0, max_count=None):
+    def load_datasets(self, jl_source, skip_lines=0, max_count=None):
         skip_lines = int(skip_lines)
         if max_count is not None:
             max_count = int(max_count)
@@ -150,25 +154,23 @@ class CanadaCommand(CkanCommand):
                 if max_count is not None and num >= skip_lines + max_count:
                     break
                 yield num, line
+        cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
+            '-c', self.options.config]
+        if self.options.ckan_user:
+            cmd += ['-u', self.options.ckan_user]
 
-        pool = worker_pool(
-            [sys.argv[0], 'canada', 'load-dataset-worker', username,
-             '-c', self.options.config],
-            self.options.processes,
-            line_reader(),
-            )
-
+        pool = worker_pool(cmd, self.options.processes, line_reader())
         for job_ids, finished, result in pool:
             print job_ids, finished, result.strip()
 
 
-    def load_dataset_worker(self, username):
+    def load_dataset_worker(self):
         """
         a process that accepts lines of json on stdin which is parsed and
         passed to the package_create action.  it produces lines of json
         which are the responses from each action call.
         """
-        registry = LocalCKAN(username, {'return_id_only': True})
+        registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
         for line in iter(sys.stdin.readline, ''):
             pkg = json.loads(line)
             try:
