@@ -68,7 +68,10 @@ class CanadaCommand(CkanCommand):
             for org in schema_description.dataset_field_by_id['author']['choices']:
                 if 'id' not in org:
                     continue
-                self.create_organization(org)
+                if not org['id']:
+                    print "skipping", org
+                else:
+                    self.create_organization(org)
 
         elif cmd == 'delete-organizations':
             raise NotImplementedError(
@@ -391,7 +394,7 @@ class CanadaCommand(CkanCommand):
     def create_organization(self, org):
         registry = LocalCKAN()
         registry.action.organization_create(
-            name=org['id'].lower(),
+            name=org['id'].lower().replace(' ', ''),
             title=org['id'],
             description=org['key'],
             )
