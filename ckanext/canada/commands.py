@@ -88,9 +88,6 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'load-dataset-worker':
             self.load_dataset_worker(self.args[1])
 
-        elif cmd == 'load-random-datasets':
-            self.load_rando(self.args[1])
-
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
@@ -360,39 +357,6 @@ class CanadaCommand(CkanCommand):
             except IOError:
                 break
 
-
-    def load_rando(self, username):
-        count = 0
-        total = 0.0
-        import random
-        log = file('rando.log', 'a')
-        registry = LocalCKAN(username)
-
-        while True:
-            try:
-                print str(count) + ",",
-                log.write(str(count) + ",")
-                start = time.time()
-                response = registry.action.package_create(**{
-                    'name': "%x" % random.getrandbits(64),
-                    'maintainer': '',
-                    'title': '',
-                    'author_email': '',
-                    'notes': '',
-                    'author': '',
-                    'maintainer_email': '',
-                    'license_id': ''})
-            except ValidationError, e:
-                print unicode(e).encode('utf-8')
-            except KeyboardInterrupt:
-                return
-            else:
-                end = time.time()
-                count += 1
-                total += end - start
-                log.write("%f\n" % (end - start,))
-                log.flush()
-                print "%f, %f" % (end - start, total / count)
 
     def create_organization(self, org):
         registry = LocalCKAN()
