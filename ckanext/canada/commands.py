@@ -323,7 +323,10 @@ class CanadaCommand(CkanCommand):
                     source_pkg = None
 
             try:
-                target_pkg = portal.action.package_show(id=package_id.strip())
+                # don't pass user in context so deleted packages
+                # raise NotAuthorized
+                target_pkg = portal.call_action('package_show',
+                    {'id':package_id.strip()}, {})
             except (NotFound, NotAuthorized):
                 target_pkg = None
 
