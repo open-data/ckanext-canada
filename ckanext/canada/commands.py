@@ -1,6 +1,5 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
-from ckan.logic import get_action, NotFound, ValidationError, NotAuthorized
 from ckan.logic.validators import isodate
 from ckan.lib.navl.validators import not_empty
 import paste.script
@@ -11,12 +10,13 @@ import re
 import json
 import time
 import sys
-import urllib2
 from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanext.canada.plugins import create_package_schema
+from ckanext.canada.ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
+    ValidationError, NotAuthorized)
 
 class CanadaCommand(CkanCommand):
     """
@@ -68,7 +68,10 @@ class CanadaCommand(CkanCommand):
             for org in schema_description.dataset_field_by_id['author']['choices']:
                 if 'id' not in org:
                     continue
-                self.create_organization(org)
+                if not org['id']:
+                    print "skipping", org['key'].encode('utf-8')
+                else:
+                    self.create_organization(org)
 
         elif cmd == 'delete-organizations':
             raise NotImplementedError(
@@ -113,32 +116,30 @@ class CanadaCommand(CkanCommand):
         conf = appconfig('config:' + self.filename)
 
     def delete_vocabulary(self, name):
-        user = get_action('get_site_user')({'ignore_auth': True}, ())
-        context = {'user': user['name']}
-        vocab = get_action('vocabulary_show')(context, {'id': name})
+        registry = LocalCKAN()
+        vocab = registry.action.vocabulary_show(id=name)
         for t in vocab['tags']:
-            get_action('tag_delete')(context, {'id': t['id'],})
-        get_action('vocabulary_delete')(context, {'id': vocab['id']})
+            registry.action.tag_delete(id=t['id'])
+        registry.action.vocabulary_delete(id=vocab['id'])
 
     def create_vocabulary(self, name, terms):
-        user = get_action('get_site_user')({'ignore_auth': True}, ())
-        context = {'user': user['name']}
+        registry = LocalCKAN()
         try:
-            vocab = get_action('vocabulary_show')(context, {'id': name})
+            vocab = registry.action.vocabulary_show(id=name)
             print "{name} vocabulary exists, skipping".format(name=name)
             return
         except NotFound:
             pass
         print 'creating {name} vocabulary'.format(name=name)
-        vocab = get_action('vocabulary_create')(context, {'name': name})
+        vocab = registry.action.vocabulary_create(name=name)
         for term in terms:
             # don't create items that only existed in pilot
             if 'id' not in term:
                 continue
-            get_action('tag_create')(context, {
-                'name': term['key'],
-                'vocabulary_id': vocab['id'],
-                })
+            registry.action.tag_create(
+                name=term['key'],
+                vocabulary_id=vocab['id'],
+                )
 
     def load_datasets(self, username, jl_source, skip_lines=0, max_count=None):
         skip_lines = int(skip_lines)
@@ -170,11 +171,11 @@ class CanadaCommand(CkanCommand):
         passed to the package_create action.  it produces lines of json
         which are the responses from each action call.
         """
+        registry = LocalCKAN(username, {'return_id_only': True})
         for line in iter(sys.stdin.readline, ''):
-            context = {'user': username, 'return_id_only': True}
             pkg = json.loads(line)
             try:
-                response = get_action('package_create')(context, pkg)
+                response = registry.action.package_create(**pkg)
             except ValidationError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
@@ -251,13 +252,9 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        url = source + '/api/action/changed_packages_activity_list_since'
-        data = json.dumps({
-            'since_time': since_time.isoformat(),
-            })
-        header = {'Content-Type': 'application/json'}
-        req = urllib2.Request(url, data, headers=header)
-        data = json.loads(urllib2.urlopen(req).read())
+        remote = RemoteCKAN(source)
+        data = remote.action.changed_packages_activity_list_since(
+            since_time=since_time.isoformat())
 
         if seen_id_set is None:
             seen_id_set = set()
@@ -288,11 +285,9 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        url = source + '/api/action/package_show'
-        header = {'Content-Type': 'application/json'}
+        registry = RemoteCKAN(source)
+        portal = LocalCKAN()
         now = datetime.now()
-
-        site_user = get_action('get_site_user')({'ignore_auth': True}, ())
 
         def trim_package(pkg):
             """
@@ -313,19 +308,11 @@ class CanadaCommand(CkanCommand):
                     del r[k]
 
         for package_id in iter(sys.stdin.readline, ''):
-            data = json.dumps({
-                'id': package_id.strip(),
-                })
-            req = urllib2.Request(url, data, headers=header)
             try:
-                data = json.loads(urllib2.urlopen(req).read())
+                data = registry.action.package_show(id=package_id.strip())
                 source_pkg = data['result']
-            except urllib2.HTTPError, err:
-                if err.code == 403:
-                    # accessing deleted packages sends 403 to anon users
-                    source_pkg = None
-                else:
-                    raise
+            except NotAuthorized:
+                source_pkg = None
 
             trim_package(source_pkg)
 
@@ -336,7 +323,10 @@ class CanadaCommand(CkanCommand):
                     source_pkg = None
 
             try:
-                target_pkg = get_action('package_show')({}, {'id': package_id.strip()})
+                # don't pass user in context so deleted packages
+                # raise NotAuthorized
+                target_pkg = portal.call_action('package_show',
+                    {'id':package_id.strip()}, {})
             except (NotFound, NotAuthorized):
                 target_pkg = None
 
@@ -346,24 +336,22 @@ class CanadaCommand(CkanCommand):
                 result = 'unchanged'
             elif target_pkg is None:
                 # CREATE
-                context = {
-                    'user': site_user['name'],
-                    'schema': dict(create_package_schema(), id=[not_empty]),
-                    'return_id_only': True,
-                    }
-                response = get_action('package_create')(context, source_pkg)
+                portal.call_action('package_create',
+                    source_pkg,
+                    dict(portal.context,
+                        schema=dict(create_package_schema(), id=[not_empty]),
+                        return_id_only=True),
+                    )
                 result = 'created'
             elif source_pkg is None:
                 # DELETE
-                context = {'user': site_user['name']}
-                response = get_action('package_delete')(context, {'id': package_id.strip()})
+                portal.action.package_delete(id=package_id.strip())
                 result = 'deleted'
             elif source_pkg == target_pkg:
                 result = 'unchanged'
             else:
                 # UPDATE
-                context = {'user': site_user['name'], 'return_id_only': True}
-                response = get_action('package_update')(context, source_pkg)
+                portal.action.package_update(**source_pkg)
                 result = 'updated'
 
             sys.stdout.write(result + '\n')
@@ -378,14 +366,14 @@ class CanadaCommand(CkanCommand):
         total = 0.0
         import random
         log = file('rando.log', 'a')
+        registry = LocalCKAN(username)
 
         while True:
             try:
                 print str(count) + ",",
                 log.write(str(count) + ",")
                 start = time.time()
-                context = {'user': username}
-                response = get_action('package_create')(context, {
+                response = registry.action.package_create(**{
                     'name': "%x" % random.getrandbits(64),
                     'maintainer': '',
                     'title': '',
@@ -407,24 +395,17 @@ class CanadaCommand(CkanCommand):
                 print "%f, %f" % (end - start, total / count)
 
     def create_organization(self, org):
-        organization = {
-            'name':org['id'].lower(),
-            'title':org['id'],
-            'description':org['key'],
-            }
-        user = get_action('get_site_user')({'ignore_auth': True}, ())
-        context = {'user': user['name']}
-        try:
-            response = get_action('organization_create')(context, organization)
-        except ValidationError, e:
-            print organization['name'], unicode(e).encode('utf-8')
+        registry = LocalCKAN()
+        registry.action.organization_create(
+            name=org['id'].lower().replace(' ', ''),
+            title=org['id'],
+            description=org['key'],
+            )
 
     def delete_organization(self, org):
-        user = get_action('get_site_user')({'ignore_auth': True}, ())
-        context = {'user': user['name']}
+        registry = LocalCKAN()
         try:
-            organization = get_action('organization_show')(context, {
-                'id':org['id'].lower()})
-            response = get_action('group_delete')(context, organization)
+            organization = registry.action.organization_show(id=org['id'].lower())
+            response = registry.action.group_delete(id=organization['id'])
         except NotFound:
             pass
