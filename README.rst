@@ -105,18 +105,18 @@ Choose the ones you like, there are no dependencies.
    For example load 150K records from "nrcan-1.jl" in parallel with three
    processes::
 
-     paster canada load-datasets ckanuser nrcan-1.jl 0 150000 -p 3
-   
+     paster canada load-datasets nrcan-1.jl 0 150000 -p 3
+
 For UI testing, simply load the 50 test datasets from the data folder.  It contains a mixture of the latest version of assorted datasets from NRCAN and the Enviroment Canada Pilot::
-   
-   paster canada load-datasets ckanuser data/sample.jl
-   	 
+
+   paster canada load-datasets data/sample.jl
+
 Working with the API
 --------------------
 
 To view a raw dataset using the api, pipe your curl requests to python's mjson.tool to ensure readable formatting of the output::
-  
+
   curl http://localhost:5000/api/action/package_show -d '{"id": "0007a010-556d-4f83-bb8e-6e22dcc62e84"}' |  python -mjson.tool
 
 
-     
+
