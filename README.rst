@@ -106,3 +106,17 @@ Choose the ones you like, there are no dependencies.
    processes::
 
      paster canada load-datasets ckanuser nrcan-1.jl 0 150000 -p 3
+   
+   For UI testing, simply load the 50 test datasets from the data folder with:
+   
+   	 paster canada load-datasets ckanuser data/sample.jl
+   	 
+Working with the API
+--------------------
+
+To view a raw dataset using the api:
+  
+  curl http://localhost:5000/api/action/package_show -d '{"id": "0007a010-556d-4f83-bb8e-6e22dcc62e84"}' |  python -mjson.tool
+
+
+     
