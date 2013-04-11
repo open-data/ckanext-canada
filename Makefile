@@ -1,22 +1,44 @@
 
+CKAN_CONFIG ?= development.ini
+
+ifeq ($(wildcard ${CKAN_CONFIG}),)
+$(error CKAN configuration file ${CKAN_CONFIG} not found, you may \
+        want to specify an override for the CKAN_CONFIG value)
+endif
+
+PSQL_COMMAND = $(shell bin/psql_args.py ${CKAN_CONFIG})
+DB_NAME_PORT = $(shell bin/psql_dbname.py ${CKAN_CONFIG})
+DB_USER = $(shell bin/psql_user.py ${CKAN_CONFIG})
+
+POSTGIS = $(firstword $(wildcard \
+    /usr/share/pgsql/contrib/postgis-64.sql \
+    /usr/share/postgresql/*/contrib/postgis-1.5/postgis.sql \
+    ))
+SPATIAL_REF_SYS = $(firstword $(wildcard \
+    /usr/share/pgsql/contrib/postgis-1.5/spatial_ref_sys.sql \
+    /usr/share/postgresql/*/contrib/postgis-1.5/spatial_ref_sys.sql \
+    ))
+
 test:
+	which nosetests
 	python `which nosetests` --with-pylons=test-core.ini ckanext/canada/tests 2>&1
 
-tune-database-clear-solr:
-	paster --plugin=ckan db init
-	paster --plugin=ckan search-index clear
-	bash -c "`tuning/psql_args.py development.ini`" < tuning/constraints.sql
-	bash -c "`tuning/psql_args.py development.ini`" < tuning/what_to_alter.sql
-	paster canada create-vocabularies
-	paster canada create-organizations
-	paster --plugin=ckan sysadmin add admin
+drop-database:
+	sudo -u postgres dropdb ${DB_NAME_PORT}
 
-production-database-init:
-	# apply postgis tables from redhat-specific paths
-	bash -c "`tuning/psql_args.py development.ini`" < /usr/share/pgsql/contrib/postgis-64.sql
-	bash -c "`tuning/psql_args.py development.ini`" < /usr/share/pgsql/contrib/postgis-1.5/spatial_ref_sys.sql
-	paster --plugin=ckan db init
-	paster --plugin=ckan search-index clear
-	paster canada create-vocabularies
-	paster canada create-organizations
+create-database:
+	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -E UTF-8
+	sudo -u postgres psql ${DB_NAME_PORT} < ${POSTGIS}
+	sudo -u postgres psql ${DB_NAME_PORT} -c "ALTER TABLE spatial_ref_sys OWNER TO ${DB_USER}"
+	sudo -u postgres psql ${DB_NAME_PORT} -c "ALTER TABLE geometry_columns OWNER TO ${DB_USER}"
+	bash -c "${PSQL_COMMAND}" < ${SPATIAL_REF_SYS}
+	paster --plugin=ckan db init -c ${CKAN_CONFIG}
+	paster --plugin=ckan search-index clear -c ${CKAN_CONFIG}
+	paster canada create-vocabularies -c ${CKAN_CONFIG}
+	paster canada create-organizations -c ${CKAN_CONFIG}
+	paster --plugin=ckan sysadmin add admin -c ${CKAN_CONFIG}
+
+tune-database:
+	bash -c "${PSQL_COMMAND}" < tuning/constraints.sql
+	bash -c "${PSQL_COMMAND}" < tuning/what_to_alter.sql
 
