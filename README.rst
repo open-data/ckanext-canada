@@ -107,9 +107,9 @@ Choose the ones you like, there are no dependencies.
 
      paster canada load-datasets ckanuser nrcan-1.jl 0 150000 -p 3
    
-   For UI testing, simply load the 50 test datasets from the data folder with:
+For UI testing, simply load the 50 test datasets from the data folder with:
    
-   	 paster canada load-datasets ckanuser data/sample.jl
+   paster canada load-datasets ckanuser data/sample.jl
    	 
 Working with the API
 --------------------
