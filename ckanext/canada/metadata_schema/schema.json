@@ -1872,6 +1872,16 @@
             "eng": "Issue Identification", 
             "fra": "Identification de l\u2019enjeu"
           }, 
+          "pilot_help": {
+            "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
+            "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
+          }, 
+          "pilot_id": "deptIdentifier", 
+          "pilot_name": {
+            "eng": "Department Generated Identifier", 
+            "fra": "Identificateur unique g\u00e9n\u00e9r\u00e9 par le d\u00e9partement"
+          }, 
+          "pilot_type": "text", 
           "proposed_name": {
             "eng": "issueIdentification", 
             "fra": "identificationPublication"

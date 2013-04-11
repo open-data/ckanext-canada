@@ -187,6 +187,7 @@ PILOT_FIELD_MAPPING = {
     'begin_position': 'time_period_start',
     'end_position': 'time_period_end',
     'data_series_name': 'group_name_en',
+    'data_series_issue_identification': 'deptIdentifier',
     'resource:url': 'dataset_link_en_1',
     'resource:format': 'dataset_format_1',
     'resource:size': 'dataset_size_en_1',
