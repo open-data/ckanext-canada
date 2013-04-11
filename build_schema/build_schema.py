@@ -184,10 +184,11 @@ PILOT_FIELD_MAPPING = {
     'data_dictionary': 'dictionary_list:_en', # note: different than French
     'supplemental_information': 'supplementary_documentation_en',
     'geographic_region': 'Geographic_Region_Name',
-    'begin_position': 'time_period_start',
-    'end_position': 'time_period_end',
+    'time_period_coverage_start': 'time_period_start',
+    'time_period_coverage_end': 'time_period_end',
     'data_series_name': 'group_name_en',
     'data_series_issue_identification': 'deptIdentifier',
+    'date_published': 'date_released',
     'resource:url': 'dataset_link_en_1',
     'resource:format': 'dataset_format_1',
     'resource:size': 'dataset_size_en_1',

@@ -4245,6 +4245,16 @@
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
+          "pilot_help": {
+            "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
+            "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "date_released", 
+          "pilot_name": {
+            "eng": "Date Published", 
+            "fra": "Date de publication"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "datePublished", 
             "fra": "datePublication"
@@ -4383,6 +4393,16 @@
             "eng": "Time Period Coverage Start", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "pilot_help": {
+            "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "time_period_start", 
+          "pilot_name": {
+            "eng": "Time Period Coverage Start", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "timePeriodCoverageStart", 
             "fra": "\u00e9lementTemporalle"
@@ -4403,6 +4423,16 @@
             "eng": "Time Period Coverage End", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "pilot_help": {
+            "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+            "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "time_period_end", 
+          "pilot_name": {
+            "eng": "Time Period Coverage End", 
+            "fra": "Couverture de la p\u00e9riode de temps"
+          }, 
+          "pilot_type": "datepicker", 
           "proposed_name": {
             "eng": "timePeriodCoverageEnd", 
             "fra": "\u00e9lementTemporalle"
