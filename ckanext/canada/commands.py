@@ -390,14 +390,11 @@ class CanadaCommand(CkanCommand):
 
     def create_organization(self, org):
         registry = LocalCKAN()
-        try:
-            response = registry.action.organization_create(
-                name=org['id'].lower(),
-                title=org['id'],
-                description=org['key'],
-                )
-        except ValidationError, e:
-            print organization['name'], unicode(e).encode('utf-8')
+        registry.action.organization_create(
+            name=org['id'].lower(),
+            title=org['id'],
+            description=org['key'],
+            )
 
     def delete_organization(self, org):
         registry = LocalCKAN()
