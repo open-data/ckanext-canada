@@ -291,7 +291,7 @@ def field_from_proposed(p):
     return {
         'proposed_name': {'eng': p.property_name, 'fra': p.property_name_fra},
         'proposed_type': p.type_,
-        'gc_multiplicity': p.gc_multiplicity,
+        'mandatory': bool(p.gc_multiplicity.startswith('M')),
         'description': {'eng': p.description, 'fra': p.description_fra},
         'example': p.example,
         'label': {'eng': p.property_label, 'fra': p.property_label_fra},

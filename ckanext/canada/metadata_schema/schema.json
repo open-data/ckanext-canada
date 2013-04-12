@@ -11,12 +11,12 @@
           }, 
           "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "id", 
           "label": {
             "eng": "File Identifier", 
             "fra": "Identificateur de fichier"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "fileIdentifier", 
             "fra": "Identifiant M\u00e9tadonn\u00e9es"
@@ -51,12 +51,12 @@
           }, 
           "example": "eng; CAN | fra; CAN", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "language", 
           "label": {
             "eng": "Language", 
             "fra": "Langue"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The language(s) of the content of the dataset.", 
             "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
@@ -1284,12 +1284,12 @@
           }, 
           "example": "Treasury Board of Canada Secretariat", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "author", 
           "label": {
             "eng": "Organization Name", 
             "fra": "Nom de l\u2019organisation"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
@@ -1314,12 +1314,12 @@
           }, 
           "example": "", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "department_number", 
           "label": {
             "eng": "Department Number", 
             "fra": "Num\u00e9ro du minist\u00e8re"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "departmentNumber", 
             "fra": "num\u00e9roD\u00e9partment"
@@ -1334,12 +1334,12 @@
           }, 
           "example": "od-do@tbs-sct.gc.ca", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "author_email", 
           "label": {
             "eng": "Electronic Mail Address", 
             "fra": "Adresse \u00e9lectronique"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "electronicMail Address", 
             "fra": "adresseCourrier\u00c9lectronique"
@@ -1354,12 +1354,12 @@
           }, 
           "example": "Canada Border Wait Times", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "title", 
           "label": {
             "eng": "Title", 
             "fra": "Titre"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
@@ -1385,12 +1385,12 @@
           }, 
           "example": "http://host/path/ download", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "name", 
           "label": {
             "eng": "Dataset URI", 
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "dataSetURI", 
             "fra": "URIJeuDonn\u00e9es"
@@ -1405,12 +1405,12 @@
           }, 
           "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "notes", 
           "label": {
             "eng": "Abstract", 
             "fra": "R\u00e9sum\u00e9"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
@@ -1436,12 +1436,12 @@
           }, 
           "example": "", 
           "existing": false, 
-          "gc_multiplicity": "O", 
           "id": "digital_object_identifier", 
           "label": {
             "eng": "Digital Object Identifier", 
             "fra": "Identificateur d\u2019objet num\u00e9rique"
           }, 
+          "mandatory": false, 
           "proposed_name": {
             "eng": "digitalObjectIdentifier", 
             "fra": "identificateurObjetNum\u00e9rique"
@@ -1468,12 +1468,12 @@
           }, 
           "example": "Geo", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "catalog_type", 
           "label": {
             "eng": "Catalogue Type", 
             "fra": "Type de catalogue"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "catalogueType", 
             "fra": "typeCatalogue"
@@ -1616,12 +1616,12 @@
           }, 
           "example": "Agriculture", 
           "existing": false, 
-          "gc_multiplicity": "M, Rep.", 
           "id": "subject", 
           "label": {
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1763,12 +1763,12 @@
           }, 
           "example": "Farming", 
           "existing": false, 
-          "gc_multiplicity": "O, Rep.", 
           "id": "topic_category", 
           "label": {
             "eng": "Topic Category", 
             "fra": "Cat\u00e9gorie de sujet"
           }, 
+          "mandatory": false, 
           "proposed_name": {
             "eng": "topicCategory", 
             "fra": "cat\u00e9gorieTh\u00e9matique"
@@ -1784,12 +1784,12 @@
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
           "existing": true, 
-          "gc_multiplicity": "M, Rep.", 
           "id": "tags", 
           "label": {
             "eng": "Keywords", 
             "fra": "Mots cl\u00e9s"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
@@ -1815,12 +1815,12 @@
           }, 
           "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
           "existing": true, 
-          "gc_multiplicity": "M", 
           "id": "license_id", 
           "label": {
             "eng": "License", 
             "fra": "Licence"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "license", 
             "fra": "licence"
@@ -1835,12 +1835,12 @@
           }, 
           "example": "CANSIM", 
           "existing": false, 
-          "gc_multiplicity": "O", 
           "id": "data_series_name", 
           "label": {
             "eng": "Data Series Name", 
             "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "A name given to multiple datasets to present them as a group or a set.", 
             "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
@@ -1866,12 +1866,12 @@
           }, 
           "example": "Table 502-0003", 
           "existing": false, 
-          "gc_multiplicity": "O", 
           "id": "data_series_issue_identification", 
           "label": {
             "eng": "Issue Identification", 
             "fra": "Identification de l\u2019enjeu"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
             "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
@@ -4208,12 +4208,12 @@
           }, 
           "example": "Ottawa", 
           "existing": false, 
-          "gc_multiplicity": "O", 
           "id": "geographic_region", 
           "label": {
             "eng": "Geographic Region", 
             "fra": "R\u00e9gion g\u00e9ographique"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The region that describes the geographic area covered by the dataset.", 
             "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
@@ -4239,12 +4239,12 @@
           }, 
           "example": "2012-08-11", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "date_published", 
           "label": {
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
@@ -4357,12 +4357,12 @@
           }, 
           "example": "daily", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "maintenance_and_update_frequency", 
           "label": {
             "eng": "Maintainence and Update Frequency", 
             "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
           }, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The frequency at which the dataset is published.", 
             "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
@@ -4387,12 +4387,12 @@
           }, 
           "example": "YYYY-MM-DD", 
           "existing": false, 
-          "gc_multiplicity": "O, R", 
           "id": "time_period_coverage_start", 
           "label": {
             "eng": "Time Period Coverage Start", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
@@ -4417,12 +4417,12 @@
           }, 
           "example": "YYYY-MM-DD", 
           "existing": false, 
-          "gc_multiplicity": "O, R", 
           "id": "time_period_coverage_end", 
           "label": {
             "eng": "Time Period Coverage End", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
@@ -4447,12 +4447,12 @@
           }, 
           "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
           "existing": true, 
-          "gc_multiplicity": "O", 
           "id": "url", 
           "label": {
             "eng": "Program URL", 
             "fra": "URL des documents connexes"
           }, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The URL for the program  that is responsible for the dataset or tool.", 
             "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
@@ -4478,12 +4478,12 @@
           }, 
           "example": "URL", 
           "existing": false, 
-          "gc_multiplicity": "M, cond.", 
           "id": "endpoint_url", 
           "label": {
             "eng": "Endpoint", 
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "endpoint", 
             "fra": ""
@@ -4498,12 +4498,12 @@
           }, 
           "example": "1", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "ready_to_publish", 
           "label": {
             "eng": "Ready to Publish", 
             "fra": "(translate me)"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "readyToPublish", 
             "fra": ""
@@ -4564,12 +4564,12 @@
           }, 
           "example": "vector", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "spatial_representation_type", 
           "label": {
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "spatialRespresentionType", 
             "fra": "typeRepr\u00e9sentatiobSpatiale"
@@ -4706,12 +4706,12 @@
           }, 
           "example": "documentDigital", 
           "existing": false, 
-          "gc_multiplicity": "M", 
           "id": "presentation_form", 
           "label": {
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
+          "mandatory": true, 
           "proposed_name": {
             "eng": "presentationForm", 
             "fra": "formePr\u00e9sentation"
@@ -4726,12 +4726,12 @@
           }, 
           "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
           "existing": true, 
-          "gc_multiplicity": "O", 
           "id": "spatial", 
           "label": {
             "eng": "Spatial", 
             "fra": "\u00c9l\u00e9ment spatial"
           }, 
+          "mandatory": false, 
           "proposed_name": {
             "eng": "spatial", 
             "fra": "spatiale"
@@ -4746,12 +4746,12 @@
           }, 
           "example": "Product dependant", 
           "existing": false, 
-          "gc_multiplicity": "C", 
           "id": "browse_graphic_url", 
           "label": {
             "eng": "Browse Graphic File Name", 
             "fra": "Recherche du nom du fichier graphique"
           }, 
+          "mandatory": false, 
           "proposed_name": {
             "eng": "browseGraphicFileName", 
             "fra": "NomFichierIllustration"
@@ -4798,12 +4798,12 @@
       }, 
       "example": "API", 
       "existing": true, 
-      "gc_multiplicity": "M, Rep.", 
       "id": "resource_type", 
       "label": {
         "eng": "Resource Type", 
         "fra": "Type de ressource"
       }, 
+      "mandatory": true, 
       "proposed_name": {
         "eng": "resourceType", 
         "fra": ""
@@ -4818,12 +4818,12 @@
       }, 
       "example": "http://www.ec.gc.ca/dataset", 
       "existing": true, 
-      "gc_multiplicity": "M, Rep.", 
       "id": "url", 
       "label": {
         "eng": "Access URL", 
         "fra": "URL d\u2019acc\u00e8s"
       }, 
+      "mandatory": true, 
       "pilot_help": {
         "eng": "The URL pointing to the dataset in the GC repository or website in which it was originally published.  The field accept a single URL formated as follow : http://www.domain_name/resource_path/file_name.ext.", 
         "fra": "L'adresse URL menant \u00e0 l\u2019ensemble de donn\u00e9es dans le d\u00e9p\u00f4t du GC ou le site Web o\u00f9 elle a d'abord \u00e9t\u00e9 publi\u00e9e.  Ce champ n'accepte qu'une seule adresse respectant le format suivant : http://www.nom_du_domaine/chemin_de_la_ressource/nom_du_fichier.ext."
@@ -4848,12 +4848,12 @@
       }, 
       "example": "65000000", 
       "existing": true, 
-      "gc_multiplicity": "M, Rep.", 
       "id": "size", 
       "label": {
         "eng": "Transfer Size", 
         "fra": "Taille du transfert"
       }, 
+      "mandatory": true, 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
@@ -5037,12 +5037,12 @@
       }, 
       "example": "xml", 
       "existing": true, 
-      "gc_multiplicity": "M, Rep.", 
       "id": "format", 
       "label": {
         "eng": "Format Name", 
         "fra": "Nom officiel"
       }, 
+      "mandatory": true, 
       "pilot_help": {
         "eng": "Name of the physical or digital manifestation (format) of the dataset.", 
         "fra": "Nom du format de la version imprim\u00e9e ou num\u00e9rique de l\u2019ensemble de donn\u00e9es."
@@ -5092,12 +5092,12 @@
       }, 
       "example": "eng: CAN", 
       "existing": false, 
-      "gc_multiplicity": "M, Rep.", 
       "id": "language", 
       "label": {
         "eng": "Language", 
         "fra": "Langue"
       }, 
+      "mandatory": true, 
       "proposed_name": {
         "eng": "language", 
         "fra": "langue"
@@ -5112,12 +5112,12 @@
       }, 
       "example": "2012-08-22", 
       "existing": true, 
-      "gc_multiplicity": "O", 
       "id": "last_modified", 
       "label": {
         "eng": "Date Modified", 
         "fra": "Date de modification"
       }, 
+      "mandatory": false, 
       "proposed_name": {
         "eng": "dateModified", 
         "fra": "dateModification"
