@@ -291,6 +291,7 @@ def field_from_proposed(p):
     return {
         'proposed_name': {'eng': p.property_name, 'fra': p.property_name_fra},
         'proposed_type': p.type_,
+        'type': p.ckan_type,
         'mandatory': bool(p.gc_multiplicity.startswith('M')),
         'description': {'eng': p.description, 'fra': p.description_fra},
         'example': p.example,
@@ -320,9 +321,6 @@ def apply_field_customizations(schema_out, vocab):
             for f in schema_out['resource_fields']
             if f['id'] == field_id)
         return field
-
-    for fname in schema_out['vocabularies'].values():
-        get_field(fname)['type'] = 'tag_vocabulary'
 
     def merge(c1, c2):
         def norm(t):

@@ -21,7 +21,8 @@
             "eng": "fileIdentifier", 
             "fra": "Identifiant M\u00e9tadonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "primary_key"
         }, 
         {
           "bilingual": false, 
@@ -71,7 +72,8 @@
             "eng": "language", 
             "fra": "langue"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)"
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "type": "fixed"
         }, 
         {
           "bilingual": false, 
@@ -1304,7 +1306,8 @@
             "eng": "organizationName", 
             "fra": "nomOrganisation"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)"
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -1324,7 +1327,8 @@
             "eng": "departmentNumber", 
             "fra": "num\u00e9roD\u00e9partment"
           }, 
-          "proposed_type": "CodeList\n(CharacterString)"
+          "proposed_type": "CodeList\n(CharacterString)", 
+          "type": "calculated"
         }, 
         {
           "bilingual": false, 
@@ -1344,7 +1348,8 @@
             "eng": "electronicMail Address", 
             "fra": "adresseCourrier\u00c9lectronique"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "fixed"
         }, 
         {
           "bilingual": true, 
@@ -1375,7 +1380,8 @@
             "eng": "title", 
             "fra": "titre"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "text"
         }, 
         {
           "bilingual": false, 
@@ -1395,7 +1401,8 @@
             "eng": "dataSetURI", 
             "fra": "URIJeuDonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "slug"
         }, 
         {
           "bilingual": true, 
@@ -1426,7 +1433,8 @@
             "eng": "abstract", 
             "fra": "r\u00e9sum\u00e9"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "text"
         }, 
         {
           "bilingual": false, 
@@ -1446,7 +1454,8 @@
             "eng": "digitalObjectIdentifier", 
             "fra": "identificateurObjetNum\u00e9rique"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "text"
         }, 
         {
           "bilingual": false, 
@@ -1478,7 +1487,8 @@
             "eng": "catalogueType", 
             "fra": "typeCatalogue"
           }, 
-          "proposed_type": "GC derived field"
+          "proposed_type": "GC derived field", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -1805,7 +1815,8 @@
             "eng": "keywords", 
             "fra": "motsCl\u00e9s"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "tags"
         }, 
         {
           "bilingual": false, 
@@ -1825,7 +1836,8 @@
             "eng": "license", 
             "fra": "licence"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "fixed"
         }, 
         {
           "bilingual": true, 
@@ -1856,7 +1868,8 @@
             "eng": "dataSeriesName", 
             "fra": "nonS\u00e9rieDonn\u00e9es"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "text"
         }, 
         {
           "bilingual": true, 
@@ -1886,7 +1899,8 @@
             "eng": "issueIdentification", 
             "fra": "identificationPublication"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "text"
         }, 
         {
           "bilingual": false, 
@@ -4259,7 +4273,8 @@
             "eng": "datePublished", 
             "fra": "datePublication"
           }, 
-          "proposed_type": "Date (see B.4)"
+          "proposed_type": "Date (see B.4)", 
+          "type": "date"
         }
       ], 
       "name": {
@@ -4377,7 +4392,8 @@
             "eng": "maintenanceAndUpdateFrequency", 
             "fra": "fr\u00e9quenceMise\u00c0Jour"
           }, 
-          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode"
+          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -4407,7 +4423,8 @@
             "eng": "timePeriodCoverageStart", 
             "fra": "\u00e9lementTemporalle"
           }, 
-          "proposed_type": "EX_TemporalExtent"
+          "proposed_type": "EX_TemporalExtent", 
+          "type": "date"
         }, 
         {
           "bilingual": false, 
@@ -4437,7 +4454,8 @@
             "eng": "timePeriodCoverageEnd", 
             "fra": "\u00e9lementTemporalle"
           }, 
-          "proposed_type": "EX_TemporalExtent"
+          "proposed_type": "EX_TemporalExtent", 
+          "type": "date"
         }, 
         {
           "bilingual": true, 
@@ -4468,7 +4486,8 @@
             "eng": "programURL", 
             "fra": "URLprogramme"
           }, 
-          "proposed_type": ""
+          "proposed_type": "", 
+          "type": "url"
         }, 
         {
           "bilingual": true, 
@@ -4488,7 +4507,8 @@
             "eng": "endpoint", 
             "fra": ""
           }, 
-          "proposed_type": ""
+          "proposed_type": "", 
+          "type": "url"
         }, 
         {
           "bilingual": false, 
@@ -4508,7 +4528,8 @@
             "eng": "readyToPublish", 
             "fra": ""
           }, 
-          "proposed_type": ""
+          "proposed_type": "", 
+          "type": "boolean"
         }
       ], 
       "name": {
@@ -4574,7 +4595,8 @@
             "eng": "spatialRespresentionType", 
             "fra": "typeRepr\u00e9sentatiobSpatiale"
           }, 
-          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode"
+          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -4716,7 +4738,8 @@
             "eng": "presentationForm", 
             "fra": "formePr\u00e9sentation"
           }, 
-          "proposed_type": "CodeList\nnapCI_PresentationFormCode"
+          "proposed_type": "CodeList\nnapCI_PresentationFormCode", 
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -4736,7 +4759,8 @@
             "eng": "spatial", 
             "fra": "spatiale"
           }, 
-          "proposed_type": ""
+          "proposed_type": "", 
+          "type": "geojson"
         }, 
         {
           "bilingual": false, 
@@ -4756,7 +4780,8 @@
             "eng": "browseGraphicFileName", 
             "fra": "NomFichierIllustration"
           }, 
-          "proposed_type": "free text (CharacterString)"
+          "proposed_type": "free text (CharacterString)", 
+          "type": "image_url"
         }
       ], 
       "name": {
@@ -4808,7 +4833,8 @@
         "eng": "resourceType", 
         "fra": ""
       }, 
-      "proposed_type": ""
+      "proposed_type": "", 
+      "type": "choice"
     }, 
     {
       "bilingual": false, 
@@ -4838,7 +4864,8 @@
         "eng": "accessURL", 
         "fra": "URLAcc\u00e8s"
       }, 
-      "proposed_type": "URL"
+      "proposed_type": "URL", 
+      "type": "url"
     }, 
     {
       "bilingual": false, 
@@ -4868,7 +4895,8 @@
         "eng": "transferSize", 
         "fra": "tailleTransmission"
       }, 
-      "proposed_type": "Real"
+      "proposed_type": "Real", 
+      "type": "integer"
     }, 
     {
       "bilingual": false, 
@@ -5057,7 +5085,8 @@
         "eng": "formatName", 
         "fra": "nomFormat"
       }, 
-      "proposed_type": "MD_Format"
+      "proposed_type": "MD_Format", 
+      "type": "choice"
     }, 
     {
       "bilingual": false, 
@@ -5102,7 +5131,8 @@
         "eng": "language", 
         "fra": "langue"
       }, 
-      "proposed_type": "free text (CharacterString)"
+      "proposed_type": "free text (CharacterString)", 
+      "type": "choice"
     }, 
     {
       "bilingual": false, 
@@ -5122,7 +5152,8 @@
         "eng": "dateModified", 
         "fra": "dateModification"
       }, 
-      "proposed_type": "Date"
+      "proposed_type": "Date", 
+      "type": "calculated"
     }
   ], 
   "vocabularies": {
