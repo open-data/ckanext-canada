@@ -289,8 +289,6 @@ def read_proposed_fields_vocab():
 def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
-        'proposed_name': {'eng': p.property_name, 'fra': p.property_name_fra},
-        'proposed_type': p.type_,
         'type': p.ckan_type,
         'mandatory': bool(p.gc_multiplicity.startswith('M')),
         'description': {'eng': p.description, 'fra': p.description_fra},

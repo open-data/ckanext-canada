@@ -17,11 +17,6 @@
             "fra": "Identificateur de fichier"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "fileIdentifier", 
-            "fra": "Identifiant M\u00e9tadonn\u00e9es"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "primary_key"
         }, 
         {
@@ -68,11 +63,6 @@
             "fra": "Langue"
           }, 
           "pilot_type": "choice", 
-          "proposed_name": {
-            "eng": "language", 
-            "fra": "langue"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
           "type": "fixed"
         }, 
         {
@@ -1302,11 +1292,6 @@
             "fra": "Auteur (minist\u00e8re ou organisme)"
           }, 
           "pilot_type": "choice", 
-          "proposed_name": {
-            "eng": "organizationName", 
-            "fra": "nomOrganisation"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
           "type": "choice"
         }, 
         {
@@ -1323,11 +1308,6 @@
             "fra": "Num\u00e9ro du minist\u00e8re"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "departmentNumber", 
-            "fra": "num\u00e9roD\u00e9partment"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
           "type": "calculated"
         }, 
         {
@@ -1344,11 +1324,6 @@
             "fra": "Adresse \u00e9lectronique"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "electronicMail Address", 
-            "fra": "adresseCourrier\u00c9lectronique"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "fixed"
         }, 
         {
@@ -1376,11 +1351,6 @@
             "fra": "Titre en anglais"
           }, 
           "pilot_type": "text", 
-          "proposed_name": {
-            "eng": "title", 
-            "fra": "titre"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "text"
         }, 
         {
@@ -1397,11 +1367,6 @@
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "dataSetURI", 
-            "fra": "URIJeuDonn\u00e9es"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "slug"
         }, 
         {
@@ -1429,11 +1394,6 @@
             "fra": "Description en anglais"
           }, 
           "pilot_type": "textarea", 
-          "proposed_name": {
-            "eng": "abstract", 
-            "fra": "r\u00e9sum\u00e9"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "text"
         }, 
         {
@@ -1450,11 +1410,6 @@
             "fra": "Identificateur d\u2019objet num\u00e9rique"
           }, 
           "mandatory": false, 
-          "proposed_name": {
-            "eng": "digitalObjectIdentifier", 
-            "fra": "identificateurObjetNum\u00e9rique"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "text"
         }, 
         {
@@ -1483,11 +1438,6 @@
             "fra": "Type de catalogue"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "catalogueType", 
-            "fra": "typeCatalogue"
-          }, 
-          "proposed_type": "GC derived field", 
           "type": "choice"
         }, 
         {
@@ -1642,11 +1592,6 @@
             "fra": "Domaine"
           }, 
           "pilot_type": "choice", 
-          "proposed_name": {
-            "eng": "subject", 
-            "fra": "sujet"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
           "type": "tag_vocabulary"
         }, 
         {
@@ -1779,11 +1724,6 @@
             "fra": "Cat\u00e9gorie de sujet"
           }, 
           "mandatory": false, 
-          "proposed_name": {
-            "eng": "topicCategory", 
-            "fra": "cat\u00e9gorieTh\u00e9matique"
-          }, 
-          "proposed_type": "CodeList napMD_TopicCategoryCode", 
           "type": "tag_vocabulary"
         }, 
         {
@@ -1811,11 +1751,6 @@
             "fra": "Mots-cl\u00e9s en anglais"
           }, 
           "pilot_type": "textarea", 
-          "proposed_name": {
-            "eng": "keywords", 
-            "fra": "motsCl\u00e9s"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "tags"
         }, 
         {
@@ -1832,11 +1767,6 @@
             "fra": "Licence"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "license", 
-            "fra": "licence"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "fixed"
         }, 
         {
@@ -1864,11 +1794,6 @@
             "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
           }, 
           "pilot_type": "text", 
-          "proposed_name": {
-            "eng": "dataSeriesName", 
-            "fra": "nonS\u00e9rieDonn\u00e9es"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "text"
         }, 
         {
@@ -1895,11 +1820,6 @@
             "fra": "Identificateur unique g\u00e9n\u00e9r\u00e9 par le d\u00e9partement"
           }, 
           "pilot_type": "text", 
-          "proposed_name": {
-            "eng": "issueIdentification", 
-            "fra": "identificationPublication"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "text"
         }, 
         {
@@ -4238,11 +4158,6 @@
             "fra": "Nom de la r\u00e9gion g\u00e9ographique"
           }, 
           "pilot_type": "choice", 
-          "proposed_name": {
-            "eng": "geographicRegion", 
-            "fra": "r\u00e9gionG\u00e9ographique"
-          }, 
-          "proposed_type": "CodeList\n(CharacterString)", 
           "type": "tag_vocabulary"
         }, 
         {
@@ -4269,11 +4184,6 @@
             "fra": "Date de publication"
           }, 
           "pilot_type": "datepicker", 
-          "proposed_name": {
-            "eng": "datePublished", 
-            "fra": "datePublication"
-          }, 
-          "proposed_type": "Date (see B.4)", 
           "type": "date"
         }
       ], 
@@ -4388,11 +4298,6 @@
             "fra": "Fr\u00e9quence"
           }, 
           "pilot_type": "select", 
-          "proposed_name": {
-            "eng": "maintenanceAndUpdateFrequency", 
-            "fra": "fr\u00e9quenceMise\u00c0Jour"
-          }, 
-          "proposed_type": "CodeList\nnapMD_MaintenanceFrequencyCode", 
           "type": "choice"
         }, 
         {
@@ -4419,11 +4324,6 @@
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
           "pilot_type": "datepicker", 
-          "proposed_name": {
-            "eng": "timePeriodCoverageStart", 
-            "fra": "\u00e9lementTemporalle"
-          }, 
-          "proposed_type": "EX_TemporalExtent", 
           "type": "date"
         }, 
         {
@@ -4450,11 +4350,6 @@
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
           "pilot_type": "datepicker", 
-          "proposed_name": {
-            "eng": "timePeriodCoverageEnd", 
-            "fra": "\u00e9lementTemporalle"
-          }, 
-          "proposed_type": "EX_TemporalExtent", 
           "type": "date"
         }, 
         {
@@ -4482,11 +4377,6 @@
             "fra": "Adresse URL du programme en anglais"
           }, 
           "pilot_type": "text", 
-          "proposed_name": {
-            "eng": "programURL", 
-            "fra": "URLprogramme"
-          }, 
-          "proposed_type": "", 
           "type": "url"
         }, 
         {
@@ -4503,11 +4393,6 @@
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "endpoint", 
-            "fra": ""
-          }, 
-          "proposed_type": "", 
           "type": "url"
         }, 
         {
@@ -4524,11 +4409,6 @@
             "fra": "(translate me)"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "readyToPublish", 
-            "fra": ""
-          }, 
-          "proposed_type": "", 
           "type": "boolean"
         }
       ], 
@@ -4591,11 +4471,6 @@
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "spatialRespresentionType", 
-            "fra": "typeRepr\u00e9sentatiobSpatiale"
-          }, 
-          "proposed_type": "CodeList\nnapMD_SpatialRepresentationTypeCode", 
           "type": "choice"
         }, 
         {
@@ -4734,11 +4609,6 @@
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
           "mandatory": true, 
-          "proposed_name": {
-            "eng": "presentationForm", 
-            "fra": "formePr\u00e9sentation"
-          }, 
-          "proposed_type": "CodeList\nnapCI_PresentationFormCode", 
           "type": "choice"
         }, 
         {
@@ -4755,11 +4625,6 @@
             "fra": "\u00c9l\u00e9ment spatial"
           }, 
           "mandatory": false, 
-          "proposed_name": {
-            "eng": "spatial", 
-            "fra": "spatiale"
-          }, 
-          "proposed_type": "", 
           "type": "geojson"
         }, 
         {
@@ -4776,11 +4641,6 @@
             "fra": "Recherche du nom du fichier graphique"
           }, 
           "mandatory": false, 
-          "proposed_name": {
-            "eng": "browseGraphicFileName", 
-            "fra": "NomFichierIllustration"
-          }, 
-          "proposed_type": "free text (CharacterString)", 
           "type": "image_url"
         }
       ], 
@@ -4829,11 +4689,6 @@
         "fra": "Type de ressource"
       }, 
       "mandatory": true, 
-      "proposed_name": {
-        "eng": "resourceType", 
-        "fra": ""
-      }, 
-      "proposed_type": "", 
       "type": "choice"
     }, 
     {
@@ -4860,11 +4715,6 @@
         "fra": "Lien d'acc\u00e8s \u00e0 l'ensemble de donn\u00e9es (adresse URL)"
       }, 
       "pilot_type": "text", 
-      "proposed_name": {
-        "eng": "accessURL", 
-        "fra": "URLAcc\u00e8s"
-      }, 
-      "proposed_type": "URL", 
       "type": "url"
     }, 
     {
@@ -4891,11 +4741,6 @@
         "fra": "Taille de l'ensemble de donn\u00e9es"
       }, 
       "pilot_type": "text", 
-      "proposed_name": {
-        "eng": "transferSize", 
-        "fra": "tailleTransmission"
-      }, 
-      "proposed_type": "Real", 
       "type": "integer"
     }, 
     {
@@ -5081,11 +4926,6 @@
         "fra": "Format de l'ensemble de donn\u00e9es"
       }, 
       "pilot_type": "choice", 
-      "proposed_name": {
-        "eng": "formatName", 
-        "fra": "nomFormat"
-      }, 
-      "proposed_type": "MD_Format", 
       "type": "choice"
     }, 
     {
@@ -5127,11 +4967,6 @@
         "fra": "Langue"
       }, 
       "mandatory": true, 
-      "proposed_name": {
-        "eng": "language", 
-        "fra": "langue"
-      }, 
-      "proposed_type": "free text (CharacterString)", 
       "type": "choice"
     }, 
     {
@@ -5148,11 +4983,6 @@
         "fra": "Date de modification"
       }, 
       "mandatory": false, 
-      "proposed_name": {
-        "eng": "dateModified", 
-        "fra": "dateModification"
-      }, 
-      "proposed_type": "Date", 
       "type": "calculated"
     }
   ], 
