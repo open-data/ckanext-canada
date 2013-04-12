@@ -23,6 +23,7 @@ From a clean database you must run::
 Once to create the tag vocabularies and organizations this extension requires
 before loading any data.
 
+
 Plugins
 -------
 
@@ -111,6 +112,7 @@ For UI testing, simply load the 50 test datasets from the data folder.  It conta
 
    paster canada load-datasets data/sample.jl
 
+
 Working with the API
 --------------------
 
@@ -119,4 +121,24 @@ To view a raw dataset using the api, pipe your curl requests to python's mjson.t
   curl http://localhost:5000/api/action/package_show -d '{"id": "0007a010-556d-4f83-bb8e-6e22dcc62e84"}' |  python -mjson.tool
 
 
+schema_description
+------------------
+
+The GoC Metadata Schema is available within the plugin by importing::
+
+   from ckanext.canada.metadata_schema import schema_description
+
+It is also available within the jinja2 templates as the variable
+``schema_description``.
+
+The ``schema_description`` object has attributes:
+
+``dataset_fields``
+  an ordered list of the fields available in a dataset as dicts with keys:
+
+  ``'id'``
+    the CKAN internal name for this field, e.g. ``"notes"``,
+
+  ``'name'``
+    
 
