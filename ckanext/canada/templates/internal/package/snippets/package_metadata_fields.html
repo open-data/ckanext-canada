@@ -1,12 +1,12 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/form_canada.html' as cform %}
 
-{% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
+{% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.1) %}
   {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
 {% endfor %}
 
-{% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
+{% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.2) %}
   {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
 {% endfor %}

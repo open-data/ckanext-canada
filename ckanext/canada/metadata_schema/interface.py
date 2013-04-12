@@ -58,26 +58,26 @@ class MetadataSchema(object):
 
         self.all_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
-                     in self.dataset_fields_by_ckan_id(include_existing=True))
+                     in self.dataset_field_iter(include_existing=True))
 
         self.extra_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
-                     in self.dataset_fields_by_ckan_id(include_existing=False))
+                     in self.dataset_field_iter(include_existing=False))
 
         self.existing_package_fields = self.all_package_fields - self.extra_package_fields
 
         self.all_resource_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
-                     in self.resource_fields_by_ckan_id(include_existing=True))
+                     in self.resource_field_iter(include_existing=True))
 
         self.extra_resource_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
-                     in self.resource_fields_by_ckan_id(include_existing=False))
+                     in self.resource_field_iter(include_existing=False))
 
         self.existing_resource_fields = self.all_resource_fields - self.extra_resource_fields
 
 
-    def dataset_fields_by_ckan_id(self, include_existing=True, section=None):
+    def dataset_field_iter(self, include_existing=True, section=None):
         """
         Generate (field_name, language, field) tuples for filling
         in CKAN field information.
@@ -85,17 +85,17 @@ class MetadataSchema(object):
         language will be None for fields only in a single language
         """
         fields = section['fields'] if section else self.dataset_fields
-        return self._fields_by_ckan_id(fields, include_existing)
+        return self._field_iter(fields, include_existing)
 
-    def resource_fields_by_ckan_id(self, include_existing=True):
+    def resource_field_iter(self, include_existing=True):
         """
         Generate (field_name, language, field) tuples for filling
         in CKAN resource field information.
         """
-        return self._fields_by_ckan_id(self.resource_fields, include_existing)
+        return self._field_iter(self.resource_fields, include_existing)
 
-    def _fields_by_ckan_id(self, fields, include_existing):
-        "helper for *_fields_by_ckan_id"
+    def _field_iter(self, fields, include_existing):
+        "helper for *_field_iter"
         for f in fields:
             if include_existing or not f['existing']:
                 yield (f['id'],
@@ -111,14 +111,14 @@ class MetadataSchema(object):
         Generate (ckan_field_name, pilot_field_name, field)
         pilot_field_name may be None
         """
-        return self._pilot_fields(self.dataset_fields_by_ckan_id())
+        return self._pilot_fields(self.dataset_field_iter())
 
     def resource_all_fields(self):
         """
         Generate (ckan_field_name, pilot_field_name, field)
         pilot_field_name may be None
         """
-        return self._pilot_fields(self.resource_fields_by_ckan_id())
+        return self._pilot_fields(self.resource_field_iter())
 
     def _pilot_fields(self, field_tuples):
         "helper for *_pilot_fields"
