@@ -121,7 +121,7 @@ def _schema_update(schema, form_to_db):
     schema: schema dict to update
     form_to_db: True for form_to_db_schema, False for db_to_form_schema
     """
-    for name, lang, field in schema_description.dataset_fields_by_ckan_id():
+    for name, lang, field in schema_description.dataset_field_iter():
         if name in schema:
             continue # don't modify existing fields.. yet
 

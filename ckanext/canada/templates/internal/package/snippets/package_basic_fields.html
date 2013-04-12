@@ -2,7 +2,7 @@
 
 {% import 'macros/form_canada.html' as cform %}
 
-{% for id, lang, field in schema_description.dataset_fields_by_ckan_id(
+{% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.0) %}
   {% if id not in ('id', 'language', 'license_id', 'author_email', 'author',
                'department_number') %}
