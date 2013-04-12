@@ -239,7 +239,43 @@ Dataset and resource field descriptions are dicts containing the following:
   to the choices dicts above
 
 ``'type'``
-  usually not present, but if present and set to ``"tag_vocabulary"``
-  then this field accepts multiple values from ``'choices'`` above
+  one of the following values:
 
+  ``'primary_key'``
+    the id field
 
+  ``'choice'``
+    select one of the choices
+
+  ``'calculated'``
+    value determined by CKAN
+
+  ``'fixed'``
+    fixed value for all datasets equal to example provided
+
+  ``'slug'``
+    text suitable for use as part of a URL: lowercase and hyphens
+
+  ``'text'``
+    free-form text
+
+  ``'tag_vocabulary'``
+    select 0 or more values from choices
+
+  ``'tags'``
+    free-form tags
+
+  ``'date'``
+    iso8601 date
+
+  ``'boolean'``
+    one-character strings ``0`` or ``1``
+
+  ``'url'``
+    fully qualified URL
+
+  ``'integer'``
+    integer
+
+  ``'image_url'``
+    fully qualified URL to an image file
