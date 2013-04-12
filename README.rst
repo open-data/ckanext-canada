@@ -131,14 +131,65 @@ The GoC Metadata Schema is available within the plugin by importing::
 It is also available within the jinja2 templates as the variable
 ``schema_description``.
 
-The ``schema_description`` object has attributes:
+The ``schema_description`` object contains attributes:
 
 ``dataset_fields``
-  an ordered list of the fields available in a dataset as dicts with keys:
+  an ordered list of field descriptions available in a dataset
 
-  ``'id'``
-    the CKAN internal name for this field, e.g. ``"notes"``,
+``resource_fields``
+  an ordered list of field descriptions available to each resource in a
+  dataset
 
-  ``'name'``
+``dataset_sections``
+  a list of dataset fields grouped into sections, dicts with ``'name'``
+  and ``'fields'`` keys, currently used to separate fields across the
+  dataset creation pages and group the geo fields together
+
+``dataset_field_by_id``
+  a dict mapping dataset field ids to their descriptions
+
+``resource_field_by_id``
+  a dict mapping resource field ids to their descriptions
+
+``dataset_field_iter(include_existing=True, section=None)``
+  returns a generator of (field id, language, field description) tuples
+  where field ids generated includes ``*_fra`` fields.  both French
+  and English versions of a field point use the same field description.
+  language is ``'eng'``, ``'fra'`` or ``None`` for fields without
+  separate language versions.
+  ``include_existing=False`` would *exclude* standard CKAN fields and
+  ``section`` may be used to limith the fields to the passed section.
+
+``resource_field_iter(include_existing=True)``
+  returns a generator of (field id, language, field description) tuples
+  where field ids generated includes ``*_fra`` fields.  both French
+  and English versions of a field point use the same field description.
+  language is ``'eng'``, ``'fra'`` or ``None`` for fields without
+  separate language versions.
+  ``include_existing=False`` would *exclude* standard CKAN fields.
+
+``languages``
+  ``['eng', 'fra']``, useful for keeping literal ``eng`` and ``fra``
+  strings out of the source code
+
+``vocabularies``
+  a dict mapping CKAN tag vocabulary ids to their corresponding dataset
+  field ids
+
+
+Field Descriptions
+~~~~~~~~~~~~~~~~~~
+
+Dataset and resource field descriptions are dicts containing the following:
+
+``'id'``
+  the CKAN internal name for this field, e.g. ``"notes"``, ``"title"``, ...
+  Note that these do not include French versions of fields such as
+  ``"notes_fra"``, if you need all the fields use the 
+
+``'name'``
+
+
+
     
 
