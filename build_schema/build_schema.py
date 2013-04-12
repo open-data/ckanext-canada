@@ -105,6 +105,7 @@ ProposedField = namedtuple("ProposedField", """
     property_label_fra
     gc_multiplicity
     type_
+    ckan_type
     description
     description_fra
     example
