@@ -12,7 +12,7 @@ def create_package_schema():
     Add our custom fields for validation from the form
     """
     schema = default_create_package_schema()
-    _schema_update(schema, form_to_db=True)
+    _schema_update(schema, 'create')
     return schema
 
 def update_package_schema():
@@ -20,7 +20,7 @@ def update_package_schema():
     Add our custom fields for validation from the form
     """
     schema = default_update_package_schema()
-    _schema_update(schema, form_to_db=True)
+    _schema_update(schema, 'update')
     return schema
 
 def show_package_schema():
@@ -28,33 +28,35 @@ def show_package_schema():
     Add our custom fields for converting from the db
     """
     schema = default_show_package_schema()
-    _schema_update(schema, form_to_db=False)
+    _schema_update(schema, 'show')
     return schema
 
-def _schema_update(schema, form_to_db):
+def _schema_update(schema, purpose):
     """
-    schema: schema dict to update
-    form_to_db: True for form_to_db_schema, False for db_to_form_schema
+    :param schema: schema dict to update
+    :param purpose: 'create', 'update' or 'show'
     """
+    assert purpose in ('create', 'update', 'show')
+
     for name, lang, field in schema_description.dataset_field_iter():
         if name in schema:
             continue # don't modify existing fields.. yet
 
         v = _schema_field_validators(name, lang, field)
         if v is not None:
-            schema[name] = v[0] if form_to_db else v[1]
+            schema[name] = v[0] if purpose != 'show' else v[1]
 
     for name in ('maintainer', 'author', 'author_email',
             'maintainer_email', 'license_id', 'department_number'):
         del schema[name]
 
-    if not form_to_db:
+    if purpose == 'show':
         schema['tags']['__extras'].append(free_tags_only)
 
 def _schema_field_validators(name, lang, field):
     """
     return a tuple with lists of validators for the field:
-    one for form_to_db and one for db_to_form, or None to leave
+    one for create/update and one for show, or None to leave
     both lists unchanged
     """
     if name in ('id', 'language'):
