@@ -82,16 +82,16 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         registers itself as the default (above).
         """
         return []
-    
+
     def create_package_schema(self):
         return create_package_schema()
-    
+
     def update_package_schema(self):
         return update_package_schema()
 
     def show_package_schema(self):
         return show_package_schema()
-    
+
 def create_package_schema():
     """
     Add our custom fields for validation from the form
@@ -139,7 +139,7 @@ def _schema_update(schema, form_to_db):
 def _schema_field_validators(name, lang, field):
     """
     return a tuple with lists of validators for the field:
-    one for form_to_db and one for db_to_form, or None to leave 
+    one for form_to_db and one for db_to_form, or None to leave
     both lists unchanged
     """
     if name in ('id', 'language'):
@@ -197,7 +197,7 @@ def ignore_missing_only_sysadmin(key, data, errors, context):
 
 class DataGCCAPackageController(p.SingletonPlugin):
     p.implements(p.IPackageController)
-    
+
     def read(self, entity):
         pass
 
