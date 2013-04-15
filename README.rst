@@ -245,37 +245,40 @@ Dataset and resource field descriptions are dicts containing the following:
     the id field
 
   ``'choice'``
-    select one of the choices
+    select one of the ``'choices'`` list above
 
   ``'calculated'``
-    value determined by CKAN
+    value determined by code in CKAN or this plugin, not for user-entry
 
   ``'fixed'``
-    fixed value for all datasets equal to example provided
+    fixed value for all datasets, all datasets will use ``'example'`` value
+    above
 
   ``'slug'``
-    text suitable for use as part of a URL: lowercase and hyphens
+    text suitable for use as part of a URL: lowercase Unicode characters and
+    hyphens
 
   ``'text'``
     free-form text
 
   ``'tag_vocabulary'``
-    select 0 or more values from choices
+    allow selection of 0 or more values from ``'choices'`` list above
 
   ``'tags'``
-    free-form tags
+    free-form tags with English and French separated by two spaces; Unicode
+    letter characters, hyphen (-) and single spaces between words are allowed
 
   ``'date'``
-    iso8601 date
+    iso8601 date: YYYY-MM-DD
 
   ``'boolean'``
-    one-character strings ``0`` or ``1``
+    one-character string ``0`` for False and ``1`` for True
 
   ``'url'``
     fully qualified URL
 
   ``'integer'``
-    integer
+    integer value in base 10
 
   ``'image_url'``
-    fully qualified URL to an image file
+    fully qualified URL to an image file (gif, png or jpg)
