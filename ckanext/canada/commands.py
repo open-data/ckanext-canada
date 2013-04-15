@@ -6,7 +6,6 @@ import paste.script
 from paste.script.util.logging_config import fileConfig
 
 import os
-import re
 import json
 import time
 import sys
