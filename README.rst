@@ -134,11 +134,11 @@ It is also available within the jinja2 templates as the variable
 The ``schema_description`` object contains attributes:
 
 ``dataset_fields``
-  an ordered list of [descriptions](#field-descriptions) of fields
+  an ordered list of `descriptions <#field-descriptions>`_ of fields
   available in a dataset
 
 ``resource_fields``
-  an ordered list of [descriptions](#field-descriptions) of fields
+  an ordered list of `descriptions <#field-descriptions>`_ of fields
   available in each resource in a dataset
 
 ``dataset_sections``
@@ -148,17 +148,17 @@ The ``schema_description`` object contains attributes:
 
 ``dataset_field_by_id``
   a dict mapping dataset field ids to their
-  [descriptions](#field-descriptions)
+  `descriptions <#field-descriptions>`_
 
 ``resource_field_by_id``
   a dict mapping resource field ids to their
-  [descriptions](#field-descriptions)
+  `descriptions <#field-descriptions>`_
 
 ``dataset_field_iter(include_existing=True, section=None)``
   returns a generator of (field id, language, field description) tuples
   where field ids generated includes ``*_fra`` fields.  both French
   and English versions of a field point use the same
-  [field description](#field-descriptions).
+  `field description <#field-descriptions>`_.
   language is ``'eng'``, ``'fra'`` or ``None`` for fields without
   separate language versions.
   ``include_existing=False`` would *exclude* standard CKAN fields and
@@ -169,7 +169,7 @@ The ``schema_description`` object contains attributes:
   returns a generator of (field id, language, field description) tuples
   where field ids generated includes ``*_fra`` fields.  both French
   and English versions of a field point use the same
-  [field description](#field-descriptions).
+  `field description <#field-descriptions>`_.
   language is ``'eng'``, ``'fra'`` or ``None`` for fields without
   separate language versions.
   ``include_existing=False`` would *exclude* standard CKAN fields.
@@ -239,7 +239,46 @@ Dataset and resource field descriptions are dicts containing the following:
   to the choices dicts above
 
 ``'type'``
-  usually not present, but if present and set to ``"tag_vocabulary"``
-  then this field accepts multiple values from ``'choices'`` above
+  one of the following values:
 
+  ``'primary_key'``
+    the id field
 
+  ``'choice'``
+    select one of the ``'choices'`` list above
+
+  ``'calculated'``
+    value determined by code in CKAN or this plugin, not for user-entry
+
+  ``'fixed'``
+    fixed value for all datasets, all datasets will use ``'example'`` value
+    above
+
+  ``'slug'``
+    text suitable for use as part of a URL: lowercase Unicode characters and
+    hyphens
+
+  ``'text'``
+    free-form text
+
+  ``'tag_vocabulary'``
+    allow selection of 0 or more values from ``'choices'`` list above
+
+  ``'tags'``
+    free-form tags with English and French separated by two spaces; Unicode
+    letter characters, hyphen (-) and single spaces between words are allowed
+
+  ``'date'``
+    iso8601 date: YYYY-MM-DD
+
+  ``'boolean'``
+    one-character string ``0`` for False and ``1`` for True
+
+  ``'url'``
+    fully qualified URL
+
+  ``'integer'``
+    integer value in base 10
+
+  ``'image_url'``
+    fully qualified URL to an image file (gif, png or jpg)
