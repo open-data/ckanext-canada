@@ -134,11 +134,11 @@ It is also available within the jinja2 templates as the variable
 The ``schema_description`` object contains attributes:
 
 ``dataset_fields``
-  an ordered list of [descriptions](#field-descriptions) of fields
+  an ordered list of `descriptions <#field-descriptions>`_ of fields
   available in a dataset
 
 ``resource_fields``
-  an ordered list of [descriptions](#field-descriptions) of fields
+  an ordered list of `descriptions <#field-descriptions>`_ of fields
   available in each resource in a dataset
 
 ``dataset_sections``
@@ -148,17 +148,17 @@ The ``schema_description`` object contains attributes:
 
 ``dataset_field_by_id``
   a dict mapping dataset field ids to their
-  [descriptions](#field-descriptions)
+  `descriptions <#field-descriptions>`_
 
 ``resource_field_by_id``
   a dict mapping resource field ids to their
-  [descriptions](#field-descriptions)
+  `descriptions <#field-descriptions>`_
 
 ``dataset_field_iter(include_existing=True, section=None)``
   returns a generator of (field id, language, field description) tuples
   where field ids generated includes ``*_fra`` fields.  both French
   and English versions of a field point use the same
-  [field description](#field-descriptions).
+  `field description <#field-descriptions>`_.
   language is ``'eng'``, ``'fra'`` or ``None`` for fields without
   separate language versions.
   ``include_existing=False`` would *exclude* standard CKAN fields and
@@ -169,7 +169,7 @@ The ``schema_description`` object contains attributes:
   returns a generator of (field id, language, field description) tuples
   where field ids generated includes ``*_fra`` fields.  both French
   and English versions of a field point use the same
-  [field description](#field-descriptions).
+  `field description <#field-descriptions>`_.
   language is ``'eng'``, ``'fra'`` or ``None`` for fields without
   separate language versions.
   ``include_existing=False`` would *exclude* standard CKAN fields.
