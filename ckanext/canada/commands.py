@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanext.canada.navl_schema import create_package_schema
-from ckanext.canada.ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
+from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized)
 
 class CanadaCommand(CkanCommand):
