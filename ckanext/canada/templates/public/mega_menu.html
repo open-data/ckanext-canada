@@ -1,3 +1,5 @@
+{% ckan_extends %}
+{% block mega %}
 <li>
   <div>
     <a href={{ h.url(action='index', controller='home') }}>{{_('Home')}}</a>
@@ -212,3 +214,5 @@
     </div>
   </section>
 </li>
+
+{% endblock %}
