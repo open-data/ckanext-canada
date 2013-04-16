@@ -2,6 +2,8 @@ from pylons import c
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
+from ckan.logic.schema import (default_create_package_schema,
+    default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing
@@ -82,36 +84,44 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         return []
     
     def create_package_schema(self):
-        """
-        Add our custom fields for validation from the form
-        """
-        schema = super(DataGCCAForms, self).create_package_schema()
-        _schema_update(schema, form_to_db=True)
-        return schema
+        return create_package_schema()
     
     def update_package_schema(self):
-        """
-        Add our custom fields for validation from the form
-        """
-        schema = super(DataGCCAForms, self).update_package_schema()
-        _schema_update(schema, form_to_db=True)
-        return schema
+        return update_package_schema()
 
     def show_package_schema(self):
-        """
-        Add our custom fields for converting from the db
-        """
-        schema = super(DataGCCAForms, self).show_package_schema()
-        _schema_update(schema, form_to_db=False)
-        return schema
+        return show_package_schema()
     
+def create_package_schema():
+    """
+    Add our custom fields for validation from the form
+    """
+    schema = default_create_package_schema()
+    _schema_update(schema, form_to_db=True)
+    return schema
+
+def update_package_schema():
+    """
+    Add our custom fields for validation from the form
+    """
+    schema = default_update_package_schema()
+    _schema_update(schema, form_to_db=True)
+    return schema
+
+def show_package_schema():
+    """
+    Add our custom fields for converting from the db
+    """
+    schema = default_show_package_schema()
+    _schema_update(schema, form_to_db=False)
+    return schema
 
 def _schema_update(schema, form_to_db):
     """
     schema: schema dict to update
     form_to_db: True for form_to_db_schema, False for db_to_form_schema
     """
-    for name, lang, field in schema_description.dataset_fields_by_ckan_id():
+    for name, lang, field in schema_description.dataset_field_iter():
         if name in schema:
             continue # don't modify existing fields.. yet
 
