@@ -308,10 +308,13 @@ def apply_field_customizations(schema_out, vocab):
         }
 
     def get_field(field_id):
-        (field,) = (f
-            for s in schema_out['dataset_sections']
-            for f in s['fields']
-            if f['id'] == field_id)
+        try:
+            (field,) = (f
+                for s in schema_out['dataset_sections']
+                for f in s['fields']
+                if f['id'] == field_id)
+        except ValueError:
+            assert 0, '%r not found in fields' % field_id
         return field
 
     def get_resource_field(field_id):
@@ -408,6 +411,8 @@ def add_keys_for_choices(f):
             c['key'] = u'  '.join(clean_tag_part(c[lang]) for lang in LANGS)
     else:
         for c in f['choices']:
+            if 'key' in c:
+                continue
             # use the text itself for now (both when different)
             c['key'] = c[LANGS[0]]
             if c['key'] != c[LANGS[1]]:
