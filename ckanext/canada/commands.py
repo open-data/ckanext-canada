@@ -369,7 +369,7 @@ class CanadaCommand(CkanCommand):
             name = u'0' + name # some ids are 1-digit
         registry.action.organization_create(
             name=name,
-            title=org['key'] if unicode(org['id']) != org['key'] else titles,
+            title=org['key'],
             description=titles,
             extras=[{'key': 'department_number', 'value': unicode(org['id'])}],
             )
