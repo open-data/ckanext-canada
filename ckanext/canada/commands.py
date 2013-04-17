@@ -361,10 +361,17 @@ class CanadaCommand(CkanCommand):
 
     def create_organization(self, org):
         registry = LocalCKAN()
+        titles = [org[l] for l in schema_description.languages]
+        titles = [titles[0]] + [t for t in titles[1:] if t != titles[0]]
+        titles = u' | '.join(titles)
+        name = org['key'].lower().replace(' ', '')
+        if len(name) < 2:
+            name = u'0' + name # some ids are 1-digit
         registry.action.organization_create(
-            name=org['id'].lower().replace(' ', ''),
-            title=org['id'],
-            description=org['key'],
+            name=name,
+            title=org['key'],
+            description=titles,
+            extras=[{'key': 'department_number', 'value': unicode(org['id'])}],
             )
 
     def delete_organization(self, org):
