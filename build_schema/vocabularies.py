@@ -30,9 +30,15 @@ def read_from_sheet(sheet):
             current_vocab = []
             out[proposed_name] = current_vocab
         elif cell[4]:
+            key = unicode(cell[4])
+            if cell[1]:
+                if cell[1] == cell[3]:
+                    key = cell[1]
+                else:
+                    key = u'-'.join((cell[1], cell[3]))
             current_vocab.append({
                 'id': cell[4],
-                'key': u'-'.join((cell[1], cell[3])) if cell[1] else unicode(cell[4]),
+                'key': key,
                 'eng': cell[0],
                 'fra': cell[2],
                 })
