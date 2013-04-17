@@ -21,7 +21,7 @@ SPATIAL_REF_SYS = $(firstword $(wildcard \
 
 test:
 	which nosetests
-	python `which nosetests` --with-pylons=test-core.ini ckanext/canada/tests 2>&1
+	python `which nosetests` --with-pylons=test-core.ini --nologcapture ckanext/canada/tests 2>&1
 
 drop-database:
 	sudo -u postgres dropdb ${DB_NAME_PORT}
