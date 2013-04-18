@@ -13,7 +13,7 @@
   </a>
 </div>
 <div class="span-5 row-end ">
-  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
+  <a class="heading" style="word-wrap: break-word;" href="{{ url }}" title="{{ res.name or res.description }}">
     {{ h.resource_display_name(res) | truncate(100) }}
     {{ h.popular('views', res.tracking_summary.total, min=10) }}
   </a>
