@@ -24,6 +24,10 @@ below.
   {%- endif -%}
 {%- endmacro -%}
 
+{%- macro url_field(f, pkg) -%}
+  <a href="{{- pkg[f.id] -}}">{{- pkg[f.id] -}}</a>
+{%- endmacro -%}
+
 {#
 Render the field value for a given dataset field id
 #}

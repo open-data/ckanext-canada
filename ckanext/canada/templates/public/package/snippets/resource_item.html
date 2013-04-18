@@ -13,7 +13,7 @@
   </a>
 </div>
 <div class="span-5 row-end ">
-  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
+  <a class="heading" style="word-wrap: break-word;" href="{{ url }}" title="{{ res.name or res.description }}">
     {{ h.resource_display_name(res) | truncate(100) }}
     {{ h.popular('views', res.tracking_summary.total, min=10) }}
   </a>
@@ -28,12 +28,6 @@
   <div class="dropdown btn-group">
     <ul class="menu-horizontal">
       {% block resource_item_explore_links %}
-      <li>
-        <a href="{{ url }}" class="button">
-          <span class="wb-icon-table"></span>
-          {{ _('Preview') }}
-        </a>
-      </li>
       <li>
         <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank">
           <span class="wb-icon-drive-download"></span>
