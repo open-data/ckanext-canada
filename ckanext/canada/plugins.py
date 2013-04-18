@@ -19,6 +19,17 @@ from ckanext.canada.logic import (group_show, organization_show,
 ORG_MAY_PUBLISH_KEY = 'publish'
 ORG_MAY_PUBLISH_VALUE = 'True'
 
+class DataGCCAInternal(p.SingletonPlugin):
+    """
+    Plugin for internal version of data.gc.ca site, aka the "registry"
+    This plugin requires the DataGCCAPublic and DataGCCAForms plugins
+    """
+    p.implements(p.IConfigurer)
+
+    def update_config(self, config):
+        p.toolkit.add_template_directory(config, 'templates/internal')
+        
+        
 class DataGCCAPublic(p.SingletonPlugin):
     """
     Plugin for public-facing version of data.gc.ca site, aka the "portal"
@@ -30,17 +41,6 @@ class DataGCCAPublic(p.SingletonPlugin):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
-
-
-class DataGCCAInternal(p.SingletonPlugin):
-    """
-    Plugin for internal version of data.gc.ca site, aka the "registry"
-    This plugin requires the DataGCCAPublic and DataGCCAForms plugins
-    """
-    p.implements(p.IConfigurer)
-
-    def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
