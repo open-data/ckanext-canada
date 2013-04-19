@@ -2,7 +2,6 @@ from pylons import c
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
-from ckan.new_authz import is_sysadmin
 from ckan.plugins import toolkit
 
 from ckanext.canada.metadata_schema import schema_description

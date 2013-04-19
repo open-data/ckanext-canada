@@ -4,6 +4,7 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing
 from ckan.lib.navl.dictization_functions import Invalid, missing
+from ckan.new_authz import is_sysadmin
 
 from ckanext.canada.metadata_schema import schema_description
 
@@ -71,7 +72,11 @@ def _schema_field_validators(name, lang, field):
         return ([convert_to_tags(field['vocabulary'])],
                 [convert_from_tags(field['vocabulary'])])
 
-    return ([ignore_missing, unicode, convert_to_extras],
+    edit = []
+    if not field['mandatory']:
+        edit.append(ignore_missing)
+
+    return (edit + [unicode, convert_to_extras],
             [convert_from_extras, ignore_missing])
 
 
