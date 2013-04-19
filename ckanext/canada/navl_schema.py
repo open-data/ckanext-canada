@@ -73,7 +73,7 @@ def _schema_field_validators(name, lang, field):
                 [convert_from_tags(field['vocabulary'])])
 
     edit = []
-    if not field['mandatory']:
+    if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
 
     return (edit + [unicode, convert_to_extras],
