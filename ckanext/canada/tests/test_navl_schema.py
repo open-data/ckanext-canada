@@ -6,7 +6,7 @@ import ckan.model as model
 from ckanapi import TestAppCKAN
 import json
 
-class TestDatasetForm(WsgiAppCase):
+class TestNAVLSchema(WsgiAppCase):
 
     @classmethod
     def setup_class(cls):
