@@ -16,6 +16,7 @@ class TestDatasetForm(WsgiAppCase):
         cls.normal_user = model.User.get('annafan')
         cls.sysadmin_action = TestAppCKAN(cls.app,
             str(cls.sysadmin_user.apikey)).action
+        cls.action = TestAppCKAN(cls.app).action
 
     def test_basic_package(self, package_name=u'test_package', **kwargs):
         package = {
@@ -31,3 +32,7 @@ class TestDatasetForm(WsgiAppCase):
 
         resp = self.sysadmin_action.package_create(**package)
         assert resp['result']['title'] == u'A Novel By Tolstoy'
+
+        resp = self.action.package_show(id=resp['result']['id'])
+        assert resp['result']['title'] == u'A Novel By Tolstoy'
+
