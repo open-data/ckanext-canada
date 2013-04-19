@@ -3,6 +3,7 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 
+from ckanapi import TestAppCKAN
 import json
 
 class TestDatasetForm(WsgiAppCase):
@@ -13,6 +14,8 @@ class TestDatasetForm(WsgiAppCase):
         CreateTestData.create()
         cls.sysadmin_user = model.User.get('testsysadmin')
         cls.normal_user = model.User.get('annafan')
+        cls.sysadmin_action = TestAppCKAN(cls.app,
+            str(cls.sysadmin_user.apikey)).action
 
     def test_basic_package(self, package_name=u'test_package', **kwargs):
         package = {
@@ -26,7 +29,5 @@ class TestDatasetForm(WsgiAppCase):
         }
         package.update(kwargs)
 
-        postparams = '%s=1' % json.dumps(package)
-        res = self.app.post('/api/action/package_create', params=postparams,
-            extra_environ={'Authorization': str(self.sysadmin_user.apikey)})
-        assert json.loads(res.body)['result']['title'] == u'A Novel By Tolstoy'
+        resp = self.sysadmin_action.package_create(**package)
+        assert resp['result']['title'] == u'A Novel By Tolstoy'
