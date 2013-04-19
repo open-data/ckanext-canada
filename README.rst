@@ -282,3 +282,21 @@ Dataset and resource field descriptions are dicts containing the following:
 
   ``'image_url'``
     fully qualified URL to an image file (gif, png or jpg)
+
+
+Google Analytics Integration
+----------------------------
+
+`okfn/ckanext-googleanalytics <https://github.com/okfn/ckanext-googleanalytics>`_ is used for Google Analytics integration. 
+Follow these steps to integrate:
+
+1. $ pip install -e  git+https://github.com/okfn/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
+
+2. Edit your CKAN ini file to add the Google Analytics tracking parameters::
+
+      googleanalytics.id = UA-1010101-1
+      googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+
+3. To the list of installed extensions, add `googleanalytics`. For example::
+
+      ckan.plugins = stats json_preview googleanalytics canada_public canada_internal canada_forms wet_theme
