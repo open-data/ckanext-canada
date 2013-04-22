@@ -1,4 +1,5 @@
 from pylons import c
+from pylons.i18n import _, ungettext
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
@@ -25,9 +26,25 @@ class DataGCCAInternal(p.SingletonPlugin):
     This plugin requires the DataGCCAPublic and DataGCCAForms plugins
     """
     p.implements(p.IConfigurer)
+    p.implements(p.IFacets)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
+        
+    def dataset_facets(self, facets_dict, package_type):
+        ''' Update the facets_dict and return it. '''
+        
+        facets_dict = {'published': _('Published or Pending')}
+                      
+        return facets_dict
+
+    def group_facets(self, facets_dict, group_type, package_type):
+        ''' Update the facets_dict and return it. '''
+        return facets_dict
+
+    def organization_facets(self, facets_dict, organization_type, package_type):
+        ''' Update the facets_dict and return it. '''
+        return facets_dict
         
         
 class DataGCCAPublic(p.SingletonPlugin):
@@ -36,11 +53,31 @@ class DataGCCAPublic(p.SingletonPlugin):
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurer)
+    p.implements(p.IFacets)
 
     def update_config(self, config):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
+        
+    def dataset_facets(self, facets_dict, package_type):
+        ''' Update the facets_dict and return it. '''
+
+        facets_dict.update( {'organization': _('Organization'),
+                      'tags': _('Subject and Topic'),
+                      'res_format': _('File Format'),
+                      'raw_geo': _('Raw or GeoSpatial'),
+                      'organization': _('Organization'), } )
+
+        return facets_dict
+
+    def group_facets(self, facets_dict, group_type, package_type):
+        ''' Update the facets_dict and return it. '''
+        return facets_dict
+
+    def organization_facets(self, facets_dict, organization_type, package_type):
+        ''' Update the facets_dict and return it. '''
+        return facets_dict
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
