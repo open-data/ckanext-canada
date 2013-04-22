@@ -17,7 +17,7 @@ client_lang - language from h.lang(): 'en' or 'fr'
 
   {% set inputargs = {
     'name': id,
-    'label': field.label[client_lang],
+    'label': ('* ' if field.mandatory else '') + field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
     'value': data[id],
     'error': errors[id],
