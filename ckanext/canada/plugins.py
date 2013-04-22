@@ -145,7 +145,7 @@ def _schema_field_validators(name, lang, field):
     if name in ('id', 'language'):
         return
 
-    if name == 'date_published':
+    if name == 'portal_release_date':
         return ([treat_missing_as_empty, protect_date_published,
                  unicode, convert_to_extras],
                 [convert_from_extras, ignore_missing])
