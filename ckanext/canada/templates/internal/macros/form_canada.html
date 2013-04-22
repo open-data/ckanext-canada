@@ -33,7 +33,8 @@ client_lang - language from h.lang(): 'en' or 'fr'
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
   {% elif field.choices %}
-    {% do inputargs.update({'options':[], 'selected':data[id]}) %}
+    {% do inputargs.update({'options':[],
+      'selected':data[id] if data[id] else field.example}) %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
     {% do inputargs.pop('placeholder') %}
