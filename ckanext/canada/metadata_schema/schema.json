@@ -1367,7 +1367,7 @@
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
           "mandatory": true, 
-          "type": "slug"
+          "type": "calculated"
         }, 
         {
           "bilingual": true, 
@@ -4173,7 +4173,7 @@
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
@@ -4280,7 +4280,7 @@
             "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
             "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
           }, 
-          "example": "daily", 
+          "example": "As Needed | Au besoin", 
           "existing": false, 
           "id": "maintenance_and_update_frequency", 
           "label": {
@@ -4392,7 +4392,7 @@
             "eng": "Endpoint", 
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "url"
         }, 
         {
@@ -4408,7 +4408,7 @@
             "eng": "Ready to Publish", 
             "fra": "(translate me)"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "boolean"
         }
       ], 
@@ -4470,7 +4470,7 @@
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "choice"
         }, 
         {
@@ -4608,7 +4608,7 @@
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "choice"
         }, 
         {
@@ -4730,7 +4730,7 @@
         "eng": "Transfer Size", 
         "fra": "Taille du transfert"
       }, 
-      "mandatory": true, 
+      "mandatory": false, 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
