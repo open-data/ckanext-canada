@@ -39,6 +39,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         package['title_fra'] = u'Un novel par Tolstoy'
         package['maintenance_and_update_frequency'] = u'As Needed | Au besoin'
         package['notes_fra'] = u'...'
+        package['keywords'] = u'book'
+        package['keywords_fra'] = u'livre'
 
         resp = self.sysadmin_action.package_create(**package)
         assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
