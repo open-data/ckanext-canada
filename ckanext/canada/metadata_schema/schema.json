@@ -1727,14 +1727,14 @@
           "type": "tag_vocabulary"
         }, 
         {
-          "bilingual": false, 
+          "bilingual": true, 
           "description": {
             "eng": "The commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource.", 
             "fra": "Les mots utilis\u00e9s de fa\u00e7on commune, des locutions, ou des mots officiels utilis\u00e9s pour d\u00e9crire le sujet de la ressource."
           }, 
           "example": "Air, Air Quality, Organic Pollutants", 
-          "existing": true, 
-          "id": "tags", 
+          "existing": false, 
+          "id": "keywords", 
           "label": {
             "eng": "Keywords", 
             "fra": "Mots cl\u00e9s"
@@ -4410,6 +4410,22 @@
           }, 
           "mandatory": false, 
           "type": "boolean"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date the dataset may be published to the portal CKAN site", 
+            "fra": "(translate me)"
+          }, 
+          "example": "2013-05-01", 
+          "existing": false, 
+          "id": "portal_release_date", 
+          "label": {
+            "eng": "Portal Release Date", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "date"
         }
       ], 
       "name": {

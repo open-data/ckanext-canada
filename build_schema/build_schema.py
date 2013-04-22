@@ -43,12 +43,12 @@ SECTIONS_FIELDS = [
         'catalog_type', # will control field validation in the future
         'subject', 
         'topic_category', 
-        'tags',
+        'keywords',
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
         'geographic_region',
-        'date_published', # ADMIN-only field that will control publishing
+        'date_published',
         ]),
     ("Additional Fields", [
         'maintenance_and_update_frequency',
@@ -57,6 +57,7 @@ SECTIONS_FIELDS = [
         'url',
         'endpoint_url',
         'ready_to_publish',
+        'portal_release_date', # ADMIN-only field that will control publishing
         ]),
     ("Geospatial Additional Fields", [
         'spatial_representation_type',
@@ -68,7 +69,6 @@ SECTIONS_FIELDS = [
 
 # override calculated values
 FIELD_OVERRIDES = {
-    'tags': {'bilingual': False},
     'resource:resource_type': {'choices': [ # should match normal CKAN values
         {'eng': 'File', 'fra': 'File', 'key': 'file'},
         {'eng': 'Doc', 'fra': 'Doc', 'key': 'doc'},
@@ -131,12 +131,13 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'catalogueType': 'catalog_type',
     'title': 'title',
     'datePublished': 'date_published',
+    'portalReleaseDate': 'portal_release_date',
     'readyToPublish': 'ready_to_publish',
     'dateModified': 'resource:last_modified',
     'abstract': 'notes',
     'subject': 'subject',
     'topicCategory': 'topic_category',
-    'keywords': 'tags',
+    'keywords': 'keywords',
     'maintenanceAndUpdateFrequency':
         'maintenance_and_update_frequency',
     'timePeriodCoverageStart': 'time_period_coverage_start',
@@ -179,7 +180,7 @@ PILOT_FIELD_MAPPING = {
     'date_modified': 'date_update',
     'maintenance_and_update_frequency': 'frequency',
     'notes': 'description_en',
-    'tags': 'keywords_en',
+    'keywords': 'keywords_en',
     'url': 'program_page_en', # note: different than French
     'documentation_url': 'data_series_url_en',
     'data_dictionary': 'dictionary_list:_en', # note: different than French
@@ -201,7 +202,7 @@ PILOT_FIELD_MAPPING = {
 BILINGUAL_FIELDS = {
     'title': 'title_fr',
     'notes': 'description_fr',
-    'tags': 'keywords_fr',
+    'keywords': 'keywords_fr',
     'url': 'program_url_fr',
     'documentation_url': 'data_series_url_fr',
     'data_dictionary': 'data_dictionary_fr',
