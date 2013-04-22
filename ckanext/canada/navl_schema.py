@@ -40,6 +40,9 @@ def _schema_update(schema, purpose):
     assert purpose in ('create', 'update', 'show')
 
     for name, lang, field in schema_description.dataset_field_iter():
+        if name == 'name' and purpose == 'create':
+            schema[name] = [ignore_missing, unicode]
+
         if name in schema:
             continue # don't modify existing fields.. yet
 
