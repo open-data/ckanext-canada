@@ -9,3 +9,6 @@
     {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
   {% endif %}
 {% endfor %}
+
+{# workaround for not using standard tags field #}
+<input type="hidden" name="tag_string" value="" />
