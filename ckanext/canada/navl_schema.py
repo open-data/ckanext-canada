@@ -2,7 +2,7 @@ from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
-from ckan.lib.navl.validators import ignore_missing
+from ckan.lib.navl.validators import ignore_missing, not_empty
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -42,6 +42,8 @@ def _schema_update(schema, purpose):
     for name, lang, field in schema_description.dataset_field_iter():
         if name == 'name' and purpose == 'create':
             schema[name] = [ignore_missing, unicode]
+        if name == 'title' and purpose == 'create':
+            schema[name] = [not_empty, unicode]
 
         if name in schema:
             continue # don't modify existing fields.. yet
