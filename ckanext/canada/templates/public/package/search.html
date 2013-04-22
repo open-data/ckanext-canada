@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+  {% for facet in c.facet_titles %}
+    {%- if facet != 'license' %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
