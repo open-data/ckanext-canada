@@ -26,7 +26,9 @@ client_lang - language from h.lang(): 'en' or 'fr'
     } %}
 
   {% if lang %}
-    {% do inputargs.update({'label': inputargs.label + ' ' + lang|upper}) %}
+    {% do inputargs.update({'label': inputargs.label + ' ' +
+      schema_description.dataset_field_by_id.language.choices[
+      0 if lang != 'fra' else 1][client_lang]}) %}
   {% endif %}
 
   {% set widget = form.input %}
