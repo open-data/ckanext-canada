@@ -49,9 +49,9 @@ SECTIONS_FIELDS = [
         'data_series_issue_identification',
         'geographic_region',
         'date_published',
+        'maintenance_and_update_frequency',
         ]),
     ("Additional Fields", [
-        'maintenance_and_update_frequency',
         'time_period_coverage_start',
         'time_period_coverage_end',
         'url',

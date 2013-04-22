@@ -17,7 +17,7 @@ client_lang - language from h.lang(): 'en' or 'fr'
 
   {% set inputargs = {
     'name': id,
-    'label': field.label[client_lang],
+    'label': ('* ' if field.mandatory else '') + field.label[client_lang],
     'placeholder': field.example if lang != 'fra' else '', 
     'value': data[id],
     'error': errors[id],
@@ -26,32 +26,17 @@ client_lang - language from h.lang(): 'en' or 'fr'
     } %}
 
   {% if lang %}
-    {% do inputargs.update({'label': inputargs.label + ' ' + lang|upper}) %}
+    {% do inputargs.update({'label': inputargs.label + ' ' +
+      schema_description.dataset_field_by_id.language.choices[
+      0 if lang != 'fra' else 1][client_lang]}) %}
   {% endif %}
 
   {% set widget = form.input %}
-  {% if id == 'name' %}
-    {% do inputargs.update({
-      'prepend': '/data/dataset/',
-      'attrs': {'data-module': 'slug-preview-slug',
-                'data-module-prefix': 'data.gc.ca/data/dataset/',
-                'data-module-placeholder': '<dataset>',}, 
-      }) %}
-    {% set widget = form.prepend %}
-  {% elif id in ('notes', 'notes_fra') %}
+  {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif id == 'tags' %} 
-    {# special case name "tag_string" for tags #}
-    {% do inputargs.update({
-      'name': 'tag_string', 
-      'value': data['tag_string'],
-      'classes': ['control-full'],
-      'attrs': {'data-module': 'autocomplete',
-                'data-module-tags': '',
-                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
-      }) %}
   {% elif field.choices %}
-    {% do inputargs.update({'options':[], 'selected':data[id]}) %}
+    {% do inputargs.update({'options':[],
+      'selected':data[id] if data[id] else field.example}) %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
     {% do inputargs.pop('placeholder') %}
