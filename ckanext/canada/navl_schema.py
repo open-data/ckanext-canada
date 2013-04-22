@@ -52,12 +52,6 @@ def _schema_update(schema, purpose):
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
 
-    for name in ('maintainer', 'author', 'author_email',
-            'maintainer_email', 'license_id', 'department_number'):
-        del schema[name]
-
-    if purpose == 'show':
-        schema['tags']['__extras'].append(free_tags_only)
 
 def _schema_field_validators(name, lang, field):
     """
