@@ -40,16 +40,6 @@ client_lang - language from h.lang(): 'en' or 'fr'
     {% set widget = form.prepend %}
   {% elif id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif id == 'tags' %} 
-    {# special case name "tag_string" for tags #}
-    {% do inputargs.update({
-      'name': 'tag_string', 
-      'value': data['tag_string'],
-      'classes': ['control-full'],
-      'attrs': {'data-module': 'autocomplete',
-                'data-module-tags': '',
-                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
-      }) %}
   {% elif field.choices %}
     {% do inputargs.update({'options':[], 'selected':data[id]}) %}
     {# kwargs form.select doesn't support #}
