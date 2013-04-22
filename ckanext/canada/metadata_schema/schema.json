@@ -4185,15 +4185,7 @@
           }, 
           "pilot_type": "datepicker", 
           "type": "date"
-        }
-      ], 
-      "name": {
-        "en": "Primary Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
+        }, 
         {
           "bilingual": false, 
           "choices": [
@@ -4299,7 +4291,15 @@
           }, 
           "pilot_type": "select", 
           "type": "choice"
-        }, 
+        }
+      ], 
+      "name": {
+        "en": "Primary Fields"
+      }
+    }, 
+    {
+      "description": {}, 
+      "fields": [
         {
           "bilingual": false, 
           "description": {
