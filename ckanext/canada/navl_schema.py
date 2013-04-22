@@ -80,6 +80,8 @@ def _schema_field_validators(name, lang, field):
     edit = []
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
+    if field['mandatory']:
+        edit.append(not_empty)
 
     return (edit + [unicode, convert_to_extras],
             [convert_from_extras, ignore_missing])
