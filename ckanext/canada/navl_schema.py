@@ -3,6 +3,7 @@ from ckan.logic.schema import (default_create_package_schema,
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty
+from ckan.logic.validators import isodate
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -61,7 +62,7 @@ def _schema_field_validators(name, lang, field):
     """
     if name == 'portal_release_date':
         return ([treat_missing_as_empty, protect_date_published,
-                 unicode, convert_to_extras],
+                 isodate, convert_to_extras],
                 [convert_from_extras, ignore_missing])
 
     if 'vocabulary' in field:
@@ -74,7 +75,12 @@ def _schema_field_validators(name, lang, field):
     if field['mandatory']:
         edit.append(not_empty)
 
-    return (edit + [unicode, convert_to_extras],
+    if field['type'] == 'date':
+        edit.append(isodate)
+    else:
+        edit.append(unicode)
+
+    return (edit + [convert_to_extras],
             [convert_from_extras, ignore_missing])
 
 
