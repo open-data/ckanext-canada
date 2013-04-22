@@ -59,9 +59,6 @@ def _schema_field_validators(name, lang, field):
     one for create/update and one for show, or None to leave
     both lists unchanged
     """
-    if name in ('id', 'language'):
-        return
-
     if name == 'portal_release_date':
         return ([treat_missing_as_empty, protect_date_published,
                  unicode, convert_to_extras],
