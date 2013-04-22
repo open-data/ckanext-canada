@@ -36,7 +36,8 @@ var wet_boew_geomap = {
 			displayProjection: 'EPSG:4269',
 			numZoomLevels: 12
 		}
-	},
+	}
+};
 
 /*
 	basemap : {
@@ -44,10 +45,11 @@ var wet_boew_geomap = {
 		type: 'wms',
 		url: 'http://vmap0.tiles.osgeo.org/wms/vmap0',
 		layers: 'basic'
-	},
-*/
+	}
+};	
+
 	overlays : [  
-  /*
+
 		{
 			title: 'KML Demo EN',
 			caption: 'This is a sample KML file loaded locally by Geomap.',
@@ -105,22 +107,22 @@ var wet_boew_geomap = {
 				author: 'Author'
 			}
 		},
-  */    
+   
     {
-      title: 'GeoJSON Provinces EN',
-      caption: 'Sample GeoJSON from City of Ottawa',
+      title: 'Provinces',
+      caption: 'Provinces and territories of Canada',
       type: 'geojson',
       url: 'http://localhost:8088/data/data/provinces.js',
       visible: true,
       zoom: true,
-      tab: true,
+      tab: false,
       datatable: true,
       attributes: {
         name: 'Name' /*,
         code: 'Code',
         cartodb_id: 'ID',
         created_at: 'Created',
-        updated_at: 'Last updated' */
+        updated_at: 'Last updated' 
       }
     },
 		 /* {
@@ -179,7 +181,8 @@ var wet_boew_geomap = {
 				select: {'pointRadius': '30', 'externalGraphic': '../../OverIcon.png', 'label': "Selected", 'fillOpacity': 0.90}
 			}
 		}		
-      */		
-	]
+      		
+	] 
 };
 
+*/
