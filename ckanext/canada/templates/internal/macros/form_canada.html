@@ -30,15 +30,7 @@ client_lang - language from h.lang(): 'en' or 'fr'
   {% endif %}
 
   {% set widget = form.input %}
-  {% if id == 'name' %}
-    {% do inputargs.update({
-      'prepend': '/data/dataset/',
-      'attrs': {'data-module': 'slug-preview-slug',
-                'data-module-prefix': 'data.gc.ca/data/dataset/',
-                'data-module-placeholder': '<dataset>',}, 
-      }) %}
-    {% set widget = form.prepend %}
-  {% elif id in ('notes', 'notes_fra') %}
+  {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
   {% elif field.choices %}
     {% do inputargs.update({'options':[], 'selected':data[id]}) %}
