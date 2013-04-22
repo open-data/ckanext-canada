@@ -42,7 +42,7 @@ def _schema_update(schema, purpose):
     for name, lang, field in schema_description.dataset_field_iter():
         if name == 'name' and purpose == 'create':
             schema[name] = [ignore_missing, unicode]
-        if name == 'title' and purpose == 'create':
+        if name in ('title', 'notes') and purpose != 'show':
             schema[name] = [not_empty, unicode]
 
         if name in schema:
