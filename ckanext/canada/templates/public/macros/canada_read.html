@@ -74,3 +74,15 @@ language
     {%- endfor -%}
   </ul>
 {%- endmacro -%}
+
+{#
+Render the organization name
+#}
+{%- macro org_field(pkg, client_lang) -%}
+  {%- set org = pkg.organization.title -%}
+  {%- if org != None and ' | ' in org -%}
+    {{- org.split(' | ')[1 if client_lang == 'fr' else 0] -}}
+  {%- else -%}
+    {{- org -}}
+  {%- endif -%}
+{%- endmacro -%}

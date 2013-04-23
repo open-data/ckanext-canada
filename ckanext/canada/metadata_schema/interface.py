@@ -55,6 +55,8 @@ class MetadataSchema(object):
                 continue
             f['choices_by_pilot_uuid'] = dict((c['pilot_uuid'], c)
                 for c in f['choices'] if 'pilot_uuid' in c)
+            f['choices_by_key'] = dict((c['key'], c)
+                for c in f['choices'] if 'key' in c)
 
         self.all_package_fields = frozenset(ckan_id
                      for ckan_id, ignore, field
