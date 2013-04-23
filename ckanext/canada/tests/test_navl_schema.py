@@ -19,9 +19,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             str(cls.sysadmin_user.apikey)).action
         cls.action = TestAppCKAN(cls.app).action
 
-    def test_basic_package(self):
-        package = {
-            'name': u'test_package',
+        cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
             'resources': [{
                 'description': u'Full text.',
@@ -30,22 +28,23 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             }]
         }
 
+        cls.complete_pkg = dict(cls.incomplete_pkg,
+            catalog_type=u'Data | Données',
+            title_fra=u'Un novel par Tolstoy',
+            maintenance_and_update_frequency=u'As Needed | Au besoin',
+            notes=u'...',
+            notes_fra=u'...',
+            keywords=u'book',
+            keywords_fra=u'livre')
+
+    def test_basic_package(self):
         self.assert_raises(ValidationError,
             self.sysadmin_action.package_create,
-            **package)
+            name='basic_package', **self.incomplete_pkg)
 
-        # fields we require
-        package['catalog_type'] = u'Data | Données'
-        package['title_fra'] = u'Un novel par Tolstoy'
-        package['maintenance_and_update_frequency'] = u'As Needed | Au besoin'
-        package['notes'] = u'...'
-        package['notes_fra'] = u'...'
-        package['keywords'] = u'book'
-        package['keywords_fra'] = u'livre'
-
-        resp = self.sysadmin_action.package_create(**package)
+        resp = self.sysadmin_action.package_create(
+            name='basic_package', **self.complete_pkg)
         assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['result']['id'])
         assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
-
