@@ -44,6 +44,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.pop('placeholder') %}
 
     {% if id == 'owner_org' %}
+      {% do inputargs.options.append({'text': '', 'value': ''}) %}
       {% for org in orgs_avail('create_dataset') %}
         {% set c = field.choices_by_key[org.name] %}
         {% do inputargs.options.append({
@@ -74,6 +75,7 @@ orgs_avail  - h.organizations_available helper (optional)
       {% endfor %}
 
     {% else %}
+      {% do inputargs.options.append({'text': '', 'value': ''}) %}
       {% for c in field.choices %}
         {% do inputargs.options.append({
           'text': c[client_lang],
