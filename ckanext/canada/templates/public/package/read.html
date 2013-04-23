@@ -42,8 +42,8 @@
             {# f.id #}
           </td>
           <td>
-          {%- if f.id == 'tags' -%}
-            {{ cr.tag_field(pkg, client_lang) }}
+          {%- if f.type == 'keywords' -%}
+            {{ cr.keyword_field(f, pkg, client_lang) }}
             
           {%- elif f.type == 'tag_vocabulary' -%}
             {{ cr.tag_vocab_field(f, pkg, client_lang) }}
