@@ -71,7 +71,7 @@ SECTIONS_FIELDS = [
 FIELD_OVERRIDES = {
     'resource:resource_type': {'choices': [ # should match normal CKAN values
         {'eng': 'File', 'fra': 'File', 'key': 'file'},
-        {'eng': 'Doc', 'fra': 'Doc', 'key': 'doc'},
+        {'eng': 'Supporting Document', 'fra': 'Document', 'key': 'doc'},
         {'eng': 'API', 'fra': 'API', 'key': 'api'},
         ]},
     }
@@ -109,6 +109,7 @@ ProposedField = namedtuple("ProposedField", """
     description
     description_fra
     example
+    example_fra
     domain_best_practice
     name_space
     implementation

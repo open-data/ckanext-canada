@@ -13,8 +13,8 @@
           "existing": true, 
           "id": "id", 
           "label": {
-            "eng": "File Identifier", 
-            "fra": "Identificateur de fichier"
+            "eng": "Identifier", 
+            "fra": "Identificateur"
           }, 
           "mandatory": true, 
           "type": "primary_key"
@@ -45,7 +45,7 @@
             "eng": "The language of the metadata", 
             "fra": "La langue des m\u00e9tadonn\u00e9es"
           }, 
-          "example": "eng; CAN | fra; CAN", 
+          "example": "eng; CAN", 
           "existing": false, 
           "id": "language", 
           "label": {
@@ -1278,8 +1278,8 @@
           "existing": true, 
           "id": "owner_org", 
           "label": {
-            "eng": "Organization Name", 
-            "fra": "Nom de l\u2019organisation"
+            "eng": "Publisher", 
+            "fra": "\u00c9diteur"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1316,11 +1316,11 @@
             "eng": "The electronic mail address of the responsible organization or individual.", 
             "fra": "L\u2019adresse \u00e9lectronique de l\u2019organisation ou de la personne responsable"
           }, 
-          "example": "od-do@tbs-sct.gc.ca", 
+          "example": "open-ouvert@tbs-sct.gc.ca", 
           "existing": true, 
           "id": "author_email", 
           "label": {
-            "eng": "Electronic Mail Address", 
+            "eng": "Email", 
             "fra": "Adresse \u00e9lectronique"
           }, 
           "mandatory": true, 
@@ -1379,8 +1379,8 @@
           "existing": true, 
           "id": "notes", 
           "label": {
-            "eng": "Abstract", 
-            "fra": "R\u00e9sum\u00e9"
+            "eng": "Description", 
+            "fra": "Description"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1402,7 +1402,7 @@
             "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
             "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
           }, 
-          "example": "", 
+          "example": "10.978.86123/45678", 
           "existing": false, 
           "id": "digital_object_identifier", 
           "label": {
@@ -1430,7 +1430,7 @@
             "eng": "The type of catalogue to which the metadata record belongs: Raw, Geo", 
             "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es\u00a0: Raw, Geo"
           }, 
-          "example": "Geo", 
+          "example": "Geo Data", 
           "existing": false, 
           "id": "catalog_type", 
           "label": {
@@ -1581,7 +1581,7 @@
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1763,7 +1763,7 @@
           "existing": true, 
           "id": "license_id", 
           "label": {
-            "eng": "License", 
+            "eng": "Licence", 
             "fra": "Licence"
           }, 
           "mandatory": true, 
@@ -4276,8 +4276,8 @@
           "existing": false, 
           "id": "maintenance_and_update_frequency", 
           "label": {
-            "eng": "Maintainence and Update Frequency", 
-            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
+            "eng": "Frequency", 
+            "fra": "Fr\u00e9quence"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -4362,8 +4362,8 @@
           "existing": true, 
           "id": "url", 
           "label": {
-            "eng": "Program URL", 
-            "fra": "URL des documents connexes"
+            "eng": "Homepage URL", 
+            "fra": "URL de la page d\u2019accueil"
           }, 
           "mandatory": false, 
           "pilot_help": {
@@ -4683,8 +4683,8 @@
           "key": "file"
         }, 
         {
-          "eng": "Doc", 
-          "fra": "Doc", 
+          "eng": "Supporting Document", 
+          "fra": "Document", 
           "key": "doc"
         }, 
         {
@@ -4717,8 +4717,8 @@
       "existing": true, 
       "id": "url", 
       "label": {
-        "eng": "Access URL", 
-        "fra": "URL d\u2019acc\u00e8s"
+        "eng": "URL", 
+        "fra": "URL"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4743,8 +4743,8 @@
       "existing": true, 
       "id": "size", 
       "label": {
-        "eng": "Transfer Size", 
-        "fra": "Taille du transfert"
+        "eng": "Size", 
+        "fra": "Taille"
       }, 
       "mandatory": false, 
       "pilot_help": {
@@ -4928,8 +4928,8 @@
       "existing": true, 
       "id": "format", 
       "label": {
-        "eng": "Format Name", 
-        "fra": "Nom officiel"
+        "eng": "Format", 
+        "fra": "Format"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4948,9 +4948,10 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "no language", 
-          "fra": "aucune langue", 
-          "key": "no language | aucune langue"
+          "eng": "No linguistic content; Not applicable", 
+          "fra": "pas de contenu linguistique; non applicable", 
+          "id": "zxx; CAN", 
+          "key": "No linguistic content; Not applicable | pas de contenu linguistique; non applicable"
         }, 
         {
           "eng": "English", 
@@ -4999,7 +5000,7 @@
         "fra": "Date de modification"
       }, 
       "mandatory": false, 
-      "type": "calculated"
+      "type": "date"
     }
   ], 
   "vocabularies": {
