@@ -30,7 +30,7 @@ def read_from_sheet(sheet):
             current_vocab = []
             out[proposed_name] = current_vocab
         elif cell[4]:
-            key = unicode(cell[4])
+            key = u'org' + unicode(cell[4])
             if cell[1]:
                 if cell[1] == cell[3]:
                     key = cell[1]
@@ -38,7 +38,7 @@ def read_from_sheet(sheet):
                     key = u'-'.join((cell[1], cell[3]))
             current_vocab.append({
                 'id': cell[4],
-                'key': key,
+                'key': key.lower().replace(' ', ''),
                 'eng': cell[0],
                 'fra': cell[2],
                 })
