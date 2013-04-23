@@ -1,7 +1,6 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic.validators import isodate
-from ckan.lib.navl.validators import not_empty
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -13,8 +12,7 @@ from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
-from ckanext.canada.plugins import create_package_schema
-from ckanext.canada.ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
+from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized)
 
 class CanadaCommand(CkanCommand):
@@ -68,7 +66,7 @@ class CanadaCommand(CkanCommand):
                 self.create_vocabulary(name, terms)
 
         elif cmd == 'create-organizations':
-            for org in schema_description.dataset_field_by_id['author']['choices']:
+            for org in schema_description.dataset_field_by_id['owner_org']['choices']:
                 if 'id' not in org:
                     continue
                 if not org['id']:
@@ -80,7 +78,7 @@ class CanadaCommand(CkanCommand):
             raise NotImplementedError(
                 "Sorry, this can't be implemented properly until group "
                 "purging is implemented in CKAN")
-            for org in schema_description.dataset_field_by_id['author']['choices']:
+            for org in schema_description.dataset_field_by_id['owner_org']['choices']:
                 if 'id' not in org:
                     continue
                 self.delete_organization(org)
@@ -334,12 +332,7 @@ class CanadaCommand(CkanCommand):
                 result = 'unchanged'
             elif target_pkg is None:
                 # CREATE
-                portal.call_action('package_create',
-                    source_pkg,
-                    dict(portal.context,
-                        schema=dict(create_package_schema(), id=[not_empty]),
-                        return_id_only=True),
-                    )
+                portal.action.package_create(**source_pkg)
                 result = 'created'
             elif source_pkg is None:
                 # DELETE
@@ -363,16 +356,15 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN()
         titles = [org[l] for l in schema_description.languages]
         titles = [titles[0]] + [t for t in titles[1:] if t != titles[0]]
-        titles = u' | '.join(titles)
-        name = org['key'].lower().replace(' ', '')
-        if len(name) < 2:
-            name = u'0' + name # some ids are 1-digit
-        registry.action.organization_create(
-            name=name,
-            title=org['key'],
-            description=titles,
-            extras=[{'key': 'department_number', 'value': unicode(org['id'])}],
-            )
+        kwargs = {
+            'name':org['key'],
+            'title':u' | '.join(titles),
+            'extras':[{'key': 'department_number',
+                'value': unicode(org['id'])}],
+            }
+        if 'pilot_uuid' in org:
+            kwargs['id'] = org['pilot_uuid']
+        registry.action.organization_create(**kwargs)
 
     def delete_organization(self, org):
         registry = LocalCKAN()

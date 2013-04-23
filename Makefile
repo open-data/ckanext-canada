@@ -20,8 +20,9 @@ SPATIAL_REF_SYS = $(firstword $(wildcard \
     ))
 
 test:
-	which nosetests
-	python `which nosetests` --with-pylons=test-core.ini ckanext/canada/tests 2>&1
+	sudo -u postgres dropdb ${DB_NAME_PORT}
+	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -T test_template
+	nosetests --with-pylons=${CKAN_CONFIG} --nologcapture ckanext/canada/tests 2>&1
 
 drop-database:
 	sudo -u postgres dropdb ${DB_NAME_PORT}
