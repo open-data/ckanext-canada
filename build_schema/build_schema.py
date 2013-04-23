@@ -37,18 +37,20 @@ SECTIONS_FIELDS = [
         'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
         'title',
-        'name', #- optional in proposed, REQUIRED here!
+        'name',
         'notes',
         'digital_object_identifier', # "datacite" identifier
-        'catalog_type', # will control field validation in the future
-        'subject', 
-        'topic_category', 
+        'catalog_type', # will control field validation
+        'subject',
+        'topic_category',
         'keywords',
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
         'geographic_region',
+        'spatial',
         'date_published',
+        'date_modified',
         'maintenance_and_update_frequency',
         ]),
     ("Additional Fields", [
@@ -56,14 +58,11 @@ SECTIONS_FIELDS = [
         'time_period_coverage_end',
         'url',
         'endpoint_url',
-        'ready_to_publish',
-        'portal_release_date', # ADMIN-only field that will control publishing
-        ]),
-    ("Geospatial Additional Fields", [
         'spatial_representation_type',
         'presentation_form',
-        'spatial',
         'browse_graphic_url',
+        'ready_to_publish',
+        'portal_release_date', # ADMIN-only field that will control publishing
         ]),
     ]
 
@@ -83,7 +82,6 @@ RESOURCE_FIELDS = [
     'size',
     'format',
     'language',
-    'last_modified',
     ]
 
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
@@ -134,7 +132,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'datePublished': 'date_published',
     'portalReleaseDate': 'portal_release_date',
     'readyToPublish': 'ready_to_publish',
-    'dateModified': 'resource:last_modified',
+    'dateModified': 'date_modified',
     'abstract': 'notes',
     'subject': 'subject',
     'topicCategory': 'topic_category',
@@ -178,7 +176,7 @@ PILOT_FIELD_MAPPING = {
     'subject': 'category',
     'language': 'language__',
     'date': 'date_released',
-    'date_modified': 'date_update',
+    'date_modified': 'date_updated',
     'maintenance_and_update_frequency': 'frequency',
     'notes': 'description_en',
     'keywords': 'keywords_en',

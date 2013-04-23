@@ -4163,6 +4163,22 @@
         {
           "bilingual": false, 
           "description": {
+            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
+            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
+          }, 
+          "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
+          "existing": true, 
+          "id": "spatial", 
+          "label": {
+            "eng": "Spatial", 
+            "fra": "\u00c9l\u00e9ment spatial"
+          }, 
+          "mandatory": false, 
+          "type": "geojson"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
           }, 
@@ -4182,6 +4198,32 @@
           "pilot_name": {
             "eng": "Date Published", 
             "fra": "Date de publication"
+          }, 
+          "pilot_type": "datepicker", 
+          "type": "date"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was modified.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
+          }, 
+          "example": "2012-08-22", 
+          "existing": false, 
+          "id": "date_modified", 
+          "label": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
+          }, 
+          "mandatory": false, 
+          "pilot_help": {
+            "eng": "The date of the last update to the dataset (YYYY-MM-DD)", 
+            "fra": "La date de la derni\u00e8re mise \u00e0 jour de l\u2019ensemble de donn\u00e9es (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "date_updated", 
+          "pilot_name": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
           }, 
           "pilot_type": "datepicker", 
           "type": "date"
@@ -4397,46 +4439,6 @@
         }, 
         {
           "bilingual": false, 
-          "description": {
-            "eng": "(describe me)", 
-            "fra": "(translate me)"
-          }, 
-          "example": "1", 
-          "existing": false, 
-          "id": "ready_to_publish", 
-          "label": {
-            "eng": "Ready to Publish", 
-            "fra": "(translate me)"
-          }, 
-          "mandatory": false, 
-          "type": "boolean"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The date the dataset may be published to the portal CKAN site", 
-            "fra": "(translate me)"
-          }, 
-          "example": "2013-05-01", 
-          "existing": false, 
-          "id": "portal_release_date", 
-          "label": {
-            "eng": "Portal Release Date", 
-            "fra": "(translate me)"
-          }, 
-          "mandatory": false, 
-          "type": "date"
-        }
-      ], 
-      "name": {
-        "en": "Additional Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
-        {
-          "bilingual": false, 
           "choices": [
             {
               "eng": "Vector", 
@@ -4630,22 +4632,6 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
-            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
-          }, 
-          "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
-          "existing": true, 
-          "id": "spatial", 
-          "label": {
-            "eng": "Spatial", 
-            "fra": "\u00c9l\u00e9ment spatial"
-          }, 
-          "mandatory": false, 
-          "type": "geojson"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
             "eng": "The name of the graphic file provided to illustrate the resource.", 
             "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
           }, 
@@ -4658,10 +4644,42 @@
           }, 
           "mandatory": false, 
           "type": "image_url"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "(describe me)", 
+            "fra": "(translate me)"
+          }, 
+          "example": "1", 
+          "existing": false, 
+          "id": "ready_to_publish", 
+          "label": {
+            "eng": "Ready to Publish", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "boolean"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date the dataset may be published to the portal CKAN site", 
+            "fra": "(translate me)"
+          }, 
+          "example": "2013-05-01", 
+          "existing": false, 
+          "id": "portal_release_date", 
+          "label": {
+            "eng": "Portal Release Date", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "date"
         }
       ], 
       "name": {
-        "en": "Geospatial Additional Fields"
+        "en": "Additional Fields"
       }
     }
   ], 
@@ -4985,22 +5003,6 @@
       }, 
       "mandatory": true, 
       "type": "choice"
-    }, 
-    {
-      "bilingual": false, 
-      "description": {
-        "eng": "The date in which the resource was modified.", 
-        "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
-      }, 
-      "example": "2012-08-22", 
-      "existing": true, 
-      "id": "last_modified", 
-      "label": {
-        "eng": "Date Modified", 
-        "fra": "Date de modification"
-      }, 
-      "mandatory": false, 
-      "type": "date"
     }
   ], 
   "vocabularies": {
