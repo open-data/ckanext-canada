@@ -73,6 +73,10 @@ Requirements
    - `open-data/wet-boew <https://github.com/open-data/wet-boew>`_
    - master
    - N/A
+ * - ckanapi
+   - `open-data/ckanapi <https://github.com/open-data/ckanapi>`_
+   - master
+   - N/A
 
 
 Loading Data
