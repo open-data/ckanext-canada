@@ -292,7 +292,7 @@ def field_from_proposed(p):
         'type': p.ckan_type,
         'mandatory': bool(p.gc_multiplicity.startswith('M')),
         'description': {'eng': p.description, 'fra': p.description_fra},
-        'example': p.example,
+        'example': {'eng': p.example, 'fra': p.example_fra},
         'label': {'eng': p.property_label, 'fra': p.property_label_fra},
         }
 
