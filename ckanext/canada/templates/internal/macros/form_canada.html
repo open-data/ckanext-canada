@@ -35,10 +35,14 @@ orgs_avail  - h.organizations_available helper (optional)
   {% set widget = form.input %}
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
+
   {% elif field.choices %}
-    {% do inputargs.update({'options':[],
-      'selected':data[id] if data[id] else field.example[
-        'eng' if lang != 'fra' else 'fra']}) %}
+    {% do inputargs.update({'options':[]}) %}
+    {% if data[id] %}
+      {% do inputargs.update({'selected':data[id]}) %}
+    {% else %}
+      {% do inputargs.update({'selected':field.example['eng']}) %}
+    {% endif %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
     {% do inputargs.pop('placeholder') %}
