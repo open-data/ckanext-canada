@@ -48,3 +48,24 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         resp = self.action.package_show(id=resp['result']['id'])
         assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
+
+    def test_keyword_validation(self):
+        self.assert_raises(ValidationError,
+            self.sysadmin_action.package_create,
+            name='keyword_validation',
+            **dict(self.complete_pkg, keywords='not! ok!'))
+
+        self.assert_raises(ValidationError,
+            self.sysadmin_action.package_create,
+            name='keyword_validation',
+            **dict(self.complete_pkg, keywords_fra='one too short, q'))
+
+        self.assert_raises(ValidationError,
+            self.sysadmin_action.package_create,
+            name='keyword_validation',
+            **dict(self.complete_pkg, keywords='this is much too long' * 50))
+
+        self.sysadmin_action.package_create(
+            name='keyword_validation',
+            **dict(self.complete_pkg, keywords='these, ones, are, a-ok'))
+
