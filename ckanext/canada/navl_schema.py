@@ -3,7 +3,7 @@ from ckan.logic.schema import (default_create_package_schema,
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty
-from ckan.logic.validators import isodate
+from ckan.logic.validators import isodate, tag_string_convert
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -65,7 +65,7 @@ def _schema_field_validators(name, lang, field):
                  isodate, convert_to_extras],
                 [convert_from_extras, ignore_missing])
 
-    if 'vocabulary' in field:
+    if field['type'] == 'tag_vocabulary':
         return ([convert_to_tags(field['vocabulary'])],
                 [convert_from_tags(field['vocabulary'])])
 
@@ -77,6 +77,8 @@ def _schema_field_validators(name, lang, field):
 
     if field['type'] == 'date':
         edit.append(isodate)
+    elif field['type'] == 'keywords':
+        edit.append(keywords_validate)
     else:
         edit.append(unicode)
 
@@ -121,3 +123,10 @@ def ignore_missing_only_sysadmin(key, data, errors, context):
         return ignore_missing(key, data, errors, context)
 
 
+def keywords_validate(key, data, errors, context):
+    """
+    Validate a keywords in the same way as tag_string, but don't
+    insert tags into data.
+    """
+    data = {key: data[key]}
+    tag_string_convert(key, data, errors, context)
