@@ -54,9 +54,9 @@
           {%- elif f.id == 'spatial' -%}
           {# h.debug_inspect(f)
              Need a valid test here for the value, not just the field #}
-             {% if f.example %}
+             {% if pkg[f.id] %}
              {# The geojson needs to be converted to WKT format and then passed in. #}
-               {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=f.example %}
+               {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg[f.id] %}
              {% endif %}
           {%- elif f.id == 'owner_org' -%}
             {{ cr.org_field(pkg, client_lang) }}
