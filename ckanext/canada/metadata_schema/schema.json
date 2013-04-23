@@ -1306,25 +1306,6 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The unique number assigned to each department", 
-            "fra": "Le num\u00e9ro unique assign\u00e9 \u00e0 chaque minist\u00e8re"
-          }, 
-          "example": {
-            "eng": "", 
-            "fra": ""
-          }, 
-          "existing": false, 
-          "id": "department_number", 
-          "label": {
-            "eng": "Department Number", 
-            "fra": "Num\u00e9ro du minist\u00e8re"
-          }, 
-          "mandatory": true, 
-          "type": "calculated"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
             "eng": "The electronic mail address of the responsible organization or individual.", 
             "fra": "L\u2019adresse \u00e9lectronique de l\u2019organisation ou de la personne responsable"
           }, 

@@ -34,7 +34,6 @@ SECTIONS_FIELDS = [
         'id', # unique ID,
         'language', # Always "eng; CAN|fra; CAN"
         'owner_org', # XXX set to GC Department (ckan group), no data entry
-        'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
         'title',
         'name',
