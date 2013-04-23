@@ -68,7 +68,7 @@ class CanadaCommand(CkanCommand):
                 self.create_vocabulary(name, terms)
 
         elif cmd == 'create-organizations':
-            for org in schema_description.dataset_field_by_id['author']['choices']:
+            for org in schema_description.dataset_field_by_id['owner_org']['choices']:
                 if 'id' not in org:
                     continue
                 if not org['id']:
@@ -363,11 +363,15 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN()
         titles = [org[l] for l in schema_description.languages]
         titles = [titles[0]] + [t for t in titles[1:] if t != titles[0]]
-        registry.action.organization_create(
-            name=org['key'],
-            title=u' | '.join(titles),
-            extras=[{'key': 'department_number', 'value': unicode(org['id'])}],
-            )
+        kwargs = {
+            'name':org['key'],
+            'title':u' | '.join(titles),
+            'extras':[{'key': 'department_number',
+                'value': unicode(org['id'])}],
+            }
+        if 'pilot_uuid' in org:
+            kwargs['id'] = org['pilot_uuid']
+        registry.action.organization_create(**kwargs)
 
     def delete_organization(self, org):
         registry = LocalCKAN()
