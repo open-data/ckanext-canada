@@ -47,14 +47,15 @@ Render the field label for the given field object and client language
 {%- endmacro -%}
 
 {#
-Render a list of tags for the client language
+Render a list of keywords for the client language
 #}
-{%- macro tag_field(pkg, client_lang) -%}
+{%- macro keyword_field(f, pkg, client_lang) -%}
   <ul class='menu-horizontal margin-top-none margin-bottom-none'>
-    {%- for tag in pkg.tags -%}
+    {% set tags = pkg[f.id + ('_fra' if client_lang == 'fr' else '')] -%}
+    {%- for tag in tags.split(',') -%}
       <li>
-        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.name
-          %}">{{ tag.display_name.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
+        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
+          %}">{{ tag.strip() }}</a>
       </li>
     {%- endfor -%}
   </ul>
