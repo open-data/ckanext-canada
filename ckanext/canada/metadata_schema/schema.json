@@ -9,12 +9,15 @@
             "eng": "A unique phrase or string which uniquely identifies the metadata file.", 
             "fra": "Une locution ou un syntagme unique qui identifie le fichier de m\u00e9tadonn\u00e9es"
           }, 
-          "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
+          "example": {
+            "eng": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
+            "fra": "11800c2c-e6b9-11df-b9ae-0014c2c00eab"
+          }, 
           "existing": true, 
           "id": "id", 
           "label": {
-            "eng": "File Identifier", 
-            "fra": "Identificateur de fichier"
+            "eng": "Identifier", 
+            "fra": "Identificateur"
           }, 
           "mandatory": true, 
           "type": "primary_key"
@@ -45,7 +48,10 @@
             "eng": "The language of the metadata", 
             "fra": "La langue des m\u00e9tadonn\u00e9es"
           }, 
-          "example": "eng; CAN | fra; CAN", 
+          "example": {
+            "eng": "eng; CAN", 
+            "fra": "fra; CAN"
+          }, 
           "existing": false, 
           "id": "language", 
           "label": {
@@ -1274,12 +1280,15 @@
             "eng": "The organization directly responsible for the datasets and for metadata maintenance.", 
             "fra": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9es et de la maintenance des m\u00e9tadonn\u00e9es"
           }, 
-          "example": "Treasury Board of Canada Secretariat", 
+          "example": {
+            "eng": "Treasury Board of Canada Secretariat", 
+            "fra": "Secr\u00e9tariat du Conseil du Tr\u00e9sor du Canada"
+          }, 
           "existing": true, 
           "id": "owner_org", 
           "label": {
-            "eng": "Organization Name", 
-            "fra": "Nom de l\u2019organisation"
+            "eng": "Publisher", 
+            "fra": "\u00c9diteur"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1297,30 +1306,17 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The unique number assigned to each department", 
-            "fra": "Le num\u00e9ro unique assign\u00e9 \u00e0 chaque minist\u00e8re"
-          }, 
-          "example": "", 
-          "existing": false, 
-          "id": "department_number", 
-          "label": {
-            "eng": "Department Number", 
-            "fra": "Num\u00e9ro du minist\u00e8re"
-          }, 
-          "mandatory": true, 
-          "type": "calculated"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
             "eng": "The electronic mail address of the responsible organization or individual.", 
             "fra": "L\u2019adresse \u00e9lectronique de l\u2019organisation ou de la personne responsable"
           }, 
-          "example": "od-do@tbs-sct.gc.ca", 
+          "example": {
+            "eng": "open-ouvert@tbs-sct.gc.ca", 
+            "fra": "open-ouvert@tbs-sct.gc.ca"
+          }, 
           "existing": true, 
           "id": "author_email", 
           "label": {
-            "eng": "Electronic Mail Address", 
+            "eng": "Email", 
             "fra": "Adresse \u00e9lectronique"
           }, 
           "mandatory": true, 
@@ -1332,7 +1328,10 @@
             "eng": "The name by which the cited dataset is known", 
             "fra": "Nom connue de l\u2019ensemble de donn\u00e9es cit\u00e9e"
           }, 
-          "example": "Canada Border Wait Times", 
+          "example": {
+            "eng": "Canada Border Wait Times", 
+            "fra": "Temps d\u2019attente \u00e0 la fronti\u00e8re"
+          }, 
           "existing": true, 
           "id": "title", 
           "label": {
@@ -1359,7 +1358,10 @@
             "eng": "The Uniform Resource Identifier for the dataset along with its on line function code.", 
             "fra": "L\u2019identificateur de ressource uniforme de l\u2019ensemble de donn\u00e9es, ainsi que son code de fonction en ligne"
           }, 
-          "example": "http://host/path/ download", 
+          "example": {
+            "eng": "http://host/path/ download", 
+            "fra": "http://hote/chemin/telechargement"
+          }, 
           "existing": true, 
           "id": "name", 
           "label": {
@@ -1375,12 +1377,15 @@
             "eng": "A brief narrative summary of the dataset\u2019s contents", 
             "fra": "Un bref r\u00e9sum\u00e9 narratif du contenu de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "example": {
+            "eng": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+            "fra": "L\u2019Inventaire national des rejets de polluants (INRP) est l\u2019inventaire public des rejets de polluants du Canada\u2026"
+          }, 
           "existing": true, 
           "id": "notes", 
           "label": {
-            "eng": "Abstract", 
-            "fra": "R\u00e9sum\u00e9"
+            "eng": "Description", 
+            "fra": "Description"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1402,7 +1407,10 @@
             "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
             "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
           }, 
-          "example": "", 
+          "example": {
+            "eng": "10.978.86123/45678", 
+            "fra": "10.978.86123/45678"
+          }, 
           "existing": false, 
           "id": "digital_object_identifier", 
           "label": {
@@ -1430,7 +1438,10 @@
             "eng": "The type of catalogue to which the metadata record belongs: Raw, Geo", 
             "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es\u00a0: Raw, Geo"
           }, 
-          "example": "Geo", 
+          "example": {
+            "eng": "Geo Data", 
+            "fra": "G\u00e9o"
+          }, 
           "existing": false, 
           "id": "catalog_type", 
           "label": {
@@ -1574,14 +1585,17 @@
             "eng": "The main subject(s) of the dataset.", 
             "fra": "Le principal sujet (ou les principaux sujets) de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Agriculture", 
+          "example": {
+            "eng": "Agriculture", 
+            "fra": "Agriculture"
+          }, 
           "existing": false, 
           "id": "subject", 
           "label": {
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1716,7 +1730,10 @@
             "eng": "The main theme(s) of the dataset.", 
             "fra": "Le th\u00e8me principal (ou les  th\u00e8mes principaux) de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Farming", 
+          "example": {
+            "eng": "Farming", 
+            "fra": "Exploitation agricole"
+          }, 
           "existing": false, 
           "id": "topic_category", 
           "label": {
@@ -1732,7 +1749,10 @@
             "eng": "The commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource.", 
             "fra": "Les mots utilis\u00e9s de fa\u00e7on commune, des locutions, ou des mots officiels utilis\u00e9s pour d\u00e9crire le sujet de la ressource."
           }, 
-          "example": "Air, Air Quality, Organic Pollutants", 
+          "example": {
+            "eng": "Air, Air Quality, Organic Pollutants", 
+            "fra": "Air, Qualit\u00e9 de l\u2019air, Polluants organiques"
+          }, 
           "existing": false, 
           "id": "keywords", 
           "label": {
@@ -1759,11 +1779,14 @@
             "eng": "The limitations or constraints on the use of the resource.", 
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
           }, 
-          "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+          "example": {
+            "eng": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+            "fra": "Les contraintes \u00e9nonc\u00e9es dans l\u2019Accord de licence de donn\u00e9es libres du gouvernement du Canada."
+          }, 
           "existing": true, 
           "id": "license_id", 
           "label": {
-            "eng": "License", 
+            "eng": "Licence", 
             "fra": "Licence"
           }, 
           "mandatory": true, 
@@ -1775,7 +1798,10 @@
             "eng": "The name of the series, or aggregate dataset, of which the dataset is a part", 
             "fra": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
           }, 
-          "example": "CANSIM", 
+          "example": {
+            "eng": "CANSIM", 
+            "fra": "CANSIM"
+          }, 
           "existing": false, 
           "id": "data_series_name", 
           "label": {
@@ -1802,7 +1828,10 @@
             "eng": "The identification of the series\u2019 issue information.", 
             "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
           }, 
-          "example": "Table 502-0003", 
+          "example": {
+            "eng": "Table 502-0003", 
+            "fra": "Tableau 502-0003"
+          }, 
           "existing": false, 
           "id": "data_series_issue_identification", 
           "label": {
@@ -4140,7 +4169,10 @@
             "eng": "The geographic area of the dataset", 
             "fra": "La r\u00e9gion g\u00e9ographique de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Ottawa", 
+          "example": {
+            "eng": "Ottawa", 
+            "fra": "Ottawa"
+          }, 
           "existing": false, 
           "id": "geographic_region", 
           "label": {
@@ -4163,10 +4195,32 @@
         {
           "bilingual": false, 
           "description": {
+            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
+            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
+          }, 
+          "example": {
+            "eng": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
+            "fra": "G\u00e9om\u00e9trie GeoJSON valide"
+          }, 
+          "existing": true, 
+          "id": "spatial", 
+          "label": {
+            "eng": "Spatial", 
+            "fra": "\u00c9l\u00e9ment spatial"
+          }, 
+          "mandatory": false, 
+          "type": "geojson"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
           }, 
-          "example": "2012-08-11", 
+          "example": {
+            "eng": "2012-08-11", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "date_published", 
           "label": {
@@ -4182,6 +4236,35 @@
           "pilot_name": {
             "eng": "Date Published", 
             "fra": "Date de publication"
+          }, 
+          "pilot_type": "datepicker", 
+          "type": "date"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was modified.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
+          }, 
+          "example": {
+            "eng": "2012-08-22", 
+            "fra": "2012-08-22"
+          }, 
+          "existing": false, 
+          "id": "date_modified", 
+          "label": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
+          }, 
+          "mandatory": false, 
+          "pilot_help": {
+            "eng": "The date of the last update to the dataset (YYYY-MM-DD)", 
+            "fra": "La date de la derni\u00e8re mise \u00e0 jour de l\u2019ensemble de donn\u00e9es (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "date_updated", 
+          "pilot_name": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
           }, 
           "pilot_type": "datepicker", 
           "type": "date"
@@ -4272,12 +4355,15 @@
             "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
             "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
           }, 
-          "example": "As Needed | Au besoin", 
+          "example": {
+            "eng": "As Needed | Au besoin", 
+            "fra": "Au besoin"
+          }, 
           "existing": false, 
           "id": "maintenance_and_update_frequency", 
           "label": {
-            "eng": "Maintainence and Update Frequency", 
-            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
+            "eng": "Frequency", 
+            "fra": "Fr\u00e9quence"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -4306,7 +4392,10 @@
             "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
-          "example": "YYYY-MM-DD", 
+          "example": {
+            "eng": "YYYY-MM-DD", 
+            "fra": "AAAA-MM-JJ"
+          }, 
           "existing": false, 
           "id": "time_period_coverage_start", 
           "label": {
@@ -4332,7 +4421,10 @@
             "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
-          "example": "YYYY-MM-DD", 
+          "example": {
+            "eng": "YYYY-MM-DD", 
+            "fra": "AAAA-MM-JJ"
+          }, 
           "existing": false, 
           "id": "time_period_coverage_end", 
           "label": {
@@ -4358,12 +4450,15 @@
             "eng": "The URL for the Government of Canada program that is responsible for the dataset.", 
             "fra": "L\u2019adresse URL du programme du gouvernement du Canada responsable de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "example": {
+            "eng": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+            "fra": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-fra.jsp"
+          }, 
           "existing": true, 
           "id": "url", 
           "label": {
-            "eng": "Program URL", 
-            "fra": "URL des documents connexes"
+            "eng": "Homepage URL", 
+            "fra": "URL de la page d\u2019accueil"
           }, 
           "mandatory": false, 
           "pilot_help": {
@@ -4385,7 +4480,10 @@
             "eng": "The endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory", 
             "fra": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API).\n(Si l\u2019utilisateur coche \u00ab oui \u00bb au champ \u00ab interrogeable \u00bb, alors ce champ est obligatoire.)"
           }, 
-          "example": "URL", 
+          "example": {
+            "eng": "URL", 
+            "fra": "URL"
+          }, 
           "existing": false, 
           "id": "endpoint_url", 
           "label": {
@@ -4395,46 +4493,6 @@
           "mandatory": false, 
           "type": "url"
         }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "(describe me)", 
-            "fra": "(translate me)"
-          }, 
-          "example": "1", 
-          "existing": false, 
-          "id": "ready_to_publish", 
-          "label": {
-            "eng": "Ready to Publish", 
-            "fra": "(translate me)"
-          }, 
-          "mandatory": false, 
-          "type": "boolean"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The date the dataset may be published to the portal CKAN site", 
-            "fra": "(translate me)"
-          }, 
-          "example": "2013-05-01", 
-          "existing": false, 
-          "id": "portal_release_date", 
-          "label": {
-            "eng": "Portal Release Date", 
-            "fra": "(translate me)"
-          }, 
-          "mandatory": false, 
-          "type": "date"
-        }
-      ], 
-      "name": {
-        "en": "Additional Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
         {
           "bilingual": false, 
           "choices": [
@@ -4479,7 +4537,10 @@
             "eng": "The object(s) used to represent the\ngeographic information.", 
             "fra": "L\u2019objet utilis\u00e9 (ou les objets utilis\u00e9s) pour repr\u00e9senter l\u2019information g\u00e9ographique"
           }, 
-          "example": "vector", 
+          "example": {
+            "eng": "vector", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "spatial_representation_type", 
           "label": {
@@ -4617,7 +4678,10 @@
             "eng": "The form in which the resource is available.", 
             "fra": "Le format dans lequel la ressource est disponible"
           }, 
-          "example": "documentDigital", 
+          "example": {
+            "eng": "documentDigital", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "presentation_form", 
           "label": {
@@ -4630,26 +4694,13 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
-            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
-          }, 
-          "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
-          "existing": true, 
-          "id": "spatial", 
-          "label": {
-            "eng": "Spatial", 
-            "fra": "\u00c9l\u00e9ment spatial"
-          }, 
-          "mandatory": false, 
-          "type": "geojson"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
             "eng": "The name of the graphic file provided to illustrate the resource.", 
             "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
           }, 
-          "example": "Product dependant", 
+          "example": {
+            "eng": "Product dependant", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "browse_graphic_url", 
           "label": {
@@ -4658,10 +4709,48 @@
           }, 
           "mandatory": false, 
           "type": "image_url"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "(describe me)", 
+            "fra": "(translate me)"
+          }, 
+          "example": {
+            "eng": "1", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "ready_to_publish", 
+          "label": {
+            "eng": "Ready to Publish", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "boolean"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date the dataset may be published to the portal CKAN site", 
+            "fra": "(translate me)"
+          }, 
+          "example": {
+            "eng": "2013-05-01", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "portal_release_date", 
+          "label": {
+            "eng": "Portal Release Date", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "date"
         }
       ], 
       "name": {
-        "en": "Geospatial Additional Fields"
+        "en": "Additional Fields"
       }
     }
   ], 
@@ -4683,8 +4772,8 @@
           "key": "file"
         }, 
         {
-          "eng": "Doc", 
-          "fra": "Doc", 
+          "eng": "Supporting Document", 
+          "fra": "Document", 
           "key": "doc"
         }, 
         {
@@ -4697,7 +4786,10 @@
         "eng": "The type of resource.", 
         "fra": "Le type de ressource"
       }, 
-      "example": "API", 
+      "example": {
+        "eng": "API", 
+        "fra": "API"
+      }, 
       "existing": true, 
       "id": "resource_type", 
       "label": {
@@ -4713,12 +4805,15 @@
         "eng": "The electronic location where the resource can be found.", 
         "fra": "L\u2019endroit \u00e9lectronique o\u00f9 se trouve la ressource."
       }, 
-      "example": "http://www.ec.gc.ca/dataset", 
+      "example": {
+        "eng": "http://www.ec.gc.ca/dataset", 
+        "fra": "http://www.ec.gc.ca/ensemble"
+      }, 
       "existing": true, 
       "id": "url", 
       "label": {
-        "eng": "Access URL", 
-        "fra": "URL d\u2019acc\u00e8s"
+        "eng": "URL", 
+        "fra": "URL"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4739,12 +4834,15 @@
         "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65000000", 
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
       }, 
-      "example": "65000000", 
+      "example": {
+        "eng": "65000000", 
+        "fra": "65000000"
+      }, 
       "existing": true, 
       "id": "size", 
       "label": {
-        "eng": "Transfer Size", 
-        "fra": "Taille du transfert"
+        "eng": "Size", 
+        "fra": "Taille"
       }, 
       "mandatory": false, 
       "pilot_help": {
@@ -4924,12 +5022,15 @@
         "eng": "Name of the data transfer format.", 
         "fra": "Nom du format pour le transfert de donn\u00e9es"
       }, 
-      "example": "xml", 
+      "example": {
+        "eng": "xml", 
+        "fra": "xml"
+      }, 
       "existing": true, 
       "id": "format", 
       "label": {
-        "eng": "Format Name", 
-        "fra": "Nom officiel"
+        "eng": "Format", 
+        "fra": "Format"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4948,9 +5049,10 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "no language", 
-          "fra": "aucune langue", 
-          "key": "no language | aucune langue"
+          "eng": "No linguistic content; Not applicable", 
+          "fra": "pas de contenu linguistique; non applicable", 
+          "id": "zxx; CAN", 
+          "key": "No linguistic content; Not applicable | pas de contenu linguistique; non applicable"
         }, 
         {
           "eng": "English", 
@@ -4975,7 +5077,10 @@
         "eng": "The language of the resourcet.", 
         "fra": "La langue de la ressource"
       }, 
-      "example": "eng: CAN", 
+      "example": {
+        "eng": "eng: CAN", 
+        "fra": "fra : CAN"
+      }, 
       "existing": false, 
       "id": "language", 
       "label": {
@@ -4984,22 +5089,6 @@
       }, 
       "mandatory": true, 
       "type": "choice"
-    }, 
-    {
-      "bilingual": false, 
-      "description": {
-        "eng": "The date in which the resource was modified.", 
-        "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
-      }, 
-      "example": "2012-08-22", 
-      "existing": true, 
-      "id": "last_modified", 
-      "label": {
-        "eng": "Date Modified", 
-        "fra": "Date de modification"
-      }, 
-      "mandatory": false, 
-      "type": "calculated"
     }
   ], 
   "vocabularies": {

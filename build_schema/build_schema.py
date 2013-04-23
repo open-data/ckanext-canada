@@ -34,21 +34,22 @@ SECTIONS_FIELDS = [
         'id', # unique ID,
         'language', # Always "eng; CAN|fra; CAN"
         'owner_org', # XXX set to GC Department (ckan group), no data entry
-        'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
         'title',
-        'name', #- optional in proposed, REQUIRED here!
+        'name',
         'notes',
         'digital_object_identifier', # "datacite" identifier
-        'catalog_type', # will control field validation in the future
-        'subject', 
-        'topic_category', 
+        'catalog_type', # will control field validation
+        'subject',
+        'topic_category',
         'keywords',
         'license_id',
         'data_series_name',
         'data_series_issue_identification',
         'geographic_region',
+        'spatial',
         'date_published',
+        'date_modified',
         'maintenance_and_update_frequency',
         ]),
     ("Additional Fields", [
@@ -56,14 +57,11 @@ SECTIONS_FIELDS = [
         'time_period_coverage_end',
         'url',
         'endpoint_url',
-        'ready_to_publish',
-        'portal_release_date', # ADMIN-only field that will control publishing
-        ]),
-    ("Geospatial Additional Fields", [
         'spatial_representation_type',
         'presentation_form',
-        'spatial',
         'browse_graphic_url',
+        'ready_to_publish',
+        'portal_release_date', # ADMIN-only field that will control publishing
         ]),
     ]
 
@@ -71,7 +69,7 @@ SECTIONS_FIELDS = [
 FIELD_OVERRIDES = {
     'resource:resource_type': {'choices': [ # should match normal CKAN values
         {'eng': 'File', 'fra': 'File', 'key': 'file'},
-        {'eng': 'Doc', 'fra': 'Doc', 'key': 'doc'},
+        {'eng': 'Supporting Document', 'fra': 'Document', 'key': 'doc'},
         {'eng': 'API', 'fra': 'API', 'key': 'api'},
         ]},
     }
@@ -83,7 +81,6 @@ RESOURCE_FIELDS = [
     'size',
     'format',
     'language',
-    'last_modified',
     ]
 
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
@@ -109,6 +106,7 @@ ProposedField = namedtuple("ProposedField", """
     description
     description_fra
     example
+    example_fra
     domain_best_practice
     name_space
     implementation
@@ -133,7 +131,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'datePublished': 'date_published',
     'portalReleaseDate': 'portal_release_date',
     'readyToPublish': 'ready_to_publish',
-    'dateModified': 'resource:last_modified',
+    'dateModified': 'date_modified',
     'abstract': 'notes',
     'subject': 'subject',
     'topicCategory': 'topic_category',
@@ -177,7 +175,7 @@ PILOT_FIELD_MAPPING = {
     'subject': 'category',
     'language': 'language__',
     'date': 'date_released',
-    'date_modified': 'date_update',
+    'date_modified': 'date_updated',
     'maintenance_and_update_frequency': 'frequency',
     'notes': 'description_en',
     'keywords': 'keywords_en',
@@ -293,7 +291,7 @@ def field_from_proposed(p):
         'type': p.ckan_type,
         'mandatory': bool(p.gc_multiplicity.startswith('M')),
         'description': {'eng': p.description, 'fra': p.description_fra},
-        'example': p.example,
+        'example': {'eng': p.example, 'fra': p.example_fra},
         'label': {'eng': p.property_label, 'fra': p.property_label_fra},
         }
 
