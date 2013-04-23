@@ -2,7 +2,7 @@ from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
-from ckan.lib.navl.validators import ignore_missing, not_empty
+from ckan.lib.navl.validators import ignore_missing, not_empty, empty
 from ckan.logic.validators import isodate, tag_string_convert
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
@@ -41,13 +41,16 @@ def _schema_update(schema, purpose):
     assert purpose in ('create', 'update', 'show')
 
     for name, lang, field in schema_description.dataset_field_iter():
+        if name == 'id' and purpose == 'create':
+            schema[name] = [ignore_missing, protect_new_dataset_id,
+                unicode]
         if name == 'name' and purpose == 'create':
             schema[name] = [ignore_missing, unicode]
         if name in ('title', 'notes') and purpose != 'show':
             schema[name] = [not_empty, unicode]
 
         if name in schema:
-            continue # don't modify existing fields.. yet
+            continue # don't modify other existing fields
 
         v = _schema_field_validators(name, lang, field)
         if v is not None:
@@ -130,3 +133,13 @@ def keywords_validate(key, data, errors, context):
     """
     data = {key: data[key]}
     tag_string_convert(key, data, errors, context)
+
+
+def protect_new_dataset_id(key, data, errors, context):
+    """
+    Allow dataset ids to be set for packages created by a sysadmin
+    """
+    if is_sysadmin(context['user']):
+        return
+    empty(key, data, errors, context)
+
