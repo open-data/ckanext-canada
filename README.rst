@@ -268,8 +268,8 @@ Dataset and resource field descriptions are dicts containing the following:
   ``'tag_vocabulary'``
     allow selection of 0 or more values from ``'choices'`` list above
 
-  ``'tags'``
-    free-form tags with English and French separated by two spaces; Unicode
+  ``'keywords'``
+    free-form keywords in a string separated with commas; Unicode
     letter characters, hyphen (-) and single spaces between words are allowed
 
   ``'date'``
