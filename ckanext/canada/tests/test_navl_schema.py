@@ -17,6 +17,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.normal_user = model.User.get('annafan')
         cls.sysadmin_action = TestAppCKAN(cls.app,
             str(cls.sysadmin_user.apikey)).action
+        cls.normal_action = TestAppCKAN(cls.app,
+            str(cls.normal_user.apikey)).action
         cls.action = TestAppCKAN(cls.app).action
 
         cls.incomplete_pkg = {
@@ -68,4 +70,24 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.sysadmin_action.package_create(
             name='keyword_validation',
             **dict(self.complete_pkg, keywords='these, ones, are, a-ok'))
+
+    def test_custom_dataset_id(self):
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
+
+        self.sysadmin_action.package_create(
+            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
+
+        resp = self.action.package_show(id='my-custom-id')
+        assert resp['result']['id'] == 'my-custom-id'
+        assert resp['result']['name'] == 'custom_dataset_id'
+
+        # apparently we can update packages this way too
+        # NOTE: please don't do this
+        self.sysadmin_action.package_create(
+            name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
+
+        resp = self.action.package_show(id='my-custom-id')
+        assert resp['result']['name'] == 'different_dataset_id'
 

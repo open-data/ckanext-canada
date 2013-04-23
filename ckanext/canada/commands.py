@@ -1,7 +1,6 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic.validators import isodate
-from ckan.lib.navl.validators import not_empty
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -13,7 +12,6 @@ from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
-from ckanext.canada.navl_schema import create_package_schema
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized)
 
@@ -334,12 +332,7 @@ class CanadaCommand(CkanCommand):
                 result = 'unchanged'
             elif target_pkg is None:
                 # CREATE
-                portal.call_action('package_create',
-                    source_pkg,
-                    dict(portal.context,
-                        schema=dict(create_package_schema(), id=[not_empty]),
-                        return_id_only=True),
-                    )
+                portal.action.package_create(**source_pkg)
                 result = 'created'
             elif source_pkg is None:
                 # DELETE
