@@ -11,8 +11,9 @@ field       - schema_description field dict for this CKAN field
 data        - dict containing form data by CKAN field id
 errors      - dict containing form errors by CKAN field id
 client_lang - language from h.lang(): 'en' or 'fr'
+orgs_avail  - h.organizations_available helper (optional)
 #}
-{% macro formfield(id, lang, field, data, errors, client_lang) %}
+{% macro formfield(id, lang, field, data, errors, client_lang, orgs_avail=none) %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
   {% set inputargs = {
@@ -40,11 +41,19 @@ client_lang - language from h.lang(): 'en' or 'fr'
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
     {% do inputargs.pop('placeholder') %}
-    {% for c in field.choices %}
-      {% set indent = '' %}
-      {% set skip = false %}
-      {# Try to make geographic region selection nicer-looking #}
-      {% if id == 'geographic_region' %}
+
+    {% if id == 'owner_org' %}
+      {% for org in orgs_avail('create_dataset') %}
+        {% set c = field.choices_by_key[org.name] %}
+        {% do inputargs.options.append({
+          'text': c[client_lang],
+          'value': org.id, })
+        %}
+      {% endfor %}
+
+    {% elif id == 'geographic_region' %}
+      {% for c in field.choices %}
+        {% set skip = false %}
         {% if not c.id %}
           {% set skip = true %}
         {% elif c.id > 99 %}
@@ -54,19 +63,27 @@ client_lang - language from h.lang(): 'en' or 'fr'
         {% else %}
           {% set level = 0 %}
         {% endif %}
-      {% endif %}
-      {% if not skip %}
+        {% if not skip %}
+          {% do inputargs.options.append({
+            'text': c[client_lang],
+            'value': c.key,
+            'level': level, })
+          %}
+        {% endif %}
+      {% endfor %}
+
+    {% else %}
+      {% for c in field.choices %}
         {% do inputargs.options.append({
           'text': c[client_lang],
-          'value': c.key,
-          'level': level}) 
+          'value': c.key, })
         %}
-      {% endif %}
-      
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
+
     {% if id == 'geographic_region' %}
       {% set widget = geo_checkbox_field %}
-    {% elif field.vocabulary %}
+    {% elif field.type == 'tag_vocabulary' %}
       {% set widget = multi_checkbox_field %}
     {% else %}
       {% set widget = form.select %}
