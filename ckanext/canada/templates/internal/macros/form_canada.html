@@ -75,7 +75,9 @@ orgs_avail  - h.organizations_available helper (optional)
       {% endfor %}
 
     {% else %}
-      {% do inputargs.options.append({'text': '', 'value': ''}) %}
+      {% if field.type != 'tag_vocabulary' %}
+        {% do inputargs.options.append({'text': '', 'value': ''}) %}
+      {% endif %}
       {% for c in field.choices %}
         {% do inputargs.options.append({
           'text': c[client_lang],
