@@ -1292,7 +1292,7 @@
             "fra": "Auteur (minist\u00e8re ou organisme)"
           }, 
           "pilot_type": "choice", 
-          "type": "calculated"
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -1329,7 +1329,7 @@
         {
           "bilingual": true, 
           "description": {
-            "eng": "The name by which the cited dataset is know", 
+            "eng": "The name by which the cited dataset is known", 
             "fra": "Nom connue de l\u2019ensemble de donn\u00e9es cit\u00e9e"
           }, 
           "example": "Canada Border Wait Times", 
