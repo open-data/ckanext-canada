@@ -33,7 +33,7 @@ SECTIONS_FIELDS = [
     ("Primary Fields", [
         'id', # unique ID,
         'language', # Always "eng; CAN|fra; CAN"
-        'author', # XXX set to GC Department (ckan group), no data entry
+        'owner_org', # XXX set to GC Department (ckan group), no data entry
         'department_number', # generated from GC Department
         'author_email', # XXX set to single common email, no data entry
         'title',
@@ -123,7 +123,7 @@ ProposedField = namedtuple("ProposedField", """
 # the same as their proposed fields
 PROPOSED_TO_EXISTING_FIELDS = {
     'fileIdentifier': 'id',
-    'organizationName': 'author',
+    'organizationName': 'owner_org',
     'departmentNumber': 'department_number',
     'electronicMail Address': 'author_email',
     'dataSetURI': 'name',
@@ -173,7 +173,7 @@ PILOT_FIELD_MAPPING = {
     'telephone_number_voice': 'contact_phone',
     #'maintainer_email': 'contact_email', - will have a single common email
     'title': 'title_en',
-    'author': 'department', # FIXME: will this be replaced by group owner?
+    'owner_org': 'department', # FIXME: will this be replaced by group owner?
     'subject': 'category',
     'language': 'language__',
     'date': 'date_released',

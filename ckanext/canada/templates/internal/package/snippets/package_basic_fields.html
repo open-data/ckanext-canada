@@ -5,7 +5,8 @@
 {% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.0) %}
   {% if field.type not in ('primary_key', 'calculated', 'fixed') %}
-    {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
+    {{ cform.formfield(id, lang, field, data, errors, h.lang(),
+      h.organizations_available) }}
   {% endif %}
 {% endfor %}
 
