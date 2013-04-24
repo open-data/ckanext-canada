@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized)
+    ValidationError, NotAuthorized, SearchIndexError)
 
 class CanadaCommand(CkanCommand):
     """
@@ -172,7 +172,7 @@ class CanadaCommand(CkanCommand):
             pkg = json.loads(line)
             try:
                 response = registry.action.package_create(**pkg)
-            except ValidationError, e:
+            except (ValidationError, SearchIndexError), e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
                 return
