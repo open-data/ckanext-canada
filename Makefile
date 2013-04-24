@@ -28,7 +28,7 @@ test:
 drop-database:
 	-sudo -u postgres dropdb ${DB_NAME_PORT}
 
-create-database:
+create-database: drop-database
 	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -E UTF-8
 	sudo -u postgres psql ${DB_NAME_PORT} < ${POSTGIS}
 	sudo -u postgres psql ${DB_NAME_PORT} -c "ALTER TABLE spatial_ref_sys OWNER TO ${DB_USER}"
