@@ -12,8 +12,9 @@ from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
+from ckanext.canada.stats import completion_stats
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized)
+    ValidationError, NotAuthorized, SearchError)
 
 class CanadaCommand(CkanCommand):
     """
@@ -150,15 +151,16 @@ class CanadaCommand(CkanCommand):
                     continue
                 if max_count is not None and num >= skip_lines + max_count:
                     break
-                yield num, line
+                yield num, line.strip() + '\n'
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
             '-c', self.options.config]
         if self.options.ckan_user:
             cmd += ['-u', self.options.ckan_user]
 
+        stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
         for job_ids, finished, result in pool:
-            print job_ids, finished, result.strip()
+            print job_ids, stats.next(), finished, result.strip()
 
 
     def load_dataset_worker(self):
@@ -172,7 +174,7 @@ class CanadaCommand(CkanCommand):
             pkg = json.loads(line)
             try:
                 response = registry.action.package_create(**pkg)
-            except ValidationError, e:
+            except (ValidationError, SearchError), e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
                 return
