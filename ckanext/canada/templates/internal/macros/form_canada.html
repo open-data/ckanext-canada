@@ -206,3 +206,43 @@ classes     - An array of classes to apply to the control-group.
   </label>
   
 {% endmacro %}
+
+{#
+Build a list of errors for the current form.
+
+errors        - A dict of field/message pairs.
+schema_fields - schema_description.dataset_field_by_id or .resource_field...
+client_lang   - language from h.lang(): 'en' or 'fr'
+
+Example:
+
+  {% import 'macros/form.html' as form %}
+  {{ form.errors(error_summary, type="warning") }}
+
+#}
+{% macro errors(errors={}, schema_fields, client_lang) %}
+  {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
+  {% if errors %}
+    <div class="error-explanation module-alert margin-bottom-large alert-{{ type }}{{ " " ~ classes | join(' ') }}">
+      <p>{{ _('The form contains invalid entries:') }}</p>
+      <ul>
+        {% for key, error in errors.items() %}
+          {% if key.endswith('_fra') %}
+            {% set key_base = key[:-4] %}
+          {% else %}
+            {% set key_base = key %}
+          {% endif %}
+          {% set f = schema_fields[key_base] %}
+          {% set label = schema_fields[key_base].label[client_lang] %}
+          {% if f.bilingual %}
+            {% set label = label + ' ' +
+              schema_description.dataset_field_by_id.language.choices[
+              1 if key.endswith('_fra') else 0][client_lang] %}
+          {% endif %}
+          <li data-field-label="{{ key }}">{% if key %}{{
+            label }}: {% endif %}{{ ', '.join(error) }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
