@@ -50,7 +50,7 @@ def _schema_update(schema, purpose):
             schema[name] = [ignore_missing, unicode, name_validator,
                 package_name_validator]
         if name in ('title', 'notes') and purpose != 'show':
-            schema[name] = [not_empty, unicode]
+            schema[name] = [not_empty_allow_override, unicode]
 
         if name in schema:
             continue # don't modify other existing fields
@@ -58,6 +58,9 @@ def _schema_update(schema, purpose):
         v = _schema_field_validators(name, lang, field)
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
+
+    if purpose in ('create', 'update'):
+        schema['validation_override'] = [ignore_missing]
 
 
 def _schema_field_validators(name, lang, field):
@@ -79,7 +82,7 @@ def _schema_field_validators(name, lang, field):
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
     if field['mandatory']:
-        edit.append(not_empty)
+        edit.append(not_empty_allow_override)
 
     if field['type'] == 'date':
         edit.append(isodate)
@@ -161,3 +164,13 @@ def package_id_doesnt_exist(key, data, errors, context):
     if existing:
         errors[key].append(_('That URL is already in use.'))
 
+
+def not_empty_allow_override(key, data, errors, context):
+    """
+    Not empty, but allow sysadmins to override the validation error
+    by setting a value in data[(validation_override,)].
+    """
+    if is_sysadmin(context['user']) and data[('validation_override',)]:
+        ignore_missing(key, data, errors, context)
+    else:
+        not_empty(key, data, errors, context)
