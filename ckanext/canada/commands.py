@@ -150,7 +150,7 @@ class CanadaCommand(CkanCommand):
                     continue
                 if max_count is not None and num >= skip_lines + max_count:
                     break
-                yield num, line
+                yield num, line.strip() + '\n'
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
             '-c', self.options.config]
         if self.options.ckan_user:
