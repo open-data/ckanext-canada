@@ -4,8 +4,11 @@
 
 {% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.0) %}
-  {% if id not in ('id', 'language', 'license_id', 'author_email', 'author',
-               'department_number') %}
-    {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
+  {% if field.type not in ('primary_key', 'calculated', 'fixed') %}
+    {{ cform.formfield(id, lang, field, data, errors, h.lang(),
+      h.organizations_available) }}
   {% endif %}
 {% endfor %}
+
+{# workaround for not using standard tags field #}
+<input type="hidden" name="tag_string" value="" />

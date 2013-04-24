@@ -9,12 +9,15 @@
             "eng": "A unique phrase or string which uniquely identifies the metadata file.", 
             "fra": "Une locution ou un syntagme unique qui identifie le fichier de m\u00e9tadonn\u00e9es"
           }, 
-          "example": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
+          "example": {
+            "eng": "11800c2c-e6b9-11df-b9ae-0014c2c00eab", 
+            "fra": "11800c2c-e6b9-11df-b9ae-0014c2c00eab"
+          }, 
           "existing": true, 
           "id": "id", 
           "label": {
-            "eng": "File Identifier", 
-            "fra": "Identificateur de fichier"
+            "eng": "Identifier", 
+            "fra": "Identificateur"
           }, 
           "mandatory": true, 
           "type": "primary_key"
@@ -45,7 +48,10 @@
             "eng": "The language of the metadata", 
             "fra": "La langue des m\u00e9tadonn\u00e9es"
           }, 
-          "example": "eng; CAN | fra; CAN", 
+          "example": {
+            "eng": "eng; CAN", 
+            "fra": "fra; CAN"
+          }, 
           "existing": false, 
           "id": "language", 
           "label": {
@@ -72,84 +78,84 @@
               "eng": "Atlantic Canada Opportunities Agency", 
               "fra": "Agence de promotion \u00e9conomique du Canada atlantique", 
               "id": 276, 
-              "key": "ACOA-APECA", 
+              "key": "acoa-apeca", 
               "pilot_uuid": "C3DDAD27-EFA9-41AB-9D12-12856482C0A8"
             }, 
             {
               "eng": "Agriculture and Agri-Food Canada", 
               "fra": "Agriculture et Agroalimentaire Canada", 
               "id": 235, 
-              "key": "AAFC-AAC", 
+              "key": "aafc-aac", 
               "pilot_uuid": "2ABCCA59-6C57-4886-99E7-85EC6C719218"
             }, 
             {
               "eng": "Atlantic Pilotage Authority Canada", 
               "fra": "Administration de pilotage de l'Atlantique Canada", 
               "id": 221, 
-              "key": "APA", 
+              "key": "apa", 
               "pilot_uuid": "ED979C5D-69C9-48A4-A3E8-F69C71D8C3D6"
             }, 
             {
               "eng": "Canadian Artists and Producers Professional Relations Tribunal", 
               "fra": "Tribunal canadien des relations professionnelles artistes-producteurs", 
               "id": 24, 
-              "key": "CAPPRT-TCRPAP", 
+              "key": "capprt-tcrpap", 
               "pilot_uuid": "0F2D6642-8818-4671-B4EF-253F1F47AB1D"
             }, 
             {
               "eng": "Canadian Transportation Agency", 
               "fra": "Office des transports du Canada", 
               "id": 124, 
-              "key": "CTA-OTC", 
+              "key": "cta-otc", 
               "pilot_uuid": "18CECF2C-DE86-43E2-8B4D-5B1E4C9EDD84"
             }, 
             {
               "eng": "Office of the Auditor General of Canada", 
               "fra": "Bureau du v\u00e9rificateur g\u00e9n\u00e9ral du Canada", 
               "id": 125, 
-              "key": "OAG-BVG", 
+              "key": "oag-bvg", 
               "pilot_uuid": "4DDD2FC7-A8EA-4633-841B-248A5F792540"
             }, 
             {
               "eng": "Canadian International Trade Tribunal", 
               "fra": "Tribunal canadien du commerce ext\u00e9rieur", 
               "id": 175, 
-              "key": "CITT-TCCE", 
+              "key": "citt-tcce", 
               "pilot_uuid": "8D7884DB-F877-467B-957D-501EC94ACA6D"
             }, 
             {
               "eng": "Business Development Bank of Canada", 
               "fra": "Banque de d\u00e9veloppement du Canada", 
               "id": 150, 
-              "key": "BDC", 
+              "key": "bdc", 
               "pilot_uuid": "A4DA1974-0BC6-4398-A8F9-049F422A6A92"
             }, 
             {
               "eng": "Blue Water Bridge Canada", 
               "fra": "Pont Blue Water Canada", 
               "id": 103, 
-              "key": "BWBC-PBWC", 
+              "key": "bwbc-pbwc", 
               "pilot_uuid": "87CDEC17-64E6-4613-999D-152A033A80C0"
             }, 
             {
               "eng": "Courts Administration Service", 
               "fra": "Service administratif des tribunaux judiciaires", 
               "id": 228, 
-              "key": "CAS-SATJ", 
+              "key": "cas-satj", 
               "pilot_uuid": "4EFC4A27-695B-4AB7-B25D-252B3D85FE2D"
             }, 
             {
               "eng": "Transportation Appeal Tribunal of Canada", 
               "fra": "Tribunal d'appel des transports du Canada", 
               "id": 96, 
-              "key": "TATC", 
+              "key": "tatc", 
               "pilot_uuid": "90819721-E2B5-48FF-AD4D-E8828C05947A"
             }, 
             {
               "eng": "Canadian Air Transport Security Authority", 
               "fra": "Administration canadienne de la s\u00fbret\u00e9 du transport a\u00e9rien", 
               "id": 250, 
-              "key": "CATSA-ACSTA", 
+              "key": "catsa-acsta", 
               "pilot_uuid": "130002B1-6961-4764-A041-744D87E89157"
             }, 
             {
@@ -162,49 +168,49 @@
               "eng": "Canada Border Services Agency", 
               "fra": "Agence des services frontaliers du Canada", 
               "id": 229, 
-              "key": "CBSA-ASFC", 
+              "key": "cbsa-asfc", 
               "pilot_uuid": "33DD2B45-8215-44E1-9C60-D7E829B6D48E"
             }, 
             {
               "eng": "Canadian Commercial Corporation", 
               "fra": "Corporation commerciale canadienne", 
               "id": 34, 
-              "key": "CCC", 
+              "key": "ccc", 
               "pilot_uuid": "5EDE278A-55CB-49A3-9BF0-0D0DFC3A73D6"
             }, 
             {
               "eng": "Canadian Centre for Occupational Health and Safety", 
               "fra": "Centre canadien d'hygi\u00e8ne et de s\u00e9curit\u00e9 au travail", 
               "id": 35, 
-              "key": "CCOHS-CCHST", 
+              "key": "ccohs-cchst", 
               "pilot_uuid": "5FEE6EF8-AA76-4351-818D-00589C947075"
             }, 
             {
               "eng": "Canada Revenue Agency", 
               "fra": "Agence du revenu du Canada", 
               "id": 47, 
-              "key": "CRA-ARC", 
+              "key": "cra-arc", 
               "pilot_uuid": "88B6EE4B-AA19-475B-B92A-2A80260806C2"
             }, 
             {
               "eng": "Canadian Dairy Commission", 
               "fra": "Commission canadienne du lait", 
               "id": 151, 
-              "key": "CDC-CCL", 
+              "key": "cdc-ccl", 
               "pilot_uuid": "BFEDF818-5D2D-4478-A8F9-A7FF8D6B727F"
             }, 
             {
               "eng": "Canada Development Investment Corporation", 
               "fra": "Corporation de d\u00e9veloppement des investissements du Canada", 
               "id": 148, 
-              "key": "CDEV", 
+              "key": "cdev", 
               "pilot_uuid": "2195E34B-E37F-4A34-A26B-15E9E487FE22"
             }, 
             {
               "eng": "Canada Deposit Insurance Corporation", 
               "fra": "Soci\u00e9t\u00e9 d'assurance-d\u00e9p\u00f4ts du Canada", 
               "id": 273, 
-              "key": "CDIC-SADC", 
+              "key": "cdic-sadc", 
               "pilot_uuid": "9A7F872D-4071-4919-87C9-BE04BE38A124"
             }, 
             {
@@ -230,98 +236,98 @@
               "eng": "Financial Transactions and Reports Analysis Centre of Canada", 
               "fra": "Centre d'analyse des op\u00e9rations et d\u00e9clarations financi\u00e8res du Canada", 
               "id": 127, 
-              "key": "FINTRAC-CANAFE", 
+              "key": "fintrac-canafe", 
               "pilot_uuid": "0C38B176-A05C-4462-8F16-AE8335F1A332"
             }, 
             {
               "eng": "Canadian Forces Grievance Board", 
               "fra": "Comit\u00e9 des griefs des Forces canadiennes", 
               "id": 43, 
-              "key": "CFGB-CGFC", 
+              "key": "cfgb-cgfc", 
               "pilot_uuid": "C3C6F115-462E-40EE-AE9C-1957152F52E5"
             }, 
             {
               "eng": "Canadian Grain Commission", 
               "fra": "Commission canadienne des grains", 
               "id": 169, 
-              "key": "CGC-CCG", 
+              "key": "cgc-ccg", 
               "pilot_uuid": "196FF0D1-A29E-48AD-829D-24D93D656EAF"
             }, 
             {
               "eng": "Parks Canada", 
               "fra": "Parcs Canada", 
               "id": 154, 
-              "key": "PC", 
+              "key": "pc", 
               "pilot_uuid": "B578A1C3-FDCF-4F36-89E2-3B2E75020C43"
             }, 
             {
               "eng": "Canadian Human Rights Commission", 
               "fra": "Commission canadienne des droits de la personne", 
               "id": 113, 
-              "key": "CHRC-CCDP", 
+              "key": "chrc-ccdp", 
               "pilot_uuid": "7989CBA8-1F59-47C1-B9BC-F5FA9A0E03E7"
             }, 
             {
               "eng": "Canadian Intergovernmental Conference Secretariat", 
               "fra": "Secr\u00e9tariat des conf\u00e9rences intergouvernementales canadiennes", 
               "id": 274, 
-              "key": "CICS-SCIC", 
+              "key": "cics-scic", 
               "pilot_uuid": "AB62517F-41BF-49DA-AB49-4C03B9C2E683"
             }, 
             {
               "eng": "Canada Lands Company Limited", 
               "fra": "Soci\u00e9t\u00e9 immobili\u00e8re du Canada Limit\u00e9e", 
               "id": 82, 
-              "key": "82", 
+              "key": "org82", 
               "pilot_uuid": "CEC34510-FAAB-4722-9787-0245DD0CFA58"
             }, 
             {
               "eng": "Canada Industrial Relations Board", 
               "fra": "Conseil canadien des relations industrielles", 
               "id": 188, 
-              "key": "CIRB-CCRI", 
+              "key": "cirb-ccri", 
               "pilot_uuid": "5B074ECE-DC3C-4091-A90E-7E419A186B38"
             }, 
             {
               "eng": "Canadian Museum of Civilization", 
               "fra": "Mus\u00e9e canadien des civilisations", 
               "id": 263, 
-              "key": "CMC-MCC", 
+              "key": "cmc-mcc", 
               "pilot_uuid": "4EA922BD-53C4-4905-848B-9329B98A0441"
             }, 
             {
               "eng": "Canada Mortgage and Housing Corporation", 
               "fra": "Soci\u00e9t\u00e9 canadienne d'hypoth\u00e8ques et de logement", 
               "id": 87, 
-              "key": "CMHC-SCHL", 
+              "key": "cmhc-schl", 
               "pilot_uuid": "05AFE8D4-BE53-4853-B529-A79C78757969"
             }, 
             {
               "eng": "Canadian Museum of Nature", 
               "fra": "Mus\u00e9e canadien de la nature", 
               "id": 57, 
-              "key": "CMN-MCN", 
+              "key": "cmn-mcn", 
               "pilot_uuid": "1A781743-7F0F-4A50-B620-CCCEE18D709C"
             }, 
             {
               "eng": "Canadian Nuclear Safety Commission", 
               "fra": "Commission canadienne de s\u00fbret\u00e9 nucl\u00e9aire", 
               "id": 58, 
-              "key": "CNSC-CCSN", 
+              "key": "cnsc-ccsn", 
               "pilot_uuid": "261F1DF4-DD3A-4DAD-939B-55B4F2853FBB"
             }, 
             {
               "eng": "Office of the Commissioner of Official Languages", 
               "fra": "Commissariat aux langues officielles", 
               "id": 258, 
-              "key": "OCOL-CLO", 
+              "key": "ocol-clo", 
               "pilot_uuid": "E45B1486-67DB-431A-96C5-E127DF594DBA"
             }, 
             {
               "eng": "Copyright Board Canada", 
               "fra": "Commission du droit d'auteur Canada", 
               "id": 116, 
-              "key": "CB-CDA", 
+              "key": "cb-cda", 
               "pilot_uuid": "0560B521-A423-4A01-A993-F8AA2EA353F5"
             }, 
             {
@@ -334,35 +340,35 @@
               "eng": "Canadian Institutes of Health Research", 
               "fra": "Instituts de recherche en sant\u00e9 du Canada", 
               "id": 236, 
-              "key": "CIHR-IRSC", 
+              "key": "cihr-irsc", 
               "pilot_uuid": "D767E220-09B6-4AE0-97B2-7E94683DB117"
             }, 
             {
               "eng": "Canadian Space Agency", 
               "fra": "Agence spatiale canadienne", 
               "id": 3, 
-              "key": "CSA-ASC", 
+              "key": "csa-asc", 
               "pilot_uuid": "95F65CF9-ED6A-4630-9C1A-8339FDB15CF0"
             }, 
             {
               "eng": "Office of the Communications Security Establishment Commissioner", 
               "fra": "Bureau du commissaire du Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications", 
               "id": 279, 
-              "key": "OCSEC-BCCST", 
+              "key": "ocsec-bccst", 
               "pilot_uuid": "626F5B6F-4BC3-4622-A60C-EA10FDCCAA90"
             }, 
             {
               "eng": "Canadian Security Intelligence Service", 
               "fra": "Service canadien du renseignement de s\u00e9curit\u00e9", 
               "id": 90, 
-              "key": "CSIS-SCRS", 
+              "key": "csis-scrs", 
               "pilot_uuid": "F06CF54B-F618-4358-8F47-82B54D2979B7"
             }, 
             {
               "eng": "Canada School of Public Service", 
               "fra": "\u00c9cole de la fonction publique du Canada", 
               "id": 73, 
-              "key": "CSPS-EFPC", 
+              "key": "csps-efpc", 
               "pilot_uuid": "892B1E0C-3389-4C9F-A6F0-92FE653016C1"
             }, 
             {
@@ -375,77 +381,77 @@
               "eng": "Defence Construction Canada", 
               "fra": "Construction de D\u00e9fense Canada", 
               "id": 28, 
-              "key": "DCC-CDC", 
+              "key": "dcc-cdc", 
               "pilot_uuid": "AA37FA1C-BC8C-4196-9AC2-33B873C8C7A7"
             }, 
             {
               "eng": "Fisheries and Oceans Canada", 
               "fra": "P\u00eaches et Oc\u00e9ans Canada", 
               "id": 253, 
-              "key": "DFO-MPO", 
+              "key": "dfo-mpo", 
               "pilot_uuid": "E56460A0-2055-4BF4-A693-EA238E0746E7"
             }, 
             {
               "eng": "National Defence", 
               "fra": "D\u00e9fense nationale", 
               "id": 32, 
-              "key": "DND-MDN", 
+              "key": "dnd-mdn", 
               "pilot_uuid": "4CAEC647-C069-4C25-B1CD-17F648E5DBC0"
             }, 
             {
               "eng": "Environment Canada", 
               "fra": "Environnement Canada", 
               "id": 99, 
-              "key": "EC", 
+              "key": "ec", 
               "pilot_uuid": "49E2ADF4-AD7A-43EB-85C8-6433D37ED62C"
             }, 
             {
               "eng": "Industry Canada", 
               "fra": "Industrie Canada", 
               "id": 230, 
-              "key": "IC", 
+              "key": "ic", 
               "pilot_uuid": "06CC519C-E56E-4FC8-8B9C-BE0A461E3CD9"
             }, 
             {
               "eng": "Veterans Affairs Canada", 
               "fra": "Anciens Combattants Canada", 
               "id": 189, 
-              "key": "VAC-ACC", 
+              "key": "vac-acc", 
               "pilot_uuid": "EADD6F05-3BE4-4AF6-AD22-4045878B73CB"
             }, 
             {
               "eng": "Canadian Environmental Assessment Agency", 
               "fra": "Agence canadienne d'\u00e9valuation environnementale", 
               "id": 270, 
-              "key": "CEAA-ACEE", 
+              "key": "ceaa-acee", 
               "pilot_uuid": "04F792C7-7836-4581-94ED-00BCCB22AB5D"
             }, 
             {
               "eng": "Enterprise Cape Breton Corporation", 
               "fra": "Soci\u00e9t\u00e9 d'expansion du Cap-Breton", 
               "id": 203, 
-              "key": "203", 
+              "key": "org203", 
               "pilot_uuid": "5BDA4BD0-A57D-4CFF-9DCB-51B9ABD7F5A4"
             }, 
             {
               "eng": "Export Development Canada", 
               "fra": "Exportation et d\u00e9veloppement Canada", 
               "id": 62, 
-              "key": "EDC", 
+              "key": "edc", 
               "pilot_uuid": "978E1BC5-401F-4AF2-A8A5-BFBBEF62C818"
             }, 
             {
               "eng": "National Energy Board", 
               "fra": "Office national de l'\u00e9nergie", 
               "id": 239, 
-              "key": "NEB-ONE", 
+              "key": "neb-one", 
               "pilot_uuid": "A3EE9522-882F-47B0-BA7D-83420DC8577C"
             }, 
             {
               "eng": "Foreign Affairs and International Trade Canada", 
               "fra": "Affaires \u00e9trang\u00e8res et Commerce international Canada", 
               "id": 64, 
-              "key": "DFAIT-MAECI", 
+              "key": "dfait-maeci", 
               "pilot_uuid": "1514CBB9-9EC7-42AC-9E31-B97E78926ACC"
             }, 
             {
@@ -458,42 +464,42 @@
               "eng": "Financial Consumer Agency of Canada", 
               "fra": "Agence de la consommation en mati\u00e8re financi\u00e8re du Canada", 
               "id": 224, 
-              "key": "FCAC-ACFC", 
+              "key": "fcac-acfc", 
               "pilot_uuid": "F5FFE147-68EC-4DC5-AA38-825F432002DC"
             }, 
             {
               "eng": "Farm Credit Canada", 
               "fra": "Financement agricole Canada", 
               "id": 23, 
-              "key": "FCC-FAC", 
+              "key": "fcc-fac", 
               "pilot_uuid": "215F5DF1-C82F-4B31-8899-735916A9C80C"
             }, 
             {
               "eng": "Freshwater Fish Marketing Corporation", 
               "fra": "Office de commercialisation du poisson d'eau douce", 
               "id": 252, 
-              "key": "FFMC-OCPED", 
+              "key": "ffmc-ocped", 
               "pilot_uuid": "532D7148-51C2-458B-96C5-04DE52571FB0"
             }, 
             {
               "eng": "Department of Finance Canada", 
               "fra": "Minist\u00e8re des Finances Canada", 
               "id": 157, 
-              "key": "FIN", 
+              "key": "fin", 
               "pilot_uuid": "05D03DCB-5906-4555-A5A1-84D86E9E94DD"
             }, 
             {
               "eng": "Office of the Commissioner for Federal Judicial Affairs Canada", 
               "fra": "Commissariat \u00e0 la magistrature f\u00e9d\u00e9rale Canada", 
               "id": 140, 
-              "key": "FJA-CMF", 
+              "key": "fja-cmf", 
               "pilot_uuid": "CDCD07C8-6C96-4A4C-81C1-A03616CE28D1"
             }, 
             {
               "eng": "Farm Products Council of Canada", 
               "fra": "Conseil des produits agricoles du Canada", 
               "id": 200, 
-              "key": "FPCC-CPAC", 
+              "key": "fpcc-cpac", 
               "pilot_uuid": "DFCB28FB-9A1F-48E4-8C3D-A916257CA7CF"
             }, 
             {
@@ -506,7 +512,7 @@
               "eng": "Economic Development Agency of Canada for the Regions of Quebec", 
               "fra": "Agence de d\u00e9veloppement \u00e9conomique du Canada pour les r\u00e9gions du Qu\u00e9bec", 
               "id": 93, 
-              "key": "CED-DEC", 
+              "key": "ced-dec", 
               "pilot_uuid": "5F75CE60-887A-43DC-B182-95FFB80407D0"
             }, 
             {
@@ -519,7 +525,7 @@
               "eng": "Great Lakes Pilotage Authority Canada", 
               "fra": "Administration de pilotage des Grands Lacs Canada", 
               "id": 261, 
-              "key": "GLPA-APGL", 
+              "key": "glpa-apgl", 
               "pilot_uuid": "2F265480-9433-4458-9B0C-CB3E4872C89B"
             }, 
             {
@@ -538,14 +544,14 @@
               "eng": "Human Rights Tribunal of Canada", 
               "fra": "Tribunal des droits de la personne du Canada", 
               "id": 164, 
-              "key": "HRTC-TDPC", 
+              "key": "hrtc-tdpc", 
               "pilot_uuid": "26F0D053-27F8-4EDE-B279-156E80C41A90"
             }, 
             {
               "eng": "Human Resources and Skills Development Canada", 
               "fra": "Ressources humaines et D\u00e9veloppement des comp\u00e9tences Canada", 
               "id": 141, 
-              "key": "HRSDC-RHDCC", 
+              "key": "hrsdc-rhdcc", 
               "pilot_uuid": "055ADCD8-8FDA-40DA-A5B7-689FF7DB57A6"
             }, 
             {
@@ -558,21 +564,21 @@
               "eng": "Canadian Food Inspection Agency", 
               "fra": "Agence canadienne d'inspection des aliments", 
               "id": 206, 
-              "key": "CFIA-ACIA", 
+              "key": "cfia-acia", 
               "pilot_uuid": "90D94FD0-5E79-4DBB-AF2A-B1DC881749FA"
             }, 
             {
               "eng": "Canadian International Development Agency", 
               "fra": "Agence canadienne de d\u00e9veloppement international", 
               "id": 218, 
-              "key": "CIDA-ACDI", 
+              "key": "cida-acdi", 
               "pilot_uuid": "58C9589E-CFC7-437D-AB50-1EBD11E08D9D"
             }, 
             {
               "eng": "Citizenship and Immigration Canada", 
               "fra": "Citoyennet\u00e9 et Immigration Canada", 
               "id": 94, 
-              "key": "CIC", 
+              "key": "cic", 
               "pilot_uuid": "51383040-F4F9-4B96-9E6B-2D70AAFB522A"
             }, 
             {
@@ -585,7 +591,7 @@
               "eng": "Offices of the Information and Privacy Commissioners of Canada", 
               "fra": "Commissariats \u00e0 l\u2019information et \u00e0 la protection de la vie priv\u00e9e au Canada", 
               "id": 226, 
-              "key": "OPC-CPVP", 
+              "key": "opc-cpvp", 
               "pilot_uuid": "1E85EDF7-8D3C-4E68-8B47-D17B5A69BD42"
             }, 
             {
@@ -598,7 +604,7 @@
               "eng": "Immigration and Refugee Board of Canada", 
               "fra": "Commission de l'immigration et du statut de r\u00e9fugi\u00e9 du Canada", 
               "id": 5, 
-              "key": "IRB-CISR", 
+              "key": "irb-cisr", 
               "pilot_uuid": "E93D81B4-C6FC-475E-904A-825F56A4902F"
             }, 
             {
@@ -617,56 +623,56 @@
               "eng": "Library and Archives Canada", 
               "fra": "Biblioth\u00e8que et Archives Canada", 
               "id": 129, 
-              "key": "LAC-BAC", 
+              "key": "lac-bac", 
               "pilot_uuid": "75BDAB68-199F-4C06-92A3-E1E6769B0B8E"
             }, 
             {
               "eng": "Law Commission of Canada", 
               "fra": "Commission du droit du Canada", 
               "id": 231, 
-              "key": "231", 
+              "key": "org231", 
               "pilot_uuid": "DB890CD6-68E6-4765-81B5-0061F904F0B9"
             }, 
             {
               "eng": "Laurentian Pilotage Authority Canada", 
               "fra": "Administration de pilotage des Laurentides Canada", 
               "id": 213, 
-              "key": "LPA-APL", 
+              "key": "lpa-apl", 
               "pilot_uuid": "B2EE0266-52E2-430B-A344-7237274F6104"
             }, 
             {
               "eng": "Marine Atlantic Inc.", 
               "fra": "Marine Atlantique S.C.C.", 
               "id": 238, 
-              "key": "238", 
+              "key": "org238", 
               "pilot_uuid": "1D15328A-ACFB-4793-8ABD-19D0A287A6AC"
             }, 
             {
               "eng": "Hazardous Materials Information Review Commission Canada", 
               "fra": "Conseil de contr\u00f4le des renseignements relatifs aux mati\u00e8res dangereuses Canada", 
               "id": 49, 
-              "key": "HMIRC-CCRMD", 
+              "key": "hmirc-ccrmd", 
               "pilot_uuid": "A1A99158-C6CB-44F3-A1A9-0B474776E7A0"
             }, 
             {
               "eng": "Royal Canadian Mint", 
               "fra": "Monnaie royale canadienne", 
               "id": 18, 
-              "key": "18", 
+              "key": "org18", 
               "pilot_uuid": "3BFB10CE-F739-4836-ABEF-FFF4C1CDA62E"
             }, 
             {
               "eng": "Transport Canada", 
               "fra": "Transports Canada", 
               "id": 217, 
-              "key": "TC", 
+              "key": "tc", 
               "pilot_uuid": "AEAE485F-42DE-4D33-AFA3-F8A3A76FC663"
             }, 
             {
               "eng": "Military Police Complaints Commission of Canada", 
               "fra": "Commission d'examen des plaintes concernant la police militaire du Canada", 
               "id": 66, 
-              "key": "MPCC-CPPM", 
+              "key": "mpcc-cppm", 
               "pilot_uuid": "88E53539-2A56-4169-B682-C11DF3CB405F"
             }, 
             {
@@ -679,35 +685,35 @@
               "eng": "National Capital Commission", 
               "fra": "Commission de la capitale nationale", 
               "id": 22, 
-              "key": "NCC-CCN", 
+              "key": "ncc-ccn", 
               "pilot_uuid": "5409DA6C-F5D7-45A7-9DE2-7242D6464C74"
             }, 
             {
               "eng": "National Round Table on the Environment and the Economy", 
               "fra": "Table ronde nationale sur l'environnement et l'\u00e9conomie", 
               "id": 100, 
-              "key": "100", 
+              "key": "org100", 
               "pilot_uuid": "9F10D599-6C3E-4780-9652-12BE4BD3634E"
             }, 
             {
               "eng": "National Film Board", 
               "fra": "Office national du film", 
               "id": 167, 
-              "key": "NFB-ONF", 
+              "key": "nfb-onf", 
               "pilot_uuid": "581B66BD-5C64-4F1F-86C8-D653A1539EAD"
             }, 
             {
               "eng": "National Gallery of Canada", 
               "fra": "Mus\u00e9e des beaux-arts du Canada", 
               "id": 59, 
-              "key": "NGC-MBAC", 
+              "key": "ngc-mbac", 
               "pilot_uuid": "3339DA23-42CD-4C47-BE17-6389004E08C1"
             }, 
             {
               "eng": "Canada Science and Technology Museum", 
               "fra": "Mus\u00e9e des sciences et de la technologie du Canada", 
               "id": 202, 
-              "key": "CSTM-MSTC", 
+              "key": "cstm-mstc", 
               "pilot_uuid": "6FDF2204-B9E0-40C3-8D1D-F23E08D7A072"
             }, 
             {
@@ -720,14 +726,14 @@
               "eng": "Parole Board of Canada", 
               "fra": "Commission des lib\u00e9rations conditionnelles du Canada", 
               "id": 246, 
-              "key": "PBC-CLCC", 
+              "key": "pbc-clcc", 
               "pilot_uuid": "6AF7EAE0-2351-43BB-AD44-262BDDD45E08"
             }, 
             {
               "eng": "National Research Council Canada", 
               "fra": "Conseil national de recherches Canada", 
               "id": 172, 
-              "key": "NRC-CNRC", 
+              "key": "nrc-cnrc", 
               "pilot_uuid": "EF74C91F-8B81-4C59-8D5F-17094D96F057"
             }, 
             {
@@ -746,70 +752,70 @@
               "eng": "Canadian Heritage", 
               "fra": "Patrimoine canadien", 
               "id": 16, 
-              "key": "PCH", 
+              "key": "pch", 
               "pilot_uuid": "9EEB1859-D658-4E1B-A0E0-45CFAB4E3E5A"
             }, 
             {
               "eng": "Privy Council Office", 
               "fra": "Bureau du Conseil priv\u00e9", 
               "id": 173, 
-              "key": "173", 
+              "key": "org173", 
               "pilot_uuid": "26DF0856-0FA2-404C-87E9-21443F333990"
             }, 
             {
               "eng": "Correctional Service of Canada", 
               "fra": "Service correctionnel du Canada", 
               "id": 193, 
-              "key": "CSC-SCC", 
+              "key": "csc-scc", 
               "pilot_uuid": "3EEE5483-9B34-492D-AE39-3C378F3C2354"
             }, 
             {
               "eng": "Public Health Agency of Canada", 
               "fra": "Agence de la sant\u00e9 publique du Canada", 
               "id": 135, 
-              "key": "PHAC-ASPC", 
+              "key": "phac-aspc", 
               "pilot_uuid": "1C71053B-AA64-4646-956B-41631C396018"
             }, 
             {
               "eng": "Canadian Polar Commission", 
               "fra": "Commission canadienne des affaires polaires", 
               "id": 143, 
-              "key": "POLAR-POLAIRE", 
+              "key": "polar-polaire", 
               "pilot_uuid": "1B0F90FF-3458-47A6-99FD-28AF6E006D75"
             }, 
             {
               "eng": "Pacific Pilotage Authority Canada", 
               "fra": "Administration de pilotage du Pacifique Canada", 
               "id": 165, 
-              "key": "PPA-APP", 
+              "key": "ppa-app", 
               "pilot_uuid": "4256F094-418D-4995-BB27-DE4D8B969644"
             }, 
             {
               "eng": "Public Service Commission of Canada", 
               "fra": "Commission de la fonction publique du Canada", 
               "id": 227, 
-              "key": "PSC-CFP", 
+              "key": "psc-cfp", 
               "pilot_uuid": "2FFBA23B-83C0-425B-8846-952A407F3D6E"
             }, 
             {
               "eng": "Public Safety Canada", 
               "fra": "S\u00e9curit\u00e9 publique Canada", 
               "id": 214, 
-              "key": "PS-SP", 
+              "key": "ps-sp", 
               "pilot_uuid": "7C0AF243-753A-465F-8D46-C4FF7397D9B6"
             }, 
             {
               "eng": "Public Service Staffing Tribunal", 
               "fra": "Tribunal de la dotation de la fonction publique", 
               "id": 266, 
-              "key": "PSST-TDFP", 
+              "key": "psst-tdfp", 
               "pilot_uuid": "1676844B-E41C-49C2-956C-14056AE1DF3C"
             }, 
             {
               "eng": "Patented Medicine Prices Review Board Canada", 
               "fra": "Conseil d'examen du prix des m\u00e9dicaments brevet\u00e9s Canada", 
               "id": 15, 
-              "key": "15", 
+              "key": "org15", 
               "pilot_uuid": "13A37B05-6384-45FF-A2AE-2DE2CD380B59"
             }, 
             {
@@ -822,21 +828,21 @@
               "eng": "Royal Canadian Mounted Police", 
               "fra": "Gendarmerie royale du Canada", 
               "id": 131, 
-              "key": "RCMP-GRC", 
+              "key": "rcmp-grc", 
               "pilot_uuid": "32365B12-5BF6-4B3A-AD1F-F5DAD76D2FDB"
             }, 
             {
               "eng": "Registry of the Competition Tribunal", 
               "fra": "Greffe du Tribunal de la concurrence", 
               "id": 89, 
-              "key": "RCT-GTC", 
+              "key": "rct-gtc", 
               "pilot_uuid": "760A68FA-0D34-4D8F-A146-294238D3C9EB"
             }, 
             {
               "eng": "RCMP External Review Committee", 
               "fra": "Comit\u00e9 externe d'examen de la GRC", 
               "id": 232, 
-              "key": "ERC-CEE", 
+              "key": "erc-cee", 
               "pilot_uuid": "FE709A24-3483-49EF-9A04-8F61D0C2806F"
             }, 
             {
@@ -849,28 +855,28 @@
               "eng": "Natural Resources Canada", 
               "fra": "Ressources naturelles Canada", 
               "id": 115, 
-              "key": "NRCan-RNCan", 
+              "key": "nrcan-rncan", 
               "pilot_uuid": "9391E0A2-9717-4755-B548-4499C21F917B"
             }, 
             {
               "eng": "Canadian Radio-television and Telecommunications Commission", 
               "fra": "Conseil de la radiodiffusion et des t\u00e9l\u00e9communications canadiennes", 
               "id": 126, 
-              "key": "CRTC", 
+              "key": "crtc", 
               "pilot_uuid": "DFDD27DD-1BE6-4735-A763-F3D3360A46FE"
             }, 
             {
               "eng": "Ridley Terminals Inc.", 
               "fra": "Ridley Terminals Inc.", 
               "id": 142, 
-              "key": "142", 
+              "key": "org142", 
               "pilot_uuid": "6B59D745-BFBA-4C90-B593-06CA740C7C0A"
             }, 
             {
               "eng": "Standards Council of Canada", 
               "fra": "Conseil canadien des normes", 
               "id": 107, 
-              "key": "SCC-CCN", 
+              "key": "scc-ccn", 
               "pilot_uuid": "72F1CD74-BCD8-410F-9C67-D27AFDC2CA40"
             }, 
             {
@@ -883,21 +889,21 @@
               "eng": "Health Canada", 
               "fra": "Sant\u00e9 Canada", 
               "id": 271, 
-              "key": "HC-SC", 
+              "key": "hc-sc", 
               "pilot_uuid": "BD26DB5E-82D2-42C1-99BB-08FCF6068FEE"
             }, 
             {
               "eng": "Office of the Superintendent of Financial Institutions Canada", 
               "fra": "Bureau du surintendant des institutions financi\u00e8res Canada", 
               "id": 184, 
-              "key": "OSFI-BSIF", 
+              "key": "osfi-bsif", 
               "pilot_uuid": "4F01090B-C049-4CAF-9C6C-D00312B23DCB"
             }, 
             {
               "eng": "Security Intelligence Review Committee", 
               "fra": "Comit\u00e9 de surveillance des activit\u00e9s de renseignement de s\u00e9curit\u00e9", 
               "id": 109, 
-              "key": "SIRC-CSARS", 
+              "key": "sirc-csars", 
               "pilot_uuid": "ED7F55BA-ECDA-4599-8358-6D767B54E0CC"
             }, 
             {
@@ -910,77 +916,77 @@
               "eng": "Public Service Labour Relations Board", 
               "fra": "Commission des relations de travail dans la fonction publique", 
               "id": 102, 
-              "key": "PSLRB-CRTFP", 
+              "key": "pslrb-crtfp", 
               "pilot_uuid": "E359FC5E-4894-427A-AC68-013C197F47D7"
             }, 
             {
               "eng": "Social Sciences and Humanities Research Council of Canada", 
               "fra": "Conseil de recherches en sciences humaines du Canada", 
               "id": 207, 
-              "key": "SSHRC-CRSH", 
+              "key": "sshrc-crsh", 
               "pilot_uuid": "DF295E03-841D-49BE-AAE6-32BB6AC093FB"
             }, 
             {
               "eng": "Statistics Canada", 
               "fra": "Statistique Canada", 
               "id": 256, 
-              "key": "StatCan", 
+              "key": "statcan", 
               "pilot_uuid": "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
             }, 
             {
               "eng": "Registrar of the Supreme Court of Canada and that portion of the federal public administration appointed under subsection 12(2) of the Supreme Court Act", 
               "fra": "Registraire de la Cour supr\u00eame du Canada et le secteur de l'administration publique f\u00e9d\u00e9rale nomm\u00e9 en vertu du paragraphe 12(2) de la Loi sur la Cour supr\u00eame", 
               "id": 63, 
-              "key": "SCC-CSC", 
+              "key": "scc-csc", 
               "pilot_uuid": "6FAAC6D8-0E3C-4223-8280-CD9C057C5BA2"
             }, 
             {
               "eng": "Public Works and Government Services Canada", 
               "fra": "Travaux publics et Services gouvernementaux Canada", 
               "id": 81, 
-              "key": "PWGSC-TPSGC", 
+              "key": "pwgsc-tpsgc", 
               "pilot_uuid": "39C93B4D-4F69-4F43-A5B6-FFF89E8B0DF2"
             }, 
             {
               "eng": "Status of Women Canada", 
               "fra": "Condition f\u00e9minine Canada", 
               "id": 147, 
-              "key": "SWC-CFC", 
+              "key": "swc-cfc", 
               "pilot_uuid": "B3B6BBB7-2A9B-466E-B454-254408A21280"
             }, 
             {
               "eng": "Treasury Board of Canada Secretariat", 
               "fra": "Secr\u00e9tariat du Conseil du Tr\u00e9sor du Canada", 
               "id": 139, 
-              "key": "TBS-SCT", 
+              "key": "tbs-sct", 
               "pilot_uuid": "81765FCD-32B3-4708-A593-3AA00705E62B"
             }, 
             {
               "eng": "Canadian Tourism Commission", 
               "fra": "Commission canadienne du tourisme", 
               "id": 178, 
-              "key": "178", 
+              "key": "org178", 
               "pilot_uuid": "D34A790C-A2E2-48C1-80D8-705205E3D979"
             }, 
             {
               "eng": "Transportation Safety Board of Canada", 
               "fra": "Bureau de la s\u00e9curit\u00e9 des transports du Canada", 
               "id": 215, 
-              "key": "TSB-BST", 
+              "key": "tsb-bst", 
               "pilot_uuid": "6D84AB23-F352-42EF-9F6E-F025F17F9675"
             }, 
             {
               "eng": "VIA Rail Canada Inc.", 
               "fra": "VIA Rail Canada Inc.", 
               "id": 55555, 
-              "key": "55555", 
+              "key": "org55555", 
               "pilot_uuid": "E3AC5F42-93AA-4076-B4FE-9B2740013443"
             }, 
             {
               "eng": "Western Economic Diversification Canada", 
               "fra": "Diversification de l'\u00e9conomie de l'Ouest Canada", 
               "id": 55, 
-              "key": "WD-DEO", 
+              "key": "wd-deo", 
               "pilot_uuid": "45F867DE-3495-40D1-9A9F-CE66FBF27F28"
             }, 
             {
@@ -993,7 +999,7 @@
               "eng": "Canada Emission Reduction Incentives Agency", 
               "fra": "Agence canadienne pour l'incitation \u00e0 la r\u00e9duction des \u00e9missions", 
               "id": 277, 
-              "key": "277", 
+              "key": "org277", 
               "pilot_uuid": "4E732FFD-F001-4612-8421-2840CE1E8D34"
             }, 
             {
@@ -1012,7 +1018,7 @@
               "eng": "Communications Security Establishment Canada", 
               "fra": "Centre de la s\u00e9curit\u00e9 des t\u00e9l\u00e9communications Canada", 
               "id": 156, 
-              "key": "CSEC-CSTC", 
+              "key": "csec-cstc", 
               "pilot_uuid": "321F1015-551D-45A0-B1B7-C1FDFCB20F66"
             }, 
             {
@@ -1055,7 +1061,7 @@
               "eng": "Public Prosecution Service of Canada", 
               "fra": "Service des poursuites p\u00e9nales du Canada", 
               "id": 98, 
-              "key": "PPSC-SPPC", 
+              "key": "ppsc-sppc", 
               "pilot_uuid": "3E9C5012-AD1D-452C-9432-4C3A66E5F1F8"
             }, 
             {
@@ -1068,7 +1074,7 @@
               "eng": "Public Servants Disclosure Protection Tribunal Canada", 
               "fra": "Tribunal de la protection des fonctionnaires divulgateurs Canada", 
               "id": 40, 
-              "key": "PSDPTC-TPFDC", 
+              "key": "psdptc-tpfdc", 
               "pilot_uuid": "2EABB728-4065-45CB-BD57-F9DC195D5325"
             }, 
             {
@@ -1081,21 +1087,21 @@
               "eng": "Atomic Energy of Canada Limited", 
               "fra": "\u00c9nergie atomique du Canada, Limit\u00e9e", 
               "id": 138, 
-              "key": "138", 
+              "key": "org138", 
               "pilot_uuid": "D623814A-10A8-439D-9A33-181CE5390B11"
             }, 
             {
               "eng": "Office of the Commissioner of Lobbying of Canada", 
               "fra": "Commissariat au lobbying du Canada", 
               "id": 205, 
-              "key": "OCL-CAL", 
+              "key": "ocl-cal", 
               "pilot_uuid": "6B85304C-C856-463D-A6DB-463091FEE549"
             }, 
             {
               "eng": "Registry of the Specific Claims Tribunal of Canada", 
               "fra": "Greffe du Tribunal des revendications particuli\u00e8res du Canada", 
               "id": 220, 
-              "key": "SCT-TRP", 
+              "key": "sct-trp", 
               "pilot_uuid": "0CA4C1A6-F751-438A-B215-000245174A3C"
             }, 
             {
@@ -1108,14 +1114,14 @@
               "eng": "Federal Economic Development Agency for Southern Ontario", 
               "fra": "Agence f\u00e9d\u00e9rale de d\u00e9veloppement \u00e9conomique pour le Sud de l'Ontario", 
               "id": 21, 
-              "key": "FedDev Ontario", 
+              "key": "feddevontario", 
               "pilot_uuid": "1918B8AE-B298-4809-B5DB-43100F93AEAC"
             }, 
             {
               "eng": "Canadian Northern Economic Development Agency", 
               "fra": "Agence canadienne de d\u00e9veloppement \u00e9conomique du Nord", 
               "id": 4, 
-              "key": "CanNor", 
+              "key": "cannor", 
               "pilot_uuid": "63CFF5A6-FB76-4938-91EB-010D3C0673DE"
             }, 
             {
@@ -1128,158 +1134,161 @@
               "eng": "Infrastructure Canada", 
               "fra": "Infrastructure Canada", 
               "id": 278, 
-              "key": "INFC", 
+              "key": "infc", 
               "pilot_uuid": "AC76B01B-0569-4067-A427-D1F6183A8746"
             }, 
             {
               "eng": "Aboriginal Affairs and Northern Development Canada", 
               "fra": "Affaires autochtones et D\u00e9veloppement du Nord Canada", 
               "id": 249, 
-              "key": "AANDC-AADNC"
+              "key": "aandc-aadnc"
             }, 
             {
               "eng": "Canada Employment Insurance Commission", 
               "fra": "Commission de l'assurance-emploi du Canada", 
               "id": 196, 
-              "key": "CEIC-CAEC"
+              "key": "ceic-caec"
             }, 
             {
               "eng": "Canada Employment Insurance Financing Board", 
               "fra": "Office de financement de l'assurance-emploi du Canada", 
               "id": 176, 
-              "key": "176"
+              "key": "org176"
             }, 
             {
               "eng": "Canada Post", 
               "fra": "Postes Canada", 
               "id": 83, 
-              "key": "CPC-SCP"
+              "key": "cpc-scp"
             }, 
             {
               "eng": "Canadian Museum for Human Rights", 
               "fra": "Mus\u00e9e canadien pour les droits de la personne", 
               "id": 267, 
-              "key": "CMHR-MCDP"
+              "key": "cmhr-mcdp"
             }, 
             {
               "eng": "Canadian Museum of Immigration at Pier 21", 
               "fra": "Mus\u00e9e canadien de l'immigration du Quai 21", 
               "id": 2, 
-              "key": "CMIP-MCIQ"
+              "key": "cmip-mciq"
             }, 
             {
               "eng": "Commission for Public Complaints Against the Royal Canadian Mounted Police", 
               "fra": "Commission des plaintes du public contre la Gendarmerie royale du Canada", 
               "id": 136, 
-              "key": "CPC-CPP"
+              "key": "cpc-cpp"
             }, 
             {
               "eng": "Corporation for the Mitigation of Mackenzie Gas Project Impacts", 
               "fra": "Soci\u00e9t\u00e9 d'att\u00e9nuation des r\u00e9percussions du projet gazier Mackenzie", 
               "id": 1, 
-              "key": "1"
+              "key": "org1"
             }, 
             {
               "eng": "Department of Justice Canada", 
               "fra": "Minist\u00e8re de la Justice Canada", 
               "id": 119, 
-              "key": "JUS"
+              "key": "jus"
             }, 
             {
               "eng": "Department of Social Development", 
               "fra": "Minist\u00e8re du D\u00e9veloppement social", 
               "id": 55556, 
-              "key": "55556"
+              "key": "org55556"
             }, 
             {
               "eng": "Federal Bridge Corporation", 
               "fra": "Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux", 
               "id": 254, 
-              "key": "FBCL-SPFL"
+              "key": "fbcl-spfl"
             }, 
             {
               "eng": "First Nations Statistical Institute", 
               "fra": "Institut de la statistique des premi\u00e8res nations", 
               "id": 120, 
-              "key": "120"
+              "key": "org120"
             }, 
             {
               "eng": "Indian Residential Schools Truth and Reconciliation Commission", 
               "fra": "Commission de v\u00e9rit\u00e9 et de r\u00e9conciliation relative aux pensionnats indiens", 
               "id": 245, 
-              "key": "245"
+              "key": "org245"
             }, 
             {
               "eng": "Northern Pipeline Agency Canada", 
               "fra": "Administration du pipe-line du Nord Canada", 
               "id": 10, 
-              "key": "NPA-APN"
+              "key": "npa-apn"
             }, 
             {
               "eng": "Office of the Public Sector Integrity Commissioner of Canada", 
               "fra": "Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada", 
               "id": 210, 
-              "key": "PSIC-ISPC"
+              "key": "psic-ispc"
             }, 
             {
               "eng": "Office of the Secretary to the Governor General", 
               "fra": "Bureau du secr\u00e9taire du gouverneur g\u00e9n\u00e9ral", 
               "id": 5557, 
-              "key": "OSGG-BSGG"
+              "key": "osgg-bsgg"
             }, 
             {
               "eng": "Science and Engineering Research Canada", 
               "fra": "Recherches en sciences et en g\u00e9nie Canada", 
               "id": 110, 
-              "key": "SERC-RSGC"
+              "key": "serc-rsgc"
             }, 
             {
               "eng": "Shared Services Canada", 
               "fra": "Services partag\u00e9s Canada", 
               "id": 92, 
-              "key": "SSC-SPC"
+              "key": "ssc-spc"
             }, 
             {
               "eng": "The Correctional Investigator Canada", 
               "fra": "L'Enqu\u00eateur correctionnel Canada", 
               "id": 5555, 
-              "key": "OCI-BEC"
+              "key": "oci-bec"
             }, 
             {
               "eng": "The National Battlefields Commission", 
               "fra": "Commission des champs de bataille nationaux", 
               "id": 262, 
-              "key": "NBC-CCBN"
+              "key": "nbc-ccbn"
             }, 
             {
               "eng": "Treasury Board", 
               "fra": "Conseil du Tr\u00e9sor", 
               "id": 105, 
-              "key": "TB-CT"
+              "key": "tb-ct"
             }, 
             {
               "eng": "Veterans Review and Appeal Board", 
               "fra": "Tribunal des anciens combattants (r\u00e9vision et appel)", 
               "id": 85, 
-              "key": "VRAB-TACRA"
+              "key": "vrab-tacra"
             }, 
             {
               "eng": "Windsor-Detroit Bridge Authority", 
               "fra": "Autorit\u00e9 du pont Windsor-D\u00e9troit", 
               "id": 55553, 
-              "key": "55553"
+              "key": "org55553"
             }
           ], 
           "description": {
             "eng": "The organization directly responsible for the datasets and for metadata maintenance.", 
             "fra": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9es et de la maintenance des m\u00e9tadonn\u00e9es"
           }, 
-          "example": "Treasury Board of Canada Secretariat", 
+          "example": {
+            "eng": "Treasury Board of Canada Secretariat", 
+            "fra": "Secr\u00e9tariat du Conseil du Tr\u00e9sor du Canada"
+          }, 
           "existing": true, 
-          "id": "author", 
+          "id": "owner_org", 
           "label": {
-            "eng": "Organization Name", 
-            "fra": "Nom de l\u2019organisation"
+            "eng": "Publisher", 
+            "fra": "\u00c9diteur"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1297,30 +1306,17 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The unique number assigned to each department", 
-            "fra": "Le num\u00e9ro unique assign\u00e9 \u00e0 chaque minist\u00e8re"
-          }, 
-          "example": "", 
-          "existing": false, 
-          "id": "department_number", 
-          "label": {
-            "eng": "Department Number", 
-            "fra": "Num\u00e9ro du minist\u00e8re"
-          }, 
-          "mandatory": true, 
-          "type": "calculated"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
             "eng": "The electronic mail address of the responsible organization or individual.", 
             "fra": "L\u2019adresse \u00e9lectronique de l\u2019organisation ou de la personne responsable"
           }, 
-          "example": "od-do@tbs-sct.gc.ca", 
+          "example": {
+            "eng": "open-ouvert@tbs-sct.gc.ca", 
+            "fra": "open-ouvert@tbs-sct.gc.ca"
+          }, 
           "existing": true, 
           "id": "author_email", 
           "label": {
-            "eng": "Electronic Mail Address", 
+            "eng": "Email", 
             "fra": "Adresse \u00e9lectronique"
           }, 
           "mandatory": true, 
@@ -1329,10 +1325,13 @@
         {
           "bilingual": true, 
           "description": {
-            "eng": "The name by which the cited dataset is know", 
+            "eng": "The name by which the cited dataset is known", 
             "fra": "Nom connue de l\u2019ensemble de donn\u00e9es cit\u00e9e"
           }, 
-          "example": "Canada Border Wait Times", 
+          "example": {
+            "eng": "Canada Border Wait Times", 
+            "fra": "Temps d\u2019attente \u00e0 la fronti\u00e8re"
+          }, 
           "existing": true, 
           "id": "title", 
           "label": {
@@ -1359,7 +1358,10 @@
             "eng": "The Uniform Resource Identifier for the dataset along with its on line function code.", 
             "fra": "L\u2019identificateur de ressource uniforme de l\u2019ensemble de donn\u00e9es, ainsi que son code de fonction en ligne"
           }, 
-          "example": "http://host/path/ download", 
+          "example": {
+            "eng": "http://host/path/ download", 
+            "fra": "http://hote/chemin/telechargement"
+          }, 
           "existing": true, 
           "id": "name", 
           "label": {
@@ -1367,7 +1369,7 @@
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
           "mandatory": true, 
-          "type": "slug"
+          "type": "calculated"
         }, 
         {
           "bilingual": true, 
@@ -1375,12 +1377,15 @@
             "eng": "A brief narrative summary of the dataset\u2019s contents", 
             "fra": "Un bref r\u00e9sum\u00e9 narratif du contenu de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+          "example": {
+            "eng": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...", 
+            "fra": "L\u2019Inventaire national des rejets de polluants (INRP) est l\u2019inventaire public des rejets de polluants du Canada\u2026"
+          }, 
           "existing": true, 
           "id": "notes", 
           "label": {
-            "eng": "Abstract", 
-            "fra": "R\u00e9sum\u00e9"
+            "eng": "Description", 
+            "fra": "Description"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -1402,7 +1407,10 @@
             "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
             "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
           }, 
-          "example": "", 
+          "example": {
+            "eng": "10.978.86123/45678", 
+            "fra": "10.978.86123/45678"
+          }, 
           "existing": false, 
           "id": "digital_object_identifier", 
           "label": {
@@ -1430,7 +1438,10 @@
             "eng": "The type of catalogue to which the metadata record belongs: Raw, Geo", 
             "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es\u00a0: Raw, Geo"
           }, 
-          "example": "Geo", 
+          "example": {
+            "eng": "Geo Data", 
+            "fra": "G\u00e9o"
+          }, 
           "existing": false, 
           "id": "catalog_type", 
           "label": {
@@ -1574,14 +1585,17 @@
             "eng": "The main subject(s) of the dataset.", 
             "fra": "Le principal sujet (ou les principaux sujets) de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Agriculture", 
+          "example": {
+            "eng": "Agriculture", 
+            "fra": "Agriculture"
+          }, 
           "existing": false, 
           "id": "subject", 
           "label": {
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1716,7 +1730,10 @@
             "eng": "The main theme(s) of the dataset.", 
             "fra": "Le th\u00e8me principal (ou les  th\u00e8mes principaux) de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Farming", 
+          "example": {
+            "eng": "Farming", 
+            "fra": "Exploitation agricole"
+          }, 
           "existing": false, 
           "id": "topic_category", 
           "label": {
@@ -1727,14 +1744,17 @@
           "type": "tag_vocabulary"
         }, 
         {
-          "bilingual": false, 
+          "bilingual": true, 
           "description": {
             "eng": "The commonly used word(s), or formalized word(s) or phrase(s) used to describe the subject of the resource.", 
             "fra": "Les mots utilis\u00e9s de fa\u00e7on commune, des locutions, ou des mots officiels utilis\u00e9s pour d\u00e9crire le sujet de la ressource."
           }, 
-          "example": "Air, Air Quality, Organic Pollutants", 
-          "existing": true, 
-          "id": "tags", 
+          "example": {
+            "eng": "Air, Air Quality, Organic Pollutants", 
+            "fra": "Air, Qualit\u00e9 de l\u2019air, Polluants organiques"
+          }, 
+          "existing": false, 
+          "id": "keywords", 
           "label": {
             "eng": "Keywords", 
             "fra": "Mots cl\u00e9s"
@@ -1751,7 +1771,7 @@
             "fra": "Mots-cl\u00e9s en anglais"
           }, 
           "pilot_type": "textarea", 
-          "type": "tags"
+          "type": "keywords"
         }, 
         {
           "bilingual": false, 
@@ -1759,11 +1779,14 @@
             "eng": "The limitations or constraints on the use of the resource.", 
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
           }, 
-          "example": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+          "example": {
+            "eng": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
+            "fra": "Les contraintes \u00e9nonc\u00e9es dans l\u2019Accord de licence de donn\u00e9es libres du gouvernement du Canada."
+          }, 
           "existing": true, 
           "id": "license_id", 
           "label": {
-            "eng": "License", 
+            "eng": "Licence", 
             "fra": "Licence"
           }, 
           "mandatory": true, 
@@ -1775,7 +1798,10 @@
             "eng": "The name of the series, or aggregate dataset, of which the dataset is a part", 
             "fra": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
           }, 
-          "example": "CANSIM", 
+          "example": {
+            "eng": "CANSIM", 
+            "fra": "CANSIM"
+          }, 
           "existing": false, 
           "id": "data_series_name", 
           "label": {
@@ -1802,7 +1828,10 @@
             "eng": "The identification of the series\u2019 issue information.", 
             "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
           }, 
-          "example": "Table 502-0003", 
+          "example": {
+            "eng": "Table 502-0003", 
+            "fra": "Tableau 502-0003"
+          }, 
           "existing": false, 
           "id": "data_series_issue_identification", 
           "label": {
@@ -4140,7 +4169,10 @@
             "eng": "The geographic area of the dataset", 
             "fra": "La r\u00e9gion g\u00e9ographique de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "Ottawa", 
+          "example": {
+            "eng": "Ottawa", 
+            "fra": "Ottawa"
+          }, 
           "existing": false, 
           "id": "geographic_region", 
           "label": {
@@ -4163,17 +4195,39 @@
         {
           "bilingual": false, 
           "description": {
+            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
+            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
+          }, 
+          "example": {
+            "eng": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
+            "fra": "G\u00e9om\u00e9trie GeoJSON valide"
+          }, 
+          "existing": true, 
+          "id": "spatial", 
+          "label": {
+            "eng": "Spatial", 
+            "fra": "\u00c9l\u00e9ment spatial"
+          }, 
+          "mandatory": false, 
+          "type": "geojson"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
           }, 
-          "example": "2012-08-11", 
+          "example": {
+            "eng": "2012-08-11", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "date_published", 
           "label": {
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "pilot_help": {
             "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
@@ -4185,15 +4239,36 @@
           }, 
           "pilot_type": "datepicker", 
           "type": "date"
-        }
-      ], 
-      "name": {
-        "en": "Primary Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date in which the resource was modified.", 
+            "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
+          }, 
+          "example": {
+            "eng": "2012-08-22", 
+            "fra": "2012-08-22"
+          }, 
+          "existing": false, 
+          "id": "date_modified", 
+          "label": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
+          }, 
+          "mandatory": false, 
+          "pilot_help": {
+            "eng": "The date of the last update to the dataset (YYYY-MM-DD)", 
+            "fra": "La date de la derni\u00e8re mise \u00e0 jour de l\u2019ensemble de donn\u00e9es (AAAA-MM-JJ)"
+          }, 
+          "pilot_id": "date_updated", 
+          "pilot_name": {
+            "eng": "Date Modified", 
+            "fra": "Date de modification"
+          }, 
+          "pilot_type": "datepicker", 
+          "type": "date"
+        }, 
         {
           "bilingual": false, 
           "choices": [
@@ -4280,12 +4355,15 @@
             "eng": "The frequency with which changes and additions are made to the resource after the initial resource is completed.", 
             "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
           }, 
-          "example": "daily", 
+          "example": {
+            "eng": "As Needed | Au besoin", 
+            "fra": "Au besoin"
+          }, 
           "existing": false, 
           "id": "maintenance_and_update_frequency", 
           "label": {
-            "eng": "Maintainence and Update Frequency", 
-            "fra": "Fr\u00e9quence de la maintenance et de la mise \u00e0 jour"
+            "eng": "Frequency", 
+            "fra": "Fr\u00e9quence"
           }, 
           "mandatory": true, 
           "pilot_help": {
@@ -4299,14 +4377,25 @@
           }, 
           "pilot_type": "select", 
           "type": "choice"
-        }, 
+        }
+      ], 
+      "name": {
+        "en": "Primary Fields"
+      }
+    }, 
+    {
+      "description": {}, 
+      "fields": [
         {
           "bilingual": false, 
           "description": {
             "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
-          "example": "YYYY-MM-DD", 
+          "example": {
+            "eng": "YYYY-MM-DD", 
+            "fra": "AAAA-MM-JJ"
+          }, 
           "existing": false, 
           "id": "time_period_coverage_start", 
           "label": {
@@ -4332,7 +4421,10 @@
             "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
           }, 
-          "example": "YYYY-MM-DD", 
+          "example": {
+            "eng": "YYYY-MM-DD", 
+            "fra": "AAAA-MM-JJ"
+          }, 
           "existing": false, 
           "id": "time_period_coverage_end", 
           "label": {
@@ -4358,12 +4450,15 @@
             "eng": "The URL for the Government of Canada program that is responsible for the dataset.", 
             "fra": "L\u2019adresse URL du programme du gouvernement du Canada responsable de l\u2019ensemble de donn\u00e9es"
           }, 
-          "example": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+          "example": {
+            "eng": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-eng.jsp", 
+            "fra": "http://webprod3.hc-sc.gc.ca/arquery-rechercheei/index-fra.jsp"
+          }, 
           "existing": true, 
           "id": "url", 
           "label": {
-            "eng": "Program URL", 
-            "fra": "URL des documents connexes"
+            "eng": "Homepage URL", 
+            "fra": "URL de la page d\u2019accueil"
           }, 
           "mandatory": false, 
           "pilot_help": {
@@ -4385,40 +4480,19 @@
             "eng": "The endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory", 
             "fra": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API).\n(Si l\u2019utilisateur coche \u00ab oui \u00bb au champ \u00ab interrogeable \u00bb, alors ce champ est obligatoire.)"
           }, 
-          "example": "URL", 
+          "example": {
+            "eng": "URL", 
+            "fra": "URL"
+          }, 
           "existing": false, 
           "id": "endpoint_url", 
           "label": {
             "eng": "Endpoint", 
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "url"
         }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "(describe me)", 
-            "fra": "(translate me)"
-          }, 
-          "example": "1", 
-          "existing": false, 
-          "id": "ready_to_publish", 
-          "label": {
-            "eng": "Ready to Publish", 
-            "fra": "(translate me)"
-          }, 
-          "mandatory": true, 
-          "type": "boolean"
-        }
-      ], 
-      "name": {
-        "en": "Additional Fields"
-      }
-    }, 
-    {
-      "description": {}, 
-      "fields": [
         {
           "bilingual": false, 
           "choices": [
@@ -4463,14 +4537,17 @@
             "eng": "The object(s) used to represent the\ngeographic information.", 
             "fra": "L\u2019objet utilis\u00e9 (ou les objets utilis\u00e9s) pour repr\u00e9senter l\u2019information g\u00e9ographique"
           }, 
-          "example": "vector", 
+          "example": {
+            "eng": "vector", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "spatial_representation_type", 
           "label": {
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": true, 
+          "mandatory": false, 
           "type": "choice"
         }, 
         {
@@ -4601,31 +4678,18 @@
             "eng": "The form in which the resource is available.", 
             "fra": "Le format dans lequel la ressource est disponible"
           }, 
-          "example": "documentDigital", 
+          "example": {
+            "eng": "documentDigital", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "presentation_form", 
           "label": {
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": true, 
-          "type": "choice"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
-            "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
-          }, 
-          "example": "{\"type\": \"Polygon\", \"coordinates\": [[[-114.5, 55.75], [-114.5, 56], [-114, 56], [-114, 55.75], [-114.5, 55.75]]]}", 
-          "existing": true, 
-          "id": "spatial", 
-          "label": {
-            "eng": "Spatial", 
-            "fra": "\u00c9l\u00e9ment spatial"
-          }, 
           "mandatory": false, 
-          "type": "geojson"
+          "type": "choice"
         }, 
         {
           "bilingual": false, 
@@ -4633,7 +4697,10 @@
             "eng": "The name of the graphic file provided to illustrate the resource.", 
             "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
           }, 
-          "example": "Product dependant", 
+          "example": {
+            "eng": "Product dependant", 
+            "fra": ""
+          }, 
           "existing": false, 
           "id": "browse_graphic_url", 
           "label": {
@@ -4642,10 +4709,48 @@
           }, 
           "mandatory": false, 
           "type": "image_url"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "(describe me)", 
+            "fra": "(translate me)"
+          }, 
+          "example": {
+            "eng": "1", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "ready_to_publish", 
+          "label": {
+            "eng": "Ready to Publish", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "boolean"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The date the dataset may be published to the portal CKAN site", 
+            "fra": "(translate me)"
+          }, 
+          "example": {
+            "eng": "2013-05-01", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "portal_release_date", 
+          "label": {
+            "eng": "Portal Release Date", 
+            "fra": "(translate me)"
+          }, 
+          "mandatory": false, 
+          "type": "date"
         }
       ], 
       "name": {
-        "en": "Geospatial Additional Fields"
+        "en": "Additional Fields"
       }
     }
   ], 
@@ -4667,8 +4772,8 @@
           "key": "file"
         }, 
         {
-          "eng": "Doc", 
-          "fra": "Doc", 
+          "eng": "Supporting Document", 
+          "fra": "Document", 
           "key": "doc"
         }, 
         {
@@ -4681,7 +4786,10 @@
         "eng": "The type of resource.", 
         "fra": "Le type de ressource"
       }, 
-      "example": "API", 
+      "example": {
+        "eng": "API", 
+        "fra": "API"
+      }, 
       "existing": true, 
       "id": "resource_type", 
       "label": {
@@ -4697,12 +4805,15 @@
         "eng": "The electronic location where the resource can be found.", 
         "fra": "L\u2019endroit \u00e9lectronique o\u00f9 se trouve la ressource."
       }, 
-      "example": "http://www.ec.gc.ca/dataset", 
+      "example": {
+        "eng": "http://www.ec.gc.ca/dataset", 
+        "fra": "http://www.ec.gc.ca/ensemble"
+      }, 
       "existing": true, 
       "id": "url", 
       "label": {
-        "eng": "Access URL", 
-        "fra": "URL d\u2019acc\u00e8s"
+        "eng": "URL", 
+        "fra": "URL"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4723,14 +4834,17 @@
         "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65000000", 
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
       }, 
-      "example": "65000000", 
+      "example": {
+        "eng": "65000000", 
+        "fra": "65000000"
+      }, 
       "existing": true, 
       "id": "size", 
       "label": {
-        "eng": "Transfer Size", 
-        "fra": "Taille du transfert"
+        "eng": "Size", 
+        "fra": "Taille"
       }, 
-      "mandatory": true, 
+      "mandatory": false, 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
@@ -4908,12 +5022,15 @@
         "eng": "Name of the data transfer format.", 
         "fra": "Nom du format pour le transfert de donn\u00e9es"
       }, 
-      "example": "xml", 
+      "example": {
+        "eng": "xml", 
+        "fra": "xml"
+      }, 
       "existing": true, 
       "id": "format", 
       "label": {
-        "eng": "Format Name", 
-        "fra": "Nom officiel"
+        "eng": "Format", 
+        "fra": "Format"
       }, 
       "mandatory": true, 
       "pilot_help": {
@@ -4932,9 +5049,10 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "no language", 
-          "fra": "aucune langue", 
-          "key": "no language | aucune langue"
+          "eng": "No linguistic content; Not applicable", 
+          "fra": "pas de contenu linguistique; non applicable", 
+          "id": "zxx; CAN", 
+          "key": "No linguistic content; Not applicable | pas de contenu linguistique; non applicable"
         }, 
         {
           "eng": "English", 
@@ -4959,7 +5077,10 @@
         "eng": "The language of the resourcet.", 
         "fra": "La langue de la ressource"
       }, 
-      "example": "eng: CAN", 
+      "example": {
+        "eng": "eng: CAN", 
+        "fra": "fra : CAN"
+      }, 
       "existing": false, 
       "id": "language", 
       "label": {
@@ -4968,22 +5089,6 @@
       }, 
       "mandatory": true, 
       "type": "choice"
-    }, 
-    {
-      "bilingual": false, 
-      "description": {
-        "eng": "The date in which the resource was modified.", 
-        "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 modifi\u00e9e"
-      }, 
-      "example": "2012-08-22", 
-      "existing": true, 
-      "id": "last_modified", 
-      "label": {
-        "eng": "Date Modified", 
-        "fra": "Date de modification"
-      }, 
-      "mandatory": false, 
-      "type": "calculated"
     }
   ], 
   "vocabularies": {

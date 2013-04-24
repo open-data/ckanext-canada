@@ -11,14 +11,15 @@ field       - schema_description field dict for this CKAN field
 data        - dict containing form data by CKAN field id
 errors      - dict containing form errors by CKAN field id
 client_lang - language from h.lang(): 'en' or 'fr'
+orgs_avail  - h.organizations_available helper (optional)
 #}
-{% macro formfield(id, lang, field, data, errors, client_lang) %}
+{% macro formfield(id, lang, field, data, errors, client_lang, orgs_avail=none) %}
   {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
 
   {% set inputargs = {
     'name': id,
-    'label': field.label[client_lang],
-    'placeholder': field.example if lang != 'fra' else '', 
+    'label': ('* ' if field.mandatory else '') + field.label[client_lang],
+    'placeholder': field.example['eng' if lang != 'fra' else 'fra'],
     'value': data[id],
     'error': errors[id],
     'id': 'field-' + id,
@@ -26,40 +27,39 @@ client_lang - language from h.lang(): 'en' or 'fr'
     } %}
 
   {% if lang %}
-    {% do inputargs.update({'label': inputargs.label + ' ' + lang|upper}) %}
+    {% do inputargs.update({'label': inputargs.label + ' ' +
+      schema_description.dataset_field_by_id.language.choices[
+      0 if lang != 'fra' else 1][client_lang]}) %}
   {% endif %}
 
   {% set widget = form.input %}
-  {% if id == 'name' %}
-    {% do inputargs.update({
-      'prepend': '/data/dataset/',
-      'attrs': {'data-module': 'slug-preview-slug',
-                'data-module-prefix': 'data.gc.ca/data/dataset/',
-                'data-module-placeholder': '<dataset>',}, 
-      }) %}
-    {% set widget = form.prepend %}
-  {% elif id in ('notes', 'notes_fra') %}
+  {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-  {% elif id == 'tags' %} 
-    {# special case name "tag_string" for tags #}
-    {% do inputargs.update({
-      'name': 'tag_string', 
-      'value': data['tag_string'],
-      'classes': ['control-full'],
-      'attrs': {'data-module': 'autocomplete',
-                'data-module-tags': '',
-                'data-module-source': '/api/2/util/tag/autocomplete?incomplete=?'},
-      }) %}
+
   {% elif field.choices %}
-    {% do inputargs.update({'options':[], 'selected':data[id]}) %}
+    {% do inputargs.update({'options':[]}) %}
+    {% if id in data %}
+      {% do inputargs.update({'selected':data[id]}) %}
+    {% else %}
+      {% do inputargs.update({'selected':field.example['eng']}) %}
+    {% endif %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
     {% do inputargs.pop('placeholder') %}
-    {% for c in field.choices %}
-      {% set indent = '' %}
-      {% set skip = false %}
-      {# Try to make geographic region selection nicer-looking #}
-      {% if id == 'geographic_region' %}
+
+    {% if id == 'owner_org' %}
+      {% do inputargs.options.append({'text': '', 'value': ''}) %}
+      {% for org in orgs_avail('create_dataset') %}
+        {% set c = field.choices_by_key[org.name] %}
+        {% do inputargs.options.append({
+          'text': c[client_lang],
+          'value': org.id, })
+        %}
+      {% endfor %}
+
+    {% elif id == 'geographic_region' %}
+      {% for c in field.choices %}
+        {% set skip = false %}
         {% if not c.id %}
           {% set skip = true %}
         {% elif c.id > 99 %}
@@ -69,19 +69,30 @@ client_lang - language from h.lang(): 'en' or 'fr'
         {% else %}
           {% set level = 0 %}
         {% endif %}
+        {% if not skip %}
+          {% do inputargs.options.append({
+            'text': c[client_lang],
+            'value': c.key,
+            'level': level, })
+          %}
+        {% endif %}
+      {% endfor %}
+
+    {% else %}
+      {% if field.type != 'tag_vocabulary' %}
+        {% do inputargs.options.append({'text': '', 'value': ''}) %}
       {% endif %}
-      {% if not skip %}
+      {% for c in field.choices %}
         {% do inputargs.options.append({
           'text': c[client_lang],
-          'value': c.key,
-          'level': level}) 
+          'value': c.key, })
         %}
-      {% endif %}
-      
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
+
     {% if id == 'geographic_region' %}
       {% set widget = geo_checkbox_field %}
-    {% elif field.vocabulary %}
+    {% elif field.type == 'tag_vocabulary' %}
       {% set widget = multi_checkbox_field %}
     {% else %}
       {% set widget = form.select %}
@@ -194,4 +205,44 @@ classes     - An array of classes to apply to the control-group.
     {{ option.text }}
   </label>
   
+{% endmacro %}
+
+{#
+Build a list of errors for the current form.
+
+errors        - A dict of field/message pairs.
+schema_fields - schema_description.dataset_field_by_id or .resource_field...
+client_lang   - language from h.lang(): 'en' or 'fr'
+
+Example:
+
+  {% import 'macros/form.html' as form %}
+  {{ form.errors(error_summary, type="warning") }}
+
+#}
+{% macro errors(errors={}, schema_fields, client_lang) %}
+  {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
+  {% if errors %}
+    <div class="error-explanation module-alert margin-bottom-large alert-{{ type }}{{ " " ~ classes | join(' ') }}">
+      <p>{{ _('The form contains invalid entries:') }}</p>
+      <ul>
+        {% for key, error in errors.items() %}
+          {% if key.endswith('_fra') %}
+            {% set key_base = key[:-4] %}
+          {% else %}
+            {% set key_base = key %}
+          {% endif %}
+          {% set f = schema_fields[key_base] %}
+          {% set label = schema_fields[key_base].label[client_lang] %}
+          {% if f.bilingual %}
+            {% set label = label + ' ' +
+              schema_description.dataset_field_by_id.language.choices[
+              1 if key.endswith('_fra') else 0][client_lang] %}
+          {% endif %}
+          <li data-field-label="{{ key }}">{% if key %}{{
+            label }}: {% endif %}{{ ', '.join(error) }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 {% endmacro %}
