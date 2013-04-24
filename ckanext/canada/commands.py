@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
+from ckanext.canada.stats import completion_stats
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchError)
 
@@ -156,9 +157,10 @@ class CanadaCommand(CkanCommand):
         if self.options.ckan_user:
             cmd += ['-u', self.options.ckan_user]
 
+        stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
         for job_ids, finished, result in pool:
-            print job_ids, finished, result.strip()
+            print job_ids, stats.next(), finished, result.strip()
 
 
     def load_dataset_worker(self):

@@ -12,5 +12,5 @@ def completion_stats(skip=1):
         if count < skip:
             yield '---'
         else:
-            yield '%f/s' % ((time.time() - start) / count)
+            yield '%5.2f/s' % (count / (time.time() - start))
         count += 1
