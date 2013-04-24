@@ -9,6 +9,7 @@ endif
 PSQL_COMMAND = $(shell bin/psql_args.py ${CKAN_CONFIG})
 DB_NAME_PORT = $(shell bin/psql_dbname.py ${CKAN_CONFIG})
 DB_USER = $(shell bin/psql_user.py ${CKAN_CONFIG})
+TEST_TEMPLATE = test_template
 
 POSTGIS = $(firstword $(wildcard \
     /usr/share/pgsql/contrib/postgis-64.sql \
@@ -21,11 +22,11 @@ SPATIAL_REF_SYS = $(firstword $(wildcard \
 
 test:
 	sudo -u postgres dropdb ${DB_NAME_PORT}
-	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -T test_template
+	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -T ${TEST_TEMPLATE}
 	nosetests --with-pylons=${CKAN_CONFIG} --nologcapture ckanext/canada/tests 2>&1
 
 drop-database:
-	sudo -u postgres dropdb ${DB_NAME_PORT}
+	-sudo -u postgres dropdb ${DB_NAME_PORT}
 
 create-database:
 	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -E UTF-8
@@ -42,4 +43,9 @@ create-database:
 tune-database:
 	bash -c "${PSQL_COMMAND}" < tuning/constraints.sql
 	bash -c "${PSQL_COMMAND}" < tuning/what_to_alter.sql
+
+create-test-template: drop-database create-database
+	-sudo -u postgres dropdb ${TEST_TEMPLATE} \
+            $(wordlist 2, 3, ${DB_NAME_PORT})
+	sudo -u postgres createdb ${TEST_TEMPLATE} -T ${DB_NAME_PORT}
 
