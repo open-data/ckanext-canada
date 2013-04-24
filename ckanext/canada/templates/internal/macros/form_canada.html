@@ -38,7 +38,7 @@ orgs_avail  - h.organizations_available helper (optional)
 
   {% elif field.choices %}
     {% do inputargs.update({'options':[]}) %}
-    {% if data[id] %}
+    {% if id in data %}
       {% do inputargs.update({'selected':data[id]}) %}
     {% else %}
       {% do inputargs.update({'selected':field.example['eng']}) %}
