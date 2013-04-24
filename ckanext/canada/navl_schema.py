@@ -1,9 +1,11 @@
+from pylons.i18n import _
 from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty, empty
-from ckan.logic.validators import isodate, tag_string_convert
+from ckan.logic.validators import (isodate, tag_string_convert,
+    name_validator, package_name_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -43,9 +45,10 @@ def _schema_update(schema, purpose):
     for name, lang, field in schema_description.dataset_field_iter():
         if name == 'id' and purpose == 'create':
             schema[name] = [ignore_missing, protect_new_dataset_id,
-                unicode]
+                unicode, name_validator, package_id_doesnt_exist]
         if name == 'name' and purpose == 'create':
-            schema[name] = [ignore_missing, unicode]
+            schema[name] = [ignore_missing, unicode, name_validator,
+                package_name_validator]
         if name in ('title', 'notes') and purpose != 'show':
             schema[name] = [not_empty, unicode]
 
@@ -142,4 +145,19 @@ def protect_new_dataset_id(key, data, errors, context):
     if is_sysadmin(context['user']):
         return
     empty(key, data, errors, context)
+
+
+def package_id_doesnt_exist(key, data, errors, context):
+    """
+    fail if this value already exists as a package id.
+    """
+    # XXX: this is not a solution for the race where two packages with
+    # the same id are created at the same time.  When that happens one
+    # will silently overwrite the other :-(
+
+    model = context["model"]
+    session = context["session"]
+    existing = model.Package.get(data[key])
+    if existing:
+        errors[key].append(_('That URL is already in use.'))
 
