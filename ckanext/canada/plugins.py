@@ -25,7 +25,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
-<<<<<<< HEAD
         
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -41,12 +40,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
-        
-        
-=======
 
-
->>>>>>> 5b14a9e6d3c11ea3cfbd467e58f20e26883e5715
 class DataGCCAPublic(p.SingletonPlugin):
     """
     Plugin for public-facing version of data.gc.ca site, aka the "portal"
