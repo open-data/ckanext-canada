@@ -83,11 +83,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert resp['result']['id'] == 'my-custom-id'
         assert resp['result']['name'] == 'custom_dataset_id'
 
-        # apparently we can update packages this way too
-        # NOTE: please don't do this
-        self.sysadmin_action.package_create(
+        self.assert_raises(ValidationError,
+            self.sysadmin_action.package_create,
             name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
-
-        resp = self.action.package_show(id='my-custom-id')
-        assert resp['result']['name'] == 'different_dataset_id'
 
