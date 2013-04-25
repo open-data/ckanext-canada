@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{%- block api_access_info -%}
+  <!-- We want this block to be empty in the canada extension -->
+{%- endblock -%}
+
+{% block secondary_content %}
+  {% for facet in c.facet_titles %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+  {% endfor %}
+{% endblock %}
