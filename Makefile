@@ -1,5 +1,6 @@
 
 CKAN_CONFIG ?= development.ini
+DB_TEMPLATE ?= test_template
 
 ifeq ($(wildcard ${CKAN_CONFIG}),)
 $(error CKAN configuration file ${CKAN_CONFIG} not found, you may \
@@ -19,15 +20,13 @@ SPATIAL_REF_SYS = $(firstword $(wildcard \
     /usr/share/postgresql/*/contrib/postgis-1.5/spatial_ref_sys.sql \
     ))
 
-test:
-	sudo -u postgres dropdb ${DB_NAME_PORT}
-	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -T test_template
+test: reset-database
 	nosetests --with-pylons=${CKAN_CONFIG} --nologcapture ckanext/canada/tests 2>&1
 
 drop-database:
-	sudo -u postgres dropdb ${DB_NAME_PORT}
+	-sudo -u postgres dropdb ${DB_NAME_PORT}
 
-create-database:
+build-database: drop-database
 	sudo -u postgres createdb ${DB_NAME_PORT} -O ${DB_USER} -E UTF-8
 	sudo -u postgres psql ${DB_NAME_PORT} < ${POSTGIS}
 	sudo -u postgres psql ${DB_NAME_PORT} -c "ALTER TABLE spatial_ref_sys OWNER TO ${DB_USER}"
@@ -43,3 +42,10 @@ tune-database:
 	bash -c "${PSQL_COMMAND}" < tuning/constraints.sql
 	bash -c "${PSQL_COMMAND}" < tuning/what_to_alter.sql
 
+build-database-template: drop-database build-database
+	-sudo -u postgres dropdb ${DB_TEMPLATE} \
+            $(wordlist 2, 3, ${DB_NAME_PORT})
+	sudo -u postgres createdb ${DB_TEMPLATE} -T ${DB_NAME_PORT}
+
+reset-database: drop-database
+	sudo -u postgres createdb ${DB_NAME_PORT} -T ${DB_TEMPLATE}
