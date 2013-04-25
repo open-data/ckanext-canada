@@ -69,7 +69,7 @@ language
   <ul class='menu-horizontal margin-top-none margin-bottom-none'>
     {%- for tag in pkg[f.id] -%}
       <li>
-        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.name
+        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
           %}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
       </li>
     {%- endfor -%}
