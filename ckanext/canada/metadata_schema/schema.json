@@ -4764,6 +4764,25 @@
   ], 
   "resource_fields": [
     {
+      "bilingual": true, 
+      "description": {
+        "eng": "The name by which the cited resource is known", 
+        "fra": "Nom connue de l\u2019ensemble de donn\u00e9es cit\u00e9e"
+      }, 
+      "example": {
+        "eng": "", 
+        "fra": ""
+      }, 
+      "existing": true, 
+      "id": "name", 
+      "label": {
+        "eng": "Title", 
+        "fra": "Titre"
+      }, 
+      "mandatory": false, 
+      "type": "text"
+    }, 
+    {
       "bilingual": false, 
       "choices": [
         {
@@ -5052,25 +5071,25 @@
           "eng": "No linguistic content; Not applicable", 
           "fra": "pas de contenu linguistique; non applicable", 
           "id": "zxx; CAN", 
-          "key": "No linguistic content; Not applicable | pas de contenu linguistique; non applicable"
+          "key": "zxx; CAN"
         }, 
         {
           "eng": "English", 
           "fra": "Anglais", 
           "id": "eng; CAN", 
-          "key": "English | Anglais"
+          "key": "eng; CAN"
         }, 
         {
           "eng": "French", 
           "fra": "Fran\u00e7ais", 
           "id": "fra; CAN", 
-          "key": "French | Fran\u00e7ais"
+          "key": "fra; CAN"
         }, 
         {
           "eng": "Bilingual (English and French)", 
           "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
           "id": "eng; CAN | fra; CAN", 
-          "key": "Bilingual (English and French) | Bilingue (Anglais et Fran\u00e7ais)"
+          "key": "eng; CAN | fra; CAN"
         }
       ], 
       "description": {

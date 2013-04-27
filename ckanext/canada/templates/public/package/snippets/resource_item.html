@@ -14,7 +14,7 @@
 </div>
 <div class="span-5 row-end ">
   <a class="heading" style="word-wrap: break-word;" href="{{ url }}" title="{{ res.name or res.description }}">
-    {{ h.resource_display_name(res) | truncate(100) }}
+    {{ cr.resource_display_name(res, client_lang) | truncate(100) }}
     {{ h.popular('views', res.tracking_summary.total, min=10) }}
   </a>
   {% endblock resource_item_title %}
@@ -22,7 +22,7 @@
     {{ cr.field_label(format_field, client_lang) }}:
     {{ cr.field(format_field, res, client_lang) }},
     {{ cr.field_label(lang_field, client_lang) }}:
-    {{ cr.field(lang_field, res, client_lang) }}
+    {{ cr.lookup_field(lang_field, res, client_lang) }}
   </p>
   {% block resource_item_explore %}
   <div class="dropdown btn-group">
@@ -38,7 +38,7 @@
         </a>
       </li>
       {% endif %}
-      <li>        
+      <li>
         <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank">
           <span class="wb-icon-drive-download"></span>
           {{ _('Download') }}

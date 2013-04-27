@@ -114,11 +114,8 @@ def protect_date_published(key, data, errors, context):
     if original == value:
         return
 
-    for g in c.userobj.get_groups():
-        if not g.is_organization:
-            continue
-        if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
-            return
+    if may_publish_datasets():
+        return
 
     raise Invalid('Cannot change value of key from %s to %s. '
                   'This key is read-only' % (original, value))
