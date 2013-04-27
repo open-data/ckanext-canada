@@ -96,3 +96,15 @@ Render a choice field where the choice['key'] is the value stored
     {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
   {%- endif -%}
 {%- endmacro -%}
+
+{#
+Choose the most appropriate display name for a resource
+#}
+{%- macro resource_display_name(res, client_lang) -%}
+  {%- set name = res.name_fra if client_lang == 'fr' else res.name -%}
+  {%- if name -%}
+    {{- name -}}
+  {%- else -%}
+    {{- res.url -}}
+  {%- endif -%}
+{%- endmacro -%}
