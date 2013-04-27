@@ -76,6 +76,7 @@ FIELD_OVERRIDES = {
 
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
+    'name',
     'resource_type',
     'url',
     'size',
@@ -86,6 +87,7 @@ RESOURCE_FIELDS = [
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 
 BILINGUAL_RESOURCE_FIELDS = set([
+    'name',
     ])
 
 EXISTING_FIELDS = set(default_create_package_schema()
@@ -149,6 +151,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'programURL': 'url',
     'endpoint': 'endpoint_url',
     'license': 'license_id',
+    'resourceTitle': 'resource:name',
     'accessURL': 'resource:url',
     'language2': 'resource:language',
     # resource fields
@@ -354,6 +357,11 @@ def apply_field_customizations(schema_out, vocab):
             choices = merge(choices, f['choices'])
         elif 'choices' in f:
             choices = merge(f['choices'], choices)
+
+        # language is special: we are using given ids as keys
+        if field == 'language':
+            for c in choices:
+                c['key'] = c['id']
         f['choices'] = choices
 
 

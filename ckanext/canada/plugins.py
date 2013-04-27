@@ -1,5 +1,4 @@
-from pylons import c
-from pylons.i18n import _, ungettext
+from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
@@ -10,10 +9,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-
-
-ORG_MAY_PUBLISH_KEY = 'publish'
-ORG_MAY_PUBLISH_VALUE = 'True'
+from ckanext.canada.helpers import may_publish_datasets
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -22,15 +18,16 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
+    p.implements(p.ITemplateHelpers)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
-        
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
-        
+
         facets_dict = {'published': _('Published or Pending')}
-                      
+
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -40,6 +37,10 @@ class DataGCCAInternal(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
+
+    def get_helpers(self):
+        return {'may_publish_datasets': may_publish_datasets}
+
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
