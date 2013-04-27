@@ -76,6 +76,7 @@ FIELD_OVERRIDES = {
 
 # Resource fields (no sections)
 RESOURCE_FIELDS = [
+    'description',
     'resource_type',
     'url',
     'size',
@@ -86,6 +87,7 @@ RESOURCE_FIELDS = [
 EXISTING_RESOURCE_FIELDS = set(default_resource_schema())
 
 BILINGUAL_RESOURCE_FIELDS = set([
+    'description',
     ])
 
 EXISTING_FIELDS = set(default_create_package_schema()
@@ -149,6 +151,7 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'programURL': 'url',
     'endpoint': 'endpoint_url',
     'license': 'license_id',
+    'resourceTitle': 'resource:description',
     'accessURL': 'resource:url',
     'language2': 'resource:language',
     # resource fields
