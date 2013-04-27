@@ -354,6 +354,11 @@ def apply_field_customizations(schema_out, vocab):
             choices = merge(choices, f['choices'])
         elif 'choices' in f:
             choices = merge(f['choices'], choices)
+
+        # language is special: we are using given ids as keys
+        if field == 'language':
+            for c in choices:
+                c['key'] = c['id']
         f['choices'] = choices
 
 
