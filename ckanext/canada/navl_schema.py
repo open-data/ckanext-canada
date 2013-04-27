@@ -5,7 +5,7 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
-    name_validator, package_name_validator)
+    name_validator, package_name_validator, owner_org_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -51,6 +51,8 @@ def _schema_update(schema, purpose):
                 package_name_validator]
         if name in ('title', 'notes') and purpose != 'show':
             schema[name] = [not_empty_allow_override, unicode]
+        if name == 'owner_org':
+            schema[name] = [not_empty, owner_org_validator, unicode]
 
         if name in schema:
             continue # don't modify other existing fields
