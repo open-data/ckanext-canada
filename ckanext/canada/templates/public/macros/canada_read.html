@@ -92,5 +92,7 @@ Render the organization name
 Render a choice field where the choice['key'] is the value stored
 #}
 {%- macro lookup_field(f, pkg, client_lang) -%}
-  {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+  {%- if pkg[f.id] -%}
+    {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+  {%- endif -%}
 {%- endmacro -%}
