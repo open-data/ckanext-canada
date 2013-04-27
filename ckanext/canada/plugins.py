@@ -38,9 +38,6 @@ class DataGCCAInternal(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
         return facets_dict
 
-    def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
-
     def get_helpers(self):
         return {'may_publish_datasets': may_publish_datasets}
 
