@@ -7,6 +7,8 @@ import ckan.model as model
 from ckanapi import TestAppCKAN, ValidationError
 import json
 
+NRCAN_UUID = '9391E0A2-9717-4755-B548-4499C21F917B'
+
 class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
     @classmethod
@@ -27,7 +29,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 'description': u'Full text.',
                 'format': u'plain text',
                 'url': u'http://www.annakarenina.com/download/'
-            }]
+            }],
+            'owner_org': NRCAN_UUID,
         }
 
         cls.complete_pkg = dict(cls.incomplete_pkg,
