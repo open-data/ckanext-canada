@@ -42,23 +42,22 @@ def _schema_update(schema, purpose):
     """
     assert purpose in ('create', 'update', 'show')
 
+    if purpose == 'create':
+        schema['id'] = [ignore_missing, protect_new_dataset_id,
+            unicode, name_validator, package_id_doesnt_exist]
+        schema['name'] = [ignore_missing, unicode, name_validator,
+            package_name_validator]
+    if purpose in ('create', 'update'):
+        schema['title'] = [not_empty_allow_override, unicode]
+        schema['notes'] = [not_empty_allow_override, unicode]
+        schema['owner_org'] = [not_empty, owner_org_validator, unicode]
+
     resources = schema['resources']
     resources['resource_type'] = [not_empty, unicode]
     resources['format'] = [not_empty, unicode]
     resources['language'] = [not_empty, unicode]
 
     for name, lang, field in schema_description.dataset_field_iter():
-        if name == 'id' and purpose == 'create':
-            schema[name] = [ignore_missing, protect_new_dataset_id,
-                unicode, name_validator, package_id_doesnt_exist]
-        if name == 'name' and purpose == 'create':
-            schema[name] = [ignore_missing, unicode, name_validator,
-                package_name_validator]
-        if name in ('title', 'notes') and purpose != 'show':
-            schema[name] = [not_empty_allow_override, unicode]
-        if name == 'owner_org':
-            schema[name] = [not_empty, owner_org_validator, unicode]
-
         if name in schema:
             continue # don't modify other existing fields
 
