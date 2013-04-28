@@ -42,6 +42,11 @@ def _schema_update(schema, purpose):
     """
     assert purpose in ('create', 'update', 'show')
 
+    resources = schema['resources']
+    resources['resource_type'] = [not_empty, unicode]
+    resources['format'] = [not_empty, unicode]
+    resources['language'] = [not_empty, unicode]
+
     for name, lang, field in schema_description.dataset_field_iter():
         if name == 'id' and purpose == 'create':
             schema[name] = [ignore_missing, protect_new_dataset_id,
