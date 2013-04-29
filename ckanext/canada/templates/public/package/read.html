@@ -9,6 +9,11 @@
 
 {% block primary_content_inner %}
   <section class="resources module-content">
+    {% if pkg.state == "deleted" %}
+    <div class="module-alert">
+      <p>This dataset has been deleted and is no longer accessible to non-admin users.</p>
+    </div>
+    {% endif %}
     <h1>
       {{ cr.field_id('title', pkg, client_lang) }}
     </h1>
