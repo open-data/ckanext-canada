@@ -4227,7 +4227,7 @@
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
-          "mandatory": false, 
+          "mandatory": true, 
           "pilot_help": {
             "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
@@ -4786,18 +4786,21 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "File", 
-          "fra": "File", 
+          "eng": "Dataset", 
+          "fra": "Donnes", 
+          "id": "file", 
           "key": "file"
         }, 
         {
-          "eng": "Supporting Document", 
-          "fra": "Document", 
+          "eng": "Supporting Documentation", 
+          "fra": "Documentation de Soutien", 
+          "id": "doc", 
           "key": "doc"
         }, 
         {
           "eng": "API", 
           "fra": "API", 
+          "id": "api", 
           "key": "api"
         }
       ], 
@@ -4882,164 +4885,188 @@
         {
           "eng": "CSV", 
           "fra": "CSV", 
+          "id": "CSV", 
           "key": "CSV", 
           "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
         }, 
         {
-          "eng": "GeoTIFF", 
-          "fra": "GeoTIFF", 
-          "key": "GeoTIFF", 
-          "pilot_uuid": "A6727501-C214-4D73-995B-0B3EC8CB24F9"
-        }, 
-        {
           "eng": "KML / KMZ", 
           "fra": "KML / KMZ", 
-          "key": "KML / KMZ", 
+          "id": "kml / kmz", 
+          "key": "kml / kmz", 
           "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
         }, 
         {
           "eng": "RDF", 
           "fra": "RDF", 
+          "id": "RDF", 
           "key": "RDF", 
           "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
         }, 
         {
           "eng": "RSS", 
           "fra": "RSS", 
-          "key": "RSS", 
+          "id": "rss", 
+          "key": "rss", 
           "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
         }, 
         {
           "eng": "SHP", 
           "fra": "SHP", 
-          "key": "SHP", 
+          "id": "SHAPE", 
+          "key": "SHAPE", 
           "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
         }, 
         {
           "eng": "XML", 
           "fra": "XML", 
+          "id": "XML", 
           "key": "XML", 
           "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }, 
         {
           "eng": "DOC", 
           "fra": "DOC", 
-          "key": "DOC"
+          "id": "doc", 
+          "key": "doc"
         }, 
         {
           "eng": "EXE", 
           "fra": "EXE", 
-          "key": "EXE"
+          "id": "exe", 
+          "key": "exe"
         }, 
         {
           "eng": "GeoRSS", 
           "fra": "GeoRSS", 
-          "key": "GeoRSS"
+          "id": "georss", 
+          "key": "georss"
         }, 
         {
           "eng": "GIF", 
           "fra": "GIF", 
-          "key": "GIF"
+          "id": "gif", 
+          "key": "gif"
         }, 
         {
           "eng": "HTML", 
           "fra": "HTML", 
+          "id": "HTML", 
           "key": "HTML"
         }, 
         {
           "eng": "IATI", 
           "fra": "IATI", 
-          "key": "IATI"
+          "id": "iati", 
+          "key": "iati"
         }, 
         {
           "eng": "JPG", 
           "fra": "JPG", 
-          "key": "JPG"
+          "id": "jpg", 
+          "key": "jpg"
         }, 
         {
           "eng": "JSON", 
           "fra": "JSON", 
+          "id": "JSON", 
           "key": "JSON"
         }, 
         {
           "eng": "NetCDF", 
           "fra": "NetCDF", 
-          "key": "NetCDF"
+          "id": "netcdf", 
+          "key": "netcdf"
         }, 
         {
           "eng": "ODP", 
           "fra": "ODP", 
-          "key": "ODP"
+          "id": "odp", 
+          "key": "odp"
         }, 
         {
           "eng": "ODS", 
           "fra": "ODS", 
-          "key": "ODS"
+          "id": "ods", 
+          "key": "ods"
         }, 
         {
           "eng": "ODT", 
           "fra": "ODT", 
-          "key": "ODT"
+          "id": "odt", 
+          "key": "odt"
         }, 
         {
           "eng": "PDF", 
           "fra": "PDF", 
+          "id": "PDF", 
           "key": "PDF"
         }, 
         {
           "eng": "PNG", 
           "fra": "PNG", 
-          "key": "PNG"
+          "id": "png", 
+          "key": "png"
         }, 
         {
           "eng": "PPT", 
           "fra": "PPT", 
-          "key": "PPT"
+          "id": "ppt", 
+          "key": "ppt"
         }, 
         {
           "eng": "RDFa", 
           "fra": "RDFa", 
-          "key": "RDFa"
+          "id": "rdfa", 
+          "key": "rdfa"
         }, 
         {
           "eng": "RTF", 
           "fra": "RTF", 
-          "key": "RTF"
+          "id": "rtf", 
+          "key": "rtf"
         }, 
         {
           "eng": "SAV", 
           "fra": "SAV", 
-          "key": "SAV"
+          "id": "sav", 
+          "key": "sav"
         }, 
         {
           "eng": "SQL", 
           "fra": "SQL", 
-          "key": "SQL"
+          "id": "sql", 
+          "key": "sql"
         }, 
         {
           "eng": "TXT", 
           "fra": "TXT", 
+          "id": "TXT", 
           "key": "TXT"
         }, 
         {
           "eng": "XLS", 
           "fra": "XLS", 
-          "key": "XLS"
+          "id": "xls", 
+          "key": "xls"
         }, 
         {
           "eng": "XLSM", 
           "fra": "XLSM", 
-          "key": "XLSM"
+          "id": "xlsm", 
+          "key": "xlsm"
         }, 
         {
           "eng": "Zip", 
           "fra": "Zip", 
-          "key": "Zip"
+          "id": "ZIP", 
+          "key": "ZIP"
         }, 
         {
           "eng": "Other", 
           "fra": "Other", 
-          "key": "Other"
+          "id": "other", 
+          "key": "other"
         }
       ], 
       "description": {

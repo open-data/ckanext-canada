@@ -2,52 +2,37 @@
 
 {% block mega %}
 <li>
-  <section>
-    <h3><a href={{ h.url(action='index', controller='home') }}>{{_('Home')}}</a></h3>
-    <div class="mb-sm">
-      <div class="span-2">
-        <ul>
-          <li>
-            <a href={{ h.url(action='index', controller='home') }}>{{_('Home')}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <div role="presentation">
+    <a role="menuitem" href={{ h.url(action='search', controller='package') }}>Search Data</a>
+  </div>
 </li>
+
 <li>
-  <section>
-    <h3><a href={{ h.url(action='about', controller='home') }}>Open Data</a></h3>
-    <div class="mb-sm">
-      <ul>
-        <li>
-          <a href={{ h.url(action='search', controller='package') }}>Search Data</a>
-        </li>
-
-        <li>
-          <span>---------</span>
-        </li>
-
-        {{ h.build_nav_main(
-          ('add dataset', _('Add Dataset'), 'package_create'),
-          ('search', _('Datasets')),
-          ('organizations_index', _('Organizations')),
-          ('group_index', _('Groups')),
-        ) }}
-
-        <li>{% link_for _('Log in'), controller='user', action='login' %}</li>
-        <li>{% link_for _('Register'), controller='user', action='register', class_='sub' %}</li>
-        
-      </ul>
-      
-      <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href="/eng/content/open-data">Open Data - Main Page</a>
-      </div>
-      
-    </div>
-  </section>
+  <div role="presentation">
+    <a role="menuitem" href={{ h.url(action='index', controller='organization') }}>Organizations</a>
+  </div>
 </li>
+
+{% if c.userobj %}
+<li>
+  <div role="presentation">
+    {% link_for _('Log out'), controller='user', action='logout' %}
+  </div>
+</li>
+{% else %}
+<li>
+  <div role="presentation">
+    {% link_for _('Log in'), controller='user', action='login' %}
+  </div>
+</li>
+{% endif %}
+
+<li>
+  <div role="presentation">
+    {% link_for _('Register'), controller='user', action='register' %}
+  </div>
+</li>
+
 <li>
 {% if c.userobj %}
   <section>
@@ -73,21 +58,18 @@
               {{ _('Edit Profile') }}
             </a>
           </li>
-          <li>
-            <a href="{{ h.url_for('/user/_logout') }}">
-              <i class="icon-signout"></i>
-              {{ _('Log out') }}
-            </a>
-          </li>
         </ul>
       </div>
       <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href={{ h.url(action='about', controller='home') }}>About</a>
-      </div>
     </div>
   </section>          
 {% endif %}
+</li>
+
+<li>
+  <div role="presentation">
+    <a role="menuitem" href="/help">Help</a>
+  </div>
 </li>
 
 {% endblock %}
