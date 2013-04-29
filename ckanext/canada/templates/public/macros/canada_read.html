@@ -93,7 +93,11 @@ Render a choice field where the choice['key'] is the value stored
 #}
 {%- macro lookup_field(f, pkg, client_lang) -%}
   {%- if pkg[f.id] -%}
-    {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+    {%- if f.choices_by_key.get(pkg[f.id]) -%}
+      {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+    {% else %}
+      {{ split_bilingual_field(pkg[f.id], client_lang)}}
+    {% endif %}
   {%- endif -%}
 {%- endmacro -%}
 
