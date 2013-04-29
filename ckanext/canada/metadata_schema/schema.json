@@ -4786,18 +4786,21 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "File", 
-          "fra": "File", 
+          "eng": "Dataset", 
+          "fra": "Donnes", 
+          "id": "file", 
           "key": "file"
         }, 
         {
-          "eng": "Supporting Document", 
-          "fra": "Document", 
+          "eng": "Supporting Documentation", 
+          "fra": "Documentation de Soutien", 
+          "id": "doc", 
           "key": "doc"
         }, 
         {
           "eng": "API", 
           "fra": "API", 
+          "id": "api", 
           "key": "api"
         }
       ], 
