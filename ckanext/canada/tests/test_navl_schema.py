@@ -38,15 +38,16 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             }],
         }
 
-        cls.almost_complete_pkg = dict(cls.incomplete_pkg,
+        cls.override_possible_pkg = dict(cls.incomplete_pkg,
             owner_org=NRCAN_UUID)
 
-        cls.complete_pkg = dict(cls.almost_complete_pkg,
+        cls.complete_pkg = dict(cls.override_possible_pkg,
             catalog_type=u'Data | Données',
             title_fra=u'Un novel par Tolstoy',
             maintenance_and_update_frequency=u'As Needed | Au besoin',
             notes=u'...',
             notes_fra=u'...',
+            subject=[u'Persons  Personnes'],
             date_published=u'2013-01-01',
             keywords=u'book',
             keywords_fra=u'livre')
@@ -58,7 +59,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='basic_package', **self.almost_complete_pkg)
+            name='basic_package', **self.override_possible_pkg)
 
         resp = self.normal_action.package_create(
             name='basic_package', **self.complete_pkg)
@@ -110,7 +111,39 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
-            validation_override=True, **self.almost_complete_pkg)
+            validation_override=True, **self.override_possible_pkg)
 
         self.sysadmin_action.package_create(
-            validation_override=True, **self.almost_complete_pkg)
+            validation_override=True, **self.override_possible_pkg)
+
+    def test_raw_required(self):
+        raw_pkg = dict(self.complete_pkg)
+        del raw_pkg['subject']
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **raw_pkg)
+
+    def test_geo_required(self):
+        geo_pkg = dict(self.complete_pkg,
+            catalog_type=u"Geo Data | Géo")
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **geo_pkg)
+
+        geo_pkg.update({
+            'spatial_representation_type': "Vector | Vecteur",
+            'presentation_form': "Diagram Hardcopy | Diagramme papier",
+            'browse_graphic_url': "http://example.com/example.jpg",
+            })
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **geo_pkg)
+
+        geo_pkg['topic_category'] = [u"Society  Société",
+            u"Structure  Structures"]
+
+        self.normal_action.package_create(**geo_pkg)
+
