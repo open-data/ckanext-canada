@@ -36,10 +36,12 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 'resource_type': 'text',
                 'language': 'zxx; CAN',
             }],
-            'owner_org': NRCAN_UUID,
         }
 
-        cls.complete_pkg = dict(cls.incomplete_pkg,
+        cls.almost_complete_pkg = dict(cls.incomplete_pkg,
+            owner_org=NRCAN_UUID)
+
+        cls.complete_pkg = dict(cls.almost_complete_pkg,
             catalog_type=u'Data | Données',
             title_fra=u'Un novel par Tolstoy',
             maintenance_and_update_frequency=u'As Needed | Au besoin',
@@ -52,6 +54,10 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
             name='basic_package', **self.incomplete_pkg)
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            name='basic_package', **self.almost_complete_pkg)
 
         resp = self.normal_action.package_create(
             name='basic_package', **self.complete_pkg)

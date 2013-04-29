@@ -9,6 +9,8 @@ from ckan.logic.validators import (isodate, tag_string_convert,
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
+from formencode.validators import OneOf
+
 from ckanext.canada.metadata_schema import schema_description
 
 def create_package_schema():
@@ -64,6 +66,13 @@ def _schema_update(schema, purpose):
         v = _schema_field_validators(name, lang, field)
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
+
+        if field['type'] == 'choice' and purpose in ('create', 'update'):
+            schema[name].append(OneOf(c['key'] for c in field['choices']))
+
+    for name, lang, field in schema_description.resource_field_iter():
+        if field['type'] == 'choice' and purpose in ('create', 'update'):
+            resources[name].append(OneOf(c['key'] for c in field['choices']))
 
     if purpose in ('create', 'update'):
         schema['validation_override'] = [ignore_missing]
@@ -177,3 +186,4 @@ def not_empty_allow_override(key, data, errors, context):
         ignore_missing(key, data, errors, context)
     else:
         not_empty(key, data, errors, context)
+
