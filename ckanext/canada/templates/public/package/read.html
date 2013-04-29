@@ -27,7 +27,7 @@
   </section>
   
   {# Please replace this with a better test for geospatial data #}
-  {% if pkg['catalog_type'].find('Geo Data') > -1 %}
+  {% if pkg['spatial'] %}
   <section>
     {# The geojson needs to be converted to WKT format and then passed in. #}
     {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
@@ -71,5 +71,8 @@
     {% endfor %}
     </tbody>
   </table>
+   <ul>
+        <li><a href="/dataset/{{pkg.name}}" target="_blank"><i class="ckan-icon ckan-icon-share"></i>{{_('Add Comments')}}</a></li>
+   </ul>
 {% endblock %}
 
