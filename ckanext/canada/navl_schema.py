@@ -89,25 +89,27 @@ def _schema_field_validators(name, lang, field):
                  isodate, convert_to_extras],
                 [convert_from_extras, ignore_missing])
 
-    if field['type'] == 'tag_vocabulary':
-        return ([convert_to_tags(field['vocabulary'])],
-                [convert_from_tags(field['vocabulary'])])
-
     edit = []
-    if field['type'] in ('calculated', 'fixed') or field['mandatory'] != 'all':
+    view = []
+    if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
-    if field['mandatory']:
+    elif field['mandatory'] == 'all':
         edit.append(not_empty_allow_override)
+    elif field['mandatory']:
+        edit.append(not_empty_when_catalog_type(field['mandatory']))
 
     if field['type'] == 'date':
         edit.append(isodate)
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
+    elif field['type'] == 'tag_vocabulary':
+        edit.append(convert_to_tags(field['vocabulary']))
+        view.append(convert_from_tags(field['vocabulary']))
     else:
         edit.append(unicode)
 
     return (edit + [convert_to_extras],
-            [convert_from_extras, ignore_missing])
+            view if view else [convert_from_extras, ignore_missing])
 
 
 def treat_missing_as_empty(key, data, errors, context):
@@ -187,3 +189,22 @@ def not_empty_allow_override(key, data, errors, context):
     else:
         not_empty(key, data, errors, context)
 
+
+def not_empty_when_catalog_type(ctype):
+    """
+    Not empty when value of catalog_type is raw/geo
+    but allow sysadmins to override the validation error
+    by setting a value in data[(validation_override,)].
+    """
+    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+    ctype = choices[0 if ctype == 'raw' else 1]['key']
+
+    def conditional_not_empty(key, data, errors, context):
+        if is_sysadmin(context['user']) and data[('validation_override',)]:
+            ignore_missing(key, data, errors, context)
+        elif data[('catalog_type',)] != ctype:
+            ignore_missing(key, data, errors, context)
+        else:
+            not_empty(key, data, errors, context)
+
+    return conditional_not_empty
