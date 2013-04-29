@@ -19,7 +19,7 @@
             "eng": "Identifier", 
             "fra": "Identificateur"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "type": "primary_key"
         }, 
         {
@@ -58,7 +58,7 @@
             "eng": "Language", 
             "fra": "Langue"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The language(s) of the content of the dataset.", 
             "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
@@ -1290,7 +1290,7 @@
             "eng": "Publisher", 
             "fra": "\u00c9diteur"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The organization that created the content of the dataset. In instances where several organizations collaborate in the creation of a dataset, choose one department/agency as the primary creator and reflect other contributors within the dataset description and keywords.", 
             "fra": "L'organisation qui a cr\u00e9\u00e9 le contenu de l\u2019ensemble de donn\u00e9es. Lorsque plusieurs organisations collaborent \u00e0 la cr\u00e9ation d'une base de donn\u00e9es, choisir un concepteur premier parmi les minist\u00e8res ou organismes, et indiquer les autres collaborateurs dans la description de l\u2019ensemble de donn\u00e9es et les mots cl\u00e9s."
@@ -1319,7 +1319,7 @@
             "eng": "Email", 
             "fra": "Adresse \u00e9lectronique"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "type": "fixed"
         }, 
         {
@@ -1338,7 +1338,7 @@
             "eng": "Title", 
             "fra": "Titre"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The unique name given to the dataset. It is typically the name by which the resource is known.", 
             "fra": "Le nom unique donn\u00e9 \u00e0 l\u2019ensemble de donn\u00e9es. Habituellement, il s'agit du nom sous lequel la ressource est connue."
@@ -1368,7 +1368,7 @@
             "eng": "Dataset URI", 
             "fra": "URI de l\u2019ensemble de donn\u00e9es"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "type": "calculated"
         }, 
         {
@@ -1387,7 +1387,7 @@
             "eng": "Description", 
             "fra": "Description"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.", 
             "fra": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
@@ -1429,7 +1429,7 @@
             "eng": "Catalogue Type", 
             "fra": "Type de catalogue"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "type": "choice"
         }, 
         {
@@ -1740,7 +1740,7 @@
             "eng": "Keywords", 
             "fra": "Mots cl\u00e9s"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
             "fra": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
@@ -1770,7 +1770,7 @@
             "eng": "Licence", 
             "fra": "Licence"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "type": "fixed"
         }, 
         {
@@ -4101,7 +4101,7 @@
             "eng": "Geographic Region", 
             "fra": "R\u00e9gion g\u00e9ographique"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The region that describes the geographic area covered by the dataset.", 
             "fra": "La r\u00e9gion qui d\u00e9crit la r\u00e9gion g\u00e9ographique couverte par l'ensemble de donn\u00e9es."
@@ -4130,7 +4130,7 @@
             "eng": "Spatial", 
             "fra": "\u00c9l\u00e9ment spatial"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "type": "geojson"
         }, 
         {
@@ -4366,7 +4366,7 @@
             "eng": "Date Published", 
             "fra": "Date de publication"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The date that the resource was first published (made available exernally). (YYYY-MM-DD)", 
             "fra": "La date de la publication initiale de la ressource (accessible \u00e0 l'externe). (AAAA-MM-JJ)"
@@ -4395,7 +4395,7 @@
             "eng": "Date Modified", 
             "fra": "Date de modification"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The date of the last update to the dataset (YYYY-MM-DD)", 
             "fra": "La date de la derni\u00e8re mise \u00e0 jour de l\u2019ensemble de donn\u00e9es (AAAA-MM-JJ)"
@@ -4504,7 +4504,7 @@
             "eng": "Frequency", 
             "fra": "Fr\u00e9quence"
           }, 
-          "mandatory": true, 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The frequency at which the dataset is published.", 
             "fra": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
@@ -4541,7 +4541,7 @@
             "eng": "Data Series Name", 
             "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "A name given to multiple datasets to present them as a group or a set.", 
             "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
@@ -4571,7 +4571,7 @@
             "eng": "Issue Identification", 
             "fra": "Identification de l\u2019enjeu"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
             "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
@@ -4600,7 +4600,7 @@
             "eng": "Digital Object Identifier", 
             "fra": "Identificateur d\u2019objet num\u00e9rique"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "type": "text"
         }, 
         {
@@ -4619,7 +4619,7 @@
             "eng": "Time Period Coverage Start", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
@@ -4648,7 +4648,7 @@
             "eng": "Time Period Coverage End", 
             "fra": "Couverture de la p\u00e9riode de temps"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
             "fra": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
@@ -4677,7 +4677,7 @@
             "eng": "Homepage URL", 
             "fra": "URL de la page d\u2019accueil"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "pilot_help": {
             "eng": "The URL for the program  that is responsible for the dataset or tool.", 
             "fra": "L'adresse URL du programme responsable de l\u2019ensemble de donn\u00e9es ou de l'outil."
@@ -4707,7 +4707,7 @@
             "eng": "Endpoint", 
             "fra": "Point d\u2019extr\u00e9mit\u00e9"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "type": "url"
         }, 
         {
@@ -4726,7 +4726,7 @@
             "eng": "Ready to Publish", 
             "fra": "(translate me)"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "type": "boolean"
         }, 
         {
@@ -4745,7 +4745,7 @@
             "eng": "Portal Release Date", 
             "fra": "(translate me)"
           }, 
-          "mandatory": false, 
+          "mandatory": null, 
           "type": "date"
         }
       ], 
@@ -4779,7 +4779,7 @@
         "eng": "Title", 
         "fra": "Titre"
       }, 
-      "mandatory": false, 
+      "mandatory": null, 
       "type": "text"
     }, 
     {
@@ -4818,7 +4818,7 @@
         "eng": "Resource Type", 
         "fra": "Type de ressource"
       }, 
-      "mandatory": true, 
+      "mandatory": "all", 
       "type": "choice"
     }, 
     {
@@ -4837,7 +4837,7 @@
         "eng": "URL", 
         "fra": "URL"
       }, 
-      "mandatory": true, 
+      "mandatory": "all", 
       "pilot_help": {
         "eng": "The URL pointing to the dataset in the GC repository or website in which it was originally published.  The field accept a single URL formated as follow : http://www.domain_name/resource_path/file_name.ext.", 
         "fra": "L'adresse URL menant \u00e0 l\u2019ensemble de donn\u00e9es dans le d\u00e9p\u00f4t du GC ou le site Web o\u00f9 elle a d'abord \u00e9t\u00e9 publi\u00e9e.  Ce champ n'accepte qu'une seule adresse respectant le format suivant : http://www.nom_du_domaine/chemin_de_la_ressource/nom_du_fichier.ext."
@@ -4866,7 +4866,7 @@
         "eng": "Size", 
         "fra": "Taille"
       }, 
-      "mandatory": false, 
+      "mandatory": null, 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
@@ -5083,7 +5083,7 @@
         "eng": "Format", 
         "fra": "Format"
       }, 
-      "mandatory": true, 
+      "mandatory": "all", 
       "pilot_help": {
         "eng": "Name of the physical or digital manifestation (format) of the dataset.", 
         "fra": "Nom du format de la version imprim\u00e9e ou num\u00e9rique de l\u2019ensemble de donn\u00e9es."
@@ -5138,7 +5138,7 @@
         "eng": "Language", 
         "fra": "Langue"
       }, 
-      "mandatory": true, 
+      "mandatory": "all", 
       "type": "choice"
     }
   ], 
