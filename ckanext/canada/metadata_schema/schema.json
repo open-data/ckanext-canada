@@ -4213,6 +4213,223 @@
         }, 
         {
           "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Vector", 
+              "fra": "Vecteur", 
+              "id": 635, 
+              "key": "Vector | Vecteur"
+            }, 
+            {
+              "eng": "Grid", 
+              "fra": "Grille", 
+              "id": 636, 
+              "key": "Grid | Grille"
+            }, 
+            {
+              "eng": "Text Table", 
+              "fra": "Texte table", 
+              "id": 637, 
+              "key": "Text Table | Texte table"
+            }, 
+            {
+              "eng": "Tin", 
+              "fra": "Tin", 
+              "id": 638, 
+              "key": "Tin"
+            }, 
+            {
+              "eng": "Stero Model", 
+              "fra": "St\u00e9r\u00e9omod\u00e8le", 
+              "id": 639, 
+              "key": "Stero Model | St\u00e9r\u00e9omod\u00e8le"
+            }, 
+            {
+              "eng": "Video", 
+              "fra": "Vid\u00e9o", 
+              "id": 640, 
+              "key": "Video | Vid\u00e9o"
+            }
+          ], 
+          "description": {
+            "eng": "The object(s) used to represent the\ngeographic information.", 
+            "fra": "L\u2019objet utilis\u00e9 (ou les objets utilis\u00e9s) pour repr\u00e9senter l\u2019information g\u00e9ographique"
+          }, 
+          "example": {
+            "eng": "vector", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "spatial_representation_type", 
+          "label": {
+            "eng": "Spatial Representation Type", 
+            "fra": "Type de repr\u00e9sentation spatiale"
+          }, 
+          "mandatory": "geo", 
+          "type": "choice"
+        }, 
+        {
+          "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Document Digital", 
+              "fra": "Document num\u00e9rique", 
+              "id": 387, 
+              "key": "Document Digital | Document num\u00e9rique"
+            }, 
+            {
+              "eng": "Document Hardcopy", 
+              "fra": "Document papier", 
+              "id": 388, 
+              "key": "Document Hardcopy | Document papier"
+            }, 
+            {
+              "eng": "Image Digital", 
+              "fra": "Image num\u00e9rique", 
+              "id": 389, 
+              "key": "Image Digital | Image num\u00e9rique"
+            }, 
+            {
+              "eng": "Image Hardcopy", 
+              "fra": "Image papier", 
+              "id": 390, 
+              "key": "Image Hardcopy | Image papier"
+            }, 
+            {
+              "eng": "Map Digital", 
+              "fra": "Carte num\u00e9rique", 
+              "id": 391, 
+              "key": "Map Digital | Carte num\u00e9rique"
+            }, 
+            {
+              "eng": "Map Hardcopy", 
+              "fra": "Carte papier", 
+              "id": 392, 
+              "key": "Map Hardcopy | Carte papier"
+            }, 
+            {
+              "eng": "Model Digital", 
+              "fra": "Mod\u00e8le num\u00e9rique", 
+              "id": 393, 
+              "key": "Model Digital | Mod\u00e8le num\u00e9rique"
+            }, 
+            {
+              "eng": "Model Hardcopy", 
+              "fra": "Maquette", 
+              "id": 394, 
+              "key": "Model Hardcopy | Maquette"
+            }, 
+            {
+              "eng": "Profile Digital", 
+              "fra": "Profil num\u00e9rique", 
+              "id": 395, 
+              "key": "Profile Digital | Profil num\u00e9rique"
+            }, 
+            {
+              "eng": "Profile Hardcopy", 
+              "fra": "Profil papier", 
+              "id": 396, 
+              "key": "Profile Hardcopy | Profil papier"
+            }, 
+            {
+              "eng": "Table Digital", 
+              "fra": "Table num\u00e9rique", 
+              "id": 397, 
+              "key": "Table Digital | Table num\u00e9rique"
+            }, 
+            {
+              "eng": "Table Hardcopy", 
+              "fra": "Table papier", 
+              "id": 398, 
+              "key": "Table Hardcopy | Table papier"
+            }, 
+            {
+              "eng": "Video Digital", 
+              "fra": "Vid\u00e9o num\u00e9rique", 
+              "id": 399, 
+              "key": "Video Digital | Vid\u00e9o num\u00e9rique"
+            }, 
+            {
+              "eng": "Video Hardcopy", 
+              "fra": "Vid\u00e9o film", 
+              "id": 400, 
+              "key": "Video Hardcopy | Vid\u00e9o film"
+            }, 
+            {
+              "eng": "Audio Digital", 
+              "fra": "Audio num\u00e9rique", 
+              "id": 401, 
+              "key": "Audio Digital | Audio num\u00e9rique"
+            }, 
+            {
+              "eng": "Audio Hardcopy", 
+              "fra": "Audio analogique", 
+              "id": 402, 
+              "key": "Audio Hardcopy | Audio analogique"
+            }, 
+            {
+              "eng": "Multimedia Digital", 
+              "fra": "Multim\u00e9dia num\u00e9rique", 
+              "id": 403, 
+              "key": "Multimedia Digital | Multim\u00e9dia num\u00e9rique"
+            }, 
+            {
+              "eng": "Multimedia Hardcopy", 
+              "fra": "Multim\u00e9dia analogique", 
+              "id": 404, 
+              "key": "Multimedia Hardcopy | Multim\u00e9dia analogique"
+            }, 
+            {
+              "eng": "Diagram Digital", 
+              "fra": "Diagramme num\u00e9rique", 
+              "id": 405, 
+              "key": "Diagram Digital | Diagramme num\u00e9rique"
+            }, 
+            {
+              "eng": "Diagram Hardcopy", 
+              "fra": "Diagramme papier", 
+              "id": 406, 
+              "key": "Diagram Hardcopy | Diagramme papier"
+            }
+          ], 
+          "description": {
+            "eng": "The form in which the resource is available.", 
+            "fra": "Le format dans lequel la ressource est disponible"
+          }, 
+          "example": {
+            "eng": "documentDigital", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "presentation_form", 
+          "label": {
+            "eng": "Presentation Form", 
+            "fra": "Type de repr\u00e9sentation spatiale"
+          }, 
+          "mandatory": "geo", 
+          "type": "choice"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The name of the graphic file provided to illustrate the resource.", 
+            "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
+          }, 
+          "example": {
+            "eng": "Product dependant", 
+            "fra": ""
+          }, 
+          "existing": false, 
+          "id": "browse_graphic_url", 
+          "label": {
+            "eng": "Browse Graphic File Name", 
+            "fra": "Recherche du nom du fichier graphique"
+          }, 
+          "mandatory": "geo", 
+          "type": "image_url"
+        }, 
+        {
+          "bilingual": false, 
           "description": {
             "eng": "The date in which the resource was issued.", 
             "fra": "La date \u00e0 laquelle la ressource a \u00e9t\u00e9 \u00e9mise."
@@ -4492,223 +4709,6 @@
           }, 
           "mandatory": false, 
           "type": "url"
-        }, 
-        {
-          "bilingual": false, 
-          "choices": [
-            {
-              "eng": "Vector", 
-              "fra": "Vecteur", 
-              "id": 635, 
-              "key": "Vector | Vecteur"
-            }, 
-            {
-              "eng": "Grid", 
-              "fra": "Grille", 
-              "id": 636, 
-              "key": "Grid | Grille"
-            }, 
-            {
-              "eng": "Text Table", 
-              "fra": "Texte table", 
-              "id": 637, 
-              "key": "Text Table | Texte table"
-            }, 
-            {
-              "eng": "Tin", 
-              "fra": "Tin", 
-              "id": 638, 
-              "key": "Tin"
-            }, 
-            {
-              "eng": "Stero Model", 
-              "fra": "St\u00e9r\u00e9omod\u00e8le", 
-              "id": 639, 
-              "key": "Stero Model | St\u00e9r\u00e9omod\u00e8le"
-            }, 
-            {
-              "eng": "Video", 
-              "fra": "Vid\u00e9o", 
-              "id": 640, 
-              "key": "Video | Vid\u00e9o"
-            }
-          ], 
-          "description": {
-            "eng": "The object(s) used to represent the\ngeographic information.", 
-            "fra": "L\u2019objet utilis\u00e9 (ou les objets utilis\u00e9s) pour repr\u00e9senter l\u2019information g\u00e9ographique"
-          }, 
-          "example": {
-            "eng": "vector", 
-            "fra": ""
-          }, 
-          "existing": false, 
-          "id": "spatial_representation_type", 
-          "label": {
-            "eng": "Spatial Representation Type", 
-            "fra": "Type de repr\u00e9sentation spatiale"
-          }, 
-          "mandatory": "geo", 
-          "type": "choice"
-        }, 
-        {
-          "bilingual": false, 
-          "choices": [
-            {
-              "eng": "Document Digital", 
-              "fra": "Document num\u00e9rique", 
-              "id": 387, 
-              "key": "Document Digital | Document num\u00e9rique"
-            }, 
-            {
-              "eng": "Document Hardcopy", 
-              "fra": "Document papier", 
-              "id": 388, 
-              "key": "Document Hardcopy | Document papier"
-            }, 
-            {
-              "eng": "Image Digital", 
-              "fra": "Image num\u00e9rique", 
-              "id": 389, 
-              "key": "Image Digital | Image num\u00e9rique"
-            }, 
-            {
-              "eng": "Image Hardcopy", 
-              "fra": "Image papier", 
-              "id": 390, 
-              "key": "Image Hardcopy | Image papier"
-            }, 
-            {
-              "eng": "Map Digital", 
-              "fra": "Carte num\u00e9rique", 
-              "id": 391, 
-              "key": "Map Digital | Carte num\u00e9rique"
-            }, 
-            {
-              "eng": "Map Hardcopy", 
-              "fra": "Carte papier", 
-              "id": 392, 
-              "key": "Map Hardcopy | Carte papier"
-            }, 
-            {
-              "eng": "Model Digital", 
-              "fra": "Mod\u00e8le num\u00e9rique", 
-              "id": 393, 
-              "key": "Model Digital | Mod\u00e8le num\u00e9rique"
-            }, 
-            {
-              "eng": "Model Hardcopy", 
-              "fra": "Maquette", 
-              "id": 394, 
-              "key": "Model Hardcopy | Maquette"
-            }, 
-            {
-              "eng": "Profile Digital", 
-              "fra": "Profil num\u00e9rique", 
-              "id": 395, 
-              "key": "Profile Digital | Profil num\u00e9rique"
-            }, 
-            {
-              "eng": "Profile Hardcopy", 
-              "fra": "Profil papier", 
-              "id": 396, 
-              "key": "Profile Hardcopy | Profil papier"
-            }, 
-            {
-              "eng": "Table Digital", 
-              "fra": "Table num\u00e9rique", 
-              "id": 397, 
-              "key": "Table Digital | Table num\u00e9rique"
-            }, 
-            {
-              "eng": "Table Hardcopy", 
-              "fra": "Table papier", 
-              "id": 398, 
-              "key": "Table Hardcopy | Table papier"
-            }, 
-            {
-              "eng": "Video Digital", 
-              "fra": "Vid\u00e9o num\u00e9rique", 
-              "id": 399, 
-              "key": "Video Digital | Vid\u00e9o num\u00e9rique"
-            }, 
-            {
-              "eng": "Video Hardcopy", 
-              "fra": "Vid\u00e9o film", 
-              "id": 400, 
-              "key": "Video Hardcopy | Vid\u00e9o film"
-            }, 
-            {
-              "eng": "Audio Digital", 
-              "fra": "Audio num\u00e9rique", 
-              "id": 401, 
-              "key": "Audio Digital | Audio num\u00e9rique"
-            }, 
-            {
-              "eng": "Audio Hardcopy", 
-              "fra": "Audio analogique", 
-              "id": 402, 
-              "key": "Audio Hardcopy | Audio analogique"
-            }, 
-            {
-              "eng": "Multimedia Digital", 
-              "fra": "Multim\u00e9dia num\u00e9rique", 
-              "id": 403, 
-              "key": "Multimedia Digital | Multim\u00e9dia num\u00e9rique"
-            }, 
-            {
-              "eng": "Multimedia Hardcopy", 
-              "fra": "Multim\u00e9dia analogique", 
-              "id": 404, 
-              "key": "Multimedia Hardcopy | Multim\u00e9dia analogique"
-            }, 
-            {
-              "eng": "Diagram Digital", 
-              "fra": "Diagramme num\u00e9rique", 
-              "id": 405, 
-              "key": "Diagram Digital | Diagramme num\u00e9rique"
-            }, 
-            {
-              "eng": "Diagram Hardcopy", 
-              "fra": "Diagramme papier", 
-              "id": 406, 
-              "key": "Diagram Hardcopy | Diagramme papier"
-            }
-          ], 
-          "description": {
-            "eng": "The form in which the resource is available.", 
-            "fra": "Le format dans lequel la ressource est disponible"
-          }, 
-          "example": {
-            "eng": "documentDigital", 
-            "fra": ""
-          }, 
-          "existing": false, 
-          "id": "presentation_form", 
-          "label": {
-            "eng": "Presentation Form", 
-            "fra": "Type de repr\u00e9sentation spatiale"
-          }, 
-          "mandatory": "geo", 
-          "type": "choice"
-        }, 
-        {
-          "bilingual": false, 
-          "description": {
-            "eng": "The name of the graphic file provided to illustrate the resource.", 
-            "fra": "Le nom du fichier graphique fournit pour illustrer la ressource"
-          }, 
-          "example": {
-            "eng": "Product dependant", 
-            "fra": ""
-          }, 
-          "existing": false, 
-          "id": "browse_graphic_url", 
-          "label": {
-            "eng": "Browse Graphic File Name", 
-            "fra": "Recherche du nom du fichier graphique"
-          }, 
-          "mandatory": "geo", 
-          "type": "image_url"
         }, 
         {
           "bilingual": false, 
