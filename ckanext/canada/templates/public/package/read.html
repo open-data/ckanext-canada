@@ -76,8 +76,10 @@
     {% endfor %}
     </tbody>
   </table>
-   <ul>
-        <li><a href="/dataset/{{pkg.name}}" target="_blank"><i class="ckan-icon ckan-icon-share"></i>{{_('Add Comments')}}</a></li>
+  <p>
+   <ul class="button-group">
+        <li class="button"><a href="/dataset/{{pkg.name}}" target="_blank">{{_('Comment')}}</a></li>
    </ul>
+  </p>
 {% endblock %}
 
