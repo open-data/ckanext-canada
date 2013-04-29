@@ -1,218 +1,22 @@
 {% ckan_extends %}
+
 {% block mega %}
 <li>
-  <div>
-    <a href={{ h.url(action='index', controller='home') }}>{{_('Home')}}</a>
+  <div role="presentation">
+    <a role="menuitem" href={{ h.url(action='search', controller='package') }}>Search Data</a>
   </div>
-</li>
-<li>
-  <section>
-    <h3><a href={{ h.url(action='about', controller='home') }}>About Us</a></h3>
-    <div class="mb-sm">
-      <div class="span-2">
-        <ul>
-          <li>
-            <a href="/eng/content/open-data-principles">Open Data Principles</a>
-          </li>
-          <li>
-            <a href="/eng/content/benefits-open-data">Benefits of Open Data</a>
-          </li>
-          <li>
-            <a href="/eng/content/media">Media</a>
-          </li>
-          <li style="list-style: none">
-            <h4>
-              <a href="/eng/content/frequently-asked-questions">Frequently Asked Questions</a>
-            </h4>
-            <ul>
-              <li>
-                <a href="/eng/content/open-data-pilot-report">Open Data Pilot Report</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="/eng/content/licensing" class="active-trail active">Licensing</a>
-          </li>
-          <li style="list-style: none">
-            <div class="clear"></div>
-          </li>
-        </ul>
-      </div>
-      <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href={{ h.url(action='about', controller='home') }}>About</a>
-      </div>
-    </div>
-  </section>
 </li>
 
 <li>
-  <section>
-    <h3>
-      <a href="/eng/content/open-data">Open Data</a>
-    </h3>
-    <div class="mb-sm">
-      <h4>
-        <a href="/eng/content/featured-datasets">Featured Datasets</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/featured-dataset-archive">Featured Dataset Archive</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a href="/eng/content/facts-and-figures">Facts and Figures</a>
-        </li>
-        <li>
-          <a href="/eng/content/open-data-canada">Open Data in Canada</a>
-        </li>
-        <li style="list-style: none">
-          <h4>
-            <a href="/eng/content/developers-corner">Developer's Corner</a>
-          </h4>
-          <ul>
-            <li>
-              <a href="/eng/content/our-platform">Our Platform</a>
-            </li>
-            <li>
-              <a href="/eng/content/metadata-standard">Metadata Standard</a>
-            </li>
-            <li>
-              <a href="/eng/content/open-data-formats">Open Data Formats</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href={{ h.url(action='search', controller='package') }}>Search Data</a>
-        </li>
- 
-        {{ h.build_nav_main(('organizations_index', _('Organizations'))) }}
-      
-      </ul>
-    
-      <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href="/eng/content/open-data">Open Data - Main Page</a>
-      </div>
-    </div>
-  </section>
+  <div role="presentation">
+    <a role="menuitem" href={{ h.url(action='index', controller='organization') }}>Organizations</a>
+  </div>
 </li>
+
 <li>
-  <section>
-    <h3>
-      <a href="/eng/content/open-government">Open Government</a>
-    </h3>
-    <div class="mb-sm">
-      <h4>
-        <a href="/eng/content/action-plan-open-government">Action Plan on Open Government</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/commitments">Commitments</a>
-        </li>
-      </ul>
-      <h4>
-        <a href="/eng/content/open-information">Open Information</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/access-information-request-summaries">Access to Information (ATI)</a>
-        </li>
-        <li>
-          <a href="/eng/content/government-canada-spending">Government of Canada Spending</a>
-        </li>
-        <li>
-          <a href="/eng/content/departmental-dashboards">Departmental Dashboards</a>
-        </li>
-        <li>
-          <a href="/eng/content/proactive-disclosure">Proactive Disclosure</a>
-        </li>
-      </ul>
-      <h4>
-        <a href="/eng/content/open-government-consultation">Open Government Consultation</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/final-report">Final Report</a>
-        </li>
-        <li>
-          <a href="/eng/content/comments-canadians">Comments from Canadians</a>
-        </li>
-        <li>
-          <a href="/eng/content/tweet-chats">Tweet Chats</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a href="/eng/content/transparency">Transparency</a>
-        </li>
-        <li style="list-style: none">
-          <h4>
-            <a href="/eng/content/advisory-panel-open-government">Advisory Panel on Open Government</a>
-          </h4>
-          <ul>
-            <li>
-              <a href="/eng/content/panel-members">Panel Members</a>
-            </li>
-            <li>
-              <a href="/eng/content/panel-meeting-minutes">Panel Meeting Minutes</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href="/eng/content/open-government">Open Government - Main Page</a>
-      </div>
-    </div>
-  </section>
-</li>
-<li>
-  <section>
-    <h3>
-      <a href="/eng/content/participate">Participate</a>
-    </h3>
-    <div class="mb-sm">
-      <h4>
-        <a href="/eng/content/consultations">Consultations</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/active-consultations">Active Consultations</a>
-        </li>
-        <li>
-          <a href="/eng/content/what-we%E2%80%99ve-heard">What We’ve Heard</a>
-        </li>
-        <li>
-          <a href="/eng/content/upcoming-consultations">Upcoming Consultations</a>
-        </li>
-      </ul>
-      <h4>
-        <a href="/eng/content/feedback">Feedback</a>
-      </h4>
-      <ul>
-        <li>
-          <a href="/eng/content/suggest-dataset">Suggest a Dataset</a>
-        </li>
-        <li>
-          <a href="/eng/content/contact-us-form" title="Contact Us Form">Contact Us Form</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a href="/eng/content/data-challenges">Data Challenges</a>
-        </li>
-        <li>
-          <a href="/eng/content/blog">Blog</a>
-        </li>
-      </ul>
-      <div class="clear"></div>
-      <div class="mb-main-link">
-        <a href="/eng/content/participate">Participate - Main Page</a>
-      </div>
-    </div>
-  </section>
+  <div role="presentation">
+    <a role="menuitem" href="/help">Help</a>
+  </div>
 </li>
 
 {% endblock %}

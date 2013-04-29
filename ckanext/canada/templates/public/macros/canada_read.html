@@ -69,7 +69,7 @@ language
   <ul class='menu-horizontal margin-top-none margin-bottom-none'>
     {%- for tag in pkg[f.id] -%}
       <li>
-        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.name
+        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
           %}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
       </li>
     {%- endfor -%}
@@ -93,7 +93,11 @@ Render a choice field where the choice['key'] is the value stored
 #}
 {%- macro lookup_field(f, pkg, client_lang) -%}
   {%- if pkg[f.id] -%}
-    {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+    {%- if f.choices_by_key.get(pkg[f.id]) -%}
+      {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
+    {% else %}
+      {{ split_bilingual_field(pkg[f.id], client_lang)}}
+    {% endif %}
   {%- endif -%}
 {%- endmacro -%}
 
@@ -106,5 +110,13 @@ Choose the most appropriate display name for a resource
     {{- name -}}
   {%- else -%}
     {{- res.url -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro split_bilingual_field(field_text, client_lang) -%}
+  {%- if field_text != None and ' | ' in field_text -%}
+    {{- field_text.split(' | ')[1 if client_lang == 'fr' else 0] -}}
+  {%- else -%}
+    {{- field_text -}}
   {%- endif -%}
 {%- endmacro -%}
