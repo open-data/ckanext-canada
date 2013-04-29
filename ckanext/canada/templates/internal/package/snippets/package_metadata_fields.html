@@ -3,6 +3,8 @@
 
 {% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.1) %}
-  {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
+  {% if id != 'portal_release_date' or h.may_publish_datasets() %}
+    {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
+  {% endif %}
 {% endfor %}
 
