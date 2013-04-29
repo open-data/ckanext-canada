@@ -354,7 +354,9 @@ def apply_field_customizations(schema_out, vocab):
             choices = merge(f['choices'], choices)
 
         # some fields we are using given ids as keys
-        if field in ('language', 'resource:resource_type'):
+        if field in ('language', 'resource:resource_type', 'resource:format'):
+            # remove choices that only exist in pilot
+            choices = [c for c in choices if 'id' in c]
             for c in choices:
                 c['key'] = c['id']
         f['choices'] = choices
