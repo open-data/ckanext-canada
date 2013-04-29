@@ -219,6 +219,10 @@ Dataset and resource field descriptions are dicts containing the following:
   not for fields that contain no language or both languages in the
   same value
 
+``'mandatory'``
+  ``True`` if always required, ``"geo"`` if required for geo datasets,
+  ``"raw"`` if required for raw datasets, ``False`` if not required
+
 ``'choices'``
   if this key exists then the user must select one of the choices
   in this list; the list contains dicts with the following:

@@ -1595,7 +1595,7 @@
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "mandatory": false, 
+          "mandatory": "raw", 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1740,7 +1740,7 @@
             "eng": "Topic Category", 
             "fra": "Cat\u00e9gorie de sujet"
           }, 
-          "mandatory": false, 
+          "mandatory": "geo", 
           "type": "tag_vocabulary"
         }, 
         {
@@ -4547,7 +4547,7 @@
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": false, 
+          "mandatory": "geo", 
           "type": "choice"
         }, 
         {
@@ -4688,7 +4688,7 @@
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": false, 
+          "mandatory": "geo", 
           "type": "choice"
         }, 
         {
@@ -4707,7 +4707,7 @@
             "eng": "Browse Graphic File Name", 
             "fra": "Recherche du nom du fichier graphique"
           }, 
-          "mandatory": false, 
+          "mandatory": "geo", 
           "type": "image_url"
         }, 
         {

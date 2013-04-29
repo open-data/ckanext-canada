@@ -287,7 +287,8 @@ def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
         'type': p.ckan_type,
-        'mandatory': bool(p.gc_multiplicity.startswith('M')),
+        'mandatory': {'M': True, 'G': 'geo', 'R': 'raw'
+            }.get(p.gc_multiplicity[:1], False),
         'description': {'eng': p.description, 'fra': p.description_fra},
         'example': {'eng': p.example, 'fra': p.example_fra},
         'label': {'eng': p.property_label, 'fra': p.property_label_fra},
