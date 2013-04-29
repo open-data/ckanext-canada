@@ -1403,25 +1403,6 @@
         }, 
         {
           "bilingual": false, 
-          "description": {
-            "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
-            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
-          }, 
-          "example": {
-            "eng": "10.978.86123/45678", 
-            "fra": "10.978.86123/45678"
-          }, 
-          "existing": false, 
-          "id": "digital_object_identifier", 
-          "label": {
-            "eng": "Digital Object Identifier", 
-            "fra": "Identificateur d\u2019objet num\u00e9rique"
-          }, 
-          "mandatory": false, 
-          "type": "text"
-        }, 
-        {
-          "bilingual": false, 
           "choices": [
             {
               "eng": "Data", 
@@ -1791,65 +1772,6 @@
           }, 
           "mandatory": true, 
           "type": "fixed"
-        }, 
-        {
-          "bilingual": true, 
-          "description": {
-            "eng": "The name of the series, or aggregate dataset, of which the dataset is a part", 
-            "fra": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
-          }, 
-          "example": {
-            "eng": "CANSIM", 
-            "fra": "CANSIM"
-          }, 
-          "existing": false, 
-          "id": "data_series_name", 
-          "label": {
-            "eng": "Data Series Name", 
-            "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
-          }, 
-          "mandatory": false, 
-          "pilot_help": {
-            "eng": "A name given to multiple datasets to present them as a group or a set.", 
-            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
-          }, 
-          "pilot_id": "group_name_en", 
-          "pilot_id_fra": "group_name_fr", 
-          "pilot_name": {
-            "eng": "Dataset Group Name English", 
-            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
-          }, 
-          "pilot_type": "text", 
-          "type": "text"
-        }, 
-        {
-          "bilingual": true, 
-          "description": {
-            "eng": "The identification of the series\u2019 issue information.", 
-            "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
-          }, 
-          "example": {
-            "eng": "Table 502-0003", 
-            "fra": "Tableau 502-0003"
-          }, 
-          "existing": false, 
-          "id": "data_series_issue_identification", 
-          "label": {
-            "eng": "Issue Identification", 
-            "fra": "Identification de l\u2019enjeu"
-          }, 
-          "mandatory": false, 
-          "pilot_help": {
-            "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
-            "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
-          }, 
-          "pilot_id": "deptIdentifier", 
-          "pilot_name": {
-            "eng": "Department Generated Identifier", 
-            "fra": "Identificateur unique g\u00e9n\u00e9r\u00e9 par le d\u00e9partement"
-          }, 
-          "pilot_type": "text", 
-          "type": "text"
         }, 
         {
           "bilingual": false, 
@@ -4603,6 +4525,84 @@
     {
       "description": {}, 
       "fields": [
+        {
+          "bilingual": true, 
+          "description": {
+            "eng": "The name of the series, or aggregate dataset, of which the dataset is a part", 
+            "fra": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
+          }, 
+          "example": {
+            "eng": "CANSIM", 
+            "fra": "CANSIM"
+          }, 
+          "existing": false, 
+          "id": "data_series_name", 
+          "label": {
+            "eng": "Data Series Name", 
+            "fra": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
+          }, 
+          "mandatory": false, 
+          "pilot_help": {
+            "eng": "A name given to multiple datasets to present them as a group or a set.", 
+            "fra": "Titre donn\u00e9 \u00e0 de multiples bases de donn\u00e9es afin de les pr\u00e9senter en tant que groupe ou que s\u00e9rie."
+          }, 
+          "pilot_id": "group_name_en", 
+          "pilot_id_fra": "group_name_fr", 
+          "pilot_name": {
+            "eng": "Dataset Group Name English", 
+            "fra": "Nom du groupe des ensembles de donn\u00e9es en anglais"
+          }, 
+          "pilot_type": "text", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": true, 
+          "description": {
+            "eng": "The identification of the series\u2019 issue information.", 
+            "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
+          }, 
+          "example": {
+            "eng": "Table 502-0003", 
+            "fra": "Tableau 502-0003"
+          }, 
+          "existing": false, 
+          "id": "data_series_issue_identification", 
+          "label": {
+            "eng": "Issue Identification", 
+            "fra": "Identification de l\u2019enjeu"
+          }, 
+          "mandatory": false, 
+          "pilot_help": {
+            "eng": "The unique identifier used  by departments/agencies to identify the dataset in an internal system.", 
+            "fra": "L'identificateur unique appliqu\u00e9 par les minist\u00e8res ou les organismes \u00e0 l\u2019ensemble de donn\u00e9es dans un syst\u00e8me interne."
+          }, 
+          "pilot_id": "deptIdentifier", 
+          "pilot_name": {
+            "eng": "Department Generated Identifier", 
+            "fra": "Identificateur unique g\u00e9n\u00e9r\u00e9 par le d\u00e9partement"
+          }, 
+          "pilot_type": "text", 
+          "type": "text"
+        }, 
+        {
+          "bilingual": false, 
+          "description": {
+            "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
+            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
+          }, 
+          "example": {
+            "eng": "10.978.86123/45678", 
+            "fra": "10.978.86123/45678"
+          }, 
+          "existing": false, 
+          "id": "digital_object_identifier", 
+          "label": {
+            "eng": "Digital Object Identifier", 
+            "fra": "Identificateur d\u2019objet num\u00e9rique"
+          }, 
+          "mandatory": false, 
+          "type": "text"
+        }, 
         {
           "bilingual": false, 
           "description": {

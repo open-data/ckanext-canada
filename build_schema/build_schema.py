@@ -31,21 +31,18 @@ LANGS = 'eng', 'fra'
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
     ("Primary Fields", [
-        'id', # unique ID,
-        'language', # Always "eng; CAN|fra; CAN"
-        'owner_org', # XXX set to GC Department (ckan group), no data entry
-        'author_email', # XXX set to single common email, no data entry
+        'id',
+        'language', # Always "eng; CAN | fra; CAN"
+        'owner_org',
+        'author_email', # set to single common email, no data entry
         'title',
         'name',
         'notes',
-        'digital_object_identifier', # "datacite" identifier
-        'catalog_type', # will control field validation
+        'catalog_type', # controls some field validation
         'subject',
         'topic_category',
         'keywords',
         'license_id',
-        'data_series_name',
-        'data_series_issue_identification',
         'geographic_region',
         'spatial',
         'spatial_representation_type',
@@ -56,12 +53,15 @@ SECTIONS_FIELDS = [
         'maintenance_and_update_frequency',
         ]),
     ("Additional Fields", [
+        'data_series_name',
+        'data_series_issue_identification',
+        'digital_object_identifier', # "datacite" identifier
         'time_period_coverage_start',
         'time_period_coverage_end',
         'url',
         'endpoint_url',
         'ready_to_publish',
-        'portal_release_date', # ADMIN-only field that will control publishing
+        'portal_release_date', # ADMIN-only field that controls publishing
         ]),
     ]
 
