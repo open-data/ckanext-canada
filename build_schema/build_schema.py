@@ -67,11 +67,6 @@ SECTIONS_FIELDS = [
 
 # override calculated values
 FIELD_OVERRIDES = {
-    'resource:resource_type': {'choices': [ # should match normal CKAN values
-        {'eng': 'File', 'fra': 'File', 'key': 'file'},
-        {'eng': 'Supporting Document', 'fra': 'Document', 'key': 'doc'},
-        {'eng': 'API', 'fra': 'API', 'key': 'api'},
-        ]},
     }
 
 # Resource fields (no sections)
@@ -358,8 +353,10 @@ def apply_field_customizations(schema_out, vocab):
         elif 'choices' in f:
             choices = merge(f['choices'], choices)
 
-        # language is special: we are using given ids as keys
-        if field == 'language':
+        # some fields we are using given ids as keys
+        if field in ('language', 'resource:resource_type', 'resource:format'):
+            # remove choices that only exist in pilot
+            choices = [c for c in choices if 'id' in c]
             for c in choices:
                 c['key'] = c['id']
         f['choices'] = choices

@@ -36,6 +36,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             maintenance_and_update_frequency=u'As Needed | Au besoin',
             notes=u'...',
             notes_fra=u'...',
+            date_published=u'2013-01-01',
             keywords=u'book',
             keywords_fra=u'livre')
 
