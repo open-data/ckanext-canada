@@ -32,7 +32,9 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             'resources': [{
                 'description': u'Full text.',
                 'format': u'plain text',
-                'url': u'http://www.annakarenina.com/download/'
+                'url': u'http://www.annakarenina.com/download/',
+                'resource_type': 'text',
+                'language': 'zxx; CAN',
             }],
             'owner_org': NRCAN_UUID,
         }
