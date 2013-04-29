@@ -9,7 +9,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-from ckanext.canada.helpers import may_publish_datasets
+from ckanext.canada.helpers import may_publish_datasets, user_organizations
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -49,6 +49,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     """
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
+    p.implements(p.ITemplateHelpers)
 
     def update_config(self, config):
         # add our templates
@@ -73,6 +74,9 @@ class DataGCCAPublic(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
+    
+    def get_helpers(self):
+        return {'user_organizations': user_organizations}
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):

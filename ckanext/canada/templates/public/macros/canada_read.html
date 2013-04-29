@@ -108,3 +108,11 @@ Choose the most appropriate display name for a resource
     {{- res.url -}}
   {%- endif -%}
 {%- endmacro -%}
+
+{%- macro split_bilingual_field(field_text, client_lang) -%}
+  {%- if field_text != None and ' | ' in field_text -%}
+    {{- field_text.split(' | ')[1 if client_lang == 'fr' else 0] -}}
+  {%- else -%}
+    {{- field_text -}}
+  {%- endif -%}
+{%- endmacro -%}
