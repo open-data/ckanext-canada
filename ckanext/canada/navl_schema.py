@@ -68,11 +68,11 @@ def _schema_update(schema, purpose):
             schema[name] = v[0] if purpose != 'show' else v[1]
 
         if field['type'] == 'choice' and purpose in ('create', 'update'):
-            schema[name].append(OneOf(c['key'] for c in field['choices']))
+            schema[name].append(OneOf([c['key'] for c in field['choices']]))
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['type'] == 'choice' and purpose in ('create', 'update'):
-            resources[name].append(OneOf(c['key'] for c in field['choices']))
+            resources[name].append(OneOf([c['key'] for c in field['choices']]))
 
     if purpose in ('create', 'update'):
         schema['validation_override'] = [ignore_missing]

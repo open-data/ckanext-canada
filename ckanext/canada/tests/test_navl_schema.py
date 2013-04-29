@@ -31,9 +31,9 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             'title': u'A Novel By Tolstoy',
             'resources': [{
                 'description': u'Full text.',
-                'format': u'plain text',
+                'format': u'TXT',
                 'url': u'http://www.annakarenina.com/download/',
-                'resource_type': 'text',
+                'resource_type': 'file',
                 'language': 'zxx; CAN',
             }],
         }
@@ -109,7 +109,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
-            validation_override=True, **self.incomplete_pkg)
+            validation_override=True, **self.almost_complete_pkg)
 
         self.sysadmin_action.package_create(
-            validation_override=True, **self.incomplete_pkg)
+            validation_override=True, **self.almost_complete_pkg)
