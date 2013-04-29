@@ -17,11 +17,15 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         CreateTestData.create()
         cls.sysadmin_user = model.User.get('testsysadmin')
         cls.normal_user = model.User.get('annafan')
+
         cls.sysadmin_action = TestAppCKAN(cls.app,
             str(cls.sysadmin_user.apikey)).action
         cls.normal_action = TestAppCKAN(cls.app,
             str(cls.normal_user.apikey)).action
         cls.action = TestAppCKAN(cls.app).action
+
+        cls.sysadmin_action.organization_member_create(
+            username='annafan', id=NRCAN_UUID, role='editor')
 
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
