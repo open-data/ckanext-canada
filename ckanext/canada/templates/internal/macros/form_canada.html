@@ -35,6 +35,9 @@ orgs_avail  - h.organizations_available helper (optional)
   {% set widget = form.input %}
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
+    
+  {% elif field.type == 'date' %}
+    {% do inputargs.update({'type': 'date', 'value': h.today()}) %}
 
   {% elif field.choices %}
     {% do inputargs.update({'options':[]}) %}
