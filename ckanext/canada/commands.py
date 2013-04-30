@@ -27,7 +27,7 @@ class CanadaCommand(CkanCommand):
                       create-organizations
                       load-datasets <.jl source file>
                                     [<lines to skip> [<lines to load>]]
-                                    [-p <processes>] [-u <ckan user>]
+                                    [-r] [-p <processes>] [-u <ckan user>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <processes>]
 
@@ -40,6 +40,8 @@ class CanadaCommand(CkanCommand):
     usage = __doc__
 
     parser = paste.script.command.Command.standard_parser(verbose=True)
+    parser.add_option('-r', '--replace-datasets', action='store_true',
+        dest='replace_datasets', help='Replace existing datasets')
     parser.add_option('-c', '--config', dest='config',
         default='development.ini', help='Config file to use.')
     parser.add_option('-p', '--processes', dest='processes',
@@ -156,12 +158,13 @@ class CanadaCommand(CkanCommand):
             '-c', self.options.config]
         if self.options.ckan_user:
             cmd += ['-u', self.options.ckan_user]
+        if self.options.replace_datasets:
+            cmd += ['-r']
 
         stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
         for job_ids, finished, result in pool:
             print job_ids, stats.next(), finished, result.strip()
-
 
     def load_dataset_worker(self):
         """
@@ -172,8 +175,24 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
         for line in iter(sys.stdin.readline, ''):
             pkg = json.loads(line)
+            _trim_package(pkg)
+
+            existing = None
+            if self.options.replace_datasets:
+                try:
+                    existing = registry.action.package_show(id=pkg['name'])
+                    _trim_package(existing)
+                    if existing == pkg:
+                        sys.stdout.write('unchanged\n')
+                        continue
+                except NotFound:
+                    existing = None
+
             try:
-                response = registry.action.package_create(**pkg)
+                if existing:
+                    response = registry.action.package_update(**pkg)
+                else:
+                    response = registry.action.package_create(**pkg)
             except (ValidationError, SearchError), e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
@@ -287,24 +306,6 @@ class CanadaCommand(CkanCommand):
         portal = LocalCKAN()
         now = datetime.now()
 
-        def trim_package(pkg):
-            """
-            remove keys from pkg that we don't care about when comparing
-            or updating/creating packages.
-            """
-            if not pkg:
-                return
-            for k in ['extras', 'metadata_modified', 'metadata_created',
-                    'revision_id', 'revision_timestamp']:
-                del pkg[k]
-            for t in pkg.get('tags', []):
-                for k in ['id', 'revision_timestamp']:
-                    del t[k]
-            for r in pkg['resources']:
-                for k in ['resource_group_id', 'revision_id',
-                        'revision_timestamp']:
-                    del r[k]
-
         for package_id in iter(sys.stdin.readline, ''):
             try:
                 data = registry.action.package_show(id=package_id.strip())
@@ -312,7 +313,7 @@ class CanadaCommand(CkanCommand):
             except NotAuthorized:
                 source_pkg = None
 
-            trim_package(source_pkg)
+            _trim_package(source_pkg)
 
             if source_pkg:
                 # treat unpublished packages same as deleted packages
@@ -328,7 +329,7 @@ class CanadaCommand(CkanCommand):
             except (NotFound, NotAuthorized):
                 target_pkg = None
 
-            trim_package(target_pkg)
+            _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
                 result = 'unchanged'
@@ -375,3 +376,23 @@ class CanadaCommand(CkanCommand):
             response = registry.action.group_delete(id=organization['id'])
         except NotFound:
             pass
+
+
+def _trim_package(pkg):
+    """
+    remove keys from pkg that we don't care about when comparing
+    or updating/creating packages.
+    """
+    if not pkg:
+        return
+    for k in ['extras', 'metadata_modified', 'metadata_created',
+            'revision_id', 'revision_timestamp']:
+        del pkg[k]
+    for t in pkg.get('tags', []):
+        for k in ['id', 'revision_timestamp']:
+            del t[k]
+    for r in pkg['resources']:
+        for k in ['resource_group_id', 'revision_id',
+                'revision_timestamp']:
+            del r[k]
+
