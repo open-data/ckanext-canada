@@ -9,7 +9,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-from ckanext.canada.helpers import may_publish_datasets, user_organizations, today
+from ckanext.canada.helpers import may_publish_datasets, user_organizations, today, date_format
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -40,7 +40,8 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def get_helpers(self):
         return {'may_publish_datasets': may_publish_datasets,
-                'today': today}
+                'today': today,
+                'date_format': date_format}
 
 
 class DataGCCAPublic(p.SingletonPlugin):

@@ -23,6 +23,13 @@ def user_organizations(user):
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     
+# Return the Date format that the WET datepicker requires to function properly
+def date_format(date_string):
+    if not date_string:
+        return None
+    else:
+        return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+    
 class EST(datetime.tzinfo):
     def utcoffset(self, dt):
       return datetime.timedelta(hours=-5)

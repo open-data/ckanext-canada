@@ -37,7 +37,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% set widget = form.markdown %}
     
   {% elif field.type == 'date' %}
-    {% do inputargs.update({'type': 'date', 'value': h.today()}) %}
+    {% do inputargs.update({'type': 'date', 'value': h.date_format(data[id]) or h.today() }) %}
 
   {% elif field.type == 'boolean' %}
     {% set widget = big_checkbox_field %}
