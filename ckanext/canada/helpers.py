@@ -1,5 +1,6 @@
 from pylons import c
 import ckan.model as model
+import datetime
 
 ORG_MAY_PUBLISH_KEY = 'publish'
 ORG_MAY_PUBLISH_VALUE = 'True'
@@ -18,3 +19,20 @@ def may_publish_datasets():
 def user_organizations(user):
     u = model.User.get(user['name'])
     return u.get_groups(group_type = "organization")
+    
+def today():
+    return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
+    
+# Return the Date format that the WET datepicker requires to function properly
+def date_format(date_string):
+    if not date_string:
+        return None
+    else:
+        return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+    
+class EST(datetime.tzinfo):
+    def utcoffset(self, dt):
+      return datetime.timedelta(hours=-5)
+
+    def dst(self, dt):
+        return datetime.timedelta(0)
