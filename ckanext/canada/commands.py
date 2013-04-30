@@ -387,12 +387,14 @@ def _trim_package(pkg):
         return
     for k in ['extras', 'metadata_modified', 'metadata_created',
             'revision_id', 'revision_timestamp']:
-        del pkg[k]
+        if k in pkg:
+            del pkg[k]
     for t in pkg.get('tags', []):
         for k in ['id', 'revision_timestamp']:
             del t[k]
     for r in pkg['resources']:
         for k in ['resource_group_id', 'revision_id',
                 'revision_timestamp']:
-            del r[k]
+            if k in r:
+                del r[k]
 
