@@ -64,6 +64,9 @@
           {%- elif f.type == 'url' -%}
             {{ cr.url_field(f, pkg) }}
 
+          {%- elif f.type == 'boolean' -%}
+            {{ cr.bool_field(f, pkg) }}
+
           {%- elif f.id == 'owner_org' -%}
             {{ cr.org_field(pkg, client_lang) }}
 
