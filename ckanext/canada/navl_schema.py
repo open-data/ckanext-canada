@@ -5,7 +5,7 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
-    name_validator, package_name_validator)
+    name_validator, package_name_validator, boolean_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -79,6 +79,7 @@ def _schema_field_validators(name, lang, field):
                 [convert_from_tags(field['vocabulary'])])
 
     edit = []
+    view = []
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
     if field['mandatory']:
@@ -88,11 +89,14 @@ def _schema_field_validators(name, lang, field):
         edit.append(isodate)
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
+    elif field['type'] == 'boolean':
+        edit.append(boolean_validator)
+        view.extend([convert_from_extras, ignore_missing, boolean_validator])
     else:
         edit.append(unicode)
 
     return (edit + [convert_to_extras],
-            [convert_from_extras, ignore_missing])
+            view if view else [convert_from_extras, ignore_missing])
 
 
 def treat_missing_as_empty(key, data, errors, context):

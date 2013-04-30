@@ -120,3 +120,14 @@ Choose the most appropriate display name for a resource
     {{- field_text -}}
   {%- endif -%}
 {%- endmacro -%}
+
+{#
+Render a boolean field with a friendly WET checkmark or X
+#}
+{%- macro bool_field(f, pkg) -%}
+  {%- if pkg[f.id] -%}
+    <span class="wb-icon-tick"></span>
+  {%- else -%}
+    <span class="wb-icon-x"></span>
+  {%- endif -%}
+{%- endmacro -%}
