@@ -317,8 +317,8 @@ class CanadaCommand(CkanCommand):
 
             if source_pkg:
                 # treat unpublished packages same as deleted packages
-                if not source_pkg['date_published'] or isodate(
-                        source_pkg['date_published'], None) > now:
+                if not source_pkg['portal_release_date'] or isodate(
+                        source_pkg['portal_release_date'], None) > now:
                     source_pkg = None
 
             try:
