@@ -36,6 +36,9 @@ orgs_avail  - h.organizations_available helper (optional)
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
 
+  {% elif field.type == 'boolean' %}
+    {% set widget = big_checkbox_field %}
+
   {% elif field.choices %}
     {% do inputargs.update({'options':[]}) %}
     {% if id in data %}
@@ -245,4 +248,34 @@ Example:
       </ul>
     </div>
   {% endif %}
+{% endmacro %}
+
+{#
+Create a single checkbox field, with emphasis
+
+name        - The name of the form parameter.
+id          - The id to use on the input and label. Convention is to prefix with 'field-'.
+label       - The human readable label.
+options     -
+selected    -
+error       - A list of error strings for the field or just true to highlight the field.
+classes     - An array of classes to apply to the control-group.
+#}
+{% macro big_checkbox_field(name, id='', label='', value='', checked=false,
+    placeholder='', error="", classes=[], attrs={}) %}
+  {%- set extra_html = caller() if caller -%}
+    <div class="control-group{{ " error" if error }}"></div>
+    <h4>{{ label }}</h4>
+    <div class="span-1 row-start"></div>
+    <div class="controls span-4 row-end">
+      <label class="form-checkbox" for="{{ name }}"
+          style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+        <input id="{{ name }}" type="checkbox" name="{{ name
+            }}" value="{{ 1 | empty_and_escape }}" {{
+            "checked " if value }} />
+        {{ extra_html }}
+      </label>
+      {% if error and error is iterable %}<strong class="error-inline">{{ error|join(', ') }}</strong>{% endif %}
+    </div>
+    <div class="clear"></div>
 {% endmacro %}
