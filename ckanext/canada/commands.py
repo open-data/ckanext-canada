@@ -183,6 +183,7 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
         for line in iter(sys.stdin.readline, ''):
             pkg = json.loads(line)
+            validation_override = pkg.get('validation_override') # FIXME: remove me
             _trim_package(pkg)
 
             existing = None
@@ -199,6 +200,7 @@ class CanadaCommand(CkanCommand):
                     except IOError:
                         break
                     continue
+            pkg['validation_override'] = validation_override
             try:
                 if existing:
                     response = registry.action.package_update(**pkg)
