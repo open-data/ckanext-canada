@@ -1,6 +1,7 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
-from ckan.logic.validators import isodate
+from ckan.logic.validators import isodate, boolean_validator
+from ckan.lib.navl.dictization_functions import Invalid
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -14,7 +15,7 @@ from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanext.canada.stats import completion_stats
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized, SearchError)
+    ValidationError, NotAuthorized, SearchIndexError)
 
 class CanadaCommand(CkanCommand):
     """
@@ -26,12 +27,14 @@ class CanadaCommand(CkanCommand):
                       delete-vocabularies
                       create-organizations
                       load-datasets <.jl source file>
-                                    [<lines to skip> [<lines to load>]]
-                                    [-p <processes>] [-u <ckan user>]
+                                    [<starting line number> [<lines to load>]]
+                                    [-r] [-p <processes>] [-u <ckan user>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <processes>]
 
         * all commands take optional [-c <path to ckan config file>]
+        * <starting line number> defaults to 1
+        * <lines to load> defaults to loading all lines
         * <processes> defaults to 1
         * <last activity date> defaults to 7 days ago
         * <ckan user> defaults to the system user
@@ -40,6 +43,8 @@ class CanadaCommand(CkanCommand):
     usage = __doc__
 
     parser = paste.script.command.Command.standard_parser(verbose=True)
+    parser.add_option('-r', '--replace-datasets', action='store_true',
+        dest='replace_datasets', help='Replace existing datasets')
     parser.add_option('-c', '--config', dest='config',
         default='development.ini', help='Config file to use.')
     parser.add_option('-p', '--processes', dest='processes',
@@ -140,28 +145,35 @@ class CanadaCommand(CkanCommand):
                 vocabulary_id=vocab['id'],
                 )
 
-    def load_datasets(self, jl_source, skip_lines=0, max_count=None):
-        skip_lines = int(skip_lines)
+    def load_datasets(self, jl_source, start_line=1, max_count=None):
+        start_line = int(start_line)
         if max_count is not None:
             max_count = int(max_count)
 
         def line_reader():
-            for num, line in enumerate(open(jl_source)):
-                if num < skip_lines:
+            for num, line in enumerate(open(jl_source), 1):
+                if num < start_line:
                     continue
-                if max_count is not None and num >= skip_lines + max_count:
+                if max_count is not None and num >= start_line + max_count:
                     break
                 yield num, line.strip() + '\n'
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
             '-c', self.options.config]
         if self.options.ckan_user:
             cmd += ['-u', self.options.ckan_user]
+        if self.options.replace_datasets:
+            cmd += ['-r']
 
         stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
-        for job_ids, finished, result in pool:
-            print job_ids, stats.next(), finished, result.strip()
-
+        try:
+            for job_ids, finished, result in pool:
+                print job_ids, stats.next(), finished, result.strip()
+        except IOError, e:
+            # let pipe errors cause silent exit --
+            # the worker will have provided the real traceback
+            if e.errno != 32:
+                raise
 
     def load_dataset_worker(self):
         """
@@ -172,16 +184,42 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
         for line in iter(sys.stdin.readline, ''):
             pkg = json.loads(line)
+            validation_override = pkg.get('validation_override') # FIXME: remove me
+            _trim_package(pkg)
+
+            existing = None
+            if self.options.replace_datasets:
+                try:
+                    existing = registry.action.package_show(id=pkg['id'])
+                    _trim_package(existing)
+                except NotFound:
+                    existing = None
+                if existing == pkg:
+                    sys.stdout.write('unchanged\n')
+                    try:
+                        sys.stdout.flush()
+                    except IOError:
+                        break
+                    continue
+            pkg['validation_override'] = validation_override
             try:
-                response = registry.action.package_create(**pkg)
-            except (ValidationError, SearchError), e:
+                if existing:
+                    response = registry.action.package_update(**pkg)
+                else:
+                    response = registry.action.package_create(**pkg)
+            except ValidationError, e:
+                sys.stdout.write(json.dumps(e.error_dict) + '\n')
+            except SearchIndexError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
                 return
             else:
+                sys.stdout.write('replace ' if existing else 'create ')
                 sys.stdout.write(response + '\n')
             try:
                 sys.stdout.flush()
+            except KeyboardInterrupt:
+                return
             except IOError:
                 break
 
@@ -218,21 +256,26 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
-        for package_ids, next_date in changed_package_id_runs(activity_date):
-            stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+        try:
+            for package_ids, next_date in changed_package_id_runs(activity_date):
+                stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
-            jobs = ((i, i + '\n') for i in package_ids)
-            try:
-                job_ids, finished, result = pool.send(jobs)
-                while result is not None:
-                    stats[result.strip()] += 1
-                    job_ids, finished, result = pool.next()
-            except KeyboardInterrupt:
-                break
+                jobs = ((i, i + '\n') for i in package_ids)
+                try:
+                    job_ids, finished, result = pool.send(jobs)
+                    while result is not None:
+                        stats[result.strip()] += 1
+                        job_ids, finished, result = pool.next()
+                except KeyboardInterrupt:
+                    break
 
-            print next_date.isoformat(),
-            print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
-
+                print next_date.isoformat(),
+                print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+        except IOError, e:
+            # let pipe errors cause silent exit --
+            # the worker will have provided the real traceback
+            if e.errno != 32:
+                raise
 
     def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
         """
@@ -287,24 +330,6 @@ class CanadaCommand(CkanCommand):
         portal = LocalCKAN()
         now = datetime.now()
 
-        def trim_package(pkg):
-            """
-            remove keys from pkg that we don't care about when comparing
-            or updating/creating packages.
-            """
-            if not pkg:
-                return
-            for k in ['extras', 'metadata_modified', 'metadata_created',
-                    'revision_id', 'revision_timestamp']:
-                del pkg[k]
-            for t in pkg.get('tags', []):
-                for k in ['id', 'revision_timestamp']:
-                    del t[k]
-            for r in pkg['resources']:
-                for k in ['resource_group_id', 'revision_id',
-                        'revision_timestamp']:
-                    del r[k]
-
         for package_id in iter(sys.stdin.readline, ''):
             try:
                 data = registry.action.package_show(id=package_id.strip())
@@ -312,12 +337,12 @@ class CanadaCommand(CkanCommand):
             except NotAuthorized:
                 source_pkg = None
 
-            trim_package(source_pkg)
+            _trim_package(source_pkg)
 
             if source_pkg:
                 # treat unpublished packages same as deleted packages
-                if not source_pkg['date_published'] or isodate(
-                        source_pkg['date_published'], None) > now:
+                if not source_pkg['portal_release_date'] or isodate(
+                        source_pkg['portal_release_date'], None) > now:
                     source_pkg = None
 
             try:
@@ -328,7 +353,7 @@ class CanadaCommand(CkanCommand):
             except (NotFound, NotAuthorized):
                 target_pkg = None
 
-            trim_package(target_pkg)
+            _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
                 result = 'unchanged'
@@ -375,3 +400,60 @@ class CanadaCommand(CkanCommand):
             response = registry.action.group_delete(id=organization['id'])
         except NotFound:
             pass
+
+
+def _trim_package(pkg):
+    """
+    remove keys from pkg that we don't care about when comparing
+    or updating/creating packages.  Also try to convert types and
+    create missing fields that will be present in package_show.
+    """
+    # XXX full of custom hacks and deep knowledge of our schema :-(
+    if not pkg:
+        return
+    for k in ['extras', 'metadata_modified', 'metadata_created',
+            'revision_id', 'revision_timestamp', 'organization',
+            'version', 'tracking_summary',
+            'tags', # just because we don't use them
+            'num_tags', 'num_resources', 'maintainer',
+            'isopen', 'relationships_as_object', 'license_title',
+            'maintainer_email', 'author',
+            'groups', # just because we don't use them
+            'relationships_as_subject', 'department_number',
+            # FIXME: remove these when we can:
+            'validation_override', 'resource_type',
+            ]:
+        if k in pkg:
+            del pkg[k]
+    for r in pkg['resources']:
+        for k in ['resource_group_id', 'revision_id',
+                'revision_timestamp', 'cache_last_updated',
+                'webstore_last_updated', 'id', 'state', 'hash',
+                'description', 'tracking_summary', 'mimetype_inner',
+                'mimetype', 'cache_url', 'created', 'webstore_url',
+                'last_modified', 'position', ]:
+            if k in r:
+                del r[k]
+        for k in ['name', 'size']:
+            if k not in r:
+                r[k] = None
+    for k in ['ready_to_publish', 'private']:
+        pkg[k] = boolean_validator(pkg.get(k, ''), None)
+    if 'name' not in pkg:
+        pkg['name'] = pkg['id']
+    if 'type' not in pkg:
+        pkg['type'] = 'dataset'
+    if 'state' not in pkg:
+        pkg['state'] = 'active'
+    for k in ['url']:
+        if k not in pkg:
+            pkg[k] = ''
+    for name, lang, field in schema_description.dataset_field_iter():
+        if field['type'] == 'date':
+            try:
+                pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
+            except Invalid:
+                pass # not for us to fail validation
+        if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
+            pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
+
