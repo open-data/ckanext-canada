@@ -60,6 +60,7 @@ class CanadaCommand(CkanCommand):
         default=1, type="int")
     parser.add_option('-u', '--ckan-user', dest='ckan_user',
         default=None)
+    parser.add_option('-l', '--log', dest='log', default=None)
 
     def command(self):
         '''
@@ -159,6 +160,10 @@ class CanadaCommand(CkanCommand):
         if max_count is not None:
             max_count = int(max_count)
 
+        log = None
+        if self.options.log:
+            log = open(self.options.log, 'a')
+
         def line_reader():
             for num, line in enumerate(open(jl_source), 1):
                 if num < start_line:
@@ -177,7 +182,18 @@ class CanadaCommand(CkanCommand):
         pool = worker_pool(cmd, self.options.processes, line_reader())
         try:
             for job_ids, finished, result in pool:
-                print job_ids, stats.next(), finished, result.strip()
+                timestamp, action, error, response = json.loads(result)
+                print job_ids, stats.next(), finished, action,
+                print json.dumps(response) if response else ''
+                if log:
+                    log.write(json.dumps([
+                        timestamp,
+                        finished,
+                        action,
+                        error,
+                        response,
+                        ]) + '\n')
+                    log.flush()
         except IOError, e:
             # let pipe errors cause silent exit --
             # the worker will have provided the real traceback
@@ -191,6 +207,14 @@ class CanadaCommand(CkanCommand):
         which are the responses from each action call.
         """
         registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
+
+        def reply(action, error, response):
+            sys.stdout.write(json.dumps([
+                datetime.now().isoformat(),
+                action,
+                error,
+                response]) + '\n')
+
         for line in iter(sys.stdin.readline, ''):
             pkg = json.loads(line)
             validation_override = pkg.get('validation_override') # FIXME: remove me
@@ -204,27 +228,27 @@ class CanadaCommand(CkanCommand):
                 except NotFound:
                     existing = None
                 if existing == pkg:
-                    sys.stdout.write('unchanged\n')
+                    reply('unchanged', None, None)
                     try:
                         sys.stdout.flush()
                     except IOError:
                         break
                     continue
             pkg['validation_override'] = validation_override
+            action = 'replace' if existing else 'create'
             try:
                 if existing:
                     response = registry.action.package_update(**pkg)
                 else:
                     response = registry.action.package_create(**pkg)
             except ValidationError, e:
-                sys.stdout.write(json.dumps(e.error_dict) + '\n')
+                reply(action, 'ValidationError', e.error_dict)
             except SearchIndexError, e:
-                sys.stdout.write(unicode(e).encode('utf-8') + '\n')
+                reply(action, 'SearchIndexError', unicode(e))
             except KeyboardInterrupt:
                 return
             else:
-                sys.stdout.write('replace ' if existing else 'create ')
-                sys.stdout.write(response + '\n')
+                reply(action, None, response)
             try:
                 sys.stdout.flush()
             except KeyboardInterrupt:
