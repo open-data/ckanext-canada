@@ -77,6 +77,16 @@
         </tr>
       {% endif %}
     {% endfor %}
+      <tr>
+        <td>
+          <strong>{{ _('Openness rating') }}</strong>:
+        </td>
+        <td>
+          {% for star in range(h.openness_score(pkg)) -%}
+            *
+          {%- endfor %}
+        </td>
+      </tr>
     </tbody>
   </table>
   

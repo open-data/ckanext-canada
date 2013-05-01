@@ -17,6 +17,24 @@ def may_publish_datasets():
         if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
             return True
 
+def openness_score(pkg):
+    score = 0
+    for r in pkg['resources']:
+        # scores copied from ckanext-qa and our valid formats
+        score = max(score, {
+            'CSV': 3,
+            'JSON': 3,
+            'kml / kmz': 3,
+            'ods': 2,
+            'RDF': 4,
+            'rdfa': 4,
+            'TXT': 1,
+            'xls': 2,
+            'xlsm': 2,
+            'XML': 3,
+            }.get(r['format'], 0))
+    return score
+
 
 def user_organizations(user):
     u = model.User.get(user['name'])
@@ -38,7 +56,8 @@ class EST(datetime.tzinfo):
 
     def dst(self, dt):
         return datetime.timedelta(0)
-  
+
+
 # Retrieve the comments for this dataset that have been saved in the Drupal database
 # This is ugly - look away!  Or better yet, suggest improvements
 def dataset_comments(pkg_id):
