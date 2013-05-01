@@ -163,8 +163,14 @@ class CanadaCommand(CkanCommand):
 
         stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
-        for job_ids, finished, result in pool:
-            print job_ids, stats.next(), finished, result.strip()
+        try:
+            for job_ids, finished, result in pool:
+                print job_ids, stats.next(), finished, result.strip()
+        except IOError, e:
+            # let pipe errors cause silent exit --
+            # the worker will have provided the real traceback
+            if e.errno != 32:
+                raise
 
     def load_dataset_worker(self):
         """
@@ -240,21 +246,26 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
-        for package_ids, next_date in changed_package_id_runs(activity_date):
-            stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+        try:
+            for package_ids, next_date in changed_package_id_runs(activity_date):
+                stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
-            jobs = ((i, i + '\n') for i in package_ids)
-            try:
-                job_ids, finished, result = pool.send(jobs)
-                while result is not None:
-                    stats[result.strip()] += 1
-                    job_ids, finished, result = pool.next()
-            except KeyboardInterrupt:
-                break
+                jobs = ((i, i + '\n') for i in package_ids)
+                try:
+                    job_ids, finished, result = pool.send(jobs)
+                    while result is not None:
+                        stats[result.strip()] += 1
+                        job_ids, finished, result = pool.next()
+                except KeyboardInterrupt:
+                    break
 
-            print next_date.isoformat(),
-            print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
-
+                print next_date.isoformat(),
+                print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+        except IOError, e:
+            # let pipe errors cause silent exit --
+            # the worker will have provided the real traceback
+            if e.errno != 32:
+                raise
 
     def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
         """
