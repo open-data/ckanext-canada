@@ -96,7 +96,7 @@ Render a choice field where the choice['key'] is the value stored
     {%- if f.choices_by_key.get(pkg[f.id]) -%}
       {{- f.choices_by_key[pkg[f.id]]['fra' if client_lang == 'fr' else 'eng'] -}}
     {% else %}
-      {{ split_bilingual_field(pkg[f.id], client_lang)}}
+      {{ split_bilingual_field(pkg[f.id], client_lang) }}
     {% endif %}
   {%- endif -%}
 {%- endmacro -%}
@@ -118,5 +118,16 @@ Choose the most appropriate display name for a resource
     {{- field_text.split(' | ')[1 if client_lang == 'fr' else 0] -}}
   {%- else -%}
     {{- field_text -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{#
+Render a boolean field with a friendly WET checkmark or X
+#}
+{%- macro bool_field(f, pkg) -%}
+  {%- if pkg[f.id] -%}
+    <span class="wb-icon-tick"></span>
+  {%- else -%}
+    <span class="wb-icon-x"></span>
   {%- endif -%}
 {%- endmacro -%}

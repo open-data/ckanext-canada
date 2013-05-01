@@ -5,7 +5,8 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
-    name_validator, package_name_validator, owner_org_validator)
+    name_validator, package_name_validator, boolean_validator,
+    owner_org_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 
@@ -85,7 +86,7 @@ def _schema_field_validators(name, lang, field):
     both lists unchanged
     """
     if name == 'portal_release_date':
-        return ([treat_missing_as_empty, protect_date_published,
+        return ([treat_missing_as_empty, protect_portal_release_date,
                  isodate, convert_to_extras],
                 [convert_from_extras, ignore_missing])
 
@@ -105,6 +106,9 @@ def _schema_field_validators(name, lang, field):
     elif field['type'] == 'tag_vocabulary':
         edit.append(convert_to_tags(field['vocabulary']))
         view.append(convert_from_tags(field['vocabulary']))
+    elif field['type'] == 'boolean':
+        edit.append(boolean_validator)
+        view.extend([convert_from_extras, ignore_missing, boolean_validator])
     else:
         edit.append(unicode)
 
@@ -117,16 +121,16 @@ def treat_missing_as_empty(key, data, errors, context):
     if value is missing:
         data[key] = ''
 
-def protect_date_published(key, data, errors, context):
+def protect_portal_release_date(key, data, errors, context):
     """
-    Ensure the date_published is not changed by an unauthorized user.
+    Ensure the portal_release_date is not changed by an unauthorized user.
     """
     if is_sysadmin(context['user']):
         return
     original = ''
     package = context.get('package')
     if package:
-        original = package.extras.get('date_published', '')
+        original = package.extras.get('portal_release_date', '')
     value = data.get(key, '')
     if original == value:
         return

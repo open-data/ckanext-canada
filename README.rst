@@ -280,7 +280,7 @@ Dataset and resource field descriptions are dicts containing the following:
     iso8601 date: YYYY-MM-DD
 
   ``'boolean'``
-    one-character string ``0`` for False and ``1`` for True
+    ``True`` or ``False`` (not strings, but strings are accepted when setting)
 
   ``'url'``
     fully qualified URL
