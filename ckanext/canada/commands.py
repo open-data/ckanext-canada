@@ -207,7 +207,9 @@ class CanadaCommand(CkanCommand):
                     response = registry.action.package_update(**pkg)
                 else:
                     response = registry.action.package_create(**pkg)
-            except (ValidationError, SearchIndexError), e:
+            except ValidationError, e:
+                sys.stdout.write(json.dumps(e.error_dict) + '\n')
+            except SearchIndexError, e:
                 sys.stdout.write(unicode(e).encode('utf-8') + '\n')
             except KeyboardInterrupt:
                 return
@@ -216,6 +218,8 @@ class CanadaCommand(CkanCommand):
                 sys.stdout.write(response + '\n')
             try:
                 sys.stdout.flush()
+            except KeyboardInterrupt:
+                return
             except IOError:
                 break
 
