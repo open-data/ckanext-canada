@@ -28,16 +28,25 @@ class CanadaCommand(CkanCommand):
                       create-organizations
                       load-datasets <.jl source file>
                                     [<starting line number> [<lines to load>]]
-                                    [-r] [-p <processes>] [-u <ckan user>]
+                                    [-r] [-p <num>] [-u <username>]
+                                    [-l <log file>]
                       portal-update <registry server> [<last activity date>]
-                                    [-p <processes>]
+                                    [-p <num>]
 
-        * all commands take optional [-c <path to ckan config file>]
-        * <starting line number> defaults to 1
-        * <lines to load> defaults to loading all lines
-        * <processes> defaults to 1
-        * <last activity date> defaults to 7 days ago
-        * <ckan user> defaults to the system user
+        <starting line number> of .jl source file, default: 1
+        <lines to load> from .jl source file, default: all lines
+        <last activity date> for reading activites, default: 7 days ago
+
+    Options::
+
+        -c/--config <ckan config>  use named ckan config file
+                                   (available to all commands)
+        -r/--replace-datasets      enable replacing existing datasets
+        -p/--processes <num>       sets the number of worker processes,
+                                   default: 1
+        -u/--ckan-user <username>  sets the owner of packages created,
+                                   default: ckan system user
+        -l/--log <log filename>    write log of actions to log filename
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
