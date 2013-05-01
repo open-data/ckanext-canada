@@ -211,6 +211,7 @@ class CanadaCommand(CkanCommand):
             except KeyboardInterrupt:
                 return
             else:
+                sys.stdout.write('replace ' if existing else 'create ')
                 sys.stdout.write(response + '\n')
             try:
                 sys.stdout.flush()
@@ -439,13 +440,12 @@ def _trim_package(pkg):
         pkg['type'] = 'dataset'
     if 'state' not in pkg:
         pkg['state'] = 'active'
-    for k in ['url', 'time_period_coverage_end', 'time_period_coverage_start',
-            'portal_release_date']:
+    for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
     for name, lang, field in schema_description.dataset_field_iter():
-        if field['type'] == 'date' and pkg.get(name):
-            pkg[name] = str(isodate(pkg[name], None))
+        if field['type'] == 'date':
+            pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
         if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
             pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
 
