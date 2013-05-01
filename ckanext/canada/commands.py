@@ -396,17 +396,26 @@ def _trim_package(pkg):
             'tags', # just because we don't use them
             'num_tags', 'num_resources', 'maintainer',
             'isopen', 'relationships_as_object', 'license_title',
-            'maintainer_email',
+            'maintainer_email', 'author',
             'groups', # just because we don't use them
             'relationships_as_subject', 'department_number',
+            # FIXME: remove these when we can:
+            'validation_override', 'resource_type',
             ]:
         if k in pkg:
             del pkg[k]
     for r in pkg['resources']:
         for k in ['resource_group_id', 'revision_id',
-                'revision_timestamp']:
+                'revision_timestamp', 'cache_last_updated',
+                'webstore_last_updated', 'id', 'state', 'hash',
+                'description', 'tracking_summary', 'mimetype_inner',
+                'mimetype', 'cache_url', 'created', 'webstore_url',
+                'last_modified', 'position', ]:
             if k in r:
                 del r[k]
+        for k in ['name', 'size']:
+            if k not in r:
+                r[k] = None
     for k in ['ready_to_publish', 'private']:
         pkg[k] = boolean_validator(pkg.get(k, ''), None)
     if 'name' not in pkg:
@@ -415,6 +424,13 @@ def _trim_package(pkg):
         pkg['type'] = 'dataset'
     if 'state' not in pkg:
         pkg['state'] = 'active'
-    for k in ['url', 'time_period_coverage_end', 'time_period_coverage_start']:
+    for k in ['url', 'time_period_coverage_end', 'time_period_coverage_start',
+            'portal_release_date']:
         if k not in pkg:
             pkg[k] = ''
+    for name, lang, field in schema_description.dataset_field_iter():
+        if field['type'] == 'date' and pkg[name]:
+            pkg[name] = str(isodate(pkg[name], None))
+        if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
+            pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
+
