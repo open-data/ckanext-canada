@@ -5,9 +5,12 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
 from ckan.lib.navl.validators import ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
-    name_validator, package_name_validator, boolean_validator)
+    name_validator, package_name_validator, boolean_validator,
+    owner_org_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
+
+from formencode.validators import OneOf
 
 from ckanext.canada.metadata_schema import schema_description
 
@@ -42,22 +45,35 @@ def _schema_update(schema, purpose):
     """
     assert purpose in ('create', 'update', 'show')
 
-    for name, lang, field in schema_description.dataset_field_iter():
-        if name == 'id' and purpose == 'create':
-            schema[name] = [ignore_missing, protect_new_dataset_id,
-                unicode, name_validator, package_id_doesnt_exist]
-        if name == 'name' and purpose == 'create':
-            schema[name] = [ignore_missing, unicode, name_validator,
-                package_name_validator]
-        if name in ('title', 'notes') and purpose != 'show':
-            schema[name] = [not_empty_allow_override, unicode]
+    if purpose == 'create':
+        schema['id'] = [ignore_missing, protect_new_dataset_id,
+            unicode, name_validator, package_id_doesnt_exist]
+        schema['name'] = [ignore_missing, unicode, name_validator,
+            package_name_validator]
+    if purpose in ('create', 'update'):
+        schema['title'] = [not_empty_allow_override, unicode]
+        schema['notes'] = [not_empty_allow_override, unicode]
+        schema['owner_org'] = [not_empty, owner_org_validator, unicode]
 
+    resources = schema['resources']
+    resources['resource_type'] = [not_empty, unicode]
+    resources['format'] = [not_empty, unicode]
+    resources['language'] = [not_empty, unicode]
+
+    for name, lang, field in schema_description.dataset_field_iter():
         if name in schema:
             continue # don't modify other existing fields
 
         v = _schema_field_validators(name, lang, field)
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
+
+        if field['type'] == 'choice' and purpose in ('create', 'update'):
+            schema[name].append(OneOf([c['key'] for c in field['choices']]))
+
+    for name, lang, field in schema_description.resource_field_iter():
+        if field['type'] == 'choice' and purpose in ('create', 'update'):
+            resources[name].append(OneOf([c['key'] for c in field['choices']]))
 
     if purpose in ('create', 'update'):
         schema['validation_override'] = [ignore_missing]
@@ -74,21 +90,22 @@ def _schema_field_validators(name, lang, field):
                  isodate, convert_to_extras],
                 [convert_from_extras, ignore_missing])
 
-    if field['type'] == 'tag_vocabulary':
-        return ([convert_to_tags(field['vocabulary'])],
-                [convert_from_tags(field['vocabulary'])])
-
     edit = []
     view = []
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
-    if field['mandatory']:
+    elif field['mandatory'] == 'all':
         edit.append(not_empty_allow_override)
+    elif field['mandatory']:
+        edit.append(not_empty_when_catalog_type(field['mandatory']))
 
     if field['type'] == 'date':
         edit.append(isodate)
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
+    elif field['type'] == 'tag_vocabulary':
+        edit.append(convert_to_tags(field['vocabulary']))
+        view.append(convert_from_tags(field['vocabulary']))
     elif field['type'] == 'boolean':
         edit.append(boolean_validator)
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
@@ -175,3 +192,23 @@ def not_empty_allow_override(key, data, errors, context):
         ignore_missing(key, data, errors, context)
     else:
         not_empty(key, data, errors, context)
+
+
+def not_empty_when_catalog_type(ctype):
+    """
+    Not empty when value of catalog_type is raw/geo
+    but allow sysadmins to override the validation error
+    by setting a value in data[(validation_override,)].
+    """
+    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+    ctype = choices[0 if ctype == 'raw' else 1]['key']
+
+    def conditional_not_empty(key, data, errors, context):
+        if is_sysadmin(context['user']) and data[('validation_override',)]:
+            ignore_missing(key, data, errors, context)
+        elif data[('catalog_type',)] != ctype:
+            ignore_missing(key, data, errors, context)
+        else:
+            not_empty(key, data, errors, context)
+
+    return conditional_not_empty
