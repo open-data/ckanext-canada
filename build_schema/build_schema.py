@@ -31,37 +31,37 @@ LANGS = 'eng', 'fra'
 # ('section name', [field name 1, ...]), ...
 SECTIONS_FIELDS = [
     ("Primary Fields", [
-        'id', # unique ID,
-        'language', # Always "eng; CAN|fra; CAN"
-        'owner_org', # XXX set to GC Department (ckan group), no data entry
-        'author_email', # XXX set to single common email, no data entry
+        'id',
+        'language', # Always "eng; CAN | fra; CAN"
+        'owner_org',
+        'author_email', # set to single common email, no data entry
         'title',
         'name',
         'notes',
-        'digital_object_identifier', # "datacite" identifier
-        'catalog_type', # will control field validation
+        'catalog_type', # controls some field validation
         'subject',
         'topic_category',
         'keywords',
         'license_id',
-        'data_series_name',
-        'data_series_issue_identification',
         'geographic_region',
         'spatial',
+        'spatial_representation_type',
+        'presentation_form',
+        'browse_graphic_url',
         'date_published',
         'date_modified',
         'maintenance_and_update_frequency',
         ]),
     ("Additional Fields", [
+        'data_series_name',
+        'data_series_issue_identification',
+        'digital_object_identifier', # "datacite" identifier
         'time_period_coverage_start',
         'time_period_coverage_end',
         'url',
         'endpoint_url',
-        'spatial_representation_type',
-        'presentation_form',
-        'browse_graphic_url',
         'ready_to_publish',
-        'portal_release_date', # ADMIN-only field that will control publishing
+        'portal_release_date', # ADMIN-only field that controls publishing
         ]),
     ]
 
@@ -287,7 +287,8 @@ def field_from_proposed(p):
     "extract proposed field information into a field dict"
     return {
         'type': p.ckan_type,
-        'mandatory': bool(p.gc_multiplicity.startswith('M')),
+        'mandatory': {'M': 'all', 'G': 'geo', 'R': 'raw'
+            }.get(p.gc_multiplicity[:1], None),
         'description': {'eng': p.description, 'fra': p.description_fra},
         'example': {'eng': p.example, 'fra': p.example_fra},
         'label': {'eng': p.property_label, 'fra': p.property_label_fra},
