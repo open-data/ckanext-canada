@@ -1,6 +1,7 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic.validators import isodate, boolean_validator
+from ckan.lib.navl.dictization_functions import Invalid
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -445,7 +446,10 @@ def _trim_package(pkg):
             pkg[k] = ''
     for name, lang, field in schema_description.dataset_field_iter():
         if field['type'] == 'date':
-            pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
+            try:
+                pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
+            except Invalid:
+                pass # not for us to fail validation
         if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
             pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
 
