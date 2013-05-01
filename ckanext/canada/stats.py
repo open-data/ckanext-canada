@@ -1,16 +1,16 @@
 import time
 
-def completion_stats(skip=1):
+def completion_stats(window=1):
     """
     Generate completions/second reports on each iteration.
 
-    skip - number of completion reports to skip at the beginning
+    window - window size for completion reports
     """
-    count = 0
-    start = time.time()
+    stamps = []
     while True:
-        if count < skip:
+        stamps.append(time.time())
+        if len(stamps) < window + 1:
             yield '---'
         else:
-            yield '%5.2f/s' % (count / (time.time() - start))
-        count += 1
+            yield '%4.2fs' % ((stamps[-1] - stamps[0]) / window)
+            stamps = stamps[-window:]
