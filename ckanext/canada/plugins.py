@@ -9,7 +9,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-from ckanext.canada.helpers import may_publish_datasets, user_organizations, today, date_format
+from ckanext.canada.helpers import may_publish_datasets, user_organizations, today, date_format, dataset_comments
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -78,7 +78,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         return facets_dict
     
     def get_helpers(self):
-        return {'user_organizations': user_organizations}
+        return {'user_organizations': user_organizations, 'dataset_comments': dataset_comments}
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):

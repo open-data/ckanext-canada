@@ -1,0 +1,24 @@
+{% block opendatacanada_comments %}
+
+  <table class="table table-striped table-bordered table-condensed span-6">
+    <tbody>
+    {% for comment in comment_list %}
+      <tr>
+        <td>
+          {{ comment['subject'] }}<br>
+          {{ comment['comment_body_value'] }}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  
+  {% set comment_list = h.dataset_comments(pkg.id) %}
+  
+  <p>
+   <ul class="button-group">
+        <li class="button"><a href="/dataset/{{pkg.name}}">{{_('Add Comment')}}</a></li>
+   </ul>
+  </p>
+
+{% endblock %}
