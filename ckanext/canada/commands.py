@@ -1,6 +1,6 @@
 from ckan import model
 from ckan.lib.cli import CkanCommand
-from ckan.logic.validators import isodate
+from ckan.logic.validators import isodate, boolean_validator
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
@@ -180,14 +180,17 @@ class CanadaCommand(CkanCommand):
             existing = None
             if self.options.replace_datasets:
                 try:
-                    existing = registry.action.package_show(id=pkg['name'])
+                    existing = registry.action.package_show(id=pkg['id'])
                     _trim_package(existing)
-                    if existing == pkg:
-                        sys.stdout.write('unchanged\n')
-                        continue
                 except NotFound:
                     existing = None
-
+                if existing == pkg:
+                    sys.stdout.write('unchanged\n')
+                    try:
+                        sys.stdout.flush()
+                    except IOError:
+                        break
+                    continue
             try:
                 if existing:
                     response = registry.action.package_update(**pkg)
@@ -381,20 +384,37 @@ class CanadaCommand(CkanCommand):
 def _trim_package(pkg):
     """
     remove keys from pkg that we don't care about when comparing
-    or updating/creating packages.
+    or updating/creating packages.  Also try to convert types and
+    create missing fields that will be present in package_show.
     """
+    # XXX full of custom hacks and deep knowledge of our schema :-(
     if not pkg:
         return
     for k in ['extras', 'metadata_modified', 'metadata_created',
-            'revision_id', 'revision_timestamp']:
+            'revision_id', 'revision_timestamp', 'organization',
+            'version', 'tracking_summary',
+            'tags', # just because we don't use them
+            'num_tags', 'num_resources', 'maintainer',
+            'isopen', 'relationships_as_object', 'license_title',
+            'maintainer_email',
+            'groups', # just because we don't use them
+            'relationships_as_subject', 'department_number',
+            ]:
         if k in pkg:
             del pkg[k]
-    for t in pkg.get('tags', []):
-        for k in ['id', 'revision_timestamp']:
-            del t[k]
     for r in pkg['resources']:
         for k in ['resource_group_id', 'revision_id',
                 'revision_timestamp']:
             if k in r:
                 del r[k]
-
+    for k in ['ready_to_publish', 'private']:
+        pkg[k] = boolean_validator(pkg.get(k, ''), None)
+    if 'name' not in pkg:
+        pkg['name'] = pkg['id']
+    if 'type' not in pkg:
+        pkg['type'] = 'dataset'
+    if 'state' not in pkg:
+        pkg['state'] = 'active'
+    for k in ['url', 'time_period_coverage_end', 'time_period_coverage_start']:
+        if k not in pkg:
+            pkg[k] = ''
