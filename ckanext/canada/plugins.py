@@ -44,7 +44,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         return {'may_publish_datasets': may_publish_datasets,
                 'today': today,
                 'date_format': date_format,
-                'openness_score': openness_score}
+                }
 
 
 class DataGCCAPublic(p.SingletonPlugin):
@@ -81,7 +81,10 @@ class DataGCCAPublic(p.SingletonPlugin):
         return facets_dict
     
     def get_helpers(self):
-        return {'user_organizations': user_organizations, 'dataset_comments': dataset_comments}
+        return {'user_organizations': user_organizations,
+                'dataset_comments': dataset_comments,
+                'openness_score': openness_score,
+                }
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
