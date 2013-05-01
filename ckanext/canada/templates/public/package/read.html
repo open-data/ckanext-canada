@@ -79,10 +79,10 @@
     {% endfor %}
     </tbody>
   </table>
-  <p>
-   <ul class="button-group">
-        <li class="button"><a href="/dataset/{{pkg.name}}" target="_blank">{{_('Comment')}}</a></li>
-   </ul>
-  </p>
+  
+  {% block drupal_comments %}
+  {# include "comments.html" #}
+  {% endblock drupal_comments %}
+
 {% endblock %}
 

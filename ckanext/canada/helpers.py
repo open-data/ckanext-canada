@@ -1,6 +1,8 @@
 from pylons import c
 import ckan.model as model
 import datetime
+import psycopg2 as pg2
+from ckan.lib.cli import parse_db_config
 
 ORG_MAY_PUBLISH_KEY = 'publish'
 ORG_MAY_PUBLISH_VALUE = 'True'
@@ -36,3 +38,26 @@ class EST(datetime.tzinfo):
 
     def dst(self, dt):
         return datetime.timedelta(0)
+  
+# Retrieve the comments for this dataset that have been saved in the Drupal database
+# This is ugly - look away!  Or better yet, suggest improvements
+def dataset_comments(pkg_id):
+
+    #import pdb; pdb.set_trace()
+    dbd = parse_db_config('ckan.drupal.url')
+    drupal_conn_string = "host='%s' dbname='%s' user='%s' password='%s'" % (dbd['db_host'], dbd['db_name'], dbd['db_user'], dbd['db_pass'])    
+    
+    drupal_conn = pg2.connect(drupal_conn_string)
+    drupal_cursor = drupal_conn.cursor()
+    
+    drupal_cursor.execute(
+       """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
+          from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
+          inner join od_package o on o.pkg_node_id = c.nid 
+          where o.pkg_id = %s""", (pkg_id,))
+    
+    comment_list = []
+    for comment in drupal_cursor:
+       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment[3]})
+       
+    return comment_list
