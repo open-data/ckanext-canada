@@ -26,12 +26,14 @@ class CanadaCommand(CkanCommand):
                       delete-vocabularies
                       create-organizations
                       load-datasets <.jl source file>
-                                    [<lines to skip> [<lines to load>]]
+                                    [<starting line number> [<lines to load>]]
                                     [-r] [-p <processes>] [-u <ckan user>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <processes>]
 
         * all commands take optional [-c <path to ckan config file>]
+        * <starting line number> defaults to 1
+        * <lines to load> defaults to loading all lines
         * <processes> defaults to 1
         * <last activity date> defaults to 7 days ago
         * <ckan user> defaults to the system user
@@ -142,16 +144,16 @@ class CanadaCommand(CkanCommand):
                 vocabulary_id=vocab['id'],
                 )
 
-    def load_datasets(self, jl_source, skip_lines=0, max_count=None):
-        skip_lines = int(skip_lines)
+    def load_datasets(self, jl_source, start_line=1, max_count=None):
+        start_line = int(start_line)
         if max_count is not None:
             max_count = int(max_count)
 
         def line_reader():
-            for num, line in enumerate(open(jl_source)):
-                if num < skip_lines:
+            for num, line in enumerate(open(jl_source), 1):
+                if num < start_line:
                     continue
-                if max_count is not None and num >= skip_lines + max_count:
+                if max_count is not None and num >= start_line + max_count:
                     break
                 yield num, line.strip() + '\n'
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
@@ -440,7 +442,7 @@ def _trim_package(pkg):
         if k not in pkg:
             pkg[k] = ''
     for name, lang, field in schema_description.dataset_field_iter():
-        if field['type'] == 'date' and pkg[name]:
+        if field['type'] == 'date' and pkg.get(name):
             pkg[name] = str(isodate(pkg[name], None))
         if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
             pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
