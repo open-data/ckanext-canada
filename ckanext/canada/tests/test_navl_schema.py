@@ -147,3 +147,14 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         self.normal_action.package_create(**geo_pkg)
 
+    def test_pilot_uuids(self):
+        pilot_pkg = dict(self.complete_pkg,
+            subject=['BEF4D60C-E2D1-46B9-96C0-B55902F076F1'],
+            )
+
+        pkg = self.normal_action.package_create(**pilot_pkg)
+        assert pkg['subject'] == [u"Persons  Personnes"]
+
+        resp = self.action.package_show(id=pkg['id'])
+        assert resp['result']['subject'] == [u"Persons  Personnes"]
+
