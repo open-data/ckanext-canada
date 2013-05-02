@@ -65,9 +65,9 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict.update( {'organization': _('Organization'),
-                      'tags': _('Subject and Topic'),
+                      'tags': _('Subject'),
                       'res_format': _('File Format'),
-                      'raw_geo': _('Raw or GeoSpatial'),
+                      'raw_geo': _('Catalog Type'),
                       'organization': _('Organization'), } )
 
         return facets_dict
