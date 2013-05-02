@@ -52,7 +52,8 @@ Example:
     </div>
     <br/>
     <div class="publisher_info">
-      <em>{{ cr.field_label(publisher_field, client_lang) }}:</em>
+     {# <em>{{ cr.field_label(publisher_field, client_lang) }}:</em> #}
+      <em>{{ _('Organization') }}: </em>
       {{ cr.org_field(package, client_lang) }}
     </div>
     {% if package.resources and not hide_resources %}
