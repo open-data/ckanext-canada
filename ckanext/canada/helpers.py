@@ -32,7 +32,7 @@ def openness_score(pkg):
             'xls': 2,
             'xlsm': 2,
             'XML': 3,
-            }.get(r['format'], 0))
+            }.get(r['format'], 1))
     return score
 
 
