@@ -8,91 +8,142 @@
 {% block subtitle %}{{ cr.field_id('title', pkg, client_lang) }}{% endblock %}
 
 {% block primary_content_inner %}
-  <section class="resources module-content">
-    {% if pkg.state == "deleted" %}
-    <div class="module-alert">
-      <p>This dataset has been deleted and is no longer accessible to non-admin users.</p>
-    </div>
-    {% endif %}
-    <h1>
-      {{ cr.field_id('title', pkg, client_lang) }}
-    </h1>
-  </section>
-
-  <section id="dataset-resources" class="resources module-content">
-    <h5>{{ _('Data and Resources') }}</h5>
-    {% if pkg.resources %}
-      <div class="span-6">
-        {% for resource in pkg.resources %}
-          {% snippet 'package/snippets/resource_item.html',
-            pkg=pkg, res=resource, client_lang=client_lang %}
-        {% endfor %}
+  <div class="module">
+    <section class="resources module-content indent-large">
+      {% if pkg.state == "deleted" %}
+      <div class="module-alert">
+        <p>This dataset has been deleted and is no longer accessible to non-admin users.</p>
       </div>
-    {% endif %}
-  </section>
-  
-  {# Please replace this with a better test for geospatial data #}
-  {% if pkg['spatial'] %}
-  <section>
-    {# The geojson needs to be converted to WKT format and then passed in. #}
-    {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
-  </section>
-  {% endif %}
-  
-  <table class="table table-striped table-bordered table-condensed span-6">
-    <thead>
-      <tr>
-        <th scope="col">Field</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for f in schema_description.dataset_fields %}
-      {% if f.id not in ('title', 'name', 'language', 'author_email',
-        'portal_release_date' ) %}
-        <tr>
-          <td>
-            <strong>{{ cr.field_label(f, client_lang) }}</strong>:
-          </td>
-          <td>
-          {%- if f.type == 'keywords' -%}
-            {{ cr.keyword_field(f, pkg, client_lang) }}
-
-          {%- elif f.type == 'tag_vocabulary' -%}
-            {{ cr.tag_vocab_field(f, pkg, client_lang) }}
-
-          {%- elif f.type == 'url' -%}
-            {{ cr.url_field(f, pkg) }}
-
-          {%- elif f.type == 'boolean' -%}
-            {{ cr.bool_field(f, pkg) }}
-
-          {%- elif f.id == 'owner_org' -%}
-            {{ cr.org_field(pkg, client_lang) }}
-
-          {%- else -%}
-            {{ cr.field(f, pkg, client_lang) }}
-          {%- endif -%}
-          </td>
-        </tr>
       {% endif %}
-    {% endfor %}
-      <tr>
-        <td>
-          <strong>{{ _('Openness rating') }}</strong>:
-        </td>
-        <td>
+      <h1>
+        {{ cr.field_id('title', pkg, client_lang) }}
+      </h1>
+    </section>
+  
+    <section class="module-content indent-large">
+      <h4>{{ pkg.title or pkg.name }}
+        {% if pkg.state.startswith('draft') %}
+          [{{ _('Draft') }}]
+        {% endif %}
+      </h4>
+      {% if c.pkg_notes_formatted %}
+        <div>
+          {{ c.pkg_notes_formatted }}
+        </div>
+      {% endif %}
+      
+      <h5>{{ _('Organization')}}: </h5>{{cr.org_field(pkg, client_lang)}}
+      
+      <h5>{{_('License')}}: </h5>{{ pkg.license_title }}
+    </section>
+
+    <section id="dataset-resources" class="resources module-content indent-large">
+      <h5>{{ _('Data and Resources') }}</h5>
+      {% if pkg.resources %}
+        <div class="span-6">
+          {% for resource in pkg.resources %}
+            {% snippet 'package/snippets/resource_item.html',
+              pkg=pkg, res=resource, client_lang=client_lang %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+    
+    <section class="indent-large">
+      <h5>{{ _('Additional Info') }}</h5>
+      
+      <ul class="list-bullet-none">
+        <li class="margin-bottom-medium"><u><b>{{ _('Openness rating') }}:</b></u>
           {% for star in range(h.openness_score(pkg)) -%}
             *
           {%- endfor %}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </li class="margin-bottom-medium">
+        
+        {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
+        {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
+        <li class="margin-bottom-medium">{{ _('Temporal Coverage') }}:
+          {{ cr.date_field(period_start, pkg) }} <b>-</b> {{ cr.date_field(period_end, pkg) }}
+        </li>
+        
+        {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
+        <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
+          {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
+        </li>
+        
+        {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
+        <li class="margin-bottom-medium">{{ cr.field_label(frequency, client_lang) }}:
+          {{ cr.field(frequency, pkg, client_lang) }}
+        </li>
+      </ul>
+      
+      <h5>{{ _('Developer Tools') }}</h5>
+    </section>
   
-  {% block drupal_comments %}
-  {# include "comments.html" #}
-  {% endblock drupal_comments %}
+    {# Please replace this with a better test for geospatial data #}
+    {% if pkg['spatial'] %}
+    <section class="indent-medium">
+      {# The geojson needs to be converted to WKT format and then passed in. #}
+      {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
+    </section>
+    {% endif %}
+  
+{#
+    <table class="table table-striped table-bordered table-condensed span-6">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for f in schema_description.dataset_fields %}
+        {% if f.id not in ('title', 'name', 'language', 'author_email',
+          'portal_release_date' ) %}
+          <tr>
+            <td>
+              <strong>{{ cr.field_label(f, client_lang) }}</strong>:
+            </td>
+            <td>
+            {%- if f.type == 'keywords' -%}
+              {{ cr.keyword_field(f, pkg, client_lang) }}
 
+            {%- elif f.type == 'tag_vocabulary' -%}
+              {{ cr.tag_vocab_field(f, pkg, client_lang) }}
+
+            {%- elif f.type == 'url' -%}
+              {{ cr.url_field(f, pkg) }}
+
+            {%- elif f.type == 'boolean' -%}
+              {{ cr.bool_field(f, pkg) }}
+
+            {%- elif f.id == 'owner_org' -%}
+              {{ cr.org_field(pkg, client_lang) }}
+
+            {%- else -%}
+              {{ cr.field(f, pkg, client_lang) }}
+            {%- endif -%}
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+        <tr>
+          <td>
+            <strong>{{ _('Openness rating') }}</strong>:
+          </td>
+          <td>
+            {% for star in range(h.openness_score(pkg)) -%}
+              *
+            {%- endfor %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+#}
+    {% block drupal_comments %}
+    {# include "comments.html" #}
+    {% endblock drupal_comments %}
+
+  </div>
 {% endblock %}
 
