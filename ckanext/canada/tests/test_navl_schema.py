@@ -156,9 +156,16 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 )],
             )
 
-        pkg = self.normal_action.package_create(**pilot_pkg)
+        resp = self.normal_action.package_create(**pilot_pkg)
+        pkg = resp['result']
         assert pkg['subject'] == [u"Persons  Personnes"]
+        assert pkg['geographic_region'] == [
+            u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
+        assert pkg['resources'][0]['format'] == u'XML'
 
         resp = self.action.package_show(id=pkg['id'])
-        assert resp['result']['subject'] == [u"Persons  Personnes"]
-
+        pkg = resp['result']
+        assert pkg['subject'] == [u"Persons  Personnes"]
+        assert pkg['geographic_region'] == [
+            u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
+        assert pkg['resources'][0]['format'] == u'XML'
