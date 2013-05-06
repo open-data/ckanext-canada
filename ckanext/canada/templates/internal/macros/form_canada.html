@@ -50,8 +50,6 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.update({'options':[]}) %}
     {% if id in data %}
       {% do inputargs.update({'selected':data[id]}) %}
-    {% else %}
-      {% do inputargs.update({'selected':field.example['eng']}) %}
     {% endif %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
