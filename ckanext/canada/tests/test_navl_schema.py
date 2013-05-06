@@ -30,9 +30,11 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
             'resources': [{
-                'description': u'Full text.',
+                'name': u'Full text.',
+                'name_fra': u'Full text.',
                 'format': u'TXT',
                 'url': u'http://www.annakarenina.com/download/',
+                'size': 42,
                 'resource_type': 'file',
                 'language': 'zxx; CAN',
             }],
