@@ -56,9 +56,6 @@ def _schema_update(schema, purpose):
         schema['owner_org'] = [not_empty, owner_org_validator, unicode]
 
     resources = schema['resources']
-    resources['resource_type'] = [not_empty, unicode]
-    resources['format'] = [not_empty, unicode]
-    resources['language'] = [not_empty, unicode]
 
     for name, lang, field in schema_description.dataset_field_iter():
         if name in schema:
@@ -74,6 +71,8 @@ def _schema_update(schema, purpose):
                 OneOf([c['key'] for c in field['choices']])])
 
     for name, lang, field in schema_description.resource_field_iter():
+        if field['mandatory'] and purpose in ('create', 'update'):
+            resources[name] = [not_empty_allow_override, unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
                 convert_pilot_uuid(field),
@@ -193,7 +192,7 @@ def not_empty_allow_override(key, data, errors, context):
     Not empty, but allow sysadmins to override the validation error
     by setting a value in data[(validation_override,)].
     """
-    if is_sysadmin(context['user']) and data[('validation_override',)]:
+    if is_sysadmin(context['user']) and data.get(('validation_override',)):
         ignore_missing(key, data, errors, context)
     else:
         not_empty(key, data, errors, context)
