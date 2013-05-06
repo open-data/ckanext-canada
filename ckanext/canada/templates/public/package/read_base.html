@@ -5,11 +5,16 @@
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
 
+{% block page_header %}
+
+{% endblock %}
+
 {% block secondary_content %}
   <div class="module-related">
     <h3>About this Dataset</h3>
     <ul>
-      <li><b>{{ _('Publisher') }}:</b>
+      {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
+      <li><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
         <br/>
         {{ cr.org_field(pkg, client_lang) }}
       </li>
