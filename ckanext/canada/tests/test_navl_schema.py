@@ -138,13 +138,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             'browse_graphic_url': "http://example.com/example.jpg",
             })
 
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **geo_pkg)
-
-        geo_pkg['topic_category'] = [u"Society  Société",
-            u"Structure  Structures"]
-
         self.normal_action.package_create(**geo_pkg)
 
     def test_pilot_uuids(self):
