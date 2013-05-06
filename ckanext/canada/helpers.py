@@ -47,9 +47,12 @@ def today():
 def date_format(date_string):
     if not date_string:
         return None
-    else:
-        return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
-    
+    try:
+        return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S"
+            ).strftime("%Y-%m-%d")
+    except ValueError:
+        return date_string
+
 class EST(datetime.tzinfo):
     def utcoffset(self, dt):
       return datetime.timedelta(hours=-5)
