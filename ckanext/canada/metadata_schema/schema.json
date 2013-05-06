@@ -1277,8 +1277,8 @@
             }
           ], 
           "description": {
-            "eng": "The organization directly responsible for the datasets and for metadata maintenance.", 
-            "fra": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9es et de la maintenance des m\u00e9tadonn\u00e9es"
+            "eng": "The organization directly responsible for the dataset and for metadata maintenance.", 
+            "fra": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9e et de la maintenance des m\u00e9tadonn\u00e9es"
           }, 
           "example": {
             "eng": "Treasury Board of Canada Secretariat", 
@@ -1416,8 +1416,8 @@
             }
           ], 
           "description": {
-            "eng": "The type of catalogue to which the metadata record belongs: Raw, Geo", 
-            "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es\u00a0: Raw, Geo"
+            "eng": "The type of catalogue to which the metadata record belongs.", 
+            "fra": "Le type de catalogue auquel appartient le dossier de m\u00e9tadonn\u00e9es."
           }, 
           "example": {
             "eng": "Geo Data", 
@@ -1576,7 +1576,7 @@
             "eng": "Subject", 
             "fra": "Sujet"
           }, 
-          "mandatory": "raw", 
+          "mandatory": "all", 
           "pilot_help": {
             "eng": "The topic of the content of the resource. If more than one category applies, choose one category that best describes the dataset.", 
             "fra": "Le sujet du contenu de la ressource. Si plus d'une cat\u00e9gorie s'applique, choisissez celle qui d\u00e9crit le mieux l\u2019ensemble de donn\u00e9es."
@@ -1721,7 +1721,7 @@
             "eng": "Topic Category", 
             "fra": "Cat\u00e9gorie de sujet"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "tag_vocabulary"
         }, 
         {
@@ -4117,7 +4117,7 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The representation of spatial information in a dataset. A valid GeoJSON geometry.", 
+            "eng": "The representation of spatial information in a dataset.", 
             "fra": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
           }, 
           "example": {
@@ -4495,7 +4495,7 @@
             "fra": "La fr\u00e9quence \u00e0 laquelle des changements et des ajouts sont effectu\u00e9s \u00e0 la ressource apr\u00e8s la cr\u00e9ation de la ressource initiale."
           }, 
           "example": {
-            "eng": "As Needed | Au besoin", 
+            "eng": "As Needed", 
             "fra": "Au besoin"
           }, 
           "existing": false, 
@@ -4587,7 +4587,7 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The Digital Object Identifier  assigned to file, for more information see (URL to info about DOIs)", 
+            "eng": "The Digital Object Identifier  assigned to file.", 
             "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
           }, 
           "example": {
@@ -4694,8 +4694,8 @@
         {
           "bilingual": true, 
           "description": {
-            "eng": "The endpoint of web service to access the dataset (API).\n(If user select yes for 'Queryable' then this field is mandatory", 
-            "fra": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API).\n(Si l\u2019utilisateur coche \u00ab oui \u00bb au champ \u00ab interrogeable \u00bb, alors ce champ est obligatoire.)"
+            "eng": "The endpoint of web service to access the dataset (API).", 
+            "fra": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API)."
           }, 
           "example": {
             "eng": "URL", 
@@ -4737,7 +4737,7 @@
           }, 
           "example": {
             "eng": "2013-05-01", 
-            "fra": ""
+            "fra": "2013-05-01"
           }, 
           "existing": false, 
           "id": "portal_release_date", 
@@ -4779,7 +4779,7 @@
         "eng": "Title", 
         "fra": "Titre"
       }, 
-      "mandatory": null, 
+      "mandatory": "all", 
       "type": "text"
     }, 
     {
@@ -4853,8 +4853,8 @@
     {
       "bilingual": false, 
       "description": {
-        "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes. The transfer size is 65000000", 
-        "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets. La taille du transfert est > 65 000 000"
+        "eng": "The estimated size of a unit in the specified transfer format, expressed in bytes.", 
+        "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets."
       }, 
       "example": {
         "eng": "65000000", 
@@ -4866,7 +4866,7 @@
         "eng": "Size", 
         "fra": "Taille"
       }, 
-      "mandatory": null, 
+      "mandatory": "all", 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
@@ -5125,7 +5125,7 @@
         }
       ], 
       "description": {
-        "eng": "The language of the resourcet.", 
+        "eng": "The language of the resource.", 
         "fra": "La langue de la ressource"
       }, 
       "example": {
