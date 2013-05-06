@@ -24,6 +24,10 @@ below.
   {%- endif -%}
 {%- endmacro -%}
 
+{% macro date_field(f, pkg) %}
+  {{- h.date_format(pkg[f.id]) -}}
+{% endmacro %}
+
 {%- macro url_field(f, pkg) -%}
   <a href="{{- pkg[f.id] -}}">{{- pkg[f.id] -}}</a>
 {%- endmacro -%}

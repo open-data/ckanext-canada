@@ -1,0 +1,38 @@
+{% ckan_extends %}
+
+{% import 'macros/canada_read.html' as cr with context %}
+
+{% set pkg = c.pkg_dict %}
+{% set client_lang = h.lang() %}
+
+{% block secondary_content %}
+  <div class="module-related">
+    <h3>About this Dataset</h3>
+    <ul>
+      <li><b>{{ _('Publisher') }}:</b>
+        <br/>
+        {{ cr.org_field(pkg, client_lang) }}
+      </li>
+      
+      {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
+      <li>{{ cr.field_label(keywords, client_lang) }}:
+        {{ cr.keyword_field(keywords, pkg, client_lang) }}
+      </li>
+      
+      {% set date_published = schema_description.dataset_field_by_id['date_published'] %}
+      <li>{{ cr.field_label(date_published, client_lang) }}:
+        {{ cr.date_field(date_published, pkg) }}
+      </li>
+      
+      {% set date_modified = schema_description.dataset_field_by_id['date_modified'] %}
+      <li>{{ cr.field_label(date_modified, client_lang) }}:
+        {{ cr.date_field(date_modified, pkg) }}
+      </li>
+      
+      {% set program_url = schema_description.dataset_field_by_id['url'] %}
+      <li>{{ cr.field_label(program_url, client_lang) }}:
+        {{ cr.url_field(program_url, pkg) }}
+      </li>
+    </ul>
+  </div>
+{% endblock %}
