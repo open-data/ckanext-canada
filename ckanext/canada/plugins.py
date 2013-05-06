@@ -55,6 +55,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
+    p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         # add our templates
@@ -79,6 +80,12 @@ class DataGCCAPublic(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
+        
+    def before_map(self, map):
+        map.connect('/', controller='user', action='login')
+        map.connect('/help', controller='home', action='index')
+
+        return map
     
     def get_helpers(self):
         return {'user_organizations': user_organizations,
