@@ -308,3 +308,22 @@ Follow these steps to integrate:
 3. To the list of installed extensions, add `googleanalytics`. For example::
 
       ckan.plugins = stats json_preview googleanalytics canada_public canada_internal canada_forms wet_theme
+
+Compiling the updated French localization strings
+-------------------------------------------------
+
+1. Clone the CKAN i18n repo::
+    
+   $ hg clone http://bitbucket.org/bboissin/ckan-i18n/
+
+2. Copy ckanext-canada/i18n/ckan.po to ckan-i18n/ckan/i18n/fr/LC_MESSAGES/::
+   
+   $ cp ckanext-canada/i18n/ckan.po ckan-i18n/ckan/i18n/fr/LC_MESSAGES/ckan.po
+
+3. Within the ckan-i18n repo, Compile the updated localization file::
+
+   $ python setup.py compile_catalog --locale FR
+
+4. Overwrite the CKAN french .mo file with the newly compiled one::
+
+   $cp ckan-i18n/ckan/i18n/fr/LC_MESSAGES/ckan.mo virtualenv/ckan/src/ckan/ckan/i18n/fr/LC_MESSAGES/ckan.mo
