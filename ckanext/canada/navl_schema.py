@@ -69,11 +69,15 @@ def _schema_update(schema, purpose):
             schema[name] = v[0] if purpose != 'show' else v[1]
 
         if field['type'] == 'choice' and purpose in ('create', 'update'):
-            schema[name].append(OneOf([c['key'] for c in field['choices']]))
+            schema[name].extend([
+                convert_pilot_uuid(field),
+                OneOf([c['key'] for c in field['choices']])])
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['type'] == 'choice' and purpose in ('create', 'update'):
-            resources[name].append(OneOf([c['key'] for c in field['choices']]))
+            resources[name].extend([
+                convert_pilot_uuid(field),
+                OneOf([c['key'] for c in field['choices']])])
 
     if purpose in ('create', 'update'):
         schema['validation_override'] = [ignore_missing]
@@ -104,7 +108,8 @@ def _schema_field_validators(name, lang, field):
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
     elif field['type'] == 'tag_vocabulary':
-        edit.append(convert_to_tags(field['vocabulary']))
+        edit.extend([convert_pilot_uuid_list(field),
+            convert_to_tags(field['vocabulary'])])
         view.append(convert_from_tags(field['vocabulary']))
     elif field['type'] == 'boolean':
         edit.append(boolean_validator)
@@ -212,3 +217,29 @@ def not_empty_when_catalog_type(ctype):
             not_empty(key, data, errors, context)
 
     return conditional_not_empty
+
+
+def convert_pilot_uuid(field):
+    """
+    Allow the user to pass a pilot UUID instead of one of the normal choices
+    by replacing it with the correct key value
+    """
+    mapping = field['choices_by_pilot_uuid']
+    def handle_pilot_uuid(value):
+        if value in mapping:
+            return mapping[value]['key']
+        return value
+    return handle_pilot_uuid
+
+
+def convert_pilot_uuid_list(field):
+    """
+    Allow the user to pass a pilot UUID instead of one of the normal choices
+    in a list by replacing the values with the correct key values
+    """
+    mapping = field['choices_by_pilot_uuid']
+    def handle_pilot_uuid_list(value):
+        if isinstance(value, (str, unicode)):
+            value = [v.strip() for v in value.split(',')]
+        return [mapping.get(v, {'key':v})['key'] for v in value]
+    return handle_pilot_uuid_list
