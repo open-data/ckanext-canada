@@ -71,7 +71,7 @@ def _schema_update(schema, purpose):
                 OneOf([c['key'] for c in field['choices']])])
 
     for name, lang, field in schema_description.resource_field_iter():
-        if field['mandatory']:
+        if field['mandatory'] and purpose in ('create', 'update'):
             resources[name] = [not_empty_allow_override, unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
