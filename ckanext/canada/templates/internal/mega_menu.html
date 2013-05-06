@@ -3,6 +3,13 @@
 {% block mega %}
 <li>
   <div role="presentation">
+    <a role="menuitem" href="http://www.data.gc.ca/">Data.gc.ca</a>
+  </div>
+</li>
+
+
+<li>
+  <div role="presentation">
     <a role="menuitem" href={{ h.url(action='search', controller='package') }}>Search Data</a>
   </div>
 </li>
@@ -33,8 +40,8 @@
   </div>
 </li>
 
-<li>
 {% if c.userobj %}
+<li>
   <section>
     <h3><a href={{ h.url(action='about', controller='home') }}>{{ _('My Account') }}</a></h3>
     <div class="mb-sm">
@@ -58,19 +65,20 @@
               {{ _('Edit Profile') }}
             </a>
           </li>
-          <li>
-            <a href="{{ h.url_for(controller='package', action='new') }}">
-              <i class="icon-dashboard"></i>
-              {{ _('Add Dataset') }}
-            </a>
-          </li>
         </ul>
       </div>
       <div class="clear"></div>
     </div>
   </section>          
-{% endif %}
 </li>
+
+<li>
+  <a href="{{ h.url_for(controller='package', action='new') }}">
+    <i class="icon-dashboard"></i>
+    {{ _('Add Dataset') }}
+  </a>
+</li>
+{% endif %}
 
 <li>
   <div role="presentation">

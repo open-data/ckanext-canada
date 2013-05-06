@@ -21,6 +21,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
+    p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -39,6 +40,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
+        
+    def before_map(self, map):
+        map.connect('/', controller='user', action='login')
+        map.connect('/help', controller='home', action='index')
+
+        return map
 
     def get_helpers(self):
         return {'may_publish_datasets': may_publish_datasets,
