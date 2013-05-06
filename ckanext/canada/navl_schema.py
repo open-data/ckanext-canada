@@ -72,7 +72,7 @@ def _schema_update(schema, purpose):
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['mandatory']:
-            resources[name] = [not_empty, unicode]
+            resources[name] = [not_empty_allow_override, unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
                 convert_pilot_uuid(field),
