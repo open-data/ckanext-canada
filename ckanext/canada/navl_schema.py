@@ -192,7 +192,7 @@ def not_empty_allow_override(key, data, errors, context):
     Not empty, but allow sysadmins to override the validation error
     by setting a value in data[(validation_override,)].
     """
-    if is_sysadmin(context['user']) and data[('validation_override',)]:
+    if is_sysadmin(context['user']) and data.get(('validation_override',)):
         ignore_missing(key, data, errors, context)
     else:
         not_empty(key, data, errors, context)
