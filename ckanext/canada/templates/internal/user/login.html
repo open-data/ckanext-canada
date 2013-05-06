@@ -1,0 +1,17 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <section class="module-poster">
+    <div class="module-content">
+      <h1 class="page-heading">{{ _('Login') }}</h1>
+      
+      <p>
+        Introductory Text from old registry to go here.
+      </p>
+      
+      {% block form %}
+        {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}

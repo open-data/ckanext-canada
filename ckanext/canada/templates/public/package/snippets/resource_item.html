@@ -1,29 +1,34 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/canada_read.html' as cr %}
+{% import 'macros/canada_read.html' as cr with context %}
 
 {% set url = h.url_for(controller='package', action='resource_read', id=pkg.name, resource_id=res.id) %}
 {% set lang_field = schema_description.resource_field_by_id['language'] %}
 {% set format_field = schema_description.resource_field_by_id['format'] %}
+{% set size_field = schema_description.resource_field_by_id['size'] %}
 
-<div class="span-1 row-start align-right">
-  {% block resource_item_title %}
-  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
-    <span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ res.format }}
-    </span>
-  </a>
-</div>
-<div class="span-5 row-end ">
-  <a class="heading" style="word-wrap: break-word;" href="{{ url }}" title="{{ res.name or res.description }}">
-    {{ cr.resource_display_name(res, client_lang) | truncate(100) }}
-    {{ h.popular('views', res.tracking_summary.total, min=10) }}
-  </a>
-  {% endblock resource_item_title %}
-  <p class="description">
-    {{ cr.field_label(format_field, client_lang) }}:
-    {{ cr.field(format_field, res, client_lang) }},
-    {{ cr.field_label(lang_field, client_lang) }}:
-    {{ cr.lookup_field(lang_field, res, client_lang) }}
+<div class="menu-horizontal ">
+  
+  <p class="description span-2">
+    {% if res.description %}
+      {{ h.markdown_extract(res.description, extract_length=80) }}
+    {% else %}
+      <span class="empty">{{ _('No description for this resource') }}</span>
+    {% endif %}
   </p>
+  
+  <span class="span-1">
+    {{ cr.field(format_field, res, client_lang) }}
+  </span>
+  
+  <span class="span-1">
+    {{ cr.lookup_field(lang_field, res, client_lang) }}
+  </span>
+  
+  <span class="span-1">
+    <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
+  </span>
+
+<!--  
   {% block resource_item_explore %}
   <div class="dropdown btn-group">
     <ul class="menu-horizontal">
@@ -42,4 +47,6 @@
     </ul>
   </div>
   {% endblock %}
+--> 
 </div>
+<div class="clear"></div>
