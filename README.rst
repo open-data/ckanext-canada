@@ -322,18 +322,10 @@ Follow these steps to integrate:
 Compiling the updated French localization strings
 -------------------------------------------------
 
-1. Clone the CKAN i18n repo::
-    
-   $ hg clone http://bitbucket.org/bboissin/ckan-i18n/
-
-2. Copy ckanext-canada/i18n/ckan.po to ckan-i18n/ckan/i18n/fr/LC_MESSAGES/::
-   
-   $ cp ckanext-canada/i18n/ckan.po ckan-i18n/ckan/i18n/fr/LC_MESSAGES/ckan.po
-
-3. Within the ckan-i18n repo, Compile the updated localization file::
+1. The open-data/ckan repo, branch canada-v2.0 should contain the compiled localization file. But if it doesn't, you can compile like so::
 
    $ python setup.py compile_catalog --locale FR
 
-4. Overwrite the CKAN french .mo file with the newly compiled one::
+2. If you are not running CKAN from source, you need to copy the compiled .mo file to your deploy environment::
 
-   $cp ckan-i18n/ckan/i18n/fr/LC_MESSAGES/ckan.mo virtualenv/ckan/src/ckan/ckan/i18n/fr/LC_MESSAGES/ckan.mo
+   $cp ckan_source/ckan/i18n/fr/LC_MESSAGES/ckan.mo virtualenv/ckan/src/ckan/ckan/i18n/fr/LC_MESSAGES/ckan.mo
