@@ -164,3 +164,15 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert pkg['geographic_region'] == [
             u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
         assert pkg['resources'][0]['format'] == u'XML'
+
+
+    def test_tag_extras_bug(self):
+        resp = self.normal_action.package_create(
+            **self.complete_pkg)
+
+        resp = self.action.package_show(id=resp['result']['id'])
+        assert 'subject' not in [e['key'] for e in resp['result'].get('extras',[])]
+
+    def test_keywords_with_apostrophe(self):
+        self.normal_action.package_create(
+            **dict(self.complete_pkg, keywords="emissions de l'automobile"))
