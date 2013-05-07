@@ -39,7 +39,7 @@ orgs_avail  - h.organizations_available helper (optional)
   {% set widget = form.input %}
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-    
+
   {% elif field.type == 'date' %}
     {% do inputargs.update({'type': 'date', 'value': h.date_format(data[id]) or h.today() }) %}
 
@@ -50,6 +50,8 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.update({'options':[]}) %}
     {% if id in data %}
       {% do inputargs.update({'selected':data[id]}) %}
+    {% elif field.choices|length == 1 %}
+      {% do inputargs.update({'selected':field.choices[0].key}) %}
     {% endif %}
     {# kwargs form.select doesn't support #}
     {% do inputargs.pop('value') %}
