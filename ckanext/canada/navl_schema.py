@@ -159,7 +159,8 @@ def keywords_validate(key, data, errors, context):
     Validate a keywords in the same way as tag_string, but don't
     insert tags into data.
     """
-    data = {key: data[key]}
+    # also allow apostrophe, can't avoid them with French keywords
+    data = {key: data[key].replace("'", "-")}
     tag_string_convert(key, data, errors, context)
 
 
