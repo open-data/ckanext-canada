@@ -1756,6 +1756,14 @@
         }, 
         {
           "bilingual": false, 
+          "choices": [
+            {
+              "eng": "Open Government License \u2013 Canada", 
+              "fra": "Licence du gouvernement ouvert \u2013 Canada", 
+              "id": "ca-ogl-lgo", 
+              "key": "ca-ogl-lgo"
+            }
+          ], 
           "description": {
             "eng": "The limitations or constraints on the use of the resource.", 
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
@@ -1771,7 +1779,7 @@
             "fra": "Licence"
           }, 
           "mandatory": "all", 
-          "type": "fixed"
+          "type": "choice"
         }, 
         {
           "bilingual": false, 

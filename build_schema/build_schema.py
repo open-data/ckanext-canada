@@ -210,6 +210,14 @@ BILINGUAL_FIELDS = {
     'endpoint_url': None,
     }
 
+
+USE_CHOICE_IDS_AS_KEYS = set([
+    'language',
+    'license_id',
+    'resource:resource_type',
+    'resource:format',
+    ])
+
 def lang_versions(root, xp):
     """
     Return {'eng': english_text, 'fra': french_text} dict for a given
@@ -355,7 +363,7 @@ def apply_field_customizations(schema_out, vocab):
             choices = merge(f['choices'], choices)
 
         # some fields we are using given ids as keys
-        if field in ('language', 'resource:resource_type', 'resource:format'):
+        if field in USE_CHOICE_IDS_AS_KEYS:
             # remove choices that only exist in pilot
             choices = [c for c in choices if 'id' in c]
             for c in choices:

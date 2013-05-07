@@ -79,6 +79,16 @@ Requirements
    - N/A
 
 
+Configuration
+-------------
+
+The CKAN ini file needs the plugins listed above, as well as::
+
+   licenses_group_url = http://(host)/static/licenses.json
+
+for the license list to be correctly populated.
+
+
 Loading Data
 ------------
 
