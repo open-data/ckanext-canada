@@ -180,3 +180,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
     def test_keywords_with_apostrophe(self):
         self.normal_action.package_create(
             **dict(self.complete_pkg, keywords="emissions de l'automobile"))
+
+    def test_treat_empty_string_as_no_tags(self):
+        self.normal_action.package_create(
+            **dict(self.complete_pkg, topic_category=''))
