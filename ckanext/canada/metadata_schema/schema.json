@@ -1560,6 +1560,12 @@
               "id": "TR", 
               "key": "Transport  Transport", 
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
+            }, 
+            {
+              "eng": "Form Descriptors", 
+              "fra": "Format", 
+              "id": "FM", 
+              "key": "Form Descriptors  Format"
             }
           ], 
           "description": {
@@ -1769,8 +1775,8 @@
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
           }, 
           "example": {
-            "eng": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
-            "fra": "Les contraintes \u00e9nonc\u00e9es dans l\u2019Accord de licence de donn\u00e9es libres du gouvernement du Canada."
+            "eng": "ca-ogl-lgo", 
+            "fra": "ca-ogl-lgo"
           }, 
           "existing": true, 
           "id": "license_id", 
