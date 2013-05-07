@@ -107,9 +107,9 @@ def _schema_field_validators(name, lang, field):
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
     elif field['type'] == 'tag_vocabulary':
-        edit.extend([convert_pilot_uuid_list(field),
-            convert_to_tags(field['vocabulary'])])
-        view.append(convert_from_tags(field['vocabulary']))
+        return (edit + [convert_pilot_uuid_list(field),
+                convert_to_tags(field['vocabulary'])],
+            view + [convert_from_tags(field['vocabulary'])])
     elif field['type'] == 'boolean':
         edit.append(boolean_validator)
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
@@ -159,7 +159,8 @@ def keywords_validate(key, data, errors, context):
     Validate a keywords in the same way as tag_string, but don't
     insert tags into data.
     """
-    data = {key: data[key]}
+    # also allow apostrophe, can't avoid them with French keywords
+    data = {key: data[key].replace("'", "-")}
     tag_string_convert(key, data, errors, context)
 
 
