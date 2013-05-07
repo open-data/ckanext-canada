@@ -54,6 +54,10 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             keywords=u'book',
             keywords_fra=u'livre')
 
+    @classmethod
+    def teardown_class(cls):
+        CreateTestData.delete()
+
     def test_basic_package(self):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
@@ -176,3 +180,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
     def test_keywords_with_apostrophe(self):
         self.normal_action.package_create(
             **dict(self.complete_pkg, keywords="emissions de l'automobile"))
+
+    def test_treat_empty_string_as_no_tags(self):
+        self.normal_action.package_create(
+            **dict(self.complete_pkg, topic_category=''))
