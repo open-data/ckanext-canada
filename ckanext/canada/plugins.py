@@ -46,6 +46,14 @@ class DataGCCAInternal(p.SingletonPlugin):
         map.connect('/help', controller='home', action='index')
 
         return map
+        
+    def after_map(self, map):
+        map.connect(
+            'guidelines', '/guidelines',
+            controller='ckanext.canada.controller:CanadaController',
+            action='view_guidelines'
+        )
+        return map
 
     def get_helpers(self):
         return {'may_publish_datasets': may_publish_datasets,
