@@ -60,6 +60,9 @@ def read_from_sheet(sheet):
                 'eng': cell[0],
                 'fra': cell[1],
                 })
+            if cell[5]:
+                current_vocab[-1]['subject_ids'] = [
+                    i.strip() for i in cell[5].split(',')]
         else:
             current_vocab.append({
                 'id': u'-'.join((cell[1], cell[3])) if cell[1] else u'',
