@@ -30,8 +30,12 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
         resp = self.sysadmin_action.package_create(
             **self.example_pkg[0])
 
-        self.assert_equals(
-            _trim_package(cls.example_pkg[0]),
+        original = json.loads(json.dumps(self.example_pkg[0]))
+        _trim_package(original)
+        existing = resp['result']
+        _trim_package(existing)
+        self.assert_equal(
+            _trim_package(self.example_pkg[0]),
             _trim_package(resp['result']))
 
 
