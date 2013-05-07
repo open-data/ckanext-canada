@@ -54,6 +54,10 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             keywords=u'book',
             keywords_fra=u'livre')
 
+    @classmethod
+    def teardown_class(cls):
+        CreateTestData.delete()
+
     def test_basic_package(self):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
