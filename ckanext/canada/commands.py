@@ -487,6 +487,10 @@ def _trim_package(pkg):
                 pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
             except Invalid:
                 pass # not for us to fail validation
-        if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
-            pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
-
+        elif field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
+            if not pkg[name]:
+                pkg[name] = []
+            else:
+                pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
+        elif field['type'] == 'url' and isinstance(pkg[name], (str, unicode)):
+            pkg[name] = pkg[name].strip()
