@@ -239,6 +239,8 @@ def convert_pilot_uuid_list(field):
     """
     mapping = field['choices_by_pilot_uuid']
     def handle_pilot_uuid_list(value):
+        if not value:
+            return []
         if isinstance(value, (str, unicode)):
             value = [v.strip() for v in value.split(',')]
         return [mapping.get(v, {'key':v})['key'] for v in value]
