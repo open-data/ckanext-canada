@@ -43,8 +43,6 @@ class DataGCCAInternal(p.SingletonPlugin):
         
     def before_map(self, map):
         map.connect('/', controller='user', action='login')
-        map.connect('/help', controller='home', action='index')
-
         return map
         
     def after_map(self, map):
@@ -52,6 +50,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             'guidelines', '/guidelines',
             controller='ckanext.canada.controller:CanadaController',
             action='view_guidelines'
+        )
+        map.connect(
+            'help', '/help',
+            controller='ckanext.canada.controller:CanadaController',
+            action='view_help'
         )
         return map
 
