@@ -172,3 +172,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         resp = self.action.package_show(id=resp['result']['id'])
         assert 'subject' not in [e['key'] for e in resp['result'].get('extras',[])]
+
+    def test_keywords_with_apostrophe(self):
+        self.normal_action.package_create(
+            **dict(self.complete_pkg, keywords="emissions de l'automobile"))
