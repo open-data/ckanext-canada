@@ -1,0 +1,130 @@
+{% extends "page_wet.html" %}
+      
+{# For the homepage, re-arrange the normal primary/secondary layout from side-by-side
+   to stacked
+#}
+{% block content %}
+  <div role="main">
+      {{ self.flash() }}
+      {{ self.primary_content() }}
+  </div>
+  <div>
+      {{ self.secondary_content() }}
+  </div>
+{% endblock %}
+
+{% block primary_content %}
+  <div class="span-1"></div>
+  <div class="span-6">
+    <div class="module-poster indent-large">
+      {% if h.lang() == 'en' %}
+        <h1>Help</h1>
+        
+        <p>This page provides instructions on using the Open Data Metadata Registry to add dataset
+        metadata records to the <a href="http://data.gc.ca">Government of Canada Open Data Portal.</a></p>
+        
+        <p>Additional information on creating metadata for the Registry is found in the <em>Government of Canada Open Data Portal Metadata Implementation Guide, 2nd Edition.</em></p>
+        
+        <h3>Adding a Dataset</h3>
+        <p>To add a dataset to the Open Data Portal, you must create a metadata record for that dataset and add it to the Registry. To add a metadata record:</p>
+        
+        <ol>
+          <li>Click <b>'Add Dataset'</b></li>
+          <li>Ensure that the dataset you are adding meets the requirements in the <em>Dataset Criteria</em> list. This list is also found under <em>Guidelines</em> in the Registry.</li>
+          <li>Follow the instructions provided in the <em>Government of Canada Open Data Portal Metadata Implementation Guide</em>.</li>
+        </ol>
+        
+        <h3>Reviewing your Datasets</h3>
+        <p>To review your dataset metadata records or to see the complete list of records, click <b>Dashboard</b>. The records are listed in the order in which they were entered in the Registry.</p>
+        
+        <h3>Reviewing the Datasets of your Department or Agency</h3>
+        <p>To see the complete set of metadata records belonging to your department or agency, click <b>Organizations</b>.</p>
+        
+        <p>To see a record within the Registry, click the name of the dataset.</p>
+        
+        <h3>Searching the Registry</h3>
+        <p>Use Search to find metadata records published in the Registry. This feature is the same as <em>Advanced Search</em> on the Open Data Portal website.</p>
+        
+        <p>To search the Registry:</p>
+        <ol>
+          <li>Type your search keywords under <b>Search open data </b>.</li>
+        </ol>
+        
+        <p>The list of results shows datasets matching your search query in the order in which they were entered in the Registry (chronological).</p>
+        
+        <h3>Browsing the Registry</h3>
+        
+        <p>Use the <em>Browse</em> feature to find metadata records published in the Registry. This feature is similar to <em>Browse</em> on the Open Data Portal website.</p>
+        
+        <p>You can browse the Registry in three ways:</p>
+        
+        <ol>
+          <li><b>By department</b>. Click on a department or agency name to see all datasets published by that organization.</li>
+          <li><b>By subject</b>. Click on a subject to find all datasets 'tagged' with that subject.</li>
+          <li><b>By datatype</b>. Click on a datatype name to find all datasets in that format.</li>
+        </ol>
+        
+        <p>The list of results displays datasets in the order in which they were entered in the Registry (chronological).</p>
+        
+      {% else %}
+        <h1>Aide</h1>
+        
+        <p>Le présent document fournit des instructions sur l'utilisation du Registre de métadonnées pour <a href="http://data.gc.ca">le Portail de données ouvertes du gouvernement du Canada</a>.</p>
+        
+        <p>Pour de plus amples renseignements, consultez le document intitulé <b>Guide de mise en place des métadonnées pour les ressources Web, 2e édition</b></p>
+        
+        <h3>Ajouter un jeu de données</h3>
+        
+        <p>L'ajout d'un ensemble de données sur le Portail de données ouvertes comprend l'incorporation au Registre d'un enregistrement de métadonnées relatif à l'ensemble de données. Voici la procédure à suivre :</p>
+        
+      <ol>
+        <li>Cliquez sur <b>Ajouter un jeu de données.</b></li>
+        <li>Veillez à ce que l'ensemble de données que vous voulez verser au Portail soit conforme à la liste des critères applicables aux ensembles de données. Cette liste fait également partie des lignes directrices relatives au Registre.</li>
+        <li>Suivez les instructions fournies dans le document intitulé Guide de mise en place des métadonnées pour les ressources web, 2e édition</li>
+      </ol>  
+      
+      <h3>Examiner vos ensembles de données</h3>
+      
+      <p>Pour examiner vos ensembles de données et les enregistrements de métadonnées connexes, ou
+      encore pour consulter la liste complète des enregistrements, cliquez sur <b>Tableu de bord</b>. Les enregistrements sont présentés dans l'ordre où ils ont été versés au Registre.</p>
+      
+      <h3>Examiner les ensembles de données de votre ministère ou organisme</h3>
+      
+      <p>Pour examiner l'ensemble des enregistrements de métadonnées de votre ministère ou organisme, cliquez sur <b>Organisations</b>.</p>
+      
+      <p>Pour consulter un enregistrement dans le Registre, cliquez sur le nom de l'ensemble de données correspondant.</p>
+      
+      <h3>Faire une recherche dans le Registre</h3>
+      
+      <p>Utilisez la fonction <em>Recherche</em> pour trouver des enregistrements de métadonnées publiés dans le Registre. Cette fonction est la même que la fonction <em>Recherche avancée</em> sur le site Web du Portail de données ouvertes.</p>
+      
+      <p>Pour effectuer une recherche dans le Registre :</p>
+      
+      <ol>
+        <li>Tapez des <b>mots clés</b> dans la fenêtre de recherche de données.</li>
+      </ol>
+      
+      <p>Une liste des ensembles de données correspondant à vos critères de recherche sera affichée; les ensembles de données figureront dans l'ordre où ils ont été versés au Registre.</p>
+      
+      <h3>Naviguer à l'intérieur du Registre</h3>
+      
+      <p>Utilisez la fonction de <em>navigation</em> pour trouver des enregistrements de métadonnées publiés dans le Registre. C'est une fonction similaire à celle que comporte le Portail de données ouvertes.</p>
+      
+      <p>Vous pouvez naviguer dans le Registre selon trois paramètres :</p>
+      
+      <ol>
+        <li><b>Par ministère</b> - Cliquez sur le nom d'un ministère ou d'un organisme pour voir quels
+        ensembles de données il a publiés.</li>
+        <li><b>Par sujet</b> - Cliquez sur un sujet pour voir tous les ensembles de données auxquels ce sujet a été associé.</li>
+        <li>Par type de données - Cliquez sur un format de données pour voir tous les ensembles de données produits dans ce format.</li>
+      </ol>
+      
+      <p>Les ensembles de données sont affichés dans l'ordre où ils ont été versés au Registre (ordre
+      chronologique).</p>
+      
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="clear"></div>
+{% endblock primary_content %}
