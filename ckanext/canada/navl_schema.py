@@ -60,6 +60,7 @@ def _schema_update(schema, purpose):
             schema_description.dataset_field_by_id['author_email'])]
         schema['license_id'] = [fixed_value(
             schema_description.dataset_field_by_id['license_id'])]
+        schema['department_number'] = [get_department_number]
 
     resources = schema['resources']
 
@@ -263,3 +264,12 @@ def fixed_value(field, lang=None):
     def use_example_value(value):
         return field['example']['fra' if lang == 'fra' else 'eng']
     return use_example_value
+
+
+def get_department_number(key, data, errors, context):
+    """
+    Return the department number for the org to which this dataset is assigned
+    """
+    owner_org = data.get(('owner_org',))
+    data[key] = schema_description.dataset_field_by_id['owner_org'][
+        'choices_by_pilot_uuid'].get(owner_org, {'id':None})['id']
