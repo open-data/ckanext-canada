@@ -480,7 +480,7 @@ def _trim_package(pkg):
             if k not in r:
                 r[k] = None
     for k in ['ready_to_publish', 'private']:
-        pkg[k] = boolean_validator(pkg.get(k, ''), None)
+        pkg[k] = boolean_validator(unicode(pkg.get(k, '')), None)
     if 'name' not in pkg:
         pkg['name'] = pkg['id']
     if 'type' not in pkg:
