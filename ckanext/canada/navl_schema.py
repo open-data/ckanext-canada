@@ -121,7 +121,7 @@ def _schema_field_validators(name, lang, field):
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
     elif field['type'] == 'fixed':
         edit.append(ignore)
-        view.append(fixed_value(field))
+        view.append(fixed_value(field, lang))
     else:
         edit.append(unicode)
 
@@ -256,10 +256,10 @@ def convert_pilot_uuid_list(field):
     return handle_pilot_uuid_list
 
 
-def fixed_value(field):
+def fixed_value(field, lang=None):
     """
     Generate the same value for this field for all datasets
     """
-    def ditto(value):
-        return field['example']['eng']
+    def use_example_value(value):
+        return field['example']['fra' if lang == 'fra' else 'eng']
     return ditto
