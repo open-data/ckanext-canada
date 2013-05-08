@@ -111,7 +111,7 @@ def _schema_field_validators(name, lang, field):
                 convert_to_tags(field['vocabulary'])],
             view + [convert_from_tags(field['vocabulary'])])
     elif field['type'] == 'boolean':
-        edit.append(boolean_validator)
+        edit.extend([unicode, boolean_validator])
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
     else:
         edit.append(unicode)
