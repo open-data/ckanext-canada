@@ -492,5 +492,5 @@ def _trim_package(pkg):
                 pkg[name] = []
             else:
                 pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
-        elif field['type'] == 'url' and isinstance(pkg[name], (str, unicode)):
+        elif field['type'] == 'url' and isinstance(pkg.get(name), (str, unicode)):
             pkg[name] = pkg[name].strip()
