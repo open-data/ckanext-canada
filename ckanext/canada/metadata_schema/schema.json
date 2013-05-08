@@ -4509,6 +4509,12 @@
           "bilingual": false, 
           "choices": [
             {
+              "eng": "As Needed", 
+              "fra": "Au besoin", 
+              "id": 540, 
+              "key": "As Needed | Au besoin"
+            }, 
+            {
               "eng": "Continual", 
               "fra": "Continue", 
               "id": 532, 
@@ -4539,6 +4545,12 @@
               "key": "Monthly | Mensuel"
             }, 
             {
+              "eng": "Semimonthly", 
+              "fra": "Bimensuel", 
+              "id": 544, 
+              "key": "Semimonthly | Bimensuel"
+            }, 
+            {
               "eng": "Quarterly", 
               "fra": "Trimestriel", 
               "id": 537, 
@@ -4557,12 +4569,6 @@
               "key": "Annually | Annuel"
             }, 
             {
-              "eng": "As Needed", 
-              "fra": "Au besoin", 
-              "id": 540, 
-              "key": "As Needed | Au besoin"
-            }, 
-            {
               "eng": "Irregular", 
               "fra": "Irr\u00e9gulier", 
               "id": 541, 
@@ -4579,12 +4585,6 @@
               "fra": "Inconnu", 
               "id": 543, 
               "key": "Unknown | Inconnu"
-            }, 
-            {
-              "eng": "Semimonthly", 
-              "fra": "Bimensuel", 
-              "id": 544, 
-              "key": "Semimonthly | Bimensuel"
             }
           ], 
           "description": {
@@ -4684,8 +4684,8 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The Digital Object Identifier  assigned to file.", 
-            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
+            "eng": "The Digital Object Identifier  assigned to file. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html", 
+            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier. Pour plus d'informations, visitez :  http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
           }, 
           "example": {
             "eng": "10.978.86123/45678", 
