@@ -34,7 +34,9 @@
       
       <h5>{{ _('Organization')}}: </h5>{{cr.org_field(pkg, client_lang)}}
       
-      <h5>{{_('License')}}: </h5>{{ pkg.license_title }}
+      <h5>{{_('Licence')}}: </h5>{{pkg.license_title_fra
+        if client_lang == 'fr' and 'license_title_fra' in pkg
+        else pkg.license_title }}
     </section>
 
     <section id="dataset-resources" class="resources module-content indent-large">
