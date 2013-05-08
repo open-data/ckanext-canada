@@ -49,8 +49,8 @@
             "fra": "La langue des m\u00e9tadonn\u00e9es"
           }, 
           "example": {
-            "eng": "eng; CAN", 
-            "fra": "fra; CAN"
+            "eng": "eng; CAN | fra; CAN", 
+            "fra": ""
           }, 
           "existing": false, 
           "id": "language", 
@@ -1311,7 +1311,7 @@
           }, 
           "example": {
             "eng": "open-ouvert@tbs-sct.gc.ca", 
-            "fra": "open-ouvert@tbs-sct.gc.ca"
+            "fra": ""
           }, 
           "existing": true, 
           "id": "author_email", 
@@ -1840,7 +1840,7 @@
           }, 
           "example": {
             "eng": "ca-ogl-lgo", 
-            "fra": "ca-ogl-lgo"
+            "fra": ""
           }, 
           "existing": true, 
           "id": "license_id", 
@@ -1850,6 +1850,25 @@
           }, 
           "mandatory": "all", 
           "type": "choice"
+        }, 
+        {
+          "bilingual": true, 
+          "description": {
+            "eng": "The specific attribution statement provided by the information provider.", 
+            "fra": "L\u2019\u00e9nonc\u00e9 d\u2019attribution pr\u00e9cis fourni par le fournisseur d\u2019information"
+          }, 
+          "example": {
+            "eng": "Contains information licensed under the Open Government Licence \u2013 Canada.", 
+            "fra": "Contient des informations autoris\u00e9es sous la Licence du gouvernement ouvert- Canada"
+          }, 
+          "existing": false, 
+          "id": "attribution", 
+          "label": {
+            "eng": "Attribution Statement", 
+            "fra": "D\u00e9claration d'attribution"
+          }, 
+          "mandatory": "all", 
+          "type": "fixed"
         }, 
         {
           "bilingual": false, 
@@ -4490,6 +4509,12 @@
           "bilingual": false, 
           "choices": [
             {
+              "eng": "As Needed", 
+              "fra": "Au besoin", 
+              "id": 540, 
+              "key": "As Needed | Au besoin"
+            }, 
+            {
               "eng": "Continual", 
               "fra": "Continue", 
               "id": 532, 
@@ -4520,6 +4545,12 @@
               "key": "Monthly | Mensuel"
             }, 
             {
+              "eng": "Semimonthly", 
+              "fra": "Bimensuel", 
+              "id": 544, 
+              "key": "Semimonthly | Bimensuel"
+            }, 
+            {
               "eng": "Quarterly", 
               "fra": "Trimestriel", 
               "id": 537, 
@@ -4538,12 +4569,6 @@
               "key": "Annually | Annuel"
             }, 
             {
-              "eng": "As Needed", 
-              "fra": "Au besoin", 
-              "id": 540, 
-              "key": "As Needed | Au besoin"
-            }, 
-            {
               "eng": "Irregular", 
               "fra": "Irr\u00e9gulier", 
               "id": 541, 
@@ -4560,12 +4585,6 @@
               "fra": "Inconnu", 
               "id": 543, 
               "key": "Unknown | Inconnu"
-            }, 
-            {
-              "eng": "Semimonthly", 
-              "fra": "Bimensuel", 
-              "id": 544, 
-              "key": "Semimonthly | Bimensuel"
             }
           ], 
           "description": {
@@ -4665,8 +4684,8 @@
         {
           "bilingual": false, 
           "description": {
-            "eng": "The Digital Object Identifier  assigned to file.", 
-            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier"
+            "eng": "The Digital Object Identifier  assigned to file. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html", 
+            "fra": "L\u2019identificateur d\u2019objet num\u00e9rique assign\u00e9 au dossier. Pour plus d'informations, visitez :  http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
           }, 
           "example": {
             "eng": "10.978.86123/45678", 
@@ -4944,7 +4963,7 @@
         "eng": "Size", 
         "fra": "Taille"
       }, 
-      "mandatory": "all", 
+      "mandatory": null, 
       "pilot_help": {
         "eng": "The total size of the dataset in megabytes (MB).", 
         "fra": "La taille totale de l\u2019ensemble de donn\u00e9es en m\u00e9gaoctets (MO)."
