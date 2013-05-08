@@ -29,6 +29,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
+            'license_id': 'ca-ogl-lgo',
             'resources': [{
                 'name': u'Full text.',
                 'name_fra': u'Full text.',
@@ -184,3 +185,13 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
     def test_treat_empty_string_as_no_tags(self):
         self.normal_action.package_create(
             **dict(self.complete_pkg, topic_category=''))
+
+    def test_invalid_resource_size(self):
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **dict(self.complete_pkg,
+                resources = [dict(self.complete_pkg['resources'][0],
+                    size='10M',
+                    )],
+                )
+            )

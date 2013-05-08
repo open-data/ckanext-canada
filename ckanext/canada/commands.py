@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanext.canada.stats import completion_stats
+from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchIndexError)
 
@@ -216,44 +217,52 @@ class CanadaCommand(CkanCommand):
                 response]) + '\n')
 
         for line in iter(sys.stdin.readline, ''):
-            pkg = json.loads(line)
-            validation_override = pkg.get('validation_override') # FIXME: remove me
-            _trim_package(pkg)
-
-            existing = None
-            if self.options.replace_datasets:
-                try:
-                    existing = registry.action.package_show(id=pkg['id'])
-                    _trim_package(existing)
-                except NotFound:
-                    existing = None
-                if existing == pkg:
-                    reply('unchanged', None, None)
-                    try:
-                        sys.stdout.flush()
-                    except IOError:
-                        break
-                    continue
-            pkg['validation_override'] = validation_override
-            action = 'replace' if existing else 'create'
             try:
-                if existing:
-                    response = registry.action.package_update(**pkg)
+                pkg = json.loads(line)
+            except UnicodeDecodeError, e:
+                pkg = None
+                reply('read', 'UnicodeDecodeError', unicode(e))
+
+            if pkg:
+                validation_override = pkg.get('validation_override') # FIXME: remove me
+                _trim_package(pkg)
+
+                existing = None
+                if self.options.replace_datasets:
+                    try:
+                        existing = registry.action.package_show(id=pkg['id'])
+                        _trim_package(existing)
+                    except NotFound:
+                        existing = None
+                    if existing == pkg:
+                        reply('unchanged', None, None)
+                        pkg = None
+
+            if pkg:
+                pkg['validation_override'] = validation_override
+                action = 'replace' if existing else 'create'
+                try:
+                    if existing:
+                        response = registry.action.package_update(**pkg)
+                    else:
+                        response = registry.action.package_create(**pkg)
+                except ValidationError, e:
+                    reply(action, 'ValidationError', e.error_dict)
+                except SearchIndexError, e:
+                    reply(action, 'SearchIndexError', unicode(e))
+                except KeyboardInterrupt:
+                    return
                 else:
-                    response = registry.action.package_create(**pkg)
-            except ValidationError, e:
-                reply(action, 'ValidationError', e.error_dict)
-            except SearchIndexError, e:
-                reply(action, 'SearchIndexError', unicode(e))
-            except KeyboardInterrupt:
-                return
-            else:
-                reply(action, None, response)
+                    reply(action, None, response)
             try:
                 sys.stdout.flush()
             except KeyboardInterrupt:
                 return
-            except IOError:
+            except IOError, e:
+                # let pipe errors cause silent exit --
+                # the parent must have exited with an error
+                if e.errno != 32:
+                    raise
                 break
 
     def portal_update(self, source, activity_date=None):
@@ -471,7 +480,7 @@ def _trim_package(pkg):
             if k not in r:
                 r[k] = None
     for k in ['ready_to_publish', 'private']:
-        pkg[k] = boolean_validator(pkg.get(k, ''), None)
+        pkg[k] = boolean_validator(unicode(pkg.get(k, '')), None)
     if 'name' not in pkg:
         pkg['name'] = pkg['id']
     if 'type' not in pkg:
@@ -487,10 +496,11 @@ def _trim_package(pkg):
                 pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
             except Invalid:
                 pass # not for us to fail validation
-        elif field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
-            if not pkg[name]:
-                pkg[name] = []
-            else:
-                pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
-        elif field['type'] == 'url' and isinstance(pkg[name], (str, unicode)):
-            pkg[name] = pkg[name].strip()
+        elif field['type'] == 'tag_vocabulary' and not isinstance(
+                pkg.get(name), list):
+            pkg[name] = convert_pilot_uuid_list(field)(pkg.get(name, []))
+        elif field['type'] == 'url':
+            if not pkg.get(name): # be consistent about what an empty url is
+                pkg[name] = ""
+        elif field['type'] == 'fixed' and name in pkg:
+            del pkg[name]
