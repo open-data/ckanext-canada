@@ -7,3 +7,6 @@ class CanadaController(BaseController):
         
     def view_help(self):
         return render('help.html')
+      
+    def view_new_user(self):
+        return render('newuser.html')

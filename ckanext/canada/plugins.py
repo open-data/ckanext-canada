@@ -56,6 +56,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaController',
             action='view_help'
         )
+        map.connect(
+            'newuser', '/newuser',
+            controller='ckanext.canada.controller:CanadaController',
+            action='view_new_user'
+        )
         return map
 
     def get_helpers(self):
