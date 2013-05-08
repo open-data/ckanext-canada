@@ -149,8 +149,8 @@ PROPOSED_TO_EXISTING_FIELDS = {
     'license': 'license_id',
     'resourceTitle': 'resource:name',
     'accessURL': 'resource:url',
-    'language2': 'resource:language',
     # resource fields
+    'language2': 'resource:language',
     'transferSize': 'resource:size',
     'formatName': 'resource:format',
 
@@ -172,7 +172,6 @@ PILOT_FIELD_MAPPING = {
     'title': 'title_en',
     'owner_org': 'department', # FIXME: will this be replaced by group owner?
     'subject': 'category',
-    'language': 'language__',
     'date': 'date_released',
     'date_modified': 'date_updated',
     'maintenance_and_update_frequency': 'frequency',
@@ -188,6 +187,7 @@ PILOT_FIELD_MAPPING = {
     'data_series_name': 'group_name_en',
     'data_series_issue_identification': 'deptIdentifier',
     'date_published': 'date_released',
+    'resource:language': 'language__',
     'resource:url': 'dataset_link_en_1',
     'resource:format': 'dataset_format_1',
     'resource:size': 'dataset_size_en_1',
@@ -284,12 +284,12 @@ def read_proposed_fields_vocab():
         new_name = p.property_name.strip()
         if not new_name:
             continue
-        new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
-        if new_name in out:
-            new_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name + '2',
-                new_name) # language is duplicated
-        assert new_name not in out, (new_name, out.keys())
-        out[new_name] = p
+        ckan_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name, new_name)
+        if ckan_name in out:
+            ckan_name = PROPOSED_TO_EXISTING_FIELDS.get(new_name + '2',
+                ckan_name) # language is duplicated
+        assert ckan_name not in out, (ckan_name, out.keys())
+        out[ckan_name] = p
     return out, dict((PROPOSED_TO_EXISTING_FIELDS.get(k, k), v)
         for k,v in vocab.iteritems())
 
@@ -358,7 +358,7 @@ def apply_field_customizations(schema_out, vocab):
         else:
             f = get_field(field)
 
-        if field in ('geographic_region',):
+        if field in ('geographic_region', 'language'):
             # prefer proposed.xls ordering
             choices = merge(choices, f['choices'])
         elif 'choices' in f:
