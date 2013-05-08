@@ -502,3 +502,5 @@ def _trim_package(pkg):
         elif field['type'] == 'url':
             if not pkg.get(name): # be consistent about what an empty url is
                 pkg[name] = ""
+        elif field['type'] == 'fixed' and name in pkg:
+            del pkg[name]

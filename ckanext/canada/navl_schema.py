@@ -262,4 +262,4 @@ def fixed_value(field, lang=None):
     """
     def use_example_value(value):
         return field['example']['fra' if lang == 'fra' else 'eng']
-    return ditto
+    return use_example_value

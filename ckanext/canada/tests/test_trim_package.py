@@ -37,7 +37,8 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
         original = json.loads(json.dumps(original))
         _trim_package(original)
         _trim_package(existing)
-        self.assert_equal(set(original), set(existing))
+        self.assert_equal(set(original) - set(existing), set([]))
+        self.assert_equal(set(existing) - set(original), set([]))
         for k in original:
             if k == 'resources':
                 continue
