@@ -43,6 +43,7 @@ SECTIONS_FIELDS = [
         'topic_category',
         'keywords',
         'license_id',
+        'attribution',
         'geographic_region',
         'spatial',
         'spatial_representation_type',
@@ -208,6 +209,7 @@ BILINGUAL_FIELDS = {
     'issue_identification': None,
     'related_document_url': None,
     'endpoint_url': None,
+    'attribution': None,
     }
 
 

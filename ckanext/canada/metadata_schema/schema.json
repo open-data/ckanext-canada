@@ -49,8 +49,8 @@
             "fra": "La langue des m\u00e9tadonn\u00e9es"
           }, 
           "example": {
-            "eng": "eng; CAN", 
-            "fra": "fra; CAN"
+            "eng": "eng; CAN | fra; CAN", 
+            "fra": ""
           }, 
           "existing": false, 
           "id": "language", 
@@ -1311,7 +1311,7 @@
           }, 
           "example": {
             "eng": "open-ouvert@tbs-sct.gc.ca", 
-            "fra": "open-ouvert@tbs-sct.gc.ca"
+            "fra": ""
           }, 
           "existing": true, 
           "id": "author_email", 
@@ -1840,7 +1840,7 @@
           }, 
           "example": {
             "eng": "ca-ogl-lgo", 
-            "fra": "ca-ogl-lgo"
+            "fra": ""
           }, 
           "existing": true, 
           "id": "license_id", 
@@ -1850,6 +1850,25 @@
           }, 
           "mandatory": "all", 
           "type": "choice"
+        }, 
+        {
+          "bilingual": true, 
+          "description": {
+            "eng": "The specific attribution statement provided by the information provider.", 
+            "fra": "L\u2019\u00e9nonc\u00e9 d\u2019attribution pr\u00e9cis fourni par le fournisseur d\u2019information"
+          }, 
+          "example": {
+            "eng": "Contains information licensed under the Open Government Licence \u2013 Canada.", 
+            "fra": "Contient des informations autoris\u00e9es sous la Licence du gouvernement ouvert- Canada"
+          }, 
+          "existing": false, 
+          "id": "attribution", 
+          "label": {
+            "eng": "Attribution Statement", 
+            "fra": "D\u00e9claration d'attribution"
+          }, 
+          "mandatory": "all", 
+          "type": "fixed"
         }, 
         {
           "bilingual": false, 
