@@ -1560,6 +1560,12 @@
               "id": "TR", 
               "key": "Transport  Transport", 
               "pilot_uuid": "949D4BF7-0AF0-49BD-8C76-AF0B82E72CC2"
+            }, 
+            {
+              "eng": "Form Descriptors", 
+              "fra": "Format", 
+              "id": "FM", 
+              "key": "Form Descriptors  Format"
             }
           ], 
           "description": {
@@ -1596,115 +1602,179 @@
               "eng": "Farming", 
               "fra": "Agriculture", 
               "id": 642, 
-              "key": "Farming  Agriculture"
+              "key": "Farming  Agriculture", 
+              "subject_ids": [
+                "AG"
+              ]
             }, 
             {
               "eng": "Biota", 
               "fra": "Biote", 
               "id": 643, 
-              "key": "Biota  Biote"
+              "key": "Biota  Biote", 
+              "subject_ids": [
+                "NE", 
+                "ST"
+              ]
             }, 
             {
               "eng": "Boundaries", 
               "fra": "Fronti\u00e8res", 
               "id": 644, 
-              "key": "Boundaries  Fronti\u00e8res"
+              "key": "Boundaries  Fronti\u00e8res", 
+              "subject_ids": [
+                "GV"
+              ]
             }, 
             {
               "eng": "Climatology / Meteorology / Atmosphere", 
               "fra": "Climatologie / M\u00e9t\u00e9orologie / Atmosph\u00e8re", 
               "id": 645, 
-              "key": "Climatology Meteorology Atmosphere  Climatologie M\u00e9t\u00e9orologie Atmosph\u00e8re"
+              "key": "Climatology Meteorology Atmosphere  Climatologie M\u00e9t\u00e9orologie Atmosph\u00e8re", 
+              "subject_ids": [
+                "NE", 
+                "ST"
+              ]
             }, 
             {
               "eng": "Economy", 
               "fra": "\u00c9conomie", 
               "id": 646, 
-              "key": "Economy  \u00c9conomie"
+              "key": "Economy  \u00c9conomie", 
+              "subject_ids": [
+                "EC"
+              ]
             }, 
             {
               "eng": "Elevation", 
               "fra": "\u00c9l\u00e9vation", 
               "id": 647, 
-              "key": "Elevation  \u00c9l\u00e9vation"
+              "key": "Elevation  \u00c9l\u00e9vation", 
+              "subject_ids": [
+                "FM"
+              ]
             }, 
             {
               "eng": "Environment", 
               "fra": "Environnement", 
               "id": 648, 
-              "key": "Environment  Environnement"
+              "key": "Environment  Environnement", 
+              "subject_ids": [
+                "NE"
+              ]
             }, 
             {
               "eng": "Geoscientific Information", 
               "fra": "Information g\u00e9oscientifique", 
               "id": 649, 
-              "key": "Geoscientific Information  Information g\u00e9oscientifique"
+              "key": "Geoscientific Information  Information g\u00e9oscientifique", 
+              "subject_ids": [
+                "FM", 
+                "ST", 
+                "NE"
+              ]
             }, 
             {
               "eng": "Health", 
               "fra": "Sant\u00e9", 
               "id": 650, 
-              "key": "Health  Sant\u00e9"
+              "key": "Health  Sant\u00e9", 
+              "subject_ids": [
+                "HE"
+              ]
             }, 
             {
               "eng": "Imagery Base Maps Earth Cover", 
               "fra": "Imagerie carte de base couverture terrestre", 
               "id": 651, 
-              "key": "Imagery Base Maps Earth Cover  Imagerie carte de base couverture terrestre"
+              "key": "Imagery Base Maps Earth Cover  Imagerie carte de base couverture terrestre", 
+              "subject_ids": [
+                "FM"
+              ]
             }, 
             {
               "eng": "Intelligence Military", 
               "fra": "Renseignements militaires", 
               "id": 652, 
-              "key": "Intelligence Military  Renseignements militaires"
+              "key": "Intelligence Military  Renseignements militaires", 
+              "subject_ids": [
+                "MI"
+              ]
             }, 
             {
               "eng": "Inland Waters", 
               "fra": "Eaux int\u00e9rieures", 
               "id": 653, 
-              "key": "Inland Waters  Eaux int\u00e9rieures"
+              "key": "Inland Waters  Eaux int\u00e9rieures", 
+              "subject_ids": [
+                "NE"
+              ]
             }, 
             {
               "eng": "Location", 
               "fra": "Localisation", 
               "id": 654, 
-              "key": "Location  Localisation"
+              "key": "Location  Localisation", 
+              "subject_ids": [
+                "FM"
+              ]
             }, 
             {
               "eng": "Oceans", 
               "fra": "Oc\u00e9ans", 
               "id": 655, 
-              "key": "Oceans  Oc\u00e9ans"
+              "key": "Oceans  Oc\u00e9ans", 
+              "subject_ids": [
+                "NE"
+              ]
             }, 
             {
               "eng": "Planning Cadastre", 
               "fra": "Am\u00e9nagement cadastre", 
               "id": 656, 
-              "key": "Planning Cadastre  Am\u00e9nagement cadastre"
+              "key": "Planning Cadastre  Am\u00e9nagement cadastre", 
+              "subject_ids": [
+                "EC", 
+                "NE", 
+                "FM"
+              ]
             }, 
             {
               "eng": "Society", 
               "fra": "Soci\u00e9t\u00e9", 
               "id": 657, 
-              "key": "Society  Soci\u00e9t\u00e9"
+              "key": "Society  Soci\u00e9t\u00e9", 
+              "subject_ids": [
+                "SO"
+              ]
             }, 
             {
               "eng": "Structure", 
               "fra": "Structures", 
               "id": 658, 
-              "key": "Structure  Structures"
+              "key": "Structure  Structures", 
+              "subject_ids": [
+                "EC"
+              ]
             }, 
             {
               "eng": "Transportation", 
               "fra": "Transport", 
               "id": 659, 
-              "key": "Transportation  Transport"
+              "key": "Transportation  Transport", 
+              "subject_ids": [
+                "TR"
+              ]
             }, 
             {
               "eng": "Utilities Communication", 
               "fra": "Services communication", 
               "id": 660, 
-              "key": "Utilities Communication  Services communication"
+              "key": "Utilities Communication  Services communication", 
+              "subject_ids": [
+                "EC", 
+                "IN"
+              ]
             }
           ], 
           "description": {
@@ -1769,8 +1839,8 @@
             "fra": "Les limites ou contraintes li\u00e9es \u00e0 l\u2019utilisation de la ressource"
           }, 
           "example": {
-            "eng": "Constraints outlined in: Government of Canada Open Data Licence Agreement", 
-            "fra": "Les contraintes \u00e9nonc\u00e9es dans l\u2019Accord de licence de donn\u00e9es libres du gouvernement du Canada."
+            "eng": "ca-ogl-lgo", 
+            "fra": "ca-ogl-lgo"
           }, 
           "existing": true, 
           "id": "license_id", 

@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
 from ckanext.canada.stats import completion_stats
+from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchIndexError)
 
@@ -487,6 +488,8 @@ def _trim_package(pkg):
                 pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
             except Invalid:
                 pass # not for us to fail validation
-        if field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
-            pkg[name] = [t.strip() for t in pkg[name].split(',') if t.strip()]
-
+        elif field['type'] == 'tag_vocabulary' and not isinstance(pkg[name], list):
+            pkg[name] = convert_pilot_uuid_list(field)(pkg[name])
+        elif field['type'] == 'url':
+            if not pkg.get(name): # be consistent about what an empty url is
+                pkg[name] = ""
