@@ -1,0 +1,21 @@
+{% extends 'page_wet.html' %}
+
+{% block primary_content %}
+  <article class="module-poster">
+    <div class="module-content">
+      <h1 class="page-heading">{{ _('Register for an Account') }}</h1>
+
+        {% if h.lang() == 'en' %}
+        <p> To register for an account for the Open Data Registry, send a request to :  <a href="mailto: open-ouvert@gc.ca">open-ouvert@gc.ca.</a></p>
+        {% else %}
+        <p> Pour créer un compte pour le Registre de données ouvertes, veuillez faire parvenir une demande à : <a href="mailto: open-ouvert@gc.ca">open-ouvert@gc.ca.</a></p>
+        {% endif %}
+
+      {{ c.form | safe }}
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary_content %}
+
+{% endblock %}
