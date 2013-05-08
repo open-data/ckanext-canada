@@ -195,3 +195,19 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                     )],
                 )
             )
+
+    def test_generated_fields(self):
+        resp = self.normal_action.package_create(**self.complete_pkg)
+
+        pkg = resp['result']
+        # not generated, we set this one but later tests depend on it
+        self.assert_equal(pkg['license_id'], 'ca-ogl-lgo')
+        # this one is generated in the bowels of CKAN's model_dictize
+        self.assert_equal(pkg['license_title'],
+            'Open Government Licence - Canada')
+        # some we actually generate ourselves
+        self.assert_equal(pkg['license_title_fra'],
+            'Licence du gouvernement ouvert - Canada')
+        assert pkg['license_url_fra']
+
+        assert pkg['department_number']

@@ -9,6 +9,7 @@ from ckan.logic.validators import (isodate, tag_string_convert,
     owner_org_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
+from ckan.model.package import Package
 
 from formencode.validators import OneOf
 
@@ -60,6 +61,9 @@ def _schema_update(schema, purpose):
             schema_description.dataset_field_by_id['author_email'])]
         schema['license_id'] = [fixed_value(
             schema_description.dataset_field_by_id['license_id'])]
+        schema['department_number'] = [get_department_number]
+        schema['license_title_fra'] = [get_license_field('title_fra')]
+        schema['license_url_fra'] = [get_license_field('url_fra')]
 
     resources = schema['resources']
 
@@ -263,3 +267,28 @@ def fixed_value(field, lang=None):
     def use_example_value(value):
         return field['example']['fra' if lang == 'fra' else 'eng']
     return use_example_value
+
+
+def get_department_number(key, data, errors, context):
+    """
+    Return the department number for the org to which this dataset is assigned
+    """
+    owner_org = data.get(('owner_org',))
+    data[key] = schema_description.dataset_field_by_id['owner_org'][
+        'choices_by_pilot_uuid'].get(owner_org, {'id':None})['id']
+
+
+def get_license_field(name):
+    """
+    Fill in a value from the selected license
+    """
+    def fill_license_value(key, data, errors, context):
+        license_id = data.get(('license_id',))
+        value = None
+        if license_id:
+            license = Package.get_license_register().get(license_id)
+            if license:
+                value = license[name]
+        data[key] = value
+    return fill_license_value
+
