@@ -3,7 +3,7 @@ from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
-from ckan.lib.navl.validators import ignore_missing, not_empty, empty
+from ckan.lib.navl.validators import ignore, ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
     name_validator, package_name_validator, boolean_validator,
     owner_org_validator)
@@ -54,6 +54,12 @@ def _schema_update(schema, purpose):
         schema['title'] = [not_empty_allow_override, unicode]
         schema['notes'] = [not_empty_allow_override, unicode]
         schema['owner_org'] = [not_empty, owner_org_validator, unicode]
+        schema['license_id'] = [not_empty_allow_override, unicode]
+    else:
+        schema['author_email'] = [fixed_value(
+            schema_description.dataset_field_by_id['author_email'])]
+        schema['license_id'] = [fixed_value(
+            schema_description.dataset_field_by_id['license_id'])]
 
     resources = schema['resources']
 
@@ -113,6 +119,9 @@ def _schema_field_validators(name, lang, field):
     elif field['type'] == 'boolean':
         edit.extend([unicode, boolean_validator])
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
+    elif field['type'] == 'fixed':
+        edit.append(ignore)
+        view.append(fixed_value(field))
     else:
         edit.append(unicode)
 
@@ -245,3 +254,12 @@ def convert_pilot_uuid_list(field):
             value = [v.strip() for v in value.split(',')]
         return [mapping.get(v, {'key':v})['key'] for v in value]
     return handle_pilot_uuid_list
+
+
+def fixed_value(field):
+    """
+    Generate the same value for this field for all datasets
+    """
+    def ditto(value):
+        return field['example']['eng']
+    return ditto
