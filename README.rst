@@ -82,11 +82,18 @@ Requirements
 Configuration
 -------------
 
-The CKAN ini file needs the plugins listed above, as well as::
+The CKAN ini file needs the plugins listed above as well as::
 
    licenses_group_url = http://(host)/static/licenses.json
 
 for the license list to be correctly populated.
+
+Users that don't belong to an Organization should not be allowed to create
+datasets::
+
+   ckan.auth.create_dataset_if_not_in_organization = false
+
+(without this setting the form will be presented but fail during validation)
 
 
 Loading Data
