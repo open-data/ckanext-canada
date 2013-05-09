@@ -32,8 +32,8 @@ orgs_avail  - h.organizations_available helper (optional)
 
   {% if lang %}
     {% do inputargs.update({'label': inputargs.label + ' ' +
-      schema_description.dataset_field_by_id.language.choices[
-      0 if lang != 'fra' else 1][client_lang]}) %}
+      schema_description.resource_field_by_id.language.choices[
+      1 if lang != 'fra' else 2][client_lang]}) %}
   {% endif %}
 
   {% set widget = form.input %}
