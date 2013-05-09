@@ -24,26 +24,6 @@
         }, 
         {
           "bilingual": false, 
-          "choices": [
-            {
-              "eng": "English", 
-              "fra": "Anglais", 
-              "key": "English | Anglais", 
-              "pilot_uuid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30"
-            }, 
-            {
-              "eng": "French", 
-              "fra": "Fran\u00e7ais", 
-              "key": "French | Fran\u00e7ais", 
-              "pilot_uuid": "FA6486B4-8A2A-4DA4-A727-E4EA3D29BF71"
-            }, 
-            {
-              "eng": "Bilingual (English and French)", 
-              "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
-              "key": "Bilingual (English and French) | Bilingue (Anglais et Fran\u00e7ais)", 
-              "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
-            }
-          ], 
           "description": {
             "eng": "The language of the metadata", 
             "fra": "La langue des m\u00e9tadonn\u00e9es"
@@ -59,16 +39,6 @@
             "fra": "Langue"
           }, 
           "mandatory": "all", 
-          "pilot_help": {
-            "eng": "The language(s) of the content of the dataset.", 
-            "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
-          }, 
-          "pilot_id": "language__", 
-          "pilot_name": {
-            "eng": "Language", 
-            "fra": "Langue"
-          }, 
-          "pilot_type": "choice", 
           "type": "fixed"
         }, 
         {
@@ -5206,19 +5176,22 @@
           "eng": "English", 
           "fra": "Anglais", 
           "id": "eng; CAN", 
-          "key": "eng; CAN"
+          "key": "eng; CAN", 
+          "pilot_uuid": "D892EF88-739B-43DE-BDAF-B7AB01C35B30"
         }, 
         {
           "eng": "French", 
           "fra": "Fran\u00e7ais", 
           "id": "fra; CAN", 
-          "key": "fra; CAN"
+          "key": "fra; CAN", 
+          "pilot_uuid": "FA6486B4-8A2A-4DA4-A727-E4EA3D29BF71"
         }, 
         {
           "eng": "Bilingual (English and French)", 
           "fra": "Bilingue (Anglais et Fran\u00e7ais)", 
           "id": "eng; CAN | fra; CAN", 
-          "key": "eng; CAN | fra; CAN"
+          "key": "eng; CAN | fra; CAN", 
+          "pilot_uuid": "790CE47F-0B49-4D1F-9CE0-50EC57517981"
         }
       ], 
       "description": {
@@ -5236,6 +5209,16 @@
         "fra": "Langue"
       }, 
       "mandatory": "all", 
+      "pilot_help": {
+        "eng": "The language(s) of the content of the dataset.", 
+        "fra": "La ou les langues appliqu\u00e9es au contenu de l\u2019ensemble de donn\u00e9es."
+      }, 
+      "pilot_id": "language__", 
+      "pilot_name": {
+        "eng": "Language", 
+        "fra": "Langue"
+      }, 
+      "pilot_type": "choice", 
       "type": "choice"
     }
   ], 
