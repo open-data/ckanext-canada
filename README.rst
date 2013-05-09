@@ -82,11 +82,26 @@ Requirements
 Configuration
 -------------
 
-The CKAN ini file needs the plugins listed above, as well as::
+The CKAN ini file needs the following plugins for the registry::
 
-   licenses_group_url = http://(host)/static/licenses.json
+   ckan.plugins = stats canada_forms canada_internal canada_public wet_theme
+
+For the public server use only::
+
+   ckan.plugins = stats canada_forms canada_public wet_theme
+
+It also needs to be able to find the licenses file::
+
+   licenses_group_url = http://<ckan instance>/static/licenses.json
 
 for the license list to be correctly populated.
+
+Users that don't belong to an Organization should not be allowed to create
+datasets::
+
+   ckan.auth.create_dataset_if_not_in_organization = false
+
+(without this setting the form will be presented but fail during validation)
 
 
 Loading Data
