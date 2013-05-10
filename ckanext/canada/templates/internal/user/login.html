@@ -2,18 +2,19 @@
 
 {% block secondary_content %}
   <section class="module module-info span-2">
-    <h2 class="module-heading">{{ _('Need an Account?') }}</h2>
+    <h2 class="module-heading">{{ _('Need an Account') }}?</h2>
     <div class="module-content">
+      <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
       <p class="action">
-        <a class="button button-info" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_new_user') }}">{{ _('Register') }}</a>
+        <a class="button button-info" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_new_user') }}">{{ _('Create an Account') }}</a>
       </p>
     </div>
   </section>
 
   <section class="module module-attention span-2">
-    <h2 class="module-heading">{{ _('Forgotten your details?') }}</h2>
+    <h2 class="module-heading">{{ _('Forgotten your details') }}?</h2>
     <div class="module-content">
-      <p>{% trans %}No problem, use our password recovery form to reset it.{% endtrans %}</p>
+      <p>{{ _('No problem, use our password recovery form to reset it') }}.</p>
       <p class="action">
         <a class="button button-attention" href="{{ h.url_for(controller='user', action='request_reset') }}">{{ _('Forgot your password?') }}</a>
       </p>
