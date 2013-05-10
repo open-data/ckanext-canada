@@ -15,20 +15,17 @@
         <p>This dataset has been deleted and is no longer accessible to non-admin users.</p>
       </div>
       {% endif %}
-      <h1>
-        {{ cr.field_id('title', pkg, client_lang) }}
-      </h1>
     </section>
   
     <section class="module-content indent-large">
-      <h4>{{ pkg.title or pkg.name }}
+      <h1>{{ cr.field_id('title', pkg, client_lang) or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
-      </h4>
+      </h1>
       {% if c.pkg_notes_formatted %}
         <div>
-          {{ c.pkg_notes_formatted }}
+          {{ cr.field_id('notes', pkg, client_lang) }}
         </div>
       {% endif %}
       

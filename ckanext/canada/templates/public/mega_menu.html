@@ -3,13 +3,13 @@
 {% block mega %}
 <li>
   <div role="presentation">
-    <a role="menuitem" href={{ h.url(action='search', controller='package') }}>Search Data</a>
+    <a role="menuitem" href={{ h.url(action='search', controller='package') }}>{{ _('Search Data') }}</a>
   </div>
 </li>
 
 <li>
   <div role="presentation">
-    <a role="menuitem" href={{ h.url(action='index', controller='organization') }}>Organizations</a>
+    <a role="menuitem" href={{ h.url(action='index', controller='organization') }}>{{ _("Organizations") }}</a>
   </div>
 </li>
 
