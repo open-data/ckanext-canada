@@ -1,0 +1,19 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+<section>
+  <header>
+    <ul class="button-group margin-top-none">
+      <li>
+        <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}" class="button{% if c.action == 'read' %} button-accent{% endif %}">{{_('Dataset')}}</a>
+      </li>
+      <li>
+        <a href="{{h.url(controller='organization', action='activity', id=c.group_dict.name)}}" class="button{% if c.action == 'activity' %} button-accent{% endif %}">{{_('Activity')}}</a>
+      </li>
+    </ul>
+  </header>
+
+  {% block primary_content_inner %}
+  {% endblock %}
+</section>
+{% endblock %}
