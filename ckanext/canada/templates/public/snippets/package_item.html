@@ -59,9 +59,10 @@ Example:
     {% if package.resources and not hide_resources %}
       <ul class="menu-horizontal margin-top-none">
         <li><em>{{ _('Resource Formats') }}:</em></li>
-        {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+        {% for resource in package.resources %}
+          {% set format = cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) %}
           <li>
-            <code>{{ resource }}</code>
+            <code>{{ format }}</code>
           </li>
         {% endfor %}
       </ul>
