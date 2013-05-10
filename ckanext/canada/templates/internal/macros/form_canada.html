@@ -39,6 +39,10 @@ orgs_avail  - h.organizations_available helper (optional)
   {% set widget = form.input %}
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
+    
+  {% elif id == 'size' %}
+    {% set widget = form.append %}
+    {% do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) %}
 
   {% elif field.type == 'date' %}
     {% do inputargs.update({'type': 'date', 'value': h.date_format(data[id]) or h.today() }) %}
@@ -206,6 +210,7 @@ classes     - An array of classes to apply to the control-group.
     </div>
     <div class="clear"></div>
 {% endmacro %}
+
 
 {% macro geo_checkbox(name, id='', option='', index=0, checked=false, placeholder='', error="", classes=[], attrs={}) %}
   
