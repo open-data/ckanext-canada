@@ -51,8 +51,6 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.update({'options':[]}) %}
     {% if id in data %}
       {% do inputargs.update({'selected':data[id]}) %}
-    {% elif field.choices|length == 1 %}
-      {% do inputargs.update({'selected':field.choices[0].key}) %}
     {# custom requirement from client #}
     {% elif field.id == 'catalog_type' %}
       {% do inputargs.update({'selected':field.choices[0].key}) %}
@@ -93,7 +91,8 @@ orgs_avail  - h.organizations_available helper (optional)
       {% endfor %}
 
     {% else %}
-      {% if field.type != 'tag_vocabulary' %}
+      {% if field.type != 'tag_vocabulary' and (
+          field.mandatory != 'all' or field.choices|length > 1) %}
         {% do inputargs.options.append({'text': '', 'value': ''}) %}
       {% endif %}
       {% for c in field.choices %}
