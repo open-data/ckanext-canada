@@ -18,11 +18,8 @@ orgs_avail  - h.organizations_available helper (optional)
 
   {% set inputargs = {
     'name': id,
-    'label': {
-      'all': '* ',
-      'raw': '<sup>*d</sup> ' | safe,
-      'geo': '<sup>*g</sup> ' | safe,
-      none: ''}[field.mandatory] + field.label[client_lang],
+    'label': ('* ' if field.mandatory == 'all' else '')
+      + field.label[client_lang],
     'placeholder': field.example['eng' if lang != 'fra' else 'fra'],
     'value': data[id],
     'error': errors[id],
