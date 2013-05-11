@@ -232,8 +232,7 @@ Dataset and resource field descriptions are dicts containing the following:
   ``{'eng': English field description, 'fra': French field description}``
 
 ``'example'``
-  an example value used as a placeholder in the form, with only one language
-  version avalable, so we're currently hiding it on French fields
+  ``{'eng': English example value, 'fra': French example value}``
 
 ``'existing'``
   ``True`` if this field exists in the default CKAN schema in at least
@@ -243,8 +242,8 @@ Dataset and resource field descriptions are dicts containing the following:
 ``'bilingual'``
   ``True`` if there are two separate versions of this field, one for
   English and one for French with ``"_fra"`` appended to the ``'id'``,
-  not for fields that contain no language or both languages in the
-  same value
+  ``False`` for fields that contain no language component or have both
+  languages stored together in one field, e.g. choice fields
 
 ``'mandatory'``
   ``"all"`` if always required, ``"geo"`` if required for geo datasets,
@@ -268,6 +267,10 @@ Dataset and resource field descriptions are dicts containing the following:
 
   ``'pilot_uuid'``
     correspongind UUID for this choice when importing pilot data
+
+  ``'subject_ids'``
+    topic_category choices only: this field contains a list of ids from the
+    subject choices list that correspond to this topic_category choice
 
 ``'choices_by_pilot_uuid'``
   if ``'choices'`` exists then this will be a dict mapping pilot UUIDs
@@ -317,6 +320,10 @@ Dataset and resource field descriptions are dicts containing the following:
 
   ``'image_url'``
     fully qualified URL to an image file (gif, png or jpg)
+
+``'ui_disabled'``
+  if present and set to ``True`` then this field will appear in the form UI
+  but not be editable by the user
 
 
 Google Analytics Integration

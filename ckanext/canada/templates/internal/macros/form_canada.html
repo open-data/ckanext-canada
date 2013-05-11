@@ -33,10 +33,14 @@ orgs_avail  - h.organizations_available helper (optional)
       1 if lang != 'fra' else 2][client_lang]}) %}
   {% endif %}
 
+  {% if field.get('ui_disabled') %}
+    {% do inputargs.update({'attrs': {'class': 'ui-disabled'}}) %}
+  {% endif %}
+
   {% set widget = form.input %}
   {% if id in ('notes', 'notes_fra') %}
     {% set widget = form.markdown %}
-    
+
   {% elif id == 'size' %}
     {% set widget = form.append %}
     {% do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) %}
