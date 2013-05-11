@@ -55,10 +55,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% if id in data %}
       {% do inputargs.update({'selected':data[id]}) %}
     {% elif field.choices|length == 1 %}
-      {% do inputargs.update({
-        'selected':field.choices[0].key,
-        'attrs': {'disabled':''},
-        }) %}
+      {% do inputargs.update({'selected':field.choices[0].key}) %}
     {# custom requirement from client #}
     {% elif field.id == 'catalog_type' %}
       {% do inputargs.update({'selected':field.choices[0].key}) %}
