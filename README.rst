@@ -268,6 +268,10 @@ Dataset and resource field descriptions are dicts containing the following:
   ``'pilot_uuid'``
     correspongind UUID for this choice when importing pilot data
 
+  ``'subject_ids'``
+    topic_category choices only: this field contains a list of ids from the
+    subject choices list that correspond to this topic_category choice
+
 ``'choices_by_pilot_uuid'``
   if ``'choices'`` exists then this will be a dict mapping pilot UUIDs
   to the choices dicts above
