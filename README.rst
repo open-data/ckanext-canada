@@ -232,8 +232,7 @@ Dataset and resource field descriptions are dicts containing the following:
   ``{'eng': English field description, 'fra': French field description}``
 
 ``'example'``
-  an example value used as a placeholder in the form, with only one language
-  version avalable, so we're currently hiding it on French fields
+  ``{'eng': English example value, 'fra': French example value}``
 
 ``'existing'``
   ``True`` if this field exists in the default CKAN schema in at least
