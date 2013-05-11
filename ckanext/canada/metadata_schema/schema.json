@@ -1819,7 +1819,8 @@
             "fra": "Licence"
           }, 
           "mandatory": "all", 
-          "type": "choice"
+          "type": "choice", 
+          "ui_disabled": true
         }, 
         {
           "bilingual": true, 
@@ -4944,7 +4945,8 @@
         "fra": "Taille de l'ensemble de donn\u00e9es"
       }, 
       "pilot_type": "text", 
-      "type": "integer"
+      "type": "integer", 
+      "ui_disabled": true
     }, 
     {
       "bilingual": false, 
