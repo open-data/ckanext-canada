@@ -242,8 +242,8 @@ Dataset and resource field descriptions are dicts containing the following:
 ``'bilingual'``
   ``True`` if there are two separate versions of this field, one for
   English and one for French with ``"_fra"`` appended to the ``'id'``,
-  not for fields that contain no language or both languages in the
-  same value
+  ``False`` for fields that contain no language component or have both
+  languages stored together in one field, e.g. choice fields
 
 ``'mandatory'``
   ``"all"`` if always required, ``"geo"`` if required for geo datasets,
