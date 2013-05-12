@@ -1819,7 +1819,8 @@
             "fra": "Licence"
           }, 
           "mandatory": "all", 
-          "type": "choice"
+          "type": "choice", 
+          "ui_disabled": true
         }, 
         {
           "bilingual": true, 
@@ -3062,10 +3063,10 @@
               "key": "Ontario - Kenora  Ontario - Kenora"
             }, 
             {
-              "eng": "Praries", 
-              "fra": "Praries", 
+              "eng": "Prairies", 
+              "fra": "Prairies", 
               "id": 4, 
-              "key": "Praries  Praries"
+              "key": "Prairies  Prairies"
             }, 
             {
               "eng": "Manitoba", 
@@ -4924,8 +4925,8 @@
         "fra": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets."
       }, 
       "example": {
-        "eng": "65000000", 
-        "fra": "65000000"
+        "eng": "", 
+        "fra": ""
       }, 
       "existing": true, 
       "id": "size", 
@@ -4944,7 +4945,8 @@
         "fra": "Taille de l'ensemble de donn\u00e9es"
       }, 
       "pilot_type": "text", 
-      "type": "integer"
+      "type": "integer", 
+      "ui_disabled": true
     }, 
     {
       "bilingual": false, 

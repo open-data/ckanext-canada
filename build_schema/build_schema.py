@@ -68,6 +68,8 @@ SECTIONS_FIELDS = [
 
 # override calculated values
 FIELD_OVERRIDES = {
+    'license_id': {'ui_disabled': True,},
+    'resource:size': {'ui_disabled': True,}
     }
 
 # Resource fields (no sections)
