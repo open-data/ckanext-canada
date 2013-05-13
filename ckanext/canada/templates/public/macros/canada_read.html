@@ -135,3 +135,16 @@ Render a boolean field with a friendly WET checkmark or X
     <span class="wb-icon-x"></span>
   {%- endif -%}
 {%- endmacro -%}
+
+{#
+Render a file download size field with 'O' or 'B' appended for Octets/Bytes
+#}
+{%- macro size_field(f, pkg, client_lang) -%}
+  {% set suffix = 'O' if client_lang == 'fr' else 'B' %}
+
+  {%- if pkg[f.id] -%}
+    {{pkg[f.id]}} {{suffix}}
+  {%- else -%}
+    0 {{suffix}}
+  {%- endif -%}
+{%- endmacro -%}

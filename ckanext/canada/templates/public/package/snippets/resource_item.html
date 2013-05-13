@@ -8,16 +8,20 @@
 
 <div class="menu-horizontal ">
   
-  <p class="description span-2">
+  <span class="span-1">
     {% if res.description %}
       {{ h.markdown_extract(res.description, extract_length=80) }}
     {% else %}
       <span class="empty">{{ _('No description for this resource') }}</span>
     {% endif %}
-  </p>
+  </span>
   
   <span class="span-1">
-    {{ cr.field(format_field, res, client_lang) }}
+    {{ cr.lookup_field(format_field, res, client_lang) }}
+  </span>
+  
+  <span class="span-1">
+    {{ cr.size_field(size_field, res, client_lang) }}
   </span>
   
   <span class="span-1">
@@ -25,7 +29,7 @@
   </span>
   
   <span class="span-1">
-    <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
+    <a href="{{ res.url }}" class="resource-url-analytics button button-small" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
   </span>
 
 <!--  
