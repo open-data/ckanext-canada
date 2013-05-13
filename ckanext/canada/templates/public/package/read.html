@@ -61,7 +61,9 @@
         {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
         {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
         <li class="margin-bottom-medium">{{ _('Temporal Coverage') }}:
-          {{ cr.date_field(period_start, pkg) }} <b>-</b> {{ cr.date_field(period_end, pkg) }}
+          {% if cr.date_field(period_start, pkg) != 'None' and cr.date_field(period_end, pkg) != 'None'%}
+            {{ cr.date_field(period_start, pkg) }} <b>-</b> {{ cr.date_field(period_end, pkg) }}
+          {% endif %}
         </li>
         
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
