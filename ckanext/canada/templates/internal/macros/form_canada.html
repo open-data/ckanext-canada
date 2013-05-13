@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/form_wet.html' as form %}
+{% import 'macros/form_wet.html' as form with context %}
 
 {#
 Automatic form field creation with schema_description field and form data
@@ -46,7 +46,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) %}
 
   {% elif field.type == 'date' %}
-    {% do inputargs.update({'type': 'date', 'value': h.date_format(data[id]) or h.today() }) %}
+    {% do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) %}
 
   {% elif field.type == 'boolean' %}
     {% set widget = big_checkbox_field %}

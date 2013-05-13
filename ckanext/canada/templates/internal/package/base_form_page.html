@@ -18,18 +18,22 @@
     <section class="module-info">
       <h2 class="module-heading"><i class="icon-info-sign"></i>{{_('Guidelines')}}</h2>
       <p>
-        {% trans %}
-        Waiting for the English and French text for this box. This box will contain the link to the <a href="/guidelines">Guidelines</a> page.
-        {% endtrans %}
+        {% if h.lang() == 'en' %}
+        Review the <a href="/guidelines">criteria</a> for preparing datasets for publication on the Open Data Portal
+        {% else %}
+        Revoir les <a href="/guidelines">critères</a> pour préparer des ensembles de données pour publication sur le Portail de données ouvertes.
+        {% endif %}
       </p>
     </section>
     <br/>
     <section class="module-info">
-      <h2 class="module-heading"><i class="icon-info-sign"></i>{{_('Open Data Implementation Guide')}}</h2>
+      <h2 class="module-heading"><i class="icon-info-sign"></i>{{_('Open Data Portal Metadata Implementation Guide')}}</h2>
       <p>
-        {% trans %}
-        Waiting for the English and French text for this box.
-        {% endtrans %}
+        {% if h.lang() == 'en' %}
+        Review the Open Data Portal Metadata Implementation Guide
+        {% else %}
+        Revoir le Guide de mise en place des métadonnées pour les ressources Web
+        {% endif %}
       </p>
     </section>
   {% endblock %}
