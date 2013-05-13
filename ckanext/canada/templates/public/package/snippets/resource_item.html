@@ -9,8 +9,9 @@
 <div class="menu-horizontal ">
   
   <span class="span-1">
-    {% if res.description %}
-      {{ h.markdown_extract(res.description, extract_length=80) }}
+    {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
+    {% if name_field in res and res[name_field] %}
+      {{ h.markdown_extract(res[name_field], extract_length=80) }}
     {% else %}
       <span class="empty">{{ _('No description for this resource') }}</span>
     {% endif %}
