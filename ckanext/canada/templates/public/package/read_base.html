@@ -26,17 +26,23 @@
       
       {% set date_published = schema_description.dataset_field_by_id['date_published'] %}
       <li>{{ cr.field_label(date_published, client_lang) }}:
-        {{ cr.date_field(date_published, pkg) }}
+        {% if cr.date_field(date_published, pkg) != 'None' %}
+          {{ cr.date_field(date_published, pkg) }}
+        {% endif %}
       </li>
       
       {% set date_modified = schema_description.dataset_field_by_id['date_modified'] %}
       <li>{{ cr.field_label(date_modified, client_lang) }}:
-        {{ cr.date_field(date_modified, pkg) }}
+        {% if cr.date_field(date_modified, pkg) != 'None' %}
+          {{ cr.date_field(date_modified, pkg) }}
+        {% endif %}
       </li>
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
       <li>{{ cr.field_label(program_url, client_lang) }}:
-        {{ cr.url_field(program_url, pkg) }}
+        {% if cr.url_field(program_url, pkg) != 'None' %}
+          {{ cr.url_field(program_url, pkg) }}
+        {% endif %}
       </li>
     </ul>
   </div>
