@@ -38,6 +38,9 @@ Plugins
 ``canada_internal``
   templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
+  
+``canada_package``
+  package processing between CKAN and Solr
 
 
 Requirements
@@ -84,11 +87,11 @@ Configuration
 
 The CKAN ini file needs the following plugins for the registry server::
 
-   ckan.plugins = stats canada_forms canada_internal canada_public wet_theme
+   ckan.plugins = stats canada_forms canada_internal canada_public canada_package wet_theme
 
 For the public server use only::
 
-   ckan.plugins = stats canada_forms canada_public wet_theme
+   ckan.plugins = stats canada_forms canada_public canada_package wet_theme
 
 CKAN also needs to be able to find the licenses file for the license list
 to be correctly populated::
