@@ -46,7 +46,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) %}
 
   {% elif field.type == 'date' %}
-    {% do inputargs.update({'type': 'date', 'value': h.date_format(data[id]) or h.today() }) %}
+    {% do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) %}
 
   {% elif field.type == 'boolean' %}
     {% set widget = big_checkbox_field %}
