@@ -38,7 +38,7 @@ Plugins
 ``canada_internal``
   templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
-  
+
 ``canada_package``
   package processing between CKAN and Solr
 
@@ -68,6 +68,7 @@ Requirements
    - * canada_forms
      * canada_internal
      * canada_public
+     * canada_package
  * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
    - master
