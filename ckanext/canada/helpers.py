@@ -59,6 +59,13 @@ class EST(datetime.tzinfo):
 
     def dst(self, dt):
         return datetime.timedelta(0)
+        
+def remove_duplicates(a_list):
+    s = set()
+    for i in a_list:
+        s.add(i)
+            
+    return s
 
 
 # Retrieve the comments for this dataset that have been saved in the Drupal database

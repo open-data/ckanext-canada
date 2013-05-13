@@ -61,8 +61,12 @@ Example:
     {% if package.resources and not hide_resources %}
       <ul class="menu-horizontal margin-top-none">
         <li><em>{{ _('Resource Formats') }}:</em></li>
+        {% set formats = [] %}
         {% for resource in package.resources %}
-          {% set format = cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) %}
+          {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
+        {% endfor %}
+        
+        {% for format in h.remove_duplicates(formats) %}
           <li>
             <code>{{ format }}</code>
           </li>
