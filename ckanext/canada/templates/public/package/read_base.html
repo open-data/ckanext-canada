@@ -9,6 +9,13 @@
 
 {% endblock %}
 
+{% block breadcrumb_content %}
+  {% set dataset = pkg.title or pkg.name %}
+  {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
+  <li>{% link_for _('Datasets'), controller='package', action='search', highlight_actions = 'new index' %}</li>
+  <li class="active"><a href="{{ pkg_url }}" title="{{ cr.field_id('title', pkg, client_lang) }}">{{ cr.field_id('title', pkg, client_lang)|truncate(35) }}</a></li>
+{% endblock %}
+
 {% block secondary_content %}
   <div class="module-related">
     <h3>{{_('About this Dataset')}}</h3>
