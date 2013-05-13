@@ -1,0 +1,36 @@
+{% import 'macros/canada_read.html' as cr %}
+
+{% with items = items or h.get_facet_items_dict(name) %}
+  <section>
+    <h4 class="background-accent"></span>{{ title or h.get_facet_title(name) }}</h4>
+    <div class="module">
+    <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action">{{ _('Clear All') }}</a></p>    
+    {% if items %}
+      <nav>
+        <ul class="list-bullet-none">
+          {% for item in items %}
+            {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+            {% set label = label_function(item) if label_function else h.truncate(cr.split_bilingual_field(item.display_name, h.lang()), 22) %}
+            {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
+              <li class="nav-item{% if item.active %} active{% endif %}">
+                <a href="{{ href }}">
+                  <span>{{ label }} {{ count }}</span>
+                </a>
+              </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <p class="module-footer">
+        {% if h.get_param_int('_%s_limit' % name) %}
+          <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show More {facet}').format(facet=title) }}</a>
+        {% else %}
+          <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show Only Popular {facet}').format(facet=title) }}</a>
+        {% endif %}
+      </p>
+    {% else %}
+      <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
+    {% endif %}
+    </div>
+  </section>
+  <br>
+{% endwith %}
