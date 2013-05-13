@@ -11,7 +11,7 @@
 
 {% block secondary_content %}
   <div class="module-related">
-    <h3>About this Dataset</h3>
+    <h3>{{_('About this Dataset')}}</h3>
     <ul>
       {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
       <li><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
