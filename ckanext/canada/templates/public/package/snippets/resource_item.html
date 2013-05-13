@@ -8,7 +8,7 @@
 
 <div class="menu-horizontal ">
   
-  <span class="span-2">
+  <span class="span-1">
     {% if res.description %}
       {{ h.markdown_extract(res.description, extract_length=80) }}
     {% else %}
@@ -18,6 +18,10 @@
   
   <span class="span-1">
     {{ cr.lookup_field(format_field, res, client_lang) }}
+  </span>
+  
+  <span class="span-1">
+    {{ cr.size_field(size_field, res, client_lang) }}
   </span>
   
   <span class="span-1">
