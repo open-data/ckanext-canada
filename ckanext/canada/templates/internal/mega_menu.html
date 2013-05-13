@@ -3,7 +3,11 @@
 {% block mega %}
 <li>
   <div role="presentation">
+    {% if h.lang() == 'en' %}    
     <a role="menuitem" href="http://www.data.gc.ca/">Data.gc.ca</a>
+    {% else %}
+    <a role="menuitem" href="http://www.donnees.gc.ca/">Donnees.gc.ca</a>
+  {% endif %}
   </div>
 </li>
 
@@ -82,7 +86,11 @@
 
 <li>
   <div role="presentation">
-    <a role="menuitem" href="/help">{{_('Help')}}</a>
+    {% if h.lang() == 'en' %}  
+    <a role="menuitem" href="/en/help">Help</a>
+  {% else %}
+    <a role="menuitem" href="/fr/help">Aide</a>
+  {% endif %}
   </div>
 </li>
 
