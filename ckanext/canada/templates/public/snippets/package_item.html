@@ -33,7 +33,7 @@ Example:
             {{ _('Private') }}
           </span>
         {% endif %}
-        {{ h.link_to(h.truncate(cr.field(title, package, client_lang), truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+        {{ h.link_to(h.truncate(cr.field_id('title', package, client_lang), truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
         {% if package.get('state', '').startswith('draft') %}
           <span class="label label-info">{{ _('Draft') }}</span>
         {% elif package.get('state', '').startswith('deleted') %}
@@ -44,8 +44,8 @@ Example:
       {% if banner %}
         <span class="banner">Popular</span>
       {% endif %}
-      {% if notes %}
-        <div>{{ notes|urlize }}</div>
+      {% if cr.field_id('notes', package, client_lang) %}
+        <div>{{ cr.field_id('notes', package, client_lang) | truncate(300) }}</div>
       {% else %}
         <p class="empty">{{ _("This dataset has no description") }}</p>
       {% endif %}
