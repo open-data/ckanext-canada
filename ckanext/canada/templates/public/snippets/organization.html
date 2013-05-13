@@ -11,11 +11,13 @@ Example:
 
 #}
 
+{% import 'macros/canada_read.html' as cr %}
+
 {% with truncate=truncate or 0, url=h.url_for(controller='organization', action='read', id=organization.name) %}
 <div class="module">
   <section>
     <div class="span-2">
-      <h3 class="align-center">{{ organization.title or organization.name }}</h3>
+      <h3 class="align-center">{{cr.split_bilingual_field(organization.title or organization.name, h.lang())}}</h3>
 
       {% if organization.description %}
       <p>

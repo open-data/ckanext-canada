@@ -12,7 +12,7 @@
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
       <div class="module-alert">
-        <p>This dataset has been deleted and is no longer accessible to non-admin users.</p>
+        <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
       </div>
       {% endif %}
     </section>
@@ -49,12 +49,12 @@
     </section>
     
     <section class="indent-large">
-      <h5>{{ _('Additional Info') }}</h5>
+      <h5>{{ _('Additional Information') }}</h5>
       
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium"><u><b>{{ _('Openness rating') }}:</b></u>
           {% for star in range(h.openness_score(pkg)) -%}
-            *
+            <img src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
           {%- endfor %}
         </li class="margin-bottom-medium">
         
