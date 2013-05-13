@@ -39,6 +39,12 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
+        
+        facets_dict = {
+                      'tags': _('Subject'),
+                      'res_format': _('File Format'),
+                      'raw_geo': _('Catalog Type'), }
+        
         return facets_dict
         
     def before_map(self, map):
