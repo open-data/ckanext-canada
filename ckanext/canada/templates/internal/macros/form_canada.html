@@ -87,7 +87,7 @@ orgs_avail  - h.organizations_available helper (optional)
         {% endif %}
         {% if not skip %}
           {% do inputargs.options.append({
-            'text': c[client_lang],
+            'text': '. . ' * level + c[client_lang],
             'value': c.key,
             'level': level, })
           %}
@@ -108,7 +108,7 @@ orgs_avail  - h.organizations_available helper (optional)
     {% endif %}
 
     {% if id == 'geographic_region' %}
-      {% set widget = geo_checkbox_field %}
+      {% set widget = multi_checkbox_field %}
     {% elif field.type == 'tag_vocabulary' %}
       {% set widget = multi_checkbox_field %}
     {% else %}
