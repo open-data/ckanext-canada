@@ -38,7 +38,7 @@ Plugins
 ``canada_internal``
   templates for internal site and registration (requires
   ``canada_forms`` and ``canada_public``)
-  
+
 ``canada_package``
   package processing between CKAN and Solr
 
@@ -68,6 +68,7 @@ Requirements
    - * canada_forms
      * canada_internal
      * canada_public
+     * canada_package
  * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
    - master
@@ -82,8 +83,8 @@ Requirements
    - N/A
 
 
-Configuration
--------------
+Configuration: development.ini or production.ini
+------------------------------------------------
 
 The CKAN ini file needs the following plugins for the registry server::
 
@@ -107,6 +108,18 @@ validation::
 We aren't using notification emails, so they need to be disabled::
 
    ckan.activity_streams_email_notifications = false
+
+
+Configuration: who.ini
+----------------------
+
+The following lines need to be changed in ``[plugin:friendlyform]``::
+
+   -post_login_url = /user/logged_in
+   -post_logout_url = /user/logged_out
+   +post_login_url =
+   +post_logout_url =
+
 
 
 Loading Data
