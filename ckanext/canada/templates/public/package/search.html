@@ -1,11 +1,22 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
 {% ckan_extends %}
+{% import 'macros/canada_read.html' as cr %}
 
 {%- block api_access_info -%}
   <!-- We want this block to be empty in the canada extension -->
 {%- endblock -%}
 
+{%- macro res_label(format) -%}
+  {{- cr.resource_format(format.name, h.lang()) -}}
+{%- endmacro -%}
+
 {% block secondary_content %}
   {% for facet in c.facet_titles %}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+    {% if facet == 'res_format' %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet],
+        name=facet, label_function=res_label) }}
+    {% else %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+    {% endif %}
   {% endfor %}
 {% endblock %}
