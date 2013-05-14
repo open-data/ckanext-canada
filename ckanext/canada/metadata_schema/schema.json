@@ -4627,7 +4627,7 @@
           "bilingual": true, 
           "description": {
             "eng": "The identification of the series\u2019 issue information.", 
-            "fra": "L\u2019identification de l\u2019enjeu des s\u00e9ries"
+            "fra": "L\u2019identification de l\u2019ensemble de donn\u00e9es de la s\u00e9rie"
           }, 
           "example": {
             "eng": "Table 502-0003", 
@@ -4637,7 +4637,7 @@
           "id": "data_series_issue_identification", 
           "label": {
             "eng": "Issue Identification", 
-            "fra": "Identification de l\u2019enjeu"
+            "fra": "Identification de l\u2019ensemble de donn\u00e9es"
           }, 
           "mandatory": null, 
           "pilot_help": {
@@ -4855,7 +4855,7 @@
       "choices": [
         {
           "eng": "Dataset", 
-          "fra": "Donnes", 
+          "fra": "Donn\u00e9es", 
           "id": "file", 
           "key": "file"
         }, 
