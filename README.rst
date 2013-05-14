@@ -337,9 +337,9 @@ Dataset and resource field descriptions are dicts containing the following:
   ``'image_url'``
     fully qualified URL to an image file (gif, png or jpg)
 
-``'ui_disabled'``
-  if present and set to ``True`` then this field will appear in the form UI
-  but not be editable by the user
+``'ui_options'``
+  if present a list containing strings such as ``'disabled'`` or ``'hidden'``
+  which affect the form presented to users entering datasets
 
 
 Google Analytics Integration

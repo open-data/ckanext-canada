@@ -33,7 +33,7 @@ orgs_avail  - h.organizations_available helper (optional)
       1 if lang != 'fra' else 2][client_lang]}) %}
   {% endif %}
 
-  {% if field.get('ui_disabled') %}
+  {% if 'disabled' in field.get('ui_options', []) %}
     {% do inputargs.update({'attrs': {'class': 'ui-disabled'}}) %}
   {% endif %}
 
@@ -116,11 +116,17 @@ orgs_avail  - h.organizations_available helper (optional)
     {% endif %}
   {% endif %}
 
-  {% call widget(**inputargs) %}
-    {% if field.description %}
-      {{ form.info(field.description[client_lang]) }}
-    {% endif %}
-  {% endcall %}
+  {% if 'hidden' in field.get('ui_options', []) %}
+    <div style="display:none">
+      {{ widget(**inputargs) }}
+    </div>
+  {% else %}
+    {% call widget(**inputargs) %}
+      {% if field.description %}
+        {{ form.info(field.description[client_lang]) }}
+      {% endif %}
+    {% endcall %}
+  {% endif %}
 {% endmacro %}
 
 {#
