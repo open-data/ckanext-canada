@@ -106,6 +106,20 @@ Render a choice field where the choice['key'] is the value stored
 {%- endmacro -%}
 
 {#
+Display a resource format in the correct language
+#}
+
+{%- macro resource_format(format, client_lang) -%}
+  {%- set format_field = schema_description.resource_field_by_id.format -%}
+  {%- if format in format_field.choices_by_key -%}
+    {{- format_field.choices_by_key[format]['fra' if client_lang == 'fr' else 'eng'] -}}
+  {%- else -%}
+    {{- format -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+
+{#
 Choose the most appropriate display name for a resource
 #}
 {%- macro resource_display_name(res, client_lang) -%}
