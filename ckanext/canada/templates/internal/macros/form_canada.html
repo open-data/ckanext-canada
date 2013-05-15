@@ -115,6 +115,10 @@ orgs_avail  - h.organizations_available helper (optional)
     {%- else -%}
       {%- set widget = form.select -%}
     {%- endif -%}
+
+    {%- if 'sort_choices' in field.get('ui_options', []) -%}
+      {%- do inputargs.options.sort(key=_text_key) -%}
+    {%- endif -%}
   {%- endif -%}
 
   {%- if 'hidden' in field.get('ui_options', []) -%}
@@ -128,6 +132,11 @@ orgs_avail  - h.organizations_available helper (optional)
       {%- endif -%}
     {%- endcall -%}
   {%- endif -%}
+{%- endmacro -%}
+
+{# helper for sort_choices above #}
+{%- macro _text_key(d) -%}
+  {{- schema_description.normalize_strip_accents(d.text) -}}
 {%- endmacro -%}
 
 {#
