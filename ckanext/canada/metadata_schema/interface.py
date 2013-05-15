@@ -142,6 +142,6 @@ class MetadataSchema(object):
         if not s:
             s = u''
         s = unicodedata.normalize('NFD', s)
-        return s.encode('ascii', 'ignore').decode('ascii')
+        return s.encode('ascii', 'ignore').decode('ascii').lower()
 
 
