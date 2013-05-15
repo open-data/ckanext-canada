@@ -10,6 +10,10 @@
   {{- cr.resource_format(format.name, h.lang()) -}}
 {%- endmacro -%}
 
+{%- macro license_lookup(license) -%}
+  {{- cr.license_name(license.name, h.lang()) -}}
+{%- endmacro -%}
+
 {% block secondary_content %}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['tags'],
     name='tags') }}
@@ -18,5 +22,5 @@
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
     name='res_format', label_function=res_label) }}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-    name='license_id') }}
+    name='license_id', label_function=license_lookup) }}
 {% endblock %}
