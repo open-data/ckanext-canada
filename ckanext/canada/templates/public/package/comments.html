@@ -1,31 +1,36 @@
 {% block opendatacanada_comments %}
 
-  {% set pkg = c.pkg_dict %}
+<div class="module">
+  <section class="module-content indent-large">
+    {% set pkg = c.pkg_dict %}
 
-  {% set comment_list = h.dataset_comments(pkg.id) %}
+    {% set comment_list = h.dataset_comments(pkg.id) %}
 
-  {% if comment_list %}
-  <div class="span-6">
-  <h3>{{ _('Comments') }}</h3>
-  <table class="table table-striped table-bordered table-condensed">
-    <tbody>
-    {% for comment in comment_list %}
-      <tr>
-        <td>
-          <em>{{ comment['subject'] }}</em><br>
-          {{ comment['comment_body'] }}
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  </div>
-  {% endif %}
-  <p>
-   <ul class="button-group">
-        <li class="button"><a href="/dataset/{{pkg.name}}">{{_('Add a Comment')}}</a></li>
-   </ul>
-  </p>
+    <h3>{{ _('Comments') }}</h3>
+    
+    {% if comment_list %}
+    <table class="wet-boew-zebra span-5">
+      <tbody>
+      {% for comment in comment_list %}
+        <tr>
+          <td>
+            <em>{{ comment['subject'] }}</em><br>
+            {{ comment['comment_body']|striptags }}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="clear"></div>
+    {% endif %}
+    <p>
+     <ul class="button-group">
+          <li class="button"><a href="/dataset/{{pkg.name}}">{{_('Comment')}}</a></li>
+     </ul>
+    </p>
+  </section>
+</div>
 
 {% endblock %}
+
 

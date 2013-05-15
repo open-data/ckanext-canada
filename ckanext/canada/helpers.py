@@ -2,6 +2,7 @@ from pylons import c
 from ckan.model import User, Package
 import datetime
 import psycopg2 as pg2
+from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
 
 ORG_MAY_PUBLISH_KEY = 'publish'
@@ -87,7 +88,8 @@ def dataset_comments(pkg_id):
     
     comment_list = []
     for comment in drupal_cursor:
-       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment[4]})
+       comment_body = clean_html(comment[4])
+       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
        
     return comment_list
 
