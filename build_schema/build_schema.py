@@ -66,8 +66,9 @@ SECTIONS_FIELDS = [
         ]),
     ]
 
-# override calculated values
+# override calculated values or provide extra values for schema
 FIELD_OVERRIDES = {
+    'owner_org': {'ui_options': ['sort_choices'],},
     'license_id': {'ui_options': ['disabled'],},
     'resource:size': {'ui_options': ['hidden'],}
     }
