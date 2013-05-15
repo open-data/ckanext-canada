@@ -1,3 +1,4 @@
+{% import 'macros/canada_read.html' as cr %}
 {#
 Renders a media item for a organization. This should be used in a list.
 
@@ -18,7 +19,8 @@ Example:
 {% set url = h.url_for(organization.type ~ '_read', action='read', id=organization.name) %}
 <div class="span-2 module{% if first %} row-start{% endif %}{% if last %} row-end{% endif %}">
   <div class="span-2">
-    <h4><a href="{{ url }}" title="{{ _('View {name}').format(name=organization.display_name) }}"> {{ organization.display_name }} </a></h4>
+    <h4><a href="{{ url }}" title="{{ _('View {name}').format(name=organization.display_name) }}"
+        > {{ cr.split_bilingual_field(organization.display_name, h.lang()) }} </a></h4>
     {% if organization.description %}
     <p>
       {{ h.truncate(organization.description, length=80, whole_word=True) }}
