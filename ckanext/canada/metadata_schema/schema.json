@@ -981,7 +981,8 @@
             {
               "eng": "Library of Parliament", 
               "fra": "Biblioth\u00e8que du Parlement", 
-              "key": "Library of Parliament | Biblioth\u00e8que du Parlement", 
+              "id": 55555, 
+              "key": "lp-bp", 
               "pilot_uuid": "0C002E0E-05B9-4B3B-86FC-23AD8BABD461"
             }, 
             {
@@ -1820,7 +1821,9 @@
           }, 
           "mandatory": "all", 
           "type": "choice", 
-          "ui_disabled": true
+          "ui_options": [
+            "disabled"
+          ]
         }, 
         {
           "bilingual": true, 
@@ -4946,7 +4949,9 @@
       }, 
       "pilot_type": "text", 
       "type": "integer", 
-      "ui_disabled": true
+      "ui_options": [
+        "hidden"
+      ]
     }, 
     {
       "bilingual": false, 

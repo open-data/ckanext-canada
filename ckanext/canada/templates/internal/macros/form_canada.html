@@ -1,5 +1,6 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/form_wet.html' as form with context %}
+{% import 'macros/canada_read.html' as cr %}
 
 {#
 Automatic form field creation with schema_description field and form data
@@ -13,10 +14,10 @@ errors      - dict containing form errors by CKAN field id
 client_lang - language from h.lang(): 'en' or 'fr'
 orgs_avail  - h.organizations_available helper (optional)
 #}
-{% macro formfield(id, lang, field, data, errors, client_lang, orgs_avail=none) %}
-  {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
+{%- macro formfield(id, lang, field, data, errors, client_lang, orgs_avail=none) -%}
+  {%- set client_lang = cr.full_lang(client_lang) -%}
 
-  {% set inputargs = {
+  {%- set inputargs = {
     'name': id,
     'label': ('* ' if field.mandatory == 'all' else '')
       + field.label[client_lang],
@@ -25,103 +26,109 @@ orgs_avail  - h.organizations_available helper (optional)
     'error': errors[id],
     'id': 'field-' + id,
     'classes': ['control-medium'],
-    } %}
+    } -%}
 
-  {% if lang %}
-    {% do inputargs.update({'label': inputargs.label + ' ' +
+  {%- if lang -%}
+    {%- do inputargs.update({'label': inputargs.label + ' ' +
       schema_description.resource_field_by_id.language.choices[
-      1 if lang != 'fra' else 2][client_lang]}) %}
-  {% endif %}
+      1 if lang != 'fra' else 2][client_lang]}) -%}
+  {%- endif -%}
 
-  {% if field.get('ui_disabled') %}
-    {% do inputargs.update({'attrs': {'class': 'ui-disabled'}}) %}
-  {% endif %}
+  {%- if 'disabled' in field.get('ui_options', []) -%}
+    {%- do inputargs.update({'attrs': {'class': 'ui-disabled'}}) -%}
+  {%- endif -%}
 
-  {% set widget = form.input %}
-  {% if id in ('notes', 'notes_fra') %}
-    {% set widget = form.markdown %}
+  {%- set widget = form.input -%}
+  {%- if id in ('notes', 'notes_fra') -%}
+    {%- set widget = form.markdown -%}
 
-  {% elif id == 'size' %}
-    {% set widget = form.append %}
-    {% do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) %}
+  {%- elif id == 'size' -%}
+    {%- set widget = form.append -%}
+    {%- do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) -%}
 
-  {% elif field.type == 'date' %}
-    {% do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) %}
+  {%- elif field.type == 'date' -%}
+    {%- do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) -%}
 
-  {% elif field.type == 'boolean' %}
-    {% set widget = big_checkbox_field %}
+  {%- elif field.type == 'boolean' -%}
+    {%- set widget = big_checkbox_field -%}
 
-  {% elif field.choices %}
-    {% do inputargs.update({'options':[]}) %}
-    {% if id in data %}
-      {% do inputargs.update({'selected':data[id]}) %}
+  {%- elif field.choices -%}
+    {%- do inputargs.update({'options':[]}) -%}
+    {%- if id in data -%}
+      {%- do inputargs.update({'selected':data[id]}) -%}
     {# custom requirement from client #}
-    {% elif field.id == 'catalog_type' %}
-      {% do inputargs.update({'selected':field.choices[0].key}) %}
-    {% endif %}
+    {%- elif field.id == 'catalog_type' -%}
+      {%- do inputargs.update({'selected':field.choices[0].key}) -%}
+    {%- endif -%}
     {# kwargs form.select doesn't support #}
-    {% do inputargs.pop('value') %}
-    {% do inputargs.pop('placeholder') %}
+    {%- do inputargs.pop('value') -%}
+    {%- do inputargs.pop('placeholder') -%}
 
-    {% if id == 'owner_org' %}
-      {% do inputargs.options.append({'text': '', 'value': ''}) %}
-      {% for org in orgs_avail('create_dataset') %}
-        {% set c = field.choices_by_key[org.name] %}
-        {% do inputargs.options.append({
+    {%- if id == 'owner_org' -%}
+      {%- do inputargs.options.append({'text': '', 'value': ''}) -%}
+      {%- for org in orgs_avail('create_dataset') -%}
+        {%- set c = field.choices_by_key[org.name] -%}
+        {%- do inputargs.options.append({
           'text': c[client_lang],
           'value': org.id, })
-        %}
-      {% endfor %}
+        -%}
+      {%- endfor -%}
 
-    {% elif id == 'geographic_region' %}
-      {% for c in field.choices %}
-        {% set skip = false %}
-        {% if not c.id %}
-          {% set skip = true %}
-        {% elif c.id > 99 %}
-          {% set level = 2 %}
-        {% elif c.id > 9 %}
-          {% set level = 1 %}
-        {% else %}
-          {% set level = 0 %}
-        {% endif %}
-        {% if not skip %}
-          {% do inputargs.options.append({
+    {%- elif id == 'geographic_region' -%}
+      {%- for c in field.choices -%}
+        {%- set skip = false -%}
+        {%- if not c.id -%}
+          {%- set skip = true -%}
+        {%- elif c.id > 99 -%}
+          {%- set level = 2 -%}
+        {%- elif c.id > 9 -%}
+          {%- set level = 1 -%}
+        {%- else -%}
+          {%- set level = 0 -%}
+        {%- endif -%}
+        {%- if not skip -%}
+          {%- do inputargs.options.append({
             'text': '. . ' * level + c[client_lang],
             'value': c.key,
             'level': level, })
-          %}
-        {% endif %}
-      {% endfor %}
+          -%}
+        {%- endif -%}
+      {%- endfor -%}
 
-    {% else %}
-      {% if field.type != 'tag_vocabulary' and (
-          field.mandatory != 'all' or field.choices|length > 1) %}
-        {% do inputargs.options.append({'text': '', 'value': ''}) %}
-      {% endif %}
-      {% for c in field.choices %}
-        {% do inputargs.options.append({
+    {%- else -%}
+      {%- if field.type != 'tag_vocabulary' and (
+          field.mandatory != 'all' or field.choices|length > 1) -%}
+        {%- do inputargs.options.append({'text': '', 'value': ''}) -%}
+      {%- endif -%}
+      {%- for c in field.choices -%}
+        {%- do inputargs.options.append({
           'text': c[client_lang],
           'value': c.key, })
-        %}
-      {% endfor %}
-    {% endif %}
+        -%}
+      {%- endfor -%}
+    {%- endif -%}
 
-    {% if id == 'geographic_region' %}
-      {% set widget = multi_checkbox_field %}
-    {% elif field.type == 'tag_vocabulary' %}
-      {% set widget = multi_checkbox_field %}
-    {% else %}
-      {% set widget = form.select %}
-    {% endif %}
-  {% endif %}
+    {%- if id == 'geographic_region' -%}
+      {%- set widget = multi_checkbox_field -%}
+    {%- elif field.type == 'tag_vocabulary' -%}
+      {%- set widget = multi_checkbox_field -%}
+    {%- else -%}
+      {%- set widget = form.select -%}
+    {%- endif -%}
+  {%- endif -%}
 
-  {% call widget(**inputargs) %}
-    {% if field.description %}
-      {{ form.info(field.description[client_lang]) }}
-    {% endif %}
-  {% endcall %}
-{% endmacro %}
+  {%- if 'hidden' in field.get('ui_options', []) -%}
+    <div style="display:none">
+      {{ widget(**inputargs) }}
+    </div>
+  {%- else -%}
+    {%- call widget(**inputargs) -%}
+      {%- if field.description -%}
+        {{ form.info(field.description[client_lang]) }}
+      {%- endif -%}
+    {%- endcall -%}
+  {%- endif -%}
+{%- endmacro -%}
 
 {#
 Create a group of checkboxes for a tag vocabulary field with all the
@@ -238,32 +245,32 @@ Example:
   {{ form.errors(error_summary, type="warning") }}
 
 #}
-{% macro errors(errors={}, schema_fields, client_lang) %}
-  {% set client_lang = 'fra' if client_lang == 'fr' else 'eng' %}
-  {% if errors %}
+{%- macro errors(errors={}, schema_fields, client_lang) -%}
+  {%- set client_lang = 'fra' if client_lang == 'fr' else 'eng' -%}
+  {%- if errors -%}
     <div class="error-explanation module-alert margin-bottom-large alert-{{ type }}{{ " " ~ classes | join(' ') }}">
       <p>{{ _('The form contains invalid entries:') }}</p>
       <ul>
-        {% for key, error in errors.items() %}
-          {% if key.endswith('_fra') %}
-            {% set key_base = key[:-4] %}
-          {% else %}
-            {% set key_base = key %}
-          {% endif %}
-          {% set f = schema_fields[key_base] %}
-          {% set label = schema_fields[key_base].label[client_lang] %}
-          {% if f.bilingual %}
-            {% set label = label + ' ' +
+        {%- for key, error in errors.items() -%}
+          {%- if key.endswith('_fra') -%}
+            {%- set key_base = key[:-4] -%}
+          {%- else -%}
+            {%- set key_base = key -%}
+          {%- endif -%}
+          {%- set f = schema_fields[key_base] -%}
+          {%- set label = schema_fields[key_base].label[client_lang] -%}
+          {%- if f.bilingual -%}
+            {%- set label = label + ' ' +
               schema_description.resource_field_by_id.language.choices[
-              2 if key.endswith('_fra') else 1][client_lang] %}
-          {% endif %}
-          <li data-field-label="{{ key }}">{% if key %}{{
-            label }}: {% endif %}{{ ', '.join(error) }}</li>
-        {% endfor %}
+              2 if key.endswith('_fra') else 1][client_lang] -%}
+          {%- endif -%}
+          <li data-field-label="{{ key }}">{%- if key -%}{{
+            label }}: {%- endif -%}{{ ', '.join(error) }}</li>
+        {%- endfor -%}
       </ul>
     </div>
-  {% endif %}
-{% endmacro %}
+  {%- endif -%}
+{%- endmacro -%}
 
 {#
 Create a single checkbox field, with emphasis
