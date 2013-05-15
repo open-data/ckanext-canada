@@ -9,9 +9,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-from ckanext.canada.helpers import (may_publish_datasets,
-    user_organizations, today, date_format, openness_score,
-    dataset_comments, remove_duplicates, get_license)
+from ckanext.canada import helpers
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -75,10 +73,11 @@ class DataGCCAInternal(p.SingletonPlugin):
         return map
 
     def get_helpers(self):
-        return {'may_publish_datasets': may_publish_datasets,
-                'today': today,
-                'date_format': date_format,
-                }
+        return dict((h, getattr(helpers, h)) for h in [
+            'may_publish_datasets',
+            'today',
+            'date_format',
+            ])
 
 
 class DataGCCAPublic(p.SingletonPlugin):
@@ -115,12 +114,13 @@ class DataGCCAPublic(p.SingletonPlugin):
         return facets_dict
     
     def get_helpers(self):
-        return {'user_organizations': user_organizations,
-                'dataset_comments': dataset_comments,
-                'openness_score': openness_score,
-                'remove_duplicates': remove_duplicates,
-                'get_license': get_license,
-                }
+        return dict((h, getattr(helpers, h)) for h in [
+            'user_organizations',
+            'dataset_comments',
+            'openness_score',
+            'remove_duplicates',
+            'get_license',
+            ])
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
