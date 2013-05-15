@@ -29,7 +29,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict = {'published': _('Published or Pending')}
+        facets_dict.update({'published': _('Published or Pending')})
 
         return facets_dict
 
@@ -89,11 +89,11 @@ class DataGCCAPublic(p.SingletonPlugin):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
-        
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict.update( {'organization': _('Organization'),
+        facets_dict.update( {
                       'tags': _('Subject'),
                       'res_format': _('File Format'),
                       'raw_geo': _('Catalog Type'),
