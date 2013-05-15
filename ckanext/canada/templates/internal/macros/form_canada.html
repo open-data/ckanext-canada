@@ -136,7 +136,7 @@ orgs_avail  - h.organizations_available helper (optional)
 
 {# helper for sort_choices above #}
 {%- macro _text_key(d) -%}
-  {{- d.text -}}
+  {{- schema_description.normalize_strip_accents(d.text) -}}
 {%- endmacro -%}
 
 {#
