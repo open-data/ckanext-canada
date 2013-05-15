@@ -82,11 +82,11 @@ def dataset_comments(pkg_id):
     drupal_cursor.execute(
        """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
           from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
-          inner join od_package o on o.pkg_node_id = c.nid 
+          inner join opendata_package o on o.pkg_node_id = c.nid 
           where o.pkg_id = %s""", (pkg_id,))
     
     comment_list = []
     for comment in drupal_cursor:
-       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment[3]})
+       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment[4]})
        
     return comment_list
