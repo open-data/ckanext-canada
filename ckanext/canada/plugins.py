@@ -104,7 +104,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
-    
+
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
@@ -112,6 +112,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'openness_score',
             'remove_duplicates',
             'get_license',
+            'normalize_strip_accents',
             ])
 
 

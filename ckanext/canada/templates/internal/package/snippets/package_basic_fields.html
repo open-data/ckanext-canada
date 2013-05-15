@@ -6,7 +6,7 @@
     true, schema_description.dataset_sections.0) %}
   {% if field.type not in ('primary_key', 'calculated', 'fixed') %}
     {{ cform.formfield(id, lang, field, data, errors, h.lang(),
-      h.organizations_available) }}
+      h.organizations_available, h.normalize_strip_accents) }}
   {% endif %}
 {% endfor %}
 
