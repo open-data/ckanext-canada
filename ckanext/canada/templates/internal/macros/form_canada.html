@@ -49,7 +49,8 @@ norm_key    - h.normalize_strip_accents helper (optional)
     {%- do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) -%}
 
   {%- elif field.type == 'date' -%}
-    {%- do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) -%}
+    {%- do inputargs.update({'placeholder': '', 'type': 'date',
+      'value': cr.date_format(data[id]) or '' }) -%}
 
   {%- elif field.type == 'boolean' -%}
     {%- set widget = big_checkbox_field -%}
