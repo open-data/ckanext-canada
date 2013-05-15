@@ -74,23 +74,28 @@ def remove_duplicates(a_list):
 def dataset_comments(pkg_id):
 
     #import pdb; pdb.set_trace()
-    dbd = parse_db_config('ckan.drupal.url')
-    drupal_conn_string = "host='%s' dbname='%s' user='%s' password='%s'" % (dbd['db_host'], dbd['db_name'], dbd['db_user'], dbd['db_pass'])    
-    
-    drupal_conn = pg2.connect(drupal_conn_string)
-    drupal_cursor = drupal_conn.cursor()
-    
-    drupal_cursor.execute(
-       """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
-          from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
-          inner join opendata_package o on o.pkg_node_id = c.nid 
-          where o.pkg_id = %s""", (pkg_id,))
-    
     comment_list = []
-    for comment in drupal_cursor:
-       comment_body = clean_html(comment[4])
-       comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
-       
+    try:
+      dbd = parse_db_config('ckan.drupal.url')
+      if (dbd):
+        drupal_conn_string = "host='%s' dbname='%s' user='%s' password='%s'" % (dbd['db_host'], dbd['db_name'], dbd['db_user'], dbd['db_pass'])    
+        
+        drupal_conn = pg2.connect(drupal_conn_string)
+        drupal_cursor = drupal_conn.cursor()
+        
+        drupal_cursor.execute(
+           """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
+              from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
+              inner join opendata_package o on o.pkg_node_id = c.nid 
+              where o.pkg_id = %s""", (pkg_id,))
+        
+    
+        for comment in drupal_cursor:
+           comment_body = clean_html(comment[4])
+           comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
+
+    except KeyError:
+       pass
     return comment_list
 
 
