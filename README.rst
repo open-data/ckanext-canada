@@ -364,7 +364,7 @@ Compiling the updated French localization strings
 
 1. The open-data/ckan repo, branch canada-v2.0 should contain the compiled localization file. But if it doesn't, you can compile like so::
 
-   $ python setup.py compile_catalog --locale FR
+   $ python setup.py compile_catalog --locale fr
 
 2. If you are not running CKAN from source, you need to copy the compiled .mo file to your deploy environment::
 
