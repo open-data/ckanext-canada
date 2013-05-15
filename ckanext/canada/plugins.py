@@ -11,7 +11,7 @@ from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
 from ckanext.canada.helpers import (may_publish_datasets,
     user_organizations, today, date_format, openness_score,
-    dataset_comments, remove_duplicates)
+    dataset_comments, remove_duplicates, get_license)
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -113,7 +113,8 @@ class DataGCCAPublic(p.SingletonPlugin):
         return {'user_organizations': user_organizations,
                 'dataset_comments': dataset_comments,
                 'openness_score': openness_score,
-                'remove_duplicates': remove_duplicates
+                'remove_duplicates': remove_duplicates,
+                'get_license': get_license,
                 }
 
 
