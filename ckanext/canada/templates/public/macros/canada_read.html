@@ -123,6 +123,18 @@ Display a resource format in the correct language
 
 
 {#
+Display a license name in the correct language
+#}
+{%- macro license_name(license_id, client_lang) -%}
+  {%- set license_field = schema_description.dataset_field_by_id.license_id -%}
+  {%- if license_id in license_field.choices_by_key -%}
+    {{- license_field.choices_by_key[license_id][full_lang(client_lang)] -}}
+  {%- else -%}
+    {{- license_id -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{#
 Choose the most appropriate display name for a resource
 #}
 {%- macro resource_display_name(res, client_lang) -%}
