@@ -141,10 +141,11 @@
     </table>
   
 #}
-    {% block drupal_comments %}
-    {% include "package/comments.html" %}
-    {% endblock drupal_comments %}
-
   </div>
+
+{% block drupal_comments %}
+{% include "package/comments.html" pkg %}
+{% endblock drupal_comments %}
+    
 {% endblock %}
 
