@@ -3,6 +3,7 @@ import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
 from ckan.plugins import toolkit
+from routes.mapper import SubMapper
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
@@ -10,6 +11,7 @@ from ckanext.canada.navl_schema import (create_package_schema,
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
 from ckanext.canada import helpers
+
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -37,14 +39,14 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
-        
+
         facets_dict = {
                       'tags': _('Subject'),
                       'res_format': _('File Format'),
                       'raw_geo': _('Catalog Type'), }
-        
+
         return facets_dict
-        
+
     def before_map(self, map):
         map.connect('/', controller='user', action='login')
         map.connect(
@@ -53,23 +55,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='organization_index',
         )
         return map
-        
+
     def after_map(self, map):
-        map.connect(
-            'guidelines', '/guidelines',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_guidelines'
-        )
-        map.connect(
-            'help', '/help',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_help'
-        )
-        map.connect(
-            'newuser', '/newuser',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_new_user'
-        )
+        with SubMapper(map,
+                controller='ckanext.canada.controller:CanadaController') as m:
+            m.connect('/guidelines', action='view_guidelines')
+            m.connect('/help', action='view_help')
+            m.connect('/newuser', action='view_new_user')
         return map
 
     def get_helpers(self):
