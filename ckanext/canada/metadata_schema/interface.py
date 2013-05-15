@@ -1,6 +1,6 @@
 import json
 import os
-import unicodedata
+from ckanext.canada.tools import normalize_strip_accents
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _JSON_NAME = os.path.join(_HERE, 'schema.json')
@@ -81,6 +81,11 @@ class MetadataSchema(object):
 
         self.existing_resource_fields = self.all_resource_fields - self.extra_resource_fields
 
+        # XXX: this doesn't belong here, but it's convenient because the
+        # schema_description is available in templates.
+        # Bad programmer!  No cookie!
+        self.normalize_strip_accents = normalize_strip_accents
+
 
     def dataset_field_iter(self, include_existing=True, section=None):
         """
@@ -131,17 +136,4 @@ class MetadataSchema(object):
             pilot = ('pilot_id_' + self.languages[1]) if lang == self.languages[1] else 'pilot_id'
             pilot_field_name = field.get(pilot, None)
             yield ckan_field_name, pilot_field_name, field
-
-    def normalize_strip_accents(self, s):
-        """
-        utility function to help with sorting our French strings
-        """
-        # XXX: this doesn't belong here, but it's convenient because the
-        # schema_description is available in templates.
-        # Bad programmer!  No cookie!
-        if not s:
-            s = u''
-        s = unicodedata.normalize('NFD', s)
-        return s.encode('ascii', 'ignore').decode('ascii').lower()
-
 
