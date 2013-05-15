@@ -11,12 +11,12 @@
 {%- endmacro -%}
 
 {% block secondary_content %}
-  {% for facet in c.facet_titles %}
-    {% if facet == 'res_format' %}
-      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet],
-        name=facet, label_function=res_label) }}
-    {% else %}
-      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
-    {% endif %}
-  {% endfor %}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['tags'],
+    name='tags') }}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['raw_geo'],
+    name='raw_geo') }}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
+    name='res_format', label_function=res_label) }}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
+    name='license_id') }}
 {% endblock %}
