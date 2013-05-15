@@ -1,5 +1,6 @@
 import json
 import os
+import unicodedata
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _JSON_NAME = os.path.join(_HERE, 'schema.json')
@@ -131,5 +132,16 @@ class MetadataSchema(object):
             pilot_field_name = field.get(pilot, None)
             yield ckan_field_name, pilot_field_name, field
 
+    def normalize_strip_accents(self, s):
+        """
+        utility function to help with sorting our French strings
+        """
+        # XXX: this doesn't belong here, but it's convenient because the
+        # schema_description is available in templates.
+        # Bad programmer!  No cookie!
+        if not s:
+            s = u''
+        s = unicodedata.normalize('NFD', s)
+        return s.encode('ascii', 'ignore').decode('ascii').lower()
 
 
