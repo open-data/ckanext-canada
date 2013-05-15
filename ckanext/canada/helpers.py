@@ -1,5 +1,5 @@
 from pylons import c
-import ckan.model as model
+from ckan.model import User, Package
 import datetime
 import psycopg2 as pg2
 from lxml.html.clean import clean_html
@@ -38,7 +38,7 @@ def openness_score(pkg):
 
 
 def user_organizations(user):
-    u = model.User.get(user['name'])
+    u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
     
 def today():
@@ -92,3 +92,8 @@ def dataset_comments(pkg_id):
        comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
        
     return comment_list
+
+
+def get_license(license_id):
+    return Package.get_license_register().get(license_id)
+

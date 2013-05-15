@@ -11,7 +11,7 @@ from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
 from ckanext.canada.helpers import (may_publish_datasets,
     user_organizations, today, date_format, openness_score,
-    dataset_comments, remove_duplicates)
+    dataset_comments, remove_duplicates, get_license)
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -29,7 +29,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict = {'published': _('Published or Pending')}
+        facets_dict.update({'published': _('Published or Pending')})
 
         return facets_dict
 
@@ -49,6 +49,11 @@ class DataGCCAInternal(p.SingletonPlugin):
         
     def before_map(self, map):
         map.connect('/', controller='user', action='login')
+        map.connect(
+            'organizations_index', '/organization',
+            controller='ckanext.canada.controller:CanadaController',
+            action='organization_index',
+        )
         return map
         
     def after_map(self, map):
@@ -89,11 +94,11 @@ class DataGCCAPublic(p.SingletonPlugin):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
-        
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict.update( {'organization': _('Organization'),
+        facets_dict.update( {
                       'tags': _('Subject'),
                       'res_format': _('File Format'),
                       'raw_geo': _('Catalog Type'),
@@ -113,7 +118,8 @@ class DataGCCAPublic(p.SingletonPlugin):
         return {'user_organizations': user_organizations,
                 'dataset_comments': dataset_comments,
                 'openness_score': openness_score,
-                'remove_duplicates': remove_duplicates
+                'remove_duplicates': remove_duplicates,
+                'get_license': get_license,
                 }
 
 
