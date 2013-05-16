@@ -15,6 +15,8 @@
 {%- endmacro -%}
 
 {% block secondary_content %}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
+    name='organization') }}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['tags'],
     name='tags') }}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['raw_geo'],
