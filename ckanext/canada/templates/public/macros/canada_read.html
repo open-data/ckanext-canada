@@ -61,7 +61,7 @@ Render a list of keywords for the client language
     {% set tags = pkg[f.id + ('_fra' if client_lang == 'fr' else '')] -%}
     {%- for tag in tags.split(',') -%}
       <li>
-        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
+        <a class="button button-none button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
           %}">{{ tag.strip() }}</a>
       </li>
     {%- endfor -%}
