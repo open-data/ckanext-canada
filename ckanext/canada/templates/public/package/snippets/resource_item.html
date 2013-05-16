@@ -6,33 +6,32 @@
 {% set format_field = schema_description.resource_field_by_id['format'] %}
 {% set size_field = schema_description.resource_field_by_id['size'] %}
 
-<div class="menu-horizontal ">
-  
-  <span class="span-1">
+<tr> 
+  <td>
     {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
     {% if name_field in res and res[name_field] %}
       {{ h.markdown_extract(res[name_field], extract_length=80) }}
     {% else %}
       <span class="empty">{{ _('No description for this resource') }}</span>
     {% endif %}
-  </span>
+  </td>
   
-  <span class="span-1">
+  <td>
     {{ cr.lookup_field(format_field, res, client_lang) }}
-  </span>
+  </td>
   
-  <span class="span-1">
+  <td>
     {{ cr.size_field(size_field, res, client_lang) }}
-  </span>
+  </td>
   
-  <span class="span-1">
+  <td>
     {{ cr.lookup_field(lang_field, res, client_lang) }}
-  </span>
+  </td>
   
-  <span class="span-1">
+  <td>
     <a href="{{ res.url }}" class="resource-url-analytics button button-small" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
-  </span>
-
+  </td>
+</tr>
 <!--  
   {% block resource_item_explore %}
   <div class="dropdown btn-group">
@@ -53,5 +52,4 @@
   </div>
   {% endblock %}
 --> 
-</div>
-<div class="clear"></div>
+

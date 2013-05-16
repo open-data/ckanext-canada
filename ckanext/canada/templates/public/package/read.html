@@ -40,10 +40,21 @@
       <h5>{{ _('Data and Resources') }}</h5>
       {% if pkg.resources %}
         <div class="span-6">
+          <table class="wet-boew-zebra span-5">
+            <thead>
+              <tr>
+                <th>{{ _('Resource Name') }}</th>
+                <th>{{ _('Format') }}</th>
+                <th>{{ _('Size (MB)') }}</th>
+                <th>{{ _('Language') }}</th>
+                <th>{{ _('Link') }}</th>
+              </tr>
+            </thead>
           {% for resource in pkg.resources %}
             {% snippet 'package/snippets/resource_item.html',
               pkg=pkg, res=resource, client_lang=client_lang %}
           {% endfor %}
+          </table>
         </div>
       {% endif %}
     </section>
@@ -78,10 +89,14 @@
       </ul>
       
       <h5>{{ _('Developer Tools') }}</h5>
+        <ul>
+          <li class="list-bullet-none"><a href="/data/api/action/package_show?id={{pkg.id}}">/data/api/action/package_show?id={{pkg.id}}</a></li>
+        </ul>
     </section>
   
     {# Please replace this with a better test for geospatial data #}
     {% if pkg['spatial'] %}
+    <br>
     <section class="indent-medium">
       {# The geojson needs to be converted to WKT format and then passed in. #}
       {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
