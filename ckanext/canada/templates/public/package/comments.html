@@ -2,11 +2,12 @@
 
 <div class="module">
   <section class="module-content indent-large">
+    
     {% set pkg = c.pkg_dict %}
 
     {% set comment_list = h.dataset_comments(pkg.id) %}
 
-    <h3>{{ _('Comments') }}</h3>
+    <h3><a id="comments">{{ _('Comments') }}</a></h3>
     
     {% if comment_list %}
     <table class="wet-boew-zebra span-5">
