@@ -27,15 +27,21 @@
         <div>
           {{ cr.field_id('notes', pkg, client_lang) }}
         </div>
-      {% endif %}
-      
-      <h5>{{ _('Organization')}}: </h5>{{cr.org_field(pkg, client_lang)}}
-      
-      <h5>{{_('Licence')}}: </h5>{{pkg.license_title_fra
-        if client_lang == 'fr' and 'license_title_fra' in pkg
-        else pkg.license_title }}
+      {% endif %} 
+     
+    <div class="span-6">
+       <p>    
+       <div class="span-1 row-start equalize align-bottom"><h5>{{ _('Organization')}}: </h5></div>
+       <div class="span-4 row-end equalize align-bottom">{{cr.org_field(pkg, client_lang)}}</div>
+       </p>
+       <div class="clear"></div>
+       <p>
+       <div class="span-1 row-start equalize align-bottom"><h5>{{_('Licence')}}: </h5></div>
+       <div class="span-4 row-end equalize align-bottom"> {{pkg.license_title_fra
+            if client_lang == 'fr' and 'license_title_fra' in pkg
+            else pkg.license_title }}</div>
+       </p>
     </section>
-
     <section id="dataset-resources" class="resources module-content indent-large">
       <h5>{{ _('Data and Resources') }}</h5>
       {% if pkg.resources %}
