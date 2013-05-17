@@ -1,8 +1,11 @@
   {% block ds_socialmedia %} 
   <div class="module-related">
+    {% set pkg = c.pkg_dict %}  
     <h3>{{_('Have your say') }}</h3>
     <ul>
-      <li><img class="image-actual" src="/data/img/rating_placeholder.jpg"></li>
+      <li><img class="image-actual" src="/data/img/rating_placeholder.jpg"><br>
+        <a href="/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</li></a>
+      
       <li><a href="#comments">{{ _('Comments: ') }}  1</a></li>
     </ul>
   </div>
