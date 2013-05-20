@@ -37,9 +37,13 @@
        <div class="clear"></div>
        <p>
        <div class="span-1 row-start equalize align-bottom"><h5>{{_('Licence')}}: </h5></div>
-       <div class="span-4 row-end equalize align-bottom"> {{pkg.license_title_fra
+       {% if client_lang == 'fr' %}
+         <div class="span-4 row-end equalize align-bottom"><a href="http://www.data.gc.ca/default.asp?lang=Fn&n=E7BD8C3D-1">{{pkg.license_title_fra
             if client_lang == 'fr' and 'license_title_fra' in pkg
-            else pkg.license_title }}</div>
+            else pkg.license_title }}</a>
+       {% else %}
+         <div class="span-4 row-end equalize align-bottom"><a href="http://www.data.gc.ca/default.asp?lang=En&n=E7BD8C3D-1">{{pkg.license_title }}</a>
+       {% endif %}
        </p>
     </section>
     <section id="dataset-resources" class="resources module-content indent-large">
