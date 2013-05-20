@@ -1,2 +1,6 @@
 {# Used to insert the home icon into a breadcrumb #}
-<li><a href="{{ "/" }}">{{ _('Home') }}</a></li>
+{% if h.lang() == 'en' %}
+<li><a href="{{ "/eng" }}">Home</a></li>
+{% else %}
+<li><a href="{{ "/fra" }}">Accueil</a></li>
+{% endif %}
