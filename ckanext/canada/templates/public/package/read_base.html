@@ -22,10 +22,6 @@
   {% include "package/snippets/socialmedia.html" %}
   {% endblock ds_socialmedia %}
   
-  <section>
-    <div class="wet-boew-share" data-wet-boew='{"sites":["facebook","google", "twitter"]}'></div>
-    <div class="clear"></div>
-  </section>
   <p>
   <div class="module-related">
     <h3>{{_('About this Dataset')}}</h3>
@@ -57,7 +53,11 @@
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
       <li>{{ cr.field_label(program_url, client_lang) }}:
-        <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ cr.field(program_url, pkg, client_lang) }}</a>
+        {% if h.lang() == 'en' %}
+        <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
+        {% else %}
+        
+        {% endif %}
       </li>
     </ul>
   </div>
