@@ -1,4 +1,10 @@
   {% block ds_socialmedia %} 
+  
+  <section>
+    <div class="wet-boew-share" data-wet-boew='{"sites":["facebook","google", "twitter"]}'></div>
+    <div class="clear"></div>
+  </section>
+  <p>
   <div class="module-related">
     {% set pkg = c.pkg_dict %}  
     <h3>{{_('Have your say') }}</h3>
@@ -9,4 +15,5 @@
       <li><a href="#comments">{{ _('Comments: ') }}  1</a></li>
     </ul>
   </div>
+  </p>
   {% endblock ds_socialmedia %}

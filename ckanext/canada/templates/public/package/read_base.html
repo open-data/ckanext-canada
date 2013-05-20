@@ -53,7 +53,11 @@
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
       <li>{{ cr.field_label(program_url, client_lang) }}:
-        <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ cr.field(program_url, pkg, client_lang) }}</a>
+        {% if h.lang() == 'en' %}
+        <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
+        {% else %}
+        
+        {% endif %}
       </li>
     </ul>
   </div>
