@@ -81,11 +81,6 @@ class MetadataSchema(object):
 
         self.existing_resource_fields = self.all_resource_fields - self.extra_resource_fields
 
-        # XXX: this doesn't belong here, but it's convenient because the
-        # schema_description is available in templates.
-        # Bad programmer!  No cookie!
-        self.normalize_strip_accents = normalize_strip_accents
-
 
     def dataset_field_iter(self, include_existing=True, section=None):
         """

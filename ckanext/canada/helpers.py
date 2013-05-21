@@ -4,6 +4,7 @@ import datetime
 import psycopg2 as pg2
 from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
+import unicodedata
 
 ORG_MAY_PUBLISH_KEY = 'publish'
 ORG_MAY_PUBLISH_VALUE = 'True'
@@ -101,4 +102,15 @@ def dataset_comments(pkg_id):
 
 def get_license(license_id):
     return Package.get_license_register().get(license_id)
+
+
+def normalize_strip_accents(s):
+    """
+    utility function to help with sorting our French strings
+    """
+    if not s:
+        s = u''
+    s = unicodedata.normalize('NFD', s)
+    return s.encode('ascii', 'ignore').decode('ascii').lower()
+
 

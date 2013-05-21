@@ -3,15 +3,15 @@ import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
 from ckan.plugins import toolkit
+from routes.mapper import SubMapper
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada.logic import (group_show, organization_show,
     changed_packages_activity_list_since)
-from ckanext.canada.helpers import (may_publish_datasets,
-    user_organizations, today, date_format, openness_score,
-    dataset_comments, remove_duplicates, get_license)
+from ckanext.canada import helpers
+
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -39,14 +39,14 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
-        
+
         facets_dict = {
                       'tags': _('Subject'),
                       'res_format': _('File Format'),
                       'raw_geo': _('Catalog Type'), }
-        
+
         return facets_dict
-        
+
     def before_map(self, map):
         map.connect('/', controller='user', action='login')
         map.connect(
@@ -55,30 +55,21 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='organization_index',
         )
         return map
-        
+
     def after_map(self, map):
-        map.connect(
-            'guidelines', '/guidelines',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_guidelines'
-        )
-        map.connect(
-            'help', '/help',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_help'
-        )
-        map.connect(
-            'newuser', '/newuser',
-            controller='ckanext.canada.controller:CanadaController',
-            action='view_new_user'
-        )
+        with SubMapper(map,
+                controller='ckanext.canada.controller:CanadaController') as m:
+            m.connect('/guidelines', action='view_guidelines')
+            m.connect('/help', action='view_help')
+            m.connect('/newuser', action='view_new_user')
         return map
 
     def get_helpers(self):
-        return {'may_publish_datasets': may_publish_datasets,
-                'today': today,
-                'date_format': date_format,
-                }
+        return dict((h, getattr(helpers, h)) for h in [
+            'may_publish_datasets',
+            'today',
+            'date_format',
+            ])
 
 
 class DataGCCAPublic(p.SingletonPlugin):
@@ -113,14 +104,16 @@ class DataGCCAPublic(p.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
         return facets_dict
-    
+
     def get_helpers(self):
-        return {'user_organizations': user_organizations,
-                'dataset_comments': dataset_comments,
-                'openness_score': openness_score,
-                'remove_duplicates': remove_duplicates,
-                'get_license': get_license,
-                }
+        return dict((h, getattr(helpers, h)) for h in [
+            'user_organizations',
+            'dataset_comments',
+            'openness_score',
+            'remove_duplicates',
+            'get_license',
+            'normalize_strip_accents',
+            ])
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):

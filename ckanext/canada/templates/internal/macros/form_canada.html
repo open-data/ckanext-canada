@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/form_wet.html' as form with context %}
+{% import 'macros/form_wet.html' as form %}
 {% import 'macros/canada_read.html' as cr %}
 
 {#
@@ -13,8 +13,10 @@ data        - dict containing form data by CKAN field id
 errors      - dict containing form errors by CKAN field id
 client_lang - language from h.lang(): 'en' or 'fr'
 orgs_avail  - h.organizations_available helper (optional)
+norm_key    - h.normalize_strip_accents helper (optional)
 #}
-{%- macro formfield(id, lang, field, data, errors, client_lang, orgs_avail=none) -%}
+{%- macro formfield(id, lang, field, data, errors, client_lang,
+    orgs_avail=none, norm_key=none) -%}
   {%- set client_lang = cr.full_lang(client_lang) -%}
 
   {%- set inputargs = {
@@ -47,7 +49,8 @@ orgs_avail  - h.organizations_available helper (optional)
     {%- do inputargs.update({'append': 'O' if client_lang == 'fra' else 'B' }) -%}
 
   {%- elif field.type == 'date' -%}
-    {%- do inputargs.update({'placeholder': '', 'type': 'date', 'value': h.date_format(data[id]) or '' }) -%}
+    {%- do inputargs.update({'placeholder': '', 'type': 'date',
+      'value': cr.date_format(data[id]) or '' }) -%}
 
   {%- elif field.type == 'boolean' -%}
     {%- set widget = big_checkbox_field -%}
@@ -117,6 +120,15 @@ orgs_avail  - h.organizations_available helper (optional)
     {%- endif -%}
 
     {%- if 'sort_choices' in field.get('ui_options', []) -%}
+      {%- if norm_key -%}
+        {%- macro _text_key(d) -%}
+          {{- norm_key(d.text) -}}
+        {%- endmacro -%}
+      {%- else -%}
+        {%- macro _text_key(d) -%}
+          {{- d.text.lower() -}}
+        {%- endmacro -%}
+      {%- endif -%}
       {%- do inputargs.options.sort(key=_text_key) -%}
     {%- endif -%}
   {%- endif -%}
@@ -132,11 +144,6 @@ orgs_avail  - h.organizations_available helper (optional)
       {%- endif -%}
     {%- endcall -%}
   {%- endif -%}
-{%- endmacro -%}
-
-{# helper for sort_choices above #}
-{%- macro _text_key(d) -%}
-  {{- schema_description.normalize_strip_accents(d.text) -}}
 {%- endmacro -%}
 
 {#
