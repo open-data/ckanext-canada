@@ -118,13 +118,14 @@
           Read more about this site's API: <a href="http://docs.ckan.org">{{ _('About the API') }}</a>
         </p>
     </section>
-  
-    {% if pkg['spatial'] %}
+
     <br>
     <section class="indent-medium">
       <h4>{{ _('Geographic Information') }}</h4>
-      {# The geojson needs to be converted to WKT format and then passed in. #}
-      {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
+      {% if pkg['spatial'] %}
+        {# The geojson needs to be converted to WKT format and then passed in. #}
+        {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
+      {% endif %}
       <ul class="list-bullet-none">
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
         <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
@@ -132,7 +133,6 @@
         </li>
       </ul>
     </section>
-    {% endif %}
   
 {#
     <table class="table table-striped table-bordered table-condensed span-6">
