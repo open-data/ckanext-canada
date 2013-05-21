@@ -19,11 +19,7 @@
   <td>
     {{ cr.lookup_field(format_field, res, client_lang) }}
   </td>
-  
-  <td>
-    {{ cr.size_field(size_field, res, client_lang) }}
-  </td>
-  
+
   <td>
     {{ cr.lookup_field(lang_field, res, client_lang) }}
   </td>
@@ -31,7 +27,7 @@
   <td>
     <a href="{{ res.url }}" class="button button-accent button-small" target="_blank">{{ _('Download') }}</a>
     {% if res.webstore_last_updated %}
-    &nbsp;<a href="{{ url }}" class="button button-small"><span class="wb-icon-table"></span>{{ _('Preview') }}</a>
+    &nbsp;<a href="{{ url }}" class="button button-accent button-small">{{ _('Preview') }}</a>
     {% endif %}
   </td>
 </tr>
