@@ -44,8 +44,6 @@
             {{ h.link_to(h.truncate(cr.field_id('title', package, h.lang()), 80), h.url_for(controller='package', action='read', id=package.name)) }}
           </li>
         {% endfor %}
-        <li>{{ h.link_to(_("Load more"), h.url_for(controller='user', action='read', id=user["name"]), class_="button button-small") }}
-        </li>
       </ul>
     {% else %}>
       <span>{{ _('You do not have any datasets') }}</span>
