@@ -35,16 +35,9 @@
       <div class="span-6">
         <p>
         <div class="span-1 row-start equalize align-bottom">
-          <h5>{{ _('Organization')}}: </h5>
-        </div>
-        <div class="span-4 row-end equalize align-bottom">
-          {{cr.org_field(pkg, client_lang)}}
-        </div>
-        <div class="clear"></div>
-        </p>
-        <div class="span-1 row-start equalize align-bottom">
           <h5>{{_('Licence')}}: </h5>
         </div>
+        </p>
         {% if client_lang == 'fr' %}
         <div class="span-4 row-end equalize align-bottom">
           <a href="http://www.data.gc.ca/default.asp?lang=Fn&n=E7BD8C3D-1">{{pkg.license_title_fra
