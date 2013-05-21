@@ -109,20 +109,25 @@
     </section>
 
     <br>
+
+    {% if pkg.geographic_region or pkg.spatial %}
     <section class="indent-medium">
       <h4>{{ _('Geographic Information') }}</h4>
-      {% if pkg['spatial'] %}
+      {% if pkg.spatial %}
         {# The geojson needs to be converted to WKT format and then passed in. #}
         {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
       {% endif %}
+      {% if pkg.geographic_region %}
       <ul class="list-bullet-none">
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
         <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
           {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
         </li>
       </ul>
+      {% endif %}
     </section>
-  
+    {% endif %}
+
 {#
     <table class="table table-striped table-bordered table-condensed span-6">
       <thead>
