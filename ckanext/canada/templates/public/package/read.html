@@ -100,12 +100,7 @@
             {{ cr.date_field(period_start, pkg) }} <b>-</b> {{ cr.date_field(period_end, pkg) }}
           {% endif %}
         </li>
-        
-        {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-        <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
-          {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
-        </li>
-        
+
         {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
         <li class="margin-bottom-medium">{{ cr.field_label(frequency, client_lang) }}:
           {{ cr.field(frequency, pkg, client_lang) }}
@@ -130,6 +125,12 @@
       <h4>{{ _('Geographic Information') }}</h4>
       {# The geojson needs to be converted to WKT format and then passed in. #}
       {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
+      <ul class="list-bullet-none">
+        {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
+        <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
+          {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
+        </li>
+      </ul>
     </section>
     {% endif %}
   
