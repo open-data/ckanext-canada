@@ -9,10 +9,6 @@
 
 {% block primary_content_inner %}
 
-  {% block share_widget %}
-    {% include "package/snippets/share_widget.html" %}
-  {% endblock %}
-
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
