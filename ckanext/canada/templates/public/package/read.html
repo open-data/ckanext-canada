@@ -8,6 +8,10 @@
 {% block subtitle %}{{ cr.field_id('title', pkg, client_lang) }}{% endblock %}
 
 {% block primary_content_inner %}
+
+  <div class="wet-boew-share span-8 margin-bottom-none" data-wet-boew='{"sites":["facebook","google", "twitter"]}'></div>
+  <div class="clear"></div>
+                 
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
@@ -28,24 +32,37 @@
           {{ cr.field_id('notes', pkg, client_lang) }}
         </div>
       {% endif %} 
-     
-    <div class="span-6">
-       <p>    
-       <div class="span-1 row-start equalize align-bottom"><h5>{{ _('Organization')}}: </h5></div>
-       <div class="span-4 row-end equalize align-bottom">{{cr.org_field(pkg, client_lang)}}</div>
-       </p>
-       <div class="clear"></div>
-       <p>
-       <div class="span-1 row-start equalize align-bottom"><h5>{{_('Licence')}}: </h5></div>
-       {% if client_lang == 'fr' %}
-         <div class="span-4 row-end equalize align-bottom"><a href="http://www.data.gc.ca/default.asp?lang=Fn&n=E7BD8C3D-1">{{pkg.license_title_fra
-            if client_lang == 'fr' and 'license_title_fra' in pkg
-            else pkg.license_title }}</a>
-       {% else %}
-         <div class="span-4 row-end equalize align-bottom"><a href="http://www.data.gc.ca/default.asp?lang=En&n=E7BD8C3D-1">{{pkg.license_title }}</a>
-       {% endif %}
-       </p>
+
     </section>
+    <section class="module-content indent-large">
+      <div class="span-6">
+        <p>
+        <div class="span-1 row-start equalize align-bottom">
+          <h5>{{ _('Organization')}}: </h5>
+        </div>
+        <div class="span-4 row-end equalize align-bottom">
+          {{cr.org_field(pkg, client_lang)}}
+        </div>
+        <div class="clear"></div>
+        </p>
+        <div class="span-1 row-start equalize align-bottom">
+          <h5>{{_('Licence')}}: </h5>
+        </div>
+        {% if client_lang == 'fr' %}
+        <div class="span-4 row-end equalize align-bottom">
+          <a href="http://www.data.gc.ca/default.asp?lang=Fn&n=E7BD8C3D-1">{{pkg.license_title_fra
+          if client_lang == 'fr' and 'license_title_fra' in pkg
+          else pkg.license_title }}</a>
+        </div>
+        {% else %}
+        <div class="span-4 row-end equalize align-bottom">
+          <a href="http://www.data.gc.ca/default.asp?lang=En&n=E7BD8C3D-1">{{pkg.license_title }}</a>
+        </div>
+        {% endif %}
+        <div class="clear"></div>
+      </div>
+    </section>
+    
     <section id="dataset-resources" class="resources module-content indent-large">
       <h5>{{ _('Data and Resources') }}</h5>
       {% if pkg.resources %}
