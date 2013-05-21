@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/canada_read.html' as cr with context %}
+{% import 'macros/canada_read.html' as cr %}
 
 {% set url = h.url_for(controller='package', action='resource_read', id=pkg.name, resource_id=res.id) %}
 {% set lang_field = schema_description.resource_field_by_id['language'] %}

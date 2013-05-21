@@ -24,9 +24,20 @@ below.
   {%- endif -%}
 {%- endmacro -%}
 
-{% macro date_field(f, pkg) %}
-  {{- h.date_format(pkg[f.id]) -}}
-{% endmacro %}
+{#
+Strip any time from the date passed, returning only YYYY-MM-DD
+#}
+{%- macro date_format(d) -%}
+  {%- if d and ' ' in d -%}
+    {{- d.split(' ')[0] -}}
+  {%- else -%}
+    {{- d -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro date_field(f, pkg) -%}
+  {{- date_format(pkg[f.id]) -}}
+{%- endmacro -%}
 
 {%- macro url_field(f, pkg) -%}
   <a href="{{- pkg[f.id] -}}">{{- pkg[f.id] -}}</a>

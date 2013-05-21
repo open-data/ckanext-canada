@@ -1,12 +1,12 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 
-{% import 'macros/form_canada.html' as cform with context %}
+{% import 'macros/form_canada.html' as cform %}
 
 {% for id, lang, field in schema_description.dataset_field_iter(
     true, schema_description.dataset_sections.0) %}
   {% if field.type not in ('primary_key', 'calculated', 'fixed') %}
     {{ cform.formfield(id, lang, field, data, errors, h.lang(),
-      h.organizations_available) }}
+      h.organizations_available, h.normalize_strip_accents) }}
   {% endif %}
 {% endfor %}
 

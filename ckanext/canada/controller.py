@@ -2,7 +2,7 @@ import logging
 from ckan.lib.base import BaseController, c, render, model, request, h
 from ckan.logic import get_action, NotAuthorized, check_access
 from ckan.lib.helpers import Page
-from ckanext.canada.tools import normalize_strip_accents
+from ckanext.canada.helpers import normalize_strip_accents
 
 class CanadaController(BaseController):
     def view_guidelines(self):
