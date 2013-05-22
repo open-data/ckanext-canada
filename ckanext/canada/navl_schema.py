@@ -10,6 +10,7 @@ from ckan.logic.validators import (isodate, tag_string_convert,
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 from ckan.model.package import Package
+from ckan import model
 
 from formencode.validators import OneOf
 
