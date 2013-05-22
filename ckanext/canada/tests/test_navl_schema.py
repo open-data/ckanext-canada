@@ -17,6 +17,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         CreateTestData.create()
         cls.sysadmin_user = model.User.get('testsysadmin')
         cls.normal_user = model.User.get('annafan')
+        cls.publisher_user = model.User.get('russianfan')
 
         cls.sysadmin_action = TestAppCKAN(cls.app,
             str(cls.sysadmin_user.apikey)).action
