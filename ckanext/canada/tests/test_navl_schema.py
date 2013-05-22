@@ -7,8 +7,6 @@ import ckan.model as model
 from ckanapi import TestAppCKAN, ValidationError
 import json
 
-NRCAN_UUID = '9391E0A2-9717-4755-B548-4499C21F917B'
-
 class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
     @classmethod
@@ -28,7 +26,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.action = TestAppCKAN(cls.app).action
 
         cls.sysadmin_action.organization_member_create(
-            username='annafan', id=NRCAN_UUID, role='editor')
+            username='annafan', id='nrcan-rncan', role='editor')
 
         cls.sysadmin_action.organization_member_create(
             username='russianfan', id='tb-ct', role='editor')
@@ -48,7 +46,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         }
 
         cls.override_possible_pkg = dict(cls.incomplete_pkg,
-            owner_org=NRCAN_UUID)
+            owner_org='nrcan-rncan')
 
         cls.complete_pkg = dict(cls.override_possible_pkg,
             catalog_type=u'Data | Données',
