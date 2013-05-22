@@ -55,7 +55,7 @@ def _schema_update(schema, purpose):
     if purpose in ('create', 'update'):
         schema['title'] = [not_empty_allow_override, unicode]
         schema['notes'] = [not_empty_allow_override, unicode]
-        schema['owner_org'] = [not_empty, owner_org_validator, unicode]
+        schema['owner_org'] = [not_empty, owner_org_validator_publisher, unicode]
         schema['license_id'] = [not_empty_allow_override, unicode]
     else:
         schema['author_email'] = [fixed_value(
@@ -293,3 +293,27 @@ def get_license_field(name):
         data[key] = value
     return fill_license_value
 
+def owner_org_validator_publisher(key, data, errors, context):
+    """
+    owner_org_validator modified to allow publisher to update
+    datasets for any org
+    """
+
+    value = data.get(key)
+
+    if value is missing or not value:
+        if not ckan.new_authz.check_config_permission('create_unowned_dataset'):
+            raise Invalid(_('A organization must be supplied'))
+        data.pop(key, None)
+        raise StopOnError
+
+    model = context['model']
+    group = model.Group.get(value)
+    if not group:
+        raise Invalid(_('Organization does not exist'))
+    group_id = group.id
+    user = context['user']
+    user = model.User.get(user)
+    if not(may_publish_datasets() or user.is_in_group(group_id)):
+        raise Invalid(_('You cannot add a dataset to this organization'))
+    data[key] = group_id
