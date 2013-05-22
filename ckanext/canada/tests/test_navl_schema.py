@@ -23,10 +23,15 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             str(cls.sysadmin_user.apikey)).action
         cls.normal_action = TestAppCKAN(cls.app,
             str(cls.normal_user.apikey)).action
+        cls.publisher_action = TestAppCKAN(cls.app,
+            str(cls.publisher_user.apikey)).action
         cls.action = TestAppCKAN(cls.app).action
 
         cls.sysadmin_action.organization_member_create(
             username='annafan', id=NRCAN_UUID, role='editor')
+
+        cls.sysadmin_action.organization_member_create(
+            username='russianfan', id='tb-ct', role='editor')
 
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
@@ -214,6 +219,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert pkg['department_number']
 
     def test_portal_release_date(self):
-        resp = self.normal_action.package_create(**dict(
-            self.complete_pkg, portal_release_date='2012-01-01'))
-        
+        resp = self.publisher_action.package_create(**dict(
+            self.complete_pkg,
+            portal_release_date='2012-01-01',
+            owner_org='tb-ct'))
+
