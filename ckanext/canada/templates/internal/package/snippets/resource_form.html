@@ -8,3 +8,7 @@
     {{ cform.formfield(id, lang, field, data, errors, h.lang()) }}
   {% endfor %}
 {% endblock %}
+
+{% block again_button %}
+  <button class="button" name="save" value="again" type="submit">{{ _('Add another resource') }}</button>
+{% endblock %}
