@@ -84,16 +84,17 @@ def dataset_comments(pkg_id):
         drupal_conn = pg2.connect(drupal_conn_string)
         drupal_cursor = drupal_conn.cursor()
         
+        # add this to the SQL statement to limit comments to those that are published  'and status = 0'
         drupal_cursor.execute(
-           """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
-              from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
-              inner join opendata_package o on o.pkg_node_id = c.nid 
-              where o.pkg_id = %s""", (pkg_id,))
-        
+           """select c.subject, to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value from comment c 
+inner join field_data_comment_body f on c.cid = f.entity_id
+inner join opendata_package o on o.pkg_node_id = c.nid
+where o.pkg_id = %s""", (pkg_id,))
+      
     
         for comment in drupal_cursor:
            comment_body = clean_html(comment[4])
-           comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
+           comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[3], 'comment_body': comment_body, 'user': comment[2]})
 
     except KeyError:
        pass
