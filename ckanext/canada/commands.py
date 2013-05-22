@@ -33,6 +33,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <num>]
+                      dump-datasets
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -111,6 +112,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'portal-update-worker':
             self.portal_update_worker(self.args[1])
+
+        elif cmd == 'dump-datasets':
+            self.dump_datasets()
 
         else:
             print self.__doc__
@@ -445,6 +449,12 @@ class CanadaCommand(CkanCommand):
             response = registry.action.group_delete(id=organization['id'])
         except NotFound:
             pass
+
+    def dump_datasets(self):
+        registry = LocalCKAN()
+        for name in registry.action.package_list():
+            print json.dumps(registry.action.package_show(id=name),
+                sort_keys=True)
 
 
 def _trim_package(pkg):
