@@ -1,4 +1,4 @@
-from pylons import c
+from pylons import c, config
 from ckan.model import User, Package
 import datetime
 import psycopg2 as pg2
@@ -6,18 +6,20 @@ from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
 import unicodedata
 
-ORG_MAY_PUBLISH_KEY = 'publish'
-ORG_MAY_PUBLISH_VALUE = 'True'
+ORG_MAY_PUBLISH_OPTION = 'publish_datasets_organization_name'
+ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 
 def may_publish_datasets():
     if c.userobj.sysadmin:
         return True
 
+    pub_org = config.get(ORG_MAY_PUBLISH_OPTION, ORG_MAY_PUBLISH_DEFAULT_NAME)
     for g in c.userobj.get_groups():
         if not g.is_organization:
             continue
-        if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
+        if g.name == pub_org:
             return True
+    return False
 
 def openness_score(pkg):
     score = 0
