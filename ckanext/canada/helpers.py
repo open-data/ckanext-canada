@@ -9,12 +9,14 @@ import unicodedata
 ORG_MAY_PUBLISH_OPTION = 'publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 
-def may_publish_datasets():
-    if c.userobj.sysadmin:
+def may_publish_datasets(userobj=None):
+    if not userobj:
+        userobj = c.userobj
+    if userobj.sysadmin:
         return True
 
     pub_org = config.get(ORG_MAY_PUBLISH_OPTION, ORG_MAY_PUBLISH_DEFAULT_NAME)
-    for g in c.userobj.get_groups():
+    for g in userobj.get_groups():
         if not g.is_organization:
             continue
         if g.name == pub_org:
