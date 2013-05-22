@@ -14,6 +14,7 @@ from ckan.model.package import Package
 from formencode.validators import OneOf
 
 from ckanext.canada.metadata_schema import schema_description
+from ckanext.canada.helpers import may_publish_datasets
 
 def create_package_schema():
     """
