@@ -1,6 +1,6 @@
 import json
 import os
-from ckanext.canada.tools import normalize_strip_accents
+from ckanext.canada.helpers import normalize_strip_accents
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _JSON_NAME = os.path.join(_HERE, 'schema.json')
