@@ -229,4 +229,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         self.sysadmin_action.package_create(**release_pkg)
 
+    def test_publisher_authorities(self):
+        "The publishing org (tb-ct by default) gets special authorities"
+        # create packages belonging to other orgs
+        self.publisher_action.package_create(**self.complete_pkg)
 
