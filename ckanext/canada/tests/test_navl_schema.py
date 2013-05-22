@@ -211,3 +211,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert pkg['license_url_fra']
 
         assert pkg['department_number']
+
+    def test_portal_release_date(self):
+        resp = self.normal_action.package_create(**dict(
+            self.complete_pkg, portal_release_date='2012-01-01'))
+        
