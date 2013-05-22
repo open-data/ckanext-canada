@@ -7,8 +7,6 @@ import ckan.model as model
 from ckanapi import TestAppCKAN, ValidationError
 import json
 
-NRCAN_UUID = '9391E0A2-9717-4755-B548-4499C21F917B'
-
 class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
     @classmethod
@@ -17,15 +15,21 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         CreateTestData.create()
         cls.sysadmin_user = model.User.get('testsysadmin')
         cls.normal_user = model.User.get('annafan')
+        cls.publisher_user = model.User.get('russianfan')
 
         cls.sysadmin_action = TestAppCKAN(cls.app,
             str(cls.sysadmin_user.apikey)).action
         cls.normal_action = TestAppCKAN(cls.app,
             str(cls.normal_user.apikey)).action
+        cls.publisher_action = TestAppCKAN(cls.app,
+            str(cls.publisher_user.apikey)).action
         cls.action = TestAppCKAN(cls.app).action
 
         cls.sysadmin_action.organization_member_create(
-            username='annafan', id=NRCAN_UUID, role='editor')
+            username='annafan', id='nrcan-rncan', role='editor')
+
+        cls.sysadmin_action.organization_member_create(
+            username='russianfan', id='tb-ct', role='editor')
 
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
@@ -42,7 +46,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         }
 
         cls.override_possible_pkg = dict(cls.incomplete_pkg,
-            owner_org=NRCAN_UUID)
+            owner_org='nrcan-rncan')
 
         cls.complete_pkg = dict(cls.override_possible_pkg,
             catalog_type=u'Data | Données',
@@ -211,3 +215,22 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert pkg['license_url_fra']
 
         assert pkg['department_number']
+
+    def test_portal_release_date(self):
+        release_pkg = dict(self.complete_pkg,
+            portal_release_date='2012-01-01',
+            owner_org='tb-ct')
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **release_pkg)
+
+        self.publisher_action.package_create(**release_pkg)
+
+        self.sysadmin_action.package_create(**release_pkg)
+
+    def test_publisher_authorities(self):
+        "The publishing org (tb-ct by default) gets special authorities"
+        # create packages belonging to other orgs
+        self.publisher_action.package_create(**self.complete_pkg)
+
