@@ -117,12 +117,17 @@
         {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
       {% endif %}
       {% if pkg.geographic_region %}
-      <ul class="list-bullet-none">
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-        <li class="margin-bottom-medium">{{ cr.field_label(geo_region, client_lang) }}:
-          {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
-        </li>
-      </ul>
+        <div class="span-6">
+          <p>
+          <div class="span-2 row-start equalize align-bottom">
+            <h5>{{ cr.field_label(geo_region, client_lang) }}</h5>
+          </div>
+          </p>
+          <div class="span-4 row-end equalize align-bottom">
+            {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
+          </div>
+        </div>
       {% endif %}
     </section>
     {% endif %}
