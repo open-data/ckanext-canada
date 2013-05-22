@@ -10,6 +10,7 @@ from ckan.logic.validators import (isodate, tag_string_convert,
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 from ckan.model.package import Package
+from ckan import model
 
 from formencode.validators import OneOf
 
@@ -153,7 +154,9 @@ def protect_portal_release_date(key, data, errors, context):
     if original == value:
         return
 
-    if may_publish_datasets():
+    user = context['user']
+    user = model.User.get(user)
+    if may_publish_datasets(user):
         return
 
     raise Invalid('Cannot change value of key from %s to %s. '
@@ -314,6 +317,6 @@ def owner_org_validator_publisher(key, data, errors, context):
     group_id = group.id
     user = context['user']
     user = model.User.get(user)
-    if not(may_publish_datasets() or user.is_in_group(group_id)):
+    if not(may_publish_datasets(user) or user.is_in_group(group_id)):
         raise Invalid(_('You cannot add a dataset to this organization'))
     data[key] = group_id
