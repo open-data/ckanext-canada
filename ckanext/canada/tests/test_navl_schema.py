@@ -217,8 +217,16 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert pkg['department_number']
 
     def test_portal_release_date(self):
-        resp = self.publisher_action.package_create(**dict(
-            self.complete_pkg,
+        release_pkg = dict(self.complete_pkg,
             portal_release_date='2012-01-01',
-            owner_org='tb-ct'))
+            owner_org='tb-ct')
+
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **release_pkg)
+
+        self.publisher_action.package_create(**release_pkg)
+
+        self.sysadmin_action.package_create(**release_pkg)
+
 
