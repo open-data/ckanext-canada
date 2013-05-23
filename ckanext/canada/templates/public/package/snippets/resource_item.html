@@ -10,6 +10,7 @@
   <td>
     {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
     {% if name_field in res and res[name_field] %}
+      {% set res_name = res[name_field]  %}
       {{ h.markdown_extract(res[name_field], extract_length=80) }}
     {% else %}
       <span class="empty">{{ _('No description for this resource') }}</span>
@@ -25,7 +26,7 @@
   </td>
   
   <td>
-    <a href="{{ res.url }}" class="button button-accent button-small" title="{{res.url}}" target="_blank">{{ _('Download') }}</a>
+    <a href="{{ res.url }}" class="button button-accent button-small" title="{{res_name or _('Resource') ~ ' ' ~ res_num}}" target="_blank">{{ _('Download') }}</a>
     {% if res.webstore_last_updated %}
     &nbsp;<a href="{{ url }}" class="button button-accent button-small">{{ _('Preview') }}</a>
     {% endif %}
