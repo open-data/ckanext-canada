@@ -33,11 +33,9 @@
     </section>
     <section class="module-content indent-large">
       <div class="span-6">
-        <p>
-        <div class="span-1 row-start equalize align-bottom">
+        <div class="span-1 row-start equalize align-bottom margin-top-medium">
           <h5>{{_('Licence')}}: </h5>
         </div>
-        </p>
         {% if client_lang == 'fr' %}
         <div class="span-4 row-end equalize align-bottom">
           <a href="http://www.data.gc.ca/default.asp?lang=Fn&amp;=E7BD8C3D-1">{{pkg.license_title_fra
@@ -81,9 +79,9 @@
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium">{{ _('Openness rating') }}:
           {% for star in range(h.openness_score(pkg)) -%}
-            <img src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
+            <img alt="{{_('Openness rating')}}" src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
           {%- endfor %}
-        </li class="margin-bottom-medium">
+        </li>
         
         {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
         {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
