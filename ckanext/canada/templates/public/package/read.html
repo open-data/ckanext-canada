@@ -32,9 +32,9 @@
 
     </section>
     <section class="module-content indent-large">
-      <div class="span-6">
-        <div class="span-1 row-start equalize align-bottom margin-top-medium">
-          <h5>{{_('Licence')}}: </h5>
+      <div class="span-6 margin-top-medium">
+        <div class="span-1 row-start equalize align-bottom">
+          <h2>{{_('Licence')}}: </h2>
         </div>
         {% if client_lang == 'fr' %}
         <div class="span-4 row-end equalize align-bottom">
@@ -52,16 +52,16 @@
     </section>
     
     <section id="dataset-resources" class="resources module-content indent-large">
-      <h5>{{ _('Data and Resources') }}</h5>
+      <h2>{{ _('Data and Resources') }}</h2>
       {% if pkg.resources %}
         <div class="span-6">
           <table class="wet-boew-zebra span-5">
             <thead>
               <tr>
-                <th>{{ _('Resource Name') }}</th>
-                <th>{{ _('Format') }}</th>
-                <th>{{ _('Language') }}</th>
-                <th>{{ _('Link') }}</th>
+                <th scope="col">{{ _('Resource Name') }}</th>
+                <th scope="col">{{ _('Format') }}</th>
+                <th scope="col">{{ _('Language') }}</th>
+                <th scope="col">{{ _('Link') }}</th>
               </tr>
             </thead>
           {% for resource in pkg.resources %}
@@ -74,7 +74,7 @@
     </section>
     
     <section class="indent-large">
-      <h5>{{ _('Additional Information') }}</h5>
+      <h2>{{ _('Additional Information') }}</h2>
       
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium">{{ _('Openness rating') }}:
@@ -97,7 +97,7 @@
         </li>
       </ul>
       
-      <h5>{{ _('Developer Tools') }}</h5>
+      <h2>{{ _('Developer Tools') }}</h2>
         <ul class="list-bullet-none">
           <li class="margin-bottom-medium">The information on this page (the dataset metadata) is also available in JSON format<br/>
           <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">Link to JSON format</a></li>
@@ -109,20 +109,18 @@
 
     {% if pkg.geographic_region or pkg.spatial %}
     <section class="indent-medium">
-      <h4>{{ _('Geographic Information') }}</h4>
+      <h2>{{ _('Geographic Information') }}</h2>
       {% if pkg.spatial %}
         {# The geojson needs to be converted to WKT format and then passed in. #}
         {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
       {% endif %}
       {% if pkg.geographic_region %}
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-        <div class="span-6">
-          <p>
-          <div class="span-2 row-start equalize align-bottom">
-            <h5>{{ cr.field_label(geo_region, client_lang) }}</h5>
+        <div class="span-6 margin-top-medium">
+          <div class="span-2 row-start equalize align-bottom ">
+            <h3>{{ cr.field_label(geo_region, client_lang) }}</h3>
           </div>
-          </p>
-          <div class="span-4 row-end equalize align-bottom">
+          <div class="span-4 row-end equalize align-bottom ">
             {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
           </div>
         </div>
