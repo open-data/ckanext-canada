@@ -13,41 +13,47 @@
   <li>{% link_for h.resource_display_name(res)|truncate(30), controller='package', action='resource_read', id=c.package.get('name'), resource_id=res.id %}</a></li>
 {% endblock %}
 
-{% block primary_content %}
+{% block secondary_content %}{% endblock %}
 
-  {% block resource %}
-    <section>
-      <div>
+{% block main_content %}
+  <div class="span-8">  
+  {% block primary_content %}
+    {% block resource %}
+      <section>
         <div>
-          {% block resource_content %}
-            {% block resource_read_title %}<h3>{{ h.resource_display_name(res) | truncate(50) }}</h3>{% endblock %}
-            <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>Download</a>
-            <div class="prose notes" property="rdfs:label">
-              {% if res.description %}
-                {{ h.render_markdown(res.description) }}
-              {% else %}
-                <p class="empty">{{ _('There is no description for this resource') }}</p>
-              {% endif %}
-              {% if not res.description and c.package.notes %}
-                <h3>{{ _('From the dataset abstract') }}</h3>
-                <p>{{ h.markdown_extract(c.package.get('notes')) }}</p>
-                <p>{% trans dataset=c.package.title, url=h.url_for(controller='package', action='read', id=c.package['name']) %}Source: <a href="{{ url }}">{{ dataset }}</a>{% endtrans %}
-              {% endif %}
-            {% endblock %}
-          </div>
-        </div>
-        {% block data_preview %}
           <div>
-            {% if c.resource.datastore_active %}
-              {# The resource preview feature of CKAN should only be used with an accessible previewer like ckanext-datatable #}
-
-              {{ h.get_datapreview(c.resource.id) }}
-
-            {% endif %}
+            {% block resource_content %}
+              {% block resource_read_title %}<h3>{{ h.resource_display_name(res) | truncate(50) }}</h3>{% endblock %}
+              <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>Download</a>
+              <div class="prose notes" property="rdfs:label">
+                {% if res.description %}
+                  {{ h.render_markdown(res.description) }}
+                {% else %}
+                  <p class="empty">{{ _('There is no description for this resource') }}</p>
+                {% endif %}
+                {% if not res.description and c.package.notes %}
+                  <h3>{{ _('From the dataset abstract') }}</h3>
+                  <p>{{ h.markdown_extract(c.package.get('notes')) }}</p>
+                  <p>{% trans dataset=c.package.title, url=h.url_for(controller='package', action='read', id=c.package['name']) %}Source: <a href="{{ url }}">{{ dataset }}</a>{% endtrans %}
+                {% endif %}
+              {% endblock %}
+            </div>
           </div>
-        {% endblock %}
-      </div>
-    </section>
-  {% endblock resource %}
+          {% block data_preview %}
+            <div>
+              {% if c.resource.datastore_active %}
+                {# The resource preview feature of CKAN should only be used with an accessible previewer like ckanext-datatable #}
+  
+                {{ h.get_datapreview(c.resource.id) }}
+  
+              {% endif %}
+            </div>
+          {% endblock %}
+        </div>
+      </section>
+    {% endblock resource %}
 
-{% endblock %}
+  {% endblock primary_content %}
+
+  <div class="clear"></div>
+{% endblock main_content %}
