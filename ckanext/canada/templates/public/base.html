@@ -1,5 +1,5 @@
 {% extends "gwcu_wet.html" %}
 
 {% block site_title %}
-<a target="_blank" href="/">{{ _('Open Government') }}</a>
+<a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('Open Government') }}</a>
 {% endblock %}
