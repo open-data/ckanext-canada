@@ -56,3 +56,11 @@
   {% endfor %}
 {% endfor %}
 {% endblock %}
+
+{% block suggest_a_dataset_button %}
+  {% if h.lang() == 'en' %}
+  <a href="/eng/suggested-datasets" class="button">Can’t find what you’re looking for?</a>
+  {% else %}
+  <a href="/fra/suggested-datasets" class="button">Vous ne trouvez pas ce que vous cherchez?</a>
+  {% endif %}
+{% endblock %}
