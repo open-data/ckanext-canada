@@ -22,7 +22,6 @@
   {% include "package/snippets/socialmedia.html" %}
   {% endblock ds_socialmedia %}
   
-  <p>
   <div class="module-related">
     <h3>{{_('About this Dataset')}}</h3>
     <ul>
@@ -53,13 +52,11 @@
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
       <li>{{ cr.field_label(program_url, client_lang) }}:
-        {% if h.lang() == 'en' %}
-        <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
-        {% else %}
-        
+        {% if cr.field(program_url, pkg, client_lang) != '' %}
+          <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
         {% endif %}
       </li>
     </ul>
   </div>
-  </p>
+
 {% endblock %}
