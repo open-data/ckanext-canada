@@ -161,7 +161,9 @@ classes     - An array of classes to apply to the control-group.
 {% macro multi_checkbox_field(name, id, label, options, selected, error,
     classes=[], attrs=[]) %}
   {%- set extra_html = caller() if caller -%}
-    {%- call form.input_block(id or name, label or name, error, classes, extra_html=extra_html) -%}
+    {%- call form.input_block('', '', error, classes, extra_html=extra_html) -%}
+    <fieldset>
+      <legend>{{label or name}}</legend>
       {% for o in options %}
         <label class="form-checkbox" for="{{ name }}-{{ loop.index0 }}"
             style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
@@ -171,6 +173,7 @@ classes     - An array of classes to apply to the control-group.
           {{ o.text }}
         </label>
       {% endfor %}
+    </fieldset>
     {%- endcall -%}
     <div class="clear"></div>
 {% endmacro %}
