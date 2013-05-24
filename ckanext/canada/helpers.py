@@ -1,4 +1,4 @@
-from pylons import c
+from pylons import c, config
 from ckan.model import User, Package
 import datetime
 import psycopg2 as pg2
@@ -6,18 +6,22 @@ from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
 import unicodedata
 
-ORG_MAY_PUBLISH_KEY = 'publish'
-ORG_MAY_PUBLISH_VALUE = 'True'
+ORG_MAY_PUBLISH_OPTION = 'publish_datasets_organization_name'
+ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 
-def may_publish_datasets():
-    if c.userobj.sysadmin:
+def may_publish_datasets(userobj=None):
+    if not userobj:
+        userobj = c.userobj
+    if userobj.sysadmin:
         return True
 
-    for g in c.userobj.get_groups():
+    pub_org = config.get(ORG_MAY_PUBLISH_OPTION, ORG_MAY_PUBLISH_DEFAULT_NAME)
+    for g in userobj.get_groups():
         if not g.is_organization:
             continue
-        if g.extras.get(ORG_MAY_PUBLISH_KEY) == ORG_MAY_PUBLISH_VALUE:
+        if g.name == pub_org:
             return True
+    return False
 
 def openness_score(pkg):
     score = 0
@@ -84,16 +88,17 @@ def dataset_comments(pkg_id):
         drupal_conn = pg2.connect(drupal_conn_string)
         drupal_cursor = drupal_conn.cursor()
         
+        # add this to the SQL statement to limit comments to those that are published  'and status = 0'
         drupal_cursor.execute(
-           """select c.subject, c.changed, c.name, c.thread, f.comment_body_value 
-              from comment c inner join field_data_comment_body f on c.cid = f.entity_id 
-              inner join opendata_package o on o.pkg_node_id = c.nid 
-              where o.pkg_id = %s""", (pkg_id,))
-        
+           """select c.subject, to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value from comment c 
+inner join field_data_comment_body f on c.cid = f.entity_id
+inner join opendata_package o on o.pkg_node_id = c.nid
+where o.pkg_id = %s""", (pkg_id,))
+      
     
         for comment in drupal_cursor:
            comment_body = clean_html(comment[4])
-           comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[2], 'comment_body': comment_body})
+           comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[3], 'comment_body': comment_body, 'user': comment[2]})
 
     except KeyError:
        pass
