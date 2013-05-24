@@ -3,7 +3,7 @@
 
 {% with items = items or h.get_facet_items_dict(name) %}
   <section>
-    <h4 class="background-accent"></span>{{ title or h.get_facet_title(name) }}</h4>
+    <h4 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h4>
     <div class="module">
     <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action">{{ _('Clear All') }}</a></p>    
     {% if items %}

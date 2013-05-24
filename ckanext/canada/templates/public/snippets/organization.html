@@ -33,13 +33,13 @@ Example:
     {% if show_nums %}
       <div class="span-2">
         <div class="span-1 row-start">
-          <h5 class="align-center">{{ _('Members') }}</h5>
+          <h4 class="align-center">{{ _('Members') }}</h4>
           <p class="font-xlarge align-center">
             {{ h.SI_number_span(organization.members|length) }}
           </p>
         </div>
         <div class="span-1 row-end">
-          <h5 class="align-center">{{ _('Datasets') }}</h5>
+          <h4 class="align-center">{{ _('Datasets') }}</h4>
           <p class="font-xlarge align-center">
             {{ h.SI_number_span(organization.package_count) }}
           </p>

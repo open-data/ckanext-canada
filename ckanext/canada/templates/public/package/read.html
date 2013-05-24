@@ -32,21 +32,19 @@
 
     </section>
     <section class="module-content indent-large">
-      <div class="span-6">
-        <p>
+      <div class="span-6 margin-top-medium">
         <div class="span-1 row-start equalize align-bottom">
-          <h5>{{_('Licence')}}: </h5>
+          <h2>{{_('Licence')}}: </h2>
         </div>
-        </p>
         {% if client_lang == 'fr' %}
         <div class="span-4 row-end equalize align-bottom">
-          <a href="http://www.data.gc.ca/default.asp?lang=Fn&n=E7BD8C3D-1">{{pkg.license_title_fra
+          <a href="http://www.data.gc.ca/default.asp?lang=Fn&amp;=E7BD8C3D-1">{{pkg.license_title_fra
           if client_lang == 'fr' and 'license_title_fra' in pkg
           else pkg.license_title }}</a>
         </div>
         {% else %}
         <div class="span-4 row-end equalize align-bottom">
-          <a href="http://www.data.gc.ca/default.asp?lang=En&n=E7BD8C3D-1">{{pkg.license_title }}</a>
+          <a href="http://www.data.gc.ca/default.asp?lang=En&amp;=E7BD8C3D-1">{{pkg.license_title }}</a>
         </div>
         {% endif %}
         <div class="clear"></div>
@@ -54,21 +52,21 @@
     </section>
     
     <section id="dataset-resources" class="resources module-content indent-large">
-      <h5>{{ _('Data and Resources') }}</h5>
+      <h2>{{ _('Data and Resources') }}</h2>
       {% if pkg.resources %}
         <div class="span-6">
           <table class="wet-boew-zebra span-5">
             <thead>
               <tr>
-                <th>{{ _('Resource Name') }}</th>
-                <th>{{ _('Format') }}</th>
-                <th>{{ _('Language') }}</th>
-                <th>{{ _('Link') }}</th>
+                <th scope="col">{{ _('Resource Name') }}</th>
+                <th scope="col">{{ _('Format') }}</th>
+                <th scope="col">{{ _('Language') }}</th>
+                <th scope="col">{{ _('Link') }}</th>
               </tr>
             </thead>
           {% for resource in pkg.resources %}
             {% snippet 'package/snippets/resource_item.html',
-              pkg=pkg, res=resource, client_lang=client_lang %}
+              pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
           {% endfor %}
           </table>
         </div>
@@ -76,14 +74,14 @@
     </section>
     
     <section class="indent-large">
-      <h5>{{ _('Additional Information') }}</h5>
+      <h2>{{ _('Additional Information') }}</h2>
       
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium">{{ _('Openness rating') }}:
           {% for star in range(h.openness_score(pkg)) -%}
-            <img src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
+            <img alt="{{_('Openness rating')}}" src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
           {%- endfor %}
-        </li class="margin-bottom-medium">
+        </li>
         
         {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
         {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
@@ -99,7 +97,7 @@
         </li>
       </ul>
       
-      <h5>{{ _('Developer Tools') }}</h5>
+      <h2>{{ _('Developer Tools') }}</h2>
         <ul class="list-bullet-none">
           <li class="margin-bottom-medium">The information on this page (the dataset metadata) is also available in JSON format<br/>
           <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">Link to JSON format</a></li>
@@ -111,20 +109,18 @@
 
     {% if pkg.geographic_region or pkg.spatial %}
     <section class="indent-medium">
-      <h4>{{ _('Geographic Information') }}</h4>
+      <h2>{{ _('Geographic Information') }}</h2>
       {% if pkg.spatial %}
         {# The geojson needs to be converted to WKT format and then passed in. #}
         {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
       {% endif %}
       {% if pkg.geographic_region %}
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-        <div class="span-6">
-          <p>
-          <div class="span-2 row-start equalize align-bottom">
-            <h5>{{ cr.field_label(geo_region, client_lang) }}</h5>
+        <div class="span-6 margin-top-medium">
+          <div class="span-2 row-start equalize align-bottom ">
+            <h3>{{ cr.field_label(geo_region, client_lang) }}</h3>
           </div>
-          </p>
-          <div class="span-4 row-end equalize align-bottom">
+          <div class="span-4 row-end equalize align-bottom ">
             {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
           </div>
         </div>
