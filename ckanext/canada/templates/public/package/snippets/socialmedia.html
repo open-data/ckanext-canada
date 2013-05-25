@@ -5,10 +5,23 @@
     {% set pkg = c.pkg_dict %}  
     <h3>{{_('Have your say') }}</h3>
     <ul>
-      <li><img class="image-actual" src="/data/img/rating_placeholder.jpg"><br>
+      {% set rating = h.dataset_rating(pkg.name) %}
+      {% if rating == 1 %}
+        <li><img class="image-actual" src="/data/img/onestar.png"><br>
+      {% elif rating == 2 %}
+        <li><img class="image-actual" src="/data/img/twostar.png"><br>
+      {% elif rating == 3 %}
+        <li><img class="image-actual" src="/data/img/threestar.png"><br>
+      {% elif rating == 4 %}
+        <li><img class="image-actual" src="/data/img/fourstar.png"><br>
+      {% elif rating == 5 %}
+        <li><img class="image-actual" src="/data/img/fivestar.png"><br>          
+      {% else %}
+        <li><img class="image-actual" src="/data/img/zerostar.png"><br>
+      {% endif %}
         <a href="/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</li></a>
       
-      <li><a href="#comments">{{ _('Comments: ') }}  1</a></li>
+      <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{ _('Comment(s)') }}</a></li>
     </ul>
   </div>
   </p>
