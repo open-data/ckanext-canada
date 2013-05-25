@@ -113,6 +113,8 @@ class DataGCCAPublic(p.SingletonPlugin):
             'remove_duplicates',
             'get_license',
             'normalize_strip_accents',
+            'dataset_rating',
+            'dataset_comment_count',
             ])
 
 
