@@ -75,7 +75,6 @@ def remove_duplicates(a_list):
 
 
 # Retrieve the comments for this dataset that have been saved in the Drupal database
-# This is ugly - look away!  Or better yet, suggest improvements
 def dataset_comments(pkg_id):
 
     #import pdb; pdb.set_trace()
@@ -99,9 +98,12 @@ where o.pkg_id = %s""", (pkg_id,))
         for comment in drupal_cursor:
            comment_body = clean_html(comment[4])
            comment_list.append({'subject': comment[0], 'date': comment[1], 'thread': comment[3], 'comment_body': comment_body, 'user': comment[2]})
-
+        drupal_cursor.close()
+        drupal_conn.close()
+        
     except KeyError:
        pass
+     
     return comment_list
 
 
@@ -119,3 +121,51 @@ def normalize_strip_accents(s):
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
 
+def dataset_rating(pkg_id):
+  
+  rating = -1
+  try:
+    dbd = parse_db_config('ckan.drupal.url')
+    if (dbd):
+      drupal_conn_string = "host='%s' dbname='%s' user='%s' password='%s'" % (dbd['db_host'], dbd['db_name'], dbd['db_user'], dbd['db_pass'])    
+      
+      drupal_conn = pg2.connect(drupal_conn_string)
+
+      drupal_cursor = drupal_conn.cursor()
+      
+      # retreive the average dataset rating from Drupal  -- NB the parameter must be in the form (x,)
+      drupal_cursor.execute(  
+          """select avg(v.value)/25+1 as rating from opendata_package p 
+             inner join votingapi_vote v on p.pkg_node_id = v.entity_id 
+             where p.pkg_id = %s""", (pkg_id,))
+      row = drupal_cursor.fetchone()
+      rating = row[0]
+      drupal_cursor.close()
+      drupal_conn.close()
+  except KeyError:
+     pass
+  return rating
+
+def dataset_comment_count(pkg_id):
+
+    count = 0
+
+    try:
+      dbd = parse_db_config('ckan.drupal.url')
+      if (dbd):
+        drupal_conn_string = "host='%s' dbname='%s' user='%s' password='%s'" % (dbd['db_host'], dbd['db_name'], dbd['db_user'], dbd['db_pass'])    
+        
+        drupal_conn = pg2.connect(drupal_conn_string)
+        drupal_cursor = drupal_conn.cursor()
+        
+        # add this to the SQL statement to limit comments to those that are published  'and status = 0'
+        drupal_cursor.execute(
+           """select count(c.*) from comment c inner join opendata_package o on o.pkg_node_id = c.nid where o.pkg_id = %s""", (pkg_id,))
+        row = drupal_cursor.fetchone()
+        count = row[0]
+        drupal_cursor.close()
+        drupal_conn.close()      
+       
+    except KeyError:
+       pass
+    return count
