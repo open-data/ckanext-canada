@@ -7,19 +7,19 @@
     <ul>
       {% set rating = h.dataset_rating(pkg.name) %}
       {% if rating == 1 %}
-        <li><img class="image-actual" src="/data/img/onestar.png"><br>
+        <li><img class="image-actual" src="/data/img/onestar.png" alt="{{ _('One star') }}"><br>
       {% elif rating == 2 %}
-        <li><img class="image-actual" src="/data/img/twostar.png"><br>
+        <li><img class="image-actual" src="/data/img/twostar.png" alt="{{ _('Two stars') }}"><br>
       {% elif rating == 3 %}
-        <li><img class="image-actual" src="/data/img/threestar.png"><br>
+        <li><img class="image-actual" src="/data/img/threestar.png" alt="{{ _('Three stars') }}"><br>
       {% elif rating == 4 %}
-        <li><img class="image-actual" src="/data/img/fourstar.png"><br>
+        <li><img class="image-actual" src="/data/img/fourstar.png" alt="{{ _('Four stars') }}"><br>
       {% elif rating == 5 %}
-        <li><img class="image-actual" src="/data/img/fivestar.png"><br>          
+        <li><img class="image-actual" src="/data/img/fivestar.png" alt="{{ _('Five stars') }}"><br>          
       {% else %}
-        <li><img class="image-actual" src="/data/img/zerostar.png"><br>
+        <li><img class="image-actual" src="/data/img/zerostar.png" alt="{{ _('Unrated') }}"><br>
       {% endif %}
-        <a href="/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</li></a>
+        <a href="/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
       
       <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{ _('Comment(s)') }}</a></li>
     </ul>
