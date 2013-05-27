@@ -90,12 +90,12 @@ class DataGCCAPublic(p.SingletonPlugin):
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict.update( {
+        facets_dict = {
                       'keywords': _('Tags'),
                       'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'),
-                      'organization': _('Organization'), } )
+                      'organization': _('Organization'), }
 
         return facets_dict
 

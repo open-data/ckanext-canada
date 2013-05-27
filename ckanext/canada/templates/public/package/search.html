@@ -17,12 +17,20 @@
 {% block secondary_content %}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
     name='organization') }}
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['tags'],
-    name='tags') }}
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['raw_geo'],
-    name='raw_geo') }}
+    
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
+    
+  {% if h.lang() == 'en' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
+    name='keywords') }}
+  {% elif h.lang() == 'fr' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+    name='keywords') }}
+  {% endif %}
+  
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
     name='res_format', label_function=res_label) }}
+    
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
     name='license_id', label_function=license_lookup) }}
   <section>
