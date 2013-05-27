@@ -36,23 +36,19 @@
         <div class="span-1 row-start equalize align-bottom">
           <h2>{{_('Licence')}}: </h2>
         </div>
+        <div class="span-4 row-end equalize align-bottom">
         {% if client_lang == 'fr' %}
-        <div class="span-4 row-end equalize align-bottom">
-          <a href="http://www.data.gc.ca/default.asp?lang=Fn&amp;=E7BD8C3D-1">{{pkg.license_title_fra
-          if client_lang == 'fr' and 'license_title_fra' in pkg
-          else pkg.license_title }}</a>
-        </div>
+          <a href="{{ pkg.license_url_fra }}">{{ pkg.license_title_fra }}</a>
         {% else %}
-        <div class="span-4 row-end equalize align-bottom">
-          <a href="http://www.data.gc.ca/default.asp?lang=En&amp;=E7BD8C3D-1">{{pkg.license_title }}</a>
-        </div>
+          <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
         {% endif %}
+        </div>
         <div class="clear"></div>
       </div>
     </section>
     
     <section id="dataset-resources" class="resources module-content indent-large">
-      <h2>{{ _('Data and Resources') }}</h2>
+      <h2>{{ _('Dataset Resources') }}</h2>
       {% if pkg.resources %}
         <div class="span-6">
           <table class="wet-boew-zebra span-5">
