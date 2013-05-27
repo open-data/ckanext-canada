@@ -1,30 +1,36 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
+{% import 'macros/canada_read.html' as cr with context %}
 
 {%- block api_access_info -%}
   <!-- We want this block to be empty in the canada extension -->
 {%- endblock -%}
 
-{%- macro res_label(format) -%}
-  {{- cr.resource_format(format.name, h.lang()) -}}
-{%- endmacro -%}
-
-{%- macro license_lookup(license) -%}
-  {{- cr.license_name(license.name, h.lang()) -}}
-{%- endmacro -%}
-
 {% block secondary_content %}
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
     name='organization') }}
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['tags'],
-    name='tags') }}
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['raw_geo'],
-    name='raw_geo') }}
+    
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
+    
+  {% if h.lang() == 'en' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
+    name='keywords') }}
+  {% elif h.lang() == 'fr' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+    name='keywords_fra') }}
+  {% endif %}
+  
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
+    name='subject', label_function=cr.subject_label) }}
+  
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
-    name='res_format', label_function=res_label) }}
+    name='res_format', label_function=cr.res_label) }}
+    
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-    name='license_id', label_function=license_lookup) }}
+    name='license_id', label_function=cr.license_lookup) }}
+    
+  {# { h.snippet('snippets/facet_list.html', title=c.facet_titles['ready_to_publish'],
+    name='ready_to_publish') } #}
   <section>
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}

@@ -41,9 +41,12 @@ class DataGCCAInternal(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-                      'tags': _('Subject'),
+                      'keywords': _('Tags'),
+                      'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
-                      'raw_geo': _('Catalog Type'), }
+                      'catalog_type': _('Catalog Type'), 
+                      'subject': _('Subject'),
+                      'ready_to_publish': _('Ready to Publish') }
 
         return facets_dict
 
@@ -89,11 +92,14 @@ class DataGCCAPublic(p.SingletonPlugin):
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict.update( {
-                      'tags': _('Subject'),
+        facets_dict = {
+                      'keywords': _('Tags'),
+                      'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
-                      'raw_geo': _('Catalog Type'),
-                      'organization': _('Organization'), } )
+                      'catalog_type': _('Catalog Type'),
+                      'subject': _('Subject'),
+                      'organization': _('Organization'),
+                      'ready_to_publish': _('Ready to Publish') }
 
         return facets_dict
 
@@ -207,6 +213,27 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
+        #print data_dict 
+        
+        data_dict['keywords'] = data_dict['extras_keywords'].split(',')
+        data_dict['keywords_fra'] = data_dict['extras_keywords_fra'].split(',')
+        data_dict['catalog_type'] = data_dict['extras_catalog_type']
+        
+        data_dict['subject'] = list()
+        
+        if 'vocab_gc_core_subject_thesaurus' in data_dict:
+            data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
+        
+        if 'vocab_iso_topic_categories' in data_dict:
+            topics = data_dict['vocab_iso_topic_categories']
+            for topic in topics:
+                subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
+                for subject_id in subject_ids:
+                    data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
+        
+        if 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+            data_dict['ready_to_publish'] = 'true'
+        
         return data_dict
 
     def before_view(self, pkg_dict):
