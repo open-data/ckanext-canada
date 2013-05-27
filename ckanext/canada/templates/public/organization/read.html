@@ -11,7 +11,7 @@
     name='keywords') }}
   {% elif h.lang() == 'fr' %}
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
-    name='keywords') }}
+    name='keywords_fra') }}
   {% endif %}
   
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
