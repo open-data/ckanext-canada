@@ -157,9 +157,24 @@ Choose the most appropriate display name for a resource
   {%- endif -%}
 {%- endmacro -%}
 
+{#
+Split a bilingual field separated by a pipe
+#}
 {%- macro split_bilingual_field(field_text, client_lang) -%}
   {%- if field_text != None and ' | ' in field_text -%}
     {{- field_text.split(' | ')[1 if client_lang == 'fr' else 0] -}}
+  {%- else -%}
+    {{- field_text -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+
+{#
+Split a subject or topic category field, which are separated by a double space
+#}
+{%- macro split_subject_field(field_text, client_lang) -%}
+  {%- if field_text != None and '  ' in field_text -%}
+    {{- field_text.split('  ')[1 if client_lang == 'fr' else 0] -}}
   {%- else -%}
     {{- field_text -}}
   {%- endif -%}
@@ -187,4 +202,21 @@ Render a file download size field with 'O' or 'B' appended for Octets/Bytes
   {%- else -%}
     0 {{suffix}}
   {%- endif -%}
+{%- endmacro -%}
+
+
+{# 
+Search Facet Formatters 
+#}
+
+{%- macro res_label(format) -%}
+  {{- resource_format(format.name, h.lang()) -}}
+{%- endmacro -%}
+
+{%- macro subject_label(subject) -%}
+  {{- split_subject_field(subject.name, h.lang()) -}}
+{%- endmacro -%}
+
+{%- macro license_lookup(license) -%}
+  {{- license_name(license.name, h.lang()) -}}
 {%- endmacro -%}
