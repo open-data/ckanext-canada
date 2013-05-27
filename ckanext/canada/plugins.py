@@ -223,7 +223,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
             data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
         
         if 'vocab_iso_topic_categories' in data_dict:
-            data_dict['subject'].extend(data_dict['vocab_iso_topic_categories'])
+            topics = data_dict['vocab_iso_topic_categories']
+            for topic in topics:
+                subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
+                for subject_id in subject_ids:
+                    data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
         
         return data_dict
 
