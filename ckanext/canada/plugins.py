@@ -44,7 +44,8 @@ class DataGCCAInternal(p.SingletonPlugin):
                       'keywords': _('Tags'),
                       'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
-                      'catalog_type': _('Catalog Type'), }
+                      'catalog_type': _('Catalog Type'), 
+                      'subject': _('Subject'), }
 
         return facets_dict
 
@@ -95,6 +96,7 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'),
+                      'subject': _('Subject'),
                       'organization': _('Organization'), }
 
         return facets_dict
@@ -214,6 +216,14 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['keywords'] = data_dict['extras_keywords'].split(',')
         data_dict['keywords_fra'] = data_dict['extras_keywords_fra'].split(',')
         data_dict['catalog_type'] = data_dict['extras_catalog_type']
+        
+        data_dict['subject'] = list()
+        
+        if 'vocab_gc_core_subject_thesaurus' in data_dict:
+            data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
+        
+        if 'vocab_iso_topic_categories' in data_dict:
+            data_dict['subject'].extend(data_dict['vocab_iso_topic_categories'])
         
         return data_dict
 
