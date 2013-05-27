@@ -41,9 +41,9 @@ class DataGCCAInternal(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-                      'tags': _('Subject'),
+                      'keywords': _('Tags'),
                       'res_format': _('File Format'),
-                      'raw_geo': _('Catalog Type'), }
+                      'catalog_type': _('Catalog Type'), }
 
         return facets_dict
 
@@ -90,9 +90,9 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict.update( {
-                      'tags': _('Subject'),
+                      'keywords': _('Tags'),
                       'res_format': _('File Format'),
-                      'raw_geo': _('Catalog Type'),
+                      'catalog_type': _('Catalog Type'),
                       'organization': _('Organization'), } )
 
         return facets_dict
@@ -207,6 +207,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
+        #print data_dict 
+        
+        data_dict['keywords'] = data_dict['extras_keywords'].split(',')
+        data_dict['catalog_type'] = data_dict['extras_catalog_type']
+        
         return data_dict
 
     def before_view(self, pkg_dict):
