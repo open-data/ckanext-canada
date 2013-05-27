@@ -121,6 +121,17 @@ The following lines need to be changed in ``[plugin:friendlyform]``::
    +post_logout_url =
 
 
+Configuration: Solr
+----------------------
+
+This extension uses a custom Solr schema based on the ckan 2.0 schema. You can find the schema in the root directory of the project. 
+Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
+
+You will need to rebuild your search index using::
+
+   paster --plugin ckan search-index rebuild
+
+
 
 Loading Data
 ------------
