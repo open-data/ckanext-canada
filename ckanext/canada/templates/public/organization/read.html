@@ -1,0 +1,25 @@
+{% ckan_extends %}
+
+{% import 'macros/canada_read.html' as cr with context %}
+
+{% block organization_facets %}
+    
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
+    
+  {% if h.lang() == 'en' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
+    name='keywords') }}
+  {% elif h.lang() == 'fr' %}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+    name='keywords_fra') }}
+  {% endif %}
+  
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
+    name='subject', label_function=cr.subject_label) }}
+  
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
+    name='res_format', label_function=cr.res_label) }}
+    
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
+    name='license_id', label_function=cr.license_lookup) }}
+{% endblock %}
