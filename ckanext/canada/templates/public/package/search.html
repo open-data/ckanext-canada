@@ -28,6 +28,9 @@
     
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
     name='license_id', label_function=cr.license_lookup) }}
+    
+  {# { h.snippet('snippets/facet_list.html', title=c.facet_titles['ready_to_publish'],
+    name='ready_to_publish') } #}
   <section>
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}

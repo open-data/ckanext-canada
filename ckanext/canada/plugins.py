@@ -45,7 +45,8 @@ class DataGCCAInternal(p.SingletonPlugin):
                       'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'), 
-                      'subject': _('Subject'), }
+                      'subject': _('Subject'),
+                      'ready_to_publish': _('Ready to Publish') }
 
         return facets_dict
 
@@ -97,7 +98,8 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'),
                       'subject': _('Subject'),
-                      'organization': _('Organization'), }
+                      'organization': _('Organization'),
+                      'ready_to_publish': _('Ready to Publish') }
 
         return facets_dict
 
@@ -228,6 +230,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
                 for subject_id in subject_ids:
                     data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
+        
+        if 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+            data_dict['ready_to_publish'] = 'true'
         
         return data_dict
 
