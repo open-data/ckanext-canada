@@ -3,18 +3,18 @@
 {% block mega %}
 
 {# The French mega-menu has not yet been prepared #}
+
+{# CKAN and WET developers, please note that wrapping each list item in an unordered list seems to be required for IE compatability #}
 <li>
   <section>
     <h3><a href="/eng/about-open-government">{{ _('About Open Government') }}</a></h3>
     <div class="mb-sm">
       <div class="span-2">
-        <section>
-          <ul>
-            <li><a href="/eng/canadas-action-plan-open-government">{{ _('Canada\'s Action Plan on Open Government') }}</a></li>
-            <li><a href="/eng/open-government-licence-canada">{{ _('Open Government Licence') }}</a></li>
-            <li><a href="/eng/frequently-asked-questions">{{ _('Frequently Asked Questions') }}</a></li>
-          </ul>
-        </section>
+       <ul>
+          <ul><li><a href="/eng/canadas-action-plan-open-government">{{ _('Canada\'s Action Plan on Open Government') }}</a></li></ul>
+          <ul><li><a href="/eng/open-government-licence-canada">{{ _('Open Government Licence') }}</a></li></ul>
+          <ul><li><a href="/eng/frequently-asked-questions">{{ _('Frequently Asked Questions') }}</a></li></ul>
+       </ul>
       </div>
       <div class="clear"></div>
       <div class="mb-main-link"><a href="/eng/about-open-government">{{ _('About Open Government - Main page') }}</a></div>
@@ -27,24 +27,20 @@
     <h3><a href="/eng/open-data">{{ _('Open Data') }}</a></h3>
     <div class="mb-sm">
       <div class="span-2">
-        <section>
-          <ul>
-          <li><a href="/data/en/dataset">{{ _('Search Data') }}</a></li>  
-          <li><a href="/eng/showcase">{{ _('Showcase') }}</a></li> 
-          <li><a href="/eng/maps/open-data-canada">{{ _('Open Data in Canada') }}</a></li>  
-          <li><a href="/eng/featured-datasets">{{ _('Featured Datasets') }}</a></li>
-          </ul>
-        </section>
+        <ul>
+          <ul><li><a href="/data/en/dataset">{{ _('Search Data') }}</a></li></ul>  
+          <ul><li><a href="/eng/showcase">{{ _('Showcase') }}</a></li></ul> 
+          <ul><li><a href="/eng/maps/open-data-canada">{{ _('Open Data in Canada') }}</a></li></ul>  
+          <ul><li><a href="/eng/featured-datasets">{{ _('Featured Datasets') }}</a></li></ul>
+        </ul>
       </div>
       <div class="span-2">
-        <section>
-          <ul>
-            <li><a href="/eng/developers-corner">{{ _('Developer\'s Corner') }}</a></li>
-            <li><a href="/eng/open-data-principles">{{ _('Open Data Principles') }}</a></li>                              
-            <li><a href="/eng/open-data-handbook">{{ _('Open Data Handbook') }}</a></li>
-            <li><a href="/eng/facts-and-figures">{{ _('Facts & Figures') }}</a></li>
-          </ul>
-        </section>
+        <ul>
+          <ul><li><a href="/eng/developers-corner">{{ _('Developer\'s Corner') }}</a></li></ul>
+          <ul><li><a href="/eng/open-data-principles">{{ _('Open Data Principles') }}</a></li></ul>                              
+          <ul><li><a href="/eng/open-data-handbook">{{ _('Open Data Handbook') }}</a></li></ul>
+          <ul><li><a href="/eng/facts-and-figures">{{ _('Facts & Figures') }}</a></li></ul>
+        </ul>
       </div>  
       <div class="clear"></div>
       <div class="mb-main-link"><a href="/eng/open-data">{{ _('Open Data - Main page') }}</a></div>
@@ -56,12 +52,10 @@
     <h3><a href="/eng/open-information">{{ _('Open Information') }}</a></h3>
     <div class="mb-sm">
       <div class="span-2">
-        <section>
-          <ul>
-            <li><a href='/eng/access-information-ati'>{{ _('Searchable Summaries of Completed ATI requests') }}</a></li>
-            <li><a href="/eng/completed-access-information-requests">{{ _('Completed Access to Information Requests') }}</a></li>
-          </ul>
-        </section>
+        <ul>
+            <ul><li><a href='/eng/access-information-ati'>{{ _('Searchable Summaries of Completed ATI requests') }}</a></li></ul>
+            <ul><li><a href="/eng/completed-access-information-requests">{{ _('Completed Access to Information Requests') }}</a></li></ul>
+        </ul>
       </div>
       <div class="clear"></div>
       <div class="mb-main-link"><a href="/eng/open-information">{{ _('Open Information - Main page') }}</a></div>
@@ -74,14 +68,12 @@
     <h3><a href="/eng/open-dialogue">{{ _('Open Dialogue') }}</a></h3>
     <div class="mb-sm">
       <div class="span-2">
-        <section>
-          <ul>
-            <li><a href="/eng/consultations">{{ _('Consultations') }}</a></li>
-            <li><a href="/eng/blog">{{ _('Blog') }}</a></li> 
-            <li><a href="/eng/forms/submit-application">{{ _('Submit an Application') }}</a></li>                                
-            <li><a href="/eng/suggested-datasets">{{ _('Suggested Datasets') }}</a></li> 
-          </ul>
-        </section>
+        <ul>
+            <ul><li><a href="/eng/consultations">{{ _('Consultations') }}</a></li></ul>
+            <ul><li><a href="/eng/blog">{{ _('Blog') }}</a></li></ul> 
+            <ul><li><a href="/eng/forms/submit-application">{{ _('Submit an Application') }}</a></li></ul>                                
+            <ul><li><a href="/eng/suggested-datasets">{{ _('Suggested Datasets') }}</a></li></ul>
+        </ul> 
       </div> 
       <div class="clear"></div>   
       <div class="mb-main-link"><a href="/eng/open-dialogue">{{ _('Open Dialogue - Main page') }}</a></div>
