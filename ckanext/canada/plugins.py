@@ -121,6 +121,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'normalize_strip_accents',
             'dataset_rating',
             'dataset_comment_count',
+            'portal_url',
             ])
 
 
