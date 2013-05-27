@@ -100,9 +100,9 @@
       
       <h2>{{ _('Developer Tools') }}</h2>
         <ul class="list-bullet-none">
-          <li class="margin-bottom-medium">The information on this page (the dataset metadata) is also available in JSON format<br/>
-          <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">Link to JSON format</a></li>
-          <li class="margin-bottom-medium">Read more about this site's API: <a href="http://docs.ckan.org">{{ _('About the API') }}</a></li>
+          <li class="margin-bottom-medium">{{ _('The information on this page (the dataset metadata) is also available in JSON format') }}<br/>
+          <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON format') }}</a></li>
+          <li class="margin-bottom-medium">{{ _("Read more about this site's API: <a href='http://docs.ckan.org'>About the API</a>") }}</li>
         </ul>
     </section>
 
