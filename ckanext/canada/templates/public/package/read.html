@@ -79,7 +79,8 @@
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium">{{ _('Openness rating') }}:
           {% for star in range(h.openness_score(pkg)) -%}
-            <img alt="{{_('Openness rating')}}" src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/>
+            <a href="{% if h.lang() == 'en' %}/eng/frequently-asked-questions#fivetstar{% else %}/fra/foire-aux-questions#cinqetoile{% endif %}">
+            <img alt="{{_('Openness rating')}}" src="{{h.url_for_static('/img/star.png')}}" class="image-actual margin-bottom-none"/></a>
           {%- endfor %}
         </li>
         
