@@ -42,6 +42,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
         facets_dict = {
                       'keywords': _('Tags'),
+                      'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'), }
 
@@ -91,6 +92,7 @@ class DataGCCAPublic(p.SingletonPlugin):
 
         facets_dict.update( {
                       'keywords': _('Tags'),
+                      'keywords_fra': _('Tags'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'),
                       'organization': _('Organization'), } )
@@ -210,6 +212,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         #print data_dict 
         
         data_dict['keywords'] = data_dict['extras_keywords'].split(',')
+        data_dict['keywords_fra'] = data_dict['extras_keywords_fra'].split(',')
         data_dict['catalog_type'] = data_dict['extras_catalog_type']
         
         return data_dict

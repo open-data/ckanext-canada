@@ -141,6 +141,7 @@
     <!-- Extra Canada fields -->
     <field name="catalog_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="keywords_fra" type="string" indexed="true" stored="true" multiValued="true"/>
 </fields>
 
 <uniqueKey>index_id</uniqueKey>

@@ -1,0 +1,17 @@
+{% ckan_extends %}
+
+{% block organization_facets %}
+  {% for facet in c.facet_titles %}
+      
+      {% if h.lang() == 'en' and facet == 'keywords_fra' %}
+        {# Do not display french keywords on english pages #}
+      {% elif h.lang() == 'fr' and facet == 'keywords' %}
+        {# Do not display english keywords on french pages #}
+      {% else %}
+  
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, extras={'id':c.group_dict.id}) }}
+      
+      {% endif %}
+      
+  {% endfor %}
+{% endblock %}
