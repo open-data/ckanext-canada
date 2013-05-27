@@ -6,8 +6,10 @@ from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
 import unicodedata
 
-ORG_MAY_PUBLISH_OPTION = 'publish_datasets_organization_name'
+ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
+PORTAL_URL_OPTION = 'canada.portal_url'
+PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 
 def may_publish_datasets(userobj=None):
     if not userobj:
@@ -169,3 +171,7 @@ def dataset_comment_count(pkg_id):
     except KeyError:
        pass
     return count
+
+
+def portal_url():
+    return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))

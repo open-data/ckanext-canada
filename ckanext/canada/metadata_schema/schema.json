@@ -192,8 +192,7 @@
             {
               "eng": "Office of the Chief Electoral Officer", 
               "fra": "Bureau du directeur g\u00e9n\u00e9ral des \u00e9lections", 
-              "id": 285, 
-              "key": "elections", 
+              "key": "Office of the Chief Electoral Officer | Bureau du directeur g\u00e9n\u00e9ral des \u00e9lections", 
               "pilot_uuid": "177F4C5D-5EB5-469F-B0DB-7CBF3CC313F9"
             }, 
             {
@@ -1193,6 +1192,12 @@
               "key": "npa-apn"
             }, 
             {
+              "eng": "Elections Canada", 
+              "fra": "\u00c9lections Canada", 
+              "id": 285, 
+              "key": "elections"
+            }, 
+            {
               "eng": "Office of the Public Sector Integrity Commissioner of Canada", 
               "fra": "Commissariat \u00e0 l'int\u00e9grit\u00e9 du secteur public du Canada", 
               "id": 210, 
@@ -1400,8 +1405,8 @@
           "existing": false, 
           "id": "catalog_type", 
           "label": {
-            "eng": "Catalogue Type", 
-            "fra": "Type de catalogue"
+            "eng": "Data Type", 
+            "fra": "Type de donn\u00e9es"
           }, 
           "mandatory": "all", 
           "type": "choice"
@@ -1781,7 +1786,7 @@
           "existing": false, 
           "id": "keywords", 
           "label": {
-            "eng": "Keywords", 
+            "eng": "Tags", 
             "fra": "Mots cl\u00e9s"
           }, 
           "mandatory": "all", 
