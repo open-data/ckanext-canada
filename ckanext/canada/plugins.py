@@ -52,11 +52,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def before_map(self, map):
         map.connect('/', controller='user', action='login')
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
         return map
 
     def after_map(self, map):
@@ -83,6 +78,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
+    p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         # add our templates
@@ -121,8 +117,21 @@ class DataGCCAPublic(p.SingletonPlugin):
             'normalize_strip_accents',
             'dataset_rating',
             'dataset_comment_count',
+            'portal_url',
             ])
 
+    def before_map(self, map):
+        map.connect(
+            'organizations_index', '/organization',
+            controller='ckanext.canada.controller:CanadaController',
+            action='organization_index',
+        )
+        map.connect(
+            'general', '/feeds/dataset.atom',
+            controller='ckanext.canada.controller:CanadaFeedController',
+            action='general',
+        )
+        return map
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """

@@ -140,7 +140,7 @@ norm_key    - h.normalize_strip_accents helper (optional)
   {%- else -%}
     {%- call widget(**inputargs) -%}
       {%- if field.description -%}
-        {{ form.info(field.description[client_lang]) }}
+        {{ form.info(field.description_html[client_lang]) }}
       {%- endif -%}
     {%- endcall -%}
   {%- endif -%}

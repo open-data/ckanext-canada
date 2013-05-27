@@ -1,6 +1,7 @@
 import json
 import os
 from ckanext.canada.helpers import normalize_strip_accents
+from ckan.lib.helpers import render_markdown
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _JSON_NAME = os.path.join(_HERE, 'schema.json')
@@ -52,6 +53,9 @@ class MetadataSchema(object):
             self.dataset_field_by_id[v]['vocabulary'] = k
 
         for f in self.dataset_fields + self.resource_fields:
+            f['description_html'] = dict((k, render_markdown(v))
+                for k, v in f['description'].items())
+
             if 'choices' not in f:
                 continue
             f['choices_by_pilot_uuid'] = dict((c['pilot_uuid'], c)
