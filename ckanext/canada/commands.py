@@ -10,6 +10,7 @@ import json
 import time
 import sys
 from datetime import datetime, timedelta
+from contextlib import contextmanager
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.workers import worker_pool
@@ -33,7 +34,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <num>]
-                      dump-datasets
+                      dump-datasets [-p <num>]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -105,16 +106,22 @@ class CanadaCommand(CkanCommand):
             self.load_datasets(self.args[1], *self.args[2:])
 
         elif cmd == 'load-dataset-worker':
-            self.load_dataset_worker()
+            with _quiet_int_pipe():
+                self.load_dataset_worker()
 
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
         elif cmd == 'portal-update-worker':
-            self.portal_update_worker(self.args[1])
+            with _quiet_int_pipe():
+                self.portal_update_worker(self.args[1])
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
+
+        elif cmd == 'dump-datasets-worker':
+            with _quiet_int_pipe():
+                self.dump_datasets_worker()
 
         else:
             print self.__doc__
@@ -175,7 +182,7 @@ class CanadaCommand(CkanCommand):
                     continue
                 if max_count is not None and num >= start_line + max_count:
                     break
-                yield num, line.strip() + '\n'
+                yield num, line.strip()
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
             '-c', self.options.config]
         if self.options.ckan_user:
@@ -185,7 +192,7 @@ class CanadaCommand(CkanCommand):
 
         stats = completion_stats(self.options.processes)
         pool = worker_pool(cmd, self.options.processes, line_reader())
-        try:
+        with _quiet_int_pipe():
             for job_ids, finished, result in pool:
                 timestamp, action, error, response = json.loads(result)
                 print job_ids, stats.next(), finished, action,
@@ -199,11 +206,6 @@ class CanadaCommand(CkanCommand):
                         response,
                         ]) + '\n')
                     log.flush()
-        except IOError, e:
-            # let pipe errors cause silent exit --
-            # the worker will have provided the real traceback
-            if e.errno != 32:
-                raise
 
     def load_dataset_worker(self):
         """
@@ -254,20 +256,9 @@ class CanadaCommand(CkanCommand):
                     reply(action, 'ValidationError', e.error_dict)
                 except SearchIndexError, e:
                     reply(action, 'SearchIndexError', unicode(e))
-                except KeyboardInterrupt:
-                    return
                 else:
                     reply(action, None, response)
-            try:
-                sys.stdout.flush()
-            except KeyboardInterrupt:
-                return
-            except IOError, e:
-                # let pipe errors cause silent exit --
-                # the parent must have exited with an error
-                if e.errno != 32:
-                    raise
-                break
+            sys.stdout.flush()
 
     def portal_update(self, source, activity_date=None):
         """
@@ -302,26 +293,17 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
-        try:
+        with _quiet_int_pipe():
             for package_ids, next_date in changed_package_id_runs(activity_date):
                 stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
-                jobs = ((i, i + '\n') for i in package_ids)
-                try:
-                    job_ids, finished, result = pool.send(jobs)
-                    while result is not None:
-                        stats[result.strip()] += 1
-                        job_ids, finished, result = pool.next()
-                except KeyboardInterrupt:
-                    break
+                job_ids, finished, result = pool.send(enumerate(package_ids))
+                while result is not None:
+                    stats[result.strip()] += 1
+                    job_ids, finished, result = pool.next()
 
                 print next_date.isoformat(),
                 print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
-        except IOError, e:
-            # let pipe errors cause silent exit --
-            # the worker will have provided the real traceback
-            if e.errno != 32:
-                raise
 
     def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
         """
@@ -419,10 +401,7 @@ class CanadaCommand(CkanCommand):
                 result = 'updated'
 
             sys.stdout.write(result + '\n')
-            try:
-                sys.stdout.flush()
-            except IOError:
-                break
+            sys.stdout.flush()
 
 
     def create_organization(self, org):
@@ -450,11 +429,44 @@ class CanadaCommand(CkanCommand):
         except NotFound:
             pass
 
+
     def dump_datasets(self):
-        registry = LocalCKAN()
-        for name in registry.action.package_list():
-            print json.dumps(registry.action.package_show(id=name),
-                sort_keys=True)
+        """
+        Output all public datasets as a .jl file
+        """
+        registry = LocalCKAN('visitor')
+        package_names = registry.action.package_list()
+
+        cmd = [sys.argv[0], 'canada', 'dump-datasets-worker',
+            '-c', self.options.config]
+        stats = completion_stats(self.options.processes)
+        pool = worker_pool(cmd, self.options.processes,
+            enumerate(package_names))
+
+        expecting_number = 0
+        results = {}
+        with _quiet_int_pipe():
+            for job_ids, finished, result in pool:
+                sys.stderr.write("%s %s %s\n" % (
+                    job_ids, stats.next(), finished))
+                results[finished] = result
+                # keep the output in the same order as package_names
+                while expecting_number in results:
+                    sys.stdout.write(results.pop(expecting_number))
+                    expecting_number += 1
+
+    def dump_datasets_worker(self):
+        """
+        a process that accepts package names, one per line, and outputs
+        lines of json containing that package data.
+        """
+        registry = LocalCKAN('visitor')
+
+        for name in iter(sys.stdin.readline, ''):
+            sys.stdout.write(json.dumps(
+                registry.action.package_show(id=name.strip()), sort_keys=True)
+                + '\n')
+            sys.stdout.flush()
 
 
 def _trim_package(pkg):
@@ -518,3 +530,17 @@ def _trim_package(pkg):
                 pkg[name] = ""
         elif field['type'] == 'fixed' and name in pkg:
             del pkg[name]
+
+
+@contextmanager
+def _quiet_int_pipe():
+    """
+    let pipe errors and KeyboardIterrupt exceptions cause silent exit
+    """
+    try:
+        yield
+    except KeyboardInterrupt:
+        pass
+    except IOError, e:
+        if e.errno != 32:
+            raise
