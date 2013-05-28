@@ -46,7 +46,8 @@ class DataGCCAInternal(p.SingletonPlugin):
                       'res_format': _('File Format'),
                       'catalog_type': _('Catalog Type'), 
                       'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish') }
+                      'ready_to_publish': _('Ready to Publish'),
+                      'license_id': _('Licence') }
 
         return facets_dict
 
@@ -95,7 +96,8 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'catalog_type': _('Catalog Type'),
                       'subject': _('Subject'),
                       'organization': _('Organization'),
-                      'ready_to_publish': _('Ready to Publish') }
+                      'ready_to_publish': _('Ready to Publish'),
+                      'license_id': _('Licence') }
 
         return facets_dict
 
