@@ -443,11 +443,17 @@ class CanadaCommand(CkanCommand):
         pool = worker_pool(cmd, self.options.processes,
             enumerate(package_names))
 
+        expecting_number = 0
+        results = {}
         with _quiet_int_pipe():
             for job_ids, finished, result in pool:
                 sys.stderr.write("%s %s %s\n" % (
                     job_ids, stats.next(), finished))
-                sys.stdout.write(result)
+                results[finished] = result
+                # keep the output in the same order as package_names
+                while expecting_number in results:
+                    sys.stdout.write(results.pop(expecting_number))
+                    expecting_number += 1
 
     def dump_datasets_worker(self):
         """
