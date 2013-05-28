@@ -43,6 +43,7 @@ def worker_pool(popen_arg, num_workers, job_iterable,
         job_id, job_str = next(job_iter, (None, None))
         if job_str is None:
             return None, None
+        job_str = job_str.rstrip('\n') + '\n'
         if not worker:
             worker = subprocess.Popen(popen_arg,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE)
