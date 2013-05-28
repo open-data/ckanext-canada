@@ -226,7 +226,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         
         data_dict['keywords'] = data_dict['extras_keywords'].split(',')
         data_dict['keywords_fra'] = data_dict['extras_keywords_fra'].split(',')
-        data_dict['catalog_type'] = data_dict['extras_catalog_type']
+        data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
         
         data_dict['subject'] = list()
         
