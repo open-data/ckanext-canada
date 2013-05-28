@@ -182,7 +182,7 @@ class CanadaCommand(CkanCommand):
                     continue
                 if max_count is not None and num >= start_line + max_count:
                     break
-                yield num, line.strip() + '\n'
+                yield num, line.strip()
         cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
             '-c', self.options.config]
         if self.options.ckan_user:
@@ -297,8 +297,7 @@ class CanadaCommand(CkanCommand):
             for package_ids, next_date in changed_package_id_runs(activity_date):
                 stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
-                jobs = ((i, i + '\n') for i in package_ids)
-                job_ids, finished, result = pool.send(jobs)
+                job_ids, finished, result = pool.send(enumerate(package_ids))
                 while result is not None:
                     stats[result.strip()] += 1
                     job_ids, finished, result = pool.next()
