@@ -1,12 +1,14 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr with context %}
+{% import 'macros/canada_read.html' as cr %}
 
 {%- block api_access_info -%}
   <!-- We want this block to be empty in the canada extension -->
 {%- endblock -%}
 
 {% block secondary_content %}
+  <h2>{{ _('Search Data') }}</h2>
+  
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
     name='organization') }}
     
@@ -49,7 +51,7 @@
   {% set search_facets_items = c.search_facets.get(field)['items'] %}
   <span class="facet">{{ c.facet_titles.get(field) }}:</span>
   {% for value in c.fields_grouped[field] %}
-    <span class="filtered pill">
+    <span class="filtered pill background-accent facet-filter">
       {%- if c.translated_fields and c.translated_fields.has_key((field,value)) -%}
         {{ c.translated_fields[(field,value)] }}
       {%- else -%}
@@ -57,7 +59,7 @@
             search_facets_items , 'name', 'display_name', value),
           h.lang()) }}
       {%- endif %}
-      <a href="{{ c.remove_field(field, value) }}" class="remove" title="{{ _('Remove') }}"><i class="icon-remove"></i></a>
+      <a href="{{ c.remove_field(field, value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
     </span>
   {% endfor %}
 {% endfor %}

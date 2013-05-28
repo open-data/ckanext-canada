@@ -209,14 +209,14 @@ Render a file download size field with 'O' or 'B' appended for Octets/Bytes
 Search Facet Formatters 
 #}
 
-{%- macro res_label(format) -%}
-  {{- resource_format(format.name, h.lang()) -}}
+{%- macro res_label(format, lang) -%}
+  {{- resource_format(format.name, lang) -}}
 {%- endmacro -%}
 
-{%- macro subject_label(subject) -%}
-  {{- split_subject_field(subject.name, h.lang()) -}}
+{%- macro subject_label(subject, lang) -%}
+  {{- split_subject_field(subject.name, lang) -}}
 {%- endmacro -%}
 
-{%- macro license_lookup(license) -%}
-  {{- license_name(license.name, h.lang()) -}}
+{%- macro license_lookup(license, lang) -%}
+  {{- license_name(license.name, lang) -}}
 {%- endmacro -%}
