@@ -417,9 +417,12 @@ class CanadaCommand(CkanCommand):
         if 'pilot_uuid' in org:
             kwargs['id'] = org['pilot_uuid']
         try:
-            registry.action.organization_show(id=kwargs['name'])
+            response = registry.action.organization_show(id=kwargs['name'])
         except NotFound:
             registry.action.organization_create(**kwargs)
+        else:
+            if response['title'] != kwargs['title']:
+                registry.action.organization_update(**kwargs)
 
     def delete_organization(self, org):
         registry = LocalCKAN()
