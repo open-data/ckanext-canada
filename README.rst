@@ -108,6 +108,10 @@ validation::
 We aren't using notification emails, so they need to be disabled::
 
    ckan.activity_streams_email_notifications = false
+   
+Additionally, we want to limit the search results page to 10 results per page::
+
+   ckan.datasets_per_page = 10
 
 
 Configuration: who.ini
