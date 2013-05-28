@@ -422,7 +422,7 @@ class CanadaCommand(CkanCommand):
             registry.action.organization_create(**kwargs)
         else:
             if response['title'] != kwargs['title']:
-                registry.action.organization_update(**kwargs)
+                registry.action.organization_update(id=response['id'], **kwargs)
 
     def delete_organization(self, org):
         registry = LocalCKAN()
