@@ -263,6 +263,7 @@ Example:
   {%- set client_lang = 'fra' if client_lang == 'fr' else 'eng' -%}
   {%- if errors -%}
     <div class="error-explanation module-alert margin-bottom-large alert-{{ type }}{{ " " ~ classes | join(' ') }}">
+      <h2>{{_('Errors in form')}}</h2>
       <p>{{ _('The form contains invalid entries:') }}</p>
       <ul>
         {%- for key, error in errors.items() -%}
