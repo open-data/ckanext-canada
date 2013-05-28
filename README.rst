@@ -81,6 +81,11 @@ Requirements
    - `open-data/ckanapi <https://github.com/open-data/ckanapi>`_
    - master
    - N/A
+ * - ckanext-googleanalytics
+   - `ofkn/ckanext-googleanalytics <https://github.com/okfn/ckanext-googleanalytics>`_
+   - master
+   - googleanalytics
+ 
 
 
 Configuration: development.ini or production.ini
@@ -112,6 +117,11 @@ We aren't using notification emails, so they need to be disabled::
 Additionally, we want to limit the search results page to 10 results per page::
 
    ckan.datasets_per_page = 10
+   
+To integrate Google Analytics::
+
+   googleanalytics.id = UA-1010101-1 (your analytics account id)
+   googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
 
 
 Configuration: who.ini
@@ -356,23 +366,6 @@ Dataset and resource field descriptions are dicts containing the following:
   if present a list containing strings such as ``'disabled'`` or ``'hidden'``
   which affect the form presented to users entering datasets
 
-
-Google Analytics Integration
-----------------------------
-
-`okfn/ckanext-googleanalytics <https://github.com/okfn/ckanext-googleanalytics>`_ is used for Google Analytics integration. 
-Follow these steps to integrate:
-
-1. $ pip install -e  git+https://github.com/okfn/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
-
-2. Edit your CKAN ini file to add the Google Analytics tracking parameters::
-
-      googleanalytics.id = UA-1010101-1
-      googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
-
-3. To the list of installed extensions, add `googleanalytics`. For example::
-
-      ckan.plugins = stats json_preview googleanalytics canada_public canada_internal canada_forms wet_theme
 
 Compiling the updated French localization strings
 -------------------------------------------------
