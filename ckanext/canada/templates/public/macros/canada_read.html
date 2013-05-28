@@ -87,8 +87,7 @@ language
   <ul class='menu-horizontal margin-top-none margin-bottom-none'>
     {%- for tag in pkg[f.id] -%}
       <li>
-        <a class="button button-info button-small" href="{% url_for controller='package', action='search', tags=tag.strip()
-          %}" title="{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}">{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</a>
+          <code>{{ tag.split('  ')[1 if client_lang == 'fr' else 0] }}</code>
       </li>
     {%- endfor -%}
   </ul>
