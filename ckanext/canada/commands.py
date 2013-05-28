@@ -33,7 +33,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>]
                       portal-update <registry server> [<last activity date>]
                                     [-p <num>]
-                      dump-datasets
+                      dump-datasets [-p <num>]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -115,6 +115,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
+
+        elif cmd == 'dump-datasets-worker':
+            self.dump_datasets_worker()
 
         else:
             print self.__doc__
@@ -450,11 +453,49 @@ class CanadaCommand(CkanCommand):
         except NotFound:
             pass
 
+
     def dump_datasets(self):
-        registry = LocalCKAN()
-        for name in registry.action.package_list():
-            print json.dumps(registry.action.package_show(id=name),
-                sort_keys=True)
+        """
+        Output all public datasets as a .jl file
+        """
+        registry = LocalCKAN('visitor')
+        package_names = registry.action.package_list()
+
+        cmd = [sys.argv[0], 'canada', 'dump-datasets-worker',
+            '-c', self.options.config]
+        stats = completion_stats(self.options.processes)
+        pool = worker_pool(cmd, self.options.processes,
+            enumerate(package_names))
+        try:
+            for job_ids, finished, result in pool:
+                sys.stderr.write("%s %s %s\n" % (
+                    job_ids, stats.next(), finished))
+                sys.stdout.write(result)
+        except IOError, e:
+            # let pipe errors cause silent exit --
+            # the worker will have provided the real traceback
+            if e.errno != 32:
+                raise
+
+    def dump_datasets_worker(self):
+        """
+        a process that accepts package names, one per line, and outputs
+        lines of json containing that package data.
+        """
+        registry = LocalCKAN('visitor')
+
+        for name in iter(sys.stdin.readline, ''):
+            sys.stdout.write(json.dumps(
+                registry.action.package_show(id=name.strip()), sort_keys=True)
+                + '\n')
+            try:
+                sys.stdout.flush()
+            except IOError, e:
+                # let pipe errors cause silent exit --
+                # the parent must have exited with an error
+                if e.errno != 32:
+                    raise
+                break
 
 
 def _trim_package(pkg):
