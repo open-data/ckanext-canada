@@ -7,6 +7,8 @@
 {%- endblock -%}
 
 {% block secondary_content %}
+  <h2>{{ _('Search Data') }}</h2>
+  
   {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
     name='organization') }}
     
