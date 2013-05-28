@@ -1,7 +1,8 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/canada_read.html' as cr %}
 
-{% with items = items or h.get_facet_items_dict(name) %}
+{% with items = items or h.get_facet_items_dict(name, limit=5) %}
+  {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
   <section>
     <h4 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h4>
     <div class="module">
