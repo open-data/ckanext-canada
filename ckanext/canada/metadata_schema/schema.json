@@ -4976,7 +4976,10 @@
           "fra": "KML / KMZ", 
           "id": "kml / kmz", 
           "key": "kml / kmz", 
-          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018"
+          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
+          "replaces": [
+            "KML\u00a0/ KMZ"
+          ]
         }, 
         {
           "eng": "RDF", 
@@ -5007,10 +5010,52 @@
           "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }, 
         {
+          "eng": "ASCII Grid", 
+          "fra": "ASCII Grid", 
+          "id": "ascii grid", 
+          "key": "ascii grid"
+        }, 
+        {
+          "eng": "CDED ASCII", 
+          "fra": "CDED ASCII", 
+          "id": "cdec ascii", 
+          "key": "cdec ascii"
+        }, 
+        {
+          "eng": "CDR", 
+          "fra": "CDR", 
+          "id": "cdr", 
+          "key": "cdr"
+        }, 
+        {
           "eng": "DOC", 
           "fra": "DOC", 
           "id": "doc", 
           "key": "doc"
+        }, 
+        {
+          "eng": "dxf", 
+          "fra": "dxf", 
+          "id": "dxf", 
+          "key": "dxf"
+        }, 
+        {
+          "eng": "E00", 
+          "fra": "E00", 
+          "id": "e00", 
+          "key": "e00"
+        }, 
+        {
+          "eng": "ECW", 
+          "fra": "ECW", 
+          "id": "ecw", 
+          "key": "ecw"
+        }, 
+        {
+          "eng": "EDI", 
+          "fra": "EDI", 
+          "id": "edi", 
+          "key": "edi"
         }, 
         {
           "eng": "EXE", 
@@ -5019,16 +5064,58 @@
           "key": "exe"
         }, 
         {
+          "eng": "FGDB / GDB", 
+          "fra": "FGDB / GDB", 
+          "id": "fgdb / gdb", 
+          "key": "fgdb / gdb", 
+          "replaces": [
+            "FGDB\u00a0/ GDB"
+          ]
+        }, 
+        {
+          "eng": "Flat raster binary", 
+          "fra": "Flat raster binary", 
+          "id": "flat raster binary", 
+          "key": "flat raster binary"
+        }, 
+        {
+          "eng": "GeoPDF", 
+          "fra": "GeoPDF", 
+          "id": "geopdf", 
+          "key": "geopdf"
+        }, 
+        {
           "eng": "GeoRSS", 
           "fra": "GeoRSS", 
           "id": "georss", 
           "key": "georss"
         }, 
         {
+          "eng": "GeoTIF", 
+          "fra": "GeoTIF", 
+          "id": "geotif", 
+          "key": "geotif"
+        }, 
+        {
           "eng": "GIF", 
           "fra": "GIF", 
           "id": "gif", 
           "key": "gif"
+        }, 
+        {
+          "eng": "GML", 
+          "fra": "GML", 
+          "id": "gml", 
+          "key": "gml"
+        }, 
+        {
+          "eng": "HDF", 
+          "fra": "HDF", 
+          "id": "hdf", 
+          "key": "hdf", 
+          "replaces": [
+            "GNU Zipped HDF"
+          ]
         }, 
         {
           "eng": "HTML", 
@@ -5041,6 +5128,12 @@
           "fra": "IATI", 
           "id": "iati", 
           "key": "iati"
+        }, 
+        {
+          "eng": "JPEG 2000", 
+          "fra": "JPEG 2000", 
+          "id": "Jpeg 2000", 
+          "key": "Jpeg 2000"
         }, 
         {
           "eng": "JPG", 
@@ -5109,10 +5202,25 @@
           "key": "rtf"
         }, 
         {
+          "eng": "SAR / CCT", 
+          "fra": "SAR / CCT", 
+          "id": "sar / cct", 
+          "key": "sar / cct", 
+          "replaces": [
+            "SAR/CCT"
+          ]
+        }, 
+        {
           "eng": "SAV", 
           "fra": "SAV", 
           "id": "sav", 
           "key": "sav"
+        }, 
+        {
+          "eng": "SEGY", 
+          "fra": "SEGY", 
+          "id": "segy", 
+          "key": "segy"
         }, 
         {
           "eng": "SQL", 
@@ -5121,10 +5229,26 @@
           "key": "sql"
         }, 
         {
+          "eng": "TIFF World File", 
+          "fra": "TIFF World File", 
+          "id": "tiff world file", 
+          "key": "tiff world file"
+        }, 
+        {
+          "eng": "TIFF", 
+          "fra": "TIFF", 
+          "id": "tiff", 
+          "key": "tiff"
+        }, 
+        {
           "eng": "TXT", 
           "fra": "TXT", 
           "id": "TXT", 
-          "key": "TXT"
+          "key": "TXT", 
+          "replaces": [
+            "ASCII", 
+            "text"
+          ]
         }, 
         {
           "eng": "XLS", 
