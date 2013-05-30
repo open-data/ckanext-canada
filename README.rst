@@ -123,6 +123,9 @@ To integrate Google Analytics::
    googleanalytics.id = UA-1010101-1 (your analytics account id)
    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
 
+For the public server, also set the Drupal portal URL::
+
+   canada.portal_url = http://myserver.com
 
 Configuration: who.ini
 ----------------------
