@@ -16,8 +16,7 @@
         <li>
           <div>{{ comment['user']}}</div>
           <div>{{ comment['date'] }}</div>
-            <em>{{ comment['subject'] }}</em><br>
-            {{ comment['comment_body']|striptags }}
+          {{ comment['comment_body']|striptags }}
         </li>
       {% endfor %}
       </ol>
