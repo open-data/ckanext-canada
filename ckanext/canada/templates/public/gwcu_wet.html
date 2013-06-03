@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block custom_styles %}
+  {{ super() }}
+  <link rel="stylesheet" type="text/css" href="{{ h.url_for_static('/static/canada.css') }}" />
+{% endblock %}
