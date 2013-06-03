@@ -234,3 +234,25 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         # create packages belonging to other orgs
         self.publisher_action.package_create(**self.complete_pkg)
 
+    def test_spatial(self):
+        spatial_pkg = dict(self.complete_pkg,
+            spatial='"{"type": "Polygon", "coordinates": '
+                '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
+                '[-52.622540, 82.514468], [-52.622540, 41.736231], '
+                '[-141.001333, 41.736231]]]}"')
+        self.normal_action.package_create(**spatial_pkg)
+
+        bad_spatial_pkg = dict(self.complete_pkg,
+            spatial='"{"type": "Line", "coordinates": '
+                '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
+                '[-52.622540, 82.514468], [-52.622540, 41.736231], '
+                '[-141.001333, 41.736231]]]}"')
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **bad_spatial_pkg)
+
+        bad_spatial_pkg2 = dict(self.complete_pkg,
+            spatial='forty')
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **bad_spatial_pkg2)
