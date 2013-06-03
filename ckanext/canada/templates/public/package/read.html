@@ -76,11 +76,8 @@
         <li class="margin-bottom-medium"><a href="{{ h.portal_url() + (
             '/eng/frequently-asked-questions#fivestar' if h.lang() == 'en' else
             '/fra/foire-aux-questions#cinqetoile') }}">{{ _('Openness rating') }}</a>: 
-            {%- for star in range(h.openness_score(pkg)) -%}
-              <img alt="{{_('Openness rating')}}" src="{{
-                h.url_for_static('/img/star.png')
-                }}" class="image-actual margin-bottom-none"/>
-            {%- endfor %}
+            <span title="{{ h.openness_score(pkg) }}"
+              class="openness-rating-{{ h.openness_score(pkg) }}"></span>
         </li>
         
         {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
