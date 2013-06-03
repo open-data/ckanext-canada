@@ -110,8 +110,10 @@
     <section class="indent-medium">
       <h2>{{ _('Geographic Information') }}</h2>
       {% if pkg.spatial %}
-        {# The geojson needs to be converted to WKT format and then passed in. #}
-        {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), gjson=pkg['spatial'] %}
+        {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
+        {% if wkt %}
+          {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), wkt=wkt %}
+        {% endif %}
       {% endif %}
       {% if pkg.geographic_region %}
         {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
