@@ -16,6 +16,8 @@ from formencode.validators import OneOf
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.helpers import may_publish_datasets
+from shapely.geometry import asShape
+import json
 
 def create_package_schema():
     """
@@ -128,6 +130,8 @@ def _schema_field_validators(name, lang, field):
     elif field['type'] == 'fixed':
         edit.append(ignore)
         view.append(fixed_value(field, lang))
+    elif field['type'] == 'geojson':
+        edit.append(geojson_validator)
     else:
         edit.append(unicode)
 
@@ -320,3 +324,17 @@ def owner_org_validator_publisher(key, data, errors, context):
     if not(may_publish_datasets(user) or user.is_in_group(group_id)):
         raise Invalid(_('You cannot add a dataset to this organization'))
     data[key] = group_id
+
+def geojson_validator(value):
+    if value:
+        try:
+            gjson = json.loads(value)
+            shape = asShape(gjson)
+        except ValueError:
+            raise Invalid(_("Invalid GeoJSON"))
+
+        # XXX: make sure we didn't mess up importing
+        coords = gjson['coordinates']
+        if coords and coords[0][0][0] and coords[0][0][0] > 0:
+            raise Invalid(_("Not in northern hemisphere, transposed lat/lng?"))
+    return value
