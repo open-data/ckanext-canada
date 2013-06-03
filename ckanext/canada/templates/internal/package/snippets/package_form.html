@@ -2,6 +2,7 @@
 
 {% ckan_extends %}
 {% import 'macros/form_canada.html' as cform %}
+{% import 'macros/canada_read.html' as cr %}
 
 {% block errors %}{{ cform.errors(
   errors, schema_description.dataset_field_by_id, h.lang()) }}{% endblock %}
@@ -9,7 +10,7 @@
 {% block disclaimer %}
   <p class="action-info small">
     {% set license = h.get_license('ca-ogl-lgo') %}
-    {% if license != None %}
+    {% if license %}
       {% if h.lang() == 'en' %}
       Important: By submitting content, you
       agree to release your contributions under the
@@ -21,5 +22,10 @@
       >{{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>.
       {% endif %}
     {% endif %}
+  </p>
+  <p class="action-info small">
+    {% set att = schema_description.dataset_field_by_id['attribution'] %}
+    {{ att.label[cr.full_lang(h.lang())] }}:
+    {{ att.example[cr.full_lang(h.lang())] }}
   </p>
 {% endblock %}
