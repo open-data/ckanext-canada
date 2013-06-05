@@ -332,9 +332,4 @@ def geojson_validator(value):
             shape = asShape(gjson)
         except ValueError:
             raise Invalid(_("Invalid GeoJSON"))
-
-        # XXX: make sure we didn't mess up importing
-        coords = gjson['coordinates']
-        if coords and coords[0][0][0] and coords[0][0][0] > 0:
-            raise Invalid(_("Not in northern hemisphere, transposed lat/lng?"))
     return value
