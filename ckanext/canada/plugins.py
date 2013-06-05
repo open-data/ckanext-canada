@@ -224,10 +224,14 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
-        #print data_dict 
-        
-        data_dict['keywords'] = data_dict['extras_keywords'].split(',')
-        data_dict['keywords_fra'] = data_dict['extras_keywords_fra'].split(',')
+        def kw(name):
+            s = data_dict.get(name, '').strip()
+            if not s:
+                return []
+            return [k.strip() for k in s.split(',')]
+
+        data_dict['keywords'] = kw('extras_keywords')
+        data_dict['keywords_fra'] = kw('extras_keywords_fra')
         data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
         
         data_dict['subject'] = list()
