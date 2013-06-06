@@ -74,8 +74,8 @@
       
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium"><a href="{{ h.portal_url() + (
-            '/eng/frequently-asked-questions#fivestar' if h.lang() == 'en' else
-            '/fra/foire-aux-questions#cinqetoile') }}">{{ _('Openness rating') }}</a>: 
+            '/eng/openness-rating' if h.lang() == 'en' else
+            '/fra/node/43') }}">{{ _('Openness rating') }}</a>: 
             <span title="{{ h.openness_score(pkg) }}"
               class="openness-rating-{{ h.openness_score(pkg) }}"></span>
         </li>
