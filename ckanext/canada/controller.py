@@ -115,9 +115,8 @@ class CanadaFeedController(FeedController):
         for pkg in results:
             feed.add_item(
                 title=pkg.get(lx('title'), ''),
-                link=self.base_url + url_for(controller='package',
-                                             action='read',
-                                             id=pkg['id']),
+                link=self.base_url + url(str(
+                        '/api/action/package_show?id=%s' % pkg['name'])),
                 description=pkg.get(lx('notes'), ''),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
