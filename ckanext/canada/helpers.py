@@ -40,6 +40,11 @@ def openness_score(pkg):
             'xls': 2,
             'xlsm': 2,
             'XML': 3,
+            'FGDB': 3,
+            'GDB': 3,
+            'GML': 3,
+            'KML': 3,
+            'KMZ': 3,
             }.get(r['format'], 1))
     return score
 
