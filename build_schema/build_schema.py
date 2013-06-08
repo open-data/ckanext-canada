@@ -223,6 +223,13 @@ USE_CHOICE_IDS_AS_KEYS = set([
     'resource:format',
     ])
 
+USE_PROPOSED_ORDERING = set([
+    'geographic_region',
+    'language',
+    'resource:format',
+    ])
+
+
 def lang_versions(root, xp):
     """
     Return {'eng': english_text, 'fra': french_text} dict for a given
@@ -334,7 +341,7 @@ def apply_field_customizations(schema_out, vocab):
             if f['id'] == field_id)
         return field
 
-    def merge(c1, c2):
+    def merge(c1, c2, names_from_latter=True):
         def norm(t):
             if t == "Shapefile":
                 return "SHP"
@@ -347,7 +354,10 @@ def apply_field_customizations(schema_out, vocab):
             ekeys[norm(od['eng'])] = od
         for d in c2:
             target = ekeys.get(norm(d['eng']))
-            if target:
+            if target and names_from_latter:
+                target.update(d)
+            elif target:
+                d = dict((k, v) for k, v in d.items() if k not in LANGS)
                 target.update(d)
             else:
                 out.append(d)
@@ -361,9 +371,9 @@ def apply_field_customizations(schema_out, vocab):
         else:
             f = get_field(field)
 
-        if field in ('geographic_region', 'language'):
+        if field in USE_PROPOSED_ORDERING:
             # prefer proposed.xls ordering
-            choices = merge(choices, f['choices'])
+            choices = merge(choices, f['choices'], False)
         elif 'choices' in f:
             choices = merge(f['choices'], choices)
 

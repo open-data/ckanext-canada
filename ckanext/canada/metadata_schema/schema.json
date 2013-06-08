@@ -4965,52 +4965,6 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "CSV", 
-          "fra": "CSV", 
-          "id": "CSV", 
-          "key": "CSV", 
-          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
-        }, 
-        {
-          "eng": "KML / KMZ", 
-          "fra": "KML / KMZ", 
-          "id": "kml / kmz", 
-          "key": "kml / kmz", 
-          "openness_score": 3, 
-          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
-          "replaces": [
-            "KML\u00a0/ KMZ"
-          ]
-        }, 
-        {
-          "eng": "RDF", 
-          "fra": "RDF", 
-          "id": "RDF", 
-          "key": "RDF", 
-          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
-        }, 
-        {
-          "eng": "RSS", 
-          "fra": "RSS", 
-          "id": "rss", 
-          "key": "rss", 
-          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
-        }, 
-        {
-          "eng": "SHP", 
-          "fra": "SHP", 
-          "id": "SHAPE", 
-          "key": "SHAPE", 
-          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
-        }, 
-        {
-          "eng": "XML", 
-          "fra": "XML", 
-          "id": "XML", 
-          "key": "XML", 
-          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
-        }, 
-        {
           "eng": "ASCII Grid", 
           "fra": "ASCII Grid", 
           "id": "ascii grid", 
@@ -5027,6 +4981,13 @@
           "fra": "CDR", 
           "id": "cdr", 
           "key": "cdr"
+        }, 
+        {
+          "eng": "CSV", 
+          "fra": "CSV", 
+          "id": "CSV", 
+          "key": "CSV", 
+          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
         }, 
         {
           "eng": "DOC", 
@@ -5151,6 +5112,17 @@
           "key": "JSON"
         }, 
         {
+          "eng": "KML / KMZ", 
+          "fra": "KML / KMZ", 
+          "id": "kml / kmz", 
+          "key": "kml / kmz", 
+          "openness_score": 3, 
+          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
+          "replaces": [
+            "KML\u00a0/ KMZ"
+          ]
+        }, 
+        {
           "eng": "NetCDF", 
           "fra": "NetCDF", 
           "id": "netcdf", 
@@ -5193,10 +5165,24 @@
           "key": "ppt"
         }, 
         {
+          "eng": "RDF", 
+          "fra": "RDF", 
+          "id": "RDF", 
+          "key": "RDF", 
+          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
+        }, 
+        {
           "eng": "RDFa", 
           "fra": "RDFa", 
           "id": "rdfa", 
           "key": "rdfa"
+        }, 
+        {
+          "eng": "RSS", 
+          "fra": "RSS", 
+          "id": "rss", 
+          "key": "rss", 
+          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
         }, 
         {
           "eng": "RTF", 
@@ -5225,6 +5211,13 @@
           "fra": "SEGY", 
           "id": "segy", 
           "key": "segy"
+        }, 
+        {
+          "eng": "SHP", 
+          "fra": "SHP", 
+          "id": "SHAPE", 
+          "key": "SHAPE", 
+          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
         }, 
         {
           "eng": "SQL", 
@@ -5266,6 +5259,13 @@
           "fra": "XLSM", 
           "id": "xlsm", 
           "key": "xlsm"
+        }, 
+        {
+          "eng": "XML", 
+          "fra": "XML", 
+          "id": "XML", 
+          "key": "XML", 
+          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }, 
         {
           "eng": "Zip", 
