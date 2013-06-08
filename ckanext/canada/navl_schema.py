@@ -221,16 +221,12 @@ def not_empty_if_ready_to_publish(key, data, errors, context):
 def not_empty_when_catalog_type(ctype):
     """
     Not empty when value of catalog_type is raw/geo
-    but allow sysadmins to override the validation error
-    by setting a value in data[(validation_override,)].
     """
     choices = schema_description.dataset_field_by_id['catalog_type']['choices']
     ctype = choices[0 if ctype == 'raw' else 1]['key']
 
     def conditional_not_empty(key, data, errors, context):
-        if is_sysadmin(context['user']) and data[('validation_override',)]:
-            ignore_missing(key, data, errors, context)
-        elif data[('catalog_type',)] != ctype:
+        if data.get(('catalog_type',)) != ctype:
             ignore_missing(key, data, errors, context)
         else:
             not_empty_if_ready_to_publish(key, data, errors, context)
