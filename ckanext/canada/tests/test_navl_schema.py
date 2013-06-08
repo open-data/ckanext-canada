@@ -124,6 +124,11 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.normal_action.package_create(
             **dict(self.override_possible_pkg, ready_to_publish=False))
 
+        try:
+            self.normal_action.package_create(**self.override_possible_pkg)
+        except ValidationError, e:
+            assert 'ready_to_publish' in e.error_dict
+
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
         del raw_pkg['subject']
