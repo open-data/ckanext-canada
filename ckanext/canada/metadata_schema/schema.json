@@ -4976,6 +4976,7 @@
           "fra": "KML / KMZ", 
           "id": "kml / kmz", 
           "key": "kml / kmz", 
+          "openness_score": 3, 
           "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
           "replaces": [
             "KML\u00a0/ KMZ"
@@ -5068,6 +5069,7 @@
           "fra": "FGDB / GDB", 
           "id": "fgdb / gdb", 
           "key": "fgdb / gdb", 
+          "openness_score": 3, 
           "replaces": [
             "FGDB\u00a0/ GDB"
           ]
@@ -5113,6 +5115,7 @@
           "fra": "HDF", 
           "id": "hdf", 
           "key": "hdf", 
+          "openness_score": 1, 
           "replaces": [
             "GNU Zipped HDF"
           ]
@@ -5206,6 +5209,7 @@
           "fra": "SAR / CCT", 
           "id": "sar / cct", 
           "key": "sar / cct", 
+          "openness_score": 1, 
           "replaces": [
             "SAR/CCT"
           ]
@@ -5245,6 +5249,7 @@
           "fra": "TXT", 
           "id": "TXT", 
           "key": "TXT", 
+          "openness_score": 1, 
           "replaces": [
             "ASCII", 
             "text"
