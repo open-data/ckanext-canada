@@ -375,7 +375,6 @@ def apply_field_customizations(schema_out, vocab):
             f = get_field(field)
 
         if field in USE_PROPOSED_ORDERING:
-            # prefer proposed.xls ordering
             choices = merge(choices, f['choices'], False)
         elif 'choices' in f:
             choices = merge(f['choices'], choices)
