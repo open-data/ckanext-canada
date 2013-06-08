@@ -72,3 +72,11 @@
   <a href="/fra/suggested-datasets" class="button">Vous ne trouvez pas ce que vous cherchez?</a>
   {% endif %}
 {% endblock %}
+
+{% block try_another_search %}
+<p class="extra">
+{%- trans -%}
+Please review your spelling, or reduce the number of filters selected.
+{%- endtrans -%}
+</p>
+{% endblock %}
