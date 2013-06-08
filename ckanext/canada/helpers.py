@@ -6,6 +6,8 @@ from lxml.html.clean import clean_html
 from ckan.lib.cli import parse_db_config
 import unicodedata
 
+from ckanext.canada.metadata_schema import schema_description
+
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
@@ -27,23 +29,11 @@ def may_publish_datasets(userobj=None):
 
 def openness_score(pkg):
     score = 0
+    fmt = schema_description.resource_field_by_id['format']['choices_by_key']
     for r in pkg['resources']:
-        # scores copied from ckanext-qa and our valid formats
-        score = max(score, {
-            'CSV': 3,
-            'JSON': 3,
-            'kml / kmz': 3,
-            'ods': 2,
-            'RDF': 4,
-            'rdfa': 4,
-            'TXT': 1,
-            'xls': 2,
-            'xlsm': 2,
-            'XML': 3,
-            'fgdb / gdb': 3,
-            'gml': 3,
-            'kml / kmz': 3,
-            }.get(r['format'], 1))
+        if r['resource_type'] != 'file':
+            continue
+        score = max(score, fmt[r['format']]['openness_score'])
     return score
 
 

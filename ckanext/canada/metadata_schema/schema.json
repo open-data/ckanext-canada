@@ -4965,109 +4965,82 @@
       "bilingual": false, 
       "choices": [
         {
-          "eng": "CSV", 
-          "fra": "CSV", 
-          "id": "CSV", 
-          "key": "CSV", 
-          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
-        }, 
-        {
-          "eng": "KML / KMZ", 
-          "fra": "KML / KMZ", 
-          "id": "kml / kmz", 
-          "key": "kml / kmz", 
-          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
-          "replaces": [
-            "KML\u00a0/ KMZ"
-          ]
-        }, 
-        {
-          "eng": "RDF", 
-          "fra": "RDF", 
-          "id": "RDF", 
-          "key": "RDF", 
-          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
-        }, 
-        {
-          "eng": "RSS", 
-          "fra": "RSS", 
-          "id": "rss", 
-          "key": "rss", 
-          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
-        }, 
-        {
-          "eng": "SHP", 
-          "fra": "SHP", 
-          "id": "SHAPE", 
-          "key": "SHAPE", 
-          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
-        }, 
-        {
-          "eng": "XML", 
-          "fra": "XML", 
-          "id": "XML", 
-          "key": "XML", 
-          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
-        }, 
-        {
           "eng": "ASCII Grid", 
           "fra": "ASCII Grid", 
           "id": "ascii grid", 
-          "key": "ascii grid"
+          "key": "ascii grid", 
+          "openness_score": 1
         }, 
         {
           "eng": "CDED ASCII", 
           "fra": "CDED ASCII", 
           "id": "cdec ascii", 
-          "key": "cdec ascii"
+          "key": "cdec ascii", 
+          "openness_score": 1
         }, 
         {
           "eng": "CDR", 
           "fra": "CDR", 
           "id": "cdr", 
-          "key": "cdr"
+          "key": "cdr", 
+          "openness_score": 1
+        }, 
+        {
+          "eng": "CSV", 
+          "fra": "CSV", 
+          "id": "CSV", 
+          "key": "CSV", 
+          "openness_score": 3, 
+          "pilot_uuid": "636BE1C0-E5CC-46D3-A838-7447E2240930"
         }, 
         {
           "eng": "DOC", 
           "fra": "DOC", 
           "id": "doc", 
-          "key": "doc"
+          "key": "doc", 
+          "openness_score": 1
         }, 
         {
           "eng": "dxf", 
           "fra": "dxf", 
           "id": "dxf", 
-          "key": "dxf"
+          "key": "dxf", 
+          "openness_score": 1
         }, 
         {
           "eng": "E00", 
           "fra": "E00", 
           "id": "e00", 
-          "key": "e00"
+          "key": "e00", 
+          "openness_score": 1
         }, 
         {
           "eng": "ECW", 
           "fra": "ECW", 
           "id": "ecw", 
-          "key": "ecw"
+          "key": "ecw", 
+          "openness_score": 1
         }, 
         {
           "eng": "EDI", 
           "fra": "EDI", 
           "id": "edi", 
-          "key": "edi"
+          "key": "edi", 
+          "openness_score": 1
         }, 
         {
           "eng": "EXE", 
           "fra": "EXE", 
           "id": "exe", 
-          "key": "exe"
+          "key": "exe", 
+          "openness_score": 1
         }, 
         {
           "eng": "FGDB / GDB", 
           "fra": "FGDB / GDB", 
           "id": "fgdb / gdb", 
           "key": "fgdb / gdb", 
+          "openness_score": 3, 
           "replaces": [
             "FGDB\u00a0/ GDB"
           ]
@@ -5076,43 +5049,50 @@
           "eng": "Flat raster binary", 
           "fra": "Flat raster binary", 
           "id": "flat raster binary", 
-          "key": "flat raster binary"
+          "key": "flat raster binary", 
+          "openness_score": 1
         }, 
         {
           "eng": "GeoPDF", 
           "fra": "GeoPDF", 
           "id": "geopdf", 
-          "key": "geopdf"
+          "key": "geopdf", 
+          "openness_score": 1
         }, 
         {
           "eng": "GeoRSS", 
           "fra": "GeoRSS", 
           "id": "georss", 
-          "key": "georss"
+          "key": "georss", 
+          "openness_score": 1
         }, 
         {
           "eng": "GeoTIF", 
           "fra": "GeoTIF", 
           "id": "geotif", 
-          "key": "geotif"
+          "key": "geotif", 
+          "openness_score": 1
         }, 
         {
           "eng": "GIF", 
           "fra": "GIF", 
           "id": "gif", 
-          "key": "gif"
+          "key": "gif", 
+          "openness_score": 1
         }, 
         {
           "eng": "GML", 
           "fra": "GML", 
           "id": "gml", 
-          "key": "gml"
+          "key": "gml", 
+          "openness_score": 3
         }, 
         {
           "eng": "HDF", 
           "fra": "HDF", 
           "id": "hdf", 
           "key": "hdf", 
+          "openness_score": 1, 
           "replaces": [
             "GNU Zipped HDF"
           ]
@@ -5121,91 +5101,133 @@
           "eng": "HTML", 
           "fra": "HTML", 
           "id": "HTML", 
-          "key": "HTML"
+          "key": "HTML", 
+          "openness_score": 1
         }, 
         {
           "eng": "IATI", 
           "fra": "IATI", 
           "id": "iati", 
-          "key": "iati"
+          "key": "iati", 
+          "openness_score": 1
         }, 
         {
           "eng": "JPEG 2000", 
           "fra": "JPEG 2000", 
           "id": "Jpeg 2000", 
-          "key": "Jpeg 2000"
+          "key": "Jpeg 2000", 
+          "openness_score": 1
         }, 
         {
           "eng": "JPG", 
           "fra": "JPG", 
           "id": "jpg", 
-          "key": "jpg"
+          "key": "jpg", 
+          "openness_score": 1
         }, 
         {
           "eng": "JSON", 
           "fra": "JSON", 
           "id": "JSON", 
-          "key": "JSON"
+          "key": "JSON", 
+          "openness_score": 3
+        }, 
+        {
+          "eng": "KML / KMZ", 
+          "fra": "KML / KMZ", 
+          "id": "kml / kmz", 
+          "key": "kml / kmz", 
+          "openness_score": 3, 
+          "pilot_uuid": "6F8FA16D-DDCE-4A3D-91F3-2ECFB1513018", 
+          "replaces": [
+            "KML\u00a0/ KMZ"
+          ]
         }, 
         {
           "eng": "NetCDF", 
           "fra": "NetCDF", 
           "id": "netcdf", 
-          "key": "netcdf"
+          "key": "netcdf", 
+          "openness_score": 1
         }, 
         {
           "eng": "ODP", 
           "fra": "ODP", 
           "id": "odp", 
-          "key": "odp"
+          "key": "odp", 
+          "openness_score": 1
         }, 
         {
           "eng": "ODS", 
           "fra": "ODS", 
           "id": "ods", 
-          "key": "ods"
+          "key": "ods", 
+          "openness_score": 2
         }, 
         {
           "eng": "ODT", 
           "fra": "ODT", 
           "id": "odt", 
-          "key": "odt"
+          "key": "odt", 
+          "openness_score": 1
         }, 
         {
           "eng": "PDF", 
           "fra": "PDF", 
           "id": "PDF", 
-          "key": "PDF"
+          "key": "PDF", 
+          "openness_score": 1
         }, 
         {
           "eng": "PNG", 
           "fra": "PNG", 
           "id": "png", 
-          "key": "png"
+          "key": "png", 
+          "openness_score": 1
         }, 
         {
           "eng": "PPT", 
           "fra": "PPT", 
           "id": "ppt", 
-          "key": "ppt"
+          "key": "ppt", 
+          "openness_score": 1
+        }, 
+        {
+          "eng": "RDF", 
+          "fra": "RDF", 
+          "id": "RDF", 
+          "key": "RDF", 
+          "openness_score": 4, 
+          "pilot_uuid": "047DA6BB-AE0B-4BD9-9DAA-7B8C69AA8C1E"
         }, 
         {
           "eng": "RDFa", 
           "fra": "RDFa", 
           "id": "rdfa", 
-          "key": "rdfa"
+          "key": "rdfa", 
+          "openness_score": 4
+        }, 
+        {
+          "eng": "RSS", 
+          "fra": "RSS", 
+          "id": "rss", 
+          "key": "rss", 
+          "openness_score": 1, 
+          "pilot_uuid": "576C70F8-9E96-4A1F-A000-2460ACF4325E"
         }, 
         {
           "eng": "RTF", 
           "fra": "RTF", 
           "id": "rtf", 
-          "key": "rtf"
+          "key": "rtf", 
+          "openness_score": 1
         }, 
         {
           "eng": "SAR / CCT", 
           "fra": "SAR / CCT", 
           "id": "sar / cct", 
           "key": "sar / cct", 
+          "openness_score": 1, 
           "replaces": [
             "SAR/CCT"
           ]
@@ -5214,37 +5236,51 @@
           "eng": "SAV", 
           "fra": "SAV", 
           "id": "sav", 
-          "key": "sav"
+          "key": "sav", 
+          "openness_score": 1
         }, 
         {
           "eng": "SEGY", 
           "fra": "SEGY", 
           "id": "segy", 
-          "key": "segy"
+          "key": "segy", 
+          "openness_score": 1
+        }, 
+        {
+          "eng": "SHP", 
+          "fra": "SHP", 
+          "id": "SHAPE", 
+          "key": "SHAPE", 
+          "openness_score": 1, 
+          "pilot_uuid": "25D1CF30-A617-4FE2-8FE9-2EA7460ECD3F"
         }, 
         {
           "eng": "SQL", 
           "fra": "SQL", 
           "id": "sql", 
-          "key": "sql"
+          "key": "sql", 
+          "openness_score": 1
         }, 
         {
           "eng": "TIFF World File", 
           "fra": "TIFF World File", 
           "id": "tiff world file", 
-          "key": "tiff world file"
+          "key": "tiff world file", 
+          "openness_score": 1
         }, 
         {
           "eng": "TIFF", 
           "fra": "TIFF", 
           "id": "tiff", 
-          "key": "tiff"
+          "key": "tiff", 
+          "openness_score": 1
         }, 
         {
           "eng": "TXT", 
           "fra": "TXT", 
           "id": "TXT", 
           "key": "TXT", 
+          "openness_score": 1, 
           "replaces": [
             "ASCII", 
             "text"
@@ -5254,25 +5290,37 @@
           "eng": "XLS", 
           "fra": "XLS", 
           "id": "XLS", 
-          "key": "XLS"
+          "key": "XLS", 
+          "openness_score": 2
         }, 
         {
           "eng": "XLSM", 
           "fra": "XLSM", 
           "id": "xlsm", 
-          "key": "xlsm"
+          "key": "xlsm", 
+          "openness_score": 2
+        }, 
+        {
+          "eng": "XML", 
+          "fra": "XML", 
+          "id": "XML", 
+          "key": "XML", 
+          "openness_score": 3, 
+          "pilot_uuid": "D91DAAF4-0BD5-4F0C-A4FA-F99E89642315"
         }, 
         {
           "eng": "Zip", 
           "fra": "Zip", 
           "id": "ZIP", 
-          "key": "ZIP"
+          "key": "ZIP", 
+          "openness_score": 1
         }, 
         {
           "eng": "Other", 
           "fra": "Autre", 
           "id": "other", 
-          "key": "other"
+          "key": "other", 
+          "openness_score": 1
         }
       ], 
       "description": {

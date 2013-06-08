@@ -1,6 +1,5 @@
 import json
 import os
-from ckanext.canada.helpers import normalize_strip_accents
 from ckan.lib.helpers import render_markdown
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
