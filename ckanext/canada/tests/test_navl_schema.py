@@ -34,6 +34,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
             'license_id': 'ca-ogl-lgo',
+            'ready_to_publish': True,
             'resources': [{
                 'name': u'Full text.',
                 'name_fra': u'Full text.',
