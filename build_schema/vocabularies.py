@@ -63,9 +63,11 @@ def read_from_sheet(sheet):
             if proposed_name == 'topicCategory':
                 current_vocab[-1]['subject_ids'] = [
                     i.strip() for i in cell[5].split(',')]
-            elif proposed_name == 'formatName' and cell[5]:
-                current_vocab[-1]['replaces'] = [
-                    i.strip() for i in cell[5].split(',')]
+            elif proposed_name == 'formatName':
+                if cell[5]:
+                    current_vocab[-1]['replaces'] = [
+                        i.strip() for i in cell[5].split(',')]
+                current_vocab[-1]['openness_score'] = cell[6]
 
         else:
             current_vocab.append({
