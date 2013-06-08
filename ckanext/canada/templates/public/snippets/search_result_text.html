@@ -30,6 +30,7 @@ Example:
   {% set text_no_query_none = _('Sorry no organizations found') %}
 {%- endif -%}
 
+<p>
 {% if query %}
   {%- if count -%}
     {{ text_query.format(number=h.localised_number(count), query=query) }}
@@ -43,3 +44,4 @@ Example:
     {{ text_no_query_none }}
   {%- endif -%}
 {%- endif -%}
+</p>
