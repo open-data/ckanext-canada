@@ -256,12 +256,3 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg2)
-
-        transposed_spatial_pkg = dict(self.complete_pkg,
-            spatial='{"type": "Polygon", "coordinates": '
-                '[[[41.736231, -141.001333], [82.514468, -141.001333], '
-                '[82.514468, -52.622540], [41.736231, -52.622540], '
-                '[41.736231, -141.001333]]]}')
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **transposed_spatial_pkg)
