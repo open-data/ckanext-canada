@@ -116,17 +116,13 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.sysadmin_action.package_create,
             name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
 
-    def test_validation_override(self):
+    def test_not_ready_to_publish(self):
         self.assert_raises(ValidationError,
             self.sysadmin_action.package_create,
             **self.incomplete_pkg)
 
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            validation_override=True, **self.override_possible_pkg)
-
-        self.sysadmin_action.package_create(
-            validation_override=True, **self.override_possible_pkg)
+        self.normal_action.package_create(
+            **dict(self.override_possible_pkg, ready_to_publish=False))
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
