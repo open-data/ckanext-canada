@@ -1,4 +1,5 @@
 from pylons.i18n import _
+from paste.deploy.converters import asbool
 from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
@@ -56,10 +57,10 @@ def _schema_update(schema, purpose):
         schema['name'] = [ignore_missing, unicode, name_validator,
             package_name_validator]
     if purpose in ('create', 'update'):
-        schema['title'] = [not_empty_allow_override, unicode]
-        schema['notes'] = [not_empty_allow_override, unicode]
+        schema['title'] = [not_empty_if_ready_to_publish, unicode]
+        schema['notes'] = [not_empty_if_ready_to_publish, unicode]
         schema['owner_org'] = [not_empty, owner_org_validator_publisher, unicode]
-        schema['license_id'] = [not_empty_allow_override, unicode]
+        schema['license_id'] = [not_empty_if_ready_to_publish, unicode]
     else:
         schema['author_email'] = [fixed_value(
             schema_description.dataset_field_by_id['author_email'])]
@@ -86,14 +87,11 @@ def _schema_update(schema, purpose):
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['mandatory'] and purpose in ('create', 'update'):
-            resources[name] = [not_empty_allow_override, unicode]
+            resources[name] = [not_empty_if_ready_to_publish, unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
                 convert_pilot_uuid(field),
                 OneOf([c['key'] for c in field['choices']])])
-
-    if purpose in ('create', 'update'):
-        schema['validation_override'] = [ignore_missing]
 
 
 def _schema_field_validators(name, lang, field):
@@ -112,7 +110,7 @@ def _schema_field_validators(name, lang, field):
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
     elif field['mandatory'] == 'all':
-        edit.append(not_empty_allow_override)
+        edit.append(not_empty_if_ready_to_publish)
     elif field['mandatory']:
         edit.append(not_empty_when_catalog_type(field['mandatory']))
 
@@ -209,15 +207,15 @@ def package_id_doesnt_exist(key, data, errors, context):
         errors[key].append(_('That URL is already in use.'))
 
 
-def not_empty_allow_override(key, data, errors, context):
+def not_empty_if_ready_to_publish(key, data, errors, context):
     """
     Not empty, but allow sysadmins to override the validation error
     by setting a value in data[(validation_override,)].
     """
-    if is_sysadmin(context['user']) and data.get(('validation_override',)):
-        ignore_missing(key, data, errors, context)
-    else:
+    if asbool(data.get(('ready_to_publish',), False)):
         not_empty(key, data, errors, context)
+    else:
+        ignore_missing(key, data, errors, context)
 
 
 def not_empty_when_catalog_type(ctype):
@@ -235,7 +233,7 @@ def not_empty_when_catalog_type(ctype):
         elif data[('catalog_type',)] != ctype:
             ignore_missing(key, data, errors, context)
         else:
-            not_empty(key, data, errors, context)
+            not_empty_if_ready_to_publish(key, data, errors, context)
 
     return conditional_not_empty
 
