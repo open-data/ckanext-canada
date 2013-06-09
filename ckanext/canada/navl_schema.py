@@ -59,16 +59,32 @@ class RequiredWhenPublishing(object):
         if not field:
             field = schema_description.dataset_field_by_id[name]
         self.d_fields.append((name, lang, field))
-        return _not_empty_if_ready_to_publish
+        if field['mandatory'] == 'all':
+            return _not_empty_if_ready_to_publish
+        return _conditional_not_empty_if_ready_to_publish(field['mandatory'])
 
     def resource_field(self, name, lang, field):
         self.r_fields.append((name, lang, field))
         return _not_empty_if_ready_to_publish
 
     def ready_to_publish(self, key, data, errors, context):
+        """
+        We need to repeat all the validation of the required dataset and
+        resource fields so that we can list the missing fields in the
+        error message for this field -- the missing fields may not be
+        visible on the same page where this field appears.
+        """
         if not asbool(data.get(key)):
             return
-        import ipdb; ipdb.set_trace()
+        choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+        ctype_key = choices[0 if data.get(('catalog_type',), 'raw') == 'raw' else 1]['key']
+        missing = []
+        for name, lang, field in self.d_fields:
+            if not data.get((name,)) and (field['mandatory'] == 'all' or
+                    field['mandatory'] == ctype_key):
+                missing.append(name)
+        if missing:
+            raise Invalid(u'missing required fields: ' + u', '.join(missing))
 
 
 def _not_empty_if_ready_to_publish(key, data, errors, context):
@@ -80,6 +96,22 @@ def _not_empty_if_ready_to_publish(key, data, errors, context):
         not_empty(key, data, errors, context)
     else:
         ignore_missing(key, data, errors, context)
+
+def _conditional_not_empty_if_ready_to_publish(catalog_type):
+    """
+    Not empty when value of catalog_type is raw/geo
+    """
+    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+    ctype_key = choices[0 if catalog_type == 'raw' else 1]['key']
+
+    def conditional_not_empty(key, data, errors, context):
+        if data.get(('catalog_type',)) != ctype_key:
+            ignore_missing(key, data, errors, context)
+        else:
+            _not_empty_if_ready_to_publish(key, data, errors, context)
+
+    return conditional_not_empty
+
 
 
 
@@ -151,12 +183,9 @@ def _schema_field_validators(name, lang, field, required):
     view = []
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
-    elif field['mandatory'] == 'all':
+    elif field['mandatory']:
         # FIXME: assuming dataset field passed!
         edit.append(required.dataset_field(name, lang, field))
-    elif field['mandatory']:
-        edit.append(not_empty_when_catalog_type(field['mandatory'],
-            name, lang, field, required))
 
     if field['type'] == 'date':
         edit.append(isodate)
@@ -252,23 +281,6 @@ def package_id_doesnt_exist(key, data, errors, context):
     existing = model.Package.get(data[key])
     if existing:
         errors[key].append(_('That URL is already in use.'))
-
-
-def not_empty_when_catalog_type(ctype, name, lang, field, required):
-    """
-    Not empty when value of catalog_type is raw/geo
-    """
-    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
-    ctype = choices[0 if ctype == 'raw' else 1]['key']
-
-    def conditional_not_empty(key, data, errors, context):
-        if data.get(('catalog_type',)) != ctype:
-            ignore_missing(key, data, errors, context)
-        else:
-            # FIXME: assuming dataset field passed!
-            required.dataset_field(name, lang, field, )(key, data, errors, context)
-
-    return conditional_not_empty
 
 
 def convert_pilot_uuid(field):
