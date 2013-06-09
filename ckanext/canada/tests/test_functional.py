@@ -63,3 +63,14 @@ class TestNew(TestPackageBase):
 
         # Check resource page
         assert not 'Error' in res, res
+
+        res = self.app.get(res.header('Location'),
+            extra_environ=self.extra_environ_tester)
+        fv = res.forms['dataset-form']
+        fv['ready_to_publish'] = True
+        # Submit
+        res = fv.submit('save', 1,
+            extra_environ=self.extra_environ_tester)
+
+        # Check metadata page
+        assert not 'Error' in res, res
