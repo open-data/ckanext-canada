@@ -83,8 +83,15 @@ class RequiredWhenPublishing(object):
             if not data.get((name,)) and (field['mandatory'] == 'all' or
                     field['mandatory'] == ctype_key):
                 missing.append(name)
+        rnum = 0
+        while ('resources', rnum, 'url') in data:
+            for name, lang, field in self.r_fields:
+                if not data.get(('resources', rnum, name)):
+                    missing.append('resources.%s.%s' % (rnum, name))
+            rnum += 1
+
         if missing:
-            raise Invalid(u'missing required fields: ' + u', '.join(missing))
+            raise Invalid(u'required to publish: ' + u', '.join(missing))
 
 
 def _not_empty_if_ready_to_publish(key, data, errors, context):
