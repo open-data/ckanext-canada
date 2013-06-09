@@ -47,3 +47,19 @@ class TestNew(TestPackageBase):
 
         # Check dataset page
         assert not 'Error' in res, res
+
+        res = self.app.get(res.header('Location'),
+            extra_environ=self.extra_environ_tester)
+        fv = res.forms['dataset-form']
+        fv['name'] = 'english resource name'
+        fv['name_fra'] = 'french resource name'
+        fv['resource_type'] = 'file'
+        fv['url'] = 'somewhere'
+        fv['format'] = 'TXT'
+        fv['language'] = 'zxx; CAN'
+        # Submit
+        res = fv.submit('save', 2,
+            extra_environ=self.extra_environ_tester)
+
+        # Check resource page
+        assert not 'Error' in res, res
