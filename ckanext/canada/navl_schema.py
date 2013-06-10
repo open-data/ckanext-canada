@@ -91,7 +91,9 @@ class RequiredWhenPublishing(object):
             rnum += 1
 
         if missing:
-            raise Invalid(u'required to publish: ' + u', '.join(missing))
+            raise Invalid(_(
+                "The following fields are required to publish this dataset:")
+                + u' ' + u', '.join(missing))
 
 
 def _not_empty_if_ready_to_publish(key, data, errors, context):
