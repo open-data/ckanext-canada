@@ -1,4 +1,5 @@
 from pylons.i18n import _
+from paste.deploy.converters import asbool
 from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
@@ -43,6 +44,87 @@ def show_package_schema():
     _schema_update(schema, 'show')
     return schema
 
+
+class RequiredWhenPublishing(object):
+    """
+    ready_to_publish needs to know which fields are required
+    this function adds each field to a list the
+    ready_to_publish_validator can use to build an error message
+    """
+    def __init__(self):
+        self.d_fields = []
+        self.r_fields = []
+
+    def dataset_field(self, name, lang=None, field=None):
+        if not field:
+            field = schema_description.dataset_field_by_id[name]
+        self.d_fields.append((name, lang, field))
+        if field['mandatory'] == 'all':
+            return _not_empty_if_ready_to_publish
+        return _conditional_not_empty_if_ready_to_publish(field['mandatory'])
+
+    def resource_field(self, name, lang, field):
+        self.r_fields.append((name, lang, field))
+        return _not_empty_if_ready_to_publish
+
+    def ready_to_publish(self, key, data, errors, context):
+        """
+        We need to repeat all the validation of the required dataset and
+        resource fields so that we can list the missing fields in the
+        error message for this field -- the missing fields may not be
+        visible on the same page where this field appears.
+        """
+        if not asbool(data.get(key)):
+            return
+        choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+        ctype_key = choices[0 if data.get(('catalog_type',), 'raw') == 'raw' else 1]['key']
+        missing = []
+        for name, lang, field in self.d_fields:
+            if not data.get((name,)) and (field['mandatory'] == 'all' or
+                    field['mandatory'] == ctype_key):
+                missing.append(name)
+        rnum = 0
+        while ('resources', rnum, 'url') in data:
+            for name, lang, field in self.r_fields:
+                if not data.get(('resources', rnum, name)):
+                    missing.append('resources.%s.%s' % (rnum, name))
+            rnum += 1
+
+        if missing:
+            raise Invalid(_(
+                "The following fields are required to publish this dataset:")
+                + u' ' + u', '.join(missing))
+
+
+def _not_empty_if_ready_to_publish(key, data, errors, context):
+    """
+    Not empty, but allow sysadmins to override the validation error
+    by setting a value in data[(validation_override,)].
+    """
+    if asbool(data.get(('ready_to_publish',), True)):
+        not_empty(key, data, errors, context)
+    else:
+        ignore_missing(key, data, errors, context)
+
+def _conditional_not_empty_if_ready_to_publish(catalog_type):
+    """
+    Not empty when value of catalog_type is raw/geo
+    """
+    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
+    ctype_key = choices[0 if catalog_type == 'raw' else 1]['key']
+
+    def conditional_not_empty(key, data, errors, context):
+        if data.get(('catalog_type',)) != ctype_key:
+            ignore_missing(key, data, errors, context)
+        else:
+            _not_empty_if_ready_to_publish(key, data, errors, context)
+
+    return conditional_not_empty
+
+
+
+
+
 def _schema_update(schema, purpose):
     """
     :param schema: schema dict to update
@@ -50,16 +132,18 @@ def _schema_update(schema, purpose):
     """
     assert purpose in ('create', 'update', 'show')
 
+    required = RequiredWhenPublishing()
+
     if purpose == 'create':
         schema['id'] = [ignore_missing, protect_new_dataset_id,
             unicode, name_validator, package_id_doesnt_exist]
         schema['name'] = [ignore_missing, unicode, name_validator,
             package_name_validator]
     if purpose in ('create', 'update'):
-        schema['title'] = [not_empty_allow_override, unicode]
-        schema['notes'] = [not_empty_allow_override, unicode]
+        schema['title'] = [required.dataset_field('title'), unicode]
+        schema['notes'] = [required.dataset_field('notes'), unicode]
         schema['owner_org'] = [not_empty, owner_org_validator_publisher, unicode]
-        schema['license_id'] = [not_empty_allow_override, unicode]
+        schema['license_id'] = [required.dataset_field('license_id'), unicode]
     else:
         schema['author_email'] = [fixed_value(
             schema_description.dataset_field_by_id['author_email'])]
@@ -75,7 +159,7 @@ def _schema_update(schema, purpose):
         if name in schema:
             continue # don't modify other existing fields
 
-        v = _schema_field_validators(name, lang, field)
+        v = _schema_field_validators(name, lang, field, required)
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
 
@@ -86,17 +170,14 @@ def _schema_update(schema, purpose):
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['mandatory'] and purpose in ('create', 'update'):
-            resources[name] = [not_empty_allow_override, unicode]
+            resources[name] = [required.resource_field(name, lang, field), unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
                 convert_pilot_uuid(field),
                 OneOf([c['key'] for c in field['choices']])])
 
-    if purpose in ('create', 'update'):
-        schema['validation_override'] = [ignore_missing]
 
-
-def _schema_field_validators(name, lang, field):
+def _schema_field_validators(name, lang, field, required):
     """
     return a tuple with lists of validators for the field:
     one for create/update and one for show, or None to leave
@@ -111,10 +192,9 @@ def _schema_field_validators(name, lang, field):
     view = []
     if field['type'] in ('calculated', 'fixed') or not field['mandatory']:
         edit.append(ignore_missing)
-    elif field['mandatory'] == 'all':
-        edit.append(not_empty_allow_override)
     elif field['mandatory']:
-        edit.append(not_empty_when_catalog_type(field['mandatory']))
+        # FIXME: assuming dataset field passed!
+        edit.append(required.dataset_field(name, lang, field))
 
     if field['type'] == 'date':
         edit.append(isodate)
@@ -134,6 +214,9 @@ def _schema_field_validators(name, lang, field):
         edit.append(geojson_validator)
     else:
         edit.append(unicode)
+
+    if name == 'ready_to_publish':
+        edit.append(required.ready_to_publish)
 
     return (edit + [convert_to_extras],
             view if view else [convert_from_extras, ignore_missing])
@@ -207,37 +290,6 @@ def package_id_doesnt_exist(key, data, errors, context):
     existing = model.Package.get(data[key])
     if existing:
         errors[key].append(_('That URL is already in use.'))
-
-
-def not_empty_allow_override(key, data, errors, context):
-    """
-    Not empty, but allow sysadmins to override the validation error
-    by setting a value in data[(validation_override,)].
-    """
-    if is_sysadmin(context['user']) and data.get(('validation_override',)):
-        ignore_missing(key, data, errors, context)
-    else:
-        not_empty(key, data, errors, context)
-
-
-def not_empty_when_catalog_type(ctype):
-    """
-    Not empty when value of catalog_type is raw/geo
-    but allow sysadmins to override the validation error
-    by setting a value in data[(validation_override,)].
-    """
-    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
-    ctype = choices[0 if ctype == 'raw' else 1]['key']
-
-    def conditional_not_empty(key, data, errors, context):
-        if is_sysadmin(context['user']) and data[('validation_override',)]:
-            ignore_missing(key, data, errors, context)
-        elif data[('catalog_type',)] != ctype:
-            ignore_missing(key, data, errors, context)
-        else:
-            not_empty(key, data, errors, context)
-
-    return conditional_not_empty
 
 
 def convert_pilot_uuid(field):

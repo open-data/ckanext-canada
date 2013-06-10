@@ -272,15 +272,17 @@ Example:
           {%- else -%}
             {%- set key_base = key -%}
           {%- endif -%}
-          {%- set f = schema_fields[key_base] -%}
-          {%- set label = schema_fields[key_base].label[client_lang] -%}
-          {%- if f.bilingual -%}
-            {%- set label = label + ' ' +
-              schema_description.resource_field_by_id.language.choices[
-              2 if key.endswith('_fra') else 1][client_lang] -%}
+          {%- set f = schema_fields.get(key_base) -%}
+          {%- if f -%}
+            {%- set label = schema_fields[key_base].label[client_lang] -%}
+            {%- if f.bilingual -%}
+              {%- set label = label + ' ' +
+                schema_description.resource_field_by_id.language.choices[
+                2 if key.endswith('_fra') else 1][client_lang] -%}
+            {%- endif -%}
+            <li data-field-label="{{ key }}">{%- if key -%}{{
+              label }}: {%- endif -%}{{ ', '.join(error) }}</li>
           {%- endif -%}
-          <li data-field-label="{{ key }}">{%- if key -%}{{
-            label }}: {%- endif -%}{{ ', '.join(error) }}</li>
         {%- endfor -%}
       </ul>
     </div>
