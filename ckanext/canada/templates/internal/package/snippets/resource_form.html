@@ -2,6 +2,11 @@
 {% ckan_extends %}
 {% import 'macros/form_canada.html' as cform %}
 
+{%- block errors -%}
+  {{- cform.errors(
+  errors, schema_description.resource_field_by_id, h.lang()) -}}
+{%- endblock -%}
+
 {% block basic_fields %}
   {% for id, lang, field in schema_description.resource_field_iter(
       true) %}
