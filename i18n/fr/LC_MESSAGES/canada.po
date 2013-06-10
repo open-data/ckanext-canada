@@ -1,0 +1,364 @@
+# This file is meant to be combined with CKAN v2.0.1's
+# "ckan/i18n/fr/LC_MESSAGES/ckan.po" file using msgcat --use-first
+#
+# Thia file is being maintained by hand so that changes are visible
+# in source control.  CKAN's .po file is reported as binary by git
+# for some reason.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+
+msgid "You are now following {0}"
+msgstr "Vous êtes maintenant abonné à {0}"
+
+msgid "You are no longer following {0}"
+msgstr "Vous n'êtes plus abonné à {0}"
+
+msgid "Dataset has been deleted."
+msgstr "L'ensemble de données a été supprimé."
+
+msgid "Show more"
+msgstr "Afficher plus"
+
+msgid "Show less"
+msgstr "Afficher moins"
+
+msgid "Log in"
+msgstr "Connexion"
+
+msgid "Load more"
+msgstr "En charger davantage"
+
+msgid "No activities are within this activity stream"
+msgstr "Aucune activité pour cet élément"
+
+msgid "Activity Stream"
+msgstr "Flux d'Activités"
+
+msgid "Confirm Delete"
+msgstr "Confirmer l'annulation"
+
+msgid "Create Dataset"
+msgstr "Créer un jeu de données"
+
+msgid "What are datasets?"
+msgstr "Qu’est-ce qu’un ensemble de données?"
+
+msgid "Draft"
+msgstr "Ébauche"
+
+msgid " <p class=\"extra\">Please try another search.</p> "
+msgstr "Veuillez essayer une nouvelle recherche"
+
+msgid "Additional Info"
+msgstr "Information additionnelle"
+
+msgid "Edit Dataset"
+msgstr "Modifier ensemble de données "
+
+msgid "Edit Resources"
+msgstr "Modifier ressources"
+
+msgid "Next: Add Data"
+msgstr "Suivant : ajouter données"
+
+msgid "Last Modified"
+msgstr "date de modification"
+
+msgid "Save & add another"
+msgstr "Sauvegarder et ajouter un autre "
+
+msgid "Next: Additional Info"
+msgstr "Suivant : renseignements supplémentaires"
+
+msgid "Data and Resources"
+msgstr "Données et ressources"
+
+msgid "This item has no description"
+msgstr "Aucune description disponible pour cet ensemble de données"
+
+msgid "Clear All"
+msgstr "Effacer tout"
+
+msgid "Show More {facet}"
+msgstr "Afficher plus d'{facet}"
+
+msgid "Show Only Popular {facet}"
+msgstr "Afficher uniquement les {facet} populaires"
+
+msgid "There are no filters for this search"
+msgstr "Aucun filtre sélectionné pour cette recherche"
+
+msgid "Go"
+msgstr "Allez"
+
+msgid "Popular"
+msgstr "popularité"
+
+msgid "This dataset has no description"
+msgstr "Aucune description disponible pour cet ensemble de données"
+
+msgid "{number} dataset found for \"{query}\""
+msgid_plural "{number} datasets found for \"{query}\""
+msgstr[0] "{number} ensemble de données trouvé"
+msgstr[1] "{number} ensembles de données trouvés"
+
+msgid "Sorry no datasets found for \"{query}\""
+msgstr "0 ensemble de données trouvé"
+
+msgid "{number} dataset found"
+msgid_plural "{number} datasets found"
+msgstr[0] "{number} ensemble de données trouvé"
+msgstr[1] "{number} ensembles de données trouvés"
+
+msgid "Sorry no datasets found"
+msgstr "0 ensembles de données trouvés"
+
+msgid "Sorry no organizations found for \"{query}\""
+msgstr "0 organisations trouvées"
+
+msgid "Sorry no organizations found"
+msgstr "0 organisations trouvées"
+
+msgid "Order by"
+msgstr "Trier par"
+
+msgid "Relevance"
+msgstr "pertinence"
+
+msgid "Name Ascending"
+msgstr "alphabétique croissant"
+
+msgid "Name Descending"
+msgstr "alphabétique décroissant"
+
+msgid "Email"
+msgstr "Courriel"
+
+msgid "News feed"
+msgstr "Fil de nouvelles"
+
+msgid "Activity from items that you follow"
+msgstr "Il faut une activité sur le fil d’information des éléments dont vous faites le suivi "
+
+msgid "My Datasets"
+msgstr "Mes ensembles de données"
+
+msgid "You do not have any datasets"
+msgstr "Vous n'avez aucun ensemble de données"
+
+msgid "Account Info"
+msgstr "Renseignements sur le compte"
+
+msgid "A little information about yourself"
+msgstr "Un peu d'information vous concernant"
+
+msgid "Update Profile"
+msgstr "Mettre à jour le profil"
+
+msgid "Create an Account"
+msgstr "Créer un compte"
+
+msgid "You are now logged out."
+msgstr "Vous êtes maintenant déconnecté"
+
+msgid "Remember me"
+msgstr "Mémoriser mes informations"
+
+msgid "Register for an Account"
+msgstr "S’inscrire pour obtenir un compte"
+
+msgid "Reset Your Password"
+msgstr "Réinitialiser votre mot de passe"
+
+msgid "You haven't created any datasets."
+msgstr "Vous n'avez créé aucun ensemble de données"
+
+msgid "Create one now?"
+msgstr "Vous voulez en créer un maintenant?"
+
+msgid "Member Since"
+msgstr "Membre depuis"
+
+msgid "Request Reset"
+msgstr "Demander une réinitialisation"
+
+msgid "You are not following anything"
+msgstr "Vous ne faites aucun suivi"
+
+msgid "E-mail"
+msgstr "Courriel"
+
+msgid "E-Mail"
+msgstr "Courriel"
+
+
+
+#: ckanext-canada/ckanext/canada/templates/internal/base.html
+msgid "Open Data Registry"
+msgstr "Registre de données ouvertes"
+
+msgid "Departments"
+msgstr "Ministères"
+
+msgid "Need an Account"
+msgstr "Besoin d’un compte"
+
+msgid "Then sign right up, it only takes a minute"
+msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
+
+msgid "Forgotten your details"
+msgstr "Vous avez oublié vos coordonnées"
+
+msgid "No problem, use our password recovery form to reset it"
+msgstr "Utilisez notre formulaire de récupération de mot de passe pour rétablir votre identité"
+
+msgid "Search Data"
+msgstr "Recherche données"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Stay connected"
+msgstr "Restez branchés"
+
+msgid "Health"
+msgstr "Santé"
+
+msgid "Travel"
+msgstr "Voyage"
+
+msgid "Jobs"
+msgstr "Emplois"
+
+msgid "Economy"
+msgstr "Économie"
+
+msgid "healthycanadians.gc.ca"
+msgstr "canadiensensante.gc.ca"
+
+msgid "travel.gc.ca"
+msgstr "voyage.gc.ca"
+
+msgid "jobbank.gc.ca"
+msgstr "guichetemplois.gc.ca"
+
+msgid "actionplan.gc.ca"
+msgstr "plandaction.gc.ca"
+
+msgid "What are Organizations"
+msgstr "Qu’est qu’une organisation"
+
+msgid "Search open data"
+msgstr "Chercher dans les données ouvertes"
+
+msgid "Subject"
+msgstr "Sujet"
+
+msgid "File Format"
+msgstr "Format du fichier"
+
+msgid "Published or Pending"
+msgstr "Publié ou en attente de publication"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Openness rating"
+msgstr "Degré d’ouverture des données"
+
+msgid "My Account"
+msgstr "Mon compte"
+
+msgid "Activities"
+msgstr "Activités"
+
+msgid "No full name provided"
+msgstr "Aucun nom complet fourni"
+
+msgid "You have not provided a biography"
+msgstr "Vous n’avez pas fourni de biographie"
+
+msgid ""
+" Your profile lets other Open Data Registry users know about who you "
+"are and what you do. "
+msgstr "Votre profil permet aux autres utilisateurs de Registre de données ouvertes de savoir qui vous êtes et ce que vous faites"
+
+msgid "Temporal Coverage"
+msgstr "Couverture temporelle"
+
+msgid "Developer Tools"
+msgstr "Outils pour le développeur"
+
+msgid "Guidelines"
+msgstr "Lignes directrices"
+
+msgid "Open Data Portal Metadata Implementation Guide"
+msgstr "Guide de mise en place des métadonnées pour les ressources Web"
+
+msgid "About this Dataset"
+msgstr "À propos de ce jeu de données"
+
+msgid "This dataset has been deleted and is no longer accessible to non-admin users"
+msgstr "Cet ensemble de données a été supprimé et n'est plus accessible"
+
+msgid "Activity"
+msgstr "Activité"
+
+msgid "Catalog Type"
+msgstr "Type de Catalogue"
+
+msgid "Resource Name"
+msgstr "Nom de la ressource"
+
+msgid "Size (MB)"
+msgstr "Taille (Mo)"
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Program Page"
+msgstr "Page du programme"
+
+msgid "Geographic Information"
+msgstr "Information géographique"
+
+msgid "Open Government"
+msgstr "Gouvernement ouvert"
+
+msgid "You can use <a href='http://daringfireball.net/projects/markdown/syntax' target='_blank'>Markdown formatting</a> here"
+msgstr "Vous pouvez utiliser le formatage <a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Markdown</a> ici"
+
+msgid "Forgotten your password?"
+msgstr "Vous avez oublié votre mot de passe?"
+
+msgid "Add another resource"
+msgstr "Ajouter une autre ressource"
+
+msgid "Dataset Resources"
+msgstr "Ressources de l'ensemble de données"
+
+msgid "The information on this page (the dataset metadata) is also available in JSON format"
+msgstr "L’information sur cette page (les métadonnées du jeu de données) est aussi disponible en format JSON"
+
+msgid "Link to JSON format"
+msgstr "Lien au format JSON"
+
+msgid "Read more about this site's API: <a href='%(portal)s/eng/developers-corner-api'>About the API</a>"
+msgstr "En savoir plus sur l’API du site: <a href='%(portal)s/fra/coin-des-developpeurs-ipa'>À propos du API</a>"
+
+msgid "Data Type"
+msgstr "Type de données"
+
+msgid "No datasets were found to match your query."
+msgstr "Aucun jeu de données correspond aux termes de recherche spécifiés."
+
+msgid "Please review your spelling, or reduce the number of filters selected."
+msgstr "S'il vous plaît vérifier votre orthographe, ou réduit le nombre de filtres sélectionnés."
+
+msgid "The following fields are required to publish this dataset:"
+msgstr "Les champs suivants doivent être remplis afin de publier ce jeu de données:"
