@@ -4,6 +4,13 @@
 # Thia file is being maintained by hand so that changes are visible
 # in source control.  CKAN's .po file is reported as binary by git
 # for some reason.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
 
 msgid "You are now following {0}"
 msgstr "Vous êtes maintenant abonné à {0}"
@@ -20,14 +27,8 @@ msgstr "Afficher plus"
 msgid "Show less"
 msgstr "Afficher moins"
 
-msgid "Show more"
-msgstr "Afficher plus"
-
 msgid "Log in"
 msgstr "Connexion"
-
-msgid "Search Data"
-msgstr "Chercher un jeu de données"
 
 msgid "Load more"
 msgstr "En charger davantage"
@@ -101,6 +102,7 @@ msgstr "popularité"
 msgid "This dataset has no description"
 msgstr "Aucune description disponible pour cet ensemble de données"
 
+msgid "{number} dataset found for \"{query}\""
 msgid_plural "{number} datasets found for \"{query}\""
 msgstr[0] "{number} ensemble de données trouvé"
 msgstr[1] "{number} ensembles de données trouvés"
@@ -108,6 +110,7 @@ msgstr[1] "{number} ensembles de données trouvés"
 msgid "Sorry no datasets found for \"{query}\""
 msgstr "0 ensemble de données trouvé"
 
+msgid "{number} dataset found"
 msgid_plural "{number} datasets found"
 msgstr[0] "{number} ensemble de données trouvé"
 msgstr[1] "{number} ensembles de données trouvés"
