@@ -43,6 +43,8 @@ class MetadataSchema(object):
 
         self.dataset_field_by_id = dict((f['id'], f)
             for f in self.dataset_fields)
+        self.metadata_field_by_id = dict((f['id'], f)
+            for f in self.dataset_sections[1]['fields'])
         self.resource_field_by_id = dict((f['id'], f)
             for f in self.resource_fields)
 

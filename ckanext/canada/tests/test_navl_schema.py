@@ -34,6 +34,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
             'license_id': 'ca-ogl-lgo',
+            'ready_to_publish': True,
             'resources': [{
                 'name': u'Full text.',
                 'name_fra': u'Full text.',
@@ -115,17 +116,29 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.sysadmin_action.package_create,
             name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
 
-    def test_validation_override(self):
+    def test_not_ready_to_publish(self):
         self.assert_raises(ValidationError,
             self.sysadmin_action.package_create,
             **self.incomplete_pkg)
 
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            validation_override=True, **self.override_possible_pkg)
+        self.normal_action.package_create(
+            **dict(self.override_possible_pkg, ready_to_publish=False))
 
-        self.sysadmin_action.package_create(
-            validation_override=True, **self.override_possible_pkg)
+        try:
+            self.normal_action.package_create(**self.override_possible_pkg)
+        except ValidationError, e:
+            assert 'ready_to_publish' in e.error_dict
+            assert any('notes' in err for err in e.error_dict['ready_to_publish'])
+
+        missing_resource_field = json.loads(json.dumps(self.complete_pkg))
+        del missing_resource_field['resources'][0]['name_fra']
+
+        try:
+            self.normal_action.package_create(**missing_resource_field)
+        except ValidationError, e:
+            assert 'ready_to_publish' in e.error_dict
+            assert any('name_fra' in err for err in e.error_dict['ready_to_publish'])
+
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
