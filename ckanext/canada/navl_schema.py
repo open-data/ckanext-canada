@@ -99,7 +99,7 @@ def _not_empty_if_ready_to_publish(key, data, errors, context):
     Not empty, but allow sysadmins to override the validation error
     by setting a value in data[(validation_override,)].
     """
-    if asbool(data.get(('ready_to_publish',), False)):
+    if asbool(data.get(('ready_to_publish',), True)):
         not_empty(key, data, errors, context)
     else:
         ignore_missing(key, data, errors, context)
