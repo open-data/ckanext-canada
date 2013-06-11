@@ -78,19 +78,19 @@ class RequiredWhenPublishing(object):
             return
         choices = schema_description.dataset_field_by_id['catalog_type']['choices']
         ctype_key = choices[0 if data.get(('catalog_type',), 'raw') == 'raw' else 1]['key']
-        missing = []
+        missing_names = []
         for name, lang, field in self.d_fields:
             if not data.get((name,)) and (field['mandatory'] == 'all' or
                     field['mandatory'] == ctype_key):
-                missing.append(name)
+                missing_names.append(name)
         rnum = 0
         while ('resources', rnum, 'url') in data:
             for name, lang, field in self.r_fields:
                 if not data.get(('resources', rnum, name)):
-                    missing.append('resources.%s.%s' % (rnum, name))
+                    missing_names.append('resources.%s.%s' % (rnum, name))
             rnum += 1
 
-        if missing:
+        if missing_names:
             raise Invalid(_(
                 "The following fields are required to publish this dataset:")
                 + u' ' + u', '.join(missing))
@@ -101,7 +101,8 @@ def _not_empty_if_ready_to_publish(key, data, errors, context):
     Not empty, but allow sysadmins to override the validation error
     by setting a value in data[(validation_override,)].
     """
-    if asbool(data.get(('ready_to_publish',), True)):
+    v = data.get(('ready_to_publish',), True)
+    if v is missing or v:
         not_empty(key, data, errors, context)
     else:
         ignore_missing(key, data, errors, context)
