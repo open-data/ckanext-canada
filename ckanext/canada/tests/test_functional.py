@@ -88,6 +88,12 @@ class TestNew(TestPackageBase):
         assert 'Title French:Missing value' in res, res
         assert 'Subject:Missing value' in res, res
         assert 'Title English:Missing value' in res, res
+        assert 'Description English:Missing value' in res, res
+        assert 'Description French:Missing value' in res, res
+        assert 'Tags English:Missing value' in res, res
+        assert 'Tags French:Missing value' in res, res
+        assert 'Date Published:Missing value' in res, res
+        assert 'Frequency:Missing value' in res, res
 
         fv = res.forms['dataset-form']
         fv['title'] = 'english title'
