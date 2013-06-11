@@ -37,9 +37,9 @@
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}
       {% if h.lang() == 'en' %}
-        <a href={{ license.url }}>View the {{ license.title }}</a>
+        <a href="{{ license.url }}">View the {{ license.title }}</a>
       {% else %}
-        <a href={{ license.url_fra }}>Voir la {{
+        <a href="{{ license.url_fra }}">Voir la {{
           license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
       {% endif %}
     {% endif %}
