@@ -25,9 +25,9 @@
       <p class="module-footer">
         {% set facet_name = title + 's' %}
         {% if h.get_param_int('_%s_limit' % name) %}
-          <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show more')}}</a>
+          <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
         {% else %}
-          <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more">{{ _('Show less') }}</a>
+          <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
         {% endif %}
       </p>
     {% else %}
