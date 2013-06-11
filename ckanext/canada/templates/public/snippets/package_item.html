@@ -47,7 +47,7 @@ Example:
         <span class="banner">Popular</span>
       {% endif %}
       {% if cr.field_id('notes', package, client_lang) %}
-        <div>{{ cr.field_id('notes', package, client_lang) | truncate(300) }}</div>
+        <div>{{ cr.field_id('notes', package, client_lang)[0:300] }}...</div>
       {% else %}
         <p class="empty">{{ _("This dataset has no description") }}</p>
       {% endif %}
