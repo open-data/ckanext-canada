@@ -59,15 +59,18 @@ Example:
       {{ cr.org_field(package, client_lang) }}
     </div>
     {% if package.resources and not hide_resources %}
-      <ul class="menu-horizontal margin-top-none">
-        <li><em>{{ _('Resource Formats') }}:</em></li>
+    <div style="display:inline-block;">
+      <span class="span-1 margin-left-none margin-bottom-small">
+        <em>{{ _('Resource Formats') }}:</em>
+      </span>
+      <ul class="menu-horizontal margin-top-none span-3 margin-bottom-none" >
         {% set formats = [] %}
         {% for resource in package.resources %}
           {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
         {% endfor %}
         
         {% for format in h.remove_duplicates(formats) %}
-          <li>
+          <li style="padding:0;">
             <code>{{ format }}</code>
           </li>
         {% endfor %}
