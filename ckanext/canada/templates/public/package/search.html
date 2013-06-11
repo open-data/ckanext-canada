@@ -7,42 +7,44 @@
 {%- endblock -%}
 
 {% block secondary_content %}
-  <h2>{{ _('Search Data') }}</h2>
+  <section role="complementary">
+    <h2>{{ _('Search Data') }}</h2>
   
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
-    name='organization') }}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
+      name='organization') }}
     
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
     
-  {% if h.lang() == 'en' %}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
-    name='keywords') }}
-  {% elif h.lang() == 'fr' %}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
-    name='keywords_fra') }}
-  {% endif %}
-  
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
-    name='subject', label_function=cr.subject_label) }}
-  
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
-    name='res_format', label_function=cr.res_label) }}
-    
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-    name='license_id', label_function=cr.license_lookup) }}
-    
-  {# { h.snippet('snippets/facet_list.html', title=c.facet_titles['ready_to_publish'],
-    name='ready_to_publish') } #}
-  <section>
-    {% set license = h.get_license('ca-ogl-lgo') %}
-    {% if license != None %}
-      {% if h.lang() == 'en' %}
-        <a href="{{ license.url }}">View the {{ license.title }}</a>
-      {% else %}
-        <a href="{{ license.url_fra }}">Voir la {{
-          license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
-      {% endif %}
+    {% if h.lang() == 'en' %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
+      name='keywords') }}
+    {% elif h.lang() == 'fr' %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+      name='keywords_fra') }}
     {% endif %}
+  
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
+      name='subject', label_function=cr.subject_label) }}
+  
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
+      name='res_format', label_function=cr.res_label) }}
+    
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
+      name='license_id', label_function=cr.license_lookup) }}
+    
+    {# { h.snippet('snippets/facet_list.html', title=c.facet_titles['ready_to_publish'],
+      name='ready_to_publish') } #}
+    <section>
+      {% set license = h.get_license('ca-ogl-lgo') %}
+      {% if license != None %}
+        {% if h.lang() == 'en' %}
+          <a href="{{ license.url }}">View the {{ license.title }}</a>
+        {% else %}
+          <a href="{{ license.url_fra }}">Voir la {{
+            license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
+        {% endif %}
+      {% endif %}
+    </section>
   </section>
 {% endblock %}
 
