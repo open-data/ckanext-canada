@@ -6,9 +6,11 @@ from ckan.logic import get_action, NotAuthorized, check_access
 from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
+from ckan.lib import i18n
+
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
-from pylons import config
+from pylons import config, session
 import webhelpers.feedgenerator
 
 class CanadaController(BaseController):
@@ -54,6 +56,30 @@ class CanadaController(BaseController):
             items_per_page=1000
         )
         return render('organization/index.html')
+
+    def logged_in(self):
+        # we need to set the language via a redirect
+        lang = session.pop('lang', None)
+        session.save()
+
+        # we need to set the language explicitly here or the flash
+        # messages will not be translated.
+        i18n.set_lang(lang)
+
+        if c.user:
+            context = None
+            data_dict = {'id': c.user}
+
+            user_dict = get_action('user_show')(context, data_dict)
+
+            h.flash_success(_("<p><strong>Note</strong></p>"
+                "<p>%s is now logged in</p>") %
+                user_dict['display_name'], allow_html=True)
+            return h.redirect_to(controller='package',
+                action='search', locale=lang)
+        else:
+            err = _('Login failed. Bad username or password.')
+            return self.login(error=err)
 
 class CanadaFeedController(FeedController):
     def general(self):
