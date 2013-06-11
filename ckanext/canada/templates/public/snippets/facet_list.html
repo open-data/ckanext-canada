@@ -4,7 +4,7 @@
 {% with items = items or h.get_facet_items_dict(name, limit=5) %}
   {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
   <section>
-    <h4 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h4>
+    <h3 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h3>
     <div class="module">
     <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action">{{ _('Clear All') }}</a></p>    
     {% if items %}
