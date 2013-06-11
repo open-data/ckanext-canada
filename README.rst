@@ -373,10 +373,10 @@ Dataset and resource field descriptions are dicts containing the following:
 Compiling the updated French localization strings
 -------------------------------------------------
 
-1. The open-data/ckan repo, branch canada-v2.0 should contain the compiled localization file. But if it doesn't, you can compile like so::
+Each time you install or update this extension you need to install the
+updated translations by running::
 
-   $ python setup.py compile_catalog --locale fr
+   bin/build-combined-ckan-mo.sh
 
-2. If you are not running CKAN from source, you need to copy the compiled .mo file to your deploy environment::
-
-   $cp ckan_source/ckan/i18n/fr/LC_MESSAGES/ckan.mo virtualenv/ckan/src/ckan/ckan/i18n/fr/LC_MESSAGES/ckan.mo
+This script overwrites the ckan French translations by combining it with
+ours.
