@@ -24,7 +24,7 @@
   <div class="module-related">
     <h3>{{_('About this Dataset')}}
     <a href="{{ h.url_for(action='history', controller='package', id=pkg.id)
-      }}?format=atom" title="RSS"><span class="wb-icon-rss"></span></a></h3>
+      }}?format=atom" title="RSS"><span class="wb-icon-rss indent-medium"></span><span style="color:white;">{{_('RSS Feed')}}</span></a></h3>
     <ul>
       {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
       <li><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
