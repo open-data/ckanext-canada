@@ -1,6 +1,5 @@
   {% block ds_socialmedia %} 
-  
-  <p>
+
   <div class="module-related">
     {% set pkg = c.pkg_dict %}  
     <h3>{{_('Have your say') }}</h3>
@@ -24,5 +23,4 @@
       <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{ _('Comment(s)') }}</a></li>
     </ul>
   </div>
-  </p>
   {% endblock ds_socialmedia %}
