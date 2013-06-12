@@ -109,6 +109,16 @@ class DataGCCAPublic(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
+
+        facets_dict = {
+                      'keywords': _('Tags'),
+                      'keywords_fra': _('Tags'),
+                      'res_format': _('File Format'),
+                      'catalog_type': _('Data Type'),
+                      'subject': _('Subject'),
+                      'ready_to_publish': _('Ready to Publish'),
+                      'license_id': _('Licence') }
+
         return facets_dict
 
     def get_helpers(self):

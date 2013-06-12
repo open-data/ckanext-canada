@@ -17,7 +17,7 @@
       _('This dataset is currently ranked five stars'),
       ][rating] -%}
     <li><img class="image-actual" src="{{
-      h.url_for_static('/static/img/' + rating_img, qualified=true)
+      h.url_for_static('/static/img/leaves/' + rating_img, qualified=true)
       }}" alt="{{ rating_alt }}"><br />
       <a href="/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
 
