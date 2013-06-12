@@ -75,11 +75,20 @@
       <ul class="list-bullet-none">
         <li class="margin-bottom-medium"><a href="{{ h.portal_url() + (
             '/eng/openness-rating' if h.lang() == 'en' else
-            '/fra/cote-degre-douvertrure-des-donnees') }}">{{ _('Openness rating') }}</a>: 
-            <span title="{{ h.openness_score(pkg) }}"
-              class="openness-rating-{{ h.openness_score(pkg) }}"></span>
+            '/fra/cote-degre-douvertrure-des-donnees') }}">{{ _('Openness rating') }}</a>:
+            {%- set openness = h.openness_score(pkg) -%}
+            <img src="{{ h.url_for_static('/static/img/stars/star'
+              ~ openness ~ '.png') }}" alt="{{
+                ['',
+                _('one star'),
+                _('two stars'),
+                _('three stars'),
+                _('four stars'),
+                _('five stars'),
+                ][openness] }}"
+                class="image-actual margin-bottom-none openness-rating-stars" />
         </li>
-        
+
         {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
         {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
         {% if cr.date_field(period_start, pkg) and cr.date_field(period_end, pkg) %}
@@ -98,9 +107,6 @@
         <ul class="list-bullet-none">
           <li class="margin-bottom-medium">{{ _('The information on this page (the dataset metadata) is also available in JSON format') }}<br/>
           <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON format') }}</a></li>
-          <li class="margin-bottom-medium">{{ (_("Read more about this site's API:"
-            " <a href='%(portal)s/eng/developers-corner-api'>About the API</a>")
-            % dict(portal=h.portal_url()))|safe }}</li>
         </ul>
     </section>
 

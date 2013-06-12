@@ -64,6 +64,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-u', '--ckan-user', dest='ckan_user',
         default=None)
     parser.add_option('-l', '--log', dest='log', default=None)
+    parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
 
     def command(self):
         '''
@@ -367,7 +368,7 @@ class CanadaCommand(CkanCommand):
 
             _trim_package(source_pkg)
 
-            if source_pkg:
+            if source_pkg and not self.options.mirror:
                 # treat unpublished packages same as deleted packages
                 if not source_pkg['portal_release_date'] or isodate(
                         source_pkg['portal_release_date'], None) > now:
