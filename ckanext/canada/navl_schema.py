@@ -93,7 +93,7 @@ class RequiredWhenPublishing(object):
         if missing_names:
             raise Invalid(_(
                 "The following fields are required to publish this dataset:")
-                + u' ' + u', '.join(missing))
+                + u' ' + u', '.join(missing_names))
 
 
 def _not_empty_if_ready_to_publish(key, data, errors, context):
