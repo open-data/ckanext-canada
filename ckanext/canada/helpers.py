@@ -139,7 +139,7 @@ def dataset_rating(pkg_id):
       drupal_conn.close()
   except KeyError:
      pass
-  return rating
+  return int(rating)
 
 def dataset_comment_count(pkg_id):
 
