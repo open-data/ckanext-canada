@@ -5,7 +5,7 @@
     
     {% set pkg = c.pkg_dict %}
 
-    {% set comment_list = h.dataset_comments(pkg.id) %}
+    {% set comment_list = h.dataset_comments(pkg.id, h.lang()) %}
 
     <h3><a id="comments">{{ _('Comments') }}</a></h3>
     
