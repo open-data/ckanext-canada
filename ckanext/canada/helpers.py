@@ -168,3 +168,6 @@ def dataset_comment_count(pkg_id):
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+    
+def googleanalytics_id():
+    return str(config.get('googleanalytics.id'))
