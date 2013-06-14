@@ -13,6 +13,9 @@ ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 
+pg2.extensions.register_type(pg2.extensions.UNICODE)
+pg2.extensions.register_type(pg2.extensions.UNICODEARRAY)
+
 def may_publish_datasets(userobj=None):
     if not userobj:
         userobj = c.userobj
@@ -84,10 +87,10 @@ def dataset_comments(pkg_id, lang):
         
         # add this to the SQL statement to limit comments to those that are published  'and status = 0'
         drupal_cursor.execute(
-           """select to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value, c.language from comment c 
+           """select to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value, c.language from comment c
 inner join field_data_comment_body f on c.cid = f.entity_id
-inner join opendata_package o on o.pkg_node_id = c.nid
-where o.pkg_id = %s and c.language = %s""", (pkg_id, lang))
+inner join opendata_package o on c.nid in (select n.nid from node n where n.tnid = o.pkg_node_id)
+where o.pkg_id = %s and c.language = %s;""", (pkg_id, lang))
       
     
         for comment in drupal_cursor:
