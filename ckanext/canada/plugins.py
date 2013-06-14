@@ -87,6 +87,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
+        p.toolkit.add_resource('public/static/js', 'js')
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -132,6 +133,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'dataset_rating',
             'dataset_comment_count',
             'portal_url',
+            'googleanalytics_id',
             ])
 
     def before_map(self, map):
