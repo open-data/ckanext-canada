@@ -120,8 +120,7 @@ def normalize_strip_accents(s):
 
 
 def dataset_rating(pkg_id):
-  
-  rating = -1
+  rating = None
   try:
     dbd = parse_db_config('ckan.drupal.url')
     if (dbd):
