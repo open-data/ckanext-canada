@@ -112,8 +112,8 @@ msgstr "0 ensemble de données trouvé"
 
 msgid "{number} dataset found"
 msgid_plural "{number} datasets found"
-msgstr[0] "{number} ensemble de données trouvé"
-msgstr[1] "{number} ensembles de données trouvés"
+msgstr[0] "{number} jeu de données trouvé"
+msgstr[1] "{number} jeux de données trouvés"
 
 msgid "Sorry no datasets found"
 msgstr "0 ensembles de données trouvés"
@@ -219,6 +219,9 @@ msgstr "Utilisez notre formulaire de récupération de mot de passe pour rétabl
 
 msgid "Search Data"
 msgstr "Recherche données"
+
+msgid "Search Datasets"
+msgstr "Recherche de jeux de données"
 
 msgid "Help"
 msgstr "Aide"
@@ -355,10 +358,10 @@ msgid "Data Type"
 msgstr "Type de données"
 
 msgid "No datasets were found to match your query."
-msgstr "Aucun jeu de données correspond aux termes de recherche spécifiés."
+msgstr "Aucun jeu de données ne correspond aux termes de recherche spécifiés."
 
 msgid "Please review your spelling, or reduce the number of filters selected."
-msgstr "S'il vous plaît vérifier votre orthographe, ou réduit le nombre de filtres sélectionnés."
+msgstr "S'il vous plaît vérifier l’orthographe, ou réduire le nombre de filtres sélectionnés."
 
 msgid "The following fields are required to publish this dataset:"
 msgstr "Les champs suivants doivent être remplis afin de publier ce jeu de données:"
