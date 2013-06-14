@@ -78,8 +78,9 @@ class CanadaController(BaseController):
             return h.redirect_to(controller='package',
                 action='search', locale=lang)
         else:
-            err = _('Login failed. Bad username or password.')
-            return self.login(error=err)
+            h.flash_error(_('Login failed. Bad username or password.'))
+            return h.redirect_to(controller='user',
+                action='login', locale=lang)
 
 class CanadaFeedController(FeedController):
     def general(self):
