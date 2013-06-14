@@ -13,6 +13,9 @@ ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 
+pg2.extensions.register_type(pg2.extensions.UNICODE)
+pg2.extensions.register_type(pg2.extensions.UNICODEARRAY)
+
 def may_publish_datasets(userobj=None):
     if not userobj:
         userobj = c.userobj
@@ -70,7 +73,7 @@ def remove_duplicates(a_list):
 
 
 # Retrieve the comments for this dataset that have been saved in the Drupal database
-def dataset_comments(pkg_id):
+def dataset_comments(pkg_id, lang):
 
     #import pdb; pdb.set_trace()
     comment_list = []
@@ -84,10 +87,10 @@ def dataset_comments(pkg_id):
         
         # add this to the SQL statement to limit comments to those that are published  'and status = 0'
         drupal_cursor.execute(
-           """select to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value from comment c 
+           """select to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value, c.language from comment c
 inner join field_data_comment_body f on c.cid = f.entity_id
-inner join opendata_package o on o.pkg_node_id = c.nid
-where o.pkg_id = %s""", (pkg_id,))
+inner join opendata_package o on c.nid in (select n.nid from node n where n.tnid = o.pkg_node_id)
+where o.pkg_id = %s and c.language = %s;""", (pkg_id, lang))
       
     
         for comment in drupal_cursor:
@@ -117,8 +120,7 @@ def normalize_strip_accents(s):
 
 
 def dataset_rating(pkg_id):
-  
-  rating = -1
+  rating = None
   try:
     dbd = parse_db_config('ckan.drupal.url')
     if (dbd):
@@ -139,7 +141,7 @@ def dataset_rating(pkg_id):
       drupal_conn.close()
   except KeyError:
      pass
-  return int(rating)
+  return int(0 if rating is None else rating)
 
 def dataset_comment_count(pkg_id):
 

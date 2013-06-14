@@ -93,11 +93,11 @@ Configuration: development.ini or production.ini
 
 The CKAN ini file needs the following plugins for the registry server::
 
-   ckan.plugins = stats canada_forms canada_internal canada_public canada_package wet_theme
+   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme
 
 For the public server use only::
 
-   ckan.plugins = stats canada_forms canada_public canada_package wet_theme
+   ckan.plugins = stats googleanalytics canada_forms canada_public canada_package wet_theme
 
 CKAN also needs to be able to find the licenses file for the license list
 to be correctly populated::

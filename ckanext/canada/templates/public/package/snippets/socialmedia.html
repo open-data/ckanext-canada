@@ -4,12 +4,11 @@
   {% set pkg = c.pkg_dict %}
   <h3>{{ _('Have your say') }}</h3>
   <ul>
-    {%- set rating = h.dataset_rating(pkg.name) or 5 -%}
+    {%- set rating = h.dataset_rating(pkg.name) or 0 -%}
     {%- set rating_img = ['zerostar.png', 'onestar.png', 'twostar.png',
       'threestar.png', 'fourstar.png', 'fivestar.png'][rating] -%}
     {%- set rating_alt = [
       _('This dataset is currently unrated'),
-      _('This dataset is currently ranked zero stars'),
       _('This dataset is currently ranked one star'),
       _('This dataset is currently ranked two stars'),
       _('This dataset is currently ranked three stars'),
