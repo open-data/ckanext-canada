@@ -25,7 +25,7 @@
     {% endif %}
     
      <ul class="button-group">
-          <li class="button"><a href="/dataset/{{pkg.name}}">{{_('Comment')}}</a></li>
+          <li class="button"><a href="/{% if h.lang() == 'fr' %}fra{% else %}eng{% endif %}/dataset/{{pkg.name}}">{{_('Comment')}}</a></li>
      </ul>
     
   </section>
