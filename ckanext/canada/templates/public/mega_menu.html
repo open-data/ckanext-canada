@@ -5,78 +5,158 @@
 {# The French mega-menu has not yet been prepared #}
 
 {# CKAN and WET developers, please note that wrapping each list item in an unordered list seems to be required for IE compatability #}
+{% if h.lang() == 'fr' %}
 <li>
   <section>
-    <h3><a href="#">{{ _('About data.gc.ca') }}</a></h3>
+    <h3><a href="#">À propos de donnees.gc.ca</a></h3>
     <div class="mb-sm">
       <div class="span-2">
        <ul>
-          <li><a href="/eng/open-government-licence-canada">{{ _('Open Government Licence') }}</a></li>
-          <li><a href="/eng/frequently-asked-questions">{{ _('Frequently Asked Questions') }}</a></li>
-          <li><a href="/eng/open-data-101">{{ _('Open Data 101') }}</a></li>
-          <li><a href="/eng/open-data-principles">{{ _('Open Data Principles') }}</a></li>                              
+          <li><a href="/fra/licence-du-gouvernement-ouvert-canada">Open Government Licence</a></li>
+          <li><a href="/fra/foire-aux-questions">Foire aux questions</a></li>
+          <li><a href="/fra/labc-des-donnees-ouvertes">L'abc des données ouvertes</a></li>
+          <li><a href="/fra/principes-de-donnees-ouvertes">Principes de données ouvertes</a></li>                              
        </ul>
       </div>
       <div class="clear"></div>
-      <div class="mb-main-link"><a href="/eng/about-datagcca">{{ _('About data.gc.ca - Main page') }}</a></div>
+      <div class="mb-main-link"><a href="/fra/propos-de-donneesgcca">À propos de donnees.gc.ca - Page principale</a></div>
     </div>
   </section>
 </li>
 
 <li>
   <section>
-    <h3><a href="#">{{ _('Open Data') }}</a></h3>
+    <h3><a href="#">Données ouvertes</a></h3>
     <div class="mb-sm">
       <div class="span-2">
         <ul>
-          <li><a href="/data/en/dataset">{{ _('Search Data') }}</a></li>  
-          <li><a href="/eng/showcase">{{ _('Showcase') }}</a></li> 
-          <li><a href="/eng/maps/open-data-canada">{{ _('Open Data in Canada') }}</a></li>  
-          <li><a href="/eng/featured-datasets">{{ _('Featured Data') }}</a></li>
-          <li><a href="/eng/developers-corner">{{ _('Developer\'s Corner') }}</a></li>
-          <li><a href="/eng/facts-and-figures">{{ _('Facts & Figures') }}</a></li>
+          <li><a href="/data/fr/dataset">Recherche de données</a></li>  
+          <li><a href="/fra/en-vedette">En vedette</a></li> 
+          <li><a href="/fra/cartes/donnees-ouvertes-au-canada">Données ouvertes au Canada</a></li>  
+          <li><a href="/fra/donnees-regardees-de-pres">>Données regardées de près</a></li>
+          <li><a href="/fra/coin-des-developpeurs">Coin des développeurs</a></li>
+          <li><a href="/fra/faits-et-chiffres">Faits et chiffres</a></li>
         </ul>
       </div>  
       <div class="clear"></div>
-      <div class="mb-main-link"><a href="/eng/open-data">{{ _('Open Data - Main page') }}</a></div>
+      <div class="mb-main-link"><a href="/fra/donnees-ouvertes">Données ouvertes - Page principale</a></div>
     </div>
   </section>
 </li>
 
 <li>
   <section>
-    <h3><a href="#">{{ _('Open Government') }}</a></h3>
+    <h3><a href="#">Gouvernement ouvert</a></h3>
     <div class="mb-sm">
       <div class="span-2">
         <ul>
-            <li><a href='/eng/search/ati'>{{ _('Search Summaries of Completed ATI requests') }}</a></li>
-            <li><a href="/eng/canadas-action-plan-open-government">{{ _('Canada\'s Action Plan on Open Government') }}</a></li>        
-            <li><a href="/eng/advisory-panel-open-government">{{ _('Advisory Panel') }}</a></li>
+            <li><a href='/fra/search/ati'>Recherche des sommaires de demandes d'AI complétées</a></li>
+            <li><a href='/fra/gouvernement-ouvert#depenses'>Dépenses du gouvernement</a></li>
+            <li><a href="/fra/plan-daction-du-canada-pour-un-gouvernement-ouvert">Plan d'action du Canada pour un gouvernement ouvert</a></li>        
+            <li><a href="fra/comite-consultatif">Comité consultatif</a></li>
         </ul>
       </div>
       <div class="clear"></div>
-      <div class="mb-main-link"><a href="/eng/open-government">{{ _('Open Government - Main page') }}</a></div>
+      <div class="mb-main-link"><a href="/fra/gouvernement-ouvert">Gouvernement ouvert - Page principale</a></div>
     </div>
   </section>
 </li>
 
 <li>
   <section>
-    <h3><a href="#">{{ _('Participate') }}</a></h3>
+    <h3><a href="#">Participez</a></h3>
     <div class="mb-sm">
       <div class="span-2">
         <ul>
-            <li><a href="/eng/forms/contact-us">{{ _('Give Us Your Feedback') }}</a></li>
-            <li><a href="/eng/blog">{{ _('Blog') }}</a></li>
-            <li><a href="/eng/suggested-datasets">{{ _('Suggest a Dataset') }}</a></li>
-            <li><a href="/eng/forms/submit-your-app">{{ _('Submit Your App') }}</a></li>                                
-            <li><a href="/eng/consultations">{{ _('Consultations') }}</a></li>
+            <li><a href="/fra/formulaire/faites-nous-part-de-vos-commentaires#commentaires">Faites-nous part de vos commentaires</a></li>
+            <li><a href="/fra/blogue">Blogue</a></li>
+            <li><a href="/fra/jeux-de-donnees-suggeres">Proposez un jeu de données</a></li>
+            <li><a href="/fra/formulaire/informez-nous-de-votre-application">Informez-nous de votre application</a></li>                                
+            <li><a href="/fra/consultations">Consultations</a></li>
         </ul> 
       </div> 
       <div class="clear"></div>   
-      <div class="mb-main-link"><a href="/eng/participate">{{ _('Participate - Main page') }}</a></div>
+      <div class="mb-main-link"><a href="/fra/participez">Participez - Page principale</a></div>
     </div>  
   </section>
 </li>
+
+{% else %}
+
+<li>
+  <section>
+    <h3><a href="#">About data.gc.ca</a></h3>
+    <div class="mb-sm">
+      <div class="span-2">
+       <ul>
+          <li><a href="/eng/open-government-licence-canada">Open Government Licence</a></li>
+          <li><a href="/eng/frequently-asked-questions">Frequently Asked Questions</a></li>
+          <li><a href="/eng/open-data-101">Open Data 101</a></li>
+          <li><a href="/eng/open-data-principles">Open Data Principles</a></li>                              
+       </ul>
+      </div>
+      <div class="clear"></div>
+      <div class="mb-main-link"><a href="/eng/about-datagcca">About data.gc.ca - Main page</a></div>
+    </div>
+  </section>
+</li>
+
+<li>
+  <section>
+    <h3><a href="#">Open Data</a></h3>
+    <div class="mb-sm">
+      <div class="span-2">
+        <ul>
+          <li><a href="/data/en/dataset">Search Data</a></li>  
+          <li><a href="/eng/showcase">Showcase</a></li> 
+          <li><a href="/eng/maps/open-data-canada">Open Data in Canada</a></li>  
+          <li><a href="/eng/featured-data">Featured Data</a></li>
+          <li><a href="/eng/developers-corner">Developer\'s Corner</a></li>
+          <li><a href="/eng/facts-and-figures">Facts and Figures</a></li>
+        </ul>
+      </div>  
+      <div class="clear"></div>
+      <div class="mb-main-link"><a href="/eng/open-data">Open Data - Main page</a></div>
+    </div>
+  </section>
+</li>
+
+<li>
+  <section>
+    <h3><a href="#">Open Government</a></h3>
+    <div class="mb-sm">
+      <div class="span-2">
+        <ul>
+            <li><a href='/eng/search/ati'>Search Summaries of Completed ATI requests</a></li>
+            <li><a href='/eng/open-government#gcspending'>Government Spending</a></li>
+            <li><a href="/eng/canadas-action-plan-open-government">Canada's Action Plan on Open Government</a></li>        
+            <li><a href="/eng/advisory-panel-open-government">Advisory Panel</a></li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+      <div class="mb-main-link"><a href="/eng/open-government">Open Government - Main page</a></div>
+    </div>
+  </section>
+</li>
+
+<li>
+  <section>
+    <h3><a href="#">Participate</a></h3>
+    <div class="mb-sm">
+      <div class="span-2">
+        <ul>
+            <li><a href="/eng/forms/contact-us#feedback">Give Us Your Feedback</a></li>
+            <li><a href="/eng/blog">Blog</a></li>
+            <li><a href="/eng/suggested-datasets">Suggest a Dataset</a></li>
+            <li><a href="/eng/forms/submit-your-app">Submit Your App</a></li>                                
+            <li><a href="/eng/consultations">Consultations</a></li>
+        </ul> 
+      </div> 
+      <div class="clear"></div>   
+      <div class="mb-main-link"><a href="/eng/participate">Participate - Main page</a></div>
+    </div>  
+  </section>
+</li>
+{% endif %}
 
 {% endblock %}
