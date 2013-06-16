@@ -102,9 +102,8 @@ class CanadaFeedController(FeedController):
         alternate_url = self._alternate_url(params)
 
         return self.output_feed(results,
-            feed_title=_(u'Open Government'),
-            feed_description=_(u'Recently created or '
-            'updated datasets on %s') % g.site_title,
+            feed_title=_(u'data.gc.ca Dataset Feed'),
+            feed_description='',
             feed_link=alternate_url,
             feed_guid=_create_atom_id(
             u'/feeds/dataset.atom'),
