@@ -335,8 +335,9 @@ def get_department_number(key, data, errors, context):
     Return the department number for the org to which this dataset is assigned
     """
     owner_org = data.get(('owner_org',))
+    # FIXME: only returns department number for orgs from pilot
     data[key] = schema_description.dataset_field_by_id['owner_org'][
-        'choices_by_pilot_uuid'].get(owner_org, {'id':None})['id']
+        'choices_by_pilot_uuid'].get(owner_org, {}).get('id')
 
 
 def get_license_field(name):
