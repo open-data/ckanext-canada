@@ -24,13 +24,13 @@ def limit_api_logic():
         'package_activity_list': {'data_dict': {'limit': 2}},
         'group_activity_list': {'data_dict': {'limit': 2}},
         'organization_activity_list': {'data_dict': {'limit': 2}},
-        'recently_changed_packages_activity_list': {'data_dict': {'limit': 2}},
+        'recently_changed_packages_activity_list': {'data_dict': {'limit': 10}},
         'user_activity_list_html': {'data_dict': {'limit': 2}},
         'package_activity_list_html': {'data_dict': {'limit': 2}},
         'group_activity_list_html': {'data_dict': {'limit': 2}},
         'organization_activity_list_html': {'data_dict': {'limit': 2}},
         'recently_changed_packages_activity_list_html':
-            {'data_dict': {'limit': 2}},
+            {'data_dict': {'limit': 10}},
         'dashboard_activity_list': {'data_dict': {'limit': 2}},
         'dashboard_activity_list_html': {'data_dict': {'limit': 2}},
         }
