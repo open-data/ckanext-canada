@@ -1,11 +1,15 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
 {% extends "package/read_base.html" %}
+
+{% import 'macros/canada_read.html' as cr %}
 
 {% set pkg = c.pkg_dict %}
 {% set res = c.resource %}
 
 {% block breadcrumb_content %}
   <li>{% link_for _('Datasets'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% link_for h.dataset_display_name(c.package)|truncate(15), controller='package', action='read', id=c.package.get('name') %}</li>
+  <li>{% link_for cr.field(schema_description.dataset_field_by_id['title'], pkg, h.lang()) | truncate(30),
+        controller='package', action='read', id=pkg['name'] %}</li>
 {% endblock %}
 
 {% block secondary_content %}{% endblock %}
@@ -18,18 +22,29 @@
         <div>
           <div>
             {% block resource_content %}
-              {% block resource_read_title %}<h3>{{ h.resource_display_name(res) | truncate(50) }}</h3>{% endblock %}
+              {% block resource_read_title %}<h3>{{
+                cr.resource_display_name(res, h.lang()) | truncate(50)
+                }}</h3>{% endblock %}
               <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
               <div class="prose notes" property="rdfs:label">
-                {% if res.description %}
-                  {{ h.render_markdown(res.description) }}
-                {% else %}
-                  <p class="empty">{{ _('There is no description for this resource') }}</p>
-                {% endif %}
-                {% if not res.description and c.package.notes %}
+                {%- set notes = cr.field(
+                  schema_description.dataset_field_by_id['notes'],
+                  pkg, h.lang()) -%}
+                {%- if notes -%}
                   <h3>{{ _('From the dataset abstract') }}</h3>
-                  <p>{{ h.markdown_extract(c.package.get('notes')) }}</p>
-                  <p>{% trans dataset=c.package.title, url=h.url_for(controller='package', action='read', id=c.package['name']) %}Source: <a href="{{ url }}">{{ dataset }}</a>{% endtrans %}
+                  <p>{{ h.markdown_extract(notes) }}</p>
+                  <p>{% trans
+                    dataset=cr.field(
+                        schema_description.dataset_field_by_id['title'],
+                        pkg,
+                        h.lang()),
+                    url=h.url_for(
+                        controller='package',
+                        action='read',
+                        id=pkg['name'])
+                    %}Source: <a href="{{ url }}">{{ dataset }}</a>{%
+                    endtrans %}
+                  </p>
                 {% endif %}
               {% endblock %}
             </div>
