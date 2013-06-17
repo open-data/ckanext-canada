@@ -165,12 +165,11 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     # IActions
 
     def get_actions(self):
-        return dict((h, getattr(logic, h)) for h in [
-            'group_show',
-            'organization_show',
-            'user_activity_list',
+        actions = logic.limit_api_logic()
+        actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_list_since',
             ])
+        return actions
 
     # IDatasetForm
 

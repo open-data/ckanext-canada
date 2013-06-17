@@ -5,19 +5,31 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from pylons import config
+import functools
 
-def group_show(context, data_dict):
-    context.update({'limits': {'packages': 2}})
-    return core_get.group_show(context, data_dict)
 
-def organization_show(context, data_dict):
-    context.update({'limits': {'packages': 2}})
-    return core_get.organization_show(context, data_dict)
-
-@side_effect_free
-def user_activity_list(context, data_dict):
-    data_dict['limit'] = 2
-    return core_get.user_activity_list(context, data_dict)
+def limit_api_logic():
+    """
+    Return a dict of logic function names to their wrappers
+    that override existing api calls with more restricive parameters
+    """
+    api_limits = {
+        'group_show': {'context': {'limits': {'packages': 2}}},
+        'organization_show': {'context': {'limits': {'packages': 2}}},
+        'user_activity_list': {'data_dict': {'limit': 2}},
+        }
+    out = {}
+    for name, limits in api_limits.items():
+        action = getattr(core_get, name)
+        @functools.wraps(action)
+        def wrapper(context, data_dict, limits=limits, action=action):
+            context.update(limits.get('context', {}))
+            data_dict.update(limits.get('data_dict', {}))
+            return action(context, data_dict)
+        if hasattr(action, 'side_effect_free'):
+            wrapper.side_effect_free = action.side_effect_free
+        out[name] = wrapper
+    return out
 
 @side_effect_free
 def changed_packages_activity_list_since(context, data_dict):
