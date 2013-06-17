@@ -17,6 +17,22 @@ def limit_api_logic():
         'group_show': {'context': {'limits': {'packages': 2}}},
         'organization_show': {'context': {'limits': {'packages': 2}}},
         'user_activity_list': {'data_dict': {'limit': 2}},
+        'current_package_list_with_resources': {'data_dict': {'limit': 2}},
+        'group_package_show': {'data_dict': {'limit': 2}},
+        'package_search': {'data_dict': {'rows': 20}},
+        'resource_search': {'data_dict': {'limit': 20}},
+        'package_activity_list': {'data_dict': {'limit': 2}},
+        'group_activity_list': {'data_dict': {'limit': 2}},
+        'organization_activity_list': {'data_dict': {'limit': 2}},
+        'recently_changed_packages_activity_list': {'data_dict': {'limit': 2}},
+        'user_activity_list_html': {'data_dict': {'limit': 2}},
+        'package_activity_list_html': {'data_dict': {'limit': 2}},
+        'group_activity_list_html': {'data_dict': {'limit': 2}},
+        'organization_activity_list_html': {'data_dict': {'limit': 2}},
+        'recently_changed_packages_activity_list_html':
+            {'data_dict': {'limit': 2}},
+        'dashboard_activity_list': {'data_dict': {'limit': 2}},
+        'dashboard_activity_list_html': {'data_dict': {'limit': 2}},
         }
     out = {}
     for name, limits in api_limits.items():
