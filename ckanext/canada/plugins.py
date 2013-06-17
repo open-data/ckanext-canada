@@ -8,8 +8,7 @@ from routes.mapper import SubMapper
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
-from ckanext.canada.logic import (group_show, organization_show,
-    changed_packages_activity_list_since)
+from ckanext.canada import logic
 from ckanext.canada import helpers
 
 
@@ -166,12 +165,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     # IActions
 
     def get_actions(self):
-        return {
-            'group_show': group_show,
-            'organization_show': organization_show,
-            'changed_packages_activity_list_since':
-                changed_packages_activity_list_since,
-            }
+        return dict((h, getattr(logic, h)) for h in [
+            'group_show',
+            'organization_show',
+            'user_activity_list',
+            'changed_packages_activity_list_since',
+            ])
 
     # IDatasetForm
 
