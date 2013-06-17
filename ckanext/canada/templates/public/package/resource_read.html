@@ -8,7 +8,7 @@
 
 {% block breadcrumb_content %}
   <li>{% link_for _('Datasets'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% link_for cr.field(schema_description.dataset_field_by_id['title'], pkg, h.lang()) | truncate(30),
+  <li>{% link_for cr.field(schema_description.dataset_field_by_id['title'], pkg, h.lang()) | truncate(30) | safe,
         controller='package', action='read', id=pkg['name'] %}</li>
 {% endblock %}
 
@@ -23,7 +23,7 @@
           <div>
             {% block resource_content %}
               {% block resource_read_title %}<h3>{{
-                cr.resource_display_name(res, h.lang()) | truncate(50)
+                cr.resource_display_name(res, h.lang()) | truncate(50) | safe
                 }}</h3>{% endblock %}
               <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
               <div class="prose notes" property="rdfs:label">
