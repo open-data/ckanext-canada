@@ -8,7 +8,8 @@
 
 {% block breadcrumb_content %}
   <li>{% link_for _('Datasets'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% link_for h.dataset_display_name(c.package)|truncate(15), controller='package', action='read', id=c.package.get('name') %}</li>
+  <li>{% link_for cr.field(schema_description.dataset_field_by_id['title'], pkg, h.lang()) | truncate(30),
+        controller='package', action='read', id=pkg['name'] %}</li>
 {% endblock %}
 
 {% block secondary_content %}{% endblock %}
@@ -35,12 +36,12 @@
                   <p>{% trans
                     dataset=cr.field(
                         schema_description.dataset_field_by_id['title'],
-                        c.package,
+                        pkg,
                         h.lang()),
                     url=h.url_for(
                         controller='package',
                         action='read',
-                        id=c.package['name'])
+                        id=pkg['name'])
                     %}Source: <a href="{{ url }}">{{ dataset }}</a>{%
                     endtrans %}
                   </p>
