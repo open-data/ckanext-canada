@@ -65,6 +65,8 @@ class CanadaCommand(CkanCommand):
         default=None)
     parser.add_option('-l', '--log', dest='log', default=None)
     parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
+    parser.add_option('-a', '--api-key', dest='api_key',
+        default=None)
 
     def command(self):
         '''
@@ -114,8 +116,8 @@ class CanadaCommand(CkanCommand):
             self.portal_update(self.args[1], *self.args[2:])
 
         elif cmd == 'portal-update-worker':
-            with _quiet_int_pipe():
-                self.portal_update_worker(self.args[1])
+            #with _quiet_int_pipe():
+            self.portal_update_worker(self.args[1])
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
@@ -355,8 +357,10 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        registry = RemoteCKAN(source)
-        portal = LocalCKAN()
+        #registry = RemoteCKAN(source)
+        registry = LocalCKAN()
+        #portal = LocalCKAN()
+        portal = RemoteCKAN(source, api_key=self.options.api_key)
         now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
