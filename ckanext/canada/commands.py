@@ -32,8 +32,8 @@ class CanadaCommand(CkanCommand):
                                     [<starting line number> [<lines to load>]]
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>]
-                      portal-update <registry server> [<last activity date>]
-                                    [-p <num>]
+                      portal-update <remote server> [<last activity date>]
+                                    [-p <num>] [-a <push-apikey>]
                       dump-datasets [-p <num>]
 
         <starting line number> of .jl source file, default: 1
@@ -50,6 +50,8 @@ class CanadaCommand(CkanCommand):
         -u/--ckan-user <username>  sets the owner of packages created,
                                    default: ckan system user
         -l/--log <log filename>    write log of actions to log filename
+        -a/--push-apikey <apikey>  push to <remote server> instead of
+                                   pulling and use provided apikey
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -286,9 +288,12 @@ class CanadaCommand(CkanCommand):
                 yield package_ids, next_date
                 start_date = next_date
 
+        cmd = [sys.argv[0], 'canada', 'portal-update-worker', source,
+             '-c', self.options.config]
+        if self.options.push_apikey:
+            cmd.extend(['-a', self.options.push_apikey])
         pool = worker_pool(
-            [sys.argv[0], 'canada', 'portal-update-worker', source,
-             '-c', self.options.config],
+            cmd,
             self.options.processes,
             [],
             stop_when_jobs_done=False,
