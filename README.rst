@@ -57,11 +57,6 @@ Requirements
    - `open-data/ckan <https://github.com/open-data/ckan>`_
    - canada-v2.0
    - * stats
- * - Spatial extension
-   - `open-data/ckanext-spatial <https://github.com/open-data/ckanext-spatial>`_
-   - release-v2.0
-   - * spatial_metadata
-     * spatial_query
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
    - master
