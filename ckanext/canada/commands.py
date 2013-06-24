@@ -9,6 +9,7 @@ import os
 import json
 import time
 import sys
+import gzip
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
@@ -31,10 +32,10 @@ class CanadaCommand(CkanCommand):
                       load-datasets <.jl source file>
                                     [<starting line number> [<lines to load>]]
                                     [-r] [-p <num>] [-u <username>]
-                                    [-l <log file>]
+                                    [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
                                     [-p <num>] [-a <push-apikey>]
-                      dump-datasets [-p <num>]
+                      dump-datasets [-p <num>] [-z]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -52,6 +53,7 @@ class CanadaCommand(CkanCommand):
         -l/--log <log filename>    write log of actions to log filename
         -a/--push-apikey <apikey>  push to <remote server> instead of
                                    pulling and use provided apikey
+        -z/--gzip                  read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -69,6 +71,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
     parser.add_option('-a', '--push-apikey', dest='push_apikey',
         default=None)
+    parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
 
     def command(self):
         '''
@@ -182,7 +185,11 @@ class CanadaCommand(CkanCommand):
             log = open(self.options.log, 'a')
 
         def line_reader():
-            for num, line in enumerate(open(jl_source), 1):
+            if self.options.gzip:
+                source_file = gzip.GzipFile(jl_source)
+            else:
+                source_file = open(jl_source)
+            for num, line in enumerate(source_file, 1):
                 if num < start_line:
                     continue
                 if max_count is not None and num >= start_line + max_count:
@@ -457,6 +464,9 @@ class CanadaCommand(CkanCommand):
         pool = worker_pool(cmd, self.options.processes,
             enumerate(package_names))
 
+        sink = sys.stdout
+        if self.options.gzip:
+            sink = gzip.GzipFile(fileobj=sys.stdout, mode='wb')
         expecting_number = 0
         results = {}
         with _quiet_int_pipe():
@@ -466,7 +476,7 @@ class CanadaCommand(CkanCommand):
                 results[finished] = result
                 # keep the output in the same order as package_names
                 while expecting_number in results:
-                    sys.stdout.write(results.pop(expecting_number))
+                    sink.write(results.pop(expecting_number))
                     expecting_number += 1
 
     def dump_datasets_worker(self):
