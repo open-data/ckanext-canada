@@ -30,7 +30,7 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
         for p in self.example_pkg:
             resp = self.sysadmin_action.package_create(**p)
 
-            self._trim_compare(p, resp['result'])
+            self._trim_compare(p, resp)
 
     def _trim_compare(self, original, existing):
         "make a copy of original so that it is not modified"
@@ -55,7 +55,7 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
             subject="3AC17C98-F356-4CC8-BAEB-886037E5C2EE")
         resp = self.sysadmin_action.package_create(**example)
 
-        self._trim_compare(example, resp['result'])
+        self._trim_compare(example, resp)
 
 
 EXAMPLE_JSON_LINES = r"""
