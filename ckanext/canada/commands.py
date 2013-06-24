@@ -329,19 +329,19 @@ class CanadaCommand(CkanCommand):
         if seen_id_set is None:
             seen_id_set = set()
 
-        if not data['result']:
+        if not data:
             return None, None
 
         package_ids = []
-        for result in data['result']:
+        for result in data:
             package_id = result['data']['package']['id']
             if package_id in seen_id_set:
                 continue
             seen_id_set.add(package_id)
             package_ids.append(package_id)
 
-        if data['result']:
-            since_time = isodate(data['result'][-1]['timestamp'], None)
+        if data:
+            since_time = isodate(data[-1]['timestamp'], None)
 
         return package_ids, since_time
 
@@ -361,8 +361,7 @@ class CanadaCommand(CkanCommand):
 
         for package_id in iter(sys.stdin.readline, ''):
             try:
-                data = registry.action.package_show(id=package_id.strip())
-                source_pkg = data['result']
+                source_pkg = registry.action.package_show(id=package_id.strip())
             except NotAuthorized:
                 source_pkg = None
 
