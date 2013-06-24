@@ -34,7 +34,7 @@ class CanadaCommand(CkanCommand):
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
-                                    [-p <num>] [-a <push-apikey>]
+                                    [-p <num>] [-a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
 
         <starting line number> of .jl source file, default: 1
@@ -53,6 +53,8 @@ class CanadaCommand(CkanCommand):
         -l/--log <log filename>    write log of actions to log filename
         -a/--push-apikey <apikey>  push to <remote server> instead of
                                    pulling and use provided apikey
+        -m/--mirror                copy all datasets, ignoring
+                                   portal_release_date
         -z/--gzip                  read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
@@ -299,6 +301,8 @@ class CanadaCommand(CkanCommand):
              '-c', self.options.config]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
+        if self.options.mirror:
+            cmd.append('-m')
         pool = worker_pool(
             cmd,
             self.options.processes,
