@@ -27,9 +27,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
-
-        facets_dict.update({'published': _('Published or Pending')})
-
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -38,16 +35,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
-
-        facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Data Type'),
-                      'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
-
         return facets_dict
 
     def before_map(self, map):
@@ -99,6 +86,7 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'subject': _('Subject'),
                       'organization': _('Organization'),
                       'ready_to_publish': _('Ready to Publish'),
+                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -117,6 +105,7 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'catalog_type': _('Data Type'),
                       'subject': _('Subject'),
                       'ready_to_publish': _('Ready to Publish'),
+                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict

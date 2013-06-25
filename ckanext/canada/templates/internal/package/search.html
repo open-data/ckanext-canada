@@ -1,0 +1,9 @@
+{% ckan_extends %}
+{% block extra_facets %}
+  {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
+    name='ready_to_publish') }}
+
+  {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['portal_release_date'],
+    name='portal_release_date') }}
+{% endblock %}
+
