@@ -73,6 +73,35 @@ def changed_packages_activity_list_since(context, data_dict):
         since_time, limit)
     return model_dictize.activity_list_dictize(activity_objects, context)
 
+@side_effect_free
+def activity_list_from_user_since(context, data_dict):
+    '''Return the activity stream of all recently added or changed packages.
+
+    :param since_time: starting date/time
+
+    Limited to 31 records (configurable via the
+    ckan.activity_list_hard_limit setting) but may be called repeatedly
+    with the timestamp of the last record to collect all activities.
+       
+    :param user_id:  the user of the requested activity list
+    
+    :rtype: list of dictionaries
+    '''
+
+    since = get_or_bust(data_dict, 'since_time')
+    user_id = get_or_bust(data_dict, 'user_id')
+    try:
+        since_time = isodate(since, None)
+    except Invalid, e:
+        raise ValidationError({'since_time':e.error})
+
+    # hard limit this api to reduce opportunity for abuse
+    limit = int(config.get('ckan.activity_list_hard_limit', 63))
+
+    activity_objects = _activities_from_user_list_since(
+        since_time, limit,user_id)
+    return model_dictize.activity_list_dictize(activity_objects, context)
+
 def _changed_packages_activity_list_since(since, limit):
     '''Return the site-wide stream of changed package activities since a given
     date.
@@ -82,6 +111,20 @@ def _changed_packages_activity_list_since(since, limit):
 
     '''
     q = model.activity._changed_packages_activity_query()
+    q = q.order_by(model.Activity.timestamp)
+    q = q.filter(model.Activity.timestamp > since)
+    return q.limit(limit)
+
+def _activities_from_user_list_since(since, limit,user_id):
+    '''Return the site-wide stream of changed package activities since a given
+    date for a particular user.
+
+    This activity stream includes recent 'new package', 'changed package' and
+    'deleted package' activities for that user.
+
+    '''
+    
+    q = model.activity._activities_from_user_query(user_id)
     q = q.order_by(model.Activity.timestamp)
     q = q.filter(model.Activity.timestamp > since)
     return q.limit(limit)
