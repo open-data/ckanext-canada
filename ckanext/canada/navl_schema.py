@@ -266,7 +266,11 @@ def keywords_validate(key, data, errors, context):
     """
     # also allow apostrophe, can't avoid them with French keywords
     data = {key: data[key].replace("'", "-")}
-    tag_string_convert(key, data, errors, context)
+    try:
+        tag_string_convert(key, data, errors, context)
+    except Invalid, e:
+        e.error = e.error.replace("-_.", "' - _ .")
+        raise e
 
 
 def protect_new_dataset_id(key, data, errors, context):
