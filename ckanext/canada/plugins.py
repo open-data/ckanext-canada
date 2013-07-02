@@ -215,9 +215,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         search_params['facet.field'].remove('portal_release_date')
         
         search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-10YEARS'
-        search_params['facet.range.end'] = 'NOW/DAY+10YEARS'
-        search_params['facet.range.gap'] = '+10YEARS'
+        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        search_params['facet.range.gap'] = '+100YEARS'
         
         
         return search_params

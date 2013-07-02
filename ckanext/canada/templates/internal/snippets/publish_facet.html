@@ -12,20 +12,29 @@
       <nav>
         <ul class="list-bullet-none">
           
-          {% for item, value in h.parse_release_date_facet(facet_range).iteritems() %}
-            {% set href = h.add_url_param(new_params={facet_range_name: item}, extras=extras, alternative_url=alternative_url) %}
-            
-            <li class="nav-item{% if item.active %} active{% endif %}">
-              <a href="{{ href }}">
-                <span>{{ item }} ({{ value }})</span>
-              </a>
-            </li>
-            
-          {% endfor %}
+          {% set fr = h.parse_release_date_facet(facet_range) %}
+          
+          <!-- Published -->
+          {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[0]}, extras=extras, alternative_url=alternative_url) %}
+          
+          <li class="nav-item">
+            <a href="{{ href }}">
+              <span>Published ({{ fr.values()[0] }})</span>
+            </a>
+          </li>
+          
+          <!-- Scheduled -->
+          {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[1]}, extras=extras, alternative_url=alternative_url) %}
+          
+          <li class="nav-item">
+            <a href="{{ href }}">
+              <span>Scheduled ({{ fr.values()[1] }})</span>
+            </a>
+          </li>
           
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
-            {% set label = label_function(item, h.lang()) if label_function else h.truncate(cr.split_bilingual_field(item.display_name, h.lang()), 22) %}
+            {% set label = 'Pending' if item.display_name == 'true' else 'Draft' %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %}">
                 <a href="{{ href }}">
