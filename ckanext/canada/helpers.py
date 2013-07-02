@@ -173,3 +173,12 @@ def portal_url():
     
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
+    
+def parse_release_date_facet(facet_results):
+    list_of_ranges = facet_results['counts'][0::2]
+    list_of_ranges.append(facet_results['end'])
+    for index, range_value in enumerate(list_of_ranges[0:-1]):
+        list_of_ranges[index] = '[' + list_of_ranges[index] + ' TO ' + list_of_ranges[index+1] + ']'
+    
+    return dict(zip(list_of_ranges, facet_results['counts'][1::2]))
+    

@@ -4,6 +4,7 @@ from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
 from ckan.plugins import toolkit
 from routes.mapper import SubMapper
+from ckan.lib.search import query
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
@@ -56,6 +57,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'may_publish_datasets',
             'today',
             'date_format',
+            'parse_release_date_facet'
             ])
 
 
@@ -208,6 +210,16 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
+        #we're going to group portal_release_date into two bins - to today and after today
+        
+        search_params['facet.field'].remove('portal_release_date')
+        
+        search_params['facet.range'] = 'portal_release_date'
+        search_params['facet.range.start'] = 'NOW/DAY-10YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+10YEARS'
+        search_params['facet.range.gap'] = '+10YEARS'
+        
+        
         return search_params
 
     def after_search(self, search_results, search_params):

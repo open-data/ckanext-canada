@@ -11,6 +11,18 @@
     {% if items %}
       <nav>
         <ul class="list-bullet-none">
+          
+          {% for item, value in h.parse_release_date_facet(facet_range).iteritems() %}
+            {% set href = h.add_url_param(new_params={facet_range_name: item}, extras=extras, alternative_url=alternative_url) %}
+            
+            <li class="nav-item{% if item.active %} active{% endif %}">
+              <a href="{{ href }}">
+                <span>{{ item }} ({{ value }})</span>
+              </a>
+            </li>
+            
+          {% endfor %}
+          
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = label_function(item, h.lang()) if label_function else h.truncate(cr.split_bilingual_field(item.display_name, h.lang()), 22) %}
