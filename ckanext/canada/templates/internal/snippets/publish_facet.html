@@ -15,22 +15,26 @@
           {% set fr = h.parse_release_date_facet(facet_range) %}
           
           <!-- Published -->
-          {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[0]}, extras=extras, alternative_url=alternative_url) %}
+          {% if fr.values()[0] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[0]}, extras=extras, alternative_url=alternative_url) %}
           
-          <li class="nav-item">
-            <a href="{{ href }}">
-              <span>Published ({{ fr.values()[0] }})</span>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="{{ href }}">
+                <span>Published ({{ fr.values()[0] }})</span>
+              </a>
+            </li>
+          {% endif %}
           
           <!-- Scheduled -->
-          {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[1]}, extras=extras, alternative_url=alternative_url) %}
+          {% if fr.values()[1] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[1]}, extras=extras, alternative_url=alternative_url) %}
           
-          <li class="nav-item">
-            <a href="{{ href }}">
-              <span>Scheduled ({{ fr.values()[1] }})</span>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="{{ href }}">
+                <span>Scheduled ({{ fr.values()[1] }})</span>
+              </a>
+            </li>
+          {% endif %}
           
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
