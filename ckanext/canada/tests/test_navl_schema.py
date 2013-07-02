@@ -18,11 +18,11 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         cls.publisher_user = model.User.get('russianfan')
 
         cls.sysadmin_action = TestAppCKAN(cls.app,
-            str(cls.sysadmin_user.apikey)).action
+            cls.sysadmin_user.apikey).action
         cls.normal_action = TestAppCKAN(cls.app,
-            str(cls.normal_user.apikey)).action
+            cls.normal_user.apikey).action
         cls.publisher_action = TestAppCKAN(cls.app,
-            str(cls.publisher_user.apikey)).action
+            cls.publisher_user.apikey).action
         cls.action = TestAppCKAN(cls.app).action
 
         cls.sysadmin_action.organization_member_create(
@@ -75,10 +75,10 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         resp = self.normal_action.package_create(
             name='basic_package', **self.complete_pkg)
-        assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
+        assert resp['title_fra'] == u'Un novel par Tolstoy'
 
-        resp = self.action.package_show(id=resp['result']['id'])
-        assert resp['result']['title_fra'] == u'Un novel par Tolstoy'
+        resp = self.action.package_show(id=resp['id'])
+        assert resp['title_fra'] == u'Un novel par Tolstoy'
 
     def test_keyword_validation(self):
         self.assert_raises(ValidationError,
@@ -109,8 +109,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
 
         resp = self.action.package_show(id='my-custom-id')
-        assert resp['result']['id'] == 'my-custom-id'
-        assert resp['result']['name'] == 'custom_dataset_id'
+        assert resp['id'] == 'my-custom-id'
+        assert resp['name'] == 'custom_dataset_id'
 
         self.assert_raises(ValidationError,
             self.sysadmin_action.package_create,
@@ -173,15 +173,13 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 )],
             )
 
-        resp = self.normal_action.package_create(**pilot_pkg)
-        pkg = resp['result']
+        pkg = self.normal_action.package_create(**pilot_pkg)
         assert pkg['subject'] == [u"Persons  Personnes"]
         assert pkg['geographic_region'] == [
             u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
         assert pkg['resources'][0]['format'] == u'XML'
 
-        resp = self.action.package_show(id=pkg['id'])
-        pkg = resp['result']
+        pkg = self.action.package_show(id=pkg['id'])
         assert pkg['subject'] == [u"Persons  Personnes"]
         assert pkg['geographic_region'] == [
             u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
@@ -192,8 +190,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         resp = self.normal_action.package_create(
             **self.complete_pkg)
 
-        resp = self.action.package_show(id=resp['result']['id'])
-        assert 'subject' not in [e['key'] for e in resp['result'].get('extras',[])]
+        resp = self.action.package_show(id=resp['id'])
+        assert 'subject' not in [e['key'] for e in resp.get('extras',[])]
 
     def test_keywords_with_apostrophe(self):
         self.normal_action.package_create(
@@ -214,9 +212,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             )
 
     def test_generated_fields(self):
-        resp = self.normal_action.package_create(**self.complete_pkg)
+        pkg = self.normal_action.package_create(**self.complete_pkg)
 
-        pkg = resp['result']
         # not generated, we set this one but later tests depend on it
         self.assert_equal(pkg['license_id'], 'ca-ogl-lgo')
         # this one is generated in the bowels of CKAN's model_dictize

@@ -9,6 +9,7 @@ import os
 import json
 import time
 import sys
+import gzip
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
@@ -31,10 +32,10 @@ class CanadaCommand(CkanCommand):
                       load-datasets <.jl source file>
                                     [<starting line number> [<lines to load>]]
                                     [-r] [-p <num>] [-u <username>]
-                                    [-l <log file>]
-                      portal-update <registry server> [<last activity date>]
-                                    [-p <num>]
-                      dump-datasets [-p <num>]
+                                    [-l <log file>] [-z]
+                      portal-update <remote server> [<last activity date>]
+                                    [-p <num>] [-a <push-apikey>] [-m]
+                      dump-datasets [-p <num>] [-z]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -50,6 +51,11 @@ class CanadaCommand(CkanCommand):
         -u/--ckan-user <username>  sets the owner of packages created,
                                    default: ckan system user
         -l/--log <log filename>    write log of actions to log filename
+        -a/--push-apikey <apikey>  push to <remote server> instead of
+                                   pulling and use provided apikey
+        -m/--mirror                copy all datasets, ignoring
+                                   portal_release_date
+        -z/--gzip                  read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -65,6 +71,9 @@ class CanadaCommand(CkanCommand):
         default=None)
     parser.add_option('-l', '--log', dest='log', default=None)
     parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
+    parser.add_option('-a', '--push-apikey', dest='push_apikey',
+        default=None)
+    parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
 
     def command(self):
         '''
@@ -178,7 +187,11 @@ class CanadaCommand(CkanCommand):
             log = open(self.options.log, 'a')
 
         def line_reader():
-            for num, line in enumerate(open(jl_source), 1):
+            if self.options.gzip:
+                source_file = gzip.GzipFile(jl_source)
+            else:
+                source_file = open(jl_source)
+            for num, line in enumerate(source_file, 1):
                 if num < start_line:
                     continue
                 if max_count is not None and num >= start_line + max_count:
@@ -284,9 +297,14 @@ class CanadaCommand(CkanCommand):
                 yield package_ids, next_date
                 start_date = next_date
 
+        cmd = [sys.argv[0], 'canada', 'portal-update-worker', source,
+             '-c', self.options.config]
+        if self.options.push_apikey:
+            cmd.extend(['-a', self.options.push_apikey])
+        if self.options.mirror:
+            cmd.append('-m')
         pool = worker_pool(
-            [sys.argv[0], 'canada', 'portal-update-worker', source,
-             '-c', self.options.config],
+            cmd,
             self.options.processes,
             [],
             stop_when_jobs_done=False,
@@ -329,24 +347,24 @@ class CanadaCommand(CkanCommand):
         if seen_id_set is None:
             seen_id_set = set()
 
-        if not data['result']:
+        if not data:
             return None, None
 
         package_ids = []
-        for result in data['result']:
+        for result in data:
             package_id = result['data']['package']['id']
             if package_id in seen_id_set:
                 continue
             seen_id_set.add(package_id)
             package_ids.append(package_id)
 
-        if data['result']:
-            since_time = isodate(data['result'][-1]['timestamp'], None)
+        if data:
+            since_time = isodate(data[-1]['timestamp'], None)
 
         return package_ids, since_time
 
 
-    def portal_update_worker(self, source):
+    def portal_update_worker(self, remote):
         """
         a process that accepts package ids on stdin which are passed to
         the package_show API on the remote CKAN instance and compared
@@ -355,14 +373,17 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        registry = RemoteCKAN(source)
-        portal = LocalCKAN()
+        if self.options.push_apikey:
+            registry = LocalCKAN()
+            portal = RemoteCKAN(remote, apikey=self.options.push_apikey)
+        else:
+            registry = RemoteCKAN(remote)
+            portal = LocalCKAN()
         now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
             try:
-                data = registry.action.package_show(id=package_id.strip())
-                source_pkg = data['result']
+                source_pkg = registry.action.package_show(id=package_id.strip())
             except NotAuthorized:
                 source_pkg = None
 
@@ -447,6 +468,9 @@ class CanadaCommand(CkanCommand):
         pool = worker_pool(cmd, self.options.processes,
             enumerate(package_names))
 
+        sink = sys.stdout
+        if self.options.gzip:
+            sink = gzip.GzipFile(fileobj=sys.stdout, mode='wb')
         expecting_number = 0
         results = {}
         with _quiet_int_pipe():
@@ -456,7 +480,7 @@ class CanadaCommand(CkanCommand):
                 results[finished] = result
                 # keep the output in the same order as package_names
                 while expecting_number in results:
-                    sys.stdout.write(results.pop(expecting_number))
+                    sink.write(results.pop(expecting_number))
                     expecting_number += 1
 
     def dump_datasets_worker(self):
