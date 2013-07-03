@@ -223,17 +223,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_params
 
     def after_search(self, search_results, search_params):
-        if search_results['count'] > 0:
-            for result in search_results['results']:
-        
-                title_fra = filter(lambda extra:extra['key']=='title_fra', result['extras'])
-                if len(title_fra) > 0:
-                    result['title_fra'] = title_fra[0]['value']
-                                 
-                notes_fra = filter(lambda extra:extra['key']=='notes_fra', result['extras'])
-                if len(notes_fra) > 0:
-                    result['notes_fra'] =  notes_fra[0]['value']
-        
+        for result in search_results.get('results', []):
+            for extra in result.get('extra', []):
+                if extra.get('key') in ['title_fra', 'notes_fra']:
+                    result[extra['key']] = extra['value']
+
         return search_results
 
     def before_index(self, data_dict):
