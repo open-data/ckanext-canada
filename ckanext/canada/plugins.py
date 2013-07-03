@@ -4,6 +4,7 @@ from ckan.lib.plugins import DefaultDatasetForm
 import ckan.lib.plugins as lib_plugins
 from ckan.plugins import toolkit
 from routes.mapper import SubMapper
+from ckan.lib.search import query
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
@@ -27,9 +28,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
-
-        facets_dict.update({'published': _('Published or Pending')})
-
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -38,16 +36,6 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def organization_facets(self, facets_dict, organization_type, package_type):
         ''' Update the facets_dict and return it. '''
-
-        facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Data Type'),
-                      'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
-
         return facets_dict
 
     def before_map(self, map):
@@ -69,6 +57,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'may_publish_datasets',
             'today',
             'date_format',
+            'parse_release_date_facet'
             ])
 
 
@@ -99,6 +88,7 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'subject': _('Subject'),
                       'organization': _('Organization'),
                       'ready_to_publish': _('Ready to Publish'),
+                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -117,6 +107,7 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'catalog_type': _('Data Type'),
                       'subject': _('Subject'),
                       'ready_to_publish': _('Ready to Publish'),
+                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -219,6 +210,16 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
+        #we're going to group portal_release_date into two bins - to today and after today
+        
+        search_params['facet.field'].remove('portal_release_date')
+        
+        search_params['facet.range'] = 'portal_release_date'
+        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        search_params['facet.range.gap'] = '+100YEARS'
+        
+        
         return search_params
 
     def after_search(self, search_results, search_params):
@@ -258,7 +259,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 for subject_id in subject_ids:
                     data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
         
-        if 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+        if 'portal_release_date' in data_dict:
+            data_dict.pop('ready_to_publish', None)
+        elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
             data_dict['ready_to_publish'] = 'true'
         
         return data_dict
