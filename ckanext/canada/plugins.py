@@ -259,7 +259,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 for subject_id in subject_ids:
                     data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
         
-        if 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+        if 'portal_release_date' in data_dict:
+            data_dict.pop('ready_to_publish', None)
+        elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
             data_dict['ready_to_publish'] = 'true'
         
         return data_dict
