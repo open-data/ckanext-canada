@@ -1,0 +1,67 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
+{% import 'macros/canada_read.html' as cr %}
+
+{% set facet_name = title + 's' %}
+
+{% with items = items or h.get_facet_items_dict(name, limit=5) %}
+  {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
+  <section>
+    <h3 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h3>
+    <div class="module">   
+    {% if items %}
+      <nav>
+        <ul class="list-bullet-none">
+          
+          {% set fr = h.parse_release_date_facet(facet_range) %}
+          
+          <!-- Published -->
+          {% if fr.values()[0] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[0]}, extras=extras, alternative_url=alternative_url) %}
+          
+            <li class="nav-item">
+              <a href="{{ href }}">
+                <span>Published ({{ fr.values()[0] }})</span>
+              </a>
+            </li>
+          {% endif %}
+          
+          <!-- Scheduled -->
+          {% if fr.values()[1] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[1]}, extras=extras, alternative_url=alternative_url) %}
+          
+            <li class="nav-item">
+              <a href="{{ href }}">
+                <span>Scheduled ({{ fr.values()[1] }})</span>
+              </a>
+            </li>
+          {% endif %}
+          
+          {% for item in items %}
+            {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+            {% set label = 'Pending' if item.display_name == 'true' else 'Draft' %}
+            {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
+              <li class="nav-item{% if item.active %} active{% endif %}">
+                <a href="{{ href }}">
+                  <span>{{ label }} {{ count }}</span>
+                </a>
+              </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <p class="module-footer">
+        {% if items | count > 1 %}
+          {% if h.get_param_int('_%s_limit' % name) %}
+            <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
+          {% else %}
+            <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
+          {% endif %}
+        {% endif %}
+      </p>
+      <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
+    {% else %}
+      <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
+    {% endif %}
+    </div>
+  </section>
+  <br>
+{% endwith %}
