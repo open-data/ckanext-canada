@@ -224,7 +224,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def after_search(self, search_results, search_params):
         for result in search_results.get('results', []):
-            for extra in result.get('extra', []):
+            for extra in result.get('extras', []):
                 if extra.get('key') in ['title_fra', 'notes_fra']:
                     result[extra['key']] = extra['value']
 
