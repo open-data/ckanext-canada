@@ -88,7 +88,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'subject': _('Subject'),
                       'organization': _('Organization'),
                       'ready_to_publish': _('Ready to Publish'),
-                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -107,7 +106,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'catalog_type': _('Data Type'),
                       'subject': _('Subject'),
                       'ready_to_publish': _('Ready to Publish'),
-                      'portal_release_date': _('Portal Release Date'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -210,10 +208,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
-        #we're going to group portal_release_date into two bins - to today and after today
-        
-        search_params['facet.field'].remove('portal_release_date')
-        
+        #we're going to group portal_release_date into two bins - to today and after today        
         search_params['facet.range'] = 'portal_release_date'
         search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
