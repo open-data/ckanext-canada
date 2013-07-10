@@ -31,7 +31,7 @@ cd dl/ckan
 git checkout canada-v2.0
 cd -
 
-ln -s ../dl/ckan/ckan links/ckan
+ln -s dl/ckan/ckan links/ckan
 pip install -r links/ckan/requirements.txt -r links/ckan/dev-requirements.txt \
 	-r requirements.txt --use-mirrors
 
