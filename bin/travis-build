@@ -23,10 +23,17 @@ sudo -u postgres psql -c "CREATE USER datastore WITH PASSWORD 'pass';"
 sudo -u postgres psql -c 'CREATE DATABASE ckantest WITH OWNER ckantest;'
 sudo -u postgres psql -c 'CREATE DATABASE datastore WITH OWNER ckantest;'
 
-pip install -r requirements.txt --use-mirrors
+mkdir dl
+cd dl
+git clone git+https://github.com/open-data/ckan
+cd -
+cd dl/ckan
+git checkout canada-v2.0
+cd -
 
-ln -s `python -c'import ckan; print ckan.__file__.rsplit("/", 1)[0]'` ../ckan
-pip install -r ../ckan/requirements.txt -r ../ckan/dev-requirements.txt
+ln -s ../dl/ckan/ckan links/ckan
+pip install -r links/ckan/requirements.txt -r links/ckan/dev-requirements.txt \
+	-r requirements.txt --use-mirrors
 
 python setup.py develop
 
