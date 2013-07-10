@@ -51,7 +51,14 @@ echo "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME" |
 sudo cp solr_schema.xml /etc/solr/conf/schema.xml
 sudo service jetty restart
 
-paster db init -c test-core.ini
+cd dl/ckan
+paster make-config ckan development.ini --no-interactive
+sed -i -e 's/.*solr_url.*/solr_url = http:\/\/127.0.0.1:8983\/solr/' development.ini
+sed -i -e 's/.*ckan\.site_id =.*/ckan.site_id = travis_ci/' development.ini
+sed -i -e 's/^sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckantest:pass@localhost\/ckantest/' development.ini
+sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckantest:pass@localhost\/datastore/' development.ini
+paster db init -c ../../test-core.ini
+cd -
 
 # If Postgres >= 9.0, we don't need to use datastore's legacy mode.
 if [ $PGVERSION != '8.4' ]
