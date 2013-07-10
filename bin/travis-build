@@ -26,7 +26,7 @@ sudo -u postgres psql -c 'CREATE DATABASE datastore WITH OWNER ckantest;'
 pip install -r requirements.txt --use-mirrors
 
 ln -s `python -c'import ckan; print ckan.__file__.rsplit("/", 1)[0]'` ../ckan
-pip install -r ../ckan/requirements.txt ../ckan/dev-requirements.txt
+pip install -r ../ckan/requirements.txt -r ../ckan/dev-requirements.txt
 
 python setup.py develop
 
