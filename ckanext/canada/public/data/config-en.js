@@ -2,9 +2,6 @@
  * Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
  * wet-boew.github.com/wet-boew/License-eng.txt / wet-boew.github.com/wet-boew/Licence-fra.txt
  */
-/*
- * Example English configuration file for Geomap
- */
 
 /*
  * Global overrides for individual components
@@ -18,7 +15,7 @@
  */
 var wet_boew_geomap = {
 	// OPTIONAL: note that Geomap will provide a default basemap if not specified here.
-
+/*
 	basemap : {
 		title: 'CBMT',
 		type: 'wms',
@@ -37,152 +34,6 @@ var wet_boew_geomap = {
 			numZoomLevels: 12
 		}
 	}
-};
-
-/*
-	basemap : {
-		title: 'WMS Demo',
-		type: 'wms',
-		url: 'http://vmap0.tiles.osgeo.org/wms/vmap0',
-		layers: 'basic'
-	}
-};	
-
-	overlays : [  
-
-		{
-			title: 'KML Demo EN',
-			caption: 'This is a sample KML file loaded locally by Geomap.',
-			type: 'kml',
-			url: 'data/sample.kml',		
-			visible: true,
-			datatable: true,
-			tab: true,
-			attributes: {
-				name: 'Product Title',
-				description: 'Description'
-			}
-		},
-		{
-			title: 'ATOM Demo EN',
-			caption: 'This is a sample ATOM feed loaded locally by Geomap.',
-			type: 'atom',
-			url: 'data/sample.atom',
-			tab: true,
-			attributes: {
-				title: 'Title',
-				summary: 'About this dataset'
-			},
-			visible: false
-		},
-		{
-			title: 'GeoRSS Demo EN',
-			caption: 'This is a sample GeoRSS feed loaded locally by Geomap.',
-			type: 'georss',
-			url: 'data/sample.rss',				
-			attributes: {
-				title: 'Title',
-				description: 'Description',
-				link: 'More Info'
-			},
-			visible: false,
-			datable:false,
-			tab: true
-		},
-		{
-			title: 'JSON (GeoGratis) EN',
-			caption: 'This is a sample dataset loaded from a remote JSON resource, in this case the GeoGratis API.',
-			type: 'json',					
-			url: 'http://geogratis.gc.ca/api/en/nrcan-rncan/ess-sst',
-			params: {
-				'alt': 'json',
-				'q': 'alluvial'
-			},
-			visible: false,
-			root: 'products',	
-			tab: true,
-			attributes: {
-				title: 'Title',
-				summary: 'Abstract',				
-				author: 'Author'
-			}
-		},
-   
-    {
-      title: 'Provinces',
-      caption: 'Provinces and territories of Canada',
-      type: 'geojson',
-      url: 'http://localhost:8088/data/data/provinces.js',
-      visible: true,
-      zoom: true,
-      tab: false,
-      datatable: true,
-      attributes: {
-        name: 'Name' /*,
-        code: 'Code',
-        cartodb_id: 'ID',
-        created_at: 'Created',
-        updated_at: 'Last updated' 
-      }
-    },
-		 /* {
-			title: 'GeoJSON (CartoDB) EN',
-			caption: 'This is a sample dataset loaded from a remote GeoJSON resource, in this case traffic cameras in the city of Ottawa from the CartoDB API.',
-			type: 'geojson',					
-			url: 'http://stephenott.cartodb.com/api/v2/sql',
-			params: {
-				'format': 'GeoJSON',
-				'q': 'SELECT * FROM traffic_cameras LIMIT 25'
-			},
-			attributes: {				
-				location_desc: 'Location',
-				longitude: 'Latitude',
-				latitude: 'Longitude',				
-				updated_at: 'Last updated'
-			},
-			visible: true,	
-			zoom:  true,
-			datatable: true,
-			tab: true,		
-			// default style			
-			style: {
-				type: 'symbol',
-				init: { 'pointRadius': '15', 'externalGraphic': '/data/data/icons/trafficcamera.png', 'fillOpacity': 1.0 },
-				select: { 'pointRadius': '15', 'externalGraphic': '/data/data/icons/trafficcamera_active.png', 'fillOpacity': 1.0 }
-			}
-			// unique value style
-			style: {
-				type: 'unique',
-				field: 'Location',
-				init: {'Bayshore & Richmond': {'pointRadius':'25', 'strokeWidth':'20', 'strokeColor': '#800080'},'Baseline & Greenbank': {'pointRadius':'25', 'strokeWidth':'10', 'fillColor': '#800080'}},
-				select: {'pointRadius': 30, 'externalGraphic': '../../OverIcon.png', 'label': "${Location}", 'fillOpacity': 0.90}
-			}
-			// rule style
-			style: {
-				type: 'rule',
-				rule: [{
-						field: 'Longitude',
-						value: [45.36],
-						filter: 'LESS_THAN',
-						init: {'pointRadius': '15', 'strokeColor': '#800000','fillColor': '#FFFFFF', 'fillOpacity': 0.90}
-				},
-						{
-					field: 'Longitude',
-						value: [45.37, 45.42],
-						filter: 'BETWEEN',
-						init: {'pointRadius': '25', 'strokeColor': '#000000','fillColor': '#222222', 'fillOpacity': 0.90}
-				},
-						{
-						field: 'Longitude',
-						value: [45.42],
-						filter: 'GREATER_THAN',
-						init: {'pointRadius': '10', 'strokeColor': '#800080','fillColor': '#800080'}
-				}],
-				select: {'pointRadius': '30', 'externalGraphic': '../../OverIcon.png', 'label': "Selected", 'fillOpacity': 0.90}
-			}
-		}		
-      		
-	] 
-};
-
 */
+};
+
