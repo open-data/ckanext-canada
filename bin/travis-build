@@ -33,8 +33,7 @@ cd -
 
 ln -s ../dl/ckan links/ckan
 pip install -r links/ckan/pip-requirements.txt \
-	-r links/ckan/pip-requirements-test.txt \
-	-r requirements.txt --use-mirrors
+	-r links/ckan/pip-requirements-test.txt --use-mirrors
 
 python setup.py develop
 
