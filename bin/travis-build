@@ -59,6 +59,7 @@ sed -i -e 's/.*ckan\.site_id =.*/ckan.site_id = travis_ci/' development.ini
 sed -i -e 's/^sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckantest:pass@localhost\/ckantest/' development.ini
 sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckantest:pass@localhost\/datastore/' development.ini
 ln -s "$CKAN_DIR"/test-core.ini "$CANADA_DIR"/links/test-core.ini
+ln -s "$CKAN_DIR"/development.ini "$CANADA_DIR"/links/development.ini
 paster db init -c "$CANADA_DIR"/test-core.ini
 
 # If Postgres >= 9.0, we don't need to use datastore's legacy mode.
