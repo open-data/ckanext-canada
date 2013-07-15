@@ -36,7 +36,7 @@ class CanadaCommand(CkanCommand):
                       portal-update <remote server> [<last activity date>]
                                     [-p <num>] [-a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
-                      changed-datasets [<since date>] [-s <remove server>]
+                      changed-datasets [<since date>] [-s <remove server>] [-b]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -46,6 +46,7 @@ class CanadaCommand(CkanCommand):
 
         -a/--push-apikey <apikey>   push to <remote server> instead of
                                     pulling and use provided apikey
+        -b/--brief                  don't output requested dates
         -c/--config <ckan config>   use named ckan config file
                                     (available to all commands)
         -l/--log <log filename>     write log of actions to log filename
@@ -77,6 +78,7 @@ class CanadaCommand(CkanCommand):
         default=None)
     parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
     parser.add_option('-s', '--server', dest='server', default=None)
+    parser.add_option('-b', '--brief', dest='brief', action='store_true')
 
     def command(self):
         '''
@@ -516,7 +518,8 @@ class CanadaCommand(CkanCommand):
         seen_ids = set()
 
         while True:
-            print "# {0}".format(since_date.isoformat())
+            if not self.options.brief:
+                print "# {0}".format(since_date.isoformat())
             ids, since_date = self._changed_package_ids_since(
                 self.options.server, since_date, seen_ids)
             if not ids:
