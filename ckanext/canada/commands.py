@@ -518,14 +518,14 @@ class CanadaCommand(CkanCommand):
         seen_ids = set()
 
         while True:
-            if not self.options.brief:
-                print "# {0}".format(since_date.isoformat())
             ids, since_date = self._changed_package_ids_since(
                 self.options.server, since_date, seen_ids)
             if not ids:
                 return
             for i in ids:
                 print i
+            if not self.options.brief:
+                print "# {0}".format(since_date.isoformat())
 
 
 def _trim_package(pkg):
