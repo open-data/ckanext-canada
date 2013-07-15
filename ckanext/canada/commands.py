@@ -36,6 +36,7 @@ class CanadaCommand(CkanCommand):
                       portal-update <remote server> [<last activity date>]
                                     [-p <num>] [-a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
+                      changed-datasets [<since date>] [-s <remove server>] [-b]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -43,19 +44,21 @@ class CanadaCommand(CkanCommand):
 
     Options::
 
-        -c/--config <ckan config>  use named ckan config file
-                                   (available to all commands)
-        -r/--replace-datasets      enable replacing existing datasets
-        -p/--processes <num>       sets the number of worker processes,
-                                   default: 1
-        -u/--ckan-user <username>  sets the owner of packages created,
-                                   default: ckan system user
-        -l/--log <log filename>    write log of actions to log filename
-        -a/--push-apikey <apikey>  push to <remote server> instead of
-                                   pulling and use provided apikey
-        -m/--mirror                copy all datasets, ignoring
-                                   portal_release_date
-        -z/--gzip                  read/write gzipped data
+        -a/--push-apikey <apikey>   push to <remote server> instead of
+                                    pulling and use provided apikey
+        -b/--brief                  don't output requested dates
+        -c/--config <ckan config>   use named ckan config file
+                                    (available to all commands)
+        -l/--log <log filename>     write log of actions to log filename
+        -m/--mirror                 copy all datasets, ignoring
+                                    portal_release_date
+        -p/--processes <num>        sets the number of worker processes,
+                                    default: 1
+        -r/--replace-datasets       enable replacing existing datasets
+        -s/--server <remote server> retrieve from <remote server>
+        -u/--ckan-user <username>   sets the owner of packages created,
+                                    default: ckan system user
+        -z/--gzip                   read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -74,6 +77,8 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-a', '--push-apikey', dest='push_apikey',
         default=None)
     parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
+    parser.add_option('-s', '--server', dest='server', default=None)
+    parser.add_option('-b', '--brief', dest='brief', action='store_true')
 
     def command(self):
         '''
@@ -132,6 +137,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'dump-datasets-worker':
             with _quiet_int_pipe():
                 self.dump_datasets_worker()
+
+        elif cmd == 'changed-datasets':
+            self.changed_datasets(*self.args[1:])
 
         else:
             print self.__doc__
@@ -340,7 +348,10 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        remote = RemoteCKAN(source)
+        if source:
+            remote = RemoteCKAN(source)
+        else:
+            remote = LocalCKAN()
         data = remote.action.changed_packages_activity_list_since(
             since_time=since_time.isoformat())
 
@@ -495,6 +506,26 @@ class CanadaCommand(CkanCommand):
                 registry.action.package_show(id=name.strip()), sort_keys=True)
                 + '\n')
             sys.stdout.flush()
+
+
+    def changed_datasets(self, since_date):
+        """
+        Produce a list of dataset ids and requested dates. Each package
+        id will appear at most once, showing the activity date closest
+        to since_date. Requested dates are preceeded with a "#"
+        """
+        since_date = isodate(since_date, None)
+        seen_ids = set()
+
+        while True:
+            ids, since_date = self._changed_package_ids_since(
+                self.options.server, since_date, seen_ids)
+            if not ids:
+                return
+            for i in ids:
+                print i
+            if not self.options.brief:
+                print "# {0}".format(since_date.isoformat())
 
 
 def _trim_package(pkg):
