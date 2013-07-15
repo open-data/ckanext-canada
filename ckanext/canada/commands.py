@@ -508,15 +508,15 @@ class CanadaCommand(CkanCommand):
 
     def changed_datasets(self, since_date):
         """
-        Produce a list of dataset ids and activity dates. Each package
+        Produce a list of dataset ids and requested dates. Each package
         id will appear at most once, showing the activity date closest
-        to since_date.
+        to since_date. Requested dates are preceeded with a "#"
         """
         since_date = isodate(since_date, None)
         seen_ids = set()
 
         while True:
-            sys.stderr.write("# {0}\n".format(since_date.isoformat()))
+            print "# {0}".format(since_date.isoformat())
             ids, since_date = self._changed_package_ids_since(
                 self.options.server, since_date, seen_ids)
             if not ids:
