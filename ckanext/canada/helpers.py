@@ -175,10 +175,9 @@ def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
     
 def parse_release_date_facet(facet_results):
-    list_of_ranges = facet_results['counts'][0::2]
-    list_of_ranges.append(facet_results['end'])
-    for index, range_value in enumerate(list_of_ranges[0:-1]):
-        list_of_ranges[index] = '[' + list_of_ranges[index] + ' TO ' + list_of_ranges[index+1] + ']'
+    counts = facet_results['counts'][1::2]
+    ranges = facet_results['counts'][0::2]
+    facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
+                  'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
-    return dict(zip(list_of_ranges, facet_results['counts'][1::2]))
-    
+    return facet_dict
