@@ -1,5 +1,7 @@
 import logging
 import json
+import ckan.model as model
+
 from ckan.lib.base import (BaseController, c, render, model, request, h, g,
     response)
 from ckan.logic import get_action, NotAuthorized, check_access
@@ -171,4 +173,21 @@ class PublishController(PackageController):
         return 'dataset'
         
     def publish(self):
+        #import pdb; pdb.set_trace()
+        
+        packages = list()
+        
+        #open a new revision, so we can publish everything in one clean activity
+        model.repo.new_revision()
+        
+        #get a list of package id's from the for POST data
+        for key, package_id in request.str_POST:
+            package_instance = model.Package.get(package_id)
+            #change portal release date
+            #TODO
+            
+        #close the revision, commit to database
+        model.Session.commit()
+        
+        #return us to the publishing interface
         return ''
