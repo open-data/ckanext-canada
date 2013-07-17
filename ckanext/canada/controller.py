@@ -7,6 +7,7 @@ from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
 from ckan.lib import i18n
+from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
@@ -160,3 +161,11 @@ class CanadaFeedController(FeedController):
             )
         response.content_type = feed.mime_type
         return feed.writeString('utf-8')
+        
+class PublishController(PackageController):
+    
+    def _search_template(self, package_type):
+        return 'publish.html'
+        
+    def _guess_package_type(self, expecting_name=False):
+        return 'dataset'

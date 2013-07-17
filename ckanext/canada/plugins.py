@@ -42,6 +42,9 @@ class DataGCCAInternal(p.SingletonPlugin):
         map.connect('/', controller='user', action='login')
         map.connect('/user/logged_in', action='logged_in',
             controller='ckanext.canada.controller:CanadaController')
+        map.connect('/publish', action='search', 
+            controller='ckanext.canada.controller:PublishController')
+        #map.redirect('/publish', '/dataset')
         return map
 
     def after_map(self, map):
