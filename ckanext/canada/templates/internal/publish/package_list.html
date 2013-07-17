@@ -13,5 +13,9 @@
       {% snippet 'publish/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
     {% endfor %}
   </ul>
+  
+  <div style="height:35px;">
+    <button type="submit" class="button button-large button-attention" style="float:right;">Publish Selected Datasets</button>
+  </div>
 </form>
 {% endif %}

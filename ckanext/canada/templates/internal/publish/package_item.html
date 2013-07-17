@@ -59,11 +59,13 @@ Example:
       {{ cr.org_field(package, client_lang) }}
     </div>
     
+    {% if h.is_ready_to_publish(package) %}
     <div style="float:right;">
       <label class="form-checkbox" for="publish">
         <input type="checkbox" name="publish" id="publish"/>Publish?
       </label>
     </div>
+    {% endif %}
     
     {% if package.resources and not hide_resources %}
     <div style="display:inline-block;">

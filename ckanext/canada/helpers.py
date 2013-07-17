@@ -177,7 +177,29 @@ def googleanalytics_id():
 def parse_release_date_facet(facet_results):
     counts = facet_results['counts'][1::2]
     ranges = facet_results['counts'][0::2]
+    facet_dict = dict()
+    
+    if len(facet_results['counts']) < 2:
+        return dict()
+        
     facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
                   'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
     return facet_dict
+    
+def is_ready_to_publish(package):
+    portal_release_date = None
+    for e in package['extras']:
+        if e['key'] == 'ready_to_publish':
+            ready_to_publish = e['value']
+            continue
+        elif e['key'] == 'portal_release_date':
+            portal_release_date = e['value']
+            continue
+            
+    #if datetime.datetime.strptime(portal_release_date, "%Y-%m-%d %H:%M:%S") < datetime.datetime.now():
+    
+    if ready_to_publish == 'true' and not portal_release_date:
+        return True
+    else:
+        return False

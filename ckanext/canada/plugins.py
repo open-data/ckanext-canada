@@ -62,7 +62,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'may_publish_datasets',
             'today',
             'date_format',
-            'parse_release_date_facet'
+            'parse_release_date_facet',
+            'is_ready_to_publish'
             ])
 
 
