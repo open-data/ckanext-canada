@@ -165,7 +165,10 @@ class CanadaFeedController(FeedController):
 class PublishController(PackageController):
     
     def _search_template(self, package_type):
-        return 'publish.html'
+        return 'publish/search.html'
         
     def _guess_package_type(self, expecting_name=False):
         return 'dataset'
+        
+    def publish(self):
+        return ''

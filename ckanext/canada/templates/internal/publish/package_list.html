@@ -1,0 +1,17 @@
+{% set list_class = 'list-bullet-none' %}
+{% if packages %}
+<form action="/publish" method="POST">
+  
+  <div>
+    <label for="publish_all" class="form-checkbox" style="float:right; display:inline-block; margin-top:-25px;">
+      <input type="checkbox" id="publish_all" name="publish_all">Select All for Publishing
+    </label>
+  </div>
+  
+  <ul class="{{ list_class or 'list-bullet-none' }} wet-boew-zebra zebra-hover">
+    {% for package in packages %}
+      {% snippet 'publish/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+    {% endfor %}
+  </ul>
+</form>
+{% endif %}
