@@ -75,3 +75,8 @@
 {% block extra_facets %}
   {# we want this to be empty. we don't want to show the publish/pending facet on the publish interface #}
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% resource 'js/check_all.js' %}
+{% endblock %}
