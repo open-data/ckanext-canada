@@ -14,8 +14,14 @@
     {% endfor %}
   </ul>
   
-  <div style="height:35px;">
-    <button type="submit" class="button button-large button-attention" style="float:right;">Publish Selected Datasets</button>
+  <div style="height:50px;">
+    <button type="submit" class="button button-large button-accent" style="float:right;">Publish Selected Datasets</button>
+    
+    <div style="float:right;">
+      <label for="startdate">Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):</label>
+      <input type="date" id="startdate" name="startdate" min="2013-07-01" />
+    </div>
+    
   </div>
 </form>
 {% endif %}

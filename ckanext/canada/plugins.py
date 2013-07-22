@@ -220,7 +220,6 @@ class DataGCCAPackageController(p.SingletonPlugin):
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
         search_params['facet.range.gap'] = '+100YEARS'
         
-        
         return search_params
 
     def after_search(self, search_results, search_params):

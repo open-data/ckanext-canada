@@ -9,6 +9,7 @@ from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
 from ckan.lib import i18n
+from ckan.lib.base import h
 from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
@@ -170,6 +171,7 @@ class PublishController(PackageController):
         return 'publish/search.html'
         
     def _guess_package_type(self, expecting_name=False):
+        request.GET['ready_to_publish'] = u'true'
         return 'dataset'
         
     def publish(self):
@@ -180,14 +182,17 @@ class PublishController(PackageController):
         #open a new revision, so we can publish everything in one clean activity
         model.repo.new_revision()
         
+        publish_date = request.str_POST['']
         #get a list of package id's from the for POST data
-        for key, package_id in request.str_POST:
+        for key, package_id in request.str_POST.iteritems():
             package_instance = model.Package.get(package_id)
             #change portal release date
-            #TODO
+            #package_instance.extras['portal_release_date'] = 
             
         #close the revision, commit to database
         model.Session.commit()
         
         #return us to the publishing interface
-        return ''
+        url = h.url_for(controller='ckanext.canada.controller:PublishController',
+                        action='search')
+        redirect(url)
