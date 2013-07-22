@@ -40,7 +40,7 @@
                 {%- else -%}
                   {{ h.list_dict_filter(search_facets_items , 'name', 'display_name', value) }}
                 {%- endif %}
-                <a href="{{ c.remove_field(field, value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
+                <a href="{{ h.remove_url_param(field, value=value, controller='ckanext.canada.controller:PublishController', action='search') }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
               </span>
             {% endfor %}
           {% endfor %}
