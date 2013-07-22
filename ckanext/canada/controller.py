@@ -9,7 +9,7 @@ from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
 from ckan.lib import i18n
-from ckan.lib.base import h
+from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
@@ -175,20 +175,21 @@ class PublishController(PackageController):
         return 'dataset'
         
     def publish(self):
-        #import pdb; pdb.set_trace()
-        
         packages = list()
         
         #open a new revision, so we can publish everything in one clean activity
         model.repo.new_revision()
         
-        publish_date = request.str_POST['']
+        publish_date = date_str_to_datetime(request.str_POST['publish_date']
+            ).strftime("%Y-%m-%d %H:%M:%S")
+        
         #get a list of package id's from the for POST data
         for key, package_id in request.str_POST.iteritems():
-            package_instance = model.Package.get(package_id)
-            #change portal release date
-            #package_instance.extras['portal_release_date'] = 
-            
+            if key == 'publish':
+                package_instance = model.Package.get(package_id)
+                #change portal release date
+                package_instance.extras['portal_release_date'] = publish_date
+           
         #close the revision, commit to database
         model.Session.commit()
         

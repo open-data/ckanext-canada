@@ -16,8 +16,8 @@
   
   <fieldset>
     <div>
-      <label for="startdate">Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):</label>
-      <input type="date" id="startdate" name="startdate" min="{{h.today()}}" />
+      <label for="publish_date">Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):</label>
+      <input type="date" id="publish_date" name="publish_date" min="{{h.today()}}" value="{{h.today()}}" />
     </div>
     
     <button type="submit" class="button button-large button-attention">Publish Selected Datasets</button>
