@@ -1,0 +1,27 @@
+{% set list_class = 'list-bullet-none' %}
+{% if packages %}
+<form action="/publish_datasets" method="POST" id="publish_form">
+  
+  <div>
+    <label for="publish_all" class="form-checkbox" style="float:right; display:inline-block; margin-top:-25px;">
+      <input type="checkbox" id="publish_all" name="publish_all">Select All for Publishing
+    </label>
+  </div>
+  
+  <ul class="{{ list_class or 'list-bullet-none' }} wet-boew-zebra zebra-hover">
+    {% for package in packages %}
+      {% snippet 'publish/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+    {% endfor %}
+  </ul>
+  
+  <fieldset>
+    <div>
+      <label for="publish_date">Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):</label>
+      <input type="date" id="publish_date" name="publish_date" min="{{h.today()}}" value="{{h.today()}}" />
+    </div>
+    
+    <button type="submit" class="button button-large button-attention">Publish Selected Datasets</button>
+    
+  </fieldset>
+</form>
+{% endif %}
