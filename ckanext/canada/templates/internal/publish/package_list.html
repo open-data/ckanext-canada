@@ -14,14 +14,14 @@
     {% endfor %}
   </ul>
   
-  <div style="height:50px;">
-    <button type="submit" class="button button-large button-accent" style="float:right;">Publish Selected Datasets</button>
-    
-    <div style="float:right;">
+  <fieldset>
+    <div>
       <label for="startdate">Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):</label>
-      <input type="date" id="startdate" name="startdate" min="2013-07-01" />
+      <input type="date" id="startdate" name="startdate" min="{{h.today()}}" />
     </div>
     
-  </div>
+    <button type="submit" class="button button-large button-attention">Publish Selected Datasets</button>
+    
+  </fieldset>
 </form>
 {% endif %}
