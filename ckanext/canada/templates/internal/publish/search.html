@@ -37,6 +37,9 @@
               <span class="filtered pill background-accent facet-filter">
                 {%- if c.translated_fields and c.translated_fields.has_key((field,value)) -%}
                   {{ c.translated_fields[(field,value)] }}
+                {% elif field == 'subject' %}
+                  {# since we separate subjects by two spaces instead of a pipe... #}
+                  {{ cr.split_subject_field(value, h.lang()) }}
                 {%- else -%}
                   {{ h.list_dict_filter(search_facets_items , 'name', 'display_name', value) }}
                 {%- endif %}
