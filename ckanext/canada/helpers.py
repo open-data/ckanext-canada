@@ -179,7 +179,7 @@ def parse_release_date_facet(facet_results):
     ranges = facet_results['counts'][0::2]
     facet_dict = dict()
     
-    if len(facet_results['counts']) < 2:
+    if len(counts) < 2:
         return dict()
         
     facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
