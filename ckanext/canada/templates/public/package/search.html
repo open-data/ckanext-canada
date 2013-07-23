@@ -16,7 +16,7 @@
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
       name='organization') }}
     
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type' ) }}
+    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=cr.catalog_label ) }}
     
     {% if h.lang() == 'en' %}
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
