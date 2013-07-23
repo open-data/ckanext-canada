@@ -15,23 +15,23 @@
           {% set fr = h.parse_release_date_facet(facet_range) %}
           
           <!-- Published -->
-          {% if fr.values()[0] %}
-            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[0]}, extras=extras, alternative_url=alternative_url) %}
+          {% if fr['published'] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr['published'].url_param}, extras=extras, alternative_url=alternative_url) %}
           
             <li class="nav-item">
               <a href="{{ href }}">
-                <span>Published ({{ fr.values()[0] }})</span>
+                <span>{{ _('Published') }} ({{ fr['published'].count }})</span>
               </a>
             </li>
           {% endif %}
           
           <!-- Scheduled -->
-          {% if fr.values()[1] %}
-            {% set href = h.add_url_param(new_params={facet_range_name: fr.keys()[1]}, extras=extras, alternative_url=alternative_url) %}
+          {% if fr['scheduled'] %}
+            {% set href = h.add_url_param(new_params={facet_range_name: fr['scheduled'].url_param}, extras=extras, alternative_url=alternative_url) %}
           
             <li class="nav-item">
               <a href="{{ href }}">
-                <span>Scheduled ({{ fr.values()[1] }})</span>
+                <span>{{ _('Scheduled') }} ({{ fr['scheduled'].count }})</span>
               </a>
             </li>
           {% endif %}
