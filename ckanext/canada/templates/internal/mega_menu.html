@@ -69,6 +69,14 @@
               {{ _('Edit Profile') }}
             </a>
           </li>
+          {% if c.userobj.sysadmin %}
+          <li>
+            <a href="{{ h.url_for(controller='ckanext.canada.controller:PublishController', action='search') }}">
+              <i class="icon-wrench"></i>
+              {{ _('Publish Datasets') }}
+            </a>
+          </li>
+          {% endif %}
         </ul>
       </div>
       <div class="clear"></div>

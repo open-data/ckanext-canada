@@ -46,7 +46,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:PublishController')
         map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
             controller='ckanext.canada.controller:PublishController')
-        #map.redirect('/publish', '/dataset')
         return map
 
     def after_map(self, map):
