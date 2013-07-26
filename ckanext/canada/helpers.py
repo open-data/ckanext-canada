@@ -179,11 +179,16 @@ def parse_release_date_facet(facet_results):
     ranges = facet_results['counts'][0::2]
     facet_dict = dict()
     
-    if len(counts) < 2:
+    if len(counts) == 0:
         return dict()
-        
-    facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
-                  'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
+    elif len(counts) == 1:
+        if ranges[0] == facet_results['start']:
+            facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
+        else:
+            facet_dict = {'scheduled': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
+    else:
+        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
+                      'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
     return facet_dict
     
