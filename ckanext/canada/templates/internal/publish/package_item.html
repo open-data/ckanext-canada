@@ -62,7 +62,7 @@ Example:
     {% if h.is_ready_to_publish(package) %}
     <div style="float:right;">
       <label class="form-checkbox">
-        <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/>Publish?
+        <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/>{{ _('Publish?') }}
       </label>
     </div>
     {% endif %}
