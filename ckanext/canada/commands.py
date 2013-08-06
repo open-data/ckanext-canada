@@ -335,19 +335,20 @@ class CanadaCommand(CkanCommand):
                 stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
                 job_ids, finished, result = pool.send(enumerate(package_ids))
-                result = result.strip()
                 while result is not None:
-                    stats[result] += 1
-                    print job_ids, finished, result
+                    package_id, action, reason = json.loads(result)
+                    stats[action] += 1
+                    print job_ids, finished, package_id, action, reason
                     if log:
                         log.write(json.dumps([
                             datetime.now().isoformat(),
                             finished,
-                            result,
+                            package_id,
+                            action,
+                            reason,
                             ]) + '\n')
                         log.flush()
                     job_ids, finished, result = pool.next()
-                    result = result.strip()
 
                 print next_date.isoformat(),
                 print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
@@ -409,8 +410,10 @@ class CanadaCommand(CkanCommand):
         now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
+            package_id = package_id.strip()
+            reason = None
             try:
-                source_pkg = registry.action.package_show(id=package_id.strip())
+                source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
                 source_pkg = None
 
@@ -418,38 +421,43 @@ class CanadaCommand(CkanCommand):
 
             if source_pkg and not self.options.mirror:
                 # treat unpublished packages same as deleted packages
-                if not source_pkg['portal_release_date'] or isodate(
-                        source_pkg['portal_release_date'], None) > now:
+                if not source_pkg['portal_release_date']:
                     source_pkg = None
+                    reason = 'release date not set'
+                elif isodate(source_pkg['portal_release_date'], None) > now:
+                    source_pkg = None
+                    reason = 'release date in future'
 
             try:
                 # don't pass user in context so deleted packages
                 # raise NotAuthorized
                 target_pkg = portal.call_action('package_show',
-                    {'id':package_id.strip()}, {})
+                    {'id':package_id}, {})
             except (NotFound, NotAuthorized):
                 target_pkg = None
 
             _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
-                result = 'unchanged'
+                action = 'unchanged'
+                reason = reason or 'deleted on registry'
             elif target_pkg is None:
                 # CREATE
                 portal.action.package_create(**source_pkg)
-                result = 'created'
+                action = 'created'
             elif source_pkg is None:
                 # DELETE
-                portal.action.package_delete(id=package_id.strip())
-                result = 'deleted'
+                portal.action.package_delete(id=package_id)
+                action = 'deleted'
             elif source_pkg == target_pkg:
-                result = 'unchanged'
+                action = 'unchanged'
+                reason = 'no difference found'
             else:
                 # UPDATE
                 portal.action.package_update(**source_pkg)
-                result = 'updated'
+                action = 'updated'
 
-            sys.stdout.write(result + '\n')
+            sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
 
 
