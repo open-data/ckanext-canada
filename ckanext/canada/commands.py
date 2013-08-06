@@ -35,6 +35,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
                                     [-p <num>] [-a <push-apikey>] [-m]
+                                    [-l <log file>]
                       dump-datasets [-p <num>] [-z]
                       changed-datasets [<since date>] [-s <remove server>] [-b]
 
@@ -294,6 +295,10 @@ class CanadaCommand(CkanCommand):
         else:
             activity_date = datetime.now() - timedelta(days=7)
 
+        log = None
+        if self.options.log:
+            log = open(self.options.log, 'a')
+
         seen_package_id_set = set()
 
         def changed_package_id_runs(start_date):
@@ -331,7 +336,18 @@ class CanadaCommand(CkanCommand):
 
                 job_ids, finished, result = pool.send(enumerate(package_ids))
                 while result is not None:
-                    stats[result.strip()] += 1
+                    package_id, action, reason = json.loads(result)
+                    stats[action] += 1
+                    print job_ids, finished, package_id, action, reason
+                    if log:
+                        log.write(json.dumps([
+                            datetime.now().isoformat(),
+                            finished,
+                            package_id,
+                            action,
+                            reason,
+                            ]) + '\n')
+                        log.flush()
                     job_ids, finished, result = pool.next()
 
                 print next_date.isoformat(),
@@ -394,47 +410,58 @@ class CanadaCommand(CkanCommand):
         now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
+            package_id = package_id.strip()
+            reason = None
             try:
-                source_pkg = registry.action.package_show(id=package_id.strip())
+                source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
+                source_pkg = None
+            if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
             _trim_package(source_pkg)
 
             if source_pkg and not self.options.mirror:
                 # treat unpublished packages same as deleted packages
-                if not source_pkg['portal_release_date'] or isodate(
-                        source_pkg['portal_release_date'], None) > now:
+                if not source_pkg['portal_release_date']:
                     source_pkg = None
+                    reason = 'release date not set'
+                elif isodate(source_pkg['portal_release_date'], None) > now:
+                    source_pkg = None
+                    reason = 'release date in future'
 
             try:
                 # don't pass user in context so deleted packages
                 # raise NotAuthorized
                 target_pkg = portal.call_action('package_show',
-                    {'id':package_id.strip()}, {})
+                    {'id':package_id}, {})
             except (NotFound, NotAuthorized):
+                target_pkg = None
+            if target_pkg and target_pkg['state'] == 'deleted':
                 target_pkg = None
 
             _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
-                result = 'unchanged'
+                action = 'unchanged'
+                reason = reason or 'deleted on registry'
             elif target_pkg is None:
                 # CREATE
                 portal.action.package_create(**source_pkg)
-                result = 'created'
+                action = 'created'
             elif source_pkg is None:
                 # DELETE
-                portal.action.package_delete(id=package_id.strip())
-                result = 'deleted'
+                portal.action.package_delete(id=package_id)
+                action = 'deleted'
             elif source_pkg == target_pkg:
-                result = 'unchanged'
+                action = 'unchanged'
+                reason = 'no difference found'
             else:
                 # UPDATE
                 portal.action.package_update(**source_pkg)
-                result = 'updated'
+                action = 'updated'
 
-            sys.stdout.write(result + '\n')
+            sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
 
 
