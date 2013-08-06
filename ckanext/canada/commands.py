@@ -297,9 +297,14 @@ class CanadaCommand(CkanCommand):
         seen_package_id_set = set()
 
         def changed_package_id_runs(start_date):
+            if self.options.push_apikey:
+                registry = LocalCKAN()
+            else:
+                registry = RemoteCKAN(source)
+
             while True:
                 package_ids, next_date = self._changed_package_ids_since(
-                    source, start_date, seen_package_id_set)
+                    registry, start_date, seen_package_id_set)
                 if next_date is None:
                     return
                 yield package_ids, next_date
@@ -332,13 +337,13 @@ class CanadaCommand(CkanCommand):
                 print next_date.isoformat(),
                 print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
 
-    def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
+    def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
         Query source ckan instance for packages changed since_time.
         returns (package ids, next since_time to query) or (None, None)
         when no more changes are found.
 
-        source - URL of CKAN source, e.g. 'http://registry.statcan.gc.ca'
+        registry - LocalCKAN or RemoteCKAN instance
         since_time - local datetime to start looking for changes
         seen_id_set - set of package ids already processed, this set is
                       modified by calling this function
@@ -348,11 +353,7 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        if source:
-            remote = RemoteCKAN(source)
-        else:
-            remote = LocalCKAN()
-        data = remote.action.changed_packages_activity_list_since(
+        data = registry.action.changed_packages_activity_list_since(
             since_time=since_time.isoformat())
 
         if seen_id_set is None:
