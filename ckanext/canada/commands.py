@@ -35,6 +35,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
                                     [-p <num>] [-a <push-apikey>] [-m]
+                                    [-l <log file>]
                       dump-datasets [-p <num>] [-z]
                       changed-datasets [<since date>] [-s <remove server>] [-b]
 
@@ -294,6 +295,10 @@ class CanadaCommand(CkanCommand):
         else:
             activity_date = datetime.now() - timedelta(days=7)
 
+        log = None
+        if self.options.log:
+            log = open(self.options.log, 'a')
+
         seen_package_id_set = set()
 
         def changed_package_id_runs(start_date):
@@ -330,9 +335,19 @@ class CanadaCommand(CkanCommand):
                 stats = dict(created=0, updated=0, deleted=0, unchanged=0)
 
                 job_ids, finished, result = pool.send(enumerate(package_ids))
+                result = result.strip()
                 while result is not None:
-                    stats[result.strip()] += 1
+                    stats[result] += 1
+                    print job_ids, finished, result
+                    if log:
+                        log.write(json.dumps([
+                            datetime.now().isoformat(),
+                            finished,
+                            result,
+                            ]) + '\n')
+                        log.flush()
                     job_ids, finished, result = pool.next()
+                    result = result.strip()
 
                 print next_date.isoformat(),
                 print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
