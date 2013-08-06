@@ -416,6 +416,8 @@ class CanadaCommand(CkanCommand):
                 source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
                 source_pkg = None
+            if source_pkg and source_pkg['state'] == 'deleted':
+                source_pkg = None
 
             _trim_package(source_pkg)
 
@@ -434,6 +436,8 @@ class CanadaCommand(CkanCommand):
                 target_pkg = portal.call_action('package_show',
                     {'id':package_id}, {})
             except (NotFound, NotAuthorized):
+                target_pkg = None
+            if target_pkg and target_pkg['state'] == 'deleted':
                 target_pkg = None
 
             _trim_package(target_pkg)
