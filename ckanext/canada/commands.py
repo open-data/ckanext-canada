@@ -39,7 +39,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
-                      changed-datasets [<since date>] [-s <remove server>] [-b]
+                      changed-datasets [<since date>] [-s <remote server>] [-b]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -358,9 +358,11 @@ class CanadaCommand(CkanCommand):
 
             for package_ids, next_date in changed_package_id_runs(activity_date):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
+                stats = completion_stats(self.options.processes)
                 while result is not None:
                     package_id, action, reason = json.loads(result)
-                    print job_ids, finished, package_id, action, reason
+                    print job_ids, stats.next(), finished, package_id, \
+                        action, reason
                     append_log(finished, package_id, action, reason)
                     job_ids, finished, result = pool.next()
 
