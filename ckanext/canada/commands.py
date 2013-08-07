@@ -330,41 +330,33 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
+        def append_log(finished, package_id, action, reason):
+            if not log:
+                return
+            log.write(json.dumps([
+                datetime.now().isoformat(),
+                finished,
+                package_id,
+                action,
+                reason,
+                ]) + '\n')
+            log.flush()
+
         with _quiet_int_pipe():
-            if log:
-                log.write(json.dumps([
-                    datetime.now().isoformat(),
-                    None,
-                    None,
-                    "started updating from:",
-                    activity_date.isoformat(),
-                    ]
+            append_log(None, None, "started updating from:",
+                activity_date.isoformat())
 
             for package_ids, next_date in changed_package_id_runs(activity_date):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
                 while result is not None:
                     package_id, action, reason = json.loads(result)
                     print job_ids, finished, package_id, action, reason
-                    if log:
-                        log.write(json.dumps([
-                            datetime.now().isoformat(),
-                            finished,
-                            package_id,
-                            action,
-                            reason,
-                            ]) + '\n')
-                        log.flush()
+                    append_log(finished, package_id, action, reason)
                     job_ids, finished, result = pool.next()
 
                 print " --- next batch starting at: " + next_date.isoformat()
-                if log:
-                    log.write(json.dumps([
-                        datetime.now().isoformat(),
-                        None,
-                        None,
-                        "next batch starting at:",
-                        next_date.isoformat(),
-                        ]
+                append_log(None, None, "next batch starting at:",
+                    next_date.isoformat())
 
     def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
