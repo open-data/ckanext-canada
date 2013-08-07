@@ -412,6 +412,7 @@ class CanadaCommand(CkanCommand):
         for package_id in iter(sys.stdin.readline, ''):
             package_id = package_id.strip()
             reason = None
+            target_deleted = False
             try:
                 source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
@@ -439,27 +440,29 @@ class CanadaCommand(CkanCommand):
                 target_pkg = None
             if target_pkg and target_pkg['state'] == 'deleted':
                 target_pkg = None
+                target_deleted = True
 
             _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
                 action = 'unchanged'
                 reason = reason or 'deleted on registry'
+            elif target_deleted:
+                action = 'updated'
+                reason = 'undeleting on target'
+                portal.action.package_update(**source_pkg)
             elif target_pkg is None:
-                # CREATE
-                portal.action.package_create(**source_pkg)
                 action = 'created'
+                portal.action.package_create(**source_pkg)
             elif source_pkg is None:
-                # DELETE
-                portal.action.package_delete(id=package_id)
                 action = 'deleted'
+                portal.action.package_delete(id=package_id)
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
             else:
-                # UPDATE
-                portal.action.package_update(**source_pkg)
                 action = 'updated'
+                portal.action.package_update(**source_pkg)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
