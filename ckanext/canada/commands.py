@@ -34,7 +34,7 @@ class CanadaCommand(CkanCommand):
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
-                                    [-p <num>] [-a <push-apikey>] [-m]
+                                    [-f | -a <push-apikey>] [-p <num>] [-m]
                                     [-l <log file>]
                       dump-datasets [-p <num>] [-z]
                       changed-datasets [<since date>] [-s <remove server>] [-b]
@@ -45,11 +45,13 @@ class CanadaCommand(CkanCommand):
 
     Options::
 
-        -a/--push-apikey <apikey>   push to <remote server> instead of
-                                    pulling and use provided apikey
+        -a/--push-apikey <apikey>   push to <remote server> using apikey
         -b/--brief                  don't output requested dates
         -c/--config <ckan config>   use named ckan config file
                                     (available to all commands)
+        -f/--fetch                  fetch changes from <remote server>,
+                                    must be specified if push apikey not
+                                    given
         -l/--log <log filename>     write log of actions to log filename
         -m/--mirror                 copy all datasets, ignoring
                                     portal_release_date
@@ -80,6 +82,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
     parser.add_option('-s', '--server', dest='server', default=None)
     parser.add_option('-b', '--brief', dest='brief', action='store_true')
+    parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
 
     def command(self):
         '''
@@ -301,12 +304,15 @@ class CanadaCommand(CkanCommand):
 
         seen_package_id_set = set()
 
-        def changed_package_id_runs(start_date):
-            if self.options.push_apikey:
-                registry = LocalCKAN()
-            else:
-                registry = RemoteCKAN(source)
+        if self.options.push_apikey and not self.options.fetch:
+            registry = LocalCKAN()
+        elif self.options.fetch:
+            registry = RemoteCKAN(source)
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
 
+        def changed_package_id_runs(start_date):
             while True:
                 package_ids, next_date = self._changed_package_ids_since(
                     registry, start_date, seen_package_id_set)
@@ -319,6 +325,8 @@ class CanadaCommand(CkanCommand):
              '-c', self.options.config]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
+        else:
+            cmd.append('-f')
         if self.options.mirror:
             cmd.append('-m')
         pool = worker_pool(
@@ -406,12 +414,16 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        if self.options.push_apikey:
+        if self.options.push_apikey and not self.options.fetch:
             registry = LocalCKAN()
             portal = RemoteCKAN(remote, apikey=self.options.push_apikey)
-        else:
+        elif self.options.fetch:
             registry = RemoteCKAN(remote)
             portal = LocalCKAN()
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
+
         now = datetime.now()
 
         for package_id in iter(sys.stdin.readline, ''):
