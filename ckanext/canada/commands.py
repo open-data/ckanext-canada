@@ -332,12 +332,9 @@ class CanadaCommand(CkanCommand):
 
         with _quiet_int_pipe():
             for package_ids, next_date in changed_package_id_runs(activity_date):
-                stats = dict(created=0, updated=0, deleted=0, unchanged=0)
-
                 job_ids, finished, result = pool.send(enumerate(package_ids))
                 while result is not None:
                     package_id, action, reason = json.loads(result)
-                    stats[action] += 1
                     print job_ids, finished, package_id, action, reason
                     if log:
                         log.write(json.dumps([
@@ -350,8 +347,7 @@ class CanadaCommand(CkanCommand):
                         log.flush()
                     job_ids, finished, result = pool.next()
 
-                print next_date.isoformat(),
-                print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+                print " --- next batch starting at: " + next_date.isoformat()
 
     def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
