@@ -331,6 +331,15 @@ class CanadaCommand(CkanCommand):
         pool.next() # advance generator so we may call send() below
 
         with _quiet_int_pipe():
+            if log:
+                log.write(json.dumps([
+                    datetime.now().isoformat(),
+                    None,
+                    None,
+                    "started updating from:",
+                    activity_date.isoformat(),
+                    ]
+
             for package_ids, next_date in changed_package_id_runs(activity_date):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
                 while result is not None:
@@ -348,6 +357,14 @@ class CanadaCommand(CkanCommand):
                     job_ids, finished, result = pool.next()
 
                 print " --- next batch starting at: " + next_date.isoformat()
+                if log:
+                    log.write(json.dumps([
+                        datetime.now().isoformat(),
+                        None,
+                        None,
+                        "next batch starting at:",
+                        next_date.isoformat(),
+                        ]
 
     def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
