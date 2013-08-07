@@ -456,10 +456,8 @@ class CanadaCommand(CkanCommand):
                     reason = 'release date in future'
 
             try:
-                # don't pass user in context so deleted packages
-                # raise NotAuthorized
                 target_pkg = portal.call_action('package_show',
-                    {'id':package_id}, {})
+                    {'id':package_id})
             except (NotFound, NotAuthorized):
                 target_pkg = None
             if target_pkg and target_pkg['state'] == 'deleted':
