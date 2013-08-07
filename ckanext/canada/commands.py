@@ -36,6 +36,8 @@ class CanadaCommand(CkanCommand):
                       portal-update <remote server> [<last activity date>]
                                     [-f | -a <push-apikey>] [-p <num>] [-m]
                                     [-l <log file>]
+                      copy-datasets <remote server> [<dataset-id> ...]
+                                    [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
                       changed-datasets [<since date>] [-s <remove server>] [-b]
 
@@ -49,12 +51,12 @@ class CanadaCommand(CkanCommand):
         -b/--brief                  don't output requested dates
         -c/--config <ckan config>   use named ckan config file
                                     (available to all commands)
-        -f/--fetch                  fetch changes from <remote server>,
+        -f/--fetch                  fetch datasets from <remote server>,
                                     must be specified if push apikey not
                                     given
         -l/--log <log filename>     write log of actions to log filename
-        -m/--mirror                 copy all datasets, ignoring
-                                    portal_release_date
+        -m/--mirror                 copy all datasets, default is to treat
+                                    unreleased datasets as deleted
         -p/--processes <num>        sets the number of worker processes,
                                     default: 1
         -r/--replace-datasets       enable replacing existing datasets
@@ -131,9 +133,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
-        elif cmd == 'portal-update-worker':
+        elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
-                self.portal_update_worker(self.args[1])
+                self.copy_datasets(self.args[1], self.args[2:])
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
@@ -321,7 +323,7 @@ class CanadaCommand(CkanCommand):
                 yield package_ids, next_date
                 start_date = next_date
 
-        cmd = [sys.argv[0], 'canada', 'portal-update-worker', source,
+        cmd = [sys.argv[0], 'canada', 'copy-datasets', source,
              '-c', self.options.config]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
@@ -405,7 +407,7 @@ class CanadaCommand(CkanCommand):
         return package_ids, since_time
 
 
-    def portal_update_worker(self, remote):
+    def copy_datasets(self, remote, package_ids=None):
         """
         a process that accepts package ids on stdin which are passed to
         the package_show API on the remote CKAN instance and compared
@@ -426,7 +428,10 @@ class CanadaCommand(CkanCommand):
 
         now = datetime.now()
 
-        for package_id in iter(sys.stdin.readline, ''):
+        if not package_ids:
+            package_ids = iter(sys.stdin.readline, '')
+
+        for package_id in package_ids:
             package_id = package_id.strip()
             reason = None
             target_deleted = False
