@@ -34,10 +34,12 @@ class CanadaCommand(CkanCommand):
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
-                                    [-p <num>] [-a <push-apikey>] [-m]
+                                    [-f | -a <push-apikey>] [-p <num>] [-m]
                                     [-l <log file>]
+                      copy-datasets <remote server> [<dataset-id> ...]
+                                    [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
-                      changed-datasets [<since date>] [-s <remove server>] [-b]
+                      changed-datasets [<since date>] [-s <remote server>] [-b]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -45,14 +47,16 @@ class CanadaCommand(CkanCommand):
 
     Options::
 
-        -a/--push-apikey <apikey>   push to <remote server> instead of
-                                    pulling and use provided apikey
+        -a/--push-apikey <apikey>   push to <remote server> using apikey
         -b/--brief                  don't output requested dates
         -c/--config <ckan config>   use named ckan config file
                                     (available to all commands)
+        -f/--fetch                  fetch datasets from <remote server>,
+                                    must be specified if push apikey not
+                                    given
         -l/--log <log filename>     write log of actions to log filename
-        -m/--mirror                 copy all datasets, ignoring
-                                    portal_release_date
+        -m/--mirror                 copy all datasets, default is to treat
+                                    unreleased datasets as deleted
         -p/--processes <num>        sets the number of worker processes,
                                     default: 1
         -r/--replace-datasets       enable replacing existing datasets
@@ -80,6 +84,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
     parser.add_option('-s', '--server', dest='server', default=None)
     parser.add_option('-b', '--brief', dest='brief', action='store_true')
+    parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
 
     def command(self):
         '''
@@ -128,9 +133,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
-        elif cmd == 'portal-update-worker':
+        elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
-                self.portal_update_worker(self.args[1])
+                self.copy_datasets(self.args[1], self.args[2:])
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
@@ -301,12 +306,15 @@ class CanadaCommand(CkanCommand):
 
         seen_package_id_set = set()
 
-        def changed_package_id_runs(start_date):
-            if self.options.push_apikey:
-                registry = LocalCKAN()
-            else:
-                registry = RemoteCKAN(source)
+        if self.options.push_apikey and not self.options.fetch:
+            registry = LocalCKAN()
+        elif self.options.fetch:
+            registry = RemoteCKAN(source)
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
 
+        def changed_package_id_runs(start_date):
             while True:
                 package_ids, next_date = self._changed_package_ids_since(
                     registry, start_date, seen_package_id_set)
@@ -315,10 +323,12 @@ class CanadaCommand(CkanCommand):
                 yield package_ids, next_date
                 start_date = next_date
 
-        cmd = [sys.argv[0], 'canada', 'portal-update-worker', source,
+        cmd = [sys.argv[0], 'canada', 'copy-datasets', source,
              '-c', self.options.config]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
+        else:
+            cmd.append('-f')
         if self.options.mirror:
             cmd.append('-m')
         pool = worker_pool(
@@ -330,28 +340,35 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
-        with _quiet_int_pipe():
-            for package_ids, next_date in changed_package_id_runs(activity_date):
-                stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+        def append_log(finished, package_id, action, reason):
+            if not log:
+                return
+            log.write(json.dumps([
+                datetime.now().isoformat(),
+                finished,
+                package_id,
+                action,
+                reason,
+                ]) + '\n')
+            log.flush()
 
+        with _quiet_int_pipe():
+            append_log(None, None, "started updating from:",
+                activity_date.isoformat())
+
+            for package_ids, next_date in changed_package_id_runs(activity_date):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
+                stats = completion_stats(self.options.processes)
                 while result is not None:
                     package_id, action, reason = json.loads(result)
-                    stats[action] += 1
-                    print job_ids, finished, package_id, action, reason
-                    if log:
-                        log.write(json.dumps([
-                            datetime.now().isoformat(),
-                            finished,
-                            package_id,
-                            action,
-                            reason,
-                            ]) + '\n')
-                        log.flush()
+                    print job_ids, stats.next(), finished, package_id, \
+                        action, reason
+                    append_log(finished, package_id, action, reason)
                     job_ids, finished, result = pool.next()
 
-                print next_date.isoformat(),
-                print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+                print " --- next batch starting at: " + next_date.isoformat()
+                append_log(None, None, "next batch starting at:",
+                    next_date.isoformat())
 
     def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
@@ -392,7 +409,7 @@ class CanadaCommand(CkanCommand):
         return package_ids, since_time
 
 
-    def portal_update_worker(self, remote):
+    def copy_datasets(self, remote, package_ids=None):
         """
         a process that accepts package ids on stdin which are passed to
         the package_show API on the remote CKAN instance and compared
@@ -401,15 +418,22 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        if self.options.push_apikey:
+        if self.options.push_apikey and not self.options.fetch:
             registry = LocalCKAN()
             portal = RemoteCKAN(remote, apikey=self.options.push_apikey)
-        else:
+        elif self.options.fetch:
             registry = RemoteCKAN(remote)
             portal = LocalCKAN()
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
+
         now = datetime.now()
 
-        for package_id in iter(sys.stdin.readline, ''):
+        if not package_ids:
+            package_ids = iter(sys.stdin.readline, '')
+
+        for package_id in package_ids:
             package_id = package_id.strip()
             reason = None
             target_deleted = False
@@ -432,10 +456,8 @@ class CanadaCommand(CkanCommand):
                     reason = 'release date in future'
 
             try:
-                # don't pass user in context so deleted packages
-                # raise NotAuthorized
                 target_pkg = portal.call_action('package_show',
-                    {'id':package_id}, {})
+                    {'id':package_id})
             except (NotFound, NotAuthorized):
                 target_pkg = None
             if target_pkg and target_pkg['state'] == 'deleted':
