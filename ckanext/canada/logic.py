@@ -19,7 +19,7 @@ def limit_api_logic():
         'user_activity_list': {'data_dict': {'limit': 2}},
         'current_package_list_with_resources': {'data_dict': {'limit': 2}},
         'group_package_show': {'data_dict': {'limit': 2}},
-        'package_search': {'data_dict': {'rows': 20}},
+        'package_search': {'data_dict': {'rows': 10}},
         'resource_search': {'data_dict': {'limit': 20}},
         'package_activity_list': {'data_dict': {'limit': 2}},
         'group_activity_list': {'data_dict': {'limit': 2}},
