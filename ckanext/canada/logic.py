@@ -43,7 +43,7 @@ def limit_api_logic():
         @functools.wraps(action)
         def wrapper(context, data_dict, limit=limit, action=action):
             passed_limit = context.get('limits', {}).get('packages')
-            if passed_limit is not None and passed_limit > limit:
+            if passed_limit is not None and int(passed_limit) > limit:
                 context.getdefault('limits', {})['packages'] = limit
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
@@ -52,11 +52,13 @@ def limit_api_logic():
 
     for name, limit in data_dict_limit.items():
         action = getattr(core_get, name)
+        # package_search is special... :-(
+        param = 'rows' if name == 'package_search' else 'limit'
         @functools.wraps(action)
-        def wrapper(context, data_dict, limit=limit, action=action):
-            passed_limit = data_dict.get('limit')
-            if passed_limit is not None and passed_limit > limit:
-                data_dict['limit'] = limit
+        def wrapper(context, data_dict, limit=limit, action=action, param=param):
+            passed_limit = data_dict.get(param)
+            if passed_limit is not None and int(passed_limit) > limit:
+                data_dict[param] = limit
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
             wrapper.side_effect_free = action.side_effect_free
