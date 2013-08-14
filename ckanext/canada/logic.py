@@ -14,26 +14,26 @@ def limit_api_logic():
     existing api calls to set new default limits and hard limits
     """
     context_limit_packages = {
-        'group_show': (2, 2),
-        'organization_show': (2, 2),
+        'group_show': (5, 20),
+        'organization_show': (5, 20),
     }
     data_dict_limit = {
-        'user_activity_list': (2, 2),
-        'current_package_list_with_resources': (2, 2),
-        'group_package_show': (2, 2),
-        'package_search': (5, 10),
-        'resource_search': (20, 20),
-        'package_activity_list': (2, 2),
-        'group_activity_list': (2, 2),
-        'organization_activity_list': (2, 2),
-        'recently_changed_packages_activity_list': (10, 10),
-        'user_activity_list_html': (2, 2),
-        'package_activity_list_html': (2, 2),
-        'group_activity_list_html': (2, 2),
-        'organization_activity_list_html': (2, 2),
-        'recently_changed_packages_activity_list_html': (10, 10),
-        'dashboard_activity_list': (2, 2),
-        'dashboard_activity_list_html': (2, 2),
+        'user_activity_list': (20, 100),
+        'current_package_list_with_resources': (20, 100),
+        'group_package_show': (20, 100),
+        'package_search': (20, 100),
+        'resource_search': (20, 100),
+        'package_activity_list': (20, 100),
+        'group_activity_list': (20, 100),
+        'organization_activity_list': (20, 100),
+        'recently_changed_packages_activity_list': (20, 100),
+        'user_activity_list_html': (20, 100),
+        'package_activity_list_html': (20, 100),
+        'group_activity_list_html': (20, 100),
+        'organization_activity_list_html': (20, 100),
+        'recently_changed_packages_activity_list_html': (20, 100),
+        'dashboard_activity_list': (20, 100),
+        'dashboard_activity_list_html': (20, 100),
         }
 
     out = {}
