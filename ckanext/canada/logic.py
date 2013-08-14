@@ -10,55 +10,54 @@ import functools
 
 def limit_api_logic():
     """
-    Return a dict of logic function names -> wrappers
-    that override existing api calls to set hard limits on number of
-    items returned in each call
+    Return a dict of logic function names -> wrappers that override
+    existing api calls to set new default limits and hard limits
     """
     context_limit_packages = {
-        'group_show': 2,
-        'organization_show': 2,
+        'group_show': (2, 2),
+        'organization_show': (2, 2),
     }
     data_dict_limit = {
-        'user_activity_list': 2,
-        'current_package_list_with_resources': 2,
-        'group_package_show': 2,
-        'package_search': 10,
-        'resource_search': 20,
-        'package_activity_list': 2,
-        'group_activity_list': 2,
-        'organization_activity_list': 2,
-        'recently_changed_packages_activity_list': 10,
-        'user_activity_list_html': 2,
-        'package_activity_list_html': 2,
-        'group_activity_list_html': 2,
-        'organization_activity_list_html': 2,
-        'recently_changed_packages_activity_list_html': 10,
-        'dashboard_activity_list': 2,
-        'dashboard_activity_list_html': 2,
+        'user_activity_list': (2, 2),
+        'current_package_list_with_resources': (2, 2),
+        'group_package_show': (2, 2),
+        'package_search': (5, 10),
+        'resource_search': (20, 20),
+        'package_activity_list': (2, 2),
+        'group_activity_list': (2, 2),
+        'organization_activity_list': (2, 2),
+        'recently_changed_packages_activity_list': (10, 10),
+        'user_activity_list_html': (2, 2),
+        'package_activity_list_html': (2, 2),
+        'group_activity_list_html': (2, 2),
+        'organization_activity_list_html': (2, 2),
+        'recently_changed_packages_activity_list_html': (10, 10),
+        'dashboard_activity_list': (2, 2),
+        'dashboard_activity_list_html': (2, 2),
         }
 
     out = {}
-    for name, limit in context_limit_packages.items():
+    for name, (default, limit) in context_limit_packages.items():
         action = getattr(core_get, name)
         @functools.wraps(action)
-        def wrapper(context, data_dict, limit=limit, action=action):
-            passed_limit = context.get('limits', {}).get('packages')
-            if passed_limit is not None and int(passed_limit) > limit:
-                context.getdefault('limits', {})['packages'] = limit
+        def wrapper(context, data_dict,
+                default=default, limit=limit, action=action):
+            value = int(context.get('limits', {}).get('packages', default))
+            context.setdefault('limits', {})['packages'] = min(value, limit)
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
             wrapper.side_effect_free = action.side_effect_free
         out[name] = wrapper
 
-    for name, limit in data_dict_limit.items():
+    for name, (default, limit) in data_dict_limit.items():
         action = getattr(core_get, name)
         # package_search is special... :-(
         param = 'rows' if name == 'package_search' else 'limit'
         @functools.wraps(action)
-        def wrapper(context, data_dict, limit=limit, action=action, param=param):
-            passed_limit = data_dict.get(param)
-            if passed_limit is not None and int(passed_limit) > limit:
-                data_dict[param] = limit
+        def wrapper(context, data_dict,
+                default=default, limit=limit, action=action, param=param):
+            value = int(data_dict.get(param, default))
+            data_dict[param] = min(value, limit)
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
             wrapper.side_effect_free = action.side_effect_free
