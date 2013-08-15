@@ -36,7 +36,7 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
                                     [-f | -a <push-apikey>] [-p <num>] [-m]
-                                    [-l <log file>]
+                                    [-l <log file>] [-t <num> [-d <seconds>]]
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
@@ -52,6 +52,7 @@ class CanadaCommand(CkanCommand):
         -b/--brief                  don't output requested dates
         -c/--config <ckan config>   use named ckan config file
                                     (available to all commands)
+        -d/--delay <seconds>        delay between retries, default: 60
         -f/--fetch                  fetch datasets from <remote server>,
                                     must be specified if push apikey not
                                     given
@@ -62,6 +63,8 @@ class CanadaCommand(CkanCommand):
                                     default: 1
         -r/--replace-datasets       enable replacing existing datasets
         -s/--server <remote server> retrieve from <remote server>
+        -t/--tries <num>            try <num> times, set > 1 to retry on
+                                    failures, default: 1
         -u/--ckan-user <username>   sets the owner of packages created,
                                     default: ckan system user
         -z/--gzip                   read/write gzipped data
@@ -86,6 +89,8 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-s', '--server', dest='server', default=None)
     parser.add_option('-b', '--brief', dest='brief', action='store_true')
     parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
+    parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
+    parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
 
     def command(self):
         '''
@@ -295,6 +300,17 @@ class CanadaCommand(CkanCommand):
         and apply the package updates to the local CKAN instance for all
         packages with published_date set to any time in the past.
         """
+        tries = self.options.tries
+        self._portal_update_completed = False
+        self._portal_update_activity_date = activity_date
+        while tries > 0:
+            tries -= 1
+            self._portal_update(source, self._portal_update_activity_date)
+            if self._portal_update_completed or not tries:
+                return
+            time.sleep(self.options.delay)
+
+    def _portal_update(self, source, activity_date):
         if activity_date:
             # XXX local time :-(
             activity_date = isodate(activity_date, None)
@@ -370,6 +386,8 @@ class CanadaCommand(CkanCommand):
                 print " --- next batch starting at: " + next_date.isoformat()
                 append_log(None, None, "next batch starting at:",
                     next_date.isoformat())
+                self._portal_update_activity_date = next_date.isoformat()
+            self._portal_update_completed = True
 
     def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
