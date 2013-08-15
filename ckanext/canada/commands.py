@@ -10,6 +10,7 @@ import json
 import time
 import sys
 import gzip
+import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
@@ -18,7 +19,7 @@ from ckanext.canada.workers import worker_pool
 from ckanext.canada.stats import completion_stats
 from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized, SearchIndexError)
+    ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
 
 class CanadaCommand(CkanCommand):
     """
@@ -441,6 +442,10 @@ class CanadaCommand(CkanCommand):
                 source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
                 source_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                sys.stdout.write(json.dumps([package_id, 'source error',
+                    unicode(e.args)]) + '\n')
+                raise
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
@@ -460,6 +465,10 @@ class CanadaCommand(CkanCommand):
                     {'id':package_id})
             except (NotFound, NotAuthorized):
                 target_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                sys.stdout.write(json.dumps([package_id, 'target error',
+                    unicode(e.args)]) + '\n')
+                raise
             if target_pkg and target_pkg['state'] == 'deleted':
                 target_pkg = None
                 target_deleted = True
