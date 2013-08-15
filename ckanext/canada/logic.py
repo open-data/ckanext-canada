@@ -21,7 +21,7 @@ def limit_api_logic():
         'user_activity_list': (20, 100),
         'current_package_list_with_resources': (20, 100),
         'group_package_show': (20, 100),
-        'package_search': (20, 100),
+        'package_search': (int(config.get('ckan.datasets_per_page', 20)), 100),
         'resource_search': (20, 100),
         'package_activity_list': (20, 100),
         'group_activity_list': (20, 100),
