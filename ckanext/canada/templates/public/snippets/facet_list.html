@@ -10,12 +10,12 @@
     <div class="module">   
     {% if items %}
       <nav>
-        <ul class="list-bullet-none">
+        <ul class="list-bullet-none" style="margin-left: 7px;">
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = label_function(item, h.lang()) if label_function else cr.split_bilingual_field(item.display_name, h.lang()) %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
-              <li class="nav-item{% if item.active %} active{% endif %}">
+              <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                 <a href="{{ href }}">
                   <span>{{ label }} {{ count }}</span>
                 </a>
@@ -23,7 +23,8 @@
           {% endfor %}
         </ul>
       </nav>
-      <p class="module-footer">
+      <div class="module-footer" style="margin-left: 15px;">
+        <p>
         {% if items | count > 1 %}
           {% if h.get_param_int('_%s_limit' % name) %}
             <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
@@ -31,11 +32,13 @@
             <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
           {% endif %}
         {% endif %}
-      </p>
-      <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
-    {% else %}
-      <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
-    {% endif %}
+        </p>
+        <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
+      {% else %}
+        <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
+      {% endif %}
+      </div>
+      
     </div>
   </section>
   <br>
