@@ -10,7 +10,7 @@
     <div class="module">   
     {% if items %}
       <nav>
-        <ul class="list-bullet-none">
+        <ul class="list-bullet-none" style="margin-left: 7px;">
           
           {% set fr = h.parse_release_date_facet(facet_range) %}
           
@@ -18,7 +18,7 @@
           {% if fr['published'] %}
             {% set href = h.add_url_param(new_params={facet_range_name: fr['published'].url_param}, extras=extras, alternative_url=alternative_url) %}
           
-            <li class="nav-item">
+            <li class="nav-item facet-item">
               <a href="{{ href }}">
                 <span>{{ _('Published') }} ({{ fr['published'].count }})</span>
               </a>
@@ -29,7 +29,7 @@
           {% if fr['scheduled'] %}
             {% set href = h.add_url_param(new_params={facet_range_name: fr['scheduled'].url_param}, extras=extras, alternative_url=alternative_url) %}
           
-            <li class="nav-item">
+            <li class="nav-item facet-item">
               <a href="{{ href }}">
                 <span>{{ _('Scheduled') }} ({{ fr['scheduled'].count }})</span>
               </a>
@@ -40,7 +40,7 @@
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = 'Pending' if item.display_name == 'true' else 'Draft' %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
-              <li class="nav-item{% if item.active %} active{% endif %}">
+              <li class="nav-item{% if item.active %} active{% endif %} facet-item">
                 <a href="{{ href }}">
                   <span>{{ label }} {{ count }}</span>
                 </a>
@@ -48,19 +48,22 @@
           {% endfor %}
         </ul>
       </nav>
-      <p class="module-footer">
-        {% if items | count > 1 %}
-          {% if h.get_param_int('_%s_limit' % name) %}
-            <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
-          {% else %}
-            <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
+      <div class="module-footer" style="margin-left: 15px;">
+        <p>
+          {% if items | count > 1 %}
+            {% if h.get_param_int('_%s_limit' % name) %}
+              <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
+            {% else %}
+              <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      </p>
-      <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
-    {% else %}
-      <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
-    {% endif %}
+        </p>
+        <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
+      {% else %}
+        <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
+      {% endif %}
+      </div>
+      
     </div>
   </section>
   <br>
