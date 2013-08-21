@@ -40,6 +40,8 @@ python setup.py develop
 cd dl
 wget http://github.com/wet-boew/wet-boew-dist/archive/v3.1.2-release-dist.zip
 unzip v3.1.2-release-dist.zip
+echo mv wet-boew-dist-3.1.2-release-dist/dist/* \
+  "`python -c'import ckanext.wet_boew as wb; print wb.__file__.rsplit("/",1)[0]'`"/public/dist/.
 mv wet-boew-dist-3.1.2-release-dist/dist/* \
   "`python -c'import ckanext.wet_boew as wb; print wb.__file__.rsplit("/",1)[0]'`"/public/dist/.
 cd -
