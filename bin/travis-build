@@ -79,5 +79,8 @@ cd -
 
 cat test-core.ini
 
+paster canada create-vocabularies
+paster canada create-organizations
+
 # And finally, run the tests
 nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests
