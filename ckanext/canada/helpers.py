@@ -175,10 +175,36 @@ def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
     
 def parse_release_date_facet(facet_results):
-    list_of_ranges = facet_results['counts'][0::2]
-    list_of_ranges.append(facet_results['end'])
-    for index, range_value in enumerate(list_of_ranges[0:-1]):
-        list_of_ranges[index] = '[' + list_of_ranges[index] + ' TO ' + list_of_ranges[index+1] + ']'
+    counts = facet_results['counts'][1::2]
+    ranges = facet_results['counts'][0::2]
+    facet_dict = dict()
     
-    return dict(zip(list_of_ranges, facet_results['counts'][1::2]))
+    if len(counts) == 0:
+        return dict()
+    elif len(counts) == 1:
+        if ranges[0] == facet_results['start']:
+            facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
+        else:
+            facet_dict = {'scheduled': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
+    else:
+        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
+                      'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
+    return facet_dict
+    
+def is_ready_to_publish(package):
+    portal_release_date = None
+    for e in package['extras']:
+        if e['key'] == 'ready_to_publish':
+            ready_to_publish = e['value']
+            continue
+        elif e['key'] == 'portal_release_date':
+            portal_release_date = e['value']
+            continue
+            
+    #if datetime.datetime.strptime(portal_release_date, "%Y-%m-%d %H:%M:%S") < datetime.datetime.now():
+    
+    if ready_to_publish == 'true' and not portal_release_date:
+        return True
+    else:
+        return False

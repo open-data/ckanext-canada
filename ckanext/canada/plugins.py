@@ -42,6 +42,10 @@ class DataGCCAInternal(p.SingletonPlugin):
         map.connect('/', controller='user', action='login')
         map.connect('/user/logged_in', action='logged_in',
             controller='ckanext.canada.controller:CanadaController')
+        map.connect('/publish', action='search', 
+            controller='ckanext.canada.controller:PublishController')
+        map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
+            controller='ckanext.canada.controller:PublishController')
         return map
 
     def after_map(self, map):
@@ -57,7 +61,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'may_publish_datasets',
             'today',
             'date_format',
-            'parse_release_date_facet'
+            'parse_release_date_facet',
+            'is_ready_to_publish'
             ])
 
 
@@ -213,7 +218,6 @@ class DataGCCAPackageController(p.SingletonPlugin):
         search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
         search_params['facet.range.gap'] = '+100YEARS'
-        
         
         return search_params
 

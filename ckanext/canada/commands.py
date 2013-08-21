@@ -10,6 +10,7 @@ import json
 import time
 import sys
 import gzip
+import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
@@ -18,7 +19,7 @@ from ckanext.canada.workers import worker_pool
 from ckanext.canada.stats import completion_stats
 from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized, SearchIndexError)
+    ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
 
 class CanadaCommand(CkanCommand):
     """
@@ -34,8 +35,12 @@ class CanadaCommand(CkanCommand):
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>] [-z]
                       portal-update <remote server> [<last activity date>]
-                                    [-p <num>] [-a <push-apikey>] [-m]
+                                    [-f | -a <push-apikey>] [-p <num>] [-m]
+                                    [-l <log file>] [-t <num> [-d <seconds>]]
+                      copy-datasets <remote server> [<dataset-id> ...]
+                                    [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
+                      changed-datasets [<since date>] [-s <remote server>] [-b]
 
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
@@ -43,19 +48,26 @@ class CanadaCommand(CkanCommand):
 
     Options::
 
-        -c/--config <ckan config>  use named ckan config file
-                                   (available to all commands)
-        -r/--replace-datasets      enable replacing existing datasets
-        -p/--processes <num>       sets the number of worker processes,
-                                   default: 1
-        -u/--ckan-user <username>  sets the owner of packages created,
-                                   default: ckan system user
-        -l/--log <log filename>    write log of actions to log filename
-        -a/--push-apikey <apikey>  push to <remote server> instead of
-                                   pulling and use provided apikey
-        -m/--mirror                copy all datasets, ignoring
-                                   portal_release_date
-        -z/--gzip                  read/write gzipped data
+        -a/--push-apikey <apikey>   push to <remote server> using apikey
+        -b/--brief                  don't output requested dates
+        -c/--config <ckan config>   use named ckan config file
+                                    (available to all commands)
+        -d/--delay <seconds>        delay between retries, default: 60
+        -f/--fetch                  fetch datasets from <remote server>,
+                                    must be specified if push apikey not
+                                    given
+        -l/--log <log filename>     write log of actions to log filename
+        -m/--mirror                 copy all datasets, default is to treat
+                                    unreleased datasets as deleted
+        -p/--processes <num>        sets the number of worker processes,
+                                    default: 1
+        -r/--replace-datasets       enable replacing existing datasets
+        -s/--server <remote server> retrieve from <remote server>
+        -t/--tries <num>            try <num> times, set > 1 to retry on
+                                    failures, default: 1
+        -u/--ckan-user <username>   sets the owner of packages created,
+                                    default: ckan system user
+        -z/--gzip                   read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -74,6 +86,11 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-a', '--push-apikey', dest='push_apikey',
         default=None)
     parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
+    parser.add_option('-s', '--server', dest='server', default=None)
+    parser.add_option('-b', '--brief', dest='brief', action='store_true')
+    parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
+    parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
+    parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
 
     def command(self):
         '''
@@ -122,9 +139,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
-        elif cmd == 'portal-update-worker':
+        elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
-                self.portal_update_worker(self.args[1])
+                self.copy_datasets(self.args[1], self.args[2:])
 
         elif cmd == 'dump-datasets':
             self.dump_datasets()
@@ -132,6 +149,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'dump-datasets-worker':
             with _quiet_int_pipe():
                 self.dump_datasets_worker()
+
+        elif cmd == 'changed-datasets':
+            self.changed_datasets(*self.args[1:])
 
         else:
             print self.__doc__
@@ -280,27 +300,52 @@ class CanadaCommand(CkanCommand):
         and apply the package updates to the local CKAN instance for all
         packages with published_date set to any time in the past.
         """
+        tries = self.options.tries
+        self._portal_update_completed = False
+        self._portal_update_activity_date = activity_date
+        while tries > 0:
+            tries -= 1
+            self._portal_update(source, self._portal_update_activity_date)
+            if self._portal_update_completed or not tries:
+                return
+            time.sleep(self.options.delay)
+
+    def _portal_update(self, source, activity_date):
         if activity_date:
             # XXX local time :-(
             activity_date = isodate(activity_date, None)
         else:
             activity_date = datetime.now() - timedelta(days=7)
 
+        log = None
+        if self.options.log:
+            log = open(self.options.log, 'a')
+
         seen_package_id_set = set()
+
+        if self.options.push_apikey and not self.options.fetch:
+            registry = LocalCKAN()
+        elif self.options.fetch:
+            registry = RemoteCKAN(source)
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
 
         def changed_package_id_runs(start_date):
             while True:
                 package_ids, next_date = self._changed_package_ids_since(
-                    source, start_date, seen_package_id_set)
+                    registry, start_date, seen_package_id_set)
                 if next_date is None:
                     return
                 yield package_ids, next_date
                 start_date = next_date
 
-        cmd = [sys.argv[0], 'canada', 'portal-update-worker', source,
+        cmd = [sys.argv[0], 'canada', 'copy-datasets', source,
              '-c', self.options.config]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
+        else:
+            cmd.append('-f')
         if self.options.mirror:
             cmd.append('-m')
         pool = worker_pool(
@@ -312,25 +357,45 @@ class CanadaCommand(CkanCommand):
             )
         pool.next() # advance generator so we may call send() below
 
-        with _quiet_int_pipe():
-            for package_ids, next_date in changed_package_id_runs(activity_date):
-                stats = dict(created=0, updated=0, deleted=0, unchanged=0)
+        def append_log(finished, package_id, action, reason):
+            if not log:
+                return
+            log.write(json.dumps([
+                datetime.now().isoformat(),
+                finished,
+                package_id,
+                action,
+                reason,
+                ]) + '\n')
+            log.flush()
 
+        with _quiet_int_pipe():
+            append_log(None, None, "started updating from:",
+                activity_date.isoformat())
+
+            for package_ids, next_date in changed_package_id_runs(activity_date):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
+                stats = completion_stats(self.options.processes)
                 while result is not None:
-                    stats[result.strip()] += 1
+                    package_id, action, reason = json.loads(result)
+                    print job_ids, stats.next(), finished, package_id, \
+                        action, reason
+                    append_log(finished, package_id, action, reason)
                     job_ids, finished, result = pool.next()
 
-                print next_date.isoformat(),
-                print " ".join("%s:%s" % kv for kv in sorted(stats.items()))
+                print " --- next batch starting at: " + next_date.isoformat()
+                append_log(None, None, "next batch starting at:",
+                    next_date.isoformat())
+                self._portal_update_activity_date = next_date.isoformat()
+            self._portal_update_completed = True
 
-    def _changed_package_ids_since(self, source, since_time, seen_id_set=None):
+    def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
         """
         Query source ckan instance for packages changed since_time.
         returns (package ids, next since_time to query) or (None, None)
         when no more changes are found.
 
-        source - URL of CKAN source, e.g. 'http://registry.statcan.gc.ca'
+        registry - LocalCKAN or RemoteCKAN instance
         since_time - local datetime to start looking for changes
         seen_id_set - set of package ids already processed, this set is
                       modified by calling this function
@@ -340,8 +405,7 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        remote = RemoteCKAN(source)
-        data = remote.action.changed_packages_activity_list_since(
+        data = registry.action.changed_packages_activity_list_since(
             since_time=since_time.isoformat())
 
         if seen_id_set is None:
@@ -364,7 +428,7 @@ class CanadaCommand(CkanCommand):
         return package_ids, since_time
 
 
-    def portal_update_worker(self, remote):
+    def copy_datasets(self, remote, package_ids=None):
         """
         a process that accepts package ids on stdin which are passed to
         the package_show API on the remote CKAN instance and compared
@@ -373,56 +437,83 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        if self.options.push_apikey:
+        if self.options.push_apikey and not self.options.fetch:
             registry = LocalCKAN()
             portal = RemoteCKAN(remote, apikey=self.options.push_apikey)
-        else:
+        elif self.options.fetch:
             registry = RemoteCKAN(remote)
             portal = LocalCKAN()
+        else:
+            print "exactly one of -f or -a options must be specified"
+            return
+
         now = datetime.now()
 
-        for package_id in iter(sys.stdin.readline, ''):
+        if not package_ids:
+            package_ids = iter(sys.stdin.readline, '')
+
+        for package_id in package_ids:
+            package_id = package_id.strip()
+            reason = None
+            target_deleted = False
             try:
-                source_pkg = registry.action.package_show(id=package_id.strip())
+                source_pkg = registry.action.package_show(id=package_id)
             except NotAuthorized:
+                source_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                sys.stdout.write(json.dumps([package_id, 'source error',
+                    unicode(e.args)]) + '\n')
+                raise
+            if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
             _trim_package(source_pkg)
 
             if source_pkg and not self.options.mirror:
                 # treat unpublished packages same as deleted packages
-                if not source_pkg['portal_release_date'] or isodate(
-                        source_pkg['portal_release_date'], None) > now:
+                if not source_pkg['portal_release_date']:
                     source_pkg = None
+                    reason = 'release date not set'
+                elif isodate(source_pkg['portal_release_date'], None) > now:
+                    source_pkg = None
+                    reason = 'release date in future'
 
             try:
-                # don't pass user in context so deleted packages
-                # raise NotAuthorized
                 target_pkg = portal.call_action('package_show',
-                    {'id':package_id.strip()}, {})
+                    {'id':package_id})
             except (NotFound, NotAuthorized):
                 target_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                sys.stdout.write(json.dumps([package_id, 'target error',
+                    unicode(e.args)]) + '\n')
+                raise
+            if target_pkg and target_pkg['state'] == 'deleted':
+                target_pkg = None
+                target_deleted = True
 
             _trim_package(target_pkg)
 
             if target_pkg is None and source_pkg is None:
-                result = 'unchanged'
-            elif target_pkg is None:
-                # CREATE
-                portal.action.package_create(**source_pkg)
-                result = 'created'
-            elif source_pkg is None:
-                # DELETE
-                portal.action.package_delete(id=package_id.strip())
-                result = 'deleted'
-            elif source_pkg == target_pkg:
-                result = 'unchanged'
-            else:
-                # UPDATE
+                action = 'unchanged'
+                reason = reason or 'deleted on registry'
+            elif target_deleted:
+                action = 'updated'
+                reason = 'undeleting on target'
                 portal.action.package_update(**source_pkg)
-                result = 'updated'
+            elif target_pkg is None:
+                action = 'created'
+                portal.action.package_create(**source_pkg)
+            elif source_pkg is None:
+                action = 'deleted'
+                portal.action.package_delete(id=package_id)
+            elif source_pkg == target_pkg:
+                action = 'unchanged'
+                reason = 'no difference found'
+            else:
+                action = 'updated'
+                portal.action.package_update(**source_pkg)
 
-            sys.stdout.write(result + '\n')
+            sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
 
 
@@ -495,6 +586,26 @@ class CanadaCommand(CkanCommand):
                 registry.action.package_show(id=name.strip()), sort_keys=True)
                 + '\n')
             sys.stdout.flush()
+
+
+    def changed_datasets(self, since_date):
+        """
+        Produce a list of dataset ids and requested dates. Each package
+        id will appear at most once, showing the activity date closest
+        to since_date. Requested dates are preceeded with a "#"
+        """
+        since_date = isodate(since_date, None)
+        seen_ids = set()
+
+        while True:
+            ids, since_date = self._changed_package_ids_since(
+                self.options.server, since_date, seen_ids)
+            if not ids:
+                return
+            for i in ids:
+                print i
+            if not self.options.brief:
+                print "# {0}".format(since_date.isoformat())
 
 
 def _trim_package(pkg):

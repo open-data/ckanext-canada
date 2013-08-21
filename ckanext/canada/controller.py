@@ -1,17 +1,22 @@
 import logging
 import json
+import ckan.model as model
+import webhelpers.feedgenerator
+import ckan.new_authz as new_authz
+
 from ckan.lib.base import (BaseController, c, render, model, request, h, g,
-    response)
+    response, abort)
 from ckan.logic import get_action, NotAuthorized, check_access
 from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
 from ckan.lib import i18n
+from ckan.lib.base import h, redirect
+from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
-import webhelpers.feedgenerator
 
 class CanadaController(BaseController):
     def view_guidelines(self):
@@ -160,3 +165,43 @@ class CanadaFeedController(FeedController):
             )
         response.content_type = feed.mime_type
         return feed.writeString('utf-8')
+        
+class PublishController(PackageController):
+    
+    def _search_template(self, package_type):
+        return 'publish/search.html'
+        
+    def _guess_package_type(self, expecting_name=False):
+        # this is a bit unortodox, but this method allows us to conveniently alter the
+        # search method without much code duplication.
+        sysadmin = new_authz.is_sysadmin(c.user)
+        if not sysadmin:
+            abort(401, _('Not authorized to see this page'))
+        
+        #always set ready_to_publish to true for the publishing interface
+        request.GET['ready_to_publish'] = u'true'
+        return 'dataset'
+        
+    def publish(self):
+        packages = list()
+        
+        #open a new revision, so we can publish everything in one clean activity
+        model.repo.new_revision()
+        
+        publish_date = date_str_to_datetime(request.str_POST['publish_date']
+            ).strftime("%Y-%m-%d %H:%M:%S")
+        
+        #get a list of package id's from the for POST data
+        for key, package_id in request.str_POST.iteritems():
+            if key == 'publish':
+                package_instance = model.Package.get(package_id)
+                #change portal release date
+                package_instance.extras['portal_release_date'] = publish_date
+           
+        #close the revision, commit to database
+        model.Session.commit()
+        
+        #return us to the publishing interface
+        url = h.url_for(controller='ckanext.canada.controller:PublishController',
+                        action='search')
+        redirect(url)

@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 from ckan.lib.helpers import render_markdown
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +33,10 @@ class MetadataSchema(object):
     def __init__(self):
         with open(_JSON_NAME) as j:
             schema = json.load(j)
+
+        # make markdown less noisy
+        markdown_log = logging.getLogger('MARKDOWN')
+        markdown_log.setLevel(logging.WARNING)
 
         self.intro = schema['intro']
         self.languages = schema['languages']

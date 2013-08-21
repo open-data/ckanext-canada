@@ -34,7 +34,7 @@ Example:
           </span>
         {% endif %}
 
-        {{ h.link_to(cr.field_id('title', package, client_lang), h.url_for(controller='package', action='read', id=package.name)) }}
+        {{ h.link_to(h.truncate(cr.field_id('title', package, client_lang), truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
         
         {% if package.get('state', '').startswith('draft') %}
           <span class="label label-info">{{ _('Draft') }}</span>
@@ -58,6 +58,15 @@ Example:
       <em>{{ _('Organization') }}: </em>
       {{ cr.org_field(package, client_lang) }}
     </div>
+    
+    {% if h.is_ready_to_publish(package) %}
+    <div style="float:right;">
+      <label class="form-checkbox">
+        <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/>{{ _('Publish?') }}
+      </label>
+    </div>
+    {% endif %}
+    
     {% if package.resources and not hide_resources %}
     <div style="display:inline-block;">
       <span class="span-1 margin-left-none margin-bottom-small">
@@ -75,6 +84,7 @@ Example:
           </li>
         {% endfor %}
       </ul>
+    </div>
     {% endif %}
   {% endblock %}
 </li>
