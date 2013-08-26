@@ -5,6 +5,7 @@ from ckan.lib.navl.dictization_functions import Invalid
 import paste.script
 from paste.script.util.logging_config import fileConfig
 
+import re
 import os
 import json
 import time
@@ -21,6 +22,12 @@ from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
 
+PAST_RE = (r'^'
+    r'(?:(\d+)d)?' # days
+    r'(?:(\d+)h)?' # hours
+    r'(?:(\d+)m)?' # minutes
+    r'$')
+
 class CanadaCommand(CkanCommand):
     """
     CKAN Canada Extension
@@ -34,7 +41,8 @@ class CanadaCommand(CkanCommand):
                                     [<starting line number> [<lines to load>]]
                                     [-r] [-p <num>] [-u <username>]
                                     [-l <log file>] [-z]
-                      portal-update <remote server> [<last activity date>]
+                      portal-update <remote server>
+                                    [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-f | -a <push-apikey>] [-p <num>] [-m]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
                       copy-datasets <remote server> [<dataset-id> ...]
@@ -45,6 +53,7 @@ class CanadaCommand(CkanCommand):
         <starting line number> of .jl source file, default: 1
         <lines to load> from .jl source file, default: all lines
         <last activity date> for reading activites, default: 7 days ago
+        <k> number of hours/minutes/seconds in the past for reading activities
 
     Options::
 
@@ -312,8 +321,13 @@ class CanadaCommand(CkanCommand):
 
     def _portal_update(self, source, activity_date):
         if activity_date:
-            # XXX local time :-(
-            activity_date = isodate(activity_date, None)
+            past = re.match(PAST_RE, activity_date)
+            if past:
+                days, hours, minutes = (int(x) if x else 0 for x in past.groups())
+                activity_date = datetime.now() - timedelta(days=days,
+                    seconds=(hours * 60 + minutes) * 60)
+            else:
+                activity_date = isodate(activity_date, None)
         else:
             activity_date = datetime.now() - timedelta(days=7)
 
