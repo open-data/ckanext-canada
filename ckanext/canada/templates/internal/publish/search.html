@@ -66,7 +66,9 @@
       {{ h.snippet('publish/package_list.html', packages=c.page.items) }}
     </div>
 
-    {{ c.page.pager(q=c.q) }}
+    {%- block pager -%}
+      {{ c.page.pager(q=c.q) }}
+    {%- endblock -%}
   </section>
 
   {%- block api_access_info -%}
