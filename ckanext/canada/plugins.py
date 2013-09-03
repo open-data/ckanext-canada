@@ -256,6 +256,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
             data_dict.pop('ready_to_publish', None)
         elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
             data_dict['ready_to_publish'] = 'true'
+        else:
+            data_dict['ready_to_publish'] = 'false'
         
         return data_dict
 
