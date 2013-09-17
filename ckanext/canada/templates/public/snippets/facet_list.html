@@ -34,10 +34,10 @@
         {% endif %}
         </p>
         <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
+      </div>
       {% else %}
         <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
       {% endif %}
-      </div>
       
     </div>
   </section>
