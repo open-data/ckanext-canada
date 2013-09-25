@@ -1,0 +1,40 @@
+[
+  {
+    "dataset_type": "ati-summaries",
+    "title": "ATI Summaries",
+    "datastore_table": {
+      "fields": [
+        {
+          "id": "request_number",
+          "type": "text"
+        },
+        {
+          "id": "year",
+          "type": "int"
+        },
+        {
+          "id": "month",
+          "type": "int"
+        },
+        {
+          "id": "summary_eng",
+          "type": "text"
+        },
+        {
+          "id": "summary_fra",
+          "type": "text"
+        },
+        {
+          "id": "disposition",
+          "type": "text"
+        },
+        {
+          "id": "pages",
+          "type": "int"
+        }
+      ],
+      "primary_key": "request_number",
+      "indexes": ""
+    }
+  }
+]
