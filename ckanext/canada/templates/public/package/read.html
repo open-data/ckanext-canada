@@ -48,6 +48,7 @@
     </section>
     
     <section id="dataset-resources" class="resources module-content indent-large">
+
       <h2>{{ _('Dataset Resources') }}</h2>
       {% if pkg.resources %}
         <div class="span-6">
@@ -61,8 +62,10 @@
               </tr>
             </thead>
           {% for resource in pkg.resources %}
-            {% snippet 'package/snippets/resource_item.html',
-              pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+            {% if resource.format != 'app' %}
+	          {% snippet 'package/snippets/resource_item.html',
+	            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+            {% endif %}
           {% endfor %}
           </table>
         </div>
@@ -70,39 +73,19 @@
     </section>
     
     <section class="indent-large">
-      <h2>{{ _('Additional Information') }}</h2>
       
-      <ul class="list-bullet-none">
-        <li class="margin-bottom-medium"><a href="{{ h.portal_url() + (
-            '/eng/openness-rating' if h.lang() == 'en' else
-            '/fra/cote-degre-douvertrure-des-donnees') }}">{{ _('Openness rating') }}</a>:
-            {%- set openness = h.openness_score(pkg) -%}
-            <img src="{{ h.url_for_static('/static/img/stars/star'
-              ~ openness ~ '.png') }}" alt="{{
-                ['',
-                _('one star'),
-                _('two stars'),
-                _('three stars'),
-                _('four stars'),
-                _('five stars'),
-                ][openness] }}"
-                class="image-actual margin-bottom-none openness-rating-stars" />
-        </li>
+      <h2>{{ _('Related Items') }}</h2>
+        <ul class="list-bullet-none">      
+        {% for resource in pkg.resources %}
+          {% if resource.format == 'app' %}
+            {% snippet 'package/snippets/app_item.html',
+	            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+      	  {% endif %}
+      	
+        {% endfor %}
+        </ul>  
 
-        {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
-        {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
-        {% if cr.date_field(period_start, pkg) and cr.date_field(period_end, pkg) %}
-        <li class="margin-bottom-medium">{{ _('Temporal Coverage') }}:
-          {{ cr.date_field(period_start, pkg) }}–{{ cr.date_field(period_end, pkg) }}
-        </li>
-        {% endif %}
-
-        {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
-        <li class="margin-bottom-medium">{{ cr.field_label(frequency, client_lang) }}:
-          {{ cr.field(frequency, pkg, client_lang) }}
-        </li>
-      </ul>
-      
+     
       <h2>{{ _('Developer Tools') }}</h2>
         <ul class="list-bullet-none">
           <li class="margin-bottom-medium">{{ _('The information on this page (the dataset metadata) is also available in JSON format') }}<br/>

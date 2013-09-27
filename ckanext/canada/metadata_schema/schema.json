@@ -4881,6 +4881,12 @@
           "fra": "API", 
           "id": "api", 
           "key": "api"
+        },
+        {
+          "eng": "Application",
+          "fra": "Application",
+          "id": "app",
+          "key": "app"
         }
       ], 
       "description": {
@@ -4971,6 +4977,13 @@
           "key": "ascii grid", 
           "openness_score": 1
         }, 
+        {
+          "eng": "Application",
+          "fra": "Application",
+          "id": "app",
+          "key": "app",
+          "openness_score": 1
+        },
         {
           "eng": "CDED ASCII", 
           "fra": "CDED ASCII", 
