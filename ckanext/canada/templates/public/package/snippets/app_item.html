@@ -1,0 +1,12 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
+{% import 'macros/canada_read.html' as cr %}
+
+{% set lang_field = schema_description.resource_field_by_id['language'] %}
+{% set format_field = schema_description.resource_field_by_id['format'] %}
+
+    {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
+    {% if name_field in res and res[name_field] %}
+      <a href="{{ res.url }}">{{ h.markdown_extract(res[name_field], extract_length=80) }}<a/>
+    {% else %}
+      <li><span class="empty">{{ _('No description for this resource') }}</span></li>
+    {% endif %}
