@@ -63,8 +63,8 @@
             </thead>
           {% for resource in pkg.resources %}
             {% if resource.format != 'app' %}
-	          {% snippet 'package/snippets/resource_item.html',
-	            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+              {% snippet 'package/snippets/resource_item.html',
+                pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
             {% endif %}
           {% endfor %}
           </table>
@@ -73,23 +73,28 @@
     </section>
     
     <section class="indent-large">
-      
-      <h2>{{ _('Related Items') }}</h2>
-        <ul class="list-bullet-none">      
-        {% for resource in pkg.resources %}
-          {% if resource.format == 'app' %}
-            {% snippet 'package/snippets/app_item.html',
-	            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-      	  {% endif %}
-      	
-        {% endfor %}
-        </ul>  
 
-     
+      {% set apps = [] %}
+      {% for resource in pkg.resources %}
+        {% if resource.format == 'app' %}
+          {% set apps = apps.append(resource) %}
+        {% endif %}
+      {% endfor %}
+
+      {% if apps|length > 0 %}
+      <h2>{{ _('Related Items') }}</h2>
+        <ul class="list-bullet-none">
+        {% for resource in apps %}
+          {% snippet 'package/snippets/app_item.html',
+              pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+        {% endfor %}
+        </ul>
+      {% endif %}
+
       <h2>{{ _('Developer Tools') }}</h2>
         <ul class="list-bullet-none">
           <li class="margin-bottom-medium">{{ _('The information on this page (the dataset metadata) is also available in JSON format') }}<br/>
-          <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON format') }}</a></li>
+          <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON formatl') }}</a></li>
         </ul>
     </section>
 
