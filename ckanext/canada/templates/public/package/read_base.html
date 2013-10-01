@@ -59,10 +59,19 @@
       </li>
 
       {% set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] %}
+      {% set start_date = cr.date_field(period_start, pkg) %}
       {% set period_end = schema_description.dataset_field_by_id['time_period_coverage_end'] %}
-      {% if cr.date_field(period_start, pkg) and cr.date_field(period_end, pkg) %}
+      {% set end_date = cr.date_field(period_end, pkg) %}
+      {% if start_date or end_date %}
+
       <li>{{ _('Temporal Coverage') }}:
-        {{ cr.date_field(period_start, pkg) }}–{{ cr.date_field(period_end, pkg) }}
+        {% if start_date and end_date %}
+          {{ start_date }} {{ _('to') }} {{ end_date }}
+        {% elif start_date %}
+          {{ start_date }}+
+        {% elif end_date %}
+          {{ _('to') }} {{ end_date }}
+        {% endif %}
       </li>
       {% endif %}
       
