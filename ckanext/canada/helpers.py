@@ -90,7 +90,7 @@ def dataset_comments(pkg_id, lang):
            """select to_char(to_timestamp(c.changed), 'YYYY-MM-DD'), c.name, c.thread, f.comment_body_value, c.language from comment c
 inner join field_data_comment_body f on c.cid = f.entity_id
 inner join opendata_package o on c.nid in (select n.nid from node n where n.tnid = o.pkg_node_id)
-where o.pkg_id = %s and c.language = %s;""", (pkg_id, lang))
+where o.pkg_id = %s and c.language = %s order by c.changed asc;""", (pkg_id, lang))
       
     
         for comment in drupal_cursor:
