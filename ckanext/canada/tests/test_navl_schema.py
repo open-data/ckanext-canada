@@ -266,3 +266,19 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg2)
+
+    def test_dont_change_portal_release_date(self):
+        "normal users should not be able to reset the portal release date"
+
+        resp = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        # silently ignore missing portal_release_date
+        self.normal_action.package_update(id=resp['id'],
+            **dict((k, v) for k, v in self.complete_pkg.iteritems()
+                if k != 'portal_release_date'))
+
+        resp2 = self.normal_action.package_show(id=resp['id'])
+
+        self.assert_equal(resp['portal_release_date'],
+            resp2['portal_release_date'])
+
