@@ -33,26 +33,31 @@
       </li>
       
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
-      <li>{{ cr.field_label(keywords, client_lang) }}:
+      <li><b>{{ cr.field_label(keywords, client_lang) }}:</b>
         {{ cr.keyword_field(keywords, pkg, client_lang) }}
       </li>
-      
+
+      {% set subjects = schema_description.dataset_field_by_id['subject'] %}
+      <li><b>{{ cr.field_label(subjects, client_lang) }}:</b>
+        {{ cr.subject_field(subjects, pkg, client_lang) }}
+      </li>
+
       {% set date_published = schema_description.dataset_field_by_id['date_published'] %}
-      <li>{{ cr.field_label(date_published, client_lang) }}:
+      <li><b>{{ cr.field_label(date_published, client_lang) }}:</b>
         {% if cr.date_field(date_published, pkg) != 'None' %}
           {{ cr.date_field(date_published, pkg) }}
         {% endif %}
       </li>
       
       {% set date_modified = schema_description.dataset_field_by_id['date_modified'] %}
-      <li>{{ cr.field_label(date_modified, client_lang) }}:
+      <li><b>{{ cr.field_label(date_modified, client_lang) }}:</b>
         {% if cr.date_field(date_modified, pkg) != 'None' %}
           {{ cr.date_field(date_modified, pkg) }}
         {% endif %}
       </li>
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
-      <li>{{ cr.field_label(program_url, client_lang) }}:
+      <li><b>{{ cr.field_label(program_url, client_lang) }}:</b>
         {% if cr.field(program_url, pkg, client_lang) != '' %}
           <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
         {% endif %}
@@ -64,19 +69,19 @@
       {% set end_date = cr.date_field(period_end, pkg) %}
       {% if start_date or end_date %}
 
-      <li>{{ _('Temporal Coverage') }}:
+      <li><b>{{ _('Temporal Coverage') }}:</b>
         {% if start_date and end_date %}
           {{ start_date }} {{ _('to') }} {{ end_date }}
         {% elif start_date %}
-          {{ start_date }}+
+          {{ start_date }} {{ _('to undefined') }}
         {% elif end_date %}
-          {{ _('to') }} {{ end_date }}
+          {{ _('undefined to') }} {{ end_date }}
         {% endif %}
       </li>
       {% endif %}
       
       {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
-	  <li class="margin-bottom-medium">{{ cr.field_label(frequency, client_lang) }}:
+	  <li class="margin-bottom-medium"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
 	    {{ cr.field(frequency, pkg, client_lang) }}
 	  </li>
                  
@@ -84,7 +89,7 @@
       <ul class="list-bullet-none">
         <li><a href="{{ h.portal_url() + (
             '/eng/openness-rating' if h.lang() == 'en' else
-            '/fra/cote-degre-douvertrure-des-donnees') }}">{{ _('Openness rating') }}</a>:
+            '/fra/cote-degre-douvertrure-des-donnees') }}"><b>{{ _('Openness rating') }}</b></a>:
             {%- set openness = h.openness_score(pkg) -%}
             <img src="{{ h.url_for_static('/static/img/stars/star'
               ~ openness ~ '.png') }}" alt="{{
