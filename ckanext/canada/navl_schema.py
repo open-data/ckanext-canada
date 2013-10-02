@@ -244,7 +244,12 @@ def protect_portal_release_date(key, data, errors, context):
 
     user = context['user']
     user = model.User.get(user)
-    if may_publish_datasets(user) or value == '':
+    if may_publish_datasets(user):
+        return
+
+    if value == '':
+        # silently replace with the old value when none is sent
+        data[key] = original
         return
 
     raise Invalid('Cannot change value of key from %s to %s. '
