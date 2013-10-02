@@ -242,7 +242,9 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
     def test_publisher_authorities(self):
         "The publishing org (tb-ct by default) gets special authorities"
         # create packages belonging to other orgs
-        self.publisher_action.package_create(**self.complete_pkg)
+        self.publisher_action.package_create(
+            portal_release_date='2012-01-01',
+            **self.complete_pkg)
 
     def test_spatial(self):
         spatial_pkg = dict(self.complete_pkg,
@@ -270,15 +272,16 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
     def test_dont_change_portal_release_date(self):
         "normal users should not be able to reset the portal release date"
 
-        resp = self.sysadmin_action.package_create(**self.complete_pkg)
+        resp = self.sysadmin_action.package_create(
+            portal_release_date='2012-01-01',
+            **self.complete_pkg)
 
         # silently ignore missing portal_release_date
         self.normal_action.package_update(id=resp['id'],
-            **dict((k, v) for k, v in self.complete_pkg.iteritems()
-                if k != 'portal_release_date'))
+            **self.complete_pkg)
 
         resp2 = self.normal_action.package_show(id=resp['id'])
 
         self.assert_equal(resp['portal_release_date'],
-            resp2['portal_release_date'])
+            resp2.get('portal_release_date'))
 
