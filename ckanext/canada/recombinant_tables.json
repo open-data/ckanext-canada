@@ -6,16 +6,16 @@
     "datastore_table": {
       "fields": [
         {
-          "id": "request_number",
-          "type": "text"
-        },
-        {
           "id": "year",
           "type": "int"
         },
         {
           "id": "month",
           "type": "int"
+        },
+        {
+          "id": "request_number",
+          "type": "text"
         },
         {
           "id": "summary_eng",
