@@ -1,9 +1,13 @@
+import hashlib
+import calendar
 
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN
+
+BATCH_SIZE = 1000
 
 class ATICommand(CkanCommand):
     """
@@ -43,9 +47,15 @@ class ATICommand(CkanCommand):
         conn = _solr_connection()
         lc = LocalCKAN()
         for org in lc.action.organization_list():
-            g = _ati_summaries(org, lc)
+            count = 0
+            org_detail = None
+            for records in _ati_summaries(org, lc):
+                if not org_detail:
+                    org_detail = lc.action.organization_show(id=org)
+                _update_records(records, org_detail, conn)
+                count += len(records)
 
-            print org, len(list(g))
+            print org, count
         #rval = conn.query("*:*" , rows=2)
 
 def _solr_connection():
@@ -65,10 +75,52 @@ def _ati_summaries(org, lc):
     offset = 0
     while True:
         rval = lc.action.datastore_search(resource_id=resource_alias,
-            limit=1000, offset=offset)
+            limit=BATCH_SIZE, offset=offset)
         records = rval['records']
         if not records:
             return
-        for r in records:
-            yield r
+        yield records
         offset += len(records)
+
+def _update_records(records, org_detail, conn):
+    """
+    """
+    out = []
+    org = org_detail['name']
+    orghash = hashlib.md5(org).hexdigest()
+    for r in records:
+        unique = hashlib.md5(orghash + r['request_number']).hexdigest()
+        # don't ask why, just doing it the way it was done before
+        out.append({
+            'bundle': 'ati_summaries',
+            'hash': 'avexlb',
+            'id': unique + 'en',
+            'i18n_ts_en_ati_request_number': r['request_number'],
+            'i18n_ts_en_ati_request_summary': r['summary_eng'],
+            'ss_ati_contact_information_en':
+                "http://data.gc.ca/data/en/organizations/{0}".format(org),
+            'ss_ati_disposition_en': r['disposition'].split(' / ', 1)[0],
+            'ss_ati_month_en': '{0:02d}'.format(r['month']),
+            'ss_ati_monthname_en': calendar.month_name[r['month']],
+            'ss_ati_number_of_pages_en': r['pages'],
+            'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
+            'ss_ati_year_en': r['year'],
+            'ss_language': 'en',
+            })
+        out.append({
+            'bundle': 'ati_summaries',
+            'hash': 'avexlb',
+            'id': unique + 'fr',
+            'i18n_ts_fr_ati_request_number': r['request_number'],
+            'i18n_ts_fr_ati_request_summary': r['summary_fra'],
+            'ss_ati_contact_information_fr':
+                "http://donnees.gc.ca/data/fr/organizations/{0}".format(org),
+            'ss_ati_disposition_fr': r['disposition'].split(' / ', 1)[1],
+            'ss_ati_month_fr': '{0:02d}'.format(r['month']),
+            'ss_ati_monthname_fr': calendar.month_name[r['month']],
+            'ss_ati_number_of_pages_fr': r['pages'],
+            'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[1],
+            'ss_ati_year_fr': r['year'],
+            'ss_language': 'fr',
+            })
+    conn.add_many(out, _commit=True)
