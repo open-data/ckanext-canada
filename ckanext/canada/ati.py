@@ -3,6 +3,8 @@ import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
+from ckanapi import LocalCKAN
+
 class ATICommand(CkanCommand):
     """
     Manage the ATI Summaries SOLR index
@@ -39,8 +41,12 @@ class ATICommand(CkanCommand):
 
     def _rebuild(self):
         conn = _solr_connection()
-        rval = conn.query("*:*" , rows=2)
-        import ipdb; ipdb.set_trace()
+        lc = LocalCKAN()
+        for org in lc.action.organization_list():
+            g = _ati_summaries(org, lc)
+
+            print org, len(list(g))
+        #rval = conn.query("*:*" , rows=2)
 
 def _solr_connection():
     from solr import SolrConnection
@@ -50,3 +56,19 @@ def _solr_connection():
     if user is not None and password is not None:
         return SolrConnection(url, http_user=user, http_pass=password)
     return SolrConnection(url)
+
+def _ati_summaries(org, lc):
+    """
+    generator of ati summary dicts for organization with name org
+    """
+    resource_alias = 'ati-summaries-{0}'.format(org)
+    offset = 0
+    while True:
+        rval = lc.action.datastore_search(resource_id=resource_alias,
+            limit=1000, offset=offset)
+        records = rval['records']
+        if not records:
+            return
+        for r in records:
+            yield r
+        offset += len(records)
