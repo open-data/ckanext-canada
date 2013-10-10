@@ -53,7 +53,7 @@
           "type": "int"
         }
       ],
-      "primary_key": "year month",
+      "primary_key": ["year", "month"],
       "indexes": ""
     }
   }
