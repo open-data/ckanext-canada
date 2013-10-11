@@ -9,6 +9,7 @@ from ckan.lib.cli import CkanCommand
 from ckanapi import LocalCKAN
 
 BATCH_SIZE = 1000
+START_YEAR_MONTH = (2012, 1)
 MONTHS_FRA = [
     u'', # "month 0"
     u'janvier',
@@ -105,6 +106,8 @@ def _update_records(records, org_detail, conn):
     org = org_detail['name']
     orghash = hashlib.md5(org).hexdigest()
     for r in records:
+        if (r['year'], r['month']) < START_YEAR_MONTH:
+            continue
         unique = hashlib.md5(orghash + r['request_number'].encode('utf-8')
             ).hexdigest()
         # don't ask why, just doing it the way it was done before
