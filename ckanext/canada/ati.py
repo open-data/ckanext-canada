@@ -89,7 +89,8 @@ def _update_records(records, org_detail, conn):
     org = org_detail['name']
     orghash = hashlib.md5(org).hexdigest()
     for r in records:
-        unique = hashlib.md5(orghash + r['request_number']).hexdigest()
+        unique = hashlib.md5(orghash + r['request_number'].encode('utf-8')
+            ).hexdigest()
         # don't ask why, just doing it the way it was done before
         out.append({
             'bundle': 'ati_summaries',
@@ -115,11 +116,11 @@ def _update_records(records, org_detail, conn):
             'i18n_ts_fr_ati_request_summary': r['summary_fra'],
             'ss_ati_contact_information_fr':
                 "http://donnees.gc.ca/data/fr/organizations/{0}".format(org),
-            'ss_ati_disposition_fr': r['disposition'].split(' / ', 1)[1],
+            'ss_ati_disposition_fr': r['disposition'].split(' / ', 1)[-1],
             'ss_ati_month_fr': '{0:02d}'.format(r['month']),
             'ss_ati_monthname_fr': calendar.month_name[r['month']],
             'ss_ati_number_of_pages_fr': r['pages'],
-            'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[1],
+            'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': r['year'],
             'ss_language': 'fr',
             })
