@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import hashlib
 import calendar
 
@@ -8,6 +9,21 @@ from ckan.lib.cli import CkanCommand
 from ckanapi import LocalCKAN
 
 BATCH_SIZE = 1000
+MONTHS_FRA = [
+    u'', # "month 0"
+    u'janvier',
+    u'février',
+    u'mars',
+    u'avril',
+    u'mai',
+    u'juin',
+    u'juillet',
+    u'août',
+    u'septembre',
+    u'octobre',
+    u'novembre',
+    u'décembre',
+    ]
 
 class ATICommand(CkanCommand):
     """
@@ -118,7 +134,7 @@ def _update_records(records, org_detail, conn):
                 "http://donnees.gc.ca/data/fr/organizations/{0}".format(org),
             'ss_ati_disposition_fr': r['disposition'].split(' / ', 1)[-1],
             'ss_ati_month_fr': '{0:02d}'.format(r['month']),
-            'ss_ati_monthname_fr': calendar.month_name[r['month']],
+            'ss_ati_monthname_fr': MONTHS_FRA[r['month']],
             'ss_ati_number_of_pages_fr': r['pages'],
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': r['year'],
