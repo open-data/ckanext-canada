@@ -1,0 +1,53 @@
+{
+    "group_type": "organization",
+    "group_fields": [
+        {
+            "field_name": "title",
+            "label": {"en": "English Name", "fr": "Name en anglais"},
+            "form_snippet": "text.html",
+            "validators": "not_empty"
+        },
+        {
+            "field_name": "title_fra",
+            "label": {"en": "French Name", "fr": "Nom en fran\u00e7ais"},
+            "form_snippet": "text.html",
+            "validators": "not_empty"
+        },
+        {
+            "field_name": "alternate_names",
+            "label": {"en": "English Alternate Name"},
+            "form_snippet": "text.html",
+            "validators": ""
+        },
+        {
+            "field_name": "alternate_names_fra",
+            "label": {"en": "French Alternate Names"},
+            "form_snippet": "text.html",
+            "validators": ""
+        },
+        {
+            "field_name": "name",
+            "label": {"en": "URI", "fr": "URI"},
+            "form_snippet": "text.html",
+            "validators": "not_empty name_validator group_name_validator"
+        },
+        {
+            "field_name": "department_number",
+            "label": {"en": "Department Identifier"},
+            "form_snippet": "text.html",
+            "validators": "not_empty int"
+        },
+        {
+            "field_name": "homepage",
+            "label": {"en": "English Homepage"},
+            "form_snippet": "text.html",
+            "validators": "not_empty"
+        },
+        {
+            "field_name": "homepage_fra",
+            "label": {"en": "French Homepage"},
+            "form_snippet": "text.html",
+            "validators": "not_empty"
+        }
+    ]
+}
