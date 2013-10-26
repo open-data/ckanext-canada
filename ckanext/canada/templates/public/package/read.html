@@ -77,7 +77,7 @@
       {% set apps = [] %}
       {% for resource in pkg.resources %}
         {% if resource.format == 'app' %}
-          {% set apps = apps.append(resource) %}
+          {% do apps.append(resource) %}
         {% endif %}
       {% endfor %}
 
