@@ -4266,7 +4266,7 @@
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "choice"
         }, 
         {
@@ -4407,7 +4407,7 @@
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "choice"
         }, 
         {
@@ -4426,7 +4426,7 @@
             "eng": "Browse Graphic File Name", 
             "fra": "Recherche du nom du fichier graphique"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "image_url"
         }, 
         {
