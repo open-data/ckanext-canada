@@ -118,22 +118,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.normal_action.package_create,
             **raw_pkg)
 
-    def test_geo_required(self):
-        geo_pkg = dict(self.complete_pkg,
-            catalog_type=u"Geo Data | Géo")
-
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **geo_pkg)
-
-        geo_pkg.update({
-            'spatial_representation_type': "Vector | Vecteur",
-            'presentation_form': "Diagram Hardcopy | Diagramme papier",
-            'browse_graphic_url': "http://example.com/example.jpg",
-            })
-
-        self.normal_action.package_create(**geo_pkg)
-
     def test_pilot_uuids(self):
         pilot_pkg = dict(self.complete_pkg,
             subject=['BEF4D60C-E2D1-46B9-96C0-B55902F076F1'],
