@@ -12,6 +12,17 @@ from ckanext.canada.navl_schema import (create_package_schema,
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
+from sqlalchemy import Column
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import types
+import logging
+
+log = logging.getLogger(__name__)
+drupal_comments_table = None
+drupal_comments_count_table = None
+drupal_ratings_table = None
+metadata = None
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -71,6 +82,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     Plugin for public-facing version of data.gc.ca site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
     """
+    p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
@@ -141,6 +153,33 @@ class DataGCCAPublic(p.SingletonPlugin):
             action='general',
         )
         return map
+
+    def configure(self, config):
+        global metadata
+        if (not 'ckan.drupal.url' in config):
+            log.warn('Drupal database connection not defined.')
+        elif not metadata:
+            metadata = MetaData(config['ckan.drupal.url'])
+            self.define_drupal_comments_table()
+
+    def define_drupal_comments_table(self):
+        global drupal_comments_table, drupal_comments_count_table, drupal_ratings_table, metadata
+
+        drupal_comments_table = Table('opendata_package_v', metadata,
+            Column('changed',types.UnicodeText, primary_key=True, nullable=False),
+            Column('name', types.Unicode(60)),
+            Column('thread', types.Unicode(255)),
+            Column('comment_body_value', types.UnicodeText),
+            Column('language', types.Unicode(12)),
+            Column('pkg_id', types.UnicodeText))
+
+        drupal_comments_count_table = Table('opendata_package_count_v', metadata,
+            Column('count', types.Integer),
+            Column('pkg_id', types.UnicodeText))
+
+        drupal_ratings_table = Table('opendata_package_rating_v', metadata,
+            Column('rating', types.Float),
+            Column('pkg_id', types.UnicodeText))
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
