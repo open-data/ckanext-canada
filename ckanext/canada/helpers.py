@@ -1,7 +1,7 @@
 from pylons import c, config
 from ckan.model import User, Package
 import datetime
-from sqlalchemy import *
+from sqlalchemy import select, bindparam, and_
 from lxml.html.clean import clean_html
 import plugins
 import unicodedata
@@ -73,11 +73,9 @@ def remove_duplicates(a_list):
 # Retrieve the comments for this dataset that have been saved in the Drupal database
 def dataset_comments(pkg_id, lang):
 
-    #import pdb; pdb.set_trace  # test with 439c6c46-b602-4b01-9f21-e04bf55d7b93
-
     comment_list = []
     try:
-        if (not plugins.drupal_comments_table is None):
+        if (plugins.drupal_comments_table is not None):
             where_clause = []
             clause_1 = plugins.drupal_comments_table.c.pkg_id == bindparam('pkg_id')
             where_clause.append(clause_1)
@@ -112,11 +110,11 @@ def normalize_strip_accents(s):
 
 
 def dataset_rating(package_id):
-    #import pdb; pdb.set_trace()
+
     rating = None
     try:
 
-        if not plugins.drupal_ratings_table is None:
+        if plugins.drupal_ratings_table is not None:
             stmt = select([plugins.drupal_ratings_table], whereclause=plugins.drupal_ratings_table.c.pkg_id==bindparam('pkg_id'))
             row = stmt.execute(pkg_id=package_id).fetchone()
             if row:
@@ -132,7 +130,7 @@ def dataset_comment_count(package_id):
 
     try:
 
-        if not plugins.drupal_comments_count_table is None:
+        if plugins.drupal_comments_count_table is not None:
             stmt = select([plugins.drupal_comments_count_table], whereclause=plugins.drupal_comments_count_table.c.pkg_id==bindparam('pkg_id'))
             row = stmt.execute(pkg_id=package_id).fetchone()
             if row:
