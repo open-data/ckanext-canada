@@ -3,7 +3,7 @@ from ckan.model import User, Package
 import datetime
 from sqlalchemy import select, bindparam, and_
 from lxml.html.clean import clean_html
-import plugins
+from plugins import drupal_comments_table, drupal_comments_count_table, drupal_ratings_table
 import unicodedata
 
 from ckanext.canada.metadata_schema import schema_description
@@ -75,14 +75,14 @@ def dataset_comments(pkg_id, lang):
 
     comment_list = []
     try:
-        if (plugins.drupal_comments_table is not None):
+        if (drupal_comments_table is not None):
             where_clause = []
-            clause_1 = plugins.drupal_comments_table.c.pkg_id == bindparam('pkg_id')
+            clause_1 = drupal_comments_table.c.pkg_id == bindparam('pkg_id')
             where_clause.append(clause_1)
-            clause_2 = plugins.drupal_comments_table.c.language == bindparam('language')
+            clause_2 = drupal_comments_table.c.language == bindparam('language')
             where_clause.append(clause_2)
             and_clause = and_(*where_clause)
-            stmt = select([plugins.drupal_comments_table], and_clause)
+            stmt = select([drupal_comments_table], and_clause)
 
             for comment in stmt.execute(pkg_id=pkg_id, language=lang):
                  comment_body = clean_html(comment[3])
@@ -115,7 +115,7 @@ def dataset_rating(package_id):
     try:
 
         if plugins.drupal_ratings_table is not None:
-            stmt = select([plugins.drupal_ratings_table], whereclause=plugins.drupal_ratings_table.c.pkg_id==bindparam('pkg_id'))
+            stmt = select([drupal_ratings_table], whereclause=drupal_ratings_table.c.pkg_id==bindparam('pkg_id'))
             row = stmt.execute(pkg_id=package_id).fetchone()
             if row:
                 rating = row[0]
@@ -130,8 +130,8 @@ def dataset_comment_count(package_id):
 
     try:
 
-        if plugins.drupal_comments_count_table is not None:
-            stmt = select([plugins.drupal_comments_count_table], whereclause=plugins.drupal_comments_count_table.c.pkg_id==bindparam('pkg_id'))
+        if drupal_comments_count_table is not None:
+            stmt = select([drupal_comments_count_table], whereclause=drupal_comments_count_table.c.pkg_id==bindparam('pkg_id'))
             row = stmt.execute(pkg_id=package_id).fetchone()
             if row:
                 count = row[0]
