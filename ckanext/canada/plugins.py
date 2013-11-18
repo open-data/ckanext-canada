@@ -1,28 +1,14 @@
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
-import ckan.lib.plugins as lib_plugins
-from ckan.plugins import toolkit
+from wcms import wcms_configure
 from routes.mapper import SubMapper
-from ckan.lib.search import query
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada import logic
 from ckanext.canada import helpers
-
-from sqlalchemy import Column
-from sqlalchemy import MetaData
-from sqlalchemy import Table
-from sqlalchemy import types
-import logging
-
-log = logging.getLogger(__name__)
-drupal_comments_table = None
-drupal_comments_count_table = None
-drupal_ratings_table = None
-metadata = None
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -155,31 +141,9 @@ class DataGCCAPublic(p.SingletonPlugin):
         return map
 
     def configure(self, config):
-        global metadata
-        if (not 'ckan.drupal.url' in config):
-            log.warn('Drupal database connection not defined.')
-        elif not metadata:
-            metadata = MetaData(config['ckan.drupal.url'])
-            self.define_drupal_comments_table()
 
-    def define_drupal_comments_table(self):
-        global drupal_comments_table, drupal_comments_count_table, drupal_ratings_table, metadata
-
-        drupal_comments_table = Table('opendata_package_v', metadata,
-            Column('changed',types.UnicodeText, primary_key=True, nullable=False),
-            Column('name', types.Unicode(60)),
-            Column('thread', types.Unicode(255)),
-            Column('comment_body_value', types.UnicodeText),
-            Column('language', types.Unicode(12)),
-            Column('pkg_id', types.UnicodeText))
-
-        drupal_comments_count_table = Table('opendata_package_count_v', metadata,
-            Column('count', types.Integer),
-            Column('pkg_id', types.UnicodeText))
-
-        drupal_ratings_table = Table('opendata_package_rating_v', metadata,
-            Column('rating', types.Float),
-            Column('pkg_id', types.UnicodeText))
+        if ('ckan.drupal.url' in config):
+            wcms_configure(config['ckan.drupal.url'])
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
