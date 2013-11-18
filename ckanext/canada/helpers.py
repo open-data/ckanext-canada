@@ -1,9 +1,7 @@
 from pylons import c, config
 from ckan.model import User, Package
+from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
-from sqlalchemy import select, bindparam, and_
-from lxml.html.clean import clean_html
-from plugins import drupal_comments_table, drupal_comments_count_table, drupal_ratings_table
 import unicodedata
 
 from ckanext.canada.metadata_schema import schema_description
@@ -73,26 +71,7 @@ def remove_duplicates(a_list):
 # Retrieve the comments for this dataset that have been saved in the Drupal database
 def dataset_comments(pkg_id, lang):
 
-    comment_list = []
-    try:
-        if (drupal_comments_table is not None):
-            where_clause = []
-            clause_1 = drupal_comments_table.c.pkg_id == bindparam('pkg_id')
-            where_clause.append(clause_1)
-            clause_2 = drupal_comments_table.c.language == bindparam('language')
-            where_clause.append(clause_2)
-            and_clause = and_(*where_clause)
-            stmt = select([drupal_comments_table], and_clause)
-
-            for comment in stmt.execute(pkg_id=pkg_id, language=lang):
-                 comment_body = clean_html(comment[3])
-                 comment_list.append({'date': comment[0], 'thread': comment[2], 'comment_body': comment_body, 'user': comment[1]})
-
-
-    except KeyError:
-        pass
-     
-    return comment_list
+    return wcms_dataset_comments(pkg_id, lang)
 
 
 def get_license(license_id):
@@ -111,34 +90,12 @@ def normalize_strip_accents(s):
 
 def dataset_rating(package_id):
 
-    rating = None
-    try:
+    return wcms_dataset_rating(package_id)
 
-        if plugins.drupal_ratings_table is not None:
-            stmt = select([drupal_ratings_table], whereclause=drupal_ratings_table.c.pkg_id==bindparam('pkg_id'))
-            row = stmt.execute(pkg_id=package_id).fetchone()
-            if row:
-                rating = row[0]
-
-    except KeyError:
-        pass
-    return int(0 if rating is None else rating)
 
 def dataset_comment_count(package_id):
 
-    count = 0
-
-    try:
-
-        if drupal_comments_count_table is not None:
-            stmt = select([drupal_comments_count_table], whereclause=drupal_comments_count_table.c.pkg_id==bindparam('pkg_id'))
-            row = stmt.execute(pkg_id=package_id).fetchone()
-            if row:
-                count = row[0]
-       
-    except KeyError:
-       pass
-    return count
+    return wcms_dataset_comment_count(package_id)
 
 
 def portal_url():
