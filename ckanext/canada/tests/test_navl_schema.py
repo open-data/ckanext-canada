@@ -46,10 +46,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             }],
         }
 
-        cls.override_possible_pkg = dict(cls.incomplete_pkg,
-            owner_org='nrcan-rncan')
-
-        cls.complete_pkg = dict(cls.override_possible_pkg,
+        cls.complete_pkg = dict(cls.incomplete_pkg,
+            owner_org='nrcan-rncan',
             catalog_type=u'Data | Données',
             title_fra=u'Un novel par Tolstoy',
             maintenance_and_update_frequency=u'As Needed | Au besoin',
@@ -68,10 +66,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
             name='basic_package', **self.incomplete_pkg)
-
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            name='basic_package', **self.override_possible_pkg)
 
         resp = self.normal_action.package_create(
             name='basic_package', **self.complete_pkg)
@@ -116,30 +110,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.sysadmin_action.package_create,
             name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
 
-    def test_not_ready_to_publish(self):
-        self.assert_raises(ValidationError,
-            self.sysadmin_action.package_create,
-            **self.incomplete_pkg)
-
-        self.normal_action.package_create(
-            **dict(self.override_possible_pkg, ready_to_publish=False))
-
-        try:
-            self.normal_action.package_create(**self.override_possible_pkg)
-        except ValidationError, e:
-            assert 'ready_to_publish' in e.error_dict
-            assert any('notes' in err for err in e.error_dict['ready_to_publish'])
-
-        missing_resource_field = json.loads(json.dumps(self.complete_pkg))
-        del missing_resource_field['resources'][0]['name_fra']
-
-        try:
-            self.normal_action.package_create(**missing_resource_field)
-        except ValidationError, e:
-            assert 'ready_to_publish' in e.error_dict
-            assert any('name_fra' in err for err in e.error_dict['ready_to_publish'])
-
-
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
         del raw_pkg['subject']
@@ -147,22 +117,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
             **raw_pkg)
-
-    def test_geo_required(self):
-        geo_pkg = dict(self.complete_pkg,
-            catalog_type=u"Geo Data | Géo")
-
-        self.assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **geo_pkg)
-
-        geo_pkg.update({
-            'spatial_representation_type': "Vector | Vecteur",
-            'presentation_form': "Diagram Hardcopy | Diagramme papier",
-            'browse_graphic_url': "http://example.com/example.jpg",
-            })
-
-        self.normal_action.package_create(**geo_pkg)
 
     def test_pilot_uuids(self):
         pilot_pkg = dict(self.complete_pkg,

@@ -45,85 +45,6 @@ def show_package_schema():
     return schema
 
 
-class RequiredWhenPublishing(object):
-    """
-    ready_to_publish needs to know which fields are required
-    this function adds each field to a list the
-    ready_to_publish_validator can use to build an error message
-    """
-    def __init__(self):
-        self.d_fields = []
-        self.r_fields = []
-
-    def dataset_field(self, name, lang=None, field=None):
-        if not field:
-            field = schema_description.dataset_field_by_id[name]
-        self.d_fields.append((name, lang, field))
-        if field['mandatory'] == 'all':
-            return _not_empty_if_ready_to_publish
-        return _conditional_not_empty_if_ready_to_publish(field['mandatory'])
-
-    def resource_field(self, name, lang, field):
-        self.r_fields.append((name, lang, field))
-        return _not_empty_if_ready_to_publish
-
-    def ready_to_publish(self, key, data, errors, context):
-        """
-        We need to repeat all the validation of the required dataset and
-        resource fields so that we can list the missing fields in the
-        error message for this field -- the missing fields may not be
-        visible on the same page where this field appears.
-        """
-        if not asbool(data.get(key)):
-            return
-        choices = schema_description.dataset_field_by_id['catalog_type']['choices']
-        ctype_key = choices[0 if data.get(('catalog_type',), 'raw') == 'raw' else 1]['key']
-        missing_names = []
-        for name, lang, field in self.d_fields:
-            if not data.get((name,)) and (field['mandatory'] == 'all' or
-                    field['mandatory'] == ctype_key):
-                missing_names.append(name)
-        rnum = 0
-        while ('resources', rnum, 'url') in data:
-            for name, lang, field in self.r_fields:
-                if not data.get(('resources', rnum, name)):
-                    missing_names.append('resources.%s.%s' % (rnum, name))
-            rnum += 1
-
-        if missing_names:
-            raise Invalid(_(
-                "The following fields are required to publish this dataset:")
-                + u' ' + u', '.join(missing_names))
-
-
-def _not_empty_if_ready_to_publish(key, data, errors, context):
-    """
-    Not empty, but allow sysadmins to override the validation error
-    by setting a value in data[(validation_override,)].
-    """
-    v = data.get(('ready_to_publish',), True)
-    if v is missing or v:
-        not_empty(key, data, errors, context)
-    else:
-        ignore_missing(key, data, errors, context)
-
-def _conditional_not_empty_if_ready_to_publish(catalog_type):
-    """
-    Not empty when value of catalog_type is raw/geo
-    """
-    choices = schema_description.dataset_field_by_id['catalog_type']['choices']
-    ctype_key = choices[0 if catalog_type == 'raw' else 1]['key']
-
-    def conditional_not_empty(key, data, errors, context):
-        if data.get(('catalog_type',)) != ctype_key:
-            ignore_missing(key, data, errors, context)
-        else:
-            _not_empty_if_ready_to_publish(key, data, errors, context)
-
-    return conditional_not_empty
-
-
-
 
 
 def _schema_update(schema, purpose):
@@ -133,18 +54,16 @@ def _schema_update(schema, purpose):
     """
     assert purpose in ('create', 'update', 'show')
 
-    required = RequiredWhenPublishing()
-
     if purpose == 'create':
         schema['id'] = [ignore_missing, protect_new_dataset_id,
             unicode, name_validator, package_id_doesnt_exist]
         schema['name'] = [ignore_missing, unicode, name_validator,
             package_name_validator]
     if purpose in ('create', 'update'):
-        schema['title'] = [required.dataset_field('title'), unicode]
-        schema['notes'] = [required.dataset_field('notes'), unicode]
+        schema['title'] = [not_empty, unicode]
+        schema['notes'] = [not_empty, unicode]
         schema['owner_org'] = [not_empty, owner_org_validator_publisher, unicode]
-        schema['license_id'] = [required.dataset_field('license_id'), unicode]
+        schema['license_id'] = [not_empty, unicode]
     else:
         schema['author_email'] = [fixed_value(
             schema_description.dataset_field_by_id['author_email'])]
@@ -160,7 +79,7 @@ def _schema_update(schema, purpose):
         if name in schema:
             continue # don't modify other existing fields
 
-        v = _schema_field_validators(name, lang, field, required)
+        v = _schema_field_validators(name, lang, field)
         if v is not None:
             schema[name] = v[0] if purpose != 'show' else v[1]
 
@@ -171,14 +90,14 @@ def _schema_update(schema, purpose):
 
     for name, lang, field in schema_description.resource_field_iter():
         if field['mandatory'] and purpose in ('create', 'update'):
-            resources[name] = [required.resource_field(name, lang, field), unicode]
+            resources[name] = [not_empty, unicode]
         if field['type'] == 'choice' and purpose in ('create', 'update'):
             resources[name].extend([
                 convert_pilot_uuid(field),
                 OneOf([c['key'] for c in field['choices']])])
 
 
-def _schema_field_validators(name, lang, field, required):
+def _schema_field_validators(name, lang, field):
     """
     return a tuple with lists of validators for the field:
     one for create/update and one for show, or None to leave
@@ -195,7 +114,7 @@ def _schema_field_validators(name, lang, field, required):
         edit.append(ignore_missing)
     elif field['mandatory']:
         # FIXME: assuming dataset field passed!
-        edit.append(required.dataset_field(name, lang, field))
+        edit.append(not_empty)
 
     if field['type'] == 'date':
         edit.append(isodate)
@@ -215,9 +134,6 @@ def _schema_field_validators(name, lang, field, required):
         edit.append(geojson_validator)
     else:
         edit.append(unicode)
-
-    if name == 'ready_to_publish':
-        edit.append(required.ready_to_publish)
 
     return (edit + [convert_to_extras],
             view if view else [convert_from_extras, ignore_missing])
