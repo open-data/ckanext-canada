@@ -2,6 +2,12 @@
     "type": "organization",
     "fields": [
         {
+            "field_name": "id",
+            "label": {"en": "id"},
+            "form_snippet": "not_shown.html",
+            "validators": "ignore_missing"
+        },
+        {
             "field_name": "title",
             "label": {"en": "English Name", "fr": "Name en anglais"},
             "form_snippet": "text.html",
