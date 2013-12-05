@@ -273,7 +273,6 @@ class CanadaCommand(CkanCommand):
                 reply('read', 'UnicodeDecodeError', unicode(e))
 
             if pkg:
-                validation_override = pkg.get('validation_override') # FIXME: remove me
                 _trim_package(pkg)
 
                 existing = None
@@ -288,7 +287,6 @@ class CanadaCommand(CkanCommand):
                         pkg = None
 
             if pkg:
-                pkg['validation_override'] = validation_override
                 action = 'replace' if existing else 'create'
                 try:
                     if existing:
@@ -642,7 +640,7 @@ def _trim_package(pkg):
             'groups', # just because we don't use them
             'relationships_as_subject', 'department_number',
             # FIXME: remove these when we can:
-            'validation_override', 'resource_type',
+            'resource_type',
             ]:
         if k in pkg:
             del pkg[k]
