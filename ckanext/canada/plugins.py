@@ -1,17 +1,14 @@
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
-import ckan.lib.plugins as lib_plugins
-from ckan.plugins import toolkit
+from wcms import wcms_configure
 from routes.mapper import SubMapper
-from ckan.lib.search import query
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
     update_package_schema, show_package_schema)
 from ckanext.canada import logic
 from ckanext.canada import helpers
-
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -71,6 +68,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     Plugin for public-facing version of data.gc.ca site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
     """
+    p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
@@ -141,6 +139,11 @@ class DataGCCAPublic(p.SingletonPlugin):
             action='general',
         )
         return map
+
+    def configure(self, config):
+
+        if ('ckan.drupal.url' in config):
+            wcms_configure(config['ckan.drupal.url'])
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """

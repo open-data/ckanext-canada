@@ -6,7 +6,7 @@
 
     {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
     {% if name_field in res and res[name_field] %}
-      <a href="{{ res.url }}">{{ h.markdown_extract(res[name_field], extract_length=80) }}<a/>
+      <li><a href="{{ res.url }}">{{ h.markdown_extract(res[name_field], extract_length=80) }}<a/></li>
     {% else %}
       <li><span class="empty">{{ _('No description for this resource') }}</span></li>
     {% endif %}

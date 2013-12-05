@@ -415,14 +415,14 @@
               "id": 239, 
               "key": "neb-one", 
               "pilot_uuid": "A3EE9522-882F-47B0-BA7D-83420DC8577C"
-            }, 
+            },
             {
-              "eng": "Foreign Affairs and International Trade Canada", 
-              "fra": "Affaires \u00e9trang\u00e8res et Commerce international Canada", 
-              "id": 64, 
-              "key": "dfait-maeci", 
-              "pilot_uuid": "1514CBB9-9EC7-42AC-9E31-B97E78926ACC"
-            }, 
+              "eng": "Foreign Affairs, Trade and Development Canada",
+              "fra": "Affaires \u00e9trang\u00e9res, Commerce et D\u00e9veloppement Canada",
+              "id": 98989,
+              "key": "dfatd-maecd",
+              "pilot_uuid": "d7c2580f-89c5-4705-9d56-6b0e8e5d9538"
+            },
             {
               "eng": "The Federal Bridge Corporation Limited", 
               "fra": "La Soci\u00e9t\u00e9 des ponts f\u00e9d\u00e9raux Limit\u00e9e", 
@@ -515,14 +515,14 @@
               "id": 164, 
               "key": "hrtc-tdpc", 
               "pilot_uuid": "26F0D053-27F8-4EDE-B279-156E80C41A90"
-            }, 
+            },
             {
-              "eng": "Human Resources and Skills Development Canada", 
-              "fra": "Ressources humaines et D\u00e9veloppement des comp\u00e9tences Canada", 
-              "id": 141, 
-              "key": "hrsdc-rhdcc", 
-              "pilot_uuid": "055ADCD8-8FDA-40DA-A5B7-689FF7DB57A6"
-            }, 
+              "eng": "Employment and Social Development Canada",
+              "fra": "Emploi et D\u00e9veloppement social Canada",
+              "id": 141,
+              "key": "esdc-edsc",
+              "pilot_uuid": "91ffac50-56e5-11e3-ab0c-08002710fcd5"
+            },
             {
               "eng": "Indian Affairs and Northern Development Canada", 
               "fra": "Affaires indiennes et du Nord Canada", 
@@ -535,14 +535,7 @@
               "id": 206, 
               "key": "cfia-acia", 
               "pilot_uuid": "90D94FD0-5E79-4DBB-AF2A-B1DC881749FA"
-            }, 
-            {
-              "eng": "Canadian International Development Agency", 
-              "fra": "Agence canadienne de d\u00e9veloppement international", 
-              "id": 218, 
-              "key": "cida-acdi", 
-              "pilot_uuid": "58C9589E-CFC7-437D-AB50-1EBD11E08D9D"
-            }, 
+            },
             {
               "eng": "Citizenship and Immigration Canada", 
               "fra": "Citoyennet\u00e9 et Immigration Canada", 
@@ -1250,6 +1243,12 @@
               "fra": "Autorit\u00e9 du pont Windsor-D\u00e9troit", 
               "id": 55553, 
               "key": "org55553"
+            },
+            {
+              "eng": "Bank of Canada",
+              "fra": "Banque du Canada",
+              "id": "98990",
+              "key": "boc-bdc"
             }
           ], 
           "description": {
@@ -4266,7 +4265,7 @@
             "eng": "Spatial Representation Type", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "choice"
         }, 
         {
@@ -4407,7 +4406,7 @@
             "eng": "Presentation Form", 
             "fra": "Type de repr\u00e9sentation spatiale"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "choice"
         }, 
         {
@@ -4426,7 +4425,7 @@
             "eng": "Browse Graphic File Name", 
             "fra": "Recherche du nom du fichier graphique"
           }, 
-          "mandatory": "geo", 
+          "mandatory": null, 
           "type": "image_url"
         }, 
         {
