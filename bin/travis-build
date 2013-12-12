@@ -28,12 +28,11 @@ cd dl
 git clone https://github.com/open-data/ckan
 cd -
 cd dl/ckan
-git checkout canada-v2.0
+git checkout canada-v2.1
 cd -
 
 ln -s ../dl/ckan links/ckan
-pip install -r links/ckan/pip-requirements.txt \
-	-r links/ckan/pip-requirements-test.txt --use-mirrors
+pip install -r links/ckan/requirements.txt --use-mirrors
 
 python setup.py develop
 
