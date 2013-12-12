@@ -479,6 +479,10 @@ class CanadaCommand(CkanCommand):
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
+            if source_pkg and source_pkg['type'] != 'dataset':
+                # non-default dataset types ignored
+                source_pkg = None
+
             _trim_package(source_pkg)
 
             if source_pkg and not self.options.mirror:
