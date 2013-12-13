@@ -59,7 +59,7 @@ def wcms_dataset_comments(pkg_id, lang):
             clause_2 = _drupal_db.drupal_comments_table.c.language == bindparam('language')
             where_clause.append(clause_2)
             and_clause = and_(*where_clause)
-            stmt = select([_drupal_db.drupal_comments_table], and_clause)
+            stmt = select([_drupal_db.drupal_comments_table], and_clause, order_by=[_drupal_db.drupal_comments_table.c.changed])
 
             for comment in stmt.execute(pkg_id=pkg_id, language=lang):
                  comment_body = clean_html(comment[3])
