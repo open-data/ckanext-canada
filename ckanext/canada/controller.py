@@ -2,12 +2,13 @@ import logging
 import json
 import ckan.model as model
 import webhelpers.feedgenerator
-import ckan.new_authz as new_authz
 
 from ckan.lib.base import (BaseController, c, render, model, request, h, g,
     response, abort)
-from ckan.logic import get_action, NotAuthorized, check_access
-from ckan.lib.helpers import Page, url_for, date_str_to_datetime, url
+from ckan.logic import get_action, check_access, schema, NotAuthorized
+from ckan.controllers.user import UserController
+import ckan.new_authz as new_authz
+from ckan.lib.helpers import Page, date_str_to_datetime, url
 from ckan.controllers.feed import (FeedController, _package_search,
     _create_atom_id, _FixedAtom1Feed)
 from ckan.lib import i18n
@@ -24,6 +25,40 @@ class CanadaController(BaseController):
 
     def view_help(self):
         return render('help.html')
+
+    def register(self, data=None, errors=None, error_summary=None):
+        '''GET to display a form for registering a new user.
+           or POST the form data to actually do the user registration.
+
+           The bulk of this code is pulled directly from ckan/controlllers/user.py
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author,
+                   'schema': schema.user_new_form_schema(),
+                   'save': 'save' in request.params}
+
+        try:
+            check_access('user_create', context)
+        except NotAuthorized:
+            abort(401, _('Unauthorized to create a user'))
+
+        if context['save'] and not data:
+            uc = UserController()
+            return uc._save_new(context)
+
+        if c.user and not data:
+            # #1799 Don't offer the registration form if already logged in
+            return render('user/logout_first.html')
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.form = render('user/new_user_form.html', extra_vars=vars)
+        return render('user/new.html')
+
 
     def view_new_user(self):
         return render('newuser.html')
@@ -77,11 +112,21 @@ class CanadaController(BaseController):
 
             user_dict = get_action('user_show')(context, data_dict)
 
+            group_dict = get_action('organization_list_for_user')(context, data_dict)
+            isNewUser = False
+            if len(group_dict) == 0:
+                isNewUser = True
+
             h.flash_success(_("<p><strong>Note</strong></p>"
                 "<p>%s is now logged in</p>") %
                 user_dict['display_name'], allow_html=True)
-            return h.redirect_to(controller='package',
-                action='search', locale=lang)
+
+            if isNewUser:
+                return h.redirect_to(controller='ckanext.canada.controller:CanadaController',
+                                         action='view_new_user', locale=lang)
+            else:
+                return h.redirect_to(controller='package',
+                    action='search', locale=lang)
         else:
             h.flash_error(_('Login failed. Bad username or password.'))
             return h.redirect_to(controller='user',
