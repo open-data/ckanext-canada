@@ -6,7 +6,7 @@
     <div class="module-content">
       <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
       <p class="action">
-        <a class="button button-info" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_new_user') }}">{{ _('Create an Account') }}</a>
+        <a class="button button-info" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
       </p>
     </div>
   </section>
