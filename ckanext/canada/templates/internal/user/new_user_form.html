@@ -1,0 +1,15 @@
+{% import 'macros/form_wet.html' as form %}
+
+<form class="dataset-form form-horizontal" action="" method="post">
+  {{ form.errors(error_summary) }}
+  {{ form.input("name", id="field-username", label=_("Username"), placeholder="username", value=data.name, error=errors.name) }}
+  {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder="Joe Bloggs", value=data.fullname, error=errors.fullname) }}
+  {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder="joe.bloggs@tbs-sct.gc.ca", value=data.email, error=errors.email) }}
+  {{ form.input("department", id="field-department", label=_("Department"), placeholder="Treasury Board Secretariat", value=data.department, error=errors.department) }}
+  {{ form.input("phoneno", id="field-phoneno", label=_("Phone Number"), placeholder="000 000 0000", value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) }}
+  {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1) }}
+  {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", placeholder="••••••••", value=data.password2, error=errors.password1) }}
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit" name="save">{{ _("Create Account") }}</button>
+  </div>
+</form>
