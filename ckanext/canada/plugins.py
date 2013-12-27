@@ -38,13 +38,12 @@ def notify_ckan_user_create(context, data_dict):
             new_phoneno = data_dict['phoneno']
             new_dept = data_dict['department']
 
-            ## CHECK FOR NEW DATA DICT VALUES FOR THE 2 NEW FIELDS
-            import pdb; pdb.set_trace()
             xtra_vars = {'nu_email': new_email, 'nu_fullname': new_fullname, 'nu_username': new_username,
                          'nu_phoneno': new_phoneno, 'nu_dept': new_dept}
             email_body = render('user/new_user_email.html', extra_vars=xtra_vars)
             ckan.lib.mailer.mail_recipient(ckan_user_create_dict['email_name'], ckan_user_create_dict['email_address'],
-                   'New data.gc.ca Registry Account Created', email_body)
+                   u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de donnees.gc.ca',
+                   email_body)
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
         log.error(m.message)
@@ -108,15 +107,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     def configure(self, config):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
-        if 'canada.notification_new_user_body' in config:
-            ckan_user_create_dict['canada.notification_new_user_body'] = config['canada.notification_new_user_body']
-        else:
-            ckan_user_create_dict['canada.notification_new_user_body'] = \
-                'A new account has been created for %s in the data.gc.ca registry. The account information is as follows: \
-                Username: 	%s \
-                Email:		%s \
-                \
-                To complete the registration, access the registry and link the account to their department.'
 
         if 'canada.notification_new_user_email' in config:
             ckan_user_create_dict['email_address'] = config['canada.notification_new_user_email']
