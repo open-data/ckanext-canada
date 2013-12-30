@@ -32,14 +32,14 @@ def notify_ckan_user_create(context, data_dict):
 
     try:
         if ckan_user_create_dict['email_address']:
-            new_email = data_dict['email']
-            new_fullname = data_dict['fullname']
-            new_username = data_dict['name']
-            new_phoneno = data_dict['phoneno']
-            new_dept = data_dict['department']
+            new_email = str(data_dict['email']).strip()
+            new_fullname = str(data_dict['fullname']).strip()
+            new_username = str(data_dict['name']).strip()
+            new_phoneno = str(data_dict['phoneno']).strip()
+            new_dept = str(data_dict['department']).strip()
 
-            xtra_vars = {'email': str(new_email).strip(), 'fullname': new_fullname, 'username': new_username,
-                         'phoneno': str(new_phoneno).strip(), 'dept': new_dept}
+            xtra_vars = {'email': new_email, 'fullname': new_fullname, 'username': new_username,
+                         'phoneno': new_phoneno, 'dept': new_dept}
             email_body = render('user/new_user_email.html', extra_vars=xtra_vars)
             ckan.lib.mailer.mail_recipient(ckan_user_create_dict['email_name'], ckan_user_create_dict['email_address'],
                    u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de donnees.gc.ca',
