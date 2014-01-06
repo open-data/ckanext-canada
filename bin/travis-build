@@ -1,24 +1,8 @@
 #!/bin/sh
 
-# Drop Travis' postgres cluster if we're building using a different pg version
-TRAVIS_PGVERSION='9.1'
-if [ $PGVERSION != $TRAVIS_PGVERSION ]
-then
-  sudo -u postgres pg_dropcluster --stop $TRAVIS_PGVERSION main
-  # Make psql use $PGVERSION
-  export PGCLUSTER=$PGVERSION/main
-fi
-
 # Install postgres and solr
 sudo apt-get update -qq
 sudo apt-get install solr-jetty postgresql-$PGVERSION libgeos-c1
-
-# force postgres to use 5432 as it's port
-sudo sed -i -e 's/port = 5433/port = 5432/g' /etc/postgresql/8.4/main/postgresql.conf
-cat /etc/postgresql/8.4/main/postgresql.conf
-
-sudo service postgresql stop
-sudo service postgresql start
 
 # Setup postgres' users and databases
 sudo -u postgres psql -c "CREATE USER ckantest WITH PASSWORD 'pass';"
