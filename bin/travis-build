@@ -15,8 +15,10 @@ sudo apt-get install solr-jetty postgresql-$PGVERSION libgeos-c1
 
 # force postgres to use 5432 as it's port
 sudo sed -i -e 's/port = 5433/port = 5432/g' /etc/postgresql/8.4/main/postgresql.conf
+cat /etc/postgresql/8.4/main/postgresql.conf
 
-sudo service postgresql reload
+sudo service postgresql stop
+sudo service postgresql start
 
 # Setup postgres' users and databases
 sudo -u postgres psql -c "CREATE USER ckantest WITH PASSWORD 'pass';"
