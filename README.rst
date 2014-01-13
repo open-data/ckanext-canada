@@ -7,13 +7,14 @@ Team: Ian Ward, Ross Thompson, Peder Jakobsen, Denis Zgonjanin
 
 Features:
 
-* Forms and Validation for GoC Metadata Schema (in progress)
+* Forms and Validation for GoC Metadata Schema
+  * complete, but planning to migrate to ckanext-scheming once it is ready
 * Batch import of data
+  * merging into ckanapi, will be removed from here
 
 Installation:
 
-* Use CKAN Version: 2.0+
-* After every pull or fetch, use ``python setup.py develop`` just in case entry points have changed.
+* Use open-data fork of CKAN, branch canada-v2.1
 
 From a clean database you must run::
 
@@ -55,7 +56,7 @@ Requirements
    - Plugins
  * - CKAN
    - `open-data/ckan <https://github.com/open-data/ckan>`_
-   - canada-v2.0
+   - canada-v2.1
    - * stats
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
@@ -108,11 +109,11 @@ validation::
 We aren't using notification emails, so they need to be disabled::
 
    ckan.activity_streams_email_notifications = false
-   
+
 Additionally, we want to limit the search results page to 10 results per page::
 
    ckan.datasets_per_page = 10
-   
+
 To integrate Google Analytics::
 
    googleanalytics.id = UA-1010101-1 (your analytics account id)
@@ -122,21 +123,11 @@ For the public server, also set the Drupal portal URL::
 
    canada.portal_url = http://myserver.com
 
-Configuration: who.ini
-----------------------
-
-The following lines need to be changed in ``[plugin:friendlyform]``::
-
-   -post_login_url = /user/logged_in
-   -post_logout_url = /user/logged_out
-   +post_login_url =
-   +post_logout_url =
-
 
 Configuration: Solr
 ----------------------
 
-This extension uses a custom Solr schema based on the ckan 2.0 schema. You can find the schema in the root directory of the project. 
+This extension uses a custom Solr schema based on the ckan 2.1 schema. You can find the schema in the root directory of the project.
 Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using::
@@ -186,7 +177,7 @@ For UI testing, simply load the 50 test datasets from the data folder.  It conta
 Working with the API
 --------------------
 
-To view a raw dataset using the api, pipe your curl requests to python's mjson.tool to ensure readable formatting of the output::
+To view a raw dataset using the api, pipe your curl requests to python's json.tool to ensure readable formatting of the output::
 
   curl http://localhost:5000/api/action/package_show -d '{"id": "0007a010-556d-4f83-bb8e-6e22dcc62e84"}' |  python -mjson.tool
 
