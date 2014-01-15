@@ -125,6 +125,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
+            'drupal_session_present'
             ])
 
     def before_map(self, map):

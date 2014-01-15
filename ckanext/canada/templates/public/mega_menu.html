@@ -157,6 +157,27 @@
     </div>  
   </section>
 </li>
+
+{% if h.drupal_session_present(request) %}
+<li>
+  <section>
+    <h3><a href="/user">My Account</a></h3>
+  </section>
+</li>
+
+
+  <section style="float:right; text-decoration:underline;">
+    <a style="font-weight: normal;" href="/logout">Log out</a>
+  </section>
+
+{% else %}
+<li>
+  <section>
+    <h3><a href="/user/login">Login</a></h3>
+  </section>
+</li>
+{% endif %}
+
 {% endif %}
 
 {% endblock %}
