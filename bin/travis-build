@@ -1,21 +1,8 @@
 #!/bin/sh
 
-# Drop Travis' postgres cluster if we're building using a different pg version
-TRAVIS_PGVERSION='9.1'
-if [ $PGVERSION != $TRAVIS_PGVERSION ]
-then
-  sudo -u postgres pg_dropcluster --stop $TRAVIS_PGVERSION main
-  # Make psql use $PGVERSION
-  export PGCLUSTER=$PGVERSION/main
-fi
-
 # Install postgres and solr
-# We need this ppa so we can install postgres-8.4
-sudo add-apt-repository -yy ppa:pitti/postgresql
 sudo apt-get update -qq
 sudo apt-get install solr-jetty postgresql-$PGVERSION libgeos-c1
-
-sudo service postgresql reload
 
 # Setup postgres' users and databases
 sudo -u postgres psql -c "CREATE USER ckantest WITH PASSWORD 'pass';"
@@ -28,12 +15,11 @@ cd dl
 git clone https://github.com/open-data/ckan
 cd -
 cd dl/ckan
-git checkout canada-v2.0
+git checkout canada-v2.1
 cd -
 
 ln -s ../dl/ckan links/ckan
-pip install -r links/ckan/pip-requirements.txt \
-	-r links/ckan/pip-requirements-test.txt --use-mirrors
+pip install -r links/ckan/requirements.txt --use-mirrors
 
 python setup.py develop
 

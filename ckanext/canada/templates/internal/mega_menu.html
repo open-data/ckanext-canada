@@ -40,7 +40,7 @@
 
 <li>
   <div role="presentation">
-    {% link_for _('Register'), controller='ckanext.canada.controller:CanadaController', action='view_new_user' %}
+    {% link_for _('Register'), controller='user', action='register' %}
   </div>
 </li>
 
@@ -94,11 +94,8 @@
 
 <li>
   <div role="presentation">
-    {% if h.lang() == 'en' %}  
-    <a role="menuitem" href="/en/help">Help</a>
-  {% else %}
-    <a role="menuitem" href="/fr/help">Aide</a>
-  {% endif %}
+    <a role="menuitem" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController',
+      action='view_help') }}">{{ _('Help') }}</a>
   </div>
 </li>
 

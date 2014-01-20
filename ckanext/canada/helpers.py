@@ -104,6 +104,13 @@ def portal_url():
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
     
+def drupal_session_present(request):
+    for name in request.cookies.keys():
+        if name.startswith("SESS"):
+            return True
+    
+    return False
+    
 def parse_release_date_facet(facet_results):
     counts = facet_results['counts'][1::2]
     ranges = facet_results['counts'][0::2]
