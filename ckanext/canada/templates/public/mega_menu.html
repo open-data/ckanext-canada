@@ -160,9 +160,9 @@
 
 {% if h.drupal_session_present(request) %}
 <li>
-  <section>
-    <h3><a href="/user">My Account</a></h3>
-  </section>
+  <div>
+    <a class="ui-link" href="/user">My Account</a>
+  </div>
 </li>
 
 
@@ -172,9 +172,9 @@
 
 {% else %}
 <li>
-  <section>
-    <h3><a href="/user/login">Login</a></h3>
-  </section>
+  <div>
+    <a class="ui-link" href="/user/login">Login</a>
+  </div>
 </li>
 {% endif %}
 
