@@ -38,6 +38,18 @@
             "validators": "not_empty name_validator group_name_validator"
         },
         {
+            "field_name": "shortform",
+            "label": {"en": "English Title Short Form"},
+            "form_snippet": "text.html",
+            "validators": ""
+        },
+        {
+            "field_name": "shortform_fr",
+            "label": {"en": "French Title Short Form"},
+            "form_snippet": "text.html",
+            "validators": ""
+        },
+        {
             "field_name": "department_number",
             "label": {"en": "Department Identifier"},
             "form_snippet": "text.html",
