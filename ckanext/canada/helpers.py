@@ -109,7 +109,7 @@ def drupal_session_present(request):
         if name.startswith("SESS"):
             return True
     
-    return False
+    return True
     
 def parse_release_date_facet(facet_results):
     counts = facet_results['counts'][1::2]
