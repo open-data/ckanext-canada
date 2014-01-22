@@ -56,6 +56,14 @@
       {% block form %}
         {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
       {% endblock %}
+
+      <div class="color-accent">
+      {% if h.lang() == 'en' %}
+      NOTE: Username and password are case sensitive.
+      {% else %}
+      NOTE: Le nom d'utilisateur et mot de passe sont sensibles à la casse.
+      {% endif %}
+      </div>
     </div>
   </section>
 {% endblock %}
