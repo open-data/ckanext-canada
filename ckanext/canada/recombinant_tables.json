@@ -1,0 +1,60 @@
+[
+  {
+    "dataset_type": "ati-summaries",
+    "title": "ATI Summaries",
+    "xls_sheet_name": "ATI AI",
+    "datastore_table": {
+      "fields": [
+        {
+          "id": "year",
+          "type": "int"
+        },
+        {
+          "id": "month",
+          "type": "int"
+        },
+        {
+          "id": "request_number",
+          "type": "text"
+        },
+        {
+          "id": "summary_eng",
+          "type": "text"
+        },
+        {
+          "id": "summary_fra",
+          "type": "text"
+        },
+        {
+          "id": "disposition",
+          "type": "text"
+        },
+        {
+          "id": "pages",
+          "type": "int"
+        }
+      ],
+      "primary_key": "request_number",
+      "indexes": ""
+    }
+  },
+  {
+    "dataset_type": "ati-none",
+    "title": "ATI Nothing to Report",
+    "xls_sheet_name": "ATI AI none",
+    "datastore_table": {
+      "fields": [
+        {
+          "id": "year",
+          "type": "int"
+        },
+        {
+          "id": "month",
+          "type": "int"
+        }
+      ],
+      "primary_key": ["year", "month"],
+      "indexes": ""
+    }
+  }
+]

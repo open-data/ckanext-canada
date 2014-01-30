@@ -32,5 +32,6 @@ setup(
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
+    ati=ckanext.canada.ati:ATICommand
     """,
 )

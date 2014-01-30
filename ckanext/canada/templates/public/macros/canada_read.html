@@ -69,7 +69,8 @@ Render a list of keywords for the client language
 #}
 {%- macro keyword_field(f, pkg, client_lang) -%}
   <ul class='menu-horizontal margin-top-none margin-bottom-none'>
-    {% set tags = pkg[f.id + ('_fra' if client_lang == 'fr' else '')] -%}
+    {% set tags = pkg.get(
+      f.id + ('_fra' if client_lang == 'fr' else ''), '') -%}
     {%- for tag in tags.split(',') -%}
       <li>
         <a class="button button-none button-small" href="
