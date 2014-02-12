@@ -4970,6 +4970,20 @@
       "bilingual": false, 
       "choices": [
         {
+          "eng": "AI",
+          "fra": "AI",
+          "id": "ai",
+          "key": "ai",
+          "openness_score": 1
+        },
+        {
+          "eng": "AMF",
+          "fra": "AMF",
+          "id": "amf",
+          "key": "amf",
+          "openness_score": 1
+        },
+        {
           "eng": "ASCII Grid", 
           "fra": "ASCII Grid", 
           "id": "ascii grid", 
@@ -4981,6 +4995,13 @@
           "fra": "Application",
           "id": "app",
           "key": "app",
+          "openness_score": 1
+        },
+        {
+          "eng": "BMP",
+          "fra": "BMP",
+          "id": "bmp",
+          "key": "bmp",
           "openness_score": 1
         },
         {
@@ -5039,7 +5060,21 @@
           "id": "edi", 
           "key": "edi", 
           "openness_score": 1
-        }, 
+        },
+        {
+          "eng": "EMF",
+          "fra": "EMF",
+          "id": "emf",
+          "key": "emf",
+          "openness_score": 1
+        },
+        {
+          "eng": "EPS",
+          "fra": "EPS",
+          "id": "eps",
+          "key": "eps",
+          "openness_score": 1
+        },
         {
           "eng": "EXE", 
           "fra": "EXE", 
@@ -5279,7 +5314,14 @@
           "id": "sql", 
           "key": "sql", 
           "openness_score": 1
-        }, 
+        },
+        {
+          "eng": "SVG",
+          "fra": "SVG",
+          "id": "svg",
+          "key": "svg",
+          "openness_score": 1
+        },
         {
           "eng": "TIFF World File", 
           "fra": "TIFF World File", 
@@ -5318,6 +5360,13 @@
           "id": "wms",
           "key": "wms",
           "openness_score": 3
+        },
+        {
+          "eng": "WMTS",
+          "fra": "WMTS",
+          "id": "wmts",
+          "key": "wmts",
+          "openness_score": 1
         },
         {
           "eng": "XLS", 
