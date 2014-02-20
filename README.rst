@@ -8,9 +8,12 @@ Team: Ian Ward, Ross Thompson, Peder Jakobsen, Denis Zgonjanin
 Features:
 
 * Forms and Validation for GoC Metadata Schema
+
   * complete, but planning to migrate to ckanext-scheming once it is ready
+
 * Batch import of data
-  * merging into ckanapi, will be removed from here
+
+  * merged into ckanapi, will be removed from here shortly
 
 Installation:
 
@@ -19,7 +22,7 @@ Installation:
 From a clean database you must run::
 
    paster canada create-vocabularies
-   paster canada create-organizations
+   ckanapi load organizations -I transitional_orgs.jsonl
 
 Once to create the tag vocabularies and organizations this extension requires
 before loading any data.
@@ -74,14 +77,17 @@ Requirements
    - master
    - N/A
  * - ckanapi
-   - `open-data/ckanapi <https://github.com/open-data/ckanapi>`_
+   - `ckan/ckanapi <https://github.com/ckan/ckanapi>`_
    - master
    - N/A
  * - ckanext-googleanalytics
    - `ofkn/ckanext-googleanalytics <https://github.com/okfn/ckanext-googleanalytics>`_
    - master
    - googleanalytics
- 
+ * - Recombinant tables extension
+   - `open-data/ckanext-recombinant <https://github.com/open-data/ckanext-recombinant>`_
+   - master
+   - * recombinant
 
 
 Configuration: development.ini or production.ini
@@ -89,7 +95,7 @@ Configuration: development.ini or production.ini
 
 The CKAN ini file needs the following plugins for the registry server::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme
+   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
 
 For the public server use only::
 
@@ -123,6 +129,10 @@ For the public server, also set the Drupal portal URL::
 
    canada.portal_url = http://myserver.com
 
+For the registry server set up recombinant configuration for ATI summaries::
+
+   recombinant.tables = ckanext.canada:recombinant_tables.json
+
 
 Configuration: Solr
 ----------------------
@@ -136,50 +146,12 @@ You will need to rebuild your search index using::
 
 
 
-Loading Data
-------------
-
-These are the steps we use to import data faster during development.
-Choose the ones you like, there are no dependencies.
-
-1. use the latest version of ckan from the
-   `canada-v2.1 branch <https://github.com/open-data/ckan/tree/canada-v2.1>`_
-   for fixes related to importing tags (~30% faster)
-
-2. disable solr updates while importing with the following lines in your
-   development.ini (~15% faster)::
-
-     ckan.search.automatic_indexing = false
-     ckan.search.solr_commit = false
-
-   With this change you need to remember to run
-   ``paster --plugin ckan search-index rebuild`` (or ``rebuild_fast``)
-   after the import, and remove the changes to development.ini.
-
-3. Drop the indexes on the database while importing (~40% faster)
-
-   Apply the changes in ``tuning/contraints.sql`` and
-   ``tuning/what_to_alter.sql`` to your database.
-
-4. Do the import in parallel with the load-datasets command (close to linear
-   scaling until you hit cpu or disk I/O limits):
-
-   For example load 150K records from "nrcan-1.jl" in parallel with three
-   processes::
-
-     paster canada load-datasets nrcan-1.jl 0 150000 -p 3
-
-For UI testing, simply load the 50 test datasets from the data folder.  It contains a mixture of the latest version of assorted datasets from NRCAN and the Enviroment Canada Pilot::
-
-   paster canada load-datasets data/sample.jl
-
-
 Working with the API
 --------------------
 
-To view a raw dataset using the api, pipe your curl requests to python's json.tool to ensure readable formatting of the output::
+To view a raw dataset using the api, use the ``ckanapi`` command line tool, e.g.::
 
-  curl http://localhost:5000/api/action/package_show -d '{"id": "0007a010-556d-4f83-bb8e-6e22dcc62e84"}' |  python -mjson.tool
+  ckanapi package_show id=0007a010-556d-4f83-bb8e-6e22dcc62e84
 
 
 schema_description
