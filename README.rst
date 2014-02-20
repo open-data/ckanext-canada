@@ -22,7 +22,7 @@ Installation:
 From a clean database you must run::
 
    paster canada create-vocabularies
-   paster canada create-organizations
+   ckanapi load organizations -I transitional_orgs.jsonl
 
 Once to create the tag vocabularies and organizations this extension requires
 before loading any data.
