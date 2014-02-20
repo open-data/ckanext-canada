@@ -36,7 +36,6 @@ class CanadaCommand(CkanCommand):
 
         paster canada create-vocabularies
                       delete-vocabularies
-                      create-organizations
                       load-datasets <.jl source file>
                                     [<starting line number> [<lines to load>]]
                                     [-r] [-p <num>] [-u <username>]
@@ -119,15 +118,6 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'create-vocabularies':
             for name, terms in schema_description.vocabularies.iteritems():
                 self.create_vocabulary(name, terms)
-
-        elif cmd == 'create-organizations':
-            for org in schema_description.dataset_field_by_id['owner_org']['choices']:
-                if 'id' not in org:
-                    continue
-                if not org['id']:
-                    print "skipping", org['key'].encode('utf-8')
-                else:
-                    self.create_organization(org)
 
         elif cmd == 'delete-organizations':
             raise NotImplementedError(
@@ -532,26 +522,6 @@ class CanadaCommand(CkanCommand):
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
 
-
-    def create_organization(self, org):
-        registry = LocalCKAN()
-        titles = [org[l] for l in schema_description.languages]
-        titles = [titles[0]] + [t for t in titles[1:] if t != titles[0]]
-        kwargs = {
-            'name':org['key'],
-            'title':u' | '.join(titles),
-            'extras':[{'key': 'department_number',
-                'value': unicode(org['id'])}],
-            }
-        if 'pilot_uuid' in org:
-            kwargs['id'] = org['pilot_uuid']
-        try:
-            response = registry.action.organization_show(id=kwargs['name'])
-        except NotFound:
-            registry.action.organization_create(**kwargs)
-        else:
-            if response['title'] != kwargs['title']:
-                registry.action.organization_update(id=response['id'], **kwargs)
 
     def delete_organization(self, org):
         registry = LocalCKAN()
