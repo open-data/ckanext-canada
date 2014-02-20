@@ -110,6 +110,14 @@ def _update_records(records, org_detail, conn):
             continue
         unique = hashlib.md5(orghash + r['request_number'].encode('utf-8')
             ).hexdigest()
+        shortform = None
+        shortform_fr = None
+        for e in org_detail['extras']:
+            if e['key'] == 'shortform':
+                shortform = e['value']
+            elif e['key'] == 'shortform_fr':
+                shortfotm = e['value']
+
         # don't ask why, just doing it the way it was done before
         out.append({
             'bundle': 'ati_summaries',
@@ -126,7 +134,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_number_of_pages_en': r['pages'],
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
             'ss_ati_year_en': r['year'],
-            'ss_ati_org_shortform_en': org_detail['shortform'],
+            'ss_ati_org_shortform_en': shortform,
             'ss_language': 'en',
             })
         out.append({
@@ -144,7 +152,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_number_of_pages_fr': r['pages'],
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': r['year'],
-            'ss_ati_org_shortform_fr': org_detail['shortform_fr'],
+            'ss_ati_org_shortform_fr': shortform_fr,
             'ss_language': 'fr',
             })
     conn.add_many(out, _commit=True)
