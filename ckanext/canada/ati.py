@@ -116,7 +116,7 @@ def _update_records(records, org_detail, conn):
             if e['key'] == 'shortform':
                 shortform = e['value']
             elif e['key'] == 'shortform_fr':
-                shortfotm = e['value']
+                shortform_fr = e['value']
 
         # don't ask why, just doing it the way it was done before
         out.append({
