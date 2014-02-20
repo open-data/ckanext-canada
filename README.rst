@@ -84,10 +84,6 @@ Requirements
    - `ofkn/ckanext-googleanalytics <https://github.com/okfn/ckanext-googleanalytics>`_
    - master
    - googleanalytics
- * - Scheming extension
-   - `open-data/ckanext-scheming <https://github.com/open-data/ckanext-scheming>`_
-   - master
-   - * scheming_organizations
  * - Recombinant tables extension
    - `open-data/ckanext-recombinant <https://github.com/open-data/ckanext-recombinant>`_
    - master
@@ -99,11 +95,11 @@ Configuration: development.ini or production.ini
 
 The CKAN ini file needs the following plugins for the registry server::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant scheming_organizations
+   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
 
 For the public server use only::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_public canada_package wet_theme scheming_organizations
+   ckan.plugins = stats googleanalytics canada_forms canada_public canada_package wet_theme
 
 CKAN also needs to be able to find the licenses file for the license list
 to be correctly populated::
@@ -132,10 +128,6 @@ To integrate Google Analytics::
 For the public server, also set the Drupal portal URL::
 
    canada.portal_url = http://myserver.com
-
-Set up the custom organization fields::
-
-   scheming.organization_schemas = ckanext.canada:organizations.json
 
 For the registry server set up recombinant configuration for ATI summaries::
 
