@@ -69,7 +69,12 @@ def limit_api_logic():
         @functools.wraps(action)
         def wrapper(context, data_dict,
                 default=default, limit=limit, action=action, param=param):
-            value = int(data_dict.get(param, default))
+            try:
+                if int(data_dict.get('offset', '0')) > 1000:
+                    return []  # no.
+                value = int(data_dict.get(param, default))
+            except ValueError:
+                return []
             data_dict[param] = min(value, limit)
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
@@ -81,20 +86,13 @@ def limit_api_logic():
         @functools.wraps(action)
         def wrapper(context, data_dict, action=action):
             if context.get('user', 'visitor') in ('', 'visitor'):
-                return disabled_action(context, data_dict)
+                return []
             return action(context, data_dict)
 
         out[name] = wrapper
 
     return out
 
-
-@side_effect_free
-def disabled_action(context, data_dict):
-    """
-    This action has been disabled.
-    """
-    return []
 
 
 @side_effect_free
