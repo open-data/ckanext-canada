@@ -66,7 +66,7 @@ cd -
 cat test-core.ini
 
 paster canada create-vocabularies -c links/development.ini
-paster canada create-organizations -c links/development.ini
+ckanapi load organizations -I transitional_orgs.jsonl -c links/development.ini
 
 # And finally, run the tests
 nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests

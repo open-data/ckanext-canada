@@ -22,7 +22,7 @@ build-database: drop-database
 	paster --plugin=ckan db init -c ${CKAN_CONFIG}
 	paster --plugin=ckan search-index clear -c ${CKAN_CONFIG}
 	paster canada create-vocabularies -c ${CKAN_CONFIG}
-	paster canada create-organizations -c ${CKAN_CONFIG}
+	ckanapi load organizations -I transitional_orgs.jsonl -c ${CKAN_CONFIG}
 	paster --plugin=ckan sysadmin add admin -c ${CKAN_CONFIG}
 
 tune-database:
