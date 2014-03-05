@@ -45,18 +45,16 @@ sudo service jetty restart
 CANADA_DIR="`pwd`"
 CKAN_DIR="`python -c'import ckan; print ckan.__file__.rsplit("/",2)[0]'`"
 cd "$CKAN_DIR"
-paster make-config ckan development.ini --no-interactive
 ln -s "$CKAN_DIR"/test-core.ini "$CANADA_DIR"/links/test-core.ini
-ln -s "$CKAN_DIR"/development.ini "$CANADA_DIR"/links/development.ini
 ln -s "$CKAN_DIR"/who.ini "$CANADA_DIR"/links/who.ini
 
 cat test-core.ini
 echo setting up databases
-paster db init -c "$CANADA_DIR"/test-core.ini
-paster datastore set-permissions postgres -c "$CANADA_DIR"/test-core.ini
+paster db init -c test-core.ini
+paster datastore set-permissions postgres -c test-core.ini
 
 cd -
 
-paster canada create-vocabularies -c links/development.ini
-ckanapi load organizations -I transitional_orgs.jsonl -c links/development.ini
+paster canada create-vocabularies -c test-core.ini
+ckanapi load organizations -I transitional_orgs.jsonl -c test-core.ini
 
