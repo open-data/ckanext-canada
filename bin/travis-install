@@ -50,23 +50,17 @@ sed -i -e 's/.*solr_url.*/solr_url = http:\/\/127.0.0.1:8983\/solr/' development
 sed -i -e 's/.*ckan\.site_id =.*/ckan.site_id = travis_ci/' development.ini
 sed -i -e 's/^sqlalchemy.url.*/sqlalchemy.url = postgresql:\/\/ckantest:pass@localhost\/ckantest/' development.ini
 sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/ckantest:pass@localhost\/datastore/' development.ini
+sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore:pass@localhost\/datastore/' development.ini
 ln -s "$CKAN_DIR"/test-core.ini "$CANADA_DIR"/links/test-core.ini
 ln -s "$CKAN_DIR"/development.ini "$CANADA_DIR"/links/development.ini
 ln -s "$CKAN_DIR"/who.ini "$CANADA_DIR"/links/who.ini
 
-# If Postgres >= 9.0, we don't need to use datastore's legacy mode.
-if [ $PGVERSION != '8.4' ]
-then
-  sed -i -e 's/.*datastore.read_url.*/ckan.datastore.read_url = postgresql:\/\/datastore:pass@localhost\/datastore/' test-core.ini
-  paster datastore set-permissions postgres -c "$CANADA_DIR"/test-core.ini
-else
-  sed -i -e 's/.*datastore.read_url.*//' test-core.ini
-fi
-
-paster db init -c "$CANADA_DIR"/test-core.ini
-cd -
-
 cat test-core.ini
+echo setting up databases
+paster db init -c "$CANADA_DIR"/test-core.ini
+paster datastore set-permissions postgres -c "$CANADA_DIR"/test-core.ini
+
+cd -
 
 paster canada create-vocabularies -c links/development.ini
 ckanapi load organizations -I transitional_orgs.jsonl -c links/development.ini
