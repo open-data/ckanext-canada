@@ -19,13 +19,13 @@ git checkout canada-v2.1
 cd -
 
 ln -s ../dl/ckan links/ckan
-pip install -r links/ckan/requirements.txt --use-mirrors
+pip install -r links/ckan/requirements.txt --allow-all-external
 
 python setup.py develop
 
 cd dl
 wget http://github.com/wet-boew/wet-boew-dist/archive/v3.1.2-release-dist.zip
-unzip v3.1.2-release-dist.zip
+unzip v3.1.2-release-dist.zip > /dev/null
 DIST_DIR="`python -c'import ckanext.wet_boew as wb; print wb.__file__.rsplit("/",1)[0]'`"/public/dist
 echo mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
 mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
@@ -66,7 +66,7 @@ cd -
 cat test-core.ini
 
 paster canada create-vocabularies -c links/development.ini
-paster canada create-organizations -c links/development.ini
+ckanapi load organizations -I transitional_orgs.jsonl -c links/development.ini
 
 # And finally, run the tests
 nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests
