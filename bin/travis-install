@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Install postgres and solr
 sudo apt-get update -qq
 sudo apt-get install solr-jetty postgresql-$PGVERSION libgeos-c1
@@ -68,5 +70,3 @@ cat test-core.ini
 paster canada create-vocabularies -c links/development.ini
 ckanapi load organizations -I transitional_orgs.jsonl -c links/development.ini
 
-# And finally, run the tests
-nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests
