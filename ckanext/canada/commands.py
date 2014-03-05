@@ -119,15 +119,6 @@ class CanadaCommand(CkanCommand):
             for name, terms in schema_description.vocabularies.iteritems():
                 self.create_vocabulary(name, terms)
 
-        elif cmd == 'delete-organizations':
-            raise NotImplementedError(
-                "Sorry, this can't be implemented properly until group "
-                "purging is implemented in CKAN")
-            for org in schema_description.dataset_field_by_id['owner_org']['choices']:
-                if 'id' not in org:
-                    continue
-                self.delete_organization(org)
-
         elif cmd == 'load-datasets':
             self.load_datasets(self.args[1], *self.args[2:])
 
@@ -521,15 +512,6 @@ class CanadaCommand(CkanCommand):
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
-
-
-    def delete_organization(self, org):
-        registry = LocalCKAN()
-        try:
-            organization = registry.action.organization_show(id=org['id'].lower())
-            response = registry.action.group_delete(id=organization['id'])
-        except NotFound:
-            pass
 
 
     def dump_datasets(self):
