@@ -53,7 +53,6 @@ sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/c
 ln -s "$CKAN_DIR"/test-core.ini "$CANADA_DIR"/links/test-core.ini
 ln -s "$CKAN_DIR"/development.ini "$CANADA_DIR"/links/development.ini
 ln -s "$CKAN_DIR"/who.ini "$CANADA_DIR"/links/who.ini
-paster db init -c "$CANADA_DIR"/test-core.ini
 
 # If Postgres >= 9.0, we don't need to use datastore's legacy mode.
 if [ $PGVERSION != '8.4' ]
@@ -63,6 +62,8 @@ then
 else
   sed -i -e 's/.*datastore.read_url.*//' test-core.ini
 fi
+
+paster db init -c "$CANADA_DIR"/test-core.ini
 cd -
 
 cat test-core.ini
