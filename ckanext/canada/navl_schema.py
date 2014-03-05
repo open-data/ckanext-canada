@@ -7,7 +7,7 @@ from ckan.logic.converters import (free_tags_only, convert_from_tags,
 from ckan.lib.navl.validators import ignore, ignore_missing, not_empty, empty
 from ckan.logic.validators import (isodate, tag_string_convert,
     name_validator, package_name_validator, boolean_validator,
-    owner_org_validator)
+    owner_org_validator, duplicate_extras_key)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 from ckan.model.package import Package
@@ -53,6 +53,13 @@ def _schema_update(schema, purpose):
     :param purpose: 'create', 'update' or 'show'
     """
     assert purpose in ('create', 'update', 'show')
+
+    # XXX: remove duplicate_extras_key validation
+    # to work around update failures on packages with
+    # multiple portal_release_date values mistakenly added
+    if '__before' in schema:
+        schema['__before'] = [v for v in schema['__before']
+            if v != duplicate_extras_key]
 
     if purpose == 'create':
         schema['id'] = [ignore_missing, protect_new_dataset_id,

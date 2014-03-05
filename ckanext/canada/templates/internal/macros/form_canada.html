@@ -70,11 +70,13 @@ norm_key    - h.normalize_strip_accents helper (optional)
     {%- if id == 'owner_org' -%}
       {%- do inputargs.options.append({'text': '', 'value': ''}) -%}
       {%- for org in orgs_avail('create_dataset') -%}
-        {%- set c = field.choices_by_key[org.name] -%}
-        {%- do inputargs.options.append({
-          'text': c[client_lang],
-          'value': org.id, })
-        -%}
+        {%- if org.name in field.choices_by_key -%}
+          {%- set c = field.choices_by_key[org.name] -%}
+          {%- do inputargs.options.append({
+            'text': c[client_lang],
+            'value': org.id, })
+          -%}
+        {%- endif -%}
       {%- endfor -%}
 
     {%- elif id == 'geographic_region' -%}
