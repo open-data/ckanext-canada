@@ -1885,6 +1885,12 @@
               "fra": "Licence du gouvernement ouvert \u2013 Canada", 
               "id": "ca-ogl-lgo", 
               "key": "ca-ogl-lgo"
+            },
+            {
+              "eng": "Open Data Licence Agreement \u007c Office of the Commissioner of Lobbying",
+              "fra": "Accord de licence de donn\u00e9es libre \u007c Commissariat au lobbying",
+              "id": "ca-odla-aldg",
+              "key": "ca-odla-aldg"
             }
           ], 
           "description": {
@@ -1902,10 +1908,7 @@
             "fra": "Licence"
           }, 
           "mandatory": "all", 
-          "type": "choice", 
-          "ui_options": [
-            "disabled"
-          ]
+          "type": "choice"
         }, 
         {
           "bilingual": true, 
