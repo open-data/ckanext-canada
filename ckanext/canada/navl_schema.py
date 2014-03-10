@@ -74,8 +74,6 @@ def _schema_update(schema, purpose):
     else:
         schema['author_email'] = [fixed_value(
             schema_description.dataset_field_by_id['author_email'])]
-        schema['license_id'] = [fixed_value(
-            schema_description.dataset_field_by_id['license_id'])]
         schema['department_number'] = [get_department_number]
         schema['license_title_fra'] = [get_license_field('title_fra')]
         schema['license_url_fra'] = [get_license_field('url_fra')]
