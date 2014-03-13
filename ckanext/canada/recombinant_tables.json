@@ -3,58 +3,78 @@
     "dataset_type": "ati-summaries",
     "title": "ATI Summaries",
     "xls_sheet_name": "ATI AI",
-    "datastore_table": {
-      "fields": [
-        {
-          "id": "year",
-          "type": "int"
-        },
-        {
-          "id": "month",
-          "type": "int"
-        },
-        {
-          "id": "request_number",
-          "type": "text"
-        },
-        {
-          "id": "summary_eng",
-          "type": "text"
-        },
-        {
-          "id": "summary_fra",
-          "type": "text"
-        },
-        {
-          "id": "disposition",
-          "type": "text"
-        },
-        {
-          "id": "pages",
-          "type": "int"
-        }
-      ],
-      "primary_key": "request_number",
-      "indexes": ""
-    }
+    "fields": [
+      {
+        "datastore_id": "year",
+        "label": "Year/Annee",
+        "datastore_type": "int",
+        "xls_column_width": 5
+      },
+      {
+        "datastore_id": "month",
+        "label": "Month/Mois",
+        "datastore_type": "int",
+        "xls_column_width": 4
+      },
+      {
+        "datastore_id": "request_number",
+        "label": "Number/Numero",
+        "datastore_type": "text",
+        "xls_column_width": 15
+      },
+      {
+        "datastore_id": "summary_eng",
+        "label": "ENG Summary/Sommaire",
+        "datastore_type": "text",
+        "xls_column_width": 30
+      },
+      {
+        "datastore_id": "summary_fra",
+        "label": "FRA Summary/Sommaire",
+        "datastore_type": "text",
+        "xls_column_width": 30
+      },
+      {
+        "datastore_id": "disposition",
+        "label": "Disposition",
+        "datastore_type": "text",
+        "xls_column_width": 40
+      },
+      {
+        "datastore_id": "pages",
+        "label": "Pages",
+        "datastore_type": "int",
+        "xls_column_width": 6
+      }
+    ],
+    "datastore_primary_key": "request_number",
+    "datastore_indexes": "",
+    "xls_organization_info": ["dept_id", null, "name", "title"],
+    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
+    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
   {
     "dataset_type": "ati-none",
     "title": "ATI Nothing to Report",
     "xls_sheet_name": "ATI AI none",
-    "datastore_table": {
-      "fields": [
-        {
-          "id": "year",
-          "type": "int"
-        },
-        {
-          "id": "month",
-          "type": "int"
-        }
-      ],
-      "primary_key": ["year", "month"],
-      "indexes": ""
-    }
+    "fields": [
+      {
+        "datastore_id": "year",
+        "label": "Year/Annee",
+        "datastore_type": "int",
+        "xls_column_width": 5
+      },
+      {
+        "datastore_id": "month",
+        "label": "Month/Mois",
+        "datastore_type": "int",
+        "xls_column_width": 4
+      }
+    ],
+    "primary_key": ["year", "month"],
+    "indexes": ""
+    "xls_organization_info": ["dept_id", null, "name", "title"],
+    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
+    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   }
 ]
