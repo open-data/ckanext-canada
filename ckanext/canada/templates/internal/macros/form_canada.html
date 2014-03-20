@@ -60,7 +60,7 @@ norm_key    - h.normalize_strip_accents helper (optional)
     {%- if id in data -%}
       {%- do inputargs.update({'selected':data[id]}) -%}
     {# custom requirement from client #}
-    {%- elif field.id == 'catalog_type' -%}
+    {%- elif field.id in ['catalog_type', 'license_id'] -%}
       {%- do inputargs.update({'selected':field.choices[0].key}) -%}
     {%- endif -%}
     {# kwargs form.select doesn't support #}
