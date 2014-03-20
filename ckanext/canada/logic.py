@@ -18,7 +18,7 @@ def limit_api_logic():
         'organization_show': (5, 20),
     }
     data_dict_limit = {
-        'package_search': (int(config.get('ckan.datasets_per_page', 20)), 100),
+        'package_search': (int(config.get('ckan.datasets_per_page', 20)), 300),
         'package_activity_list': (20, 100),
         'recently_changed_packages_activity_list': (20, 100),
         'package_activity_list_html': (20, 100),
