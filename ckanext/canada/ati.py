@@ -8,6 +8,7 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN
 
+DATASET_TYPE = 'ati-summaries'
 BATCH_SIZE = 1000
 START_YEAR_MONTH = (2012, 1)
 MONTHS_FRA = [
@@ -65,10 +66,8 @@ class ATICommand(CkanCommand):
         lc = LocalCKAN()
         for org in lc.action.organization_list():
             count = 0
-            org_detail = None
-            for records in _ati_summaries(org, lc):
-                if not org_detail:
-                    org_detail = lc.action.organization_show(id=org)
+            org_detail = lc.action.organization_show(id=org)
+            for records in _ati_summaries(org_detail, lc):
                 _update_records(records, org_detail, conn)
                 count += len(records)
 
@@ -88,10 +87,13 @@ def _ati_summaries(org, lc):
     """
     generator of ati summary dicts for organization with name org
     """
-    resource_alias = 'ati-summaries-{0}'.format(org)
+    result = lc.action.package_search(
+        q="type:%s owner_org:%s" % (DATASET_TYPE, org['id']),
+        rows=1000)['results']
+    resource_id = result[0]['resources'][0]['id']
     offset = 0
     while True:
-        rval = lc.action.datastore_search(resource_id=resource_alias,
+        rval = lc.action.datastore_search(resource_id=resource_id,
             limit=BATCH_SIZE, offset=offset)
         records = rval['records']
         if not records:
