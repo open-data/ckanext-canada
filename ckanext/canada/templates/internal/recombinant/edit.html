@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% set res = c.pkg_dict['resources'][0] %}
+
+{% block primary_content %}
+{{ super() }}
+    <section>
+      <div>
+          {{ h.get_datapreview_ati(res.id) }}
+      </div>
+    </section>
+{% endblock %}

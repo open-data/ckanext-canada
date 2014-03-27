@@ -4,6 +4,9 @@ from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset
 import datetime
 import unicodedata
 
+import ckanapi
+
+import ckan.lib.helpers as h
 from ckanext.canada.metadata_schema import schema_description
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
@@ -145,3 +148,12 @@ def is_ready_to_publish(package):
         return True
     else:
         return False
+
+def get_datapreview_ati(res_id):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    results = lc.action.datastore_search(
+        resource_id=res_id,
+        sort='year,month desc',
+        limit=3000)
+    return h.snippet('package/wet_datatable.html',
+        ds_fields=results['fields'], ds_records=results['records'])
