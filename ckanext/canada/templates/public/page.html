@@ -1,0 +1,163 @@
+{% ckan_extends %}
+
+{%- block styles %}
+
+{#
+  <!-- <noscript><link rel="stylesheet" href="dist/theme-base/css/theme-ns-min.css" /></noscript> -->
+ #}
+  {% resource 'ckanext-wet/wet_cdn_govt' %}
+  {% resource 'ckanext-wet/ckan' %}
+
+  {# resource g.main_css[6:] #}
+{% endblock %}
+
+{% block page %}
+  <div id="wb-body">
+    {{ super() }}
+  </div>
+{% endblock %}
+
+{% block skip %}
+  <div id="wb-skip">
+    <ul id="wb-tphp">
+      <li id="wb-skip1"><a href="#content">Skip to main content</a></li>
+      <li id="wb-skip2"><a href="#footer">Skip to footer</a></li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block flash_inner %}
+  {% if flash_messages %}
+    <div class="span-8 module-attention">
+      {{ super() }}
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block header %}
+  {% set lang = h.lang() %}
+  {% set current_url = request.environ.CKAN_CURRENT_URL %}
+  <div id="wb-head">
+    <div id="wb-head-in">
+      <header>
+        <section>
+          <div id="base-fullhd">
+            <h2>Header Bar</h2>
+            <div id="base-fullhd-in">
+              <ul>
+                {# This format only works for a bilingual format #}
+                <li id="base-fullhd-lang">
+                  {% if lang == 'en'%}
+                    <a href="{% url_for current_url, locale='fr' %}" lang="fr">Français</a>
+                  {% else %}
+                    <a href="{% url_for current_url, locale='en' %}" lang="en">English</a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <div id="base-bnr" role="banner">
+          <div id="base-bnr-in">
+            <div id="base-title">
+              <p id="base-title-in">
+                <a href="/">{{ _('Open Data') }}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <nav role="navigation">
+          <div id="gcwu-psnb">
+            <h2>Site menu</h2>
+            <div id="gcwu-psnb-in">
+              <div class="wet-boew-menubar mb-mega">
+                <div>
+                  <ul class="mb-menu">
+                  {# include "mega_menu.html" #}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% block breadcrumb %}
+          <div id="gcwu-bc">
+            <h2>Breadcrumb trail</h2>
+            <div id="gcwu-bc-in">
+              <ol>
+                  {% snippet 'snippets/home_breadcrumb_item.html' %}
+                  {% if self.breadcrumb_content() | trim %}
+                    {% block breadcrumb_content %}{% endblock %}
+                  {% endif %}
+              </ol>
+            </div>
+          </div>
+        {% endblock %}
+        </nav>
+      </header>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% block main_content %}
+    <div id="wb-core">
+      <div id="wb-core-in">
+        {% if self.content_action() | trim %}
+          <div class="span-8"><p>
+            {% block content_action %}{% endblock %}
+          </p></div>
+        {% endif %}
+        <div id="wb-main" role="main">
+          <div id="wb-main-in">
+            <div class="span-6 float-right">
+              {% block pre_primary %}{% endblock %}
+              {{ self.primary() }}
+            </div>
+            <div class="span-2 float-left">
+              {{ self.secondary() }}
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        {% block sec_menu %}{% endblock %}
+      </div>
+    </div>
+  {% endblock %}
+{% endblock %}
+
+{% block primary_content %}
+  <article>
+    {% block page_header %}
+      <header>
+        <ul class="button-group margin-top-none">
+          {% block content_primary_nav %}{% endblock %}
+        </ul>
+      </header>
+    {% endblock %}
+    <div>
+      {% if self.page_primary_action() | trim %}
+        <p><div class="page_primary_action">
+          {% block page_primary_action %}{% endblock %}
+        </div></p>
+      {% endif %}
+      {% block primary_content_inner %}
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}
+
+
+{% block footer %}
+  {% include "footer_gwcu.html" %}
+{% endblock footer %}
+
+{%- block scripts %}
+{% endblock -%}
+
+{% block body_extras -%}
+  {# defined in the config.ini under "ckan.template_footer_end" #}
+  {{ g.template_footer_end | safe }}
+{%- endblock %}
