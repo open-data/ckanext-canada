@@ -1,16 +1,16 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
+{% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
 {% set facet_name = title + 's' %}
 
+{% block facet_list_item_panel_body %}
 {% with items = items or h.get_facet_items_dict(name, limit=5) %}
   {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
-  <section>
-    <h3 class="background-accent"><span>{{ title or h.get_facet_title(name) }}</span></h3>
-    <div class="module">   
+
     {% if items %}
       <nav>
-        <ul class="list-bullet-none" style="margin-left: 7px;">
+        <ul class="list-unstyled" style="margin-left: 7px;">
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = label_function(item, h.lang()) if label_function else cr.split_bilingual_field(item.display_name, h.lang()) %}
@@ -23,23 +23,28 @@
           {% endfor %}
         </ul>
       </nav>
-      <div class="module-footer" style="margin-left: 15px;">
-        <p>
+      <ul style="margin-left: 15px;" class="list-unstyled">
         {% if items | count > 1 %}
           {% if h.get_param_int('_%s_limit' % name) %}
-            <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show more')}} {{facet_name}}">{{ _('Show more')}}</a>
+            <li><a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
+                   title="{{_('Show more')}} {{facet_name}}">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+              {{ _('Show more')}}</a></li>
           {% else %}
-            <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more" title="{{_('Show less')}} {{facet_name}}">{{ _('Show less') }}</a>
+            <li><a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
+                   title="{{_('Show less')}} {{facet_name}}">
+              <span class="glyphicon glyphicon-chevron-up"></span>
+              {{ _('Show less') }}</a></li>
           {% endif %}
         {% endif %}
-        </p>
-        <p><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action" title="{{_('Clear All')}} {{facet_name}}">{{ _('Clear All') }}</a></p> 
-      </div>
+        <li><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}"
+               title="{{_('Clear All')}} {{facet_name}}">
+          <span class="glyphicon glyphicon-remove"></span>
+          {{ _('Clear All') }}</a></li>
+      </ul>
       {% else %}
-        <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
+        <p>{{ _('There are no filters for this search') }}</p>
       {% endif %}
-      
-    </div>
-  </section>
-  <br>
+
 {% endwith %}
+{% endblock %}

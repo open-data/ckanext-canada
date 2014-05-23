@@ -1,8 +1,4 @@
-{% extends "gwcu_wet.html" %}
-
-{% block site_title %}
-<a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('data.gc.ca') }}</a>
-{% endblock %}
+{% ckan_extends %}
 
 {% block links %}
 

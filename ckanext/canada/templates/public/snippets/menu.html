@@ -1,0 +1,118 @@
+{% ckan_extends %}
+
+{% block wet_megamenu_items %}
+
+{# CKAN and WET developers, please note that wrapping each list item in an unordered list seems to be required for IE compatability #}
+{% if h.lang() == 'fr' %}
+<li>
+  <a href="#home_mn" class="item" role="menuitem">À propos de donnees.gc.ca</a>
+  <ul class="sm list-unstyled" id="home_mn" role="menu">
+    <li><a href="/fra/propos-de-donneesgcca">À propos de donnees.gc.ca</a></li>
+    <li><a href="/fra/licence-du-gouvernement-ouvert-canada">Licence du gouvernement ouvert - Canada</a></li>
+    <li><a href="/fra/foire-aux-questions">Foire aux questions</a></li>
+    <li><a href="/fra/labc-des-donnees-ouvertes">L'abc des données ouvertes</a></li>
+    <li><a href="/fra/principes-de-donnees-ouvertes">Principes de données ouvertes</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#doon_mn" class="item" role="menuitem">Données ouvertes</a>
+  <ul class="sm list-unstyled" id="doon_mn" role="menu">
+    <li><a href="/fra/donnees-ouvertes">Données ouvertes</a></li>
+    <li><a href="/data/fr/dataset">Recherche de données</a></li>
+    <li><a href="/fra/en-vedette">En vedette</a></li>
+    <li><a href="/fra/cartes/donnees-ouvertes-au-canada">Données ouvertes au Canada</a></li>
+    <li><a href="/fra/coin-des-developpeurs">Coin des développeurs</a></li>
+    <li><a href="/fra/faits-et-chiffres">Faits et chiffres</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#govout_mn" class="item" role="menuitem">Gouvernement ouvert</a>
+  <ul class="sm list-unstyled" id="govout_mn" role="menu">
+    <li><a href="/fra/gouvernement-ouvert">Gouvernement ouvert</a></li>
+    <li><a href='/fra/search/ati'>Recherche des sommaires de demandes d'AI complétées</a></li>
+    <li><a href='/fra/gouvernement-ouvert#depenses'>Dépenses du gouvernement</a></li>
+    <li><a href="/fra/plan-daction-du-canada-pour-un-gouvernement-ouvert">Plan d'action du Canada pour un gouvernement ouvert</a></li>
+    <li><a href="/fra/comite-consultatif">Comité consultatif</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#particip_mn" class="item" role="menuitem">Participez</a></h3>
+  <ul class="sm list-unstyled" id="particip_mn" role="menu">
+    <li><a href="/fra/participez">Participez</a></li>
+    <li><a href="/fra/formulaire/faites-nous-part-de-vos-commentaires#commentaires">Faites-nous part de vos commentaires</a></li>
+    <li><a href="/fra/blogue">Blogue</a></li>
+    <li><a href="/fra/jeux-de-donnees-suggeres">Proposez un jeu de données</a></li>
+    <li><a href="/fra/formulaire/informez-nous-de-votre-application">Informez-nous de votre application</a></li>
+    <li><a href="/fra/consultations">Consultations</a></li>
+  </ul>
+</li>
+
+{% else %}
+
+<li>
+  <a href="#about_mn" class="item" role="menuitem">About data.gc.ca</a>
+  <ul class="sm list-unstyled" id="about_mn" role="menu">
+    <li><a href="/eng/about-datagcca">About data.gc.ca</a></li>
+    <li><a href="/eng/open-government-licence-canada">Open Government Licence</a></li>
+    <li><a href="/eng/frequently-asked-questions">Frequently Asked Questions</a></li>
+    <li><a href="/eng/open-data-101">Open Data 101</a></li>
+    <li><a href="/eng/open-data-principles">Open Data Principles</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#od_mn" class="item" role="menuitem">Open Data</a>
+  <ul class="sm list-unstyled" id="od_mn" role="menu">
+    <li><a href="/eng/open-data">Open Data</a></li>
+    <li><a href="/data/en/dataset">Search Data</a></li>
+    <li><a href="/eng/showcase">Showcase</a></li>
+    <li><a href="/eng/maps/open-data-canada">Open Data in Canada</a></li>
+    <li><a href="/eng/developers-corner">Developer's Corner</a></li>
+    <li><a href="/eng/facts-and-figures">Facts and Figures</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#og_mn" class="item" role="menuitem">Open Government</a>
+  <ul class="sm list-unstyled" id="og_mn" role="menu">
+    <li><a href="/eng/open-government">Open Government</a></li>
+    <li><a href='/eng/search/ati'>Search Summaries of Completed ATI requests</a></li>
+    <li><a href='/eng/open-government#gcspending'>Government Spending</a></li>
+    <li><a href="/eng/canadas-action-plan-open-government">Canada's Action Plan on Open Government</a></li>
+    <li><a href="/eng/advisory-panel-open-government">Advisory Panel</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#participate_mn" class="item" role="menuitem">Participate</a>
+  <ul class="sm list-unstyled" id="participate_mn" role="menu">
+    <li><a href="/eng/participate">Participate</a></li>
+    <li><a href="/eng/forms/contact-us#feedback">Give Us Your Feedback</a></li>
+    <li><a href="/eng/blog">Blog</a></li>
+    <li><a href="/eng/suggested-datasets">Suggest a Dataset</a></li>
+    <li><a href="/eng/forms/submit-your-app">Submit Your App</a></li>
+    <li><a href="/eng/consultations">Consultations</a></li>
+  </ul>
+</li>
+{% endif %}
+
+{% if h.drupal_session_present(request) %}
+<li>
+  <a href="#myacct_mn" class="item" role="menuitem">{{ _('My Account') }}</a>
+  <ul class="sm list-unstyled" id="myacct_mn" role="menu">
+    <li><a href="/user">My Account</a></li>
+    <li><a style="font-weight: normal;" href="/user/logout">Log out</a></li>
+  </ul>
+</li>
+
+{% else %}
+
+<li>
+  <a href="/user/login" class="item" role="menuitem">Login</a>
+</li>
+{% endif %}
+
+{% endblock %}
