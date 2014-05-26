@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import hashlib
 import calendar
+import datetime
 
 import paste.script
 from pylons import config
@@ -10,7 +11,7 @@ from ckanapi import LocalCKAN
 
 DATASET_TYPE = 'ati-summaries'
 BATCH_SIZE = 1000
-START_YEAR_MONTH = (2012, 1)
+WINDOW_YEARS = 2
 MONTHS_FRA = [
     u'', # "month 0"
     u'janvier',
@@ -107,8 +108,10 @@ def _update_records(records, org_detail, conn):
     out = []
     org = org_detail['name']
     orghash = hashlib.md5(org).hexdigest()
+    today = datetime.datetime.today()
+    start_year_month = (today.year - WINDOW_YEARS, today.month)
     for r in records:
-        if (r['year'], r['month']) < START_YEAR_MONTH:
+        if (r['year'], r['month']) < start_year_month:
             continue
         unique = hashlib.md5(orghash + r['request_number'].encode('utf-8')
             ).hexdigest()
