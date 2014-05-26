@@ -8,49 +8,49 @@
         "datastore_id": "year",
         "label": "Year/Annee",
         "datastore_type": "int",
-        "xls_column_width": 5
+        "xls_column_width": 13
       },
       {
         "datastore_id": "month",
         "label": "Month/Mois",
         "datastore_type": "int",
-        "xls_column_width": 4
+        "xls_column_width": 13
       },
       {
         "datastore_id": "request_number",
         "label": "Number/Numero",
         "datastore_type": "text",
-        "xls_column_width": 15
+        "xls_column_width": 38
       },
       {
         "datastore_id": "summary_eng",
         "label": "ENG Summary/Sommaire",
         "datastore_type": "text",
-        "xls_column_width": 30
+        "xls_column_width": 41
       },
       {
         "datastore_id": "summary_fra",
         "label": "FRA Summary/Sommaire",
         "datastore_type": "text",
-        "xls_column_width": 30
+        "xls_column_width": 41
       },
       {
         "datastore_id": "disposition",
         "label": "Disposition",
         "datastore_type": "text",
-        "xls_column_width": 40
+        "xls_column_width": 39
       },
       {
         "datastore_id": "pages",
         "label": "Pages",
         "datastore_type": "int",
-        "xls_column_width": 6
+        "xls_column_width": 34
       }
     ],
     "datastore_primary_key": "request_number",
     "datastore_indexes": "",
     "xls_organization_info": ["dept_id", null, "name", "title"],
-    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
+    "xls_organization_style": "pattern: pattern solid, fore_color light_green;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
   {
