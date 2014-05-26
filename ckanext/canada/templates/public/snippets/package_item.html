@@ -34,8 +34,30 @@ Example:
           </span>
         {% endif %}
 
-        {{ h.link_to(cr.field_id('title', package, client_lang), h.url_for(controller='package', action='read', id=package.name)) }}
-        
+        {#- FIXME: continuing to add static text here doesn't scale -#}
+        {%- if package.type == 'ati-summaries' -%}
+          {%- if client_lang == 'fr' -%}
+            {%- set title = "ATI summaries" -%}
+            {%- set desc = "Ce juex de données contient tous vos sommaires d'AI completé. Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici." -%}
+          {%- else -%}
+            {%- set title = "ATI Summaries" -%}
+            {%- set desc = "This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries." -%}
+          {%- endif -%}
+        {%- elif package.type == 'ati-none' -%}
+          {%- if client_lang == 'fr' -%}
+            {%- set title = "ATI nothing to report" -%}
+            {%- set desc = "Ce jeux de données contient tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées. C'est là que vous identifier explicitement les mois, votre organisation a rien à signaler." -%}
+          {%- else -%}
+            {%- set title = "ATI Nothing to Report" -%}
+            {%- set desc = "This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report." -%}
+          {%- endif -%}
+        {%- else -%}
+          {% set title = cr.field_id('title', package, client_lang) %}
+          {% set desc = cr.field_id('notes', package, client_lang) %}
+        {%- endif -%}
+
+        {{ h.link_to(title, h.url_for(controller='package', action='read', id=package.name)) }}
+
         {% if package.get('state', '').startswith('draft') %}
           <span class="label label-info">{{ _('Draft') }}</span>
         {% elif package.get('state', '').startswith('deleted') %}
@@ -46,8 +68,8 @@ Example:
       {% if banner %}
         <span class="banner">Popular</span>
       {% endif %}
-      {% if cr.field_id('notes', package, client_lang) %}
-        <div>{{ cr.field_id('notes', package, client_lang)[0:300] }}...</div>
+      {% if desc %}
+        <div>{{ desc[0:300] }}...</div>
       {% else %}
         <p class="empty">{{ _("This dataset has no description") }}</p>
       {% endif %}
