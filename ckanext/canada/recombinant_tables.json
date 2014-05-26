@@ -49,7 +49,16 @@
     ],
     "datastore_primary_key": "request_number",
     "datastore_indexes": "",
-    "xls_organization_info": ["dept_id", null, "name", "title"],
+    "xls_organization_info":
+      [
+        "dept_id",
+        null,
+        "name",
+        "title",
+        null,
+        null,
+        null
+      ],
     "xls_organization_style": "pattern: pattern solid, fore_color light_green;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
