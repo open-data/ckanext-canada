@@ -1,0 +1,80 @@
+{#
+Displays a single of dataset.
+
+package        - A package to display.
+item_class     - The class name to use on the list item.
+hide_resources - If true hides the resources (default: false).
+banner         - If true displays a popular banner (default: false).
+truncate       - The length to trucate the description to (default: 180)
+truncate_title - The length to truncate the title to (default: 80).
+
+Example:
+
+  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+
+#}
+
+{% import 'macros/canada_read.html' as cr %}
+{% set client_lang = h.lang() %}
+
+{% set truncate = truncate or 180 %}
+{% set truncate_title = truncate_title or 80 %}
+{% set notes = h.markdown_extract(cr.field(schema_description.dataset_field_by_id['notes'], package, client_lang), extract_length=truncate) %}
+{% set title = schema_description.dataset_field_by_id['title'] %}
+{% set publisher_field = schema_description.dataset_field_by_id['owner_org'] %}
+
+<li class="{{ item_class or "dataset-item" }}">
+  {% block package_item_content %}
+    <div>
+      <strong>
+        {% if package.private %}
+          <span class="dataset-private label label-inverse">
+            <i class="icon-lock"></i>
+            {{ _('Private') }}
+          </span>
+        {% endif %}
+
+        {{ h.link_to(cr.field_id('title', package, client_lang), h.url_for(controller='package', action='read', id=package.name)) }}
+        
+        {% if package.get('state', '').startswith('draft') %}
+          <span class="label label-info">{{ _('Draft') }}</span>
+        {% elif package.get('state', '').startswith('deleted') %}
+          <span class="label label-important">{{ _('Deleted') }}</span>
+        {% endif %}
+        {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
+      </strong>
+      {% if banner %}
+        <span class="banner">Popular</span>
+      {% endif %}
+      {% if cr.field_id('notes', package, client_lang) %}
+        <div>{{ cr.field_id('notes', package, client_lang)[0:300] }}...</div>
+      {% else %}
+        <p class="empty">{{ _("This dataset has no description") }}</p>
+      {% endif %}
+    </div>
+    <br/>
+    <div class="publisher_info">
+     {# <em>{{ cr.field_label(publisher_field, client_lang) }}:</em> #}
+      <em>{{ _('Organization') }}: </em>
+      {{ cr.org_field(package, client_lang) }}
+    </div>
+    {% if package.resources and not hide_resources %}
+    <div style="display:inline-block;">
+      <span class="span-1 margin-left-none margin-bottom-small">
+        <em>{{ _('Resource Formats') }}:</em>
+      </span>
+      <ul class="menu-horizontal margin-top-none span-3 margin-bottom-none" >
+        {% set formats = [] %}
+        {% for resource in package.resources %}
+          {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
+        {% endfor %}
+        
+        {% for format in h.remove_duplicates(formats) %}
+          <li style="padding:0;">
+            <code>{{ format }}</code>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endblock %}
+</li>

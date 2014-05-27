@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block search_input_label %}
+<div class="row mrgn-bttm-md">
+  <div class="col-md-12">
+  <label for="search_field" >{{ _('Search Datasets') }}</label>
+  {% if h.lang() == 'en' %}
+    <a href="/eng/suggested-datasets" class="btn btn-default btn-sm pull-right">Can’t find what you’re looking for?</a>
+  {% else %}
+    <a href="/fra/suggested-datasets" class="btn btn-info btn-block">Vous ne trouvez pas ce que vous cherchez?</a>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

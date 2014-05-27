@@ -9,7 +9,7 @@
 {% block breadcrumb_content %}
 {% endblock %}
 
-{% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+{% block subtitle %}{% endblock %}
 
 {% block secondary_content %}
 
@@ -81,14 +81,6 @@
     </span>
   {% endfor %}
 {% endfor %}
-{% endblock %}
-
-{% block search_form_footer %}
-  {% if h.lang() == 'en' %}
-  <a href="/eng/suggested-datasets" class="button">Can’t find what you’re looking for?</a>
-  {% else %}
-  <a href="/fra/suggested-datasets" class="button">Vous ne trouvez pas ce que vous cherchez?</a>
-  {% endif %}
 {% endblock %}
 
 {% block try_another_search %}
