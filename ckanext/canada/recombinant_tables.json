@@ -6,31 +6,31 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year/Annee",
+        "label": "Year / Annee",
         "datastore_type": "int",
         "xls_column_width": 13
       },
       {
         "datastore_id": "month",
-        "label": "Month/Mois",
+        "label": "Month / Mois",
         "datastore_type": "int",
         "xls_column_width": 13
       },
       {
         "datastore_id": "request_number",
-        "label": "Number/Numero",
+        "label": "Request Number / Numero de la demande",
         "datastore_type": "text",
         "xls_column_width": 38
       },
       {
         "datastore_id": "summary_eng",
-        "label": "ENG Summary/Sommaire",
+        "label": "ENG Summary / Sommaire de la demande",
         "datastore_type": "text",
         "xls_column_width": 41
       },
       {
         "datastore_id": "summary_fra",
-        "label": "FRA Summary/Sommaire",
+        "label": "FRA Summary / Sommaire de la demande",
         "datastore_type": "text",
         "xls_column_width": 41
       },
@@ -42,7 +42,7 @@
       },
       {
         "datastore_id": "pages",
-        "label": "Pages",
+        "label": "Number of Pages / Nombre de pages",
         "datastore_type": "int",
         "xls_column_width": 34
       }
@@ -69,13 +69,13 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year/Annee",
+        "label": "Year / Annee",
         "datastore_type": "int",
         "xls_column_width": 5
       },
       {
         "datastore_id": "month",
-        "label": "Month/Mois",
+        "label": "Month / Mois",
         "datastore_type": "int",
         "xls_column_width": 4
       }
