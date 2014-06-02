@@ -36,21 +36,11 @@ Example:
 
         {#- FIXME: continuing to add static text here doesn't scale -#}
         {%- if package.type == 'ati-summaries' -%}
-          {%- if client_lang == 'fr' -%}
-            {%- set title = "ATI summaries" -%}
-            {%- set desc = "Ce jeux de données contient tous vos sommaires d'AI completé. Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici." -%}
-          {%- else -%}
-            {%- set title = "ATI Summaries" -%}
-            {%- set desc = "This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries." -%}
-          {%- endif -%}
+          {%- set title = _("ATI Summaries") -%}
+          {%- set desc = _("This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries.") -%}
         {%- elif package.type == 'ati-none' -%}
-          {%- if client_lang == 'fr' -%}
-            {%- set title = "ATI nothing to report" -%}
-            {%- set desc = "Ce jeux de données contient tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées. C'est là que vous identifier explicitement les mois, votre organisation a rien à signaler." -%}
-          {%- else -%}
-            {%- set title = "ATI Nothing to Report" -%}
-            {%- set desc = "This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report." -%}
-          {%- endif -%}
+          {%- set title = _("ATI Nothing to Report") -%}
+          {%- set desc = _("This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report.") -%}
         {%- else -%}
           {% set title = cr.field_id('title', package, client_lang) %}
           {% set desc = cr.field_id('notes', package, client_lang) %}
