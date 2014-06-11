@@ -21,43 +21,50 @@
   {% include "package/snippets/socialmedia.html" %}
   {% endblock ds_socialmedia %}
   
-  <div class="module-related">
-    <h3>{{_('About this Dataset')}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    <div class="panel-title">{{_('About this Dataset')}}</div>
     <a href="{{ h.url_for(action='history', controller='package', id=pkg.id)
-      }}?format=atom" title="RSS"><span class="wb-icon-rss indent-medium"></span><span style="color:white;">{{_('RSS Feed')}}</span></a></h3>
-    <ul>
+      }}?format=atom" title="RSS"><span class="fa fa-rss"></span> {{_('RSS Feed')}}</a>
+    </div>
+
+    <ul class="list-group">
       {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
-      <li><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
         <br/>
         {{ cr.org_field(pkg, client_lang) }}
       </li>
       
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
-      <li><b>{{ cr.field_label(keywords, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(keywords, client_lang) }}:</b>
+        <small>
         {{ cr.keyword_field(keywords, pkg, client_lang) }}
+        </small>
       </li>
 
       {% set subjects = schema_description.dataset_field_by_id['subject'] %}
-      <li><b>{{ cr.field_label(subjects, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(subjects, client_lang) }}:</b>
+        <small>
         {{ cr.subject_field(subjects, pkg, client_lang) }}
+        </small>
       </li>
 
       {% set date_published = schema_description.dataset_field_by_id['date_published'] %}
-      <li><b>{{ cr.field_label(date_published, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(date_published, client_lang) }}:</b>
         {% if cr.date_field(date_published, pkg) != 'None' %}
-          {{ cr.date_field(date_published, pkg) }}
+          <p>{{ cr.date_field(date_published, pkg) }}</p>
         {% endif %}
       </li>
       
       {% set date_modified = schema_description.dataset_field_by_id['date_modified'] %}
-      <li><b>{{ cr.field_label(date_modified, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(date_modified, client_lang) }}:</b>
         {% if cr.date_field(date_modified, pkg) != 'None' %}
-          {{ cr.date_field(date_modified, pkg) }}
+          <p>{{ cr.date_field(date_modified, pkg) }}</p>
         {% endif %}
       </li>
       
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
-      <li><b>{{ cr.field_label(program_url, client_lang) }}:</b>
+      <li class="list-group-item"><b>{{ cr.field_label(program_url, client_lang) }}:</b>
         {% if cr.field(program_url, pkg, client_lang) != '' %}
           <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
         {% endif %}
@@ -69,7 +76,8 @@
       {% set end_date = cr.date_field(period_end, pkg) %}
       {% if start_date or end_date %}
 
-      <li><b>{{ _('Temporal Coverage') }}:</b>
+      <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
+        <small>
         {% if start_date and end_date %}
           {{ start_date }} {{ _('to') }} {{ end_date }}
         {% elif start_date %}
@@ -77,16 +85,19 @@
         {% elif end_date %}
           {{ _('undefined to') }} {{ end_date }}
         {% endif %}
+        </small>
       </li>
       {% endif %}
       
       {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
-	  <li class="margin-bottom-medium"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
+	  <li class="list-group-item"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
 	    {{ cr.field(frequency, pkg, client_lang) }}
 	  </li>
                  
     </ul>
-      <ul class="list-bullet-none">
+    <ul class="list-group">
+      <li class="list-group-item">
+      <ul class="list-unstyled">
         <li><a href="{{ h.portal_url() + (
             '/eng/openness-rating' if h.lang() == 'en' else
             '/fra/cote-degre-douvertrure-des-donnees') }}"><b>{{ _('Openness rating') }}</b></a>:
@@ -102,7 +113,9 @@
                 ][openness] }}"
                 class="image-actual margin-bottom-none openness-rating-stars" />
         </li>  
-      </ul>    
+      </ul>
+      </li>
+      </ul>
 
   </div>
 

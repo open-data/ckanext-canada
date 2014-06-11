@@ -1,28 +1,30 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% block ds_socialmedia %}
-<div class="module-related">
+<div class="panel panel-default">
   {% set pkg = c.pkg_dict %}
-  <h3>{{ _('Have your say') }}</h3>
-  <ul>
-    {%- set rating = h.dataset_rating(pkg.name) or 0 -%}
-    {%- set rating_img = ['zerostar.png', 'onestar.png', 'twostar.png',
-      'threestar.png', 'fourstar.png', 'fivestar.png'][rating] -%}
-    {%- set rating_alt = [
-      _('This dataset is currently unrated'),
-      _('This dataset is currently ranked one star'),
-      _('This dataset is currently ranked two stars'),
-      _('This dataset is currently ranked three stars'),
-      _('This dataset is currently ranked four stars'),
-      _('This dataset is currently ranked five stars'),
-      ][rating] -%}
-    <li><img class="image-actual" src="{{
-      h.url_for_static('/static/img/leaves/' + rating_img, qualified=true)
-      }}" alt="{{ rating_alt }}"><br />
-      <a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif
-        %}/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
+  <div class="panel-heading"><div class="panel-title">{{ _('Have your say') }}</div></div>
+  <div class="panel-body">
+    <ul class="list-unstyled">
+      {%- set rating = h.dataset_rating(pkg.name) or 0 -%}
+      {%- set rating_img = ['zerostar.png', 'onestar.png', 'twostar.png',
+        'threestar.png', 'fourstar.png', 'fivestar.png'][rating] -%}
+      {%- set rating_alt = [
+        _('This dataset is currently unrated'),
+        _('This dataset is currently ranked one star'),
+        _('This dataset is currently ranked two stars'),
+        _('This dataset is currently ranked three stars'),
+        _('This dataset is currently ranked four stars'),
+        _('This dataset is currently ranked five stars'),
+        ][rating] -%}
+      <li><img class="image-actual" src="{{
+        h.url_for_static('/static/img/leaves/' + rating_img, qualified=true)
+        }}" alt="{{ rating_alt }}"><br />
+        <a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif
+          %}/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
 
-    <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{
-      _('Comment(s)') }}</a></li>
-  </ul>
+      <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{
+        _('Comment(s)') }}</a></li>
+    </ul>
+  </div>
 </div>
 {% endblock ds_socialmedia %}
