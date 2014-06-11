@@ -1,32 +1,33 @@
 {% ckan_extends %}
 
 {% block secondary_content %}
-  <section class="module module-info span-2">
-    <h2 class="module-heading">{{ _('Need an Account') }}?</h2>
-    <div class="module-content">
+
+  <div class="panel panel-info">
+    <div class="panel-heading panel-title">
+    {{ _('Need an Account') }}?</div>
+    <div class="panel-body">
       <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
       <p class="action">
-        <a class="button button-info" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
+        <a class="btn btn-primary btn-xs" href="{{ h.url_for(controller='user', action='register') }}" role="button">{{ _('Create an Account') }}</a>
       </p>
     </div>
-  </section>
+  </div>
 
-  <section class="module module-attention span-2">
-    <h2 class="module-heading">{{ _('Forgotten your password?') }}</h2>
-    <div class="module-content">
+  <div class="panel panel-warning">
+    <div class="panel-heading panel-title">
+    {{ _('Forgotten your password?') }}</div>
+    <div class="panel-body">
       <p>{{ _('No problem, use our password recovery form to reset it') }}.</p>
-      <p class="action">
-        <a class="button button-attention" href="{{ h.url_for(controller='user', action='request_reset') }}">{{ _('Forgotten your password?') }}</a>
+      <p>
+        <a class="btn btn-warning btn-xs" href="{{ h.url_for(controller='user', action='request_reset') }}" role="button">{{ _('Reset password') }}</a>
       </p>
     </div>
-  </section>
+  </div>
 {% endblock %}
 
 {% block primary_content %}
-  <section class="module-poster">
-    <div class="module-content">
-      <h1 class="page-heading">{{ _('Log in') }}</h1>
-      
+  <div class="panel">
+
       {% if h.lang() == 'en' %}
         <h2>Welcome to the Government of Canada Open Data Portal Registry</h2>
         <p>
@@ -52,18 +53,18 @@
           </p>
         </blockquote>
       {% endif %}
-      
+
       {% block form %}
-        {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
+        {{ super() }}
       {% endblock %}
 
-      <div class="color-accent">
+      <div class="text-info">
       {% if h.lang() == 'en' %}
       NOTE: Username and password are case sensitive.
       {% else %}
       NOTE: Le nom d'utilisateur et mot de passe sont sensibles à la casse.
       {% endif %}
       </div>
-    </div>
-  </section>
+
+  </div>
 {% endblock %}

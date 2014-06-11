@@ -1,101 +1,101 @@
 
-<div id="wb-foot">
-  <div id="wb-foot-in">
-    <footer>
-      <h2 id="wb-nav">Footer</h2>
-      <!-- FooterStart -->
-      <nav role="navigation">
-        <div id="gcwu-sft">
-          <h3>Site footer</h3>
-          <div id="gcwu-sft-in">
-            <div id="gcwu-tctr">
-              
-            </div>
-            <br/><br/><!-- Break needed to avoid display issues with the footer nav overlapping the maple leaf image -->
-            <div class="clear"></div>
-            <div class="span-2">
-              <div class="gcwu-col-head">
-                {% if h.lang() == 'en' %}
-                <a href="http://data.gc.ca/eng/about-datagcca" target="_blank">About us</a>
-                {% else %}
-                <a href="http://donnees.gc.ca/fra/propos-de-donneesgcca" target="_blank">À propos de nous</a>
-                {% endif %}
-              </div>
-            </div>
-            <div class="span-2">
-              <div class="gcwu-col-head">
-                {% if h.lang() == 'en' %}
-                <a href="http://data.gc.ca/eng/media" target="_blank">News</a>
-                {% else %}
-                <a href="http://donnees.gc.ca/fra/medias" target="_blank">Nouvelles</a>
-                {% endif %}
-              </div>
-            </div>
-            <div class="span-2">
-              <div class="gcwu-col-head">
-                {% if h.lang() == 'en' %}
-                <a href="http://data.gc.ca/eng/forms/contact-us" target="_blank">Contact us</a>
-                {% else %}
-                <a href="http://donnees.gc.ca/fra/formulaire/faites-nous-part-de-vos-commentaires" target="_blank">Contactez-nous</a>
-                {% endif %}
-              </div>
-            </div>
-            <div class="span-2">
-              <div class="gcwu-col-head">
-                {% if h.lang() == 'en' %}
-                <a href="http://data.gc.ca/eng/stay-connected" target="_blank">{{ _('Stay connected') }}</a>
-                {% else %}
-                <a href="http://donnees.gc.ca/fra/restez-branches" target="_blank">{{ _('Stay connected') }}</a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
+{% block footer_content %}
+<footer role="contentinfo" id="wb-info" class="visible-sm visible-md visible-lg wb-navcurr">
+  {% if h.lang() == 'en' %}
+  <div class="container">
+    <nav role="navigation"><h2>About Us</h2>
+      <ul id="gc-tctr" class="list-inline">
+        <li><a rel="license" href="/eng/terms-and-conditions">Terms and conditions</a></li>
+        <li><a href="/eng/transparency">Transparency</a></li>
+      </ul>
+      <div class="row">
+        <section class="col-sm-3"><h3>About</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://data.gc.ca/eng/about-datagcca" target="_blank">About us</a></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Media</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://data.gc.ca/eng/media" target="_blank">News</a></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Contact Us</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://data.gc.ca/eng/forms/contact-us" target="_blank">Contact us</a></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Stay Connected</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://data.gc.ca/eng/stay-connected" target="_blank">{{ _('Stay connected') }}</a></li>
+          </ul>
+        </section>
+      </div>
       </nav>
-
-      <nav role="navigation">
-        <div id="gcwu-gcft">
-          <h3>Government of Canada footer</h3>
-          <div id="gcwu-gcft-in">
-            <div id="gcwu-gcft-fip">
-              <ul>
-                <li>
-                  <a target="_blank" rel="external" href="http://healthycanadians.gc.ca/index-eng.php"><span>{{_("Health")}}</span>
-                  <br />
-                  {{_("healthycanadians.gc.ca")}}</a>
-                </li>
-                <li>
-                  <a target="_blank" rel="external" href="http://www.voyage.gc.ca/index-eng.asp"><span>{{_("Travel")}}</span>
-                  <br />
-                  {{_('travel.gc.ca')}}</a>
-                </li>
-                <li>
-                  <a target="_blank" rel="external" href="http://www.servicecanada.gc.ca/eng/home.shtml"><span>{{_('Service Canada')}}</span>
-                  <br />
-                  {{_('servicecanada.gc.ca')}}</a>
-                </li>
-                <li>
-                  <a target="_blank" rel="external" href="http://www.jobbank.gc.ca/intro-eng.aspx"><span>{{_("Jobs")}}</span>
-                  <br />
-                  {{_('jobbank.gc.ca')}}</a>
-                </li>
-                <li>
-                  <a target="_blank" rel="external" href="http://actionplan.gc.ca/en"><span>{{_("Economy")}}</span>
-                  <br />
-                  {{_('actionplan.gc.ca')}}</a>
-                </li>
-                <li id="gcwu-gcft-ca">
-                  <div>
-                    <a target="_blank" rel="external" href="http://www.canada.gc.ca/menu-eng.html">Canada.gc.ca</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <!-- FooterEnd -->
-    </footer>
   </div>
-</div>
+  <div id="gc-info">
+    <div class="container">
+      <nav role="navigation"><h2>Government of Canada footer</h2>
+        <ul class="list-inline">
+          <li><a href="http://healthycanadians.gc.ca"><span>Health</span>healthycanadians.gc.ca</a></li>
+          <li><a href="http://travel.gc.ca"><span>Travel</span>travel.gc.ca</a></li>
+          <li><a href="http://www.servicecanada.gc.ca/eng/home.shtml"><span>Service Canada</span>servicecanada.gc.ca</a>
+          </li>
+          <li><a href="http://www.jobbank.gc.ca"><span>Jobs</span>jobbank.gc.ca</a></li>
+          <li><a href="http://actionplan.gc.ca/en"><span>Economy</span>actionplan.gc.ca</a></li>
+          <li id="canada-ca"><a href="http://www.canada.ca/en/index.html">Canada.ca</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  {% else %}
+  <div class="container">
+    <nav role="navigation"><h2>{{ _('Site information') }}</h2>
+      <ul id="gc-tctr" class="list-inline">
+        <li><a rel="license" href="/fra/avis">Avis</a></li>
+        <li><a href="/fra/transparence">Transparence</a></li>
+      </ul>
+      <div class="row">
+        <section class="col-sm-3"><h3>À propos</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://donnees.gc.ca/fra/propos-de-donneesgcca" target="_blank">À propos de nous</a></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Médias</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://donnees.gc.ca/fra/medias" target="_blank">Nouvelles</a></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Contactez-nous</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://donnees.gc.ca/fra/formulaire/faites-nous-part-de-vos-commentaires" target="_blank"></li>
+          </ul>
+        </section>
+        <section class="col-sm-3"><h3>Restez branchés</h3>
+          <ul class="list-unstyled">
+            <li><a href="http://donnees.gc.ca/fra/restez-branches" target="_blank">{{ _('Stay connected') }}</a></li>
+          </ul>
+        </section>
+      </div>
+      </nav>
+    </div>
+    <div id="gc-info">
+      <div class="container">
+        <nav role="navigation"><h2>Pied de page du gouvernement du Canada</h2>
+          <ul class="list-inline">
+            <li><a href="http://canadiensensante.gc.ca"><span>Santé</span>canadiensensante.gc.ca</a></li>
+            <li><a href="http://voyage.gc.ca"><span>Voyage</span>voyage.gc.ca</a></li>
+            <li><a href="http://www.servicecanada.gc.ca/fra/accueil.shtml"><span>Service Canada</span>servicecanada.gc.ca</a>
+            </li>
+            <li><a href="http://www.guichetemplois.gc.ca"><span>Emplois</span>guichetemplois.gc.ca</a></li>
+            <li><a href="http://plandaction.gc.ca/fr"><span>Économie</span>plandaction.gc.ca</a></li>
+            <li id="canada-ca"><a href="http://www.canada.ca/fr/index.html">Canada.ca</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  {% endif %}
+</footer>
+
+{% endblock %}
 
