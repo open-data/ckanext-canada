@@ -19,7 +19,14 @@
 <li>
   <a href="#home_sr" class="item" role="menuitem">{{ _('Search Data') }}</a>
   <ul class="sm list-unstyled" id="home_sr" role="menu">
-    <li><a href="http://www.data.gc.ca/">{{ _('Search Data') }}</a></li>
+    <li><a href="{{ h.url(action='search', controller='package') }}">{{ _('Search Data') }}</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="#home_or" class="item" role="menuitem">{{ _('Organizations') }}</a>
+  <ul class="sm list-unstyled" id="home_pr" role="menu">
+    <li><a href="{{ h.url(action='index', controller='organization') }}">{{ _('Organizations') }}</a></li>
   </ul>
 </li>
 
@@ -37,12 +44,14 @@
   {% endif %}
 </li>
 
+{% if not c.userobj %}
 <li>
   <a href="#home_rg" class="item" role="menuitem">{{ _('Register') }}</a>
   <ul class="sm list-unstyled" id="home_lh" role="menu">
     <li>{% link_for _('Register'), controller='user', action='register' %}</li>
   </ul>
 </li>
+{% endif %}
 
 {% if c.userobj %}
 <li>
