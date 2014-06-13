@@ -57,7 +57,6 @@
 <li>
   <a href="#home_my" class="item" role="menuitem">{{ _('My Account') }}</a>
   <ul class="sm list-unstyled" id="home_my" role="menu">
-    <li><a href={{ h.url(action='about', controller='home') }}>{{ _('My Account') }}</a></li>
     <li><a href="{{ h.url_for(controller='user', action='dashboard') }}">{{ _('Dashboard') }}</a></li>
     <li><a href="{{ h.url_for(controller='user', action='read', id=c.userobj.name) }}">{{ _('My Profile') }}</a></li>
     <li><a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}">{{ _('Edit Profile') }}</a></li>
