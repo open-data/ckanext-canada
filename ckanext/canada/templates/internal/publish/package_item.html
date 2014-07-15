@@ -23,9 +23,9 @@ Example:
 {% set title = schema_description.dataset_field_by_id['title'] %}
 {% set publisher_field = schema_description.dataset_field_by_id['owner_org'] %}
 
-<li class="{{ item_class or "dataset-item" }}">
+<li>
   {% block package_item_content %}
-    <div>
+    <div class="panel panel-default">
       <strong>
         {% if package.private %}
           <span class="dataset-private label label-inverse">
@@ -51,40 +51,37 @@ Example:
       {% else %}
         <p class="empty">{{ _("This dataset has no description") }}</p>
       {% endif %}
-    </div>
-    <br/>
+
+
     <div class="publisher_info">
      {# <em>{{ cr.field_label(publisher_field, client_lang) }}:</em> #}
       <em>{{ _('Organization') }}: </em>
       {{ cr.org_field(package, client_lang) }}
     </div>
-    
-    {% if h.is_ready_to_publish(package) %}
-    <div style="float:right;">
-      <label class="form-checkbox">
-        <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/>{{ _('Publish?') }}
-      </label>
-    </div>
-    {% endif %}
-    
+
     {% if package.resources and not hide_resources %}
-    <div style="display:inline-block;">
-      <span class="span-1 margin-left-none margin-bottom-small">
-        <em>{{ _('Resource Formats') }}:</em>
-      </span>
-      <ul class="menu-horizontal margin-top-none span-3 margin-bottom-none" >
-        {% set formats = [] %}
-        {% for resource in package.resources %}
-          {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
-        {% endfor %}
-        
-        {% for format in h.remove_duplicates(formats) %}
-          <li style="padding:0;">
-            <code>{{ format }}</code>
-          </li>
-        {% endfor %}
-      </ul>
+    <div class="row">
+      <div class="col-md-3"><em>{{ _('Resource Formats:') }}</em></div>
+      <div class="col-md-6">
+        <ul class="list-inline list-unstyled" >
+          {% set formats = [] %}
+          {% for resource in package.resources %}
+            {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
+          {% endfor %}
+
+          {% for format in h.remove_duplicates(formats) %}
+            <li><span class="badge">{{ format }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-3">
+        {% if h.is_ready_to_publish(package) %}
+        <label class="form-checkbox">
+          <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/> {{ _('Publish?') }}
+        </label></div>
+        {% endif %}
     </div>
+          </div>
     {% endif %}
   {% endblock %}
 </li>
