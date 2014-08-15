@@ -6,37 +6,49 @@
 <a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('data.gc.ca') }}</a>
 {% endblock %}
 
+{% block wet_banner %}
+<div id="wb-bnr" class="container">
 {% block wet_banner_bar %}
-<div class="container">
-  <div class="row">
-    <object id="gcwu-sig" type="image/svg+xml" tabindex="-1" role="img" data="{{ wet_server }}/assets/sig-en.svg"
-            aria-label="Government of Canada"></object>
-    <ul id="gc-bar" class="list-inline">
-      <li><a href="http://www.canada.ca/en/index.html" rel="external">{{ _('Canada.ca') }}</a></li>
-      <li><a href="http://www.canada.ca/en/services/index.html" rel="external">{{ _('Services') }}</a></li>
-      <li><a href="http://www.canada.ca/en/gov/dept/index.html" rel="external">{{ _('Departments') }}</a></li>
-      <li id="wb-lng"><h2>Language selection</h2>
-        <ul class="list-inline">
+
+  <section class="visible-md visible-lg text-right" id="wb-lng">
+    <h2 class="wb-inv">Language selection</h2>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline margin-bottom-none">
           {% if h.lang() == 'en' %}
           <li><a lang="fr" href="{% url_for current_url, locale='fr' %}">Français</a></li>
           {% else %}
           <li><a lang="en" href="{% url_for current_url, locale='en' %}">English</a></li>
           {% endif %}
         </ul>
+      </div>
+    </div>
+  </section>
+<div class="row">
+  <div class="brand col-xs-8 col-sm-9 col-md-6">
+    <a href="http://www.canada.ca/en/index.html">
+      <object type="image/svg+xml" tabindex="-1" role="img" data="{{ wet_server }}/assets/sig-blk-en.svg"
+              aria-label="Government of Canada"></object>
+    </a>
+  </div>
+  <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
+    <h2>Search and menus</h2>
+    <ul class="list-inline text-right chvrn">
+      <li><a href="#mb-pnl" title="Search and menus" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span
+          class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Search and menus</span></span></span></a>
       </li>
     </ul>
-    <section class="wb-mb-links col-xs-12 visible-sm visible-xs" id="wb-glb-mn">
-      <h2>Menu</h2>
-      <ul class="pnl-btn list-inline text-right">
-        <li><a href="#mb-pnl" title="Menu" aria-controls="mb-pnl" class="overlay-lnk btn btn-xs btn-default"
-               role="button"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Menu</span></span></a>
-        </li>
-      </ul>
-      <div id="mb-pnl"></div>
-    </section>
-  </div>
+    <div id="mb-pnl"></div>
+  </section>
 </div>
 {% endblock %}
+</div>
+
+{% block wet_megamenu %} {{ super() }} {% endblock %}
+{% block breadcrumb %} {{ super() }} {% endblock %}
+
+{% endblock wet_banner %}
 
 {% block wet_search_box %}
 <div id="wb-sttl" class="col-md-5">
@@ -49,7 +61,7 @@
 {% endblock %}
 
 {% block footer %}
-  {% include "footer_gwcu.html" %}
+  {% include "footer_gcweb.html" %}
 {% endblock footer %}
 
 {% block body_extras -%}

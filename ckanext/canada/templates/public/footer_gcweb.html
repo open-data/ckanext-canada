@@ -1,0 +1,194 @@
+{# vim: set filetype=jinja sw=2 sts=2: #}
+
+{% set wet_server = h.wet_url() %}
+{% block footer_content %}
+<footer role="contentinfo" id="wb-info">
+  {% if h.lang() == 'en' %}
+  <nav role="navigation" class="container visible-sm visible-md visible-lg wb-navcurr">
+    <h2 class="wb-inv">{{ _('Site information') }}</h2>
+
+    <div class="row">
+      <div class="col-sm-3 col-lg-3 brdr-lft">
+        <section>
+          <h3>Government</h3>
+          <ul class="list-unstyled">
+            <li><a href="/eng/about-datagcca">About Open Government</a></li>
+            <li><a href="/eng/canadas-action-plan-open-government">Action Plan</a></li>
+            <li><a href="/eng/open-government-licence-canada">Open Government Licence</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Transparency</h3>
+          <ul id="gc-tctr" class="list-unstyled">
+            <li><a rel="license" href="/eng/terms-and-conditions">Terms and conditions</a></li>
+            <li><a href="/eng/transparency">Transparency</a></li>
+          </ul>
+        </section>
+      </div>
+      <section class="col-sm-3 col-lg-3">
+        <h3>Contact Information</h3>
+        <ul class="list-unstyled">
+          <li><a href="/eng/forms/contact-us">Contact Us</a></li>
+          <li><a href="/eng/frequently-asked-questions" title="faq">Frequently Asked Questions</a></li>
+          <li><a href="/eng/suggested-datasets" title="Suggest a Dataset">Suggest a Dataset</a></li>
+        </ul>
+      </section>
+
+      <div class="col-sm-3 col-lg-3">
+        <section>
+          <h3>News</h3>
+          <ul class="list-unstyled">
+            <li><a href="/eng/media">Media</a></li>
+            <li><a href="/eng/media#toc2">News Releases</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Stay Connected</h3>
+          <ul class="list-unstyled">
+            <li><a href="/eng/stay-connected">Stay Connected</a></li>
+            <li><a
+                href="https://twitter.com/search?q=%40TBS_Canada%20%23opengov%20OR%20%23opendata%20OR%20%23datagc%20%2Bexclude%3Aretweets%20&src=typd"
+                title="Twitter">Twitter</a>
+            </li>
+            <li><a href="/eng/rss-feeds" title="RSS Feeds">RSS Feeds</a></li>
+          </ul>
+        </section>
+      </div>
+      <div class="col-sm-3 col-lg-3 brdr-lft">
+        <section>
+          <h3>Feedback</h3>
+
+          <p><a href="http://www.canada.ca/en/contact/feedback.html"><img src="{{ wet_server }}/assets/feedback.png"
+                                                                          class="img-responsive"
+                                                                          alt="Feedback about this Web site"/></a></p>
+        </section>
+        <section>
+          <h3>Social media</h3>
+
+          <p><a href="http://www.canada.ca/en/social/index.html"><img src="{{ wet_server }}/assets/social.png"
+                                                                      alt="Social media"
+                                                                      class="img-responsive"/></a></p>
+        </section>
+        <section>
+          <h3>Mobile centre</h3>
+
+          <p><a href="http://www.canada.ca/en/mobile/index.html"><img src="{{ wet_server }}/assets/mobile.png"
+                                                                      alt="Mobile centre"
+                                                                      class="img-responsive"/></a></p>
+        </section>
+      </div>
+    </div>
+  </nav>
+
+  <div class="brand">
+    <div class="container">
+      <div class="row ">
+        <div class="col-xs-6 visible-sm visible-xs tofpg">
+          <a href="#wb-cont">Top of Page <span class="glyphicon glyphicon-chevron-up"></span></a>
+        </div>
+        <div class="col-xs-6 col-md-12 text-right">
+          <object type="image/svg+xml" tabindex="-1" role="img" data="{{ wet_server }}/assets/wmms-blk.svg"
+                  aria-label="Symbol of the Government of Canada"></object>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+
+  <nav role="navigation" class="container visible-sm visible-md visible-lg wb-navcurr">
+    <h2 class="wb-inv">{{ _('Site information') }}</h2>
+
+    <div class="row">
+      <div class="col-sm-3 col-lg-3 brdr-lft">
+        <section>
+          <h3>Gouvernement</h3>
+          <ul class="list-unstyled">
+            <li><a href="/fra/propos-de-donneesgcca">À propos de donnees.gc.ca</li>
+            <li><a href="/fra/plan-daction-du-canada-pour-un-gouvernement-ouvert">Plan d'action</a></li>
+            <li><a href="/fra/licence-du-gouvernement-ouvert-canada">Licence du gouvernement ouvert</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Transparence</h3>
+          <ul id="gc-tctr" class="list-unstyled">
+            <li><a rel="license" href="/fra/avis">Avis</a></li>
+            <li><a href="/fra/transparence">Transparence</a></li>
+          </ul>
+        </section>
+      </div>
+      <section class="col-sm-3 col-lg-3">
+        <h3>Coordonnées</h3>
+        <ul class="list-unstyled">
+          <li><a href="/fra/formulaire/faites-nous-part-de-vos-commentaires">Contactez-nous</a></li>
+          <li><a href="/fra/foire-aux-questions">Foire aux questions</a></li>
+          <li><a href="/fra/jeux-de-donnees-suggeres">Proposez un jeu de données</a></li>
+        </ul>
+      </section>
+      <div class="col-sm-3 col-lg-3">
+        <section>
+          <h3>Nouvelles</h3>
+          <ul class="list-unstyled">
+            <li><a href="/fra/medias">Médias</a></li>
+            <li><a href="/fra/medias#toc2">Communiqués de presse</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Restez branchés</h3>
+          <ul class="list-unstyled">
+            <li><a href="/fra/restez-branches">Restez branchés</a></li>
+            <li><a
+                href="https://twitter.com/search?q=%40SCT_Canada%20%23donn%C3%A9esouvertes%20OR%20%23gouvert%20OR%20donn%C3%A9esGC%20%2Bexclude%3Aretweets&src=typd">Twitter</a>
+            </li>
+            <li><a href="/fra/fils-rss">Fils RSS</a></li>
+          </ul>
+        </section>
+      </div>
+
+
+    <div class="col-sm-3 col-lg-3 brdr-lft">
+      <section>
+        <h3>Rétroaction</h3>
+
+        <p><a href="http://www.canada.ca/fr/contact/retroaction.html"><img src="{{ wet_server }}/assets/feedback.png"
+                                                                           class="img-responsive"
+                                                                           alt="Rétroaction sur ce site Web"/></a></p>
+      </section>
+      <section>
+        <h3>Médias sociaux</h3>
+
+        <p><a href="http://www.canada.ca/fr/sociaux/index.html"><img src="{{ wet_server }}/assets/social.png"
+                                                                     class="img-responsive" alt="Médias sociaux"/></a>
+        </p>
+      </section>
+      <section>
+        <h3>Centre mobile</h3>
+
+        <p><a href="http://www.canada.ca/fr/mobile/index.html"><img src="{{ wet_server }}/assets/mobile.png"
+                                                                    class="img-responsive" alt="Centre mobile"/></a></p>
+      </section>
+    </div>
+   </div>
+  </nav>
+
+
+  <div class="brand">
+    <div class="container">
+      <div class="row ">
+        <div class="col-xs-6 visible-sm visible-xs tofpg">
+          <a href="#wb-cont">Haut de la page <span class="glyphicon glyphicon-chevron-up"></span></a>
+        </div>
+        <div class="col-xs-6 col-md-12 text-right">
+          <object type="image/svg+xml" tabindex="-1" role="img" data="{{ wet_server }}/assets/wmms-blk.svg"
+                  aria-label="Symbole du gouvernement du Canada"></object>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+</footer>
+
+{% endblock %}
+
+
