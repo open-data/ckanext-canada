@@ -45,7 +45,45 @@
 {% endblock %}
 </div>
 
-{% block wet_megamenu %} {{ super() }} {% endblock %}
+{% block wet_megamenu %}
+<nav role="navigation" id="wb-sm" data-ajax-fetch="{% url_for '/snippets/menu.html' %}" data-trgt="mb-pnl"
+     class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement">
+{% if h.lang() == 'fr' %}
+  <h2 class="wb-inv">Menu des sujets</h2>
+  <div class="container visible-md visible-lg nvbar">
+    <div class="row">
+      <ul class="list-inline menu">
+        <li><a href="http://www.canada.ca/fr/services/emplois/index.html">Emplois</a></li>
+        <li><a href="http://www.cic.gc.ca/francais/index.asp">Immigration</a></li>
+        <li><a href="http://voyage.gc.ca/">Voyage</a></li>
+        <li><a href="http://www.canada.ca/fr/services/entreprises/index.html">Entreprises</a></li>
+        <li><a href="http://www.canada.ca/fr/services/prestations/index.html">Prestations</a></li>
+        <li><a href="http://canadiensensante.gc.ca/index-fra.php">Santé</a></li>
+        <li><a href="http://www.canada.ca/fr/services/impots/index.html">Impôts</a></li>
+        <li><a href="http://www.canada.ca/fr/services/index.html">Autres services</a></li>
+      </ul>
+    </div>
+  </div>
+{% else %}
+  <h2 class="wb-inv">Topics menu</h2>
+  <div class="container visible-md visible-lg nvbar">
+    <div class="row">
+      <ul class="list-inline menu">
+        <li><a href="http://www.canada.ca/en/services/jobs/index.html">Jobs</a></li>
+        <li><a href="http://www.cic.gc.ca/english/index.asp">Immigration</a></li>
+        <li><a href="http://travel.gc.ca/">Travel</a></li>
+        <li><a href="http://www.canada.ca/en/services/business/index.html">Business</a></li>
+        <li><a href="http://www.canada.ca/en/services/benefits/index.html">Benefits</a></li>
+        <li><a href="http://healthycanadians.gc.ca/index-eng.php">Health</a></li>
+        <li><a href="http://www.canada.ca/en/services/taxes/index.html">Taxes</a></li>
+        <li><a href="http://www.canada.ca/en/services/index.html">More services</a></li>
+      </ul>
+    </div>
+  </div>
+{% endif %}
+</nav>
+{% endblock %}
+
 {% block breadcrumb %} {{ super() }} {% endblock %}
 
 {% endblock wet_banner %}
