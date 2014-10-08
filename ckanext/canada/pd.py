@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
+import os
 import hashlib
 import calendar
 import datetime
+from unicodecsv import DictReader
 
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_xls import xls_template
+from ckanext.recombinant.plugins import get_table
 
 BATCH_SIZE = 1000
 DATASET_TYPE = 'proactive-disclosure'
@@ -64,8 +67,43 @@ class PDCommand(CkanCommand):
             print org, count
 
     def _build_templates(self):
+        lc = LocalCKAN()
+        output_files = {}
+        next_row = {}
+        output_path = self.args[2:][-1]
+        table = get_table(DATASET_TYPE)
+
+        def out_file(org_id):
+            if org_id in output_files:
+                next_row[org_id] += 1
+                return output_files[org_id], next_row[org_id]
+            try:
+                org = lc.action.organization_show(id=org_id, include_datasets=False)
+            except NotFound:
+                print 'org id', org_id, 'not found'
+                output_files[org_id] = None
+                next_row[org_id] = 0
+                return None, None
+            book = xls_template(DATASET_TYPE, org)
+            output_files[org_id] = book
+            next_row[org_id] = len(book.get_sheet(0).get_rows())
+            return book, next_row[org_id]
+
+        def add_row(book, row, d):
+            sheet = book.get_sheet(0)
+            for i, f in enumerate(table['fields']):
+                sheet.write(row, i, d[f['datastore_id']])
+
         for f in self.args[1:-1]:
-            print f
+            for d in DictReader(open(f, 'rb')):
+                book, row = out_file(d['organization'])
+                if not book:
+                    continue
+                add_row(book, row, d)
+
+        for org_id, book in output_files.iteritems():
+            if book:
+                book.save(os.path.join(output_path, org_id + '.xls'))
 
 
 def _solr_connection():
