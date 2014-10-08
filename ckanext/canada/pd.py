@@ -1,18 +1,30 @@
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 import os
 import hashlib
 import calendar
 import datetime
 from unicodecsv import DictReader
+=======
+import hashlib
+import calendar
+import datetime
+>>>>>>> 1b29a8a... start of pd command and recombinant config
 
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
+<<<<<<< HEAD
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_xls import xls_template
 from ckanext.recombinant.plugins import get_table
+=======
+from ckanapi import LocalCKAN
+
+from ckanext.recombinant.write_xls import xls_template
+>>>>>>> 1b29a8a... start of pd command and recombinant config
 
 BATCH_SIZE = 1000
 DATASET_TYPE = 'proactive-disclosure'
@@ -67,6 +79,7 @@ class PDCommand(CkanCommand):
             print org, count
 
     def _build_templates(self):
+<<<<<<< HEAD
         lc = LocalCKAN()
         output_files = {}
         next_row = {}
@@ -104,6 +117,10 @@ class PDCommand(CkanCommand):
         for org_id, book in output_files.iteritems():
             if book:
                 book.save(os.path.join(output_path, org_id + '.xls'))
+=======
+        for f in self.args[1:-1]:
+            print f
+>>>>>>> 1b29a8a... start of pd command and recombinant config
 
 
 def _solr_connection():
