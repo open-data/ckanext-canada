@@ -6,10 +6,11 @@
 
 {% block facet_list_item_panel_body %}
 {% with items = items or h.get_facet_items_dict(name, limit=5) %}
-  {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
+  {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items[0:25] %}
 
     {% if items %}
       <nav>
+
         <ul class="list-unstyled" style="margin-left: 7px;">
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
@@ -37,10 +38,6 @@
               {{ _('Show less') }}</a></li>
           {% endif %}
         {% endif %}
-        <li><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}"
-               title="{{_('Clear All')}} {{facet_name}}">
-          <span class="glyphicon glyphicon-remove"></span>
-          {{ _('Clear All') }}</a></li>
       </ul>
       {% else %}
         <p>{{ _('There are no filters for this search') }}</p>
