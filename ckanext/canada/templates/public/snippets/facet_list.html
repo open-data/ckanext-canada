@@ -5,7 +5,8 @@
 {% set facet_name = title + 's' %}
 
 {% block facet_list_item_panel_body %}
-{% with items = items or h.get_facet_items_dict(name, limit=5) %}
+{% with items = items or h.get_facet_items_dict(name, limit=25) %}
+  {% set item_count = items | length %}
   {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items[0:25] %}
 
     {% if items %}
@@ -25,7 +26,7 @@
         </ul>
       </nav>
       <ul style="margin-left: 15px;" class="list-unstyled">
-        {% if items | count > 1 %}
+        {% if item_count > 5 %}
           {% if h.get_param_int('_%s_limit' % name) %}
             <li><a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
                    title="{{_('Show more')}} {{facet_name}}">
