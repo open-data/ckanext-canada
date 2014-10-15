@@ -76,5 +76,131 @@
     "xls_organization_info": ["dept_id", null, "name", "title"],
     "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
+  },
+  {
+    "dataset_type": "proactive-disclosure",
+    "title": "Proactive Disclosure",
+    "xls_sheet_name": "PD",
+    "fields": [
+      {
+        "datastore_id": "ref_number",
+        "label": "Ref number",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "vendor_name_en",
+        "label": "Vendor name en",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "vendor_name_fr",
+        "label": "Vendor name fr",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "description_code",
+        "label": "Description code",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "description_en",
+        "label": "Description en",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "description_fr",
+        "label": "Description fr",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "description_more_en",
+        "label": "Description more en",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "description_more_fr",
+        "label": "Description more fr",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "contract_date",
+        "label": "Contract date",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "contract_period_start",
+        "label": "Contract period start",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "contract_period_end",
+        "label": "Contract period end",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "delivery_date",
+        "label": "Delivery date",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "contract_value",
+        "label": "Contract value",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "original_value",
+        "label": "Original value",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "cumulative_value",
+        "label": "Cumulative value",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "comments_en",
+        "label": "Comments en",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "comments_fr",
+        "label": "Comments fr",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "additional_comments_en",
+        "label": "Additional comments en",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      },
+      {
+        "datastore_id": "additional_comments_fr",
+        "label": "Additional comments fr",
+        "datastore_type": "text",
+        "xls_column_width": 20
+      }
+    ],
+    "datastore_primary_key": ["ref_number"],
+    "datastore_indexes": "",
+    "xls_organization_info": ["dept_id", null, "name", "title"],
+    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
+    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_blue;"
   }
 ]
