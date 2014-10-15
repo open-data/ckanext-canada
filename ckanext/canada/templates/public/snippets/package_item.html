@@ -1,8 +1,35 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
+
+{% set client_lang = h.lang() %}
+
 {% block publisher_info %}
 <div class="row mrgn-tp-sm">
   <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
   <div class="cold-md-9">{{ cr.org_field(package, client_lang) }}</div>
 </div>
+{% endblock %}
+
+{% block notes %}
+  {% if client_lang == 'fr' %}
+    {% set notes = h.markdown_extract(package.notes_fra, extract_length=truncate) %}
+  {% else %}
+    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+  {% endif %}
+  {% if notes %}
+    <div>{{ notes|urlize }}</div>
+  {% else %}
+    <p class="empty">{{ _("This dataset has no description") }}</p>
+  {% endif %}
+{% endblock %}
+
+{% block heading %}
+  {% if client_lang == 'fr' %}
+    {% set my_title = package['title_fra']%}
+  {% else %}
+    {% set my_title = package['title']%}
+  {% endif %}
+  {% block heading_private %}{{ super() }}{% endblock %}
+    {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+  {% block heading_meta %}{{ super() }}{% endblock %}
 {% endblock %}
