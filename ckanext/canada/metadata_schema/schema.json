@@ -5567,6 +5567,44 @@
       }, 
       "pilot_type": "choice", 
       "type": "choice"
+    },
+    {
+      "bilingual": false, 
+      "description": {
+        "eng": "The most important data items in this resource have a URI, e.g. data in RDF format.",
+        "fra": "Les plus importants éléments des données de cette ressource sont dotés d’un URI, p. ex., des données en format RDF."
+      }, 
+      "example": {
+        "eng": "", 
+        "fra": ""
+      }, 
+      "existing": false, 
+      "id": "data_includes_uris", 
+      "label": {
+        "eng": "Data Includes URIs", 
+        "fra": "Les données comprennent les URI"
+      }, 
+      "mandatory": null, 
+      "type": "boolean"
+    }, 
+    {
+      "bilingual": false, 
+      "description": {
+        "eng": "The data includes links to other data for providing context, and those links are kept up to date (not broken).",
+        "fra": "Les données comprennent des liens à d’autres données qui accordent un contexte, et ces liens sont gardés à jour (non brisés)."
+      }, 
+      "example": {
+        "eng": "", 
+        "fra": ""
+      }, 
+      "existing": false, 
+      "id": "data_includes_links",
+      "label": {
+        "eng": "Data Includes Links",
+        "fra": "Les données comprennent les liens"
+      }, 
+      "mandatory": null, 
+      "type": "boolean"
     }
   ], 
   "vocabularies": {
