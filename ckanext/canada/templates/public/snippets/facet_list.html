@@ -13,7 +13,7 @@
       <nav>
 
         <ul class="list-unstyled" style="margin-left: 7px;">
-          {% for item in items %}
+          {% for item in items | sort(attribute='display_name') %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = label_function(item, h.lang()) if label_function else cr.split_bilingual_field(item.display_name, h.lang()) %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
