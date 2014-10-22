@@ -18,6 +18,22 @@ BATCH_SIZE = 1000
 DATASET_TYPE = 'proactive-disclosure'
 SPLIT_XLS_ROWS = 50002
 
+MONTHS_FRA = [
+    u'', # "month 0"
+    u'janvier',
+    u'février',
+    u'mars',
+    u'avril',
+    u'mai',
+    u'juin',
+    u'juillet',
+    u'août',
+    u'septembre',
+    u'octobre',
+    u'novembre',
+    u'décembre',
+    ]
+
 class PDCommand(CkanCommand):
     """
     Manage the Proactive Disclosures SOLR index / data files
@@ -164,6 +180,12 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'shortform_fr':
                 shortform_fr = e['value']
 
+        try:
+            year, month, day = (int(x) for x in r['contract_date'].split('-'))
+        except ValueError:
+            print 'bad date:', r['contract_date']
+            year = month = day = 0
+
         out.append({
             'bundle': 'proactive_disclosure',
             'id': unique,
@@ -186,5 +208,14 @@ def _update_records(records, org_detail, conn):
             'ss_comments_fr': r['comments_fr'],
             'ss_additional_comments_en': r['additional_comments_en'],
             'ss_additional_comments_fr': r['additional_comments_fr'],
+            'ss_org_shortform_en': shortform,
+            'ss_org_shortform_fr': shortform_fr,
+            'ss_org_name_en': org_detail['title'].split(' | ', 1)[0],
+            'ss_org_name_fr': org_detail['title'].split(' | ', 1)[-1],
+            'ss_contract_date_year': str(year),
+            'ss_contract_date_month': str(month),
+            'ss_contract_date_day': str(day),
+            'ss_contract_date_monthname_en': calendar.month_name[month],
+            'ss_contract_date_monthname_fr': MONTHS_FRA[month],
             })
     conn.add_many(out, _commit=True)
