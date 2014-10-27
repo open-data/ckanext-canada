@@ -12,7 +12,7 @@
 {% block breadcrumb_content %}
   {% set dataset = pkg.title or pkg.name %}
   {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
-  <li>{% link_for _('Search Data'), controller='package', action='search', highlight_actions = 'new index' %}</li>
+  <li>{% link_for _('Search Open Data'), controller='package', action='search', highlight_actions = 'new index' %}</li>
 {% endblock %}
 
 {% block secondary_content %}
