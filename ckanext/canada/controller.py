@@ -179,7 +179,7 @@ class CanadaFeedController(FeedController):
         alternate_url = self._alternate_url(params)
 
         return self.output_feed(results,
-            feed_title=_(u'data.gc.ca Dataset Feed'),
+            feed_title=_(u'Open Canada Dataset Feed'),
             feed_description='',
             feed_link=alternate_url,
             feed_guid=_create_atom_id(
