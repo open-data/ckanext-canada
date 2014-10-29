@@ -6,7 +6,7 @@ version = '0.2.0'
 setup(
     name='ckanext-canada',
     version=version,
-    description="data.gc.ca CKAN extension",
+    description="Open Canada CKAN extension",
     long_description="""
     """,
     classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
