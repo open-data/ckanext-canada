@@ -3,7 +3,7 @@
 {% set current_url = request.environ.CKAN_CURRENT_URL %}
 
 {% block site_title %}
-<a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('data.gc.ca') }}</a>
+<a href="{% if h.lang() == 'en' %}/en{% else %}/fr{% endif %}">{{ _('Open Canada') }}</a>
 {% endblock %}
 
 {% block wet_banner %}

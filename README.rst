@@ -32,10 +32,10 @@ Plugins
 -------
 
 ``canada_forms``
-  dataset forms for data.gc.ca metadata schema
+  dataset forms for Open Canada metadata schema
 
 ``canada_public``
-  base and public facing data.gc.ca templates (requires
+  base and public facing Open Canada templates (requires
   ``canada_forms`` and ``wet_theme`` from
   `ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_ )
 
@@ -61,7 +61,7 @@ Requirements
    - `open-data/ckan <https://github.com/open-data/ckan>`_
    - canada-v2.1
    - * stats
- * - data.gc.ca extension
+ * - Open Canada extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
    - master
    - * canada_forms
