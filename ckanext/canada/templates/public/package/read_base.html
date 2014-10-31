@@ -99,9 +99,8 @@
     <ul class="list-group">
       <li class="list-group-item">
       <ul class="list-unstyled">
-        <li><a href="{{ h.portal_url() + (
-            '/en/openness-rating' if h.lang() == 'en' else
-            '/fr/cote-degre-douvertrure-des-donnees') }}"><b>{{ _('Openness rating') }}</b></a>:
+        <li><a href="{{ '/en/openness-rating' if h.lang() == 'en' else
+            '/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness rating') }}</b></a>:
             {%- set openness = h.openness_score(pkg) -%}
             <img src="{{ h.url_for_static('/static/img/stars/star'
               ~ openness ~ '.png') }}" alt="{{
