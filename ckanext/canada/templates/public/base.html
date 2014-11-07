@@ -1,7 +1,6 @@
 {% ckan_extends %}
 
 {% block links %}
-
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ h.googleanalytics_id() }}']);
@@ -18,6 +17,15 @@
 
 {% block scripts %}
 {{ super() }}
-{% resource 'js/googleanalytics_event_tracking.js' %}
+{% endblock %}
+
+{% block wet_scripts %}
+  // Add Google Analytics Event Tracking to resource download links.
+  jQuery('a.resource-url-analytics btn btn-primary').on('click', function() {
+  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
+  if (resource_url) {
+  _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+  }
+  });
 {% endblock %}
 
