@@ -31,7 +31,7 @@
 
 {% if client_lang == 'fr' %}
   {% if pkg.license_url_fra == 'http://data.gc.ca/fra/licence-du-gouvernement-ouvert-canada' %}
-      {% set license_url_fra = 'â€‹http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
+      {% set license_url_fra = '‹http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
   {% else %}
       {% set license_url_fra = pkg.license_url_fra %}
   {% endif %}
@@ -40,7 +40,7 @@
   {% if pkg.license_url == 'http://data.gc.ca/eng/open-government-licence-canada' %}
       {% set license_url = 'http://open.canada.ca/en/open-government-licence-canada' %}
   {% else %}
-      {% set license_url_fra = pkg.license_url %}
+      {% set license_url = pkg.license_url %}
   {% endif %}
   <a href="{{ license_url }}">{{ pkg.license_title }}</a>
 {% endif %}
