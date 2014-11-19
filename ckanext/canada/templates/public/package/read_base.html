@@ -16,6 +16,10 @@
   <li>{% if client_lang == 'fr' %}{{ pkg.title_fra }}{% else %}{{ pkg.title }}{% endif %}</li>
 {% endblock %}
 
+{% set info_title = pkg.title or pkg.name %}
+{% set page_title  = _('{record_title} - Open Data Portal - Open Data') %}
+{% block title %}{{ page_title.format(record_title=info_title) }}{% endblock %}
+
 {% block secondary_content %}
 
   {% block ds_socialmedia %} 

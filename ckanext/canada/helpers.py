@@ -8,6 +8,7 @@ import ckanapi
 
 import ckan.lib.helpers as h
 from ckanext.canada.metadata_schema import schema_description
+from ckan.logic.validators import boolean_validator
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -33,9 +34,14 @@ def openness_score(pkg):
     score = 0
     fmt = schema_description.resource_field_by_id['format']['choices_by_key']
     for r in pkg['resources']:
-        if r['resource_type'] != 'file':
+        if r['resource_type'] != 'file' and r['resource_type'] != 'api':
             continue
-        score = max(score, fmt[r['format']]['openness_score'])
+        resource_score = fmt[r['format']]['openness_score']
+        if boolean_validator(r.get('data_includes_uris', ''), {}):
+            resource_score = 4
+            if boolean_validator(r.get('data_includes_links', ''), {}):
+                resource_score = 5
+        score = max(score, resource_score)
     return score
 
 

@@ -25,10 +25,24 @@
 {% endblock %}
 
 {% block package_item_license_inner %}
+{# for now, just override the old data.gc.ca license
+   url until such time that all datasets have been
+   updated with the new url #}
+
 {% if client_lang == 'fr' %}
-  <a href="{{ pkg.license_url_fra }}">{{ pkg.license_title_fra }}</a>
+  {% if pkg.license_url_fra == 'http://data.gc.ca/fra/licence-du-gouvernement-ouvert-canada' %}
+      {% set license_url_fra = 'http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
+  {% else %}
+      {% set license_url_fra = pkg.license_url_fra %}
+  {% endif %}
+  <a href="{{ license_url_fra }}">{{ pkg.license_title_fra }}</a>
 {% else %}
-  <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
+  {% if pkg.license_url == 'http://data.gc.ca/eng/open-government-licence-canada' %}
+      {% set license_url = 'http://open.canada.ca/en/open-government-licence-canada' %}
+  {% else %}
+      {% set license_url = pkg.license_url %}
+  {% endif %}
+  <a href="{{ license_url }}">{{ pkg.license_title }}</a>
 {% endif %}
 {% endblock %}
 
