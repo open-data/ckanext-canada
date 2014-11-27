@@ -87,9 +87,9 @@
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
   {
-    "dataset_type": "proactive-disclosure",
-    "title": "Proactive Disclosure",
-    "xls_sheet_name": "PD",
+    "dataset_type": "contracts",
+    "title": "Contracts",
+    "xls_sheet_name": "contracts",
     "fields": [
       {
         "datastore_id": "ref_number",
