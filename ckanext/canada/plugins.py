@@ -179,7 +179,8 @@ class DataGCCAPublic(p.SingletonPlugin):
             'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
-            'drupal_session_present'
+            'drupal_session_present',
+            'is_site_message_showing'
             ])
 
     def before_map(self, map):

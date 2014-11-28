@@ -97,6 +97,16 @@
 </nav>
 {% endblock %}
 
+{% block wet_flash %}
+  {% if h.is_site_message_showing() == 'True' %}
+    {% if h.lang() == 'fr' %}
+      {% snippet 'snippets/site_message_fr.html' %}
+    {% else %}
+      {% snippet 'snippets/site_message_en.html' %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
 {% block breadcrumb %} {{ super() }} {% endblock %}
 
 {% endblock wet_banner %}
@@ -119,3 +129,4 @@
   {# defined in the config.ini under "ckan.template_footer_end" #}
   {{ g.template_footer_end | safe }}
 {%- endblock %}
+
