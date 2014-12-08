@@ -565,9 +565,14 @@ class CanadaCommand(CkanCommand):
         since_date = isodate(since_date, None)
         seen_ids = set()
 
+        if self.options.server:
+            registry = RemoteCKAN(self.options.server)
+        else:
+            registry = LocalCKAN()
+
         while True:
             ids, since_date = self._changed_package_ids_since(
-                self.options.server, since_date, seen_ids)
+                registry, since_date, seen_ids)
             if not ids:
                 return
             for i in ids:
