@@ -4,7 +4,8 @@ from ckan.logic.schema import (default_create_package_schema,
     default_update_package_schema, default_show_package_schema)
 from ckan.logic.converters import (free_tags_only, convert_from_tags,
     convert_to_tags, convert_from_extras, convert_to_extras)
-from ckan.lib.navl.validators import ignore, ignore_missing, not_empty, empty
+from ckan.lib.navl.validators import (ignore, ignore_missing, not_empty, empty,
+    if_empty_same_as)
 from ckan.logic.validators import (isodate, tag_string_convert,
     name_validator, package_name_validator, boolean_validator,
     owner_org_validator, duplicate_extras_key)
@@ -19,6 +20,7 @@ from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.helpers import may_publish_datasets
 from shapely.geometry import asShape
 import json
+import uuid
 
 def create_package_schema():
     """
@@ -62,9 +64,9 @@ def _schema_update(schema, purpose):
             if v != duplicate_extras_key]
 
     if purpose == 'create':
-        schema['id'] = [ignore_missing, protect_new_dataset_id,
+        schema['id'] = [protect_new_dataset_id, if_empty_generate_uuid,
             unicode, name_validator, package_id_doesnt_exist]
-        schema['name'] = [ignore_missing, unicode, name_validator,
+        schema['name'] = [if_empty_same_as('id'), unicode, name_validator,
             package_name_validator]
     if purpose in ('create', 'update'):
         schema['title'] = [not_empty, unicode]
@@ -203,9 +205,21 @@ def protect_new_dataset_id(key, data, errors, context):
     """
     Allow dataset ids to be set for packages created by a sysadmin
     """
+    if not data[key] or data[key] is missing:
+        return
     if is_sysadmin(context['user']):
         return
     empty(key, data, errors, context)
+
+
+def if_empty_generate_uuid(value):
+    """
+    Generate a uuid for this dataset early so that it may be
+    copied into the name field.
+    """
+    if not value or value is missing:
+        return str(uuid.uuid4())
+    return value
 
 
 def package_id_doesnt_exist(key, data, errors, context):
