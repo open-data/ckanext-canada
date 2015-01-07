@@ -602,6 +602,8 @@ def _trim_package(pkg):
             'relationships_as_subject', 'department_number',
             # FIXME: remove these when we can:
             'resource_type',
+            # new in 2.3:
+            'creator_user_id',
             ]:
         if k in pkg:
             del pkg[k]
