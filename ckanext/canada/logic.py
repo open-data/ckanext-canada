@@ -13,6 +13,7 @@ def limit_api_logic():
     Return a dict of logic function names -> wrappers that override
     existing api calls to set new default limits and hard limits
     """
+    return {}
     context_limit_packages = {
         'group_show': (5, 20),
         'organization_show': (5, 20),
@@ -55,8 +56,8 @@ def limit_api_logic():
         @functools.wraps(action)
         def wrapper(context, data_dict,
                 default=default, limit=limit, action=action):
-            value = int(context.get('limits', {}).get('packages', default))
-            context.setdefault('limits', {})['packages'] = min(value, limit)
+            #value = int(context.get('limits', {}).get('packages', default))
+            #context.setdefault('limits', {})['packages'] = min(value, limit)
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
             wrapper.side_effect_free = action.side_effect_free
