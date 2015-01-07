@@ -15,6 +15,7 @@ sudo -u postgres psql -c 'CREATE DATABASE datastore_test WITH OWNER ckan_default
 mkdir dl
 cd dl
 git clone https://github.com/ckan/ckan
+python setup.py develop
 cd -
 
 ln -s ../dl/ckan links/ckan
