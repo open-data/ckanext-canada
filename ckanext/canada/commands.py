@@ -608,7 +608,7 @@ def _trim_package(pkg):
         if k in pkg:
             del pkg[k]
     for r in pkg['resources']:
-        for k in ['resource_group_id', 'revision_id',
+        for k in ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
                 'webstore_last_updated', 'id', 'state', 'hash',
                 'description', 'tracking_summary', 'mimetype_inner',
