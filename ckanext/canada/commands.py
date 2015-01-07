@@ -314,8 +314,6 @@ class CanadaCommand(CkanCommand):
         if self.options.log:
             log = open(self.options.log, 'a')
 
-        seen_package_id_set = set()
-
         if self.options.push_apikey and not self.options.fetch:
             registry = LocalCKAN()
         elif self.options.fetch:
@@ -327,7 +325,7 @@ class CanadaCommand(CkanCommand):
         def changed_package_id_runs(start_date):
             while True:
                 package_ids, next_date = self._changed_package_ids_since(
-                    registry, start_date, seen_package_id_set)
+                    registry, start_date)
                 if next_date is None:
                     return
                 yield package_ids, next_date
