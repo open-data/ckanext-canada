@@ -1,4 +1,3 @@
--e git+https://github.com/open-data/ckan@canada-v2.1#egg=ckan
 -e git+https://github.com/open-data/ckanext-wet-boew@master#egg=ckanext-wet-boew
 ckanapi>=2.1
 lxml
