@@ -613,7 +613,7 @@ def _trim_package(pkg):
                 'webstore_last_updated', 'id', 'state', 'hash',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'last_modified', 'position', ]:
+                'last_modified', 'position', 'url_type']:
             if k in r:
                 del r[k]
         for k in ['name', 'size']:
