@@ -101,7 +101,11 @@ For the public server use only::
 CKAN also needs to be able to find the licenses file for the license list
 to be correctly populated::
 
-   licenses_group_url = http://<ckan instance>/static/licenses.json
+   licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
+
+Combined ckan translations must be found the correct location::
+
+   ckan.i18n_directory = <path to this extension>/build/i18n
 
 Users that don't belong to an Organization should not be allowed to create
 datasets, without this setting the form will be presented but fail during
