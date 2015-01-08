@@ -1,0 +1,97 @@
+{% ckan_extends %}
+
+{% set wet_server = h.wet_url() %}
+{% block custom_wet_css %}
+<link href="{{ wet_server }}/css/messages.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block primary %}
+
+   {% if c.code[0] == '404' %}
+   <div class="error">
+    <div class="box">
+        {% if h.lang() == 'fr' %}
+        <h1 class="h1" id="wb-cont"><img class="pull-left" alt=""
+                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACLCAMAAACEG4G0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRFvHuBxIyQ69naqlhf0aWp5czOsGVr+PLznT9Gy5md2ri68uXmo0xTljI6////////Vc5QvgAAABB0Uk5T////////////////////AOAjXRkAAATTSURBVHja7JzblusgCEDR1AuaOP//t4ckTW8xbQXa+nB4mjUztTuCYBCEP7YElxC8H6azDN4DJhf4IwKPI6GP04FEjyl8CyaZYZsKROdcOQv9iAjb30z6OExIsH2XLQdiN1ponaAmmJVkNCmUFxKSGVeez8CE07iQ2PKm2IVnxKAOk4EMNsLbJGee9VNZFSbP+hlea6emr9l+3sR5BybMKN4Vpjg/4wQdGIwSlA0nogKMIyscRCgLDilrdEKYYOiZTkVBTjS/Jkhg5mmBUFRktrwXk/MUBuePFzWZHw2ZMGHQm5br5AyBA2PjFFNRlkSD2naYRA9hi7pYmu7UCoPaKrpVFbbB0CegfEjmsVtg6P9T+ZikIxr4PssxDfyA5ZAGfsFyRLP/lfkCy0JjXsOkr7AsNOkVjCPi8hUhDbjnMDl+zr/s/U3MT2EGCmTvD1d7n2zwxfRlz2AMhbGGZxtEMIVCsTmGaTVeL4PZGfEtTIiNxluBiY1GHMMBDExjkML4thA+3vk+uFNS4x5TDFPcnaKuMERp2l2FEIaGGEMFBluVVArKYWgKcA+TGWGgAgOMsJB3MND8UFUYbB7EX20YrjHJ/QbGXWPUBuM5MSlpwFCM8vcwhJcL56EUYPJlamCzGE6w1oGhqYFbGIKzOjCcV3O7LSg4R2tffgdDC8rcwETeVjMrwaQpXmHSNPI2a0owZVwjFKzrGn8Lg+vqhtV8sxYMb5y8mvAMc5qG8lsY2sCezjD0E3OMqAVzWvbmBBPYWqrsrgpbT2GBSWwt6cGQntICA9y1VIFhPxbOIQFmj+fUYDx3JDf7Pfiz/LktoAZDC9MSTBKMgHownowGKEhiDzBIwRIoFiQ9GH46hRREMHwvU4HhTzJ5mj/IAvslx6kGQxacwQn0vN9dCWD85AAlqSpNGPK9BIOKMILcJIEATCdFGCexPwAvGUAThoxXBlOUYeJk+4CxUwSJm9nDZNFYyjDlP8zB7uo/zAFM7AnGC2FkfkYRZvYzMg9s9GDk4QB1YURR+xFGcoo3R23RfuYRRjYUynZ6mjDzTk+0B35MS6NoYTrZ28Hj7gpFbibL3pseYQRrYXlvEr1RPsI4icK98F27BHcnQbIUjDALoShrFsLKQqWWrPkZSeZKT86ZK0lOT0+2nJ4g26knW7YzyN4wytIK4VFUAnTJAwsy5LS28ZIlj8hf2ZcMueDsoNjxbgts+Vo6iU9VklJK5OZUhX3eZHcHGTEz15IXn8TJq0TOcnsSxzyjdLWaK8fSdhSf3kINBlgzbMTn2tUOJ8ZL5cO5NuvE39Z7rTJjhkFcC+HqMI6xrp24SkQLZlclwqmfUYKp1M8wKouUYCqVRZyaqzpMe0TJGtVotWrK1phbr0Zj1OmlGkzj9B7U6bVXMIax4vNCq90lpdrOJJ2Y49rO9qrXfXSCViUdVr0yitmN6Lz0WT1wc6X0PN6N3YyNT/K8Urq1hnzFgYVnhFY39aqGvK/q+i/2HcDLvoO+OjL66lXpq4unr/6mvjq/+uqJ66tbsK8+yr46TPvqve2rK7mvfu3OOtn76vHv6/aDzu6F6OzGjOtdIizPonyXiOCWFfOBW1YWZWHr/TP4qftnOruZp7c7ix5vc4Lf3ubU3T1Xn7sB7J8AAwBgXxPiu3Hm7gAAAABJRU5ErkJggg=="
+                                         height="65" width="65">Nous ne pouvons trouver cette page Web</h1>
+
+        <p class="pagetag">Erreur 404</p>
+
+        <p>Nous sommes désolés que vous ayez abouti ici. Il arrive parfois qu'une page ait été déplacée ou supprimée.
+            Heureusement, nous pouvons vous aider à trouver ce que vous cherchez. Que faire?</p>
+        <ul>
+            <li>Retournez à la <a href="http://www.canada.ca/fr/index.html">page d'accueil</a>;</li>
+            <li>Consultez le <a href="http://www.canada.ca/fr/plan.html">plan du site</a>;</li>
+            <li>Vérifiez dans les <a href="http://www.collectionscanada.gc.ca/012/012-412.01-f.html">Archives Web du
+                gouvernement du Canada</a> s'il existe une version antérieure;
+            </li>
+            <li><a href="http://www.canada.ca/fr/contact/index.html">Contactez-nous</a> pour de l'assistance.</li>
+        </ul>
+        <section class="visible-xs visible-sm srchbox">
+            <h2 class="wb-inv">Recherche</h2>
+
+            <form action="http://recherche-search.gc.ca/rGs/s_r?#wb-land" method="get" role="search"
+                  class="form-inline">
+                <div class="col-xs-12 form-group">
+                    <label for="error-srch" class="wb-inv">Recherchez le site Web</label>
+                    <input name="cdn" value="canada" type="hidden">
+                    <input name="st" value="s" type="hidden">
+                    <input name="num" value="10" type="hidden">
+                    <input name="langs" value="fra" type="hidden">
+                    <input name="st1rt" value="0" type="hidden">
+                    <input name="s5bm3ts21rch" value="x" type="hidden">
+                    <input id="error-srch" class="form-control" name="q" value="" size="150" maxlength="150"
+                           placeholder="Rechercher dans Canada.ca" type="search">
+                    <button type="submit" id="srch-er-sub" class="btn btn-primary btn-small" name="srch-er-sub"><span
+                        class="glyphicon-search glyphicon"></span><span class="wb-inv">Recherche</span></button>
+                </div>
+            </form>
+        </section>
+        {% else %}
+        <h1 class="h1" id="wb-cont"><img alt="" class="pull-left"
+                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACLCAMAAACEG4G0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRFvHuBxIyQ69naqlhf0aWp5czOsGVr+PLznT9Gy5md2ri68uXmo0xTljI6////////Vc5QvgAAABB0Uk5T////////////////////AOAjXRkAAATTSURBVHja7JzblusgCEDR1AuaOP//t4ckTW8xbQXa+nB4mjUztTuCYBCEP7YElxC8H6azDN4DJhf4IwKPI6GP04FEjyl8CyaZYZsKROdcOQv9iAjb30z6OExIsH2XLQdiN1ponaAmmJVkNCmUFxKSGVeez8CE07iQ2PKm2IVnxKAOk4EMNsLbJGee9VNZFSbP+hlea6emr9l+3sR5BybMKN4Vpjg/4wQdGIwSlA0nogKMIyscRCgLDilrdEKYYOiZTkVBTjS/Jkhg5mmBUFRktrwXk/MUBuePFzWZHw2ZMGHQm5br5AyBA2PjFFNRlkSD2naYRA9hi7pYmu7UCoPaKrpVFbbB0CegfEjmsVtg6P9T+ZikIxr4PssxDfyA5ZAGfsFyRLP/lfkCy0JjXsOkr7AsNOkVjCPi8hUhDbjnMDl+zr/s/U3MT2EGCmTvD1d7n2zwxfRlz2AMhbGGZxtEMIVCsTmGaTVeL4PZGfEtTIiNxluBiY1GHMMBDExjkML4thA+3vk+uFNS4x5TDFPcnaKuMERp2l2FEIaGGEMFBluVVArKYWgKcA+TGWGgAgOMsJB3MND8UFUYbB7EX20YrjHJ/QbGXWPUBuM5MSlpwFCM8vcwhJcL56EUYPJlamCzGE6w1oGhqYFbGIKzOjCcV3O7LSg4R2tffgdDC8rcwETeVjMrwaQpXmHSNPI2a0owZVwjFKzrGn8Lg+vqhtV8sxYMb5y8mvAMc5qG8lsY2sCezjD0E3OMqAVzWvbmBBPYWqrsrgpbT2GBSWwt6cGQntICA9y1VIFhPxbOIQFmj+fUYDx3JDf7Pfiz/LktoAZDC9MSTBKMgHownowGKEhiDzBIwRIoFiQ9GH46hRREMHwvU4HhTzJ5mj/IAvslx6kGQxacwQn0vN9dCWD85AAlqSpNGPK9BIOKMILcJIEATCdFGCexPwAvGUAThoxXBlOUYeJk+4CxUwSJm9nDZNFYyjDlP8zB7uo/zAFM7AnGC2FkfkYRZvYzMg9s9GDk4QB1YURR+xFGcoo3R23RfuYRRjYUynZ6mjDzTk+0B35MS6NoYTrZ28Hj7gpFbibL3pseYQRrYXlvEr1RPsI4icK98F27BHcnQbIUjDALoShrFsLKQqWWrPkZSeZKT86ZK0lOT0+2nJ4g26knW7YzyN4wytIK4VFUAnTJAwsy5LS28ZIlj8hf2ZcMueDsoNjxbgts+Vo6iU9VklJK5OZUhX3eZHcHGTEz15IXn8TJq0TOcnsSxzyjdLWaK8fSdhSf3kINBlgzbMTn2tUOJ8ZL5cO5NuvE39Z7rTJjhkFcC+HqMI6xrp24SkQLZlclwqmfUYKp1M8wKouUYCqVRZyaqzpMe0TJGtVotWrK1phbr0Zj1OmlGkzj9B7U6bVXMIax4vNCq90lpdrOJJ2Y49rO9qrXfXSCViUdVr0yitmN6Lz0WT1wc6X0PN6N3YyNT/K8Urq1hnzFgYVnhFY39aqGvK/q+i/2HcDLvoO+OjL66lXpq4unr/6mvjq/+uqJ66tbsK8+yr46TPvqve2rK7mvfu3OOtn76vHv6/aDzu6F6OzGjOtdIizPonyXiOCWFfOBW1YWZWHr/TP4qftnOruZp7c7ix5vc4Lf3ubU3T1Xn7sB7J8AAwBgXxPiu3Hm7gAAAABJRU5ErkJggg=="
+                                         height="65" width="65">We couldn't find that Web page</h1>
+
+        <p class="pagetag">Error 404</p>
+
+        <p>We're sorry you ended up here. Sometimes a page gets moved or deleted, but hopefully we can help you find
+            what you're looking for. What next?</p>
+
+        <ul>
+            <li>Return to the <a href="http://www.canada.ca/en/index.html">home page</a>;</li>
+            <li>Consult the <a href="http://www.canada.ca/en/sitemap.html">site map</a>;</li>
+            <li>Check out the <a href="http://www.collectionscanada.gc.ca/012/012-412.01-e.html" rel="external">Government
+                of Canada Web Archive</a> to view an older version; or
+            </li>
+            <li><a href="http://www.canada.ca/en/contact/index.html">Contact us</a> and we'll help you out.</li>
+        </ul>
+        <section class="visible-xs visible-sm srchbox"><h2 class="wb-inv">Search</h2>
+
+            <form action="http://recherche-search.gc.ca/rGs/s_r?#wb-land" class="form-inline" method="get"
+                  role="search">
+                <div class="col-xs-12 form-group"><label class="wb-inv" for="error-srch">Search website</label> <input
+                    name="cdn" value="canada" type="hidden"><input name="st" value="s" type="hidden"><input name="num"
+                                                                                                            value="10"
+                                                                                                            type="hidden"><input
+                    name="langs" value="eng" type="hidden"><input name="st1rt" value="0" type="hidden"><input
+                    name="s5bm3ts21rch" value="x" type="hidden"><input class="form-control" id="error-srch"
+                                                                       maxlength="150" name="q"
+                                                                       placeholder="Search Canada.ca" size="150"
+                                                                       value="" type="search">
+                    <button class="btn btn-primary btn-small" id="srch-er-sub" name="srch-er-sub" type="submit"><span
+                        class="wb-inv">Search</span></button>
+                </div>
+            </form>
+        </section>
+        {% endif %}
+    </div>
+    </div>
+
+    {% else %}
+<div class="col-md-9 offset-2">
+    <div>{{ c.content }}</div>
+</div>
+    {% endif %}
+
+
+{% endblock %}

@@ -353,12 +353,18 @@ If this value is not defined, then the extension will not attempt to read from t
 The installed Drupal site must have the opendata_package module enabled. In additional, 3 views are used by the
 Drupal. Run the following SQL commands to create the necessary views in the Drupal database::
 
-    create or replace view opendata_package_v as  select to_char(to_timestamp(c.changed::double precision),
-        'YYYY-MM-DD'::text) AS changed, c.name, c.thread, f.comment_body_value, c.language, o.pkg_id FROM comment c
-        JOIN field_data_comment_body f ON c.cid = f.entity_id
-        JOIN opendata_package o ON (c.nid IN ( SELECT n.nid
-        FROM node n
-        WHERE n.nid = o.pkg_node_id and c.status = 1));
+    create or replace view opendata_package_v as  SELECT to_char(to_timestamp(c.created::double precision), 'YYYY-MM-DD'::text) AS changed,
+    c.name,
+    c.thread,
+    f.comment_body_value,
+    c.language,
+    o.pkg_id
+     FROM comment c
+     JOIN field_data_comment_body f ON c.cid = f.entity_id
+     JOIN opendata_package o ON (c.nid IN ( SELECT n.nid
+     FROM node n
+    WHERE n.nid = o.pkg_node_id AND c.status = 1))
+    ORDER BY c.thread;
 
     create view opendata_package_rating_v as select avg(v.value)/25+1 as rating, p.pkg_id from opendata_package p
                  inner join votingapi_vote v on p.pkg_node_id = v.entity_id group by p.pkg_id;

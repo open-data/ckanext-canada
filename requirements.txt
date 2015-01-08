@@ -2,5 +2,5 @@
 -e git+https://github.com/open-data/ckanext-wet-boew@master#egg=ckanext-wet-boew
 ckanapi>=2.1
 lxml
-shapely
+shapely==1.2.17
 docopt

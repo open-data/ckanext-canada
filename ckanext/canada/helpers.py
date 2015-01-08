@@ -14,7 +14,8 @@ ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
-
+SHOW_SITE_MSG_OPTION = 'canada.show_site_message'
+SHOW_SITE_MSG_DEFAULT = 'False'
 
 def may_publish_datasets(userobj=None):
     if not userobj:
@@ -109,6 +110,9 @@ def dataset_comment_count(package_id):
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+
+def is_site_message_showing():
+    return str(config.get(SHOW_SITE_MSG_OPTION, SHOW_SITE_MSG_DEFAULT))
     
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))

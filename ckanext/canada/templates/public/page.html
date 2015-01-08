@@ -46,10 +46,10 @@
     {% endif %}
   </div>
   <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
-    <h2>Search and menus</h2>
+    <h2>{{ _('Search and menus') }}</h2>
     <ul class="list-inline text-right chvrn">
       <li><a href="#mb-pnl" title="Search and menus" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span
-          class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Search and menus</span></span></span></a>
+          class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">{{ _('Search and menus') }}</span></span></span></a>
       </li>
     </ul>
     <div id="mb-pnl"></div>
@@ -78,7 +78,7 @@
     </div>
   </div>
 {% else %}
-  <h2 class="wb-inv">Topics menu</h2>
+  <h2 class="wb-inv">{{ _('Topics menu') }}</h2>
   <div class="container visible-md visible-lg nvbar">
     <div class="row">
       <ul class="list-inline menu">
@@ -95,6 +95,16 @@
   </div>
 {% endif %}
 </nav>
+{% endblock %}
+
+{% block wet_flash %}
+  {% if h.is_site_message_showing() == 'True' %}
+    {% if h.lang() == 'fr' %}
+      {% snippet 'snippets/site_message_fr.html' %}
+    {% else %}
+      {% snippet 'snippets/site_message_en.html' %}
+    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block breadcrumb %} {{ super() }} {% endblock %}
@@ -119,3 +129,4 @@
   {# defined in the config.ini under "ckan.template_footer_end" #}
   {{ g.template_footer_end | safe }}
 {%- endblock %}
+
