@@ -600,16 +600,18 @@ def _trim_package(pkg):
             'relationships_as_subject', 'department_number',
             # FIXME: remove these when we can:
             'resource_type',
+            # new in 2.3:
+            'creator_user_id',
             ]:
         if k in pkg:
             del pkg[k]
     for r in pkg['resources']:
-        for k in ['resource_group_id', 'revision_id',
+        for k in ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
                 'webstore_last_updated', 'id', 'state', 'hash',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'last_modified', 'position', ]:
+                'last_modified', 'position', 'url_type']:
             if k in r:
                 del r[k]
         for k in ['name', 'size']:

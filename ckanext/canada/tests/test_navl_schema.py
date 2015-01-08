@@ -30,6 +30,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         cls.sysadmin_action.organization_member_create(
             username='russianfan', id='tb-ct', role='editor')
+        cls.sysadmin_action.organization_member_create(
+            username='russianfan', id='nrcan-rncan', role='editor')
 
         cls.incomplete_pkg = {
             'title': u'A Novel By Tolstoy',
@@ -182,8 +184,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
     def test_portal_release_date(self):
         release_pkg = dict(self.complete_pkg,
-            portal_release_date='2012-01-01',
-            owner_org='tb-ct')
+            portal_release_date='2012-01-01')
 
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
@@ -192,13 +193,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         self.publisher_action.package_create(**release_pkg)
 
         self.sysadmin_action.package_create(**release_pkg)
-
-    def test_publisher_authorities(self):
-        "The publishing org (tb-ct by default) gets special authorities"
-        # create packages belonging to other orgs
-        self.publisher_action.package_create(
-            portal_release_date='2012-01-01',
-            **self.complete_pkg)
 
     def test_spatial(self):
         spatial_pkg = dict(self.complete_pkg,

@@ -16,8 +16,10 @@ mkdir dl
 cd dl
 git clone https://github.com/open-data/ckan
 cd -
+
 cd dl/ckan
-git checkout canada-v2.1
+git checkout canada-v2.3
+python setup.py develop
 cd -
 
 ln -s ../dl/ckan links/ckan
@@ -51,7 +53,7 @@ ln -s "$CKAN_DIR"/who.ini "$CANADA_DIR"/links/who.ini
 cat test-core.ini
 echo setting up databases
 paster db init -c test-core.ini
-paster datastore set-permissions postgres -c test-core.ini
+paster datastore set-permissions -c test-core.ini | sudo -u postgres psql
 
 cd -
 

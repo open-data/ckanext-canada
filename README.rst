@@ -11,13 +11,10 @@ Features:
 
   * complete, but planning to migrate to ckanext-scheming once it is ready
 
-* Batch import of data
-
-  * merged into ckanapi, will be removed from here shortly
-
 Installation:
 
-* Use open-data fork of CKAN, branch canada-v2.1
+* Use `open-data fork of CKAN<https://github.com/open-data/ckan>`_,
+  branch canada-v2.3
 
 From a clean database you must run::
 
@@ -59,8 +56,8 @@ Requirements
    - Plugins
  * - CKAN
    - `open-data/ckan <https://github.com/open-data/ckan>`_
-   - canada-v2.1
-   - * stats
+   - canada-v2.3
+   - N/A
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
    - master
@@ -95,16 +92,20 @@ Configuration: development.ini or production.ini
 
 The CKAN ini file needs the following plugins for the registry server::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
+   ckan.plugins = googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
 
 For the public server use only::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_public canada_package wet_theme
+   ckan.plugins = googleanalytics canada_forms canada_public canada_package wet_theme
 
 CKAN also needs to be able to find the licenses file for the license list
 to be correctly populated::
 
-   licenses_group_url = http://<ckan instance>/static/licenses.json
+   licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
+
+Combined ckan translations must be found the correct location::
+
+   ckan.i18n_directory = <path to this extension>/build/i18n
 
 Users that don't belong to an Organization should not be allowed to create
 datasets, without this setting the form will be presented but fail during
@@ -137,7 +138,7 @@ For the registry server set up recombinant configuration for ATI summaries::
 Configuration: Solr
 ----------------------
 
-This extension uses a custom Solr schema based on the ckan 2.1 schema. You can find the schema in the root directory of the project.
+This extension uses a custom Solr schema based on the ckan 2.3 schema. You can find the schema in the root directory of the project.
 Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using::
