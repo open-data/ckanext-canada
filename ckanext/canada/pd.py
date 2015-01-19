@@ -15,7 +15,7 @@ from ckanext.recombinant.write_xls import xls_template
 from ckanext.recombinant.plugins import get_table
 
 BATCH_SIZE = 1000
-DATASET_TYPE = 'proactive-disclosure'
+DATASET_TYPE = 'contracts'
 SPLIT_XLS_ROWS = 50002
 
 MONTHS_FRA = [
