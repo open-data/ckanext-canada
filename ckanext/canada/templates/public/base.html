@@ -5,6 +5,7 @@
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ h.googleanalytics_id() }}']);
   _gaq.push(['_setDomainName', 'auto']);
+  _gaq.push(['_gat._anonymizeIp']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
