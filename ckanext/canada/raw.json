@@ -1,0 +1,462 @@
+{
+  "scheming_version": 1,
+  "dataset_type": "raw",
+  "about": "open.canada.ca: raw open data metadata definition",
+  "about_url": "http://github.com/open-data/ckanext-canada",
+  "dataset_fields": [
+    {
+      "field_name": "owner_org",
+      "label": {
+        "en": "Publisher",
+        "fr": "\u00c9diteur"
+      },
+      "preset": "dataset_organization"
+      "help_text": {
+        "en": "The organization directly responsible for the dataset and for metadata maintenance.",
+        "fr": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9e et de la maintenance des m\u00e9tadonn\u00e9es"
+      }
+    },
+
+    {
+      "field_name": "digital_object_identifier",
+      "label": {
+        "en": "Digital Object Identifier",
+        "fr": "Identificateur d\u2019objet num\u00e9rique"
+      }
+    },
+
+    {
+      "field_name": "catalog_type",
+      "preset": "stamp_value",
+      "value": {
+        "en": "Raw Data",
+        "fr": "Donn\u00e9es"
+      }
+    },
+
+    {
+      "field_name": "language",
+      "preset": "stamp_value",
+      "value": ["eng; CAN", "fra; CAN"]
+    },
+
+    {
+      "field_name": "title",
+      "label": {
+        "en": "Title",
+        "fr": "Titre"
+      },
+      "preset": "fluent_text",
+      "form_placeholder": {
+        "en": "Canada Border Wait Times",
+        "fr": "Temps d\u2019attente \u00e0 la fronti\u00e8re"
+      },
+      "required": true
+    },
+
+    {
+      "field_name": "name",
+      "form_snippet": null,
+      "display_snippet": null,
+      "validators": "if_empty_same_as(id)"
+    },
+
+    {
+      "field_name": "notes",
+      "label": {
+        "en": "Description",
+        "fr": "Description"
+      },
+      "form_snippet": "markdown.html",
+      "form_placeholder": {
+        "en": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...",
+        "fr": "L\u2019Inventaire national des rejets de polluants (INRP) est l\u2019inventaire public des rejets de polluants du Canada\u2026"
+         }
+      },
+      "help_text": {
+        "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.",
+        "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
+      },
+      "required": true
+    },
+
+    {
+      "field_name": "subject",
+      "preset": "multiple_choice",
+      "choices": [
+        {
+          "label": {
+            "en": "Arts, Music, Literature",
+            "fr": "Arts, musique, litt\u00e9rature",
+          },
+          "value": "AA"
+        },
+        {
+          "label": {
+            "en": "Agriculture",
+            "fr": "Agriculture"
+          },
+          "value": "AG"
+        },
+        {
+          "label": {
+            "en": "Economics and Industry",
+            "fr": "\u00c9conomie et industrie"
+          },
+          "value": "EC"
+        },
+        {
+          "label": {
+            "en": "Education and Training",
+            "fr": "\u00c9ducation et formation"
+          },
+          "value": "ET"
+        },
+        {
+          "label": {
+            "en": "Government and Politics",
+            "fr": "Gouvernement et vie politique"
+          },
+          "value": "GV"
+        },
+        {
+          "label": {
+            "en": "Health and Safety",
+            "fr": "Sant\u00e9 et s\u00e9curit\u00e9"
+          },
+          "value": "HE"
+        },
+        {
+          "label": {
+            "en": "History and Archaeology",
+            "fr": "Histoire et arch\u00e9ologie"
+          },
+          "value": "HI"
+        },
+        {
+          "label": {
+            "en": "Information and Communications",
+            "fr": "Information et communication"
+          },
+          "value": "IN"
+        },
+        {
+          "label": {
+            "en": "Labour",
+            "fr": "Travail et emploi"
+          },
+          "value": "LB"
+        },
+        {
+          "label": {
+            "en": "Language and Linguistics",
+            "fr": "Langue et linguistique"
+          },
+          "value": "LN"
+        },
+        {
+          "label": {
+            "en": "Law",
+            "fr": "Droit"
+          },
+          "value": "LW"
+        },
+        {
+          "label": {
+            "en": "Military",
+            "fr": "Histoire et science militaire"
+          },
+          "value": "MI"
+        },
+        {
+          "label": {
+            "en": "Nature and Environment",
+            "fr": "Nature et environnement"
+          },
+          "value": "NE"
+        },
+        {
+          "label": {
+            "en": "Persons",
+            "fr": "Personnes"
+          },
+          "value": "PE"
+        },
+        {
+          "label": {
+            "en": "Processes",
+            "fr": "Liens et fonctions"
+          },
+          "value": "PR"
+        },
+        {
+          "label": {
+            "en": "Society and Culture",
+            "fr": "Soci\u00e9t\u00e9 et culture"
+          },
+          "value": "SO"
+        },
+        {
+          "label": {
+            "en": "Science and Technology",
+            "fr": "Sciences et technologie"
+          },
+          "value": "ST"
+        },
+        {
+          "label": {
+            "en": "Transport",
+            "fr": "Transport"
+          },
+          "value": "TR"
+        },
+        {
+          "label": {
+            "en": "Form Descriptors",
+            "fr": "Format"
+          },
+          "value": "FM"
+        }
+      ],
+      "required": true
+    },
+
+    {
+      "field_name": "keywords",
+      "label": "Tags",
+      "preset": "fluent_tags",
+      "help_text": {
+        "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.", 
+        "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
+    },
+    {
+      "field_name": "date_published",
+      "preset": "date",
+      "label": {
+        "en": "Date Published",
+        "fr": "Date de publication"
+      },
+      "help_text": {
+        "en": "The date in which the dataset was issued.",
+        "fr": "La date \u00e0 laquelle le jeu de donn\u00e9es a \u00e9t\u00e9 \u00e9mise."
+      },
+      "required": true
+    },
+    {
+      "field_name": "date_modified",
+      "preset": "date",
+      "label": {
+        "en": "Date Modified",
+        "fr": "Date de modification"
+      },
+      "help_text": {
+        "en": "The date in which the dataset was modified.", 
+        "fr": "La date \u00e0 laquelle le jeu de donn\u00e9es a \u00e9t\u00e9 modifi\u00e9e"
+      },
+      "required": true
+    },
+    {
+      "field_name": "frequency",
+      "preset": "select",
+      "label": {
+        "en": "Frequency",
+        "fr": "Fr\u00e9quence"
+      },
+      "help_text": {
+        "en": "The frequency at which the dataset is published.",
+        "fr": "La fr\u00e9quence de la publication de l\u2019ensemble de donn\u00e9es."
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "As Needed",
+            "fr": "Au besoin"
+          },
+          "value": "as_needed"
+        },
+        {
+          "label": {
+            "en": "Continual",
+            "fr": "Continue"
+          },
+          "value": "continual"
+        },
+        {
+          "label": {
+            "en": "Daily",
+            "fr": "Quotidien"
+          },
+          "value": "daily"
+        },
+        {
+          "label": {
+            "en": "Weekly",
+            "fr": "Hebdomadaire"
+          },
+          "value": "weekly"
+        },
+        {
+          "label": {
+            "en": "Fortnightly",
+            "fr": "Quinzomadaire"
+          },
+          "value": "fortnightly"
+        },
+        {
+          "label": {
+            "en": "Monthly",
+            "fr": "Mensuel",
+          },
+          "value": "monthly"
+        },
+        {
+          "label": {
+            "en": "Semimonthly",
+            "fr": "Bimensuel"
+          },
+          "value": "semimonthly"
+        },
+        {
+          "label": {
+            "en": "Quarterly",
+            "fr": "Trimestriel"
+          },
+          "value": "quarterly",
+        },
+        {
+          "label": {
+            "en": "Biannually",
+            "fr": "Semestriel"
+          },
+          "value": "biannually"
+        },
+        {
+          "label": {
+            "en": "Annually",
+            "fr": "Annuel"
+          },
+          "value":"annually"
+        },
+        {
+          "label": {
+            "en": "Irregular",
+            "fr": "Irr\u00e9gulier"
+          },
+          "value": "irregular"
+        },
+        {
+          "label": {
+            "en": "Not Planned",
+            "fr": "Non planifi\u00e9"
+          },
+          "value": "not_planned"
+        },
+        {
+          "label": {
+            "en": "Unknown",
+            "fr": "Inconnu"
+          },
+          "value": "unknown"
+        }
+      ],
+      "required": true
+    },
+    {
+      "field_name": "time_period_coverage_start",
+      "preset": "date",
+      "label": {
+        "en": "Time Period Coverage Start",
+        "fr": "Couverture de la p\u00e9riode de temps"
+      },
+      "help_text": {
+        "en": "The start date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+        "fr": "La date de d\u00e9but ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+      }
+    },
+    {
+      "field_name": "time_period_coverage_end",
+      "preset": "date",
+      "label": {
+        "en": "Time Period Coverage End",
+        "fr": "Couverture de la p\u00e9riode de temps"
+      },
+      "help_text": {
+        "en": "The end date or time interval(s) covered by the data. (YYYY-MM-DD)", 
+        "fr": "La date de fin ou les p\u00e9riodes couvertes par les donn\u00e9es. (AAAA-MM-JJ)"
+      }
+    },
+    {
+    }
+
+
+    {
+      "field_name": "license_id",
+      "label": "License",
+      "form_snippet": "license.html"
+    },
+    {
+      "field_name": "url",
+      "label": "Source",
+      "form_placeholder": "http://example.com/dataset.json",
+      "display_property": "foaf:homepage",
+      "display_snippet": "link.html"
+    },
+    {
+      "field_name": "version",
+      "label": "Version",
+      "validators": "ignore_missing unicode package_version_validator",
+      "form_placeholder": "1.0"
+    },
+    {
+      "field_name": "author",
+      "label": "Author",
+      "form_placeholder": "Joe Bloggs",
+      "display_property": "dc:creator"
+    },
+    {
+      "field_name": "author_email",
+      "label": "Author Email",
+      "form_placeholder": "joe@example.com",
+      "display_property": "dc:creator",
+      "display_snippet": "email.html",
+      "display_email_name_field": "author"
+    },
+    {
+      "field_name": "maintainer",
+      "label": "Maintainer",
+      "form_placeholder": "Joe Bloggs",
+      "display_property": "dc:contributor"
+    },
+    {
+      "field_name": "maintainer_email",
+      "label": "Maintainer Email",
+      "form_placeholder": "joe@example.com",
+      "display_property": "dc:contributor",
+      "display_snippet": "email.html",
+      "display_email_name_field": "maintainer"
+    }
+  ],
+  "resource_fields": [
+    {
+      "field_name": "url",
+      "label": "URL",
+      "preset": "resource_url_upload"
+    },
+    {
+      "field_name": "name",
+      "label": "Name",
+      "form_placeholder": "eg. January 2011 Gold Prices"
+    },
+    {
+      "field_name": "description",
+      "label": "Description",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Some useful notes about the data"
+    },
+    {
+      "field_name": "format",
+      "label": "Format",
+      "preset": "resource_format_autocomplete"
+    }
+  ]
+}
