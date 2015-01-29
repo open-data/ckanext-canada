@@ -55,7 +55,6 @@
     {% endif %}
   {% endfor %}
 </div>
-{% endblock %}
 
 {% if apps|length > 0 %}
 <div class="col-md-12">
@@ -68,6 +67,7 @@
   </ul>
 </div>
 {% endif %}
+{% endblock %}
 
 {% block package_item_geo_preview %}
 {% if pkg.geographic_region or pkg.spatial %}
