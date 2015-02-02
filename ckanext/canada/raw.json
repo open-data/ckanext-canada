@@ -42,6 +42,7 @@
 
     {
       "field_name": "title",
+      "required": true,
       "label": {
         "en": "Title",
         "fr": "Titre"
@@ -50,8 +51,7 @@
       "form_placeholder": {
         "en": "Canada Border Wait Times",
         "fr": "Temps d\u2019attente \u00e0 la fronti\u00e8re"
-      },
-      "required": true
+      }
     },
 
     {
@@ -63,6 +63,7 @@
 
     {
       "field_name": "notes",
+      "required": true,
       "label": {
         "en": "Description",
         "fr": "Description"
@@ -76,12 +77,12 @@
       "help_text": {
         "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.",
         "fr": "Une description d\u00e9taill\u00e9e de l\u2019ensemble de donn\u00e9es qui permettra \u00e0 l'utilisateur de conna\u00eetre la nature et le but des donn\u00e9es comprises dans l\u2019ensemble de donn\u00e9es."
-      },
-      "required": true
+      }
     },
 
     {
       "field_name": "subject",
+      "required": true,
       "preset": "multiple_choice",
       "choices": [
         {
@@ -217,13 +218,16 @@
           },
           "value": "FM"
         }
-      ],
-      "required": true
+      ]
     },
 
     {
       "field_name": "keywords",
-      "label": "Tags",
+      "required": true,
+      "label": {
+        "en": "Tags",
+        "fr": "Mots cl\u00e9s"
+      },
       "preset": "fluent_tags",
       "help_text": {
         "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.",
@@ -232,6 +236,7 @@
 
     {
       "field_name": "date_published",
+      "required": true,
       "preset": "date",
       "label": {
         "en": "Date Published",
@@ -240,8 +245,7 @@
       "help_text": {
         "en": "The date in which the dataset was issued.",
         "fr": "La date \u00e0 laquelle le jeu de donn\u00e9es a \u00e9t\u00e9 \u00e9mise."
-      },
-      "required": true
+      }
     },
 
     {
@@ -254,12 +258,12 @@
       "help_text": {
         "en": "The date in which the dataset was modified.",
         "fr": "La date \u00e0 laquelle le jeu de donn\u00e9es a \u00e9t\u00e9 modifi\u00e9e"
-      },
-      "required": true
+      }
     },
 
     {
       "field_name": "frequency",
+      "required": true,
       "preset": "select",
       "label": {
         "en": "Frequency",
@@ -2629,6 +2633,7 @@
 
     {
       "field_name": "license_id",
+      "required": true,
       "label": {
         "en": "Licence",
         "fr": "Licence"
@@ -2654,6 +2659,7 @@
   ],
 
   "resource_fields": [
+
     {
       "field_name": "name",
       "required": true,
