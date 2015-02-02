@@ -2744,7 +2744,320 @@
         "fr": "Format de l'ensemble de donn\u00e9es"
       },
       "choices": [
-        
+        {
+          "label": "AI",
+          "value": "ai",
+          "openness_score": 1
+        },
+        {
+          "label": "AMF",
+          "value": "amf",
+          "openness_score": 1
+        },
+        {
+          "label": "ASCII Grid",
+          "value": "ascii grid",
+          "openness_score": 1
+        },
+        {
+          "label": "Application",
+          "value": "app",
+          "openness_score": 1
+        },
+        {
+          "label": "BMP",
+          "value": "bmp",
+          "openness_score": 1
+        },
+        {
+          "label": "CDED ASCII",
+          "value": "cdec ascii",
+          "openness_score": 1
+        },
+        {
+          "label": "CDR",
+          "value": "cdr",
+          "openness_score": 1
+        },
+        {
+          "label": "CSV",
+          "value": "CSV",
+          "openness_score": 3
+        },
+        {
+          "label": "DOC",
+          "value": "doc",
+          "openness_score": 1
+        },
+        {
+          "label": "dxf",
+          "value": "dxf",
+          "openness_score": 1
+        },
+        {
+          "label": "E00",
+          "value": "e00",
+          "openness_score": 1
+        },
+        {
+          "label": "ECW",
+          "value": "ecw",
+          "openness_score": 1
+        },
+        {
+          "label": "EDI",
+          "value": "edi",
+          "openness_score": 1
+        },
+        {
+          "label": "EMF",
+          "value": "emf",
+          "openness_score": 1
+        },
+        {
+          "label": "EPS",
+          "value": "eps",
+          "openness_score": 1
+        },
+        {
+          "label": "EXE",
+          "value": "exe",
+          "openness_score": 1
+        },
+        {
+          "label": "FGDB / GDB",
+          "value": "fgdb / gdb",
+          "openness_score": 3,
+          "replaces": [
+            "FGDB\u00a0/ GDB"
+          ]
+        },
+        {
+          "label": "Flat raster binary",
+          "value": "flat raster binary",
+          "openness_score": 1
+        },
+        {
+          "label": "GeoPDF",
+          "value": "geopdf",
+          "openness_score": 1
+        },
+        {
+          "label": "GeoRSS",
+          "value": "georss",
+          "openness_score": 1
+        },
+        {
+          "label": "GeoTIF",
+          "value": "geotif",
+          "openness_score": 1
+        },
+        {
+          "label": "GIF",
+          "value": "gif",
+          "openness_score": 1
+        },
+        {
+          "label": "GML",
+          "value": "gml",
+          "openness_score": 3
+        },
+        {
+          "label": "HDF",
+          "value": "hdf",
+          "openness_score": 1,
+          "replaces": [
+            "GNU Zipped HDF"
+          ]
+        },
+        {
+          "label": "HTML",
+          "value": "HTML",
+          "openness_score": 1
+        },
+        {
+          "label": "IATI",
+          "value": "iati",
+          "openness_score": 1
+        },
+        {
+          "label": "JPEG 2000",
+          "value": "jpeg 2000",
+          "openness_score": 1
+        },
+        {
+          "label": "JPG",
+          "value": "jpg",
+          "openness_score": 1
+        },
+        {
+          "label": "JSON",
+          "value": "JSON",
+          "openness_score": 3
+        },
+        {
+          "label": "JSON Lines",
+          "value": "jsonl",
+          "openness_score": 3
+        },
+        {
+          "label": "KML / KMZ",
+          "value": "kml / kmz",
+          "openness_score": 3,
+          "replaces": [
+            "KML\u00a0/ KMZ"
+          ]
+        },
+        {
+          "label": "NetCDF",
+          "value": "netcdf",
+          "openness_score": 1
+        },
+        {
+          "label": "ODP",
+          "value": "odp",
+          "openness_score": 1
+        },
+        {
+          "label": "ODS",
+          "value": "ods",
+          "openness_score": 2
+        },
+        {
+          "label": "ODT",
+          "value": "odt",
+          "openness_score": 1
+        },
+        {
+          "label": "PDF",
+          "value": "PDF",
+          "openness_score": 1
+        },
+        {
+          "label": "PNG",
+          "value": "png",
+          "openness_score": 1
+        },
+        {
+          "label": "PPT",
+          "value": "ppt",
+          "openness_score": 1
+        },
+        {
+          "label": "RDF",
+          "value": "RDF",
+          "openness_score": 4
+        },
+        {
+          "label": "RDFa",
+          "value": "rdfa",
+          "openness_score": 4
+        },
+        {
+          "label": "RSS",
+          "value": "rss",
+          "openness_score": 1
+        },
+        {
+          "label": "RTF",
+          "value": "rtf",
+          "openness_score": 1
+        },
+        {
+          "label": "SAR / CCT",
+          "value": "sar / cct",
+          "openness_score": 1,
+          "replaces": [
+            "SAR/CCT"
+          ]
+        },
+        {
+          "label": "SAV",
+          "value": "sav",
+          "openness_score": 1
+        },
+        {
+          "label": "SEGY",
+          "value": "segy",
+          "openness_score": 1
+        },
+        {
+          "label": "SHP",
+          "value": "SHAPE",
+          "openness_score": 1
+        },
+        {
+          "label": "SQL",
+          "value": "sql",
+          "openness_score": 1
+        },
+        {
+          "label": "SVG",
+          "value": "svg",
+          "openness_score": 1
+        },
+        {
+          "label": "TIFF World File",
+          "value": "tiff world file",
+          "openness_score": 1
+        },
+        {
+          "label": "TIFF",
+          "value": "tiff",
+          "openness_score": 1
+        },
+        {
+          "label": "TXT",
+          "value": "TXT",
+          "openness_score": 1,
+          "replaces": [
+            "ASCII",
+            "text"
+          ]
+        },
+        {
+          "label": "WFS",
+          "value": "wfs",
+          "openness_score": 3
+        },
+        {
+          "label": "WMS",
+          "value": "wms",
+          "openness_score": 3
+        },
+        {
+          "label": "WMTS",
+          "value": "wmts",
+          "openness_score": 1
+        },
+        {
+          "label": "XLS",
+          "value": "XLS",
+          "openness_score": 2
+        },
+        {
+          "label": "XLSM",
+          "value": "xlsm",
+          "openness_score": 2
+        },
+        {
+          "label": "XML",
+          "value": "XML",
+          "openness_score": 3
+        },
+        {
+          "label": "Zip",
+          "value": "ZIP",
+          "openness_score": 1
+        },
+        {
+          "label": {
+            "en": "Other",
+            "fr": "Autre"
+          }
+          "value": "other",
+          "openness_score": 1
+        }
       ]
     },
 
