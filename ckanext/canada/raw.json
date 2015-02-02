@@ -2574,77 +2574,218 @@
           }
         }
       ]
-    }
+    },
 
+    {
+      "field_name": "spatial",
+      "label": {
+        "en": "Spatial",
+        "fr": "\u00c9l\u00e9ment spatial"
+      },
+      "help_text": {
+        "en": "The representation of spatial information in a dataset.",
+        "fr": "La repr\u00e9sentation de l\u2019information spatiale dans un ensemble de donn\u00e9es"
+      }
+    },
+
+    {
+      "field_name": "data_series_name",
+      "preset": "fluent_text",
+      "label": {
+        "en": "Data Series Name",
+        "fr": "Nom de la s\u00e9rie de l\u2019ensemble de donn\u00e9es"
+      },
+      "help_text": {
+        "en": "The name of the series, or aggregate dataset, of which the dataset is a part",
+        "fr": "Le nom de la s\u00e9rie ou du groupement d\u2019ensembles de donn\u00e9es, auquel l\u2019ensemble de donn\u00e9es fait partie"
+      }
+    },
+
+    {
+      "field_name": "data_series_issue_identification",
+      "preset": "fluent_text",
+      "label": {
+        "en": "Issue Identification",
+        "fr": "Identification de l\u2019ensemble de donn\u00e9es"
+      },
+      "help_text": {
+        "en": "The identification of the series\u2019 issue information.",
+        "fr": "L\u2019identification de l\u2019ensemble de donn\u00e9es de la s\u00e9rie"
+      }
+    },
+
+    {
+      "field_name": "url",
+      "preset": "fluent_text",
+      "label": {
+        "en": "Homepage URL",
+        "fr": "URL de la page d\u2019accueil"
+      },
+      "help_text": {
+        "en": "The URL for the Government of Canada program that is responsible for the dataset.",
+        "fr": "L\u2019adresse URL du programme du gouvernement du Canada responsable de l\u2019ensemble de donn\u00e9es"
+      }
+    },
 
     {
       "field_name": "license_id",
-      "label": "License",
+      "label": {
+        "en": "Licence",
+        "fr": "Licence"
+      },
+      "help_text": {
+        "en": "The specific attribution statement provided by the information provider.",
+        "fr": "L\u2019\u00e9nonc\u00e9 d\u2019attribution pr\u00e9cis fourni par le fournisseur d\u2019information"
+      }
       "form_snippet": "license.html"
     },
+
     {
-      "field_name": "url",
-      "label": "Source",
-      "form_placeholder": "http://example.com/dataset.json",
-      "display_property": "foaf:homepage",
-      "display_snippet": "link.html"
-    },
-    {
-      "field_name": "version",
-      "label": "Version",
-      "validators": "ignore_missing unicode package_version_validator",
-      "form_placeholder": "1.0"
-    },
-    {
-      "field_name": "author",
-      "label": "Author",
-      "form_placeholder": "Joe Bloggs",
-      "display_property": "dc:creator"
-    },
-    {
-      "field_name": "author_email",
-      "label": "Author Email",
-      "form_placeholder": "joe@example.com",
-      "display_property": "dc:creator",
-      "display_snippet": "email.html",
-      "display_email_name_field": "author"
-    },
-    {
-      "field_name": "maintainer",
-      "label": "Maintainer",
-      "form_placeholder": "Joe Bloggs",
-      "display_property": "dc:contributor"
-    },
-    {
-      "field_name": "maintainer_email",
-      "label": "Maintainer Email",
-      "form_placeholder": "joe@example.com",
-      "display_property": "dc:contributor",
-      "display_snippet": "email.html",
-      "display_email_name_field": "maintainer"
+      "field_name": "endpoint_url",
+      "label": {
+        "en": "Endpoint",
+        "fr": "Point d\u2019extr\u00e9mit\u00e9"
+      },
+      "help_text": {
+        "en": "The endpoint of web service to access the dataset (API).",
+        "fr": "Le point d\u2019extr\u00e9mit\u00e9 du service Web concernant l\u2019acc\u00e8s \u00e0 l\u2019ensemble de donn\u00e9es (API)."
+      }
     }
   ],
+
   "resource_fields": [
     {
+      "field_name": "name",
+      "preset": "fluent_text",
+      "label": {
+        "en": "Title",
+        "fr": "Titre"
+      },
+      "help_text": {
+        "en": "The name by which the cited resource is known",
+        "fr": "Le nom par lequel la ressource mentionn\u00e9e est connue."
+      }
+    },
+
+    {
       "field_name": "url",
-      "label": "URL",
+      "label": {
+        "en": "URL",
+        "fr": "URL"
+      },
+      "help_text": {
+        "en": "The electronic location where the resource can be found.",
+        "fr": "L\u2019endroit \u00e9lectronique o\u00f9 se trouve la ressource."
+      },
       "preset": "resource_url_upload"
     },
+
     {
-      "field_name": "name",
-      "label": "Name",
-      "form_placeholder": "eg. January 2011 Gold Prices"
+      "field_name": "language",
+      "preset": "select",
+      "required": true,
+      "label": {
+        "en": "Language",
+        "fr": "Langue"
+      },
+      "help_text": {
+        "en": "The language of the resource.",
+        "fr": "La langue de la ressource"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "No linguistic content; Not applicable",
+            "fr": "pas de contenu linguistique; non applicable"
+          },
+          "value": "zxx; CAN"
+        },
+        {
+          "label": {
+            "en": "English",
+            "fr": "Anglais"
+          },
+          "value": "eng; CAN"
+        },
+        {
+          "label": {
+            "en": "French",
+            "fr": "Fran\u00e7ais"
+          },
+          "value": "fra; CAN"
+        },
+        {
+          "label": {
+            "en": "Bilingual (English and French)",
+            "fr": "Bilingue (Anglais et Fran\u00e7ais)"
+          },
+          "value": "eng; CAN | fra; CAN"
+        }
+      ]
     },
+
     {
-      "field_name": "description",
-      "label": "Description",
-      "form_snippet": "markdown.html",
-      "form_placeholder": "Some useful notes about the data"
+      "field_name": "size",
+      "label": {
+        "en": "Size",
+        "fr": "Taille"
+      },
+      "help_text": {
+        "en": "The estimated size of a unit in the specified transfer format, expressed in bytes.",
+        "fr": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets."
+      }
     },
+
     {
       "field_name": "format",
-      "label": "Format",
-      "preset": "resource_format_autocomplete"
+      "preset": "select",
+      "label": {
+        "en": "Dataset Format",
+        "fr": "Format de l'ensemble de donn\u00e9es"
+      },
+      "choices": [
+        
+      ]
+    },
+
+    {
+      "field_name": "resource_type",
+      "preset": "select",
+      "label": {
+        "en": "Resource Type",
+        "fr": "Type de ressource"
+      },
+      "choices": [
+        {
+          "label": {
+            "en": "Dataset",
+            "fr": "Donn\u00e9es"
+          },
+          "value": "file"
+        },
+        {
+          "label": {
+            "en": "Supporting Documentation",
+            "fr": "Documentation de Soutien"
+          },
+          "value": "doc"
+        },
+        {
+          "label": {
+            "en": "API",
+            "fr": "API"
+          },
+          "value": "api"
+        },
+        {
+          "label": {
+            "en": "Application",
+            "fr": "Application"
+          },
+          "value": "app"
+        }
+      ]
+
     }
   ]
 }
