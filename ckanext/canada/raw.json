@@ -2656,6 +2656,7 @@
   "resource_fields": [
     {
       "field_name": "name",
+      "required": true,
       "preset": "fluent_text",
       "label": {
         "en": "Title",
@@ -2669,6 +2670,7 @@
 
     {
       "field_name": "url",
+      "required": true,
       "label": {
         "en": "URL",
         "fr": "URL"
@@ -2682,8 +2684,8 @@
 
     {
       "field_name": "language",
-      "preset": "select",
       "required": true,
+      "preset": "select",
       "label": {
         "en": "Language",
         "fr": "Langue"
@@ -2738,6 +2740,7 @@
 
     {
       "field_name": "format",
+      "required": true,
       "preset": "select",
       "label": {
         "en": "Dataset Format",
@@ -3063,6 +3066,7 @@
 
     {
       "field_name": "resource_type",
+      "required": true,
       "preset": "select",
       "label": {
         "en": "Resource Type",
