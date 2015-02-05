@@ -10,7 +10,7 @@
         "en": "Publisher",
         "fr": "\u00c9diteur"
       },
-      "preset": "dataset_organization"
+      "preset": "dataset_organization",
       "help_text": {
         "en": "The organization directly responsible for the dataset and for metadata maintenance.",
         "fr": "Le nom de l\u2019organisation directement responsable des ensembles de donn\u00e9e et de la maintenance des m\u00e9tadonn\u00e9es"
@@ -72,7 +72,6 @@
       "form_placeholder": {
         "en": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...",
         "fr": "L\u2019Inventaire national des rejets de polluants (INRP) est l\u2019inventaire public des rejets de polluants du Canada\u2026"
-         }
       },
       "help_text": {
         "en": "A detailed description of the dataset that will allow the user to determine the nature and purpose of the data in the dataset.",
@@ -88,7 +87,7 @@
         {
           "label": {
             "en": "Arts, Music, Literature",
-            "fr": "Arts, musique, litt\u00e9rature",
+            "fr": "Arts, musique, litt\u00e9rature"
           },
           "value": "AA"
         },
@@ -232,6 +231,7 @@
       "help_text": {
         "en": "The topic of the content of the resource expressed as keywords, to help users discover the datasets and provide ways of identifying other similar datasets. Include as many keywords as possible. Use commas to separate keywords.",
         "fr": "Le sujet du contenu de la ressource est exprim\u00e9 par mots cl\u00e9s, afin d'aider les utilisateurs \u00e0 d\u00e9couvrir l\u2019ensemble de donn\u00e9es et \u00e0 leur fournir des moyens de trouver d'autres bases de donn\u00e9es similaires. Inclure le plus de mots cl\u00e9s possible. Utiliser des virgules pour s\u00e9parer les mots cl\u00e9s."
+      }
     },
 
     {
@@ -312,7 +312,7 @@
         {
           "label": {
             "en": "Monthly",
-            "fr": "Mensuel",
+            "fr": "Mensuel"
           },
           "value": "monthly"
         },
@@ -328,7 +328,7 @@
             "en": "Quarterly",
             "fr": "Trimestriel"
           },
-          "value": "quarterly",
+          "value": "quarterly"
         },
         {
           "label": {
@@ -2641,7 +2641,7 @@
       "help_text": {
         "en": "The specific attribution statement provided by the information provider.",
         "fr": "L\u2019\u00e9nonc\u00e9 d\u2019attribution pr\u00e9cis fourni par le fournisseur d\u2019information"
-      }
+      },
       "form_snippet": "license.html"
     },
 
@@ -3063,7 +3063,7 @@
           "label": {
             "en": "Other",
             "fr": "Autre"
-          }
+          },
           "value": "other",
           "openness_score": 1
         }
