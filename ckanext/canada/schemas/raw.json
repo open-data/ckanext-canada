@@ -3,6 +3,9 @@
   "dataset_type": "raw",
   "about": "open.canada.ca: raw open data metadata definition",
   "about_url": "http://github.com/open-data/ckanext-canada",
+
+  "form_languages": ["en", "fr"],
+
   "dataset_fields": [
     {
       "field_name": "owner_org",
