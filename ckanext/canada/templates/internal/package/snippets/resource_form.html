@@ -15,13 +15,13 @@
 {% endblock %}
 
 {% block again_button %}
-  <button class="button" name="save" value="again" type="submit">{{ _('Add another resource') }}</button>
+  <button class="btn mrgn-rght-sm" name="save" value="again" type="submit">{{ _('Add another resource') }}</button>
 {% endblock %}
 
 {% block save_button %}
   {% if stage %}
-    <button class="button button-accent" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Next: Additional Info') }}{% endblock %}</button>
+    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Next: Additional Info') }}{% endblock %}</button>
   {% else %}
-    <button class="button button-accent" name="save" value="go-dataset-search" type="submit">{{ _('Finish') }}</button>
+    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-dataset-search" type="submit">{{ _('Finish') }}</button>
   {% endif %}
 {% endblock %}

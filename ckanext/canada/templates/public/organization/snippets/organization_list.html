@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% block organization_list %}
+
+  <table class="table table-condensed">
+  {% for organization in organizations %}
+    {% snippet "organization/snippets/organization_item.html", organization=organization, position=loop.index %}
+
+  {% endfor %}
+  </table>
+
+{% endblock %}

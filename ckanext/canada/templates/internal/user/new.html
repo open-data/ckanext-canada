@@ -1,27 +1,23 @@
-{% extends 'page_wet.html' %}
+{% ckan_extends %}
 
-{% block subtitle %}{{ _('Register') }}{% endblock %}
+{% block subtitle %}{% block page_heading %}{{ _('Register for an Account') }}{% endblock %}{% endblock %}
 
 {% block breadcrumb_content %}
   <li class="active">{{ h.nav_link(_('Registration'), controller='user', action='register') }}</li>
 {% endblock %}
 
 {% block primary_content %}
-  <article class="module">
-    <div class="module-content">
-      <h1 class="page-heading">
-        {% block page_heading %}{{ _('Register for an Account') }}{% endblock %}
-      </h1>
-      {{ c.form | safe }}
-    </div>
-  </article>
+
+  <div class="row col-md-12">
+    {{ c.form | safe }}
+  </div>
 {% endblock %}
 
 {% block secondary_content %}
-  <section class="module module-info span-2">
-    <h2 class="module-heading">{{ _('Why Sign Up?') }}</h2>
-    <div class="module-content">
+  <div class="panel panel-info">
+    <div class="panel-heading">{{ _('Why Sign Up?') }}</div>
+    <div class="panel-body">
       <p>{% trans %}An active account linked to your department is required to create or modify datasets in the registry.{% endtrans %}</p>
     </div>
-  </section>
+  </div>
 {% endblock %}

@@ -135,7 +135,7 @@ def _update_records(records, org_detail, conn):
             'i18n_ts_en_ati_request_number': r['request_number'],
             'i18n_ts_en_ati_request_summary': r['summary_eng'],
             'ss_ati_contact_information_en':
-                "http://data.gc.ca/data/en/organization/about/{0}"
+                "http://open.canada.ca/data/en/organization/about/{0}"
                 .format(org),
             'ss_ati_disposition_en': r['disposition'].split(' / ', 1)[0],
             'ss_ati_month_en': '{0:02d}'.format(r['month']),
@@ -154,7 +154,7 @@ def _update_records(records, org_detail, conn):
             'i18n_ts_fr_ati_request_number': r['request_number'],
             'i18n_ts_fr_ati_request_summary': r['summary_fra'],
             'ss_ati_contact_information_fr':
-                "http://donnees.gc.ca/data/fr/organization/about/{0}"
+                "http://ouvert.canada.ca/data/fr/organization/about/{0}"
                 .format(org),
             'ss_ati_disposition_fr': r['disposition'].split(' / ', 1)[-1],
             'ss_ati_month_fr': '{0:02d}'.format(r['month']),

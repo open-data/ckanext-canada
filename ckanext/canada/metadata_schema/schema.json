@@ -213,8 +213,8 @@
               "pilot_uuid": "892B1E0C-3389-4C9F-A6F0-92FE653016C1"
             }, 
             {
-              "eng": "Canada Science and Technology Museum", 
-              "fra": "Mus\u00e9e des sciences et de la technologie du Canada", 
+              "eng": "Canada Science and Technology Museum Corporation",
+              "fra": "Soci\u00e9t\u00e9 du Mus\u00e9e des sciences et de la technologie du Canada",
               "id": 202, 
               "key": "cstm-mstc", 
               "pilot_uuid": "6FDF2204-B9E0-40C3-8D1D-F23E08D7A072"
@@ -491,7 +491,14 @@
               "id": 28, 
               "key": "dcc-cdc", 
               "pilot_uuid": "AA37FA1C-BC8C-4196-9AC2-33B873C8C7A7"
-            }, 
+            },
+            {
+              "eng": "Defence Research and Development Canada",
+              "fra": "Recherche et d\u00e9veloppement pour la D\u00e9fense Canada",
+              "id": "65656",
+              "key": "drdc-rddc",
+              "pilot_uuid": "b274ff8b-610b-5f1c-b4f1-468247206108"
+            },
             {
               "eng": "Department of Finance Canada", 
               "fra": "Minist\u00e8re des Finances Canada", 
@@ -4830,8 +4837,8 @@
           "existing": true, 
           "id": "url", 
           "label": {
-            "eng": "Homepage URL", 
-            "fra": "URL de la page d\u2019accueil"
+            "eng": "Program Page URL", 
+            "fra": "URL de la page du programme"
           }, 
           "mandatory": null, 
           "pilot_help": {

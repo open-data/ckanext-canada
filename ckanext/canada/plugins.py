@@ -42,7 +42,7 @@ def notify_ckan_user_create(context, data_dict):
                          'phoneno': new_phoneno, 'dept': new_dept}
             email_body = render('user/new_user_email.html', extra_vars=xtra_vars)
             ckan.lib.mailer.mail_recipient(ckan_user_create_dict['email_name'], ckan_user_create_dict['email_address'],
-                   u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de donnees.gc.ca',
+                   u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de Gouvernement ouvert',
                    email_body)
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
@@ -119,7 +119,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
-    Plugin for public-facing version of data.gc.ca site, aka the "portal"
+    Plugin for public-facing version of Open Government site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurable)
@@ -179,7 +179,8 @@ class DataGCCAPublic(p.SingletonPlugin):
             'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
-            'drupal_session_present'
+            'drupal_session_present',
+            'is_site_message_showing'
             ])
 
     def before_map(self, map):

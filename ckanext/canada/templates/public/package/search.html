@@ -7,10 +7,17 @@
 {%- endblock -%}
 
 {% block breadcrumb_content %}
+    <li>{{ _('Search Open Data') }}</li>
 {% endblock %}
 
+{% block subtitle %}{{ _('Open Data Portal') }}{% endblock %}
+
+{%- block title -%}{{ _('Open Data Portal - Open Data') }}{% endblock %}
+
+{% block page_primary_action %}{% endblock %}
+
 {% block secondary_content %}
-  <section role="complementary">
+
     <h2>{{ _('Search Filters') }}</h2>
   
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
@@ -39,7 +46,7 @@
       
     {% endblock %}
         
-    <section>
+    <div class="well well-sm">
       {% set license = h.get_license('ca-ogl-lgo') %}
       {% if license != None %}
         {% if h.lang() == 'en' %}
@@ -49,9 +56,15 @@
             license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
         {% endif %}
       {% endif %}
-    </section>
-  </section>
+    </div>
+
 {% endblock %}
+
+  {% block search_title %}
+    {% if not no_title %}
+      {% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}
+    {% endif %}
+  {% endblock %}
 
 {% block filter_list %}
 {% for field in c.fields_grouped %}
@@ -73,14 +86,6 @@
     </span>
   {% endfor %}
 {% endfor %}
-{% endblock %}
-
-{% block suggest_a_dataset_button %}
-  {% if h.lang() == 'en' %}
-  <a href="/eng/suggested-datasets" class="button">Can’t find what you’re looking for?</a>
-  {% else %}
-  <a href="/fra/suggested-datasets" class="button">Vous ne trouvez pas ce que vous cherchez?</a>
-  {% endif %}
 {% endblock %}
 
 {% block try_another_search %}

@@ -1,15 +1,11 @@
-{% extends "gwcu_wet.html" %}
-
-{% block site_title %}
-<a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('data.gc.ca') }}</a>
-{% endblock %}
+{% ckan_extends %}
 
 {% block links %}
-
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ h.googleanalytics_id() }}']);
   _gaq.push(['_setDomainName', 'auto']);
+  _gaq.push(['_gat._anonymizeIp']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -22,6 +18,17 @@
 
 {% block scripts %}
 {{ super() }}
-{% resource 'js/googleanalytics_event_tracking.js' %}
+{% endblock %}
+
+{% block wet_scripts %}
+  <script type="text/javascript">
+  // Add Google Analytics Event Tracking to resource download links.
+  jQuery('a.resource-url-analytics').on('click', function() {
+  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
+  if (resource_url) {
+  _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+  }
+  });
+  </script>
 {% endblock %}
 

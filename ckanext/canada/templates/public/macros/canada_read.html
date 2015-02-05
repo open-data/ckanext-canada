@@ -68,12 +68,12 @@ Render the field label for the given field object and client language
 Render a list of keywords for the client language
 #}
 {%- macro keyword_field(f, pkg, client_lang) -%}
-  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
+  <ul class='list-inline'>
     {% set tags = pkg.get(
       f.id + ('_fra' if client_lang == 'fr' else ''), '') -%}
     {%- for tag in tags.split(',') -%}
       <li>
-        <a class="button button-none button-small" href="
+        <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
           {%- if client_lang == 'fr' -%}
             {%- url_for controller='package', action='search',
               keywords_fra=tag.strip() -%}
@@ -88,11 +88,11 @@ Render a list of keywords for the client language
 {%- endmacro -%}
 
 {%- macro subject_field(f, pkg, client_lang) -%}
-  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
+  <ul class='list-inline'>
     {%- for tag in pkg[f.id] -%}
       <li>
         {% set s = tag.split('  ')[1 if client_lang == 'fr' else 0] %}
-        <a class="button button-none button-small" href="
+        <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
         {%- url_for controller='package', action='search', subject=tag.strip() -%}
         " title="{{ _('Subject') ~ ' ' ~ s.strip() }}">{{ s.strip() }}</a>
       </li>

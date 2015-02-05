@@ -17,38 +17,22 @@
   </td>
   
   <td>
-    {{ cr.lookup_field(format_field, res, client_lang) }}
+    {{ _(cr.lookup_field(format_field, res, client_lang)) }}
   </td>
 
   <td>
-    {{ cr.lookup_field(lang_field, res, client_lang) }}
+    {{ _(cr.lookup_field(lang_field, res, client_lang)) }}
   </td>
   
   <td>
-    <a href="{{ res.url }}" class="resource-url-analytics button button-accent button-small" title="{{_('Resource') ~ ' ' ~ res_num}}" target="_blank">{{ _('Download') }}</a>
+
+    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
+        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Download') }}</a>
+
     {% if res.webstore_last_updated %}
-    &nbsp;<a href="{{ url }}" class="button button-accent button-small">{{ _('Preview') }}</a>
+    &nbsp;
+    <a href="{{ url }}" class="btn btn-default" >{{ _('Preview') }}</a>
     {% endif %}
   </td>
 </tr>
-<!--  
-  {% block resource_item_explore %}
-  <div class="dropdown btn-group">
-    <ul class="menu-horizontal">
-      {% block resource_item_explore_links %}
-      {# if the resource is stored locally, then offer the preview button
-        h.debug_inspect(res) #}
-      {% if res.webstore_last_updated %}
-      <li>
-        <a href="{{ url }}" class="button"><span class="wb-icon-table"></span>{{ _('Preview') }}</a>
-      </li>
-      {% endif %}
-      <li>
-        <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
-      </li>
-      {% endblock %}
-    </ul>
-  </div>
-  {% endblock %}
---> 
 
