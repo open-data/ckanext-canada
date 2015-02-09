@@ -6,6 +6,12 @@
 
   "form_languages": ["en", "fr"],
 
+  "catalog_type_label": {
+    "en": "Raw Data",
+    "fr": "Donn\u00e9es"
+  },
+  "languages_label": ["eng; CAN", "fra; CAN"],
+
   "dataset_fields": [
     {
       "field_name": "owner_org",
@@ -26,21 +32,6 @@
         "en": "Digital Object Identifier",
         "fr": "Identificateur d\u2019objet num\u00e9rique"
       }
-    },
-
-    {
-      "field_name": "catalog_type",
-      "preset": "stamp_value",
-      "value": {
-        "en": "Raw Data",
-        "fr": "Donn\u00e9es"
-      }
-    },
-
-    {
-      "field_name": "language",
-      "preset": "stamp_value",
-      "value": ["eng; CAN", "fra; CAN"]
     },
 
     {
@@ -67,11 +58,11 @@
     {
       "field_name": "notes",
       "required": true,
+      "preset": "fluent_markdown",
       "label": {
         "en": "Description",
         "fr": "Description"
       },
-      "form_snippet": "markdown.html",
       "form_placeholder": {
         "en": "The National Pollutant Release Inventory (NPRI) is Canada's public inventory of pollutant releases (to air, water and land), disposals and transfers for recycling. The NPRI includes...",
         "fr": "L\u2019Inventaire national des rejets de polluants (INRP) est l\u2019inventaire public des rejets de polluants du Canada\u2026"
