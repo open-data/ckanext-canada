@@ -100,7 +100,15 @@ class CanadaController(BaseController):
 
     def logged_in(self):
         # we need to set the language via a redirect
+
+        # Lang is not being retrieved properly by the Babel i18n lib in this redirect, so using
+        # this clunky workaround for now.
         lang = session.pop('lang', None)
+        if lang is None:
+            came_from = request.params.get('came_from', '')
+            if came_from.startswith('/fr'):
+                lang = 'fr'
+
         session.save()
 
         # we need to set the language explicitly here or the flash
