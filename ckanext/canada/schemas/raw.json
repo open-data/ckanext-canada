@@ -14,6 +14,17 @@
 
   "dataset_fields": [
     {
+      "field_name": "id",
+      "form_snippet": null,
+      "create_validators": "empty_if_not_sysadmin if_empty_generate_uuid unicode name_validator package_id_does_not_exist"
+    },
+    {
+      "field_name": "name",
+      "form_snippet": null,
+      "validators": "if_empty_same_as(id)"
+    },
+
+    {
       "field_name": "owner_org",
       "label": {
         "en": "Publisher",
@@ -49,13 +60,6 @@
     },
 
     {
-      "field_name": "name",
-      "form_snippet": null,
-      "display_snippet": null,
-      "validators": "if_empty_same_as(id)"
-    },
-
-    {
       "field_name": "notes",
       "required": true,
       "preset": "fluent_markdown",
@@ -76,7 +80,7 @@
     {
       "field_name": "subject",
       "required": true,
-      "preset": "multiple_choice",
+      "preset": "multiple_checkbox",
       "choices": [
         {
           "label": {
@@ -391,7 +395,7 @@
 
     {
       "field_name": "geographic_region",
-      "preset": "multiple_choice",
+      "preset": "multiple_select",
       "label": {
         "en": "Geographic Region",
         "fr": "R\u00e9gion g\u00e9ographique"
@@ -2735,7 +2739,8 @@
       "help_text": {
         "en": "The estimated size of a unit in the specified transfer format, expressed in bytes.",
         "fr": "La taille approximative d\u2019une unit\u00e9 dans le format de transfert pr\u00e9cis, en octets."
-      }
+      },
+      "validators": "ignore_missing int_validator"
     },
 
     {

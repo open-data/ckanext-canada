@@ -8,7 +8,8 @@ from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
-         update_package_schema, show_package_schema)
+         update_package_schema, show_package_schema, if_empty_generate_uuid,
+         )
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -208,6 +209,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     p.implements(p.IConfigurable)
     p.implements(p.IActions)
     p.implements(p.IDatasetForm, inherit=True)
+    p.implements(p.IValidators, inherit=True)
 
     # IConfigurable
 
@@ -248,6 +250,13 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
 
     def show_package_schema(self):
         return show_package_schema()
+
+    # IValidators
+
+    def get_validators(self):
+        return {
+            'if_empty_generate_uuid': if_empty_generate_uuid,
+            }
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
