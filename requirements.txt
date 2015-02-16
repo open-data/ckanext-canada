@@ -1,5 +1,7 @@
--e git+https://github.com/open-data/ckanext-wet-boew@master#egg=ckanext-wet-boew
+-e git+https://github.com/open-data/ckanext-wet-boew@wet4-scheming#egg=ckanext-wet-boew
 ckanapi>=2.1
 lxml
 shapely==1.2.17
 docopt
+-e git+https://github.com/open-data/ckanext-scheming
+-e git+https://github.com/open-data/ckanext-fluent
