@@ -16,6 +16,7 @@
     {
       "field_name": "id",
       "form_snippet": null,
+      "display_snippet": null,
       "create_validators": "empty_if_not_sysadmin if_empty_generate_uuid unicode name_validator package_id_does_not_exist"
     },
     {
@@ -81,6 +82,10 @@
       "field_name": "subject",
       "required": true,
       "preset": "multiple_checkbox",
+      "label": {
+        "en": "Subject",
+        "fr": "Sujet"
+      },
       "choices": [
         {
           "label": {
