@@ -10,7 +10,7 @@
   <td>
     {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
     {% if name_field in res and res[name_field] %}
-      {{ h.markdown_extract(res[name_field], extract_length=80) }}
+      { h.markdown_extract(res[name_field], extract_length=80) }
     {% else %}
       <span class="empty">{{ _('No description for this resource') }}</span>
     {% endif %}

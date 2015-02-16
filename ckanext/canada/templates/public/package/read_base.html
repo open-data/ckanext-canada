@@ -43,7 +43,7 @@
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
       <li class="list-group-item"><b>{{ cr.field_label(keywords, client_lang) }}:</b>
         <small>
-        {{ cr.keyword_field(keywords, pkg, client_lang) }}
+        { cr.keyword_field(keywords, pkg, client_lang) }
         </small>
       </li>
 
