@@ -1,4 +1,4 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
+{# vim: set filetype=htmljinja sw=2 sts=2: #}
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
@@ -6,7 +6,7 @@
 {% set client_lang = h.lang() %}
 {% set wet_server = h.wet_url() %}
 
-{% block subtitle %}{{ cr.field_id('title', pkg, client_lang) or pkg.name }}{% endblock %}
+{% block subtitle %}{% endblock %}
 
 {% block package_item_title %}
 {% if pkg.state.startswith('draft') %}
@@ -185,5 +185,7 @@
 <![endif]-->
 {% endblock %}
 
+{% block package_resources %}{% endblock %}
+{% block package_license %}{% endblock %}
 
 
