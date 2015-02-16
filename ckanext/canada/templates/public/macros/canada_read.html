@@ -182,7 +182,7 @@ Display a license name in the correct language
 Choose the most appropriate display name for a resource
 #}
 {%- macro resource_display_name(res, client_lang) -%}
-  {%- set name = res.name_fra if client_lang == 'fr' else res.name -%}
+  {%- set name = res.name.fr if client_lang == 'fr' else res.name.en -%}
   {%- if name -%}
     {{- name -}}
   {%- else -%}
