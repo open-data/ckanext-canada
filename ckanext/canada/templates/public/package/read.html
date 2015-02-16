@@ -25,7 +25,7 @@
     </section>
   
     <section class="module-content indent-large">
-      <h1>{{ cr.field_id('title', pkg, client_lang) or pkg.name }}
+      <h1>{{ pkg.title[client_lang] or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
