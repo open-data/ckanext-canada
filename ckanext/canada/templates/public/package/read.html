@@ -32,7 +32,7 @@
       </h1>
       {% if c.pkg_notes_formatted %}
         <div>
-          {{ cr.field_id('notes', pkg, client_lang) }}
+          {{ h.render_markdown(pkg.notes[client_lang]) }}
         </div>
       {% endif %} 
 
