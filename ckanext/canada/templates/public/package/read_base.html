@@ -16,13 +16,12 @@ Remove the markdown_extract call because our notes is a dict not a string:
 {% endblock %}
 
 {% block breadcrumb_content %}
-  {% set dataset = pkg.title or pkg.name %}
+  {% set dataset = pkg.title[client_lang] or pkg.name %}
   {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
   <li>{% link_for _('Search Open Data'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% if client_lang == 'fr' %}{{ pkg.title_fra }}{% else %}{{ pkg.title }}{% endif %}</li>
+  <li>{{ dataset }}</li>
 {% endblock %}
 
-{% set info_title = pkg.title or pkg.name %}
 {% set page_title  = _('{record_title} - Open Data Portal - Open Data') %}
 {% block title %}{{ cr.field_id('title', pkg, client_lang) or pkg.name }}{% endblock %}
 
