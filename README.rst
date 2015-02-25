@@ -9,24 +9,21 @@ Features:
 
 * Forms and Validation for GoC Metadata Schema
 
-  * complete, but planning to migrate to ckanext-scheming once it is ready
-
 Installation:
 
-* Use `open-data fork of CKAN<https://github.com/open-data/ckan>`_,
+* Use `open-data fork of CKAN <https://github.com/open-data/ckan>`_ ,
   branch canada-v2.3
 
 From a clean database you must run::
 
-   paster canada create-vocabularies
    ckanapi load organizations -I transitional_orgs.jsonl
 
-Once to create the tag vocabularies and organizations this extension requires
+Once to create the organizations this extension requires
 before loading any data.
 
 
-Plugins
--------
+Plugins in this extension
+-------------------------
 
 ``canada_forms``
   dataset forms for Open Canada metadata schema
@@ -60,17 +57,21 @@ Requirements
    - N/A
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
-   - master
+   - wet4-scheming
    - * canada_forms
      * canada_internal
      * canada_public
      * canada_package
  * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
-   - master
+   - wet4-scheming
    - * wet_theme
- * - WET-BOEW
-   - `open-data/wet-boew <https://github.com/open-data/wet-boew>`_
+ * - Scheming extension
+   - `open-data/ckanext-scheming <https://github.com/open-data/ckanext-scheming>`_
+   - master
+   - scheming_datasets
+ * - Fluent extension
+   - `open-data/ckanext-fluent <https://github.com/open-data/ckanext-fluent>`_
    - master
    - N/A
  * - ckanapi
@@ -90,49 +91,44 @@ Requirements
 Configuration: development.ini or production.ini
 ------------------------------------------------
 
-The CKAN ini file needs the following plugins for the registry server::
+The CKAN ini file needs the following settings for the registry server::
 
-   ckan.plugins = googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
+   ckan.plugins = googleanalytics canada_forms canada_internal
+        canada_public canada_package wet_theme datastore recombinant
+        scheming_datasets fluent
+
+   recombinant.tables = ckanext.canada:recombinant_tables.json
 
 For the public server use only::
 
-   ckan.plugins = googleanalytics canada_forms canada_public canada_package wet_theme
+   ckan.plugins = googleanalytics canada_forms
+        canada_public canada_package wet_theme
+        scheming_datasets fluent
 
-CKAN also needs to be able to find the licenses file for the license list
-to be correctly populated::
+   canada.portal_url = http://myserver.com
+
+Both servers need::
+
+   scheming.dataset_schemas =
+       ckanext.canada:schemas/raw.json
+
+   scheming.presets = ckanext.scheming:presets.json
+       ckanext.fluent:presets.json
+       ckanext.canada:schemas/presets.json
 
    licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
-Combined ckan translations must be found the correct location::
-
    ckan.i18n_directory = <path to this extension>/build/i18n
-
-Users that don't belong to an Organization should not be allowed to create
-datasets, without this setting the form will be presented but fail during
-validation::
 
    ckan.auth.create_dataset_if_not_in_organization = false
 
-We aren't using notification emails, so they need to be disabled::
-
    ckan.activity_streams_email_notifications = false
 
-Additionally, we want to limit the search results page to 10 results per page::
-
    ckan.datasets_per_page = 10
-
-To integrate Google Analytics::
 
    googleanalytics.id = UA-1010101-1 (your analytics account id)
    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
 
-For the public server, also set the Drupal portal URL::
-
-   canada.portal_url = http://myserver.com
-
-For the registry server set up recombinant configuration for ATI summaries::
-
-   recombinant.tables = ckanext.canada:recombinant_tables.json
 
 
 Configuration: Solr

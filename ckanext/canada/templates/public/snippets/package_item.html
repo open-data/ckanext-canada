@@ -1,48 +1,102 @@
-{% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
+{#
+Displays a single of dataset.
+
+package        - A package to display.
+item_class     - The class name to use on the list item.
+hide_resources - If true hides the resources (default: false).
+banner         - If true displays a popular banner (default: false).
+truncate       - The length to trucate the description to (default: 180)
+truncate_title - The length to truncate the title to (default: 80).
+
+Example:
+
+  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+
+#}
 {% set client_lang = h.lang() %}
+{% set truncate = truncate or 180 %}
+{% set truncate_title = truncate_title or 80 %}
+{% set title = package.title or package.name %}
+{% set notes = h.markdown_extract(package.notes[client_lang], extract_length=truncate) %}
+
+{% block package_item %}
+<li>
+  <div class="panel panel-default mrgn-bttm-sm">
+
+    <header class="panel-heading"><h3 class="panel-title">
+      {% block heading %}
+        {% set my_title = package['title'][client_lang] %}
+
+        {#- FIXME: continuing to add static text here doesn't scale -#}
+        {%- if package.type == 'ati-summaries' -%}
+          {%- set title = _("ATI Summaries") -%}
+          {%- set desc = _("This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries.") -%}
+        {%- elif package.type == 'ati-none' -%}
+          {%- set title = _("ATI Nothing to Report") -%}
+          {%- set desc = _("This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report.") -%}
+        {%- else -%}
+          {% set title = cr.field_id('title', package, client_lang) %}
+          {% set desc = cr.field_id('notes', package, client_lang) %}
+        {%- endif -%}
+
+        {% block heading_private %}
+          {% if package.private %}
+            <span class="dataset-private label label-inverse">
+              <i class="icon-lock"></i>
+              {{ _('Private') }}
+            </span>
+          {% endif %}
+        {% endblock %}
+        {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+        {% block heading_meta %}
+          {% if package.get('state', '').startswith('draft') %}
+            <span class="label label-info">{{ _('Draft') }}</span>
+          {% elif package.get('state', '').startswith('deleted') %}
+            <span class="label label-important">{{ _('Deleted') }}</span>
+          {% endif %}
+          {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
+        {% endblock %}
+      {% endblock %}
+    </h3></header>
+
+    <div class="panel-body">
+      {% block banner %}
+        {% if banner %}
+          <span class="banner">{{ _('Popular') }}</span>
+        {% endif %}
+      {% endblock %}
+      {% block notes %}
+        {% if notes %}
+          <div>{{ notes|urlize }}</div>
+        {% else %}
+          <p class="empty">{{ _("This dataset has no description") }}</p>
+        {% endif %}
+      {% endblock %}
+    </div>
+    {% block resources %}
+      {% if package.resources and not hide_resources %}
+        {% block resources_outer %}
+          <div class="row">
+            <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+            <div class="col-md-9">
+              <ul class="list-inline list-unstyled">
+                {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                  <li><span class="badge">{{ resource }}</span></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% endblock %}
+      {% endif %}
+    {% endblock %}
+  </li>
+{% endblock %}
 
 {% block publisher_info %}
 <div class="row mrgn-tp-sm">
   <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
   <div class="cold-md-9">{{ cr.org_field(package, client_lang) }}</div>
 </div>
-{% endblock %}
-
-{% block notes %}
-  {% if client_lang == 'fr' %}
-    {% set notes = h.markdown_extract(package.notes_fra, extract_length=truncate) %}
-  {% else %}
-    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
-  {% endif %}
-  {% if notes %}
-    <div>{{ notes|urlize }}</div>
-  {% else %}
-    <p class="empty">{{ _("This dataset has no description") }}</p>
-  {% endif %}
-{% endblock %}
-
-{% block heading %}
-  {% if client_lang == 'fr' %}
-    {% set my_title = package['title_fra']%}
-  {% else %}
-    {% set my_title = package['title']%}
-  {% endif %}
-
-  {#- FIXME: continuing to add static text here doesn't scale -#}
-  {%- if package.type == 'ati-summaries' -%}
-    {%- set title = _("ATI Summaries") -%}
-    {%- set desc = _("This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries.") -%}
-  {%- elif package.type == 'ati-none' -%}
-    {%- set title = _("ATI Nothing to Report") -%}
-    {%- set desc = _("This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report.") -%}
-  {%- else -%}
-    {% set title = cr.field_id('title', package, client_lang) %}
-    {% set desc = cr.field_id('notes', package, client_lang) %}
-  {%- endif -%}
-
-  {% block heading_private %}{{ super() }}{% endblock %}
-    {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
-  {% block heading_meta %}{{ super() }}{% endblock %}
 {% endblock %}
