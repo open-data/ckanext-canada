@@ -128,7 +128,8 @@ def usage():
 
 def _set_new_schema_dataset_choices():
     """
-    Initialize tree of choices (label:value) for new schema dataset choice fields
+    Initialize tree of choices (label:value) for new schema dataset
+    choice fields
     """
     global sd_new_dfc
     _HERE = path.dirname(path.abspath(__file__))
@@ -152,7 +153,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         usage()
 
-    # Input path must refer to a regular file or a symbolic link to a regular file
+    # Input path must refer to a regular file or a sym-link to a regular file
     fpath_jsonl_old = sys.argv[1]
     if path.islink(fpath_jsonl_old):
         fpath_jsonl_old = readlink(fpath_jsonl_old)
