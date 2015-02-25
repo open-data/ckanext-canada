@@ -67,11 +67,20 @@ def _process(line):
     # dump tags: redundant
     rec['tags'] = []
 
-    # merge biligual keys
+    # merge biligual keys -- only keywords ought to become a list
     bi_fr_keys = [k for k in rec.keys() if k.endswith(SUFFIX_FRA)]
     for k_fra in bi_fr_keys:
         k = k_fra[:-LEN_SUFFIX_FRA]
-        rec[k] = dict(zip(LANG_KEYS, (rec.pop(k, None), rec.pop(k_fra, None))))
+        if k == 'keywords':
+            rec[k] = dict(zip(LANG_KEYS, (
+                [] if rec.get(k) is None else [
+                    token.strip() for token in rec.pop(k).split(',')],
+                [] if rec.get(k_fra) is None else [
+                    token.strip() for token in rec.pop(k_fra).split(',')])))
+        else:
+            rec[k] = dict(zip(LANG_KEYS, (
+                rec.pop(k, None),
+                rec.pop(k_fra, None))))
 
     # convert subject english-sp-sp-french content to fluent text
     rec['subject'] = [
@@ -105,7 +114,7 @@ def _main(fpath_jsonl_old, fpath_jsonl_new):
     With input JSONL data file, open and process a line at a time;
     write output to gzipped JSONL new-style file
     """
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
     with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
         with gzip.open(fpath_jsonl_new, 'wb') as fp_out:
