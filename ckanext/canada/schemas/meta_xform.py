@@ -114,7 +114,7 @@ def _main(fpath_jsonl_old, fpath_jsonl_new):
     With input JSONL data file, open and process a line at a time;
     write output to gzipped JSONL new-style file
     """
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
     with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
         with gzip.open(fpath_jsonl_new, 'wb') as fp_out:
