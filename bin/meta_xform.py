@@ -1,4 +1,4 @@
-__author__ = 'klumste'
+#!/usr/bin/env python
 
 """
 Transform metadata .jsonl file from CKAN 2.1 alignment to 2.3
@@ -142,7 +142,9 @@ def _set_new_schema_dataset_choices():
     """
     global sd_new_dfc
     _HERE = path.dirname(path.abspath(__file__))
-    _JSON_NAME = path.join(_HERE, 'raw.json')
+    _SCHEMAS_DIR = path.join(path.dirname(_HERE),'ckanext/canada/schemas')
+    _JSON_NAME = path.join(_SCHEMAS_DIR, 'raw.json')
+
     with open(_JSON_NAME) as j:
         sd_new = simplejson.load(j)
     sd_new_dfc = {
@@ -170,11 +172,11 @@ if __name__ == '__main__':
         usage()
 
     # Input path must refer to a gzipped file
-    fpath_jsonl_old = path.abspath(fpath_jsonl_old)
+    fpath_jsonl_old = path.expanduser(path.abspath(fpath_jsonl_old))
     if not _is_gzipped(fpath_jsonl_old):
         usage()
 
-    fpath_jsonl_new = sys.argv[2]
+    fpath_jsonl_new = path.expanduser(path.abspath(sys.argv[2]))
 
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
