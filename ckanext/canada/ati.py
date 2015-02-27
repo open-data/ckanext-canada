@@ -129,6 +129,8 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'ati_email':
                 ati_email = e['value']
 
+        num_pages = re.sub(r'[^0-9]','',r.get('pages', '') # e.g., 12,345->12345
+
         # don't ask why, just doing it the way it was done before
         out.append({
             'bundle': 'ati_summaries',
@@ -142,7 +144,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_disposition_en': r.get('disposition', '').split(' / ', 1)[0],
             'ss_ati_month_en': '{0:02d}'.format(r['month']),
             'ss_ati_monthname_en': calendar.month_name[month],
-            'ss_ati_number_of_pages_en': r.get('pages', ''),
+            'ss_ati_number_of_pages_en': num_pages,
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
             'ss_ati_year_en': r['year'],
             'ss_ati_org_shortform_en': shortform,
@@ -163,7 +165,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
             'ss_ati_month_fr': '{0:02d}'.format(r['month']),
             'ss_ati_monthname_fr': MONTHS_FRA[month],
-            'ss_ati_number_of_pages_fr': r.get('pages', ''),
+            'ss_ati_number_of_pages_fr': num_pages,
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': r['year'],
             'ss_ati_org_shortform_fr': shortform_fr,
