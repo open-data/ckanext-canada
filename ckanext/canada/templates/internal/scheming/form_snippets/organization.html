@@ -20,10 +20,10 @@
            <option value="" {% if not selected_org and data.id %} selected="selected" {% endif %}>{{ _('No organization') }}</option>
         {% endif %}
         {% for organization in organizations_available %}
-          {# get out first org from users list only if there is not an existing org #}
+          {# get our first org from users list only if there is not an existing org #}
           {% set selected_org = (existing_org and existing_org == organization.id) or (
             not existing_org and not data.id and organization.id == organizations_available[0].id) %}
-          {% set title = cr.split_bilingual_field(organization.title, h.lang()) %}
+          {% set title = cr.split_bilingual_field(organization.title, h.lang())[:70] %}
           <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ title }}</option>
         {% endfor %}
       </select>
