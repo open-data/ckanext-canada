@@ -4,9 +4,6 @@
 {% import 'macros/form_canada.html' as cform %}
 {% import 'macros/canada_read.html' as cr %}
 
-{% block errors %}{{ cform.errors(
-  errors, schema_description.dataset_field_by_id, h.lang()) }}{% endblock %}
-
 {% block disclaimer %}
   <p class="action-info small">
     {% set license = h.get_license('ca-ogl-lgo') %}
