@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from pylons.i18n import _
 from paste.deploy.converters import asbool
 from ckan.logic.schema import (default_create_package_schema,
@@ -8,7 +10,7 @@ from ckan.lib.navl.validators import (ignore, ignore_missing, not_empty, empty,
     if_empty_same_as)
 from ckan.logic.validators import (isodate, tag_string_convert,
     name_validator, package_name_validator, boolean_validator,
-    owner_org_validator, duplicate_extras_key)
+    owner_org_validator, duplicate_extras_key, tag_name_validator)
 from ckan.lib.navl.dictization_functions import Invalid, missing
 from ckan.new_authz import is_sysadmin
 from ckan.model.package import Package
@@ -196,6 +198,22 @@ def keywords_validate(key, data, errors, context):
     data = {key: data[key].replace("'", "-")}
     try:
         tag_string_convert(key, data, errors, context)
+    except Invalid, e:
+        e.error = e.error.replace("-_.", "' - _ .")
+        raise e
+
+
+def canada_tags(value, context):
+    """
+    Accept tags with apostrope, convert other apostrophe-like characters
+    to straight apostrophe
+    """
+    value = value.replace(u"´", u"'")
+    value = value.replace(u"‘", u"'")
+    value = value.replace(u"’", u"'")
+    try:
+        tag_name_validator(value.replace(u"'", u"-"), {})
+        return value
     except Invalid, e:
         e.error = e.error.replace("-_.", "' - _ .")
         raise e

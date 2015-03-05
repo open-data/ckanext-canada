@@ -9,6 +9,7 @@ from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import (create_package_schema,
          update_package_schema, show_package_schema, if_empty_generate_uuid,
+         canada_tags,
          )
 from ckanext.canada import logic
 from ckanext.canada import helpers
@@ -256,6 +257,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     def get_validators(self):
         return {
             'if_empty_generate_uuid': if_empty_generate_uuid,
+            'canada_tags': canada_tags,
             }
 
 
