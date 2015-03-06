@@ -11,7 +11,6 @@ from os import readlink
 import gzip
 import logging
 import os.path as path
-import shlex
 import subprocess
 import sys
 
@@ -27,15 +26,6 @@ SP_PIPE_SP = ' | '
 # new schema description, data field choices
 sd_new = None
 sd_new_dfc = None
-
-def _is_gzipped(fpath):
-    """
-    Return True if input path is a gzipped file, False otherwise
-    """
-    cmd = shlex.split('file --mime-type {0}'.format(fpath))
-    result = subprocess.check_output(cmd)
-    mime_type = result.split()[-1]
-    return (mime_type == 'application/x-gzip')
 
 def _is_geodata(rec):
     """
@@ -118,10 +108,15 @@ def _main(fpath_jsonl_old, fpath_jsonl_new):
 
     with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
         with gzip.open(fpath_jsonl_new, 'wb') as fp_out:
-            for line in fp_in:
-                rec = _process(line.rstrip())
-                if (rec):
-                    fp_out.write(simplejson.dumps(rec) + '\n')
+            try:
+                for line in fp_in:
+                    rec = _process(line.rstrip())
+                    if (rec):
+                        fp_out.write(simplejson.dumps(rec) + '\n')
+            except IOError:
+                print >> sys.stderr, (
+                    'Error: input file <{0}> not gzipped'.format(
+                        fpath_jsonl_old))
 
 def usage():
     """
@@ -172,11 +167,11 @@ if __name__ == '__main__':
         usage()
 
     # Input path must refer to a gzipped file
-    fpath_jsonl_old = path.expanduser(path.abspath(fpath_jsonl_old))
-    if not _is_gzipped(fpath_jsonl_old):
-        usage()
+    fpath_jsonl_old = path.expanduser(
+        path.expandvars(path.abspath(fpath_jsonl_old)))
 
-    fpath_jsonl_new = path.expanduser(path.abspath(sys.argv[2]))
+    fpath_jsonl_new = path.expanduser(
+        path.expandvars(path.abspath(sys.argv[2])))
 
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
