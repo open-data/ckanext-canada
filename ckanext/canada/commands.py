@@ -33,9 +33,7 @@ class CanadaCommand(CkanCommand):
 
     Usage::
 
-        paster canada create-vocabularies
-                      delete-vocabularies
-                      portal-update <remote server>
+        paster canada portal-update <remote server>
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-f | -a <push-apikey>] [-p <num>] [-m]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
@@ -98,14 +96,6 @@ class CanadaCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        if cmd == 'delete-vocabularies':
-            for name in schema_description.vocabularies:
-                self.delete_vocabulary(name)
-
-        elif cmd == 'create-vocabularies':
-            for name, terms in schema_description.vocabularies.iteritems():
-                self.create_vocabulary(name, terms)
-
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
@@ -133,32 +123,6 @@ class CanadaCommand(CkanCommand):
             raise AssertionError('Config filename %r does not exist.' % self.filename)
         fileConfig(self.filename)
         conf = appconfig('config:' + self.filename)
-
-    def delete_vocabulary(self, name):
-        registry = LocalCKAN()
-        vocab = registry.action.vocabulary_show(id=name)
-        for t in vocab['tags']:
-            registry.action.tag_delete(id=t['id'])
-        registry.action.vocabulary_delete(id=vocab['id'])
-
-    def create_vocabulary(self, name, terms):
-        registry = LocalCKAN()
-        try:
-            vocab = registry.action.vocabulary_show(id=name)
-            print "{name} vocabulary exists, skipping".format(name=name)
-            return
-        except NotFound:
-            pass
-        print 'creating {name} vocabulary'.format(name=name)
-        vocab = registry.action.vocabulary_create(name=name)
-        for term in terms:
-            # don't create items that only existed in pilot
-            if 'id' not in term:
-                continue
-            registry.action.tag_create(
-                name=term['key'],
-                vocabulary_id=vocab['id'],
-                )
 
     def portal_update(self, source, activity_date=None):
         """
