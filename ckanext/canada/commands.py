@@ -96,7 +96,7 @@ class CanadaCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        elif cmd == 'portal-update':
+        if cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
         elif cmd == 'copy-datasets':
