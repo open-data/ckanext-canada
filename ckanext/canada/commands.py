@@ -4,6 +4,8 @@ from ckan.logic.validators import isodate, boolean_validator
 from ckan.lib.navl.dictization_functions import Invalid
 import paste.script
 from paste.script.util.logging_config import fileConfig
+from ckanapi.cli.workers import worker_pool
+from ckanapi.cli.utils import completion_stats
 
 import re
 import os
@@ -15,8 +17,6 @@ from datetime import datetime, timedelta
 from contextlib import contextmanager
 
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.workers import worker_pool
-from ckanext.canada.stats import completion_stats
 from ckanext.canada.navl_schema import convert_pilot_uuid_list
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
