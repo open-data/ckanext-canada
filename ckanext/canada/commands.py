@@ -36,10 +36,6 @@ class CanadaCommand(CkanCommand):
 
         paster canada create-vocabularies
                       delete-vocabularies
-                      load-datasets <.jl source file>
-                                    [<starting line number> [<lines to load>]]
-                                    [-r] [-p <num>] [-u <username>]
-                                    [-l <log file>] [-z]
                       portal-update <remote server>
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-f | -a <push-apikey>] [-p <num>] [-m]
@@ -119,13 +115,6 @@ class CanadaCommand(CkanCommand):
             for name, terms in schema_description.vocabularies.iteritems():
                 self.create_vocabulary(name, terms)
 
-        elif cmd == 'load-datasets':
-            self.load_datasets(self.args[1], *self.args[2:])
-
-        elif cmd == 'load-dataset-worker':
-            with _quiet_int_pipe():
-                self.load_dataset_worker()
-
         elif cmd == 'portal-update':
             self.portal_update(self.args[1], *self.args[2:])
 
@@ -186,101 +175,6 @@ class CanadaCommand(CkanCommand):
                 name=term['key'],
                 vocabulary_id=vocab['id'],
                 )
-
-    def load_datasets(self, jl_source, start_line=1, max_count=None):
-        start_line = int(start_line)
-        if max_count is not None:
-            max_count = int(max_count)
-
-        log = None
-        if self.options.log:
-            log = open(self.options.log, 'a')
-
-        def line_reader():
-            if self.options.gzip:
-                source_file = gzip.GzipFile(jl_source)
-            else:
-                source_file = open(jl_source)
-            for num, line in enumerate(source_file, 1):
-                if num < start_line:
-                    continue
-                if max_count is not None and num >= start_line + max_count:
-                    break
-                yield num, line.strip()
-        cmd = [sys.argv[0], 'canada', 'load-dataset-worker',
-            '-c', self.options.config]
-        if self.options.ckan_user:
-            cmd += ['-u', self.options.ckan_user]
-        if self.options.replace_datasets:
-            cmd += ['-r']
-
-        stats = completion_stats(self.options.processes)
-        pool = worker_pool(cmd, self.options.processes, line_reader())
-        with _quiet_int_pipe():
-            for job_ids, finished, result in pool:
-                timestamp, action, error, response = json.loads(result)
-                print job_ids, stats.next(), finished, action,
-                print json.dumps(response) if response else ''
-                if log:
-                    log.write(json.dumps([
-                        timestamp,
-                        finished,
-                        action,
-                        error,
-                        response,
-                        ]) + '\n')
-                    log.flush()
-
-    def load_dataset_worker(self):
-        """
-        a process that accepts lines of json on stdin which is parsed and
-        passed to the package_create action.  it produces lines of json
-        which are the responses from each action call.
-        """
-        registry = LocalCKAN(self.options.ckan_user, {'return_id_only': True})
-
-        def reply(action, error, response):
-            sys.stdout.write(json.dumps([
-                datetime.now().isoformat(),
-                action,
-                error,
-                response]) + '\n')
-
-        for line in iter(sys.stdin.readline, ''):
-            try:
-                pkg = json.loads(line)
-            except UnicodeDecodeError, e:
-                pkg = None
-                reply('read', 'UnicodeDecodeError', unicode(e))
-
-            if pkg:
-                _trim_package(pkg)
-
-                existing = None
-                if self.options.replace_datasets:
-                    try:
-                        existing = registry.action.package_show(id=pkg['id'])
-                        _trim_package(existing)
-                    except NotFound:
-                        existing = None
-                    if existing == pkg:
-                        reply('unchanged', None, None)
-                        pkg = None
-
-            if pkg:
-                action = 'replace' if existing else 'create'
-                try:
-                    if existing:
-                        response = registry.action.package_update(**pkg)
-                    else:
-                        response = registry.action.package_create(**pkg)
-                except ValidationError, e:
-                    reply(action, 'ValidationError', e.error_dict)
-                except SearchIndexError, e:
-                    reply(action, 'SearchIndexError', unicode(e))
-                else:
-                    reply(action, None, response)
-            sys.stdout.flush()
 
     def portal_update(self, source, activity_date=None):
         """
