@@ -120,28 +120,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.normal_action.package_create,
             **raw_pkg)
 
-    def test_pilot_uuids(self):
-        pilot_pkg = dict(self.complete_pkg,
-            subject=['BEF4D60C-E2D1-46B9-96C0-B55902F076F1'],
-            geographic_region=['E65D06CB-F120-43E6-B037-83F699C84BAE'],
-            resources = [dict(self.complete_pkg['resources'][0],
-                format='D91DAAF4-0BD5-4F0C-A4FA-F99E89642315',
-                )],
-            )
-
-        pkg = self.normal_action.package_create(**pilot_pkg)
-        assert pkg['subject'] == [u"Persons  Personnes"]
-        assert pkg['geographic_region'] == [
-            u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
-        assert pkg['resources'][0]['format'] == u'XML'
-
-        pkg = self.action.package_show(id=pkg['id'])
-        assert pkg['subject'] == [u"Persons  Personnes"]
-        assert pkg['geographic_region'] == [
-            u"Newfoundland and Labrador  Terre-Neuve-et-Labrador"]
-        assert pkg['resources'][0]['format'] == u'XML'
-
-
     def test_tag_extras_bug(self):
         resp = self.normal_action.package_create(
             **self.complete_pkg)
