@@ -311,17 +311,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
         
         data_dict['subject'] = list()
-        
-        if 'vocab_gc_core_subject_thesaurus' in data_dict:
-            data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
-        
-        if 'vocab_iso_topic_categories' in data_dict:
-            topics = data_dict['vocab_iso_topic_categories']
-            for topic in topics:
-                subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
-                for subject_id in subject_ids:
-                    data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
-        
+
         if 'portal_release_date' in data_dict:
             data_dict.pop('ready_to_publish', None)
         elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':

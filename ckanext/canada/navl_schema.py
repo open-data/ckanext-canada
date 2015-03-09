@@ -129,10 +129,6 @@ def _schema_field_validators(name, lang, field):
         edit.append(isodate)
     elif field['type'] == 'keywords':
         edit.append(keywords_validate)
-    elif field['type'] == 'tag_vocabulary':
-        return (edit + [convert_pilot_uuid_list(field),
-                convert_to_tags(field['vocabulary'])],
-            view + [convert_from_tags(field['vocabulary'])])
     elif field['type'] == 'boolean':
         edit.extend([unicode, boolean_validator])
         view.extend([convert_from_extras, ignore_missing, boolean_validator])
