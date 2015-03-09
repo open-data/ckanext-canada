@@ -10,7 +10,6 @@ import os
 import json
 import time
 import sys
-import gzip
 import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
@@ -42,11 +41,8 @@ class CanadaCommand(CkanCommand):
                                     [-l <log file>] [-t <num> [-d <seconds>]]
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
-                      dump-datasets [-p <num>] [-z]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
 
-        <starting line number> of .jl source file, default: 1
-        <lines to load> from .jl source file, default: all lines
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
 
@@ -65,20 +61,16 @@ class CanadaCommand(CkanCommand):
                                     unreleased datasets as deleted
         -p/--processes <num>        sets the number of worker processes,
                                     default: 1
-        -r/--replace-datasets       enable replacing existing datasets
         -s/--server <remote server> retrieve from <remote server>
         -t/--tries <num>            try <num> times, set > 1 to retry on
                                     failures, default: 1
         -u/--ckan-user <username>   sets the owner of packages created,
                                     default: ckan system user
-        -z/--gzip                   read/write gzipped data
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
 
     parser = paste.script.command.Command.standard_parser(verbose=True)
-    parser.add_option('-r', '--replace-datasets', action='store_true',
-        dest='replace_datasets', help='Replace existing datasets')
     parser.add_option('-c', '--config', dest='config',
         default='development.ini', help='Config file to use.')
     parser.add_option('-p', '--processes', dest='processes',
@@ -89,7 +81,6 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
     parser.add_option('-a', '--push-apikey', dest='push_apikey',
         default=None)
-    parser.add_option('-z', '--gzip', dest='gzip', action='store_true')
     parser.add_option('-s', '--server', dest='server', default=None)
     parser.add_option('-b', '--brief', dest='brief', action='store_true')
     parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
@@ -121,13 +112,6 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
                 self.copy_datasets(self.args[1], self.args[2:])
-
-        elif cmd == 'dump-datasets':
-            self.dump_datasets()
-
-        elif cmd == 'dump-datasets-worker':
-            with _quiet_int_pipe():
-                self.dump_datasets_worker()
 
         elif cmd == 'changed-datasets':
             self.changed_datasets(*self.args[1:])
@@ -403,48 +387,6 @@ class CanadaCommand(CkanCommand):
                 portal.action.package_update(**source_pkg)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
-            sys.stdout.flush()
-
-
-    def dump_datasets(self):
-        """
-        Output all public datasets as a .jl file
-        """
-        registry = LocalCKAN('visitor')
-        package_names = registry.action.package_list()
-
-        cmd = [sys.argv[0], 'canada', 'dump-datasets-worker',
-            '-c', self.options.config]
-        stats = completion_stats(self.options.processes)
-        pool = worker_pool(cmd, self.options.processes,
-            enumerate(package_names))
-
-        sink = sys.stdout
-        if self.options.gzip:
-            sink = gzip.GzipFile(fileobj=sys.stdout, mode='wb')
-        expecting_number = 0
-        results = {}
-        with _quiet_int_pipe():
-            for job_ids, finished, result in pool:
-                sys.stderr.write("%s %s %s\n" % (
-                    job_ids, stats.next(), finished))
-                results[finished] = result
-                # keep the output in the same order as package_names
-                while expecting_number in results:
-                    sink.write(results.pop(expecting_number))
-                    expecting_number += 1
-
-    def dump_datasets_worker(self):
-        """
-        a process that accepts package names, one per line, and outputs
-        lines of json containing that package data.
-        """
-        registry = LocalCKAN('visitor')
-
-        for name in iter(sys.stdin.readline, ''):
-            sys.stdout.write(json.dumps(
-                registry.action.package_show(id=name.strip()), sort_keys=True)
-                + '\n')
             sys.stdout.flush()
 
 
