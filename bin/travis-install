@@ -28,16 +28,6 @@ pip install -r requirements.txt
 
 python setup.py develop
 
-cd dl
-wget http://github.com/wet-boew/wet-boew-dist/archive/v3.1.2-release-dist.zip
-unzip v3.1.2-release-dist.zip > /dev/null
-DIST_DIR="`python -c'import ckanext.wet_boew as wb; print wb.__file__.rsplit("/",1)[0]'`"/public/dist
-echo mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
-mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
-wget http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.js \
-    -O "$DIST_DIR/js/jquerymobile/jquery.mobile-1.3.0.js"
-cd -
-
 # Configure Solr
 echo "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME" | sudo tee /etc/default/jetty
 # FIXME the solr schema cannot be hardcoded as it is dependent on the ckan version
