@@ -142,11 +142,12 @@ def _set_new_schema_dataset_choices():
 
     with open(_JSON_NAME) as j:
         sd_new = simplejson.load(j)
-    sd_new_dfc = {
-        df['field_name'] : {
-            ch['label']['en'].replace(',', '') :
-                ch['value'] for ch in df['choices']}
-        for df in sd_new['dataset_fields'] if 'choices' in df}
+    sd_new_dfc = dict((
+        df['field_name'],
+        dict((
+            ch['label']['en'].replace(',', ''),
+            ch['value']) for ch in df['choices']))
+        for df in sd_new['dataset_fields'] if 'choices' in df)
 
 if __name__ == '__main__':
     """
