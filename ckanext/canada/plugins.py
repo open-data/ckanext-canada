@@ -7,10 +7,7 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import (create_package_schema,
-         update_package_schema, show_package_schema, if_empty_generate_uuid,
-         canada_tags,
-         )
+from ckanext.canada.navl_schema import if_empty_generate_uuid, canada_tags
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -209,7 +206,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IActions)
-    p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IValidators, inherit=True)
 
     # IConfigurable
@@ -226,31 +222,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'changed_packages_activity_list_since',
             ])
         return actions
-
-    # IDatasetForm
-
-    def is_fallback(self):
-        """
-        Return True to register this plugin as the default handler for
-        package types not handled by any other IDatasetForm plugin.
-        """
-        return True
-
-    def package_types(self):
-        """
-        This plugin doesn't handle any special package types, it just
-        registers itself as the default (above).
-        """
-        return []
-
-    def create_package_schema(self):
-        return create_package_schema()
-
-    def update_package_schema(self):
-        return update_package_schema()
-
-    def show_package_schema(self):
-        return show_package_schema()
 
     # IValidators
 
