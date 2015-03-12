@@ -5,8 +5,12 @@
 {% block primary_content %}
 {{ super() }}
     <section>
-      <div>
-          {{ h.get_datapreview_ati(res.id) }}
-      </div>
+        <div>
+            {% if c.pkg_dict['type'].startswith('ati') %}
+                {{ h.get_datapreview_ati(res.id) }}
+            {% elif c.pkg_dict['type'] == 'contracts' %}
+                {{ h.get_datapreview_contracts(res.id) }}
+            {% endif %}
+        </div>
     </section>
 {% endblock %}
