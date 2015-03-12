@@ -36,7 +36,7 @@ def limit_api_logic():
         'user_activity_list',
         'member_list',
         'group_revision_list',
-        'user_show',
+        #'user_show',  FIXME: required for password reset
         'package_autocomplete',
         'format_autocomplete',
         'user_autocomplete',
