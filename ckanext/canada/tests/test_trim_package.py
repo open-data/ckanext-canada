@@ -3,8 +3,6 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 
-from ckanext.canada.commands import _trim_package
-
 from ckanapi import TestAppCKAN, ValidationError
 import json
 
@@ -48,14 +46,6 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
         for n, res in enumerate(original['resources']):
             self.assert_equal(('resources', n, res),
                 ('resources', n, existing['resources'][n]))
-
-    def test_pilot_uuids(self):
-        example = dict(self.example_pkg[1],
-            id='something-different',
-            subject="3AC17C98-F356-4CC8-BAEB-886037E5C2EE")
-        resp = self.sysadmin_action.package_create(**example)
-
-        self._trim_compare(example, resp)
 
 
 EXAMPLE_JSON_LINES = r"""
