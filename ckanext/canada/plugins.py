@@ -7,10 +7,7 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import (create_package_schema,
-         update_package_schema, show_package_schema, if_empty_generate_uuid,
-         canada_tags,
-         )
+from ckanext.canada.navl_schema import if_empty_generate_uuid, canada_tags
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -209,7 +206,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IActions)
-    p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IValidators, inherit=True)
 
     # IConfigurable
@@ -226,31 +222,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'changed_packages_activity_list_since',
             ])
         return actions
-
-    # IDatasetForm
-
-    def is_fallback(self):
-        """
-        Return True to register this plugin as the default handler for
-        package types not handled by any other IDatasetForm plugin.
-        """
-        return True
-
-    def package_types(self):
-        """
-        This plugin doesn't handle any special package types, it just
-        registers itself as the default (above).
-        """
-        return []
-
-    def create_package_schema(self):
-        return create_package_schema()
-
-    def update_package_schema(self):
-        return update_package_schema()
-
-    def show_package_schema(self):
-        return show_package_schema()
 
     # IValidators
 
@@ -311,17 +282,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
         
         data_dict['subject'] = list()
-        
-        if 'vocab_gc_core_subject_thesaurus' in data_dict:
-            data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
-        
-        if 'vocab_iso_topic_categories' in data_dict:
-            topics = data_dict['vocab_iso_topic_categories']
-            for topic in topics:
-                subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
-                for subject_id in subject_ids:
-                    data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
-        
+
         if 'portal_release_date' in data_dict:
             data_dict.pop('ready_to_publish', None)
         elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
