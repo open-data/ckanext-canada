@@ -129,8 +129,6 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'ati_email':
                 ati_email = e['value']
 
-        num_pages = re.sub(r'[^0-9]','',r.get('pages', '') # e.g., 12,345->12345
-
         # don't ask why, just doing it the way it was done before
         out.append({
             'bundle': 'ati_summaries',
