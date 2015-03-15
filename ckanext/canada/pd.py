@@ -15,7 +15,24 @@ from ckanext.recombinant.write_xls import xls_template
 from ckanext.recombinant.plugins import get_table
 
 BATCH_SIZE = 1000
-DATASET_TYPE = 'proactive-disclosure'
+DATASET_TYPE = 'contracts'
+SPLIT_XLS_ROWS = 50002
+
+MONTHS_FRA = [
+    u'', # "month 0"
+    u'janvier',
+    u'février',
+    u'mars',
+    u'avril',
+    u'mai',
+    u'juin',
+    u'juillet',
+    u'août',
+    u'septembre',
+    u'octobre',
+    u'novembre',
+    u'décembre',
+    ]
 
 class PDCommand(CkanCommand):
     """
@@ -70,13 +87,26 @@ class PDCommand(CkanCommand):
         lc = LocalCKAN()
         output_files = {}
         next_row = {}
+        output_counter = {}
         output_path = self.args[2:][-1]
         table = get_table(DATASET_TYPE)
+
+        def close_write_file(org_id):
+            book = output_files[org_id]
+            if not book:
+                return
+            book.save(os.path.join(output_path,
+                org_id + '-' + str(output_counter[org_id]) + '.xls'))
+            output_files[org_id] = None
 
         def out_file(org_id):
             if org_id in output_files:
                 next_row[org_id] += 1
-                return output_files[org_id], next_row[org_id]
+                # need to start a new file?
+                if next_row[org_id] > SPLIT_XLS_ROWS:
+                    close_write_file(org_id)
+                else:
+                    return output_files[org_id], next_row[org_id]
             try:
                 org = lc.action.organization_show(id=org_id, include_datasets=False)
             except NotFound:
@@ -86,6 +116,7 @@ class PDCommand(CkanCommand):
                 return None, None
             book = xls_template(DATASET_TYPE, org)
             output_files[org_id] = book
+            output_counter[org_id] = output_counter.get(org_id, 0) + 1
             next_row[org_id] = len(book.get_sheet(0).get_rows())
             return book, next_row[org_id]
 
@@ -101,9 +132,8 @@ class PDCommand(CkanCommand):
                     continue
                 add_row(book, row, d)
 
-        for org_id, book in output_files.iteritems():
-            if book:
-                book.save(os.path.join(output_path, org_id + '.xls'))
+        for org_id in output_files:
+            close_write_file(org_id)
 
 
 def _solr_connection():
@@ -150,6 +180,12 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'shortform_fr':
                 shortform_fr = e['value']
 
+        try:
+            year, month, day = (int(x) for x in r['contract_date'].split('-'))
+        except ValueError:
+            print 'bad date:', r['contract_date']
+            year = month = day = 0
+
         out.append({
             'bundle': 'proactive_disclosure',
             'id': unique,
@@ -172,5 +208,14 @@ def _update_records(records, org_detail, conn):
             'ss_comments_fr': r['comments_fr'],
             'ss_additional_comments_en': r['additional_comments_en'],
             'ss_additional_comments_fr': r['additional_comments_fr'],
+            'ss_org_shortform_en': shortform,
+            'ss_org_shortform_fr': shortform_fr,
+            'ss_org_name_en': org_detail['title'].split(' | ', 1)[0],
+            'ss_org_name_fr': org_detail['title'].split(' | ', 1)[-1],
+            'ss_contract_date_year': str(year),
+            'ss_contract_date_month': str(month),
+            'ss_contract_date_day': str(day),
+            'ss_contract_date_monthname_en': calendar.month_name[month],
+            'ss_contract_date_monthname_fr': MONTHS_FRA[month],
             })
     conn.add_many(out, _commit=True)

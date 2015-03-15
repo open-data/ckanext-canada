@@ -6,51 +6,60 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year/Annee",
+        "label": "Year / Annee",
         "datastore_type": "int",
-        "xls_column_width": 5
+        "xls_column_width": 13
       },
       {
         "datastore_id": "month",
-        "label": "Month/Mois",
+        "label": "Month / Mois",
         "datastore_type": "int",
-        "xls_column_width": 4
+        "xls_column_width": 13
       },
       {
         "datastore_id": "request_number",
-        "label": "Number/Numero",
+        "label": "Request Number / Numero de la demande",
         "datastore_type": "text",
-        "xls_column_width": 15
+        "xls_column_width": 38
       },
       {
         "datastore_id": "summary_eng",
-        "label": "ENG Summary/Sommaire",
+        "label": "English Summary / Sommaire de la demande en anglais",
         "datastore_type": "text",
-        "xls_column_width": 30
+        "xls_column_width": 41
       },
       {
         "datastore_id": "summary_fra",
-        "label": "FRA Summary/Sommaire",
+        "label": "French Summary / Sommaire de la demande en français",
         "datastore_type": "text",
-        "xls_column_width": 30
+        "xls_column_width": 41
       },
       {
         "datastore_id": "disposition",
         "label": "Disposition",
         "datastore_type": "text",
-        "xls_column_width": 40
+        "xls_column_width": 39
       },
       {
         "datastore_id": "pages",
-        "label": "Pages",
+        "label": "Number of Pages / Nombre de pages",
         "datastore_type": "int",
-        "xls_column_width": 6
+        "xls_column_width": 34
       }
     ],
     "datastore_primary_key": "request_number",
     "datastore_indexes": "",
-    "xls_organization_info": ["dept_id", null, "name", "title"],
-    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
+    "xls_organization_info":
+      [
+        "department_number",
+        null,
+        "name",
+        "title",
+        null,
+        null,
+        null
+      ],
+    "xls_organization_style": "pattern: pattern solid, fore_color light_green;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
   {
@@ -60,13 +69,13 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year/Annee",
+        "label": "Year / Annee",
         "datastore_type": "int",
         "xls_column_width": 5
       },
       {
         "datastore_id": "month",
-        "label": "Month/Mois",
+        "label": "Month / Mois",
         "datastore_type": "int",
         "xls_column_width": 4
       }
@@ -78,121 +87,121 @@
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   },
   {
-    "dataset_type": "proactive-disclosure",
-    "title": "Proactive Disclosure",
-    "xls_sheet_name": "PD",
+    "dataset_type": "contracts",
+    "title": "Contracts",
+    "xls_sheet_name": "contracts",
     "fields": [
       {
         "datastore_id": "ref_number",
-        "label": "Ref number",
+        "label": "Reference Number / Numéro de référence",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "vendor_name_en",
-        "label": "Vendor name en",
+        "label": "English Vendor Name / Nom du fournisseur en anglais",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "vendor_name_fr",
-        "label": "Vendor name fr",
+        "label": "French Vendor Name / Nom du fournisseur en français",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "description_code",
-        "label": "Description code",
+        "label": "Economic Object Code / Code d'objet économique",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "description_en",
-        "label": "Description en",
+        "label": "English Description / Description anglaise",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "description_fr",
-        "label": "Description fr",
+        "label": "English Description / Description anglaise",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "description_more_en",
-        "label": "Description more en",
+        "label": "English Description More / Description avancée en anglais",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "description_more_fr",
-        "label": "Description more fr",
+        "label": "French Description More / Description avancée en français",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_date",
-        "label": "Contract date",
+        "label": "Contract Date / Date du contrat",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_period_start",
-        "label": "Contract period start",
+        "label": "Contract Period Start / Date de début du contrat",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_period_end",
-        "label": "Contract period end",
+        "label": "Contract Period End / Date de clôture du contrat",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "delivery_date",
-        "label": "Delivery date",
+        "label": "Delivery Date / Date de livraison",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_value",
-        "label": "Contract value",
+        "label": "Contract Value / Valeur du contrat",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "original_value",
-        "label": "Original value",
+        "label": "Original Value / Valeur d'origine",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "cumulative_value",
-        "label": "Cumulative value",
+        "label": "Cumulative Value / Valeur cumulative",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "comments_en",
-        "label": "Comments en",
+        "label": "English Comments / Commentaires en anglais",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "comments_fr",
-        "label": "Comments fr",
+        "label": "French Comments / Commentaires en français",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "additional_comments_en",
-        "label": "Additional comments en",
+        "label": "English Additional Comments / Commentaires additionnels en anglais",
         "datastore_type": "text",
         "xls_column_width": 20
       },
       {
         "datastore_id": "additional_comments_fr",
-        "label": "Additional comments fr",
+        "label": "French Additional Comments / Commentaires additionnels en français",
         "datastore_type": "text",
         "xls_column_width": 20
       }
