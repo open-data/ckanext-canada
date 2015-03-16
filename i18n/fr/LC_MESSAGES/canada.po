@@ -587,6 +587,9 @@ msgstr "Ressources associés avec cet ensemble de données."
 msgid "Spatial Feature"
 msgstr "Élément spatial"
 
+msgid "Bilingual (English and French)"
+msgstr "Bilingue (français et anglais)"
+
 #FIXME - 2015-01-12 These are translations from the ckanext-recombinant extension
 
 msgid "Download template Excel spreadsheet"
@@ -598,3 +601,14 @@ msgstr "Créer et mettre à jour les données de la feuille de calcul Excel"
 msgid "Template"
 msgstr "Modèle"
 
+msgid "You do not have permission to upload to {0}"
+msgstr "Vous n'avez pas la permission de télécharger à {0}"
+
+msgid "You must provide a valid file"
+msgstr "Voud devez fournir un fichier valide"
+
+msgid "Invalid sheet for this organization. Sheet must be labeled for {0}, but you supplied a sheet for {1}"
+msgstr "Le feuille n'est pas valide pour cette organisation. La feuille doit être étiquetée pour {0}, mais vous avez fourni une feuille pour {1}"
+
+msgid "Sheet name '{0}' not found in list of valid tables"
+msgstr "Le nom de la feuille '{0}' n'a pas été trouvé dans la liste des tableaux valides"
