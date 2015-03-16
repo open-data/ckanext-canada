@@ -103,6 +103,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_ati',
+            'get_datapreview_contracts',
             ])
 
     def configure(self, config):
