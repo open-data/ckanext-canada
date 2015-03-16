@@ -8,13 +8,7 @@
 
 {% block subtitle %}{% endblock %}
 
-{% block package_item_title %}
-{% if pkg.state.startswith('draft') %}
-  <div class="col-md-12">
-    <h3>[{{ _('Draft') }}]</h3>
-  </div>
-{% endif %}
-
+{% block primary_content_inner %}
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
@@ -23,8 +17,10 @@
       </div>
       {% endif %}
     </section>
-  
+
+    {% block package_item_title %}
     <section class="module-content indent-large">
+
       <h1>{{ pkg.title[client_lang] or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
@@ -37,45 +33,60 @@
       {% endif %} 
 
     </section>
+    {%- endblock -%}
+
     <section class="module-content indent-large">
       <div class="span-6 margin-top-medium">
         <div>
-          <h2>{{_('Licence')}}: </h2>
+          <h4>{{_('Licence')}}: </h4>
         </div>
         <div>
-        {% if client_lang == 'fr' %}
-          <a href="{{ pkg.license_url_fra }}">{{ pkg.license_title_fra }}</a>
-        {% else %}
-          <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
-        {% endif %}
+
+        {% block package_item_license_inner %}
+          {# for now, just override the old data.gc.ca license
+             url until such time that all datasets have been
+             updated with the new url #}
+
+          {% if client_lang == 'fr' %}
+            {% if pkg.license_url_fra == 'http://data.gc.ca/fra/licence-du-gouvernement-ouvert-canada' %}
+                {% set license_url_fra = 'http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
+            {% else %}
+                {% set license_url_fra = pkg.license_url_fra %}
+            {% endif %}
+            <a href="{{ license_url_fra }}">{{ pkg.license_title_fra }}</a>
+          {% else %}
+            {% if pkg.license_url == 'http://data.gc.ca/eng/open-government-licence-canada' %}
+                {% set license_url = 'http://open.canada.ca/en/open-government-licence-canada' %}
+            {% else %}
+                {% set license_url = pkg.license_url %}
+            {% endif %}
+            <a href="{{ license_url }}">{{ pkg.license_title }}</a>
+          {% endif %}
+        {% endblock %}
+
         </div>
         <div class="clear"></div>
       </div>
     </section>
     
-    <section id="dataset-resources" class="resources module-content indent-large">
-
-      <h2>{{ _('Dataset Resources') }}</h2>
+    <section id="dataset-resources" class="module-content indent-large">
+      <div class="span-6 margin-top-medium">
       {% if pkg.resources %}
-        <div class="span-6">
-          <table class="wet-boew-zebra span-5" title="{{ _('Resources associates with this dataset.')}}">
-            <thead>
-              <tr>
-                <th scope="col">{{ _('Resource Name') }}</th>
-                <th scope="col">{{ _('Format') }}</th>
-                <th scope="col">{{ _('Language') }}</th>
-                <th scope="col">{{ _('Link') }}</th>
-              </tr>
-            </thead>
-          {% for resource in pkg.resources %}
-            {% if resource.format != 'app' %}
-              {% snippet 'package/snippets/resource_item.html',
-                pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-            {% endif %}
-          {% endfor %}
-          </table>
-        </div>
+        {% set nonapps = [] %}
+        {% for resource in pkg.resources %}
+          {% if resource.format != 'app' %}
+            {% do nonapps.append(resource) %}
+          {% endif %}
+        {% endfor %}
+        {% if nonapps|length > 0 %}
+
+          {% block package_resources %}
+            {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
+          {% endblock %}
+
+        {% endif %}
       {% endif %}
+      </div>
     </section>
     
     <section class="indent-large">
@@ -96,56 +107,43 @@
         {% endfor %}
         </ul>
       {% endif %}
-{% endblock %}
-
-{% block package_item_license_inner %}
-{# for now, just override the old data.gc.ca license
-   url until such time that all datasets have been
-   updated with the new url #}
-
-{% if client_lang == 'fr' %}
-  {% if pkg.license_url_fra == 'http://data.gc.ca/fra/licence-du-gouvernement-ouvert-canada' %}
-      {% set license_url_fra = 'http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
-  {% else %}
-      {% set license_url_fra = pkg.license_url_fra %}
-  {% endif %}
-  <a href="{{ license_url_fra }}">{{ pkg.license_title_fra }}</a>
-{% else %}
-  {% if pkg.license_url == 'http://data.gc.ca/eng/open-government-licence-canada' %}
-      {% set license_url = 'http://open.canada.ca/en/open-government-licence-canada' %}
-  {% else %}
-      {% set license_url = pkg.license_url %}
-  {% endif %}
-  <a href="{{ license_url }}">{{ pkg.license_title }}</a>
-{% endif %}
-{% endblock %}
 
 {% block package_item_apps %}
-<div class="col-md-12">
-  {% set apps = [] %}
-  {% for resource in pkg.resources %}
-    {% if resource.format == 'app' %}
-      {% do apps.append(resource) %}
-    {% endif %}
-  {% endfor %}
-</div>
+  <div class="span-6 margin-top-medium">
+    {% set apps = [] %}
+    {% for resource in pkg.resources %}
+      {% if resource.format == 'app' %}
+        {% do apps.append(resource) %}
+      {% endif %}
+    {% endfor %}
+  </div>
 
-{% if apps|length > 0 %}
-<div class="col-md-12">
-  <h4>{{ _('Related Items') }}</h4>
-  <ul class="list-unstyled">
-  {% for resource in apps %}
-    {% snippet 'package/snippets/app_item.html',
-        pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-  {% endfor %}
-  </ul>
-</div>
-{% endif %}
+  {% if apps|length > 0 %}
+    <div class="span-6 margin-top-medium">
+      <h4>{{ _('Related Items') }}</h4>
+      <ul class="list-unstyled">
+      {% for resource in apps %}
+        {% snippet 'package/snippets/app_item.html',
+            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+      {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
 {% endblock %}
+
+{% block developer_tools %}
+<div class="span-6 margin-top-medium">
+  <h4>{{ _('Developer Tools') }}</h4>
+    <ul class="list-unstyled">
+      <li class="mrgn-bttm-md">{{ _('The information on this page (the publication metadata) is also available in JSON format') }} <br/>
+      <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON format') }}</a></li>
+    </ul>
+</div>
+{% endblock developer_tools %}
 
 {% block package_item_geo_preview %}
 {% if pkg.geographic_region or pkg.spatial %}
-<div class="col-md-12">
+<div class="span-6 margin-top-medium">
   <h4>{{ _('Geographic Information') }}</h4>
   {% if pkg.spatial %}
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
@@ -171,11 +169,13 @@
   {% endif %}
 </div>
 {% endif %}
-{% endblock %}
+{% endblock package_item_geo_preview %}
 
 {% block package_comments %}
 {% include "package/comments.html" %}
 {% endblock %}
+
+{% endblock primary_content_inner %}
 
 {% block page_extra_scripts %}
 <!--[if gte IE 9 | !IE ]><!-->
@@ -185,7 +185,6 @@
 <![endif]-->
 {% endblock %}
 
-{% block package_resources %}{% endblock %}
 {% block package_license %}{% endblock %}
 {% block package_item_notes %}{% endblock %}
 
