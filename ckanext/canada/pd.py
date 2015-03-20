@@ -3,7 +3,9 @@ import os
 import hashlib
 import calendar
 import datetime
+import logging
 from unicodecsv import DictReader
+from _csv import Error as _csvError
 
 import paste.script
 from pylons import config
@@ -12,27 +14,17 @@ from ckan.lib.cli import CkanCommand
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_xls import xls_template
-from ckanext.recombinant.plugins import get_table
+from ckanext.recombinant.plugins import get_table, RecombinantPlugin
 
-BATCH_SIZE = 1000
-DATASET_TYPE = 'contracts'
+from ckanext.canada.dataset import (
+    MONTHS_FR,
+    solr_connection,
+    data_batch,
+    csv_data_batch)
+
+DATASET_TYPES = ['contracts',]
 SPLIT_XLS_ROWS = 50002
 
-MONTHS_FRA = [
-    u'', # "month 0"
-    u'janvier',
-    u'février',
-    u'mars',
-    u'avril',
-    u'mai',
-    u'juin',
-    u'juillet',
-    u'août',
-    u'septembre',
-    u'octobre',
-    u'novembre',
-    u'décembre',
-    ]
 
 class PDCommand(CkanCommand):
     """
@@ -42,7 +34,12 @@ class PDCommand(CkanCommand):
 
         paster pd build-templates <sources> <dest-dir>
                   clear
-                  rebuild
+                  rebuild [-f <file>]
+
+    Options::
+
+        -f/--csv-file <file>       use specified CSV files as contracts input,
+                                   instead of the (default) CKAN database
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -50,6 +47,11 @@ class PDCommand(CkanCommand):
     parser = paste.script.command.Command.standard_parser(verbose=True)
     parser.add_option('-c', '--config', dest='config',
         default='development.ini', help='Config file to use.')
+    parser.add_option(
+        '-f',
+        '--csv',
+        dest='csv_file',
+        help='CSV file to use as input (or default CKAN DB)')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -64,32 +66,64 @@ class PDCommand(CkanCommand):
         elif cmd == 'clear':
             return self._clear_index()
         elif cmd == 'rebuild':
-            return self._rebuild()
+            return self._rebuild(self.options.csv_file)
 
     def _clear_index(self):
-        conn = _solr_connection()
+        conn = solr_connection('proactive_disclosure', True)
         conn.delete_query("*:*")
         conn.commit()
 
-    def _rebuild(self):
-        conn = _solr_connection()
-        lc = LocalCKAN()
-        for org in lc.action.organization_list():
-            count = 0
-            org_detail = lc.action.organization_show(id=org)
-            for records in _proactive_disclosure(org_detail, lc):
-                _update_records(records, org_detail, conn)
-                count += len(records)
+    def _rebuild(self, csv_file=None):
+        """
+        Implement rebuild command
 
-            print org, count
+        :param csv_file: path to .csv file for input
+        :type csv_file: str
+
+        :return: Nothing
+        :rtype: None
+        """
+        conn = solr_connection('proactive_disclosure', True)
+        lc = LocalCKAN()
+        if csv_file:
+            try:
+                print csv_file
+                count = {}
+                for org_recs in csv_data_batch(csv_file, DATASET_TYPES):
+                    org_id = org_recs.keys()[0]
+                    if org_id not in count:
+                        count[org_id] = 0
+                    org_detail = lc.action.organization_show(id=org_id)
+                    records = org_recs[org_id]
+                    _update_records(records, org_detail, conn)
+                    count[org_id] += len(records)
+                for k, v in count.iteritems():
+                    print "    {0:s} {1}".format(k, v)
+            except (_csvError, AssertionError) as e:
+                logging.error('On {0:s}, encountered: {1:s}'.format(
+                    csv_file, e.message))
+            except IOError as e:
+                logging.error('On {0:s}, encountered: {1:s}'.format(
+                    csv_file, e.strerror))
+        else:
+            for org in lc.action.organization_list():
+                count = 0
+                org_detail = lc.action.organization_show(id=org)
+                for records in data_batch(org_detail['id'], lc, DATASET_TYPES):
+                    _update_records(records, org_detail, conn)
+                    count += len(records)
+                print org, count
 
     def _build_templates(self):
+        """
+        Implement build-templates command
+        """
         lc = LocalCKAN()
         output_files = {}
         next_row = {}
         output_counter = {}
         output_path = self.args[2:][-1]
-        table = get_table(DATASET_TYPE)
+        table = get_table(DATASET_TYPES[0])
 
         def close_write_file(org_id):
             book = output_files[org_id]
@@ -108,13 +142,14 @@ class PDCommand(CkanCommand):
                 else:
                     return output_files[org_id], next_row[org_id]
             try:
-                org = lc.action.organization_show(id=org_id, include_datasets=False)
+                org = lc.action.organization_show(
+                    id=org_id, include_data_batch=False)
             except NotFound:
-                print 'org id', org_id, 'not found'
+                logging.error('org id', org_id, 'not found')
                 output_files[org_id] = None
                 next_row[org_id] = 0
                 return None, None
-            book = xls_template(DATASET_TYPE, org)
+            book = xls_template(DATASET_TYPES[0], org)
             output_files[org_id] = book
             output_counter[org_id] = output_counter.get(org_id, 0) + 1
             next_row[org_id] = len(book.get_sheet(0).get_rows())
@@ -136,42 +171,29 @@ class PDCommand(CkanCommand):
             close_write_file(org_id)
 
 
-def _solr_connection():
-    from solr import SolrConnection
-    url = config['proactive_disclosure.solr_url']
-    user = config.get('proactive_disclosure.solr_user')
-    password = config.get('proactive_disclosure.solr_password')
-    if user is not None and password is not None:
-        return SolrConnection(url, http_user=user, http_pass=password)
-    return SolrConnection(url)
-
-def _proactive_disclosure(org, lc):
-    """
-    generator of ati summary dicts for organization with name org
-    """
-    result = lc.action.package_search(
-        q="type:%s owner_org:%s" % (DATASET_TYPE, org['id']),
-        rows=1000)['results']
-    resource_id = result[0]['resources'][0]['id']
-    offset = 0
-    while True:
-        rval = lc.action.datastore_search(resource_id=resource_id,
-            limit=BATCH_SIZE, offset=offset)
-        records = rval['records']
-        if not records:
-            return
-        yield records
-        offset += len(records)
-
 def _update_records(records, org_detail, conn):
     """
+    Update records on solr core
+
+    :param records: record dicts
+    :ptype records: sequence of record dicts
+
+    :param org_detail: org structure as returned via local CKAN
+    :ptype org_detail: dict with local CKAN org structure
+
+    :param conn: solr connection
+    :ptype conn: obj
+
+    :returns: Nothing
+    :rtype: None
     """
     out = []
     org = org_detail['name']
     orghash = hashlib.md5(org).hexdigest()
+    # site_id = config.get('ckan.site_id')
     for r in records:
-        unique = hashlib.md5(orghash + r['ref_number'].encode('utf-8')
-            ).hexdigest()
+        unique = hashlib.md5(
+            orghash + r['ref_number'].encode('utf-8')).hexdigest()
         shortform = None
         shortform_fr = None
         for e in org_detail['extras']:
@@ -183,11 +205,12 @@ def _update_records(records, org_detail, conn):
         try:
             year, month, day = (int(x) for x in r['contract_date'].split('-'))
         except ValueError:
-            print 'bad date:', r['contract_date']
+            logging.error('bad date:', r['contract_date'])
             year = month = day = 0
 
         out.append({
             'bundle': 'proactive_disclosure',
+            # 'site_id': site_id,
             'id': unique,
             'ss_ref_number': r['ref_number'],
             'ss_vendor_name_en': r['vendor_name_en'],
@@ -216,6 +239,6 @@ def _update_records(records, org_detail, conn):
             'ss_contract_date_month': str(month),
             'ss_contract_date_day': str(day),
             'ss_contract_date_monthname_en': calendar.month_name[month],
-            'ss_contract_date_monthname_fr': MONTHS_FRA[month],
+            'ss_contract_date_monthname_fr': MONTHS_FR[month],
             })
     conn.add_many(out, _commit=True)

@@ -11,6 +11,7 @@ import json
 import time
 import sys
 import gzip
+import unicodecsv
 import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager

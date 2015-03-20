@@ -6,14 +6,14 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year / Annee",
-        "datastore_type": "int",
+        "label": "Year / Année",
+        "datastore_type": "year",
         "xls_column_width": 13
       },
       {
         "datastore_id": "month",
         "label": "Month / Mois",
-        "datastore_type": "int",
+        "datastore_type": "month",
         "xls_column_width": 13
       },
       {
@@ -69,14 +69,14 @@
     "fields": [
       {
         "datastore_id": "year",
-        "label": "Year / Annee",
-        "datastore_type": "int",
+        "label": "Year / Année",
+        "datastore_type": "year",
         "xls_column_width": 5
       },
       {
         "datastore_id": "month",
         "label": "Month / Mois",
-        "datastore_type": "int",
+        "datastore_type": "month",
         "xls_column_width": 4
       }
     ],
@@ -142,43 +142,43 @@
       {
         "datastore_id": "contract_date",
         "label": "Contract Date / Date du contrat",
-        "datastore_type": "text",
+        "datastore_type": "date",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_period_start",
         "label": "Contract Period Start / Date de début du contrat",
-        "datastore_type": "text",
+        "datastore_type": "date",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_period_end",
         "label": "Contract Period End / Date de clôture du contrat",
-        "datastore_type": "text",
+        "datastore_type": "date",
         "xls_column_width": 20
       },
       {
         "datastore_id": "delivery_date",
         "label": "Delivery Date / Date de livraison",
-        "datastore_type": "text",
+        "datastore_type": "date",
         "xls_column_width": 20
       },
       {
         "datastore_id": "contract_value",
         "label": "Contract Value / Valeur du contrat",
-        "datastore_type": "text",
+        "datastore_type": "money",
         "xls_column_width": 20
       },
       {
         "datastore_id": "original_value",
         "label": "Original Value / Valeur d'origine",
-        "datastore_type": "text",
+        "datastore_type": "money",
         "xls_column_width": 20
       },
       {
         "datastore_id": "cumulative_value",
         "label": "Cumulative Value / Valeur cumulative",
-        "datastore_type": "text",
+        "datastore_type": "money",
         "xls_column_width": 20
       },
       {
