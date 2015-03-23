@@ -1,8 +1,16 @@
+scheming_version: 1
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
   en: Raw Data
   fr: Données
+dataset_type: raw
+form_languages:
+- en
+- fr
+languages_label:
+- eng; CAN
+- fra; CAN
 dataset_fields:
 - create_validators: empty_if_not_sysadmin if_empty_generate_uuid unicode name_validator
     package_id_does_not_exist
@@ -1543,13 +1551,6 @@ dataset_fields:
   label:
     en: Endpoint
     fr: Point d’extrémité
-dataset_type: raw
-form_languages:
-- en
-- fr
-languages_label:
-- eng; CAN
-- fra; CAN
 resource_fields:
 - field_name: name
   help_text:
@@ -1825,4 +1826,3 @@ resource_fields:
     fr: Type de ressource
   preset: select
   required: true
-scheming_version: 1
