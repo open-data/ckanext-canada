@@ -1,6 +1,7 @@
 [
   {
     "dataset_type": "ati-summaries",
+    "target_dataset": "ati",
     "title": "ATI Summaries",
     "xls_sheet_name": "ATI AI",
     "fields": [
@@ -64,6 +65,7 @@
   },
   {
     "dataset_type": "ati-none",
+    "target_dataset": "ati",
     "title": "ATI Nothing to Report",
     "xls_sheet_name": "ATI AI none",
     "fields": [
@@ -88,6 +90,7 @@
   },
   {
     "dataset_type": "contracts",
+    "target_dataset": "pd",
     "title": "Contracts",
     "xls_sheet_name": "contracts",
     "fields": [

@@ -10,9 +10,7 @@ import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
-from ckanapi import LocalCKAN, NotFound
-
-from ckanext.recombinant.plugins import get_table
+from ckanapi import LocalCKAN
 
 from ckanext.canada.dataset import (
     MONTHS_FR,
@@ -20,7 +18,8 @@ from ckanext.canada.dataset import (
     data_batch,
     csv_data_batch)
 
-DATASET_TYPES = ['ati-summaries', 'ati-none']
+
+TARGET_DATASET = 'ati'
 WINDOW_YEARS = 2
 
 
@@ -70,7 +69,7 @@ class ATICommand(CkanCommand):
             return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
-        conn = solr_connection('ati_summaries', True)
+        conn = solr_connection('ati_summaries')
         conn.delete_query("*:*")
         conn.commit()
 
@@ -84,34 +83,44 @@ class ATICommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
-        conn = solr_connection('ati_summaries', True)
+
+        conn = solr_connection('ati_summaries')
         lc = LocalCKAN()
         if csv_files:
+            count = {}
             for csv_file in csv_files:
                 try:
-                    print csv_file
-                    count = {}
-                    for org_recs in csv_data_batch(csv_file, DATASET_TYPES):
+                    print csv_file + ':'
+                    count[csv_file] = {}
+                    for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
                         org_id = org_recs.keys()[0]
-                        if org_id not in count:
-                            count[org_id] = 0
+                        if org_id not in count[csv_file]:
+                            count[csv_file][org_id] = 0
                         org_detail = lc.action.organization_show(id=org_id)
                         records = org_recs[org_id]
                         _update_records(records, org_detail, conn)
-                        count[org_id] += len(records)
-                    for k, v in count.iteritems():
+                        count[csv_file][org_id] += len(records)
+                    for k, v in count[csv_file].iteritems():
                         print "    {0:s} {1}".format(k, v)
-                except (_csvError, AssertionError) as e:
+                except _csvError as e:
                     logging.error('On {0:s}, encountered: {1:s}'.format(
-                        csv_file, e.message))
+                        csv_file,
+                        e.message))
+                except AssertionError as e:
+                    logging.warning('On {0:s}, encountered: {1:s}'.format(
+                        csv_file,
+                        e.message))
                 except IOError as e:
                     logging.error('On {0:s}, encountered: {1:s}'.format(
-                        csv_file, e.strerror))
+                        csv_file,
+                        e.strerror))
+            for org_id in lc.action.organization_list():
+                print org_id, sum((count[f].get(org_id, 0) for f in count))
         else:
             for org_id in lc.action.organization_list():
                 count = 0
                 org_detail = lc.action.organization_show(id=org_id)
-                for records in data_batch(org_detail['id'], lc, DATASET_TYPES):
+                for records in data_batch(org_detail['id'], lc, TARGET_DATASET):
                     _update_records(records, org_detail, conn)
                     count += len(records)
                 print org_id, count

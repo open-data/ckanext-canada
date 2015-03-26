@@ -72,7 +72,10 @@
 <fields>
     <field name="index_id" type="string" indexed="true" stored="true" required="true" />
     <field name="id" type="string" indexed="true" stored="true" required="true" />
+    <!--
     <field name="site_id" type="string" indexed="true" stored="true" required="true" />
+    -->
+    <field name="site_id" type="string" indexed="true" stored="true" required="false" />
     <field name="title" type="text" indexed="true" stored="true" />
     <field name="entity_type" type="string" indexed="true" stored="true" omitNorms="true" />
     <field name="dataset_type" type="string" indexed="true" stored="true" />
@@ -133,7 +136,7 @@
 
     <field name="_version_" type="string" indexed="true" stored="true"/>
 
-    <dynamicField name="*_date" type="date" indexed="true" stored="true" multiValued="false"/>
+    <!--<dynamicField name="*_date" type="date" indexed="true" stored="true" multiValued="false"/>-->
 
     <dynamicField name="extras_*" type="text" indexed="true" stored="true" multiValued="false"/>
     <dynamicField name="vocab_*" type="string" indexed="true" stored="true" multiValued="true"/>

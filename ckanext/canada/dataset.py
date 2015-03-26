@@ -2,7 +2,7 @@
 import os
 from unicodecsv import DictReader
 from pylons import config
-from ckanext.recombinant.plugins import get_table
+from ckanext.recombinant.plugins import get_table, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -21,15 +21,12 @@ MONTHS_FR = [
     u'décembre',
     ]
 
-def solr_connection(ini_prefix, solr_default=False):
+def solr_connection(ini_prefix):
     """
     Set up solr connection
     :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
         ati_summaries to use config setting ati_summaries.solr_url etc.)
     :ptype ini_prefix: str
-    :param solr_default: whether to accept .ini file keys for solr if
-        ini_prefix-specified settings are absent
-    :ptype solr_default: true
 
     :return a solr connection from configured URL, user, password settings
     :rtype object
@@ -38,20 +35,13 @@ def solr_connection(ini_prefix, solr_default=False):
     url = config.get('{0:s}.solr_url'.format(ini_prefix))
     user = config.get('{0:s}.solr_user'.format(ini_prefix))
     password = config.get('{0:s}.solr_password'.format(ini_prefix))
-    if solr_default:
-        if not url:
-            url = config.get('solr_url')
-        if not user:
-            user = config.get('solr_user')
-        if not password:
-            password = config.get('solr_password')
     if url is None:
         raise KeyError('{0:s}.solr_url'.format(ini_prefix))
     if user is not None and password is not None:
         return SolrConnection(url, http_user=user, http_pass=password)
     return SolrConnection(url)
 
-def data_batch(org_id, lc, dataset_types):
+def data_batch(org_id, lc, target_dataset):
     """
     Generator of dataset dicts for organization with name org
 
@@ -59,18 +49,19 @@ def data_batch(org_id, lc, dataset_types):
     :ptype org_id: str
     :param lc: local CKAN
     :ptype lc: obj
-    :param dataset_types: dataset types of interest
-    :ptype dataset_types: sequence of str
+    :param target_dataset: name of target dataset (e.g., 'ati', 'pd', etc.)
+    :ptype target_dataset: str
 
     :return generates batches of dataset dict records
     :rtype batch of dataset dict records
     """
+    dataset_types = get_dataset_types(target_dataset)
+
     for dataset_type in dataset_types:
         records = {}
         result = lc.action.package_search(
             q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
             rows=1000)['results']
-        print ">>> " + org_id + ": " + str(len(result))
         if len(result) == 0:
             yield records
         else:
@@ -88,19 +79,20 @@ def data_batch(org_id, lc, dataset_types):
                 offset += len(records)
 
 
-def csv_data_batch(csv_path, dataset_types):
+def csv_data_batch(csv_path, target_dataset):
     """
     Generator of dataset records from csv file
 
     :param csv_path: file to parse
     :ptype csv_file: str
-    :param dataset_types: dataset types of interest as per JSON schema
-    :ptype dataset_types: sequence of basestr
+    :param target_dataset: name of target dataset (e.g., 'ati', 'pd', etc.)
+    :ptype target_dataset: str
 
     :return a batch of records for at most one organization
     :rtype: dict mapping at most one org-id to
             at most BATCH_SIZE (dict) records
     """
+    dataset_types = get_dataset_types(target_dataset)
     # Use JSON schema to discover the dataset type to which the file corresponds
     schema_tables = dict((
             t,

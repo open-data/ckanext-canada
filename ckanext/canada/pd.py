@@ -14,7 +14,7 @@ from ckan.lib.cli import CkanCommand
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_xls import xls_template
-from ckanext.recombinant.plugins import get_table, RecombinantPlugin
+from ckanext.recombinant.plugins import get_table, get_dataset_types
 
 from ckanext.canada.dataset import (
     MONTHS_FR,
@@ -22,7 +22,8 @@ from ckanext.canada.dataset import (
     data_batch,
     csv_data_batch)
 
-DATASET_TYPES = ['contracts',]
+
+TARGET_DATASET = 'pd'
 SPLIT_XLS_ROWS = 50002
 
 
@@ -69,7 +70,7 @@ class PDCommand(CkanCommand):
             return self._rebuild(self.options.csv_file)
 
     def _clear_index(self):
-        conn = solr_connection('proactive_disclosure', True)
+        conn = solr_connection('proactive_disclosure')
         conn.delete_query("*:*")
         conn.commit()
 
@@ -83,13 +84,12 @@ class PDCommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
-        conn = solr_connection('proactive_disclosure', True)
+        conn = solr_connection('proactive_disclosure')
         lc = LocalCKAN()
         if csv_file:
             try:
-                print csv_file
                 count = {}
-                for org_recs in csv_data_batch(csv_file, DATASET_TYPES):
+                for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
                     org_id = org_recs.keys()[0]
                     if org_id not in count:
                         count[org_id] = 0
@@ -97,19 +97,19 @@ class PDCommand(CkanCommand):
                     records = org_recs[org_id]
                     _update_records(records, org_detail, conn)
                     count[org_id] += len(records)
-                for k, v in count.iteritems():
-                    print "    {0:s} {1}".format(k, v)
             except (_csvError, AssertionError) as e:
                 logging.error('On {0:s}, encountered: {1:s}'.format(
                     csv_file, e.message))
             except IOError as e:
                 logging.error('On {0:s}, encountered: {1:s}'.format(
                     csv_file, e.strerror))
+            for org_id in lc.action.organization_list():
+                print org_id, count.get(org_id, 0)
         else:
             for org in lc.action.organization_list():
                 count = 0
                 org_detail = lc.action.organization_show(id=org)
-                for records in data_batch(org_detail['id'], lc, DATASET_TYPES):
+                for records in data_batch(org_detail['id'], lc, TARGET_DATASET):
                     _update_records(records, org_detail, conn)
                     count += len(records)
                 print org, count
@@ -123,7 +123,8 @@ class PDCommand(CkanCommand):
         next_row = {}
         output_counter = {}
         output_path = self.args[2:][-1]
-        table = get_table(DATASET_TYPES[0])
+        dataset_types = get_dataset_types(TARGET_DATASET)
+        table = get_table(dataset_types[0])
 
         def close_write_file(org_id):
             book = output_files[org_id]
@@ -149,7 +150,7 @@ class PDCommand(CkanCommand):
                 output_files[org_id] = None
                 next_row[org_id] = 0
                 return None, None
-            book = xls_template(DATASET_TYPES[0], org)
+            book = xls_template(dataset_types[0], org)
             output_files[org_id] = book
             output_counter[org_id] = output_counter.get(org_id, 0) + 1
             next_row[org_id] = len(book.get_sheet(0).get_rows())
