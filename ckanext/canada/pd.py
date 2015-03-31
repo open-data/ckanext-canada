@@ -2,7 +2,7 @@
 import os
 import hashlib
 import calendar
-import datetime
+import time
 import logging
 from unicodecsv import DictReader
 from _csv import Error as _csvError
@@ -87,22 +87,15 @@ class PDCommand(CkanCommand):
         conn = solr_connection('proactive_disclosure')
         lc = LocalCKAN()
         if csv_file:
-            try:
-                count = {}
-                for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
-                    org_id = org_recs.keys()[0]
-                    if org_id not in count:
-                        count[org_id] = 0
-                    org_detail = lc.action.organization_show(id=org_id)
-                    records = org_recs[org_id]
-                    _update_records(records, org_detail, conn)
-                    count[org_id] += len(records)
-            except (_csvError, AssertionError) as e:
-                logging.error('On {0:s}, encountered: {1:s}'.format(
-                    csv_file, e.message))
-            except IOError as e:
-                logging.error('On {0:s}, encountered: {1:s}'.format(
-                    csv_file, e.strerror))
+            count = {}
+            for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
+                org_id = org_recs.keys()[0]
+                if org_id not in count:
+                    count[org_id] = 0
+                org_detail = lc.action.organization_show(id=org_id)
+                records = org_recs[org_id]
+                _update_records(records, org_detail, conn)
+                count[org_id] += len(records)
             for org_id in lc.action.organization_list():
                 print org_id, count.get(org_id, 0)
         else:
@@ -221,10 +214,10 @@ def _update_records(records, org_detail, conn):
             'ss_description_fr': r['description_fr'],
             'ss_description_more_en': r['description_more_en'],
             'ss_description_more_fr': r['description_more_fr'],
-            'ss_contract_date': r['contract_date'],
-            'ss_contract_period_start': r['contract_period_start'],
-            'ss_contract_period_end': r['contract_period_end'],
-            'ss_delivery_date': r['delivery_date'],
+            'ss_contract_date': date2zulu(r['contract_date']),
+            'ss_contract_period_start': date2zulu(r['contract_period_start']),
+            'ss_contract_period_end': date2zulu(r['contract_period_end']),
+            'ss_delivery_date': date2zulu(r['delivery_date']),
             'ss_contract_value': r['contract_value'],
             'ss_original_value': r['original_value'],
             'ss_cumulative_value': r['cumulative_value'],
@@ -243,3 +236,11 @@ def _update_records(records, org_detail, conn):
             'ss_contract_date_monthname_fr': MONTHS_FR[month],
             })
     conn.add_many(out, _commit=True)
+
+
+def date2zulu(yyyy_mm_dd):
+    return time.strftime(
+        "%Y-%m-%dT%H:%M:%SZ",
+        time.gmtime(time.mktime(time.strptime(
+            '{0:s} 00:00:00'.format(yyyy_mm_dd),
+            "%Y-%m-%d %H:%M:%S"))))

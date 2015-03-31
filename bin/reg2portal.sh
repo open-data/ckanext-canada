@@ -47,14 +47,20 @@ done
 
 TMPDIR=$(mktemp -t -d)
 
-# Go to ckanext-recombinant, get target datasets
+# Go to ckanext-recombinant, identify bona fide target datasets
 cd "${BIN_HOME}/../../ckanext-recombinant"
 CXR_HOME="$(pwd)"
 TARGET_DATASETS=$(paster recombinant target-datasets -c "${INI_PATH}")
 
 for TARG_DS in $(echo ${TARGET_DATASETS} | tr ' ' '\n')
 do
-    # Go to recombinant, get dataset types for current target
+    # Promote only those datasets specified on command line
+    if [ -z "${TARG_DS_MAP[${TARG_DS}]}" ]
+    then
+        continue
+    fi
+
+    # Go to ckanext-recombinant, get dataset types for current target
     cd "${CXR_HOME}"
     DATASET_TYPES=$(echo $(paster recombinant dataset-types ${TARG_DS} -c "${INI_PATH}") | sed -e 's/.*: //')
     CSV_FILES=""

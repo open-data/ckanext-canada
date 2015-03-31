@@ -31,7 +31,7 @@ cfg = ConfigParser.ConfigParser()
 cfg.read(opts['CKAN_INI_FILE'])
 
 logging.config.fileConfig(opts['CKAN_INI_FILE'])
-log = logging.getLogger()
+log = logging.getLogger('ckanext')
 
 user_agent = None
 
@@ -50,12 +50,12 @@ portal_site = ckanapi.RemoteCKAN(
     apikey=api_key,
     user_agent=user_agent)
 
-# Update package: add resources
+# Patch package: add resources
 try:
     portal_site.call_action(
-        'package_update',
+        'package_patch',
         {'id': package_id, 'url': '', 'resources': []})
-    print 'Cleared resources from package_id [{0:s}]'.format(package_id)
+    log.info('Cleared resources from package_id [{0:s}]'.format(package_id))
 
     for file in files:
         resource_name = os.path.basename(file)
@@ -64,9 +64,9 @@ try:
                 'resource_create',
                 {'package_id': package_id, 'url': '', 'name': resource_name},
                 files={'upload': f})
-        print 'Uploaded resource [{0:s}] to package_id [{1:s}]'.format(
+        log.info('Uploaded resource [{0:s}] to package_id [{1:s}]'.format(
             resource_name,
-            package_id)
+            package_id))
 
 except (AttributeError, ValueError, CKANAPIError, Exception) as e:
     log.error('Encountered {0:s}'.format(str(e)))

@@ -89,31 +89,18 @@ class ATICommand(CkanCommand):
         if csv_files:
             count = {}
             for csv_file in csv_files:
-                try:
-                    print csv_file + ':'
-                    count[csv_file] = {}
-                    for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
-                        org_id = org_recs.keys()[0]
-                        if org_id not in count[csv_file]:
-                            count[csv_file][org_id] = 0
-                        org_detail = lc.action.organization_show(id=org_id)
-                        records = org_recs[org_id]
-                        _update_records(records, org_detail, conn)
-                        count[csv_file][org_id] += len(records)
-                    for k, v in count[csv_file].iteritems():
-                        print "    {0:s} {1}".format(k, v)
-                except _csvError as e:
-                    logging.error('On {0:s}, encountered: {1:s}'.format(
-                        csv_file,
-                        e.message))
-                except AssertionError as e:
-                    logging.warning('On {0:s}, encountered: {1:s}'.format(
-                        csv_file,
-                        e.message))
-                except IOError as e:
-                    logging.error('On {0:s}, encountered: {1:s}'.format(
-                        csv_file,
-                        e.strerror))
+                print csv_file + ':'
+                count[csv_file] = {}
+                for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
+                    org_id = org_recs.keys()[0]
+                    if org_id not in count[csv_file]:
+                        count[csv_file][org_id] = 0
+                    org_detail = lc.action.organization_show(id=org_id)
+                    records = org_recs[org_id]
+                    _update_records(records, org_detail, conn)
+                    count[csv_file][org_id] += len(records)
+                for k, v in count[csv_file].iteritems():
+                    print "    {0:s} {1}".format(k, v)
             for org_id in lc.action.organization_list():
                 print org_id, sum((count[f].get(org_id, 0) for f in count))
         else:

@@ -11,7 +11,6 @@ import json
 import time
 import sys
 import gzip
-import unicodecsv
 import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
@@ -48,6 +47,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       dump-datasets [-p <num>] [-z]
+                      locate-dataset-resources <dataset-id>
                       changed-datasets [<since date>] [-s <remote server>] [-b]
 
         <starting line number> of .jl source file, default: 1
@@ -140,6 +140,9 @@ class CanadaCommand(CkanCommand):
         elif cmd == 'dump-datasets-worker':
             with _quiet_int_pipe():
                 self.dump_datasets_worker()
+
+        elif cmd == 'locate-dataset-resources':
+            self.locate_dataset_resources(self.args[1])
 
         elif cmd == 'changed-datasets':
             self.changed_datasets(*self.args[1:])
@@ -553,6 +556,16 @@ class CanadaCommand(CkanCommand):
                 registry.action.package_show(id=name.strip()), sort_keys=True)
                 + '\n')
             sys.stdout.flush()
+
+
+    def locate_dataset_resources(self, package_id):
+        """
+        Return space-separated list of URLs, one per resource
+        in the identified package
+        """
+        registry = LocalCKAN()
+        pkg = registry.action.package_show(id=package_id)
+        print ' '.join([r['url'] for r in pkg.get('resources', [])])
 
 
     def changed_datasets(self, since_date):
