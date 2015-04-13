@@ -2,6 +2,20 @@ scheming_presets_version: 1
 about: scheming presets for ckanext-canada schemas
 about_url: http://github.com/open-data/ckanext-canada
 presets:
-  # complete this
-  - preset_name: stamp_value
-    values: {}
+
+# We generate IDs here because we use that ID as our name field as well
+# and it needs to exist for "if_empty_same_as(id)" below to work
+- preset_name: canada_dataset_id
+  values:
+    create_validators: empty_if_not_sysadmin if_empty_generate_uuid
+      unicode name_validator package_id_does_not_exist
+    display_snippet: null
+    field_name: id
+    form_snippet: null
+
+- preset_name: canada_dataset_name
+  values:
+    field_name: name
+    form_snippet: null
+    validators: if_empty_same_as(id)
+        
