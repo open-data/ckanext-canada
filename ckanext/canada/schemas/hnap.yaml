@@ -1,0 +1,27 @@
+scheming_version: 1
+about: 'open.canada.ca: HNAP open data metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+catalog_type_label:
+  en: HNAP Geo Data
+  fr: HNAP géo
+dataset_type: hnap
+form_languages:
+- en  
+- fr  
+languages_label:
+- eng; CAN
+- fra; CAN
+
+dataset_fields:
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+- field_name: owner_org
+  help_text:
+    en: The organization directly responsible for the dataset and for metadata maintenance.
+    fr: Le nom de l’organisation directement responsable des ensembles de donnée et
+      de la maintenance des métadonnées
+  label:
+    en: Publisher
+    fr: Éditeur
+  preset: dataset_organization
+
