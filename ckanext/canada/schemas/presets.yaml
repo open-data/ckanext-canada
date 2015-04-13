@@ -19,3 +19,127 @@ presets:
     form_snippet: null
     validators: if_empty_same_as(id)
         
+- preset_name: canada_frequency
+  values:
+    choices:
+    - label:
+        en: As Needed
+        fr: Au besoin
+      value: as_needed
+    - label:
+        en: Continual
+        fr: Continue
+      value: continual
+    - label:
+        en: Daily
+        fr: Quotidien
+      value: daily
+    - label:
+        en: Weekly
+        fr: Hebdomadaire
+      value: weekly
+    - label:
+        en: Fortnightly
+        fr: Quinzomadaire
+      value: fortnightly
+    - label:
+        en: Monthly
+        fr: Mensuel
+      value: monthly
+    - label:
+        en: Semimonthly
+        fr: Bimensuel
+      value: semimonthly
+    - label:
+        en: Quarterly
+        fr: Trimestriel
+      value: quarterly
+    - label:
+        en: Biannually
+        fr: Semestriel
+      value: biannually
+    - label:
+        en: Annually
+        fr: Annuel
+      value: annually
+    - label:
+        en: Irregular
+        fr: Irrégulier
+      value: irregular
+    - label:
+        en: Not Planned
+        fr: Non planifié
+      value: not_planned
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
+    field_name: frequency
+    help_text:
+      en: The frequency at which the dataset is published.
+      fr: La fréquence de la publication de l’ensemble de données.
+    label:
+      en: Frequency
+      fr: Fréquence
+    required: true
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_time_period_coverage_start
+  values:
+    field_name: time_period_coverage_start
+    help_text:
+      en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage Start
+      fr: Couverture de la période de temps
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_time_period_coverage_end
+  values:
+    field_name: time_period_coverage_end
+    help_text:
+      en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage End
+      fr: Couverture de la période de temps
+    preset: date
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_resource_language
+  values:
+    choices:
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx; CAN
+    - label:
+        en: English
+        fr: Anglais
+      value: eng; CAN
+    - label:
+        en: French
+        fr: Français
+      value: fra; CAN
+    - label:
+        en: Bilingual (English and French)
+        fr: Bilingue (Anglais et Français)
+      value: eng; CAN | fra; CAN
+    field_name: language
+    help_text:
+      en: The language of the resource.
+      fr: La langue de la ressource
+    label:
+      en: Language
+      fr: Langue
+    required: true
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
