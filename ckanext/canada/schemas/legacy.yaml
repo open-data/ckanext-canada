@@ -2,15 +2,16 @@ scheming_version: 1
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
-  en: Raw Data
-  fr: Données
-dataset_type: raw
+  en: Raw/Geo Data
+  fr: Données/géo
+dataset_type: legacy
 form_languages:
 - en
 - fr
 languages_label:
 - eng; CAN
 - fra; CAN
+
 dataset_fields:
 - preset: canada_dataset_id
 - preset: canada_dataset_name
@@ -168,84 +169,10 @@ dataset_fields:
     en: Date Modified
     fr: Date de modification
   preset: date
-- choices:
-  - label:
-      en: As Needed
-      fr: Au besoin
-    value: as_needed
-  - label:
-      en: Continual
-      fr: Continue
-    value: continual
-  - label:
-      en: Daily
-      fr: Quotidien
-    value: daily
-  - label:
-      en: Weekly
-      fr: Hebdomadaire
-    value: weekly
-  - label:
-      en: Fortnightly
-      fr: Quinzomadaire
-    value: fortnightly
-  - label:
-      en: Monthly
-      fr: Mensuel
-    value: monthly
-  - label:
-      en: Semimonthly
-      fr: Bimensuel
-    value: semimonthly
-  - label:
-      en: Quarterly
-      fr: Trimestriel
-    value: quarterly
-  - label:
-      en: Biannually
-      fr: Semestriel
-    value: biannually
-  - label:
-      en: Annually
-      fr: Annuel
-    value: annually
-  - label:
-      en: Irregular
-      fr: Irrégulier
-    value: irregular
-  - label:
-      en: Not Planned
-      fr: Non planifié
-    value: not_planned
-  - label:
-      en: Unknown
-      fr: Inconnu
-    value: unknown
-  field_name: frequency
-  help_text:
-    en: The frequency at which the dataset is published.
-    fr: La fréquence de la publication de l’ensemble de données.
-  label:
-    en: Frequency
-    fr: Fréquence
-  preset: select
-  required: true
-- field_name: time_period_coverage_start
-  help_text:
-    en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
-    fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
-  label:
-    en: Time Period Coverage Start
-    fr: Couverture de la période de temps
-  preset: date
-- field_name: time_period_coverage_end
-  help_text:
-    en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
-    fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
-  label:
-    en: Time Period Coverage End
-    fr: Couverture de la période de temps
-  preset: date
+- preset: canada_frequency
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
+
 - choices:
   - label:
       en: Canada
@@ -1545,6 +1472,8 @@ dataset_fields:
   label:
     en: Endpoint
     fr: Point d’extrémité
+
+
 resource_fields:
 - field_name: name
   help_text:
@@ -1564,32 +1493,7 @@ resource_fields:
     fr: URL
   preset: resource_url_upload
   required: true
-- choices:
-  - label:
-      en: No linguistic content; Not applicable
-      fr: pas de contenu linguistique; non applicable
-    value: zxx; CAN
-  - label:
-      en: English
-      fr: Anglais
-    value: eng; CAN
-  - label:
-      en: French
-      fr: Français
-    value: fra; CAN
-  - label:
-      en: Bilingual (English and French)
-      fr: Bilingue (Anglais et Français)
-    value: eng; CAN | fra; CAN
-  field_name: language
-  help_text:
-    en: The language of the resource.
-    fr: La langue de la ressource
-  label:
-    en: Language
-    fr: Langue
-  preset: select
-  required: true
+- preset: canada_resource_language
 - field_name: size
   help_text:
     en: The estimated size of a unit in the specified transfer format, expressed in
