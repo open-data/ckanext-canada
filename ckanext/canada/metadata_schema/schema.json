@@ -323,7 +323,14 @@
               "id": 113, 
               "key": "chrc-ccdp", 
               "pilot_uuid": "7989CBA8-1F59-47C1-B9BC-F5FA9A0E03E7"
-            }, 
+            },
+            {
+              "eng": "Canadian Institute for Health Information",
+              "fra": "Institut canadien d'information sur la sant\u00e9",
+              "id": 6662,
+              "key": "cihi-icis",
+              "pilot_uuid": "6bdf4aee-a7e3-11e4-b3a7-08002710fcd5"
+            },
             {
               "eng": "Canadian Institutes of Health Research", 
               "fra": "Instituts de recherche en sant\u00e9 du Canada", 
@@ -5580,6 +5587,44 @@
       }, 
       "pilot_type": "choice", 
       "type": "choice"
+    },
+    {
+      "bilingual": false, 
+      "description": {
+        "eng": "The most important data items in this resource have a URI, e.g. data in RDF format.",
+        "fra": "Les plus importants éléments des données de cette ressource sont dotés d’un URI, p. ex., des données en format RDF."
+      }, 
+      "example": {
+        "eng": "", 
+        "fra": ""
+      }, 
+      "existing": false, 
+      "id": "data_includes_uris", 
+      "label": {
+        "eng": "Data Includes URIs", 
+        "fra": "Les données comprennent les URI"
+      }, 
+      "mandatory": null, 
+      "type": "boolean"
+    }, 
+    {
+      "bilingual": false, 
+      "description": {
+        "eng": "The data includes links to other data for providing context, and those links are kept up to date (not broken).",
+        "fra": "Les données comprennent des liens à d’autres données qui accordent un contexte, et ces liens sont gardés à jour (non brisés)."
+      }, 
+      "example": {
+        "eng": "", 
+        "fra": ""
+      }, 
+      "existing": false, 
+      "id": "data_includes_links",
+      "label": {
+        "eng": "Data Includes Links",
+        "fra": "Les données comprennent les liens"
+      }, 
+      "mandatory": null, 
+      "type": "boolean"
     }
   ], 
   "vocabularies": {
