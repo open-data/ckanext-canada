@@ -33,6 +33,11 @@ dataset_fields:
   label:
     en: Hierarchy level
     fr: Portée hiérarchique
+- field_name: metadata_contact
+  label:
+    en: Metadata contact
+    fr: Contact métadonnée
+  preset: fluent_text
 - field_name: url
   label:
     en: Metadata URI
@@ -140,6 +145,10 @@ dataset_fields:
     en: Licence
     fr: Licence
   required: true
+- field_name: reference_system
+  label:
+    en: Reference system information
+    fr: Information système référence
 - field_name: distributor
   label:
     en: Distributor
