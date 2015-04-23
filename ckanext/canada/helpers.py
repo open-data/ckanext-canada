@@ -14,6 +14,7 @@ ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
+DATAPREVIEW_MAX = 500
 
 
 def may_publish_datasets(userobj=None):
@@ -159,8 +160,8 @@ def get_datapreview_ati(res_id):
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
         resource_id=res_id,
-        sort='year,month desc',
-        limit=3000)
+        sort='year desc, month desc',
+        limit=DATAPREVIEW_MAX)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])
 
@@ -168,7 +169,7 @@ def get_datapreview_contracts(res_id):
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
         resource_id=res_id,
-        sort='contract_period_start,contract_period_end desc',
-        limit=3000)
+        sort='contract_period_start desc, contract_period_end desc',
+        limit=DATAPREVIEW_MAX)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])
