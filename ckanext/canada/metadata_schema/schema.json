@@ -323,7 +323,14 @@
               "id": 113, 
               "key": "chrc-ccdp", 
               "pilot_uuid": "7989CBA8-1F59-47C1-B9BC-F5FA9A0E03E7"
-            }, 
+            },
+            {
+              "eng": "Canadian Institute for Health Information",
+              "fra": "Institut canadien d'information sur la sant\u00e9",
+              "id": 6662,
+              "key": "cihi-icis",
+              "pilot_uuid": "6bdf4aee-a7e3-11e4-b3a7-08002710fcd5"
+            },
             {
               "eng": "Canadian Institutes of Health Research", 
               "fra": "Instituts de recherche en sant\u00e9 du Canada", 
@@ -1898,6 +1905,12 @@
               "fra": "Accord de licence de donn\u00e9es libre - Commissariat au lobbying",
               "id": "ca-odla-aldg",
               "key": "ca-odla-aldg"
+            },
+            {
+              "eng": "Open Government Licence - Canadian Institute for Health Information",
+              "fra": "Licence du gouvernement ouvert - Institut canadien d'information sur la sant\u00e9",
+              "id": "ca-cihi-icis",
+              "key": "ca-cihi-icis"
             }
           ], 
           "description": {
