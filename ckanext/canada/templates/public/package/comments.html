@@ -1,15 +1,9 @@
-
-<div class="panel col-md-12">
-
-    
-    {% set pkg = c.pkg_dict %}
-
-    {% set comment_list = h.dataset_comments(pkg.id, h.lang()) %}
-
-    <div class="panel-heading"><h3><a id="comments"></a>{{ _('Comments') }}</h3></div>
-    <div class="panel-body">
-    {% if comment_list %}
-
+<section class="indent-large">
+<div class="span-6 margin-top-medium">
+    {%- set pkg = c.pkg_dict -%}
+    {%- set comment_list = h.dataset_comments(pkg.id, h.lang()) -%}
+    <h4><a id="comments"></a>{{ _('Comments') }}</h4>
+    {%- if comment_list -%}
       <ul class="list-group">
       {% for comment in comment_list %}
         <li class="list-group-item">
@@ -20,14 +14,13 @@
       {% endfor %}
       </ul>
 
-    {% endif %}
-    
-     <ul class="list-unstyled">
-        <li><a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/dataset/{{pkg.name}}"
-          class="btn btn-default btn-lg">{{_('Comment')}}</a></li>
-     </ul>
-
+    {%- endif -%}
+    <div class="margin-top-medium">
+      <a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/dataset/{{pkg.name}}"
+          class="btn btn-default btn-lg">{{_('Comment')}}</a>
+    </div>
 </div>
+</section>
 
 
 
