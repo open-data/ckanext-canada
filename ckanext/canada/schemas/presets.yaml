@@ -115,9 +115,9 @@ presets:
 - preset_name: canada_topic_category
   values:
     field_name: topic_category
-      label:
-        en: Topic category
-        fr: Catégorie thématique
+    label:
+      en: Topic category
+      fr: Catégorie thématique
     form_snippet: multiple_checkbox.html
     display_snippet: multiple_choice.html
     choices:
