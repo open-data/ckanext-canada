@@ -125,10 +125,7 @@ dataset_fields:
   label:
     en: Spatial representation type
     fr: Type représentation spatiale
-- field_name: topic_category
-  label:
-    en: Topic category
-    fr: Catégorie thématique
+- preset: canada_topic_category
 - field_name: spatial
   label:
     en: Spatial

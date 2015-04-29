@@ -108,10 +108,95 @@ presets:
     label:
       en: Time Period Coverage End
       fr: Couverture de la période de temps
-    preset: date
     form_snippet: date.html
     display_snippet: date.html
     validators: scheming_required isodate
+
+- preset_name: canada_topic_category
+  values:
+    field_name: topic_category
+      label:
+        en: Topic category
+        fr: Catégorie thématique
+    form_snippet: multiple_checkbox.html
+    display_snippet: multiple_choice.html
+    choices:
+      - label:
+          en: Farming
+          fr: Agriculture
+        value: farming
+      - label:
+          en: Biota
+          fr: Biote
+        value: biota
+      - label:
+          en: Boundaries
+          fr: Frontières
+        value: boundaries
+      - label:
+          en: Climatology / Meteorology / Atmosphere
+          fr: Climatologie / Météorologie / Atmosphère
+        value: climatology_meterology_atmosphere
+      - label:
+          en: Economy
+          fr: Économie
+        value: economy
+      - label:
+          en: Elevation
+          fr: Élévation
+        value: elevation
+      - label:
+          en: Environment
+          fr: Environnement
+        value: environment
+      - label:
+          en: Geoscientific Information
+          fr: Information géoscientifique
+        value: geoscientific_information
+      - label:
+          en: Health
+          fr: Santé
+        value: health
+      - label:
+          en: Imagery Base Maps Earth Cover
+          fr: Imagerie carte de base couverture terrestre
+        value: imagery_base_maps_earth_cover
+      - label:
+          en: Intelligence Military
+          fr: Renseignements militaires
+        value: intelligence_military
+      - label:
+          en: Inland Waters
+          fr: Eaux intérieures
+        value: inland_waters
+      - label:
+          en: Location
+          fr: Localisation
+        value: location
+      - label:
+          en: Oceans
+          fr: Océans
+        value: oceans
+      - label:
+          en: Planning Cadastre
+          fr: Aménagement cadastre
+        value: planning_cadastre
+      - label:
+          en: Society
+          fr: Société
+        value: society
+      - label:
+          en: Structure
+          fr: Structures
+        value: structure
+      - label:
+          en: Transportation
+          fr: Transport
+        value: transport
+      - label:
+          en: Utilities Communication
+          fr: Services communication
+        value: utilities_communication
 
 - preset_name: canada_resource_language
   values:
