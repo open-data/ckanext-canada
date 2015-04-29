@@ -152,9 +152,9 @@
     {% if wkt %}
       {% if h.get_map_type() == 'static' %}
 
-        {% snippet 'snippets/geomap_static.html', gid=cr.field_id('title', pkg, client_lang), wkt=wkt %}
+        {% snippet 'snippets/geomap_static.html', gid=pkg['title'][client_lang], wkt=wkt %}
       {% else %}
-        {% snippet 'snippets/geomap_dynamic.html', gid=cr.field_id('title', pkg, client_lang), wkt=wkt %}
+        {% snippet 'snippets/geomap_dynamic.html', gid=pkg['title'][client_lang], wkt=wkt %}
       {% endif %}
     {% endif %}
   {% endif %}
