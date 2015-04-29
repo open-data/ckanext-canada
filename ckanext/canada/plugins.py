@@ -7,7 +7,8 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import if_empty_generate_uuid, canada_tags
+from ckanext.canada.navl_schema import (if_empty_generate_uuid, canada_tags,
+    geojson_validator)
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -230,6 +231,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         return {
             'if_empty_generate_uuid': if_empty_generate_uuid,
             'canada_tags': canada_tags,
+            'geojson_validator': geojson_validator,
             }
 
 

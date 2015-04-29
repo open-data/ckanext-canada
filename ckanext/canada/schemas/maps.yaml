@@ -130,6 +130,7 @@ dataset_fields:
   label:
     en: Spatial
     fr: Élément spatial
+  validators: geojson_validator
 - preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
 - preset: canada_frequency

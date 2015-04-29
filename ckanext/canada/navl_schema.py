@@ -70,8 +70,12 @@ def if_empty_generate_uuid(value):
 def geojson_validator(value):
     if value:
         try:
-            gjson = json.loads(value)
-            shape = asShape(gjson)
+            # accept decoded geojson too
+            if isinstance(value, basestring):
+                value = json.loads(value)
+            shape = asShape(value)
         except ValueError:
             raise Invalid(_("Invalid GeoJSON"))
+        # must store as JSON
+        return json.dumps(value)
     return value
