@@ -35,7 +35,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             username='russianfan', id='nrcan-rncan', role='editor')
 
         cls.incomplete_pkg = {
-            'type': 'raw',
+            'type': 'dataset',
             'title': {'en': u'A Novel By Tolstoy'},
             'license_id': 'ca-ogl-lgo',
             'resources': [{
