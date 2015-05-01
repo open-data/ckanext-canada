@@ -6,14 +6,14 @@
   {% endblock %}
 
   {% block basic_fields %}
-    {% set attrs = {'data-module': 'slug-preview-target', 'class' : 'ui-disabled width-90'} %}
+    {% set attrs = {'data-module': 'slug-preview-target', 'class' : 'width-90'} %}
     {{ form.input('title', label=_('Title'), id='field-title', placeholder=_('My Organization'), value=data.title, error=errors.title, attrs=attrs) }}
 
     {# Perhaps these should be moved into the controller? #}
     {% set prefix = h.url_for(controller='organization', action='read', id='') %}
     {% set domain = h.url_for(controller='organization', action='read', id='', qualified=true) %}
     {% set domain = domain|replace("http://", "")|replace("https://", "") %}
-    {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<organization>', 'class' : 'ui-disabled width-70'} %}
+    {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<organization>', 'class' : 'width-70'} %}
 
     {{ form.prepend('name', label=_('URL'), prepend=prefix, id='field-url', placeholder=_('my-organization'), value=data.name, error=errors.name, attrs=attrs) }}
 
@@ -37,7 +37,7 @@
         <input id="{{ id }}-key" name="{{ names[0] }}" type="hidden" value="{{ values[0] | empty_and_escape }}" />
         <label for="{{ id }}-value" class="add-on span-1">{{ values[0] }}</label>
         <div class="span-4">
-          <input id="{{ id }}-value" type="text" name="{{ names[1] }}" value="{{ values[1] | empty_and_escape }}" class="{{ "ui-disabled" if values[0] != "ati_email" else "" }}" />
+          <input id="{{ id }}-value" type="text" name="{{ names[1] }}" value="{{ values[1] | empty_and_escape }}"/>
         </div>
       </div>
     {% endfor %}
