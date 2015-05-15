@@ -1489,35 +1489,7 @@ dataset_fields:
     en: Spatial
     fr: Élément spatial
   validators: geojson_validator
-- field_name: spatial_representation_type
-  label:
-    en: Spatial representation type
-    fr: Type représentation spatiale
-  preset: choice
-  - label:
-      en: Vector
-      fr: Vecteur
-    value: '635'
-  - label:
-      en: Grid
-      fr: Grille
-    value: '636'
-  - label:
-      en: Text Table
-      fr: Texte table
-    value: '637'
-  - label:
-      en: Tin
-      fr: Tin
-    value: '638'
-  - label:
-      en: Stero Model
-      fr: Stéréomodèle
-    value: '639'
-  - label:
-      en: Video
-      fr: Vidéo
-    value: '640'
+- preset: canada_spatial_representation_type
 - field_name: presentation_form
   label:
     en: Presentation Form
