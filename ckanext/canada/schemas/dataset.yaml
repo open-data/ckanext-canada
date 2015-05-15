@@ -1474,6 +1474,156 @@ dataset_fields:
     fr: Point d’extrémité
 
 
+# dataset fields added to support migration of existing raw+geogratis records:
+- field_name: author_email
+  help_text:
+    en: The electronic mail address of the responsible organization or individual
+    fr: L’adresse électronique de l’organisation ou de la personne responsable
+  label:
+    en: Email
+    fr: Adresse électronique
+  required: true
+- preset: canada_topic_category
+- field_name: spatial
+  label:
+    en: Spatial
+    fr: Élément spatial
+  validators: geojson_validator
+- field_name: spatial_representation_type
+  label:
+    en: Spatial representation type
+    fr: Type représentation spatiale
+  preset: choice
+  - label:
+      en: Vector
+      fr: Vecteur
+    value: '635'
+  - label:
+      en: Grid
+      fr: Grille
+    value: '636'
+  - label:
+      en: Text Table
+      fr: Texte table
+    value: '637'
+  - label:
+      en: Tin
+      fr: Tin
+    value: '638'
+  - label:
+      en: Stero Model
+      fr: Stéréomodèle
+    value: '639'
+  - label:
+      en: Video
+      fr: Vidéo
+    value: '640'
+- field_name: presentation_form
+  label:
+    en: Presentation Form
+    fr: Type de représentation spatiale
+  help_text:
+    en: The form in which the resource is available
+    fr: Le format dans lequel la ressource est disponible
+  preset: select
+  choices:
+  - label:
+      en: Document Digital
+      fr: Document numérique
+    value: '387'
+  - label:
+      en: Document Hardcopy
+      fr: Document papier
+    value: '388'
+  - label:
+      en: Image Digital
+      fr: Image numérique
+    value: '389'
+  - label:
+      en: Image Hardcopy
+      fr: Image papier
+    value: '390'
+  - label:
+      en: Map Digital
+      fr: Carte numérique
+    value: '391'
+  - label:
+      en: Map Hardcopy
+      fr: Carte papier
+    value: '392'
+  - label:
+      en: Model Digital
+      fr: Modèle numérique
+    value: '393'
+  - label:
+      en: Model Hardcopy
+      fr: Maquette
+    value: '394'
+  - label:
+      en: Profile Digital
+      fr: Profil numérique
+    value: '395'
+  - label:
+      en: Profile Hardcopy
+      fr: Profil papier
+    value: '396'
+  - label:
+      en: Table Digital
+      fr: Table numérique
+    value: '397'
+  - label:
+      en: Table Hardcopy
+      fr: Table papier
+    value: '398'
+  - label:
+      en: Video Digital
+      fr: Vidéo numérique
+    value: '399'
+  - label:
+      en: Video Hardcopy
+      fr: Vidéo film
+    value: '400'
+  - label:
+      en: Audio Digital
+      fr: Audio numérique
+    value: '401'
+  - label:
+      en: Audio Hardcopy
+      fr: Audio analogique
+    value: '402'
+  - label:
+      en: Multimedia Digital
+      fr: Multimédia numérique
+    value: '403'
+  - label:
+      en: Multimedia Hardcopy
+      fr: Multimédia analogique
+    value: '404'
+  - label:
+      en: Diagram Digital
+      fr: Diagramme numérique
+    value: '405'
+  - label:
+      en: Diagram Hardcopy
+      fr: Diagramme papier
+    value: '406'
+- field_name: browse_graphic_url
+  label:
+    en: Browse Graphic File Name
+    fr: Recherche du nom du fichier graphique
+  help_text:
+    en: The name of the graphic file provided to illustrate the resource
+    fr: Le nom du fichier graphique fournit pour illustrer la ressource
+- field_name: portal_release_date
+  label:
+    en: Portal Release Date
+    fr: Date de lancement du portail
+  help_text:
+    en:	The date the dataset may be published on the Open Data Portal
+    fr: La date que le jeu de données peut être publier sur le portail Données Ouvertes
+  preset: date
+
+
 resource_fields:
 - field_name: name
   help_text:
@@ -1724,3 +1874,17 @@ resource_fields:
     fr: Type de ressource
   preset: select
   required: true
+- field_name: data_quality
+  label:
+    en: Data Includes URIs and Links
+    fr: Les données comprennent les URI et les liens
+  preset: multiple_checkbox
+  choices:
+  - label:
+      en: The most important data items in this resource have a URI, e.g. data in RDF format
+      fr: Les plus importants éléments des données de cette ressource sont dotés d’un URI, p. ex., des données en format RDF
+    value: data_includes_uris
+  - label:
+      en: The data includes links to other data for providing context, and those links are kept up to date (not broken)
+      fr: Les données comprennent des liens à d’autres données qui accordent un contexte, et ces liens sont gardés à jour (non brisés)
+    value: data_includes_links
