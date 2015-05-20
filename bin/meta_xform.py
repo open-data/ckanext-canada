@@ -52,7 +52,7 @@ def _process(line):
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
     # replace dataset type
-    rec['type'] = u'raw'
+    rec['type'] = u'dataset'
 
     # dump tags: redundant
     rec['tags'] = []
