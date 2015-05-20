@@ -1,4 +1,3 @@
-from ckan import model
 from ckan.lib.cli import CkanCommand
 from ckan.logic.validators import isodate, boolean_validator
 from ckan.lib.navl.dictization_functions import Invalid
@@ -18,6 +17,8 @@ from contextlib import contextmanager
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.navl_schema import convert_pilot_uuid_list
+from ckanext.canada.metadata_xform import metadata_xform
+
 from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
     ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
 
@@ -40,6 +41,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
+                      metadata-xform <input.jsonl.gz> <output.jsonl.gz>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -105,6 +107,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'changed-datasets':
             self.changed_datasets(*self.args[1:])
+
+        elif cmd == 'metadata-xform':
+            metadata_xform(self.args[1], self.args[2])
 
         else:
             print self.__doc__

@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-
 """
 Transform metadata .jsonl file from CKAN 2.1 alignment to 2.3
-    Usage::
-    python meta_xform.py <input file> <output file>
 """
 
 from os import readlink
@@ -143,19 +139,7 @@ def _set_new_schema_dataset_choices():
             ch['value']) for ch in df['choices']))
         for df in sd_new['dataset_fields'] if 'choices' in df)
 
-if __name__ == '__main__':
-    """
-    Main line: check arguments, init global schema variable,  and dispatch
-    """
-    fpath_jsonl_old = None
-    fpath_jsonl_new = None
-
-    # Need at least two args: input and output paths
-    if len(sys.argv) < 3:
-        usage()
-
-    # Input path must refer to a regular file or a sym-link to a regular file
-    fpath_jsonl_old = sys.argv[1]
+def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
     if path.islink(fpath_jsonl_old):
         fpath_jsonl_old = readlink(fpath_jsonl_old)
     if not path.isfile(fpath_jsonl_old):
