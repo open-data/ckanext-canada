@@ -42,12 +42,6 @@ def _process(line):
     """
     rec = simplejson.loads(line)
 
-    # filter out Geo data
-    if not _is_geodata(rec):
-        _process.count[0] += 1
-        logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
-        return None
-
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
