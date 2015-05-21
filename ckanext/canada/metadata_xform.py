@@ -149,7 +149,7 @@ def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
         path.expandvars(path.abspath(fpath_jsonl_old)))
 
     fpath_jsonl_new = path.expanduser(
-        path.expandvars(path.abspath(sys.argv[2])))
+        path.expandvars(path.abspath(fpath_jsonl_new)))
 
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
