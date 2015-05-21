@@ -13,6 +13,8 @@ import sys
 # from pylons.i18n import _
 import simplejson
 
+from ckanapi import LocalCKAN
+
 SUFFIX_FRA = '_fra'
 LEN_SUFFIX_FRA = len(SUFFIX_FRA)
 LANG_KEYS = ('en', 'fr')
@@ -126,12 +128,9 @@ def _set_new_schema_dataset_choices():
     choice fields
     """
     global sd_new_dfc
-    _HERE = path.dirname(path.abspath(__file__))
-    _SCHEMAS_DIR = path.join(path.dirname(_HERE),'ckanext/canada/schemas')
-    _JSON_NAME = path.join(_SCHEMAS_DIR, 'raw.json')
 
-    with open(_JSON_NAME) as j:
-        sd_new = simplejson.load(j)
+    ckan = LocalCKAN()
+    sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
     sd_new_dfc = dict((
         df['field_name'],
         dict((
