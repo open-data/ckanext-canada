@@ -69,6 +69,15 @@ def _process(line):
         sd_new_dfc['subject'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec['subject']]
 
+    rec['topic_category'] = [
+        sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
+            for s in rec['topic_category']]
+
+    if rec.get('presentation_form'):
+        rec['presentation_form'] = (
+            sd_new_dfc['presentation_form'][
+                rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
+
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency')
     if (freq):
