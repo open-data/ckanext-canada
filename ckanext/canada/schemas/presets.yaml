@@ -18,7 +18,7 @@ presets:
     field_name: name
     form_snippet: null
     validators: if_empty_same_as(id)
-        
+
 - preset_name: canada_frequency
   values:
     choices:
@@ -136,8 +136,8 @@ presets:
           fr: Frontières
         value: boundaries
       - label:
-          en: Climatology / Meteorology / Atmosphere
-          fr: Climatologie / Météorologie / Atmosphère
+          en: Climatology Meteorology Atmosphere
+          fr: Climatologie Météorologie Atmosphère
         value: climatology_meterology_atmosphere
       - label:
           en: Economy
@@ -230,3 +230,37 @@ presets:
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
+
+
+- preset_name: canada_spatial_representation_type
+  values:
+    field_name: spatial_representation_type
+    label:
+      en: Spatial representation type
+      fr: Type représentation spatiale
+    preset: choice
+    choices:
+    - label:
+        en: Vector
+        fr: Vecteur
+      value: '635'
+    - label:
+        en: Grid
+        fr: Grille
+      value: '636'
+    - label:
+        en: Text Table
+        fr: Texte table
+      value: '637'
+    - label:
+        en: Tin
+        fr: Tin
+      value: '638'
+    - label:
+        en: Stero Model
+        fr: Stéréomodèle
+      value: '639'
+    - label:
+        en: Video
+        fr: Vidéo
+      value: '640'

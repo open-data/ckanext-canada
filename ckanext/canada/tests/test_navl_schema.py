@@ -134,10 +134,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             **dict(self.complete_pkg, keywords=
                 {'en': ['test'], 'fr': ["emissions de l'automobile"]}))
 
-    def test_treat_empty_string_as_no_tags(self):
-        self.normal_action.package_create(
-            **dict(self.complete_pkg, topic_category=''))
-
     def test_invalid_resource_size(self):
         self.assert_raises(ValidationError,
             self.normal_action.package_create,

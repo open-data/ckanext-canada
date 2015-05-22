@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-
 """
 Transform metadata .jsonl file from CKAN 2.1 alignment to 2.3
-    Usage::
-    python meta_xform.py <input file> <output file>
 """
 
 from os import readlink
@@ -16,6 +12,8 @@ import sys
 
 # from pylons.i18n import _
 import simplejson
+
+from ckanapi import LocalCKAN
 
 SUFFIX_FRA = '_fra'
 LEN_SUFFIX_FRA = len(SUFFIX_FRA)
@@ -42,17 +40,11 @@ def _process(line):
     """
     rec = simplejson.loads(line)
 
-    # filter out Geo data
-    if not _is_geodata(rec):
-        _process.count[0] += 1
-        logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
-        return None
-
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
     # replace dataset type
-    rec['type'] = u'raw'
+    rec['type'] = u'dataset'
 
     # dump tags: redundant
     rec['tags'] = []
@@ -76,6 +68,15 @@ def _process(line):
     rec['subject'] = [
         sd_new_dfc['subject'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec['subject']]
+
+    rec['topic_category'] = [
+        sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
+            for s in rec['topic_category']]
+
+    if rec.get('presentation_form'):
+        rec['presentation_form'] = (
+            sd_new_dfc['presentation_form'][
+                rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
 
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency')
@@ -136,12 +137,9 @@ def _set_new_schema_dataset_choices():
     choice fields
     """
     global sd_new_dfc
-    _HERE = path.dirname(path.abspath(__file__))
-    _SCHEMAS_DIR = path.join(path.dirname(_HERE),'ckanext/canada/schemas')
-    _JSON_NAME = path.join(_SCHEMAS_DIR, 'raw.json')
 
-    with open(_JSON_NAME) as j:
-        sd_new = simplejson.load(j)
+    ckan = LocalCKAN()
+    sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
     sd_new_dfc = dict((
         df['field_name'],
         dict((
@@ -149,19 +147,7 @@ def _set_new_schema_dataset_choices():
             ch['value']) for ch in df['choices']))
         for df in sd_new['dataset_fields'] if 'choices' in df)
 
-if __name__ == '__main__':
-    """
-    Main line: check arguments, init global schema variable,  and dispatch
-    """
-    fpath_jsonl_old = None
-    fpath_jsonl_new = None
-
-    # Need at least two args: input and output paths
-    if len(sys.argv) < 3:
-        usage()
-
-    # Input path must refer to a regular file or a sym-link to a regular file
-    fpath_jsonl_old = sys.argv[1]
+def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
     if path.islink(fpath_jsonl_old):
         fpath_jsonl_old = readlink(fpath_jsonl_old)
     if not path.isfile(fpath_jsonl_old):
@@ -172,7 +158,7 @@ if __name__ == '__main__':
         path.expandvars(path.abspath(fpath_jsonl_old)))
 
     fpath_jsonl_new = path.expanduser(
-        path.expandvars(path.abspath(sys.argv[2])))
+        path.expandvars(path.abspath(fpath_jsonl_new)))
 
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
