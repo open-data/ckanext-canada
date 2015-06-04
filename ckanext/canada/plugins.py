@@ -279,7 +279,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr')
-        data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
+        data_dict['catalog_type'] = data_dict.get('type', '')
         
         data_dict['subject'] = list()
 
