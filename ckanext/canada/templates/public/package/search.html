@@ -26,7 +26,6 @@
     {%- macro get_catalog_label(type, lang) -%}
        {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
     {%- endmacro -%}
-
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=get_catalog_label ) }}
     
     {% if h.lang() == 'en' %}
@@ -36,9 +35,19 @@
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
       name='keywords_fra') }}
     {% endif %}
-  
+
+    {%- set subject_choices = [] -%}
+    {# must use 'dataset' type because we have a single facet list #}
+    {%- for field in h.scheming_get_dataset_schema('dataset').dataset_fields -%}
+      {%- if field.field_name == 'subject' -%}
+        {%- do subject_choices.extend(field.choices) -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- macro get_subject_label(subj, lang) -%}
+      {{- h.scheming_choices_label(subject_choices, subj.name) -}}
+    {%- endmacro -%}
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
-      name='subject', label_function=cr.subject_label) }}
+      name='subject', label_function=get_subject_label) }}
   
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
       name='res_format', label_function=cr.res_label) }}

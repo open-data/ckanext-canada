@@ -281,7 +281,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['keywords_fra'] = kw.get('fr')
         data_dict['catalog_type'] = data_dict.get('type', '')
         
-        data_dict['subject'] = list()
+        data_dict['subject'] = json.loads(data_dict['subject'])
 
         if 'portal_release_date' in data_dict:
             data_dict.pop('ready_to_publish', None)
