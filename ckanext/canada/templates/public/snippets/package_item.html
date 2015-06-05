@@ -93,6 +93,12 @@ Example:
               </ul>
             </div>
           </div>
+          <div>
+          <hr>
+          <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}" class="ogscartbtn ogscartaddbtn btn btn-success btn-xs"><span class="fa fa-plus"></span> Add To Cart</a>
+          <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}" class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs"><span class="fa fa-minus"></span> Remove From Cart</a>
+          <a href="http://path.to.ramp/?arg={{ package.name }}" id="OGSCartView_{{ package.name }}" class="ogscartviewbtn btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> View On Map</a>
+          </div>
         {% endblock %}
       {% endif %}
     {% endblock %}

@@ -10,6 +10,10 @@
     <li>{{ _('Search Open Data') }}</li>
 {% endblock %}
 
+{% block font_awesome %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+
 {% block subtitle %}{{ _('Open Data Portal') }}{% endblock %}
 
 {%- block title -%}{{ _('Open Data Portal - Open Data') }}{% endblock %}
@@ -95,3 +99,54 @@ Please review your spelling, or reduce the number of filters selected.
 {%- endtrans -%}
 </p>
 {% endblock %}
+
+{% block styles %}
+  {{ super() }}
+
+    <!-- OGS Map Shopping Cart -->
+    <script src="{{ h.portal_url() }}/static/js/OGSCookie.js"></script>
+    <script src="{{ h.portal_url() }}/static/js/OGSMapsCart.js"></script>
+    <!-- End Cart -->
+
+{% endblock %}
+
+{% block page_extra_scripts %}
+  {{ super() }}
+
+<!-- majewski has added post scripts -->
+<script type="text/javascript">
+$( document ).ready(function() {
+
+  initCart()
+  updateCartUI()
+
+  $("#OGSCartPlotItems").click(function() {
+    alertUpArray()
+  });
+  $(".ogscartviewbtn").click(function() {
+    var action = $(this).attr('id').split('_')
+    type = action[0]
+    id = action[1]
+
+    alert('http://ramp.url/?display='+id)
+    return false
+  });
+
+  $(".ogscartbtn").click(function() {
+    var action = $(this).attr('id').split('_')
+    type = action[0]
+    id = action[1]
+
+    // Action
+    if(type == 'OGSCartAdd')    { addCartItem(id)    }
+    if(type == 'OGSCartRemove') { removeCartItem(id) }
+    updateCartUI()  
+  });
+});
+</script>
+
+{% endblock %}
+
+
+
+
