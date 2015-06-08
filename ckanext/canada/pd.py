@@ -152,7 +152,11 @@ def _proactive_disclosure(org, lc):
     result = lc.action.package_search(
         q="type:%s owner_org:%s" % (DATASET_TYPE, org['id']),
         rows=1000)['results']
-    resource_id = result[0]['resources'][0]['id']
+
+    try:
+        resource_id = result[0]['resources'][0]['id']
+    except (IndexError, KeyError):
+        return
     offset = 0
     while True:
         rval = lc.action.datastore_search(resource_id=resource_id,
