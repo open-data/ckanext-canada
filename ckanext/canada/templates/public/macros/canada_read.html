@@ -152,20 +152,6 @@ Display a resource format in the correct language
 {%- endmacro -%}
 
 {#
-Display the catalog type in the correct language
-#}
-
-{%- macro catalog_type(type, client_lang) -%}
-  {%- set type_field = schema_description.dataset_field_by_id.catalog_type -%}
-  {%- if type in type_field.choices_by_key -%}
-    {{- type_field.choices_by_key[type][full_lang(client_lang)] -}}
-  {%- else -%}
-    {{- format -}}
-  {%- endif -%}
-{%- endmacro -%}
-
-
-{#
 Display a license name in the correct language
 #}
 {%- macro license_name(license_id, client_lang) -%}
@@ -247,10 +233,6 @@ Search Facet Formatters
 
 {%- macro subject_label(subject, lang) -%}
   {{- split_subject_field(subject.name, lang) -}}
-{%- endmacro -%}
-
-{%- macro catalog_label(catalog, lang) -%}
-  {{- catalog_type(catalog.name, lang) -}}
 {%- endmacro -%}
 
 {%- macro license_lookup(license, lang) -%}

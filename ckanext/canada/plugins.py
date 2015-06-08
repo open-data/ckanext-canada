@@ -12,6 +12,8 @@ from ckanext.canada.navl_schema import (if_empty_generate_uuid, canada_tags,
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
+import json
+
 # Ugly monkey patch to let us hook into the user_create action
 
 ckan_user_create = create.user_create
@@ -274,17 +276,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
-        def kw(name):
-            s = data_dict.get(name, '').strip()
-            if not s:
-                return []
-            return [k.strip() for k in s.split(',')]
-
-        data_dict['keywords'] = kw('extras_keywords')
-        data_dict['keywords_fra'] = kw('extras_keywords_fra')
-        data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
+        kw = json.loads(data_dict.get('extras_keywords', '{}'))
+        data_dict['keywords'] = kw.get('en', [])
+        data_dict['keywords_fra'] = kw.get('fr')
+        data_dict['catalog_type'] = data_dict.get('type', '')
         
-        data_dict['subject'] = list()
+        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
 
         if 'portal_release_date' in data_dict:
             data_dict.pop('ready_to_publish', None)
