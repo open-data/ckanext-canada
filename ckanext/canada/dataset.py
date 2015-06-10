@@ -65,7 +65,10 @@ def data_batch(org_id, lc, target_dataset):
         if len(result) == 0:
             yield records
         else:
-            resource_id = result[0]['resources'][0]['id']
+            try:
+                resource_id = result[0]['resources'][0]['id']
+            except (IndexError, KeyError):
+                continue
             offset = 0
             while True:
                 rval = lc.action.datastore_search(

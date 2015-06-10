@@ -25,19 +25,22 @@
   {% endblock %}
 
   {% block custom_fields %}
+    {% set extra_values = {} %}
     {% for extra in data.extras %}
+      {% do extra_values.update({extra.key: extra.value}) %}
+    {% endfor %}
+    {% for key in ['ati_email', 'department_number', 'shortform', 'shortform_fr'] %}
       {% set prefix = 'extras__%d__' % loop.index0 %}
       {% set id = 'field-extras-%d' % loop.index %}
       {% set label_id = id %}
       {% set names = (prefix ~ 'key', prefix ~ 'value', prefix ~ 'deleted') %}
-      {% set values = (extra.key, extra.value, extra.deleted) %}
       {% set error = errors[prefix ~ 'key'] or errors[prefix ~ 'value'] %}
 
       <div class="input-prepend" style="display: inline-block;">
-        <input id="{{ id }}-key" name="{{ names[0] }}" type="hidden" value="{{ values[0] | empty_and_escape }}" />
-        <label for="{{ id }}-value" class="add-on span-1">{{ values[0] }}</label>
+        <input id="{{ id }}-key" name="{{ names[0] }}" type="hidden" value="{{ key | empty_and_escape }}" />
+        <label for="{{ id }}-value" class="add-on span-1">{{ key }}</label>
         <div class="span-4">
-          <input id="{{ id }}-value" type="text" name="{{ names[1] }}" value="{{ values[1] | empty_and_escape }}"/>
+          <input id="{{ id }}-value" type="text" name="{{ names[1] }}" value="{{ extra_values.get(key, '') | empty_and_escape }}"/>
         </div>
       </div>
     {% endfor %}
