@@ -226,8 +226,8 @@ class CanadaFeedController(FeedController):
         for pkg in results:
             feed.add_item(
                 title=pkg.get(lx('title'), ''),
-                link=self.base_url + url(str(
-                        '/api/action/package_show?id=%s' % pkg['name'])),
+                link='http://open.canada.ca/data/api/action/package_show?id=%s'
+                     % pkg['name'],
                 description=pkg.get(lx('notes'), ''),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
@@ -238,8 +238,8 @@ class CanadaFeedController(FeedController):
                     for e in pkg.get('extras',[])
                     if e['key'] == lx('keywords')).split(','),
                 enclosure=webhelpers.feedgenerator.Enclosure(
-                    self.base_url + url(str(
-                        '/api/action/package_show?id=%s' % pkg['name'])),
+                    'http://open.canada.ca/data/api/action/package_show?id=%s'
+                     % pkg['name'],
                     unicode(len(json.dumps(pkg))),   # TODO fix this
                     u'application/json')
             )
