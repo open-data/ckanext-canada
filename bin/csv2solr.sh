@@ -1,14 +1,14 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage: ${0} CKAN-INI-FILE \\"
+    echo "Usage: ${0} CKAN-INI-FILE SOURCE_CKAN_URL \\"
     echo "    TARGET-DATASET:PACKAGE-ID ... [VIRTUAL-ENV-HOME]"
     echo
     echo "This script:"
-    echo "- activates virtual environment if specified"
     echo "- pushes datasets from .csv files to the solr core"
     echo
-    echo "e.g., ${0} ../development.ini ati:ati_id pd:pd_id /opt/my-venv"
+    echo "e.g., ${0} ../development.ini http://open.canada.ca/vl \\"
+    echo "    ati:ati_id pd:pd_id"
 
     exit -1
 }
@@ -21,14 +21,9 @@ function log() {
 }
 
 LAST_TARG_ARG_IDX=$#
-if [ "$#" -lt 2 ]
+if [ "$#" -lt 3 ]
 then
     usage
-elif [[ ! "${!#}" =~ ":" ]]
-then
-    LAST_TARG_ARG_IDX=$(( $# - 1 ))
-    VENV_HOME=$(echo ${!#} | sed -e 's:/$::')
-    source ${VENV_HOME}/bin/activate
 fi
 
 # Establish bin directory
@@ -39,12 +34,13 @@ BIN_HOME=$(pwd)
 cd "$(dirname ${1})"
 INI_FILE=$(basename ${1})
 INI_PATH="$(pwd)/${INI_FILE}"
-INI_PORT=$(sed -n -e '/^\[server:main\]/,/^\[.*\]/p' ${INI_PATH} | sed -n 's/^ *port *= *\([^ ]*.*\)/\1/p')
-INI_PORT=${INI_PORT%% *}
+
+# Where we download csv files
+SOURCE_CKAN_URL=${2}
 
 # Associate target datasets with ids
 declare -A TARG_DS_MAP
-for TARG_ARG in $(seq 2 ${LAST_TARG_ARG_IDX})
+for TARG_ARG in $(seq 3 ${LAST_TARG_ARG_IDX})
 do
     TARG_DS_MAP["${!TARG_ARG%:*}"]="${!TARG_ARG#*:}"
 done
@@ -60,8 +56,8 @@ cd "${BIN_HOME}/../../ckanext-recombinant"
 CXR_HOME="$(pwd)"
 TARGET_DATASETS=$(paster recombinant target-datasets -c "${INI_PATH}")
 
-# Go to ckanext-canada and fetch resources per target dataset
-cd "${CXC_HOME}"
+# Fetch resources per target dataset
+cd "${BIN_HOME}"
 for TARG_DS in $(echo ${TARGET_DATASETS} | tr ' ' '\n')
 do
     # Get resource URLs for those datasets specified on command line
@@ -70,7 +66,7 @@ do
         continue
     fi
 
-    CSV_URLS=$(paster canada locate-dataset-resources "${TARG_DS_MAP[${TARG_DS}]}" -c "${INI_PATH}")
+    CSV_URLS=$(./resource_urls.py "${TARG_DS_MAP[${TARG_DS}]}")
 
     CSV_FILES=""
     for CSV_URL in $(echo ${CSV_URLS} | tr ' ' '\n')
