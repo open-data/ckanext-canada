@@ -81,15 +81,19 @@ do
         fi
 
         # Strip off everything but file name and extension
-        FPATH="${TMPDIR}/${CSV_URL#*.*.}"
+	echo "CSV_URL $CSV_URL"
+	CSV_TAIL="${CSV_URL##*/}"
+        FPATH="${TMPDIR}/${CSV_TAIL#*.*.}"
+	echo "FPATH $FPATH"
         CSV_FILES="${CSV_FILES} ${FPATH}"
+	echo "CSV_FILES $CSV_FILES"
         wget -q ${CSV_URL} -O "${FPATH}"
         log 'INFO' "Downloaded $(wc -c ${FPATH} | cut -d ' ' -f1) bytes: [${CSV_URL}]"
     done
     CSV_FILES=${CSV_FILES/ /}
 
     # Rebuild solr core from downloaded .csv files
-    paster "${TARG_DS}" clear
+    paster "${TARG_DS}" clear -c "${INI_PATH}"
     paster "${TARG_DS}" rebuild -f ${CSV_FILES} -c "${INI_PATH}"
     log 'INFO' "Cleared and rebuilt [${TARG_DS}] solr core"
 done
