@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function usage() {
     echo "Usage: ${0} CKAN-INI-FILE SOURCE_CKAN_URL \\"
     echo "    TARGET-DATASET:PACKAGE-ID ... [VIRTUAL-ENV-HOME]"
@@ -66,7 +68,7 @@ do
         continue
     fi
 
-    CSV_URLS=$(./resource_urls.py "${TARG_DS_MAP[${TARG_DS}]}")
+    CSV_URLS=$(./resource_urls.py $SOURCE_CKAN_URL "${TARG_DS_MAP[${TARG_DS}]}")
 
     CSV_FILES=""
     for CSV_URL in $(echo ${CSV_URLS} | tr ' ' '\n')
