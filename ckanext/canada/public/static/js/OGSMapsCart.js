@@ -33,19 +33,28 @@ function updateCartUI()
 	{
 		$(".ogscartlistbtn").hide()
 		$(".ogscartplotbtn").hide()
+		// IE 9 adaptation, can't hide them so we disable
+		$(".ogscartlistbtn").attr("disabled", "disabled");
+		$(".ogscartplotbtn").attr("disabled", "disabled");
 		$(".ogscarttally").text(' Shopping Cart is Empty');
 	}
 	else if(OGSMapsChecked_ids.length >= OGSMapsMaxCart)
 	{
 		$(".ogscartlistbtn").show()
-		$(".ogscartplotbtn").show()		
+		$(".ogscartplotbtn").show()
+		// IE 9 adaptation, can't hide them so we disable
+		$(".ogscartlistbtn").removeAttr("disabled");
+		$(".ogscartplotbtn").removeAttr("disabled");
 		$(".ogscarttally").text(' Shopping Cart is Full');
 		cart_full = true
 	}
 	else
 	{
 		$(".ogscartlistbtn").show()
-		$(".ogscartplotbtn").show()		
+		$(".ogscartplotbtn").show()
+		// IE 9 adaptation, can't hide them so we disable
+		$(".ogscartlistbtn").removeAttr("disabled");
+		$(".ogscartplotbtn").removeAttr("disabled");
 		$(".ogscarttally").text(' Shopping Cart ('+OGSMapsChecked_ids.length+' of '+OGSMapsMaxCart+')');
 	}
 
@@ -59,14 +68,39 @@ function updateCartUI()
 
 		if(type == 'OGSCartAdd')
 		{ 
-			if(cart_has) { $(this).hide() }
-			else if(cart_full) { $(this).hide() }
-			else { $(this).show() }
+			if(cart_has)
+			{ 
+				$(this).hide()
+				// IE 9 adaptation, can't hide them so we disable
+				$(this).attr("disabled", "disabled");
+			}
+			else if(cart_full)
+			{
+				$(this).hide()
+				// IE 9 adaptation, can't hide them so we disable
+				$(this).attr("disabled", "disabled");
+			}
+			else
+			{
+				$(this).show()
+				// IE 9 adaptation, can't hide them so we disable
+				$(this).removeAttr("disabled");
+			}
 		}
 		else if(type == 'OGSCartRemove')
 		{
-			if(cart_has) { $(this).show() }
-			else { $(this).hide() }
+			if(cart_has)
+			{
+				$(this).show()
+				// IE 9 adaptation, can't hide them so we disable
+				$(this).removeAttr("disabled");
+			}
+			else
+			{
+				$(this).hide()
+				// IE 9 adaptation, can't hide them so we disable
+				$(this).attr("disabled", "disabled");
+			}
 		}
 	});
 
