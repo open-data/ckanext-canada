@@ -136,6 +136,13 @@ $( document ).ready(function() {
   $("#OGSCartPlotItems").click(function() {
     alertUpArray()
   });
+
+  // Part UI ease of use and part system reset
+  $("#OGSCartDumpItems").click(function() {
+    dumpCart()
+    updateCartUI()
+  });
+
   $(".ogscartviewbtn").click(function() {
     var action = $(this).attr('id').split('_')
     type = action[0]

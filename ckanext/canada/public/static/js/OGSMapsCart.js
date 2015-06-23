@@ -124,6 +124,13 @@ function removeCartItem(id)
 	saveCart()
 }
 
+// Part UI ease of use and part system reset
+function dumpCart()
+{
+	OGSMapsChecked_ids = []
+	saveCart()
+}
+
 // Interim function, will change to action on "View On Map"
 function alertUpArray()
 {
