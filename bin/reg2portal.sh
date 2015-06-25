@@ -66,7 +66,7 @@ do
     CSV_FILES=""
     for DS_TYPE in $(echo ${DATASET_TYPES} | tr ' ' '\n')
     do
-        F="${TMPDIR}/${TARG_DS}.${DS_TYPE}.csv"
+        F="${TMPDIR}/${DS_TYPE}.csv"
         paster recombinant combine ${DS_TYPE} -c "${INI_PATH}" > "${F}"
         CSV_FILES="${CSV_FILES} ${F}"
     done
