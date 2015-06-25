@@ -50,23 +50,33 @@ portal_site = ckanapi.RemoteCKAN(
     apikey=api_key,
     user_agent=user_agent)
 
-# Patch package: add resources
-try:
-    portal_site.call_action(
-        'package_patch',
-        {'id': package_id, 'url': '', 'resources': []})
-    log.info('Cleared resources from package_id [{0:s}]'.format(package_id))
+def upload_resources():
+    target = portal_site.action.package_show(id=package_id)
 
-    for file in files:
-        resource_name = os.path.basename(file)
-        with open(file) as f:
-            rc = portal_site.call_action(
-                'resource_create',
-                {'package_id': package_id, 'url': '', 'name': resource_name},
-                files={'upload': f})
+    existing_resources = dict((r['name'], r) for r in target['resources'])
+
+    for source in files:
+        resource_name = os.path.basename(source)
+        if resource_name in existing_resources:
+            with open(source) as f:
+                rc = portal_site.action.resource_update(
+                    id=existing_resources[resource_name]['id'],
+                    url='',
+                    upload=f)
+        else:
+            with open(source) as f:
+                rc = portal_site.action.resource_create(
+                    package_id=package_id,
+                    url='',
+                    name=resource_name,
+                    upload=f)
+
         log.info('Uploaded resource [{0:s}] to package_id [{1:s}]'.format(
             resource_name,
             package_id))
 
+# Patch package: add resources
+try:
+    upload_resources()
 except (AttributeError, ValueError, CKANAPIError, Exception) as e:
     log.error('Encountered {0:s}'.format(str(e)))
