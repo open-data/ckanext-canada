@@ -2,6 +2,9 @@
 import hashlib
 import calendar
 import datetime
+import logging
+from unicodecsv import DictReader
+from _csv import Error as _csvError
 
 import paste.script
 from pylons import config
@@ -9,24 +12,16 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN
 
-DATASET_TYPES = ['ati-summaries', 'ati-none']
-BATCH_SIZE = 1000
+from ckanext.canada.dataset import (
+    MONTHS_FR,
+    solr_connection,
+    data_batch,
+    csv_data_batch)
+
+
+TARGET_DATASET = 'ati'
 WINDOW_YEARS = 2
-MONTHS_FRA = [
-    u'', # "month 0"
-    u'janvier',
-    u'février',
-    u'mars',
-    u'avril',
-    u'mai',
-    u'juin',
-    u'juillet',
-    u'août',
-    u'septembre',
-    u'octobre',
-    u'novembre',
-    u'décembre',
-    ]
+
 
 class ATICommand(CkanCommand):
     """
@@ -35,14 +30,30 @@ class ATICommand(CkanCommand):
     Usage::
 
         paster ati clear
-                   rebuild
+                   rebuild [-f <file> <file>]
+
+    Options::
+
+        -f/--csv-file <file> <file>    use specified CSV files as ati-summaries
+                                       and ati-none input, instead of the
+                                       (default) CKAN database
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
 
     parser = paste.script.command.Command.standard_parser(verbose=True)
-    parser.add_option('-c', '--config', dest='config',
-        default='development.ini', help='Config file to use.')
+    parser.add_option(
+        '-c',
+        '--config',
+        dest='config',
+        default='development.ini',
+        help='Config file to use.')
+    parser.add_option(
+        '-f',
+        '--csv',
+        nargs=2,
+        dest='csv_files',
+        help='CSV files to use as input (or default CKAN DB)')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -55,59 +66,69 @@ class ATICommand(CkanCommand):
         if cmd == 'clear':
             return self._clear_index()
         elif cmd == 'rebuild':
-            return self._rebuild()
+            return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
-        conn = _solr_connection()
+        conn = solr_connection('ati_summaries')
         conn.delete_query("*:*")
         conn.commit()
 
-    def _rebuild(self):
-        conn = _solr_connection()
+    def _rebuild(self, csv_files=None):
+        """
+        Implement rebuild command
+
+        :param csv_files: sequence of paths to .csv files for input
+        :type csv_files: sequence of str
+
+        :return: Nothing
+        :rtype: None
+        """
+
+        conn = solr_connection('ati_summaries')
         lc = LocalCKAN()
-        for org in lc.action.organization_list():
-            count = 0
-            org_detail = lc.action.organization_show(id=org)
-            for records in _ati_summaries(org_detail, lc):
-                _update_records(records, org_detail, conn)
-                count += len(records)
+        if csv_files:
+            count = {}
+            for csv_file in csv_files:
+                print csv_file + ':'
+                count[csv_file] = {}
+                for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
+                    org_id = org_recs.keys()[0]
+                    if org_id not in count[csv_file]:
+                        count[csv_file][org_id] = 0
+                    org_detail = lc.action.organization_show(id=org_id)
+                    records = org_recs[org_id]
+                    _update_records(records, org_detail, conn)
+                    count[csv_file][org_id] += len(records)
+                for k, v in count[csv_file].iteritems():
+                    print "    {0:s} {1}".format(k, v)
+            for org_id in lc.action.organization_list():
+                print org_id, sum((count[f].get(org_id, 0) for f in count))
+        else:
+            for org_id in lc.action.organization_list():
+                count = 0
+                org_detail = lc.action.organization_show(id=org_id)
+                for records in data_batch(org_detail['id'], lc, TARGET_DATASET):
+                    _update_records(records, org_detail, conn)
+                    count += len(records)
+                print org_id, count
+            #rval = conn.query("*:*" , rows=2)
 
-            print org, count
-        #rval = conn.query("*:*" , rows=2)
-
-def _solr_connection():
-    from solr import SolrConnection
-    url = config['ati_summaries.solr_url']
-    user = config.get('ati_summaries.solr_user')
-    password = config.get('ati_summaries.solr_password')
-    if user is not None and password is not None:
-        return SolrConnection(url, http_user=user, http_pass=password)
-    return SolrConnection(url)
-
-def _ati_summaries(org, lc):
-    """
-    generator of ati summary dicts for organization with name org
-    """
-    for dataset_type in DATASET_TYPES:
-        result = lc.action.package_search(
-            q="type:%s owner_org:%s" % (dataset_type, org['id']),
-            rows=1000)['results']
-        try:
-            resource_id = result[0]['resources'][0]['id']
-        except (IndexError, KeyError):
-            continue
-        offset = 0
-        while True:
-            rval = lc.action.datastore_search(resource_id=resource_id,
-                limit=BATCH_SIZE, offset=offset)
-            records = rval['records']
-            if not records:
-                break
-            yield records
-            offset += len(records)
 
 def _update_records(records, org_detail, conn):
     """
+    Update records on solr core
+
+    :param records: record dicts
+    :ptype records: sequence of record dicts
+
+    :param org_detail: org structure as returned via local CKAN
+    :ptype org_detail: dict with local CKAN org structure
+
+    :param conn: solr connection
+    :ptype conn: obj
+
+    :returns: Nothing
+    :rtype: None
     """
     out = []
     org = org_detail['name']
@@ -142,8 +163,9 @@ def _update_records(records, org_detail, conn):
             'ss_ati_contact_information_en':
                 "http://open.canada.ca/data/en/organization/about/{0}"
                 .format(org),
-            'ss_ati_disposition_en': r.get('disposition', '').split(' / ', 1)[0],
-            'ss_ati_month_en': '{0:02d}'.format(r['month']),
+            'ss_ati_disposition_en':
+                r.get('disposition', '').split(' / ', 1)[0],
+            'ss_ati_month_en': '{0:02d}'.format(int(r['month'])),
             'ss_ati_monthname_en': calendar.month_name[month],
             'ss_ati_number_of_pages_en': r.get('pages', ''),
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
@@ -163,9 +185,10 @@ def _update_records(records, org_detail, conn):
             'ss_ati_contact_information_fr':
                 "http://ouvert.canada.ca/data/fr/organization/about/{0}"
                 .format(org),
-            'ss_ati_disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
-            'ss_ati_month_fr': '{0:02d}'.format(r['month']),
-            'ss_ati_monthname_fr': MONTHS_FRA[month],
+            'ss_ati_disposition_fr':
+                r.get('disposition', '').split(' / ', 1)[-1],
+            'ss_ati_month_fr': '{0:02d}'.format(int(r['month'])),
+            'ss_ati_monthname_fr': MONTHS_FR[month],
             'ss_ati_number_of_pages_fr': r.get('pages', ''),
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': r['year'],
