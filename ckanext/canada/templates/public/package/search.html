@@ -121,9 +121,8 @@ Please review your spelling, or reduce the number of filters selected.
   {{ super() }}
 
 <!-- OGS Map Shopping Cart -->
-<script src="{{ h.portal_url() }}/static/js/OGSCookie.js"></script>
-<script src="{{ h.portal_url() }}/static/js/OGSMapsCart.js"></script>
-
+<script src="{{ h.url_for_static('/static/js/OGSCookie.js') }}"></script>
+<script src="{{ h.url_for_static('/static/js/OGSMapsCart.js') }}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
 
