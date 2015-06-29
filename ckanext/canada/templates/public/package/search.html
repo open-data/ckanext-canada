@@ -115,18 +115,15 @@ Please review your spelling, or reduce the number of filters selected.
 
 {% block styles %}
   {{ super() }}
-
-    <!-- OGS Map Shopping Cart -->
-    <script src="{{ h.url_for_static('/static/js/OGSCookie.js') }}"></script>
-    <script src="{{ h.url_for_static('/static/js/OGSMapsCart.js') }}"></script>
-    <!-- End Cart -->
-
 {% endblock %}
 
 {% block page_extra_scripts %}
   {{ super() }}
 
-<!-- majewski has added post scripts -->
+<!-- OGS Map Shopping Cart -->
+<script src="{{ h.portal_url() }}/static/js/OGSCookie.js"></script>
+<script src="{{ h.portal_url() }}/static/js/OGSMapsCart.js"></script>
+
 <script type="text/javascript">
 $( document ).ready(function() {
 
@@ -168,6 +165,8 @@ $( document ).ready(function() {
     initCart()
     updateCartUI() 
   });
+
+<!-- End Cart -->
 
 });
 </script>
