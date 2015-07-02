@@ -1,43 +1,59 @@
+
 scheming_version: 1
+dataset_type: dataset
+
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
   en: Raw/Geo Data
   fr: Données/géo
-dataset_type: dataset
-form_languages:
-- en
-- fr
 languages_label:
 - eng; CAN
 - fra; CAN
 
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
 dataset_fields:
+
+# our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+
 - field_name: owner_org
+  label:
+    en: Publisher
+    fr: Éditeur
   help_text:
     en: The organization directly responsible for the dataset and for metadata maintenance.
     fr: Le nom de l’organisation directement responsable des ensembles de donnée et
       de la maintenance des métadonnées
-  label:
-    en: Publisher
-    fr: Éditeur
   preset: dataset_organization
+
 - field_name: digital_object_identifier
   label:
     en: Digital Object Identifier
     fr: Identificateur d’objet numérique
+
 - field_name: title
-  form_placeholder:
-    en: Canada Border Wait Times
-    fr: Temps d’attente à la frontière
   label:
     en: Title
     fr: Titre
+  form_placeholder:
+    en: Canada Border Wait Times
+    fr: Temps d’attente à la frontière
   preset: fluent_text
   required: true
+
 - field_name: notes
+  label:
+    en: Description
+    fr: Description
   form_placeholder:
     en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
       of pollutant releases (to air, water and land), disposals and transfers for
@@ -49,12 +65,17 @@ dataset_fields:
       the nature and purpose of the data in the dataset.
     fr: Une description détaillée de l’ensemble de données qui permettra à l'utilisateur
       de connaître la nature et le but des données comprises dans l’ensemble de données.
-  label:
-    en: Description
-    fr: Description
   preset: fluent_markdown
   required: true
-- choices:
+
+# consider moving this to a preset so other types can reuse the choices list
+- field_name: subject
+  label:
+    en: Subject
+    fr: Sujet
+  preset: multiple_checkbox
+  required: true
+  choices:
   - label:
       en: Arts, Music, Literature
       fr: Arts, musique, littérature
@@ -131,13 +152,12 @@ dataset_fields:
       en: Form Descriptors
       fr: Format
     value: FM
-  field_name: subject
-  label:
-    en: Subject
-    fr: Sujet
-  preset: multiple_checkbox
-  required: true
+
+# not using ckan's tags field because it is tricky to customize
 - field_name: keywords
+  label:
+    en: Tags
+    fr: Mots clés
   help_text:
     en: The topic of the content of the resource expressed as keywords, to help users
       discover the datasets and provide ways of identifying other similar datasets.
@@ -146,34 +166,43 @@ dataset_fields:
       les utilisateurs à découvrir l’ensemble de données et à leur fournir des moyens
       de trouver d'autres bases de données similaires. Inclure le plus de mots clés
       possible. Utiliser des virgules pour séparer les mots clés.
-  label:
-    en: Tags
-    fr: Mots clés
   preset: fluent_tags
   required: true
   tag_validators: canada_tags tag_length_validator
+
 - field_name: date_published
-  help_text:
-    en: The date in which the dataset was issued.
-    fr: La date à laquelle le jeu de données a été émise.
   label:
     en: Date Published
     fr: Date de publication
+  help_text:
+    en: The date in which the dataset was issued.
+    fr: La date à laquelle le jeu de données a été émise.
   preset: date
   required: true
+
 - field_name: date_modified
-  help_text:
-    en: The date in which the dataset was modified.
-    fr: La date à laquelle le jeu de données a été modifiée
   label:
     en: Date Modified
     fr: Date de modification
+  help_text:
+    en: The date in which the dataset was modified.
+    fr: La date à laquelle le jeu de données a été modifiée
   preset: date
+
 - preset: canada_frequency
 - preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
 
-- choices:
+# consider moving this to a preset so other types can reuse the choices list
+- field_name: geographic_region
+  label:
+    en: Geographic Region
+    fr: Région géographique
+  help_text:
+    en: The geographic area of the dataset
+    fr: La région géographique de l’ensemble de données
+  preset: multiple_select
+  choices:
   - label:
       en: Canada
       fr: Canada
@@ -1414,56 +1443,54 @@ dataset_fields:
       en: Nunavut - Kitikmeot
       fr: Nunavut - Kitikmeot
     value: '6208'
-  field_name: geographic_region
-  help_text:
-    en: The geographic area of the dataset
-    fr: La région géographique de l’ensemble de données
-  label:
-    en: Geographic Region
-    fr: Région géographique
-  preset: multiple_select
+
 - field_name: spatial
-  help_text:
-    en: The representation of spatial information in a dataset.
-    fr: La représentation de l’information spatiale dans un ensemble de données
   label:
     en: Spatial
     fr: Élément spatial
+  help_text:
+    en: The representation of spatial information in a dataset.
+    fr: La représentation de l’information spatiale dans un ensemble de données
+
 - field_name: data_series_name
+  label:
+    en: Data Series Name
+    fr: Nom de la série de l’ensemble de données
   help_text:
     en: The name of the series, or aggregate dataset, of which the dataset is a part
     fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
       de données fait partie
-  label:
-    en: Data Series Name
-    fr: Nom de la série de l’ensemble de données
   preset: fluent_text
+
 - field_name: data_series_issue_identification
-  help_text:
-    en: The identification of the series’ issue information.
-    fr: L’identification de l’ensemble de données de la série
   label:
     en: Issue Identification
     fr: Identification de l’ensemble de données
+  help_text:
+    en: The identification of the series’ issue information.
+    fr: L’identification de l’ensemble de données de la série
   preset: fluent_text
+
 - field_name: url
+  label:
+    en: Homepage URL
+    fr: URL de la page d’accueil
   help_text:
     en: The URL for the Government of Canada program that is responsible for the dataset.
     fr: L’adresse URL du programme du gouvernement du Canada responsable de l’ensemble
       de données
-  label:
-    en: Homepage URL
-    fr: URL de la page d’accueil
   preset: fluent_text
+
 - field_name: license_id
   form_snippet: license.html
-  help_text:
-    en: The specific attribution statement provided by the information provider.
-    fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
   label:
     en: Licence
     fr: Licence
+  help_text:
+    en: The specific attribution statement provided by the information provider.
+    fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
   required: true
+
 - field_name: endpoint_url
   help_text:
     en: The endpoint of web service to access the dataset (API).
@@ -1473,22 +1500,26 @@ dataset_fields:
     en: Endpoint
     fr: Point d’extrémité
 
-
 # dataset fields added to support migration of existing raw+geogratis records:
+
 - field_name: author_email
-  help_text:
-    en: The electronic mail address of the responsible organization or individual
-    fr: L’adresse électronique de l’organisation ou de la personne responsable
   label:
     en: Email
     fr: Adresse électronique
+  help_text:
+    en: The electronic mail address of the responsible organization or individual
+    fr: L’adresse électronique de l’organisation ou de la personne responsable
+
 - preset: canada_topic_category
+
 - field_name: spatial
   label:
     en: Spatial
     fr: Élément spatial
   validators: geojson_validator
+
 - preset: canada_spatial_representation_type
+
 - field_name: presentation_form
   label:
     en: Presentation Form
@@ -1578,6 +1609,7 @@ dataset_fields:
       en: Diagram Hardcopy
       fr: Diagramme papier
     value: '406'
+
 - field_name: browse_graphic_url
   label:
     en: Browse Graphic File Name
@@ -1585,6 +1617,7 @@ dataset_fields:
   help_text:
     en: The name of the graphic file provided to illustrate the resource
     fr: Le nom du fichier graphique fournit pour illustrer la ressource
+
 - field_name: portal_release_date
   label:
     en: Portal Release Date
@@ -1595,37 +1628,52 @@ dataset_fields:
   preset: date
 
 
+#
+#   RESOURCE FIELDS
+#
 resource_fields:
+
 - field_name: name
-  help_text:
-    en: The name by which the cited resource is known
-    fr: Le nom par lequel la ressource mentionnée est connue.
   label:
     en: Title
     fr: Titre
+  help_text:
+    en: The name by which the cited resource is known
+    fr: Le nom par lequel la ressource mentionnée est connue.
   preset: fluent_text
   required: true
+
 - field_name: url
-  help_text:
-    en: The electronic location where the resource can be found.
-    fr: L’endroit électronique où se trouve la ressource.
   label:
     en: URL
     fr: URL
+  help_text:
+    en: The electronic location where the resource can be found.
+    fr: L’endroit électronique où se trouve la ressource.
   preset: resource_url_upload
   required: true
+
 - preset: canada_resource_language
+
 - field_name: size
+  label:
+    en: Size
+    fr: Taille
   help_text:
     en: The estimated size of a unit in the specified transfer format, expressed in
       bytes.
     fr: La taille approximative d’une unité dans le format de transfert précis, en
       octets.
-  label:
-    en: Size
-    fr: Taille
   validators: ignore_missing int_validator
-- choices:
+
+# consider moving this to a preset so other types can reuse the choices list
+- field_name: format
+  label:
+    en: Dataset Format
+    fr: Format de l'ensemble de données
+  preset: select
+  required: true
+  choices:
   - label: AI
     openness_score: 1
     value: ai
@@ -1816,13 +1864,14 @@ resource_fields:
       fr: Autre
     openness_score: 1
     value: other
-  field_name: format
+
+- field_name: resource_type
   label:
-    en: Dataset Format
-    fr: Format de l'ensemble de données
+    en: Resource Type
+    fr: Type de ressource
   preset: select
   required: true
-- choices:
+  choices:
   - label:
       en: Dataset
       fr: Données
@@ -1839,12 +1888,7 @@ resource_fields:
       en: Application
       fr: Application
     value: app
-  field_name: resource_type
-  label:
-    en: Resource Type
-    fr: Type de ressource
-  preset: select
-  required: true
+
 - field_name: data_quality
   label:
     en: Data Includes URIs and Links
