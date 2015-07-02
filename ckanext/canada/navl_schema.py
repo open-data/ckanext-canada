@@ -54,13 +54,15 @@ def canada_tags(value, context):
     value = value.replace(u"—", u"-") # em dash
 
     try:
+        blessed_value = value
         #Let pass the bless-ed apostrophe
-        tag_name_validator(value.replace(u"'", u"-"), {})
+        blessed_value = blessed_value.replace(u"'", u"-")
         #Shelter the demon in-tag joinders (they know not what they do)
-        tag_name_validator(value.replace(u"/", u"-"), {})
-        tag_name_validator(value.replace(u";", u"-"), {})
-        tag_name_validator(value.replace(u">", u"-"), {})
-        tag_name_validator(value.replace(u"&", u"-"), {})
+        blessed_value = blessed_value.replace(u"/", u"-")
+        blessed_value = blessed_value.replace(u";", u"-")
+        blessed_value = blessed_value.replace(u">", u"-")
+        blessed_value = blessed_value.replace(u"&", u"-")
+        tag_name_validator(blessed_value, {})
         return value
     except Invalid, e:
         e.error = e.error.replace("-_.", "' - _ . / ; > &")
