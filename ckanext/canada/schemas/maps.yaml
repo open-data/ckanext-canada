@@ -1,47 +1,61 @@
+
 scheming_version: 1
+dataset_type: maps
+
 about: 'open.canada.ca: HNAP open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
   en: Geo Data
   fr: Géo
-dataset_type: maps
-form_languages:
-- en
-- fr
 languages_label:
 - eng; CAN
 - fra; CAN
 
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
 dataset_fields:
+
+# our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+
 - field_name: owner_org
+  label:
+    en: Publisher
+    fr: Éditeur
   help_text:
     en: The organization directly responsible for the dataset and for metadata maintenance.
     fr: Le nom de l’organisation directement responsable des ensembles de donnée et
       de la maintenance des métadonnées
-  label:
-    en: Publisher
-    fr: Éditeur
   preset: dataset_organization
 
 - field_name: parent_id
   label:
     en: Parent identifier
     fr: Identifiant parent
+
 - field_name: hierarchy_level
   label:
     en: Hierarchy level
     fr: Portée hiérarchique
+
 - field_name: metadata_contact
   label:
     en: Metadata contact
     fr: Contact métadonnée
   preset: fluent_text
+
 - field_name: url
   label:
     en: Metadata URI
     fr: URI métadonnées
+
 - field_name: title
   form_placeholder:
     en: Canada Border Wait Times
@@ -51,86 +65,105 @@ dataset_fields:
     fr: Titre
   preset: fluent_text
   required: true
+
 - field_name: metadata_modified
   label:
     en: Metadata record date stamp
     fr: Timbre date enregistrement métadonnées
   form_snippet: null
+
 - field_name: metadata_created
   label:
     en: Date contributed
     fr: Date contribué
   form_snippet: null
+
 - field_name: date_published
   label:
     en: Date published
     fr: Date publication
+
 - field_name: date_modified
   label:
     en: Date modified
     fr: Date modification
+
 - field_name: digital_object_identifier
   label:
     en: Digital Object Identifier
     fr: Identificateur d’objet numérique
+
 - field_name: individual_name
   label:
     en: Individual name
     fr: Nom personne
+
 - field_name: responsible_organization
   label:
     en: Organisation name
     fr: Nom organisation
   preset: fluent_text
+
 - field_name: position_name
   label:
     en: Position name
     fr: Nom position
   preset: fluent_text
+
 - field_name: contact_delivery_point
 - field_name: contact_address
 - field_name: contact_administrative_area
 - field_name: contact_postal_code
 - field_name: contact_country
 - field_name: maintainer_email
+
 - field_name: responsible_role
   label:
     en: Role
     fr: Rôle
+
 - field_name: notes
   label:
     en: Abstract
     fr: Résumé
   preset: fluent_markdown
   required: true
+
 - field_name: keywords
   label:
     en: Descriptive keywords
     fr: Mots clés descriptifs
   preset: fluent_tags
   tag_validators: canada_tags tag_length_validator
+
 - field_name: status
   label:
     en: Status
     fr: État
+
 - field_name: association_type
   label:
     en: Association type
     fr: Type association
+
 - field_name: aggregate_identifier
   label:
     en: Aggregate dataset identifier
     fr: Identifiant jeu données aggrégées
+
 - preset: canada_spatial_representation_type
 - preset: canada_topic_category
+
 - field_name: spatial
   label:
     en: Spatial
     fr: Élément spatial
   validators: geojson_validator
+
 - preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
 - preset: canada_frequency
+
 - field_name: license_id
   form_snippet: license.html
   help_text:
@@ -140,10 +173,12 @@ dataset_fields:
     en: Licence
     fr: Licence
   required: true
+
 - field_name: reference_system
   label:
     en: Reference system information
     fr: Information système référence
+
 - field_name: distributor
   label:
     en: Distributor
@@ -151,23 +186,27 @@ dataset_fields:
   preset: fluent_text
 
 
+#
+#   RESOURCE FIELDS
+#
 resource_fields:
+
 - field_name: name
   label:
     en: Resource name
     fr: Nom ressource
   preset: fluent_text
+
 - field_name: url
   label:
     en: Access URL
     fr: URL accès
   preset: resource_url_upload
   required: true
+
 - preset: canada_resource_language
+
 - field_name: content
   label:
     en: Content type
     fr: Type de contenu
-
-
-
