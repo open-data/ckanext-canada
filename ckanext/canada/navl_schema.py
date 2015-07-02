@@ -61,6 +61,7 @@ def canada_tags(value, context):
         blessed_value = blessed_value.replace(u"/", u"-")
         blessed_value = blessed_value.replace(u";", u"-")
         blessed_value = blessed_value.replace(u">", u"-")
+        blessed_value = blessed_value.replace(u"+", u"-")
         blessed_value = blessed_value.replace(u"&", u"-")
         tag_name_validator(blessed_value, {})
         return value
