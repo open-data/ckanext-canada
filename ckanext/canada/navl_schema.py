@@ -66,7 +66,7 @@ def canada_tags(value, context):
         tag_name_validator(blessed_value, {})
         return value
     except Invalid, e:
-        e.error = e.error.replace("-_.", "' - _ . / ; > &")
+        e.error = e.error.replace("-_.", "' - _ . / ; > + &")
         raise e
 
 
