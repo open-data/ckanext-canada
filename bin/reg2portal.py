@@ -57,19 +57,18 @@ def upload_resources():
 
     for source in files:
         resource_name = os.path.basename(source)
-        if resource_name in existing_resources:
-            with open(source) as f:
+        with open(source) as f:
+            if resource_name in existing_resources:
                 rc = portal_site.action.resource_update(
                     id=existing_resources[resource_name]['id'],
                     url='',
-                    upload=f)
-        else:
-            with open(source) as f:
+                    upload=(resource_name, f))
+            else:
                 rc = portal_site.action.resource_create(
                     package_id=package_id,
                     url='',
                     name=resource_name,
-                    upload=f)
+                    upload=(resource_name, f))
 
         log.info('Uploaded resource [{0:s}] to package_id [{1:s}]'.format(
             resource_name,

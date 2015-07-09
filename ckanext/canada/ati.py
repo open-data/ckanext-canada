@@ -136,15 +136,17 @@ def _update_records(records, org_detail, conn):
     today = datetime.datetime.today()
     start_year_month = (today.year - WINDOW_YEARS, today.month)
     for r in records:
-        if (r['year'], r['month']) < start_year_month:
+        year = int(r['year'])
+        month = int(r['month'])
+        if (year, month) < start_year_month:
             continue
         unique = hashlib.md5(orghash
-            + r.get('request_number', repr((r['year'], r['month']))
+            + r.get('request_number', repr((year, month))
             ).encode('utf-8')).hexdigest()
         shortform = None
         shortform_fr = None
         ati_email = None
-        month = max(1, min(12, r['month']))
+        month = max(1, min(12, month))
         for e in org_detail['extras']:
             if e['key'] == 'shortform':
                 shortform = e['value']
@@ -165,11 +167,11 @@ def _update_records(records, org_detail, conn):
                 .format(org),
             'ss_ati_disposition_en':
                 r.get('disposition', '').split(' / ', 1)[0],
-            'ss_ati_month_en': '{0:02d}'.format(int(r['month'])),
+            'ss_ati_month_en': '{0:02d}'.format(month),
             'ss_ati_monthname_en': calendar.month_name[month],
             'ss_ati_number_of_pages_en': r.get('pages', ''),
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
-            'ss_ati_year_en': r['year'],
+            'ss_ati_year_en': year,
             'ss_ati_org_shortform_en': shortform,
             'ss_ati_contact_email_en': ati_email,
             'ss_ati_nothing_to_report_en': ('' if 'request_number' in r else
@@ -187,11 +189,11 @@ def _update_records(records, org_detail, conn):
                 .format(org),
             'ss_ati_disposition_fr':
                 r.get('disposition', '').split(' / ', 1)[-1],
-            'ss_ati_month_fr': '{0:02d}'.format(int(r['month'])),
+            'ss_ati_month_fr': '{0:02d}'.format(month),
             'ss_ati_monthname_fr': MONTHS_FR[month],
             'ss_ati_number_of_pages_fr': r.get('pages', ''),
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
-            'ss_ati_year_fr': r['year'],
+            'ss_ati_year_fr': year,
             'ss_ati_org_shortform_fr': shortform_fr,
             'ss_ati_contact_email_fr': ati_email,
             'ss_ati_nothing_to_report_fr': ('' if 'request_number' in r else
