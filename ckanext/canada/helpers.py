@@ -17,7 +17,8 @@ PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 SHOW_SITE_MSG_OPTION = 'canada.show_site_message'
 SHOW_SITE_MSG_DEFAULT = 'False'
 DATAPREVIEW_MAX = 500
-
+FGP_URL_OPTION = 'fgp.ramp_base_url'
+FGP_URL_DEFAULT = 'http://localhost/'
 
 def may_publish_datasets(userobj=None):
     if not userobj:
