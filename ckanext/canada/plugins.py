@@ -109,10 +109,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             'fgp_url',
             ])
 
-    # Helper functions
-    def fgp_url(self):
-        return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
-
     def configure(self, config):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
@@ -191,10 +187,6 @@ class DataGCCAPublic(p.SingletonPlugin):
             'is_site_message_showing',
             'fgp_url',
             ])
-
-    # Helper functions
-    def fgp_url(self):
-        return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
 
     def before_map(self, map):
         map.connect(

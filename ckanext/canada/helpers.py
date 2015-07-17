@@ -178,3 +178,7 @@ def get_datapreview_contracts(res_id):
         limit=DATAPREVIEW_MAX)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])
+
+def fgp_url(self):
+    return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
+
