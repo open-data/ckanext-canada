@@ -106,7 +106,12 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_ati',
             'get_datapreview_contracts',
+            'fgp_url',
             ])
+
+    # Helper functions
+    def fgp_url(self):
+        return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
 
     def configure(self, config):
         if 'ckan.drupal.url' in config:
@@ -183,8 +188,13 @@ class DataGCCAPublic(p.SingletonPlugin):
             'portal_url',
             'googleanalytics_id',
             'drupal_session_present',
-            'is_site_message_showing'
+            'is_site_message_showing',
+            'fgp_url',
             ])
+
+    # Helper functions
+    def fgp_url(self):
+        return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
 
     def before_map(self, map):
         map.connect(
