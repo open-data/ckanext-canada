@@ -180,6 +180,6 @@ def get_datapreview_contracts(res_id):
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])
 
-def fgp_url(self):
-    return str(c.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
+def fgp_url():
+    return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
 
