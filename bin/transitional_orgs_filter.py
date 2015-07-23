@@ -19,7 +19,7 @@ EXTRAS = set([
     'ati_email',
     ])
 
-for l in sys.stdin.readlines():
+for l in sys.stdin:
     o = json.loads(l)
     print json.dumps({
         "title": o["title"],
