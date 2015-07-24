@@ -10,10 +10,7 @@
 {% endblock %}
 
 {% block breadcrumb_content %}
-  {% set dataset = pkg.title or pkg.name %}
-  {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
   <li>{% link_for _('Search Open Data'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% if client_lang == 'fr' %}{{ pkg.title_fra }}{% else %}{{ pkg.title }}{% endif %}</li>
 {% endblock %}
 
 {% set info_title = pkg.title or pkg.name %}
