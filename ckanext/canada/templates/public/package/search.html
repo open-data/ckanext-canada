@@ -145,7 +145,8 @@ $( document ).ready(function() {
     type = action[0]
     id = action[1]
 
-    alert('http://ramp.url/?display='+id)
+    location.href='/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled='+id
+    //alert('/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled='+id)
     return false
   });
 

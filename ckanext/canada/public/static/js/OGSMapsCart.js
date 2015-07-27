@@ -157,9 +157,7 @@ function viewOnMap()
 	{ alert('Select an item to view on RAMP first') }
 	else
 	{
-//		RAMP_ids = []
-//		for (var i = OGSMapsChecked_ids.length - 1; i >= 0; i--)
-//		{ RAMP_ids.push(OGSMapsChecked_ids[i].split("|")[0]) };
-		alert('http://ramp.url/?display='+OGSMapsChecked_ids.join(','))
+		location.href='/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(',')
+		//alert('/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(','))
 	}
 }
