@@ -1,4 +1,4 @@
-var OGSMapsMaxCart = 2
+var OGSMapsMaxCart = 5
 var OGSMapsChecked_ids = []
 
 // Low cost sanity functions
