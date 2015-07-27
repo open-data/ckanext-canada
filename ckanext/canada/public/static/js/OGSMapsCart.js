@@ -103,21 +103,6 @@ function updateCartUI()
 			}
 		}
 	});
-
-
-//xx  	<span class="ogscarttally fa-shopping-cart"> Cart 2 of 5</span>
-//xx  	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs"><span class="fa fa-list-alt"></span> List Cart Items [solr query join(cart.items)]</a>
-//xx  	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs"><span class="fa fa-globe"></span> Plot Cart Items on a Map [http://path.to.ramp/?arg=join(cart.items)]</a>
-
-//xx  	// Itterate over shopping cart checkboxes to confirm state
-//xx  	$('.shoppingCartCheckbox').each(function () {
-//xx  		if( jQuery.inArray($(this).val(),OGSMapsChecked_ids) > -1 )
-//xx  		{ $(this).attr('checked', true); }
-//xx  		else
-//xx  		{ $(this).attr('checked', false); }
-//xx  	});
-//xx  	// Populate the cart management box
-//xx  	$('#shoppingCartContent').html(cartStatus(OGSMapsChecked_ids))
 }
 
 // Cart setup
