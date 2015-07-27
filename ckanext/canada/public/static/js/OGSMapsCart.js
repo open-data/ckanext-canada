@@ -150,8 +150,8 @@ function dumpCart()
 	saveCart()
 }
 
-// Interim function, will change to action on "View On Map"
-function alertUpArray()
+// Initiate ramp displaying cart items
+function viewOnMap()
 {
 	if(OGSMapsChecked_ids.length === 0)
 	{ alert('Select an item to view on RAMP first') }
