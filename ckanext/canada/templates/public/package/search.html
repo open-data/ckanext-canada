@@ -124,8 +124,9 @@ Please review your spelling, or reduce the number of filters selected.
 <script src="{{ h.url_for_static('/static/js/OGSCookie.js') }}"></script>
 <script src="{{ h.url_for_static('/static/js/OGSMapsCart.js') }}"></script>
 <script type="text/javascript">
-$( document ).ready(function() {
+var OGSMapsCart_lang = '{{ h.lang() }}'
 
+$( document ).ready(function() {
   initCart()
   updateCartUI()
 
