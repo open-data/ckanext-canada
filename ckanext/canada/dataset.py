@@ -134,7 +134,20 @@ def csv_data_batch(csv_path, target_dataset):
                     org_id_done = records.keys()[0]
                     yield {org_id_done: records.pop(org_id_done)}
                 records[org_id] = []
+
+            row_dict = dict((k, safe_for_solr(v)) for k, v in row_dict.items())
             records[org_id].append(row_dict)
             if len(records[org_id]) >= BATCH_SIZE:
                 yield {org_id: records.pop(org_id)}
     yield records
+
+
+_REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
+
+def safe_for_solr(s):
+    """
+    return a string that is safe for solr to ingest by removing all
+    control characters except for CR and LF
+    """
+    assert isinstance(s, unicode)
+    return s.translate(_REMOVE_CONTROL_CODES)
