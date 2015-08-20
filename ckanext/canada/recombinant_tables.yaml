@@ -1,5 +1,4 @@
-[
-  {
+- {
     "dataset_type": "ati-summaries",
     "target_dataset": "ati",
     "title": "ATI Summaries",
@@ -62,8 +61,8 @@
       ],
     "xls_organization_style": "pattern: pattern solid, fore_color light_green;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
-  },
-  {
+  }
+- {
     "dataset_type": "ati-none",
     "target_dataset": "ati",
     "title": "ATI Nothing to Report",
@@ -87,8 +86,8 @@
     "xls_organization_info": ["dept_id", null, "name", "title"],
     "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
-  },
-  {
+  }
+- {
     "dataset_type": "contracts",
     "target_dataset": "pd",
     "title": "Contracts",
@@ -215,4 +214,3 @@
     "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_blue;"
   }
-]
