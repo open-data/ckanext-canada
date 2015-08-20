@@ -87,130 +87,116 @@
     "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
     "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
   }
-- {
-    "dataset_type": "contracts",
-    "target_dataset": "pd",
-    "title": "Contracts",
-    "xls_sheet_name": "contracts",
-    "fields": [
-      {
-        "datastore_id": "ref_number",
-        "label": "Reference Number / Numéro de référence",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "vendor_name_en",
-        "label": "English Vendor Name / Nom du fournisseur en anglais",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "vendor_name_fr",
-        "label": "French Vendor Name / Nom du fournisseur en français",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "description_code",
-        "label": "Economic Object Code / Code d'objet économique",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "description_en",
-        "label": "English Description / Description anglaise",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "description_fr",
-        "label": "French Description / Description française",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "description_more_en",
-        "label": "English Description More / Description avancée en anglais",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "description_more_fr",
-        "label": "French Description More / Description avancée en français",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "contract_date",
-        "label": "Contract Date / Date du contrat",
-        "datastore_type": "date",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "contract_period_start",
-        "label": "Contract Period Start / Date de début du contrat",
-        "datastore_type": "date",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "contract_period_end",
-        "label": "Contract Period End / Date de clôture du contrat",
-        "datastore_type": "date",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "delivery_date",
-        "label": "Delivery Date / Date de livraison",
-        "datastore_type": "date",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "contract_value",
-        "label": "Contract Value / Valeur du contrat",
-        "datastore_type": "money",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "original_value",
-        "label": "Original Value / Valeur d'origine",
-        "datastore_type": "money",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "cumulative_value",
-        "label": "Cumulative Value / Valeur cumulative",
-        "datastore_type": "money",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "comments_en",
-        "label": "English Comments / Commentaires en anglais",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "comments_fr",
-        "label": "French Comments / Commentaires en français",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "additional_comments_en",
-        "label": "English Additional Comments / Commentaires additionnels en anglais",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      },
-      {
-        "datastore_id": "additional_comments_fr",
-        "label": "French Additional Comments / Commentaires additionnels en français",
-        "datastore_type": "text",
-        "xls_column_width": 20
-      }
-    ],
-    "datastore_primary_key": ["ref_number"],
-    "datastore_indexes": "",
-    "xls_organization_info": ["dept_id", null, "name", "title"],
-    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
-    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_blue;"
-  }
+
+
+- dataset_type: contracts
+  target_dataset: pd
+  title: Contracts
+  xls_sheet_name: contracts
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: vendor_name_en
+    label: English Vendor Name / Nom du fournisseur en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: vendor_name_fr,
+    label: French Vendor Name / Nom du fournisseur en français,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: description_code,
+    label: Economic Object Code / Code d'objet économique,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: description_en,
+    label: English Description / Description anglaise,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: description_fr,
+    label: French Description / Description française,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: description_more_en,
+    label: English Description More / Description avancée en anglais,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: description_more_fr,
+    label: French Description More / Description avancée en français,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: contract_date,
+    label: Contract Date / Date du contrat,
+    datastore_type: date,
+    xls_column_width: 20
+
+  - datastore_id: contract_period_start,
+    label: Contract Period Start / Date de début du contrat,
+    datastore_type: date,
+    xls_column_width: 20
+
+  - datastore_id: contract_period_end,
+    label: Contract Period End / Date de clôture du contrat,
+    datastore_type: date,
+    xls_column_width: 20
+
+  - datastore_id: delivery_date,
+    label: Delivery Date / Date de livraison,
+    datastore_type: date,
+    xls_column_width: 20
+
+  - datastore_id: contract_value,
+    label: Contract Value / Valeur du contrat,
+    datastore_type: money,
+    xls_column_width: 20
+
+  - datastore_id: original_value,
+    label: Original Value / Valeur d'origine,
+    datastore_type: money,
+    xls_column_width: 20
+
+  - datastore_id: cumulative_value,
+    label: Cumulative Value / Valeur cumulative,
+    datastore_type: money,
+    xls_column_width: 20
+
+  - datastore_id: comments_en,
+    label: English Comments / Commentaires en anglais,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: comments_fr,
+    label: French Comments / Commentaires en français,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_en,
+    label: English Additional Comments / Commentaires additionnels en anglais,
+    datastore_type: text,
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_fr,
+    label: French Additional Comments / Commentaires additionnels en français,
+    datastore_type: text,
+    xls_column_width: 20
+
+  datastore_primary_key:
+  - ref_number
+  datastore_indexes: ""
+  xls_organization_info:
+  - dept_id
+  - null
+  - name
+  - title
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_blue;"
