@@ -1,92 +1,72 @@
-- {
-    "dataset_type": "ati-summaries",
-    "target_dataset": "ati",
-    "title": "ATI Summaries",
-    "xls_sheet_name": "ATI AI",
-    "fields": [
-      {
-        "datastore_id": "year",
-        "label": "Year / Année",
-        "datastore_type": "year",
-        "xls_column_width": 13
-      },
-      {
-        "datastore_id": "month",
-        "label": "Month / Mois (1-12)",
-        "datastore_type": "month",
-        "xls_column_width": 18
-      },
-      {
-        "datastore_id": "request_number",
-        "label": "Request Number / Numero de la demande",
-        "datastore_type": "text",
-        "xls_column_width": 38
-      },
-      {
-        "datastore_id": "summary_eng",
-        "label": "English Summary / Sommaire de la demande en anglais",
-        "datastore_type": "text",
-        "xls_column_width": 41
-      },
-      {
-        "datastore_id": "summary_fra",
-        "label": "French Summary / Sommaire de la demande en français",
-        "datastore_type": "text",
-        "xls_column_width": 41
-      },
-      {
-        "datastore_id": "disposition",
-        "label": "Disposition",
-        "datastore_type": "text",
-        "xls_column_width": 39
-      },
-      {
-        "datastore_id": "pages",
-        "label": "Number of Pages / Nombre de pages",
-        "datastore_type": "int",
-        "xls_column_width": 34
-      }
-    ],
-    "datastore_primary_key": "request_number",
-    "datastore_indexes": "",
-    "xls_organization_info":
-      [
-        "department_number",
-        null,
-        "name",
-        "title",
-        null,
-        null,
-        null
-      ],
-    "xls_organization_style": "pattern: pattern solid, fore_color light_green;",
-    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
-  }
-- {
-    "dataset_type": "ati-none",
-    "target_dataset": "ati",
-    "title": "ATI Nothing to Report",
-    "xls_sheet_name": "ATI AI none",
-    "fields": [
-      {
-        "datastore_id": "year",
-        "label": "Year / Année",
-        "datastore_type": "year",
-        "xls_column_width": 5
-      },
-      {
-        "datastore_id": "month",
-        "label": "Month / Mois",
-        "datastore_type": "month",
-        "xls_column_width": 4
-      }
-    ],
-    "datastore_primary_key": ["year", "month"],
-    "datastore_indexes": "",
-    "xls_organization_info": ["dept_id", null, "name", "title"],
-    "xls_organization_style": "pattern: pattern solid, fore_color gray25;",
-    "xls_header_style": "font: bold on; pattern: pattern solid, fore_color light_green;"
-  }
+- dataset_type: ati-summaries
+  target_dataset: ati
+  title: ATI Summaries
+  xls_sheet_name: ATI AI
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 13
+
+  - datastore_id: month
+    label: Month / Mois (1-12)
+    datastore_type: month
+    xls_column_width: 18
+
+  - datastore_id: request_number
+    label: Request Number / Numero de la demande
+    datastore_type: text
+    xls_column_width: 38
+
+  - datastore_id: summary_eng
+    label: English Summary / Sommaire de la demande en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: summary_fra
+    label: French Summary / Sommaire de la demande en français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: disposition
+    label: Disposition
+    datastore_type: text
+    xls_column_width: 39
+
+  - datastore_id: pages
+    label: Number of Pages / Nombre de pages
+    datastore_type: int
+    xls_column_width: 34
+
+  datastore_primary_key: request_number
+  datastore_indexes: ""
+  xls_organization_info: [department_number, null, name, title, null, null, null]
+  xls_organization_style: "pattern: pattern solid, fore_color light_green;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+
+
+- dataset_type: ati-none
+  target_dataset: ati
+  title: ATI Nothing to Report
+  xls_sheet_name: ATI AI none
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 5
+
+  - datastore_id: month
+    label: Month / Mois
+    datastore_type: month
+    xls_column_width: 4
+
+  datastore_primary_key: [year, month]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
 
 
 - dataset_type: contracts
@@ -105,89 +85,89 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: vendor_name_fr,
-    label: French Vendor Name / Nom du fournisseur en français,
-    datastore_type: text,
+  - datastore_id: vendor_name_fr
+    label: French Vendor Name / Nom du fournisseur en français
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: description_code,
-    label: Economic Object Code / Code d'objet économique,
-    datastore_type: text,
+  - datastore_id: description_code
+    label: Economic Object Code / Code d'objet économique
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: description_en,
-    label: English Description / Description anglaise,
-    datastore_type: text,
+  - datastore_id: description_en
+    label: English Description / Description anglaise
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: description_fr,
-    label: French Description / Description française,
-    datastore_type: text,
+  - datastore_id: description_fr
+    label: French Description / Description française
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: description_more_en,
-    label: English Description More / Description avancée en anglais,
-    datastore_type: text,
+  - datastore_id: description_more_en
+    label: English Description More / Description avancée en anglais
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: description_more_fr,
-    label: French Description More / Description avancée en français,
-    datastore_type: text,
+  - datastore_id: description_more_fr
+    label: French Description More / Description avancée en français
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: contract_date,
-    label: Contract Date / Date du contrat,
-    datastore_type: date,
+  - datastore_id: contract_date
+    label: Contract Date / Date du contrat
+    datastore_type: date
     xls_column_width: 20
 
-  - datastore_id: contract_period_start,
-    label: Contract Period Start / Date de début du contrat,
-    datastore_type: date,
+  - datastore_id: contract_period_start
+    label: Contract Period Start / Date de début du contrat
+    datastore_type: date
     xls_column_width: 20
 
-  - datastore_id: contract_period_end,
-    label: Contract Period End / Date de clôture du contrat,
-    datastore_type: date,
+  - datastore_id: contract_period_end
+    label: Contract Period End / Date de clôture du contrat
+    datastore_type: date
     xls_column_width: 20
 
-  - datastore_id: delivery_date,
-    label: Delivery Date / Date de livraison,
-    datastore_type: date,
+  - datastore_id: delivery_date
+    label: Delivery Date / Date de livraison
+    datastore_type: date
     xls_column_width: 20
 
-  - datastore_id: contract_value,
-    label: Contract Value / Valeur du contrat,
-    datastore_type: money,
+  - datastore_id: contract_value
+    label: Contract Value / Valeur du contrat
+    datastore_type: money
     xls_column_width: 20
 
-  - datastore_id: original_value,
-    label: Original Value / Valeur d'origine,
-    datastore_type: money,
+  - datastore_id: original_value
+    label: Original Value / Valeur d'origine
+    datastore_type: money
     xls_column_width: 20
 
-  - datastore_id: cumulative_value,
-    label: Cumulative Value / Valeur cumulative,
-    datastore_type: money,
+  - datastore_id: cumulative_value
+    label: Cumulative Value / Valeur cumulative
+    datastore_type: money
     xls_column_width: 20
 
-  - datastore_id: comments_en,
-    label: English Comments / Commentaires en anglais,
-    datastore_type: text,
+  - datastore_id: comments_en
+    label: English Comments / Commentaires en anglais
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: comments_fr,
-    label: French Comments / Commentaires en français,
-    datastore_type: text,
+  - datastore_id: comments_fr
+    label: French Comments / Commentaires en français
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: additional_comments_en,
-    label: English Additional Comments / Commentaires additionnels en anglais,
-    datastore_type: text,
+  - datastore_id: additional_comments_en
+    label: English Additional Comments / Commentaires additionnels en anglais
+    datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: additional_comments_fr,
-    label: French Additional Comments / Commentaires additionnels en français,
-    datastore_type: text,
+  - datastore_id: additional_comments_fr
+    label: French Additional Comments / Commentaires additionnels en français
+    datastore_type: text
     xls_column_width: 20
 
   datastore_primary_key:
