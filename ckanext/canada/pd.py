@@ -17,25 +17,23 @@ from ckanext.recombinant.write_xls import xls_template
 from ckanext.recombinant.plugins import get_table, get_dataset_types
 
 from ckanext.canada.dataset import (
-    MONTHS_FR,
     solr_connection,
     data_batch,
     csv_data_batch)
 
 
-TARGET_DATASET = 'pd'
 SPLIT_XLS_ROWS = 50002
 
 
 class PDCommand(CkanCommand):
     """
-    Manage the Proactive Disclosures SOLR index / data files
+    Manage the Proactive Disclosures SOLR indexes + data files
 
     Usage::
 
-        paster pd build-templates <sources> <dest-dir>
-                  clear
-                  rebuild [-f <file>]
+        paster contracts build-templates <sources> <dest-dir>
+                         clear
+                         rebuild [-f <file>]
 
     Options::
 
@@ -70,7 +68,7 @@ class PDCommand(CkanCommand):
             return self._rebuild(self.options.csv_file)
 
     def _clear_index(self):
-        conn = solr_connection('proactive_disclosure')
+        conn = solr_connection(self.command_name)
         conn.delete_query("*:*")
         conn.commit()
 
@@ -84,17 +82,17 @@ class PDCommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
-        conn = solr_connection('proactive_disclosure')
+        conn = solr_connection(self.command_name)
         lc = LocalCKAN()
         if csv_file:
             count = {}
-            for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
+            for org_recs in csv_data_batch(csv_file, self.command_name):
                 org_id = org_recs.keys()[0]
                 if org_id not in count:
                     count[org_id] = 0
                 org_detail = lc.action.organization_show(id=org_id)
                 records = org_recs[org_id]
-                _update_records(records, org_detail, conn)
+                _update_records(records, org_detail, conn, self.command_name)
                 count[org_id] += len(records)
             for org_id in lc.action.organization_list():
                 print org_id, count.get(org_id, 0)
@@ -102,8 +100,8 @@ class PDCommand(CkanCommand):
             for org in lc.action.organization_list():
                 count = 0
                 org_detail = lc.action.organization_show(id=org)
-                for records in data_batch(org_detail['id'], lc, TARGET_DATASET):
-                    _update_records(records, org_detail, conn)
+                for records in data_batch(org_detail['id'], lc, self.command_name):
+                    _update_records(records, org_detail, conn, self.command_name)
                     count += len(records)
                 print org, count
 
@@ -116,7 +114,7 @@ class PDCommand(CkanCommand):
         next_row = {}
         output_counter = {}
         output_path = self.args[2:][-1]
-        dataset_types = get_dataset_types(TARGET_DATASET)
+        dataset_types = get_dataset_types(self.command_name)
         table = get_table(dataset_types[0])
 
         def close_write_file(org_id):
@@ -165,7 +163,7 @@ class PDCommand(CkanCommand):
             close_write_file(org_id)
 
 
-def _update_records(records, org_detail, conn):
+def _update_records(records, org_detail, conn, recombinant_type):
     """
     Update records on solr core
 
@@ -178,16 +176,27 @@ def _update_records(records, org_detail, conn):
     :param conn: solr connection
     :ptype conn: obj
 
-    :returns: Nothing
-    :rtype: None
+    :param recombinant_type: type being
     """
-    out = []
+    table = get_table(recombinant_type)
+    pk = table['datastore_primary_key']
+    if not isinstance(pk, list):
+        pk = [pk]
+
     org = org_detail['name']
     orghash = hashlib.md5(org).hexdigest()
-    # site_id = config.get('ckan.site_id')
+
+    def unique_id(r):
+        s = orghash
+        for k in pk:
+            s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
+        return s
+
+    out = []
+
     for r in records:
-        unique = hashlib.md5(
-            orghash + r['ref_number'].encode('utf-8')).hexdigest()
+        unique = unique_id(r)
+
         shortform = None
         shortform_fr = None
         for e in org_detail['extras']:
@@ -196,45 +205,23 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'shortform_fr':
                 shortform_fr = e['value']
 
-        try:
-            year, month, day = (int(x) for x in r['contract_date'].split('-'))
-        except ValueError:
-            logging.error('bad date:', r['contract_date'])
-            year = month = day = 0
-
-        out.append({
-            'bundle': 'proactive_disclosure',
-            # 'site_id': site_id,
+        solrrec = {
             'id': unique,
-            'ss_ref_number': r['ref_number'],
-            'ss_vendor_name_en': r['vendor_name_en'],
-            'ss_vendor_name_fr': r['vendor_name_fr'],
-            'ss_description_code': r['description_code'],
-            'ss_description_en': r['description_en'],
-            'ss_description_fr': r['description_fr'],
-            'ss_description_more_en': r['description_more_en'],
-            'ss_description_more_fr': r['description_more_fr'],
-            'ss_contract_date': date2zulu(r['contract_date']),
-            'ss_contract_period_start': date2zulu(r['contract_period_start']),
-            'ss_contract_period_end': date2zulu(r['contract_period_end']),
-            'ss_delivery_date': date2zulu(r['delivery_date']),
-            'ss_contract_value': r['contract_value'],
-            'ss_original_value': r['original_value'],
-            'ss_cumulative_value': r['cumulative_value'],
-            'ss_comments_en': r['comments_en'],
-            'ss_comments_fr': r['comments_fr'],
-            'ss_additional_comments_en': r['additional_comments_en'],
-            'ss_additional_comments_fr': r['additional_comments_fr'],
-            'ss_org_shortform_en': shortform,
-            'ss_org_shortform_fr': shortform_fr,
-            'ss_org_name_en': org_detail['title'].split(' | ', 1)[0],
-            'ss_org_name_fr': org_detail['title'].split(' | ', 1)[-1],
-            'ss_contract_date_year': str(year),
-            'ss_contract_date_month': str(month),
-            'ss_contract_date_day': str(day),
-            'ss_contract_date_monthname_en': calendar.month_name[month],
-            'ss_contract_date_monthname_fr': MONTHS_FR[month],
-            })
+            'org_name_en': org_detail['title'].split(' | ', 1)[0],
+            'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
+            }
+
+        for f in table['fields']:
+            key = f['datastore_id']
+            value = r[key]
+            if f.get('datastore_type') == 'date':
+                try:
+                    value = date2zulu(value)
+                except ValueError:
+                    pass
+            solrrec[key] = value
+        out.append(solrrec)
+
     conn.add_many(out, _commit=True)
 
 
