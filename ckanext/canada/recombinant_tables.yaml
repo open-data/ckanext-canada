@@ -91,22 +91,17 @@
     xls_column_width: 20
 
   - datastore_id: description_en
-    label: English Description of Work / Description du travail anglaise
+    label: Description of Work English / Description du travail anglaise
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: description_fr
-    label: French Description of Work / Description du travail française
+    label: Description of Work French / Description du travail française
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: contract_period_start
     label: Contract Period Start Date / Date de début du contrat
-    datastore_type: date
-    xls_column_width: 20
-
-  - datastore_id: contract_period_end
-    label: Contract Period End / Date de clôture du contrat
     datastore_type: date
     xls_column_width: 20
 
@@ -132,22 +127,22 @@
     xls_column_width: 20
 
   - datastore_id: comments_en
-    label: English Comments / Commentaires en anglais
+    label: Comments English / Commentaires en anglais
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: comments_fr
-    label: French Comments / Commentaires en français
+    label: Comments French / Commentaires en français
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: additional_comments_en
-    label: English Additional Comments / Commentaires additionnels en anglais
+    label: Additional Comments English / Commentaires additionnels en anglais
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: additional_comments_fr
-    label: French Additional Comments / Commentaires additionnels en français
+    label: Additional Comments French / Commentaires additionnels en français
     datastore_type: text
     xls_column_width: 20
 
@@ -304,4 +299,4 @@
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_blue;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
