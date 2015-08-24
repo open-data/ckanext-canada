@@ -29,13 +29,13 @@ SPLIT_XLS_ROWS = 50002
 
 class PDCommand(CkanCommand):
     """
-    Manage the Proactive Disclosures SOLR index / data files
+    Manage the Proactive Disclosures SOLR indexes + data files
 
     Usage::
 
-        paster pd build-templates <sources> <dest-dir>
-                  clear
-                  rebuild [-f <file>]
+        paster contracts build-templates <sources> <dest-dir>
+                         clear
+                         rebuild [-f <file>]
 
     Options::
 
@@ -70,7 +70,7 @@ class PDCommand(CkanCommand):
             return self._rebuild(self.options.csv_file)
 
     def _clear_index(self):
-        conn = solr_connection('proactive_disclosure')
+        conn = solr_connection(self.command_name)
         conn.delete_query("*:*")
         conn.commit()
 
@@ -84,7 +84,7 @@ class PDCommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
-        conn = solr_connection('proactive_disclosure')
+        conn = solr_connection(self.command_name)
         lc = LocalCKAN()
         if csv_file:
             count = {}
