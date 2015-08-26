@@ -44,6 +44,16 @@
   xls_organization_info: [department_number, null, name, title, null, null, null]
   xls_organization_style: "pattern: pattern solid, fore_color light_green;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
 
 
 - dataset_type: ati-none
@@ -67,6 +77,17 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
 
 
 - dataset_type: contracts
@@ -300,3 +321,14 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
