@@ -131,7 +131,7 @@ For the public server, also set the Drupal portal URL::
 
 For the registry server set up recombinant configuration for ATI summaries::
 
-   recombinant.tables = ckanext.canada:recombinant_tables.json
+   recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
 
 Configuration: Solr

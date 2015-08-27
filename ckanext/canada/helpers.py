@@ -174,7 +174,8 @@ def get_datapreview_contracts(res_id):
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
         resource_id=res_id,
-        sort='contract_period_start desc, contract_period_end desc',
+        # FIXME: load these from the recombinant tables config file
+        sort='contract_period_start desc, delivery_date desc',
         limit=DATAPREVIEW_MAX)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])

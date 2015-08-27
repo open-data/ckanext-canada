@@ -1,0 +1,334 @@
+- dataset_type: ati-summaries
+  target_dataset: ati
+  title: ATI Summaries
+  xls_sheet_name: ATI AI
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 13
+
+  - datastore_id: month
+    label: Month / Mois (1-12)
+    datastore_type: month
+    xls_column_width: 18
+
+  - datastore_id: request_number
+    label: Request Number / Numero de la demande
+    datastore_type: text
+    xls_column_width: 38
+
+  - datastore_id: summary_eng
+    label: English Summary / Sommaire de la demande en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: summary_fra
+    label: French Summary / Sommaire de la demande en français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: disposition
+    label: Disposition
+    datastore_type: text
+    xls_column_width: 39
+
+  - datastore_id: pages
+    label: Number of Pages / Nombre de pages
+    datastore_type: int
+    xls_column_width: 34
+
+  datastore_primary_key: request_number
+  datastore_indexes: ""
+  xls_organization_info: [department_number, null, name, title, null, null, null]
+  xls_organization_style: "pattern: pattern solid, fore_color light_green;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+
+
+- dataset_type: ati-none
+  target_dataset: ati
+  title: ATI Nothing to Report
+  xls_sheet_name: ATI AI none
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 5
+
+  - datastore_id: month
+    label: Month / Mois
+    datastore_type: month
+    xls_column_width: 4
+
+  datastore_primary_key: [year, month]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+
+
+- dataset_type: contracts
+  target_dataset: contracts
+  title: Contracts
+  xls_sheet_name: contracts
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: vendor_name
+    label: Vendor Name / Nom du fournisseur
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: contract_date
+    label: Contract Date / Date du contrat
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: description_en
+    label: Description of Work English / Description du travail anglaise
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description of Work French / Description du travail française
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: contract_period_start
+    label: Contract Period Start Date / Date de début du contrat
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: delivery_date
+    label: Contract Period End Date or Delivery Date
+           / Date de clôture du contrat ou Date de livraison
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: contract_value
+    label: Total Contract Value / Valeur totale du contrat
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: original_value
+    label: Original Contract Value / Valeur d'origine du contrat
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: amendment_value
+    label: Contract Amendment Value / Valeur de modification
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: comments_en
+    label: Comments English / Commentaires en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: comments_fr
+    label: Comments French / Commentaires en français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_en
+    label: Additional Comments English / Commentaires additionnels en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_fr
+    label: Additional Comments French / Commentaires additionnels en français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: agreement_type_code
+    label: Agreement Type / Type d'accord
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      Y: WTO/NAFTA/AIT
+      Z: WTO/NAFTA
+      X: WTO/AIT
+      C: NAFTA/AIT
+      W: WTO
+      N: NAFTA
+      I: AIT
+      A: ABSA (PSAB)
+      R: LCSA (CLCA)
+
+  - datastore_id: commodity_type_code
+    label: Commodity Type / Type de produit
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      G: Good
+      S: Service
+      C: Construction
+
+  - datastore_id: commodity_code
+    label: Commodity Code / Code de produit
+    datastore_type: text
+    xls_column_width: 10
+    # the values are GSIN or UNSPSC codes, not listed here
+
+  - datastore_id: country_of_origin
+    label: Country of Origin / Pays d'origine
+    datastore_type: text
+    xls_column_width: 10
+    # values are iso3166-1-alphas-2
+
+  - datastore_id: solicitation_procedure_code
+    label: Solicitation Procedure / Méthode d'invitation à soumissionner
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      AC: Advance Contract Award Notice
+      OB: Open Bidding
+      TC: Traditional Competitive
+      TN: Traditional Non-Competitive
+
+  - datastore_id: limited_tendering_reason_code
+    label: Limited Tendering Reason
+           / Raisons justifiant le recours à l'appel d'offres limité
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      "05": No response to bid solicitation
+      "20": Goods Purchased on a Commodity Market
+      "21": Purchases Made Under Exceptionally Advantageous Conditions
+      "22": Winner of an Architectural Design Contest
+      "71": Exclusive Rights
+      "72": Prototype Purchase
+      "74": Interchangeable Parts
+      "81": Extreme Urgency
+      "23": Consulting Services Regarding Matters of a Confidential Nature
+      "24": Additional Construction Services
+      "25": New Construction Services
+      "86": Prices and/or Sources Fixed by Government Regulations
+      "90": Protection of Human, Animal, or Plant Life or Health
+      "87": Government Objectives Representing Best Interests/Value
+      "85": Low Dollar-value
+
+  - datastore_id: derogation_code
+    label: Derogation / Dérogation
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      "01": Shipbuilding and repair
+      "02": Urban rail and urban transportation equipment systems, components and materials
+      "03": Contracts respecting FSC 58 (communications, detection and coherent radiation
+            equipment)
+      "04": Set-asides for small and minority businesses
+      "05": Agricultural products made in furtherance of agricultural support programs or human
+            feeding  programs
+      "06": The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70,
+          74, 36
+      "07": National security exemptions incl. oil purchases relating to any strategic reserve
+            requirements
+      "08": National security exceptions include procurements made in support of safeguarding
+            nuclear materials or technology
+      "09": Under exceptional circumstances exclude a procurement from the application of AIT,
+            Chapter 5 for regional and economic development purposes
+
+  - datastore_id: aboriginal_business
+    label: Procurement Strategy for Aboriginal Business Incidental Indicator
+           / Stratégie d'approvisionnement auprès des entreprises autochtones
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: intellectual_property_code
+    label: Intellectual Property Indicator / Indicateur de propriété intellectuelle
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      A1: Crown owned – exception 1
+      A2: Crown owned – exception 2
+      A3: Crown owned – exception 3
+      A4: Crown owned – exception 4.1
+      A4: Crown owned – exception 4.2
+      A4: Crown owned – exception 4.3
+      A5: Crown owned – exception 5
+      A8: "Crown owned – exemption 8 (note: must have received approval of the Treasury Board via a Treasury Board submission)"
+      B: Contractor Owned
+      C: No IP Terms in Contract
+      "": Not Applicable
+
+  - datastore_id: potential_commercial_exploitation
+    label: Potential for Commercial Exploitation / Potentiel d'exploitation commerciale
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: former_public_servant
+    label: Former Public Servant in receipt of a PSSA pension
+           / Ancien fonctionnaire recevant une pension en vertu de la LPFP
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: standing_offer
+    label: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement
+           / Commande subséquente à une l'offre à commandes ou arrangements en matière
+           d'approvisionnement
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: standing_offer_number
+    label: Standing Offer or Supply Arrangement Number / Numéro de l’offre à commandes
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: document_type_code
+    label: Document Type / Type de document
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      C: Contract
+      A: Amendment
+      SOSA: Standing Offer/Supply Arrangement Agreement
+
+  - datastore_id: reporting_period
+    label: Reporting Period / Période de déclaration
+    datastore_type: text
+    xls_column_width: 10
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
