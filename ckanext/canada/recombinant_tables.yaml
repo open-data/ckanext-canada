@@ -44,6 +44,16 @@
   xls_organization_info: [department_number, null, name, title, null, null, null]
   xls_organization_style: "pattern: pattern solid, fore_color light_green;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
 
 
 - dataset_type: ati-none
@@ -67,6 +77,17 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
 
 
 - dataset_type: contracts
@@ -198,42 +219,42 @@
     datastore_type: text
     xls_column_width: 10
     choices:
-      05: No response to bid solicitation
-      20: Goods Purchased on a Commodity Market
-      21: Purchases Made Under Exceptionally Advantageous Conditions
-      22: Winner of an Architectural Design Contest
-      71: Exclusive Rights
-      72: Prototype Purchase
-      74: Interchangeable Parts
-      81: Extreme Urgency
-      23: Consulting Services Regarding Matters of a Confidential Nature
-      24: Additional Construction Services
-      25: New Construction Services
-      86: Prices and/or Sources Fixed by Government Regulations
-      90: Protection of Human, Animal, or Plant Life or Health
-      87: Government Objectives Representing Best Interests/Value
-      85: Low Dollar-value
+      "05": No response to bid solicitation
+      "20": Goods Purchased on a Commodity Market
+      "21": Purchases Made Under Exceptionally Advantageous Conditions
+      "22": Winner of an Architectural Design Contest
+      "71": Exclusive Rights
+      "72": Prototype Purchase
+      "74": Interchangeable Parts
+      "81": Extreme Urgency
+      "23": Consulting Services Regarding Matters of a Confidential Nature
+      "24": Additional Construction Services
+      "25": New Construction Services
+      "86": Prices and/or Sources Fixed by Government Regulations
+      "90": Protection of Human, Animal, or Plant Life or Health
+      "87": Government Objectives Representing Best Interests/Value
+      "85": Low Dollar-value
 
   - datastore_id: derogation_code
     label: Derogation / Dérogation
     datastore_type: text
     xls_column_width: 10
     choices:
-      01: Shipbuilding and repair
-      02: Urban rail and urban transportation equipment systems, components and materials
-      03: Contracts respecting FSC 58 (communications, detection and coherent radiation
-          equipment)
-      04: Set-asides for small and minority businesses
-      05: Agricultural products made in furtherance of agricultural support programs or human
-          feeding  programs
-      06: The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70,
+      "01": Shipbuilding and repair
+      "02": Urban rail and urban transportation equipment systems, components and materials
+      "03": Contracts respecting FSC 58 (communications, detection and coherent radiation
+            equipment)
+      "04": Set-asides for small and minority businesses
+      "05": Agricultural products made in furtherance of agricultural support programs or human
+            feeding  programs
+      "06": The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70,
           74, 36
-      07: National security exemptions incl. oil purchases relating to any strategic reserve
-          requirements
-      08: National security exceptions include procurements made in support of safeguarding
-          nuclear materials or technology
-      09: Under exceptional circumstances exclude a procurement from the application of AIT,
-          Chapter 5 for regional and economic development purposes
+      "07": National security exemptions incl. oil purchases relating to any strategic reserve
+            requirements
+      "08": National security exceptions include procurements made in support of safeguarding
+            nuclear materials or technology
+      "09": Under exceptional circumstances exclude a procurement from the application of AIT,
+            Chapter 5 for regional and economic development purposes
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator
@@ -300,3 +321,14 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
