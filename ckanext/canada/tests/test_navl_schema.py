@@ -223,6 +223,18 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             self.normal_action.package_create,
             **bad_spatial_pkg2)
 
+        bad_spatial_pkg3 = dict(self.complete_pkg,
+            spatial='{"type": "Polygon"}')
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **bad_spatial_pkg3)
+
+        bad_spatial_pkg4 = dict(self.complete_pkg,
+            spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
+        self.assert_raises(ValidationError,
+            self.normal_action.package_create,
+            **bad_spatial_pkg4)
+
     def test_dont_change_portal_release_date(self):
         "normal users should not be able to reset the portal release date"
 
