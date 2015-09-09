@@ -19,6 +19,7 @@ from formencode.validators import OneOf
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.helpers import may_publish_datasets
 from shapely.geometry import asShape
+from shapely import wkt
 import json
 import uuid
 
@@ -328,6 +329,7 @@ def geojson_validator(value):
         try:
             gjson = json.loads(value)
             shape = asShape(gjson)
-        except ValueError:
+            wkt.dumps(shape)
+        except:
             raise Invalid(_("Invalid GeoJSON"))
     return value
