@@ -127,9 +127,6 @@ def _update_records(records, org_detail, conn):
 
     :param conn: solr connection
     :ptype conn: obj
-
-    :returns: Nothing
-    :rtype: None
     """
     out = []
     org = org_detail['name']
@@ -157,7 +154,7 @@ def _update_records(records, org_detail, conn):
                 ati_email = e['value']
 
         # don't ask why, just doing it the way it was done before
-        out.append({
+        en_record = {
             'bundle': 'ati_summaries',
             'hash': 'avexlb',
             'id': unique + 'en',
@@ -178,8 +175,8 @@ def _update_records(records, org_detail, conn):
             'ss_ati_nothing_to_report_en': ('' if 'request_number' in r else
                 'Nothing to report this month'),
             'ss_language': 'en',
-            })
-        out.append({
+            }
+        fr_record = {
             'bundle': 'ati_summaries',
             'hash': 'avexlb',
             'id': unique + 'fr',
@@ -200,5 +197,14 @@ def _update_records(records, org_detail, conn):
             'ss_ati_nothing_to_report_fr': ('' if 'request_number' in r else
                 u'Rien à signaler ce mois-ci'),
             'ss_language': 'fr',
-            })
+            }
+
+        out.append(en_record)
+        out.append(fr_record)
+
+        record = dict(en_record, **fr_record)
+        record['ss_language'] = 'combined'
+        record['id'] = unique
+        out.append(record)
+
     conn.add_many(out, _commit=True)
