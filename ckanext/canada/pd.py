@@ -82,6 +82,8 @@ class PDCommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
+        self._clear_index()
+
         conn = solr_connection(self.command_name)
         lc = LocalCKAN()
         if csv_file:
