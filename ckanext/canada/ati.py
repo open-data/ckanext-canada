@@ -83,6 +83,7 @@ class ATICommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
+        self._clear_index()
 
         conn = solr_connection('ati_summaries')
         lc = LocalCKAN()
