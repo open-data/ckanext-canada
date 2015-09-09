@@ -220,6 +220,14 @@ def _update_records(records, org_detail, conn, recombinant_type):
                 except ValueError:
                     pass
             solrrec[key] = value
+
+            choices = f.get('choices')
+            if not choices:
+                continue
+            if key.endswith('_code'):
+                key = key[:-5]
+            solrrec[key + '_en'] = choices.get(value, '').split(' | ')[0]
+            solrrec[key + '_fr'] = choices.get(value, '').split(' | ')[-1]
         out.append(solrrec)
 
     conn.add_many(out, _commit=True)
