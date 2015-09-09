@@ -10,7 +10,7 @@ import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, NotFound
 
 from ckanext.canada.dataset import (
     MONTHS_FR,
@@ -96,7 +96,10 @@ class ATICommand(CkanCommand):
                     org_id = org_recs.keys()[0]
                     if org_id not in count[csv_file]:
                         count[csv_file][org_id] = 0
-                    org_detail = lc.action.organization_show(id=org_id)
+                    try:
+                        org_detail = lc.action.organization_show(id=org_id)
+                    except NotFound:
+                        continue
                     records = org_recs[org_id]
                     _update_records(records, org_detail, conn)
                     count[csv_file][org_id] += len(records)
