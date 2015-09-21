@@ -459,3 +459,67 @@
     datastore_type: text
     xls_column_width: 40
 
+- dataset_type: reclassification
+  target_dataset: reclassification
+  title: Reclassification
+  xls_sheet_name: reclassification
+  fields:
+
+  - datastore_id: org_name
+    label: Organization Name / Nom de L'Organization
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+    	do: we load these?
+    	or: do we put them in here?
+
+  - datastore_id: pos_number
+    label: Position Number / Nom de L'Organization
+    datastore_type: text (alpha numeric -- that text?)
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: pos_title_en
+    label: English Position Title / Titre du poste anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: pos_title_fr
+    label: French Position Title / Titre du poste français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: pos_prev_class
+    label: Previous Position Classification/ Classification Antérieure
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_class
+    label: Reclassified Position Classification / Classification du poste reclassifié
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_prev_differential
+    label: Previous Supervisory Differential  / Ancienne prime  de surveillance
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_differential
+    label: Previous Supervisory Differential  / Ancienne prime  de surveillance 
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: reason_en
+    label: English Reason for Reclassification / Raison de la decision en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: reason_fr
+    label: French reason for Reclassification /  Raison de la decision en français
+    datastore_type: text
+    xls_column_width: 41
+
