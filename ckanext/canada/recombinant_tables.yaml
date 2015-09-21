@@ -335,7 +335,7 @@
 
 
 - dataset_type: grants_and_contributions
-  target_dataset: grants_and_contributions
+  target_dataset: grants
   title: Grants and Contributions
   xls_sheet_name: grants_and_contributions
   fields:
@@ -421,7 +421,7 @@
 
 
 - dataset_type: founded_wrongdoing
-  target_dataset: founded_wrongdoing
+  target_dataset: wrongdoing
   title: Founded Wrongdoing
   xls_sheet_name: founded_wrongdoing
   fields:
