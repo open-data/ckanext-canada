@@ -332,3 +332,78 @@
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
+- dataset_type: grants_and_contributions
+  target_dataset: grants_and_contributions
+  title: Grants and Contributions
+  xls_sheet_name: grants_and_contributions
+  fields:
+
+  - datastore_id: org_name
+    label: Organization Name / Nom de L'Organization
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+      do: we load these?
+      or: do we put them in here?
+
+  - datastore_id: prog_number
+    label: Program  Number / Numéro identification du programme
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: recipient_name
+    label: Recipient  Name / Nom du recipient 
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: location_endroit
+    label: Location / Endroit
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+      a: is this
+      b: a controlled
+      c: list?
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: value
+    label: Value / Valeur
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: type
+    label: Type / Type
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+      a: need the
+      b: controlled list
+
+  - datastore_id: purpose_en
+    label: English Purpose / Objectif en Anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: purpose_fr
+    label: French Purpose / Objectif en Français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: comments_en
+    label: English Comments / Observation en Anglais
+    datastore_type: text
+    xls_column_width: 41
+    choices:
+      a: need the
+      b: controlled list
+
+  - datastore_id: comments_fr
+    label: French Comments / Observation en Français
+    datastore_type: text
+    xls_column_width: 41
+      a: need the
+      b: controlled list
