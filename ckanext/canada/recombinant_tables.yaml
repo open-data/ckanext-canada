@@ -332,19 +332,13 @@
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
+
+
 - dataset_type: grants_and_contributions
   target_dataset: grants_and_contributions
   title: Grants and Contributions
   xls_sheet_name: grants_and_contributions
   fields:
-
-  - datastore_id: org_name
-    label: Organization Name / Nom de L'Organization
-    datastore_type: text
-    xls_column_width: 20
-    choices:
-      do: we load these?
-      or: do we put them in here?
 
   - datastore_id: prog_number
     label: Program  Number / Numéro identification du programme
@@ -352,7 +346,7 @@
     xls_column_width: 20
 
   - datastore_id: recipient_name
-    label: Recipient  Name / Nom du recipient 
+    label: Recipient  Name / Nom du recipient
     datastore_type: text
     xls_column_width: 20
 
@@ -407,23 +401,17 @@
     xls_column_width: 41
       a: need the
       b: controlled list
+
+
 - dataset_type: founded_wrongdoing
   target_dataset: founded_wrongdoing
   title: Founded Wrongdoing
   xls_sheet_name: founded_wrongdoing
   fields:
 
-  - datastore_id: org_name
-    label: Organization Name / Nom de L'Organization
-    datastore_type: text
-    xls_column_width: 20
-    choices:
-    	do: registry of
-    	or: applied titles
-
   - datastore_id: file_id_number
     label: File Identification Number / Numéro d’identification du fichier
-    datastore_type: text (They want a CKAN generated number)
+    datastore_type: text
     xls_column_width: 20
 
   - datastore_id: file_id_date
@@ -459,23 +447,16 @@
     datastore_type: text
     xls_column_width: 40
 
+
 - dataset_type: reclassification
   target_dataset: reclassification
   title: Reclassification
   xls_sheet_name: reclassification
   fields:
 
-  - datastore_id: org_name
-    label: Organization Name / Nom de L'Organization
-    datastore_type: text
-    xls_column_width: 20
-    choices:
-    	do: we load these?
-    	or: do we put them in here?
-
   - datastore_id: pos_number
     label: Position Number / Nom de L'Organization
-    datastore_type: text (alpha numeric -- that text?)
+    datastore_type: text
     xls_column_width: 20
 
   - datastore_id: date
@@ -504,12 +485,12 @@
     xls_column_width: 5
 
   - datastore_id: pos_prev_differential
-    label: Previous Supervisory Differential  / Ancienne prime  de surveillance
+    label: Previous Supervisory Differential / Ancienne prime de surveillance
     datastore_type: text
     xls_column_width: 5
 
   - datastore_id: pos_differential
-    label: Previous Supervisory Differential  / Ancienne prime  de surveillance 
+    label: Previous Supervisory Differential / Ancienne prime de surveillance
     datastore_type: text
     xls_column_width: 5
 
@@ -519,7 +500,6 @@
     xls_column_width: 41
 
   - datastore_id: reason_fr
-    label: French reason for Reclassification /  Raison de la decision en français
+    label: French reason for Reclassification / Raison de la decision en français
     datastore_type: text
     xls_column_width: 41
-
