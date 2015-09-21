@@ -1475,6 +1475,7 @@ dataset_fields:
 
 - field_name: license_id
   form_snippet: license.html
+  default: ca-ogl-lgo
   label:
     en: Licence
     fr: Licence
