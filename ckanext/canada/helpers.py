@@ -17,7 +17,8 @@ PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 SHOW_SITE_MSG_OPTION = 'canada.show_site_message'
 SHOW_SITE_MSG_DEFAULT = 'False'
 DATAPREVIEW_MAX = 500
-
+FGP_URL_OPTION = 'fgp.ramp_base_url'
+FGP_URL_DEFAULT = 'http://localhost/'
 
 def may_publish_datasets(userobj=None):
     if not userobj:
@@ -178,3 +179,7 @@ def get_datapreview_contracts(res_id):
         limit=DATAPREVIEW_MAX)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])
+
+def fgp_url():
+    return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
+
