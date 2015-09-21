@@ -407,3 +407,55 @@
     xls_column_width: 41
       a: need the
       b: controlled list
+- dataset_type: founded_wrongdoing
+  target_dataset: founded_wrongdoing
+  title: Founded Wrongdoing
+  xls_sheet_name: founded_wrongdoing
+  fields:
+
+  - datastore_id: org_name
+    label: Organization Name / Nom de L'Organization
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+    	do: registry of
+    	or: applied titles
+
+  - datastore_id: file_id_number
+    label: File Identification Number / Numéro d’identification du fichier
+    datastore_type: text (They want a CKAN generated number)
+    xls_column_width: 20
+
+  - datastore_id: file_id_date
+    label: File Identification file date / Date de numéro d’identification du ficher
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: case_description_en
+    label: English Case Description / Description anglaise
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: case_description_fr
+    label: French Case Description / Description française
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: findings_conclusions
+    label: Findings and Conclusions / Constatations et Conclusions
+    datastore_type: text
+    xls_column_width: 40
+    choices:
+      a: get from
+      b: section 8 of public servants disclosure protection act
+
+  - datastore_id: recommendations_corrective_measures_en
+    label: English Recommendations and Corrective Measures / Recommendations et mesures Correctives anglaises
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: recommendations_corrective_measures_fr
+    label: Recommendations and Corrective Measures / Recommendations et mesures Correctives françaises
+    datastore_type: text
+    xls_column_width: 40
+
