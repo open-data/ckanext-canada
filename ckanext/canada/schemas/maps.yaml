@@ -78,6 +78,11 @@ dataset_fields:
     fr: Date contribué
   form_snippet: null
 
+- field_name: date_source_metadata_created
+  label:
+    en: Date metadata created
+    fr: Date métadonnées crées 
+
 - field_name: date_published
   label:
     en: Date published

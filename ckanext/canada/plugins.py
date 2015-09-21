@@ -183,7 +183,8 @@ class DataGCCAPublic(p.SingletonPlugin):
             'portal_url',
             'googleanalytics_id',
             'drupal_session_present',
-            'is_site_message_showing'
+            'is_site_message_showing',
+            'fgp_url',
             ])
 
     def before_map(self, map):
