@@ -341,12 +341,12 @@
   fields:
 
   - datastore_id: prog_number
-    label: Program  Number / Numéro identification du programme
+    label: Program Number / Numéro identification du programme
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: recipient_name
-    label: Recipient  Name / Nom du recipient
+    label: Recipient Name / Nom du recipient
     datastore_type: text
     xls_column_width: 20
 
@@ -402,6 +402,23 @@
       a: need the
       b: controlled list
 
+  datastore_primary_key: [prog_number]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF8BCCCB
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF689998
+
 
 - dataset_type: founded_wrongdoing
   target_dataset: founded_wrongdoing
@@ -447,6 +464,23 @@
     datastore_type: text
     xls_column_width: 40
 
+  datastore_primary_key: [prog_number]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA8CC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF7E9968
+
 
 - dataset_type: reclassification
   target_dataset: reclassification
@@ -455,7 +489,7 @@
   fields:
 
   - datastore_id: pos_number
-    label: Position Number / Nom de L'Organization
+    label: Position Number / Numéro du poste
     datastore_type: text
     xls_column_width: 20
 
@@ -503,3 +537,20 @@
     label: French reason for Reclassification / Raison de la decision en français
     datastore_type: text
     xls_column_width: 41
+
+  datastore_primary_key: [pos_number]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFCACC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF979968
