@@ -334,7 +334,7 @@
       fgColor: FF90C3D4
 
 
-- dataset_type: grants_and_contributions
+- dataset_type: grants
   target_dataset: grants
   title: Grants and Contributions
   xls_sheet_name: grants_and_contributions
@@ -415,7 +415,7 @@
       fgColor: FF689998
 
 
-- dataset_type: founded_wrongdoing
+- dataset_type: wrongdoing
   target_dataset: wrongdoing
   title: Founded Wrongdoing
   xls_sheet_name: founded_wrongdoing
@@ -459,7 +459,7 @@
     datastore_type: text
     xls_column_width: 40
 
-  datastore_primary_key: [prog_number]
+  datastore_primary_key: [file_id_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
