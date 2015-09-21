@@ -391,16 +391,11 @@
     label: English Comments / Observation en Anglais
     datastore_type: text
     xls_column_width: 41
-    choices:
-      a: need the
-      b: controlled list
 
   - datastore_id: comments_fr
     label: French Comments / Observation en Français
     datastore_type: text
     xls_column_width: 41
-      a: need the
-      b: controlled list
 
   datastore_primary_key: [prog_number]
   datastore_indexes: ""
