@@ -62,7 +62,8 @@ presets:
     output_validators: fluent_text_output
 
 - preset_name: canada_notes
-  - field_name: notes
+  values:
+    field_name: notes
     label:
       en: Description
       fr: Description
@@ -331,8 +332,7 @@ presets:
 
 - preset_name: canada_geographic_region
   values:
-  # consider moving this to a preset so other types can reuse the choices list
-  - field_name: geographic_region
+    field_name: geographic_region
     label:
       en: Geographic Region
       fr: Région géographique
