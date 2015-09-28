@@ -51,6 +51,3 @@ paster db init -c test-core.ini
 paster datastore set-permissions -c test-core.ini | sudo -u postgres psql
 
 cd -
-
-ckanapi load organizations -I transitional_orgs.jsonl -c test-core.ini
-
