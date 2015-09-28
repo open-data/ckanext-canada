@@ -56,7 +56,7 @@ dataset_fields:
   label:
     en: Spatial
     fr: Élément spatial
-  validators: geojson_validator
+  validators: scheming_required geojson_validator
 
 - preset: canada_spatial_representation_type
 

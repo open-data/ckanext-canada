@@ -10,23 +10,10 @@ from ckan.tests import *
 import ckan.model as model
 from ckan.lib.create_test_data import CreateTestData
 
-from ckan.tests.functional.test_package import TestPackageBase
-from ckan.tests import WsgiAppCase
+from ckan.new_tests.helpers import FunctionalTestBase
 
-class TestNew(TestPackageBase):
+class TestNew(FunctionalTestBase):
     pkg_names = []
-
-    @classmethod
-    def setup_class(cls):
-        CreateTestData.create()
-        cls.extra_environ_tester = {'REMOTE_USER': 'testsysadmin'}
-        cls.sysadmin_user = model.User.get('testsysadmin')
-        assert cls.sysadmin_user
-
-    @classmethod
-    def teardown_class(cls):
-        cls.purge_packages(cls.pkg_names)
-        CreateTestData.delete()
 
     def test_new_required_fields(self):
         raise SkipTest('XXX: need to update for new forms')

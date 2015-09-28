@@ -1,40 +1,34 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests import WsgiAppCase, CheckMethods
+from ckan.new_tests.helpers import FunctionalTestBase, call_action
+from ckan.new_tests import factories
 import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 
-from ckanapi import TestAppCKAN, ValidationError
+from ckanapi import LocalCKAN, ValidationError
 import json
 from nose.plugins.skip import SkipTest
+from nose.tools import assert_raises, assert_equal
 
-class TestNAVLSchema(WsgiAppCase, CheckMethods):
+class TestNAVLSchema(FunctionalTestBase):
 
-    @classmethod
-    def setup_class(cls):
-        search.clear()
-        CreateTestData.create()
-        cls.sysadmin_user = model.User.get('testsysadmin')
-        cls.normal_user = model.User.get('annafan')
-        cls.publisher_user = model.User.get('russianfan')
+    def setup(self):
+        self.sysadmin_user = factories.Sysadmin()
+        self.normal_user = factories.User()
+        org = factories.Organization()
 
-        cls.sysadmin_action = TestAppCKAN(cls.app,
-            cls.sysadmin_user.apikey).action
-        cls.normal_action = TestAppCKAN(cls.app,
-            cls.normal_user.apikey).action
-        cls.publisher_action = TestAppCKAN(cls.app,
-            cls.publisher_user.apikey).action
-        cls.action = TestAppCKAN(cls.app).action
+        self.sysadmin_action = LocalCKAN(
+            username=self.sysadmin_user['name']).action
+        self.normal_action = LocalCKAN(
+            username=self.normal_user['name']).action
+        self.action = LocalCKAN().action
 
-        cls.sysadmin_action.organization_member_create(
-            username='annafan', id='nrcan-rncan', role='editor')
+        self.sysadmin_action.organization_member_create(
+            username=self.normal_user['name'],
+            id=org['name'],
+            role='editor')
 
-        cls.sysadmin_action.organization_member_create(
-            username='russianfan', id='tb-ct', role='editor')
-        cls.sysadmin_action.organization_member_create(
-            username='russianfan', id='nrcan-rncan', role='editor')
-
-        cls.incomplete_pkg = {
+        self.incomplete_pkg = {
             'type': 'dataset',
             'title': {'en': u'A Novel By Tolstoy'},
             'license_id': 'ca-ogl-lgo',
@@ -48,8 +42,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             }],
         }
 
-        cls.complete_pkg = dict(cls.incomplete_pkg,
-            owner_org='nrcan-rncan',
+        self.complete_pkg = dict(self.incomplete_pkg,
+            owner_org=org['name'],
             title={'en': u'A Novel By Tolstoy', 'fr':u'Un novel par Tolstoy'},
             frequency=u'as_needed',
             notes={'en': u'...', 'fr': u'...'},
@@ -58,12 +52,8 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             keywords={'en': [u'book'], 'fr': [u'livre']},
             )
 
-    @classmethod
-    def teardown_class(cls):
-        CreateTestData.delete()
-
     def test_basic_package(self):
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             name='basic_package', **self.incomplete_pkg)
 
@@ -75,19 +65,19 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert resp['title']['fr'] == u'Un novel par Tolstoy'
 
     def test_keyword_validation(self):
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['test'], 'fr':['not! ok!']}))
 
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['test'], 'fr':['one too short', 'q']}))
 
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             name='keyword_validation',
             **dict(self.complete_pkg,
@@ -99,7 +89,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 keywords={'en':['these', 'ones', 'are', 'a-ok'], 'fr':['test']}))
 
     def test_custom_dataset_id(self):
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
 
@@ -110,7 +100,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         assert resp['id'] == 'my-custom-id'
         assert resp['name'] == 'custom_dataset_id'
 
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.sysadmin_action.package_create,
             name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
 
@@ -118,7 +108,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         raw_pkg = dict(self.complete_pkg)
         del raw_pkg['title']
 
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **raw_pkg)
 
@@ -135,7 +125,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 {'en': ['test'], 'fr': ["emissions de l'automobile"]}))
 
     def test_invalid_resource_size(self):
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **dict(self.complete_pkg,
                 resources = [dict(self.complete_pkg['resources'][0],
@@ -148,14 +138,14 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
         # not generated, we set this one but later tests depend on it
-        self.assert_equal(pkg['license_id'], 'ca-ogl-lgo')
+        assert_equal(pkg['license_id'], 'ca-ogl-lgo')
         # this one is generated in the bowels of CKAN's model_dictize
-        self.assert_equal(pkg['license_title'],
+        assert_equal(pkg['license_title'],
             'Open Government Licence - Canada')
 
         raise SkipTest('XXX: not generating fields yet')
         # some we actually generate ourselves
-        self.assert_equal(pkg['license_title_fra'],
+        assert_equal(pkg['license_title_fra'],
             'Licence du gouvernement ouvert - Canada')
         assert pkg['license_url_fra']
 
@@ -166,7 +156,7 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         release_pkg = dict(self.complete_pkg,
             portal_release_date='2012-01-01')
 
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **release_pkg)
 
@@ -188,13 +178,13 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
                 '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
                 '[-52.622540, 82.514468], [-52.622540, 41.736231], '
                 '[-141.001333, 41.736231]]]}')
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg)
 
         bad_spatial_pkg2 = dict(self.complete_pkg,
             spatial='forty')
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg2)
 
@@ -212,6 +202,6 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
 
         resp2 = self.normal_action.package_show(id=resp['id'])
 
-        self.assert_equal(resp['portal_release_date'],
+        assert_equal(resp['portal_release_date'],
             resp2.get('portal_release_date'))
 
