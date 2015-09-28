@@ -22,6 +22,185 @@ presets:
     form_snippet: null
     validators: if_empty_same_as(id)
 
+- preset_name: canada_owner_org
+  values:
+    field_name: owner_org
+    label:
+      en: Publisher
+      fr: Éditeur
+    help_text:
+      en: The organization directly responsible for the dataset and for metadata maintenance.
+      fr: Le nom de l’organisation directement responsable des ensembles de donnée et
+        de la maintenance des métadonnées
+    # copied from dataset_organization preset
+    validators: owner_org_validator unicode
+    form_snippet: organization.html
+
+- preset_name: canada_digital_object_identifier
+  values:
+    field_name: digital_object_identifier
+    label:
+      en: Digital Object Identifier
+      fr: Identificateur d’objet numérique
+
+- preset_name: canada_title
+  values:
+    field_name: title
+    label:
+      en: Title
+      fr: Titre
+    form_placeholder:
+      en: Canada Border Wait Times
+      fr: Temps d’attente à la frontière
+    required: true
+
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_notes
+  values:
+    field_name: notes
+    label:
+      en: Description
+      fr: Description
+    form_placeholder:
+      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
+        of pollutant releases (to air, water and land), disposals and transfers for
+        recycling. The NPRI includes...
+      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
+        des rejets de polluants du Canada…
+    help_text:
+      en: A detailed description of the dataset that will allow the user to determine
+        the nature and purpose of the data in the dataset.
+      fr: Une description détaillée de l’ensemble de données qui permettra à l'utilisateur
+        de connaître la nature et le but des données comprises dans l’ensemble de données.
+    required: true
+    # copied from fluent_markdown preset
+    form_snippet: fluent_markdown.html
+    display_snippet: fluent_markdown.html
+    error_snippet": fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_subject
+  values:
+    field_name: subject
+    label:
+      en: Subject
+      fr: Sujet
+    required: true
+    choices:
+    - label:
+        en: Arts, Music, Literature
+        fr: Arts, musique, littérature
+      value: AA
+    - label:
+        en: Agriculture
+        fr: Agriculture
+      value: AG
+    - label:
+        en: Economics and Industry
+        fr: Économie et industrie
+      value: EC
+    - label:
+        en: Education and Training
+        fr: Éducation et formation
+      value: ET
+    - label:
+        en: Government and Politics
+        fr: Gouvernement et vie politique
+      value: GV
+    - label:
+        en: Health and Safety
+        fr: Santé et sécurité
+      value: HE
+    - label:
+        en: History and Archaeology
+        fr: Histoire et archéologie
+      value: HI
+    - label:
+        en: Information and Communications
+        fr: Information et communication
+      value: IN
+    - label:
+        en: Labour
+        fr: Travail et emploi
+      value: LB
+    - label:
+        en: Language and Linguistics
+        fr: Langue et linguistique
+      value: LN
+    - label:
+        en: Law
+        fr: Droit
+      value: LW
+    - label:
+        en: Military
+        fr: Histoire et science militaire
+      value: MI
+    - label:
+        en: Nature and Environment
+        fr: Nature et environnement
+      value: NE
+    - label:
+        en: Persons
+        fr: Personnes
+      value: PE
+    - label:
+        en: Processes
+        fr: Liens et fonctions
+      value: PR
+    - label:
+        en: Society and Culture
+        fr: Société et culture
+      value: SO
+    - label:
+        en: Science and Technology
+        fr: Sciences et technologie
+      value: ST
+    - label:
+        en: Transport
+        fr: Transport
+      value: TR
+    - label:
+        en: Form Descriptors
+        fr: Format
+      value: FM
+    # copied from multiple_checkbox preset
+    form_snippet: multiple_checkbox.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
+
+- preset_name: canada_keywords
+  values:
+    field_name: keywords
+    label:
+      en: Tags
+      fr: Mots clés
+    help_text:
+      en: The topic of the content of the resource expressed as keywords, to help users
+        discover the datasets and provide ways of identifying other similar datasets.
+        Include as many keywords as possible. Use commas to separate keywords.
+      fr: Le sujet du contenu de la ressource est exprimé par mots clés, afin d'aider
+        les utilisateurs à découvrir l’ensemble de données et à leur fournir des moyens
+        de trouver d'autres bases de données similaires. Inclure le plus de mots clés
+        possible. Utiliser des virgules pour séparer les mots clés.
+    required: true
+    tag_validators: canada_tags tag_length_validator
+    # copied from fluent_tags preset
+    form_snippet: fluent_tags.html
+    display_snippet: fluent_tags.html
+    error_snippet: fluent_text.html
+    validators: fluent_tags
+    output_validators: fluent_tags_output
+    form_attrs:
+      data-module: autocomplete
+      data-module-tags: ""
 
 - preset_name: canada_frequency
   values:
@@ -90,6 +269,34 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
+- preset_name: canada_date_published
+  values:
+    field_name: date_published
+    label:
+      en: Date Published
+      fr: Date de publication
+    help_text:
+      en: The date in which the dataset was issued.
+      fr: La date à laquelle le jeu de données a été émise.
+    required: true
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_date_modified
+  values:
+    field_name: date_modified
+    label:
+      en: Date Modified
+      fr: Date de modification
+    help_text:
+      en: The date in which the dataset was modified.
+      fr: La date à laquelle le jeu de données a été modifiée
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
 
 - preset_name: canada_time_period_coverage_start
   values:
@@ -117,6 +324,1336 @@ presets:
     form_snippet: date.html
     display_snippet: date.html
     validators: scheming_required isodate
+
+- preset_name: canada_geographic_region
+  values:
+    field_name: geographic_region
+    label:
+      en: Geographic Region
+      fr: Région géographique
+    help_text:
+      en: The geographic area of the dataset
+      fr: La région géographique de l’ensemble de données
+    choices:
+    - label:
+        en: Canada
+        fr: Canada
+      value: '0'
+    - label:
+        en: Atlantic
+        fr: Atlantique
+      value: '1'
+    - label:
+        en: Newfoundland and Labrador
+        fr: Terre-Neuve-et-Labrador
+      value: '10'
+    - label:
+        en: Newfoundland and Labrador - Division No. 1
+        fr: Terre-Neuve-et-Labrador - Division No. 1
+      value: '1001'
+    - label:
+        en: Newfoundland and Labrador - Division No. 2
+        fr: Terre-Neuve-et-Labrador - Division No. 2
+      value: '1002'
+    - label:
+        en: Newfoundland and Labrador - Division No. 3
+        fr: Terre-Neuve-et-Labrador - Division No. 3
+      value: '1003'
+    - label:
+        en: Newfoundland and Labrador - Division No. 4
+        fr: Terre-Neuve-et-Labrador - Division No. 4
+      value: '1004'
+    - label:
+        en: Newfoundland and Labrador - Division No. 5
+        fr: Terre-Neuve-et-Labrador - Division No. 5
+      value: '1005'
+    - label:
+        en: Newfoundland and Labrador - Division No. 6
+        fr: Terre-Neuve-et-Labrador - Division No. 6
+      value: '1006'
+    - label:
+        en: Newfoundland and Labrador - Division No. 7
+        fr: Terre-Neuve-et-Labrador - Division No. 7
+      value: '1007'
+    - label:
+        en: Newfoundland and Labrador - Division No. 8
+        fr: Terre-Neuve-et-Labrador - Division No. 8
+      value: '1008'
+    - label:
+        en: Newfoundland and Labrador - Division No. 9
+        fr: Terre-Neuve-et-Labrador - Division No. 9
+      value: '1009'
+    - label:
+        en: Newfoundland and Labrador - Division No. 10
+        fr: Terre-Neuve-et-Labrador - Division No. 10
+      value: '1010'
+    - label:
+        en: Newfoundland and Labrador - Division No. 11
+        fr: Terre-Neuve-et-Labrador - Division No. 11
+      value: '1011'
+    - label:
+        en: Prince Edward Island
+        fr: Île-du-Prince-Édouard
+      value: '11'
+    - label:
+        en: Prince Edward Island - Kings
+        fr: Île-du-Prince-Édouard - Kings
+      value: '1101'
+    - label:
+        en: Prince Edward Island - Queens
+        fr: Île-du-Prince-Édouard - Queens
+      value: '1102'
+    - label:
+        en: Prince Edward Island - Prince
+        fr: Île-du-Prince-Édouard - Prince
+      value: '1103'
+    - label:
+        en: Nova Scotia
+        fr: Nouvelle-Écosse
+      value: '12'
+    - label:
+        en: Nova Scotia - Shelburne
+        fr: Nouvelle-Écosse - Shelburne
+      value: '1201'
+    - label:
+        en: Nova Scotia - Yarmouth
+        fr: Nouvelle-Écosse - Yarmouth
+      value: '1202'
+    - label:
+        en: Nova Scotia - Digby
+        fr: Nouvelle-Écosse - Digby
+      value: '1203'
+    - label:
+        en: Nova Scotia - Queens
+        fr: Nouvelle-Écosse - Queens
+      value: '1204'
+    - label:
+        en: Nova Scotia - Annapolis
+        fr: Nouvelle-Écosse - Annapolis
+      value: '1205'
+    - label:
+        en: Nova Scotia - Lunenburg
+        fr: Nouvelle-Écosse - Lunenburg
+      value: '1206'
+    - label:
+        en: Nova Scotia - Kings
+        fr: Nouvelle-Écosse - Kings
+      value: '1207'
+    - label:
+        en: Nova Scotia - Hants
+        fr: Nouvelle-Écosse - Hants
+      value: '1208'
+    - label:
+        en: Nova Scotia - Halifax
+        fr: Nouvelle-Écosse - Halifax
+      value: '1209'
+    - label:
+        en: Nova Scotia - Colchester
+        fr: Nouvelle-Écosse - Colchester
+      value: '1210'
+    - label:
+        en: Nova Scotia - Cumberland
+        fr: Nouvelle-Écosse - Cumberland
+      value: '1211'
+    - label:
+        en: Nova Scotia - Pictou
+        fr: Nouvelle-Écosse - Pictou
+      value: '1212'
+    - label:
+        en: Nova Scotia - Guysborough
+        fr: Nouvelle-Écosse - Guysborough
+      value: '1213'
+    - label:
+        en: Nova Scotia - Antigonish
+        fr: Nouvelle-Écosse - Antigonish
+      value: '1214'
+    - label:
+        en: Nova Scotia - Inverness
+        fr: Nouvelle-Écosse - Inverness
+      value: '1215'
+    - label:
+        en: Nova Scotia - Richmond
+        fr: Nouvelle-Écosse - Richmond
+      value: '1216'
+    - label:
+        en: Nova Scotia - Cape Breton
+        fr: Nouvelle-Écosse - Cape Breton
+      value: '1217'
+    - label:
+        en: Nova Scotia - Victoria
+        fr: Nouvelle-Écosse - Victoria
+      value: '1218'
+    - label:
+        en: New Brunswick
+        fr: Nouveau-Brunswick
+      value: '13'
+    - label:
+        en: New Brunswick - Saint John
+        fr: Nouveau-Brunswick - Saint John
+      value: '1301'
+    - label:
+        en: New Brunswick - Charlotte
+        fr: Nouveau-Brunswick - Charlotte
+      value: '1302'
+    - label:
+        en: New Brunswick - Sunbury
+        fr: Nouveau-Brunswick - Sunbury
+      value: '1303'
+    - label:
+        en: New Brunswick - Queens
+        fr: Nouveau-Brunswick - Queens
+      value: '1304'
+    - label:
+        en: New Brunswick - Kings
+        fr: Nouveau-Brunswick - Kings
+      value: '1305'
+    - label:
+        en: New Brunswick - Albert
+        fr: Nouveau-Brunswick - Albert
+      value: '1306'
+    - label:
+        en: New Brunswick - Westmorland
+        fr: Nouveau-Brunswick - Westmorland
+      value: '1307'
+    - label:
+        en: New Brunswick - Kent
+        fr: Nouveau-Brunswick - Kent
+      value: '1308'
+    - label:
+        en: New Brunswick - Northumberland
+        fr: Nouveau-Brunswick - Northumberland
+      value: '1309'
+    - label:
+        en: New Brunswick - York
+        fr: Nouveau-Brunswick - York
+      value: '1310'
+    - label:
+        en: New Brunswick - Carleton
+        fr: Nouveau-Brunswick - Carleton
+      value: '1311'
+    - label:
+        en: New Brunswick - Victoria
+        fr: Nouveau-Brunswick - Victoria
+      value: '1312'
+    - label:
+        en: New Brunswick - Madawaska
+        fr: Nouveau-Brunswick - Madawaska
+      value: '1313'
+    - label:
+        en: New Brunswick - Restigouche
+        fr: Nouveau-Brunswick - Restigouche
+      value: '1314'
+    - label:
+        en: New Brunswick - Gloucester
+        fr: Nouveau-Brunswick - Gloucester
+      value: '1315'
+    - label:
+        en: Quebec
+        fr: Québec
+      value: '2'
+    - label:
+        en: Quebec - Les Îles-de-la-Madeleine
+        fr: Québec - Les Îles-de-la-Madeleine
+      value: '2401'
+    - label:
+        en: Quebec - Le Rocher-Percé
+        fr: Québec - Le Rocher-Percé
+      value: '2402'
+    - label:
+        en: Quebec - La Côte-de-Gaspé
+        fr: Québec - La Côte-de-Gaspé
+      value: '2403'
+    - label:
+        en: Quebec - La Haute-Gaspésie
+        fr: Québec - La Haute-Gaspésie
+      value: '2404'
+    - label:
+        en: Quebec - Bonaventure
+        fr: Québec - Bonaventure
+      value: '2405'
+    - label:
+        en: Quebec - Avignon
+        fr: Québec - Avignon
+      value: '2406'
+    - label:
+        en: Quebec - La Matapédia
+        fr: Québec - La Matapédia
+      value: '2407'
+    - label:
+        en: Quebec - Matane
+        fr: Québec - Matane
+      value: '2408'
+    - label:
+        en: Quebec - La Mitis
+        fr: Québec - La Mitis
+      value: '2409'
+    - label:
+        en: Quebec - Rimouski-Neigette
+        fr: Québec - Rimouski-Neigette
+      value: '2410'
+    - label:
+        en: Quebec - Les Basques
+        fr: Québec - Les Basques
+      value: '2411'
+    - label:
+        en: Quebec - Rivière-du-Loup
+        fr: Québec - Rivière-du-Loup
+      value: '2412'
+    - label:
+        en: Quebec - Témiscouata
+        fr: Québec - Témiscouata
+      value: '2413'
+    - label:
+        en: Quebec - Kamouraska
+        fr: Québec - Kamouraska
+      value: '2414'
+    - label:
+        en: Quebec - Charlevoix-Est
+        fr: Québec - Charlevoix-Est
+      value: '2415'
+    - label:
+        en: Quebec - Charlevoix
+        fr: Québec - Charlevoix
+      value: '2416'
+    - label:
+        en: Quebec - LIslet
+        fr: Québec - LIslet
+      value: '2417'
+    - label:
+        en: Quebec - Montmagny
+        fr: Québec - Montmagny
+      value: '2418'
+    - label:
+        en: Quebec - Bellechasse
+        fr: Québec - Bellechasse
+      value: '2419'
+    - label:
+        en: Quebec - LÎle-dOrléans
+        fr: Québec - LÎle-dOrléans
+      value: '2420'
+    - label:
+        en: Quebec - La Côte-de-Beaupré
+        fr: Québec - La Côte-de-Beaupré
+      value: '2421'
+    - label:
+        en: Quebec - La Jacques-Cartier
+        fr: Québec - La Jacques-Cartier
+      value: '2422'
+    - label:
+        en: Quebec - Québec
+        fr: Québec - Québec
+      value: '2423'
+    - label:
+        en: Quebec - Lévis
+        fr: Québec - Lévis
+      value: '2425'
+    - label:
+        en: Quebec - La Nouvelle-Beauce
+        fr: Québec - La Nouvelle-Beauce
+      value: '2426'
+    - label:
+        en: Quebec - Robert-Cliche
+        fr: Québec - Robert-Cliche
+      value: '2427'
+    - label:
+        en: Quebec - Les Etchemins
+        fr: Québec - Les Etchemins
+      value: '2428'
+    - label:
+        en: Quebec - Beauce-Sartigan
+        fr: Québec - Beauce-Sartigan
+      value: '2429'
+    - label:
+        en: Quebec - Le Granit
+        fr: Québec - Le Granit
+      value: '2430'
+    - label:
+        en: Quebec - Les Appalaches
+        fr: Québec - Les Appalaches
+      value: '2431'
+    - label:
+        en: Quebec - LÉrable
+        fr: Québec - LÉrable
+      value: '2432'
+    - label:
+        en: Quebec - Lotbinière
+        fr: Québec - Lotbinière
+      value: '2433'
+    - label:
+        en: Quebec - Portneuf
+        fr: Québec - Portneuf
+      value: '2434'
+    - label:
+        en: Quebec - Mékinac
+        fr: Québec - Mékinac
+      value: '2435'
+    - label:
+        en: Quebec - Shawinigan
+        fr: Québec - Shawinigan
+      value: '2436'
+    - label:
+        en: Quebec - Francheville
+        fr: Québec - Francheville
+      value: '2437'
+    - label:
+        en: Quebec - Bécancour
+        fr: Québec - Bécancour
+      value: '2438'
+    - label:
+        en: Quebec - Arthabaska
+        fr: Québec - Arthabaska
+      value: '2439'
+    - label:
+        en: Quebec - Les Sources
+        fr: Québec - Les Sources
+      value: '2440'
+    - label:
+        en: Quebec - Le Haut-Saint-François
+        fr: Québec - Le Haut-Saint-François
+      value: '2441'
+    - label:
+        en: Quebec - Le Val-Saint-François
+        fr: Québec - Le Val-Saint-François
+      value: '2442'
+    - label:
+        en: Quebec - Sherbrooke
+        fr: Québec - Sherbrooke
+      value: '2443'
+    - label:
+        en: Quebec - Coaticook
+        fr: Québec - Coaticook
+      value: '2444'
+    - label:
+        en: Quebec - Memphrémagog
+        fr: Québec - Memphrémagog
+      value: '2445'
+    - label:
+        en: Quebec - Brome-Missisquoi
+        fr: Québec - Brome-Missisquoi
+      value: '2446'
+    - label:
+        en: Quebec - La Haute-Yamaska
+        fr: Québec - La Haute-Yamaska
+      value: '2447'
+    - label:
+        en: Quebec - Acton
+        fr: Québec - Acton
+      value: '2448'
+    - label:
+        en: Quebec - Drummond
+        fr: Québec - Drummond
+      value: '2449'
+    - label:
+        en: Quebec - Nicolet-Yamaska
+        fr: Québec - Nicolet-Yamaska
+      value: '2450'
+    - label:
+        en: Quebec - Maskinongé
+        fr: Québec - Maskinongé
+      value: '2451'
+    - label:
+        en: Quebec - DAutray
+        fr: Québec - DAutray
+      value: '2452'
+    - label:
+        en: Quebec - Pierre-De Saurel
+        fr: Québec - Pierre-De Saurel
+      value: '2453'
+    - label:
+        en: Quebec - Les Maskoutains
+        fr: Québec - Les Maskoutains
+      value: '2454'
+    - label:
+        en: Quebec - Rouville
+        fr: Québec - Rouville
+      value: '2455'
+    - label:
+        en: Quebec - Le Haut-Richelieu
+        fr: Québec - Le Haut-Richelieu
+      value: '2456'
+    - label:
+        en: Quebec - La Vallée-du-Richelieu
+        fr: Québec - La Vallée-du-Richelieu
+      value: '2457'
+    - label:
+        en: Quebec - Longueuil
+        fr: Québec - Longueuil
+      value: '2458'
+    - label:
+        en: Quebec - Lajemmerais
+        fr: Québec - Lajemmerais
+      value: '2459'
+    - label:
+        en: Quebec - LAssomption
+        fr: Québec - LAssomption
+      value: '2460'
+    - label:
+        en: Quebec - Joliette
+        fr: Québec - Joliette
+      value: '2461'
+    - label:
+        en: Quebec - Matawinie
+        fr: Québec - Matawinie
+      value: '2462'
+    - label:
+        en: Quebec - Montcalm
+        fr: Québec - Montcalm
+      value: '2463'
+    - label:
+        en: Quebec - Les Moulins
+        fr: Québec - Les Moulins
+      value: '2464'
+    - label:
+        en: Quebec - Laval
+        fr: Québec - Laval
+      value: '2465'
+    - label:
+        en: Quebec - Montréal
+        fr: Québec - Montréal
+      value: '2466'
+    - label:
+        en: Quebec - Roussillon
+        fr: Québec - Roussillon
+      value: '2467'
+    - label:
+        en: Quebec - Les Jardins-de-Napierville
+        fr: Québec - Les Jardins-de-Napierville
+      value: '2468'
+    - label:
+        en: Quebec - Le Haut-Saint-Laurent
+        fr: Québec - Le Haut-Saint-Laurent
+      value: '2469'
+    - label:
+        en: Quebec - Beauharnois-Salaberry
+        fr: Québec - Beauharnois-Salaberry
+      value: '2470'
+    - label:
+        en: Quebec - Vaudreuil-Soulanges
+        fr: Québec - Vaudreuil-Soulanges
+      value: '2471'
+    - label:
+        en: Quebec - Deux-Montagnes
+        fr: Québec - Deux-Montagnes
+      value: '2472'
+    - label:
+        en: Quebec - Thérèse-De Blainville
+        fr: Québec - Thérèse-De Blainville
+      value: '2473'
+    - label:
+        en: Quebec - Mirabel
+        fr: Québec - Mirabel
+      value: '2474'
+    - label:
+        en: Quebec - La Rivière-du-Nord
+        fr: Québec - La Rivière-du-Nord
+      value: '2475'
+    - label:
+        en: Quebec - Argenteuil
+        fr: Québec - Argenteuil
+      value: '2476'
+    - label:
+        en: Quebec - Les Pays-den-Haut
+        fr: Québec - Les Pays-den-Haut
+      value: '2477'
+    - label:
+        en: Quebec - Les Laurentides
+        fr: Québec - Les Laurentides
+      value: '2478'
+    - label:
+        en: Quebec - Antoine-Labelle
+        fr: Québec - Antoine-Labelle
+      value: '2479'
+    - label:
+        en: Quebec - Papineau
+        fr: Québec - Papineau
+      value: '2480'
+    - label:
+        en: Quebec - Gatineau
+        fr: Québec - Gatineau
+      value: '2481'
+    - label:
+        en: Quebec - Les Collines-de-lOutaouais
+        fr: Québec - Les Collines-de-lOutaouais
+      value: '2482'
+    - label:
+        en: Quebec - La Vallée-de-la-Gatineau
+        fr: Québec - La Vallée-de-la-Gatineau
+      value: '2483'
+    - label:
+        en: Quebec - Pontiac
+        fr: Québec - Pontiac
+      value: '2484'
+    - label:
+        en: Quebec - Témiscamingue
+        fr: Québec - Témiscamingue
+      value: '2485'
+    - label:
+        en: Quebec - Rouyn-Noranda
+        fr: Québec - Rouyn-Noranda
+      value: '2486'
+    - label:
+        en: Quebec - Abitibi-Ouest
+        fr: Québec - Abitibi-Ouest
+      value: '2487'
+    - label:
+        en: Quebec - Abitibi
+        fr: Québec - Abitibi
+      value: '2488'
+    - label:
+        en: Quebec - La Vallée-de-lOr
+        fr: Québec - La Vallée-de-lOr
+      value: '2489'
+    - label:
+        en: Quebec - La Tuque
+        fr: Québec - La Tuque
+      value: '2490'
+    - label:
+        en: Quebec - Le Domaine-du-Roy
+        fr: Québec - Le Domaine-du-Roy
+      value: '2491'
+    - label:
+        en: Quebec - Maria-Chapdelaine
+        fr: Québec - Maria-Chapdelaine
+      value: '2492'
+    - label:
+        en: Quebec - Lac-Saint-Jean-Est
+        fr: Québec - Lac-Saint-Jean-Est
+      value: '2493'
+    - label:
+        en: Quebec - Le Saguenay-et-son-Fjord
+        fr: Québec - Le Saguenay-et-son-Fjord
+      value: '2494'
+    - label:
+        en: Quebec - La Haute-Côte-Nord
+        fr: Québec - La Haute-Côte-Nord
+      value: '2495'
+    - label:
+        en: Quebec - Manicouagan
+        fr: Québec - Manicouagan
+      value: '2496'
+    - label:
+        en: Quebec - Sept-Rivières--Caniapiscau
+        fr: Québec - Sept-Rivières--Caniapiscau
+      value: '2497'
+    - label:
+        en: Quebec - Minganie--Le Golfe-du-Saint-Laurent
+        fr: Québec - Minganie--Le Golfe-du-Saint-Laurent
+      value: '2498'
+    - label:
+        en: Quebec - Nord-du-Québec
+        fr: Québec - Nord-du-Québec
+      value: '2499'
+    - label:
+        en: Ontario
+        fr: Ontario
+      value: '3'
+    - label:
+        en: Ontario - Stormont Dundas and Glengarry
+        fr: Ontario - Stormont Dundas and Glengarry
+      value: '3501'
+    - label:
+        en: Ontario - Prescott and Russell
+        fr: Ontario - Prescott and Russell
+      value: '3502'
+    - label:
+        en: Ontario - Ottawa
+        fr: Ontario - Ottawa
+      value: '3506'
+    - label:
+        en: Ontario - Leeds and Grenville
+        fr: Ontario - Leeds and Grenville
+      value: '3507'
+    - label:
+        en: Ontario - Lanark
+        fr: Ontario - Lanark
+      value: '3509'
+    - label:
+        en: Ontario - Frontenac
+        fr: Ontario - Frontenac
+      value: '3510'
+    - label:
+        en: Ontario - Lennox and Addington
+        fr: Ontario - Lennox and Addington
+      value: '3511'
+    - label:
+        en: Ontario - Hastings
+        fr: Ontario - Hastings
+      value: '3512'
+    - label:
+        en: Ontario - Prince Edward
+        fr: Ontario - Prince Edward
+      value: '3513'
+    - label:
+        en: Ontario - Northumberland
+        fr: Ontario - Northumberland
+      value: '3514'
+    - label:
+        en: Ontario - Peterborough
+        fr: Ontario - Peterborough
+      value: '3515'
+    - label:
+        en: Ontario - Kawartha Lakes
+        fr: Ontario - Kawartha Lakes
+      value: '3516'
+    - label:
+        en: Ontario - Durham
+        fr: Ontario - Durham
+      value: '3518'
+    - label:
+        en: Ontario - York
+        fr: Ontario - York
+      value: '3519'
+    - label:
+        en: Ontario - Toronto
+        fr: Ontario - Toronto
+      value: '3520'
+    - label:
+        en: Ontario - Peel
+        fr: Ontario - Peel
+      value: '3521'
+    - label:
+        en: Ontario - Dufferin
+        fr: Ontario - Dufferin
+      value: '3522'
+    - label:
+        en: Ontario - Wellington
+        fr: Ontario - Wellington
+      value: '3523'
+    - label:
+        en: Ontario - Halton
+        fr: Ontario - Halton
+      value: '3524'
+    - label:
+        en: Ontario - Hamilton
+        fr: Ontario - Hamilton
+      value: '3525'
+    - label:
+        en: Ontario - Niagara
+        fr: Ontario - Niagara
+      value: '3526'
+    - label:
+        en: Ontario - Haldimand-Norfolk
+        fr: Ontario - Haldimand-Norfolk
+      value: '3528'
+    - label:
+        en: Ontario - Brant
+        fr: Ontario - Brant
+      value: '3529'
+    - label:
+        en: Ontario - Waterloo
+        fr: Ontario - Waterloo
+      value: '3530'
+    - label:
+        en: Ontario - Perth
+        fr: Ontario - Perth
+      value: '3531'
+    - label:
+        en: Ontario - Oxford
+        fr: Ontario - Oxford
+      value: '3532'
+    - label:
+        en: Ontario - Elgin
+        fr: Ontario - Elgin
+      value: '3534'
+    - label:
+        en: Ontario - Chatham-Kent
+        fr: Ontario - Chatham-Kent
+      value: '3536'
+    - label:
+        en: Ontario - Essex
+        fr: Ontario - Essex
+      value: '3537'
+    - label:
+        en: Ontario - Lambton
+        fr: Ontario - Lambton
+      value: '3538'
+    - label:
+        en: Ontario - Middlesex
+        fr: Ontario - Middlesex
+      value: '3539'
+    - label:
+        en: Ontario - Huron
+        fr: Ontario - Huron
+      value: '3540'
+    - label:
+        en: Ontario - Bruce
+        fr: Ontario - Bruce
+      value: '3541'
+    - label:
+        en: Ontario - Grey
+        fr: Ontario - Grey
+      value: '3542'
+    - label:
+        en: Ontario - Simcoe
+        fr: Ontario - Simcoe
+      value: '3543'
+    - label:
+        en: Ontario - Muskoka
+        fr: Ontario - Muskoka
+      value: '3544'
+    - label:
+        en: Ontario - Haliburton
+        fr: Ontario - Haliburton
+      value: '3546'
+    - label:
+        en: Ontario - Renfrew
+        fr: Ontario - Renfrew
+      value: '3547'
+    - label:
+        en: Ontario - Nipissing
+        fr: Ontario - Nipissing
+      value: '3548'
+    - label:
+        en: Ontario - Parry Sound
+        fr: Ontario - Parry Sound
+      value: '3549'
+    - label:
+        en: Ontario - Manitoulin
+        fr: Ontario - Manitoulin
+      value: '3551'
+    - label:
+        en: Ontario - Sudbury
+        fr: Ontario - Sudbury
+      value: '3552'
+    - label:
+        en: Ontario - Greater Sudbury
+        fr: Ontario - Greater Sudbury
+      value: '3553'
+    - label:
+        en: Ontario - Timiskaming
+        fr: Ontario - Timiskaming
+      value: '3554'
+    - label:
+        en: Ontario - Cochrane
+        fr: Ontario - Cochrane
+      value: '3556'
+    - label:
+        en: Ontario - Algoma
+        fr: Ontario - Algoma
+      value: '3557'
+    - label:
+        en: Ontario - Thunder Bay
+        fr: Ontario - Thunder Bay
+      value: '3558'
+    - label:
+        en: Ontario - Rainy River
+        fr: Ontario - Rainy River
+      value: '3559'
+    - label:
+        en: Ontario - Kenora
+        fr: Ontario - Kenora
+      value: '3560'
+    - label:
+        en: Prairies
+        fr: Prairies
+      value: '4'
+    - label:
+        en: Manitoba
+        fr: Manitoba
+      value: '46'
+    - label:
+        en: Manitoba - Division No. 1
+        fr: Manitoba - Division No. 1
+      value: '4601'
+    - label:
+        en: Manitoba - Division No. 2
+        fr: Manitoba - Division No. 2
+      value: '4602'
+    - label:
+        en: Manitoba - Division No. 3
+        fr: Manitoba - Division No. 3
+      value: '4603'
+    - label:
+        en: Manitoba - Division No. 4
+        fr: Manitoba - Division No. 4
+      value: '4604'
+    - label:
+        en: Manitoba - Division No. 5
+        fr: Manitoba - Division No. 5
+      value: '4605'
+    - label:
+        en: Manitoba - Division No. 6
+        fr: Manitoba - Division No. 6
+      value: '4606'
+    - label:
+        en: Manitoba - Division No. 7
+        fr: Manitoba - Division No. 7
+      value: '4607'
+    - label:
+        en: Manitoba - Division No. 8
+        fr: Manitoba - Division No. 8
+      value: '4608'
+    - label:
+        en: Manitoba - Division No. 9
+        fr: Manitoba - Division No. 9
+      value: '4609'
+    - label:
+        en: Manitoba - Division No. 10
+        fr: Manitoba - Division No. 10
+      value: '4610'
+    - label:
+        en: Manitoba - Division No. 11
+        fr: Manitoba - Division No. 11
+      value: '4611'
+    - label:
+        en: Manitoba - Division No. 12
+        fr: Manitoba - Division No. 12
+      value: '4612'
+    - label:
+        en: Manitoba - Division No. 13
+        fr: Manitoba - Division No. 13
+      value: '4613'
+    - label:
+        en: Manitoba - Division No. 14
+        fr: Manitoba - Division No. 14
+      value: '4614'
+    - label:
+        en: Manitoba - Division No. 15
+        fr: Manitoba - Division No. 15
+      value: '4615'
+    - label:
+        en: Manitoba - Division No. 16
+        fr: Manitoba - Division No. 16
+      value: '4616'
+    - label:
+        en: Manitoba - Division No. 17
+        fr: Manitoba - Division No. 17
+      value: '4617'
+    - label:
+        en: Manitoba - Division No. 18
+        fr: Manitoba - Division No. 18
+      value: '4618'
+    - label:
+        en: Manitoba - Division No. 19
+        fr: Manitoba - Division No. 19
+      value: '4619'
+    - label:
+        en: Manitoba - Division No. 20
+        fr: Manitoba - Division No. 20
+      value: '4620'
+    - label:
+        en: Manitoba - Division No. 21
+        fr: Manitoba - Division No. 21
+      value: '4621'
+    - label:
+        en: Manitoba - Division No. 22
+        fr: Manitoba - Division No. 22
+      value: '4622'
+    - label:
+        en: Manitoba - Division No. 23
+        fr: Manitoba - Division No. 23
+      value: '4623'
+    - label:
+        en: Saskatchewan
+        fr: Saskatchewan
+      value: '47'
+    - label:
+        en: Saskatchewan - Division No. 1
+        fr: Saskatchewan - Division No. 1
+      value: '4701'
+    - label:
+        en: Saskatchewan - Division No. 2
+        fr: Saskatchewan - Division No. 2
+      value: '4702'
+    - label:
+        en: Saskatchewan - Division No. 3
+        fr: Saskatchewan - Division No. 3
+      value: '4703'
+    - label:
+        en: Saskatchewan - Division No. 4
+        fr: Saskatchewan - Division No. 4
+      value: '4704'
+    - label:
+        en: Saskatchewan - Division No. 5
+        fr: Saskatchewan - Division No. 5
+      value: '4705'
+    - label:
+        en: Saskatchewan - Division No. 6
+        fr: Saskatchewan - Division No. 6
+      value: '4706'
+    - label:
+        en: Saskatchewan - Division No. 7
+        fr: Saskatchewan - Division No. 7
+      value: '4707'
+    - label:
+        en: Saskatchewan - Division No. 8
+        fr: Saskatchewan - Division No. 8
+      value: '4708'
+    - label:
+        en: Saskatchewan - Division No. 9
+        fr: Saskatchewan - Division No. 9
+      value: '4709'
+    - label:
+        en: Saskatchewan - Division No. 10
+        fr: Saskatchewan - Division No. 10
+      value: '4710'
+    - label:
+        en: Saskatchewan - Division No. 11
+        fr: Saskatchewan - Division No. 11
+      value: '4711'
+    - label:
+        en: Saskatchewan - Division No. 12
+        fr: Saskatchewan - Division No. 12
+      value: '4712'
+    - label:
+        en: Saskatchewan - Division No. 13
+        fr: Saskatchewan - Division No. 13
+      value: '4713'
+    - label:
+        en: Saskatchewan - Division No. 14
+        fr: Saskatchewan - Division No. 14
+      value: '4714'
+    - label:
+        en: Saskatchewan - Division No. 15
+        fr: Saskatchewan - Division No. 15
+      value: '4715'
+    - label:
+        en: Saskatchewan - Division No. 16
+        fr: Saskatchewan - Division No. 16
+      value: '4716'
+    - label:
+        en: Saskatchewan - Division No. 17
+        fr: Saskatchewan - Division No. 17
+      value: '4717'
+    - label:
+        en: Saskatchewan - Division No. 18
+        fr: Saskatchewan - Division No. 18
+      value: '4718'
+    - label:
+        en: Alberta
+        fr: Alberta
+      value: '48'
+    - label:
+        en: Alberta - Division No. 1
+        fr: Alberta - Division No. 1
+      value: '4801'
+    - label:
+        en: Alberta - Division No. 2
+        fr: Alberta - Division No. 2
+      value: '4802'
+    - label:
+        en: Alberta - Division No. 3
+        fr: Alberta - Division No. 3
+      value: '4803'
+    - label:
+        en: Alberta - Division No. 4
+        fr: Alberta - Division No. 4
+      value: '4804'
+    - label:
+        en: Alberta - Division No. 5
+        fr: Alberta - Division No. 5
+      value: '4805'
+    - label:
+        en: Alberta - Division No. 6
+        fr: Alberta - Division No. 6
+      value: '4806'
+    - label:
+        en: Alberta - Division No. 7
+        fr: Alberta - Division No. 7
+      value: '4807'
+    - label:
+        en: Alberta - Division No. 8
+        fr: Alberta - Division No. 8
+      value: '4808'
+    - label:
+        en: Alberta - Division No. 9
+        fr: Alberta - Division No. 9
+      value: '4809'
+    - label:
+        en: Alberta - Division No. 10
+        fr: Alberta - Division No. 10
+      value: '4810'
+    - label:
+        en: Alberta - Division No. 11
+        fr: Alberta - Division No. 11
+      value: '4811'
+    - label:
+        en: Alberta - Division No. 12
+        fr: Alberta - Division No. 12
+      value: '4812'
+    - label:
+        en: Alberta - Division No. 13
+        fr: Alberta - Division No. 13
+      value: '4813'
+    - label:
+        en: Alberta - Division No. 14
+        fr: Alberta - Division No. 14
+      value: '4814'
+    - label:
+        en: Alberta - Division No. 15
+        fr: Alberta - Division No. 15
+      value: '4815'
+    - label:
+        en: Alberta - Division No. 16
+        fr: Alberta - Division No. 16
+      value: '4816'
+    - label:
+        en: Alberta - Division No. 17
+        fr: Alberta - Division No. 17
+      value: '4817'
+    - label:
+        en: Alberta - Division No. 18
+        fr: Alberta - Division No. 18
+      value: '4818'
+    - label:
+        en: Alberta - Division No. 19
+        fr: Alberta - Division No. 19
+      value: '4819'
+    - label:
+        en: British Columbia
+        fr: Colombie-Britannique
+      value: '5'
+    - label:
+        en: British Columbia - East Kootenay
+        fr: Colombie-Britannique - East Kootenay
+      value: '5901'
+    - label:
+        en: British Columbia - Central Kootenay
+        fr: Colombie-Britannique - Central Kootenay
+      value: '5903'
+    - label:
+        en: British Columbia - Kootenay Boundary
+        fr: Colombie-Britannique - Kootenay Boundary
+      value: '5905'
+    - label:
+        en: British Columbia - Okanagan-Similkameen
+        fr: Colombie-Britannique - Okanagan-Similkameen
+      value: '5907'
+    - label:
+        en: British Columbia - Fraser Valley
+        fr: Colombie-Britannique - Fraser Valley
+      value: '5909'
+    - label:
+        en: British Columbia - Greater Vancouver
+        fr: Colombie-Britannique - Greater Vancouver
+      value: '5915'
+    - label:
+        en: British Columbia - Capital
+        fr: Colombie-Britannique - Capital
+      value: '5917'
+    - label:
+        en: British Columbia - Cowichan Valley
+        fr: Colombie-Britannique - Cowichan Valley
+      value: '5919'
+    - label:
+        en: British Columbia - Nanaimo
+        fr: Colombie-Britannique - Nanaimo
+      value: '5921'
+    - label:
+        en: British Columbia - Alberni-Clayoquot
+        fr: Colombie-Britannique - Alberni-Clayoquot
+      value: '5923'
+    - label:
+        en: British Columbia - Strathcona
+        fr: Colombie-Britannique - Strathcona
+      value: '5924'
+    - label:
+        en: British Columbia - Comox Valley
+        fr: Colombie-Britannique - Comox Valley
+      value: '5926'
+    - label:
+        en: British Columbia - Powell River
+        fr: Colombie-Britannique - Powell River
+      value: '5927'
+    - label:
+        en: British Columbia - Sunshine Coast
+        fr: Colombie-Britannique - Sunshine Coast
+      value: '5929'
+    - label:
+        en: British Columbia - Squamish-Lillooet
+        fr: Colombie-Britannique - Squamish-Lillooet
+      value: '5931'
+    - label:
+        en: British Columbia - Thompson-Nicola
+        fr: Colombie-Britannique - Thompson-Nicola
+      value: '5933'
+    - label:
+        en: British Columbia - Central Okanagan
+        fr: Colombie-Britannique - Central Okanagan
+      value: '5935'
+    - label:
+        en: British Columbia - North Okanagan
+        fr: Colombie-Britannique - North Okanagan
+      value: '5937'
+    - label:
+        en: British Columbia - Columbia-Shuswap
+        fr: Colombie-Britannique - Columbia-Shuswap
+      value: '5939'
+    - label:
+        en: British Columbia - Cariboo
+        fr: Colombie-Britannique - Cariboo
+      value: '5941'
+    - label:
+        en: British Columbia - Mount Waddington
+        fr: Colombie-Britannique - Mount Waddington
+      value: '5943'
+    - label:
+        en: British Columbia - Central Coast
+        fr: Colombie-Britannique - Central Coast
+      value: '5945'
+    - label:
+        en: British Columbia - Skeena-Queen Charlotte
+        fr: Colombie-Britannique - Skeena-Queen Charlotte
+      value: '5947'
+    - label:
+        en: British Columbia - Kitimat-Stikine
+        fr: Colombie-Britannique - Kitimat-Stikine
+      value: '5949'
+    - label:
+        en: British Columbia - Bulkley-Nechako
+        fr: Colombie-Britannique - Bulkley-Nechako
+      value: '5951'
+    - label:
+        en: British Columbia - Fraser-Fort George
+        fr: Colombie-Britannique - Fraser-Fort George
+      value: '5953'
+    - label:
+        en: British Columbia - Peace River
+        fr: Colombie-Britannique - Peace River
+      value: '5955'
+    - label:
+        en: British Columbia - Stikine
+        fr: Colombie-Britannique - Stikine
+      value: '5957'
+    - label:
+        en: British Columbia - Northern Rockies
+        fr: Colombie-Britannique - Northern Rockies
+      value: '5959'
+    - label:
+        en: Territories
+        fr: Territoires
+      value: '6'
+    - label:
+        en: Yukon
+        fr: Yukon
+      value: '60'
+    - label:
+        en: Yukon - Yukon
+        fr: Yukon - Yukon
+      value: '6001'
+    - label:
+        en: Northwest Territories
+        fr: Territoires du Nord-Ouest
+      value: '61'
+    - label:
+        en: Northwest Territories - Region 1
+        fr: Territoires du Nord-Ouest - Region 1
+      value: '6101'
+    - label:
+        en: Northwest Territories - Region 2
+        fr: Territoires du Nord-Ouest - Region 2
+      value: '6102'
+    - label:
+        en: Northwest Territories - Region 3
+        fr: Territoires du Nord-Ouest - Region 3
+      value: '6103'
+    - label:
+        en: Northwest Territories - Region 4
+        fr: Territoires du Nord-Ouest - Region 4
+      value: '6104'
+    - label:
+        en: Northwest Territories - Region 5
+        fr: Territoires du Nord-Ouest - Region 5
+      value: '6105'
+    - label:
+        en: Northwest Territories - Region 6
+        fr: Territoires du Nord-Ouest - Region 6
+      value: '6106'
+    - label:
+        en: Nunavut
+        fr: Nunavut
+      value: '62'
+    - label:
+        en: Nunavut - Baffin
+        fr: Nunavut - Baffin
+      value: '6204'
+    - label:
+        en: Nunavut - Keewatin
+        fr: Nunavut - Keewatin
+      value: '6205'
+    - label:
+        en: Nunavut - Kitikmeot
+        fr: Nunavut - Kitikmeot
+      value: '6208'
+    # copied from multiple_select preset
+    form_snippet: multiple_select.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
+
+- preset_name: canada_data_series_name
+  values:
+    field_name: data_series_name
+    label:
+      en: Data Series Name
+      fr: Nom de la série de l’ensemble de données
+    help_text:
+      en: The name of the series, or aggregate dataset, of which the dataset is a part
+      fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
+        de données fait partie
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_data_series_issue_identification
+  values:
+    field_name: data_series_issue_identification
+    label:
+      en: Issue Identification
+      fr: Identification de l’ensemble de données
+    help_text:
+      en: The identification of the series’ issue information.
+      fr: L’identification de l’ensemble de données de la série
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_homepage_url
+  values:
+    field_name: url
+    label:
+      en: Homepage URL
+      fr: URL de la page d’accueil
+    help_text:
+      en: The URL for the Government of Canada program that is responsible for the dataset.
+      fr: L’adresse URL du programme du gouvernement du Canada responsable de l’ensemble
+        de données
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_license_id
+  values:
+    field_name: license_id
+    form_snippet: license.html
+    default: ca-ogl-lgo
+    label:
+      en: Licence
+      fr: Licence
+    help_text:
+      en: The specific attribution statement provided by the information provider.
+      fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
+    required: true
+
+- preset_name: canada_endpoint_url
+  values:
+    field_name: endpoint_url
+    help_text:
+      en: The endpoint of web service to access the dataset (API).
+      fr: Le point d’extrémité du service Web concernant l’accès à l’ensemble de données
+        (API).
+    label:
+      en: Endpoint
+      fr: Point d’extrémité
 
 
 - preset_name: canada_topic_category
@@ -246,7 +1783,6 @@ presets:
     label:
       en: Spatial representation type
       fr: Type représentation spatiale
-    preset: choice
     choices:
     - label:
         en: Vector
@@ -272,3 +1808,301 @@ presets:
         en: Video
         fr: Vidéo
       value: '640'
+
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_resource_name
+  values:
+    field_name: name
+    label:
+      en: Title
+      fr: Titre
+    help_text:
+      en: The name by which the cited resource is known
+      fr: Le nom par lequel la ressource mentionnée est connue.
+    required: true
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+- preset_name: canada_resource_url
+  values:
+    field_name: url
+    label:
+      en: URL
+      fr: URL
+    help_text:
+      en: The electronic location where the resource can be found.
+      fr: L’endroit électronique où se trouve la ressource.
+    required: true
+    # copied from resource_url_upload
+    validators: not_empty unicode remove_whitespace
+    form_snippet: upload.html
+    upload_field: upload
+    upload_clear: clear_upload
+    upload_label: File
+
+- preset_name: canada_resource_size
+  values:
+    field_name: size
+    label:
+      en: Size
+      fr: Taille
+    help_text:
+      en: The estimated size of a unit in the specified transfer format, expressed in
+        bytes.
+      fr: La taille approximative d’une unité dans le format de transfert précis, en
+        octets.
+    validators: ignore_missing int_validator
+
+- preset_name: canada_resource_format
+  values:
+    field_name: format
+    label:
+      en: Dataset Format
+      fr: Format de l'ensemble de données
+    preset: select
+    required: true
+    choices:
+    - label: AI
+      openness_score: 1
+      value: ai
+    - label: AMF
+      openness_score: 1
+      value: amf
+    - label: ASCII Grid
+      openness_score: 1
+      value: ascii grid
+    - label: Application
+      openness_score: 1
+      value: app
+    - label: BMP
+      openness_score: 1
+      value: bmp
+    - label: CDED ASCII
+      openness_score: 1
+      value: cdec ascii
+    - label: CDR
+      openness_score: 1
+      value: cdr
+    - label: CSV
+      openness_score: 3
+      value: CSV
+    - label: DOC
+      openness_score: 1
+      value: doc
+    - label: dxf
+      openness_score: 1
+      value: dxf
+    - label: E00
+      openness_score: 1
+      value: e00
+    - label: ECW
+      openness_score: 1
+      value: ecw
+    - label: EDI
+      openness_score: 1
+      value: edi
+    - label: EMF
+      openness_score: 1
+      value: emf
+    - label: EPS
+      openness_score: 1
+      value: eps
+    - label: EXE
+      openness_score: 1
+      value: exe
+    - label: FGDB / GDB
+      openness_score: 3
+      replaces:
+      - FGDB / GDB
+      value: fgdb / gdb
+    - label: Flat raster binary
+      openness_score: 1
+      value: flat raster binary
+    - label: GeoPDF
+      openness_score: 1
+      value: geopdf
+    - label: GeoRSS
+      openness_score: 1
+      value: georss
+    - label: GeoTIF
+      openness_score: 1
+      value: geotif
+    - label: GIF
+      openness_score: 1
+      value: gif
+    - label: GML
+      openness_score: 3
+      value: gml
+    - label: HDF
+      openness_score: 1
+      replaces:
+      - GNU Zipped HDF
+      value: hdf
+    - label: HTML
+      openness_score: 1
+      value: HTML
+    - label: IATI
+      openness_score: 1
+      value: iati
+    - label: JPEG 2000
+      openness_score: 1
+      value: jpeg 2000
+    - label: JPG
+      openness_score: 1
+      value: jpg
+    - label: JSON
+      openness_score: 3
+      value: JSON
+    - label: JSON Lines
+      openness_score: 3
+      value: jsonl
+    - label: KML / KMZ
+      openness_score: 3
+      replaces:
+      - KML / KMZ
+      value: kml / kmz
+    - label: NetCDF
+      openness_score: 1
+      value: netcdf
+    - label: ODP
+      openness_score: 1
+      value: odp
+    - label: ODS
+      openness_score: 2
+      value: ods
+    - label: ODT
+      openness_score: 1
+      value: odt
+    - label: PDF
+      openness_score: 1
+      value: PDF
+    - label: PNG
+      openness_score: 1
+      value: png
+    - label: PPT
+      openness_score: 1
+      value: ppt
+    - label: RDF
+      openness_score: 4
+      value: RDF
+    - label: RDFa
+      openness_score: 4
+      value: rdfa
+    - label: RSS
+      openness_score: 1
+      value: rss
+    - label: RTF
+      openness_score: 1
+      value: rtf
+    - label: SAR / CCT
+      openness_score: 1
+      replaces:
+      - SAR/CCT
+      value: sar / cct
+    - label: SAV
+      openness_score: 1
+      value: sav
+    - label: SEGY
+      openness_score: 1
+      value: segy
+    - label: SHP
+      openness_score: 1
+      value: SHAPE
+    - label: SQL
+      openness_score: 1
+      value: sql
+    - label: SVG
+      openness_score: 1
+      value: svg
+    - label: TIFF World File
+      openness_score: 1
+      value: tiff world file
+    - label: TIFF
+      openness_score: 1
+      value: tiff
+    - label: TXT
+      openness_score: 1
+      replaces:
+      - ASCII
+      - text
+      value: TXT
+    - label: WFS
+      openness_score: 3
+      value: wfs
+    - label: WMS
+      openness_score: 3
+      value: wms
+    - label: WMTS
+      openness_score: 1
+      value: wmts
+    - label: XLS
+      openness_score: 2
+      value: XLS
+    - label: XLSM
+      openness_score: 2
+      value: xlsm
+    - label: XML
+      openness_score: 3
+      value: XML
+    - label: Zip
+      openness_score: 1
+      value: ZIP
+    - label:
+        en: Other
+        fr: Autre
+      openness_score: 1
+      value: other
+
+- preset_name: canada_resource_type
+  values:
+    field_name: resource_type
+    label:
+      en: Resource Type
+      fr: Type de ressource
+    preset: select
+    required: true
+    choices:
+    - label:
+        en: Dataset
+        fr: Données
+      value: file
+    - label:
+        en: Supporting Documentation
+        fr: Documentation de Soutien
+      value: doc
+    - label:
+        en: API
+        fr: API
+      value: api
+    - label:
+        en: Application
+        fr: Application
+      value: app
+
+- preset_name: canada_resource_data_quality
+  values:
+    field_name: data_quality
+    label:
+      en: Data Includes URIs and Links
+      fr: Les données comprennent les URI et les liens
+    choices:
+    - label:
+        en: The most important data items in this resource have a URI, e.g. data in RDF format
+        fr: Les plus importants éléments des données de cette ressource sont dotés d’un URI, p. ex., des données en format RDF
+      value: data_includes_uris
+    - label:
+        en: The data includes links to other data for providing context, and those links are kept up to date (not broken)
+        fr: Les données comprennent des liens à d’autres données qui accordent un contexte, et ces liens sont gardés à jour (non brisés)
+      value: data_includes_links
+    form_snippet: multiple_checkbox.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output

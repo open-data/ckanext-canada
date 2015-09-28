@@ -110,7 +110,8 @@ For the public server use only::
 Both servers need::
 
    scheming.dataset_schemas =
-       ckanext.canada:schemas/raw.json
+       ckanext.canada:schemas/dataset.yaml
+       ckanext.canada:schemas/info.yaml
 
    scheming.presets = ckanext.scheming:presets.json
        ckanext.fluent:presets.json

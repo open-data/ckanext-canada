@@ -7,9 +7,6 @@ about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
   en: Geo Data
   fr: Géo
-languages_label:
-- eng; CAN
-- fra; CAN
 
 form_languages:
 - en
@@ -24,16 +21,7 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
-
-- field_name: owner_org
-  label:
-    en: Publisher
-    fr: Éditeur
-  help_text:
-    en: The organization directly responsible for the dataset and for metadata maintenance.
-    fr: Le nom de l’organisation directement responsable des ensembles de donnée et
-      de la maintenance des métadonnées
-  preset: dataset_organization
+- preset: canada_owner_org
 
 - field_name: parent_id
   label:
@@ -56,47 +44,16 @@ dataset_fields:
     en: Metadata URI
     fr: URI métadonnées
 
-- field_name: title
-  form_placeholder:
-    en: Canada Border Wait Times
-    fr: Temps d’attente à la frontière
-  label:
-    en: Title
-    fr: Titre
-  preset: fluent_text
-  required: true
-
-- field_name: metadata_modified
-  label:
-    en: Metadata record date stamp
-    fr: Timbre date enregistrement métadonnées
-  form_snippet: null
-
-- field_name: metadata_created
-  label:
-    en: Date contributed
-    fr: Date contribué
-  form_snippet: null
+- preset: canada_title
 
 - field_name: date_source_metadata_created
   label:
     en: Date metadata created
-    fr: Date métadonnées crées 
+    fr: Date métadonnées crées
 
-- field_name: date_published
-  label:
-    en: Date published
-    fr: Date publication
-
-- field_name: date_modified
-  label:
-    en: Date modified
-    fr: Date modification
-
-- field_name: digital_object_identifier
-  label:
-    en: Digital Object Identifier
-    fr: Identificateur d’objet numérique
+- preset: canada_date_published
+- preset: canada_date_modified
+- preset: canada_digital_object_identifier
 
 - field_name: individual_name
   label:
@@ -134,12 +91,7 @@ dataset_fields:
   preset: fluent_markdown
   required: true
 
-- field_name: keywords
-  label:
-    en: Descriptive keywords
-    fr: Mots clés descriptifs
-  preset: fluent_tags
-  tag_validators: canada_tags tag_length_validator
+- preset: canada_keywords
 
 - field_name: status
   label:
@@ -168,16 +120,7 @@ dataset_fields:
 - preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
 - preset: canada_frequency
-
-- field_name: license_id
-  form_snippet: license.html
-  help_text:
-    en: The specific attribution statement provided by the information provider.
-    fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
-  label:
-    en: Licence
-    fr: Licence
-  required: true
+- preset: canada_license_id
 
 - field_name: reference_system
   label:
@@ -196,19 +139,8 @@ dataset_fields:
 #
 resource_fields:
 
-- field_name: name
-  label:
-    en: Resource name
-    fr: Nom ressource
-  preset: fluent_text
-
-- field_name: url
-  label:
-    en: Access URL
-    fr: URL accès
-  preset: resource_url_upload
-  required: true
-
+- preset: canada_resource_name
+- preset: canada_resource_url
 - preset: canada_resource_language
 
 - field_name: content

@@ -11,19 +11,9 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
 
     @classmethod
     def setup_class(cls):
-        search.clear()
-        CreateTestData.create()
-        cls.sysadmin_user = model.User.get('testsysadmin')
-
-        cls.sysadmin_action = TestAppCKAN(cls.app,
-            str(cls.sysadmin_user.apikey)).action
-
         cls.example_pkg = [
             json.loads(j) for j in EXAMPLE_JSON_LINES.strip().split('\n')]
 
-    @classmethod
-    def teardown_class(cls):
-        CreateTestData.delete()
 
     def test_identify_unchanged(self):
         raise SkipTest('XXX: trim package needs to be updated for our new schemas')
