@@ -32,6 +32,7 @@ cd dl
 wget http://github.com/wet-boew/wet-boew-dist/archive/v3.1.2-release-dist.zip
 unzip v3.1.2-release-dist.zip > /dev/null
 DIST_DIR="`python -c'import ckanext.wet_boew as wb; print wb.__file__.rsplit("/",1)[0]'`"/public/dist
+mkdir -p "$DIST_DIR"
 echo mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
 mv wet-boew-dist-3.1.2-release-dist/dist/* "$DIST_DIR/."
 wget http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.js \
