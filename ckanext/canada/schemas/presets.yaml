@@ -170,16 +170,11 @@ presets:
         en: Form Descriptors
         fr: Format
       value: FM
-
     # copied from multiple_checkbox preset
-    form_snippet: fluent_tags.html
-    display_snippet: fluent_tags.html
-    error_snippet: fluent_text.html
-    validators: fluent_tags
-    output_validators: fluent_tags_output
-    form_attrs:
-      data-module: autocomplete
-      data-module-tags: ""
+    form_snippet: multiple_checkbox.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
 
 - preset_name: canada_keywords
   values:
@@ -2098,7 +2093,6 @@ presets:
     label:
       en: Data Includes URIs and Links
       fr: Les données comprennent les URI et les liens
-    preset: multiple_checkbox
     choices:
     - label:
         en: The most important data items in this resource have a URI, e.g. data in RDF format
@@ -2108,3 +2102,7 @@ presets:
         en: The data includes links to other data for providing context, and those links are kept up to date (not broken)
         fr: Les données comprennent des liens à d’autres données qui accordent un contexte, et ces liens sont gardés à jour (non brisés)
       value: data_includes_links
+    form_snippet: multiple_checkbox.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
