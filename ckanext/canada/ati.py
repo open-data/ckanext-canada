@@ -174,6 +174,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
             'ss_ati_year_en': year,
             'ss_ati_org_shortform_en': shortform,
+            'ss_ati_org_name_code': org,
             'ss_ati_contact_email_en': ati_email,
             'ss_ati_nothing_to_report_en': ('' if 'request_number' in r else
                 'Nothing to report this month'),
@@ -196,6 +197,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': year,
             'ss_ati_org_shortform_fr': shortform_fr,
+            'ss_ati_org_name_code': org,
             'ss_ati_contact_email_fr': ati_email,
             'ss_ati_nothing_to_report_fr': ('' if 'request_number' in r else
                 u'Rien à signaler ce mois-ci'),

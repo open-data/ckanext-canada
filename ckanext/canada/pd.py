@@ -209,6 +209,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
         solrrec = {
             'id': unique,
+            'org_name_code': org_detail['name']
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
             }
