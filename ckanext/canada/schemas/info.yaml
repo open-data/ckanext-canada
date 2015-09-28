@@ -1,0 +1,52 @@
+
+scheming_version: 1
+dataset_type: info
+
+about: 'open.canada.ca: open information metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+catalog_type_label:
+  en: Open Information
+  fr: Info
+
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+- preset: canada_owner_org
+- preset: canada_notes
+- preset: canada_subject
+- preset: canada_keywords
+- preset: canada_frequency
+- preset: canada_date_published
+- preset: canada_date_modified
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
+- preset: canada_geographic_region
+- preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
+- preset: canada_homepage_url
+- preset: canada_license_id
+- preset: canada_endpoint_url
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields:
+
+- preset: canada_resource_name
+- preset: canada_resource_url
+- preset: canada_resource_language
+#- preset: canada_resource_size
+#- preset: canada_resource_format
+#- preset: canada_resource_type
+#- preset: canada_resource_data_quality
+
