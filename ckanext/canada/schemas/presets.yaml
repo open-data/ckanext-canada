@@ -223,6 +223,15 @@ presets:
       data-module: autocomplete
       data-module-tags: ""
 
+- preset_name: canada_spatial
+  values:
+    field_name: spatial
+    label:
+      en: Spatial
+      fr: Élément spatial
+    validators: scheming_required geojson_validator
+
+
 - preset_name: canada_frequency
   values:
     choices:

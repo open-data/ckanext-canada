@@ -51,13 +51,7 @@ dataset_fields:
     fr: L’adresse électronique de l’organisation ou de la personne responsable
 
 - preset: canada_topic_category
-
-- field_name: spatial
-  label:
-    en: Spatial
-    fr: Élément spatial
-  validators: scheming_required geojson_validator
-
+- preset: canada_spatial
 - preset: canada_spatial_representation_type
 
 - field_name: presentation_form

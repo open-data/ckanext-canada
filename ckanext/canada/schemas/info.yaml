@@ -21,21 +21,22 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+- preset: canada_title
 - preset: canada_owner_org
+# TODO: - preset: canada_maintainer_email
 - preset: canada_notes
-- preset: canada_subject
 - preset: canada_keywords
+- preset: canada_subject
+- preset: canada_spatial
+- preset: canada_geographic_region
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_time_period_coverage_start
-- preset: canada_time_period_coverage_end
-- preset: canada_geographic_region
-- preset: canada_data_series_name
-- preset: canada_data_series_issue_identification
+# TODO: - preset: canada_released
 - preset: canada_homepage_url
 - preset: canada_license_id
-- preset: canada_endpoint_url
 - preset: canada_ready_to_publish
 
 #
@@ -44,10 +45,10 @@ dataset_fields:
 resource_fields:
 
 - preset: canada_resource_name
-- preset: canada_resource_url
+# TODO: - canada_resource_date_published
+- preset: canada_resource_type
+- preset: canada_resource_format
+- preset: canada_resource_size
 - preset: canada_resource_language
-#- preset: canada_resource_size
-#- preset: canada_resource_format
-#- preset: canada_resource_type
-#- preset: canada_resource_data_quality
+- preset: canada_resource_url
 
