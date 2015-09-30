@@ -36,6 +36,27 @@ presets:
     validators: owner_org_validator unicode
     form_snippet: organization.html
 
+- preset_name: canada_ready_to_publish
+  values:
+    field_name: ready_to_publish
+    label:
+      en: Ready to Publish
+      fr: Prêt à publier
+    required: true
+    choices:
+    - label:
+        en: "No"
+        fr: Non
+      value: "false"
+    - label:
+        en: "Yes"
+        fr: Oui
+      value: "true"
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
 - preset_name: canada_digital_object_identifier
   values:
     field_name: digital_object_identifier
@@ -201,6 +222,15 @@ presets:
     form_attrs:
       data-module: autocomplete
       data-module-tags: ""
+
+- preset_name: canada_spatial
+  values:
+    field_name: spatial
+    label:
+      en: Spatial
+      fr: Élément spatial
+    validators: scheming_required geojson_validator
+
 
 - preset_name: canada_frequency
   values:

@@ -19,13 +19,21 @@ EXTRAS = set([
     'ati_email',
     ])
 
+users = '--users' in sys.argv
+
 for l in sys.stdin.readlines():
     o = json.loads(l)
-    print json.dumps({
+    line = {
         "title": o["title"],
         "id": o["id"],
         "extras": [{"value": e["value"], "key": e["key"]}
             for e in o["extras"] if e["key"] in EXTRAS],
         "name": o["name"],
         })
+    if users:
+        line["users"] = [
+            {"name": u["name"], "capacity": u["capacity"]}
+            for u in o["users"]]
+
+    print line
 
