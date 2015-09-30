@@ -45,11 +45,11 @@ presets:
     required: true
     choices:
     - label:
-        en: No
+        en: "No"
         fr: Non
       value: "false"
     - label:
-        en: Yes
+        en: "Yes"
         fr: Oui
       value: "true"
     # copied from select preset
