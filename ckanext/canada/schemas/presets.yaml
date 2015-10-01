@@ -1921,6 +1921,8 @@ presets:
     label:
       en: Download URL
       fr: URL de téléchargement
+    upload_label:
+      en: File Upload
     help_text:
       en: The electronic location where the resource can be found.
       fr: L’endroit électronique où se trouve la ressource.
@@ -1930,7 +1932,6 @@ presets:
     form_snippet: upload.html
     upload_field: upload
     upload_clear: clear_upload
-    upload_label: File
 
 - preset_name: canada_resource_size
   values:
