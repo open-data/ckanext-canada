@@ -36,6 +36,20 @@ presets:
     validators: owner_org_validator unicode
     form_snippet: organization.html
 
+- preset_name: canada_creator
+  values:
+    field_name: creator
+    label:
+      en: Creator
+      fr: Créateur
+
+- preset_name: canada_maintainer_email
+  values:
+    field_name: maintainer_email
+    label:
+      en: Contact Email
+      fr: Adresse électronique du contact
+
 - preset_name: canada_ready_to_publish
   values:
     field_name: ready_to_publish
@@ -292,8 +306,8 @@ presets:
       en: The frequency at which the dataset is published.
       fr: La fréquence de la publication de l’ensemble de données.
     label:
-      en: Frequency
-      fr: Fréquence
+      en: Maintenance and Update Frequency
+      fr: Fréquence mis à jour
     required: true
     form_snippet: select.html
     display_snippet: select.html
@@ -323,6 +337,20 @@ presets:
     help_text:
       en: The date in which the dataset was modified.
       fr: La date à laquelle le jeu de données a été modifiée
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_date_released
+  values:
+    field_name: date_released
+    label:
+      en: Date Released
+      fr: Date de sortie
+    help_text:
+      en: The date in which the dataset was released, made available, on the Open Government Portal.
+      fr: Date à laquelle l’enregistrement de métadonnées a été publié, rendu accessible, dans le portail du gouvernement ouvert
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -1661,6 +1689,19 @@ presets:
     validators: fluent_text
     output_validators: fluent_text_output
 
+- preset_name: canada_related_items
+  values:
+    field_name: related_items
+    label:
+      en: Related Items
+      fr: Articles connexes
+
+- preset_name: canada_jurisdiction
+  values:
+    field_name: jurisdiction
+    display_snippet: null
+    form_snippet: null
+
 - preset_name: canada_license_id
   values:
     field_name: license_id
@@ -1774,6 +1815,12 @@ presets:
           fr: Services communication
         value: utilities_communication
 
+- preset_name: canada_unique_identifier
+  values:
+    field_name: unique_identifier
+    label:
+      en: Unique Identifier
+      fr: Identificateur unique
 
 - preset_name: canada_resource_language
   values:
@@ -2090,6 +2137,21 @@ presets:
         fr: Autre
       openness_score: 1
       value: other
+
+- preset_name: canada_resource_date_published
+  values:
+    field_name: resource_date_published
+    label:
+      en: Date Published
+      fr: Date de publication
+    help_text:
+      en: Date of formal issuance (e.g., publication) of the resource.
+      fr: Date officielle d’émission (c.-à-d. de publication) de la ressource.
+    required: true
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
 
 - preset_name: canada_resource_type
   values:
