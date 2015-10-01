@@ -1919,8 +1919,8 @@ presets:
   values:
     field_name: url
     label:
-      en: URL
-      fr: URL
+      en: Download URL
+      fr: URL de téléchargement
     help_text:
       en: The electronic location where the resource can be found.
       fr: L’endroit électronique où se trouve la ressource.
@@ -2164,8 +2164,8 @@ presets:
   values:
     field_name: resource_type
     label:
-      en: Resource Type
-      fr: Type de ressource
+      en: Content Type
+      fr: Type de content
     preset: select
     required: true
     choices:
