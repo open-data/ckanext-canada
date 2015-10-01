@@ -23,7 +23,8 @@ dataset_fields:
 - preset: canada_dataset_name
 - preset: canada_title
 - preset: canada_owner_org
-# TODO: - preset: canada_maintainer_email
+- preset: canada_creator
+- preset: canada_maintainer_email
 - preset: canada_notes
 - preset: canada_keywords
 - preset: canada_subject
@@ -34,8 +35,10 @@ dataset_fields:
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-# TODO: - preset: canada_released
+- preset: canada_date_released
 - preset: canada_homepage_url
+- preset: canada_related_items
+- preset: canada_jurisdiction
 - preset: canada_license_id
 - preset: canada_ready_to_publish
 
@@ -44,8 +47,9 @@ dataset_fields:
 #
 resource_fields:
 
+- preset: canada_unique_identifier
 - preset: canada_resource_name
-# TODO: - canada_resource_date_published
+- preset: canada_resource_date_published
 - preset: canada_resource_type
 - preset: canada_resource_format
 - preset: canada_resource_size
