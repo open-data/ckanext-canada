@@ -89,6 +89,13 @@ presets:
     label:
       en: Title
       fr: Titre
+    fluent_form_label:
+      en:
+        en: Title English
+        fr: Titre anglais
+      fr:
+        en: Title French
+        fr: Titre français
     help_text:
       en: The English name by which the information asset is known
       fr: Nom anglais désignant la ressource d’information
@@ -228,8 +235,16 @@ presets:
   values:
     field_name: keywords
     label:
-      en: Tags
+      en: Keywords
       fr: Mots clés
+    fluent_form_label:
+      en:
+        en: Keywords English
+        fr: Mots clés anglais
+      fr:
+        en: Keywords French
+        fr: Mots clés français
+
     help_text:
       en: Commonly used words or phrases which describe the information asset, in English
       fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
@@ -1688,6 +1703,13 @@ presets:
     label:
       en: Homepage URL
       fr: URL de la page d’accueil
+    fluent_form_label:
+      en:
+        en: Homepage URL English
+        fr: URL de la page d’accueil anglaise
+      fr:
+        en: Homepage URL French
+        fr: URL de la page d’accueil française
     help_text:
       en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
       fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
@@ -1915,6 +1937,14 @@ presets:
     label:
       en: Title
       fr: Titre
+    fluent_form_label:
+      en:
+        en: Title English
+        fr: Titre anglais
+      fr:
+        en: Title French
+        fr: Titre français
+
     help_text:
       en: An English name given to the resource.
       fr: Nom anglais attribué à la ressource
