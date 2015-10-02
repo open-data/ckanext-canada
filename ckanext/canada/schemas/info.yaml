@@ -58,6 +58,7 @@ resource_fields:
         fr: Plan stratégique
       value: file
 - preset: canada_resource_format
+  values:
     choices:
     - label: EPUB3
       openness_score: 1
