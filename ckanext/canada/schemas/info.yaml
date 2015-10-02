@@ -59,6 +59,9 @@ resource_fields:
       value: file
 - preset: canada_resource_format
     choices:
+    - label: EPUB3
+      openness_score: 1
+      value: epub3
     - label: DOC
       openness_score: 1
       value: doc
