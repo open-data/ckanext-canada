@@ -29,9 +29,8 @@ presets:
       en: Publisher
       fr: Éditeur
     help_text:
-      en: The organization directly responsible for the dataset and for metadata maintenance.
-      fr: Le nom de l’organisation directement responsable des ensembles de donnée et
-        de la maintenance des métadonnées
+      en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
+      fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
     # copied from dataset_organization preset
     validators: owner_org_validator unicode
     form_snippet: organization.html
@@ -42,6 +41,9 @@ presets:
     label:
       en: Creator
       fr: Créateur
+    help_text:
+      en: An [individual] entity primarily responsible for making the information asset
+      fr: Entité [individuelle] principalement responsable de produire la ressource d’information
 
 - preset_name: canada_maintainer_email
   values:
@@ -49,6 +51,9 @@ presets:
     label:
       en: Contact Email
       fr: Adresse électronique du contact
+    help_text:
+      en: The contact person's email for the information asset
+      fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
 
 - preset_name: canada_ready_to_publish
   values:
@@ -84,6 +89,9 @@ presets:
     label:
       en: Title
       fr: Titre
+    help_text:
+      en: The English name by which the information asset is known
+      fr: Nom anglais désignant la ressource d’information
     form_placeholder:
       en: Canada Border Wait Times
       fr: Temps d’attente à la frontière
@@ -116,10 +124,8 @@ presets:
       fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
         des rejets de polluants du Canada…
     help_text:
-      en: A detailed description of the dataset that will allow the user to determine
-        the nature and purpose of the data in the dataset.
-      fr: Une description détaillée de l’ensemble de données qui permettra à l'utilisateur
-        de connaître la nature et le but des données comprises dans l’ensemble de données.
+      en: An account of the  information asset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource. 
+      fr: Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource.
     required: true
     # copied from fluent_markdown preset
     form_snippet: fluent_markdown.html
@@ -225,13 +231,8 @@ presets:
       en: Tags
       fr: Mots clés
     help_text:
-      en: The topic of the content of the resource expressed as keywords, to help users
-        discover the datasets and provide ways of identifying other similar datasets.
-        Include as many keywords as possible. Use commas to separate keywords.
-      fr: Le sujet du contenu de la ressource est exprimé par mots clés, afin d'aider
-        les utilisateurs à découvrir l’ensemble de données et à leur fournir des moyens
-        de trouver d'autres bases de données similaires. Inclure le plus de mots clés
-        possible. Utiliser des virgules pour séparer les mots clés.
+      en: Commonly used words or phrases which describe the information asset, in English
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
     required: true
     tag_validators: canada_tags tag_length_validator
     # copied from fluent_tags preset
@@ -251,7 +252,9 @@ presets:
       en: Spatial
       fr: Élément spatial
     validators: scheming_required geojson_validator
-
+    help_text:
+      en: The range of spatial applicability of an information asset. This element could include either a bounding box, or GeoJson string.
+      fr: Étendue de l’applicabilité spatiale d’une ressource d’information. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
 
 - preset_name: canada_frequency
   values:
@@ -310,8 +313,8 @@ presets:
       value: unknown
     field_name: frequency
     help_text:
-      en: The frequency at which the dataset is published.
-      fr: La fréquence de la publication de l’ensemble de données.
+      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
     label:
       en: Maintenance and Update Frequency
       fr: Fréquence mis à jour
@@ -327,8 +330,8 @@ presets:
       en: Date Published
       fr: Date de publication
     help_text:
-      en: The date in which the dataset was issued.
-      fr: La date à laquelle le jeu de données a été émise.
+      en: The date of issuance (e.g., publication) of the information asset.
+      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
     required: true
     # copied from date preset
     form_snippet: date.html
@@ -342,8 +345,8 @@ presets:
       en: Date Modified
       fr: Date de modification
     help_text:
-      en: The date in which the dataset was modified.
-      fr: La date à laquelle le jeu de données a été modifiée
+      en: The date on which the information asset was changed, updated or modified.
+      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -356,7 +359,7 @@ presets:
       en: Date Released
       fr: Date de sortie
     help_text:
-      en: The date in which the dataset was released, made available, on the Open Government Portal.
+      en: The date on which the metadata record was released, made available, on the Open Government Portal
       fr: Date à laquelle l’enregistrement de métadonnées a été publié, rendu accessible, dans le portail du gouvernement ouvert
     # copied from date preset
     form_snippet: date.html
@@ -1686,9 +1689,8 @@ presets:
       en: Homepage URL
       fr: URL de la page d’accueil
     help_text:
-      en: The URL for the Government of Canada program that is responsible for the dataset.
-      fr: L’adresse URL du programme du gouvernement du Canada responsable de l’ensemble
-        de données
+      en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -1702,12 +1704,18 @@ presets:
     label:
       en: Related Items
       fr: Articles connexes
+    help_text:
+      en: A related dataset or information asset in the Open Government Portal. 
+      fr: La ressource d’information connexe dans le portail du gouvernement ouvert
 
 - preset_name: canada_jurisdiction
   values:
     field_name: jurisdiction
     display_snippet: null
     form_snippet: null
+    help_text:
+      en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
+      fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
 
 - preset_name: canada_license_id
   values:
@@ -1828,6 +1836,9 @@ presets:
     label:
       en: Unique Identifier
       fr: Identificateur unique
+    help_text:
+      en: A unique phrase or string which identifies the resource.
+      fr: Expression ou segment unique désignant la ressource.
 
 - preset_name: canada_resource_language
   values:
@@ -1851,7 +1862,7 @@ presets:
     field_name: language
     help_text:
       en: The language of the resource.
-      fr: La langue de la ressource
+      fr: Langue de la ressource.
     label:
       en: Language
       fr: Langue
@@ -1905,8 +1916,8 @@ presets:
       en: Title
       fr: Titre
     help_text:
-      en: The name by which the cited resource is known
-      fr: Le nom par lequel la ressource mentionnée est connue.
+      en: An English name given to the resource.
+      fr: Nom anglais attribué à la ressource
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -1924,8 +1935,8 @@ presets:
     upload_label:
       en: File Upload
     help_text:
-      en: The electronic location where the resource can be found.
-      fr: L’endroit électronique où se trouve la ressource.
+      en: The location for online access to the distribution of the resource.
+      fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
     required: true
     # copied from resource_url_upload
     validators: not_empty unicode remove_whitespace
@@ -1940,14 +1951,15 @@ presets:
       en: Size
       fr: Taille
     help_text:
-      en: The estimated size of a unit in the specified transfer format, expressed in
-        bytes.
-      fr: La taille approximative d’une unité dans le format de transfert précis, en
-        octets.
+      en: The [estimated] size of a distribution in bytes.
+      fr: Taille [estimative] d’une distribution en octets
     validators: ignore_missing int_validator
 
 - preset_name: canada_resource_format
   values:
+    help_text:
+      en: The file format, physical medium, or dimensions of the resource.
+      fr: Format du fichier, support physique ou dimensions de la ressource
     field_name: format
     label:
       en: Format
@@ -2154,7 +2166,7 @@ presets:
       fr: Date de publication
     help_text:
       en: Date of formal issuance (e.g., publication) of the resource.
-      fr: Date officielle d’émission (c.-à-d. de publication) de la ressource.
+      fr: Date officielle d’émission (c.-à-d. de publication) de la ressource
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -2162,6 +2174,9 @@ presets:
 
 - preset_name: canada_resource_type
   values:
+    help_text:
+      en: The nature or genre of the content of the resource. (For example; dataset, supporting documentation, data dictionary, API or App).
+      fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
     field_name: resource_type
     label:
       en: Content Type
