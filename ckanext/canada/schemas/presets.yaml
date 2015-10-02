@@ -1997,7 +1997,9 @@ presets:
     label:
       en: "* Format"
       fr: "* Format"
-    preset: select
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
     required: true
     choices:
     - label: AI
@@ -2214,7 +2216,9 @@ presets:
     label:
       en: "* Content Type"
       fr: "* Type de content"
-    preset: select
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
     required: true
     choices:
     - label:
