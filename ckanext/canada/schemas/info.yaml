@@ -51,7 +51,26 @@ resource_fields:
 - preset: canada_resource_name
 - preset: canada_resource_date_published
 - preset: canada_resource_type
+  values:
+    choices:
+    - label:
+        en: Strategic plan
+        fr: Plan stratégique
+      value: file
 - preset: canada_resource_format
+    choices:
+    - label: DOC
+      openness_score: 1
+      value: doc
+    - label: DOCX
+      openness_score: 1
+      value: docx
+    - label: ODT
+      openness_score: 1
+      value: odt
+    - label: PDF
+      openness_score: 1
+      value: PDF
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url
