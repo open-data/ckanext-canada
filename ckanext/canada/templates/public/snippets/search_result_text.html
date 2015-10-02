@@ -12,10 +12,10 @@ Example:
 
 #}
 {% if type == 'dataset' %}
-  {% set text_query = ungettext('{number} dataset found for "{query}"', '{number} datasets found for "{query}"', count) %}
-  {% set text_query_none = _('Sorry no datasets found for "{query}"') %}
-  {% set text_no_query = ungettext('{number} dataset found', '{number} datasets found', count) %}
-  {% set text_no_query_none = _('No datasets were found to match your query.') %}
+  {% set text_query = ungettext('{number} asset found for "{query}"', '{number} assets found for "{query}"', count) %}
+  {% set text_query_none = _('Sorry no assets found for "{query}"') %}
+  {% set text_no_query = ungettext('{number} asset found', '{number} assets found', count) %}
+  {% set text_no_query_none = _('No assets were found to match your query.') %}
 
 {% elif type == 'group' %}
   {% set text_query = ungettext('{number} group found for "{query}"', '{number} groups found for "{query}"', count) %}

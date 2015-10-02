@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block header_site_navigation_tabs %}
+  {{ h.build_nav_main(
+    ('info_search', _('Assets')),
+    ('organizations_index', _('Organizations')),
+    ('about', _('About'))
+  ) }}
+{% endblock %}
