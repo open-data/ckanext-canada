@@ -147,6 +147,9 @@ presets:
     label:
       en: "* Subject"
       fr: "* Sujet"
+    help_text:
+      en: "The topic of the content of the information asset"
+      fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
     required: true
     choices:
     - label:
