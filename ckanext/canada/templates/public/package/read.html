@@ -98,7 +98,7 @@
       {% endif %}
       </div>
     </section>
-    
+
     <section class="indent-large">
 
       {% set apps = [] %}
@@ -117,6 +117,7 @@
         {% endfor %}
         </ul>
       {% endif %}
+    </section>
 
 {% block package_item_apps %}
   <div class="span-6 margin-top-medium">
@@ -185,6 +186,7 @@
 {% include "package/comments.html" %}
 {% endblock %}
 
+  </div>
 {% endblock primary_content_inner %}
 
 {% block page_extra_scripts %}
