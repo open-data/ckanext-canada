@@ -96,9 +96,13 @@ presets:
       fr:
         en: "* Title French"
         fr: "* Titre français"
-    help_text:
-      en: The English name by which the information asset is known
-      fr: Nom anglais désignant la ressource d’information
+    fluent_help_text:
+      en:
+        en: The English name by which the information asset is known
+        fr: Nom anglais désignant la ressource d’information
+      fr:
+        en: The French name by which the information asset is known
+        fr: Nom français désignant la ressource d’information
     form_placeholder:
       en: Canada Border Wait Times
       fr: Temps d’attente à la frontière
