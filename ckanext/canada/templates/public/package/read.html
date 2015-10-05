@@ -10,6 +10,15 @@
 {% block page_title %}{% endblock %}
 
 {% block primary_content_inner %}
+  {% block actions_content %}
+    <ul class="nav nav-pills">
+        {% if h.check_access('package_update', {'id':pkg.id }) %}
+          {% block actions_content_inner %}
+          <li>{% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-default' %}</li>
+          {% endblock %}
+        {% endif %}
+    </ul>
+  {% endblock %}
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
