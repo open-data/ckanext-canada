@@ -35,7 +35,6 @@ dataset_fields:
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_date_released
 - preset: canada_homepage_url
 - preset: canada_related_items
 - preset: canada_jurisdiction
@@ -60,7 +59,6 @@ resource_fields:
   choices:
   - label: EPUB3
     openness_score: 1
-    
     value: epub3
   - label: DOC
     openness_score: 1
@@ -77,4 +75,3 @@ resource_fields:
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url
-

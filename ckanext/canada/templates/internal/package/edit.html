@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% set client_lang = h.lang() %}
+
+{%- block subtitle %}
+    {{ _('Edit') }} {{ pkg.title.get(client_lang) or pkg.name }}
+{% endblock -%}
+
+{% block page_heading %}
+    {{ _('Edit') }} {{ pkg.title.get(client_lang) or pkg.name }}
+{% endblock %}
