@@ -20,7 +20,7 @@
 
 {% block save_button %}
   {% if stage %}
-    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Save') }}{% endblock %}</button>
+    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Submit') }}{% endblock %}</button>
   {% else %}
     <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-dataset-search" type="submit">{{ _('Finish') }}</button>
   {% endif %}
