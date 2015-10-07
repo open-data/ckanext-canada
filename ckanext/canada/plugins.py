@@ -28,9 +28,9 @@ def notify_ckan_user_create(context, data_dict):
     @raise:
     """
 
-    ckan_user_create(context, data_dict)
+    user = ckan_user_create(context, data_dict)
     if not ckan_user_create_dict:
-        return
+        return user
 
     import ckan.lib.mailer
 
@@ -51,6 +51,8 @@ def notify_ckan_user_create(context, data_dict):
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+    return user
 
 
 class DataGCCAInternal(p.SingletonPlugin):
