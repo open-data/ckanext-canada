@@ -7,9 +7,10 @@
 {% set res = c.resource %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for _('Datasets'), controller='package', action='search', highlight_actions = 'new index' %}</li>
-  <li>{% link_for cr.field(schema_description.dataset_field_by_id['title'], pkg, h.lang()) | truncate(30) | safe,
-        controller='package', action='read', id=pkg['name'] %}</li>
+  {{ super() }}
+  {% set resource = res.name[client_lang] %}
+  <li>{% link_for resource | truncate(30) | safe,
+        controller='package', action='resource_read', id=pkg['name'], resource_id=res.id %}</li>
 {% endblock %}
 
 {% block secondary_content %}{% endblock %}
