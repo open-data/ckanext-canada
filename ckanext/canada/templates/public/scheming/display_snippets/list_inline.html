@@ -1,0 +1,12 @@
+{%- set values = data[field.field_name] -%}
+
+<ul class='list-inline'>
+  {%- for choice in field.choices -%}
+    {%- if choice.value in values -%}
+      <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
+        href="{%- url_for controller='package', action='search',
+        subject=choice.value %}">{{
+          h.scheming_language_text(choice.label) }}</a></li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>

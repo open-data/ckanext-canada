@@ -1,29 +1,31 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/canada_read.html' as cr %}
 
-{% set url = h.url_for(controller='package', action='resource_read', id=pkg.name, resource_id=res.id) %}
-{% set lang_field = schema_description.resource_field_by_id['language'] %}
-{% set format_field = schema_description.resource_field_by_id['format'] %}
-{% set size_field = schema_description.resource_field_by_id['size'] %}
+{% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
-<tr> 
+{% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+{% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name') %}
+{% set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') %}
+{% set lang_field = h.scheming_field_by_name(schema.resource_fields, 'language') %}
+
+{# FIXME: using tables for formatting #}
+<tr>
   <td>
-    {% set name = res.name[h.lang()] %}
-    {% if name %}
-      {{ h.markdown_extract(name, extract_length=80) }}
-    {% else %}
-      <span class="empty">{{ _('No description for this resource') }}</span>
-    {% endif %}
-  </td>
-  
-  <td>
-    {{ _(cr.lookup_field(format_field, res, client_lang)) }}
+    {% snippet 'scheming/snippets/display_field.html',
+      field=name_field, data=res, schema=schema %}
   </td>
 
   <td>
-    {{ _(cr.lookup_field(lang_field, res, client_lang)) }}
+    {% snippet 'scheming/snippets/display_field.html',
+      field=format_field, data=res, schema=schema %}
   </td>
-  
+
+  <td>
+    {% snippet 'scheming/snippets/display_field.html',
+      field=lang_field, data=res, schema=schema %}
+  </td>
+
   <td>
 
     <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
@@ -33,6 +35,9 @@
     &nbsp;
     <a href="{{ url }}" class="btn btn-default" >{{ _('Preview') }}</a>
     {% endif %}
+    {% if url_is_edit and can_edit %}
+    <a href="{{ h.url_for(controller='package', action='resource_edit', id=pkg.name, resource_id=res.id) }}"
+      class="btn btn-default" >{{ _('Edit') }}</a>
+    {% endif %}
   </td>
 </tr>
-

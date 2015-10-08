@@ -28,7 +28,9 @@ def notify_ckan_user_create(context, data_dict):
     @raise:
     """
 
-    ckan_user_create(context, data_dict)
+    user = ckan_user_create(context, data_dict)
+    if not ckan_user_create_dict:
+        return user
 
     import ckan.lib.mailer
 
@@ -50,6 +52,8 @@ def notify_ckan_user_create(context, data_dict):
         log = getLogger('ckanext')
         log.error(m.message)
 
+    return user
+
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -59,6 +63,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
+    p.implements(p.IActions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
 
@@ -118,7 +123,9 @@ class DataGCCAInternal(p.SingletonPlugin):
                 ckan_user_create_dict['email_name'] = config['canada.notification_new_user_name']
             else:
                 ckan_user_create_dict['email_name'] = config['canada.notification_new_user_email']
-            create.user_create = notify_ckan_user_create
+
+    def get_actions(self):
+        return {'user_create': notify_ckan_user_create}
 
 class DataGCCAPublic(p.SingletonPlugin):
     """

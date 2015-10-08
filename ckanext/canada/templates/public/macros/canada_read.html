@@ -86,19 +86,6 @@ Render a list of keywords for the client language
   </ul>
 {%- endmacro -%}
 
-{%- macro subject_field(f, pkg, client_lang) -%}
-  <ul class='list-inline'>
-    {%- for tag in pkg[f.id] -%}
-      <li>
-        {% set s = tag.split('  ')[1 if client_lang == 'fr' else 0] %}
-        <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
-        {%- url_for controller='package', action='search', subject=tag.strip() -%}
-        " title="{{ _('Subject') ~ ' ' ~ s.strip() }}">{{ s.strip() }}</a>
-      </li>
-    {%- endfor -%}
-  </ul>
-{%- endmacro -%}
-
 {#
 Render a list of tag vocabulary tags for given field object and client
 language
