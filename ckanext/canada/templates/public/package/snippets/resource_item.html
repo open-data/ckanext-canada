@@ -37,7 +37,7 @@
     {% endif %}
     {% if url_is_edit and can_edit %}
     <a href="{{ h.url_for(controller='package', action='resource_edit', id=pkg.name, resource_id=res.id) }}"
-      ><i class="icon-edit"></i>{{ _('Edit') }}</a>
+      class="btn btn-default" >{{ _('Edit') }}</a>
     {% endif %}
   </td>
 </tr>
