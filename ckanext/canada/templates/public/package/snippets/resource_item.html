@@ -1,4 +1,3 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/canada_read.html' as cr %}
 
 {% set url = h.url_for(controller='package', action='resource_read', id=pkg.name, resource_id=res.id) %}
@@ -6,7 +5,7 @@
 {% set format_field = schema_description.resource_field_by_id['format'] %}
 {% set size_field = schema_description.resource_field_by_id['size'] %}
 
-<tr> 
+<tr>
   <td>
     {% set name = res.name[h.lang()] %}
     {% if name %}
@@ -15,7 +14,7 @@
       <span class="empty">{{ _('No description for this resource') }}</span>
     {% endif %}
   </td>
-  
+
   <td>
     {{ _(cr.lookup_field(format_field, res, client_lang)) }}
   </td>
@@ -23,7 +22,7 @@
   <td>
     {{ _(cr.lookup_field(lang_field, res, client_lang)) }}
   </td>
-  
+
   <td>
 
     <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
