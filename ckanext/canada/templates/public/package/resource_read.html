@@ -12,6 +12,10 @@
         controller='package', action='resource_read', id=pkg['name'], resource_id=res.id %}</li>
 {% endblock %}
 
+{% block subtitle %}
+  {{ res.name[client_lang] }}
+{% endblock %}
+
 {% block secondary_content %}{% endblock %}
 
 {% block main_content %}
@@ -22,9 +26,6 @@
         <div>
           <div>
             {% block resource_content %}
-              {% block resource_read_title %}<h3>{{
-                cr.resource_display_name(res, h.lang()) | truncate(50) | safe
-                }}</h3>{% endblock %}
               <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
               <div class="prose notes" property="rdfs:label">
                 {%- set notes = cr.field(
