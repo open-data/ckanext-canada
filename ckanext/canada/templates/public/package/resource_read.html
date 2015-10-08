@@ -28,17 +28,13 @@
             {% block resource_content %}
               <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
               <div class="prose notes" property="rdfs:label">
-                {%- set notes = cr.field(
-                  schema_description.dataset_field_by_id['notes'],
-                  pkg, h.lang()) -%}
+                {%- set notes = pkg.notes.get(h.lang()) -%}
                 {%- if notes -%}
-                  <h3>{{ _('From the dataset abstract') }}</h3>
+                  <h3>{{ _('From the asset abstract') }}</h3>
                   <p>{{ h.markdown_extract(notes) }}</p>
-                  <p>{% trans
-                    dataset=cr.field(
-                        schema_description.dataset_field_by_id['title'],
-                        pkg,
-                        h.lang()),
+                  <p>
+                  {% trans
+                    dataset=pkg.title[h.lang()],
                     url=h.url_for(
                         controller='package',
                         action='read',
