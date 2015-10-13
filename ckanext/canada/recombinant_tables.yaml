@@ -156,7 +156,7 @@
 
 - dataset_type: travelq
   target_dataset: travelq
-  title: Travel Quarterly
+  title: Travel Expenditures
   xls_sheet_name: travelq
   fields:
 
@@ -224,7 +224,7 @@
 
 - dataset_type: hospitalityq
   target_dataset: hospitalityq
-  title: Hospitality Quarterly
+  title: Hospitality
   xls_sheet_name: hospitalityq
   fields:
 
@@ -659,7 +659,7 @@
 
 - dataset_type: reclassification
   target_dataset: reclassification
-  title: Reclassification
+  title: Position Reclassification
   xls_sheet_name: reclassification
   fields:
 
