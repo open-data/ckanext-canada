@@ -89,6 +89,57 @@
       patternType: solid
       fgColor: FFA1D490
 
+- dataset_type: travelq
+  target_dataset: travelq
+  title: Hospitality Quarterly
+  xls_sheet_name: travelq
+  fields:
+
+  - datastore_id: purpose
+    label: Purpose of Travel / But du voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: destination
+    label: Destination / Destination
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: airfare
+    label: Airfare / Frais aériens
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_transport
+    label: Other transportation / Autres frais de transport
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: accomodation
+    label: Accommodation / Frais d'hébergement
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: meals
+    label: Meals and incidentals / Frais de repas et frais accessoires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_expenses
+    label: Other expenses / Autres dépenses
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
 
 - dataset_type: contracts
   target_dataset: contracts
