@@ -156,21 +156,16 @@ def is_ready_to_publish(package):
     else:
         return False
 
-def get_datapreview_ati(res_id):
-    lc = ckanapi.LocalCKAN(username=c.user)
-    results = lc.action.datastore_search(
-        resource_id=res_id,
-        sort='year desc, month desc',
-        limit=DATAPREVIEW_MAX)
-    return h.snippet('package/wet_datatable.html',
-        ds_fields=results['fields'], ds_records=results['records'])
+def get_datapreview_recombinant(dataset_type, res_id):
+    from ckanext.recombinant.plugins import get_table
+    t = get_table(dataset_type)
+    default_preview_args = {}
+    if 'default_preview_sort' in t:
+        default_preview_args['sort'] = t['default_preview_sort']
 
-def get_datapreview_contracts(res_id):
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
-        resource_id=res_id,
-        # FIXME: load these from the recombinant tables config file
-        sort='contract_period_start desc, delivery_date desc',
-        limit=DATAPREVIEW_MAX)
+        resource_id=res_id, limit=DATAPREVIEW_MAX,
+        **default_preview_args)
     return h.snippet('package/wet_datatable.html',
         ds_fields=results['fields'], ds_records=results['records'])

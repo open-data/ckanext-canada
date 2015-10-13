@@ -54,6 +54,7 @@
     PatternFill:
       patternType: solid
       fgColor: FFA1D490
+  default_preview_sort: year desc, month desc
 
 
 - dataset_type: ati-none
@@ -77,7 +78,6 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
-
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -88,6 +88,7 @@
     PatternFill:
       patternType: solid
       fgColor: FFA1D490
+  default_preview_sort: year desc, month desc
 
 - dataset_type: travela
   target_dataset: travela
@@ -448,7 +449,6 @@
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
-
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -459,6 +459,7 @@
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
+  default_preview_sort: contract_period_start desc, delivery_date desc
 
 
 - dataset_type: grants
