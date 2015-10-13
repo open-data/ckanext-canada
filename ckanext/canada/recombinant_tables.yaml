@@ -89,11 +89,17 @@
       patternType: solid
       fgColor: FFA1D490
 
+# Not enable yet
 - dataset_type: travela
   target_dataset: travela
   title: Hospitality Anual
   xls_sheet_name: travela
   fields:
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
 
   - datastore_id: public_servant
     label: Travel - Public Servants/ Voyages - Fonctionnaires
@@ -120,20 +126,33 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: conference_fees
-    label: Conference Fees / Frais de participation aux conférences
-    datastore_type: text
-    xls_column_width: 20
-
   - datastore_id: total
     label: Total Amount / Montant total
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: total
+  - datastore_id: minister
     label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
     datastore_type: text
     xls_column_width: 20
+
+  datastore_primary_key: [date, total]
+  # These keys are a mess, need to review
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
 
 - dataset_type: travelq
   target_dataset: travelq
@@ -186,6 +205,23 @@
     datastore_type: text
     xls_column_width: 20
 
+  datastore_primary_key: [date, purpose, destination]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
 - dataset_type: hospitalityq
   target_dataset: hospitalityq
   title: Hospitality Quarterly
@@ -216,6 +252,23 @@
     label: Total Amount / Montant total
     datastore_type: text
     xls_column_width: 20
+
+  datastore_primary_key: [date, attendees, location]
+  datastore_indexes: ""
+  xls_organization_info: [dept_id, null, name, title]
+  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
 
 - dataset_type: contracts
   target_dataset: contracts
