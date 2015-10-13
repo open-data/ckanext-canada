@@ -89,6 +89,133 @@
       patternType: solid
       fgColor: FFA1D490
 
+- dataset_type: travela
+  target_dataset: travela
+  title: Hospitality Anual
+  xls_sheet_name: travela
+  fields:
+
+  - datastore_id: public_servant
+    label: Travel - Public Servants/ Voyages - Fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: non_public_servant
+    label: Travel: Non-Public Servants / Voyages - Non-fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total_travel
+    label: Total Travel  / Total des dépenses de voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: hospitality
+    label: Hospitality / Accueil
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: conference_fees
+    label: Conference Fees / Frais de participation aux conférences
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: conference_fees
+    label: Conference Fees / Frais de participation aux conférences
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
+    datastore_type: text
+    xls_column_width: 20
+
+- dataset_type: travelq
+  target_dataset: travelq
+  title: Hospitality Quarterly
+  xls_sheet_name: travelq
+  fields:
+
+  - datastore_id: purpose
+    label: Purpose of Travel / But du voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: destination
+    label: Destination / Destination
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: airfare
+    label: Airfare / Frais aériens
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_transport
+    label: Other transportation / Autres frais de transport
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: accomodation
+    label: Accommodation / Frais d'hébergement
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: meals
+    label: Meals and incidentals / Frais de repas et frais accessoires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_expenses
+    label: Other expenses / Autres dépenses
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+- dataset_type: hospitalityq
+  target_dataset: hospitalityq
+  title: Hospitality Quarterly
+  xls_sheet_name: hospitalityq
+  fields:
+
+  - datastore_id: description
+    label: Description / Description
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: attendees
+    label: Attendee(s) / Participant(s)
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: location
+    label: Location / Lieu
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
 
 - dataset_type: contracts
   target_dataset: contracts
