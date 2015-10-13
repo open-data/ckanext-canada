@@ -140,6 +140,36 @@
     datastore_type: text
     xls_column_width: 20
 
+- dataset_type: hospitalityq
+  target_dataset: hospitalityq
+  title: Hospitality Quarterly
+  xls_sheet_name: hospitalityq
+  fields:
+
+  - datastore_id: description
+    label: Description / Description
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: attendees
+    label: Attendee(s) / Participant(s)
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: location
+    label: Location / Lieu
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
 
 - dataset_type: contracts
   target_dataset: contracts
