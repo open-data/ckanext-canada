@@ -89,6 +89,52 @@
       patternType: solid
       fgColor: FFA1D490
 
+- dataset_type: travela
+  target_dataset: travela
+  title: Hospitality Anual
+  xls_sheet_name: travela
+  fields:
+
+  - datastore_id: public_servant
+    label: Travel - Public Servants/ Voyages - Fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: non_public_servant
+    label: Travel: Non-Public Servants / Voyages - Non-fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total_travel
+    label: Total Travel  / Total des dépenses de voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: hospitality
+    label: Hospitality / Accueil
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: conference_fees
+    label: Conference Fees / Frais de participation aux conférences
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: conference_fees
+    label: Conference Fees / Frais de participation aux conférences
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
+    datastore_type: text
+    xls_column_width: 20
+
 - dataset_type: travelq
   target_dataset: travelq
   title: Hospitality Quarterly
