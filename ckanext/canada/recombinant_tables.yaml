@@ -332,7 +332,7 @@
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
-  default_preview_sort: year desc, month desc
+  default_preview_sort: contract_period_start desc, delivery_date desc
 
 
 - dataset_type: grants
