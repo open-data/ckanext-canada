@@ -10,10 +10,13 @@
     <header>
       <ul class="nav nav-pills">
         <li class="{% if c.action == 'read' %}active{% endif %}">
-          <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}">{{_('Dataset')}}</a>
+          <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}">{{_('Assets')}}</a>
         </li>
         <li class="{% if c.action == 'activity' %}active{% endif %}">
           <a href="{{h.url(controller='organization', action='activity', id=c.group_dict.name)}}">{{_('Activity')}}</a>
+        </li>
+        <li class="{% if c.action == 'edit' %}active{% endif %}">
+          <a href="{{h.url(controller='organization', action='edit', id=c.group_dict.name)}}">{{_('Edit Organization')}}</a>
         </li>
       </ul>
     </header>
