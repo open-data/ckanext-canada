@@ -1,6 +1,6 @@
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.base import render
+from ckan.lib.base import render, h
 from ckan.lib.plugins import DefaultDatasetForm
 from ckan.logic.action import create
 from wcms import wcms_configure
@@ -307,6 +307,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
+        h.flash_success(_("Your asset %s has been saved.")
+            % data_dict['id'])
         return data_dict
 
     def after_delete(self, context, data_dict):
