@@ -33,6 +33,13 @@ setup(
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
     ati=ckanext.canada.ati:ATICommand
+
     contracts=ckanext.canada.pd:PDCommand
+    grants=ckanext.canada.pd:PDCommand
+    wrongdoing=ckanext.canada.pd:PDCommand
+    reclassification=ckanext.canada.pd:PDCommand
+    travela=ckanext.canada.pd:PDCommand
+    travelq=ckanext.canada.pd:PDCommand
+    hospitalityq=ckanext.canada.pd:PDCommand
     """,
 )
