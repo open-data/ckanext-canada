@@ -222,7 +222,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
                     value = date2zulu(value)
                     # CM: If this only applies to PD types this should be accurate
                     # CM: This should only apply if valid (as per date2zulu) else NULL
-                    if key == 'date':
+                    if key == 'date' or key == 'file_id_date' or key == 'contract_date':
                         solrrec['date_year'] = value.split('-', 1)[0]
                 except ValueError:
                     pass
