@@ -100,6 +100,7 @@
     label: Date / Date
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: public_servant
     label: Travel - Public Servants/ Voyages - Fonctionnaires
@@ -169,6 +170,7 @@
     label: Date / Date
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: destination
     label: Destination / Destination
@@ -237,6 +239,7 @@
     label: Date / Date
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: attendees
     label: Attendee(s) / Participant(s)
@@ -290,6 +293,7 @@
     label: Contract Date / Date du contrat
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: description_en
     label: Description of Work English / Description du travail anglaise
@@ -543,6 +547,7 @@
     label: Date / Date
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: value
     label: Value / Valeur
@@ -610,6 +615,7 @@
     label: File Identification file date / Date de numéro d’identification du ficher
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: case_description_en
     label: English Case Description / Description anglaise
@@ -672,6 +678,7 @@
     label: Date / Date
     datastore_type: date
     xls_column_width: 20
+    extract_date_year: true
 
   - datastore_id: pos_title_en
     label: English Position Title / Titre du poste anglais
