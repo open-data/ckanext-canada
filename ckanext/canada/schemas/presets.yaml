@@ -2208,7 +2208,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required
 
 - preset_name: canada_resource_type
   values:
