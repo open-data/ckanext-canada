@@ -14,24 +14,22 @@ Example:
 #}
 {% set s1 = stages[0] or 'active' %}
 {% set s2 = stages[1] or 'uncomplete' %}
-{% if s1 != 'uncomplete' %}{% set class = 'stage-1' %}{% endif %}
-{% if s2 != 'uncomplete' %}{% set class = 'stage-2' %}{% endif %}
 
-<ol class="stages {{ class }}">
-  <li class="first {{ s1 }}">
+<ol class="nav nav-pills nav-justified stages stage-2">
+  <li role="presentation" class="first {{ s1 }}">
     {% if s1 != 'complete' %}
-      <span class="highlight">{{ _('Add Asset Metadata') }}</span>
+      <a><span class="highlight">{{ _('Add Asset Metadata') }}</span></a>
     {% else %}
-      <button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Add Asset Metadata') }}</button>
+      <a><button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Add Asset Metadata') }}</button></a>
     {% endif %}
   </li>
   <li class="last {{ s2 }}">
     {% if s2 != 'complete' %}
-      <span class="highlight">{{ _('Add Resource Metadata') }}</span>
+      <a><span class="highlight">{{ _('Add Resource Metadata') }}</span></a>
     {% else %}
       {% if s1 == 'active' %}
         {# stage 1 #}
-        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button>
+        <a><button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>
       {% else %}
         {% link_for _('Add data'), controller='package', action='new', class_="highlight" %}
       {% endif %}
