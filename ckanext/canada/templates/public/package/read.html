@@ -1,4 +1,3 @@
-{# vim: set filetype=htmljinja sw=2 sts=2: #}
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
@@ -168,14 +167,16 @@
     {% endif %}
   {% endif %}
   {% if pkg.geographic_region %}
-    {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-
-      <div class="col-md-4">
-        <h4>{{ cr.field_label(geo_region, client_lang) }}</h4>
-      </div>
-      <div class="col-md-8">
-        {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
-      </div>
+    {% set geo_region = h.scheming_field_by_name(schema.dataset_fields,
+      'geographic_region') %}
+    <div class="col-md-4">
+      <h4>{{
+      h.scheming_language_text(geo_region.label).lstrip('*') }}: {# FIXME lstrip #}</h4>
+    </div>
+    <div class="col-md-8">
+      {% snippet 'scheming/snippets/display_field.html',
+        field=geo_region, data=pkg, schema=schema %}
+    </div>
 
   {% endif %}
 </div>

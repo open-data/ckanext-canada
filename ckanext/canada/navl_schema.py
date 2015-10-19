@@ -46,6 +46,7 @@ def canada_tags(value, context):
     Accept tags with apostrope, convert other apostrophe-like characters
     to straight apostrophe
     """
+    value = value.strip()
     value = value.replace(u"´", u"'")
     value = value.replace(u"‘", u"'")
     value = value.replace(u"’", u"'")

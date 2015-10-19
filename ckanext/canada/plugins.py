@@ -154,7 +154,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'catalog_type': _('Data Type'),
                       'subject': _('Subject'),
                       'organization': _('Organization'),
-                      'ready_to_publish': _('Ready to Publish'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -172,7 +171,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'res_format': _('File Format'),
                       'catalog_type': _('Data Type'),
                       'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish'),
                       'license_id': _('Licence') }
 
         return facets_dict
@@ -307,8 +305,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
-        h.flash_success(_("Your asset %s has been saved.")
-            % data_dict['id'])
+        if context.get('allow_state_change') and data_dict.get(
+                'state') == 'active':
+            h.flash_success(_("Your asset %s has been saved.")
+                % data_dict['id'])
         return data_dict
 
     def after_delete(self, context, data_dict):

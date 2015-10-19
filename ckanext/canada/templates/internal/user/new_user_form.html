@@ -2,7 +2,9 @@
 
 <form role="form" action="" method="post">
   {{ form.errors(error_summary) }}
-  {{ form.input("name", id="field-username", label=_("Username"), placeholder="username", value=data.name, error=errors.name) }}
+  {% call form.input("name", id="field-username", label=_("Username"), placeholder="username", value=data.name, error=errors.name)  %}
+    {{ form.info(_('Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_)')) }}
+  {% endcall %}
   {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder="Joe Bloggs", value=data.fullname, error=errors.fullname) }}
   {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder="joe.bloggs@tbs-sct.gc.ca", value=data.email, error=errors.email) }}
   {{ form.input("department", id="field-department", label=_("Department"), placeholder="Treasury Board Secretariat", value=data.department, error=errors.department) }}
