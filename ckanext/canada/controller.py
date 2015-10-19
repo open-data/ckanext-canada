@@ -152,8 +152,8 @@ class CanadaController(BaseController):
                     if len(orgs_list) == 0:
                         is_new = True
 
-            h.flash_success(_("<p><strong>Note</strong></p>"
-                "<p>%s is now logged in</p>") %
+            h.flash_success(_("<strong>Note</strong><br>"
+                "%s is now logged in") %
                 user_dict['display_name'], allow_html=True)
 
             if is_new:
