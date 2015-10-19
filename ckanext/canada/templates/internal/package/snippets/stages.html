@@ -20,7 +20,7 @@ Example:
     {% if s1 != 'complete' %}
       <a><span class="highlight">{{ _('Add Asset Metadata') }}</span></a>
     {% else %}
-      <a><button class="highlight" name="save" value="go-dataset" type="submit">{{ _('Add Asset Metadata') }}</button></a>
+      <a><button class="btn-link highlight" name="save" value="go-dataset" type="submit">{{ _('Add Asset Metadata') }}</button></a>
     {% endif %}
   </li>
   <li class="last {{ s2 }}">
@@ -29,7 +29,7 @@ Example:
     {% else %}
       {% if s1 == 'active' %}
         {# stage 1 #}
-        <a><button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>
+        <a><button class="btn-link highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>
       {% else %}
         {% link_for _('Add data'), controller='package', action='new', class_="highlight" %}
       {% endif %}
