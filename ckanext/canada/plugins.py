@@ -307,8 +307,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
-        h.flash_success(_("Your asset %s has been saved.")
-            % data_dict['id'])
+        if context.get('allow_state_change') and data_dict.get(
+                'state') == 'active':
+            h.flash_success(_("Your asset %s has been saved.")
+                % data_dict['id'])
         return data_dict
 
     def after_delete(self, context, data_dict):
