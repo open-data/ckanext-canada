@@ -54,6 +54,7 @@ presets:
     help_text:
       en: The contact person's email for the information asset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
+    required: true
 
 - preset_name: canada_ready_to_publish
   values:
