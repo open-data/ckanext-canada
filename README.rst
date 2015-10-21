@@ -119,7 +119,7 @@ Both servers need::
 
    licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
-   ckan.i18n_directory = <path to this extension>/build/i18n
+   ckan.i18n_directory = <path to this extension>/build
 
    ckan.auth.create_dataset_if_not_in_organization = false
 
