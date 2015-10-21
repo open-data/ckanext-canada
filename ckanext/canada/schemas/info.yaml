@@ -75,3 +75,5 @@ resource_fields:
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url
+  form_snippet: upload_only.html
+  label: "* File Upload"
