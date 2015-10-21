@@ -17,9 +17,11 @@
 
   {% if is_upload_enabled %}
     {{ form.input(field_upload, label=upload_label, id='field-image-upload', type='file', placeholder='', value='', error=errors.get(field_url), classes=['control-full']) }}
+    {#
     {% if is_upload %}
       {{ form.checkbox(field_clear, label=_('Clear Upload'), id='field-clear-upload', value='true', error='', classes=['control-full']) }}
     {% endif %}
+    #}
   {% endif %}
 
   {% if is_upload_enabled %}</div>{% endif %}
