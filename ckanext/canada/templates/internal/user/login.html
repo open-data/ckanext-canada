@@ -29,8 +29,7 @@
   <div class="panel">
 
       {% if h.lang() == 'en' %}
-<h2>Welcome to the Government of Canada Open
-Information Portal Registry</h2>
+<h2>Welcome to the Government of Canada Open Information Portal Registry</h2>
 
 <p>
 Use the Registry to publish metadata to the
@@ -45,6 +44,20 @@ note that your log in information for your account for the
 Open Data Registry can be used here.
 </p>
       {% else %}
+<h2>Bienvenue au Portail d’information ouverte du gouvernement du Canada</h2>
+
+<p>
+Servez-vous du registre pour publier des métadonnées dans le
+<a href="http://ouvert.canada.ca/vl/fr/doc?q=">Portail d’information ouverte</a>
+</p>
+
+<p>
+Pour obtenir de plus amples renseignements au sujet
+de l’utilisation du registre ou pour signaler une erreur,
+écrivez à open-ouvert@tbs-sct.gc.ca.  Veuillez prendre
+note que les données de connexion associées à votre compte
+du Registre de données ouvertes peuvent être utilisées ici.
+</p>
       {% endif %}
 
       {% block form %}
