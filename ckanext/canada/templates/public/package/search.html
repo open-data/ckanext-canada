@@ -27,10 +27,12 @@
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
       name='organization') }}
     
-    {%- macro get_catalog_label(type, lang) -%}
-       {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
-    {%- endmacro -%}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=get_catalog_label ) }}
+    {% if dataset_type != 'info' %}
+      {%- macro get_catalog_label(type, lang) -%}
+         {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
+      {%- endmacro -%}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=get_catalog_label ) }}
+    {% endif %}
     
     {% if h.lang() == 'en' %}
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
