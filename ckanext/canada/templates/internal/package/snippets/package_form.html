@@ -6,9 +6,6 @@
 
 {% block disclaimer %}
   <p class="action-info small">
-    {{ _("* is mandatory") }}
-  </p>
-  <p class="action-info small">
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license %}
       {% if h.lang() == 'en' %}
