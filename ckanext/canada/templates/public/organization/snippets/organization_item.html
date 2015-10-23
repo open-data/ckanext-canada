@@ -13,13 +13,13 @@
     {% if organization.packages %}
         {% if dataset_type != 'info' %}
           <span>{{ ungettext('{num} Dataset', '{num} Datasets', organization.packages).format(num=organization.packages) }}</span>
-        {% elif h.lang() == 'fr' %}
+        {% else %}
           <span>{{ ungettext('{num} Asset', '{num} Assets', organization.packages).format(num=organization.packages) }}</span>
         {% endif %}
     {% else %}
         {% if dataset_type != 'info' %}
           <span>{{ _('0 Datasets') }}</span>
-        {% elif h.lang() == 'fr' %}
+        {% else %}
           <span>{{ _('0 Assets') }}</span>
         {% endif %}
     {% endif %}
