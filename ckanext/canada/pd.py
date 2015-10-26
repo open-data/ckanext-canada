@@ -4,6 +4,7 @@ import hashlib
 import calendar
 import time
 import logging
+import json
 from unicodecsv import DictReader
 from _csv import Error as _csvError
 
@@ -232,7 +233,10 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
             choices = f.get('choices')
             if not choices:
-                continue
+                if 'choices_source' not in f:
+                    continue
+                choices = f['choices'] = extract_choices(f['choices_source'])
+
             if key.endswith('_code'):
                 key = key[:-5]
             solrrec[key + '_en'] = choices.get(value, '').split(' | ')[0]
@@ -248,3 +252,13 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
+def extract_choices(filename):
+    "Convert choices stored as json lines to the format expected above"
+    here = os.path.dirname(os.path.abspath(__file__))
+    f = open(here + '/download/' + filename, 'rb')
+    out = {}
+    for line in f:
+        choice = json.loads(line)
+        out[choice['id']] = choice['en'] + ' | ' + choice['fr']
+    return out
