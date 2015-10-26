@@ -384,13 +384,13 @@
     label: Commodity Code / Code de produit
     datastore_type: text
     xls_column_width: 10
-    # the values are GSIN or UNSPSC codes, not listed here
+    choices_source: commodity_code.jsonl
 
   - datastore_id: country_of_origin
     label: Country of Origin / Pays d'origine
     datastore_type: text
     xls_column_width: 10
-    # values are iso3166-1-alphas-2
+    choices_source: country_of_origin.jsonl
 
   - datastore_id: solicitation_procedure_code
     label: Solicitation Procedure / Méthode d'invitation à soumissionner
