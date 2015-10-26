@@ -38,7 +38,7 @@ def download_csv_filter_output(source, dataset_id, columns):
             sys.stderr.write('duplicate id: %r!\n' % out['id'])
             continue
         seen_ids.add(out['id'])
-            
+
         print json.dumps(out)
 
 download_csv_filter_output(DATA_SOURCE, GSIN_DATASET, GSIN_COLUMNS)

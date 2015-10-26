@@ -30,7 +30,7 @@ def download_csv_filter_output(url, columns):
             sys.stderr.write('duplicate id: %r!\n' % out['id'])
             continue
         seen_ids.add(out['id'])
-            
+
         print json.dumps(out)
 
 download_csv_filter_output(DATA_URL, COUNTRY_COLUMNS)
