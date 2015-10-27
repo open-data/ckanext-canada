@@ -139,9 +139,6 @@
     datastore_type: text
     xls_column_width: 20
 
-  datastore_primary_key: [date, total]
-  # These keys are a mess, need to review
-  datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
@@ -210,8 +207,6 @@
     datastore_type: text
     xls_column_width: 20
 
-  datastore_primary_key: [date, purpose, destination]
-  datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
@@ -260,8 +255,6 @@
     datastore_type: text
     xls_column_width: 20
 
-  datastore_primary_key: [date, attendees, location]
-  datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
