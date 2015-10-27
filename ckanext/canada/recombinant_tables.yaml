@@ -534,8 +534,23 @@
     datastore_type: text
     xls_column_width: 20
 
+  - datastore_id: prog_name
+    label: Program Name  / Nom du programme
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: proj_number
+    label: Project Number  / Numéro identification du projet
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: proj_name
+    label: Project Name  / Nom du projet
+    datastore_type: text
+    xls_column_width: 20
+
   - datastore_id: recipient_name
-    label: Recipient Name / Nom du recipient
+    label: Recipient  Name / Nom du récipient
     datastore_type: text
     xls_column_width: 20
 
@@ -543,10 +558,6 @@
     label: Location / Endroit
     datastore_type: text
     xls_column_width: 20
-    choices:
-      a: is this
-      b: a controlled
-      c: list?
 
   - datastore_id: date
     label: Date / Date
@@ -565,8 +576,8 @@
     datastore_type: text
     xls_column_width: 20
     choices:
-      a: need the
-      b: controlled list
+      grants: Advance Contract Award Notice
+      contributions: Open Bidding
 
   - datastore_id: purpose_en
     label: English Purpose / Objectif en Anglais
@@ -585,6 +596,11 @@
 
   - datastore_id: comments_fr
     label: French Comments / Observation en Français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: additional_info
+    label: Additional Information  / Informations supplémentaires
     datastore_type: text
     xls_column_width: 41
 
