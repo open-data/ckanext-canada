@@ -680,77 +680,77 @@
 #      fgColor: FF7E9968
 
 
-- dataset_type: reclassification
-  target_dataset: reclassification
-  title: Position Reclassification
-  xls_sheet_name: reclassification
-  fields:
-
-  - datastore_id: pos_number
-    label: Position Number / Numéro du poste
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: date
-    label: Date / Date
-    datastore_type: date
-    xls_column_width: 20
-    extract_date_year: true
-    extract_date_month: true
-
-  - datastore_id: pos_title_en
-    label: English Position Title / Titre du poste anglais
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: pos_title_fr
-    label: French Position Title / Titre du poste français
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: pos_prev_class
-    label: Previous Position Classification/ Classification Antérieure
-    datastore_type: text
-    xls_column_width: 5
-
-  - datastore_id: pos_class
-    label: Reclassified Position Classification / Classification du poste reclassifié
-    datastore_type: text
-    xls_column_width: 5
-
-  - datastore_id: pos_prev_differential
-    label: Previous Supervisory Differential / Ancienne prime de surveillance
-    datastore_type: text
-    xls_column_width: 5
-
-  - datastore_id: pos_differential
-    label: Previous Supervisory Differential / Ancienne prime de surveillance
-    datastore_type: text
-    xls_column_width: 5
-
-  - datastore_id: reason_en
-    label: English Reason for Reclassification / Raison de la decision en anglais
-    datastore_type: text
-    xls_column_width: 41
-
-  - datastore_id: reason_fr
-    label: French reason for Reclassification / Raison de la decision en français
-    datastore_type: text
-    xls_column_width: 41
-
-  datastore_primary_key: [pos_number]
-  datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
-
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFCACC8B
-    Font:
-      bold: true
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF979968
+#- dataset_type: reclassification
+#  target_dataset: reclassification
+#  title: Position Reclassification
+#  xls_sheet_name: reclassification
+#  fields:
+#
+#  - datastore_id: pos_number
+#    label: Position Number / Numéro du poste
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: date
+#    label: Date / Date
+#    datastore_type: date
+#    xls_column_width: 20
+#    extract_date_year: true
+#    extract_date_month: true
+#
+#  - datastore_id: pos_title_en
+#    label: English Position Title / Titre du poste anglais
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: pos_title_fr
+#    label: French Position Title / Titre du poste français
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: pos_prev_class
+#    label: Previous Position Classification/ Classification Antérieure
+#    datastore_type: text
+#    xls_column_width: 5
+#
+#  - datastore_id: pos_class
+#    label: Reclassified Position Classification / Classification du poste reclassifié
+#    datastore_type: text
+#    xls_column_width: 5
+#
+#  - datastore_id: pos_prev_differential
+#    label: Previous Supervisory Differential / Ancienne prime de surveillance
+#    datastore_type: text
+#    xls_column_width: 5
+#
+#  - datastore_id: pos_differential
+#    label: Previous Supervisory Differential / Ancienne prime de surveillance
+#    datastore_type: text
+#    xls_column_width: 5
+#
+#  - datastore_id: reason_en
+#    label: English Reason for Reclassification / Raison de la decision en anglais
+#    datastore_type: text
+#    xls_column_width: 41
+#
+#  - datastore_id: reason_fr
+#    label: French reason for Reclassification / Raison de la decision en français
+#    datastore_type: text
+#    xls_column_width: 41
+#
+#  datastore_primary_key: [pos_number]
+#  datastore_indexes: ""
+#  xls_organization_info: [dept_id, null, name, title]
+#  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+#  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+#
+#  excel_organization_style:
+#    PatternFill:
+#      patternType: solid
+#      fgColor: FFCACC8B
+#    Font:
+#      bold: true
+#  excel_header_style:
+#    PatternFill:
+#      patternType: solid
+#      fgColor: FF979968
