@@ -230,7 +230,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
                         if 'less_than' not in fac or float_value < fac['less_than']:
                             solrrec[key + '_range'] = str(i)
                             solrrec[key + '_range_en'] = fac['label'].split(' | ')[0]
-                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[-1]
+                            solrrec[key + '_range_fr'] = fac['label'].split(' | ')[-1]
                             break
 
             if f.get('datastore_type') == 'date':
