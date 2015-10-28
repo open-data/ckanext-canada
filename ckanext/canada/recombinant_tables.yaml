@@ -1,6 +1,6 @@
 - dataset_type: ati-summaries
   target_dataset: ati
-  title: ATI Summaries
+  title: ATI Summaries | Sommaires d’AI
   xls_sheet_name: ATI AI
   fields:
 
@@ -59,7 +59,7 @@
 
 - dataset_type: ati-none
   target_dataset: ati
-  title: ATI Nothing to Report
+  title: ATI Nothing to Report | AI rien à déclarer
   xls_sheet_name: ATI AI none
   fields:
 
@@ -93,7 +93,7 @@
 # Not enable yet
 #- dataset_type: travela
 #  target_dataset: travela
-#  title: Travel Annual Expenditures
+#  title: Annual Expenditures on Travel | Dépenses annuelles totales de voyages
 #  xls_sheet_name: travela
 #  fields:
 #
@@ -159,7 +159,7 @@
 
 - dataset_type: travelq
   target_dataset: travelq
-  title: Travel Expenditures
+  title: Travel Expenditures | Dépenses de voyages
   xls_sheet_name: travelq
   fields:
 
@@ -229,7 +229,7 @@
 
 - dataset_type: hospitalityq
   target_dataset: hospitalityq
-  title: Hospitality
+  title: Hospitality | Accueil
   xls_sheet_name: hospitalityq
   fields:
 
@@ -279,7 +279,7 @@
 
 - dataset_type: contracts
   target_dataset: contracts
-  title: Contracts
+  title: Contracts | Contrats
   xls_sheet_name: contracts
   fields:
 
@@ -519,7 +519,7 @@
 
 - dataset_type: grants
   target_dataset: grants
-  title: Grants and Contributions
+  title: Grants and Contributions | Subventions et les Contributions
   xls_sheet_name: grants_and_contributions
   fields:
 
@@ -618,7 +618,7 @@
 
 #- dataset_type: wrongdoing
 #  target_dataset: wrongdoing
-#  title: Founded Wrongdoing
+#  title: Founded Wrongdoing | Constatations d'actes répréhensibles
 #  xls_sheet_name: founded_wrongdoing
 #  fields:
 #
@@ -682,7 +682,7 @@
 
 #- dataset_type: reclassification
 #  target_dataset: reclassification
-#  title: Position Reclassification
+#  title: Position Reclassification | Reclassifications de postes
 #  xls_sheet_name: reclassification
 #  fields:
 #
