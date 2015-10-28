@@ -41,6 +41,10 @@ Example:
         {%- elif package.type == 'ati-none' -%}
           {%- set title = _("ATI Nothing to Report") -%}
           {%- set desc = _("This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report.") -%}
+        {%- elif 'title_fra' not in package -%}
+          {# yet another hack, this time for the new PD types #}
+          {% set title = cr.split_bilingual_field(package.title, client_lang) %}
+          {% set desc = '' %}
         {%- else -%}
           {% set title = cr.field_id('title', package, client_lang) %}
           {% set desc = cr.field_id('notes', package, client_lang) %}
