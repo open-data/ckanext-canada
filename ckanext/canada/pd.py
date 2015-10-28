@@ -218,6 +218,21 @@ def _update_records(records, org_detail, conn, recombinant_type):
         for f in table['fields']:
             key = f['datastore_id']
             value = r[key]
+
+            facet_range = f.get('solr_float_range_facet')
+            if facet_range:
+                try:
+                    float_value = float(value)
+                except ValueError:
+                    pass
+                else:
+                    for i, r in enumerate(facet_range):
+                        if 'less_than' not in r or float_value < r['less_than']:
+                            solrrec[key + '_range'] = str(i)
+                            solrrec[key + '_range_en'] = r['label'].split(' | ')[0]
+                            solrrec[key + '_range_en'] = r['label'].split(' | ')[-1]
+                            break
+
             if f.get('datastore_type') == 'date':
                 try:
                     value = date2zulu(value)
