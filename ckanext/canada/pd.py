@@ -226,11 +226,11 @@ def _update_records(records, org_detail, conn, recombinant_type):
                 except ValueError:
                     pass
                 else:
-                    for i, r in enumerate(facet_range):
-                        if 'less_than' not in r or float_value < r['less_than']:
+                    for i, fac in enumerate(facet_range):
+                        if 'less_than' not in fac or float_value < fac['less_than']:
                             solrrec[key + '_range'] = str(i)
-                            solrrec[key + '_range_en'] = r['label'].split(' | ')[0]
-                            solrrec[key + '_range_en'] = r['label'].split(' | ')[-1]
+                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[0]
+                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[-1]
                             break
 
             if f.get('datastore_type') == 'date':
