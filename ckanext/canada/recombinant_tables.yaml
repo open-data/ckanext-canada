@@ -428,10 +428,10 @@
     datastore_type: text
     xls_column_width: 10
     choices:
-      AC: Advance Contract Award Notice | Préavis d’adjudication de contrat
-      OB: Open Bidding | Invitation ouverte à soumissionner
-      TC: Traditional Competitive | Concurrentielle traditionnelle
-      TN: Traditional Non-Competitive | Non-concurrentielle traditionnelle
+      AC: Advance Contract Award Notice | préavis d’adjudication de contrat
+      OB: Open Bidding | invitation ouverte à soumissionner
+      TC: Traditional Competitive | concurrentielle traditionnelle
+      TN: Traditional Non-Competitive | non-concurrentielle traditionnelle
 
   - datastore_id: limited_tendering_reason_code
     label: Limited Tendering Reason
@@ -441,19 +441,19 @@
     choices:
       "05": No response to bid solicitation | Aucune réponse à une invitation à soumissionner
       "20": Goods Purchased on a Commodity Market | Biens achetés conformément à un marché des produits de base
-      "21": Purchases Made Under Exceptionally Advantageous Conditions | Achats à des conditions exceptionnellement avantageuses pour de très courtes périodes
+      "21": Purchases Made Under Exceptionally Advantageous Conditions | Achats selon des conditions exceptionnellement avantageuses court terme
       "22": Winner of an Architectural Design Contest | Lauréat d’un concours de conception architecturale
+      "23": Consulting Services Regarding Matters of a Confidential Nature | Services confidentiels d’experts-conseils
+      "24": Additional Construction Services | Services de construction supplémentaire
+      "25": New Construction Services | Nouveaux services de construction
       "71": Exclusive Rights | Droits exclusifs
       "72": Prototype Purchase | Achat de prototype
       "74": Interchangeable Parts | Pièces interchangeables
       "81": Extreme Urgency | Extrême urgence
-      "23": Consulting Services Regarding Matters of a Confidential Nature | Services confidentiels d’experts-conseils
-      "24": Additional Construction Services | Services de construction supplémentaire
-      "25": New Construction Services | Nouveaux services de construction
-      "86": Prices and/or Sources Fixed by Government Regulations | Prix ou fournisseurs déterminés par des règlements gouvernementaux
-      "90": Protection of Human, Animal, or Plant Life or Health | Protection de la vie ou de la santé des personnes, animaux, plantes
-      "87": Government Objectives Representing Best Interests/Value | Objectifs gouvernementaux représentant les meilleurs intérêts/valeurs gouvernementaux
       "85": Low Dollar-value | Faible valeur
+      "86": Prices and/or Sources Fixed by Government Regulations | Prix ou fournisseurs déterminés par des règlements gouvernementaux
+      "87": Government Objectives Representing Best Interests/Value | Objectifs gouvernementaux représentant les meilleurs 
+      "90": Protection of Human, Animal, or Plant Life or Health | Protection de la vie ou de la santé des personnes, animaux, plantes
 
   - datastore_id: derogation_code
     label: Derogation / Dérogation
@@ -469,7 +469,7 @@
       "06": The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70, 74, 36 | Les marchés de Transports Canada, du ministère des Communications, et de Pêches et Océans dans les catégories FSC 70, 74, 36
       "07": National security exemptions incl. oil purchases relating to any strategic reserve requirements | Les exceptions au titre de la sécurité nationale comprennent les achats de pétrole liés aux exigences en matière de réserve stratégique
       "08": National security exceptions include procurements made in support of safeguarding nuclear materials or technology | Les exceptions au titre de la sécurité nationale comprennent les marchés passés pour protéger les matières ou la technologie nucléaire
-      "09": Under exceptional circumstances exclude a procurement from the application of AIT, Chapter 5 for regional and economic development purposes | Dans des circonstances exceptionnelles, soustraire un marché public à l’application du chapitre 5 à des fins de développement économique et régional
+      "09": Under exceptional circumstances exclude a procurement from the application of AIT, Chapter 5 for regional and economic development purposes | Dans des circonstances exceptionnelles, soustraire un marché public à l’application du chapitre 5 de l’ACI à des fins de développement économique et régional 
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator / Stratégie d'approvisionnement auprès des entreprises autochtones
@@ -481,16 +481,16 @@
     datastore_type: text
     xls_column_width: 10
     choices:
-      A1: Crown owned – exception 1 | Droits appartenant à l'État exception 6.1
-      A2: Crown owned – exception 2 | Droits appartenant à l'État exception 6.2
-      A3: Crown owned – exception 3 | Droits appartenant à l'État exception 6.3
-      A4: Crown owned – exception 4.1 | Droits appartenant à l'État exception 6.4.1
-      A4: Crown owned – exception 4.2 | Droits appartenant à l'État exception 6.4.2
-      A4: Crown owned – exception 4.3 | Droits appartenant à l'État exception 6.4.3
-      A5: Crown owned – exception 5 | Droits appartenant à l'État exception 6.5
-      A8: "Crown owned – exemption 8 (note: must have received approval of the Treasury Board via a Treasury Board submission) | Droits appartenant à l'État exception 8" 
-      B: Contractor Owned | Droits appartenant à l'entrepreneur
-      C: No IP Terms in Contract | Aucune modalité sur les DPI indiquée au contrat
+      A1:  Crown owned – exception 1 | Droits appartenant à l'État exception 1
+      A2:  Crown owned – exception 2 | Droits appartenant à l'État exception 2
+      A3:  Crown owned – exception 3 | Droits appartenant à l'État exception 3
+      A41: Crown owned – exception 4.1 | Droits appartenant à l'État exception 4.1
+      A42: Crown owned – exception 4.2 | Droits appartenant à l'État exception 4.2
+      A4:  Crown owned – exception 4.3 | Droits appartenant à l'État exception 4.3
+      A5:  Crown owned – exception 5 | Droits appartenant à l'État exception 5
+      A8:  "Crown owned – exemption 8 (note: must have received approval of the Treasury Board via a Treasury Board submission) | Droits appartenant à l'État exemption 8 (nota : doit avoir reçu l’approbation du Conseil du Trésor par le biais d’une présentation)"
+      B:   Contractor Owned | Droits appartenant à l'entrepreneur
+      C:   No IP Terms in Contract | Aucune modalité sur les DPI indiquée au contrat
       "": Not Applicable
 
   - datastore_id: potential_commercial_exploitation
@@ -521,9 +521,9 @@
     datastore_type: text
     xls_column_width: 10
     choices:
-      C: Contract
-      A: Amendment
-      SOSA: Standing Offer/Supply Arrangement Agreement
+      C: Contract | Contrat
+      A: Amendment | Modification
+      SOSA: Standing Offer/Supply Arrangement Agreement | Offre à commandes / Arrangement en matière d’approvisionnement
 
   - datastore_id: reporting_period
     label: Reporting Period / Période de déclaration
@@ -612,8 +612,8 @@
     datastore_type: text
     xls_column_width: 20
     choices:
-      grants: Grants | Subventions
-      contributions: Contributions | Contributions
+      G: Grant | subventions
+      C: Contribution | contributions
 
   - datastore_id: purpose_en
     label: English Purpose / Objectif en Anglais
