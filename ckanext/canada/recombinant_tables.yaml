@@ -486,7 +486,7 @@
       A3:  Crown owned – exception 3 | Droits appartenant à l'État exception 3
       A41: Crown owned – exception 4.1 | Droits appartenant à l'État exception 4.1
       A42: Crown owned – exception 4.2 | Droits appartenant à l'État exception 4.2
-      A4:  Crown owned – exception 4.3 | Droits appartenant à l'État exception 4.3
+      A43: Crown owned – exception 4.3 | Droits appartenant à l'État exception 4.3
       A5:  Crown owned – exception 5 | Droits appartenant à l'État exception 5
       A8:  "Crown owned – exemption 8 (note: must have received approval of the Treasury Board via a Treasury Board submission) | Droits appartenant à l'État exemption 8 (nota : doit avoir reçu l’approbation du Conseil du Trésor par le biais d’une présentation)"
       B:   Contractor Owned | Droits appartenant à l'entrepreneur
@@ -560,22 +560,22 @@
     xls_column_width: 20
 
   - datastore_id: prog_name
-    label: Program Name  / Nom du programme
+    label: Program Name / Nom du programme
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: proj_number
-    label: Project Number  / Numéro identification du projet
+    label: Project Number / Numéro identification du projet
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: proj_name
-    label: Project Name  / Nom du projet
+    label: Project Name / Nom du projet
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: recipient_name
-    label: Recipient  Name / Nom du récipient
+    label: Recipient Name / Nom du récipient
     datastore_type: text
     xls_column_width: 20
 
@@ -636,7 +636,7 @@
     xls_column_width: 41
 
   - datastore_id: additional_info
-    label: Additional Information  / Informations supplémentaires
+    label: Additional Information / Informations supplémentaires
     datastore_type: text
     xls_column_width: 41
 
