@@ -560,22 +560,22 @@
     xls_column_width: 20
 
   - datastore_id: prog_name
-    label: Program Name  / Nom du programme
+    label: Program Name / Nom du programme
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: proj_number
-    label: Project Number  / Numéro identification du projet
+    label: Project Number / Numéro identification du projet
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: proj_name
-    label: Project Name  / Nom du projet
+    label: Project Name / Nom du projet
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: recipient_name
-    label: Recipient  Name / Nom du récipient
+    label: Recipient Name / Nom du récipient
     datastore_type: text
     xls_column_width: 20
 
@@ -636,7 +636,7 @@
     xls_column_width: 41
 
   - datastore_id: additional_info
-    label: Additional Information  / Informations supplémentaires
+    label: Additional Information / Informations supplémentaires
     datastore_type: text
     xls_column_width: 41
 
