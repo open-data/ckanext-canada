@@ -182,7 +182,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
     :param recombinant_type: type being
     """
     table = get_table(recombinant_type)
-    pk = table['datastore_primary_key']
+    pk = table.get('datastore_primary_key', [])
     if not isinstance(pk, list):
         pk = [pk]
 
@@ -191,6 +191,8 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
     def unique_id(r):
         s = orghash
+        if not pk:
+            s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
         return s
