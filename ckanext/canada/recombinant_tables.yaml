@@ -208,17 +208,17 @@
     xls_column_width: 20
 
     solr_float_range_facet:
-     - label: $0 - $249.99
+     - label: $0 - $249.99 | 0$ - 249,99$
        less_than: 250
-     - label: $250 - $499.99
+     - label: $250 - $499.99 | 250$ - 499,99$
        less_than: 500
-     - label: $500 - $999.99
+     - label: $500 - $999.99 | 500$ - 999,99$
        less_than: 1000
-     - label: $1,000 - $4,999.99
+     - label: $1,000 - $4,999.99 | 1 000$ - 4 999,99$
        less_than: 5000
-     - label: $5,000 - $24,999.99
+     - label: $5,000 - $24,999.99 | 5 000 - 24 999,99$
        less_than: 25000
-     - label: $25,000+
+     - label: $25,000+ | 25 000$ +
 
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
@@ -269,17 +269,17 @@
     xls_column_width: 20
 
     solr_float_range_facet:
-     - label: $0 - $249.99
+     - label: $0 - $249.99 | 0$ - 249,99$
        less_than: 250
-     - label: $250 - $499.99
+     - label: $250 - $499.99 | 250$ - 499,99$
        less_than: 500
-     - label: $500 - $999.99
+     - label: $500 - $999.99 | 500$ - 999,99$
        less_than: 1000
-     - label: $1,000 - $4,999.99
+     - label: $1,000 - $4,999.99 | 1 000$ - 4 999,99$
        less_than: 5000
-     - label: $5,000 - $24,999.99
+     - label: $5,000 - $24,999.99 | 5 000 - 24 999,99$
        less_than: 25000
-     - label: $25,000+
+     - label: $25,000+ | 25 000$ +
 
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
@@ -346,15 +346,15 @@
     xls_column_width: 20
 
     solr_float_range_facet:
-     - label: $10,000 - $24,999.99
+     - label: $10,000 - $24,999.99 | 10 000$ - 24 999,99$
        less_than: 25000
-     - label: $25,000 - $99,999.99
+     - label: $25,000 - $99,999.99 | 25 000$ - 99 999,99$
        less_than: 100000
-     - label: $100,000 - $999,999.99
+     - label: $100,000 - $999,999.99 | 100 000$ - 999 999,99$
        less_than: 1000000
-     - label: $1,000,000 - $4,999,999.99
+     - label: $1,000,000 - $4,999,999.99 | 1 000 000$ - 4 999 999,99$
        less_than: 5000000
-     - label: $5,000,000+
+     - label: $5,000,000+ | 5 000 000$ +
 
 
   - datastore_id: original_value
@@ -597,15 +597,15 @@
     xls_column_width: 20
 
     solr_float_range_facet:
-     - label: $10,000 - $24,999.99
+     - label: $10,000 - $24,999.99 | 10 000$ - 24 999,99$
        less_than: 25000
-     - label: $25,000 - $99,999.99
+     - label: $25,000 - $99,999.99 | 25 000$ - 99 999,99$
        less_than: 100000
-     - label: $100,000 - $999,999.99
+     - label: $100,000 - $999,999.99 | 100 000$ - 999 999,99$
        less_than: 1000000
-     - label: $1,000,000 - $4,999,999.99
+     - label: $1,000,000 - $4,999,999.99 | 1 000 000$ - 4 999 999,99$
        less_than: 5000000
-     - label: $5,000,000+
+     - label: $5,000,000+ | 5 000 000$ +
 
   - datastore_id: type
     label: Type / Type
