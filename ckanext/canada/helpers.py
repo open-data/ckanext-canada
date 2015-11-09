@@ -174,7 +174,10 @@ def get_datapreview_recombinant(dataset_type, res_id):
         label = f['label'].split(' / ')
         label = label[0] if lang == 'en' else label[-1]
         field_label[f['datastore_id']] = label
-    fields = [{'type': f['type'], 'id': field_label.get(f['id'], f['id'])}
+    fields = [{
+        'type': f['type'],
+        'id': f['id'],
+        'label': field_label.get(f['id'], f['id'])}
         for f in results['fields']]
 
     return h.snippet('package/wet_datatable.html',
