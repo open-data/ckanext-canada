@@ -167,5 +167,18 @@ def get_datapreview_recombinant(dataset_type, res_id):
     results = lc.action.datastore_search(
         resource_id=res_id, limit=DATAPREVIEW_MAX,
         **default_preview_args)
+
+    lang = h.lang()
+    field_label = {}
+    for f in t['fields']:
+        label = f['label'].split(' / ')
+        label = label[0] if lang == 'en' else label[-1]
+        field_label[f['datastore_id']] = label
+    fields = [{
+        'type': f['type'],
+        'id': f['id'],
+        'label': field_label.get(f['id'], f['id'])}
+        for f in results['fields']]
+
     return h.snippet('package/wet_datatable.html',
-        ds_fields=results['fields'], ds_records=results['records'])
+        ds_fields=fields, ds_records=results['records'])
