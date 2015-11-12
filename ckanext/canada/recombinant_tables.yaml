@@ -90,75 +90,27 @@
       fgColor: FFA1D490
   default_preview_sort: year desc, month desc
 
-# Not enable yet
-#- dataset_type: travela
-#  target_dataset: travela
-#  title: Annual Expenditures on Travel | Dépenses annuelles totales de voyages
-#  xls_sheet_name: travela
-#  fields:
-#
-#  - datastore_id: date
-#    label: Date / Date
-#    datastore_type: date
-#    xls_column_width: 20
-#    extract_date_year: true
-#    extract_date_month: true
-#
-#  - datastore_id: public_servant
-#    label: Travel - Public Servants/ Voyages - Fonctionnaires
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: non_public_servant
-#    label: Travel - Non-Public Servants / Voyages - Non-fonctionnaires
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: total_travel
-#    label: Total Travel  / Total des dépenses de voyage
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: hospitality
-#    label: Hospitality / Accueil
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: conference_fees
-#    label: Conference Fees / Frais de participation aux conférences
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: total
-#    label: Total Amount / Montant total
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  - datastore_id: minister
-#    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
-#    datastore_type: text
-#    xls_column_width: 20
-#
-#  xls_organization_info: [dept_id, null, name, title]
-#  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-#  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
-#
-#  excel_organization_style:
-#    PatternFill:
-#      patternType: solid
-#      fgColor: FFC8E1EA
-#    Font:
-#      bold: true
-#  excel_header_style:
-#    PatternFill:
-#      patternType: solid
-#      fgColor: FF90C3D4
 
 - dataset_type: travelq
   target_dataset: travelq
   title: Travel Expenditures | Dépenses de voyages
   xls_sheet_name: travelq
   fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: name
+    label: Name / Nom
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: title
+    label: Title / Titre
+    datastore_type: text
+    xls_column_width: 20
 
   - datastore_id: purpose
     label: Purpose of Travel / But du voyage
@@ -220,6 +172,8 @@
        less_than: 25000
      - label: $25,000+ | 25 000 $ +
 
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
@@ -235,11 +189,27 @@
       patternType: solid
       fgColor: FF90C3D4
 
+
 - dataset_type: hospitalityq
   target_dataset: hospitalityq
   title: Hospitality | Accueil
   xls_sheet_name: hospitalityq
   fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: name
+    label: Name / Nom
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: title
+    label: Title / Titre
+    datastore_type: text
+    xls_column_width: 20
 
   - datastore_id: description
     label: Description / Description
@@ -281,6 +251,8 @@
        less_than: 25000
      - label: $25,000+ | 25 000 $ +
 
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
   xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
@@ -295,6 +267,7 @@
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
+
 
 - dataset_type: contracts
   target_dataset: contracts
@@ -335,8 +308,7 @@
     xls_column_width: 20
 
   - datastore_id: delivery_date
-    label: Contract Period End Date or Delivery Date
-           / Date de clôture du contrat ou Date de livraison
+    label: Contract Period End Date or Delivery Date / Date de clôture du contrat ou Date de livraison
     datastore_type: date
     xls_column_width: 20
 
@@ -434,8 +406,7 @@
       TN: Traditional Non-Competitive | non-concurrentielle traditionnelle
 
   - datastore_id: limited_tendering_reason_code
-    label: Limited Tendering Reason
-           / Raisons justifiant le recours à l'appel d'offres limité
+    label: Limited Tendering Reason / Raisons justifiant le recours à l'appel d'offres limité
     datastore_type: text
     xls_column_width: 10
     choices:
@@ -499,15 +470,12 @@
     xls_column_width: 10
 
   - datastore_id: former_public_servant
-    label: Former Public Servant in receipt of a PSSA pension
-           / Ancien fonctionnaire recevant une pension en vertu de la LPFP
+    label: Former Public Servant in receipt of a PSSA pension / Ancien fonctionnaire recevant une pension en vertu de la LPFP
     datastore_type: boolean
     xls_column_width: 10
 
   - datastore_id: standing_offer
-    label: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement
-           / Commande subséquente à une l'offre à commandes ou arrangements en matière
-           d'approvisionnement
+    label: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement / Commande subséquente à une l'offre à commandes ou arrangements en matière d'approvisionnement
     datastore_type: boolean
     xls_column_width: 10
 
@@ -553,6 +521,11 @@
   title: Grants and Contributions | Subventions et les Contributions
   xls_sheet_name: grants_and_contributions
   fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
 
   - datastore_id: prog_number
     label: Program Number / Numéro identification du programme
@@ -640,7 +613,7 @@
     datastore_type: text
     xls_column_width: 41
 
-  datastore_primary_key: [prog_number]
+  datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
   xls_organization_style: "pattern: pattern solid, fore_color gray25;"
@@ -658,11 +631,88 @@
       fgColor: FF689998
 
 
+# Not enable yet
+#- dataset_type: travela
+#  target_dataset: travela
+#  title: Annual Expenditures on Travel | Dépenses annuelles totales de voyages
+#  xls_sheet_name: travela
+#  fields:
+#
+#  - datastore_id: ref_number
+#    label: Reference Number / Numéro de référence
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: date
+#    label: Date / Date
+#    datastore_type: date
+#    xls_column_width: 20
+#    extract_date_year: true
+#    extract_date_month: true
+#
+#  - datastore_id: public_servant
+#    label: Travel - Public Servants/ Voyages - Fonctionnaires
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: non_public_servant
+#    label: Travel - Non-Public Servants / Voyages - Non-fonctionnaires
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: total_travel
+#    label: Total Travel  / Total des dépenses de voyage
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: hospitality
+#    label: Hospitality / Accueil
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: conference_fees
+#    label: Conference Fees / Frais de participation aux conférences
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: total
+#    label: Total Amount / Montant total
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  - datastore_id: minister
+#    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
+#    datastore_type: text
+#    xls_column_width: 20
+#
+#  datastore_primary_key: [ref_number]
+#  datastore_indexes: ""
+#  xls_organization_info: [dept_id, null, name, title]
+#  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
+#  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+#
+#  excel_organization_style:
+#    PatternFill:
+#      patternType: solid
+#      fgColor: FFC8E1EA
+#    Font:
+#      bold: true
+#  excel_header_style:
+#    PatternFill:
+#      patternType: solid
+#      fgColor: FF90C3D4
+#
+#
 #- dataset_type: wrongdoing
 #  target_dataset: wrongdoing
 #  title: Founded Wrongdoing | Constatations d'actes répréhensibles
 #  xls_sheet_name: founded_wrongdoing
 #  fields:
+#
+#  - datastore_id: ref_number
+#    label: Reference Number / Numéro de référence
+#    datastore_type: text
+#    xls_column_width: 20
 #
 #  - datastore_id: file_id_number
 #    label: File Identification Number / Numéro d’identification du fichier
@@ -704,7 +754,7 @@
 #    datastore_type: text
 #    xls_column_width: 40
 #
-#  datastore_primary_key: [file_id_number]
+#  datastore_primary_key: [ref_number]
 #  datastore_indexes: ""
 #  xls_organization_info: [dept_id, null, name, title]
 #  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
@@ -720,13 +770,18 @@
 #    PatternFill:
 #      patternType: solid
 #      fgColor: FF7E9968
-
-
+#
+#
 #- dataset_type: reclassification
 #  target_dataset: reclassification
 #  title: Position Reclassification | Reclassifications de postes
 #  xls_sheet_name: reclassification
 #  fields:
+#
+#  - datastore_id: ref_number
+#    label: Reference Number / Numéro de référence
+#    datastore_type: text
+#    xls_column_width: 20
 #
 #  - datastore_id: pos_number
 #    label: Position Number / Numéro du poste
@@ -780,7 +835,7 @@
 #    datastore_type: text
 #    xls_column_width: 41
 #
-#  datastore_primary_key: [pos_number]
+#  datastore_primary_key: [ref_number]
 #  datastore_indexes: ""
 #  xls_organization_info: [dept_id, null, name, title]
 #  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
