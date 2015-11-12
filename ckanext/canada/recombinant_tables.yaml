@@ -518,7 +518,7 @@
 
 - dataset_type: grants
   target_dataset: grants
-  title: Grants and Contributions | Subventions et les Contributions
+  title: Grants and Contributions | Subventions et les contributions
   xls_sheet_name: grants_and_contributions
   fields:
 
@@ -528,7 +528,7 @@
     xls_column_width: 20
 
   - datastore_id: prog_number
-    label: Program Number / Numéro identification du programme
+    label: Program Number / Numéro d’identification du programme
     datastore_type: text
     xls_column_width: 20
 
@@ -538,12 +538,12 @@
     xls_column_width: 20
 
   - datastore_id: proj_number
-    label: Project Number / Numéro identification du projet
+    label: Project Number / Numéro d’identification du projet
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: proj_name
-    label: Project Name / Nom du projet
+    label: Project Name / Nom du bénéficiaire
     datastore_type: text
     xls_column_width: 20
 
@@ -589,22 +589,22 @@
       C: Contribution | contributions
 
   - datastore_id: purpose_en
-    label: English Purpose / Objectif en Anglais
+    label: English Purpose / Objectif en anglais
     datastore_type: text
     xls_column_width: 41
 
   - datastore_id: purpose_fr
-    label: French Purpose / Objectif en Français
+    label: French Purpose / Objectif en français
     datastore_type: text
     xls_column_width: 41
 
   - datastore_id: comments_en
-    label: English Comments / Observation en Anglais
+    label: English Comments / Observations en anglais
     datastore_type: text
     xls_column_width: 41
 
   - datastore_id: comments_fr
-    label: French Comments / Observation en Français
+    label: French Comments / Observations en français
     datastore_type: text
     xls_column_width: 41
 
