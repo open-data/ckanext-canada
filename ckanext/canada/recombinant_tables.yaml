@@ -518,7 +518,7 @@
 
 - dataset_type: grants
   target_dataset: grants
-  title: Grants and Contributions | Subventions et les contributions
+  title: Grants and Contributions | Subventions et les Contributions
   xls_sheet_name: grants_and_contributions
   fields:
 
@@ -740,8 +740,12 @@
     datastore_type: text
     xls_column_width: 40
     choices:
-      a: get from
-      b: section 8 of public servants disclosure protection act
+      a: a contravention of any Act of Parliament or of the legislature of a province, or of any regulations made under any such Act, other than a contravention of section 19 of this Act
+      b: a misuse of public funds or a public asset
+      c: a gross mismanagement in the public sector
+      d: an act or omission that creates a substantial and specific danger to the life, health or safety of persons, or to the environment, other than a danger that is inherent in the performance of the duties or functions of a public servant
+      e: a serious breach of a code of conduct established under section 5 or 6
+      f: knowingly directing or counselling a person to commit a wrongdoing set out in any of paragraphs (a) to (e)
 
   - datastore_id: recommendations_corrective_measures_en
     label: English Recommendations and Corrective Measures / Recommendations et mesures Correctives anglaises
