@@ -4,6 +4,7 @@ import hashlib
 import calendar
 import time
 import logging
+import json
 from unicodecsv import DictReader
 from _csv import Error as _csvError
 
@@ -31,7 +32,7 @@ class PDCommand(CkanCommand):
 
     Usage::
 
-        paster contracts build-templates <sources> <dest-dir>
+        paster <pd-type> build-templates <sources> <dest-dir>
                          clear
                          rebuild [-f <file>]
 
@@ -181,7 +182,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
     :param recombinant_type: type being
     """
     table = get_table(recombinant_type)
-    pk = table['datastore_primary_key']
+    pk = table.get('datastore_primary_key', [])
     if not isinstance(pk, list):
         pk = [pk]
 
@@ -190,6 +191,8 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
     def unique_id(r):
         s = orghash
+        if not pk:
+            s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
         return s
@@ -209,7 +212,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
         solrrec = {
             'id': unique,
-            'org_name_code': org_detail['name']
+            'org_name_code': org_detail['name'],
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
             }
@@ -217,16 +220,40 @@ def _update_records(records, org_detail, conn, recombinant_type):
         for f in table['fields']:
             key = f['datastore_id']
             value = r[key]
+
+            facet_range = f.get('solr_float_range_facet')
+            if facet_range:
+                try:
+                    float_value = float(value)
+                except ValueError:
+                    pass
+                else:
+                    for i, fac in enumerate(facet_range):
+                        if 'less_than' not in fac or float_value < fac['less_than']:
+                            solrrec[key + '_range'] = str(i)
+                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[0]
+                            solrrec[key + '_range_fr'] = fac['label'].split(' | ')[-1]
+                            break
+
             if f.get('datastore_type') == 'date':
                 try:
                     value = date2zulu(value)
+                    # CM: If this only applies to PD types this should be accurate
+                    # CM: This should only apply if valid (as per date2zulu) else NULL
+                    if f.get('extract_date_year'):
+                        solrrec['date_year'] = value.split('-', 1)[0]
+                    if f.get('extract_date_month'):
+                        solrrec['date_month'] = value.split('-')[1]
                 except ValueError:
                     pass
             solrrec[key] = value
 
             choices = f.get('choices')
             if not choices:
-                continue
+                if 'choices_source' not in f:
+                    continue
+                choices = f['choices'] = extract_choices(f['choices_source'])
+
             if key.endswith('_code'):
                 key = key[:-5]
             solrrec[key + '_en'] = choices.get(value, '').split(' | ')[0]
@@ -242,3 +269,13 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
+def extract_choices(filename):
+    "Convert choices stored as json lines to the format expected above"
+    here = os.path.dirname(os.path.abspath(__file__))
+    f = open(here + '/download/' + filename, 'rb')
+    out = {}
+    for line in f:
+        choice = json.loads(line)
+        out[choice['id']] = choice['en'] + ' | ' + choice['fr']
+    return out
