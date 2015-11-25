@@ -90,6 +90,8 @@ class PDCommand(CkanCommand):
         if csv_file:
             count = {}
             for org_recs in csv_data_batch(csv_file, self.command_name):
+                if not org_recs:
+                    break
                 org_id = org_recs.keys()[0]
                 if org_id not in count:
                     count[org_id] = 0
