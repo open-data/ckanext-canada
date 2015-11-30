@@ -167,6 +167,9 @@ class CanadaController(BaseController):
             return h.redirect_to(controller='user',
                 action='login', locale=lang)
 
+    def datatable(self, resource_id):
+        0/0
+
 class CanadaFeedController(FeedController):
     def general(self):
         data_dict, params = self._parse_url_params()
