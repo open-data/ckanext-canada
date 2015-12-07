@@ -176,6 +176,11 @@ class CanadaController(BaseController):
 
         lc = LocalCKAN(username=c.user)
 
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+            )
+
         response = lc.action.datastore_search(
             resource_id=resource_id,
             offset=offset,
@@ -185,6 +190,7 @@ class CanadaController(BaseController):
 
         return json.dumps({
             'sEcho': echo,
+            'iTotalRecords': unfiltered_response['total'],
             'iTotalDisplayRecords': response['total'],
             'aaData': [
                 [row[colname] for colname in cols]
