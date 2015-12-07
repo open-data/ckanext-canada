@@ -171,6 +171,7 @@ class CanadaController(BaseController):
 
     def datatable(self, resource_id):
         echo = int(request.params['sEcho'])
+        search_text = unicode(request.params['sSearch'])
         offset = int(request.params['iDisplayStart'])
         limit = int(request.params['iDisplayLength'])
         sort_cols = int(request.params['iSortingCols'])
@@ -191,16 +192,16 @@ class CanadaController(BaseController):
             sort_str = cols[sort_by_num] + ' ' + sort_order
             
         response = lc.action.datastore_search(
+            q=search_text,
             resource_id=resource_id,
             offset=offset,
             limit=limit,
             sort=sort_str)
 
-
         return json.dumps({
             'sEcho': echo,
             'iTotalRecords': unfiltered_response['total'],
-            'iTotalDisplayRecords': response['total'],
+            'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
                 [row[colname] for colname in cols]
                 for row in response['records']],
