@@ -20,6 +20,8 @@ from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
+from ckanapi import LocalCKAN, NotFound, NotAuthorized
+
 class CanadaController(BaseController):
     def view_guidelines(self):
         return render('guidelines.html')
@@ -168,7 +170,26 @@ class CanadaController(BaseController):
                 action='login', locale=lang)
 
     def datatable(self, resource_id):
-        0/0
+        echo = int(request.params['sEcho'])
+        offset = int(request.params['iDisplayStart'])
+        limit = int(request.params['iDisplayLength'])
+
+        lc = LocalCKAN(username=c.user)
+
+        response = lc.action.datastore_search(
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit)
+
+        cols = [f['id'] for f in response['fields']][1:]
+
+        return json.dumps({
+            'sEcho': echo,
+            'iTotalDisplayRecords': response['total'],
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']],
+            })
 
 class CanadaFeedController(FeedController):
     def general(self):

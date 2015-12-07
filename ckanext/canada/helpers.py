@@ -181,4 +181,5 @@ def get_datapreview_recombinant(dataset_type, res_id):
         for f in results['fields']]
 
     return h.snippet('package/wet_datatable.html',
+        resource_id=res_id,
         ds_fields=fields, ds_records=results['records'])
