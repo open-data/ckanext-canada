@@ -1,12 +1,17 @@
 {% ckan_extends %}
 
 {% set res = c.pkg_dict['resources'][0] %}
+{% block main_content %}
 
-{% block primary_content %}
-{{ super() }}
+  <div class="span-8">
+    {% block primary_content %}
+      {{ super() }}
+    {% endblock %}
+
     <section>
         <div>
             {{ h.get_datapreview_recombinant(c.pkg_dict.type, res.id) }}
         </div>
     </section>
+  </div>
 {% endblock %}
