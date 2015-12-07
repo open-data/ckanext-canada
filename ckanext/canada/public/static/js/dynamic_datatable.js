@@ -18,7 +18,6 @@ $(document).on("pageinit", function()
                 $column.addClass("ui-table-cell-hidden");
               }
             });
-            $('#dtprv').table('refresh');
           }
         }));
         clearInterval(poll);
