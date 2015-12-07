@@ -14,7 +14,6 @@ ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
-DATAPREVIEW_MAX = 500
 
 
 def may_publish_datasets(userobj=None):
@@ -165,7 +164,7 @@ def get_datapreview_recombinant(dataset_type, res_id):
 
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
-        resource_id=res_id, limit=DATAPREVIEW_MAX,
+        resource_id=res_id, limit=0,
         **default_preview_args)
 
     lang = h.lang()
@@ -182,4 +181,4 @@ def get_datapreview_recombinant(dataset_type, res_id):
 
     return h.snippet('package/wet_datatable.html',
         resource_id=res_id,
-        ds_fields=fields, ds_records=results['records'])
+        ds_fields=fields)

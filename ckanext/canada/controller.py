@@ -190,7 +190,7 @@ class CanadaController(BaseController):
         sort_str = ''
         if sort_cols:
             sort_str = cols[sort_by_num] + ' ' + sort_order
-            
+
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
