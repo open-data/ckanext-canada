@@ -173,6 +173,10 @@ class CanadaController(BaseController):
         echo = int(request.params['sEcho'])
         offset = int(request.params['iDisplayStart'])
         limit = int(request.params['iDisplayLength'])
+        sort_cols = int(request.params['iSortingCols'])
+        if sort_cols:
+            sort_by_num = int(request.params['iSortCol_0'])
+            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
 
         lc = LocalCKAN(username=c.user)
 
@@ -181,12 +185,17 @@ class CanadaController(BaseController):
             limit=1,
             )
 
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = ''
+        if sort_cols:
+            sort_str = cols[sort_by_num] + ' ' + sort_order
+            
         response = lc.action.datastore_search(
             resource_id=resource_id,
             offset=offset,
-            limit=limit)
+            limit=limit,
+            sort=sort_str)
 
-        cols = [f['id'] for f in response['fields']][1:]
 
         return json.dumps({
             'sEcho': echo,
