@@ -10,12 +10,12 @@ $(document).on("pageinit", function()
             var columnIndex = 0;
             $("#dtprv-popup fieldset").find("input").each(function(){
               var sel = ":nth-child(" + (columnIndex + 1) + ")";
-              $(this).jqmData("cells", $("#dtprv").find("tr").children(sel));
+              var $column = $("#dtprv").find("tr").children(sel);
+              $(this).jqmData("cells", $column);
               columnIndex++;
-              // with another terrible workaround
+              // with an extra workaround
               if (!this.checked) {
-                $(this).click();
-                $(this).click();
+                $column.addClass("ui-table-cell-hidden");
               }
             });
             $('#dtprv').table('refresh');
