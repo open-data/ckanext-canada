@@ -104,7 +104,8 @@
 
 - dataset_type: travelq
   target_dataset: travelq
-  title: Travel Expenditures | Dépenses de voyages
+  title: Proactive Disclosure - Travel Expenditures |
+         Divulgation proactive - Dépenses de voyages
   xls_sheet_name: travelq
   fields:
 
@@ -203,7 +204,8 @@
 
 - dataset_type: hospitalityq
   target_dataset: hospitalityq
-  title: Hospitality | Accueil
+  title: Proactive Disclosure - Hospitality |
+         Divulgation proactive - Accueil
   xls_sheet_name: hospitalityq
   fields:
 
@@ -282,7 +284,7 @@
 
 - dataset_type: contracts
   target_dataset: contracts
-  title: Contracts | Contrats
+  title: Proactive Disclosure - Contracts | Divulgation proactive - Contrats
   xls_sheet_name: contracts
   fields:
 
@@ -529,7 +531,8 @@
 
 - dataset_type: grants
   target_dataset: grants
-  title: Grants and Contributions | Subventions et les contributions
+  title: Proactive Disclosure - Grants and Contributions |
+         Divulgation proactive - Subventions et les contributions
   xls_sheet_name: grants_and_contributions
   fields:
 
@@ -644,7 +647,8 @@
 
 - dataset_type: travela
   target_dataset: travela
-  title: Annual Expenditures on Travel | Dépenses annuelles totales de voyages
+  title: Proactive Disclosure - Annual Expenditures on Travel |
+         Divulgation proactive - Dépenses annuelles totales de voyages
   xls_sheet_name: travela
   fields:
 
@@ -715,7 +719,8 @@
 
 - dataset_type: wrongdoing
   target_dataset: wrongdoing
-  title: Founded Wrongdoing | Constatations d'actes répréhensibles
+  title: Proactive Disclosure - Founded Wrongdoing |
+         Divulgation proactive - Constatations d'actes répréhensibles
   xls_sheet_name: founded_wrongdoing
   fields:
 
@@ -788,7 +793,8 @@
 
 - dataset_type: reclassification
   target_dataset: reclassification
-  title: Position Reclassification | Reclassifications de postes
+  title: Proactive Disclosure - Position Reclassification |
+         Divulgation proactive - Reclassifications de postes
   xls_sheet_name: reclassification
   fields:
 
