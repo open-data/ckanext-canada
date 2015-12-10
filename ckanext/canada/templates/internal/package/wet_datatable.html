@@ -2,7 +2,10 @@
 <section>
   <div class="dtprv-overflow">
     <h2 id="prtable">{{_("Preview")}}</h2>
-<table id="dtprv" class="wet-boew-tables" data-wet-boew='{"bZebra": true, "bPaginate": true}' data-role="table" data-mode="columntoggle">
+<table id="dtprv" class="wet-boew-tables"
+  data-wet-boew='{"bZebra": true, "bPaginate": true, "bServerSide": true, "sAjaxSource": "/datatable/{{ resource_id }}"}'
+  data-role="table"
+  data-mode="columntoggle" >
   <thead>
     <tr class="font-small">
       {% set i = 1 %}
@@ -15,20 +18,9 @@
     </tr>
   </thead>
   <tbody>
-    {% for ds_rec in ds_records %}
-      <tr>
-        {% for ds_field in ds_fields %}
-          {% if ds_field['id'] != '_id' %}
-            {% if ds_field['type'] != 'timestamp' %}
-              <td>{{ ds_rec[ds_field['id']] or ('&nbsp;'|safe) }}</td>
-            {% else %}
-              <td>{{ h.iso_to_goctime(ds_rec[ds_field['id']]) }}</td>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </tr>
-    {% endfor %}
   </tbody>
 </table>
   </div>
 </section>
+
+{% resource "js/dynamic_datatable.js" %}
