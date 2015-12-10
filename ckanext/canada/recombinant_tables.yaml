@@ -1,6 +1,10 @@
 - dataset_type: ati-summaries
   target_dataset: ati
-  title: ATI Summaries | Sommaires d’AI
+  title: ATI Summaries | Accès à l’information sommaires complétés
+  notes: This dataset houses all of your completed ATI summaries.
+         This is where you upload all of your ATI summaries. | Ce
+         jeux de données contient tous vos sommaires d'AI completé.
+         Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici.
   xls_sheet_name: ATI AI
   fields:
 
@@ -59,7 +63,14 @@
 
 - dataset_type: ati-none
   target_dataset: ati
-  title: ATI Nothing to Report | AI rien à déclarer
+  title: ATI Nothing to Report | Accès à l’information rien à signaler
+  notes: This dataset houses all of the months where you had nothing to
+         report regarding completed ATI requests. This is where you
+         explicitly identify which month your organization had nothing
+         to report. | Ce jeux de données contient tous les mois où vous
+         avez eu rien à signaler en ce qui concerne les demandes d'AI
+         terminées. C'est là que vous identifier explicitement les mois,
+         votre organisation a rien à signaler.
   xls_sheet_name: ATI AI none
   fields:
 
