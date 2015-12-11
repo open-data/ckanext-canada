@@ -106,6 +106,10 @@
   target_dataset: travelq
   title: Proactive Disclosure - Travel Expenditures |
          Divulgation proactive - Dépenses de voyages
+  notes: This dataset includes all of the reports on travel expenditures
+         incurred within your organization | Ce jeu de données comprend tous
+         les rapports les dépenses de voyage qui ont été engagées au sein de
+         votre organisation.
   xls_sheet_name: travelq
   fields:
 
@@ -206,6 +210,10 @@
   target_dataset: hospitalityq
   title: Proactive Disclosure - Hospitality |
          Divulgation proactive - Accueil
+  notes: This dataset includes all of the reports on hospitality expenses
+         incurred within your organization. | Ce jeu de données comprend tous
+         les rapports sur les dépenses relatives à l’accueil qui ont été
+         engagées au sein de votre organisation.
   xls_sheet_name: hospitalityq
   fields:
 
@@ -285,6 +293,10 @@
 - dataset_type: contracts
   target_dataset: contracts
   title: Proactive Disclosure - Contracts | Divulgation proactive - Contrats
+  notes: This dataset includes all of the reports on contracts issued by or on
+         behalf of your organization. | Ce jeu de données comprend tous les
+         rapports sur les contrats qui ont été émis par ou pour le compte de
+         votre organisation.
   xls_sheet_name: contracts
   fields:
 
@@ -533,6 +545,10 @@
   target_dataset: grants
   title: Proactive Disclosure - Grants and Contributions |
          Divulgation proactive - Subventions et les contributions
+  notes: This dataset includes all of the reports on grants and contributions
+         awarded by your organization. | Ce jeu de données comprend tous les
+         rapports sur les subventions et les contributions qui ont été
+         accordées par votre organisation.
   xls_sheet_name: grants_and_contributions
   fields:
 
@@ -649,6 +665,10 @@
   target_dataset: travela
   title: Proactive Disclosure - Annual Expenditures on Travel |
          Divulgation proactive - Dépenses annuelles totales de voyages
+  notes: This dataset includes all of the annual reports on travel expenses
+         incurred within your organization. | Ce jeu de données comprend tous
+         les rapports annuels sur les dépenses de voyage engagées au sein de
+         votre organisation.
   xls_sheet_name: travela
   fields:
 
@@ -721,6 +741,10 @@
   target_dataset: wrongdoing
   title: Proactive Disclosure - Founded Wrongdoing |
          Divulgation proactive - Constatations d'actes répréhensibles
+  notes: This dataset includes all of the reports on the disclosure of
+         wrongdoing within your organization. | Ce jeu de données comprend
+         tous les rapports sur la divulgation des actes répréhensibles au sein
+         de votre organisation.
   xls_sheet_name: founded_wrongdoing
   fields:
 
@@ -795,6 +819,10 @@
   target_dataset: reclassification
   title: Proactive Disclosure - Position Reclassification |
          Divulgation proactive - Reclassifications de postes
+  notes: This dataset includes all of the reports on the reclassification of
+         occupied positions within your organization. | Ce jeu de données
+         comprend tous les rapports ayant trait à la reclassification des
+         postes comblés au sein de votre organisation.
   xls_sheet_name: reclassification
   fields:
 
