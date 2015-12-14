@@ -46,8 +46,6 @@
   datastore_primary_key: request_number
   datastore_indexes: ""
   xls_organization_info: [department_number, null, name, title, null, null, null]
-  xls_organization_style: "pattern: pattern solid, fore_color light_green;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -87,8 +85,6 @@
   datastore_primary_key: [year, month]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_green;"
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -191,8 +187,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
@@ -275,8 +269,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
@@ -526,8 +518,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -646,8 +636,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
@@ -722,8 +710,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
@@ -800,8 +786,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
@@ -886,8 +870,6 @@
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   xls_organization_info: [dept_id, null, name, title]
-  xls_organization_style: "pattern: pattern solid, fore_color gray25;"
-  xls_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
 
   excel_organization_style:
     PatternFill:
