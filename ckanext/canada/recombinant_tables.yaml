@@ -45,6 +45,23 @@
 
   datastore_primary_key: request_number
   datastore_indexes: ""
+
+  examples:
+    record:
+      disposition: Disclosed in part / Communication partielle
+      summary_fra: Copies des rapports de vérification et d’évaluation du système de gestion de la sécurité
+      month: 10
+      request_number: A-2013-00516
+      summary_eng: Copies of the Safety Management System Audit and Evaluation Reports
+      year: 2014
+      pages: 779
+    filters:
+      month: 10
+      year: 2014
+    filter_one:
+      request_number: A-2013-00516
+    sort: year desc, month desc
+
   xls_organization_info: [department_number, null, name, title, null, null, null]
   excel_organization_style:
     PatternFill:
@@ -84,6 +101,18 @@
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
+
+  examples:
+    record:
+      month: 10
+      year: 2014
+    filters:
+      year: 2014
+    filter_one:
+      month: 10
+      year: 2014
+    sort: year desc, month desc
+
   xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
@@ -186,8 +215,24 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
 
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -268,8 +313,22 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
 
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      location: Halifax
+      attendees: 4
+      total: "500.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -344,7 +403,6 @@
      - label: $1,000,000 - $4,999,999.99 | 1 000 000 $ - 4 999 999,99 $
        less_than: 5000000
      - label: $5,000,000+ | 5 000 000 $ +
-
 
   - datastore_id: original_value
     label: Original Contract Value / Valeur d'origine du contrat
@@ -517,6 +575,23 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      vendor_name: Jane Smith
+      contract_date: "2016-01-01"
+      contract_value: "50000.00"
+      agreement_type_code: W
+      commodity_type_code: S
+      country_of_origin: US
+    filters:
+      agreement_type: W
+      country_of_origin: US
+    filter_one:
+      ref_number: "1980198"
+    sort: contract_date desc
+
   xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
@@ -635,8 +710,21 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
 
+  examples:
+    record:
+      ref_number: "1980198"
+      proj_number: "19876198"
+      recipient_name: Jane Smith
+      date: "2016-01-01"
+      value: "50000.00"
+    filters:
+      proj_number: "19876198"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -709,8 +797,24 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
 
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -785,6 +889,19 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      file_id_number: "15677"
+      file_id_date: "2016-01-01"
+      findings_conclusion: b
+    filters:
+      findings_conclusion: a
+    filter_one:
+      ref_number: "1980198"
+    sort: file_id_date desc
+
   xls_organization_info: [dept_id, null, name, title]
 
   excel_organization_style:
@@ -869,8 +986,19 @@
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  xls_organization_info: [dept_id, null, name, title]
 
+  examples:
+    record:
+      ref_number: "1980198"
+      pos_number: "846763"
+      date: "2016-01-01"
+    filters:
+      pos_number: "846763"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
