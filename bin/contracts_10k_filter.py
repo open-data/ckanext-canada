@@ -15,7 +15,7 @@ MINIMUM_CONTRACT_VALUE = 10000
 def main():
     reader = csv.DictReader(sys.stdin)
     writer = csv.DictWriter(sys.stdout, reader.fieldnames)
-    writer.writeheader()
+    writer.writerow(dict(zip(reader.fieldnames, reader.fieldnames)))
     for row in reader:
         try:
             v = float(row[VALUE_COLUMN])
