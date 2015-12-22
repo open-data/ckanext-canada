@@ -29,13 +29,11 @@ Example:
       {% block heading %}
         {% set my_title = package['title'][client_lang] %}
 
-        {#- FIXME: continuing to add static text here doesn't scale -#}
-        {%- if package.type == 'ati-summaries' -%}
-          {%- set title = _("ATI Summaries") -%}
-          {%- set desc = _("This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries.") -%}
-        {%- elif package.type == 'ati-none' -%}
-          {%- set title = _("ATI Nothing to Report") -%}
-          {%- set desc = _("This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report.") -%}
+        {%- if 'title_fra' not in package -%}
+          {# XXX: hack for keeping PD/ATI name/desc current #}
+          {% set table = h.recombinant_get_table(package.type) %}
+          {% set title = cr.split_bilingual_field(table.title, client_lang) %}
+          {% set desc = cr.split_bilingual_field(table.notes or '', client_lang) %}
         {%- else -%}
           {% set title = cr.field_id('title', package, client_lang) %}
           {% set desc = cr.field_id('notes', package, client_lang) %}

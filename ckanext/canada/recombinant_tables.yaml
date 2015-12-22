@@ -1,0 +1,1011 @@
+- dataset_type: ati-summaries
+  target_dataset: ati
+  title: ATI Summaries | Accès à l’information sommaires complétés
+  notes: This dataset houses all of your completed ATI summaries.
+         This is where you upload all of your ATI summaries. | Ce
+         jeux de données contient tous vos sommaires d'AI completé.
+         Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici.
+  xls_sheet_name: ATI AI
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 13
+
+  - datastore_id: month
+    label: Month / Mois (1-12)
+    datastore_type: month
+    xls_column_width: 18
+
+  - datastore_id: request_number
+    label: Request Number / Numero de la demande
+    datastore_type: text
+    xls_column_width: 38
+
+  - datastore_id: summary_eng
+    label: English Summary / Sommaire de la demande en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: summary_fra
+    label: French Summary / Sommaire de la demande en français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: disposition
+    label: Disposition
+    datastore_type: text
+    xls_column_width: 39
+
+  - datastore_id: pages
+    label: Number of Pages / Nombre de pages
+    datastore_type: int
+    xls_column_width: 34
+
+  datastore_primary_key: request_number
+  datastore_indexes: ""
+
+  examples:
+    record:
+      disposition: Disclosed in part / Communication partielle
+      summary_fra: Copies des rapports de vérification et d’évaluation du système de gestion de la sécurité
+      month: 10
+      request_number: A-2013-00516
+      summary_eng: Copies of the Safety Management System Audit and Evaluation Reports
+      year: 2014
+      pages: 779
+    filters:
+      month: 10
+      year: 2014
+    filter_one:
+      request_number: A-2013-00516
+    sort: year desc, month desc
+
+  xls_organization_info: [department_number, null, name, title, null, null, null]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+  default_preview_sort: year desc, month desc
+
+
+- dataset_type: ati-none
+  target_dataset: ati
+  title: ATI Nothing to Report | Accès à l’information rien à signaler
+  notes: This dataset houses all of the months where you had nothing to
+         report regarding completed ATI requests. This is where you
+         explicitly identify which month your organization had nothing
+         to report. | Ce jeux de données contient tous les mois où vous
+         avez eu rien à signaler en ce qui concerne les demandes d'AI
+         terminées. C'est là que vous identifier explicitement les mois,
+         votre organisation a rien à signaler.
+  xls_sheet_name: ATI AI none
+  fields:
+
+  - datastore_id: year
+    label: Year / Année
+    datastore_type: year
+    xls_column_width: 5
+
+  - datastore_id: month
+    label: Month / Mois
+    datastore_type: month
+    xls_column_width: 4
+
+  datastore_primary_key: [year, month]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      month: 10
+      year: 2014
+    filters:
+      year: 2014
+    filter_one:
+      month: 10
+      year: 2014
+    sort: year desc, month desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA1D490
+  default_preview_sort: year desc, month desc
+
+
+- dataset_type: travelq
+  target_dataset: travelq
+  title: Proactive Disclosure - Travel Expenditures |
+         Divulgation proactive - Dépenses de voyages
+  notes: This dataset includes all of the reports on travel expenditures
+         incurred within your organization | Ce jeu de données comprend tous
+         les rapports les dépenses de voyage qui ont été engagées au sein de
+         votre organisation.
+  xls_sheet_name: travelq
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: name
+    label: Name / Nom
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: title
+    label: Title / Titre
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: purpose
+    label: Purpose of Travel / But du voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: destination
+    label: Destination / Destination
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: airfare
+    label: Airfare / Frais aériens
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_transport
+    label: Other transportation / Autres frais de transport
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: accomodation
+    label: Accommodation / Frais d'hébergement
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: meals
+    label: Meals and incidentals / Frais de repas et frais accessoires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: other_expenses
+    label: Other expenses / Autres dépenses
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+
+- dataset_type: hospitalityq
+  target_dataset: hospitalityq
+  title: Proactive Disclosure - Hospitality |
+         Divulgation proactive - Accueil
+  notes: This dataset includes all of the reports on hospitality expenses
+         incurred within your organization. | Ce jeu de données comprend tous
+         les rapports sur les dépenses relatives à l’accueil qui ont été
+         engagées au sein de votre organisation.
+  xls_sheet_name: hospitalityq
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: name
+    label: Name / Nom
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: title
+    label: Title / Titre
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: description
+    label: Description / Description
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: attendees
+    label: Attendee(s) / Participant(s)
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: location
+    label: Location / Lieu
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      location: Halifax
+      attendees: 4
+      total: "500.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+
+- dataset_type: contracts
+  target_dataset: contracts
+  title: Proactive Disclosure - Contracts | Divulgation proactive - Contrats
+  notes: This dataset includes all of the reports on contracts issued by or on
+         behalf of your organization. | Ce jeu de données comprend tous les
+         rapports sur les contrats qui ont été émis par ou pour le compte de
+         votre organisation.
+  xls_sheet_name: contracts
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: vendor_name
+    label: Vendor Name / Nom du fournisseur
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: contract_date
+    label: Contract Date / Date du contrat
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: description_en
+    label: Description of Work English / Description du travail anglaise
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description of Work French / Description du travail française
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: contract_period_start
+    label: Contract Period Start Date / Date de début du contrat
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: delivery_date
+    label: Contract Period End Date or Delivery Date / Date de clôture du contrat ou Date de livraison
+    datastore_type: date
+    xls_column_width: 20
+
+  - datastore_id: contract_value
+    label: Total Contract Value / Valeur totale du contrat
+    datastore_type: money
+    xls_column_width: 20
+
+    solr_float_range_facet:
+     - label: $10,000 - $24,999.99 | 10 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000 - $99,999.99 | 25 000 $ - 99 999,99 $
+       less_than: 100000
+     - label: $100,000 - $999,999.99 | 100 000 $ - 999 999,99 $
+       less_than: 1000000
+     - label: $1,000,000 - $4,999,999.99 | 1 000 000 $ - 4 999 999,99 $
+       less_than: 5000000
+     - label: $5,000,000+ | 5 000 000 $ +
+
+  - datastore_id: original_value
+    label: Original Contract Value / Valeur d'origine du contrat
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: amendment_value
+    label: Contract Amendment Value / Valeur de modification
+    datastore_type: money
+    xls_column_width: 20
+
+  - datastore_id: comments_en
+    label: Comments English / Commentaires en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: comments_fr
+    label: Comments French / Commentaires en français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_en
+    label: Additional Comments English / Commentaires additionnels en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: additional_comments_fr
+    label: Additional Comments French / Commentaires additionnels en français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: agreement_type_code
+    label: Agreement Type / Type d'accord
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      Y: WTO/NAFTA/AIT | OMC/ALÉNA/ACI
+      Z: WTO/NAFTA | OMC/ALÉNA
+      X: WTO/AIT | OMC/ACI
+      C: NAFTA/AIT | ALÉNA/ACI
+      W: WTO | OMC
+      N: NAFTA | ALÉNA
+      I: AIT | ACI
+      A: ABSA (PSAB) | MREA
+      R: LCSA (CLCA) | MRRT
+
+  - datastore_id: commodity_type_code
+    label: Commodity Type / Type de produit
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      G: Good | Biens
+      S: Service | Services
+      C: Construction | Construction
+
+  - datastore_id: commodity_code
+    label: Commodity Code / Code de produit
+    datastore_type: text
+    xls_column_width: 10
+    choices_source: commodity_code.jsonl
+
+  - datastore_id: country_of_origin
+    label: Country of Origin / Pays d'origine
+    datastore_type: text
+    xls_column_width: 10
+    choices_source: country_of_origin.jsonl
+
+  - datastore_id: solicitation_procedure_code
+    label: Solicitation Procedure / Méthode d'invitation à soumissionner
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      AC: Advance Contract Award Notice | préavis d’adjudication de contrat
+      OB: Open Bidding | invitation ouverte à soumissionner
+      TC: Traditional Competitive | concurrentielle traditionnelle
+      TN: Traditional Non-Competitive | non-concurrentielle traditionnelle
+
+  - datastore_id: limited_tendering_reason_code
+    label: Limited Tendering Reason / Raisons justifiant le recours à l'appel d'offres limité
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      "05": No response to bid solicitation | Aucune réponse à une invitation à soumissionner
+      "20": Goods Purchased on a Commodity Market | Biens achetés conformément à un marché des produits de base
+      "21": Purchases Made Under Exceptionally Advantageous Conditions | Achats selon des conditions exceptionnellement avantageuses court terme
+      "22": Winner of an Architectural Design Contest | Lauréat d’un concours de conception architecturale
+      "23": Consulting Services Regarding Matters of a Confidential Nature | Services confidentiels d’experts-conseils
+      "24": Additional Construction Services | Services de construction supplémentaire
+      "25": New Construction Services | Nouveaux services de construction
+      "71": Exclusive Rights | Droits exclusifs
+      "72": Prototype Purchase | Achat de prototype
+      "74": Interchangeable Parts | Pièces interchangeables
+      "81": Extreme Urgency | Extrême urgence
+      "85": Low Dollar-value | Faible valeur
+      "86": Prices and/or Sources Fixed by Government Regulations | Prix ou fournisseurs déterminés par des règlements gouvernementaux
+      "87": Government Objectives Representing Best Interests/Value | Objectifs gouvernementaux représentant les meilleurs 
+      "90": Protection of Human, Animal, or Plant Life or Health | Protection de la vie ou de la santé des personnes, animaux, plantes
+
+  - datastore_id: derogation_code
+    label: Derogation / Dérogation
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      "00": None | Aucune
+      "01": Shipbuilding and repair | Aux marchés de construction et de réparation des navires
+      "02": Urban rail and urban transportation equipment systems, components and materials | Aux marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets
+      "03": Contracts respecting FSC 58 (communications, detection and coherent radiation equipment) | Aux marchés relevant de la catégorie FSC 58 (matériel de communications de détection et de rayonnement cohérent)
+      "04": Set-asides for small and minority businesses | Aux marchés réservés aux petites entreprises et aux entreprises minoritaires
+      "05": Agricultural products made in furtherance of agricultural support programs or human feeding programs | Les achats de produits agricoles effectués dans le cadre de programmes de soutien à l’agriculture ou de programme d’aide alimentaire
+      "06": The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70, 74, 36 | Les marchés de Transports Canada, du ministère des Communications, et de Pêches et Océans dans les catégories FSC 70, 74, 36
+      "07": National security exemptions incl. oil purchases relating to any strategic reserve requirements | Les exceptions au titre de la sécurité nationale comprennent les achats de pétrole liés aux exigences en matière de réserve stratégique
+      "08": National security exceptions include procurements made in support of safeguarding nuclear materials or technology | Les exceptions au titre de la sécurité nationale comprennent les marchés passés pour protéger les matières ou la technologie nucléaire
+      "09": Under exceptional circumstances exclude a procurement from the application of AIT, Chapter 5 for regional and economic development purposes | Dans des circonstances exceptionnelles, soustraire un marché public à l’application du chapitre 5 de l’ACI à des fins de développement économique et régional 
+
+  - datastore_id: aboriginal_business
+    label: Procurement Strategy for Aboriginal Business Incidental Indicator / Stratégie d'approvisionnement auprès des entreprises autochtones
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: intellectual_property_code
+    label: Intellectual Property Indicator / Indicateur de propriété intellectuelle
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      A1:  Crown owned – exception 1 | Droits appartenant à l'État exception 1
+      A2:  Crown owned – exception 2 | Droits appartenant à l'État exception 2
+      A3:  Crown owned – exception 3 | Droits appartenant à l'État exception 3
+      A41: Crown owned – exception 4.1 | Droits appartenant à l'État exception 4.1
+      A42: Crown owned – exception 4.2 | Droits appartenant à l'État exception 4.2
+      A43: Crown owned – exception 4.3 | Droits appartenant à l'État exception 4.3
+      A5:  Crown owned – exception 5 | Droits appartenant à l'État exception 5
+      A8:  "Crown owned – exemption 8 (note: must have received approval of the Treasury Board via a Treasury Board submission) | Droits appartenant à l'État exemption 8 (nota : doit avoir reçu l’approbation du Conseil du Trésor par le biais d’une présentation)"
+      B:   Contractor Owned | Droits appartenant à l'entrepreneur
+      C:   No IP Terms in Contract | Aucune modalité sur les DPI indiquée au contrat
+      "": Not Applicable
+
+  - datastore_id: potential_commercial_exploitation
+    label: Potential for Commercial Exploitation / Potentiel d'exploitation commerciale
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: former_public_servant
+    label: Former Public Servant in receipt of a PSSA pension / Ancien fonctionnaire recevant une pension en vertu de la LPFP
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: standing_offer
+    label: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement / Commande subséquente à une l'offre à commandes ou arrangements en matière d'approvisionnement
+    datastore_type: boolean
+    xls_column_width: 10
+
+  - datastore_id: standing_offer_number
+    label: Standing Offer or Supply Arrangement Number / Numéro de l’offre à commandes
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: document_type_code
+    label: Document Type / Type de document
+    datastore_type: text
+    xls_column_width: 10
+    choices:
+      C: Contract | Contrat
+      A: Amendment | Modification
+      SOSA: Standing Offer/Supply Arrangement Agreement | Offre à commandes / Arrangement en matière d’approvisionnement
+
+  - datastore_id: reporting_period
+    label: Reporting Period / Période de déclaration
+    datastore_type: text
+    xls_column_width: 10
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      vendor_name: Jane Smith
+      contract_date: "2016-01-01"
+      contract_value: "50000.00"
+      agreement_type_code: W
+      commodity_type_code: S
+      country_of_origin: US
+    filters:
+      agreement_type: W
+      country_of_origin: US
+    filter_one:
+      ref_number: "1980198"
+    sort: contract_date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+  default_preview_sort: contract_period_start desc, delivery_date desc
+
+
+- dataset_type: grants
+  target_dataset: grants
+  title: Proactive Disclosure - Grants and Contributions |
+         Divulgation proactive - Subventions et les contributions
+  notes: This dataset includes all of the reports on grants and contributions
+         awarded by your organization. | Ce jeu de données comprend tous les
+         rapports sur les subventions et les contributions qui ont été
+         accordées par votre organisation.
+  xls_sheet_name: grants_and_contributions
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: prog_number
+    label: Program Number / Numéro d’identification du programme
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: prog_name
+    label: Program Name / Nom du programme
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: proj_number
+    label: Project Number / Numéro d’identification du projet
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: proj_name
+    label: Project Name / Nom du bénéficiaire
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: recipient_name
+    label: Recipient Name / Nom du récipient
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: location_endroit
+    label: Location / Endroit
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: value
+    label: Value / Valeur
+    datastore_type: money
+    xls_column_width: 20
+
+    solr_float_range_facet:
+     - label: $10,000 - $24,999.99 | 10 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000 - $99,999.99 | 25 000 $ - 99 999,99 $
+       less_than: 100000
+     - label: $100,000 - $999,999.99 | 100 000 $ - 999 999,99 $
+       less_than: 1000000
+     - label: $1,000,000 - $4,999,999.99 | 1 000 000 $ - 4 999 999,99 $
+       less_than: 5000000
+     - label: $5,000,000+ | 5 000 000 $ +
+
+  - datastore_id: type
+    label: Type / Type
+    datastore_type: text
+    xls_column_width: 20
+    choices:
+      G: Grant | subventions
+      C: Contribution | contributions
+
+  - datastore_id: purpose_en
+    label: English Purpose / Objectif en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: purpose_fr
+    label: French Purpose / Objectif en français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: comments_en
+    label: English Comments / Observations en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: comments_fr
+    label: French Comments / Observations en français
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: additional_info
+    label: Additional Information / Informations supplémentaires
+    datastore_type: text
+    xls_column_width: 41
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      proj_number: "19876198"
+      recipient_name: Jane Smith
+      date: "2016-01-01"
+      value: "50000.00"
+    filters:
+      proj_number: "19876198"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF8BCCCB
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF689998
+
+
+- dataset_type: travela
+  target_dataset: travela
+  title: Proactive Disclosure - Annual Expenditures on Travel |
+         Divulgation proactive - Dépenses annuelles totales de voyages
+  notes: This dataset includes all of the annual reports on travel expenses
+         incurred within your organization. | Ce jeu de données comprend tous
+         les rapports annuels sur les dépenses de voyage engagées au sein de
+         votre organisation.
+  xls_sheet_name: travela
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: public_servant
+    label: Travel - Public Servants/ Voyages - Fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: non_public_servant
+    label: Travel - Non-Public Servants / Voyages - Non-fonctionnaires
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total_travel
+    label: Total Travel  / Total des dépenses de voyage
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: hospitality
+    label: Hospitality / Accueil
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: conference_fees
+    label: Conference Fees / Frais de participation aux conférences
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: minister
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) / Voyages internationaux du ministre et du personnel du ministre (également inclus dans les voyages des non-fonctionnaires)
+    datastore_type: text
+    xls_column_width: 20
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+
+- dataset_type: wrongdoing
+  target_dataset: wrongdoing
+  title: Proactive Disclosure - Founded Wrongdoing |
+         Divulgation proactive - Constatations d'actes répréhensibles
+  notes: This dataset includes all of the reports on the disclosure of
+         wrongdoing within your organization. | Ce jeu de données comprend
+         tous les rapports sur la divulgation des actes répréhensibles au sein
+         de votre organisation.
+  xls_sheet_name: founded_wrongdoing
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: file_id_number
+    label: File Identification Number / Numéro d’identification du fichier
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: file_id_date
+    label: File Identification file date / Date de numéro d’identification du ficher
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: case_description_en
+    label: English Case Description / Description anglaise
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: case_description_fr
+    label: French Case Description / Description française
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: findings_conclusions
+    label: Findings and Conclusions / Constatations et Conclusions
+    datastore_type: text
+    xls_column_width: 40
+    choices:
+      a: a contravention of any Act of Parliament or of the legislature of a province, or of any regulations made under any such Act, other than a contravention of section 19 of this Act | la contravention d’une loi fédérale ou provinciale ou d’un règlement pris sous leur régime, à l’exception de la contravention de l’article 19 de la présente loi
+      b: a misuse of public funds or a public asset | l’usage abusif des fonds ou des biens publics
+      c: a gross mismanagement in the public sector | les cas graves de mauvaise gestion dans le secteur public
+      d: an act or omission that creates a substantial and specific danger to the life, health or safety of persons, or to the environment, other than a danger that is inherent in the performance of the duties or functions of a public servant | le fait de causer — par action ou omission — un risque grave et précis pour la vie, la santé ou la sécurité humaines ou pour l’environnement, à l’exception du risque inhérent à l’exercice des attributions d’un fonctionnaire
+      e: a serious breach of a code of conduct established under section 5 or 6 | la contravention grave d’un code de conduite établi en vertu des articles 5 ou 6
+      f: knowingly directing or counselling a person to commit a wrongdoing set out in any of paragraphs (a) to (e) | le fait de sciemment ordonner ou conseiller à une personne de commettre l’un des actes répréhensibles visés aux alinéas a) à e)
+
+  - datastore_id: recommendations_corrective_measures_en
+    label: English Recommendations and Corrective Measures / Recommendations et mesures Correctives anglaises
+    datastore_type: text
+    xls_column_width: 40
+
+  - datastore_id: recommendations_corrective_measures_fr
+    label: Recommendations and Corrective Measures / Recommendations et mesures Correctives françaises
+    datastore_type: text
+    xls_column_width: 40
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      file_id_number: "15677"
+      file_id_date: "2016-01-01"
+      findings_conclusion: b
+    filters:
+      findings_conclusion: a
+    filter_one:
+      ref_number: "1980198"
+    sort: file_id_date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA8CC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF7E9968
+
+
+- dataset_type: reclassification
+  target_dataset: reclassification
+  title: Proactive Disclosure - Position Reclassification |
+         Divulgation proactive - Reclassifications de postes
+  notes: This dataset includes all of the reports on the reclassification of
+         occupied positions within your organization. | Ce jeu de données
+         comprend tous les rapports ayant trait à la reclassification des
+         postes comblés au sein de votre organisation.
+  xls_sheet_name: reclassification
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number / Numéro de référence
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: pos_number
+    label: Position Number / Numéro du poste
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: pos_title_en
+    label: English Position Title / Titre du poste anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: pos_title_fr
+    label: French Position Title / Titre du poste français
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: pos_prev_class
+    label: Previous Position Classification / Classification Antérieure
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_class
+    label: Reclassified Position Classification / Classification du poste reclassifié
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_prev_differential
+    label: Previous Supervisory Differential / Ancienne prime de surveillance
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: pos_differential
+    label: Supervisory Differential / Prime de surveillance
+    datastore_type: text
+    xls_column_width: 5
+
+  - datastore_id: reason_en
+    label: English Reason for Reclassification / Raison de la decision en anglais
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: reason_fr
+    label: French reason for Reclassification / Raison de la decision en français
+    datastore_type: text
+    xls_column_width: 41
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+
+  examples:
+    record:
+      ref_number: "1980198"
+      pos_number: "846763"
+      date: "2016-01-01"
+    filters:
+      pos_number: "846763"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
+
+  xls_organization_info: [dept_id, null, name, title]
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFCACC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF979968

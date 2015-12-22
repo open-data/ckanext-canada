@@ -7,6 +7,7 @@ from ckan import model
 
 from ckanext.canada.helpers import may_publish_datasets
 from shapely.geometry import asShape
+from shapely import wkt
 import json
 import uuid
 
@@ -88,7 +89,8 @@ def geojson_validator(value):
             if isinstance(value, basestring):
                 value = json.loads(value)
             shape = asShape(value)
-        except ValueError:
+            wkt.dumps(shape)
+        except:
             raise Invalid(_("Invalid GeoJSON"))
         # must store as JSON
         return json.dumps(value)

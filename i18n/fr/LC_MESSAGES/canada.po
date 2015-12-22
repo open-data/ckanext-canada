@@ -581,18 +581,6 @@ msgstr "Compte créé"
 msgid "Your file was successfully uploaded into the central system."
 msgstr "Votre fichier a été téléchargé avec succès dans le système central."
 
-msgid "ATI Summaries"
-msgstr "Accès à l’information sommaires complétés"
-
-msgid "This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries."
-msgstr "Ce jeux de données contient tous vos sommaires d'AI completé. Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici."
-
-msgid "ATI Nothing to Report"
-msgstr "Accès à l’information rien à signaler"
-
-msgid "This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report."
-msgstr "Ce jeux de données contient tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées. C'est là que vous identifier explicitement les mois, votre organisation a rien à signaler."
-
 msgid "Resources associates with this dataset."
 msgstr "Ressources associés avec cet ensemble de données."
 
@@ -752,3 +740,6 @@ msgstr "{actor} a créé le bien {dataset}"
 
 msgid "{actor} updated the dataset {dataset}"
 msgstr "{actor} a mis à jour le bien {dataset}"
+
+msgid "The server encountered a problem processing the file uploaded. Please try copying your data into the latest version of the template and uploading again. If this problem continues, send your Excel file open-ouvert@tbs-sct.gc.ca so we may investigate."
+msgstr "Le serveur a éprouvé un problème dans le traitement du fichier qui a été téléchargé. Veuillez tenter de copier vos données dans la version la plus récente du modèle et de télécharger le tout de nouveau. Si ce problème persiste, envoyez votre fichier Excel à open-ouvert@… afin que nous puissions faire enquête."

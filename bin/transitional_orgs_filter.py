@@ -6,7 +6,7 @@ to another ckan instance.
 
 Usage:
 
-ckanapi dump organizations --all | ./transitional_orgs_filter.py > orgs.jsonl
+ckanapi dump organizations --all -r http://registry.data.gc.ca | bin/transitional_orgs_filter.py > transitional_orgs.jsonl
 """
 
 import sys
@@ -21,7 +21,7 @@ EXTRAS = set([
 
 users = '--users' in sys.argv
 
-for l in sys.stdin.readlines():
+for l in sys.stdin:
     o = json.loads(l)
     line = {
         "title": o["title"],

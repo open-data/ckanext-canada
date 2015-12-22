@@ -20,6 +20,7 @@ DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.ramp_base_url'
 FGP_URL_DEFAULT = 'http://localhost/'
 
+
 def may_publish_datasets(userobj=None):
     if not userobj:
         userobj = c.userobj
@@ -162,24 +163,33 @@ def is_ready_to_publish(package):
     else:
         return False
 
-def get_datapreview_ati(res_id):
-    lc = ckanapi.LocalCKAN(username=c.user)
-    results = lc.action.datastore_search(
-        resource_id=res_id,
-        sort='year desc, month desc',
-        limit=DATAPREVIEW_MAX)
-    return h.snippet('package/wet_datatable.html',
-        ds_fields=results['fields'], ds_records=results['records'])
+def get_datapreview_recombinant(dataset_type, res_id):
+    from ckanext.recombinant.plugins import get_table
+    t = get_table(dataset_type)
+    default_preview_args = {}
+    if 'default_preview_sort' in t:
+        default_preview_args['sort'] = t['default_preview_sort']
 
-def get_datapreview_contracts(res_id):
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
-        resource_id=res_id,
-        sort='contract_period_start desc, contract_period_end desc',
-        limit=DATAPREVIEW_MAX)
+        resource_id=res_id, limit=0,
+        **default_preview_args)
+
+    lang = h.lang()
+    field_label = {}
+    for f in t['fields']:
+        label = f['label'].split(' / ')
+        label = label[0] if lang == 'en' else label[-1]
+        field_label[f['datastore_id']] = label
+    fields = [{
+        'type': f['type'],
+        'id': f['id'],
+        'label': field_label.get(f['id'], f['id'])}
+        for f in results['fields']]
+
     return h.snippet('package/wet_datatable.html',
-        ds_fields=results['fields'], ds_records=results['records'])
+        resource_id=res_id,
+        ds_fields=fields)
 
 def fgp_url():
     return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
-

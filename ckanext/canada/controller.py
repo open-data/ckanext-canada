@@ -20,6 +20,8 @@ from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
+from ckanapi import LocalCKAN, NotFound, NotAuthorized
+
 class CanadaController(BaseController):
     def view_guidelines(self):
         return render('guidelines.html')
@@ -168,6 +170,44 @@ class CanadaController(BaseController):
             h.flash_error(_('Login failed. Bad username or password.'))
             return h.redirect_to(controller='user',
                 action='login', locale=lang)
+
+    def datatable(self, resource_id):
+        echo = int(request.params['sEcho'])
+        search_text = unicode(request.params['sSearch'])
+        offset = int(request.params['iDisplayStart'])
+        limit = int(request.params['iDisplayLength'])
+        sort_cols = int(request.params['iSortingCols'])
+        if sort_cols:
+            sort_by_num = int(request.params['iSortCol_0'])
+            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
+
+        lc = LocalCKAN(username=c.user)
+
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+            )
+
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = ''
+        if sort_cols:
+            sort_str = cols[sort_by_num] + ' ' + sort_order
+
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=sort_str)
+
+        return json.dumps({
+            'sEcho': echo,
+            'iTotalRecords': unfiltered_response['total'],
+            'iTotalDisplayRecords': response.get('total', 0),
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']],
+            })
 
 class CanadaFeedController(FeedController):
     def general(self):
