@@ -26,8 +26,8 @@ presets:
   values:
     field_name: owner_org
     label:
-      en: "* Publisher"
-      fr: "* Éditeur"
+      en: "Publisher"
+      fr: "Éditeur"
     help_text:
       en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
       fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
@@ -49,8 +49,8 @@ presets:
   values:
     field_name: maintainer_email
     label:
-      en: "* Contact Email"
-      fr: "* Adresse électronique du contact"
+      en: "Contact Email"
+      fr: "Adresse électronique du contact"
     help_text:
       en: The contact person's email for the information asset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
@@ -92,11 +92,11 @@ presets:
       fr: Titre
     fluent_form_label:
       en:
-        en: "* Title English"
-        fr: "* Titre anglais"
+        en: "Title English"
+        fr: "Titre anglais"
       fr:
-        en: "* Title French"
-        fr: "* Titre français"
+        en: "Title French"
+        fr: "Titre français"
     fluent_help_text:
       en:
         en: The English name by which the information asset is known
@@ -124,11 +124,11 @@ presets:
       fr: Description
     fluent_form_label:
       en:
-        en: "* Description English"
-        fr: "* Description anglais"
+        en: "Description English"
+        fr: "Description anglais"
       fr:
-        en: "* Description French"
-        fr: "* Description français"
+        en: "Description French"
+        fr: "Description français"
     form_placeholder:
       en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
         of pollutant releases (to air, water and land), disposals and transfers for
@@ -150,8 +150,8 @@ presets:
   values:
     field_name: subject
     label:
-      en: "* Subject"
-      fr: "* Sujet"
+      en: "Subject"
+      fr: "Sujet"
     help_text:
       en: "The topic of the content of the information asset"
       fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
@@ -246,11 +246,11 @@ presets:
       fr: Mots clés
     fluent_form_label:
       en:
-        en: "* Keywords English"
-        fr: "* Mots clés anglais"
+        en: "Keywords English"
+        fr: "Mots clés anglais"
       fr:
-        en: "* Keywords French"
-        fr: "* Mots clés français"
+        en: "Keywords French"
+        fr: "Mots clés français"
 
     help_text:
       en: Commonly used words or phrases which describe the information asset, in English
@@ -338,8 +338,8 @@ presets:
       en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
       fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
     label:
-      en: "* Maintenance and Update Frequency"
-      fr: "* Fréquence mis à jour"
+      en: "Maintenance and Update Frequency"
+      fr: "Fréquence mis à jour"
     required: true
     form_snippet: select.html
     display_snippet: select.html
@@ -349,8 +349,8 @@ presets:
   values:
     field_name: date_published
     label:
-      en: "* Date Published"
-      fr: "* Date de publication"
+      en: "Date Published"
+      fr: "Date de publication"
     help_text:
       en: The date of issuance (e.g., publication) of the information asset.
       fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
@@ -378,8 +378,8 @@ presets:
   values:
     field_name: date_released
     label:
-      en: "* Date Released"
-      fr: "* Date de sortie"
+      en: "Date Released"
+      fr: "Date de sortie"
     help_text:
       en: The date on which the metadata record was released, made available, on the Open Government Portal
       fr: Date à laquelle l’enregistrement de métadonnées a été publié, rendu accessible, dans le portail du gouvernement ouvert
@@ -1752,8 +1752,8 @@ presets:
     form_snippet: license.html
     default: ca-ogl-lgo
     label:
-      en: "* Licence"
-      fr: "* Licence"
+      en: "Licence"
+      fr: "Licence"
     help_text:
       en: The specific attribution statement provided by the information provider.
       fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
@@ -1893,8 +1893,8 @@ presets:
       en: The language of the resource.
       fr: Langue de la ressource.
     label:
-      en: "* Language"
-      fr: "* Langue"
+      en: "Language"
+      fr: "Langue"
     required: true
     form_snippet: select.html
     display_snippet: select.html
@@ -1946,11 +1946,11 @@ presets:
       fr: Titre
     fluent_form_label:
       en:
-        en: "* Title English"
-        fr: "* Titre anglais"
+        en: "Title English"
+        fr: "Titre anglais"
       fr:
-        en: "* Title French"
-        fr: "* Titre français"
+        en: "Title French"
+        fr: "Titre français"
 
     help_text:
       en: An English name given to the resource.
@@ -1970,8 +1970,8 @@ presets:
       en: Download URL
       fr: URL de téléchargement
     upload_label:
-      en: "* File Upload"
-      fr: "* Téléchargement du fichier"
+      en: "File Upload"
+      fr: "Téléchargement du fichier"
     help_text:
       en: The location for online access to the distribution of the resource.
       fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
@@ -2000,8 +2000,8 @@ presets:
       fr: Format du fichier, support physique ou dimensions de la ressource
     field_name: format
     label:
-      en: "* Format"
-      fr: "* Format"
+      en: "Format"
+      fr: "Format"
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -2219,8 +2219,8 @@ presets:
       fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
     field_name: resource_type
     label:
-      en: "* Content Type"
-      fr: "* Type de content"
+      en: "Content Type"
+      fr: "Type de content"
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
