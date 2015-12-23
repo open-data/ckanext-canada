@@ -55,6 +55,10 @@ resource_fields:
       en: Strategic plan
       fr: Plan stratégique
     value: file
+  - label:
+      en: Briefing material
+      fr: Documentation de briefing
+    value: file_brief
 - preset: canada_resource_format
   choices:
   - label: EPUB3
@@ -72,6 +76,9 @@ resource_fields:
   - label: PDF
     openness_score: 1
     value: PDF
+  - label: HTML
+    openness_score: 1
+    value: HTML
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url
