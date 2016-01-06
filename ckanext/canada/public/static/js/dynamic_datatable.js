@@ -15,7 +15,7 @@ function dynamicDatatableFixColumns(oSettings) {
 
 var $table = $('#dtprv');
 var poll = setInterval( function(){
-  if ($.fn.DataTable) {
+  if ($.fn.DataTable && $table.hasClass('dataTable') ) {
     $table.dataTable($.extend($table.data('wet-boew'), {
       bDestroy:true,
       fnDrawCallback: dynamicDatatableFixColumns
