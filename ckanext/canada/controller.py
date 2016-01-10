@@ -303,7 +303,7 @@ class PublishController(PackageController):
 
         #always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
-        return 'dataset'
+        return 'info'
 
     def publish(self):
         packages = []
