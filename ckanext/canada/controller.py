@@ -306,10 +306,8 @@ class PublishController(PackageController):
         return 'dataset'
 
     def publish(self):
-        packages = list()
-
-        #open a new revision, so we can publish everything in one clean activity
-        model.repo.new_revision()
+        packages = []
+        lc = LocalCKAN(username=c.user)
 
         publish_date = date_str_to_datetime(request.str_POST['publish_date']
             ).strftime("%Y-%m-%d %H:%M:%S")
@@ -317,12 +315,10 @@ class PublishController(PackageController):
         #get a list of package id's from the for POST data
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
-                package_instance = model.Package.get(package_id)
-                #change portal release date
-                package_instance.extras['portal_release_date'] = publish_date
-
-        #close the revision, commit to database
-        model.Session.commit()
+                lc.action.package_patch(
+                    id=package_id,
+                    portal_release_date=publish_date,
+                    )
 
         #return us to the publishing interface
         url = h.url_for(controller='ckanext.canada.controller:PublishController',
