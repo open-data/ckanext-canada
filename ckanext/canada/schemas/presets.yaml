@@ -86,9 +86,12 @@ presets:
     help_text:
       en: The date the dataset may be published on the Open Data Portal
       fr: La date que le jeu de données peut être publier sur le portail Données Ouvertes
-    preset: date
-    form_snippet: date.html
+    form_snippet: portal_release_date.html
     display_snippet: date.html
+
+    # order is very important here:
+    validators: protect_portal_release_date ignore_empty isodate
+      convert_to_json_if_date
 
 
 - preset_name: canada_digital_object_identifier

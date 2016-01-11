@@ -2,6 +2,7 @@
 
 from pylons.i18n import _
 from ckan.plugins.toolkit import get_validator, Invalid, missing
+from ckan.lib.navl.validators import StopOnError
 from ckan.new_authz import is_sysadmin
 from ckan import model
 
@@ -33,13 +34,15 @@ def protect_portal_release_date(key, data, errors, context):
     if may_publish_datasets(user):
         return
 
-    if value == '':
+    if not value:
         # silently replace with the old value when none is sent
         data[key] = original
         return
 
-    raise Invalid('Cannot change value of key from %s to %s. '
-                  'This key is read-only' % (original, value))
+    errors[key].append("Cannot change value of key from '%s' to '%s'. "
+        'This key is read-only' % (original, value))
+
+    raise StopOnError
 
 
 def canada_tags(value, context):
