@@ -1,20 +1,23 @@
 {% extends '/package/search.html' %}
 
 {% block primary_content %}
+
+{% resource 'js/check_all.js' %}
+
   <section role="main" id="search-results">
     <div class="module-poster">
       <form id="dataset-search" class="dataset-search clearfix" method="get" data-module="select-switch" role="search">
         <div id="search">
           <label for="q">{{_('Search Datasets')}}</label>
           <input type="text" class="search" name="q" id="q" value="{{ c.q }}" autocomplete="off" placeholder="{{ _('Search...') }}" size="45"/>
-          
+
           {% block suggest_a_dataset_button %}{% endblock %}
         </div>
 
         {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
-        
+
         <button type="submit" class="button button-large button-accent" value="{{ _('Search') }}">{{ _('Submit') }}</button>
-        
+
         {% if c.fields -%}
           <span>
             {{ form.hidden_from_list(fields=c.fields) }}
@@ -79,17 +82,4 @@
 
 {% block extra_facets %}
   {# we want this to be empty. we don't want to show the publish/pending facet on the publish interface #}
-{% endblock %}
-
-{# block scripts %}
-{{ super() }}
-{% resource 'js/check_all.js' %}
-{% endblock #}
-
-{% block page_extra_scripts %}
-    <!--[if gte IE 9 | !IE ]><!-->
-    <script src="{{ h.url_for_static('/static/js/check_all.js') }}" type="text/javascript"></script>
-    <!--<![endif]--><!--[if lt IE 9]>
-    <script src="{{ h.url_for_static('/static/js/check_all.js') }}"></script>
-    <![endif]-->
 {% endblock %}

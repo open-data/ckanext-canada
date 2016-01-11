@@ -145,19 +145,11 @@ def parse_release_date_facet(facet_results):
                       'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
     return facet_dict
-    
+
 def is_ready_to_publish(package):
-    portal_release_date = None
-    for e in package['extras']:
-        if e['key'] == 'ready_to_publish':
-            ready_to_publish = e['value']
-            continue
-        elif e['key'] == 'portal_release_date':
-            portal_release_date = e['value']
-            continue
-            
-    #if datetime.datetime.strptime(portal_release_date, "%Y-%m-%d %H:%M:%S") < datetime.datetime.now():
-    
+    portal_release_date = package.get('portal_release_date')
+    ready_to_publish = package['ready_to_publish']
+
     if ready_to_publish == 'true' and not portal_release_date:
         return True
     else:

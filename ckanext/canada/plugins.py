@@ -286,16 +286,16 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr')
         data_dict['catalog_type'] = data_dict.get('type', '')
-        
+
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
 
-        if 'portal_release_date' in data_dict:
+        if data_dict.get('portal_release_date'):
             data_dict.pop('ready_to_publish', None)
-        elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+        elif data_dict.get('ready_to_publish') == 'true':
             data_dict['ready_to_publish'] = 'true'
         else:
             data_dict['ready_to_publish'] = 'false'
-        
+
         return data_dict
 
     def before_view(self, pkg_dict):

@@ -40,6 +40,7 @@ dataset_fields:
 - preset: canada_jurisdiction
 - preset: canada_license_id
 - preset: canada_ready_to_publish
+- preset: canada_portal_release_date
 
 #
 #   RESOURCE FIELDS
@@ -82,7 +83,3 @@ resource_fields:
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url
-  form_snippet: upload_only.html
-  label:
-    en: "File Upload"
-    fr: "Téléchargement du fichier"
