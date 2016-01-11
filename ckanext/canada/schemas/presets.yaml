@@ -89,6 +89,8 @@ presets:
     preset: date
     form_snippet: date.html
     display_snippet: date.html
+    validators: scheming_required isodate protect_portal_release_date
+      convert_to_json_if_date
 
 
 - preset_name: canada_digital_object_identifier
