@@ -34,7 +34,7 @@ def protect_portal_release_date(key, data, errors, context):
     if may_publish_datasets(user):
         return
 
-    if value == '':
+    if not value:
         # silently replace with the old value when none is sent
         data[key] = original
         return
