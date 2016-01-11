@@ -89,7 +89,7 @@ presets:
     preset: date
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate protect_portal_release_date
+    validators: scheming_required protect_portal_release_date isodate
       convert_to_json_if_date
 
 
