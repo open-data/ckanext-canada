@@ -38,7 +38,7 @@ def protect_portal_release_date(key, data, errors, context):
         data[key] = original
         return
 
-    raise Invalid('Cannot change value of key from %s to %s. '
+    raise Invalid("Cannot change value of key from '%s' to '%s'. "
                   'This key is read-only' % (original, value))
 
 
