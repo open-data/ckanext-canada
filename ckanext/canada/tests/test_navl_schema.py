@@ -32,6 +32,7 @@ class TestNAVLSchema(FunctionalTestBase):
             'type': 'dataset',
             'title': {'en': u'A Novel By Tolstoy'},
             'license_id': 'ca-ogl-lgo',
+            'ready_to_publish': 'true',
             'resources': [{
                 'name': {'en': u'Full text.', 'fr': u'Full text.'},
                 'format': u'TXT',
