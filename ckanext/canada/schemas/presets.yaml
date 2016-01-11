@@ -87,7 +87,7 @@ presets:
       en: The date the dataset may be published on the Open Data Portal
       fr: La date que le jeu de données peut être publier sur le portail Données Ouvertes
     preset: date
-    form_snippet: date.html
+    form_snippet: portal_release_date.html
     display_snippet: date.html
     validators: scheming_required protect_portal_release_date isodate
       convert_to_json_if_date
