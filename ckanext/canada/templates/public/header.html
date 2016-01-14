@@ -8,4 +8,8 @@
     ('about', _('About')),
     ('info_new', _('Add Asset')),
   ) }}
+  {% if c.userobj.sysadmin %}
+    <li><a href="{{ h.url_for(controller='ckanext.canada.controller:PublishController', action='search') }}">
+      {{ _('Publish Assets') }}</a></li>
+  {% endif %}
 {% endblock %}
