@@ -36,7 +36,7 @@ function updateCartUI()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").attr("disabled", "disabled");
 		$(".ogscartplotbtn").attr("disabled", "disabled");
-		$(".ogscarttally").text(' Shopping Cart is Empty');
+		$(".ogscarttally").text(' '+i18n["OGSCart_empty"][wb.lang]);
 	}
 	else if(OGSMapsChecked_ids.length >= OGSMapsMaxCart)
 	{
@@ -45,7 +45,7 @@ function updateCartUI()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").removeAttr("disabled");
 		$(".ogscartplotbtn").removeAttr("disabled");
-		$(".ogscarttally").text(' Shopping Cart is Full');
+		$(".ogscarttally").text(' '+i18n["OGSCart_full"][wb.lang]');
 		cart_full = true
 	}
 	else
@@ -55,7 +55,7 @@ function updateCartUI()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").removeAttr("disabled");
 		$(".ogscartplotbtn").removeAttr("disabled");
-		$(".ogscarttally").text(' Shopping Cart ('+OGSMapsChecked_ids.length+' of '+OGSMapsMaxCart+')');
+		$(".ogscarttally").text(' '+i18n["OGSCart_has"][wb.lang]+' ('+OGSMapsChecked_ids.length+' '+i18n["OGSCart_of"][wb.lang]+' '+OGSMapsMaxCart+')');
 	}
 
 	$(".ogscartbtn").each(function() {
