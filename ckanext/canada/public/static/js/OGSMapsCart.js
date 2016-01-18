@@ -45,7 +45,7 @@ function updateCartUI()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").removeAttr("disabled");
 		$(".ogscartplotbtn").removeAttr("disabled");
-		$(".ogscarttally").text(' '+i18n["OGSCart_full"][wb.lang]');
+		$(".ogscarttally").text(' '+i18n["OGSCart_full"][wb.lang]);
 		cart_full = true
 	}
 	else
