@@ -27,6 +27,8 @@ PAST_RE = (r'^'
     r'(?:(\d+)m)?' # minutes
     r'$')
 
+DATASET_TYPES = 'info', 'dataset'
+
 class CanadaCommand(CkanCommand):
     """
     CKAN Canada Extension
@@ -304,7 +306,7 @@ class CanadaCommand(CkanCommand):
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
-            if source_pkg and source_pkg['type'] != 'dataset':
+            if source_pkg and source_pkg['type'] not in DATASET_TYPES:
                 # non-default dataset types ignored
                 source_pkg = None
 
