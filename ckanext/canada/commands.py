@@ -27,6 +27,8 @@ PAST_RE = (r'^'
     r'(?:(\d+)m)?' # minutes
     r'$')
 
+DATASET_TYPES = 'info', 'dataset'
+
 class CanadaCommand(CkanCommand):
     """
     CKAN Canada Extension
@@ -304,7 +306,7 @@ class CanadaCommand(CkanCommand):
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
 
-            if source_pkg and source_pkg['type'] != 'dataset':
+            if source_pkg and source_pkg['type'] not in DATASET_TYPES:
                 # non-default dataset types ignored
                 source_pkg = None
 
@@ -399,7 +401,7 @@ def _trim_package(pkg):
             'num_tags', 'num_resources', 'maintainer',
             'isopen', 'relationships_as_object', 'license_title',
             'license_title_fra', 'license_url_fra', 'license_url',
-            'maintainer_email', 'author',
+            'author',
             'groups', # just because we don't use them
             'relationships_as_subject', 'department_number',
             # FIXME: remove these when we can:
@@ -421,7 +423,7 @@ def _trim_package(pkg):
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
-    for k in ['ready_to_publish', 'private']:
+    for k in ['private']:
         pkg[k] = boolean_validator(unicode(pkg.get(k, '')), None)
     if 'name' not in pkg:
         pkg['name'] = pkg['id']
