@@ -1,4 +1,3 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/canada_read.html' as cr %}
 
 {% set facet_name = title + 's' %}
@@ -11,31 +10,31 @@
     {% if items %}
       <nav>
         <ul class="list-unstyled" style="margin-left: 7px;">
-          
+
           {% set fr = h.parse_release_date_facet(facet_range) %}
-          
+
           <!-- Published -->
           {% if fr['published'] %}
             {% set href = h.add_url_param(new_params={facet_range_name: fr['published'].url_param}, extras=extras, alternative_url=alternative_url) %}
-          
+
             <li class="nav-item facet-item">
               <a href="{{ href }}">
                 <span>{{ _('Published') }} ({{ fr['published'].count }})</span>
               </a>
             </li>
           {% endif %}
-          
+
           <!-- Scheduled -->
           {% if fr['scheduled'] %}
             {% set href = h.add_url_param(new_params={facet_range_name: fr['scheduled'].url_param}, extras=extras, alternative_url=alternative_url) %}
-          
+
             <li class="nav-item facet-item">
               <a href="{{ href }}">
                 <span>{{ _('Scheduled') }} ({{ fr['scheduled'].count }})</span>
               </a>
             </li>
           {% endif %}
-          
+
           {% for item in items %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label = 'Pending' if item.display_name == 'true' else 'Draft' %}
@@ -49,18 +48,6 @@
         </ul>
       </nav>
       <ul style="margin-left: 15px;" class="list-unstyled">
-          {% if items | count > 1 %}
-            {% if h.get_param_int('_%s_limit' % name) %}
-              <li><a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
-                 class="read-more" title="{{_('Show more')}} {{facet_name}}">
-                <span class="glyphicon glyphicon-chevron-down"></span> {{ _('Show more')}}</a></li>
-            {% else %}
-              <li><a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
-                 class="read-more" title="{{_('Show less')}} {{facet_name}}">
-                <span class="glyphicon glyphicon-chevron-up"></span> {{ _('Show less') }}</a></li>
-            {% endif %}
-          {% endif %}
-
         <li><a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action"
                title="{{_('Clear All')}} {{facet_name}}">
           <span class="glyphicon glyphicon-remove"></span> {{ _('Clear All') }}</a></li>
@@ -69,7 +56,7 @@
         <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
       {% endif %}
 
-      
+
     </div>
   </div>
 {% endwith %}
