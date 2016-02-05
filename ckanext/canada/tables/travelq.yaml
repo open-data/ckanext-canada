@@ -2,6 +2,8 @@ dataset_type: travelq
 target_dataset: travelq
 
 title: Travel Expenditures
+notes: This dataset includes all of the reports on travel expenditures
+       incurred within your organization.
 
 resources:
 - title: Travel Expenditures
@@ -96,3 +98,19 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FF90C3D4
+
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
