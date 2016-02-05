@@ -698,133 +698,133 @@
     xls_column_width: 20
 
   - datastore_id: public_servant_current_year
-    label: Travel: Public Servants (Current Year) / Voyages : fonctionnaires (exercice en cours)
+    label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: public_servant_previous_year
-    label: Travel: Public Servants (Previous Year) / Voyages : fonctionnaires (exercice précédent)
+    label: Travel - Public Servants (Previous Year) / Voyages - fonctionnaires (exercice précédent)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: public_servant_change
-    label: Travel: Public Servants (Change) / Voyages : fonctionnaires (modification)
+    label: Travel - Public Servants (Change) / Voyages - fonctionnaires (modification)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: non_public_servant_current_year
-    label: Travel: Non-Public Servants (Current Year) / Voyages : non-fonctionnaires (exercice en cours)
+    label: Travel - Non-Public Servants (Current Year) / Voyages - non-fonctionnaires (exercice en cours)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: non_public_servant_previous_year
-    label: Travel: Non-Public Servants (Previous Year) / Voyages : non-fonctionnaires (exercice précédent)
+    label: Travel - Non-Public Servants (Previous Year) / Voyages - non-fonctionnaires (exercice précédent)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: non_public_servant_change
-    label: Travel: Public Servants (Change) / Voyages : non-fonctionnaires (modification)
+    label: Travel - Public Servants (Change) / Voyages - non-fonctionnaires (modification)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_travel_current_year
-    label: Total Travel: Current Year / Total des dépenses de voyage : exercice en cours
+    label: Total Travel: - Current Year / Total des dépenses de voyage - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_travel_previous_year
-    label: Total Travel: Previous Year / Total des dépenses de voyage : exercice précédent
+    label: Total Travel - Previous Year / Total des dépenses de voyage - exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_travel_change
-    label: Total Travel: Change / Total des dépenses de voyage : modification
+    label: Total Travel - Change / Total des dépenses de voyage - modification
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: hospitality_current_year
-    label: Hospitality: Current Year / Accueil : exercice en cours
+    label: Hospitality - Current Year / Accueil - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: hospitality_previous_year
-    label: Hospitality: Previous Year / Accueil : exercice précédent
+    label: Hospitality - Previous Year / Accueil - exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: hospitality_change
-    label: Hospitality: Change / Accueil : modification
+    label: Hospitality - Change / Accueil - modification
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: conference_fees_current_year
-    label: Conference Fees: Current Year / Frais de conférence : exercice en cours
+    label: Conference Fees - Current Year / Frais de conférence - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: conference_fees_previous_year
-    label: Conference Fees: Previous Year / Frais de conférence : exercice précédent
+    label: Conference Fees - Previous Year / Frais de conférence - exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: conference_fees_change
-    label: Conference Fees: Change / Frais de conférence : modification
+    label: Conference Fees - Change / Frais de conférence - modification
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_current_year
-    label: Total: Current Year / Total : exercice en cours
+    label: Total - Current Year / Total - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_previous_year
-    label: Total: Previous Year / Total : exercice précédent
+    label: Total - Previous Year / Total - exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: total_change
-    label: Total: Change / Total : modification
+    label: Total - Change / Total - modification
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: minister_current_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel): Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) : exercice en cours
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: minister_previous_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel): Previous Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans la catégorie des voyages des non-fonctionnaires) : exercice précédent
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Previous Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans la catégorie des voyages des non-fonctionnaires) - exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: minister_change
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel): Change / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) : modification
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Change / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - modification
     datastore_type: text
     xls_column_width: 20
 
 
   - datastore_id: public_servant_compared_fiscal_year
-    label: Travel: Public Servants (Current Year) / Voyages : fonctionnaires (exercice en cours)
+    label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year
-    label: Travel: Non-Public Servants (Current Year) / Voyages : non-fonctionnaires (exercice en cours)
+    label: Travel - Non-Public Servants (Current Year) / Voyages - non-fonctionnaires (exercice en cours)
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year
-    label: Hospitality: Current Year / Accueil : exercice en cours
+    label: Hospitality - Current Year / Accueil - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year
-    label: Conference Fees: Current Year / Frais de conférence : exercice en cours
+    label: Conference Fees - Current Year / Frais de conférence - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: minister_compared_fiscal_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel): Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) : exercice en cours
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice en cours
     datastore_type: text
     xls_column_width: 20
 
