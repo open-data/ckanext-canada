@@ -2,6 +2,12 @@ dataset_type: ati
 target_dataset: ati
 
 title: ATI Summaries
+notes: This dataset houses all of your completed ATI summaries.
+       This is where you upload all of your ATI summaries.
+       This dataset houses all of the months where you had nothing to
+       report regarding completed ATI requests. This is where you
+       explicitly identify which month your organization had nothing
+       to report.
 
 resources:
 - title: ATI Summaries
@@ -24,12 +30,12 @@ resources:
     datastore_type: text
     excel_column_width: 38
 
-  - datastore_id: summary_eng
+  - datastore_id: summary_en
     label: English Summary
     datastore_type: text
     excel_column_width: 41
 
-  - datastore_id: summary_fra
+  - datastore_id: summary_fr
     label: French Summary
     datastore_type: text
     excel_column_width: 41
@@ -59,10 +65,28 @@ resources:
       fgColor: FFA1D490
   default_preview_sort: year desc, month desc
 
+  examples:
+    record:
+      disposition: Disclosed in part / Communication partielle
+      summary_fr: Copies des rapports de vérification et d’évaluation
+                  du système de gestion de la sécurité
+      month: 10
+      request_number: A-2013-00516
+      summary_en: Copies of the Safety Management System Audit and
+                  Evaluation Reports
+      year: 2014
+      pages: 779
+    filters:
+      month: 10
+      year: 2014
+    filter_one:
+      request_number: A-2013-00516
+    sort: year desc, month desc
+
 
 - title: ATI Nothing to Report
 
-  excel_sheet_name: ATI AI none
+  excel_sheet_name: ATI AI nil
   fields:
 
   - datastore_id: year
@@ -89,3 +113,14 @@ resources:
       patternType: solid
       fgColor: FFA1D490
   default_preview_sort: year desc, month desc
+
+  examples:
+    record:
+      month: 10
+      year: 2014
+    filters:
+      year: 2014
+    filter_one:
+      month: 10
+      year: 2014
+    sort: year desc, month desc
