@@ -627,8 +627,13 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: prog_name
-    label: Program Name / Nom du programme
+  - datastore_id: prog_name_en
+    label: Program Name
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: prog_name_fr
+    label: Nom du programme
     datastore_type: text
     xls_column_width: 20
 
@@ -637,13 +642,23 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: proj_name
-    label: Project Name / Nom du bénéficiaire
+  - datastore_id: proj_name_en
+    label: Project Name
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: recipient_name
-    label: Recipient Name / Nom du récipient
+  - datastore_id: proj_name_fr
+    label: Nom du bénéficiaire
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: recipient_name_en
+    label: Recipient Name
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: recipient_name_fr
+    label: Nom du récipient
     datastore_type: text
     xls_column_width: 20
 
@@ -703,8 +718,13 @@
     datastore_type: text
     xls_column_width: 41
 
-  - datastore_id: additional_info
-    label: Additional Information / Informations supplémentaires
+  - datastore_id: additional_info_en
+    label: Additional Information
+    datastore_type: text
+    xls_column_width: 41
+
+  - datastore_id: additional_info_fr
+    label: Informations supplémentaires
     datastore_type: text
     xls_column_width: 41
 
