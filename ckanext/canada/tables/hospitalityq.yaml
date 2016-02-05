@@ -1,0 +1,80 @@
+- dataset_type: hospitalityq
+  target_dataset: hospitalityq
+  title: Hospitality | Accueil
+  excel_sheet_name: hospitalityq
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: name
+    label: Name / Nom
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: title
+    label: Title / Titre
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description
+    label: Description / Description
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: attendees
+    label: Attendee(s) / Participant(s)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: location
+    label: Location / Lieu
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount / Montant total
+    datastore_type: text
+    excel_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_info: [dept_id, null, name, title]
+  excel_organization_style: "pattern: pattern solid, fore_color gray25;"
+  excel_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
+
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+
+

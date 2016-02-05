@@ -569,6 +569,86 @@ msgstr "Compte créé"
 msgid "Your file was successfully uploaded into the central system."
 msgstr "Votre fichier a été téléchargé avec succès dans le système central."
 
+msgid "ATI Summaries"
+msgstr "Sommaires d’AI"
+
+msgid "This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries."
+msgstr "Ce jeux de données contient tous vos sommaires d'AI completé. Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici."
+
+msgid "ATI Nothing to Report"
+msgstr "AI rien à déclarer"
+
+msgid "This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report."
+msgstr "Ce jeux de données contient tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées. C'est là que vous identifier explicitement les mois, votre organisation a rien à signaler."
+
+msgid "Year"
+msgstr "Année"
+
+msgid "Month (1-12)"
+msgstr "Mois (1-12)"
+
+msgid "Request Number"
+msgstr "Numero de la demande"
+
+msgid "English Summary"
+msgstr "Sommaire de la demande en anglais"
+
+msgid "French Summary"
+msgstr "Sommaire de la demande en français"
+
+msgid "Number of Pages"
+msgstr "Nombre de pages"
+
+msgid "Travel Expenditures"
+msgstr "Dépenses de voyages"
+
+msgid "Reference Number"
+msgstr "Numéro de référence"
+
+# this might be too broad (CKAN translates to "Titre")
+msgid "Name"
+msgstr "Nom"
+
+msgid "Purpose of Travel"
+msgstr "But du voyage"
+
+msgid "Airfare"
+msgstr "Frais aériens"
+
+msgid "Other transportation"
+msgstr "Autres frais de transport"
+
+msgid "Accommodation"
+msgstr "Autres frais de transport"
+
+msgid "Meals and incidentals"
+msgstr "Frais de repas et frais accessoires"
+
+msgid "Other expenses"
+msgstr "Autres dépenses"
+
+msgid "Total Amount"
+msgstr "Montant total"
+
+msgid "$0 - $249.99"
+msgstr "0 $ - 249,99 $"
+
+msgid "$250 - $499.99"
+msgstr "250 $ - 499,99 $"
+
+msgid "$500 - $999.99"
+msgstr "500 $ - 999,99 $"
+
+msgid "$1,000 - $4,999.99"
+msgstr "1 000 $ - 4 999,99 $"
+
+msgid "$5,000 - $24,999.99"
+msgstr "5 000 $ - 24 999,99 $"
+
+msgid "$25,000+"
+msgstr "25 000 $ +"
+
+
 msgid "Resources associates with this dataset."
 msgstr "Ressources associés avec cet ensemble de données."
 
@@ -603,3 +683,5 @@ msgstr "Le nom de la feuille '{0}' n'a pas été trouvé dans la liste des table
 
 msgid "The server encountered a problem processing the file uploaded. Please try copying your data into the latest version of the template and uploading again. If this problem continues, send your Excel file open-ouvert@tbs-sct.gc.ca so we may investigate."
 msgstr "Le serveur a éprouvé un problème dans le traitement du fichier qui a été téléchargé. Veuillez tenter de copier vos données dans la version la plus récente du modèle et de télécharger le tout de nouveau. Si ce problème persiste, envoyez votre fichier Excel à open-ouvert@… afin que nous puissions faire enquête."
+
+
