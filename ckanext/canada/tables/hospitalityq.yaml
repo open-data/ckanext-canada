@@ -1,12 +1,12 @@
 dataset_type: hospitalityq
 target_dataset: hospitalityq
 
-title: Hospitality
+title: Proactive Disclosure - Hospitality
 notes: This dataset includes all of the reports on hospitality expenses
        incurred within your organization.
 
 resources:
-- title: Hospitality
+- title: Proactive Disclosure - Hospitality
   excel_sheet_name: hospitalityq
   fields:
 
@@ -70,7 +70,6 @@ resources:
   excel_organization_info: [dept_id, null, name, title]
   excel_organization_style: "pattern: pattern solid, fore_color gray25;"
   excel_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
-
   excel_organization_style:
     PatternFill:
       patternType: solid
