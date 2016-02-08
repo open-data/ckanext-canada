@@ -133,6 +133,16 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
+        config['recombinant.tables'] = """
+ckanext.canada:tables/ati.yaml
+ckanext.canada:tables/contracts.yaml
+ckanext.canada:tables/grants.yaml
+ckanext.canada:tables/hospitalityq.yaml
+ckanext.canada:tables/reclassification.yaml
+ckanext.canada:tables/travela.yaml
+ckanext.canada:tables/travalq.yaml
+ckanext.canada:tables/wrongdoing.yaml
+"""
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
