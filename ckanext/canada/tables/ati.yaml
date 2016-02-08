@@ -12,7 +12,7 @@ notes: This dataset houses all of your completed ATI summaries.
 resources:
 - title: ATI Summaries
 
-  excel_sheet_name: ATI AI
+  sheet_name: ati
   fields:
 
   - datastore_id: year
@@ -86,7 +86,7 @@ resources:
 
 - title: ATI Nothing to Report
 
-  excel_sheet_name: ATI AI nil
+  sheet_name: ati-nil
   fields:
 
   - datastore_id: year
