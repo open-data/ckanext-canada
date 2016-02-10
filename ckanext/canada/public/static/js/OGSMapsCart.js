@@ -19,6 +19,11 @@ function cleanCart()
 	// Adapt for the cookie
 	if(OGSMapsChecked_ids.length === 0)
 	{ OGSMapsChecked_ids = [] }
+
+	if(OGSMapsChecked_ids.length === 0)
+	{ $(".ogscartwrapper").hide() }
+	else
+	{ $(".ogscartwrapper").show() }
 }
 
 function updateCartUI()
