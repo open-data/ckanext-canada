@@ -848,6 +848,13 @@
     datastore_type: text
     xls_column_width: 20
 
+  - datastore_id: date
+    label: Date / Date
+    datastore_type: date
+    xls_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
   - datastore_id: public_servant_current_year
     label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
     datastore_type: text
