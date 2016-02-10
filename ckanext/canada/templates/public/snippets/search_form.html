@@ -12,9 +12,11 @@
   {% endif %}
   </div>
 </div>
-<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
-<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
-<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs"><span class="fa fa-globe"></span> {{ _('Plot Cart Items on a Map') }}</a>
-<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
+<span class="ogscartwrapper">
+	<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
+	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
+	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs"><span class="fa fa-globe"></span> {{ _('Plot Cart Items on a Map') }}</a>
+	<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
+</span>
 
 {% endblock %}
