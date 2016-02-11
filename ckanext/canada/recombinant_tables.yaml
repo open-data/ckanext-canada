@@ -843,11 +843,6 @@
   xls_sheet_name: travela
   fields:
 
-  - datastore_id: ref_number
-    label: Reference Number / Numéro de référence
-    datastore_type: text
-    xls_column_width: 20
-
   - datastore_id: date
     label: Date / Date
     datastore_type: date
