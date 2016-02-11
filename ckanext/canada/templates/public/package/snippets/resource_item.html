@@ -18,16 +18,22 @@
   
   <td>
     {{ _(cr.lookup_field(format_field, res, client_lang)) }}
+    <br><font color="red">what value for cr.lookup_field?</font>
+  </td>
+
+  <td>
+    {{ _(cr.lookup_field(format_field, res, client_lang)) }}
   </td>
 
   <td>
     {{ _(cr.lookup_field(lang_field, res, client_lang)) }}
+    <br><font color="red">test bilingual res</font>    
   </td>
   
   <td>
 
     <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
-        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Download') }}</a>
+        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Access') }}</a>
 
     {% if res.webstore_last_updated %}
     &nbsp;
