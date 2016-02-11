@@ -880,6 +880,21 @@
     datastore_type: text
     xls_column_width: 20
 
+  - datastore_id: minister_current_year
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice en cours
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: minister_previous_year
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Previous Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans la catégorie des voyages des non-fonctionnaires) - exercice précédent
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: minister_change
+    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Change / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - modification
+    datastore_type: text
+    xls_column_width: 20
+
   - datastore_id: total_travel_current_year
     label: Total Travel - Current Year / Total des dépenses de voyage - exercice en cours
     datastore_type: text
@@ -939,22 +954,6 @@
     label: Total - Change / Total - modification
     datastore_type: text
     xls_column_width: 20
-
-  - datastore_id: minister_current_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice en cours
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: minister_previous_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Previous Year / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans la catégorie des voyages des non-fonctionnaires) - exercice précédent
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: minister_change
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Change / Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - modification
-    datastore_type: text
-    xls_column_width: 20
-
 
   - datastore_id: public_servant_compared_fiscal_year
     label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
