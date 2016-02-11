@@ -36,6 +36,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       <li class="list-group-item"><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
         <br/>
         {{ cr.org_field(pkg, client_lang) }}
+        <font color="red">Is pkg appropriate for org_field()?</font>
       </li>
       
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
@@ -45,12 +46,20 @@ Remove the markdown_extract call because our notes is a dict not a string:
         </small>
       </li>
 
+      {# We are not showing subjects for Open Maps, is this true across core?
       {% set subjects = schema_description.dataset_field_by_id['subject'] %}
       <li class="list-group-item"><b>{{ cr.field_label(subjects, client_lang) }}:</b>
         <small>
         {{ cr.subject_field(subjects, pkg, client_lang) }}
         </small>
       </li>
+      #}
+
+      <li class="list-group-item" style="background-color:#FFC0CB"><b>Topic Category:</b>
+        <small>
+        {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
+        </small>
+      </li>      
 
       {% set date_published = schema_description.dataset_field_by_id['date_published'] %}
       <li class="list-group-item"><b>{{ cr.field_label(date_published, client_lang) }}:</b>
@@ -63,15 +72,18 @@ Remove the markdown_extract call because our notes is a dict not a string:
       <li class="list-group-item"><b>{{ cr.field_label(date_modified, client_lang) }}:</b>
         {% if cr.date_field(date_modified, pkg) != 'None' %}
           <p>{{ cr.date_field(date_modified, pkg) }}</p>
+          <font color="red">Is date_modified appropriate for date_field()?</font>
         {% endif %}
       </li>
       
+      {# We are not showing Program Page URL for Open Maps, is this true across core?
       {% set program_url = schema_description.dataset_field_by_id['url'] %}
       <li class="list-group-item"><b>{{ cr.field_label(program_url, client_lang) }}:</b>
         {% if cr.field(program_url, pkg, client_lang) != '' %}
           <a href="{{ cr.field(program_url, pkg, client_lang) }}">{{ _('Program Page') }}</a>
         {% endif %}
       </li>
+      #}
 
       {%- set period_start = schema_description.dataset_field_by_id['time_period_coverage_start'] -%}
       {%- set start_date = cr.date_field(period_start, pkg) -%}
@@ -81,7 +93,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       {% if start_date or end_date %}
       <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
         <small>
-        {% if start_date and end_date %}
+        {% if start_date and end_date and end_date != '9999-09-09' %}
           {{ start_date }} {{ _('to') }} {{ end_date }}
         {% elif start_date %}
           {{ start_date }} {{ _('to undefined') }}
@@ -95,6 +107,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
 	  <li class="list-group-item"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
 	    {{ cr.field(frequency, pkg, client_lang) }}
+      <font color="red">Is frequency appropriate for field()?</font>
 	  </li>
                  
     </ul>
@@ -118,6 +131,19 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </ul>
       </li>
       </ul>
+
+    <ul class="list-group">
+      <li class="list-group-item" style="background-color:#FFC0CB"><b>Status:</b>
+        <small>
+        {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
+        </small>
+      </li>      
+      <li class="list-group-item" style="background-color:#FFC0CB"><b>Spatial Representation Type:</b>
+        <small>
+        {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
+        </small>
+      </li>      
+    </ul>
 
   </div>
 

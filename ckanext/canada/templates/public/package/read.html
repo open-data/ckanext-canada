@@ -141,15 +141,31 @@
 </div>
 {% endblock developer_tools %}
 
+{% block related_items %}
+<div class="span-6 margin-top-medium">
+  <h4>{{ _('Related Items') }}</h4>
+    <font color="red">
+    <ul class="list-unstyled">
+      <li class="mrgn-bttm-md"><a href="#">These related items</a></li>
+      <li class="mrgn-bttm-md"><a href="#">are part of core</a></li>
+      <li class="mrgn-bttm-md"><a href="#">CKAN 2.3 / multi-scheming</a></li>
+      <li class="mrgn-bttm-md"><a href="#">work, not as part of</a></li>
+      <li class="mrgn-bttm-md"><a href="#">Open Maps.</a></li>
+      <li class="mrgn-bttm-md"><a href="#">(Except the) HNAP Source XML</a></li>      
+    </ul>
+    </font>
+</div>
+{% endblock related_items %}
+
 {% block package_item_geo_preview %}
 {% if pkg.geographic_region or pkg.spatial %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Geographic Information') }}</h4>
+  <font color="red">Why is this h.get_map_type() == 'static'?</font>
   {% if pkg.spatial %}
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
     {% if wkt %}
       {% if h.get_map_type() == 'static' %}
-
         {% snippet 'snippets/geomap_static.html', gid=pkg['title'][client_lang], wkt=wkt %}
       {% else %}
         {% snippet 'snippets/geomap_dynamic.html', gid=pkg['title'][client_lang], wkt=wkt %}
@@ -170,6 +186,13 @@
 </div>
 {% endif %}
 {% endblock package_item_geo_preview %}
+
+{% block contact_information %}
+<div class="span-6 margin-top-medium">
+  <h4>{{ _('Contact Information') }}</h4>
+  <font color="red">Find pkg. values, how do I identify?</font>
+</div>
+{% endblock contact_information %}
 
 {% block package_comments %}
 {% include "package/comments.html" %}
