@@ -56,8 +56,10 @@ Example:
       {% if banner %}
         <span class="banner">Popular</span>
       {% endif %}
-      {% if desc %}
+      {% if desc[300:] %}
         <div>{{ desc[0:300] }}...</div>
+      {% elif desc %}
+        <div>{{ desc }}</div>
       {% else %}
         <p class="empty">{{ _("This dataset has no description") }}</p>
       {% endif %}
