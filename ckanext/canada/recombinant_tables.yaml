@@ -606,11 +606,11 @@
   default_preview_sort: contract_period_start desc, delivery_date desc
 
 
-- dataset_type: contracts-aggregated
-  target_dataset: contracts-aggregated
+- dataset_type: contractsa
+  target_dataset: contracta
   title: Aggregated Contracts from -$10K to $10K | Profil des éléments de données - Modèle des marchés annuels (de 10 000 $ à 10 000 $)
   notes: NEED CONTENT - Notes | FRENCH MISSING - notes
-  xls_sheet_name: aggregated_contracts_-$10K_to_$10K
+  xls_sheet_name: contractsa
   fields:
 
   - datastore_id: contract_goods_number_of
@@ -921,10 +921,7 @@
 
   - datastore_id: date
     label: Date / Date
-    datastore_type: date
-    xls_column_width: 20
-    extract_date_year: true
-    extract_date_month: true
+    datastore_type: text
 
   - datastore_id: public_servant_current_year
     label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
