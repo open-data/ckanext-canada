@@ -29,7 +29,6 @@ Example:
   {% set text_no_query = ungettext('{number} organization found', '{number} organizations found', count) %}
   {% set text_no_query_none = _('Sorry no organizations found') %}
 {%- endif -%}
-<font color="red">Why is "no org" not showing?</font>
 
 {% if query %}
   {%- if count -%}
