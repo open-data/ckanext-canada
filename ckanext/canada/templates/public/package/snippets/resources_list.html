@@ -1,5 +1,8 @@
 {% ckan_extends %}
 {% block resource_list_inner %}
+
+<a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs pull-right"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
+
 <table class="table table-striped">
   <thead>
     <tr>

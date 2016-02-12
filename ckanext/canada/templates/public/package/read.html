@@ -32,7 +32,7 @@
         </div>
       {% endif %} 
 
-      <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ package.name }}" class="btn btn-primary btn-xs pull-right"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}(confirm short key)</a></p>
+      <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
 
     </section>
     {%- endblock -%}
@@ -73,7 +73,7 @@
     
     <section id="dataset-resources" class="module-content indent-large">
       <div class="span-6 margin-top-medium">
-      <a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ package.name }}" class="btn btn-primary btn-xs pull-right"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}(confirm short key)</a>
+      <a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs pull-right"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
       {% if pkg.resources %}
         {% set nonapps = [] %}
         {% for resource in pkg.resources %}
