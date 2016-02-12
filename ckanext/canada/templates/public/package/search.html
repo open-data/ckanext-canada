@@ -26,6 +26,7 @@
   
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
       name='organization') }}
+    <font color="red">c.facet_titles[] not responding</font>
     
     {%- macro get_catalog_label(type, lang) -%}
        {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
@@ -50,12 +51,76 @@
     {%- macro get_subject_label(subj, lang) -%}
       {{- h.scheming_choices_label(subject_choices, subj.name) -}}
     {%- endmacro -%}
+
+    {#
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
       name='subject', label_function=get_subject_label) }}
-  
+    #}
+
+<div class="panel panel-primary">
+  <div class="panel-heading" style="background-color:#FFC0CB"><span class="glyphicon glyphicon-filter"></span> Topic Category</div>
+  <div class="panel panel-body">
+      <nav>
+        <ul class="list-unstyled" style="margin-left: 7px;">
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Need hook to data</span>
+                </a>
+              </li>         
+        </ul>
+      </nav>
+  </div>
+</div>
+
+
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
       name='res_format', label_function=cr.res_label) }}
     
+<div class="panel panel-primary">
+  <div class="panel-heading" style="background-color:#FFC0CB"><span class="glyphicon glyphicon-filter"></span> Resource Type</div>
+  <div class="panel panel-body">
+      <nav>
+        <ul class="list-unstyled" style="margin-left: 7px;">
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Need hook to data</span>
+                </a>
+              </li>         
+        </ul>
+      </nav>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading" style="background-color:#FFC0CB"><span class="glyphicon glyphicon-filter"></span> Spatial Representation Type</div>
+  <div class="panel panel-body">
+      <nav>
+        <ul class="list-unstyled" style="margin-left: 7px;">
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Need hook to data</span>
+                </a>
+              </li>         
+        </ul>
+      </nav>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading" style="background-color:#FFC0CB"><span class="glyphicon glyphicon-filter"></span> Maintenance and Update Frequency</div>
+  <div class="panel panel-body">
+      <nav>
+        <ul class="list-unstyled" style="margin-left: 7px;">
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Need hook to data</span>
+                </a>
+              </li>         
+        </ul>
+      </nav>
+  </div>
+</div>
+
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
       name='license_id', label_function=cr.license_lookup) }}
     
