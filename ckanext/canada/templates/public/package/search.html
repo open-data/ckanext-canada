@@ -32,6 +32,7 @@
        {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
     {%- endmacro -%}
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=get_catalog_label ) }}
+    <font color="red">Catalogue type to be corrected by CKAN 2.3 Core</font>
     
     {% if h.lang() == 'en' %}
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
