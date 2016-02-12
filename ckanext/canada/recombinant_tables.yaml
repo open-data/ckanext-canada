@@ -773,18 +773,28 @@
     datastore_type: text
     xls_column_width: 20
 
+  - datastore_id: prog_name_en
+    label: English Program Name / Nom du programme en anglais
+    datastore_type: text
+    xls_column_width: 20
+
+  - datastore_id: prog_name_fr
+    label: French Program Name / Nom du programme en français
+    datastore_type: text
+    xls_column_width: 20
+
   - datastore_id: prog_number
     label: Program Number / Numéro d’identification du programme
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: prog_name_en
-    label: Program Name
+  - datastore_id: proj_name_en
+    label: English Project Name / Nom du bénéficiaire en anglais
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: prog_name_fr
-    label: Nom du programme
+  - datastore_id: proj_name_fr
+    label: French Project Name / Nom du bénéficiaire en français
     datastore_type: text
     xls_column_width: 20
 
@@ -793,23 +803,13 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: proj_name_en
-    label: Project Name
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: proj_name_fr
-    label: Nom du bénéficiaire
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: recipient_name_en
-    label: Recipient Name
+  - datastore_id: recipient_name_en / Nom du récipient en anglais
+    label: English Recipient Name
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: recipient_name_fr
-    label: Nom du récipient
+    label: French Recipient Name / Nom du récipient en français
     datastore_type: text
     xls_column_width: 20
 
@@ -870,12 +870,12 @@
     xls_column_width: 41
 
   - datastore_id: additional_info_en
-    label: Additional Information
+    label: English Additional Information / Informations supplémentaires en anglais
     datastore_type: text
     xls_column_width: 41
 
   - datastore_id: additional_info_fr
-    label: Informations supplémentaires
+    label: French Additional Information / Informations supplémentaires en français
     datastore_type: text
     xls_column_width: 41
 
