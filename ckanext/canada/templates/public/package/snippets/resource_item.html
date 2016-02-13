@@ -4,6 +4,9 @@
 {% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
 {% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
+{# Previous variables from Open Maps, delete if no issue #}
+{# set size_field = schema_description.resource_field_by_id['size'] #}
+
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name') %}
 {% set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') %}

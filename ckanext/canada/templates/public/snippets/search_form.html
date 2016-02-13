@@ -4,12 +4,22 @@
 
 <div class="row mrgn-bttm-md mrgn-tp-md">
   <div class="col-md-12">
-  <label for="search_field" >{{ _('Search Assets') }}</label>
+  <label for="search_field" >{{ _('Search Datasets') }}</label>
+  {# Removed the button in Scheming, should it be added in OD specific? #}
+  {#
+  {% if h.lang() == 'en' %}
+    <a href="/en/suggested-datasets" class="btn btn-success btn-sm pull-right">Suggest a Dataset</a>
+  {% else %}
+    <a href="/fr/jeux-de-donnees-suggeres" class="btn btn-success btn-sm pull-right">Proposer un jeu de données</a>
+  {% endif %}
+  #}
   </div>
 </div>
-<!-- <span class="ogscarttally fa fa-shopping-cart"></span>
-<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs"><span class="fa fa-list-alt"></span> List Cart Items</a>
-<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs"><span class="fa fa-globe"></span> Plot Cart Items on a Map</a>
-<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs"><span class="fa fa-trash-o"></span> Dump Cart</a> -->
+<span class="ogscartwrapper">
+	<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
+	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
+	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs"><span class="fa fa-globe"></span> {{ _('Plot Cart Items on a Map') }}</a>
+	<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
+</span>
 
 {% endblock %}
