@@ -156,7 +156,7 @@ def is_ready_to_publish(package):
         return False
 
 def get_datapreview_recombinant(dataset_type, res_id):
-    from ckanext.recombinant.plugins import get_table
+    from ckanext.recombinant.tables import get_table
     t = get_table(dataset_type)
     default_preview_args = {}
     if 'default_preview_sort' in t:
