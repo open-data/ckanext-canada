@@ -148,12 +148,9 @@
   <h4>{{ _('Related Items') }}</h4>
     <font color="red">
     <ul class="list-unstyled">
-      <li class="mrgn-bttm-md"><a href="#">These related items</a></li>
-      <li class="mrgn-bttm-md"><a href="#">are part of core</a></li>
-      <li class="mrgn-bttm-md"><a href="#">CKAN 2.3 / multi-scheming</a></li>
-      <li class="mrgn-bttm-md"><a href="#">work, not as part of</a></li>
-      <li class="mrgn-bttm-md"><a href="#">Open Maps.</a></li>
-      <li class="mrgn-bttm-md"><a href="#">(Except the) HNAP Source XML</a></li>      
+      <li class="mrgn-bttm-md"><a href="#">Mock documents Revision 1</a></li>
+      <li class="mrgn-bttm-md"><a href="#">Native behaviour of MOCKing birds</a></li>
+      <li class="mrgn-bttm-md"><a href="#">HNAP ISO:19115 Record (XML)</a></li>      
     </ul>
     </font>
 </div>
@@ -163,7 +160,7 @@
 {% if pkg.geographic_region or pkg.spatial %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Geographic Information') }}</h4>
-  <font color="red">Why is this h.get_map_type() == 'static'?</font>
+  <font color="red">Need to review static/dynamic behaviour for open maps</font>
   {% if pkg.spatial %}
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
     {% if wkt %}
@@ -192,7 +189,12 @@
 {% block contact_information %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Contact Information') }}</h4>
-  <font color="red">Find pkg. values, how do I identify?</font>
+  <font color="red">Government of Canada; Natural Resources Canada; Earth Sciences Sector;
+  Postal address: 2144 King Street West, 010, Sherbrook, Quebec, Canada, J1J 2E8
+  Telephone: 1 (819) 5645600
+  Telephone: 1 (800) 6612638
+  E-mail: geoginfo@NRCan.gc.ca
+  </font>
 </div>
 {% endblock contact_information %}
 
