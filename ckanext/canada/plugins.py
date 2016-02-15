@@ -140,7 +140,7 @@ ckanext.canada:tables/grants.yaml
 ckanext.canada:tables/hospitalityq.yaml
 ckanext.canada:tables/reclassification.yaml
 ckanext.canada:tables/travela.yaml
-ckanext.canada:tables/travalq.yaml
+ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 """
 
