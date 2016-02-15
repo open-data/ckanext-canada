@@ -1054,7 +1054,7 @@
     datastore_type: text
     xls_column_width: 20
 
-  datastore_primary_key: [ref_number]
+  datastore_primary_key: [date]
   datastore_indexes: ""
 
   examples:
