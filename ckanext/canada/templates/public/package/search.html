@@ -28,8 +28,26 @@
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
       name='organization') }}
     #}
-    <font color="red">Natural Resources Canada</font>
-    
+<div class="panel panel-primary">
+  <div class="panel-heading" style="background-color:#335075"><span class="glyphicon glyphicon-filter"></span> Collection Type</div>
+  <div class="panel panel-body">
+      <nav>
+        <ul class="list-unstyled" style="margin-left: 7px;">
+
+              <li class="nav-item facet-item" >
+                <a href="/dataset?catalog_type=maps&amp;__no_cache__=True">
+                  <span><font color="red">Natural Resources Canada</font></span>
+                </a>
+              </li>
+
+       </ul>
+      </nav>
+      <ul style="margin-left: 15px;" class="list-unstyled">
+      </ul>
+  </div>
+</div>
+
+\    
     {#
     {%- macro get_catalog_label(type, lang) -%}
        {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
@@ -98,11 +116,18 @@
   <div class="panel panel-body">
       <nav>
         <ul class="list-unstyled" style="margin-left: 7px;">
+
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Form Descriptors (279000)</font></a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Nature and Environment (2)</font></a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Science and Technology (2)</font></a></li>
+
+<!--
               <li class="nav-item facet-item" >
                 <a href="#">
                   <span>Need hook to data</span>
                 </a>
               </li>         
+-->
         </ul>
       </nav>
   </div>
@@ -117,13 +142,22 @@
   <div class="panel panel-body">
       <nav>
         <ul class="list-unstyled" style="margin-left: 7px;">
-              <li class="nav-item facet-item" >
-                <a href="#">
-                  <span>Need hook to data</span>
-                </a>
-              </li>         
+
+          <li class="nav-item facet-item" ><a href="#"><span><font color="red">Application (1062)</font></span></a></li>         
+          <li class="nav-item facet-item" ><a href="#"><span><font color="red">GML (16370)</font></span></a></li>         
+          <li class="nav-item facet-item" ><a href="#"><span><font color="red">Other (1062)</font></span></a></li>         
+          <li class="nav-item facet-item" ><a href="#"><span><font color="red">PDF (27885)</font></span></a></li>         
+          <li class="nav-item facet-item" ><a href="#"><span><font color="red">SHP (27885)</font></span></a></li>         
+
         </ul>
       </nav>
+      <ul style="margin-left: 15px;" class="list-unstyled">
+        <li>
+          <a href="#" title="Show more Tagss">
+            <span class="glyphicon glyphicon-chevron-down"></span>Show more</a>
+        </li>
+      </ul>
+
   </div>
 </div>
 
@@ -132,11 +166,25 @@
   <div class="panel panel-body">
       <nav>
         <ul class="list-unstyled" style="margin-left: 7px;">
+
               <li class="nav-item facet-item" >
                 <a href="#">
-                  <span>Need hook to data</span>
+                  <span>Vector (25)</span>
                 </a>
               </li>         
+
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Grid (25)</span>
+                </a>
+              </li>         
+
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>TIN (25)</span>
+                </a>
+              </li>         
+
         </ul>
       </nav>
   </div>
@@ -147,11 +195,31 @@
   <div class="panel panel-body">
       <nav>
         <ul class="list-unstyled" style="margin-left: 7px;">
+
               <li class="nav-item facet-item" >
                 <a href="#">
-                  <span>Need hook to data</span>
+                  <span>Anual (25)</span>
                 </a>
               </li>         
+
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Bi-Anual (25)</span>
+                </a>
+              </li>         
+
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Quarterly (25)</span>
+                </a>
+              </li>         
+
+              <li class="nav-item facet-item" >
+                <a href="#">
+                  <span>Monthly (25)</span>
+                </a>
+              </li>         
+
         </ul>
       </nav>
   </div>

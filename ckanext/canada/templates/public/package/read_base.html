@@ -55,6 +55,11 @@ Remove the markdown_extract call because our notes is a dict not a string:
 
       <li class="list-group-item" style="background-color:#FFC0CB"><b>Topic Category:</b>
         <small>
+        <ul class='list-inline'>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Topic Category A</font></a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Topic Category B</font></a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Topic Category C</font></a></li>
+        </ul>
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
         </small>
       </li>      
@@ -88,6 +93,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       {% if start_date or end_date %}
       <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
         <small>
+        <font color="orange">
         {% if start_date and end_date and end_date != '9999-09-09' %}
           {{ start_date }} {{ _('to') }} {{ end_date }}
         {% elif start_date %}
@@ -95,13 +101,14 @@ Remove the markdown_extract call because our notes is a dict not a string:
         {% elif end_date %}
           {{ _('undefined to') }} {{ end_date }}
         {% endif %}
+        </font>
         </small>
       </li>
       {% endif %}
       
       {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
 	  <li class="list-group-item"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
-      <font color="red">Daily</font>
+      <font color="red">quarterly</font>
 	  </li>
                  
     </ul>
@@ -129,11 +136,13 @@ Remove the markdown_extract call because our notes is a dict not a string:
     <ul class="list-group">
       <li class="list-group-item" style="background-color:#FFC0CB"><b>Status:</b>
         <small>
+        <font color="red">Ongoing</font>
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
         </small>
       </li>      
       <li class="list-group-item" style="background-color:#FFC0CB"><b>Spatial Representation Type:</b>
         <small>
+        <font color="red">Vector</font>
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
         </small>
       </li>      
