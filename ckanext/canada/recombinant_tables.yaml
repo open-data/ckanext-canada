@@ -1031,22 +1031,22 @@
     xls_column_width: 20
 
   - datastore_id: public_servant_compared_fiscal_year
-    label: Travel - Public Servants (Current Year) / Voyages - fonctionnaires (exercice en cours)
+    label: Public Servants - Compared Fiscal Year / Voyages des fonctionnaires - comparaison avec l’exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year
-    label: Travel - Non-Public Servants (Current Year) / Voyages - non-fonctionnaires (exercice en cours)
+    label: Non-Public Servants - Compared Fiscal Year / Voyages des non-fonctionnaires - comparaison avec l’exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year
-    label: Hospitality - Current Year / Accueil - exercice en cours
+    label: Hospitality - Compared Fiscal Year / Accueil - comparaison avec l’exercice précédent
     datastore_type: text
     xls_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year
-    label: Conference Fees - Current Year / Frais de conférence - exercice en cours
+    label: Conference Fees - Compared Fiscal Year / Frais de conférence - comparaison avec l’exercice précédent
     datastore_type: text
     xls_column_width: 20
 
