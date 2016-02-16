@@ -804,8 +804,8 @@
     datastore_type: text
     xls_column_width: 20
 
-  - datastore_id: recipient_name_en / Nom du récipient en anglais
-    label: English Recipient Name
+  - datastore_id: recipient_name_en
+    label: English Recipient Name / Nom du récipient en anglais
     datastore_type: text
     xls_column_width: 20
 
