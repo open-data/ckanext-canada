@@ -94,9 +94,9 @@ Example:
           {% if package.type == 'maps' %}
             <div>
             <hr>
-            <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}" class="ogscartbtn ogscartaddbtn btn btn-success btn-xs"><span class="fa fa-plus"></span> Add To Cart</a>
-            <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}" class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs"><span class="fa fa-minus"></span> Remove From Cart</a>
-            <a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ package.name }}" id="OGSCartView_{{ package.name }}" class="ogscartviewbtn btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> View On Map</a>
+            <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}" class="ogscartbtn ogscartaddbtn btn btn-success btn-xs"><span class="fa fa-plus"></span> {{ _('Add to Cart') }}</a>
+            <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}" class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs"><span class="fa fa-minus"></span> {{ _('Remove from Cart') }}</a>
+            <a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ package.name }}" id="OGSCartView_{{ package.name }}" class="ogscartviewbtn btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
             </div>
           {% endif %}
         {% endblock %}
