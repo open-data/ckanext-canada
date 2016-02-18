@@ -52,7 +52,6 @@ resources:
 
   datastore_primary_key: request_number
   datastore_indexes: ""
-  excel_organization_info: [department_number, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
@@ -101,7 +100,6 @@ resources:
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
-  excel_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
