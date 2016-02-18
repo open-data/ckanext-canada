@@ -67,9 +67,6 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_info: [dept_id, null, name, title]
-  excel_organization_style: "pattern: pattern solid, fore_color gray25;"
-  excel_header_style: "font: bold on; pattern: pattern solid, fore_color light_turquoise;"
   excel_organization_style:
     PatternFill:
       patternType: solid

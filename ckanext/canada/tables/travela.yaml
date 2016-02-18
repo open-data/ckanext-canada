@@ -149,7 +149,6 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_info: [dept_id, null, name, title]
   excel_organization_style:
     PatternFill:
       patternType: solid
