@@ -15,7 +15,7 @@ from ckan.lib.cli import CkanCommand
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_xls import xls_template
-from ckanext.recombinant.plugins import get_table, get_dataset_types
+from ckanext.recombinant.plugins import get_chromo, get_dataset_types
 
 from ckanext.canada.dataset import (
     solr_connection,
@@ -120,7 +120,7 @@ class PDCommand(CkanCommand):
         output_counter = {}
         output_path = self.args[2:][-1]
         dataset_types = get_dataset_types(self.command_name)
-        table = get_table(dataset_types[0])
+        table = get_chromo(dataset_types[0])
 
         def close_write_file(org_id):
             book = output_files[org_id]
@@ -183,7 +183,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
     :param recombinant_type: type being
     """
-    table = get_table(recombinant_type)
+    table = get_chromo(recombinant_type)
     pk = table.get('datastore_primary_key', [])
     if not isinstance(pk, list):
         pk = [pk]
