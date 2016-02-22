@@ -170,9 +170,7 @@ def get_datapreview_recombinant(resource_name, res_id):
     lang = h.lang()
     field_label = {}
     for f in t['fields']:
-        label = f['label'].split(' / ')
-        label = label[0] if lang == 'en' else label[-1]
-        field_label[f['datastore_id']] = label
+        field_label[f['datastore_id']] = h._(f['label'])
     fields = [{
         'type': f['type'],
         'id': f['id'],
