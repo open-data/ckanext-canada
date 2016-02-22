@@ -200,7 +200,7 @@ class CanadaController(BaseController):
 
         return json.dumps({
             'sEcho': echo,
-            'iTotalRecords': unfiltered_response['total'],
+            'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
                 [row[colname] for colname in cols]
