@@ -133,7 +133,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
-        config['recombinant.tables'] = """
+        config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/contracts.yaml
 ckanext.canada:tables/grants.yaml
