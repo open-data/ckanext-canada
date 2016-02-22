@@ -2,7 +2,7 @@
 import os
 from unicodecsv import DictReader
 from pylons import config
-from ckanext.recombinant.plugins import get_table, get_dataset_types
+from ckanext.recombinant.plugins import get_chromo, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -100,7 +100,7 @@ def csv_data_batch(csv_path, target_dataset):
     schema_tables = dict((
             t,
             dict((f['label'], f['datastore_id'])
-                for f in get_table(t)['fields']))
+                for f in get_chromo(t)['fields']))
         for t in dataset_types)
     records = {}
     schema_cols = None
