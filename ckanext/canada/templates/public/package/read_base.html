@@ -34,7 +34,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
     <ul class="list-group">
       {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
       <li class="list-group-item"><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
-        <font color="red">Natural Resources Canada</font>
+        Natural Resources Canada
       </li>
       
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
@@ -53,13 +53,13 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </li>
       #}
 
-      <li class="list-group-item" style="background-color:#FFC0CB"><b>Topic Category:</b>
+      <li class="list-group-item" style="background-color:#335075"><b>Topic Category:</b>
         <small>
         <ul class='list-inline'>
 
-          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Form Descriptors (279000)</font></a></li>
-          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Nature and Environment (2)</font></a></li>
-          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada"><font color="red">Science and Technology (2)</font></a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada">Form Descriptors (279000)</a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada">Nature and Environment (2)</a></li>
+          <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="#" title="Keyword Canada">Science and Technology (2)</a></li>
 
         </ul>
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
@@ -75,7 +75,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       
       {% set date_modified = schema_description.dataset_field_by_id['date_modified'] %}
       <li class="list-group-item"><b>{{ cr.field_label(date_modified, client_lang) }}:</b>
-        <p><font color="red">2016-01-10</font></p>
+        <p>2016-01-10</p>
       </li>
       
       {# We are not showing Program Page URL for Open Maps, is this true across core?
@@ -110,7 +110,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       
       {% set frequency = schema_description.dataset_field_by_id['maintenance_and_update_frequency'] %}
 	  <li class="list-group-item"><b>{{ cr.field_label(frequency, client_lang) }}:</b>
-      <font color="red">quarterly</font>
+      quarterly
 	  </li>
                  
     </ul>
@@ -136,15 +136,15 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </ul>
 
     <ul class="list-group">
-      <li class="list-group-item" style="background-color:#FFC0CB"><b>Status:</b>
+      <li class="list-group-item" style="background-color:#335075"><b>Status:</b>
         <small>
-        <font color="red">Ongoing</font>
+        Ongoing
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
         </small>
       </li>      
-      <li class="list-group-item" style="background-color:#FFC0CB"><b>Spatial Representation Type:</b>
+      <li class="list-group-item" style="background-color:#335075"><b>Spatial Representation Type:</b>
         <small>
-        <font color="red">Vector</font>
+        Vector
         {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
         </small>
       </li>      

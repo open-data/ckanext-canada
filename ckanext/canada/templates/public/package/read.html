@@ -146,13 +146,11 @@
 {% block related_items %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Related Items') }}</h4>
-    <font color="red">
     <ul class="list-unstyled">
       <li class="mrgn-bttm-md"><a href="#">Mock documents Revision 1</a></li>
       <li class="mrgn-bttm-md"><a href="#">Native behaviour of MOCKing birds</a></li>
       <li class="mrgn-bttm-md"><a href="#">HNAP ISO:19115 Record (XML)</a></li>      
     </ul>
-    </font>
 </div>
 {% endblock related_items %}
 
@@ -160,7 +158,6 @@
 {% if pkg.geographic_region or pkg.spatial %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Geographic Information') }}</h4>
-  <font color="red">Need to review static/dynamic behaviour for open maps</font>
   {% if pkg.spatial %}
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
     {% if wkt %}
@@ -189,12 +186,11 @@
 {% block contact_information %}
 <div class="span-6 margin-top-medium">
   <h4>{{ _('Contact Information') }}</h4>
-  <font color="red">Government of Canada; Natural Resources Canada; Earth Sciences Sector;<br>
+  Government of Canada; Natural Resources Canada; Earth Sciences Sector;<br>
   Postal address: 2144 King Street West, 010, Sherbrook, Quebec, Canada, J1J 2E8<br>
   Telephone: 1 (819) 5645600<br>
   Telephone: 1 (800) 6612638<br>
   E-mail: geoginfo@NRCan.gc.ca<br>
-  </font>
 </div>
 {% endblock contact_information %}
 
