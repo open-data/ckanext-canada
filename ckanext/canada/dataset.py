@@ -2,7 +2,7 @@
 import os
 from unicodecsv import DictReader
 from pylons import config
-from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.tables import get_chromo, get_geno, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -55,9 +55,13 @@ def data_batch(org_id, lc, target_dataset):
     :return generates batches of dataset dict records
     :rtype batch of dataset dict records
     """
-    dataset_types = get_dataset_types(target_dataset)
+    dataset_types = get_dataset_types()
 
     for dataset_type in dataset_types:
+        geno = get_geno(dataset_type)
+        if geno.get('target_dataset') != target_dataset:
+            continue
+        
         records = {}
         result = lc.action.package_search(
             q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),

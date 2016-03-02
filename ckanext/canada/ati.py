@@ -9,6 +9,7 @@ from _csv import Error as _csvError
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
+from solr.core import SolrException
 
 from ckanapi import LocalCKAN, NotFound
 
@@ -34,8 +35,8 @@ class ATICommand(CkanCommand):
 
     Options::
 
-        -f/--csv-file <file> <file>    use specified CSV files as ati-summaries
-                                       and ati-none input, instead of the
+        -f/--csv-file <file> <file>    use specified CSV files as ati.csv
+                                       and ati-nil.csv input, instead of the
                                        (default) CKAN database
     """
     summary = __doc__.split('\n')[0]
@@ -210,4 +211,8 @@ def _update_records(records, org_detail, conn):
         record['id'] = unique
         out.append(record)
 
-    conn.add_many(out, _commit=True)
+    try:
+        conn.add_many(out, _commit=True)
+    except SolrException, e:
+        print e.body
+        raise
