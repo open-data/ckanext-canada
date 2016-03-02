@@ -109,7 +109,7 @@ def csv_data_batch(csv_path, target_dataset):
         csv_in = DictReader(f)
         cols = csv_in.unicode_fieldnames
 
-        expected = [f['datastore_id'] for f in chromo['resources']]
+        expected = [f['datastore_id'] for f in chromo['fields']]
         assert cols[:-2] == expected, 'column mismatch:\n{0}\n{1}'.format(
             cols[:-2], expected)
 
@@ -127,7 +127,8 @@ def csv_data_batch(csv_path, target_dataset):
             if len(records) >= BATCH_SIZE:
                 yield (current_owner_org, records)
                 records = []
-    yield records
+    if records:
+        yield (current_owner_org, records)
 
 
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
