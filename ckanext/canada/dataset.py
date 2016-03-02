@@ -56,34 +56,34 @@ def data_batch(org_id, lc, target_dataset):
     :rtype batch of dataset dict records
     """
     dataset_types = get_dataset_types()
-
     for dataset_type in dataset_types:
         geno = get_geno(dataset_type)
-        if geno.get('target_dataset') != target_dataset:
-            continue
+        if geno.get('target_dataset') == target_dataset:
+            break
+    else:
+        return
+
+    result = lc.action.package_search(
+        q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
+        rows=2)['results']
         
-        records = {}
-        result = lc.action.package_search(
-            q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
-            rows=1000)['results']
-        if len(result) == 0:
+    if not result:
+        return
+    assert len(result) == 1, result
+
+    dataset = result[0]
+    for resource in dataset['resources']:
+        offset = 0
+        while True:
+            rval = lc.action.datastore_search(
+                resource_id=resource['id'],
+                limit=BATCH_SIZE,
+                offset=offset)
+            records = rval['records']
+            if not records:
+                break
+            offset += len(records)
             yield records
-        else:
-            try:
-                resource_id = result[0]['resources'][0]['id']
-            except (IndexError, KeyError):
-                continue
-            offset = 0
-            while True:
-                rval = lc.action.datastore_search(
-                    resource_id=resource_id,
-                    limit=BATCH_SIZE,
-                    offset=offset)
-                records = rval['records']
-                if not records:
-                    break
-                yield records
-                offset += len(records)
 
 
 def csv_data_batch(csv_path, target_dataset):
