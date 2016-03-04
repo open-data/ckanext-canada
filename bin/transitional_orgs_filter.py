@@ -29,7 +29,7 @@ for l in sys.stdin:
         "extras": [{"value": e["value"], "key": e["key"]}
             for e in o["extras"] if e["key"] in EXTRAS],
         "name": o["name"],
-        })
+        }
     if users:
         line["users"] = [
             {"name": u["name"], "capacity": u["capacity"]}
