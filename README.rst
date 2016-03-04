@@ -97,7 +97,7 @@ The CKAN ini file needs the following settings for the registry server::
         canada_public canada_package wet_boew_theme_gc_intranet datastore recombinant
         scheming_datasets fluent
 
-   recombinant.tables = ckanext.canada:recombinant_tables.json
+   recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
 For the public server use only::
 
