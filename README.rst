@@ -115,7 +115,7 @@ Both servers need::
 
    scheming.presets = ckanext.scheming:presets.json
        ckanext.fluent:presets.json
-       ckanext.canada:schemas/presets.json
+       ckanext.canada:schemas/presets.yaml
 
    licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
