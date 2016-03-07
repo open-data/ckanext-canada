@@ -1721,18 +1721,18 @@ presets:
     validators: fluent_text
     output_validators: fluent_text_output
 
-- preset_name: canada_homepage_url
+- preset_name: canada_program_page_url
   values:
-    field_name: url
+    field_name: program_page_url
     label:
-      en: Homepage URL
-      fr: URL de la page d’accueil
+      en: Program Page URL
+      fr: URL de la page d'accueil
     fluent_form_label:
       en:
-        en: Homepage URL English
+        en: Program Page URL English
         fr: URL de la page d’accueil anglaise
       fr:
-        en: Homepage URL French
+        en: Program Page URL French
         fr: URL de la page d’accueil française
     help_text:
       en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
@@ -1876,7 +1876,7 @@ presets:
           fr: Services communication
         value: utilities_communication
 
-- preset_name: canada_unique_identifier
+- preset_name: canada_resource_unique_identifier
   values:
     field_name: unique_identifier
     label:
@@ -1928,27 +1928,27 @@ presets:
     - label:
         en: Vector
         fr: Vecteur
-      value: '635'
+      value: vector
     - label:
         en: Grid
         fr: Grille
-      value: '636'
+      value: grid
     - label:
         en: Text Table
         fr: Texte table
-      value: '637'
+      value: text_table
     - label:
         en: Tin
         fr: Tin
-      value: '638'
+      value: tin
     - label:
-        en: Stero Model
+        en: Stereo Model
         fr: Stéréomodèle
-      value: '639'
+      value: stereo_model
     - label:
         en: Video
         fr: Vidéo
-      value: '640'
+      value: video
 
     # copied from select preset
     form_snippet: select.html
@@ -2217,7 +2217,7 @@ presets:
 
 - preset_name: canada_resource_date_published
   values:
-    field_name: resource_date_published
+    field_name: date_published
     label:
       en: Date Published
       fr: Date de publication

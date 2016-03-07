@@ -36,9 +36,8 @@ dataset_fields:
 - preset: canada_geographic_region
 - preset: canada_data_series_name
 - preset: canada_data_series_issue_identification
-- preset: canada_homepage_url
+- preset: canada_program_page_url
 - preset: canada_license_id
-- preset: canada_endpoint_url
 
 # dataset fields added to support migration of existing raw+geogratis records:
 
@@ -161,7 +160,9 @@ dataset_fields:
 #
 resource_fields:
 
+- preset: canada_resource_unique_identifier
 - preset: canada_resource_name
+- preset: canada_resource_date_published
 - preset: canada_resource_url
 - preset: canada_resource_language
 - preset: canada_resource_size
