@@ -1,7 +1,17 @@
 language: python
+sudo: required
 python:
   - "2.6"
 env:
-  - PGVERSION=9.1
+  global:
+    - CKAN_POSTGRES_DB=ckan_test
+    - CKAN_POSTGRES_USER=ckan_default
+    - CKAN_POSTGRES_PWD=pass
+    - CKAN_DATASTORE_POSTGRES_DB=datastore_test
+    - CKAN_DATASTORE_POSTGRES_WRITE_USER=ckan_default
+    - CKAN_DATASTORE_POSTGRES_READ_USER=datastore_default
+    - CKAN_DATASTORE_POSTGRES_READ_PWD=pass
+  matrix:
+    - PGVERSION=9.1
 install: ./bin/travis-install
 script: ./bin/travis-script
