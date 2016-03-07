@@ -6,7 +6,7 @@ to another ckan instance.
 
 Usage:
 
-ckanapi dump users --all | ./user_import_filter.py > users.jsonl
+ckanapi dump users --all -r http://registry.data.gc.ca | bin/user_list_filter.py > users.jsonl
 """
 
 import sys
