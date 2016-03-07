@@ -94,15 +94,15 @@ Configuration: development.ini or production.ini
 The CKAN ini file needs the following settings for the registry server::
 
    ckan.plugins = googleanalytics canada_forms canada_internal
-        canada_public canada_package wet_theme datastore recombinant
+        canada_public canada_package wet_boew_theme_gc_intranet datastore recombinant
         scheming_datasets fluent
 
-   recombinant.tables = ckanext.canada:recombinant_tables.json
+   recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
 For the public server use only::
 
    ckan.plugins = googleanalytics canada_forms
-        canada_public canada_package wet_theme
+        canada_public canada_package wet_boew_gcweb
         scheming_datasets fluent
 
    canada.portal_url = http://myserver.com
@@ -115,7 +115,7 @@ Both servers need::
 
    scheming.presets = ckanext.scheming:presets.json
        ckanext.fluent:presets.json
-       ckanext.canada:schemas/presets.json
+       ckanext.canada:schemas/presets.yaml
 
    licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
