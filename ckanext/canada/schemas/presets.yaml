@@ -137,6 +137,36 @@ presets:
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
     required: true
 
+- preset_name: canada_notes
+  values:
+    field_name: notes
+    label:
+      en: Description
+      fr: Description
+    fluent_form_label:
+      en:
+        en: "Description (English)"
+        fr: "Description (en anglais)"
+      fr:
+        en: "Description (French)"
+        fr: "Description (français)"
+    form_placeholder:
+      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
+        of pollutant releases (to air, water and land), disposals and transfers for
+        recycling. The NPRI includes...
+      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
+        des rejets de polluants du Canada…
+    help_text:
+      en: "An account of the  information asset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+    required: true
+    # copied from fluent_markdown preset
+    form_snippet: fluent_markdown.html
+    display_snippet: fluent_markdown.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
 - preset_name: canada_ready_to_publish
   values:
     field_name: ready_to_publish
@@ -157,6 +187,35 @@ presets:
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
+
+- preset_name: canada_keywords
+  values:
+    field_name: keywords
+    label:
+      en: Keywords
+      fr: Mots clés
+    fluent_form_label:
+      en:
+        en: "Keywords (English)"
+        fr: "Mots clés (anglais)"
+      fr:
+        en: "Keywords (French)"
+        fr: "Mots clés (français)"
+
+    help_text:
+      en: Commonly used words or phrases which describe the information asset, in English
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+    required: true
+    tag_validators: canada_tags tag_length_validator
+    # copied from fluent_tags preset
+    form_snippet: fluent_tags.html
+    display_snippet: fluent_tags.html
+    error_snippet: fluent_text.html
+    validators: fluent_tags
+    output_validators: fluent_tags_output
+    form_attrs:
+      data-module: autocomplete
+      data-module-tags: ""
 
 - preset_name: canada_portal_release_date
   values:
@@ -181,36 +240,6 @@ presets:
     label:
       en: Digital Object Identifier
       fr: Identificateur d’objet numérique
-
-- preset_name: canada_notes
-  values:
-    field_name: notes
-    label:
-      en: Description
-      fr: Description
-    fluent_form_label:
-      en:
-        en: "Description English"
-        fr: "Description anglais"
-      fr:
-        en: "Description French"
-        fr: "Description français"
-    form_placeholder:
-      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-        of pollutant releases (to air, water and land), disposals and transfers for
-        recycling. The NPRI includes...
-      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-        des rejets de polluants du Canada…
-    help_text:
-      en: "An account of the  information asset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
-      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
-    required: true
-    # copied from fluent_markdown preset
-    form_snippet: fluent_markdown.html
-    display_snippet: fluent_markdown.html
-    error_snippet: fluent_text.html
-    validators: fluent_text
-    output_validators: fluent_text_output
 
 - preset_name: canada_subject
   values:
@@ -303,35 +332,6 @@ presets:
         en: Form Descriptors
         fr: Format
       value: FM
-
-- preset_name: canada_keywords
-  values:
-    field_name: keywords
-    label:
-      en: Keywords
-      fr: Mots clés
-    fluent_form_label:
-      en:
-        en: "Keywords English"
-        fr: "Mots clés anglais"
-      fr:
-        en: "Keywords French"
-        fr: "Mots clés français"
-
-    help_text:
-      en: Commonly used words or phrases which describe the information asset, in English
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
-    required: true
-    tag_validators: canada_tags tag_length_validator
-    # copied from fluent_tags preset
-    form_snippet: fluent_tags.html
-    display_snippet: fluent_tags.html
-    error_snippet: fluent_text.html
-    validators: fluent_tags
-    output_validators: fluent_tags_output
-    form_attrs:
-      data-module: autocomplete
-      data-module-tags: ""
 
 - preset_name: canada_spatial
   values:

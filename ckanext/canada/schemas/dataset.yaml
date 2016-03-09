@@ -25,10 +25,14 @@ dataset_fields:
 - preset: canada_collection
 - preset: canada_title
 - preset: canada_owner_org
-- preset: canada_digital_object_identifier
+- preset: canada_org_title_at_publication
+- preset: canada_creator
+- preset: canada_maintainer_email
 - preset: canada_notes
-- preset: canada_subject
 - preset: canada_keywords
+
+- preset: canada_digital_object_identifier
+- preset: canada_subject
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
