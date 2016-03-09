@@ -217,30 +217,6 @@ presets:
       data-module: autocomplete
       data-module-tags: ""
 
-- preset_name: canada_portal_release_date
-  values:
-    field_name: portal_release_date
-    label:
-      en: Portal Release Date
-      fr: Date de lancement du portail
-    help_text:
-      en: The date the dataset may be published on the Open Information Portal
-      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
-    form_snippet: portal_release_date.html
-    display_snippet: date.html
-
-    # order is very important here:
-    validators: protect_portal_release_date ignore_empty isodate
-      convert_to_json_if_date
-
-
-- preset_name: canada_digital_object_identifier
-  values:
-    field_name: digital_object_identifier
-    label:
-      en: Digital Object Identifier
-      fr: Identificateur d’objet numérique
-
 - preset_name: canada_subject
   values:
     field_name: subject
@@ -343,143 +319,6 @@ presets:
     help_text:
       en: The range of spatial applicability of an information asset. This element could include either a bounding box, or GeoJson string.
       fr: Étendue de l’applicabilité spatiale d’une ressource d’information. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
-
-- preset_name: canada_frequency
-  values:
-    choices:
-    - label:
-        en: As Needed
-        fr: Au besoin
-      value: as_needed
-    - label:
-        en: Continual
-        fr: Continue
-      value: continual
-    - label:
-        en: Daily
-        fr: Quotidien
-      value: daily
-    - label:
-        en: Weekly
-        fr: Hebdomadaire
-      value: weekly
-    - label:
-        en: Fortnightly
-        fr: Quinzomadaire
-      value: fortnightly
-    - label:
-        en: Monthly
-        fr: Mensuel
-      value: monthly
-    - label:
-        en: Semimonthly
-        fr: Bimensuel
-      value: semimonthly
-    - label:
-        en: Quarterly
-        fr: Trimestriel
-      value: quarterly
-    - label:
-        en: Biannually
-        fr: Semestriel
-      value: biannually
-    - label:
-        en: Annually
-        fr: Annuel
-      value: annually
-    - label:
-        en: Irregular
-        fr: Irrégulier
-      value: irregular
-    - label:
-        en: Not Planned
-        fr: Non planifié
-      value: not_planned
-    - label:
-        en: Unknown
-        fr: Inconnu
-      value: unknown
-    field_name: frequency
-    help_text:
-      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
-      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
-    label:
-      en: "Maintenance and Update Frequency"
-      fr: "Fréquence mis à jour"
-    required: true
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
-
-- preset_name: canada_date_published
-  values:
-    field_name: date_published
-    label:
-      en: "Date Published"
-      fr: "Date de publication"
-    help_text:
-      en: The date of issuance (e.g., publication) of the information asset.
-      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
-    required: true
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_date_modified
-  values:
-    field_name: date_modified
-    label:
-      en: Date Modified
-      fr: Date de modification
-    help_text:
-      en: The date on which the information asset was changed, updated or modified.
-      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_date_released
-  values:
-    field_name: date_released
-    label:
-      en: "Date Released"
-      fr: "Date de sortie"
-    help_text:
-      en: The date on which the metadata record was released, made available, on the Open Government Portal
-      fr: Date à laquelle l’enregistrement de métadonnées a été publié, rendu accessible, dans le portail du gouvernement ouvert
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_time_period_coverage_start
-  values:
-    field_name: time_period_coverage_start
-    help_text:
-      en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
-      fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
-    label:
-      en: Time Period Coverage Start
-      fr: Couverture de la période de temps
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-
-- preset_name: canada_time_period_coverage_end
-  values:
-    field_name: time_period_coverage_end
-    help_text:
-      en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
-      fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
-    label:
-      en: Time Period Coverage End
-      fr: Couverture de la période de temps
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
 
 - preset_name: canada_geographic_region
   values:
@@ -1737,6 +1576,166 @@ presets:
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
+- preset_name: canada_time_period_coverage_start
+  values:
+    field_name: time_period_coverage_start
+    help_text:
+      en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage Start
+      fr: Couverture de la période de temps
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_time_period_coverage_end
+  values:
+    field_name: time_period_coverage_end
+    help_text:
+      en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage End
+      fr: Couverture de la période de temps
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_frequency
+  values:
+    choices:
+    - label:
+        en: As Needed
+        fr: Au besoin
+      value: as_needed
+    - label:
+        en: Continual
+        fr: Continue
+      value: continual
+    - label:
+        en: Daily
+        fr: Quotidien
+      value: daily
+    - label:
+        en: Weekly
+        fr: Hebdomadaire
+      value: weekly
+    - label:
+        en: Fortnightly
+        fr: Quinzomadaire
+      value: fortnightly
+    - label:
+        en: Monthly
+        fr: Mensuel
+      value: monthly
+    - label:
+        en: Semimonthly
+        fr: Bimensuel
+      value: semimonthly
+    - label:
+        en: Quarterly
+        fr: Trimestriel
+      value: quarterly
+    - label:
+        en: Biannually
+        fr: Semestriel
+      value: biannually
+    - label:
+        en: Annually
+        fr: Annuel
+      value: annually
+    - label:
+        en: Irregular
+        fr: Irrégulier
+      value: irregular
+    - label:
+        en: Not Planned
+        fr: Non planifié
+      value: not_planned
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
+    field_name: frequency
+    help_text:
+      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
+    label:
+      en: "Maintenance and Update Frequency"
+      fr: "Fréquence mis à jour"
+    required: true
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_date_published
+  values:
+    field_name: date_published
+    label:
+      en: "Date Published"
+      fr: "Date de publication"
+    help_text:
+      en: The date of issuance (e.g., publication) of the information asset.
+      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
+    required: true
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_date_modified
+  values:
+    field_name: date_modified
+    label:
+      en: Date Modified
+      fr: Date de modification
+    help_text:
+      en: The date on which the information asset was changed, updated or modified.
+      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_portal_release_date
+  values:
+    field_name: portal_release_date
+    label:
+      en: Portal Release Date
+      fr: Date de lancement du portail
+    help_text:
+      en: The date the dataset may be published on the Open Information Portal
+      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
+    form_snippet: portal_release_date.html
+    display_snippet: date.html
+    # order is very important here:
+    validators: protect_portal_release_date ignore_empty isodate
+      convert_to_json_if_date
+
+- preset_name: canada_program_page_url
+  values:
+    field_name: program_page_url
+    label:
+      en: Program Page URL
+      fr: URL de la page d'accueil
+    fluent_form_label:
+      en:
+        en: Program Page URL (English)
+        fr: URL de la page d’accueil (anglaise)
+      fr:
+        en: Program Page URL (French)
+        fr: URL de la page d’accueil (française)
+    help_text:
+      en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
 - preset_name: canada_data_series_name
   values:
     field_name: data_series_name
@@ -1770,28 +1769,25 @@ presets:
     validators: fluent_text
     output_validators: fluent_text_output
 
-- preset_name: canada_program_page_url
+- preset_name: canada_digital_object_identifier
   values:
-    field_name: program_page_url
+    field_name: digital_object_identifier
     label:
-      en: Program Page URL
-      fr: URL de la page d'accueil
-    fluent_form_label:
-      en:
-        en: Program Page URL English
-        fr: URL de la page d’accueil anglaise
-      fr:
-        en: Program Page URL French
-        fr: URL de la page d’accueil française
+      en: Digital Object Identifier
+      fr: Identificateur d’objet numérique
+
+- preset_name: canada_license_id
+  values:
+    field_name: license_id
+    form_snippet: license.html
+    default: ca-ogl-lgo
+    label:
+      en: "Licence"
+      fr: "Licence"
     help_text:
-      en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
-      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
-    # copied from fluent_text preset
-    form_snippet: fluent_text.html
-    display_snippet: fluent_text.html
-    error_snippet: fluent_text.html
-    validators: fluent_text
-    output_validators: fluent_text_output
+      en: The specific attribution statement provided by the information provider.
+      fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
+    required: true
 
 - preset_name: canada_related_items
   values:
@@ -1811,19 +1807,6 @@ presets:
     help_text:
       en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
-
-- preset_name: canada_license_id
-  values:
-    field_name: license_id
-    form_snippet: license.html
-    default: ca-ogl-lgo
-    label:
-      en: "Licence"
-      fr: "Licence"
-    help_text:
-      en: The specific attribution statement provided by the information provider.
-      fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
-    required: true
 
 - preset_name: canada_endpoint_url
   values:

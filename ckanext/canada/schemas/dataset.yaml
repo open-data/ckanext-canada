@@ -30,18 +30,19 @@ dataset_fields:
 - preset: canada_maintainer_email
 - preset: canada_notes
 - preset: canada_keywords
-
-- preset: canada_digital_object_identifier
 - preset: canada_subject
+- preset: canada_spatial
+- preset: canada_geographic_region
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_time_period_coverage_start
-- preset: canada_time_period_coverage_end
-- preset: canada_geographic_region
+- preset: canada_portal_release_date
+- preset: canada_program_page_url
 - preset: canada_data_series_name
 - preset: canada_data_series_issue_identification
-- preset: canada_program_page_url
+- preset: canada_digital_object_identifier
 - preset: canada_license_id
 
 # dataset fields added to support migration of existing raw+geogratis records:
@@ -55,7 +56,6 @@ dataset_fields:
     fr: L’adresse électronique de l’organisation ou de la personne responsable
 
 - preset: canada_topic_category
-- preset: canada_spatial
 - preset: canada_spatial_representation_type
 
 - field_name: presentation_form
@@ -157,7 +157,6 @@ dataset_fields:
     fr: Le nom du fichier graphique fournit pour illustrer la ressource
 
 - preset: canada_ready_to_publish
-- preset: canada_portal_release_date
 
 
 #
