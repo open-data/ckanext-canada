@@ -23,6 +23,12 @@ from pylons import config, session
 from ckanapi import LocalCKAN, NotFound, NotAuthorized
 
 class CanadaController(BaseController):
+    def home(self):
+        if not c.user:
+            h.redirect_to(controller='user', action='login')
+
+        return render('home/index.html')
+
     def registry_menu(self):
         return render("menu.html")
 
@@ -165,10 +171,7 @@ class CanadaController(BaseController):
                 return h.redirect_to(controller='ckanext.canada.controller:CanadaController',
                                          action='view_new_user', locale=lang)
             else:
-                # FIXME: can't use named_route='info_search' in redirect_to
-                if lang:
-                    return h.redirect_to('/{0}/info'.format(lang))
-                return h.redirect_to('/info')
+                return h.redirect_to('/{0}'.format(lang or ''))
         else:
             h.flash_error(_('Login failed. Bad username or password.'))
             return h.redirect_to(controller='user',
