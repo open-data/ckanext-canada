@@ -83,7 +83,8 @@ class DataGCCAInternal(p.SingletonPlugin):
         return facets_dict
 
     def before_map(self, map):
-        map.connect('/', controller='user', action='login')
+        map.connect('/', action='home',
+            controller='ckanext.canada.controller:CanadaController')
         map.connect('/menu', action='registry_menu',
             controller='ckanext.canada.controller:CanadaController')
         map.connect('/user/logged_in', action='logged_in',
