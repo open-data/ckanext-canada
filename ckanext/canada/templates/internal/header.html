@@ -1,0 +1,20 @@
+{% ckan_extends %}
+{% set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu') %}
+{% block sitemenu %}
+<nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="{{ menu }}">
+  <div class="container nvbar">
+    <h2>{{ _("Site menu") }}</h2>
+    <div class="row">
+      <ul class="list-inline menu">
+        {% block header_site_navigation_tabs %}
+            <li><a href="{{ _('http://open.canada.ca') }}" class="item">{{ _('Open.Canada.ca') }}</a></li>
+            <li><a href="{{ menu }}#addportal-ajoutportail" class="item">{{ _('Add to Portal') }}</a></li>
+            <li><a href="#" class="item">{{ _('Search') }}</a></li>
+            <li><a href="{{ menu }}" class="item">{{ _('Organizations') }}</a></li>
+            <li><a href="{{ menu }}#help-aide" class="item">{{ _('Help') }}</a>
+        {% endblock %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}

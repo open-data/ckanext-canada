@@ -23,6 +23,9 @@ from pylons import config, session
 from ckanapi import LocalCKAN, NotFound, NotAuthorized
 
 class CanadaController(BaseController):
+    def registry_menu(self):
+        return render("menu.html")
+
     def view_guidelines(self):
         return render('guidelines.html')
 
