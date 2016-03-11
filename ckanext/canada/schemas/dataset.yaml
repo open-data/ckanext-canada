@@ -56,6 +56,7 @@ dataset_fields:
   help_text:
     en: The electronic mail address of the responsible organization or individual
     fr: L’adresse électronique de l’organisation ou de la personne responsable
+  form_snippet: null
 
 - preset: canada_topic_category
 - preset: canada_spatial_representation_type
@@ -67,7 +68,6 @@ dataset_fields:
   help_text:
     en: The form in which the resource is available
     fr: Le format dans lequel la ressource est disponible
-  preset: select
   choices:
   - label:
       en: Document Digital
@@ -149,6 +149,10 @@ dataset_fields:
       en: Diagram Hardcopy
       fr: Diagramme papier
     value: '406'
+  form_snippet: null
+  # copied from select preset
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
 
 - field_name: browse_graphic_url
   label:
@@ -157,6 +161,7 @@ dataset_fields:
   help_text:
     en: The name of the graphic file provided to illustrate the resource
     fr: Le nom du fichier graphique fournit pour illustrer la ressource
+  form_snippet: null
 
 
 

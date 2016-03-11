@@ -53,7 +53,7 @@ presets:
 
 - preset_name: canada_title
   values:
-    field_name: title
+    field_name: title_translated
     label:
       en: Title
       fr: Titre
@@ -80,7 +80,7 @@ presets:
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_text_output
+    output_validators: fluent_core_translated_output
 
 - preset_name: canada_owner_org
   values:
@@ -139,7 +139,7 @@ presets:
 
 - preset_name: canada_notes
   values:
-    field_name: notes
+    field_name: notes_translated
     label:
       en: Description
       fr: Description
@@ -165,7 +165,7 @@ presets:
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_text_output
+    output_validators: fluent_core_translated_output
 
 - preset_name: canada_keywords
   values:
@@ -1881,7 +1881,7 @@ presets:
     label:
       en: Topic category
       fr: Catégorie thématique
-    form_snippet: multiple_checkbox.html
+    form_snippet: null
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
@@ -2339,14 +2339,14 @@ presets:
         fr: Vidéo
       value: video
 
+    form_snippet: null
     # copied from select preset
-    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
 - preset_name: canada_resource_name
   values:
-    field_name: name
+    field_name: name_translated
     label:
       en: Title
       fr: Titre
@@ -2367,7 +2367,7 @@ presets:
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_text_output
+    output_validators: fluent_core_translated_output
 
 - preset_name: canada_resource_url
   values:
