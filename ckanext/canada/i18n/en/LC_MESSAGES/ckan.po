@@ -1,4 +1,4 @@
-# English (Canada) translations for ckan.
+# English translations for ckan.
 # Copyright (C) 2013 ORGANIZATION
 # This file is distributed under the same license as the ckan project.
 #
@@ -433,7 +433,7 @@ msgstr ""
 #: ckan/controllers/package.py:1592 ckan/controllers/related.py:111
 #: ckan/controllers/related.py:122
 msgid "Dataset not found"
-msgstr ""
+msgstr "Record not found"
 
 #: ckan/controllers/package.py:346 ckan/controllers/package.py:399
 #: ckan/controllers/package.py:463 ckan/controllers/package.py:787
@@ -455,14 +455,16 @@ msgid ""
 "Viewing {package_type} datasets in {format} format is not supported "
 "(template file {file} not found)."
 msgstr ""
+"Viewing {package_type} records in {format} format is not supported "
+"(template file {file} not found)."
 
 #: ckan/controllers/package.py:472
 msgid "CKAN Dataset Revision History"
-msgstr ""
+msgstr "CKAN Record Revision History"
 
 #: ckan/controllers/package.py:475
 msgid "Recent changes to CKAN Dataset: "
-msgstr ""
+msgstr "Recent changes to CKAN Record: "
 
 #: ckan/controllers/package.py:532
 msgid "Unauthorized to create a package"
@@ -483,12 +485,12 @@ msgstr ""
 
 #: ckan/controllers/package.py:682
 msgid "Unauthorized to update dataset"
-msgstr ""
+msgstr "Unauthorized to update record"
 
 #: ckan/controllers/package.py:685 ckan/controllers/package.py:717
 #: ckan/controllers/package.py:745
 msgid "The dataset {id} could not be found."
-msgstr ""
+msgstr "The record {id} could not be found."
 
 #: ckan/controllers/package.py:688
 msgid "You must add at least one data resource"
@@ -522,7 +524,7 @@ msgstr ""
 
 #: ckan/controllers/package.py:1061
 msgid "Dataset has been deleted."
-msgstr ""
+msgstr "Record has been deleted."
 
 #: ckan/controllers/package.py:1088
 msgid "Resource has been deleted."
@@ -538,7 +540,7 @@ msgstr ""
 #: ckan/controllers/package.py:1481 ckan/controllers/package.py:1594
 #, python-format
 msgid "Unauthorized to read dataset %s"
-msgstr ""
+msgstr "Unauthorized to read record %s"
 
 #: ckan/controllers/package.py:1153 ckan/controllers/package.py:1615
 msgid "Resource view not found"
@@ -686,7 +688,7 @@ msgstr ""
 #: ckan/controllers/revision.py:108
 #, python-format
 msgid "Datasets affected: %s.\n"
-msgstr ""
+msgstr "Records affected: %s.\n"
 
 #: ckan/controllers/revision.py:188
 msgid "Revision updated"
@@ -835,7 +837,7 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:64
 msgid "{actor} added the tag {tag} to the dataset {dataset}"
-msgstr ""
+msgstr "{actor} added the tag {tag} to the record {dataset}"
 
 #: ckan/lib/activity_streams.py:67
 msgid "{actor} updated the group {group}"
@@ -847,15 +849,15 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:73
 msgid "{actor} updated the dataset {dataset}"
-msgstr ""
+msgstr "{actor} updated the record {dataset}"
 
 #: ckan/lib/activity_streams.py:76
 msgid "{actor} changed the extra {extra} of the dataset {dataset}"
-msgstr ""
+msgstr "{actor} changed the extra {extra} of the record {dataset}"
 
 #: ckan/lib/activity_streams.py:79
 msgid "{actor} updated the resource {resource} in the dataset {dataset}"
-msgstr ""
+msgstr "{actor} updated the resource {resource} in the record {dataset}"
 
 #: ckan/lib/activity_streams.py:82
 msgid "{actor} updated their profile"
@@ -863,7 +865,7 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:86
 msgid "{actor} updated the {related_type} {related_item} of the dataset {dataset}"
-msgstr ""
+msgstr "{actor} updated the {related_type} {related_item} of the record {dataset}"
 
 #: ckan/lib/activity_streams.py:89
 msgid "{actor} updated the {related_type} {related_item}"
@@ -879,15 +881,15 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:98
 msgid "{actor} deleted the dataset {dataset}"
-msgstr ""
+msgstr "{actor} deleted the record {dataset}"
 
 #: ckan/lib/activity_streams.py:101
 msgid "{actor} deleted the extra {extra} from the dataset {dataset}"
-msgstr ""
+msgstr "{actor} deleted the extra {extra} from the record {dataset}"
 
 #: ckan/lib/activity_streams.py:104
 msgid "{actor} deleted the resource {resource} from the dataset {dataset}"
-msgstr ""
+msgstr "{actor} deleted the resource {resource} from the record {dataset}"
 
 #: ckan/lib/activity_streams.py:108
 msgid "{actor} created the group {group}"
@@ -899,15 +901,15 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:114
 msgid "{actor} created the dataset {dataset}"
-msgstr ""
+msgstr "{actor} created the record {dataset}"
 
 #: ckan/lib/activity_streams.py:117
 msgid "{actor} added the extra {extra} to the dataset {dataset}"
-msgstr ""
+msgstr "{actor} added the extra {extra} to the record {dataset}"
 
 #: ckan/lib/activity_streams.py:120
 msgid "{actor} added the resource {resource} to the dataset {dataset}"
-msgstr ""
+msgstr "{actor} added the resource {resource} to the record {dataset}"
 
 #: ckan/lib/activity_streams.py:123
 msgid "{actor} signed up"
@@ -915,7 +917,7 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:126
 msgid "{actor} removed the tag {tag} from the dataset {dataset}"
-msgstr ""
+msgstr "{actor} removed the tag {tag} from the record {dataset}"
 
 #: ckan/lib/activity_streams.py:129
 msgid "{actor} deleted the related item {related_item}"
@@ -935,7 +937,7 @@ msgstr ""
 
 #: ckan/lib/activity_streams.py:142
 msgid "{actor} added the {related_type} {related_item} to the dataset {dataset}"
-msgstr ""
+msgstr "{actor} added the {related_type} {related_item} to the record {dataset}"
 
 #: ckan/lib/activity_streams.py:145
 msgid "{actor} added the {related_type} {related_item}"
@@ -1114,7 +1116,7 @@ msgstr ""
 
 #: ckan/lib/helpers.py:1164
 msgid "Created new dataset."
-msgstr ""
+msgstr "Created new record."
 
 #: ckan/lib/helpers.py:1166
 msgid "Edited resources."
@@ -1238,7 +1240,7 @@ msgstr ""
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:65
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:74
 msgid "Dataset"
-msgstr ""
+msgstr "Record"
 
 #: ckan/logic/converters.py:169 ckan/logic/validators.py:236
 #: ckanext/stats/templates/ckanext/stats/index.html:113
@@ -1256,7 +1258,7 @@ msgstr ""
 
 #: ckan/logic/validators.py:43
 msgid "You cannot remove a dataset from an existing organization"
-msgstr ""
+msgstr "You cannot remove a record from an existing organization"
 
 #: ckan/logic/validators.py:48
 msgid "Organization does not exist"
@@ -1264,7 +1266,7 @@ msgstr ""
 
 #: ckan/logic/validators.py:53
 msgid "You cannot add a dataset to this organization"
-msgstr ""
+msgstr "You cannot add a record to this organization"
 
 #: ckan/logic/validators.py:93
 msgid "Invalid integer"
@@ -1288,7 +1290,7 @@ msgstr ""
 
 #: ckan/logic/validators.py:151
 msgid "Dataset id already exists"
-msgstr ""
+msgstr "Record id already exists"
 
 #: ckan/logic/validators.py:192 ckan/logic/validators.py:283
 msgid "Resource"
@@ -1452,7 +1454,7 @@ msgstr ""
 
 #: ckan/logic/validators.py:754
 msgid "Datasets with no organization can't be private."
-msgstr ""
+msgstr "Records with no organization can't be private."
 
 #: ckan/logic/validators.py:760
 msgid "Not a list"
@@ -1533,7 +1535,7 @@ msgstr ""
 
 #: ckan/logic/action/create.py:1275 ckan/logic/action/create.py:1283
 msgid "You must be logged in to follow a dataset."
-msgstr ""
+msgstr "You must be logged in to follow a record."
 
 #: ckan/logic/action/create.py:1335
 msgid "User {username} does not exist."
@@ -1642,7 +1644,7 @@ msgstr ""
 #: ckan/logic/auth/create.py:36
 #, python-format
 msgid "User %s not authorized to add dataset to this organization"
-msgstr ""
+msgstr "User %s not authorized to add record to this organization"
 
 #: ckan/logic/auth/create.py:58
 msgid "You must be a sysadmin to create a featured related item"
@@ -1654,7 +1656,7 @@ msgstr ""
 
 #: ckan/logic/auth/create.py:77
 msgid "No dataset id provided, cannot check auth."
-msgstr ""
+msgstr "No record id provided, cannot check auth."
 
 #: ckan/logic/auth/create.py:84 ckan/logic/auth/delete.py:28
 #: ckan/logic/auth/get.py:135 ckan/logic/auth/update.py:61
@@ -1664,7 +1666,7 @@ msgstr ""
 #: ckan/logic/auth/create.py:92
 #, python-format
 msgid "User %s not authorized to create resources on dataset %s"
-msgstr ""
+msgstr "User %s not authorized to create resources on record %s"
 
 #: ckan/logic/auth/create.py:115
 #, python-format
@@ -2215,11 +2217,11 @@ msgstr ""
 #: ckan/templates/snippets/context/user.html:19 ckan/templates/user/read.html:5
 #: ckan/templates/user/read_base.html:19 ckan/templates/user/read_base.html:53
 msgid "Datasets"
-msgstr ""
+msgstr "Records"
 
 #: ckan/templates/header.html:112
 msgid "Search Datasets"
-msgstr ""
+msgstr "Search Records"
 
 #: ckan/templates/header.html:113 ckan/templates/home/snippets/search.html:11
 #: ckan/templates/snippets/simple_search.html:5
@@ -2323,7 +2325,7 @@ msgstr ""
 
 #: ckan/templates/admin/trash.html:32
 msgid " <p>Purge deleted datasets forever and irreversibly.</p> "
-msgstr ""
+msgstr " <p>Purge deleted records forever and irreversibly.</p> "
 
 #: ckan/templates/ajax_snippets/api_info.html:19
 msgid "CKAN Data API"
@@ -2718,6 +2720,9 @@ msgid ""
 " organization members.</p> <p><strong>Member:</strong> Can add/remove "
 "datasets from groups</p> "
 msgstr ""
+" <p><strong>Admin:</strong> Can edit group information, as well as manage"
+" organization members.</p> <p><strong>Member:</strong> Can add/remove "
+"records from groups</p> "
 
 #: ckan/templates/group/new.html:3 ckan/templates/group/new.html:5
 #: ckan/templates/group/new.html:7
@@ -2761,11 +2766,11 @@ msgstr ""
 #: ckan/templates/group/read.html:21 ckan/templates/organization/read.html:25
 #: ckan/templates/snippets/search_form.html:3
 msgid "Search datasets..."
-msgstr ""
+msgstr "Search records..."
 
 #: ckan/templates/group/snippets/feeds.html:3
 msgid "Datasets in group: {group}"
-msgstr ""
+msgstr "Records in group: {group}"
 
 #: ckan/templates/group/snippets/feeds.html:4
 #: ckan/templates/organization/snippets/feeds.html:4
@@ -2813,15 +2818,15 @@ msgstr ""
 #: ckanext/example_theme/v11_HTML_and_CSS/templates/snippets/example_theme_most_popular_groups.html:22
 msgid "{num} Dataset"
 msgid_plural "{num} Datasets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} Record"
+msgstr[1] "{num} Records"
 
 #: ckan/templates/group/snippets/group_item.html:34
 #: ckan/templates/organization/snippets/organization_item.html:33
 #: ckanext/example_theme/v10_custom_snippet/templates/snippets/example_theme_most_popular_groups.html:25
 #: ckanext/example_theme/v11_HTML_and_CSS/templates/snippets/example_theme_most_popular_groups.html:24
 msgid "0 Datasets"
-msgstr ""
+msgstr "0 Records"
 
 #: ckan/templates/group/snippets/group_item.html:38
 #: ckan/templates/group/snippets/group_item.html:39
@@ -2830,7 +2835,7 @@ msgstr ""
 
 #: ckan/templates/group/snippets/group_item.html:43
 msgid "Remove dataset from this group"
-msgstr ""
+msgstr "Remove record from this group"
 
 #: ckan/templates/group/snippets/helper.html:4
 msgid "What are Groups?"
@@ -2843,6 +2848,10 @@ msgid ""
 "on a particular theme, or as a very simple way to help people find and "
 "search your own published datasets. "
 msgstr ""
+" You can use CKAN Groups to create and manage collections of records. "
+"This could be to catalogue records for a particular project or team, or "
+"on a particular theme, or as a very simple way to help people find and "
+"search your own published records. "
 
 #: ckan/templates/group/snippets/history_revisions.html:10
 #: ckan/templates/package/snippets/history_revisions.html:10
@@ -2955,11 +2964,11 @@ msgstr ""
 
 #: ckan/templates/home/snippets/stats.html:10
 msgid "dataset"
-msgstr ""
+msgstr "record"
 
 #: ckan/templates/home/snippets/stats.html:10
 msgid "datasets"
-msgstr ""
+msgstr "records"
 
 #: ckan/templates/home/snippets/stats.html:16
 msgid "organization"
@@ -3030,11 +3039,11 @@ msgstr ""
 #: ckan/templates/organization/bulk_process.html:3
 #: ckan/templates/organization/bulk_process.html:11
 msgid "Edit datasets"
-msgstr ""
+msgstr "Edit records"
 
 #: ckan/templates/organization/bulk_process.html:6
 msgid "Add dataset"
-msgstr ""
+msgstr "Add record"
 
 #: ckan/templates/organization/bulk_process.html:16
 msgid " found for \"{query}\""
@@ -3042,7 +3051,7 @@ msgstr ""
 
 #: ckan/templates/organization/bulk_process.html:18
 msgid "Sorry no datasets found for \"{query}\""
-msgstr ""
+msgstr "Sorry no records found for \"{query}\""
 
 #: ckan/templates/organization/bulk_process.html:37
 msgid "Make public"
@@ -3069,7 +3078,7 @@ msgstr ""
 
 #: ckan/templates/organization/bulk_process.html:88
 msgid "This organization has no datasets associated to it"
-msgstr ""
+msgstr "This organization has no records associated to it"
 
 #: ckan/templates/organization/confirm_delete.html:11
 msgid "Are you sure you want to delete organization - {name}?"
@@ -3106,6 +3115,11 @@ msgid ""
 "<p><strong>Member:</strong> Can view the organization's private datasets,"
 " but not add new datasets.</p> "
 msgstr ""
+" <p><strong>Admin:</strong> Can add/edit and delete records, as well as "
+"manage organization members.</p> <p><strong>Editor:</strong> Can add and "
+"edit records, but not manage organization members.</p> "
+"<p><strong>Member:</strong> Can view the organization's private records,"
+" but not add new records.</p> "
 
 #: ckan/templates/organization/new.html:3
 #: ckan/templates/organization/new.html:5
@@ -3126,11 +3140,11 @@ msgstr ""
 #: ckan/templates/package/search.html:16
 #: ckan/templates/user/dashboard_datasets.html:7
 msgid "Add Dataset"
-msgstr ""
+msgstr "Add Record"
 
 #: ckan/templates/organization/snippets/feeds.html:3
 msgid "Datasets in organization: {group}"
-msgstr ""
+msgstr "Records in organization: {group}"
 
 #: ckan/templates/organization/snippets/help.html:4
 #: ckan/templates/organization/snippets/helper.html:4
@@ -3146,6 +3160,12 @@ msgid ""
 "its members, giving individual users the right to publish datasets from "
 "that particular organisation (e.g. Office of National Statistics).</p> "
 msgstr ""
+" <p>Organizations act like publishing departments for records (for "
+"example, the Department of Health). This means that records can be "
+"published by and belong to a department instead of an individual "
+"user.</p> <p>Within organizations, admins can assign roles and authorise "
+"its members, giving individual users the right to publish records from "
+"that particular organisation (e.g. Office of National Statistics).</p> "
 
 #: ckan/templates/organization/snippets/helper.html:8
 msgid ""
@@ -3153,6 +3173,9 @@ msgid ""
 " datasets. Users can have different roles within an Organization, "
 "depending on their level of authorisation to create, edit and publish. "
 msgstr ""
+" CKAN Organizations are used to create, manage and publish collections of"
+" records. Users can have different roles within an Organization, "
+"depending on their level of authorisation to create, edit and publish. "
 
 #: ckan/templates/organization/snippets/organization_form.html:10
 msgid "My Organization"
@@ -3171,6 +3194,8 @@ msgid ""
 "Are you sure you want to delete this Organization? This will delete all "
 "the public and private datasets belonging to this organization."
 msgstr ""
+"Are you sure you want to delete this Organization? This will delete all "
+"the public and private records belonging to this organization."
 
 #: ckan/templates/organization/snippets/organization_form.html:64
 msgid "Save Organization"
@@ -3184,11 +3209,11 @@ msgstr ""
 #: ckan/templates/package/base.html:22 ckan/templates/package/new.html:3
 #: ckan/templates/package/snippets/new_package_breadcrumb.html:2
 msgid "Create Dataset"
-msgstr ""
+msgstr "Create Record"
 
 #: ckan/templates/package/base_form_page.html:22
 msgid "What are datasets?"
-msgstr ""
+msgstr "What are records?"
 
 #: ckan/templates/package/base_form_page.html:25
 msgid ""
@@ -3196,10 +3221,13 @@ msgid ""
 "together with a description and other information, at a fixed URL. "
 "Datasets are what users see when searching for data. "
 msgstr ""
+" A CKAN Record is a collection of data resources (such as files), "
+"together with a description and other information, at a fixed URL. "
+"Records are what users see when searching for data. "
 
 #: ckan/templates/package/confirm_delete.html:11
 msgid "Are you sure you want to delete dataset - {name}?"
-msgstr ""
+msgstr "Are you sure you want to delete record - {name}?"
 
 #: ckan/templates/package/confirm_delete_resource.html:11
 msgid "Are you sure you want to delete resource - {name}?"
@@ -3207,7 +3235,7 @@ msgstr ""
 
 #: ckan/templates/package/edit_base.html:16
 msgid "View dataset"
-msgstr ""
+msgstr "View record"
 
 #: ckan/templates/package/edit_base.html:20
 msgid "Edit metadata"
@@ -3234,7 +3262,7 @@ msgstr ""
 
 #: ckan/templates/package/group_list.html:14
 msgid "Associate this group with this dataset"
-msgstr ""
+msgstr "Associate this group with this record"
 
 #: ckan/templates/package/group_list.html:14
 msgid "Add to group"
@@ -3242,15 +3270,15 @@ msgstr ""
 
 #: ckan/templates/package/group_list.html:23
 msgid "There are no groups associated with this dataset"
-msgstr ""
+msgstr "There are no groups associated with this record"
 
 #: ckan/templates/package/new_package_form.html:15
 msgid "Update Dataset"
-msgstr ""
+msgstr "Update Record"
 
 #: ckan/templates/package/new_resource.html:5
 msgid "Add data to the dataset"
-msgstr ""
+msgstr "Add data to the record"
 
 #: ckan/templates/package/new_resource.html:11
 #: ckan/templates/package/new_resource_not_draft.html:8
@@ -3294,6 +3322,9 @@ msgid ""
 "may differ significantly from the <a href=\"%(url)s\">current "
 "revision</a>."
 msgstr ""
+"This is an old revision of this record, as edited at %(timestamp)s. It "
+"may differ significantly from the <a href=\"%(url)s\">current "
+"revision</a>."
 
 #: ckan/templates/package/related_list.html:7
 msgid "Related Media for {dataset}"
@@ -3387,7 +3418,7 @@ msgstr ""
 
 #: ckan/templates/package/resource_read.html:69
 msgid "From the dataset abstract"
-msgstr ""
+msgstr "From the record abstract"
 
 #: ckan/templates/package/resource_read.html:71
 #, python-format
@@ -3480,6 +3511,8 @@ msgid ""
 " <p class=\"empty\">This dataset has no data, <a href=\"%(url)s\">why not"
 " add some?</a></p> "
 msgstr ""
+" <p class=\"empty\">This record has no data, <a href=\"%(url)s\">why not"
+" add some?</a></p> "
 
 #: ckan/templates/package/search.html:53
 msgid "API Docs"
@@ -3562,7 +3595,7 @@ msgstr ""
 
 #: ckan/templates/package/snippets/package_basic_fields.html:13
 msgid "eg. my-dataset"
-msgstr ""
+msgstr "eg. my-record"
 
 #: ckan/templates/package/snippets/package_basic_fields.html:19
 msgid "eg. Some useful notes about the data"
@@ -3608,10 +3641,16 @@ msgid ""
 "href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open Database "
 "License</a>."
 msgstr ""
+"The <i>data license</i> you select above only applies to the contents of "
+"any resource files that you add to this record. By submitting this form,"
+" you agree to release the <i>metadata</i> values that you enter into the "
+"form under the <a "
+"href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open Database "
+"License</a>."
 
 #: ckan/templates/package/snippets/package_form.html:39
 msgid "Are you sure you want to delete this dataset?"
-msgstr ""
+msgstr "Are you sure you want to delete this record?"
 
 #: ckan/templates/package/snippets/package_form.html:44
 msgid "Next: Add Data"
@@ -3619,7 +3658,7 @@ msgstr ""
 
 #: ckan/templates/package/snippets/package_metadata_fields.html:6
 msgid "http://example.com/dataset.json"
-msgstr ""
+msgstr "http://example.com/record.json"
 
 #: ckan/templates/package/snippets/package_metadata_fields.html:10
 msgid "1.0"
@@ -3763,17 +3802,17 @@ msgstr ""
 
 #: ckan/templates/package/snippets/resources_list.html:29
 msgid "This dataset has no data"
-msgstr ""
+msgstr "This record has no data"
 
 #: ckan/templates/package/snippets/revisions_table.html:24
 #, python-format
 msgid "Read dataset as of %s"
-msgstr ""
+msgstr "Read record as of %s"
 
 #: ckan/templates/package/snippets/stages.html:23
 #: ckan/templates/package/snippets/stages.html:25
 msgid "Create dataset"
-msgstr ""
+msgstr "Create record"
 
 #: ckan/templates/package/snippets/stages.html:30
 #: ckan/templates/package/snippets/stages.html:34
@@ -3824,6 +3863,10 @@ msgid ""
 "pictograph or bar chart, an app using all or part of the data or even a "
 "news story that references this dataset.</p> "
 msgstr ""
+" <p>Related Media is any app, article, visualisation or idea related to "
+"this record.</p> <p>For example, it could be a custom visualisation, "
+"pictograph or bar chart, an app using all or part of the data or even a "
+"news story that references this record.</p> "
 
 #: ckan/templates/related/confirm_delete.html:11
 msgid "Are you sure you want to delete related item - {name}?"
@@ -3860,6 +3903,8 @@ msgid ""
 " These are applications built with the datasets as well as ideas for "
 "things that could be done with them. "
 msgstr ""
+" These are applications built with the records as well as ideas for "
+"things that could be done with them. "
 
 #: ckan/templates/related/dashboard.html:58
 #: ckan/templates/snippets/search_form.html:70
@@ -3978,7 +4023,7 @@ msgstr ""
 
 #: ckan/templates/revision/read.html:74
 msgid "Datasets' Tags"
-msgstr ""
+msgstr "Records' Tags"
 
 #: ckan/templates/revision/snippets/revisions_list.html:7
 msgid "Entity"
@@ -4050,7 +4095,7 @@ msgstr ""
 
 #: ckan/templates/snippets/license.html:28
 msgid "This dataset satisfies the Open Definition."
-msgstr ""
+msgstr "This record satisfies the Open Definition."
 
 #: ckan/templates/snippets/organization.html:48
 msgid "There is no description for this organization"
@@ -4058,13 +4103,15 @@ msgstr ""
 
 #: ckan/templates/snippets/package_item.html:57
 msgid "This dataset has no description"
-msgstr ""
+msgstr "This record has no description"
 
 #: ckan/templates/snippets/related.html:15
 msgid ""
 "No apps, ideas, news stories or images have been related to this dataset "
 "yet."
 msgstr ""
+"No apps, ideas, news stories or images have been related to this record "
+"yet."
 
 #: ckan/templates/snippets/related.html:18
 msgid "Add Item"
@@ -4093,22 +4140,22 @@ msgstr ""
 #: ckan/templates/snippets/search_result_text.html:15
 msgid "{number} dataset found for \"{query}\""
 msgid_plural "{number} datasets found for \"{query}\""
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{number} record found for \"{query}\""
+msgstr[1] "{number} records found for \"{query}\""
 
 #: ckan/templates/snippets/search_result_text.html:16
 msgid "No datasets found for \"{query}\""
-msgstr ""
+msgstr "No records found for \"{query}\""
 
 #: ckan/templates/snippets/search_result_text.html:17
 msgid "{number} dataset found"
 msgid_plural "{number} datasets found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{number} record found"
+msgstr[1] "{number} records found"
 
 #: ckan/templates/snippets/search_result_text.html:18
 msgid "No datasets found"
-msgstr ""
+msgstr "No records found"
 
 #: ckan/templates/snippets/search_result_text.html:21
 msgid "{number} group found for \"{query}\""
@@ -4189,7 +4236,7 @@ msgstr ""
 #: ckan/templates/user/dashboard.html:20
 #: ckan/templates/user/dashboard_datasets.html:12
 msgid "My Datasets"
-msgstr ""
+msgstr "My Records"
 
 #: ckan/templates/user/dashboard.html:21
 #: ckan/templates/user/dashboard_organizations.html:12
@@ -4208,7 +4255,7 @@ msgstr ""
 #: ckan/templates/user/dashboard_datasets.html:17
 #: ckan/templates/user/read.html:14
 msgid "You haven't created any datasets."
-msgstr ""
+msgstr "You haven't created any records."
 
 #: ckan/templates/user/dashboard_datasets.html:19
 #: ckan/templates/user/dashboard_groups.html:22
@@ -4389,7 +4436,7 @@ msgstr ""
 
 #: ckan/templates/user/new.html:28
 msgid "Create datasets, groups and other exciting things"
-msgstr ""
+msgstr "Create records, groups and other exciting things"
 
 #: ckan/templates/user/new_user_form.html:5
 msgid "username"
@@ -4427,7 +4474,7 @@ msgstr ""
 
 #: ckan/templates/user/read.html:21
 msgid "User hasn't created any datasets."
-msgstr ""
+msgstr "User hasn't created any records."
 
 #: ckan/templates/user/read_base.html:39
 msgid "You have not provided a biography."
@@ -4690,7 +4737,7 @@ msgstr ""
 #: ckanext/stats/templates/ckanext/stats/index.html:10
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:57
 msgid "Total number of Datasets"
-msgstr ""
+msgstr "Total number of Records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:17
 #: ckanext/stats/templates/ckanext/stats/index.html:40
@@ -4699,26 +4746,22 @@ msgstr ""
 
 #: ckanext/stats/templates/ckanext/stats/index.html:18
 msgid "Total datasets"
-msgstr ""
+msgstr "Total records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:33
 #: ckanext/stats/templates/ckanext/stats/index.html:179
 msgid "Dataset Revisions per Week"
-msgstr ""
+msgstr "Record Revisions per Week"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:41
 msgid "All dataset revisions"
-msgstr ""
-
-#: ckanext/stats/templates/ckanext/stats/index.html:42
-msgid "New datasets"
-msgstr ""
+msgstr "All record revisions"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:58
 #: ckanext/stats/templates/ckanext/stats/index.html:180
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:63
 msgid "Top Rated Datasets"
-msgstr ""
+msgstr "Top Rated Records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:64
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:65
@@ -4739,7 +4782,7 @@ msgstr ""
 #: ckanext/stats/templates/ckanext/stats/index.html:181
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:72
 msgid "Most Edited Datasets"
-msgstr ""
+msgstr "Most Edited Records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:90
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:74
@@ -4748,7 +4791,7 @@ msgstr ""
 
 #: ckanext/stats/templates/ckanext/stats/index.html:103
 msgid "No edited datasets"
-msgstr ""
+msgstr "No edited records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:108
 #: ckanext/stats/templates/ckanext/stats/index.html:182
@@ -4759,7 +4802,7 @@ msgstr ""
 #: ckanext/stats/templates/ckanext/stats/index.html:114
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:82
 msgid "Number of datasets"
-msgstr ""
+msgstr "Number of records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:127
 msgid "No groups"
@@ -4778,12 +4821,12 @@ msgstr ""
 #: ckanext/stats/templates/ckanext/stats/index.html:137
 #: ckanext/stats/templates/ckanext/stats/index.html:157
 msgid "Number of Datasets"
-msgstr ""
+msgstr "Number of Records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:152
 #: ckanext/stats/templates/ckanext/stats/index.html:184
 msgid "Users Owning Most Datasets"
-msgstr ""
+msgstr "Users Owning Most Records"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:175
 msgid "Statistics Menu"
@@ -4791,7 +4834,7 @@ msgstr ""
 
 #: ckanext/stats/templates/ckanext/stats/index.html:178
 msgid "Total Number of Datasets"
-msgstr ""
+msgstr "Total Number of Records"
 
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:6
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:8
@@ -4800,11 +4843,11 @@ msgstr ""
 
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:60
 msgid "Revisions to Datasets per week"
-msgstr ""
+msgstr "Revisions to Records per week"
 
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:95
 msgid "Users owning most datasets"
-msgstr ""
+msgstr "Users owning most records"
 
 #: ckanext/stats/templates_legacy/ckanext/stats/index.html:102
 msgid "Page last updated:"
@@ -4816,13 +4859,15 @@ msgstr ""
 
 #: ckanext/stats/templates_legacy/ckanext/stats/leaderboard.html:17
 msgid "Dataset Leaderboard"
-msgstr ""
+msgstr "Record Leaderboard"
 
 #: ckanext/stats/templates_legacy/ckanext/stats/leaderboard.html:18
 msgid ""
 "Choose a dataset attribute and find out which categories in that area "
 "have the most datasets. E.g. tags, groups, license, res_format, country."
 msgstr ""
+"Choose a record attribute and find out which categories in that area "
+"have the most records. E.g. tags, groups, license, res_format, country."
 
 #: ckanext/stats/templates_legacy/ckanext/stats/leaderboard.html:20
 msgid "Choose area"
@@ -4959,24 +5004,39 @@ msgstr ""
 #~ " (e.g. Office of National Statistics).</p>"
 #~ " "
 #~ msgstr ""
+#~ " <p>Organizations act like publishing "
+#~ "departments for records (for example, "
+#~ "the Department of Health). This means"
+#~ " that records can be published by"
+#~ " and belong to a department instead"
+#~ " of an individual user.</p> <p>Within "
+#~ "organizations, admins can assign roles "
+#~ "and authorisation its members, giving "
+#~ "individual users the right to publish"
+#~ " records from that particular organisation"
+#~ " (e.g. Office of National Statistics).</p>"
+#~ " "
 
 #~ msgid "This organization has no description"
 #~ msgstr ""
 
 #~ msgid "Add metadata to the dataset"
-#~ msgstr ""
+#~ msgstr "Add metadata to the record"
 
 #~ msgid ""
 #~ "This is the current revision of "
 #~ "this dataset, as edited at "
 #~ "%(timestamp)s."
 #~ msgstr ""
+#~ "This is the current revision of "
+#~ "this record, as edited at "
+#~ "%(timestamp)s."
 
 #~ msgid "There is no description for this resource"
 #~ msgstr ""
 
 #~ msgid "There is no description for this dataset"
-#~ msgstr ""
+#~ msgstr "There is no description for this record"
 
 #~ msgid ""
 #~ "Important: By submitting content, you "
@@ -4995,6 +5055,9 @@ msgstr ""
 #~ " data, <a href=\"%(url)s\">why not add "
 #~ "some?</a> "
 #~ msgstr ""
+#~ " <p class=\"empty\">This record has no"
+#~ " data, <a href=\"%(url)s\">why not add "
+#~ "some?</a> "
 
 #~ msgid "Additional info"
 #~ msgstr ""
@@ -5015,7 +5078,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "View dataset resources"
-#~ msgstr ""
+#~ msgstr "View record resources"
 
 #~ msgid "DOWNLOAD"
 #~ msgstr ""
@@ -5157,9 +5220,9 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Find datasets"
-#~ msgstr ""
+#~ msgstr "Find records"
 
-#~ msgid "Add a dataset"
+#~ msgid "Add a record"
 #~ msgstr ""
 
 #~ msgid "Page Logo"
@@ -5238,7 +5301,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Deleted Datasets"
-#~ msgstr ""
+#~ msgstr "Deleted Records"
 
 #~ msgid "(None)"
 #~ msgstr ""
@@ -5250,7 +5313,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "There are no datasets currently in this group."
-#~ msgstr ""
+#~ msgstr "There are no records currently in this group."
 
 #~ msgid "History:"
 #~ msgstr ""
@@ -5262,7 +5325,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Groups of Datasets"
-#~ msgstr ""
+#~ msgstr "Groups of Records"
 
 #~ msgid "What Are Groups?"
 #~ msgstr ""
@@ -5276,12 +5339,19 @@ msgstr ""
 #~ " users have permission to add or "
 #~ "remove datasets from it."
 #~ msgstr ""
+#~ "Whilst tags are great at collecting "
+#~ "records together, there are occasions "
+#~ "when you want to restrict users "
+#~ "from editing a collection. A [1:group]"
+#~ " can be set-up to specify which"
+#~ " users have permission to add or "
+#~ "remove records from it."
 
 #~ msgid "New Dataset..."
-#~ msgstr ""
+#~ msgstr "New Record..."
 
 #~ msgid "Existing Dataset..."
-#~ msgstr ""
+#~ msgstr "Existing Record..."
 
 #~ msgid "List Groups"
 #~ msgstr ""
@@ -5326,7 +5396,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Add datasets"
-#~ msgstr ""
+#~ msgstr "Add records"
 
 #~ msgid "Resource Formats"
 #~ msgstr ""
@@ -5338,6 +5408,8 @@ msgstr ""
 #~ "[1:You searched for \"%(query)s\". "
 #~ "]%(number_of_results)s datasets found."
 #~ msgstr ""
+#~ "[1:You searched for \"%(query)s\". "
+#~ "]%(number_of_results)s records found."
 
 #~ msgid ""
 #~ "What was the [1:average price] of "
@@ -5386,6 +5458,20 @@ msgstr ""
 #~ " information (CKAN keeps a fully "
 #~ "versioned history)."
 #~ msgstr ""
+#~ "This site is running a powerful "
+#~ "piece of open-source data cataloguing"
+#~ " software called [1:CKAN], written and "
+#~ "maintained by the [2:Open Knowledge "
+#~ "Foundation]. Each 'record' record on "
+#~ "CKAN contains a description of the "
+#~ "data and other useful information, such"
+#~ " as what formats it is available "
+#~ "in, who owns it and whether it "
+#~ "is freely available, and what subject"
+#~ " areas the data is about. Other "
+#~ "users can improve or add to this"
+#~ " information (CKAN keeps a fully "
+#~ "versioned history)."
 
 #~ msgid ""
 #~ "CKAN powers a number of data "
@@ -5403,6 +5489,20 @@ msgstr ""
 #~ "[4:datacatalogs.org], which is itself powered"
 #~ " by CKAN."
 #~ msgstr ""
+#~ "CKAN powers a number of data "
+#~ "catalogues on the Internet. [1:The Data"
+#~ " Hub] is an openly editable open "
+#~ "data catalogue, in the style of "
+#~ "Wikipedia. The UK Government uses CKAN"
+#~ " to run [2:data.gov.uk], which currently"
+#~ " lists 8,000 government records. Official"
+#~ " public data from most European "
+#~ "countries is listed in a CKAN "
+#~ "catalogue at [3:publicdata.eu]. There is "
+#~ "a comprehensive list of catalogues like"
+#~ " these around the world at "
+#~ "[4:datacatalogs.org], which is itself powered"
+#~ " by CKAN."
 
 #~ msgid "Open data and the Open Knowledge Foundation"
 #~ msgstr ""
@@ -5424,6 +5524,21 @@ msgstr ""
 #~ "more about open data in the "
 #~ "[1:Open Data Handbook]."
 #~ msgstr ""
+#~ "Most of the data indexed at "
+#~ "%(site_title)s is openly licensed, meaning "
+#~ "anyone is free to use or re-"
+#~ "use it however they like. Perhaps "
+#~ "someone will take that nice record "
+#~ "of a city's public art that you"
+#~ " found, and add it to a tourist"
+#~ " map - or even make a neat "
+#~ "app for your phone that'll help "
+#~ "you find artworks when you visit "
+#~ "the city. Open data means more "
+#~ "enterprise, collaborative science and "
+#~ "transparent government. You can read "
+#~ "more about open data in the "
+#~ "[1:Open Data Handbook]."
 
 #~ msgid ""
 #~ "The [1:Open Knowledge Foundation] is a"
@@ -5459,9 +5574,11 @@ msgstr ""
 #~ "Add your own datasets to share them with others and\n"
 #~ "          to find other people interested in your data."
 #~ msgstr ""
+#~ "Add your own records to share them with others and\n"
+#~ "          to find other people interested in your data."
 
 #~ msgid "Create a dataset »"
-#~ msgstr ""
+#~ msgstr "Create a record »"
 
 #~ msgid "Sign up »"
 #~ msgstr ""
@@ -5490,19 +5607,22 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "datasets."
-#~ msgstr ""
+#~ msgstr "records."
 
 #~ msgid "Importer"
 #~ msgstr ""
 
 #~ msgid "Import Datasets"
-#~ msgstr ""
+#~ msgstr "Import Records"
 
 #~ msgid ""
 #~ "Here you can supply an Excel file"
 #~ " with details of multiple datasets "
 #~ "and import these into"
 #~ msgstr ""
+#~ "Here you can supply an Excel file"
+#~ " with details of multiple records "
+#~ "and import these into"
 
 #~ msgid "Log in to use this tool"
 #~ msgstr ""
@@ -5517,7 +5637,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Further dataset previews not shown."
-#~ msgstr ""
+#~ msgstr "Further record previews not shown."
 
 #~ msgid "Edit summary (briefly describe the changes you have made)"
 #~ msgstr ""
@@ -5535,10 +5655,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "- Datasets - History"
-#~ msgstr ""
+#~ msgstr "- Records - History"
 
 #~ msgid "- Edit - Datasets"
-#~ msgstr ""
+#~ msgstr "- Edit - Records"
 
 #~ msgid "Basic Information"
 #~ msgstr ""
@@ -5565,13 +5685,13 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "- Edit Resources - Datasets"
-#~ msgstr ""
+#~ msgstr "- Edit Resources - Records"
 
 #~ msgid "Edit Resources:"
 #~ msgstr ""
 
 #~ msgid "- Datasets - Followers"
-#~ msgstr ""
+#~ msgstr "- Records - Followers"
 
 #~ msgid "Followers:"
 #~ msgstr ""
@@ -5586,7 +5706,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Dataset History"
-#~ msgstr ""
+#~ msgstr "Record History"
 
 #~ msgid "Resources (0)"
 #~ msgstr ""
@@ -5604,13 +5724,13 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Add - Datasets"
-#~ msgstr ""
+#~ msgstr "Add - Records"
 
 #~ msgid "Add a Dataset"
-#~ msgstr ""
+#~ msgstr "Add a Record"
 
 #~ msgid "A short descriptive title for the dataset"
-#~ msgstr ""
+#~ msgstr "A short descriptive title for the record"
 
 #~ msgid "Home Page"
 #~ msgstr ""
@@ -5642,6 +5762,10 @@ msgstr ""
 #~ "more information on conventions, see "
 #~ "[1:this wiki page]."
 #~ msgstr ""
+#~ "Comma-separated terms that may link "
+#~ "this record to similar ones. For "
+#~ "more information on conventions, see "
+#~ "[1:this wiki page]."
 
 #~ msgid "e.g. pollution, rivers, water quality"
 #~ msgstr ""
@@ -5654,6 +5778,9 @@ msgstr ""
 #~ "and other materials related to your "
 #~ "dataset."
 #~ msgstr ""
+#~ "Upload or link data files, APIs "
+#~ "and other materials related to your "
+#~ "record."
 
 #~ msgid "New resource..."
 #~ msgstr ""
@@ -5679,6 +5806,10 @@ msgstr ""
 #~ " using the e-mail address in the "
 #~ "following field."
 #~ msgstr ""
+#~ "The name of the main contact, for"
+#~ " enquiries about this particular record,"
+#~ " using the e-mail address in the "
+#~ "following field."
 
 #~ msgid "Author email"
 #~ msgstr ""
@@ -5705,18 +5836,22 @@ msgstr ""
 #~ " find it in the search engine. "
 #~ "This data will also appear under"
 #~ msgstr ""
+#~ "Adding custom fields to the record "
+#~ "such as \"location:uk\" can help users"
+#~ " find it in the search engine. "
+#~ "This data will also appear under"
 
 #~ msgid "when viewing the dataset."
-#~ msgstr ""
+#~ msgstr "when viewing the record."
 
 #~ msgid "Do you really want to change the state of this dataset?"
-#~ msgstr ""
+#~ msgstr "Do you really want to change the state of this record?"
 
 #~ msgid "Yes!"
 #~ msgstr ""
 
 #~ msgid "This dataset is"
-#~ msgstr ""
+#~ msgstr "This record is"
 
 #~ msgid "Summary"
 #~ msgstr ""
@@ -5753,7 +5888,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "- Datasets"
-#~ msgstr ""
+#~ msgstr "- Records"
 
 #~ msgid "License:"
 #~ msgstr ""
@@ -5762,10 +5897,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Related Datasets"
-#~ msgstr ""
+#~ msgstr "Related Records"
 
 #~ msgid "This is an old revision of this dataset, as edited"
-#~ msgstr ""
+#~ msgstr "This is an old revision of this record, as edited"
 
 #~ msgid "at"
 #~ msgstr ""
@@ -5777,7 +5912,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "This is the current revision of this dataset, as edited"
-#~ msgstr ""
+#~ msgstr "This is the current revision of this record, as edited"
 
 #~ msgid "RDF/XML"
 #~ msgstr ""
@@ -5801,9 +5936,11 @@ msgstr ""
 #~ "[1:Dataset page] on \n"
 #~ "            [2:%(harvest_catalogue_name)s]"
 #~ msgstr ""
+#~ "[1:Record page] on \n"
+#~ "            [2:%(harvest_catalogue_name)s]"
 
 #~ msgid "- Dataset - Resource"
-#~ msgstr ""
+#~ msgstr "- Record - Resource"
 
 #~ msgid "Data API is unavailable for this resource as DataStore is disabled"
 #~ msgstr ""
@@ -5812,7 +5949,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "From the [1:Dataset]:"
-#~ msgstr ""
+#~ msgstr "From the [1:Record]:"
 
 #~ msgid "Cannot embed as resource is private."
 #~ msgstr ""
@@ -5821,7 +5958,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Do you know of a dataset that should be added to"
-#~ msgstr ""
+#~ msgstr "Do you know of a record that should be added to"
 
 #~ msgid "Register it now"
 #~ msgstr ""
@@ -5850,10 +5987,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "[1:%(item_count)s] datasets found"
-#~ msgstr ""
+#~ msgstr "[1:%(item_count)s] records found"
 
 #~ msgid "Would you like to [1:create a new dataset?]"
-#~ msgstr ""
+#~ msgstr "Would you like to [1:create a new record?]"
 
 #~ msgid "Search..."
 #~ msgstr ""
@@ -5942,7 +6079,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Dataset -"
-#~ msgstr ""
+#~ msgstr "Record -"
 
 #~ msgid ""
 #~ ",\n"
@@ -5999,7 +6136,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "There are %(count)s datasets tagged with [1:%(tagname)s]:"
-#~ msgstr ""
+#~ msgstr "There are %(count)s records tagged with [1:%(tagname)s]:"
 
 #~ msgid "- Dashboard - User"
 #~ msgstr ""
@@ -6014,7 +6151,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Add a new dataset"
-#~ msgstr ""
+#~ msgstr "Add a new record"
 
 #~ msgid "Follow another user"
 #~ msgstr ""
@@ -6211,4 +6348,3 @@ msgstr ""
 
 #~ msgid "User name:"
 #~ msgstr ""
-
