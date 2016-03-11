@@ -28,7 +28,7 @@ presets:
     label:
       en: Collection Type
       fr: Type de collection
-    required: true
+    #required: true   # FIXME: we need to use the form only for primary collection
     choices:
     - label:
         en: Non-Spatial
@@ -46,8 +46,8 @@ presets:
         en: Publications
         fr: Publication
       value: publication
+    form_snippet: null
     # copied from select preset
-    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
@@ -97,13 +97,13 @@ presets:
 
 - preset_name: canada_org_title_at_publication
   values:
-    field_name: 
+    field_name: org_title_at_publication
     label:
       en: Publisher - Organization Name at Publication
       fr: Organisation - Titre lors de la publication
     fluent_form_label:
       en:
-        en: Publisher - Organization Name at Publication (english)
+        en: Publisher - Organization Name at Publication (English)
         fr: Organisation - Titre lors de la publication (anglais)
       fr:
         en: Publisher - Organization Name at Publication (French)
@@ -1638,7 +1638,7 @@ presets:
       value: unknown
     field_name: frequency
     help_text:
-      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
+      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
       fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
     label:
       en: "Maintenance and Update Frequency"
@@ -1719,8 +1719,15 @@ presets:
   values:
     field_name: data_series_name
     label:
-      en: Data Series Name
+      en: Data Series
       fr: Nom de la série de l’ensemble de données
+    fluent_form_label:
+      en:
+        en: Data Series (English)
+        fr: Nom de la série de l’ensemble de données (anglais)
+      fr:
+        en: Data Series Name (French)
+        fr: Nom de la série de l’ensemble de données (français)
     help_text:
       en: The name of the series, or aggregate dataset, of which the dataset is a part
       fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
@@ -1738,6 +1745,13 @@ presets:
     label:
       en: Issue Identification
       fr: Identification de l’ensemble de données
+    fluent_form_label:
+      en:
+        en: Issue Identification (English)
+        fr: Identification de l’ensemble de données (anglais)
+      fr:
+        en: Issue Identification (French)
+        fr: Identification de l’ensemble de données (français)
     help_text:
       en: The identification of the series’ issue information.
       fr: L’identification de l’ensemble de données de la série
