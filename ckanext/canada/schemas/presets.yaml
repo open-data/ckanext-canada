@@ -1779,6 +1779,23 @@ presets:
     help_text:
       en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+    choices:
+    - label:
+        en: Federal
+        fr: Fédéral
+      value: federal
+    - label:
+        en: Provincial
+        fr: Provincial
+      value: provincial
+    - label:
+        en: Municipal
+        fr: Municipal
+      value: municipal
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
 
 - preset_name: canada_ready_to_publish
   values:
