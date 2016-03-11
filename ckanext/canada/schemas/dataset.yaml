@@ -44,6 +44,8 @@ dataset_fields:
 - preset: canada_data_series_issue_identification
 - preset: canada_digital_object_identifier
 - preset: canada_license_id
+- preset: canada_jurisdiction
+- preset: canada_ready_to_publish
 
 # dataset fields added to support migration of existing raw+geogratis records:
 
@@ -156,7 +158,6 @@ dataset_fields:
     en: The name of the graphic file provided to illustrate the resource
     fr: Le nom du fichier graphique fournit pour illustrer la ressource
 
-- preset: canada_ready_to_publish
 
 
 #
