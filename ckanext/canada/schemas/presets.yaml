@@ -1946,21 +1946,321 @@ presets:
   values:
     choices:
     - label:
-        en: No linguistic content; Not applicable
-        fr: pas de contenu linguistique; non applicable
-      value: zxx; CAN
-    - label:
         en: English
         fr: Anglais
-      value: eng; CAN
+      value: en
     - label:
         en: French
         fr: Français
-      value: fra; CAN
+      value: fr
     - label:
-        en: Bilingual (English and French)
-        fr: Bilingue (Anglais et Français)
-      value: eng; CAN | fra; CAN
+        en: Albanian
+        fr: Albanais
+      value: sq
+    - label:
+        en: Algonquian languages
+        fr: Algonquines, langues
+      value: alg
+    - label:
+        en: Amharic
+        fr: amharique
+      value: am
+    - label:
+        en: Apache languages
+        fr: Apache
+      value: apa
+    - label:
+        en: Arabic
+        fr: Arabe
+      value: ar
+    - label:
+        en: Armenian
+        fr: Arménien
+      value: hy
+    - label:
+        en: Artificial (Other)
+        fr: Artificielles, autres langues
+      value: art
+    - label:
+        en: Baltic (Other)
+        fr: Baltiques, autres langues
+      value: bat
+    - label:
+        en: Belarusian
+        fr: Biélorusse
+      value: be
+    - label:
+        en: Bengali
+        fr: bengali
+      value: bn
+    - label:
+        en: Bosnian
+        fr: Bosniaque
+      value: bs
+    - label:
+        en: Bulgarian
+        fr: Bulgare
+      value: bg
+    - label:
+        en: Catalan
+        fr: catalan
+      value: ca
+    - label:
+        en: Cherokee
+        fr: Cherokee
+      value: chr
+    - label:
+        en: Cheyenne
+        fr: Cheyenne
+      value: chy
+    - label:
+        en: Chinese
+        fr: Chinois
+      value: zh
+    - label:
+        en: Chipewyan
+        fr: Chipewyan
+      value: chp
+    - label:
+        en: Cree
+        fr: Cree
+      value: cr
+    - label:
+        en: Creoles and pidgins
+        fr: créoles et pidgins
+      value: crp
+    - label:
+        en: Croatian
+        fr: Croate
+      value: hr
+    - label:
+        en: Czech
+        fr: Tchèque
+      value: cs
+    - label:
+        en: Danish
+        fr: Danois
+      value: da
+    - label:
+        en: Dogrib
+        fr: dogrib
+      value: dgr
+    - label:
+        en: Dutch
+        fr: Néerlandais
+      value: nl
+    - label:
+        en: Finnish
+        fr: Finnois
+      value: fi
+    - label:
+        en: Galician
+        fr: galicien
+      value: gl
+    - label:
+        en: German
+        fr: Allemand
+      value: de
+    - label:
+        en: Greek, Modern (1453-)
+        fr: Grec moderne (après 1453)
+      value: el
+    - label:
+        en: Gujarati
+        fr: goudjrati
+      value: gu
+    - label:
+        en: Hebrew
+        fr: Hébreu
+      value: he
+    - label:
+        en: Hindi
+        fr: Hindi
+      value: hi
+    - label:
+        en: Hungarian
+        fr: Hongrois
+      value: hu
+    - label:
+        en: Indonesian
+        fr: Indonésien
+      value: id
+    - label:
+        en: Inuinnaqtun
+        fr: Innuinaqtun
+      value: inuinnaqtun
+    - label:
+        en: Inuktitut
+        fr: Inuktitut
+      value: iu
+    - label:
+        en: Inuvialuqtun
+        fr: Inuvialuqtun
+      value: inuvialuqtun
+    - label:
+        en: Iroquoian languages
+        fr: Iroquoises, langues (famille)
+      value: iro
+    - label:
+        en: Italian
+        fr: Italien
+      value: it
+    - label:
+        en: Japanese
+        fr: Japonais
+      value: ja
+    - label:
+        en: Korean
+        fr: Coréen
+      value: ko
+    - label:
+        en: Latin
+        fr: Latin
+      value: la
+    - label:
+        en: Micmac
+        fr: Micmac
+      value: mic
+    - label:
+        en: Miscellaneous languages
+        fr: Diverses, langues
+      value: mis
+    - label:
+        en: Mohawk
+        fr: Mohawk
+      value: moh
+    - label:
+        en: Multiple languages
+        fr: Multilingue
+      value: mul
+    - label:
+        en: Navajo
+        fr: Navaho
+      value: nv
+    - label:
+        en: Nootkan
+        fr: Nootkan
+      value: wak
+    - label:
+        en: North American Indian
+        fr: Indiennes d'Amérique du Nord
+      value: nai
+    - label:
+        en: Norwegian
+        fr: Norvégien
+      value: no
+    - label:
+        en: Nunatsiavummiutut
+        fr: Nunatsiavummiutut
+      value: nunatsiavummiutut
+    - label:
+        en: Ojibwa
+        fr: Ojibwa
+      value: oj
+    - label:
+        en: Persian
+        fr: Persan
+      value: fa
+    - label:
+        en: Philippine (Other)
+        fr: Philippines, autres langues
+      value: phi
+    - label:
+        en: Polish
+        fr: Polonais
+      value: pl
+    - label:
+        en: Portuguese
+        fr: Portugais
+      value: pt
+    - label:
+        en: Punjabi
+        fr: Pendjabi
+      value: pa
+    - label:
+        en: Romanian
+        fr: Roumain
+      value: ro
+    - label:
+        en: Russian
+        fr: Russe
+      value: ru
+    - label:
+        en: Salishan
+        fr: Salishan
+      value: sal
+    - label:
+        en: Serbian
+        fr: Serbe
+      value: sr
+    - label:
+        en: Sign Languages
+        fr: Langage gestuel
+      value: sgn
+    - label:
+        en: Siouan languages
+        fr: Sioux, langues
+      value: sio
+    - label:
+        en: Slovak
+        fr: Slovaque
+      value: sk
+    - label:
+        en: Somali
+        fr: somali
+      value: so
+    - label:
+        en: Spanish; Castilian
+        fr: Espagnol; castillan
+      value: es
+    - label:
+        en: Swahili
+        fr: swahili
+      value: ss
+    - label:
+        en: Swedish
+        fr: Suédois
+      value: sv
+    - label:
+        en: Tagalog
+        fr: tagalog
+      value: tl
+    - label:
+        en: Tamil
+        fr: tamoul
+      value: ta
+    - label:
+        en: Thai
+        fr: thaï
+      value: th
+    - label:
+        en: Turkish
+        fr: Turc
+      value: tr
+    - label:
+        en: Undetermined
+        fr: Indéterminée
+      value: und
+    - label:
+        en: Urdu
+        fr: Ourdou
+      value: ur
+    - label:
+        en: Vietnamese
+        fr: Vietnamien
+      value: vi
+    - label:
+        en: Welsh
+        fr: Gallois
+      value: cy
+    - label:
+        en: Yiddish
+        fr: Yiddish
+      value: yi
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx
     field_name: language
     help_text:
       en: The language of the resource.
@@ -1969,9 +2269,11 @@ presets:
       en: "Language"
       fr: "Langue"
     required: true
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
+    # copied from multiple_select preset
+    form_snippet: multiple_select.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
 
 
 - preset_name: canada_spatial_representation_type
