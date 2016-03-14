@@ -7,11 +7,11 @@
 <div class="row">
     <div class="col-md-6">
         <section>
-            <h2 class="h5"><a href="#">{{ _('Add Open Data Records') }}</a></h2>
+            <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Add Open Data Records') }}</a></h2>
             <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
         </section>
         <section>
-            <h2 class="h5"><a href="#">{{ _('Add Open Information Records') }}</a></h2>
+            <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Add Open Information Records') }}</a></h2>
             <p>{{ _('Add information about government programs, activities and publications.') }}</p>
         </section>
         <section>
