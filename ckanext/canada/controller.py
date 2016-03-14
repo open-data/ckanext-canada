@@ -1,6 +1,5 @@
 import logging
 import json
-import ckan.model as model
 import webhelpers.feedgenerator
 
 from ckan.lib.base import (BaseController, c, render, model, request, h, g,
@@ -16,7 +15,7 @@ from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
 import ckan.lib.dictization.model_dictize as model_dictize
 
-from ckanext.canada.helpers import normalize_strip_accents
+from ckanext.canada.helpers import normalize_strip_accents, is_user_new
 from pylons.i18n import _
 from pylons import config, session
 
@@ -127,47 +126,22 @@ class CanadaController(BaseController):
         i18n.set_lang(lang)
 
         if c.user:
-            is_new = False
-            is_sysadmin = new_authz.is_sysadmin(c.user)
-
-            # Retrieve information about the current user
-            context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema()}
+            context = None
             data_dict = {'id': c.user}
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            # This check is not needed (or correct) for sys admins
-            if not is_sysadmin:
-
-                # Get all organizations and all groups the user belongs to
-                orgs_q = model.Session.query(model.Group) \
-                    .filter(model.Group.is_organization == True) \
-                    .filter(model.Group.state == 'active')
-                q = model.Session.query(model.Member) \
-                    .filter(model.Member.table_name == 'user') \
-                    .filter(model.Member.table_id == user_dict['id'])
-
-                group_ids = []
-                for row in q.all():
-                    group_ids.append(row.group_id)
-
-                if not group_ids:
-                    is_new = True
-                else:
-                    orgs_q = orgs_q.filter(model.Group.id.in_(group_ids))
-
-                    orgs_list = model_dictize.group_list_dictize(orgs_q.all(), context)
-
-                    if len(orgs_list) == 0:
-                        is_new = True
+            is_new = is_user_new(c.user)
+            is_sysadmin = new_authz.is_sysadmin(c.user)
 
             h.flash_success(_("<strong>Note</strong><br>"
                 "%s is now logged in") %
                 user_dict['display_name'], allow_html=True)
 
-            if is_new:
+            if is_sysadmin:
+                return h.redirect_to(controller='package', action='search')
+
+            elif is_new:
                 return h.redirect_to(controller='ckanext.canada.controller:CanadaController',
                                          action='view_new_user', locale=lang)
             else:
