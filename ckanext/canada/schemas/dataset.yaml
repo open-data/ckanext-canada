@@ -38,14 +38,12 @@ dataset_fields:
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_portal_release_date
 - preset: canada_program_page_url
-- preset: canada_data_series_name
-- preset: canada_data_series_issue_identification
-- preset: canada_digital_object_identifier
-- preset: canada_license_id
 - preset: canada_jurisdiction
+- preset: canada_license_id
+- preset: canada_imso_approval
 - preset: canada_ready_to_publish
+- preset: canada_portal_release_date
 
 # dataset fields added to support migration of existing raw+geogratis records:
 

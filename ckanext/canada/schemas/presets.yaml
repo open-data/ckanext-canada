@@ -91,6 +91,8 @@ presets:
     help_text:
       en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
       fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
+    required: true
+    form_include_blank_choice: true
     # copied from dataset_organization preset
     validators: owner_org_validator unicode
     form_snippet: organization.html
@@ -206,7 +208,7 @@ presets:
       en: "The topic of the content of the information asset"
       fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
     required: true
-    form_snippet: multiple_checkbox.html
+    form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
@@ -1583,6 +1585,15 @@ presets:
 
 - preset_name: canada_frequency
   values:
+    field_name: frequency
+    help_text:
+      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
+    label:
+      en: "Maintenance and Update Frequency"
+      fr: "Fréquence mis à jour"
+    required: true
+    form_include_blank_choice: true
     choices:
     - label:
         en: As Needed
@@ -1636,14 +1647,6 @@ presets:
         en: Unknown
         fr: Inconnu
       value: unknown
-    field_name: frequency
-    help_text:
-      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
-      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
-    label:
-      en: "Maintenance and Update Frequency"
-      fr: "Fréquence mis à jour"
-    required: true
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -1676,21 +1679,6 @@ presets:
     form_snippet: date.html
     display_snippet: date.html
     validators: scheming_required isodate
-
-- preset_name: canada_portal_release_date
-  values:
-    field_name: portal_release_date
-    label:
-      en: Portal Release Date
-      fr: Date de lancement du portail
-    help_text:
-      en: The date the dataset may be published on the Open Information Portal
-      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
-    form_snippet: portal_release_date.html
-    display_snippet: date.html
-    # order is very important here:
-    validators: protect_portal_release_date ignore_empty isodate
-      convert_to_json_if_date
 
 - preset_name: canada_program_page_url
   values:
@@ -1773,7 +1761,7 @@ presets:
   values:
     field_name: license_id
     form_snippet: license.html
-    default: ca-ogl-lgo
+    form_include_blank_choice: true
     label:
       en: "Licence"
       fr: "Licence"
@@ -1793,19 +1781,43 @@ presets:
     help_text:
       en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+    required: true
     choices:
     - label:
         en: Federal
         fr: Fédéral
       value: federal
+    ### FIXME: add more choices once we are federating data but
+    ### only allow federal datasets to be edited in this form
+    #- label:
+    #    en: Provincial
+    #    fr: Provincial
+    #  value: provincial
+    #- label:
+    #    en: Municipal
+    #    fr: Municipal
+    #  value: municipal
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_imso_approval
+  values:
+    field_name: imso_approval
+    label:
+      en: IMSO Approval
+      fr: Approbation de la CSGI
+    required: true
+    form_include_blank_choice: true
+    choices:
     - label:
-        en: Provincial
-        fr: Provincial
-      value: provincial
+        en: "No"
+        fr: Non
+      value: "false"
     - label:
-        en: Municipal
-        fr: Municipal
-      value: municipal
+        en: "Yes"
+        fr: Oui
+      value: "true"
     # copied from select preset
     form_snippet: select.html
     display_snippet: select.html
@@ -1818,6 +1830,7 @@ presets:
       en: Ready to Publish
       fr: Prêt à publier
     required: true
+    form_include_blank_choice: true
     choices:
     - label:
         en: "No"
@@ -1832,26 +1845,21 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
-- preset_name: canada_imso_approval
+- preset_name: canada_portal_release_date
   values:
-    field_name: imso_approval
+    field_name: portal_release_date
     label:
-      en: IMSO Approval
-      fr: Approbation de la CSGI
-    required: true
-    choices:
-    - label:
-        en: "No"
-        fr: Non
-      value: "false"
-    - label:
-        en: "Yes"
-        fr: Oui
-      value: "true"
-    # copied from select preset
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
+      en: Portal Release Date
+      fr: Date de lancement du portail
+    help_text:
+      en: The date the dataset may be published on the Open Information Portal
+      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
+    form_snippet: portal_release_date.html
+    display_snippet: date.html
+    # order is very important here:
+    validators: protect_portal_release_date ignore_empty isodate
+      convert_to_json_if_date
+
 
 - preset_name: canada_related_items
   values:
