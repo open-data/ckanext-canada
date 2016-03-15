@@ -26,7 +26,12 @@ class CanadaController(BaseController):
         if not c.user:
             h.redirect_to(controller='user', action='login')
 
-        return render('home/index.html')
+        is_sysadmin = new_authz.is_sysadmin(c.user)
+        is_new = is_user_new(c.user)
+
+        if is_sysadmin or is_new:
+            return h.redirect_to(controller='package', action='search')
+        return render('home/quick_links.html')
 
     def registry_menu(self):
         return render("menu.html")
@@ -128,17 +133,14 @@ class CanadaController(BaseController):
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            is_new = is_user_new(c.user)
             is_sysadmin = new_authz.is_sysadmin(c.user)
+            is_new = is_user_new(c.user)
 
             h.flash_success(_('<strong>Note</strong><br>'
                 "%s is now logged in") %
                 user_dict['display_name'], allow_html=True)
 
-            if is_sysadmin:
-                return h.redirect_to(controller='package', action='search')
-
-            elif is_new:
+            if not is_sysadmin and is_new:
                 h.flash_notice('<strong>' + _('Account Created')
                     + '</strong><br>' +
                     _('Thank you for creating your account for the Open '
@@ -154,9 +156,8 @@ class CanadaController(BaseController):
                       '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
                       'open-ouvert@tbs-sct.gc.ca</a>')
                     , True)
-                return h.redirect_to(controller='package', action='search')
-            else:
-                return h.redirect_to('/{0}'.format(lang or ''))
+
+            return h.redirect_to('/{0}'.format(lang or ''))
         else:
             h.flash_error(_('Login failed. Bad username or password.'))
             return h.redirect_to(controller='user',
