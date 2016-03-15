@@ -71,9 +71,6 @@ class CanadaController(BaseController):
         return render('user/new.html')
 
 
-    def view_new_user(self):
-        return render('newuser.html')
-
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author, 'for_view': True,
@@ -134,7 +131,7 @@ class CanadaController(BaseController):
             is_new = is_user_new(c.user)
             is_sysadmin = new_authz.is_sysadmin(c.user)
 
-            h.flash_success(_("<strong>Note</strong><br>"
+            h.flash_success(_('<strong>Note</strong><br>'
                 "%s is now logged in") %
                 user_dict['display_name'], allow_html=True)
 
@@ -142,8 +139,22 @@ class CanadaController(BaseController):
                 return h.redirect_to(controller='package', action='search')
 
             elif is_new:
-                return h.redirect_to(controller='ckanext.canada.controller:CanadaController',
-                                         action='view_new_user', locale=lang)
+                h.flash_notice('<strong>' + _('Account Created')
+                    + '</strong><br>' +
+                    _('Thank you for creating your account for the Open '
+                      'Government registry. Although your account is active, '
+                      'it has not yet been linked to your department. Until '
+                      'the account is linked to your department you will not '
+                      'be able to create or modify datasets in the registry.')
+                    + '<br><br>' +
+                    _('You should receive an email within the next business '
+                      'day once the account activation process has been '
+                      'completed. If you require faster processing of the '
+                      'account, please send the request directly to: '
+                      '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
+                      'open-ouvert@tbs-sct.gc.ca</a>')
+                    , True)
+                return h.redirect_to(controller='package', action='search')
             else:
                 return h.redirect_to('/{0}'.format(lang or ''))
         else:
