@@ -30,24 +30,30 @@ class TestNAVLSchema(FunctionalTestBase):
 
         self.incomplete_pkg = {
             'type': 'dataset',
-            'title': {'en': u'A Novel By Tolstoy'},
+            'title_translated': {'en': u'A Novel By Tolstoy'},
             'license_id': 'ca-ogl-lgo',
             'ready_to_publish': 'true',
+            'imso_approval': 'true',
+            'jurisdiction': 'federal',
+            'maintainer_email': 'not@all.example.com',
             'resources': [{
-                'name': {'en': u'Full text.', 'fr': u'Full text.'},
+                'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
                 'format': u'TXT',
                 'url': u'http://www.annakarenina.com/download/',
                 'size': 42,
                 'resource_type': 'file',
-                'language': 'zxx; CAN',
+                'language': ['zxx'],
             }],
         }
 
         self.complete_pkg = dict(self.incomplete_pkg,
             owner_org=org['name'],
-            title={'en': u'A Novel By Tolstoy', 'fr':u'Un novel par Tolstoy'},
+            org_title_at_publication={
+                'en': u'en org name', 'fr': u'fr org name'},
+            title_translated={
+                'en': u'A Novel By Tolstoy', 'fr':u'Un novel par Tolstoy'},
             frequency=u'as_needed',
-            notes={'en': u'...', 'fr': u'...'},
+            notes_translated={'en': u'...', 'fr': u'...'},
             subject=[u'PE'],
             date_published=u'2013-01-01',
             keywords={'en': [u'book'], 'fr': [u'livre']},
@@ -60,10 +66,10 @@ class TestNAVLSchema(FunctionalTestBase):
 
         resp = self.normal_action.package_create(
             name='basic_package', **self.complete_pkg)
-        assert resp['title']['fr'] == u'Un novel par Tolstoy'
+        assert resp['title_translated']['fr'] == u'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])
-        assert resp['title']['fr'] == u'Un novel par Tolstoy'
+        assert resp['title_translated']['fr'] == u'Un novel par Tolstoy'
 
     def test_keyword_validation(self):
         assert_raises(ValidationError,
@@ -107,7 +113,7 @@ class TestNAVLSchema(FunctionalTestBase):
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
-        del raw_pkg['title']
+        del raw_pkg['title_translated']
 
         assert_raises(ValidationError,
             self.normal_action.package_create,

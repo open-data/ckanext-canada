@@ -35,7 +35,7 @@ dataset_fields:
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_homepage_url
+- preset: canada_program_page_url
 - preset: canada_related_items
 - preset: canada_jurisdiction
 - preset: canada_license_id
@@ -47,7 +47,7 @@ dataset_fields:
 #
 resource_fields:
 
-- preset: canada_unique_identifier
+- preset: canada_resource_unique_identifier
 - preset: canada_resource_name
 - preset: canada_resource_date_published
 - preset: canada_resource_type

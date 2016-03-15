@@ -22,23 +22,28 @@ dataset_fields:
 - preset: canada_dataset_id
 - preset: canada_dataset_name
 
-- preset: canada_owner_org
-- preset: canada_digital_object_identifier
+- preset: canada_collection
 - preset: canada_title
+- preset: canada_owner_org
+- preset: canada_org_title_at_publication
+- preset: canada_creator
+- preset: canada_maintainer_email
 - preset: canada_notes
-- preset: canada_subject
 - preset: canada_keywords
+- preset: canada_subject
+- preset: canada_spatial
+- preset: canada_geographic_region
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_time_period_coverage_start
-- preset: canada_time_period_coverage_end
-- preset: canada_geographic_region
-- preset: canada_data_series_name
-- preset: canada_data_series_issue_identification
-- preset: canada_homepage_url
+- preset: canada_program_page_url
+- preset: canada_jurisdiction
 - preset: canada_license_id
-- preset: canada_endpoint_url
+- preset: canada_imso_approval
+- preset: canada_ready_to_publish
+- preset: canada_portal_release_date
 
 # dataset fields added to support migration of existing raw+geogratis records:
 
@@ -49,9 +54,9 @@ dataset_fields:
   help_text:
     en: The electronic mail address of the responsible organization or individual
     fr: L’adresse électronique de l’organisation ou de la personne responsable
+  form_snippet: null
 
 - preset: canada_topic_category
-- preset: canada_spatial
 - preset: canada_spatial_representation_type
 
 - field_name: presentation_form
@@ -61,7 +66,6 @@ dataset_fields:
   help_text:
     en: The form in which the resource is available
     fr: Le format dans lequel la ressource est disponible
-  preset: select
   choices:
   - label:
       en: Document Digital
@@ -143,6 +147,10 @@ dataset_fields:
       en: Diagram Hardcopy
       fr: Diagramme papier
     value: '406'
+  form_snippet: null
+  # copied from select preset
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
 
 - field_name: browse_graphic_url
   label:
@@ -151,9 +159,8 @@ dataset_fields:
   help_text:
     en: The name of the graphic file provided to illustrate the resource
     fr: Le nom du fichier graphique fournit pour illustrer la ressource
+  form_snippet: null
 
-- preset: canada_ready_to_publish
-- preset: canada_portal_release_date
 
 
 #
@@ -161,12 +168,14 @@ dataset_fields:
 #
 resource_fields:
 
+- preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-- preset: canada_resource_url
-- preset: canada_resource_language
+- preset: canada_resource_date_published
+- preset: canada_resource_type
 - preset: canada_resource_size
 - preset: canada_resource_format
-- preset: canada_resource_type
+- preset: canada_resource_language
+- preset: canada_resource_url
 - preset: canada_resource_data_quality
 
 

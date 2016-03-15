@@ -22,18 +22,101 @@ presets:
     form_snippet: null
     validators: if_empty_same_as(id)
 
+- preset_name: canada_collection
+  values:
+    field_name: collection
+    label:
+      en: Collection Type
+      fr: Type de collection
+    #required: true   # FIXME: we need to use the form only for primary collection
+    choices:
+    - label:
+        en: Non-Spatial
+        fr: Non spatiales
+      value: primary
+    - label:
+        en: Geospatial
+        fr: Géospatiales
+      value: geogratis
+    - label:
+        en: Open Maps
+        fr: Cartes Ouvertes
+      value: openmaps
+    - label:
+        en: Publications
+        fr: Publication
+      value: publication
+    form_snippet: null
+    # copied from select preset
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_title
+  values:
+    field_name: title_translated
+    label:
+      en: Title
+      fr: Titre
+    fluent_form_label:
+      en:
+        en: "Title (English)"
+        fr: "Titre (anglais)"
+      fr:
+        en: "Title (French)"
+        fr: "Titre (français)"
+    fluent_help_text:
+      en:
+        en: The English name by which the information asset is known
+        fr: Nom anglais désignant la ressource d’information
+      fr:
+        en: The French name by which the information asset is known
+        fr: Nom français désignant la ressource d’information
+    form_placeholder:
+      en: Canada Border Wait Times
+      fr: Temps d’attente à la frontière
+    required: true
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output
+
 - preset_name: canada_owner_org
   values:
     field_name: owner_org
     label:
-      en: "Publisher"
-      fr: "Éditeur"
+      en: Publisher
+      fr: Organisation
     help_text:
       en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
       fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
+    required: true
+    form_include_blank_choice: true
     # copied from dataset_organization preset
     validators: owner_org_validator unicode
     form_snippet: organization.html
+
+- preset_name: canada_org_title_at_publication
+  values:
+    field_name: org_title_at_publication
+    label:
+      en: Publisher - Organization Name at Publication
+      fr: Organisation - Titre lors de la publication
+    fluent_form_label:
+      en:
+        en: Publisher - Organization Name at Publication (English)
+        fr: Organisation - Titre lors de la publication (anglais)
+      fr:
+        en: Publisher - Organization Name at Publication (French)
+        fr: Organisation - Titre lors de la publication (français)
+    required: true
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
 
 - preset_name: canada_creator
   values:
@@ -56,96 +139,19 @@ presets:
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
     required: true
 
-- preset_name: canada_ready_to_publish
-  values:
-    field_name: ready_to_publish
-    label:
-      en: Ready to Publish
-      fr: Prêt à publier
-    required: true
-    choices:
-    - label:
-        en: "No"
-        fr: Non
-      value: "false"
-    - label:
-        en: "Yes"
-        fr: Oui
-      value: "true"
-    # copied from select preset
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
-
-- preset_name: canada_portal_release_date
-  values:
-    field_name: portal_release_date
-    label:
-      en: Portal Release Date
-      fr: Date de lancement du portail
-    help_text:
-      en: The date the dataset may be published on the Open Information Portal
-      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
-    form_snippet: portal_release_date.html
-    display_snippet: date.html
-
-    # order is very important here:
-    validators: protect_portal_release_date ignore_empty isodate
-      convert_to_json_if_date
-
-
-- preset_name: canada_digital_object_identifier
-  values:
-    field_name: digital_object_identifier
-    label:
-      en: Digital Object Identifier
-      fr: Identificateur d’objet numérique
-
-- preset_name: canada_title
-  values:
-    field_name: title
-    label:
-      en: Title
-      fr: Titre
-    fluent_form_label:
-      en:
-        en: "Title English"
-        fr: "Titre anglais"
-      fr:
-        en: "Title French"
-        fr: "Titre français"
-    fluent_help_text:
-      en:
-        en: The English name by which the information asset is known
-        fr: Nom anglais désignant la ressource d’information
-      fr:
-        en: The French name by which the information asset is known
-        fr: Nom français désignant la ressource d’information
-    form_placeholder:
-      en: Canada Border Wait Times
-      fr: Temps d’attente à la frontière
-    required: true
-
-    # copied from fluent_text preset
-    form_snippet: fluent_text.html
-    display_snippet: fluent_text.html
-    error_snippet: fluent_text.html
-    validators: fluent_text
-    output_validators: fluent_text_output
-
 - preset_name: canada_notes
   values:
-    field_name: notes
+    field_name: notes_translated
     label:
       en: Description
       fr: Description
     fluent_form_label:
       en:
-        en: "Description English"
-        fr: "Description anglais"
+        en: "Description (English)"
+        fr: "Description (en anglais)"
       fr:
-        en: "Description French"
-        fr: "Description français"
+        en: "Description (French)"
+        fr: "Description (français)"
     form_placeholder:
       en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
         of pollutant releases (to air, water and land), disposals and transfers for
@@ -161,7 +167,36 @@ presets:
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_text_output
+    output_validators: fluent_core_translated_output
+
+- preset_name: canada_keywords
+  values:
+    field_name: keywords
+    label:
+      en: Keywords
+      fr: Mots clés
+    fluent_form_label:
+      en:
+        en: "Keywords (English)"
+        fr: "Mots clés (anglais)"
+      fr:
+        en: "Keywords (French)"
+        fr: "Mots clés (français)"
+
+    help_text:
+      en: Commonly used words or phrases which describe the information asset, in English
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+    required: true
+    tag_validators: canada_tags tag_length_validator
+    # copied from fluent_tags preset
+    form_snippet: fluent_tags.html
+    display_snippet: fluent_tags.html
+    error_snippet: fluent_text.html
+    validators: fluent_tags
+    output_validators: fluent_tags_output
+    form_attrs:
+      data-module: autocomplete
+      data-module-tags: ""
 
 - preset_name: canada_subject
   values:
@@ -173,7 +208,7 @@ presets:
       en: "The topic of the content of the information asset"
       fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
     required: true
-    form_snippet: multiple_checkbox.html
+    form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
@@ -255,35 +290,6 @@ presets:
         fr: Format
       value: FM
 
-- preset_name: canada_keywords
-  values:
-    field_name: keywords
-    label:
-      en: Keywords
-      fr: Mots clés
-    fluent_form_label:
-      en:
-        en: "Keywords English"
-        fr: "Mots clés anglais"
-      fr:
-        en: "Keywords French"
-        fr: "Mots clés français"
-
-    help_text:
-      en: Commonly used words or phrases which describe the information asset, in English
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
-    required: true
-    tag_validators: canada_tags tag_length_validator
-    # copied from fluent_tags preset
-    form_snippet: fluent_tags.html
-    display_snippet: fluent_tags.html
-    error_snippet: fluent_text.html
-    validators: fluent_tags
-    output_validators: fluent_tags_output
-    form_attrs:
-      data-module: autocomplete
-      data-module-tags: ""
-
 - preset_name: canada_spatial
   values:
     field_name: spatial
@@ -294,143 +300,6 @@ presets:
     help_text:
       en: The range of spatial applicability of an information asset. This element could include either a bounding box, or GeoJson string.
       fr: Étendue de l’applicabilité spatiale d’une ressource d’information. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
-
-- preset_name: canada_frequency
-  values:
-    choices:
-    - label:
-        en: As Needed
-        fr: Au besoin
-      value: as_needed
-    - label:
-        en: Continual
-        fr: Continue
-      value: continual
-    - label:
-        en: Daily
-        fr: Quotidien
-      value: daily
-    - label:
-        en: Weekly
-        fr: Hebdomadaire
-      value: weekly
-    - label:
-        en: Fortnightly
-        fr: Quinzomadaire
-      value: fortnightly
-    - label:
-        en: Monthly
-        fr: Mensuel
-      value: monthly
-    - label:
-        en: Semimonthly
-        fr: Bimensuel
-      value: semimonthly
-    - label:
-        en: Quarterly
-        fr: Trimestriel
-      value: quarterly
-    - label:
-        en: Biannually
-        fr: Semestriel
-      value: biannually
-    - label:
-        en: Annually
-        fr: Annuel
-      value: annually
-    - label:
-        en: Irregular
-        fr: Irrégulier
-      value: irregular
-    - label:
-        en: Not Planned
-        fr: Non planifié
-      value: not_planned
-    - label:
-        en: Unknown
-        fr: Inconnu
-      value: unknown
-    field_name: frequency
-    help_text:
-      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed 
-      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
-    label:
-      en: "Maintenance and Update Frequency"
-      fr: "Fréquence mis à jour"
-    required: true
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
-
-- preset_name: canada_date_published
-  values:
-    field_name: date_published
-    label:
-      en: "Date Published"
-      fr: "Date de publication"
-    help_text:
-      en: The date of issuance (e.g., publication) of the information asset.
-      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
-    required: true
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_date_modified
-  values:
-    field_name: date_modified
-    label:
-      en: Date Modified
-      fr: Date de modification
-    help_text:
-      en: The date on which the information asset was changed, updated or modified.
-      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_date_released
-  values:
-    field_name: date_released
-    label:
-      en: "Date Released"
-      fr: "Date de sortie"
-    help_text:
-      en: The date on which the metadata record was released, made available, on the Open Government Portal
-      fr: Date à laquelle l’enregistrement de métadonnées a été publié, rendu accessible, dans le portail du gouvernement ouvert
-    # copied from date preset
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-- preset_name: canada_time_period_coverage_start
-  values:
-    field_name: time_period_coverage_start
-    help_text:
-      en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
-      fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
-    label:
-      en: Time Period Coverage Start
-      fr: Couverture de la période de temps
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
-
-
-- preset_name: canada_time_period_coverage_end
-  values:
-    field_name: time_period_coverage_end
-    help_text:
-      en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
-      fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
-    label:
-      en: Time Period Coverage End
-      fr: Couverture de la période de temps
-    form_snippet: date.html
-    display_snippet: date.html
-    validators: scheming_required isodate
 
 - preset_name: canada_geographic_region
   values:
@@ -1688,12 +1557,165 @@ presets:
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
+- preset_name: canada_time_period_coverage_start
+  values:
+    field_name: time_period_coverage_start
+    help_text:
+      en: The start date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de début ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage Start
+      fr: Couverture de la période de temps
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_time_period_coverage_end
+  values:
+    field_name: time_period_coverage_end
+    help_text:
+      en: The end date or time interval(s) covered by the data. (YYYY-MM-DD)
+      fr: La date de fin ou les périodes couvertes par les données. (AAAA-MM-JJ)
+    label:
+      en: Time Period Coverage End
+      fr: Couverture de la période de temps
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_frequency
+  values:
+    field_name: frequency
+    help_text:
+      en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
+    label:
+      en: "Maintenance and Update Frequency"
+      fr: "Fréquence mis à jour"
+    required: true
+    form_include_blank_choice: true
+    choices:
+    - label:
+        en: As Needed
+        fr: Au besoin
+      value: as_needed
+    - label:
+        en: Continual
+        fr: Continue
+      value: continual
+    - label:
+        en: Daily
+        fr: Quotidien
+      value: daily
+    - label:
+        en: Weekly
+        fr: Hebdomadaire
+      value: weekly
+    - label:
+        en: Fortnightly
+        fr: Quinzomadaire
+      value: fortnightly
+    - label:
+        en: Monthly
+        fr: Mensuel
+      value: monthly
+    - label:
+        en: Semimonthly
+        fr: Bimensuel
+      value: semimonthly
+    - label:
+        en: Quarterly
+        fr: Trimestriel
+      value: quarterly
+    - label:
+        en: Biannually
+        fr: Semestriel
+      value: biannually
+    - label:
+        en: Annually
+        fr: Annuel
+      value: annually
+    - label:
+        en: Irregular
+        fr: Irrégulier
+      value: irregular
+    - label:
+        en: Not Planned
+        fr: Non planifié
+      value: not_planned
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_date_published
+  values:
+    field_name: date_published
+    label:
+      en: "Date Published"
+      fr: "Date de publication"
+    help_text:
+      en: The date of issuance (e.g., publication) of the information asset.
+      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
+    required: true
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_date_modified
+  values:
+    field_name: date_modified
+    label:
+      en: Date Modified
+      fr: Date de modification
+    help_text:
+      en: The date on which the information asset was changed, updated or modified.
+      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: scheming_required isodate
+
+- preset_name: canada_program_page_url
+  values:
+    field_name: program_page_url
+    label:
+      en: Program Page URL
+      fr: URL de la page d'accueil
+    fluent_form_label:
+      en:
+        en: Program Page URL (English)
+        fr: URL de la page d’accueil (anglaise)
+      fr:
+        en: Program Page URL (French)
+        fr: URL de la page d’accueil (française)
+    help_text:
+      en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
 - preset_name: canada_data_series_name
   values:
     field_name: data_series_name
     label:
-      en: Data Series Name
+      en: Data Series
       fr: Nom de la série de l’ensemble de données
+    fluent_form_label:
+      en:
+        en: Data Series (English)
+        fr: Nom de la série de l’ensemble de données (anglais)
+      fr:
+        en: Data Series Name (French)
+        fr: Nom de la série de l’ensemble de données (français)
     help_text:
       en: The name of the series, or aggregate dataset, of which the dataset is a part
       fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
@@ -1711,6 +1733,13 @@ presets:
     label:
       en: Issue Identification
       fr: Identification de l’ensemble de données
+    fluent_form_label:
+      en:
+        en: Issue Identification (English)
+        fr: Identification de l’ensemble de données (anglais)
+      fr:
+        en: Issue Identification (French)
+        fr: Identification de l’ensemble de données (français)
     help_text:
       en: The identification of the series’ issue information.
       fr: L’identification de l’ensemble de données de la série
@@ -1721,28 +1750,116 @@ presets:
     validators: fluent_text
     output_validators: fluent_text_output
 
-- preset_name: canada_homepage_url
+- preset_name: canada_digital_object_identifier
   values:
-    field_name: url
+    field_name: digital_object_identifier
     label:
-      en: Homepage URL
-      fr: URL de la page d’accueil
-    fluent_form_label:
-      en:
-        en: Homepage URL English
-        fr: URL de la page d’accueil anglaise
-      fr:
-        en: Homepage URL French
-        fr: URL de la page d’accueil française
+      en: Digital Object Identifier
+      fr: Identificateur d’objet numérique
+
+- preset_name: canada_license_id
+  values:
+    field_name: license_id
+    form_snippet: license.html
+    form_include_blank_choice: true
+    label:
+      en: "Licence"
+      fr: "Licence"
     help_text:
-      en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
-      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
-    # copied from fluent_text preset
-    form_snippet: fluent_text.html
-    display_snippet: fluent_text.html
-    error_snippet: fluent_text.html
-    validators: fluent_text
-    output_validators: fluent_text_output
+      en: The specific attribution statement provided by the information provider.
+      fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
+    required: true
+
+- preset_name: canada_jurisdiction
+  values:
+    field_name: jurisdiction
+    label:
+      en: Jurisdiction
+      fr: Jurisdiction
+    display_snippet: null
+    form_snippet: null
+    help_text:
+      en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
+      fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+    required: true
+    choices:
+    - label:
+        en: Federal
+        fr: Fédéral
+      value: federal
+    ### FIXME: add more choices once we are federating data but
+    ### only allow federal datasets to be edited in this form
+    #- label:
+    #    en: Provincial
+    #    fr: Provincial
+    #  value: provincial
+    #- label:
+    #    en: Municipal
+    #    fr: Municipal
+    #  value: municipal
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_imso_approval
+  values:
+    field_name: imso_approval
+    label:
+      en: IMSO Approval
+      fr: Approbation de la CSGI
+    required: true
+    form_include_blank_choice: true
+    choices:
+    - label:
+        en: "No"
+        fr: Non
+      value: "false"
+    - label:
+        en: "Yes"
+        fr: Oui
+      value: "true"
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_ready_to_publish
+  values:
+    field_name: ready_to_publish
+    label:
+      en: Ready to Publish
+      fr: Prêt à publier
+    required: true
+    form_include_blank_choice: true
+    choices:
+    - label:
+        en: "No"
+        fr: Non
+      value: "false"
+    - label:
+        en: "Yes"
+        fr: Oui
+      value: "true"
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+- preset_name: canada_portal_release_date
+  values:
+    field_name: portal_release_date
+    label:
+      en: Portal Release Date
+      fr: Date de lancement du portail
+    help_text:
+      en: The date the dataset may be published on the Open Information Portal
+      fr: La date que le jeu de données peut être publier sur le portail information ouvertes
+    form_snippet: portal_release_date.html
+    display_snippet: date.html
+    # order is very important here:
+    validators: protect_portal_release_date ignore_empty isodate
+      convert_to_json_if_date
+
 
 - preset_name: canada_related_items
   values:
@@ -1753,28 +1870,6 @@ presets:
     help_text:
       en: A related dataset or information asset in the Open Government Portal. 
       fr: La ressource d’information connexe dans le portail du gouvernement ouvert
-
-- preset_name: canada_jurisdiction
-  values:
-    field_name: jurisdiction
-    display_snippet: null
-    form_snippet: null
-    help_text:
-      en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
-      fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
-
-- preset_name: canada_license_id
-  values:
-    field_name: license_id
-    form_snippet: license.html
-    default: ca-ogl-lgo
-    label:
-      en: "Licence"
-      fr: "Licence"
-    help_text:
-      en: The specific attribution statement provided by the information provider.
-      fr: L’énoncé d’attribution précis fourni par le fournisseur d’information
-    required: true
 
 - preset_name: canada_endpoint_url
   values:
@@ -1794,7 +1889,7 @@ presets:
     label:
       en: Topic category
       fr: Catégorie thématique
-    form_snippet: multiple_checkbox.html
+    form_snippet: null
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
@@ -1876,7 +1971,7 @@ presets:
           fr: Services communication
         value: utilities_communication
 
-- preset_name: canada_unique_identifier
+- preset_name: canada_resource_unique_identifier
   values:
     field_name: unique_identifier
     label:
@@ -1890,21 +1985,321 @@ presets:
   values:
     choices:
     - label:
-        en: No linguistic content; Not applicable
-        fr: pas de contenu linguistique; non applicable
-      value: zxx; CAN
-    - label:
         en: English
         fr: Anglais
-      value: eng; CAN
+      value: en
     - label:
         en: French
         fr: Français
-      value: fra; CAN
+      value: fr
     - label:
-        en: Bilingual (English and French)
-        fr: Bilingue (Anglais et Français)
-      value: eng; CAN | fra; CAN
+        en: Albanian
+        fr: Albanais
+      value: sq
+    - label:
+        en: Algonquian languages
+        fr: Algonquines, langues
+      value: alg
+    - label:
+        en: Amharic
+        fr: amharique
+      value: am
+    - label:
+        en: Apache languages
+        fr: Apache
+      value: apa
+    - label:
+        en: Arabic
+        fr: Arabe
+      value: ar
+    - label:
+        en: Armenian
+        fr: Arménien
+      value: hy
+    - label:
+        en: Artificial (Other)
+        fr: Artificielles, autres langues
+      value: art
+    - label:
+        en: Baltic (Other)
+        fr: Baltiques, autres langues
+      value: bat
+    - label:
+        en: Belarusian
+        fr: Biélorusse
+      value: be
+    - label:
+        en: Bengali
+        fr: bengali
+      value: bn
+    - label:
+        en: Bosnian
+        fr: Bosniaque
+      value: bs
+    - label:
+        en: Bulgarian
+        fr: Bulgare
+      value: bg
+    - label:
+        en: Catalan
+        fr: catalan
+      value: ca
+    - label:
+        en: Cherokee
+        fr: Cherokee
+      value: chr
+    - label:
+        en: Cheyenne
+        fr: Cheyenne
+      value: chy
+    - label:
+        en: Chinese
+        fr: Chinois
+      value: zh
+    - label:
+        en: Chipewyan
+        fr: Chipewyan
+      value: chp
+    - label:
+        en: Cree
+        fr: Cree
+      value: cr
+    - label:
+        en: Creoles and pidgins
+        fr: créoles et pidgins
+      value: crp
+    - label:
+        en: Croatian
+        fr: Croate
+      value: hr
+    - label:
+        en: Czech
+        fr: Tchèque
+      value: cs
+    - label:
+        en: Danish
+        fr: Danois
+      value: da
+    - label:
+        en: Dogrib
+        fr: dogrib
+      value: dgr
+    - label:
+        en: Dutch
+        fr: Néerlandais
+      value: nl
+    - label:
+        en: Finnish
+        fr: Finnois
+      value: fi
+    - label:
+        en: Galician
+        fr: galicien
+      value: gl
+    - label:
+        en: German
+        fr: Allemand
+      value: de
+    - label:
+        en: Greek, Modern (1453-)
+        fr: Grec moderne (après 1453)
+      value: el
+    - label:
+        en: Gujarati
+        fr: goudjrati
+      value: gu
+    - label:
+        en: Hebrew
+        fr: Hébreu
+      value: he
+    - label:
+        en: Hindi
+        fr: Hindi
+      value: hi
+    - label:
+        en: Hungarian
+        fr: Hongrois
+      value: hu
+    - label:
+        en: Indonesian
+        fr: Indonésien
+      value: id
+    - label:
+        en: Inuinnaqtun
+        fr: Innuinaqtun
+      value: inuinnaqtun
+    - label:
+        en: Inuktitut
+        fr: Inuktitut
+      value: iu
+    - label:
+        en: Inuvialuqtun
+        fr: Inuvialuqtun
+      value: inuvialuqtun
+    - label:
+        en: Iroquoian languages
+        fr: Iroquoises, langues (famille)
+      value: iro
+    - label:
+        en: Italian
+        fr: Italien
+      value: it
+    - label:
+        en: Japanese
+        fr: Japonais
+      value: ja
+    - label:
+        en: Korean
+        fr: Coréen
+      value: ko
+    - label:
+        en: Latin
+        fr: Latin
+      value: la
+    - label:
+        en: Micmac
+        fr: Micmac
+      value: mic
+    - label:
+        en: Miscellaneous languages
+        fr: Diverses, langues
+      value: mis
+    - label:
+        en: Mohawk
+        fr: Mohawk
+      value: moh
+    - label:
+        en: Multiple languages
+        fr: Multilingue
+      value: mul
+    - label:
+        en: Navajo
+        fr: Navaho
+      value: nv
+    - label:
+        en: Nootkan
+        fr: Nootkan
+      value: wak
+    - label:
+        en: North American Indian
+        fr: Indiennes d'Amérique du Nord
+      value: nai
+    - label:
+        en: Norwegian
+        fr: Norvégien
+      value: no
+    - label:
+        en: Nunatsiavummiutut
+        fr: Nunatsiavummiutut
+      value: nunatsiavummiutut
+    - label:
+        en: Ojibwa
+        fr: Ojibwa
+      value: oj
+    - label:
+        en: Persian
+        fr: Persan
+      value: fa
+    - label:
+        en: Philippine (Other)
+        fr: Philippines, autres langues
+      value: phi
+    - label:
+        en: Polish
+        fr: Polonais
+      value: pl
+    - label:
+        en: Portuguese
+        fr: Portugais
+      value: pt
+    - label:
+        en: Punjabi
+        fr: Pendjabi
+      value: pa
+    - label:
+        en: Romanian
+        fr: Roumain
+      value: ro
+    - label:
+        en: Russian
+        fr: Russe
+      value: ru
+    - label:
+        en: Salishan
+        fr: Salishan
+      value: sal
+    - label:
+        en: Serbian
+        fr: Serbe
+      value: sr
+    - label:
+        en: Sign Languages
+        fr: Langage gestuel
+      value: sgn
+    - label:
+        en: Siouan languages
+        fr: Sioux, langues
+      value: sio
+    - label:
+        en: Slovak
+        fr: Slovaque
+      value: sk
+    - label:
+        en: Somali
+        fr: somali
+      value: so
+    - label:
+        en: Spanish; Castilian
+        fr: Espagnol; castillan
+      value: es
+    - label:
+        en: Swahili
+        fr: swahili
+      value: ss
+    - label:
+        en: Swedish
+        fr: Suédois
+      value: sv
+    - label:
+        en: Tagalog
+        fr: tagalog
+      value: tl
+    - label:
+        en: Tamil
+        fr: tamoul
+      value: ta
+    - label:
+        en: Thai
+        fr: thaï
+      value: th
+    - label:
+        en: Turkish
+        fr: Turc
+      value: tr
+    - label:
+        en: Undetermined
+        fr: Indéterminée
+      value: und
+    - label:
+        en: Urdu
+        fr: Ourdou
+      value: ur
+    - label:
+        en: Vietnamese
+        fr: Vietnamien
+      value: vi
+    - label:
+        en: Welsh
+        fr: Gallois
+      value: cy
+    - label:
+        en: Yiddish
+        fr: Yiddish
+      value: yi
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx
     field_name: language
     help_text:
       en: The language of the resource.
@@ -1913,9 +2308,11 @@ presets:
       en: "Language"
       fr: "Langue"
     required: true
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
+    # copied from multiple_select preset
+    form_snippet: multiple_select.html
+    display_snippet: multiple_choice.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
 
 
 - preset_name: canada_spatial_representation_type
@@ -1928,36 +2325,36 @@ presets:
     - label:
         en: Vector
         fr: Vecteur
-      value: '635'
+      value: vector
     - label:
         en: Grid
         fr: Grille
-      value: '636'
+      value: grid
     - label:
         en: Text Table
         fr: Texte table
-      value: '637'
+      value: text_table
     - label:
         en: Tin
         fr: Tin
-      value: '638'
+      value: tin
     - label:
-        en: Stero Model
+        en: Stereo Model
         fr: Stéréomodèle
-      value: '639'
+      value: stereo_model
     - label:
         en: Video
         fr: Vidéo
-      value: '640'
+      value: video
 
+    form_snippet: null
     # copied from select preset
-    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
 - preset_name: canada_resource_name
   values:
-    field_name: name
+    field_name: name_translated
     label:
       en: Title
       fr: Titre
@@ -1978,7 +2375,7 @@ presets:
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_text_output
+    output_validators: fluent_core_translated_output
 
 - preset_name: canada_resource_url
   values:
@@ -2217,7 +2614,7 @@ presets:
 
 - preset_name: canada_resource_date_published
   values:
-    field_name: resource_date_published
+    field_name: date_published
     label:
       en: Date Published
       fr: Date de publication
