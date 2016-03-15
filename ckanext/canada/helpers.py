@@ -1,16 +1,12 @@
 from pylons import c, config
 from ckan.model import User, Package
-from ckan.lib.base import model
-from ckan.logic import get_action, schema
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
 import unicodedata
 
 import ckanapi
 
-import ckan.model as model
 import ckan.lib.helpers as h
-import ckan.lib.dictization.model_dictize as model_dictize
 from ckanext.canada.metadata_schema import schema_description
 from ckan.logic.validators import boolean_validator
 
@@ -58,39 +54,6 @@ def user_organizations(user):
     u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
 
-def is_user_new(user):
-    # Retrieve information about the current user
-    context = {'model': model, 'session': model.Session,
-           'user': c.user or c.author,
-           'schema': schema.user_new_form_schema()}
-    data_dict = {'id': c.user}
-
-    user_dict = get_action('user_show')(context, data_dict)
-
-    # Get all organizations and all groups the user belongs to
-    orgs_q = model.Session.query(model.Group) \
-        .filter(model.Group.is_organization == True) \
-        .filter(model.Group.state == 'active')
-    q = model.Session.query(model.Member) \
-        .filter(model.Member.table_name == 'user') \
-        .filter(model.Member.table_id == user_dict['id'])
-
-    group_ids = []
-    for row in q.all():
-        group_ids.append(row.group_id)
-
-    if not group_ids:
-        return True
-    else:
-        orgs_q = orgs_q.filter(model.Group.id.in_(group_ids))
-
-        orgs_list = model_dictize.group_list_dictize(orgs_q.all(), context)
-
-        if len(orgs_list) == 0:
-            return True
-
-    return False
-    
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     

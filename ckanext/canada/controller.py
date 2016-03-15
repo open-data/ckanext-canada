@@ -15,7 +15,7 @@ from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
 import ckan.lib.dictization.model_dictize as model_dictize
 
-from ckanext.canada.helpers import normalize_strip_accents, is_user_new
+from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
@@ -27,7 +27,7 @@ class CanadaController(BaseController):
             h.redirect_to(controller='user', action='login')
 
         is_sysadmin = new_authz.is_sysadmin(c.user)
-        is_new = is_user_new(c.user)
+        is_new = not h.check_access('package_create')
 
         if is_sysadmin or is_new:
             return h.redirect_to(controller='package', action='search')
@@ -133,14 +133,11 @@ class CanadaController(BaseController):
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            is_sysadmin = new_authz.is_sysadmin(c.user)
-            is_new = is_user_new(c.user)
-
             h.flash_success(_('<strong>Note</strong><br>'
                 "%s is now logged in") %
                 user_dict['display_name'], allow_html=True)
 
-            if not is_sysadmin and is_new:
+            if not h.check_access('package_create'):
                 h.flash_notice('<strong>' + _('Account Created')
                     + '</strong><br>' +
                     _('Thank you for creating your account for the Open '
