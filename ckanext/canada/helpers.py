@@ -53,7 +53,7 @@ def openness_score(pkg):
 def user_organizations(user):
     u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
-    
+
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     
