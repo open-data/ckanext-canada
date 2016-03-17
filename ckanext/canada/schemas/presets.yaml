@@ -28,7 +28,7 @@ presets:
     label:
       en: Collection Type
       fr: Type de collection
-    #required: true   # FIXME: we need to use the form only for primary collection
+    required: true
     choices:
     - label:
         en: Non-Spatial
@@ -46,8 +46,8 @@ presets:
         en: Publications
         fr: Publication
       value: publication
-    form_snippet: null
     # copied from select preset
+    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
@@ -2304,8 +2304,8 @@ presets:
       en: The language of the resource.
       fr: Langue de la ressource.
     label:
-      en: "Language"
-      fr: "Langue"
+      en: Language
+      fr: Langue
     required: true
     # copied from multiple_select preset
     form_snippet: multiple_select.html
@@ -2632,29 +2632,409 @@ presets:
       fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
     field_name: resource_type
     label:
-      en: "Content Type"
-      fr: "Type de content"
+      en: Resource Type
+      fr: Type de content
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
     choices:
     - label:
-        en: Dataset
-        fr: Données
-      value: file
+        en: abstract
+        fr: sommaire
+      value: abstract
     - label:
-        en: Supporting Documentation
-        fr: Documentation de Soutien
-      value: doc
+        en: agreement
+        fr: entente
+      value: agreement
     - label:
-        en: API
-        fr: API
-      value: api
+        en: agreement - contractual material
+        fr: entente - contenu contractuel
+      value: contractual_material
     - label:
-        en: Application
-        fr: Application
-      value: app
+        en: agreement - intergovernmental agreement
+        fr: entente - entente intergouvernementale
+      value: intergovernmental_agreement
+    - label:
+        en: agreement - lease
+        fr: entente - bail
+      value: lease
+    - label:
+        en: agreement - memorandum of understanding
+        fr: entente - protocole d’entente
+      value: memorandum_of_understanding
+    - label:
+        en: agreement - nondisclosure agreement
+        fr: entente - accord de non divulgation
+      value: nondisclosure_agreement
+    - label:
+        en: agreement - service-level agreement
+        fr: entente - entente de niveau de service
+      value: service-level_agreement
+    - label:
+        en: affidavit
+        fr: affidavit
+      value: affidavit
+    - label:
+        en: application
+        fr: demande
+      value: application
+    - label:
+        en: architectural or technical design
+        fr: conception architecturale ou technique
+      value: architectural_or_technical_design
+    - label:
+        en: article
+        fr: article
+      value: article
+    - label:
+        en: assessment
+        fr: évaluation
+      value: assessment
+    - label:
+        en: assessment - audit
+        fr: évaluation - audit
+      value: audit
+    - label:
+        en: assessment - environmental assessment
+        fr: évaluation - évaluation environnementale
+      value: environmental_assessment
+    - label:
+        en: assessment - examination
+        fr: évaluation - examen
+      value: examination
+    - label:
+        en: assessment - gap assessment
+        fr: évaluation - évaluation des écarts
+      value: gap_assessment
+    - label:
+        en: assessment - lessons learned
+        fr: évaluation - leçons apprises
+      value: lessons_learned
+    - label:
+        en: assessment - performance indicator
+        fr: évaluation - indicateur de rendement
+      value: performance_indicator
+    - label:
+        en: assessment - risk assessment
+        fr: évaluation - évaluation des risques
+      value: risk_assessment
+    - label:
+        en: biography
+        fr: biographie
+      value: biography
+    - label:
+        en: briefing material
+        fr: matériel de breffage
+      value: briefing_material
+    - label:
+        en: briefing material - backgrounder
+        fr: matériel de breffage - précis d’information
+      value: backgrounder
+    - label:
+        en: business case
+        fr: analyse de rentabilisation
+      value: business_case
+    - label:
+        en: claim
+        fr: réclamation
+      value: claim
+    - label:
+        en: comments
+        fr: commentaires
+      value: comments
+    - label:
+        en: conference proceedings
+        fr: actes de la conférence
+      value: conference_proceedings
+    - label:
+        en: consultation
+        fr: consultation
+      value: consultation
+    - label:
+        en: contact information
+        fr: coordonnées
+      value: contact_information
+    - label:
+        en: correspondence
+        fr: correspondance
+      value: correspondence
+    - label:
+        en: correspondence - ministerial correspondence
+        fr: correspondance - correspondance ministérielle
+      value: ministerial_correspondence
+    - label:
+        en: correspondence - memorandum
+        fr: correspondance - note de service
+      value: memorandum
+    - label:
+        en: dataset
+        fr: jeu de données
+      value: dataset
+    - label:
+        en: delegation of authority
+        fr: délégation des pouvoirs
+      value: delegation_of_authority
+    - label:
+        en: educational material
+        fr: matériel pédagogique
+      value: educational_material
+    - label:
+        en: employment opportunity
+        fr: possibilité d’emploi
+      value: employment_opportunity
+    - label:
+        en: event
+        fr: événement
+      value: event
+    - label:
+        en: fact sheet
+        fr: feuille de renseignements
+      value: fact_sheet
+    - label:
+        en: financial material
+        fr: document financier
+      value: financial_material
+    - label:
+        en: financial material - budget
+        fr: document financier - budget
+      value: budget
+    - label:
+        en: financial material - funding proposal
+        fr: document financier - proposition de financement
+      value: funding_proposal
+    - label:
+        en: financial material - invoice
+        fr: document financier - facture
+      value: invoice
+    - label:
+        en: financial material - financial statement
+        fr: document financier - états financiers
+      value: financial_statement
+    - label:
+        en: form
+        fr: formulaire
+      value: form
+    - label:
+        en: framework
+        fr: cadre
+      value: framework
+    - label:
+        en: geospatial material
+        fr: matériel géospatial
+      value: geospatial_material
+    - label:
+        en: guide
+        fr: guide
+      value: guide
+    - label:
+        en: guide - best practices
+        fr: guide - pratiques exemplaires
+      value: best_practices
+    - label:
+        en: intellectual property statement
+        fr: Énoncé sur la propriété intellectuelle
+      value: intellectual_property_statement
+    - label:
+        en: legal complaint
+        fr: plainte légale
+      value: legal_complaint
+    - label:
+        en: legal opinion
+        fr: avis juridique
+      value: legal_opinion
+    - label:
+        en: legislation and regulations
+        fr: lois et règlements
+      value: legislation_and_regulations
+    - label:
+        en: licenses and permits
+        fr: licences et permis
+      value: licenses_and_permits
+    - label:
+        en: literary material
+        fr: ouvrages littéraires
+      value: literary_material
+    - label:
+        en: media release - statement
+        fr: communiqué de presse - énoncé
+      value: statement
+    - label:
+        en: media release
+        fr: communiqué de presse
+      value: media_release
+    - label:
+        en: meeting material
+        fr: documentation de la réunion
+      value: meeting_material
+    - label:
+        en: meeting material - agenda
+        fr: documentation de la réunion - programme
+      value: agenda
+    - label:
+        en: meeting material - minutes
+        fr: documentation de la réunion - procès-verbaux
+      value: minutes
+    - label:
+        en: memorandum to Cabinet
+        fr: mémoire au Cabinet
+      value: memorandum_to_cabinet
+    - label:
+        en: multimedia resource
+        fr: ressource multimédia
+      value: multimedia_resource
+    - label:
+        en: notice
+        fr: avis
+      value: notice
+    - label:
+        en: organizational description
+        fr: description organisationnelle
+      value: organizational_description
+    - label:
+        en: plan
+        fr: plan
+      value: plan
+    - label:
+        en: plan - business plan
+        fr: plan - plan d’activités
+      value: business_plan
+    - label:
+        en: plan - strategic plan
+        fr: plan - plan stratégique
+      value: strategic_plan
+    - label:
+        en: policy
+        fr: politique
+      value: policy
+    - label:
+        en: policy - white paper
+        fr: politique - livre blanc
+      value: white_paper
+    - label:
+        en: presentation
+        fr: présentation
+      value: presentation
+    - label:
+        en: procedure
+        fr: procédure
+      value: procedure
+    - label:
+        en: profile
+        fr: profil
+      value: profile
+    - label:
+        en: project material
+        fr: documents du projet
+      value: project_material
+    - label:
+        en: project material - project charter
+        fr: documents du projet - charte de projet
+      value: project_charter
+    - label:
+        en: project material - project plan
+        fr: documents du projet - plan du projet
+      value: project_plan
+    - label:
+        en: project material - project proposal
+        fr: documents du projet - proposition de projet
+      value: project_proposal
+    - label:
+        en: promotional material
+        fr: documents promotionnels
+      value: promotional_material
+    - label:
+        en: publication
+        fr: publication
+      value: publication
+    - label:
+        en: Q & A - FAQ
+        fr: Q et R - foire aux questions
+      value: faq
+    - label:
+        en: record of decision
+        fr: compte rendu des décisions
+      value: record_of_decision
+    - label:
+        en: report
+        fr: rapport
+      value: report
+    - label:
+        en: report - annual report
+        fr: rapport - rapport annuel
+      value: annual_report
+    - label:
+        en: report - interim report
+        fr: rapport - rapport d’étape
+      value: interim_report
+    - label:
+        en: research proposal
+        fr: projet de recherche
+      value: research_proposal
+    - label:
+        en: resource list
+        fr: liste de référence
+      value: resource_list
+    - label:
+        en: routing slip
+        fr: bordereau d’acheminement
+      value: routing_slip
+    - label:
+        en: Social media resource - blog entry
+        fr: ressources des médias sociaux - entrée de blogue
+      value: blog_entry
+    - label:
+        en: sound recording
+        fr: enregistrement sonore
+      value: sound_recording
+    - label:
+        en: specification
+        fr: spécification
+      value: specification
+    - label:
+        en: statistics
+        fr: statistiques
+      value: statistics
+    - label:
+        en: still image
+        fr: image fixe
+      value: still_image
+    - label:
+        en: submission
+        fr: présentation
+      value: submission
+    - label:
+        en: survey
+        fr: sondage
+      value: survey
+    - label:
+        en: terminology
+        fr: terminologie
+      value: terminology
+    - label:
+        en: terms of reference
+        fr: mandat
+      value: terms_of_reference
+    - label:
+        en: tool
+        fr: outil
+      value: tool
+    - label:
+        en: training material
+        fr: matériel didactique
+      value: training_material
+    - label:
+        en: transcript
+        fr: transcription
+      value: transcript
+    - label:
+        en: website
+        fr: site Web
+      value: website
+    - label:
+        en: workflow
+        fr: flux des travaux
+      value: workflow
 
 - preset_name: canada_resource_data_quality
   values:

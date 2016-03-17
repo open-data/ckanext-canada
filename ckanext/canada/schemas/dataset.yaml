@@ -23,6 +23,12 @@ dataset_fields:
 - preset: canada_dataset_name
 
 - preset: canada_collection
+  choices:
+  - label:
+      en: Non-Spatial
+      fr: Non spatiales
+    value: primary
+
 - preset: canada_title
 - preset: canada_owner_org
 - preset: canada_org_title_at_publication
