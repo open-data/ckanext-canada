@@ -30,6 +30,7 @@ class TestNAVLSchema(FunctionalTestBase):
 
         self.incomplete_pkg = {
             'type': 'dataset',
+            'collection': 'primary',
             'title_translated': {'en': u'A Novel By Tolstoy'},
             'license_id': 'ca-ogl-lgo',
             'ready_to_publish': 'true',
@@ -41,7 +42,7 @@ class TestNAVLSchema(FunctionalTestBase):
                 'format': u'TXT',
                 'url': u'http://www.annakarenina.com/download/',
                 'size': 42,
-                'resource_type': 'file',
+                'resource_type': 'dataset',
                 'language': ['zxx'],
             }],
         }
