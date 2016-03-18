@@ -21,8 +21,17 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+
+- preset: canada_collection
+  choices:
+  - label:
+      en: Publications
+      fr: Publication
+    value: publication
+
 - preset: canada_title
 - preset: canada_owner_org
+- preset: canada_org_title_at_publication
 - preset: canada_creator
 - preset: canada_maintainer_email
 - preset: canada_notes
@@ -36,11 +45,12 @@ dataset_fields:
 - preset: canada_date_published
 - preset: canada_date_modified
 - preset: canada_program_page_url
-- preset: canada_related_items
 - preset: canada_jurisdiction
 - preset: canada_license_id
+- preset: canada_imso_approval
 - preset: canada_ready_to_publish
 - preset: canada_portal_release_date
+
 
 #
 #   RESOURCE FIELDS
@@ -51,35 +61,7 @@ resource_fields:
 - preset: canada_resource_name
 - preset: canada_resource_date_published
 - preset: canada_resource_type
-  choices:
-  - label:
-      en: Strategic plan
-      fr: Plan stratégique
-    value: file
-  - label:
-      en: Briefing material
-      fr: Documentation de briefing
-    value: file_brief
 - preset: canada_resource_format
-  choices:
-  - label: EPUB3
-    openness_score: 1
-    value: epub3
-  - label: DOC
-    openness_score: 1
-    value: doc
-  - label: DOCX
-    openness_score: 1
-    value: docx
-  - label: ODT
-    openness_score: 1
-    value: odt
-  - label: PDF
-    openness_score: 1
-    value: PDF
-  - label: HTML
-    openness_score: 1
-    value: HTML
 - preset: canada_resource_size
 - preset: canada_resource_language
 - preset: canada_resource_url

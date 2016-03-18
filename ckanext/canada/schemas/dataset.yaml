@@ -23,6 +23,8 @@ dataset_fields:
 - preset: canada_dataset_name
 
 - preset: canada_collection
+  form_restrict_choices_to: [primary]
+
 - preset: canada_title
 - preset: canada_owner_org
 - preset: canada_org_title_at_publication
@@ -39,13 +41,15 @@ dataset_fields:
 - preset: canada_date_published
 - preset: canada_date_modified
 - preset: canada_program_page_url
+- preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
 - preset: canada_jurisdiction
 - preset: canada_license_id
 - preset: canada_imso_approval
 - preset: canada_ready_to_publish
 - preset: canada_portal_release_date
 
-# dataset fields added to support migration of existing raw+geogratis records:
+# fields hidden from the form to support loading fgp and geogratis data
 
 - field_name: author_email
   label:
