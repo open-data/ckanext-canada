@@ -322,10 +322,10 @@ class CanadaFeedController(FeedController):
         return feed.writeString('utf-8')
 
 
-class PublishController(PackageController):
+class CanadaAdminController(PackageController):
 
     def _search_template(self, package_type):
-        return 'publish/search.html'
+        return 'admin/publish_search.html'
 
     def _guess_package_type(self, expecting_name=False):
         # this is a bit unortodox, but this method allows us to conveniently
@@ -354,7 +354,4 @@ class PublishController(PackageController):
                     )
 
         # return us to the publishing interface
-        url = h.url_for(
-            controller='ckanext.canada.controller:PublishController',
-            action='search')
-        redirect(url)
+        redirect(h.url_for('ckanadmin_publish'))

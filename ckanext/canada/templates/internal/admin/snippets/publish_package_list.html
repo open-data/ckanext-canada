@@ -1,6 +1,6 @@
 {% set list_class = 'list-bullet-none' %}
 {% if packages %}
-<form action="/publish_datasets" method="POST" id="publish_form">
+<form action="{{ h.url_for(controller='ckanext.canada.controller:CanadaAdminController', action='publish') }}" method="POST" id="publish_form">
   
   <div>
     <label for="publish_all" class="form-checkbox" style="float:right; display:inline-block; margin-top:-25px;">
@@ -10,7 +10,7 @@
   
   <ul class="list-unstyled">
     {% for package in packages %}
-      {% snippet 'publish/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+      {% snippet 'admin/snippets/package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
     {% endfor %}
   </ul>
   

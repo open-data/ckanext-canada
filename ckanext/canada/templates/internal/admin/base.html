@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+  {{ super() }}
+  {{ h.build_nav_icon('ckanadmin_publish', _('Publish Records')) }}
+{% endblock %}

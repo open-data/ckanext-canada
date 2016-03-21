@@ -1,22 +1,23 @@
-{% extends '/package/search.html' %}
+{% extends 'admin/base.html' %}
+{% import 'macros/form.html' as form %}
 
-{% block primary_content %}
+{% block primary_content_inner %}
 
 {% resource 'js/check_all.js' %}
 
-  <section role="main" id="search-results">
+  <section id="search-results">
     <div class="module-poster">
-      <form id="dataset-search" class="dataset-search clearfix" method="get" data-module="select-switch" role="search">
+      <form id="dataset-search" class="dataset-search form-inline mrgn-bttm-lg mrgn-tp-md" method="get" data-module="select-switch" role="search">
         <div id="search">
           <label for="q">{{_('Search Assets')}}</label>
-          <input type="text" class="search" name="q" id="q" value="{{ c.q }}" autocomplete="off" placeholder="{{ _('Search...') }}" size="45"/>
-
+          <input type="text" class="search" style="width:100%;" name="q" id="q" value="{{ c.q }}" autocomplete="off" placeholder="{{ _('Search...') }}" size="45"/>
           {% block suggest_a_dataset_button %}{% endblock %}
         </div>
 
-        {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
-
-        <button type="submit" class="button button-large button-accent" value="{{ _('Search') }}">{{ _('Submit') }}</button>
+        <div class="pull-right">
+          {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
+          <button type="submit" class="btn btn-large btn-primary" value="{{ _('Search') }}">{{ _('Submit') }}</button>
+        </div>
 
         {% if c.fields -%}
           <span>
@@ -46,7 +47,7 @@
                 {%- else -%}
                   {{ h.list_dict_filter(search_facets_items , 'name', 'display_name', value) }}
                 {%- endif %}
-                <a href="{{ h.remove_url_param(field, value=value, controller='ckanext.canada.controller:PublishController', action='search') }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
+                <a href="{{ h.remove_url_param(field, value=value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
               </span>
             {% endfor %}
           {% endfor %}
@@ -66,7 +67,7 @@
           <p><strong>There was an error while searching.</strong> Please try again.</p>
         {% endtrans %}
       {% endif %}
-      {{ h.snippet('publish/package_list.html', packages=c.page.items) }}
+      {{ h.snippet('admin/snippets/publish_package_list.html', packages=c.page.items) }}
     </div>
 
     {%- block pager -%}
@@ -82,4 +83,15 @@
 
 {% block extra_facets %}
   {# we want this to be empty. we don't want to show the publish/pending facet on the publish interface #}
+{% endblock %}
+
+{% block secondary_content %}
+<div class="filters">
+  <div>
+    {% for facet in c.facet_titles %}
+      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+    {% endfor %}
+  </div>
+  <a class="close no-text hide-filters"><i class="icon-remove-sign"></i><span class="text">close</span></a>
+</div>
 {% endblock %}

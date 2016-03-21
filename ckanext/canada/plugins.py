@@ -98,10 +98,15 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaUserController',
             ckan_icon='bar-chart'
         )
-        map.connect('/publish', action='search', 
-            controller='ckanext.canada.controller:PublishController')
-        map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
-            controller='ckanext.canada.controller:PublishController')
+        map.connect(
+            'ckanadmin_publish',
+            '/ckan_admin/publish',
+            action='search',
+            controller='ckanext.canada.controller:CanadaAdminController',
+            ckan_icon='cloud-upload'
+        )
+        map.connect('/ckan_admin/publish_datasets', action='publish', conditions= dict(method=['POST']),
+            controller='ckanext.canada.controller:CanadaAdminController')
         return map
 
     def after_map(self, map):
