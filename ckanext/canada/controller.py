@@ -130,7 +130,7 @@ class CanadaController(BaseController):
         })
 
 
-class CanadaUserController(BaseController):
+class CanadaUserController(UserController):
     def logged_in(self):
         # we need to set the language via a redirect
 
@@ -221,6 +221,23 @@ class CanadaUserController(BaseController):
         c.is_sysadmin = new_authz.is_sysadmin(c.user)
         c.form = render('user/new_user_form.html', extra_vars=d)
         return render('user/new.html')
+
+    def reports(self, id=None):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author, 'auth_user_obj': c.userobj,
+                   'for_view': True}
+        data_dict = {'id': id,
+                     'user_obj': c.userobj,
+                     'include_datasets': True,
+                     'include_num_followers': True}
+
+        context['with_related'] = True
+
+        self._setup_template_variables(context, data_dict)
+
+        if c.is_myself:
+            return render('user/reports.html')
+        abort(403)
 
 
 class CanadaFeedController(FeedController):

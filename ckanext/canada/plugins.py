@@ -91,6 +91,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaUserController')
         map.connect('/user/register', action='register',
                     controller='ckanext.canada.controller:CanadaUserController')
+        map.connect(
+            'user_reports',
+            '/user/reports/{id}',
+            action='reports',
+            controller='ckanext.canada.controller:CanadaUserController',
+            ckan_icon='bar-chart'
+        )
         map.connect('/publish', action='search', 
             controller='ckanext.canada.controller:PublishController')
         map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
