@@ -25,10 +25,142 @@ dataset_fields:
 - preset: canada_collection
   form_restrict_choices_to: [primary]
 
+# FGP fields (hidden from form)
+- field_name: metadata_contact
+  label:
+    en: Metadata contact
+    fr: Contact métadonnée
+  preset: fluent_text
+  form_snippet: null
+- field_name: parent_id
+  label:
+    en: Parent identifier
+    fr: Identifiant parent
+  form_snippet: null
+- field_name: hierarchy_level
+  label:
+    en: Hierarchy level
+    fr: Portée hiérarchique
+  form_snippet: null
+- field_name: file_id
+  label:
+    en: File Identifier
+    fr: Identifiant métadonnées
+  form_snippet: null
+- field_name: short_key
+  label:
+    en: Short Key
+    fr: Identifiant court
+  form_snippet: null
+
 - preset: canada_title
 - preset: canada_owner_org
 - preset: canada_org_title_at_publication
 - preset: canada_creator
+
+# FGP fields (hidden from form)
+- field_name: position_name
+  label:
+    en: Position Name
+    fr: Nom position
+  preset: fluent_text
+  form_snippet: null
+- field_name: responsible_role
+  label:
+    en: Role
+    fr: Rôle
+  form_snippet: null
+- field_name: contact_information
+  label:
+    en: Contact Information
+    fr: Information contact
+  preset: fluent_text
+  form_snippet: null
+- field_name: topic_category
+  label:
+    en: Topic category
+    fr: Catégorie thématique
+  form_snippet: null
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  choices:
+  - label:
+      en: Farming
+      fr: Agriculture
+    value: farming
+  - label:
+      en: Biota
+      fr: Biote
+    value: biota
+  - label:
+      en: Boundaries
+      fr: Frontières
+    value: boundaries
+  - label:
+      en: Climatology Meteorology Atmosphere
+      fr: Climatologie Météorologie Atmosphère
+    value: climatology_meterology_atmosphere
+  - label:
+      en: Economy
+      fr: Économie
+    value: economy
+  - label:
+      en: Elevation
+      fr: Élévation
+    value: elevation
+  - label:
+      en: Environment
+      fr: Environnement
+    value: environment
+  - label:
+      en: Geoscientific Information
+      fr: Information géoscientifique
+    value: geoscientific_information
+  - label:
+      en: Health
+      fr: Santé
+    value: health
+  - label:
+      en: Imagery Base Maps Earth Cover
+      fr: Imagerie carte de base couverture terrestre
+    value: imagery_base_maps_earth_cover
+  - label:
+      en: Intelligence Military
+      fr: Renseignements militaires
+    value: intelligence_military
+  - label:
+      en: Inland Waters
+      fr: Eaux intérieures
+    value: inland_waters
+  - label:
+      en: Location
+      fr: Localisation
+    value: location
+  - label:
+      en: Oceans
+      fr: Océans
+    value: oceans
+  - label:
+      en: Planning Cadastre
+      fr: Aménagement cadastre
+    value: planning_cadastre
+  - label:
+      en: Society
+      fr: Société
+    value: society
+  - label:
+      en: Structure
+      fr: Structures
+    value: structure
+  - label:
+      en: Transportation
+      fr: Transport
+    value: transport
+  - label:
+      en: Utilities Communication
+      fr: Services communication
+    value: utilities_communication
+
 - preset: canada_maintainer_email
 - preset: canada_notes
 - preset: canada_keywords
@@ -43,6 +175,83 @@ dataset_fields:
 - preset: canada_program_page_url
 - preset: canada_data_series_name
 - preset: canada_data_series_issue_identification
+
+# FGP fields (hidden from form)
+- field_name: digital_object_identifier
+  label:
+    en: Digital Object Identifier
+    fr: Identificateur d’objet numérique
+  form_snippet: null
+- field_name: reference_system_information
+  label:
+    en: Reference System Information
+    fr: Information système référence
+  form_snippet: null
+- field_name: distributor
+  label:
+    en: Distributor
+    fr: Distributeur
+  preset: fluent_text
+  form_snippet: null
+- field_name: status
+  label:
+    en: Status
+    fr: État
+  form_snippet: null
+- field_name: association_type
+  label:
+    en: Association Type
+    fr: Type association
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  form_snippet: null
+  choices:
+  - value: cross_reference
+  - value: larger_work_citation
+  - value: part_of_seamless_database
+  - value: source
+  - value: stereo_mate
+  - value: is_composed_of
+- field_name: aggregate_identifier
+  label:
+    en: Aggregate dataset identifier
+    fr: Identifiant jeu données aggrégées
+  form_snippet: null
+- field_name: spatial_representation_type
+  label:
+    en: Spatial representation type
+    fr: Type représentation spatiale
+  form_snippet: null
+  display_snippet: select.html
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  choices:
+  - label:
+      en: Vector
+      fr: Vecteur
+    value: vector
+  - label:
+      en: Grid
+      fr: Grille
+    value: grid
+  - label:
+      en: Text Table
+      fr: Texte table
+    value: text_table
+  - label:
+      en: Tin
+      fr: Tin
+    value: tin
+  - label:
+      en: Stereo Model
+      fr: Stéréomodèle
+    value: stereo_model
+  - label:
+      en: Video
+      fr: Vidéo
+    value: video
+
+
 - preset: canada_jurisdiction
 - preset: canada_license_id
 - preset: canada_imso_approval
@@ -50,18 +259,6 @@ dataset_fields:
 - preset: canada_portal_release_date
 
 # fields hidden from the form to support loading fgp and geogratis data
-
-- field_name: author_email
-  label:
-    en: Email
-    fr: Adresse électronique
-  help_text:
-    en: The electronic mail address of the responsible organization or individual
-    fr: L’adresse électronique de l’organisation ou de la personne responsable
-  form_snippet: null
-
-- preset: canada_topic_category
-- preset: canada_spatial_representation_type
 
 - field_name: presentation_form
   label:
@@ -155,15 +352,6 @@ dataset_fields:
   # copied from select preset
   display_snippet: select.html
   validators: scheming_required scheming_choices
-
-- field_name: browse_graphic_url
-  label:
-    en: Browse Graphic File Name
-    fr: Recherche du nom du fichier graphique
-  help_text:
-    en: The name of the graphic file provided to illustrate the resource
-    fr: Le nom du fichier graphique fournit pour illustrer la ressource
-  form_snippet: null
 
 
 

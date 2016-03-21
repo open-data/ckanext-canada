@@ -88,6 +88,8 @@ presets:
       fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
     required: true
     form_include_blank_choice: true
+    form_select_attrs:
+      class: form-control
     # copied from dataset_organization preset
     validators: owner_org_validator unicode
     form_snippet: organization.html
@@ -210,79 +212,98 @@ presets:
     - label:
         en: Arts, Music, Literature
         fr: Arts, musique, littérature
-      value: AA
+      replaces: [AA]
+      value: arts_music_literature
     - label:
         en: Agriculture
         fr: Agriculture
-      value: AG
+      replaces: [AG]
+      value: agriculture
     - label:
         en: Economics and Industry
         fr: Économie et industrie
-      value: EC
+      replaces: [EC]
+      value: economics_and_industry
     - label:
         en: Education and Training
         fr: Éducation et formation
-      value: ET
-    - label:
-        en: Government and Politics
-        fr: Gouvernement et vie politique
-      value: GV
-    - label:
-        en: Health and Safety
-        fr: Santé et sécurité
-      value: HE
-    - label:
-        en: History and Archaeology
-        fr: Histoire et archéologie
-      value: HI
-    - label:
-        en: Information and Communications
-        fr: Information et communication
-      value: IN
-    - label:
-        en: Labour
-        fr: Travail et emploi
-      value: LB
-    - label:
-        en: Language and Linguistics
-        fr: Langue et linguistique
-      value: LN
-    - label:
-        en: Law
-        fr: Droit
-      value: LW
-    - label:
-        en: Military
-        fr: Histoire et science militaire
-      value: MI
-    - label:
-        en: Nature and Environment
-        fr: Nature et environnement
-      value: NE
-    - label:
-        en: Persons
-        fr: Personnes
-      value: PE
-    - label:
-        en: Processes
-        fr: Liens et fonctions
-      value: PR
-    - label:
-        en: Society and Culture
-        fr: Société et culture
-      value: SO
-    - label:
-        en: Science and Technology
-        fr: Sciences et technologie
-      value: ST
-    - label:
-        en: Transport
-        fr: Transport
-      value: TR
+      replaces: [ET]
+      value: education_and_training
     - label:
         en: Form Descriptors
         fr: Format
-      value: FM
+      replaces: [FM]
+      value: form_descriptors
+    - label:
+        en: Government and Politics
+        fr: Gouvernement et vie politique
+      replaces: [GV]
+      value: government_and_politics
+    - label:
+        en: Health and Safety
+        fr: Santé et sécurité
+      replaces: [HE]
+      value: health_and_safety
+    - label:
+        en: History and Archaeology
+        fr: Histoire et archéologie
+      replaces: [HI]
+      value: history_and_archaeology
+    - label:
+        en: Information and Communications
+        fr: Information et communication
+      replaces: [IN]
+      value: information_and_communications
+    - label:
+        en: Labour
+        fr: Travail et emploi
+      replaces: [LB]
+      value: labour
+    - label:
+        en: Language and Linguistics
+        fr: Langue et linguistique
+      replaces: [LN]
+      value: language_and_linguistics
+    - label:
+        en: Law
+        fr: Droit
+      replaces: [LW]
+      value: law
+    - label:
+        en: Military
+        fr: Histoire et science militaire
+      replaces: [MI]
+      value: military
+    - label:
+        en: Nature and Environment
+        fr: Nature et environnement
+      replaces: [NE]
+      value: nature_and_environment
+    - label:
+        en: Persons
+        fr: Personnes
+      replaces: [PE]
+      value: persons
+    - label:
+        en: Processes
+        fr: Liens et fonctions
+      replaces: [PR]
+      value: processes
+    - label:
+        en: Society and Culture
+        fr: Société et culture
+      replaces: [SO]
+      value: society_and_culture
+    - label:
+        en: Science and Technology
+        fr: Sciences et technologie
+      replaces: [ST]
+      value: science_and_technology
+    - label:
+        en: Transport
+        fr: Transport
+      replaces: [TR]
+      value: transport
 
 - preset_name: canada_spatial
   values:
@@ -1600,35 +1621,43 @@ presets:
     - label:
         en: Daily
         fr: Quotidien
-      value: daily
+      replaces: [daily]
+      value: P1D
     - label:
         en: Weekly
         fr: Hebdomadaire
-      value: weekly
+      replaces: [weekly]
+      value: P1W
     - label:
         en: Fortnightly
         fr: Quinzomadaire
-      value: fortnightly
+      replaces: [fortnightly]
+      value: P2W
     - label:
         en: Monthly
         fr: Mensuel
-      value: monthly
+      replaces: [monthly]
+      value: P1M
     - label:
         en: Semimonthly
         fr: Bimensuel
-      value: semimonthly
+      replaces: [semimonthly]
+      value: P2M
     - label:
         en: Quarterly
         fr: Trimestriel
-      value: quarterly
+      replaces: [quarterly]
+      value: P3M
     - label:
         en: Biannually
         fr: Semestriel
-      value: biannually
+      replaces: [biannually]
+      value: P6M
     - label:
         en: Annually
         fr: Annuel
-      value: annually
+      replaces: [annually]
+      value: P1Y
     - label:
         en: Irregular
         fr: Irrégulier
@@ -1770,27 +1799,25 @@ presets:
     label:
       en: Jurisdiction
       fr: Jurisdiction
-    display_snippet: null
-    form_snippet: null
     help_text:
       en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+    display_snippet: null
+    form_restrict_choices_to: [federal]
     required: true
     choices:
     - label:
         en: Federal
         fr: Fédéral
       value: federal
-    ### FIXME: add more choices once we are federating data but
-    ### only allow federal datasets to be edited in this form
-    #- label:
-    #    en: Provincial
-    #    fr: Provincial
-    #  value: provincial
-    #- label:
-    #    en: Municipal
-    #    fr: Municipal
-    #  value: municipal
+    - label:
+        en: Provincial
+        fr: Provincial
+      value: provincial
+    - label:
+        en: Municipal
+        fr: Municipal
+      value: municipal
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -2308,43 +2335,6 @@ presets:
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
-
-- preset_name: canada_spatial_representation_type
-  values:
-    field_name: spatial_representation_type
-    label:
-      en: Spatial representation type
-      fr: Type représentation spatiale
-    choices:
-    - label:
-        en: Vector
-        fr: Vecteur
-      value: vector
-    - label:
-        en: Grid
-        fr: Grille
-      value: grid
-    - label:
-        en: Text Table
-        fr: Texte table
-      value: text_table
-    - label:
-        en: Tin
-        fr: Tin
-      value: tin
-    - label:
-        en: Stereo Model
-        fr: Stéréomodèle
-      value: stereo_model
-    - label:
-        en: Video
-        fr: Vidéo
-      value: video
-
-    form_snippet: null
-    # copied from select preset
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
 
 - preset_name: canada_resource_name
   values:
