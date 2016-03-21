@@ -1,25 +1,36 @@
-import logging
 import json
 import webhelpers.feedgenerator
 
-from ckan.lib.base import (BaseController, c, render, model, request, h, g,
-    response, abort)
-from ckan.logic import get_action, check_access, schema, NotAuthorized
+from ckan.lib.base import (
+    BaseController,
+    c,
+    render,
+    model,
+    request,
+    g,
+    response,
+    abort
+)
+from ckan.logic import get_action, check_access, schema
 from ckan.controllers.user import UserController
 import ckan.new_authz as new_authz
 from ckan.lib.helpers import Page, date_str_to_datetime, url
-from ckan.controllers.feed import (FeedController, _package_search,
-    _create_atom_id, _FixedAtom1Feed)
+from ckan.controllers.feed import (
+    FeedController,
+    _package_search,
+    _create_atom_id,
+    _FixedAtom1Feed
+)
 from ckan.lib import i18n
 from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
-import ckan.lib.dictization.model_dictize as model_dictize
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
-from ckanapi import LocalCKAN, NotFound, NotAuthorized
+from ckanapi import LocalCKAN, NotAuthorized
+
 
 class CanadaController(BaseController):
     def home(self):
@@ -41,40 +52,6 @@ class CanadaController(BaseController):
 
     def view_help(self):
         return render('help.html')
-
-    def register(self, data=None, errors=None, error_summary=None):
-        '''GET to display a form for registering a new user.
-           or POST the form data to actually do the user registration.
-
-           The bulk of this code is pulled directly from ckan/controlllers/user.py
-        '''
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema(),
-                   'save': 'save' in request.params}
-
-        try:
-            check_access('user_create', context)
-        except NotAuthorized:
-            abort(401, _('Unauthorized to create a user'))
-
-        if context['save'] and not data:
-            uc = UserController()
-            return uc._save_new(context)
-
-        if c.user and not data:
-            # #1799 Don't offer the registration form if already logged in
-            return render('user/logout_first.html')
-
-        data = data or {}
-        errors = errors or {}
-        error_summary = error_summary or {}
-
-        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = new_authz.is_sysadmin(c.user)
-        c.form = render('user/new_user_form.html', extra_vars=vars)
-        return render('user/new.html')
-
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -110,11 +87,55 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
+    def datatable(self, resource_id):
+        echo = int(request.params['sEcho'])
+        search_text = unicode(request.params['sSearch'])
+        offset = int(request.params['iDisplayStart'])
+        limit = int(request.params['iDisplayLength'])
+        sort_cols = int(request.params['iSortingCols'])
+        if sort_cols:
+            sort_by_num = int(request.params['iSortCol_0'])
+            sort_order = ('desc' if request.params['sSortDir_0'] == 'desc'
+                          else 'asc'
+                          )
+
+        lc = LocalCKAN(username=c.user)
+
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+        )
+
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = ''
+        if sort_cols:
+            sort_str = cols[sort_by_num] + ' ' + sort_order
+
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=sort_str
+        )
+
+        return json.dumps({
+            'sEcho': echo,
+            'iTotalRecords': unfiltered_response['total'],
+            'iTotalDisplayRecords': response.get('total', 0),
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']
+            ],
+        })
+
+
+class CanadaUserController(BaseController):
     def logged_in(self):
         # we need to set the language via a redirect
 
-        # Lang is not being retrieved properly by the Babel i18n lib in this redirect, so using
-        # this clunky workaround for now.
+        # Lang is not being retrieved properly by the Babel i18n lib in
+        # this redirect, so using this clunky workaround for now.
         lang = session.pop('lang', None)
         if lang is None:
             came_from = request.params.get('came_from', '')
@@ -133,19 +154,24 @@ class CanadaController(BaseController):
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            h.flash_success(_('<strong>Note</strong><br>'
-                "%s is now logged in") %
-                user_dict['display_name'], allow_html=True)
+            h.flash_success(
+                _('<strong>Note</strong><br>{} is now logged in').format(
+                    user_dict['display_name']
+                ),
+                allow_html=True
+            )
 
             if not h.check_access('package_create'):
-                h.flash_notice('<strong>' + _('Account Created')
-                    + '</strong><br>' +
+                h.flash_notice(
+                    '<strong>' + _('Account Created') +
+                    '</strong><br>' +
                     _('Thank you for creating your account for the Open '
                       'Government registry. Although your account is active, '
                       'it has not yet been linked to your department. Until '
                       'the account is linked to your department you will not '
-                      'be able to create or modify datasets in the registry.')
-                    + '<br><br>' +
+                      'be able to create or modify datasets in the '
+                      'registry.') +
+                    '<br><br>' +
                     _('You should receive an email within the next business '
                       'day once the account activation process has been '
                       'completed. If you require faster processing of the '
@@ -157,46 +183,45 @@ class CanadaController(BaseController):
             return h.redirect_to('/{0}'.format(lang or ''))
         else:
             h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(controller='user',
-                action='login', locale=lang)
-
-    def datatable(self, resource_id):
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
-
-        lc = LocalCKAN(username=c.user)
-
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
+            return h.redirect_to(
+                controller='user',
+                action='login', locale=lang
             )
 
-        cols = [f['id'] for f in unfiltered_response['fields']][1:]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
+    def register(self, data=None, errors=None, error_summary=None):
+        '''GET to display a form for registering a new user.
+           or POST the form data to actually do the user registration.
 
-        response = lc.action.datastore_search(
-            q=search_text,
-            resource_id=resource_id,
-            offset=offset,
-            limit=limit,
-            sort=sort_str)
+           The bulk of this code is pulled directly from
+           ckan/controlllers/user.py
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author,
+                   'schema': schema.user_new_form_schema(),
+                   'save': 'save' in request.params}
 
-        return json.dumps({
-            'sEcho': echo,
-            'iTotalRecords': unfiltered_response['total'],
-            'iTotalDisplayRecords': response.get('total', 0),
-            'aaData': [
-                [row[colname] for colname in cols]
-                for row in response['records']],
-            })
+        try:
+            check_access('user_create', context)
+        except NotAuthorized:
+            abort(401, _('Unauthorized to create a user'))
+
+        if context['save'] and not data:
+            uc = UserController()
+            return uc._save_new(context)
+
+        if c.user and not data:
+            # #1799 Don't offer the registration form if already logged in
+            return render('user/logout_first.html')
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+
+        d = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.form = render('user/new_user_form.html', extra_vars=d)
+        return render('user/new.html')
+
 
 class CanadaFeedController(FeedController):
     def general(self):
@@ -217,14 +242,16 @@ class CanadaFeedController(FeedController):
 
         alternate_url = self._alternate_url(params)
 
-        return self.output_feed(results,
+        return self.output_feed(
+            results,
             feed_title=_(u'Open Government Dataset Feed'),
             feed_description='',
             feed_link=alternate_url,
             feed_guid=_create_atom_id(
-            u'/feeds/dataset.atom'),
+                u'/feeds/dataset.atom'),
             feed_url=feed_url,
-            navigation_urls=navigation_urls)
+            navigation_urls=navigation_urls
+        )
 
     def output_feed(self, results, feed_title, feed_description,
                     feed_link, feed_url, navigation_urls, feed_guid):
@@ -266,8 +293,8 @@ class CanadaFeedController(FeedController):
                 author_name=pkg.get('author', ''),
                 author_email=pkg.get('author_email', ''),
                 categories=''.join(e['value']
-                    for e in pkg.get('extras',[])
-                    if e['key'] == lx('keywords')).split(','),
+                                   for e in pkg.get('extras', [])
+                                   if e['key'] == lx('keywords')).split(','),
                 enclosure=webhelpers.feedgenerator.Enclosure(
                     self.base_url + url(str(
                         '/api/action/package_show?id=%s' % pkg['name'])),
@@ -284,24 +311,24 @@ class PublishController(PackageController):
         return 'publish/search.html'
 
     def _guess_package_type(self, expecting_name=False):
-        # this is a bit unortodox, but this method allows us to conveniently alter the
-        # search method without much code duplication.
+        # this is a bit unortodox, but this method allows us to conveniently
+        # alter the search method without much code duplication.
         sysadmin = new_authz.is_sysadmin(c.user)
         if not sysadmin:
             abort(401, _('Not authorized to see this page'))
 
-        #always set ready_to_publish to true for the publishing interface
+        # always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
         return 'info'
 
     def publish(self):
-        packages = []
         lc = LocalCKAN(username=c.user)
 
-        publish_date = date_str_to_datetime(request.str_POST['publish_date']
-            ).strftime("%Y-%m-%d %H:%M:%S")
+        publish_date = date_str_to_datetime(
+            request.str_POST['publish_date']
+        ).strftime("%Y-%m-%d %H:%M:%S")
 
-        #get a list of package id's from the for POST data
+        # get a list of package id's from the for POST data
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
@@ -309,7 +336,8 @@ class PublishController(PackageController):
                     portal_release_date=publish_date,
                     )
 
-        #return us to the publishing interface
-        url = h.url_for(controller='ckanext.canada.controller:PublishController',
-                        action='search')
+        # return us to the publishing interface
+        url = h.url_for(
+            controller='ckanext.canada.controller:PublishController',
+            action='search')
         redirect(url)

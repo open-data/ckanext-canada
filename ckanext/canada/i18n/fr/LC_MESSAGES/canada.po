@@ -414,14 +414,15 @@ msgstr "S'il vous plaît vérifier l’orthographe, ou réduire le nombre de fil
 msgid "The following fields are required to publish this dataset:"
 msgstr "Les champs suivants doivent être remplis afin de publier ce jeu de données:"
 
-msgid "<strong>Note</strong><br>%s is now logged in"
-msgstr "<strong>Note</strong><br>Bienvenue %s"
+msgid "<strong>Note</strong><br>{} is now logged in"
+msgstr "<strong>Note</strong><br>Bienvenue {}"
 
 msgid "Thank you for creating your account for the Open "
 "Government registry. Although your account is active, "
 "it has not yet been linked to your department. Until "
 "the account is linked to your department you will not "
-"be able to create or modify datasets in the registry."
+"be able to create or modify datasets in the "
+"registry."
 msgstr "Même si votre compte est actif, il n’est pas "
 "encore relié à votre ministère. Vous ne pourrez créer "
 "ou modifier de jeux de données dans le registre tant "
