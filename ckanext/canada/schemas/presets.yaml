@@ -1621,35 +1621,43 @@ presets:
     - label:
         en: Daily
         fr: Quotidien
-      value: daily
+      replaces: [daily]
+      value: P1D
     - label:
         en: Weekly
         fr: Hebdomadaire
-      value: weekly
+      replaces: [weekly]
+      value: P1W
     - label:
         en: Fortnightly
         fr: Quinzomadaire
-      value: fortnightly
+      replaces: [fortnightly]
+      value: P2W
     - label:
         en: Monthly
         fr: Mensuel
-      value: monthly
+      replaces: [monthly]
+      value: P1M
     - label:
         en: Semimonthly
         fr: Bimensuel
-      value: semimonthly
+      replaces: [semimonthly]
+      value: P2M
     - label:
         en: Quarterly
         fr: Trimestriel
-      value: quarterly
+      replaces: [quarterly]
+      value: P3M
     - label:
         en: Biannually
         fr: Semestriel
-      value: biannually
+      replaces: [biannually]
+      value: P6M
     - label:
         en: Annually
         fr: Annuel
-      value: annually
+      replaces: [annually]
+      value: P1Y
     - label:
         en: Irregular
         fr: Irrégulier
