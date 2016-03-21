@@ -13,7 +13,6 @@ from ckan.controllers.feed import (FeedController, _package_search,
 from ckan.lib import i18n
 from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
-import ckan.lib.dictization.model_dictize as model_dictize
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
@@ -41,40 +40,6 @@ class CanadaController(BaseController):
 
     def view_help(self):
         return render('help.html')
-
-    def register(self, data=None, errors=None, error_summary=None):
-        '''GET to display a form for registering a new user.
-           or POST the form data to actually do the user registration.
-
-           The bulk of this code is pulled directly from ckan/controlllers/user.py
-        '''
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema(),
-                   'save': 'save' in request.params}
-
-        try:
-            check_access('user_create', context)
-        except NotAuthorized:
-            abort(401, _('Unauthorized to create a user'))
-
-        if context['save'] and not data:
-            uc = UserController()
-            return uc._save_new(context)
-
-        if c.user and not data:
-            # #1799 Don't offer the registration form if already logged in
-            return render('user/logout_first.html')
-
-        data = data or {}
-        errors = errors or {}
-        error_summary = error_summary or {}
-
-        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = new_authz.is_sysadmin(c.user)
-        c.form = render('user/new_user_form.html', extra_vars=vars)
-        return render('user/new.html')
-
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -110,6 +75,46 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
+    def datatable(self, resource_id):
+        echo = int(request.params['sEcho'])
+        search_text = unicode(request.params['sSearch'])
+        offset = int(request.params['iDisplayStart'])
+        limit = int(request.params['iDisplayLength'])
+        sort_cols = int(request.params['iSortingCols'])
+        if sort_cols:
+            sort_by_num = int(request.params['iSortCol_0'])
+            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
+
+        lc = LocalCKAN(username=c.user)
+
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+            )
+
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = ''
+        if sort_cols:
+            sort_str = cols[sort_by_num] + ' ' + sort_order
+
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=sort_str)
+
+        return json.dumps({
+            'sEcho': echo,
+            'iTotalRecords': unfiltered_response['total'],
+            'iTotalDisplayRecords': response.get('total', 0),
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']],
+            })
+
+
+class CanadaUserController(BaseController):
     def logged_in(self):
         # we need to set the language via a redirect
 
@@ -160,43 +165,39 @@ class CanadaController(BaseController):
             return h.redirect_to(controller='user',
                 action='login', locale=lang)
 
-    def datatable(self, resource_id):
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
+    def register(self, data=None, errors=None, error_summary=None):
+        '''GET to display a form for registering a new user.
+           or POST the form data to actually do the user registration.
 
-        lc = LocalCKAN(username=c.user)
+           The bulk of this code is pulled directly from ckan/controlllers/user.py
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author,
+                   'schema': schema.user_new_form_schema(),
+                   'save': 'save' in request.params}
 
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
-            )
+        try:
+            check_access('user_create', context)
+        except NotAuthorized:
+            abort(401, _('Unauthorized to create a user'))
 
-        cols = [f['id'] for f in unfiltered_response['fields']][1:]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
+        if context['save'] and not data:
+            uc = UserController()
+            return uc._save_new(context)
 
-        response = lc.action.datastore_search(
-            q=search_text,
-            resource_id=resource_id,
-            offset=offset,
-            limit=limit,
-            sort=sort_str)
+        if c.user and not data:
+            # #1799 Don't offer the registration form if already logged in
+            return render('user/logout_first.html')
 
-        return json.dumps({
-            'sEcho': echo,
-            'iTotalRecords': unfiltered_response['total'],
-            'iTotalDisplayRecords': response.get('total', 0),
-            'aaData': [
-                [row[colname] for colname in cols]
-                for row in response['records']],
-            })
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.form = render('user/new_user_form.html', extra_vars=vars)
+        return render('user/new.html')
+
 
 class CanadaFeedController(FeedController):
     def general(self):

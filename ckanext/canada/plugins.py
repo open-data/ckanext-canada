@@ -88,13 +88,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         map.connect('/menu', action='registry_menu',
             controller='ckanext.canada.controller:CanadaController')
         map.connect('/user/logged_in', action='logged_in',
-            controller='ckanext.canada.controller:CanadaController')
+            controller='ckanext.canada.controller:CanadaUserController')
+        map.connect('/user/register', action='register',
+                    controller='ckanext.canada.controller:CanadaUserController')
         map.connect('/publish', action='search', 
             controller='ckanext.canada.controller:PublishController')
         map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
             controller='ckanext.canada.controller:PublishController')
-        map.connect('/user/register', action='register',
-                    controller='ckanext.canada.controller:CanadaController')
         return map
 
     def after_map(self, map):
@@ -102,7 +102,6 @@ class DataGCCAInternal(p.SingletonPlugin):
                 controller='ckanext.canada.controller:CanadaController') as m:
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
-            m.connect('/newuser', action='view_new_user')
             m.connect('/datatable/{resource_id}', action='datatable')
         return map
 
