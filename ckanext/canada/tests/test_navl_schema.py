@@ -55,7 +55,7 @@ class TestNAVLSchema(FunctionalTestBase):
                 'en': u'A Novel By Tolstoy', 'fr':u'Un novel par Tolstoy'},
             frequency=u'as_needed',
             notes_translated={'en': u'...', 'fr': u'...'},
-            subject=[u'PE'],
+            subject=[u'persons'],
             date_published=u'2013-01-01',
             keywords={'en': [u'book'], 'fr': [u'livre']},
             )
