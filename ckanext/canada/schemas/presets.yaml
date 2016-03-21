@@ -1772,27 +1772,25 @@ presets:
     label:
       en: Jurisdiction
       fr: Jurisdiction
-    display_snippet: null
-    form_snippet: null
     help_text:
       en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+    display_snippet: null
+    form_restrict_choices_to: [federal]
     required: true
     choices:
     - label:
         en: Federal
         fr: Fédéral
       value: federal
-    ### FIXME: add more choices once we are federating data but
-    ### only allow federal datasets to be edited in this form
-    #- label:
-    #    en: Provincial
-    #    fr: Provincial
-    #  value: provincial
-    #- label:
-    #    en: Municipal
-    #    fr: Municipal
-    #  value: municipal
+    - label:
+        en: Provincial
+        fr: Provincial
+      value: provincial
+    - label:
+        en: Municipal
+        fr: Municipal
+      value: municipal
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
