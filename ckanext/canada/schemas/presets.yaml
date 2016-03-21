@@ -88,6 +88,8 @@ presets:
       fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
     required: true
     form_include_blank_choice: true
+    form_select_attrs:
+      class: form-control
     # copied from dataset_organization preset
     validators: owner_org_validator unicode
     form_snippet: organization.html
