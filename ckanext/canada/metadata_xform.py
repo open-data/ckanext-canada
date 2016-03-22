@@ -96,7 +96,9 @@ def _process(line):
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
-            rec['spatial_representation_type']]
+            sd_new_dfc['spatial_representation_type'][
+                rec['spatial_representation_type'].lstrip().split(
+                    SP_PIPE_SP, 1)[0]]]
     else:
         rec['spatial_representation_type'] = []
 
