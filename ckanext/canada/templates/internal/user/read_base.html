@@ -1,5 +1,9 @@
 {% ckan_extends %}
 
+{% block breadcrumb_content %}
+  {{ h.build_nav('user_datasets', user.display_name|truncate(35), id=user.name) }}
+{% endblock %}
+
 {% block content_primary_nav %}
   {{ super () }}
   {% if c.is_myself %}
