@@ -46,8 +46,10 @@ def _process(line):
     if rec['catalog_type'].startswith('Geo'):
         return
 
-    # replace dataset type
     rec['type'] = u'dataset'
+    rec['catalog'] = u'primary'
+    rec['jurisdiction'] = u'federal'
+    rec['imso_approval'] = u'true'
 
     # dump tags: redundant
     rec['tags'] = []
@@ -86,6 +88,12 @@ def _process(line):
     rec['geographic_region'] = [
         sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
             for gr in rec['geographic_region']]
+
+    if rec.get('spatial_representation_type'):
+        rec['spatial_representation_type'] = [
+            rec['spatial_representation_type']]
+
+    rec['ready_to_publish'] = rec['ready_to_publish'].lower()
 
     rec['title_translated'] = rec.pop('title')
     rec['notes_translated'] = rec.pop('notes')
