@@ -289,83 +289,83 @@ dataset_fields:
   - label:
       en: Document Digital
       fr: Document numérique
-    value: '387'
+    value: document_digital
   - label:
       en: Document Hardcopy
       fr: Document papier
-    value: '388'
+    value: document_hardcopy
   - label:
       en: Image Digital
       fr: Image numérique
-    value: '389'
+    value: image_digital
   - label:
       en: Image Hardcopy
       fr: Image papier
-    value: '390'
+    value: image_hardcopy
   - label:
       en: Map Digital
       fr: Carte numérique
-    value: '391'
+    value: map_digital
   - label:
       en: Map Hardcopy
       fr: Carte papier
-    value: '392'
+    value: map_hardcopy
   - label:
       en: Model Digital
       fr: Modèle numérique
-    value: '393'
+    value: model_digital
   - label:
       en: Model Hardcopy
       fr: Maquette
-    value: '394'
+    value: model_hardcopy
   - label:
       en: Profile Digital
       fr: Profil numérique
-    value: '395'
+    value: profile_digital
   - label:
       en: Profile Hardcopy
       fr: Profil papier
-    value: '396'
+    value: profile_hardcopy
   - label:
       en: Table Digital
       fr: Table numérique
-    value: '397'
+    value: table_digital
   - label:
       en: Table Hardcopy
       fr: Table papier
-    value: '398'
+    value: table_hardcopy
   - label:
       en: Video Digital
       fr: Vidéo numérique
-    value: '399'
+    value: video_digital
   - label:
       en: Video Hardcopy
       fr: Vidéo film
-    value: '400'
+    value: video_hardcopy
   - label:
       en: Audio Digital
       fr: Audio numérique
-    value: '401'
+    value: audio_digital
   - label:
       en: Audio Hardcopy
       fr: Audio analogique
-    value: '402'
+    value: audio_hardcopy
   - label:
       en: Multimedia Digital
       fr: Multimédia numérique
-    value: '403'
+    value: multimedia_digital
   - label:
       en: Multimedia Hardcopy
       fr: Multimédia analogique
-    value: '404'
+    value: multimedia_hardcopy
   - label:
       en: Diagram Digital
       fr: Diagramme numérique
-    value: '405'
+    value: diagram_digital
   - label:
       en: Diagram Hardcopy
       fr: Diagramme papier
-    value: '406'
+    value: diagram_hardcopy
   form_snippet: null
   # copied from select preset
   display_snippet: select.html
