@@ -43,8 +43,13 @@ def _process(line):
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
-    # replace dataset type
+    if rec['catalog_type'].startswith('Geo'):
+        return
+
     rec['type'] = u'dataset'
+    rec['collection'] = u'primary'
+    rec['jurisdiction'] = u'federal'
+    rec['imso_approval'] = u'true'
 
     # dump tags: redundant
     rec['tags'] = []
@@ -73,11 +78,6 @@ def _process(line):
         sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec['topic_category']]
 
-    if rec.get('presentation_form'):
-        rec['presentation_form'] = (
-            sd_new_dfc['presentation_form'][
-                rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
-
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency')
     if (freq):
@@ -89,10 +89,45 @@ def _process(line):
         sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
             for gr in rec['geographic_region']]
 
+    if rec.get('spatial_representation_type'):
+        rec['spatial_representation_type'] = [
+            rec['spatial_representation_type']]
+    else:
+        rec['spatial_representation_type'] = []
+
+    if not rec.get('maintainer_email'):
+        rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
+
+    rec['ready_to_publish'] = str(rec['ready_to_publish']).lower()
+
+    rec['title_translated'] = rec.pop('title')
+    rec['notes_translated'] = rec.pop('notes')
+
     # merge per-resource name, name_fra to fluent text
     for r in rec['resources']:
-        r['name'] = dict(
+        r['name_translated'] = dict(
             zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+
+        langs = []
+        if 'eng' in r['language']:
+            langs.append('en')
+        if 'fra' in r['language']:
+            langs.append('fr')
+        if 'iku' in r['language']:
+            langs.append('iku')
+        if 'zxx' in r['language']:
+            langs.append('zxx')
+        r['language'] = langs
+
+        if r['resource_type'] == 'app':
+            r['related_record'] = 'application'
+
+        r['resource_type'] = {
+            'file': 'dataset',
+            'doc': 'guide',
+            'api': 'dataset',
+            'app': 'dataset',
+            }[r['resource_type']]
 
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
@@ -100,7 +135,7 @@ def _process(line):
     return rec
 _process.count = [0, 0]
 
-def _main(fpath_jsonl_old, fpath_jsonl_new):
+def _main(fpath_jsonl_old):
     """
     With input JSONL data file, open and process a line at a time;
     write output to gzipped JSONL new-style file
@@ -108,27 +143,24 @@ def _main(fpath_jsonl_old, fpath_jsonl_new):
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
     with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
-        with gzip.open(fpath_jsonl_new, 'wb') as fp_out:
-            try:
-                for line in fp_in:
-                    rec = _process(line.rstrip())
-                    if (rec):
-                        fp_out.write(simplejson.dumps(rec) + '\n')
-            except IOError:
-                print >> sys.stderr, (
-                    'Error: input file <{0}> not gzipped'.format(
-                        fpath_jsonl_old))
+        try:
+            for line in fp_in:
+                rec = _process(line.rstrip())
+                if (rec):
+                    print simplejson.dumps(rec)
+        except IOError:
+            print >> sys.stderr, (
+                'Error: input file <{0}> not gzipped'.format(
+                    fpath_jsonl_old))
 
 def usage():
     """
     Display usage message
     """
     print >> sys.stderr, (
-        'Usage: python {0} <in-file> <out-file>'.format(sys.argv[0]))
+        'Usage: python {0} <in-file>'.format(sys.argv[0]))
     print >> sys.stderr, (
         'where <in-file> is a gzipped ckanext-canada@v2.1 metadata file')
-    print >> sys.stderr, (
-        'and <out-file> will be a gzipped ckanext-canada@v2.3 metadata file.')
     sys.exit(-1)
 
 def _set_new_schema_dataset_choices():
@@ -140,14 +172,23 @@ def _set_new_schema_dataset_choices():
 
     ckan = LocalCKAN()
     sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
-    sd_new_dfc = dict((
-        df['field_name'],
-        dict((
-            ch['label']['en'].replace(',', ''),
-            ch['value']) for ch in df['choices']))
-        for df in sd_new['dataset_fields'] if 'choices' in df)
+    sd_new_dfc = {}
+    for df in sd_new['dataset_fields']:
+        if 'choices' not in df:
+            continue
 
-def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
+        old_new = {}
+        for ch in df['choices']:
+            old = ch['label']['en'].replace(',', '')
+            value = ch['value']
+            old_new[old] = value
+            for r in ch.get('replaces', ()):
+                old_new[r] = value
+
+        sd_new_dfc[df['field_name']] = old_new
+
+
+def metadata_xform(fpath_jsonl_old):
     if path.islink(fpath_jsonl_old):
         fpath_jsonl_old = readlink(fpath_jsonl_old)
     if not path.isfile(fpath_jsonl_old):
@@ -157,11 +198,8 @@ def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
     fpath_jsonl_old = path.expanduser(
         path.expandvars(path.abspath(fpath_jsonl_old)))
 
-    fpath_jsonl_new = path.expanduser(
-        path.expandvars(path.abspath(fpath_jsonl_new)))
-
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
 
     # Process input file
-    _main(fpath_jsonl_old, fpath_jsonl_new)
+    _main(fpath_jsonl_old)

@@ -2002,6 +2002,34 @@ presets:
       en: A unique phrase or string which identifies the resource.
       fr: Expression ou segment unique désignant la ressource.
 
+- preset_name: canada_resource_related_record
+  values:
+    field_name: related_record
+    label:
+      en: Related Record Type
+      fr: Type de record
+    choices:
+    - label:
+        en: Open Data
+        fr: Données ouvertes
+      value: dataset
+    - label:
+        en: Open Information
+        fr: Information ouverte
+      value: info
+    - label:
+        en: Application
+        fr: Application
+      value: application
+    - label:
+        en: Other
+        fr: Autre
+      value: other
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+
 - preset_name: canada_resource_language
   values:
     choices:
@@ -2655,7 +2683,7 @@ presets:
     - label:
         en: agreement - service-level agreement
         fr: entente - entente de niveau de service
-      value: service-level_agreement
+      value: servicelevel_agreement
     - label:
         en: affidavit
         fr: affidavit
