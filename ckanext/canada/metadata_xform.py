@@ -61,9 +61,11 @@ def _process(line):
         if k == 'keywords':
             rec[k] = dict(zip(LANG_KEYS, (
                 [] if rec.get(k) is None else [
-                    token.strip() for token in rec.pop(k).split(',')],
+                    token.strip() for token in rec.pop(k).split(',')
+                    if token],
                 [] if rec.get(k_fra) is None else [
-                    token.strip() for token in rec.pop(k_fra).split(',')])))
+                    token.strip() for token in rec.pop(k_fra).split(',')
+                    if token])))
         else:
             rec[k] = dict(zip(LANG_KEYS, (
                 rec.pop(k, None),
