@@ -87,9 +87,12 @@ def _process(line):
         sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
             for gr in rec['geographic_region']]
 
+    rec['title_translated'] = rec.pop('title')
+    rec['notes_translated'] = rec.pop('notes')
+
     # merge per-resource name, name_fra to fluent text
     for r in rec['resources']:
-        r['name'] = dict(
+        r['name_translated'] = dict(
             zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
 
     _process.count[1] += 1
