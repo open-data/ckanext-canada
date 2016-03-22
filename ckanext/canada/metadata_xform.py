@@ -47,7 +47,7 @@ def _process(line):
         return
 
     rec['type'] = u'dataset'
-    rec['catalog'] = u'primary'
+    rec['collection'] = u'primary'
     rec['jurisdiction'] = u'federal'
     rec['imso_approval'] = u'true'
 
@@ -92,8 +92,13 @@ def _process(line):
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
             rec['spatial_representation_type']]
+    else:
+        rec['spatial_representation_type'] = []
 
-    rec['ready_to_publish'] = rec['ready_to_publish'].lower()
+    if not rec.get('maintainer_email'):
+        rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
+
+    rec['ready_to_publish'] = str(rec['ready_to_publish']).lower()
 
     rec['title_translated'] = rec.pop('title')
     rec['notes_translated'] = rec.pop('notes')
@@ -102,6 +107,27 @@ def _process(line):
     for r in rec['resources']:
         r['name_translated'] = dict(
             zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+
+        langs = []
+        if 'eng' in r['language']:
+            langs.append('en')
+        if 'fra' in r['language']:
+            langs.append('fr')
+        if 'iku' in r['language']:
+            langs.append('iku')
+        if 'zxx' in r['language']:
+            langs.append('zxx')
+        r['language'] = langs
+
+        if r['resource_type'] == 'app':
+            r['related_record'] = 'application'
+
+        r['resource_type'] = {
+            'file': 'dataset',
+            'doc': 'guide',
+            'api': 'dataset',
+            'app': 'dataset',
+            }[r['resource_type']]
 
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
