@@ -76,11 +76,6 @@ def _process(line):
         sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec['topic_category']]
 
-    if rec.get('presentation_form'):
-        rec['presentation_form'] = (
-            sd_new_dfc['presentation_form'][
-                rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
-
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency')
     if (freq):
@@ -140,12 +135,21 @@ def _set_new_schema_dataset_choices():
 
     ckan = LocalCKAN()
     sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
-    sd_new_dfc = dict((
-        df['field_name'],
-        dict((
-            ch['label']['en'].replace(',', ''),
-            ch['value']) for ch in df['choices']))
-        for df in sd_new['dataset_fields'] if 'choices' in df)
+    sd_new_dfc = {}
+    for df in sd_new['dataset_fields']:
+        if 'choices' not in df:
+            continue
+
+        old_new = {}
+        for ch in df['choices']:
+            old = ch['label']['en'].replace(',', '')
+            value = ch['value']
+            old_new[old] = value
+            for r in ch.get('replaces', ()):
+                old_new[r] = value
+
+        sd_new_dfc[df['field_name']] = old_new
+
 
 def metadata_xform(fpath_jsonl_old):
     if path.islink(fpath_jsonl_old):
