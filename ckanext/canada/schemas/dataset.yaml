@@ -206,12 +206,30 @@ dataset_fields:
   output_validators: scheming_multiple_choice_output
   form_snippet: null
   choices:
-  - value: cross_reference
-  - value: larger_work_citation
-  - value: part_of_seamless_database
-  - value: source
-  - value: stereo_mate
-  - value: is_composed_of
+  - label:
+      en: Cross Reference
+      fr: Référence croisée
+    value: cross_reference
+  - label:
+      en: Larger Work Citation
+      fr: Référence générique
+    value: larger_work_citation
+  - label:
+      en: Part of Seamless Database
+      fr: Partie de base de données continue
+    value: part_of_seamless_database
+  - label:
+      en: Source
+      fr: Source
+    value: source
+  - label:
+      en: Stereo Mate
+      fr: Stéréo associée
+    value: stereo_mate
+  - label:
+      en: Is Composed Of
+      fr: Est composé de
+    value: is_composed_of
 - field_name: aggregate_identifier
   label:
     en: Aggregate dataset identifier
