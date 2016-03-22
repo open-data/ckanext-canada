@@ -69,6 +69,10 @@ class DataGCCAInternal(p.SingletonPlugin):
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
 
+        config.update({
+            "ckan.user_list_limit": 2000
+        })
+
     def before_map(self, map):
         map.connect('/', action='home',
             controller='ckanext.canada.controller:CanadaController')
