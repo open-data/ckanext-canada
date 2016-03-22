@@ -42,7 +42,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
-                      metadata-xform <input.jsonl.gz> <output.jsonl.gz>
+                      metadata-xform <input.jsonl.gz>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -110,7 +110,7 @@ class CanadaCommand(CkanCommand):
             self.changed_datasets(*self.args[1:])
 
         elif cmd == 'metadata-xform':
-            metadata_xform(self.args[1], self.args[2])
+            metadata_xform(self.args[1])
 
         else:
             print self.__doc__

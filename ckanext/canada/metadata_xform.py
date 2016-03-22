@@ -100,7 +100,7 @@ def _process(line):
     return rec
 _process.count = [0, 0]
 
-def _main(fpath_jsonl_old, fpath_jsonl_new):
+def _main(fpath_jsonl_old):
     """
     With input JSONL data file, open and process a line at a time;
     write output to gzipped JSONL new-style file
@@ -108,27 +108,24 @@ def _main(fpath_jsonl_old, fpath_jsonl_new):
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
     with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
-        with gzip.open(fpath_jsonl_new, 'wb') as fp_out:
-            try:
-                for line in fp_in:
-                    rec = _process(line.rstrip())
-                    if (rec):
-                        fp_out.write(simplejson.dumps(rec) + '\n')
-            except IOError:
-                print >> sys.stderr, (
-                    'Error: input file <{0}> not gzipped'.format(
-                        fpath_jsonl_old))
+        try:
+            for line in fp_in:
+                rec = _process(line.rstrip())
+                if (rec):
+                    print simplejson.dumps(rec)
+        except IOError:
+            print >> sys.stderr, (
+                'Error: input file <{0}> not gzipped'.format(
+                    fpath_jsonl_old))
 
 def usage():
     """
     Display usage message
     """
     print >> sys.stderr, (
-        'Usage: python {0} <in-file> <out-file>'.format(sys.argv[0]))
+        'Usage: python {0} <in-file>'.format(sys.argv[0]))
     print >> sys.stderr, (
         'where <in-file> is a gzipped ckanext-canada@v2.1 metadata file')
-    print >> sys.stderr, (
-        'and <out-file> will be a gzipped ckanext-canada@v2.3 metadata file.')
     sys.exit(-1)
 
 def _set_new_schema_dataset_choices():
@@ -147,7 +144,7 @@ def _set_new_schema_dataset_choices():
             ch['value']) for ch in df['choices']))
         for df in sd_new['dataset_fields'] if 'choices' in df)
 
-def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
+def metadata_xform(fpath_jsonl_old):
     if path.islink(fpath_jsonl_old):
         fpath_jsonl_old = readlink(fpath_jsonl_old)
     if not path.isfile(fpath_jsonl_old):
@@ -157,11 +154,8 @@ def metadata_xform(fpath_jsonl_old, fpath_jsonl_new):
     fpath_jsonl_old = path.expanduser(
         path.expandvars(path.abspath(fpath_jsonl_old)))
 
-    fpath_jsonl_new = path.expanduser(
-        path.expandvars(path.abspath(fpath_jsonl_new)))
-
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
 
     # Process input file
-    _main(fpath_jsonl_old, fpath_jsonl_new)
+    _main(fpath_jsonl_old)
