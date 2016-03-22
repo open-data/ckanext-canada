@@ -43,6 +43,9 @@ def _process(line):
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
+    if rec['catalog_type'].startswith('Geo'):
+        return
+
     # replace dataset type
     rec['type'] = u'dataset'
 
