@@ -62,25 +62,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.IFacets)
     p.implements(p.IActions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
-
-    def dataset_facets(self, facets_dict, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def group_facets(self, facets_dict, group_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
 
     def before_map(self, map):
         map.connect('/', action='home',
@@ -162,14 +149,17 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Collection Type'),
-                      'subject': _('Subject'),
-                      'organization': _('Organization'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
+            'organization': _('Organization'),
+            'keywords': _('Keywords'),
+            'keywords_fra': _('Keywords'),
+            'subject': _('Subject'),
+            'res_format': _('Format'),
+            'res_resource_type': _('Resource Type'),
+            'frequency': _('Maintenance and Update Frequency'),
+            'topic_category': _('Topic Category'),
+            'spatial_representation_type': _('Spatial Representation Type'),
+            'ready_to_publish': _('Record Status'),
+            }
 
         return facets_dict
 
@@ -178,18 +168,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-
-        facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Collection Type'),
-                      'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
-
-        return facets_dict
+        return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [

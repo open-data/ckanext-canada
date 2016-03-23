@@ -6,25 +6,5 @@
 {% block subtitle %}{{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}{% endblock %}
 
 {% block organization_facets %}
-
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', extras={'id':c.group_dict.id} ) }}
-
-  {% if h.lang() == 'en' %}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
-    name='keywords', extras={'id':c.group_dict.id}) }}
-  {% elif h.lang() == 'fr' %}
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
-    name='keywords_fra', extras={'id':c.group_dict.id}) }}
-  {% endif %}
-
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
-    name='subject', label_function=cr.subject_label, extras={'id':c.group_dict.id}) }}
-
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
-    name='res_format', label_function=cr.res_label, extras={'id':c.group_dict.id}) }}
-
-  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-    name='license_id', label_function=cr.license_lookup, extras={'id':c.group_dict.id}) }}
-
-
+  {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name} %}
 {% endblock %}

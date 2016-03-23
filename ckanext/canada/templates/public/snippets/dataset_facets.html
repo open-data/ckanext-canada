@@ -1,0 +1,43 @@
+{% if h.lang() == 'en' %}
+  {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],
+  name='keywords', extras=extras %}
+{% elif h.lang() == 'fr' %}
+  {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+  name='keywords_fra', extras=extras %}
+{% endif %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['subject'],
+  name='subject',
+  scheming_choices=h.scheming_get_preset('canada_subject').choices,
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['res_format'],
+  name='res_format',
+  scheming_choices=h.scheming_get_preset('canada_resource_format').choices,
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['res_resource_type'],
+  name='res_resource_type',
+  scheming_choices=h.scheming_get_preset('canada_resource_type').choices,
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['frequency'],
+  name='frequency',
+  scheming_choices=h.scheming_get_preset('canada_frequency').choices,
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['topic_category'],
+  name='topic_category',
+  scheming_choices=h.scheming_get_preset('canada_topic_category').choices,
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['spatial_representation_type'],
+  name='spatial_representation_type',
+  scheming_choices=h.scheming_get_preset('canada_spatial_representation_type').choices,
+  extras=extras %}
