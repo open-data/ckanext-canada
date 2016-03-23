@@ -1992,6 +1992,43 @@ presets:
           fr: Services communication
         value: utilities_communication
 
+- preset_name: canada_spatial_representation_type
+  values:
+    field_name: spatial_representation_type
+    label:
+      en: Spatial representation type
+      fr: Type représentation spatiale
+    form_snippet: null
+    display_snippet: select.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
+    choices:
+    - label:
+        en: Vector
+        fr: Vecteur
+      value: vector
+    - label:
+        en: Grid
+        fr: Grille
+      value: grid
+    - label:
+        en: Text Table
+        fr: Texte table
+      value: text_table
+    - label:
+        en: Tin
+        fr: Tin
+      value: tin
+    - label:
+        en: Stereo Model
+        fr: Stéréomodèle
+      value: stereo_model
+    - label:
+        en: Video
+        fr: Vidéo
+      value: video
+
+
 - preset_name: canada_resource_unique_identifier
   values:
     field_name: unique_identifier

@@ -155,6 +155,9 @@ class DataGCCAPublic(p.SingletonPlugin):
             'subject': _('Subject'),
             'res_format': _('Format'),
             'res_resource_type': _('Resource Type'),
+            'frequency': _('Maintenance and Update Frequency'),
+            'topic_category': _('Topic Category'),
+            'spatial_representation_type': _('Spatial Representation Type'),
             'ready_to_publish': _('Record Status'),
             }
 
