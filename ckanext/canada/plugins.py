@@ -99,8 +99,15 @@ class DataGCCAInternal(p.SingletonPlugin):
             ckan_icon='bar-chart'
         )
         map.connect(
+            'ckanadmin_listusers',
+            '/ckan-admin',
+            action='index',
+            controller='user',
+            ckan_icon='user'
+        )
+        map.connect(
             'ckanadmin_publish',
-            '/ckan_admin/publish',
+            '/ckan-admin/publish',
             action='search',
             controller='ckanext.canada.controller:CanadaAdminController',
             ckan_icon='cloud-upload'
