@@ -162,8 +162,8 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
+                      'keywords': _('Keywords'),
+                      'keywords_fra': _('Keywords'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Collection Type'),
                       'subject': _('Subject'),
@@ -181,8 +181,8 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
+                      'keywords': _('Keywords'),
+                      'keywords_fra': _('Keywords'),
                       'res_format': _('File Format'),
                       'catalog_type': _('Collection Type'),
                       'subject': _('Subject'),
