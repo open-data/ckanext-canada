@@ -9,13 +9,7 @@
 {% endif %}
 
 
-{%- set subject_choices = [] -%}
-{# must use 'dataset' type because we have a single facet list #}
-{%- for field in h.scheming_get_dataset_schema('dataset').dataset_fields -%}
-  {%- if field.field_name == 'subject' -%}
-    {%- do subject_choices.extend(field.choices) -%}
-  {%- endif -%}
-{%- endfor -%}
+{%- set subject_choices = h.scheming_get_preset('canada_subject').choices -%}
 {%- macro get_subject_label(subj, lang) -%}
   {{- h.scheming_choices_label(subject_choices, subj.name) -}}
 {%- endmacro -%}
