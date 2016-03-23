@@ -61,9 +61,11 @@ def _process(line):
         if k == 'keywords':
             rec[k] = dict(zip(LANG_KEYS, (
                 [] if rec.get(k) is None else [
-                    token.strip() for token in rec.pop(k).split(',')],
+                    token.strip() for token in rec.pop(k).split(',')
+                    if token.strip()],
                 [] if rec.get(k_fra) is None else [
-                    token.strip() for token in rec.pop(k_fra).split(',')])))
+                    token.strip() for token in rec.pop(k_fra).split(',')
+                    if token.strip()])))
         else:
             rec[k] = dict(zip(LANG_KEYS, (
                 rec.pop(k, None),
@@ -78,6 +80,11 @@ def _process(line):
         sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec['topic_category']]
 
+    if rec.get('presentation_form'):
+        rec['presentation_form'] = (
+            sd_new_dfc['presentation_form'][
+                rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
+
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency')
     if (freq):
@@ -91,7 +98,9 @@ def _process(line):
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
-            rec['spatial_representation_type']]
+            sd_new_dfc['spatial_representation_type'][
+                rec['spatial_representation_type'].lstrip().split(
+                    SP_PIPE_SP, 1)[0]]]
     else:
         rec['spatial_representation_type'] = []
 
