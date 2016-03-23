@@ -165,7 +165,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'keywords': _('Keywords'),
                       'keywords_fra': _('Keywords'),
                       'res_format': _('Format'),
-                      'catalog_type': _('Collection Type'),
                       'subject': _('Subject'),
                       'organization': _('Organization'),
                       'ready_to_publish': _('Record Status'),
@@ -184,7 +183,6 @@ class DataGCCAPublic(p.SingletonPlugin):
                       'keywords': _('Keywords'),
                       'keywords_fra': _('Keywords'),
                       'res_format': _('Format'),
-                      'catalog_type': _('Collection Type'),
                       'subject': _('Subject'),
                       'ready_to_publish': _('Record Status'),
                       }
