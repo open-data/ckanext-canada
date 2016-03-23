@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+  {{ super () }}
+  {% if c.is_myself %}
+    {{ h.build_nav_icon('user_reports', _('Reports'), id=user.name) }}
+  {% endif %}
+{% endblock %}

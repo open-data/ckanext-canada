@@ -130,7 +130,7 @@ class CanadaController(BaseController):
         })
 
 
-class CanadaUserController(BaseController):
+class CanadaUserController(UserController):
     def logged_in(self):
         # we need to set the language via a redirect
 
@@ -222,6 +222,23 @@ class CanadaUserController(BaseController):
         c.form = render('user/new_user_form.html', extra_vars=d)
         return render('user/new.html')
 
+    def reports(self, id=None):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author, 'auth_user_obj': c.userobj,
+                   'for_view': True}
+        data_dict = {'id': id,
+                     'user_obj': c.userobj,
+                     'include_datasets': True,
+                     'include_num_followers': True}
+
+        context['with_related'] = True
+
+        self._setup_template_variables(context, data_dict)
+
+        if c.is_myself:
+            return render('user/reports.html')
+        abort(403)
+
 
 class CanadaFeedController(FeedController):
     def general(self):
@@ -305,10 +322,10 @@ class CanadaFeedController(FeedController):
         return feed.writeString('utf-8')
 
 
-class PublishController(PackageController):
+class CanadaAdminController(PackageController):
 
     def _search_template(self, package_type):
-        return 'publish/search.html'
+        return 'admin/publish_search.html'
 
     def _guess_package_type(self, expecting_name=False):
         # this is a bit unortodox, but this method allows us to conveniently
@@ -337,7 +354,4 @@ class PublishController(PackageController):
                     )
 
         # return us to the publishing interface
-        url = h.url_for(
-            controller='ckanext.canada.controller:PublishController',
-            action='search')
-        redirect(url)
+        redirect(h.url_for('ckanadmin_publish'))
