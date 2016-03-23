@@ -27,12 +27,12 @@
     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
       name='organization') }}
     
-    {% if dataset_type != 'info' %}
+{#    {% if dataset_type != 'info' %}
       {%- macro get_catalog_label(type, lang) -%}
          {{- h.scheming_get_dataset_schema(type.name).catalog_type_label[lang] -}}
       {%- endmacro -%}
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=get_catalog_label ) }}
-    {% endif %}
+    {% endif %} #}
     
     {% if h.lang() == 'en' %}
       {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
@@ -123,8 +123,8 @@
 </div>
     #}
 
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-      name='license_id', label_function=cr.license_lookup) }}
+{#    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
+      name='license_id', label_function=cr.license_lookup) }}#}
     
     {% block extra_facets %}
       
