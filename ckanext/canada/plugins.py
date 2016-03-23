@@ -62,25 +62,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.IFacets)
     p.implements(p.IActions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
-
-    def dataset_facets(self, facets_dict, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def group_facets(self, facets_dict, group_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
 
     def before_map(self, map):
         map.connect('/', action='home',
@@ -165,9 +152,9 @@ class DataGCCAPublic(p.SingletonPlugin):
             'organization': _('Organization'),
             'keywords': _('Keywords'),
             'keywords_fra': _('Keywords'),
+            'subject': _('Subject'),
             'res_format': _('Format'),
             'res_resource_type': _('Resource Type'),
-            'subject': _('Subject'),
             'ready_to_publish': _('Record Status'),
             }
 
