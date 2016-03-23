@@ -1,0 +1,30 @@
+{% import 'macros/canada_read.html' as cr %}
+
+{% if h.lang() == 'en' %}
+  {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],
+  name='keywords', extras=extras %}
+{% elif h.lang() == 'fr' %}
+  {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
+  name='keywords_fra', extras=extras %}
+{% endif %}
+
+
+{%- set subject_choices = [] -%}
+{# must use 'dataset' type because we have a single facet list #}
+{%- for field in h.scheming_get_dataset_schema('dataset').dataset_fields -%}
+  {%- if field.field_name == 'subject' -%}
+    {%- do subject_choices.extend(field.choices) -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- macro get_subject_label(subj, lang) -%}
+  {{- h.scheming_choices_label(subject_choices, subj.name) -}}
+{%- endmacro -%}
+{% snippet 'snippets/facet_list.html', title=c.facet_titles['subject'],
+  name='subject', label_function=get_subject_label, extras=extras %}
+
+
+{% snippet 'snippets/facet_list.html', title=c.facet_titles['res_format'],
+  name='res_format', label_function=cr.res_label, extras=extras %}
+
+{% snippet 'snippets/facet_list.html', title=c.facet_titles['res_resource_type'],
+  name='res_resource_type', label_function=cr.res_label, extras=extras %}

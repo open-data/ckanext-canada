@@ -166,6 +166,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'keywords': _('Keywords'),
             'keywords_fra': _('Keywords'),
             'res_format': _('Format'),
+            'res_resource_type': _('Resource Type'),
             'subject': _('Subject'),
             'ready_to_publish': _('Record Status'),
             }
@@ -177,17 +178,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-
-        facets_dict = {
-            'keywords': _('Keywords'),
-            'keywords_fra': _('Keywords'),
-            'res_format': _('Format'),
-            'subject': _('Subject'),
-            'ready_to_publish': _('Record Status'),
-            }
-
-        return facets_dict
+        return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
