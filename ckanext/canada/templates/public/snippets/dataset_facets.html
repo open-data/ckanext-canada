@@ -1,5 +1,3 @@
-{% import 'macros/canada_read.html' as cr %}
-
 {% if h.lang() == 'en' %}
   {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],
   name='keywords', extras=extras %}
@@ -8,17 +6,20 @@
   name='keywords_fra', extras=extras %}
 {% endif %}
 
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['subject'],
+  name='subject',
+  scheming_choices=h.scheming_get_preset('canada_subject').choices,
+  extras=extras %}
 
-{%- set subject_choices = h.scheming_get_preset('canada_subject').choices -%}
-{%- macro get_subject_label(subj, lang) -%}
-  {{- h.scheming_choices_label(subject_choices, subj.name) -}}
-{%- endmacro -%}
-{% snippet 'snippets/facet_list.html', title=c.facet_titles['subject'],
-  name='subject', label_function=get_subject_label, extras=extras %}
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['res_format'],
+  name='res_format',
+  scheming_choices=h.scheming_get_preset('canada_resource_format').choices,
+  extras=extras %}
 
-
-{% snippet 'snippets/facet_list.html', title=c.facet_titles['res_format'],
-  name='res_format', label_function=cr.res_label, extras=extras %}
-
-{% snippet 'snippets/facet_list.html', title=c.facet_titles['res_resource_type'],
-  name='res_resource_type', label_function=cr.res_label, extras=extras %}
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['res_resource_type'],
+  name='res_resource_type',
+  scheming_choices=h.scheming_get_preset('canada_resource_type').choices,
+  extras=extras %}
