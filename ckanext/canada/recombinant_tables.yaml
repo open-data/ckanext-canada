@@ -614,6 +614,11 @@
   xls_sheet_name: contractsa
   fields:
 
+  - datastore_id: reporting_period
+    label: Reporting Period / Période de déclaration
+    datastore_type: text
+    xls_column_width: 20
+
   - datastore_id: contract_goods_number_of
     label: Number of Goods Contracts $10K and under/ Nombre de marchés de biens de 10 000 $ et moins
     datastore_type: text
@@ -705,11 +710,6 @@
 
   - datastore_id: acquisition_card_transactions_total_value
     label: Acquisition Card Transactions for all dollar values – Total Value ($ 000) / Carte d'acquisition pour toutes les valeurs en dollars– Valeur totale (000 $)
-    datastore_type: text
-    xls_column_width: 20
-
-  - datastore_id: reporting_period
-    label: Reporting Period / Période de déclaration
     datastore_type: text
     xls_column_width: 20
 
