@@ -1,3 +1,9 @@
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['collection'],
+  name='collection',
+  scheming_choices=h.scheming_get_preset('canada_collection').choices,
+  extras=extras %}
+
 {% if h.lang() == 'en' %}
   {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],
   name='keywords', extras=extras %}

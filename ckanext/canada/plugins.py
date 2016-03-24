@@ -150,6 +150,7 @@ class DataGCCAPublic(p.SingletonPlugin):
 
         facets_dict = {
             'organization': _('Organization'),
+            'collection': _('Catalogue Type'),
             'keywords': _('Keywords'),
             'keywords_fra': _('Keywords'),
             'subject': _('Subject'),
