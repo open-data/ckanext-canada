@@ -13,6 +13,8 @@
   scheming_choices=h.scheming_get_preset('canada_collection').choices,
   extras=extras %}
 
+{{ organization_facet }}
+
 {% if h.lang() == 'en' %}
   {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],
   name='keywords', extras=extras %}

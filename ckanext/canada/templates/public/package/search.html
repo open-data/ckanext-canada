@@ -23,16 +23,16 @@
 {% block secondary_content %}
 
     <h2>{{ _('Search Filters') }}</h2>
-  
-    {% snippet 'snippets/facet_list.html', title=c.facet_titles['organization'],
-      name='organization' %}
-    
-    {% snippet 'snippets/dataset_facets.html' %}
-    
+
+    {% snippet 'snippets/dataset_facets.html',
+      organization_facet=h.snippet(
+        'snippets/facet_list.html', title=c.facet_titles['organization'],
+        name='organization') %}
+
     {% block extra_facets %}
-      
+
     {% endblock %}
-        
+
     <div class="well well-sm">
       {% set license = h.get_license('ca-ogl-lgo') %}
       {% if license != None %}
