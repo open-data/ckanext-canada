@@ -149,6 +149,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
+            'type': _('Portal Type'),
             'organization': _('Organization'),
             'collection': _('Catalogue Type'),
             'keywords': _('Keywords'),

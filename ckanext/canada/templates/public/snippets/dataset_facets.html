@@ -1,4 +1,13 @@
 {% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['type'],
+  name='type',
+  scheming_choices=[
+    {'value': 'dataset', 'label': _('Open Data')},
+    {'value': 'info', 'label': _('Open Information')},
+  ],
+  extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
   title=c.facet_titles['collection'],
   name='collection',
   scheming_choices=h.scheming_get_preset('canada_collection').choices,
