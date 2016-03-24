@@ -148,6 +148,8 @@
     <field name="keywords" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords_fra" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="subject" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="topic_category" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="spatial_representation_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="ready_to_publish" type="boolean" indexed="true" stored="true"/>
 </fields>
 

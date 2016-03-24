@@ -160,7 +160,9 @@ class DataGCCAPublic(p.SingletonPlugin):
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
+            'type': _('Portal Type'),
             'organization': _('Organization'),
+            'collection': _('Catalogue Type'),
             'keywords': _('Keywords'),
             'keywords_fra': _('Keywords'),
             'subject': _('Subject'),
@@ -277,7 +279,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
         search_params['facet.range.gap'] = '+100YEARS'
-        
+
         return search_params
 
     def after_search(self, search_results, search_params):
@@ -291,10 +293,14 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def before_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr')
+        data_dict['keywords_fra'] = kw.get('fr', [])
         data_dict['catalog_type'] = data_dict.get('type', '')
 
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
+        data_dict['topic_category'] = json.loads(data_dict.get(
+            'topic_category', '[]'))
+        data_dict['spatial_representation_type'] = json.loads(data_dict.get(
+            'spatial_representation_type', '[]'))
 
         if data_dict.get('portal_release_date'):
             data_dict.pop('ready_to_publish', None)
