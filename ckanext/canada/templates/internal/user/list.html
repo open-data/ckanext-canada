@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+
+{% block primary_content_inner %}
+    <h2 class="wb-inv">{{ _('Users') }}</h2>
+    {% block users_list %}
+    <table class="wb-tables" data-wb-tables='{"pageLength": 25}' style="width:100%">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% block users_list_inner %}
+        {% for user in c.page.items %}
+        <tr>
+          <td>{{ h.linked_user(user['name'], maxlength=20) }}</td>
+          <td>{{ user['fullname'] or ' ' }}</td>
+          <td>{{ _('Sysadmin') if user[0].sysadmin else _('Member') }}</td>
+        </tr>
+        {% endfor %}
+      {% endblock %}
+      </tbody>
+    </table>
+    {% endblock %}
+{% endblock %}
