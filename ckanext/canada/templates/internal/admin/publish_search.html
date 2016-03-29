@@ -88,10 +88,10 @@
 {% block secondary_content %}
 <div class="filters">
   <div>
-    {% for facet in c.facet_titles %}
-      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
-    {% endfor %}
+    {% snippet 'snippets/dataset_facets.html',
+      organization_facet=h.snippet(
+        'snippets/facet_list.html', title=c.facet_titles['organization'],
+        name='organization') %}
   </div>
-  <a class="close no-text hide-filters"><i class="icon-remove-sign"></i><span class="text">close</span></a>
 </div>
 {% endblock %}
