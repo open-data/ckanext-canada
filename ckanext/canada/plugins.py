@@ -172,6 +172,7 @@ class DataGCCAPublic(p.SingletonPlugin):
             'topic_category': _('Topic Category'),
             'spatial_representation_type': _('Spatial Representation Type'),
             'ready_to_publish': _('Record Status'),
+            'imso_approval': _('IMSO Approval'),
             }
 
         return facets_dict
