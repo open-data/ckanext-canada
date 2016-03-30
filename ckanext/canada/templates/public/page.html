@@ -122,10 +122,6 @@
         aria-label="Symbol of the Government of Canada"></object>
 {% endblock %}
 
-{% block footer %}
-  {% include "footer_gcweb.html" %}
-{% endblock footer %}
-
 {% block body_extras -%}
   {# defined in the config.ini under "ckan.template_footer_end" #}
   {{ g.template_footer_end | safe }}
