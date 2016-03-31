@@ -25,14 +25,6 @@ SP_PIPE_SP = ' | '
 sd_new = None
 sd_new_dfc = None
 
-def _is_geodata(rec):
-    """
-    Return True if the input record contains Geo Data, False otherwise
-    """
-    return (('catalog_type' in rec) and
-        isinstance(rec['catalog_type'], unicode) and
-        not rec['catalog_type'].startswith(u'Geo '))
-
 def _process(line):
     """
     Process one JSONL record of input, return None if Geo data and
@@ -43,7 +35,7 @@ def _process(line):
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
-    if rec['catalog_type'].startswith('Geo'):
+    if rec.get('catalog_type','').startswith('Geo'):
         return
 
     rec['type'] = u'dataset'
@@ -74,11 +66,11 @@ def _process(line):
     # convert subject english-sp-sp-french content to fluent text
     rec['subject'] = [
         sd_new_dfc['subject'][s.lstrip().split(SP_SP, 1)[0]]
-            for s in rec['subject']]
+            for s in rec.get('subject', [])]
 
     rec['topic_category'] = [
         sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
-            for s in rec['topic_category']]
+            for s in rec.get('topic_category',[])]
 
     if rec.get('presentation_form'):
         rec['presentation_form'] = (
@@ -86,7 +78,7 @@ def _process(line):
                 rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
 
     # convert frenquency english-sp-pipe-sp-french content to fluent text
-    freq = rec.pop('maintenance_and_update_frequency')
+    freq = rec.pop('maintenance_and_update_frequency', None)
     if (freq):
         rec['frequency'] = sd_new_dfc[u'frequency'][
             freq.lstrip().split(SP_PIPE_SP, 1)[0]]
@@ -94,7 +86,7 @@ def _process(line):
     # convert geo region english-sp-sp-french content to fluent text
     rec['geographic_region'] = [
         sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
-            for gr in rec['geographic_region']]
+            for gr in rec.get('geographic_region',[])]
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
@@ -107,7 +99,7 @@ def _process(line):
     if not rec.get('maintainer_email'):
         rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
 
-    rec['ready_to_publish'] = str(rec['ready_to_publish']).lower()
+    rec['ready_to_publish'] = str(rec.get('ready_to_publish', '')).lower()
 
     rec['title_translated'] = rec.pop('title')
     rec['notes_translated'] = rec.pop('notes')
@@ -118,13 +110,14 @@ def _process(line):
             zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
 
         langs = []
-        if 'eng' in r['language']:
+        language = r.get('language', '')
+        if 'eng' in language:
             langs.append('en')
-        if 'fra' in r['language']:
+        if 'fra' in language:
             langs.append('fr')
-        if 'iku' in r['language']:
+        if 'iku' in language:
             langs.append('iku')
-        if 'zxx' in r['language']:
+        if 'zxx' in language:
             langs.append('zxx')
         r['language'] = langs
 
@@ -132,11 +125,12 @@ def _process(line):
             r['related_record'] = 'application'
 
         r['resource_type'] = {
+            None: 'dataset',
             'file': 'dataset',
             'doc': 'guide',
             'api': 'dataset',
             'app': 'dataset',
-            }[r['resource_type']]
+            }[r.get('resource_type', 'file')]
 
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
@@ -147,11 +141,10 @@ _process.count = [0, 0]
 def _main(fpath_jsonl_old):
     """
     With input JSONL data file, open and process a line at a time;
-    write output to gzipped JSONL new-style file
     """
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-    with gzip.open(fpath_jsonl_old, 'rb') as fp_in:
+    with open(fpath_jsonl_old, 'rb') as fp_in:
         try:
             for line in fp_in:
                 rec = _process(line.rstrip())
