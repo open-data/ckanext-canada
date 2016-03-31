@@ -25,14 +25,6 @@ SP_PIPE_SP = ' | '
 sd_new = None
 sd_new_dfc = None
 
-def _is_geodata(rec):
-    """
-    Return True if the input record contains Geo Data, False otherwise
-    """
-    return (('catalog_type' in rec) and
-        isinstance(rec['catalog_type'], unicode) and
-        not rec['catalog_type'].startswith(u'Geo '))
-
 def _process(line):
     """
     Process one JSONL record of input, return None if Geo data and
