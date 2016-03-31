@@ -42,7 +42,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
-                      metadata-xform <input.jsonl.gz>
+                      metadata-xform <input.jsonl>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
