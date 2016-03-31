@@ -30,7 +30,7 @@
     {% block package_item_title %}
     <section class="module-content indent-large">
 
-      <h1>{{ pkg.title[client_lang] or pkg.name }}
+      <h1>{{ pkg.title_translated[client_lang] or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
