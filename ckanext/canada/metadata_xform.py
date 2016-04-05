@@ -39,7 +39,7 @@ def _process(line):
         return
 
     rec['type'] = u'info' if rec['type'] == 'info' else u'dataset'
-    rec['collection'] = u'publication' if rec['type'] == info else u'primary'
+    rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
     rec['imso_approval'] = u'true'
 
@@ -110,6 +110,8 @@ def _process(line):
         if 'name_fra' in r:
             r['name_translated'] = dict(
                 zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+        elif 'name_translaged' not in r:
+            r['name_translated'] = r.pop('name')
 
         langs = []
         language = r.get('language', '')
