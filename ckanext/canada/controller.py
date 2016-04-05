@@ -1,25 +1,37 @@
-import logging
+# -*- coding: utf-8 -*-
 import json
 import webhelpers.feedgenerator
 
-from ckan.lib.base import (BaseController, c, render, model, request, h, g,
-    response, abort)
+from ckan.lib.base import (
+    BaseController,
+    c,
+    render,
+    model,
+    request,
+    h,
+    response,
+    abort,
+    redirect
+)
 from ckan.logic import get_action, check_access, schema, NotAuthorized
 from ckan.controllers.user import UserController
 import ckan.new_authz as new_authz
 from ckan.lib.helpers import Page, date_str_to_datetime, url
-from ckan.controllers.feed import (FeedController, _package_search,
-    _create_atom_id, _FixedAtom1Feed)
+from ckan.controllers.feed import (
+    FeedController,
+    _package_search,
+    _create_atom_id,
+    _FixedAtom1Feed
+)
 from ckan.lib import i18n
-from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
-import ckan.lib.dictization.model_dictize as model_dictize
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
-from ckanapi import LocalCKAN, NotFound, NotAuthorized
+from ckanapi import LocalCKAN
+
 
 class CanadaController(BaseController):
     def home(self):
@@ -46,7 +58,8 @@ class CanadaController(BaseController):
         '''GET to display a form for registering a new user.
            or POST the form data to actually do the user registration.
 
-           The bulk of this code is pulled directly from ckan/controlllers/user.py
+           The bulk of this code is pulled directly from
+           ckan/controlllers/user.py
         '''
         context = {'model': model, 'session': model.Session,
                    'user': c.user or c.author,
@@ -74,7 +87,6 @@ class CanadaController(BaseController):
         c.is_sysadmin = new_authz.is_sysadmin(c.user)
         c.form = render('user/new_user_form.html', extra_vars=vars)
         return render('user/new.html')
-
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -113,8 +125,8 @@ class CanadaController(BaseController):
     def logged_in(self):
         # we need to set the language via a redirect
 
-        # Lang is not being retrieved properly by the Babel i18n lib in this redirect, so using
-        # this clunky workaround for now.
+        # Lang is not being retrieved properly by the Babel i18n lib in this
+        # redirect, so using this clunky workaround for now.
         lang = session.pop('lang', None)
         if lang is None:
             came_from = request.params.get('came_from', '')
@@ -133,9 +145,12 @@ class CanadaController(BaseController):
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            h.flash_success(_('<strong>Note</strong><br>'
-                "%s is now logged in") %
-                user_dict['display_name'], allow_html=True)
+            h.flash_success(
+                _('<strong>Note</strong><br> %s is now logged in').format(
+                    user_dict['display_name']
+                ),
+                allow_html=True
+            )
 
             if not h.check_access('package_create'):
                 h.flash_notice('<strong>' + _('Account Created')
@@ -197,6 +212,21 @@ class CanadaController(BaseController):
                 [row[colname] for colname in cols]
                 for row in response['records']],
             })
+
+    def package_delete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The dataset has been removed from'
+            ' the Open Government Portal. <br/> The record may re-appear'
+            ' if it is re-harvested or updated. Please ensure that the'
+            ' record is deleted and purged from the source catalogue in'
+            ' order to prevent it from reappearing.'
+            ),
+            allow_html=True
+        )
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_delete(id=pkg_id)
+        return redirect('/')
+
 
 class CanadaFeedController(FeedController):
     def general(self):
