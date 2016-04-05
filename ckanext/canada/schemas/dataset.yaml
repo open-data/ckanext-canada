@@ -166,6 +166,14 @@ dataset_fields:
 - preset: canada_keywords
 - preset: canada_subject
 - preset: canada_audience
+
+- field_name: place_of_publication
+  label:
+    en: Place of Publication
+    fr: Place de publication
+  help_text: ''
+  preset: canada_geographic_region # use same multi-select controlled list
+
 - preset: canada_spatial
 - preset: canada_geographic_region
 - preset: canada_time_period_coverage_start
