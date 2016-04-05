@@ -85,8 +85,9 @@ def _process(line):
 
     # convert geo region english-sp-sp-french content to fluent text
     rec['geographic_region'] = [
-        sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
-            for gr in rec.get('geographic_region',[])]
+        sd_new_dfc[u'geographic_region'].get(
+            gr.lstrip().split(SP_SP, 1)[0], gr)
+        for gr in rec.get('geographic_region',[])]
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
