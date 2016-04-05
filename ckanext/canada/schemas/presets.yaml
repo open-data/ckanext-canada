@@ -305,6 +305,115 @@ presets:
       replaces: [TR]
       value: transport
 
+- preset_name: canada_audience
+  values:
+    field_name: audience
+    label:
+      en: Audience
+      fr: Audience
+    form_snippet: multiple_select.html
+    display_snippet: list_inline.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
+    choices:
+    - label:
+        en: Aboriginal peoples
+        fr: Peuples autochtones
+      value: aboriginal_peoples
+    - label:
+        en: Business
+        fr: Entreprises
+      value: business
+    - label:
+        en: Children
+        fr: Enfants
+      value: children
+    - label:
+        en: Educators
+        fr: Éducateurs
+      value: educators
+    - label:
+        en: Employers
+        fr: Employeurs
+      value: employers
+    - label:
+        en: Funding applicants
+        fr: Demandeurs de financement
+      value: funding_applicants
+    - label:
+        en: General public
+        fr: Grand public
+      value: general_public
+    - label:
+        en: Government
+        fr: Gouvernement
+      value: government
+    - label:
+        en: Immigrants
+        fr: Immigrants
+      value: immigrants
+    - label:
+        en: Job seekers
+        fr: Chercheurs d’emploi
+      value: job_seekers
+    - label:
+        en: Media
+        fr: Médias
+      value: media
+    - label:
+        en: Non-Canadians
+        fr: Non-Canadiens
+      value: noncanadians
+    - label:
+        en: Non-governmental organizations
+        fr: Organisations non governementales
+      value: nongovernmental_organizations
+    - label:
+        en: Parents
+        fr: Parents
+      value: parents
+    - label:
+        en: Persons with disabilities
+        fr: Personnes handicapées
+      value: persons_with_disabilities
+    - label:
+        en: Rural community
+        fr: Communauté rurale
+      value: rural_community
+    - label:
+        en: Seniors
+        fr: Aînés
+      value: seniors
+    - label:
+        en: Scientists
+        fr: Scientifiques
+      value: scientists
+    - label:
+        en: Students
+        fr: Étudiants
+      value: students
+    - label:
+        en: Travellers
+        fr: Voyageurs
+      value: travellers
+    - label:
+        en: Veterans
+        fr: Anciens combattants
+      value: veterans
+    - label:
+        en: Visitors to Canada
+        fr: Visiteurs au Canada
+      value: visitors_to_canada
+    - label:
+        en: Women
+        fr: Femmes
+      value: women
+    - label:
+        en: Youth
+        fr: Jeunesse
+      value: youth
+
+
 - preset_name: canada_spatial
   values:
     field_name: spatial
