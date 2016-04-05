@@ -107,8 +107,9 @@ def _process(line):
 
     # merge per-resource name, name_fra to fluent text
     for r in rec['resources']:
-        r['name_translated'] = dict(
-            zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+        if 'name_fra' in r:
+            r['name_translated'] = dict(
+                zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
 
         langs = []
         language = r.get('language', '')
