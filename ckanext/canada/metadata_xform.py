@@ -38,7 +38,7 @@ def _process(line):
     if rec.get('catalog_type','').startswith('Geo'):
         return
 
-    rec['type'] = u'dataset'
+    rec['type'] = u'info' if rec['type'] == u'info' else u'dataset'
     rec['collection'] = u'primary'
     rec['jurisdiction'] = u'federal'
     rec['imso_approval'] = u'true'
