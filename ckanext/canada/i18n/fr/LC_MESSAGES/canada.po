@@ -66,6 +66,15 @@ msgstr "Aucune activité pour cet élément"
 msgid "Activity Stream"
 msgstr "Flux d'Activités"
 
+msgid "Reports"
+msgstr "Rapports"
+
+msgid "Trash"
+msgstr "Jeux de données supprimés"
+
+msgid "Publish Records"
+msgstr "Publier des jeux de données"
+
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
@@ -177,6 +186,9 @@ msgstr "Activité en lien avec les éléments que vous surveillez"
 
 msgid "My Datasets"
 msgstr "Mes ensembles de données"
+
+msgid "No reports are available"
+msgstr "Aucun rapport n’est disponible"
 
 msgid "You do not have any datasets"
 msgstr "Vous n'avez aucun ensemble de données"
@@ -414,14 +426,15 @@ msgstr "S'il vous plaît vérifier l’orthographe, ou réduire le nombre de fil
 msgid "The following fields are required to publish this dataset:"
 msgstr "Les champs suivants doivent être remplis afin de publier ce jeu de données:"
 
-msgid "<strong>Note</strong><br>%s is now logged in"
-msgstr "<strong>Note</strong><br>Bienvenue %s"
+msgid "<strong>Note</strong><br>{} is now logged in"
+msgstr "<strong>Note</strong><br>Bienvenue {}"
 
 msgid "Thank you for creating your account for the Open "
 "Government registry. Although your account is active, "
 "it has not yet been linked to your department. Until "
 "the account is linked to your department you will not "
-"be able to create or modify datasets in the registry."
+"be able to create or modify datasets in the "
+"registry."
 msgstr "Même si votre compte est actif, il n’est pas "
 "encore relié à votre ministère. Vous ne pourrez créer "
 "ou modifier de jeux de données dans le registre tant "
@@ -671,18 +684,6 @@ msgstr "Portail des données ouvertes - Données ouvertes"
 msgid "{record_title} - Open Data Portal - Open Data"
 msgstr "{record_title} - Portail des données ouvertes - Données ouvertes"
 
-msgid "Topics menu"
-msgstr "Menu des sujets"
-
-msgid "Search and menus"
-msgstr "Recherche et menus"
-
-msgid "English"
-msgstr "Anglais"
-
-msgid "French"
-msgstr "Français"
-
 msgid "Spatial Feature"
 msgstr "Élément spatial"
 
@@ -732,9 +733,6 @@ msgstr "Mis à jour le bien"
 
 msgid "Reset password"
 msgstr "Vous avez oublié votre mot de passe?"
-
-msgid "Signed in as "
-msgstr "Connecté comme "
 
 msgid "Open Information Portal"
 msgstr "Registre pour les information ouverte"
@@ -806,3 +804,35 @@ msgstr "{actor} a mis à jour le bien {dataset}"
 
 msgid "The server encountered a problem processing the file uploaded. Please try copying your data into the latest version of the template and uploading again. If this problem continues, send your Excel file open-ouvert@tbs-sct.gc.ca so we may investigate."
 msgstr "Le serveur a éprouvé un problème dans le traitement du fichier qui a été téléchargé. Veuillez tenter de copier vos données dans la version la plus récente du modèle et de télécharger le tout de nouveau. Si ce problème persiste, envoyez votre fichier Excel à open-ouvert@… afin que nous puissions faire enquête."
+
+# Footer links
+
+msgid "Open Government Contact"
+msgstr "Contactez Gouvernement ouvert"
+
+msgid "/en/forms/contact-us"
+msgstr "/fr/formulaire/faites-nous-part-de-vos-commentaires"
+
+msgid "Open Government Log In"
+msgstr "Ouverture de session Gouvernement ouvert"
+
+msgid "/en/user"
+msgstr "/fr/user"
+
+msgid "Receive Open Government Email"
+msgstr "Courriels sur le Gouvernement ouvert"
+
+msgid "/en/forms/receive-open-government-email-form"
+msgstr "/fr/formulaire/courriels-gouvernement-ouvert"
+
+msgid "Most asked-about topics"
+msgstr "Sujets sur lesquels portent la plupart des questions"
+
+msgid "http://open.canada.ca/en/contact/index.html#aat"
+msgstr "http://ouvert.canada.ca/fr/contact/index.html#slq"
+
+msgid "General enquiries"
+msgstr "Renseignements généraux"
+
+msgid "http://open.canada.ca/en/contact/index.html#gen"
+msgstr "http://www.canada.ca/fr/contact/index.html#gen"

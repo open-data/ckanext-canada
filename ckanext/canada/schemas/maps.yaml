@@ -108,7 +108,7 @@ dataset_fields:
     en: Aggregate dataset identifier
     fr: Identifiant jeu données aggrégées
 
-- preset: canada_spatial_representation_type
+#- preset: canada_spatial_representation_type
 - preset: canada_topic_category
 
 - field_name: spatial
