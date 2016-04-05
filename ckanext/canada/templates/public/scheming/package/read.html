@@ -6,7 +6,6 @@
   <ul class="nav nav-pills">
       {% if h.check_access('package_update', {'id':pkg.id }) %}
         {% block actions_content_inner %}
-        <li>{% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-default' %}</li>
         <li>{% link_for _('Delete'), controller='ckanext.canada.controller:CanadaController', action='package_delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
         {% endblock %}
       {% endif %}
