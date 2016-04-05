@@ -1882,16 +1882,6 @@ presets:
       convert_to_json_if_date
 
 
-- preset_name: canada_related_items
-  values:
-    field_name: related_items
-    label:
-      en: Related Items
-      fr: Articles connexes
-    help_text:
-      en: A related dataset or information asset in the Open Government Portal. 
-      fr: La ressource d’information connexe dans le portail du gouvernement ouvert
-
 - preset_name: canada_endpoint_url
   values:
     field_name: endpoint_url
