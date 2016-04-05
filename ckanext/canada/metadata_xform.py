@@ -136,6 +136,9 @@ def _process(line):
             'app': 'dataset',
             }[r.get('resource_type', 'file')]
 
+        # XXX: disable uploading stored files for now
+        r.pop('url_type', None)
+
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
