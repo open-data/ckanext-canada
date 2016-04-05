@@ -212,6 +212,11 @@ class DataGCCAPublic(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaFeedController',
             action='general',
         )
+        map.connect(
+            '/dataset/delete/{pkg_id}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='package_delete'
+        )
         return map
 
     def configure(self, config):
