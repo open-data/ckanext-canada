@@ -2569,195 +2569,197 @@ presets:
     validators: scheming_required scheming_choices
     required: true
     choices:
-    - label: AI
-      openness_score: 1
-      value: ai
-    - label: AMF
-      openness_score: 1
-      value: amf
-    - label: ASCII Grid
-      openness_score: 1
-      value: ascii grid
-    - label: Application
-      openness_score: 1
-      value: app
-    - label: BMP
-      openness_score: 1
-      value: bmp
-    - label: CDED ASCII
-      openness_score: 1
-      value: cdec ascii
-    - label: CDR
-      openness_score: 1
-      value: cdr
-    - label: CSV
+    - value: AAC
+      mimetype: audio/mp4
+    - value: AIFF
+      mimetype: audio/aiff
+    - value: ASCII Grid
+      mimetype: application/x-ascii-grid
+      replaces: [ascii grid]
+    - value: AVI
+      mimetype: video/vnd.avi
+    - value: BMP
+      mimetype: image/bmp
+      replaces: [bmp]
+    - value: CDED ASCII
+      replaces: [cdec ascii]
+    - value: CDR
+      replaces: [cdr]
+    - value: CSV
+      mimetype: text/csv
       openness_score: 3
-      value: CSV
-    - label: DOC
-      openness_score: 1
-      value: doc
-    - label: dxf
-      openness_score: 1
-      value: dxf
-    - label: E00
-      openness_score: 1
-      value: e00
-    - label: ECW
-      openness_score: 1
-      value: ecw
-    - label: EDI
-      openness_score: 1
-      value: edi
-    - label: EMF
-      openness_score: 1
-      value: emf
-    - label: EPS
-      openness_score: 1
-      value: eps
-    - label: EXE
-      openness_score: 1
-      value: exe
-    - label: FGDB / GDB
+    - value: DBF
+      mimetype: application/dbf
+    - value: DICOM
+      mimetype: application/dicom
+    - value: DNG
+      mimetype: image/dng
+    - value: DOC
+      mimetype: application/msword
+      replaces: [doc]
+    - value: DOCX
+      mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    - value: DXF
+      mimetype: image/vnd.dxf
+      replaces: [dxf]
+    - value: E00
+      replaces: [e00]
+    - value: ECW
+      mimetype: application/x-ecw
+      replaces: [ecw]
+    - value: EMF
+      mimetype: image/emf
+      replaces: [emf]
+    - value: EPUB3
+      mimetype: application/epub+zip
+    - value: EPUB2.0.1
+      mimetype: application/epub+zip
+    - value: EPS
+      mimetype: application/postscript
+      replaces: [eps]
+    - value: ESRI REST
+    - value: EXE
+      mimetype: application/vnd.microsoft.portable-executable
+      replaces: [exe]
+    - value: FGDB/GDB
       openness_score: 3
-      replaces:
-      - FGDB / GDB
-      value: fgdb / gdb
-    - label: Flat raster binary
-      openness_score: 1
-      value: flat raster binary
-    - label: GeoPDF
-      openness_score: 1
-      value: geopdf
-    - label: GeoRSS
-      openness_score: 1
-      value: georss
-    - label: GeoTIF
-      openness_score: 1
-      value: geotif
-    - label: GIF
-      openness_score: 1
-      value: gif
-    - label: GML
+      replaces: ["FGDB / GDB", "fgdb / gdb"]
+      mimetype: application/x-filegdb
+    - value: Flat raster binary
+      replaces: [flat raster binary]
+    - value: GeoPDF
+      mimetype: application/pdf
+      replaces: [geopdf]
+    - value: GeoRSS
+      mimetype: application/rss+xml
+      replaces: [georss]
+    - value: GeoTIF
+      mimetype: image/tiff
+      replaces: [geotif]
+    - value: GIF
+      mimetype: image/gif
+      replaces: [gif]
+    - value: GML
+      mimetype: application/gml+xml
       openness_score: 3
-      value: gml
-    - label: HDF
-      openness_score: 1
-      replaces:
-      - GNU Zipped HDF
-      value: hdf
-    - label: HTML
-      openness_score: 1
-      value: HTML
-    - label: IATI
-      openness_score: 1
-      value: iati
-    - label: JPEG 2000
-      openness_score: 1
-      value: jpeg 2000
-    - label: JPG
-      openness_score: 1
-      value: jpg
-    - label: JSON
+      replaces: gml
+    - value: HDF
+      mimetype: application/x-hdf
+      replaces: ["GNU Zipped HDF", "hdf"]
+    - value: HTML
+      mimetype: text/html
+    - value: IATI
+      mimetype: application/xml
+      replaces: [iati]
+    - value: JFIF
+      mimetype: image/jpeg
+    - value: JP2
+      mimetype: image/jp2
+      replaces: [jpeg 2000]
+    - value: JPG
+      mimetype: image/jpeg
+      replaces: [jpg]
+    - value: JSON
+      mimetype: application/json
       openness_score: 3
-      value: JSON
-    - label: JSON Lines
+    - value: JSONL
+      mimetype: application/json-l
       openness_score: 3
-      value: jsonl
-    - label: KML / KMZ
+      replaces: [jsonl]
+    - value: KML
+      mimetype: application/vnd.google-earth.kml+xml
+      replaces: ["kml / kmz"]
       openness_score: 3
-      replaces:
-      - KML / KMZ
-      value: kml / kmz
-    - label: NetCDF
-      openness_score: 1
-      value: netcdf
-    - label: ODP
-      openness_score: 1
-      value: odp
-    - label: ODS
+    - value: KMZ
+      openness_score: 3
+      mimetype: application/vnd.google-earth.kmz
+    - value: MFX
+      mimetype: application/mxf
+    - value: MOV
+      mimetype: video/mov
+    - value: MPEG
+      mimetype: video/mpeg
+    - value: MPEG-1
+      mimetype: video/mpeg
+    - value: MP3
+      mimetype: audio/mpeg
+    - value: NetCDF
+      mimetype: application/x-netcdf
+      replaces: [netcdf]
+    - value: ODP
+      mimetype: application/vnd.oasis.opendocument.presentation
+      replaces: [odp]
+    - value: ODS
+      mimetype: application/vnd.oasis.opendocument.spreadsheet
       openness_score: 2
-      value: ods
-    - label: ODT
-      openness_score: 1
-      value: odt
-    - label: PDF
-      openness_score: 1
-      value: PDF
-    - label: PNG
-      openness_score: 1
-      value: png
-    - label: PPT
-      openness_score: 1
-      value: ppt
-    - label: RDF
+      replaces: [ods]
+    - value: ODT
+      mimetype: application/vnd.oasis.opendocument.text
+      replaces: [odt]
+    - value: PDF
+      mimetype: application/pdf
+    - value: PDF/A-1
+      mimetype: application/pdf
+    - value: PDF/A-2
+      mimetype: application/pdf
+    - value: PNG
+      mimetype: image/png
+      replaces: [png]
+    - value: PPT
+      mimetype: application/vnd.ms-powerpoint
+      replaces: [ppt]
+    - value: RDF
+      mimetype: application/rdf+xml
       openness_score: 4
-      value: RDF
-    - label: RDFa
+    - value: RDFa
+      mimetype: text/html
       openness_score: 4
-      value: rdfa
-    - label: RSS
-      openness_score: 1
-      value: rss
-    - label: RTF
-      openness_score: 1
-      value: rtf
-    - label: SAR / CCT
-      openness_score: 1
-      replaces:
-      - SAR/CCT
-      value: sar / cct
-    - label: SAV
-      openness_score: 1
-      value: sav
-    - label: SEGY
-      openness_score: 1
-      value: segy
-    - label: SHP
-      openness_score: 1
-      value: SHAPE
-    - label: SQL
-      openness_score: 1
-      value: sql
-    - label: SVG
-      openness_score: 1
-      value: svg
-    - label: TIFF World File
-      openness_score: 1
-      value: tiff world file
-    - label: TIFF
-      openness_score: 1
-      value: tiff
-    - label: TXT
-      openness_score: 1
-      replaces:
-      - ASCII
-      - text
-      value: TXT
-    - label: WFS
+      replaces: [rdfa]
+    - value: RSS
+      mimetype: application/rss+xml
+      replaces: [rss]
+    - value: RTF
+      mimetype: text/rtf
+      replaces: [rtf]
+    - value: SHP
+      mimetype: application/x-shapefile
+      replaces: [SHAPE]
+    - value: SQL
+      mimetype: application/sql
+      replaces: [sql]
+    - value: SVG
+      mimetype: image/svg+xml
+      replaces: [svg]
+    - value: TIFF
+      mimetype: image/tiff
+      replaces: [tiff]
+    - value: TXT
+      mimetype: text/plain
+      replaces: ["ASCII", "text", "TXT"]
+    - value: WAV
+      mimetype: audio/wav
+    - value: WFS
+      mimetype: text/xml
       openness_score: 3
-      value: wfs
-    - label: WMS
+      replaces: [wfs]
+    - value: WMS
+      mimetype: application/vnd.ogc.wms_xml
       openness_score: 3
-      value: wms
-    - label: WMTS
-      openness_score: 1
-      value: wmts
-    - label: XLS
+      replaces: [wms]
+    - value: WMTS
+      mimetype: application/xml
+      replaces: [wmts]
+    - value: WMV
+      mimetype: video/x-ms-wmv
+    - value: XML
+      mimetype: application/xml
+      openness_score: 3
+    - value: XLS
+      mimetype: application/vnd.ms-excel
       openness_score: 2
-      value: XLS
-    - label: XLSM
-      openness_score: 2
-      value: xlsm
-    - label: XML
-      openness_score: 3
-      value: XML
-    - label: Zip
-      openness_score: 1
-      value: ZIP
     - label:
         en: Other
         fr: Autre
-      openness_score: 1
       value: other
 
 - preset_name: canada_resource_date_published
