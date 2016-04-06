@@ -41,7 +41,7 @@ def _process(line):
     rec['type'] = u'info' if rec['type'] == 'info' else u'dataset'
     rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
-    rec['imso_approval'] = u'true'
+    rec['imso_approval'] = u'true' if rec.get('portal_release_date') else u'false'
 
     # dump tags: redundant
     rec['tags'] = []
