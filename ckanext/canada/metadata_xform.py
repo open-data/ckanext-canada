@@ -78,10 +78,10 @@ def _process(line):
                 rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
 
     # convert frenquency english-sp-pipe-sp-french content to fluent text
-    freq = rec.pop('maintenance_and_update_frequency', None)
-    if (freq):
-        rec['frequency'] = sd_new_dfc[u'frequency'][
-            freq.lstrip().split(SP_PIPE_SP, 1)[0]]
+    freq = rec.pop('maintenance_and_update_frequency', rec.get('frequency'))
+    if freq:
+        rec['frequency'] = sd_new_dfc[u'frequency'].get(
+            freq.lstrip().split(SP_PIPE_SP, 1)[0], freq)
 
     # convert geo region english-sp-sp-french content to fluent text
     rec['geographic_region'] = [
