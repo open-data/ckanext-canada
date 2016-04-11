@@ -38,10 +38,10 @@ def _process(line):
     if rec.get('catalog_type','').startswith('Geo'):
         return
 
-    rec['type'] = u'dataset'
-    rec['collection'] = u'primary'
+    rec['type'] = u'info' if rec['type'] == 'info' else u'dataset'
+    rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
-    rec['imso_approval'] = u'true'
+    rec['imso_approval'] = u'true' if rec.get('portal_release_date') else u'false'
 
     # dump tags: redundant
     rec['tags'] = []
@@ -78,15 +78,16 @@ def _process(line):
                 rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
 
     # convert frenquency english-sp-pipe-sp-french content to fluent text
-    freq = rec.pop('maintenance_and_update_frequency', None)
-    if (freq):
-        rec['frequency'] = sd_new_dfc[u'frequency'][
-            freq.lstrip().split(SP_PIPE_SP, 1)[0]]
+    freq = rec.pop('maintenance_and_update_frequency', rec.get('frequency'))
+    if freq:
+        rec['frequency'] = sd_new_dfc[u'frequency'].get(
+            freq.lstrip().split(SP_PIPE_SP, 1)[0], freq)
 
     # convert geo region english-sp-sp-french content to fluent text
     rec['geographic_region'] = [
-        sd_new_dfc[u'geographic_region'][gr.lstrip().split(SP_SP, 1)[0]]
-            for gr in rec.get('geographic_region',[])]
+        sd_new_dfc[u'geographic_region'].get(
+            gr.lstrip().split(SP_SP, 1)[0], gr)
+        for gr in rec.get('geographic_region',[])]
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
@@ -106,8 +107,11 @@ def _process(line):
 
     # merge per-resource name, name_fra to fluent text
     for r in rec['resources']:
-        r['name_translated'] = dict(
-            zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+        if 'name_fra' in r:
+            r['name_translated'] = dict(
+                zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
+        elif 'name_translaged' not in r:
+            r['name_translated'] = r.pop('name')
 
         langs = []
         language = r.get('language', '')
@@ -131,6 +135,9 @@ def _process(line):
             'api': 'dataset',
             'app': 'dataset',
             }[r.get('resource_type', 'file')]
+
+        # XXX: disable uploading stored files for now
+        r.pop('url_type', None)
 
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
