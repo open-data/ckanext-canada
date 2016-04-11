@@ -1,21 +1,16 @@
 {% import 'macros/canada_read.html' as cr %}
-
 {% set url = h.url_for(organization.type ~ '_read', action='read', id=organization.name) %}
-<tr>
-  <td colspan="2">
-    <strong><a href="{{ url }}" title="{% if organization.description %}
-      {{ h.truncate(organization.description, length=80, whole_word=True) }}
-    {% else %}
-      {{ _('This organization has no description') }}{% endif %}">
-      {{ h.truncate(cr.split_bilingual_field(organization.display_name, h.lang()), length=70, whole_word=True) }}</a></strong>
-  </td>
-   <td>
-    {% if organization.packages %}
+<dt style="width:auto;"><a href="{{ url }}" title="{%- if organization.description -%}
+     {{ h.truncate(organization.description, length=80, whole_word=True)}}
+   {%- else -%}
+     {{ _('This organization has no description') }}
+  {%- endif -%}">
+  {{ h.truncate(cr.split_bilingual_field(organization.display_name, h.lang()), length=70, whole_word=True) }}</a>
+</dt>
+<dd class="text-right">
+  {%- if organization.packages -%}
     <span>{{ ungettext('{num} Dataset', '{num} Datasets', organization.packages).format(num=organization.packages) }}</span>
-    {% else %}
+  {%- else -%}
     <span>{{ _('0 Datasets') }}</span>
-    {% endif %}
-  </td>
-
-</tr>
-
+  {%- endif -%}
+</dd>
