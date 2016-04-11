@@ -22,8 +22,8 @@ SP_SP = '  '
 SP_PIPE_SP = ' | '
 
 # new schema description, data field choices
-sd_new = None
-sd_new_dfc = None
+dataset_choices = {}
+resource_choices = {}
 
 def _process(line):
     """
@@ -65,33 +65,33 @@ def _process(line):
 
     # convert subject english-sp-sp-french content to fluent text
     rec['subject'] = [
-        sd_new_dfc['subject'][s.lstrip().split(SP_SP, 1)[0]]
+        dataset_choices['subject'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec.get('subject', [])]
 
     rec['topic_category'] = [
-        sd_new_dfc['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
+        dataset_choices['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec.get('topic_category',[])]
 
     if rec.get('presentation_form'):
         rec['presentation_form'] = (
-            sd_new_dfc['presentation_form'][
+            dataset_choices['presentation_form'][
                 rec['presentation_form'].lstrip().split(SP_PIPE_SP, 1)[0]])
 
     # convert frenquency english-sp-pipe-sp-french content to fluent text
     freq = rec.pop('maintenance_and_update_frequency', rec.get('frequency'))
     if freq:
-        rec['frequency'] = sd_new_dfc[u'frequency'].get(
+        rec['frequency'] = dataset_choices[u'frequency'].get(
             freq.lstrip().split(SP_PIPE_SP, 1)[0], freq)
 
     # convert geo region english-sp-sp-french content to fluent text
     rec['geographic_region'] = [
-        sd_new_dfc[u'geographic_region'].get(
+        dataset_choices[u'geographic_region'].get(
             gr.lstrip().split(SP_SP, 1)[0], gr)
         for gr in rec.get('geographic_region',[])]
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
-            sd_new_dfc['spatial_representation_type'][
+            dataset_choices['spatial_representation_type'][
                 rec['spatial_representation_type'].lstrip().split(
                     SP_PIPE_SP, 1)[0]]]
     else:
@@ -177,25 +177,27 @@ def _set_new_schema_dataset_choices():
     Initialize tree of choices (label:value) for new schema dataset
     choice fields
     """
-    global sd_new_dfc
-
-    ckan = LocalCKAN()
-    sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
-    sd_new_dfc = {}
-    for df in sd_new['dataset_fields']:
-        if 'choices' not in df:
-            continue
-
+    def choice_mapping(f):
         old_new = {}
-        for ch in df['choices']:
+        for ch in f['choices']:
             old = ch['label']['en'].replace(',', '')
             value = ch['value']
             old_new[old] = value
             for r in ch.get('replaces', ()):
                 old_new[r] = value
+        return old_new
 
-        sd_new_dfc[df['field_name']] = old_new
+    ckan = LocalCKAN()
+    sd_new = ckan.action.scheming_dataset_schema_show(type='dataset')
+    dataset_choices.clear()
+    for f in sd_new['dataset_fields']:
+        if 'choices' in f:
+            dataset_choices[f['field_name']] = choice_mapping(f)
 
+    resource_choices.clear()
+    for f in sd_new['resource_fields']:
+        if 'choices' in f:
+            resource_choices[f['field_name']] = choice_mapping(f)
 
 def metadata_xform(fpath_jsonl_old):
     if path.islink(fpath_jsonl_old):

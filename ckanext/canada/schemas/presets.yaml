@@ -2599,6 +2599,7 @@ presets:
       replaces: [doc]
     - value: DOCX
       mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      replaces: [docx]
     - value: DXF
       mimetype: image/vnd.dxf
       replaces: [dxf]
@@ -2612,6 +2613,7 @@ presets:
       replaces: [emf]
     - value: EPUB3
       mimetype: application/epub+zip
+      replaces: [epub3]
     - value: EPUB2.0.1
       mimetype: application/epub+zip
     - value: EPS
