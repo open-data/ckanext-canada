@@ -136,6 +136,9 @@ def _process(line):
             'app': 'dataset',
             }[r.get('resource_type', 'file')]
 
+        r['format'] = resource_choices['format'].get(
+            r['format'], r['format'])
+
         # XXX: disable uploading stored files for now
         r.pop('url_type', None)
 
@@ -180,7 +183,7 @@ def _set_new_schema_dataset_choices():
     def choice_mapping(f):
         old_new = {}
         for ch in f['choices']:
-            old = ch['label']['en'].replace(',', '')
+            old = ch.get('label', {'en': ch['value']})['en'].replace(',', '')
             value = ch['value']
             old_new[old] = value
             for r in ch.get('replaces', ()):
