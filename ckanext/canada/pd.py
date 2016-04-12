@@ -260,6 +260,8 @@ def _update_records(records, org_detail, conn, recombinant_type):
                 key = key[:-5]
             solrrec[key + '_en'] = choices.get(value, '').split(' | ')[0]
             solrrec[key + '_fr'] = choices.get(value, '').split(' | ')[-1]
+
+            solrrec['text'] = u' '.join(solrrec.values())
         out.append(solrrec)
 
     conn.add_many(out, _commit=True)
