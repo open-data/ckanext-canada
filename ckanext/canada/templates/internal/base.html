@@ -5,16 +5,6 @@
     >{{ _('Open Data Registry') }}</a>
 {% endblock %}
 
-{# Remove when WET v4.0.21 is out #}
-{%- block custom_styles %}
-  {{ super() }}
-  <style>
-      #wb-so {text-align: right;}
-      #wb-so .row {background: #fff; padding: 1em 0 0;}
-      #wb-so .container {border-left: 1px solid #ccc; border-right: 1px solid #ccc;}
-  </style>
-{%- endblock -%}
-
 {% block footer %}
 {% include "footer_gwcu.html" %}
 {% endblock %}
