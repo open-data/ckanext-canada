@@ -1,0 +1,91 @@
+dataset_type: reclassification
+target_dataset: reclassification
+title: Proactive Disclosure - Position Reclassification
+notes: This dataset includes all of the reports on the reclassification of
+       occupied positions within your organization.
+
+resources:
+- title: Proactive Disclosure - Position Reclassification
+  resource_name: reclassification
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: pos_number
+    label: Position Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: date
+    label: Date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: pos_title_en
+    label: English Position Title
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: pos_title_fr
+    label: French Position Title
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: pos_prev_class
+    label: Previous Position Classification
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: pos_class
+    label: Reclassified Position Classification
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: pos_prev_differential
+    label: Previous Supervisory Differential
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: pos_differential
+    label: Supervisory Differential
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: reason_en
+    label: English Reason for Reclassification
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: reason_fr
+    label: French reason for Reclassification
+    datastore_type: text
+    excel_column_width: 41
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFCACC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF979968
+
+  examples:
+    record:
+      ref_number: "1980198"
+      pos_number: "846763"
+      date: "2016-01-01"
+    filters:
+      pos_number: "846763"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
