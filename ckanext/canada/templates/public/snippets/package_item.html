@@ -21,7 +21,7 @@
         {{ super() }}
       {% endblock %}
       {% block notes %}
-        {% set notes = h.get_translated(package, 'notes_translated') %}
+        {% set notes = h.get_translated(package, 'notes') %}
         {% if notes %}
           <div>{{ notes|urlize }}</div>
         {% else %}
