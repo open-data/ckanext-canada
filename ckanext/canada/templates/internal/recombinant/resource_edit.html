@@ -1,16 +1,11 @@
 {% ckan_extends %}
 
-{% block main_content %}
+{# we want a wide display for the table #}
+{% block secondary_content %}{% endblock %}
 
-  <div class="span-8">
-    {% block primary_content %}
-      {{ super() }}
-    {% endblock %}
-
-    <section>
-        <div>
-            {{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
-        </div>
-    </section>
+{% block primary %}
+  {{ super() }}
+  <div>
+    {{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
   </div>
 {% endblock %}
