@@ -3,9 +3,38 @@
 {# we want a wide display for the table #}
 {% block secondary_content %}{% endblock %}
 
+{% block primary_content %}
+  {{ super() }}
+  <aside class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("Guide") }}</div>
+      <div class="panel-body">
+        <p>{% trans
+%}For information on how to prepare, maintain and upload templates to the Registry,
+refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("API") }}</div>
+      <div class="panel-body">
+        <p>{% trans
+%}The API provides access to the Registry records via API methods:{% endtrans %}
+        </p>
+        <p>{{ _("API Access") }}: {% link_for "curl",
+          named_route='recombinant_api_reference',
+          examples='curl' %}<br>
+        {{ _("API Access") }}: {% link_for "python",
+          named_route='recombinant_api_reference',
+          examples='python' %}<br>
+        </p>
+      </div>
+    </div>
+  </aside>
+{% endblock %}
+
 {% block primary %}
   {{ super() }}
-  <div>
-    {{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
-  </div>
+
+{{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
 {% endblock %}
