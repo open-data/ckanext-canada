@@ -439,15 +439,15 @@
     datastore_type: text
     xls_column_width: 10
     choices:
-      Y: WTO/NAFTA/AIT | OMC/ALÉNA/ACI
-      Z: WTO/NAFTA | OMC/ALÉNA
-      X: WTO/AIT | OMC/ACI
-      C: NAFTA/AIT | ALÉNA/ACI
-      W: WTO | OMC
-      N: NAFTA | ALÉNA
-      I: AIT | ACI
-      A: ABSA (PSAB) | MREA
-      R: LCSA (CLCA) | MRRT
+      Y: World Trade Organization/North American Free Trade Agreement/Agreement on Internal Trade | Organisation mondiale du commerce/Accord de libre-échange nord-américain/Accord sur le commerce intérieur
+      Z: World Trade Organization/North American Free Trade Agreement | Organisation mondiale du commerce/Accord de libre-échange nord-américain
+      X: World Trade Organization/Agreement on Internal Trade | Organisation mondiale du commerce/Accord sur le commerce intérieur
+      C: North American Free Trade Agreement/Agreement on Internal Trade | Accord de libre-échange nord-américain/Accord sur le commerce intérieur
+      W: World Trade Organization | Organisation mondiale du commerce
+      N: North American Free Trade Agreement | Accord de libre-échange nord-américain
+      I: Agreement on Internal Trade | Accord sur le commerce intérieur
+      A: Aboriginal Business Set-Aside (Procurement Strategy for Aboriginal Business) | MREA
+      R: Land Claim Set Aside (Comprehensive Land Claim Agreement) | MRRT
 
   - datastore_id: commodity_type_code
     label: Commodity Type / Type de produit
