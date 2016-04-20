@@ -123,16 +123,14 @@ class CanadaController(BaseController):
         return render('organization/index.html')
 
     def datatable(self, resource_id):
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = ('desc' if request.params['sSortDir_0'] == 'desc'
-                          else 'asc'
-                          )
+        draw = int(request.params['draw'])
+        search_text = unicode(request.params['search[value]'])
+        offset = int(request.params['start'])
+        limit = int(request.params['length'])
+        sort_by_num = int(request.params['order[0][column]'])
+        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
+                      else 'asc'
+                      )
 
         lc = LocalCKAN(username=c.user)
 
@@ -142,9 +140,7 @@ class CanadaController(BaseController):
         )
 
         cols = [f['id'] for f in unfiltered_response['fields']][1:]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
+        sort_str = cols[sort_by_num] + ' ' + sort_order
 
         response = lc.action.datastore_search(
             q=search_text,
@@ -155,7 +151,7 @@ class CanadaController(BaseController):
         )
 
         return json.dumps({
-            'sEcho': echo,
+            'draw': draw,
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
