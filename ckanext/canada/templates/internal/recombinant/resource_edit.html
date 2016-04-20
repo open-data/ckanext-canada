@@ -14,22 +14,6 @@
 refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
       </div>
     </div>
-
-    <div class="panel panel-primary">
-      <div class="panel-heading">{{ _("API") }}</div>
-      <div class="panel-body">
-        <p>{% trans
-%}The API provides access to the Registry records via API methods:{% endtrans %}
-        </p>
-        <p>{{ _("API Access") }}: {% link_for "curl",
-          named_route='recombinant_api_reference',
-          examples='curl' %}<br>
-        {{ _("API Access") }}: {% link_for "python",
-          named_route='recombinant_api_reference',
-          examples='python' %}<br>
-        </p>
-      </div>
-    </div>
   </aside>
 {% endblock %}
 
