@@ -2,7 +2,7 @@
 import os
 from unicodecsv import DictReader
 from pylons import config
-from ckanext.recombinant.plugins import get_table, get_dataset_types
+from ckanext.recombinant.tables import get_chromo, get_geno, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -55,31 +55,35 @@ def data_batch(org_id, lc, target_dataset):
     :return generates batches of dataset dict records
     :rtype batch of dataset dict records
     """
-    dataset_types = get_dataset_types(target_dataset)
-
+    dataset_types = get_dataset_types()
     for dataset_type in dataset_types:
-        records = {}
-        result = lc.action.package_search(
-            q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
-            rows=1000)['results']
-        if len(result) == 0:
+        geno = get_geno(dataset_type)
+        if geno.get('target_dataset') == target_dataset:
+            break
+    else:
+        return
+
+    result = lc.action.package_search(
+        q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
+        rows=2)['results']
+        
+    if not result:
+        return
+    assert len(result) == 1, result
+
+    dataset = result[0]
+    for resource in dataset['resources']:
+        offset = 0
+        while True:
+            rval = lc.action.datastore_search(
+                resource_id=resource['id'],
+                limit=BATCH_SIZE,
+                offset=offset)
+            records = rval['records']
+            if not records:
+                break
+            offset += len(records)
             yield records
-        else:
-            try:
-                resource_id = result[0]['resources'][0]['id']
-            except (IndexError, KeyError):
-                continue
-            offset = 0
-            while True:
-                rval = lc.action.datastore_search(
-                    resource_id=resource_id,
-                    limit=BATCH_SIZE,
-                    offset=offset)
-                records = rval['records']
-                if not records:
-                    break
-                yield records
-                offset += len(records)
 
 
 def csv_data_batch(csv_path, target_dataset):
@@ -87,59 +91,44 @@ def csv_data_batch(csv_path, target_dataset):
     Generator of dataset records from csv file
 
     :param csv_path: file to parse
-    :ptype csv_file: str
-    :param target_dataset: name of target dataset (e.g., 'ati', 'pd', etc.)
-    :ptype target_dataset: str
 
     :return a batch of records for at most one organization
     :rtype: dict mapping at most one org-id to
             at most BATCH_SIZE (dict) records
     """
-    dataset_types = get_dataset_types(target_dataset)
-    # Use JSON schema to discover the dataset type to which the file corresponds
-    schema_tables = dict((
-            t,
-            dict((f['label'], f['datastore_id'])
-                for f in get_table(t)['fields']))
-        for t in dataset_types)
-    records = {}
-    schema_cols = None
-    cols = None
-    csv_path = os.path.abspath(os.path.expandvars(os.path.expanduser(csv_path)))
-    if os.path.islink(csv_path):
-        csv_path = os.readlink(csv_path)
+    records = []
+    current_owner_org = None
+
+    firstpart, filename = os.path.split(csv_path)
+    assert filename.endswith('.csv')
+
+    chromo = get_chromo(filename[:-4])
+    assert chromo['target_dataset'] == target_dataset
+
     with open(csv_path) as f:
         csv_in = DictReader(f)
         cols = csv_in.unicode_fieldnames
 
-        for k, v in schema_tables.iteritems():
-            if (len(set(v.keys()).intersection(set(cols))) == len(v.keys()) and
-                    len(cols) == len(v.keys()) + 2):
-                # columns represent all schema data fields + 'Org id', 'Org'
-                schema_cols = [v[col] if col in v else col for col in cols]
-                break
+        expected = [f['datastore_id'] for f in chromo['fields']]
+        assert cols[:-2] == expected, 'column mismatch:\n{0}\n{1}'.format(
+            cols[:-2], expected)
 
-    assert schema_cols > 0, '{0:s} does not match any dataset type {1}'.format(
-        csv_path, dataset_types)
-
-    with open(csv_path) as f:
-        # use new dict, each col named for its corresponding JSON datastore_id
-        csv_in = DictReader(f, fieldnames=schema_cols)
-        csv_in.next()   # skip header row: no new info
         for row_dict in csv_in:
-            org_id = row_dict.pop('Org id')
-            org = row_dict.pop('Org')
-            if org_id not in records:
-                if len(records.keys()):
-                    org_id_done = records.keys()[0]
-                    yield {org_id_done: records.pop(org_id_done)}
-                records[org_id] = []
+            owner_org = row_dict.pop('owner_org')
+            owner_org_title = row_dict.pop('owner_org_title')
+            if owner_org != current_owner_org:
+                if records:
+                    yield (current_owner_org, records)
+                records = []
+                current_owner_org = owner_org
 
             row_dict = dict((k, safe_for_solr(v)) for k, v in row_dict.items())
-            records[org_id].append(row_dict)
-            if len(records[org_id]) >= BATCH_SIZE:
-                yield {org_id: records.pop(org_id)}
-    yield records
+            records.append(row_dict)
+            if len(records) >= BATCH_SIZE:
+                yield (current_owner_org, records)
+                records = []
+    if records:
+        yield (current_owner_org, records)
 
 
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)

@@ -155,9 +155,9 @@ def is_ready_to_publish(package):
     else:
         return False
 
-def get_datapreview_recombinant(dataset_type, res_id):
-    from ckanext.recombinant.plugins import get_table
-    t = get_table(dataset_type)
+def get_datapreview_recombinant(resource_name, res_id):
+    from ckanext.recombinant.tables import get_chromo
+    t = get_chromo(resource_name)
     default_preview_args = {}
     if 'default_preview_sort' in t:
         default_preview_args['sort'] = t['default_preview_sort']
@@ -170,9 +170,7 @@ def get_datapreview_recombinant(dataset_type, res_id):
     lang = h.lang()
     field_label = {}
     for f in t['fields']:
-        label = f['label'].split(' / ')
-        label = label[0] if lang == 'en' else label[-1]
-        field_label[f['datastore_id']] = label
+        field_label[f['datastore_id']] = h._(f['label'])
     fields = [{
         'type': f['type'],
         'id': f['id'],

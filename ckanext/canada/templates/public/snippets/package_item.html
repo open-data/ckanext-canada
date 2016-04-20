@@ -5,7 +5,7 @@
   <article class="panel panel-default mrgn-bttm-sm">
     <header class="panel-heading"><h3 class="panel-title">
       {% block heading %}
-        {% set my_title = package['title_translated'][client_lang] %}
+        {% set my_title = h.get_translated(package, 'title') %}
         {% block heading_private %}
           {{ super() }}
         {% endblock %}
@@ -21,7 +21,7 @@
         {{ super() }}
       {% endblock %}
       {% block notes %}
-        {% set notes = package['notes_translated'][client_lang] %}
+        {% set notes = h.get_translated(package, 'notes') %}
         {% if notes %}
           <div>{{ notes|urlize }}</div>
         {% else %}

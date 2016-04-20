@@ -1,0 +1,400 @@
+dataset_type: contracts
+target_dataset: contracts
+
+title: Proactive Disclosure - Contracts
+notes: This dataset includes all of the reports on contracts issued by or on
+       behalf of your organization.
+
+resources:
+- title: Proactive Disclosure - Contracts
+  resource_name: contracts
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: vendor_name
+    label: Vendor Name
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: contract_date
+    label: Contract Date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: description_en
+    label: Description of Work English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description of Work French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: contract_period_start
+    label: Contract Period Start Date
+    datastore_type: date
+    excel_column_width: 20
+
+  - datastore_id: delivery_date
+    label: Contract Period End Date or Delivery Date
+    datastore_type: date
+    excel_column_width: 20
+
+  - datastore_id: contract_value
+    label: Total Contract Value
+    datastore_type: money
+    excel_column_width: 20
+
+    solr_float_range_facet:
+     - label: $10,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000 - $99,999.99
+       less_than: 100000
+     - label: $100,000 - $999,999.99
+       less_than: 1000000
+     - label: $1,000,000 - $4,999,999.99
+       less_than: 5000000
+     - label: $5,000,000+
+
+  - datastore_id: original_value
+    label: Original Contract Value
+    datastore_type: money
+    excel_column_width: 20
+
+  - datastore_id: amendment_value
+    label: Contract Amendment Value
+    datastore_type: money
+    excel_column_width: 20
+
+  - datastore_id: comments_en
+    label: Comments English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: comments_fr
+    label: Comments French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: additional_comments_en
+    label: Additional Comments English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: additional_comments_fr
+    label: Additional Comments French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: agreement_type_code
+    label: Agreement Type
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      Y:
+        en: WTO/NAFTA/AIT
+        fr: OMC/ALÉNA/ACI
+      Z:
+        en: WTO/NAFTA
+        fr: OMC/ALÉNA
+      X:
+        en: WTO/AIT
+        fr: OMC/ACI
+      C:
+        en: NAFTA/AIT
+        fr: ALÉNA/ACI
+      W:
+        en: WTO
+        fr: OMC
+      N:
+        en: NAFTA
+        fr: ALÉNA
+      I:
+        en: AIT
+        fr: ACI
+      A:
+        en: ABSA (PSAB)
+        fr: MREA
+      R:
+        en: LCSA (CLCA)
+        fr: MRRT
+
+  - datastore_id: commodity_type_code
+    label: Commodity Type
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      G:
+        en: Good
+        fr: Biens
+      S:
+        en: Service
+        fr: Services
+      C:
+        en: Construction
+        fr: Construction
+
+  - datastore_id: commodity_code
+    label: Commodity Code
+    datastore_type: text
+    excel_column_width: 10
+    choices_source: commodity_code.jsonl
+
+  - datastore_id: country_of_origin
+    label: Country of Origin
+    datastore_type: text
+    excel_column_width: 10
+    choices_source: country_of_origin.jsonl
+
+  - datastore_id: solicitation_procedure_code
+    label: Solicitation Procedure
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      AC:
+        en: Advance Contract Award Notice
+        fr: préavis d’adjudication de contrat
+      OB:
+        en: Open Bidding
+        fr: invitation ouverte à soumissionner
+      TC:
+        en: Traditional Competitive
+        fr: concurrentielle traditionnelle
+      TN:
+        en: Traditional Non-Competitive
+        fr: non-concurrentielle traditionnelle
+
+  - datastore_id: limited_tendering_reason_code
+    label: Limited Tendering Reason
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      "05":
+        en: No response to bid solicitation
+        fr: Aucune réponse à une invitation à soumissionner
+      "20":
+        en: Goods Purchased on a Commodity Market
+        fr: Biens achetés conformément à un marché des produits de base
+      "21":
+        en: Purchases Made Under Exceptionally Advantageous Conditions
+        fr: Achats selon des conditions exceptionnellement avantageuses court terme
+      "22":
+        en: Winner of an Architectural Design Contest
+        fr: Lauréat d’un concours de conception architecturale
+      "23":
+        en: Consulting Services Regarding Matters of a Confidential Nature
+        fr: Services confidentiels d’experts-conseils
+      "24":
+        en: Additional Construction Services
+        fr: Services de construction supplémentaire
+      "25":
+        en: New Construction Services
+        fr: Nouveaux services de construction
+      "71":
+        en: Exclusive Rights
+        fr: Droits exclusifs
+      "72":
+        en: Prototype Purchase
+        fr: Achat de prototype
+      "74":
+        en: Interchangeable Parts
+        fr: Pièces interchangeables
+      "81":
+        en: Extreme Urgency
+        fr: Extrême urgence
+      "85":
+        en: Low Dollar-value
+        fr: Faible valeur
+      "86":
+        en: Prices and/or Sources Fixed by Government Regulations
+        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux
+      "87":
+        en: Government Objectives Representing Best Interests/Value
+        fr: Objectifs gouvernementaux représentant les meilleurs
+      "90":
+        en: Protection of Human, Animal, or Plant Life or Health
+        fr: Protection de la vie ou de la santé des personnes, animaux, plantes
+
+  - datastore_id: derogation_code
+    label: Derogation
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      "00":
+        en: None
+        fr: Aucune
+      "01":
+        en: Shipbuilding and repair
+        fr: Aux marchés de construction et de réparation des navires
+      "02":
+        en: Urban rail and urban transportation equipment systems,
+            components and materials
+        fr: Aux marchés portant sur du matériel et des systèmes de
+            transport ferroviaire urbain et de transport en commun urbain,
+            les éléments et matériaux servant à leur fabrication, ainsi
+            que tous les matériaux de fer ou d’acier reliés à ces projets
+      "03":
+        en: Contracts respecting FSC 58 (communications, detection and
+            coherent radiation equipment)
+        fr: Aux marchés relevant de la catégorie FSC 58 (matériel de
+            communications de détection et de rayonnement cohérent)
+      "04":
+        en: Set-asides for small and minority businesses
+        fr: Aux marchés réservés aux petites entreprises et aux
+            entreprises minoritaires
+      "05":
+        en: Agricultural products made in furtherance of agricultural
+            support programs or human feeding programs
+        fr: Les achats de produits agricoles effectués dans le cadre de
+            programmes de soutien à l’agriculture ou de programme d’aide
+            alimentaire
+      "06":
+        en: The Depts. of Transport, Communications and Fisheries &
+            Oceans respecting FSC 70, 74, 36
+        fr: Les marchés de Transports Canada, du ministère des
+            Communications, et de Pêches et Océans dans les catégories
+            FSC 70, 74, 36
+      "07":
+        en: National security exemptions incl. oil purchases relating to
+            any strategic reserve requirements
+        fr: Les exceptions au titre de la sécurité nationale comprennent
+            les achats de pétrole liés aux exigences en matière de
+            réserve stratégique
+      "08":
+        en: National security exceptions include procurements made in
+            support of safeguarding nuclear materials or technology
+        fr: Les exceptions au titre de la sécurité nationale comprennent
+            les marchés passés pour protéger les matières ou la
+            technologie nucléaire
+      "09":
+        en: Under exceptional circumstances exclude a procurement from
+            the application of AIT, Chapter 5 for regional and economic
+            development purposes
+        fr: Dans des circonstances exceptionnelles, soustraire un marché
+            public à l’application du chapitre 5 de l’ACI à des fins de
+            développement économique et régional
+
+  - datastore_id: aboriginal_business
+    label: Procurement Strategy for Aboriginal Business Incidental Indicator
+    datastore_type: boolean
+    excel_column_width: 10
+
+  - datastore_id: intellectual_property_code
+    label: Intellectual Property Indicator
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      A1:
+        en: Crown owned – exception 1
+        fr: Droits appartenant à l'État exception 1
+      A2:
+        en: Crown owned – exception 2
+        fr: Droits appartenant à l'État exception 2
+      A3:
+        en: Crown owned – exception 3
+        fr: Droits appartenant à l'État exception 3
+      A41:
+        en: Crown owned – exception 4.1
+        fr: Droits appartenant à l'État exception 4.1
+      A42:
+        en: Crown owned – exception 4.2
+        fr: Droits appartenant à l'État exception 4.2
+      A43:
+        en: Crown owned – exception 4.3
+        fr: Droits appartenant à l'État exception 4.3
+      A5:
+        en: Crown owned – exception 5
+        fr: Droits appartenant à l'État exception 5
+      A8:
+        en: >-
+          Crown owned – exemption 8 (note: must have received
+          approval of the Treasury Board via a Treasury Board submission)
+        fr: >-
+          Droits appartenant à l'État exemption 8 (nota : doit
+          avoir reçu l’approbation du Conseil du Trésor par le \
+          biais d’une présentation)
+      B:
+        en: Contractor Owned
+        fr: Droits appartenant à l'entrepreneur
+      C:
+        en: No IP Terms in Contract
+        fr: Aucune modalité sur les DPI indiquée au contrat
+      "": Not Applicable
+
+  - datastore_id: potential_commercial_exploitation
+    label: Potential for Commercial Exploitation
+    datastore_type: boolean
+    excel_column_width: 10
+
+  - datastore_id: former_public_servant
+    label: Former Public Servant in receipt of a PSSA pension
+    datastore_type: boolean
+    excel_column_width: 10
+
+  - datastore_id: standing_offer
+    label: Call-up or Contract against a Standing Offer or Supply
+           Arrangement Agreement
+    datastore_type: boolean
+    excel_column_width: 10
+
+  - datastore_id: standing_offer_number
+    label: Standing Offer or Supply Arrangement Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: document_type_code
+    label: Document Type
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      C:
+        en: Contract
+        fr: Contrat
+      A:
+        en: Amendment
+        fr: Modification
+      SOSA:
+        en: Standing Offer/Supply Arrangement Agreement
+        fr: Offre à commandes / Arrangement en matière d’approvisionnement
+
+  - datastore_id: reporting_period
+    label: Reporting Period
+    datastore_type: text
+    excel_column_width: 10
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+  default_preview_sort: contract_period_start desc, delivery_date desc
+
+  examples:
+    record:
+      ref_number: "1980198"
+      vendor_name: Jane Smith
+      contract_date: "2016-01-01"
+      contract_value: "50000.00"
+      agreement_type_code: W
+      commodity_type_code: S
+      country_of_origin: US
+    filters:
+      agreement_type: W
+      country_of_origin: US
+    filter_one:
+      ref_number: "1980198"
+    sort: contract_date desc
