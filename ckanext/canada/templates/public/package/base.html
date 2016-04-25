@@ -5,7 +5,7 @@
 {% block breadcrumb_content %}
   {% set dataset = pkg.title[client_lang] %}
   {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
-  <li>{% link_for _('Search Open Information'), named_route='info_search' %}</li>
+  <li>{% link_for _('Search Open Data'), named_route='package_search' %}</li>
   <li>{% link_for dataset|truncate(30), controller='package', action='read', id=pkg.name %}</li>
 {% endblock %}
 
