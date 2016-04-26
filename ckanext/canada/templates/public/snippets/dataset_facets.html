@@ -1,10 +1,14 @@
+{% set type_choices = [
+    {'value': 'dataset', 'label': _('Open Data')},
+    {'value': 'info', 'label': _('Open Information')}] %}
+{% for t in h.recombinant_get_types() %}
+  {% do type_choices.append({
+    'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+{% endfor %}
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['type'],
   name='type',
-  scheming_choices=[
-    {'value': 'dataset', 'label': _('Open Data')},
-    {'value': 'info', 'label': _('Open Information')},
-  ],
+  scheming_choices=type_choices,
   extras=extras %}
 
 {% snippet 'snippets/facet_list.html',
