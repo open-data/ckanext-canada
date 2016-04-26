@@ -6,7 +6,7 @@
     <header>
       <ul class="nav nav-pills">
         <li class="{% if c.action == 'read' %}active{% endif %}">
-          <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}">{{_('Assets')}}</a>
+          <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
         </li>
         <li class="{% if c.action == 'activity' %}active{% endif %}">
           <a href="{{h.url(controller='organization', action='activity', id=c.group_dict.name)}}">{{_('Activity')}}</a>

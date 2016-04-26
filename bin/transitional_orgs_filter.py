@@ -35,5 +35,5 @@ for l in sys.stdin:
             {"name": u["name"], "capacity": u["capacity"]}
             for u in o["users"]]
 
-    print line
+    print json.dumps(line)
 
