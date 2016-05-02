@@ -2576,15 +2576,20 @@ presets:
     - value: ASCII Grid
       mimetype: application/x-ascii-grid
       replaces: [ascii grid]
+    - label: Android Application
+      value: APK
     - value: AVI
       mimetype: video/vnd.avi
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
+    - value: BWF
     - value: CDED ASCII
       replaces: [cdec ascii]
     - value: CDR
       replaces: [cdr]
+    - label: Blackberry Application
+      value: COD
     - value: CSV
       mimetype: text/csv
       openness_score: 3
@@ -2614,7 +2619,7 @@ presets:
     - value: EPUB3
       mimetype: application/epub+zip
       replaces: [epub3]
-    - value: EPUB2.0.1
+    - value: EPUB2
       mimetype: application/epub+zip
     - value: EPS
       mimetype: application/postscript
@@ -2653,6 +2658,8 @@ presets:
     - value: IATI
       mimetype: application/xml
       replaces: [iati]
+    - label: IOS Application
+      value: IPA
     - value: JFIF
       mimetype: image/jpeg
     - value: JP2
@@ -2759,6 +2766,7 @@ presets:
     - value: XLS
       mimetype: application/vnd.ms-excel
       openness_score: 2
+    - value: ZIP
     - label:
         en: Other
         fr: Autre
@@ -3184,6 +3192,9 @@ presets:
         en: website
         fr: site Web
       value: website
+    - label:
+        en: web service
+      value: web_service
     - label:
         en: workflow
         fr: flux des travaux
