@@ -117,8 +117,7 @@ $( document ).ready(function() {
     type = action[0]
     id = action[1]
 
-    location.href='/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled='+id
-    //alert('/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled='+id)
+    location.href='http://open.canada.ca/data/en/ramp/ramp-{{ h.lang() }}-ckan.html?keys='+id
     return false
   });
 
