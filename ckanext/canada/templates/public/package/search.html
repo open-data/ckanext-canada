@@ -82,6 +82,9 @@ Please review your spelling, or reduce the number of filters selected.
 {% block styles %}
   {{ super() }}
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style>
+    #btn-xs #btn {min-height: auto;} {# wet4 btn-xs workaround #}
+  </style>
 {% endblock %}
 
 {% block scripts %}
