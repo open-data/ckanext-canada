@@ -21,9 +21,19 @@ function cleanCart()
 	{ OGSMapsChecked_ids = [] }
 
 	if(OGSMapsChecked_ids.length === 0)
-	{ $(".ogscartwrapper").hide() }
+	{
+		$(".ogscartwrapper").hide()
+		$(".ogscartwrapper").attr("disabled", "disabled");
+		$(".ogscartwrapper").css({"visibility":"hidden"});
+		//alert('disable wraper')
+	}
 	else
-	{ $(".ogscartwrapper").show() }
+	{
+		$(".ogscartwrapper").removeAttr("disabled");
+		$(".ogscartwrapper").css({"visibility":"visible"});
+		$(".ogscartwrapper").show()
+		//alert('enable wraper')
+	}
 }
 
 function updateCartUI()
@@ -45,21 +55,21 @@ function updateCartUI()
 	}
 	else if(OGSMapsChecked_ids.length >= OGSMapsMaxCart)
 	{
-		$(".ogscartlistbtn").show()
-		$(".ogscartplotbtn").show()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").removeAttr("disabled");
 		$(".ogscartplotbtn").removeAttr("disabled");
+		$(".ogscartlistbtn").show()
+		$(".ogscartplotbtn").show()
 		$(".ogscarttally").text(' '+i18n["OGSCart_full"][wb.lang]);
 		cart_full = true
 	}
 	else
 	{
-		$(".ogscartlistbtn").show()
-		$(".ogscartplotbtn").show()
 		// IE 9 adaptation, can't hide them so we disable
 		$(".ogscartlistbtn").removeAttr("disabled");
 		$(".ogscartplotbtn").removeAttr("disabled");
+		$(".ogscartlistbtn").show()
+		$(".ogscartplotbtn").show()
 		$(".ogscarttally").text(' '+i18n["OGSCart_has"][wb.lang]+' ('+OGSMapsChecked_ids.length+' '+i18n["OGSCart_of"][wb.lang]+' '+OGSMapsMaxCart+')');
 	}
 
@@ -87,9 +97,9 @@ function updateCartUI()
 			}
 			else
 			{
-				$(this).show()
 				// IE 9 adaptation, can't hide them so we disable
 				$(this).removeAttr("disabled");
+				$(this).show()
 			}
 		}
 		else if(type == 'OGSCartRemove')
@@ -162,7 +172,7 @@ function viewOnMap()
 	{ alert('Select an item to view on RAMP first') }
 	else
 	{
-		location.href='/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(',')
+		location.href='http://open.canada.ca/data/en/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys='+OGSMapsChecked_ids.join(',')
 		//alert('/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(','))
 	}
 }
