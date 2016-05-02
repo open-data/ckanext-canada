@@ -155,6 +155,16 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
+        config['recombinant.definitions'] = """
+ckanext.canada:tables/ati.yaml
+ckanext.canada:tables/contracts.yaml
+ckanext.canada:tables/grants.yaml
+ckanext.canada:tables/hospitalityq.yaml
+ckanext.canada:tables/reclassification.yaml
+ckanext.canada:tables/travela.yaml
+ckanext.canada:tables/travelq.yaml
+ckanext.canada:tables/wrongdoing.yaml
+"""
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -162,11 +172,11 @@ class DataGCCAPublic(p.SingletonPlugin):
         facets_dict = {
             'type': _('Portal Type'),
             'organization': _('Organization'),
-            'collection': _('Catalogue Type'),
-            'keywords': _('Keywords'),
-            'keywords_fra': _('Keywords'),
+            'collection': _('Collection Type'),
+            'keywords': _('Tags'),
+            'keywords_fra': _('Tags'),
             'subject': _('Subject'),
-            'res_format': _('Format'),
+            'res_format': _('File Format'),
             'res_resource_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
             'topic_category': _('Topic Category'),
@@ -211,6 +221,11 @@ class DataGCCAPublic(p.SingletonPlugin):
             'general', '/feeds/dataset.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
             action='general',
+        )
+        map.connect(
+            '/dataset/delete/{pkg_id}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='package_delete'
         )
         return map
 

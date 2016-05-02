@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{# we want a wide display for the table #}
+{% block secondary_content %}{% endblock %}
+
+{% block primary_content %}
+  {{ super() }}
+  <aside class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("Guide") }}</div>
+      <div class="panel-body">
+        <p>{% trans
+%}For information on how to prepare, maintain and upload templates to the Registry,
+refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
+      </div>
+    </div>
+  </aside>
+{% endblock %}
+
+{% block primary %}
+  {{ super() }}
+
+{{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
+{% endblock %}

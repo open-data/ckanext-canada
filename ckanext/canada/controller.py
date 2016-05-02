@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 import webhelpers.feedgenerator
 
@@ -7,9 +8,10 @@ from ckan.lib.base import (
     render,
     model,
     request,
-    g,
+    h,
     response,
-    abort
+    abort,
+    redirect
 )
 from ckan.logic import get_action, check_access, schema
 from ckan.controllers.user import UserController
@@ -22,7 +24,6 @@ from ckan.controllers.feed import (
     _FixedAtom1Feed
 )
 from ckan.lib import i18n
-from ckan.lib.base import h, redirect
 from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
@@ -52,6 +53,40 @@ class CanadaController(BaseController):
 
     def view_help(self):
         return render('help.html')
+
+    def register(self, data=None, errors=None, error_summary=None):
+        '''GET to display a form for registering a new user.
+           or POST the form data to actually do the user registration.
+
+           The bulk of this code is pulled directly from
+           ckan/controlllers/user.py
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author,
+                   'schema': schema.user_new_form_schema(),
+                   'save': 'save' in request.params}
+
+        try:
+            check_access('user_create', context)
+        except NotAuthorized:
+            abort(401, _('Unauthorized to create a user'))
+
+        if context['save'] and not data:
+            uc = UserController()
+            return uc._save_new(context)
+
+        if c.user and not data:
+            # #1799 Don't offer the registration form if already logged in
+            return render('user/logout_first.html')
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+
+        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.form = render('user/new_user_form.html', extra_vars=vars)
+        return render('user/new.html')
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -88,16 +123,14 @@ class CanadaController(BaseController):
         return render('organization/index.html')
 
     def datatable(self, resource_id):
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = ('desc' if request.params['sSortDir_0'] == 'desc'
-                          else 'asc'
-                          )
+        draw = int(request.params['draw'])
+        search_text = unicode(request.params['search[value]'])
+        offset = int(request.params['start'])
+        limit = int(request.params['length'])
+        sort_by_num = int(request.params['order[0][column]'])
+        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
+                      else 'asc'
+                      )
 
         lc = LocalCKAN(username=c.user)
 
@@ -107,9 +140,7 @@ class CanadaController(BaseController):
         )
 
         cols = [f['id'] for f in unfiltered_response['fields']][1:]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
+        sort_str = cols[sort_by_num] + ' ' + sort_order
 
         response = lc.action.datastore_search(
             q=search_text,
@@ -120,7 +151,7 @@ class CanadaController(BaseController):
         )
 
         return json.dumps({
-            'sEcho': echo,
+            'draw': draw,
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
@@ -177,8 +208,7 @@ class CanadaUserController(UserController):
                       'completed. If you require faster processing of the '
                       'account, please send the request directly to: '
                       '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
-                      'open-ouvert@tbs-sct.gc.ca</a>')
-                    , True)
+                      'open-ouvert@tbs-sct.gc.ca</a>'), True)
 
             return h.redirect_to('/{0}'.format(lang or ''))
         else:
@@ -239,6 +269,20 @@ class CanadaUserController(UserController):
             return render('user/reports.html')
         abort(403)
 
+    def package_delete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The dataset has been removed from'
+            ' the Open Government Portal. <br/> The record may re-appear'
+            ' if it is re-harvested or updated. Please ensure that the'
+            ' record is deleted and purged from the source catalogue in'
+            ' order to prevent it from reappearing.'
+            ),
+            allow_html=True
+        )
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_delete(id=pkg_id)
+        return redirect('/')
+
 
 class CanadaFeedController(FeedController):
     def general(self):
@@ -294,15 +338,18 @@ class CanadaFeedController(FeedController):
         )
 
         if c.language == 'fr':
-            def lx(x): return x + '_fra'
+            def lx(x):
+                return x + '_fra'
         else:
-            def lx(x): return x
+            def lx(x):
+                return x
 
         for pkg in results:
             feed.add_item(
                 title=pkg.get(lx('title'), ''),
                 link=self.base_url + url(str(
-                        '/api/action/package_show?id=%s' % pkg['name'])),
+                    '/api/action/package_show?id=%s' % pkg['name'])
+                ),
                 description=pkg.get(lx('notes'), ''),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),

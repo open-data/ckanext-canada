@@ -1,9 +1,0 @@
-{% ckan_extends %}
-
-{% block save_button_text %}
-  {% if form_style != 'edit' %}
-    {{ super() }}
-  {% else %}
-    {{ _('Update Asset') }}
-  {% endif %}
-{% endblock %}

@@ -1,0 +1,115 @@
+dataset_type: travelq
+target_dataset: travelq
+
+title: Travel Expenditures
+notes: This dataset includes all of the reports on travel expenditures
+       incurred within your organization.
+
+resources:
+- title: Travel Expenditures
+  resource_name: travelq
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: name
+    label: Name
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: title
+    label: Title
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: purpose
+    label: Purpose of Travel
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: date
+    label: Date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: destination
+    label: Destination
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: airfare
+    label: Airfare
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: other_transport
+    label: Other transportation
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: accomodation
+    label: Accommodation
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: meals
+    label: Meals and incidentals
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: other_expenses
+    label: Other expenses
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: total
+    label: Total Amount
+    datastore_type: text
+    excel_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99
+       less_than: 250
+     - label: $250 - $499.99
+       less_than: 500
+     - label: $500 - $999.99
+       less_than: 1000
+     - label: $1,000 - $4,999.99
+       less_than: 5000
+     - label: $5,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000+
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+  examples:
+    record:
+      ref_number: "1980198"
+      name: Jane Smith
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc
