@@ -42,7 +42,7 @@
         <hr>
         <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}" class="ogscartbtn ogscartaddbtn btn btn-success"><span class="fa fa-plus"></span> {{ _('Add to Cart') }}</a>
         <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}" class="ogscartbtn ogscartremovebtn btn btn-danger"><span class="fa fa-minus"></span> {{ _('Remove from Cart') }}</a>
-        <a href="http://open.canada.ca/data/en/ramp/ramp-{ h.lang() }}-ckan.html?keys={{ package.name }}" id="OGSCartView_{{ package.name }}" class="ogscartviewbtn btn btn-primary"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
+        <a href="http://open.canada.ca/data/en/ramp/ramp-{{ h.lang() }}-ckan.html?keys={{ package.name }}" id="OGSCartView_{{ package.name }}" class="ogscartviewbtn btn btn-primary"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
         </div>
       {% endif %}
     {% endblock %}
