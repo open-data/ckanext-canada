@@ -175,6 +175,19 @@
     datastore_type: text
     xls_column_width: 20
 
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
   - datastore_id: other_transport
     label: Other transportation / Autres frais de transport
     datastore_type: text
@@ -185,15 +198,54 @@
     datastore_type: text
     xls_column_width: 20
 
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
   - datastore_id: meals
     label: Meals and incidentals / Frais de repas et frais accessoires
     datastore_type: text
     xls_column_width: 20
 
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
+
   - datastore_id: other_expenses
     label: Other expenses / Autres dépenses
     datastore_type: text
     xls_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99 | 0 $ - 249,99 $
+       less_than: 250
+     - label: $250 - $499.99 | 250 $ - 499,99 $
+       less_than: 500
+     - label: $500 - $999.99 | 500 $ - 999,99 $
+       less_than: 1000
+     - label: $1,000 - $4,999.99 | 1 000 $ - 4 999,99 $
+       less_than: 5000
+     - label: $5,000 - $24,999.99 | 5 000 $ - 24 999,99 $
+       less_than: 25000
+     - label: $25,000+ | 25 000 $ +
 
   - datastore_id: total
     label: Total Amount / Montant total
@@ -498,7 +550,7 @@
       "81": Extreme Urgency | Extrême urgence
       "85": Low Dollar-value | Faible valeur
       "86": Prices and/or Sources Fixed by Government Regulations | Prix ou fournisseurs déterminés par des règlements gouvernementaux
-      "87": Government Objectives Representing Best Interests/Value | Objectifs gouvernementaux représentant les meilleurs 
+      "87": Government Objectives Representing Best Interests/Value | Objectifs gouvernementaux représentant les meilleurs
       "90": Protection of Human, Animal, or Plant Life or Health | Protection de la vie ou de la santé des personnes, animaux, plantes
 
   - datastore_id: derogation_code
@@ -515,7 +567,7 @@
       "06": The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70, 74, 36 | Les marchés de Transports Canada, du ministère des Communications, et de Pêches et Océans dans les catégories FSC 70, 74, 36
       "07": National security exemptions incl. oil purchases relating to any strategic reserve requirements | Les exceptions au titre de la sécurité nationale comprennent les achats de pétrole liés aux exigences en matière de réserve stratégique
       "08": National security exceptions include procurements made in support of safeguarding nuclear materials or technology | Les exceptions au titre de la sécurité nationale comprennent les marchés passés pour protéger les matières ou la technologie nucléaire
-      "09": Under exceptional circumstances exclude a procurement from the application of AIT, Chapter 5 for regional and economic development purposes | Dans des circonstances exceptionnelles, soustraire un marché public à l’application du chapitre 5 de l’ACI à des fins de développement économique et régional 
+      "09": Under exceptional circumstances exclude a procurement from the application of AIT, Chapter 5 for regional and economic development purposes | Dans des circonstances exceptionnelles, soustraire un marché public à l’application du chapitre 5 de l’ACI à des fins de développement économique et régional
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator / Stratégie d'approvisionnement auprès des entreprises autochtones
