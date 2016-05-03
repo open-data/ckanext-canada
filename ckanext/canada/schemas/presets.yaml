@@ -2584,8 +2584,9 @@ presets:
       mimetype: image/bmp
       replaces: [bmp]
     - value: BWF
+    - value: CCT
     - value: CDED ASCII
-      replaces: [cdec ascii]
+      replaces: [cded ascii]
     - value: CDR
       replaces: [cdr]
     - label: Blackberry Application
@@ -2613,6 +2614,7 @@ presets:
     - value: ECW
       mimetype: application/x-ecw
       replaces: [ecw]
+    - value: EDI
     - value: EMF
       mimetype: image/emf
       replaces: [emf]
@@ -2730,6 +2732,9 @@ presets:
     - value: RTF
       mimetype: text/rtf
       replaces: [rtf]
+    - value: SAR
+    - value: SAV
+    - value: SEGY
     - value: SHP
       mimetype: application/x-shapefile
       replaces: [SHAPE]
@@ -2763,6 +2768,7 @@ presets:
     - value: XML
       mimetype: application/xml
       openness_score: 3
+    - value: XLSM
     - value: XLS
       mimetype: application/vnd.ms-excel
       openness_score: 2
