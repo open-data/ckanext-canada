@@ -33,10 +33,10 @@ Remove the markdown_extract call because our notes is a dict not a string:
     </div>
 
     <ul class="list-group">
-      {% set owner_org = schema_description.dataset_field_by_id['owner_org'] %}
-      <li class="list-group-item"><b>{{ cr.field_label(owner_org, client_lang) }}:</b>
+      {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
+      <li class="list-group-item"><b>{{ h.scheming_language_text(owner_org.label) }}:</b>
         <br/>
-        {{ cr.org_field(pkg, client_lang) }}
+        {{ cr.split_bilingual_field(pkg.organization.title) }}
       </li>
 
       {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
