@@ -7,7 +7,7 @@ import unicodedata
 import ckanapi
 
 import ckan.lib.helpers as h
-from ckanext.canada.metadata_schema import schema_description
+from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
@@ -37,16 +37,21 @@ def may_publish_datasets(userobj=None):
 
 def openness_score(pkg):
     score = 0
-    fmt = schema_description.resource_field_by_id['format']['choices_by_key']
-    for r in pkg['resources']:
-        if r['resource_type'] != 'file' and r['resource_type'] != 'api':
+    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+    resource_formats = set(r['format'] for r in pkg['resources'])
+    for f in fmt_choices:
+        if 'openness_score' not in f:
             continue
-        resource_score = fmt[r['format']]['openness_score']
-        if boolean_validator(r.get('data_includes_uris', ''), {}):
-            resource_score = 4
-            if boolean_validator(r.get('data_includes_links', ''), {}):
-                resource_score = 5
+        if f['value'] not in resource_formats:
+            continue
+        resource_score = f.get('openness_score', 0)
         score = max(score, resource_score)
+
+    for r in pkg['resources']:
+        if 'data_includes_uris' in r.get('data_quality', []):
+            score = max(4, score)
+            if 'data_includes_links' in r.get('data_quality', []):
+                score = max(5, score)
     return score
 
 

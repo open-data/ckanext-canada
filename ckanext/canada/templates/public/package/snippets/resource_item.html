@@ -9,6 +9,7 @@
 
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
+{% set type_field = h.scheming_field_by_name(schema.resource_fields, 'resource_type') %}
 {% set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') %}
 {% set lang_field = h.scheming_field_by_name(schema.resource_fields, 'language') %}
 
@@ -17,6 +18,11 @@
   <td>
     {% snippet 'scheming/snippets/display_field.html',
       field=name_field, data=res, schema=schema %}
+  </td>
+
+  <td>
+    {% snippet 'scheming/snippets/display_field.html',
+      field=type_field, data=res, schema=schema %}
   </td>
 
   <td>
@@ -32,7 +38,7 @@
   <td>
 
     <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
-        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Download') }}</a>
+        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Access') }}</a>
 
     {% if res.webstore_last_updated %}
     &nbsp;

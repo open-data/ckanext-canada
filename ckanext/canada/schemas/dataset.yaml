@@ -81,6 +81,7 @@ dataset_fields:
     en: Topic category
     fr: Catégorie thématique
   form_snippet: null
+  display_snippet: list_inline.html
   validators: scheming_multiple_choice
   output_validators: scheming_multiple_choice_output
   choices:
