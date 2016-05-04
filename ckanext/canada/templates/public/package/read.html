@@ -41,7 +41,9 @@
         </div>
       {% endif %} 
 
-      {# <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p> #}
+      {% if pkg.collection == 'fgp' %}
+        <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
+      {% endif %}
 
     </section>
     {%- endblock -%}
@@ -179,9 +181,9 @@
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
     {% if wkt %}
       {% if h.get_map_type() == 'static' %}
-        {% snippet 'snippets/geomap_static.html', gid=pkg['title'][client_lang], wkt=wkt %}
+        {% snippet 'snippets/geomap_static.html', gid=pkg['title_translated'][client_lang], wkt=wkt %}
       {% else %}
-        {% snippet 'snippets/geomap_dynamic.html', gid=pkg['title'][client_lang], wkt=wkt %}
+        {% snippet 'snippets/geomap_dynamic.html', gid=pkg['title_translated'][client_lang], wkt=wkt %}
       {% endif %}
     {% endif %}
   {% endif %}
