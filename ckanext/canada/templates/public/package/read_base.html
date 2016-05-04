@@ -106,9 +106,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
           field=frequency, data=pkg, schema=schema %}
       </li>
 
-    </ul>
-    {% if pkg.type == 'dataset' %}
-      <ul class="list-group">
+      {% if pkg.type == 'dataset' %}
         <li class="list-group-item">
           <ul class="list-unstyled">
             <li><a href="{{ '/en/openness-rating' if h.lang() == 'en' else
@@ -127,8 +125,17 @@ Remove the markdown_extract call because our notes is a dict not a string:
             </li>
           </ul>
         </li>
-      </ul>
-    {% endif %}
+      {% endif %}
+      {% if pkg.spatial_representation_type %}
+        {% set srep = h.scheming_field_by_name(schema.dataset_fields,
+          'spatial_representation_type') %}
+        <li class="list-group-item"><b>{{
+          h.scheming_language_text(srep.label) }}:</b>
+          {% snippet 'scheming/snippets/display_field.html',
+            field=srep, data=pkg, schema=schema %}
+        </li>
+      {% endif %}
+    </ul>
 
     <!-- 
     {# Need these for Open Maps
