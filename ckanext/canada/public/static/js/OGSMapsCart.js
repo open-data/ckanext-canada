@@ -40,7 +40,7 @@ function updateCartUI()
 {
 	cleanCart()
 
-	solr_query = '/maps?q=name%3A%22'+OGSMapsChecked_ids.join("%22+OR+name%3A%22")+'%22+&sort=metadata_modified+desc'
+	solr_query = '/dataset?q=name%3A%22'+OGSMapsChecked_ids.join("%22+OR+name%3A%22")+'%22+&sort=metadata_modified+desc'
 	$('.ogscartlistbtn').attr("href", solr_query)
 
 	cart_full = false
