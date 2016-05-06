@@ -208,6 +208,43 @@ dataset_fields:
     en: Status
     fr: État
   form_snippet: null
+  choices:
+  - label:
+      en: Completed
+      fr: Complété
+    value: completed
+  - label:
+      en: Historical Archive
+      fr: Aarchive historique
+    value: historical_archive
+  - label:
+      en: Obsolete
+      fr: Périmé
+    value: obsolete
+  - label:
+      en: Ongoing
+      fr: En continue
+    value: ongoing
+  - label:
+      en: Planned
+      fr: Planifié
+    value: planned
+  - label:
+      en: Required
+      fr: Requis
+    value: required
+  - label:
+      en: Under Development
+      fr: En production
+    value: under_development
+  - label:
+      en: Proposed
+      fr: Proposé
+    value: proposed
+  # copied from select preset
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+
 - field_name: association_type
   label:
     en: Association Type
