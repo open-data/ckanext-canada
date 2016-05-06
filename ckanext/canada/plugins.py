@@ -165,6 +165,16 @@ ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 """
+        config['ckan.search.show_all_types'] = True
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+"""
+        config['scheming.dataset_schemas'] = """
+ckanext.canada:schemas/dataset.yaml
+ckanext.canada:schemas/info.yaml
+"""
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -173,12 +183,12 @@ ckanext.canada:tables/wrongdoing.yaml
             'type': _('Portal Type'),
             'organization': _('Organization'),
             'collection': _('Collection Type'),
-            'keywords': _('Tags'),
-            'keywords_fra': _('Tags'),
-            'subject': _('Subjects'),
-            'res_format': _('File Format'),
-            'res_resource_type': _('Content Type'),
-            'frequency': _('Frequency'),
+            'keywords': _('Keywords'),
+            'keywords_fra': _('Keywords'),
+            'subject': _('Subject'),
+            'res_format': _('Format'),
+            'res_type': _('Resource Type'),
+            'frequency': _('Maintenance and Update Frequency'),
             'topic_category': _('Topic Categories'),
             'spatial_representation_type': _('Spatial Representation Type'),
             'ready_to_publish': _('Record Status'),

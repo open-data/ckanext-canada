@@ -35,11 +35,9 @@
           [{{ _('Draft') }}]
         {% endif %}
       </h1>
-      {% if c.pkg_notes_formatted %}
-        <div>
-          {{ h.render_markdown(pkg.notes[client_lang]) }}
-        </div>
-      {% endif %} 
+      <div>
+        {{ h.render_markdown(pkg.notes_translated[client_lang]) }}
+      </div>
 
       {% if pkg.collection == 'fgp' %}
         <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
@@ -87,11 +85,11 @@
       {% if pkg.resources %}
         {% set nonapps = [] %}
         {% for resource in pkg.resources %}
-          {% if resource.format != 'app' %}
+          {% if not resource.related_record %}
             {% do nonapps.append(resource) %}
           {% endif %}
         {% endfor %}
-        {% if nonapps|length > 0 %}
+        {% if nonapps %}
 
           {% block package_resources %}
             {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
@@ -106,14 +104,17 @@
 
       {% set apps = [] %}
       {% for resource in pkg.resources %}
-        {% if resource.format == 'app' %}
+        {% if resource.related_record %}
           {% do apps.append(resource) %}
         {% endif %}
       {% endfor %}
 
-      {% if apps|length > 0 %}
+      {% if apps or pkg.collection == 'fgp' %}
       <h2>{{ _('Related Items') }}</h2>
         <ul class="list-bullet-none">
+        {% if pkg.collection == 'fgp' %}
+          <li><a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&id={{ pkg.id }}">{{ _("HNAP ISO:19115 Metadata Record") }}</a></li>
+        {% endif %}
         {% for resource in apps %}
           {% snippet 'package/snippets/app_item.html',
               pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
