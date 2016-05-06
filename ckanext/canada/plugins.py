@@ -187,7 +187,7 @@ ckanext.canada:schemas/info.yaml
             'keywords_fra': _('Keywords'),
             'subject': _('Subject'),
             'res_format': _('Format'),
-            'res_resource_type': _('Resource Type'),
+            'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
             'topic_category': _('Topic Categories'),
             'spatial_representation_type': _('Spatial Representation Type'),
