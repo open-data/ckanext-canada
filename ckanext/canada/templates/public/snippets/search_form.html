@@ -4,7 +4,14 @@
 
 <div class="row mrgn-bttm-md mrgn-tp-md">
   <div class="col-md-12">
-  <label for="search_field" >{{ _('Search Datasets') }}</label>
+
+  {# Special case until we launch with all types #}
+  {% if facets.search.collection['items']|length == 1 and
+      facets.search.collection['items'].0.name == 'fgp' %}
+    <label for="search_field" >{{ _('Search Open Maps') }}</label>
+  {% else %}
+    <label for="search_field" >{{ _('Search Datasets') }}</label>
+  {% endif %}
   {% if h.lang() == 'en' %}
     <a href="/en/suggested-datasets" class="btn btn-success btn-sm pull-right">Suggest a Dataset</a>
   {% else %}
