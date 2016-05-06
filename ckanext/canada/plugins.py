@@ -165,6 +165,16 @@ ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 """
+        config['ckan.search.show_all_types'] = True
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+"""
+        config['scheming.dataset_schemas'] = """
+ckanext.canada:schemas/dataset.yaml
+ckanext.canada:schemas/info.yaml
+"""
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
