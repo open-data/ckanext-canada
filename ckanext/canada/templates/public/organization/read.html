@@ -1,9 +1,6 @@
 {% ckan_extends %}
 
-{% import 'macros/canada_read.html' as cr %}
 {% set client_lang = h.lang() %}
-
-{% block subtitle %}{{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}{% endblock %}
 
 {% block organization_facets %}
   {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name} %}
