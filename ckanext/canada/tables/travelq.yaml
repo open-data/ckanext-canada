@@ -47,6 +47,19 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+    solr_float_range_facet:
+     - label: $0 - $249.99
+       less_than: 250
+     - label: $250 - $499.99
+       less_than: 500
+     - label: $500 - $999.99
+       less_than: 1000
+     - label: $1,000 - $4,999.99
+       less_than: 5000
+     - label: $5,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000+
+
   - datastore_id: other_transport
     label: Other transportation
     datastore_type: text
@@ -57,6 +70,19 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+    solr_float_range_facet:
+     - label: $0 - $249.99
+       less_than: 250
+     - label: $250 - $499.99
+       less_than: 500
+     - label: $500 - $999.99
+       less_than: 1000
+     - label: $1,000 - $4,999.99
+       less_than: 5000
+     - label: $5,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000+
+
   - datastore_id: meals
     label: Meals and incidentals
     datastore_type: text
@@ -66,6 +92,19 @@ resources:
     label: Other expenses
     datastore_type: text
     excel_column_width: 20
+
+    solr_float_range_facet:
+     - label: $0 - $249.99
+       less_than: 250
+     - label: $250 - $499.99
+       less_than: 500
+     - label: $500 - $999.99
+       less_than: 1000
+     - label: $1,000 - $4,999.99
+       less_than: 5000
+     - label: $5,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000+
 
   - datastore_id: total
     label: Total Amount

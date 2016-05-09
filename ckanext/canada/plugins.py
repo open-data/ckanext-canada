@@ -137,6 +137,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/contracts.yaml
+ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
 ckanext.canada:tables/hospitalityq.yaml
 ckanext.canada:tables/reclassification.yaml

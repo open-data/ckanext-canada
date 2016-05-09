@@ -99,31 +99,31 @@ resources:
     excel_column_width: 10
     choices:
       Y:
-        en: WTO/NAFTA/AIT
-        fr: OMC/ALÉNA/ACI
+        en: World Trade Organization/North American Free Trade Agreement/Agreement on Internal Trade
+        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain/Accord sur le commerce intérieur
       Z:
-        en: WTO/NAFTA
-        fr: OMC/ALÉNA
+        en: World Trade Organization/North American Free Trade Agreement
+        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain
       X:
-        en: WTO/AIT
-        fr: OMC/ACI
+        en: World Trade Organization/Agreement on Internal Trade
+        fr: Organisation mondiale du commerce/Accord sur le commerce intérieur
       C:
-        en: NAFTA/AIT
-        fr: ALÉNA/ACI
+        en: North American Free Trade Agreement/Agreement on Internal Trade
+        fr: Accord de libre-échange nord-américain/Accord sur le commerce intérieur
       W:
-        en: WTO
-        fr: OMC
+        en: World Trade Organization
+        fr: Organisation mondiale du commerce
       N:
-        en: NAFTA
-        fr: ALÉNA
+        en: North American Free Trade Agreement
+        fr: Accord de libre-échange nord-américain
       I:
-        en: AIT
-        fr: ACI
+        en: Agreement on Internal Trade
+        fr: Accord sur le commerce intérieur
       A:
-        en: ABSA (PSAB)
+        en: Aboriginal Business Set-Aside (Procurement Strategy for Aboriginal Business)
         fr: MREA
       R:
-        en: LCSA (CLCA)
+        en: Land Claim Set Aside (Comprehensive Land Claim Agreement)
         fr: MRRT
 
   - datastore_id: commodity_type_code
