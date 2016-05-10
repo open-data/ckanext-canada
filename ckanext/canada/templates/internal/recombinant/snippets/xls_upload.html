@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block upload_submit %}
+  {{ super() }}
+  {% if pkg.resources.0.name == 'ati' %}
+    <div class="row">
+      <p class="color-attention">{% trans %}ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions.{% endtrans %}</p>
+    </div>
+  {% endif %}
+{% endblock %}
