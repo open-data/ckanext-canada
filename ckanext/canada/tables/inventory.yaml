@@ -1,0 +1,121 @@
+dataset_type: inventory
+target_dataset: inventory
+title: Open Data Inventory
+notes: Open Data Inventory
+
+resources:
+- title: Open Data Inventory
+  resource_name: inventory
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: title_en
+    label: Title English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: title_fr
+    label: Title French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_en
+    label: Description English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: historical_publisher_en
+    label: Publisher - English Name at Publication
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: historical_publisher_fr
+    label: Publisher - French Name at Publication
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: date_published
+    label: Date Published
+    datastore_type: date
+    excel_column_width: 20
+
+  - datastore_id: language
+    label: Language
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      en:
+        en: English
+        fr: Anglais
+      fr:
+        en: French
+        fr: Français
+      en,fr:
+        en: Bilingual (English and French)
+        fr: Bilingue (Anglais et Français)
+      iu:
+        en: Inuktitut
+        fr: Inuktitut
+      zxx:
+        en: No linguistic content ; Not applicable
+        fr: Pas de contenu linguistique; non applicable
+      other:
+        en: Other
+        fr: Autre
+
+  - datastore_id: privacy_impact_assessment
+    label: Privacy Impact Assessment
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      Y:
+        en: Yes
+        fr: Oui
+      N:
+        en: No
+        fr: Non
+    
+  - datastore_id: date_released
+    label: Date Released
+    datastore_type: date
+    excel_column_width: 20
+
+  - datastore_id: download_url
+    label: Download URL
+    datastore_type: text
+    excel_column_width: 20
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF8BCCCB
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF689998
+
+  examples:
+    record:
+      ref_number: "1980198"
+      proj_number: "19876198"
+      title_en: "Data released"
+      date_published: "2016-01-01"
+      language: "xzz"
+    filters:
+      language: "en"
+    filter_one:
+      ref_number: "1980198"
+    sort: date_published desc
