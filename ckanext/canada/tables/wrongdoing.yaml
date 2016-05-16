@@ -1,0 +1,111 @@
+dataset_type: wrongdoing
+target_dataset: wrongdoing
+title: Proactive Disclosure - Founded Wrongdoing
+notes: This dataset includes all of the reports on the disclosure of
+       wrongdoing within your organization.
+
+resources:
+- title: Proactive Disclosure - Founded Wrongdoing
+  resource_name: wrongdoing
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: file_id_number
+    label: File Identification Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: file_id_date
+    label: File Identification file date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: case_description_en
+    label: English Case Description
+    datastore_type: text
+    excel_column_width: 40
+
+  - datastore_id: case_description_fr
+    label: French Case Description
+    datastore_type: text
+    excel_column_width: 40
+
+  - datastore_id: findings_conclusions
+    label: Findings and Conclusions
+    datastore_type: text
+    excel_column_width: 40
+    choices:
+      a:
+        en: a contravention of any Act of Parliament or of the legislature
+            of a province, or of any regulations made under any such Act,
+            other than a contravention of section 19 of this Act
+        fr: la contravention d’une loi fédérale ou provinciale ou d’un
+            règlement pris sous leur régime, à l’exception de la
+            contravention de l’article 19 de la présente loi
+      b:
+        en: a misuse of public funds or a public asset
+        fr: l’usage abusif des fonds ou des biens publics
+      c:
+        en: a gross mismanagement in the public sector
+        fr: les cas graves de mauvaise gestion dans le secteur public
+      d:
+        en: an act or omission that creates a substantial and specific
+            danger to the life, health or safety of persons, or to the
+            environment, other than a danger that is inherent in the
+            performance of the duties or functions of a public servant
+        fr: le fait de causer — par action ou omission — un risque grave
+            et précis pour la vie, la santé ou la sécurité humaines ou
+            pour l’environnement, à l’exception du risque inhérent à
+            l’exercice des attributions d’un fonctionnaire
+      e:
+        en: a serious breach of a code of conduct established under
+            section 5 or 6
+        fr: la contravention grave d’un code de conduite établi en vertu
+            des articles 5 ou 6
+      f:
+        en: knowingly directing or counselling a person to commit a
+            wrongdoing set out in any of paragraphs (a) to (e)
+        fr: le fait de sciemment ordonner ou conseiller à une personne
+            de commettre l’un des actes répréhensibles visés aux alinéas
+            a) à e)
+
+  - datastore_id: recommendations_corrective_measures_en
+    label: English Recommendations and Corrective Measures
+    datastore_type: text
+    excel_column_width: 40
+
+  - datastore_id: recommendations_corrective_measures_fr
+    label: Recommendations and Corrective Measures
+    datastore_type: text
+    excel_column_width: 40
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA8CC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF7E9968
+
+  examples:
+    record:
+      ref_number: "1980198"
+      file_id_number: "15677"
+      file_id_date: "2016-01-01"
+      findings_conclusion: b
+    filters:
+      findings_conclusion: a
+    filter_one:
+      ref_number: "1980198"
+    sort: file_id_date desc

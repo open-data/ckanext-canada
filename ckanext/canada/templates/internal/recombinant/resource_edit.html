@@ -6,5 +6,11 @@
     {% block primary_content %}
       {{ super() }}
     {% endblock %}
+
+    <section>
+        <div>
+            {{ h.get_datapreview_recombinant(dataset.type, resource.id) }}
+        </div>
+    </section>
   </div>
 {% endblock %}
