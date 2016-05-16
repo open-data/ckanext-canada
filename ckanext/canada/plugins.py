@@ -144,6 +144,7 @@ ckanext.canada:tables/reclassification.yaml
 ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
+ckanext.canada:tables/inventory.yaml
 """
 
     def dataset_facets(self, facets_dict, package_type):
