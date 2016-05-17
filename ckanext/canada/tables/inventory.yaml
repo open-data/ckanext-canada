@@ -16,22 +16,22 @@ resources:
   - datastore_id: title_en
     label: Title English
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: title_fr
     label: Title French
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: description_en
     label: Description English
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: description_fr
     label: Description French
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: historical_publisher_en
     label: Publisher - English Name at Publication
@@ -51,7 +51,7 @@ resources:
   - datastore_id: language
     label: Language
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 10
     choices:
       en:
         en: English
@@ -72,10 +72,15 @@ resources:
         en: Other
         fr: Autre
 
+  - datastore_id: size
+    label: Size
+    datastore_type: int
+    excel_column_width: 20
+
   - datastore_id: privacy_impact_assessment
     label: Privacy Impact Assessment
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 10
     choices:
       Y:
         en: Yes
