@@ -20,12 +20,12 @@ resources:
     excel_column_width: 20
 
   - datastore_id: prog_name_en
-    label: Program Name English
+    label: Program Name (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: prog_name_fr
-    label: Program Name French
+    label: Program Name (French)
     datastore_type: text
     excel_column_width: 20
 
@@ -35,22 +35,22 @@ resources:
     excel_column_width: 20
 
   - datastore_id: proj_name_en
-    label: Project Name English
+    label: Project Name (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: proj_name_fr
-    label: Project Name French
+    label: Project Name (French)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_name_en
-    label: Recipient Name English
+    label: Recipient Name (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_name_fr
-    label: Recipient Name French
+    label: Recipient Name (French)
     datastore_type: text
     excel_column_width: 20
 
