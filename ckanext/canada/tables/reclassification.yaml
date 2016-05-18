@@ -46,23 +46,33 @@ resources:
     datastore_type: text
     excel_column_width: 5
 
-  - datastore_id: pos_prev_differential
-    label: Previous Supervisory Differential
+  - datastore_id: pos_prev_differential_en
+    label: Previous Supervisory Differential (English)
     datastore_type: text
     excel_column_width: 5
 
-  - datastore_id: pos_differential
-    label: Supervisory Differential
+  - datastore_id: pos_prev_differential_fr
+    label: Previous Supervisory Differential (French)
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: pos_differential_en
+    label: Reclassified Supervisory Differential (English)
+    datastore_type: text
+    excel_column_width: 5
+
+  - datastore_id: pos_differential_fr
+    label: Reclassified Supervisory Differential (French)
     datastore_type: text
     excel_column_width: 5
 
   - datastore_id: reason_en
-    label: English Reason for Reclassification
+    label: Reason for Reclassification (English)
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: reason_fr
-    label: French reason for Reclassification
+    label: Reason for Reclassification (French)
     datastore_type: text
     excel_column_width: 41
 
