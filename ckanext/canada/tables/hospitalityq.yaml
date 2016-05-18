@@ -20,13 +20,23 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: title
-    label: Title
+  - datastore_id: title_en
+    label: Title (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: description
-    label: Description
+  - datastore_id: title_fr
+    label: Title (French)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_en
+    label: Description (French)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description (French)
     datastore_type: text
     excel_column_width: 20
 
@@ -42,8 +52,13 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: location
-    label: Location
+  - datastore_id: location_en
+    label: Location (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: location_fr
+    label: Location (French)
     datastore_type: text
     excel_column_width: 20
 
