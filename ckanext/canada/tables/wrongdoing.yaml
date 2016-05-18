@@ -20,7 +20,7 @@ resources:
     excel_column_width: 20
 
   - datastore_id: file_id_date
-    label: File Identification file date
+    label: File Identification date
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
