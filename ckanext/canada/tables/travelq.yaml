@@ -20,13 +20,23 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: title
-    label: Title
+  - datastore_id: title_en
+    label: Title (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: purpose
-    label: Purpose of Travel
+  - datastore_id: title_fr
+    label: Title (French)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: purpose_en
+    label: Purpose of Travel (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: purpose_fr
+    label: Purpose of Travel (French)
     datastore_type: text
     excel_column_width: 20
 
@@ -37,8 +47,13 @@ resources:
     extract_date_year: true
     extract_date_month: true
 
-  - datastore_id: destination
-    label: Destination
+  - datastore_id: destination_en
+    label: Destination (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: destination_fr
+    label: Destination (French)
     datastore_type: text
     excel_column_width: 20
 
