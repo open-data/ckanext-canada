@@ -7,8 +7,12 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import (if_empty_generate_uuid, canada_tags,
-    geojson_validator, protect_portal_release_date)
+from ckanext.canada.navl_schema import (
+    if_empty_generate_uuid,
+    canada_tags,
+    geojson_validator,
+    protect_portal_release_date
+)
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -22,9 +26,11 @@ ckan_user_create_dict = {}
 
 def notify_ckan_user_create(context, data_dict):
     """
-    Send an e-mail notification about new users that register on the site to the configured recipient
+    Send an e-mail notification about new users that register on the site to
+    the configured recipient
     @param context: standard context object
-    @param data_dict: dictionary with field values from the user registration form.
+    @param data_dict: dictionary with field values from the user registration
+                      form.
     @raise:
     """
 
@@ -36,18 +42,31 @@ def notify_ckan_user_create(context, data_dict):
 
     try:
         if ckan_user_create_dict['email_address']:
-            new_email = str(data_dict['email']).strip()
-            new_fullname = str(data_dict['fullname']).strip()
-            new_username = str(data_dict['name']).strip()
-            new_phoneno = str(data_dict['phoneno']).strip()
-            new_dept = str(data_dict['department']).strip()
+            new_email = data_dict['email'].strip()
+            new_fullname = data_dict['fullname'].strip()
+            new_username = data_dict['name'].strip()
+            new_phoneno = data_dict['phoneno'].strip()
+            new_dept = data_dict['department'].strip()
 
-            xtra_vars = {'email': new_email, 'fullname': new_fullname, 'username': new_username,
-                         'phoneno': new_phoneno, 'dept': new_dept}
-            email_body = render('user/new_user_email.html', extra_vars=xtra_vars)
-            ckan.lib.mailer.mail_recipient(ckan_user_create_dict['email_name'], ckan_user_create_dict['email_address'],
-                   u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de Gouvernement ouvert',
-                   email_body)
+            xtra_vars = {
+                'email': new_email,
+                'fullname': new_fullname,
+                'username': new_username,
+                'phoneno': new_phoneno,
+                'dept': new_dept
+            }
+            ckan.lib.mailer.mail_recipient(
+                ckan_user_create_dict['email_name'],
+                ckan_user_create_dict['email_address'],
+                (
+                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert',
+                ),
+                render(
+                    'user/new_user_email.html',
+                    extra_vars=xtra_vars
+                )
+            )
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
         log.error(m.message)
@@ -74,14 +93,26 @@ class DataGCCAInternal(p.SingletonPlugin):
         })
 
     def before_map(self, map):
-        map.connect('/', action='home',
-            controller='ckanext.canada.controller:CanadaController')
-        map.connect('/menu', action='registry_menu',
-            controller='ckanext.canada.controller:CanadaController')
-        map.connect('/user/logged_in', action='logged_in',
-            controller='ckanext.canada.controller:CanadaUserController')
-        map.connect('/user/register', action='register',
-                    controller='ckanext.canada.controller:CanadaUserController')
+        map.connect(
+            '/',
+            action='home',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
+            '/menu',
+            action='registry_menu',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
+            '/user/logged_in',
+            action='logged_in',
+            controller='ckanext.canada.controller:CanadaUserController'
+        )
+        map.connect(
+            '/user/register',
+            action='register',
+            controller='ckanext.canada.controller:CanadaUserController'
+        )
         map.connect(
             'user_reports',
             '/user/reports/{id}',
@@ -103,16 +134,25 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaAdminController',
             ckan_icon='cloud-upload'
         )
-        map.connect('/ckan_admin/publish_datasets', action='publish', conditions= dict(method=['POST']),
-            controller='ckanext.canada.controller:CanadaAdminController')
+        map.connect(
+            '/ckan_admin/publish_datasets',
+            action='publish',
+            conditions=dict(method=['POST']),
+            controller='ckanext.canada.controller:CanadaAdminController'
+        )
         return map
 
     def after_map(self, map):
-        with SubMapper(map,
-                controller='ckanext.canada.controller:CanadaController') as m:
+        mapper = SubMapper(
+            map,
+            controller='ckanext.canada.controller:CanadaController'
+        )
+
+        with mapper as m:
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
             m.connect('/datatable/{resource_id}', action='datatable')
+
         return map
 
     def get_helpers(self):
@@ -130,14 +170,21 @@ class DataGCCAInternal(p.SingletonPlugin):
             wcms_configure(config['ckan.drupal.url'])
 
         if 'canada.notification_new_user_email' in config:
-            ckan_user_create_dict['email_address'] = config['canada.notification_new_user_email']
+            ckan_user_create_dict['email_address'] = config[
+                'canada.notification_new_user_email'
+            ]
             if 'canada.notification_new_user_name' in config:
-                ckan_user_create_dict['email_name'] = config['canada.notification_new_user_name']
+                ckan_user_create_dict['email_name'] = config[
+                    'canada.notification_new_user_name'
+                ]
             else:
-                ckan_user_create_dict['email_name'] = config['canada.notification_new_user_email']
+                ckan_user_create_dict['email_name'] = config[
+                    'canada.notification_new_user_email'
+                ]
 
     def get_actions(self):
         return {'user_create': notify_ckan_user_create}
+
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -201,7 +248,8 @@ ckanext.canada:schemas/info.yaml
         ''' Update the facets_dict and return it. '''
         return facets_dict
 
-    def organization_facets(self, facets_dict, organization_type, package_type):
+    def organization_facets(self, facets_dict, organization_type,
+                            package_type):
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
@@ -243,6 +291,7 @@ ckanext.canada:schemas/info.yaml
 
         if ('ckan.drupal.url' in config):
             wcms_configure(config['ckan.drupal.url'])
+
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
@@ -300,7 +349,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
-        #we're going to group portal_release_date into two bins - to today and after today        
+        # We're going to group portal_release_date into two bins - to today and
+        # after today.
         search_params['facet.range'] = 'portal_release_date'
         search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
@@ -346,8 +396,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def after_update(self, context, data_dict):
         if context.get('allow_state_change') and data_dict.get(
                 'state') == 'active':
-            h.flash_success(_("Your asset %s has been saved.")
-                % data_dict['id'])
+            h.flash_success(
+                _("Your asset %s has been saved.")
+                % data_dict['id']
+            )
         return data_dict
 
     def after_delete(self, context, data_dict):
@@ -358,4 +410,3 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
-
