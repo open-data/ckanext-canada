@@ -54,8 +54,24 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: location_endroit
-    label: Location
+  - datastore_id: recipient_business_number
+    label: Recipient Business Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: recipient_country
+    label: Country
+    datastore_type: text
+    excel_column_width: 10
+    choices_source: country_of_origin.jsonl
+
+  - datastore_id: recipient_region_en
+    label: Region (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: recipient_region_fr
+    label: Region (French)
     datastore_type: text
     excel_column_width: 20
 
