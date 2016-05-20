@@ -18,34 +18,39 @@ resources:
   - datastore_id: name
     label: Name
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: title_en
     label: Title (English)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: title_fr
     label: Title (French)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: purpose_en
     label: Purpose of Travel (English)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: purpose_fr
     label: Purpose of Travel (French)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
-  - datastore_id: date
-    label: Date
+  - datastore_id: date_start
+    label: Start Date
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
+
+  - datastore_id: date_end
+    label: End Date
+    datastore_type: date
+    excel_column_width: 20
 
   - datastore_id: destination_en
     label: Destination (English)
@@ -59,7 +64,7 @@ resources:
 
   - datastore_id: airfare
     label: Airfare
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
     solr_float_range_facet:
@@ -77,12 +82,12 @@ resources:
 
   - datastore_id: other_transport
     label: Other transportation
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
   - datastore_id: accomodation
     label: Accommodation
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
     solr_float_range_facet:
@@ -100,12 +105,12 @@ resources:
 
   - datastore_id: meals
     label: Meals and incidentals
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
   - datastore_id: other_expenses
     label: Other expenses
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
     solr_float_range_facet:
@@ -123,7 +128,7 @@ resources:
 
   - datastore_id: total
     label: Total Amount
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
     solr_float_range_facet:
