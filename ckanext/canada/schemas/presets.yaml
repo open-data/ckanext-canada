@@ -183,7 +183,7 @@ presets:
       en: Commonly used words or phrases which describe the information asset, in English
       fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
     required: true
-    tag_validators: canada_tags tag_length_validator
+    tag_validators: canada_tags
     # copied from fluent_tags preset
     form_snippet: fluent_tags.html
     display_snippet: fluent_tags.html

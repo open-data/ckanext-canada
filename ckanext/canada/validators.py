@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unicodedata
+
 from pylons.i18n import _
 from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckan.lib.navl.validators import StopOnError
@@ -12,8 +14,9 @@ from shapely import wkt
 import json
 import uuid
 
+MIN_TAG_LENGTH = 2
+MAX_TAG_LENGTH = 140  # because twitter
 
-tag_name_validator = get_validator('tag_name_validator')
 
 def protect_portal_release_date(key, data, errors, context):
     """
@@ -47,32 +50,45 @@ def protect_portal_release_date(key, data, errors, context):
 
 def canada_tags(value, context):
     """
-    Accept tags with apostrope, convert other apostrophe-like characters
-    to straight apostrophe
+    Accept
+    - unicode graphical (printable) characters
+    - single internal spaces (no double-spaces)
+
+    Reject
+    - commas
+    - tags that are too short or too long
+
+    Strip
+    - spaces at beginning and end
     """
     value = value.strip()
-    value = value.replace(u"´", u"'")
-    value = value.replace(u"‘", u"'")
-    value = value.replace(u"’", u"'")
-    #Heal the victims of MS auto-correct
-    value = value.replace(u"–", u"-") # en dash
-    value = value.replace(u"—", u"-") # em dash
+    if len(value) < MIN_TAG_LENGTH:
+        raise Invalid(
+            _(u'Tag "%s" length is less than minimum %s')
+            % (value, MIN_TAG_LENGTH))
+    if len(value) > MAX_TAG_LENGTH:
+        raise Invalid(
+            _(u'Tag "%s" length is more than maximum %i')
+            % (value, MAX_TAG_LENGTH))
+    if u',' in value:
+        raise Invalid(_(u'Tag "%s" may not contain commas') % (value,))
+    if u'  ' in value:
+        raise Invalid(
+            _(u'Tag "%s" may not contain consecutive spaces') % (value,))
 
-    try:
-        blessed_value = value
-        #Let pass the bless-ed apostrophe
-        blessed_value = blessed_value.replace(u"'", u"-")
-        #Shelter the demon in-tag joinders (they know not what they do)
-        blessed_value = blessed_value.replace(u"/", u"-")
-        blessed_value = blessed_value.replace(u";", u"-")
-        blessed_value = blessed_value.replace(u">", u"-")
-        blessed_value = blessed_value.replace(u"+", u"-")
-        blessed_value = blessed_value.replace(u"&", u"-")
-        tag_name_validator(blessed_value, {})
-        return value
-    except Invalid, e:
-        e.error = e.error.replace("-_.", "' - _ . / ; > + &")
-        raise e
+    caution = re.sub(ur'[\w ]*', u'', value, flags=re.UNICODE)
+    for ch in caution:
+        category = unicodedata.category(ch)
+        if category.startswith('C'):
+            raise Invalid(
+                _(u'Tag "%s" may not contain unprintable character U+%04x')
+                % (value, ord(ch)))
+        if category.startswith('Z'):
+            raise Invalid(
+                _(u'Tag "%s" may not contain separator charater U+%04x')
+                % (value, ord(ch)))
+
+    return value
 
 
 def if_empty_generate_uuid(value):
