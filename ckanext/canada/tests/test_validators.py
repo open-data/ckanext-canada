@@ -4,11 +4,50 @@ from ckan.new_tests import factories
 import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
+from ckan.plugins.toolkit import Invalid
 
 from ckanapi import LocalCKAN, ValidationError
 import json
 from nose.plugins.skip import SkipTest
 from nose.tools import assert_raises, assert_equal
+
+from ckanext.canada.validators import canada_tags
+
+
+class TestCanadaTags(object):
+    def test_simple(self):
+        canada_tags(u'hello', {})
+
+    def test_too_short(self):
+        assert_raises(Invalid, canada_tags, u'h', {})
+
+    def test_too_long(self):
+        assert_raises(Invalid, canada_tags, u'z' * 141, {})
+
+    def test_barely_fits(self):
+        canada_tags(u'z' * 140, {})
+
+    def test_comma(self):
+        assert_raises(Invalid, canada_tags, u'who,me', {})
+
+    def test_strip_whitespace(self):
+        assert_equal(canada_tags(u'  hello world\n ', {}), u'hello world')
+
+    def test_consecutive_spaces(self):
+        assert_raises(Invalid, canada_tags, u'hello  world', {})
+
+    def test_punctuation(self):
+        canada_tags(u'yes we accept this ´‘’– —:;.!', {})
+
+    def test_symbols(self):
+        canada_tags(u'₩₮¬× this is fine too', {})
+
+    def test_control(self):
+        assert_raises(Invalid, canada_tags, u'hey\bthere', {})
+
+    def test_separator(self):
+        assert_raises(Invalid, canada_tags, u'one line\u2028two', {})
+
 
 class TestNAVLSchema(FunctionalTestBase):
 

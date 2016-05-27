@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import unicodedata
 
 from pylons.i18n import _
