@@ -7,7 +7,7 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import (
+from ckanext.canada.validators import (
     if_empty_generate_uuid,
     canada_tags,
     geojson_validator,
