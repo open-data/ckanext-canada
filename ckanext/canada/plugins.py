@@ -361,7 +361,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
             'wbdisable:"true"', '').replace(
             'wbdisable:"false"', '')
         from pylons import c
-        c.fields_grouped.pop('wbdisable', None)
+        try:
+            c.fields_grouped.pop('wbdisable', None)
+        except:
+            pass
 
         return search_params
 
