@@ -77,7 +77,7 @@ def canada_tags(value, context):
         raise Invalid(
             _(u'Tag "%s" may not contain consecutive spaces') % (value,))
 
-    caution = re.sub(ur'[\w ]*', u'', value, flags=re.UNICODE)
+    caution = re.sub(ur'[\w ]*', u'', value)
     for ch in caution:
         category = unicodedata.category(ch)
         if category.startswith('C'):
