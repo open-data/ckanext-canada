@@ -116,7 +116,7 @@ class TestNAVLSchema(FunctionalTestBase):
             self.normal_action.package_create,
             name='keyword_validation',
             **dict(self.complete_pkg,
-                keywords={'en':['test'], 'fr':['not! ok!']}))
+                keywords={'en':['test'], 'fr':['not  ok']}))
 
         assert_raises(ValidationError,
             self.normal_action.package_create,
