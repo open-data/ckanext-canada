@@ -267,6 +267,7 @@ ckanext.canada:schemas/info.yaml
             'drupal_session_present',
             'is_site_message_showing',
             'fgp_url',
+            'contact_information',
             ])
 
     def before_map(self, map):

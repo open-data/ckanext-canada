@@ -189,12 +189,32 @@
 {% endblock package_item_geo_preview %}
 
 {% block contact_information %}
-{#
-<div class="span-6 margin-top-medium">
-  <h4>{{ _('Contact Information') }}</h4>
-  <font color="red">Find pkg. values, how do I identify?</font>
-</div>
-#}
+  {% set info = h.contact_information(pkg.get('contact_information')) %}
+  {% if info %}
+    <div class="span-6 margin-top-medium">
+      <h4>{{ _('Contact Information') }}</h4>
+      {% if 'delivery_point' in info %}
+        <p>{{ _('Delivery Point') }}: {{ info['delivery_point'] }}</p>
+      {% endif %}
+      {% if 'city' in info %}
+        <p>{{ _('City') }}: {{ info['city'] }}</p>
+      {% endif %}
+      {% if 'administrative_area' in info %}
+        <p>{{ _('Administrative Area') }}: {{ info['administrative_area'] }}</p>
+      {% endif %}
+      {% if 'postal_code' in info %}
+        <p>{{ _('Postal Code') }}: {{ info['postal_code'] }}</p>
+      {% endif %}
+      {% if 'country' in info %}
+        <p>{{ _('Country') }}: {{ info['country'] }}</p>
+      {% endif %}
+      {% if 'electronic_mail_address' in info %}
+        <p>{{ _('Electronic Mail Address') }}:
+        <a href="mailto:{{ info['electronic_mail_address'] }}"
+          >{{ info['electronic_mail_address'] }}</a></p>
+      {% endif %}
+    </div>
+  {% endif %}
 {% endblock contact_information %}
 
 {% block package_comments %}
