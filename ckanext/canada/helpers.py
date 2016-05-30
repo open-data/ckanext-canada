@@ -1,4 +1,6 @@
+import json
 from pylons import c, config
+from pylons.i18n import _
 from ckan.model import User, Package
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
@@ -188,3 +190,13 @@ def get_datapreview_recombinant(resource_name, res_id):
 
 def fgp_url():
     return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
+
+def contact_information(info):
+    """
+    produce label, value pairs from contact info
+    """
+    try:
+        return json.loads(info)[h.lang()]
+    except:
+        return {}
+

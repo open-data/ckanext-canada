@@ -39,10 +39,6 @@
         {{ h.render_markdown(pkg.notes_translated[client_lang]) }}
       </div>
 
-      {% if pkg.collection == 'fgp' %}
-        <p><a href="/ramp/ramp-{{ h.lang() }}-ckan.html?keys_disabled={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
-      {% endif %}
-
     </section>
     {%- endblock -%}
 
@@ -54,24 +50,11 @@
         <div>
 
         {% block package_item_license_inner %}
-          {# for now, just override the old data.gc.ca license
-             url until such time that all datasets have been
-             updated with the new url #}
-
           {% if client_lang == 'fr' %}
-            {% if pkg.license_url_fra == 'http://data.gc.ca/fra/licence-du-gouvernement-ouvert-canada' %}
-                {% set license_url_fra = 'http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada' %}
-            {% else %}
-                {% set license_url_fra = pkg.license_url_fra %}
-            {% endif %}
-            <a href="{{ license_url_fra }}">{{ pkg.license_title_fra }}</a>
+            {% set license = h.get_license(pkg.license_id) %}
+            <a href="{{ license.url_fra }}">{{ license.title_fra }}</a>
           {% else %}
-            {% if pkg.license_url == 'http://data.gc.ca/eng/open-government-licence-canada' %}
-                {% set license_url = 'http://open.canada.ca/en/open-government-licence-canada' %}
-            {% else %}
-                {% set license_url = pkg.license_url %}
-            {% endif %}
-            <a href="{{ license_url }}">{{ pkg.license_title }}</a>
+            <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
           {% endif %}
         {% endblock %}
 
@@ -206,12 +189,32 @@
 {% endblock package_item_geo_preview %}
 
 {% block contact_information %}
-{#
-<div class="span-6 margin-top-medium">
-  <h4>{{ _('Contact Information') }}</h4>
-  <font color="red">Find pkg. values, how do I identify?</font>
-</div>
-#}
+  {% set info = h.contact_information(pkg.get('contact_information')) %}
+  {% if info %}
+    <div class="span-6 margin-top-medium">
+      <h4>{{ _('Contact Information') }}</h4>
+      {% if 'delivery_point' in info %}
+        <p>{{ _('Delivery Point') }}: {{ info['delivery_point'] }}</p>
+      {% endif %}
+      {% if 'city' in info %}
+        <p>{{ _('City') }}: {{ info['city'] }}</p>
+      {% endif %}
+      {% if 'administrative_area' in info %}
+        <p>{{ _('Administrative Area') }}: {{ info['administrative_area'] }}</p>
+      {% endif %}
+      {% if 'postal_code' in info %}
+        <p>{{ _('Postal Code') }}: {{ info['postal_code'] }}</p>
+      {% endif %}
+      {% if 'country' in info %}
+        <p>{{ _('Country') }}: {{ info['country'] }}</p>
+      {% endif %}
+      {% if 'electronic_mail_address' in info %}
+        <p>{{ _('Electronic Mail Address') }}:
+        <a href="mailto:{{ info['electronic_mail_address'] }}"
+          >{{ info['electronic_mail_address'] }}</a></p>
+      {% endif %}
+    </div>
+  {% endif %}
 {% endblock contact_information %}
 
 {% block package_comments %}

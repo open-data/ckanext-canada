@@ -3,10 +3,17 @@
 <ul class='list-inline'>
   {%- for choice in field.choices -%}
     {%- if choice.value in values -%}
-      <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
-        href="{%- url_for controller='package', action='search',
-        subject=choice.value %}">{{
-          h.scheming_language_text(choice.label) }}</a></li>
+      {% if field.field_name == 'topic_category' %}
+        <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
+          href="{%- url_for controller='package', action='search',
+          topic_category=choice.value %}">{{
+            h.scheming_language_text(choice.label) }}</a></li>
+      {% else %}
+        <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
+          href="{%- url_for controller='package', action='search',
+          subject=choice.value %}">{{
+            h.scheming_language_text(choice.label) }}</a></li>
+      {% endif %}
     {%- endif -%}
   {%- endfor -%}
 </ul>
