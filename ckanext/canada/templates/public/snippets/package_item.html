@@ -2,6 +2,13 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {% set client_lang = h.lang() %}
+{%- if 'title_fra' not in package -%}
+  {% set title = _(package.title) %}
+  {% set desc = _(package.notes) %}
+{%- else -%}
+  {% set title = cr.field_id('title', package, client_lang) %}
+  {% set desc = cr.field_id('notes', package, client_lang) %}
+{%- endif -%}
 
 {% block publisher_info %}
 <div class="row mrgn-tp-sm">
@@ -11,11 +18,7 @@
 {% endblock %}
 
 {% block notes %}
-  {% if client_lang == 'fr' %}
-    {% set notes = h.markdown_extract(package.notes_fra, extract_length=truncate) %}
-  {% else %}
-    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
-  {% endif %}
+  {% set notes = h.markdown_extract(desc, extract_length=truncate) %}
   {% if notes %}
     <div>{{ notes|urlize }}</div>
   {% else %}
@@ -24,12 +27,7 @@
 {% endblock %}
 
 {% block heading %}
-  {% if client_lang == 'fr' %}
-    {% set my_title = package['title_fra']%}
-  {% else %}
-    {% set my_title = package['title']%}
-  {% endif %}
   {% block heading_private %}{{ super() }}{% endblock %}
-    {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+    {{ h.link_to(title, h.url_for(controller='package', action='read', id=package.name)) }}
   {% block heading_meta %}{{ super() }}{% endblock %}
 {% endblock %}
