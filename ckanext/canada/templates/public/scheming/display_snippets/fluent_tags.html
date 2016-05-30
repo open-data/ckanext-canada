@@ -1,0 +1,16 @@
+{# slight abuse of scheming_language_text for selecting the desired
+   language version #}
+{%- set value = h.scheming_language_text(data[field.field_name]) -%}
+<ul class='list-inline'>
+  {%- for tag in value -%}
+    {% if h.lang() == 'fr' %}
+      <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
+        href="{%- url_for controller='package', action='search',
+        keywords_fra=tag %}">{{ tag }}</a></li>
+    {% else %}
+      <li><a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm"
+        href="{%- url_for controller='package', action='search',
+        keywords=tag %}">{{ tag }}</a></li>
+    {% endif %}
+  {%- endfor -%}
+</ul>

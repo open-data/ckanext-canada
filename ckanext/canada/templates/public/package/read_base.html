@@ -39,11 +39,12 @@ Remove the markdown_extract call because our notes is a dict not a string:
         {{ cr.split_bilingual_field(pkg.organization.title) }}
       </li>
 
-      {% set keywords = schema_description.dataset_field_by_id['keywords'] %}
-      <li class="list-group-item"><b>{{ cr.field_label(keywords, client_lang) }}:</b>
-        <small>
-        {{ cr.keyword_field(keywords, pkg, client_lang) }}
-        </small>
+      {% set keywords = h.scheming_field_by_name(schema.dataset_fields,
+        'keywords') %}
+      <li class="list-group-item"><b>{{
+        h.scheming_language_text(keywords.label) }}:</b>
+        {% snippet 'scheming/snippets/display_field.html',
+          field=keywords, data=pkg, schema=schema %}
       </li>
 
       {% set subj = h.scheming_field_by_name(schema.dataset_fields,
