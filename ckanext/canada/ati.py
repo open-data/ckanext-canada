@@ -70,7 +70,8 @@ class ATICommand(CkanCommand):
             return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
+        print conn
         conn.delete_query("*:*")
         conn.commit()
 
@@ -86,7 +87,7 @@ class ATICommand(CkanCommand):
         """
         self._clear_index()
 
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
         lc = LocalCKAN()
         if csv_files:
             for csv_file in csv_files:
