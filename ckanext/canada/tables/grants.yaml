@@ -1,0 +1,151 @@
+dataset_type: grants
+target_dataset: grants
+title: Proactive Disclosure - Grants and Contributions
+notes: This dataset includes all of the reports on grants and contributions
+       awarded by your organization.
+
+resources:
+- title: Proactive Disclosure - Grants and Contributions
+  resource_name: grants
+  fields:
+
+  - datastore_id: ref_number
+    label: Reference Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: prog_number
+    label: Program Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: prog_name_en
+    label: Program Name English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: prog_name_fr
+    label: Program Name French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: proj_number
+    label: Project Number
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: proj_name_en
+    label: Project Name English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: proj_name_fr
+    label: Project Name French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: recipient_name_en
+    label: Recipient Name English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: recipient_name_fr
+    label: Recipient Name French
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: location_endroit
+    label: Location
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: date
+    label: Date
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  - datastore_id: value
+    label: Value
+    datastore_type: money
+    excel_column_width: 20
+
+    solr_float_range_facet:
+     - label: $10,000 - $24,999.99
+       less_than: 25000
+     - label: $25,000 - $99,999.99
+       less_than: 100000
+     - label: $100,000 - $999,999.99
+       less_than: 1000000
+     - label: $1,000,000 - $4,999,999.99
+       less_than: 5000000
+     - label: $5,000,000+
+
+  - datastore_id: type
+    label: Type
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      G:
+        en: Grant
+        fr: subventions
+      C:
+        en: Contribution
+        fr: contributions
+
+  - datastore_id: purpose_en
+    label: Purpose English
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: purpose_fr
+    label: Purpose French
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: comments_en
+    label: Comments English
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: comments_fr
+    label: Comments French
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: additional_info_en
+    label: Additional Information English
+    datastore_type: text
+    excel_column_width: 41
+
+  - datastore_id: additional_info_fr
+    label: Additional Information French
+    datastore_type: text
+    excel_column_width: 41
+
+  datastore_primary_key: [ref_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF8BCCCB
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF689998
+
+  examples:
+    record:
+      ref_number: "1980198"
+      proj_number: "19876198"
+      recipient_name: Jane Smith
+      date: "2016-01-01"
+      value: "50000.00"
+    filters:
+      proj_number: "19876198"
+    filter_one:
+      ref_number: "1980198"
+    sort: date desc

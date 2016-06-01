@@ -14,8 +14,9 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN, NotFound
 
-from ckanext.recombinant.write_xls import xls_template
-from ckanext.recombinant.plugins import get_table, get_dataset_types
+from ckanext.recombinant.write_excel import excel_template
+from ckanext.recombinant.tables import get_chromo, get_dataset_types
+from ckanext.recombinant.helpers import recombinant_language_text
 
 from ckanext.canada.dataset import (
     solr_connection,
@@ -89,14 +90,10 @@ class PDCommand(CkanCommand):
         lc = LocalCKAN()
         if csv_file:
             count = {}
-            for org_recs in csv_data_batch(csv_file, self.command_name):
-                if not org_recs:
-                    break
-                org_id = org_recs.keys()[0]
+            for org_id, records in csv_data_batch(csv_file, self.command_name):
                 if org_id not in count:
                     count[org_id] = 0
                 org_detail = lc.action.organization_show(id=org_id)
-                records = org_recs[org_id]
                 _update_records(records, org_detail, conn, self.command_name)
                 count[org_id] += len(records)
             for org_id in lc.action.organization_list():
@@ -120,7 +117,7 @@ class PDCommand(CkanCommand):
         output_counter = {}
         output_path = self.args[2:][-1]
         dataset_types = get_dataset_types(self.command_name)
-        table = get_table(dataset_types[0])
+        table = get_chromo(dataset_types[0])
 
         def close_write_file(org_id):
             book = output_files[org_id]
@@ -146,7 +143,7 @@ class PDCommand(CkanCommand):
                 output_files[org_id] = None
                 next_row[org_id] = 0
                 return None, None
-            book = xls_template(dataset_types[0], org)
+            book = excel_template(dataset_types[0], org)
             output_files[org_id] = book
             output_counter[org_id] = output_counter.get(org_id, 0) + 1
             next_row[org_id] = len(book.get_sheet(0).get_rows())
@@ -183,7 +180,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
     :param recombinant_type: type being
     """
-    table = get_table(recombinant_type)
+    table = get_chromo(recombinant_type)
     pk = table.get('datastore_primary_key', [])
     if not isinstance(pk, list):
         pk = [pk]
@@ -258,8 +255,10 @@ def _update_records(records, org_detail, conn, recombinant_type):
 
             if key.endswith('_code'):
                 key = key[:-5]
-            solrrec[key + '_en'] = choices.get(value, '').split(' | ')[0]
-            solrrec[key + '_fr'] = choices.get(value, '').split(' | ')[-1]
+            solrrec[key + '_en'] = recombinant_language_text(
+                choices.get(value, ''), 'en')
+            solrrec[key + '_fr'] = recombinant_language_text(
+                choices.get(value, ''), 'fr')
 
         solrrec['text'] = u' '.join(solrrec.values())
         out.append(solrrec)
@@ -281,5 +280,5 @@ def extract_choices(filename):
     out = {}
     for line in f:
         choice = json.loads(line)
-        out[choice['id']] = choice['en'] + ' | ' + choice['fr']
+        out[choice['id']] = choice
     return out

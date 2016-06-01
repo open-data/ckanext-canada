@@ -9,6 +9,7 @@ from _csv import Error as _csvError
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
+from solr.core import SolrException
 
 from ckanapi import LocalCKAN, NotFound
 
@@ -34,8 +35,8 @@ class ATICommand(CkanCommand):
 
     Options::
 
-        -f/--csv-file <file> <file>    use specified CSV files as ati-summaries
-                                       and ati-none input, instead of the
+        -f/--csv-file <file> <file>    use specified CSV files as ati.csv
+                                       and ati-nil.csv input, instead of the
                                        (default) CKAN database
     """
     summary = __doc__.split('\n')[0]
@@ -69,7 +70,7 @@ class ATICommand(CkanCommand):
             return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
         conn.delete_query("*:*")
         conn.commit()
 
@@ -85,28 +86,18 @@ class ATICommand(CkanCommand):
         """
         self._clear_index()
 
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
         lc = LocalCKAN()
         if csv_files:
-            count = {}
             for csv_file in csv_files:
                 print csv_file + ':'
-                count[csv_file] = {}
-                for org_recs in csv_data_batch(csv_file, TARGET_DATASET):
-                    org_id = org_recs.keys()[0]
-                    if org_id not in count[csv_file]:
-                        count[csv_file][org_id] = 0
+                for org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
                     try:
                         org_detail = lc.action.organization_show(id=org_id)
                     except NotFound:
                         continue
-                    records = org_recs[org_id]
+                    print "    {0:s} {1}".format(org_id, len(records))
                     _update_records(records, org_detail, conn)
-                    count[csv_file][org_id] += len(records)
-                for k, v in count[csv_file].iteritems():
-                    print "    {0:s} {1}".format(k, v)
-            for org_id in lc.action.organization_list():
-                print org_id, sum((count[f].get(org_id, 0) for f in count))
         else:
             for org_id in lc.action.organization_list():
                 count = 0
@@ -115,7 +106,6 @@ class ATICommand(CkanCommand):
                     _update_records(records, org_detail, conn)
                     count += len(records)
                 print org_id, count
-            #rval = conn.query("*:*" , rows=2)
 
 
 def _update_records(records, org_detail, conn):
@@ -212,4 +202,8 @@ def _update_records(records, org_detail, conn):
         record['id'] = unique
         out.append(record)
 
-    conn.add_many(out, _commit=True)
+    try:
+        conn.add_many(out, _commit=True)
+    except SolrException, e:
+        print e.body
+        raise
