@@ -70,7 +70,7 @@ class ATICommand(CkanCommand):
             return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
         conn.delete_query("*:*")
         conn.commit()
 
@@ -86,7 +86,7 @@ class ATICommand(CkanCommand):
         """
         self._clear_index()
 
-        conn = solr_connection('ati_summaries')
+        conn = solr_connection('ati')
         lc = LocalCKAN()
         if csv_files:
             for csv_file in csv_files:
@@ -152,7 +152,7 @@ def _update_records(records, org_detail, conn):
             'hash': 'avexlb',
             'id': unique + 'en',
             'i18n_ts_en_ati_request_number': r.get('request_number', ''),
-            'i18n_ts_en_ati_request_summary': r.get('summary_eng', ''),
+            'i18n_ts_en_ati_request_summary': r.get('summary_en', ''),
             'ss_ati_contact_information_en':
                 "http://data.gc.ca/data/en/organization/about/{0}"
                 .format(org),
@@ -175,7 +175,7 @@ def _update_records(records, org_detail, conn):
             'hash': 'avexlb',
             'id': unique + 'fr',
             'i18n_ts_fr_ati_request_number': r.get('request_number', ''),
-            'i18n_ts_fr_ati_request_summary': r.get('summary_fra', ''),
+            'i18n_ts_fr_ati_request_summary': r.get('summary_fr', ''),
             'ss_ati_contact_information_fr':
                 "http://donnees.gc.ca/data/fr/organization/about/{0}"
                 .format(org),
