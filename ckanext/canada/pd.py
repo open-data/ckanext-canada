@@ -260,7 +260,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
             solrrec[key + '_fr'] = recombinant_language_text(
                 choices.get(value, ''), 'fr')
 
-        solrrec['text'] = u' '.join(solrrec.values())
+        solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
         out.append(solrrec)
 
     conn.add_many(out, _commit=True)
