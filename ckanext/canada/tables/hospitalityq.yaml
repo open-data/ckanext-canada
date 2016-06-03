@@ -31,7 +31,7 @@ resources:
     excel_column_width: 20
 
   - datastore_id: description_en
-    label: Description (French)
+    label: Description (English)
     datastore_type: text
     excel_column_width: 20
 
@@ -40,21 +40,21 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: date_start
+  - datastore_id: start_date
     label: Start Date
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
 
-  - datastore_id: date_end
+  - datastore_id: end_date
     label: End Date
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: attendees
     label: Attendee(s)
-    datastore_type: text
+    datastore_type: int
     excel_column_width: 20
 
   - datastore_id: location_en
