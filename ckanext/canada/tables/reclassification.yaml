@@ -14,6 +14,11 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+  - datastore_id: job_number
+    label: Job Number
+    datastore_type: text
+    excel_column_width: 20
+
   - datastore_id: pos_number
     label: Position Number
     datastore_type: text
@@ -27,44 +32,92 @@ resources:
     extract_date_month: true
 
   - datastore_id: pos_title_en
-    label: English Position Title
+    label: Position Title (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: pos_title_fr
-    label: French Position Title
+    label: Position Title (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: pos_prev_class
-    label: Previous Position Classification
+  - datastore_id: old_class_group_code
+    label: Previous Position Classification Group
+    datastore_type: text
+    excel_column_width: 10
+    choices_source: classification_group.jsonl
+
+  - datastore_id: old_class_level
+    label: Previous Position Classification Level Number
+    datastore_type: int
+    excel_column_width: 10
+
+  - datastore_id: new_class_group_code
+    label: Reclassified Position Classification Group
+    datastore_type: text
+    excel_column_width: 10
+    choices_source: classification_group.jsonl
+
+  - datastore_id: new_class_level
+    label: Reclassified Position Classification Level Number
+    datastore_type: int
+    excel_column_width: 10
+
+  - datastore_id: new_class_group
+    label: Reclassified Position Classification Group
     datastore_type: text
     excel_column_width: 5
 
-  - datastore_id: pos_class
-    label: Reclassified Position Classification
+  - datastore_id: prev_differential_en
+    label: Previous Supervisory Differential
     datastore_type: text
     excel_column_width: 5
+    choices:
+      "01": "01"
+      "02": "02"
+      "03": "03"
+      "04": "04"
+      "05": "05"
+      "06": "06"
+      "07": "07"
+      "08": "08"
+      "09": "09"
+      "10": "10"
+      "11": "11"
+      "12": "12"
+      "13": "13"
+      "14": "14"
+      "15": "15"
+      "16": "16"
+      "17": "17"
+      "18": "18"
+      "19": "19"
 
-  - datastore_id: pos_prev_differential_en
-    label: Previous Supervisory Differential (English)
+  - datastore_id: new_differential
+    label: Reclassified Supervisory Differential
     datastore_type: text
     excel_column_width: 5
-
-  - datastore_id: pos_prev_differential_fr
-    label: Previous Supervisory Differential (French)
-    datastore_type: text
-    excel_column_width: 5
-
-  - datastore_id: pos_differential_en
-    label: Reclassified Supervisory Differential (English)
-    datastore_type: text
-    excel_column_width: 5
-
-  - datastore_id: pos_differential_fr
-    label: Reclassified Supervisory Differential (French)
-    datastore_type: text
-    excel_column_width: 5
+    choices:
+      "N/A": "N/A"
+      "01": "01"
+      "02": "02"
+      "03": "03"
+      "04": "04"
+      "05": "05"
+      "06": "06"
+      "07": "07"
+      "08": "08"
+      "09": "09"
+      "10": "10"
+      "11": "11"
+      "12": "12"
+      "13": "13"
+      "14": "14"
+      "15": "15"
+      "16": "16"
+      "17": "17"
+      "18": "18"
+      "19": "19"
 
   - datastore_id: reason_en
     label: Reason for Reclassification (English)
