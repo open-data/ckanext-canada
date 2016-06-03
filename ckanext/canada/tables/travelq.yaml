@@ -40,15 +40,25 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  - datastore_id: date_start
-    label: Start Date
+  - datastore_id: purpose_en
+    label: Purpose of Travel (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: purpose_fr
+    label: Purpose of Travel (French)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: start_date
+    label: Travel Start Date
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
 
-  - datastore_id: date_end
-    label: End Date
+  - datastore_id: end_date
+    label: Travel End Date
     datastore_type: date
     excel_column_width: 20
 
