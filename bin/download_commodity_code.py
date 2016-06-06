@@ -7,7 +7,7 @@ import json
 import sys
 import os.path
 
-OUTPUT_FILE = os.path.join(os.path.split(os.path.abspath(__file__))[0],
+OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
     '../ckanext/canada/tables/choices/commodity_code.json')
 
 DATA_SOURCE = 'http://open.canada.ca/data'

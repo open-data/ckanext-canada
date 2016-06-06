@@ -31,7 +31,7 @@ resources:
     label: Economic Object Code
     datastore_type: text
     excel_column_width: 10
-    choices_source: economic_object_code.jsonl
+    choices_file: choices/economic_object_code.json
 
   - datastore_id: description_en
     label: Description of Work English
@@ -151,7 +151,6 @@ resources:
     label: Commodity Code
     datastore_type: text
     excel_column_width: 10
-    choices_source: commodity_code.jsonl
     choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
