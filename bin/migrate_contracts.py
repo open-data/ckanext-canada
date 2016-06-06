@@ -7,6 +7,7 @@ FIELDNAMES = 'unique_identifier,ref_number,vendor_name,contract_date,economic_ob
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
+out_csv.writeheader()
 
 for line in in_csv:
     if not line['unique_identifier'] or line['unique_identifier'] == 'None':
