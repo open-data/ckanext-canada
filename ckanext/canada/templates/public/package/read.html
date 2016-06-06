@@ -96,7 +96,7 @@
       <h2>{{ _('Related Items') }}</h2>
         <ul class="list-bullet-none">
         {% if pkg.collection == 'fgp' %}
-          <li><a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&id={{ pkg.id }}">{{ _("HNAP ISO:19115 Metadata Record") }}</a></li>
+          <li><a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">{{ _("HNAP ISO:19115 Metadata Record") }}</a></li>
         {% endif %}
         {% for resource in apps %}
           {% snippet 'package/snippets/app_item.html',
