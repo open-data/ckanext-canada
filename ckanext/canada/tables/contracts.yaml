@@ -361,7 +361,7 @@ resources:
     excel_column_width: 20
 
   - datastore_id: document_type_code
-    label: Document Type
+    label: Instrument Type
     datastore_type: text
     excel_column_width: 10
     choices:
