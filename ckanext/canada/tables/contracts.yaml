@@ -157,7 +157,7 @@ resources:
     label: Country of Origin
     datastore_type: text
     excel_column_width: 10
-    choices_source: country_of_origin.jsonl
+    choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure_code
     label: Solicitation Procedure
