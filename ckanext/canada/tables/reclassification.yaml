@@ -45,7 +45,7 @@ resources:
     label: Previous Position Classification Group
     datastore_type: text
     excel_column_width: 10
-    choices_source: classification_group.jsonl
+    choices_file: choices/classification_group.yaml
 
   - datastore_id: old_class_level
     label: Previous Position Classification Level Number
@@ -56,7 +56,7 @@ resources:
     label: Reclassified Position Classification Group
     datastore_type: text
     excel_column_width: 10
-    choices_source: classification_group.jsonl
+    choices_file: choices/classification_group.yaml
 
   - datastore_id: new_class_level
     label: Reclassified Position Classification Level Number
