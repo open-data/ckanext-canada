@@ -10,6 +10,11 @@ resources:
   resource_name: contracts
   fields:
 
+  - datastore_id: unique_identifier
+    label: Unique Identifier
+    datastore_type: text
+    excel_column_width: 20
+
   - datastore_id: ref_number
     label: Reference Number
     datastore_type: text
@@ -375,7 +380,7 @@ resources:
     datastore_type: text
     excel_column_width: 10
 
-  datastore_primary_key: [ref_number]
+  datastore_primary_key: [unique_identifier]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -391,7 +396,7 @@ resources:
 
   examples:
     record:
-      ref_number: "1980198"
+      unique_identifier: "1980198"
       vendor_name: Jane Smith
       contract_date: "2016-01-01"
       contract_value: "50000.00"
@@ -402,5 +407,5 @@ resources:
       agreement_type: W
       country_of_origin: US
     filter_one:
-      ref_number: "1980198"
+      unique_identifier: "1980198"
     sort: contract_date desc
