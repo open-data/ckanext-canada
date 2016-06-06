@@ -16,7 +16,9 @@ from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.write_excel import excel_template
 from ckanext.recombinant.tables import get_chromo, get_dataset_types
-from ckanext.recombinant.helpers import recombinant_language_text
+from ckanext.recombinant.helpers import (
+    recombinant_choice_fields,
+    recombinant_language_text)
 
 from ckanext.canada.dataset import (
     solr_connection,
@@ -165,7 +167,7 @@ class PDCommand(CkanCommand):
             close_write_file(org_id)
 
 
-def _update_records(records, org_detail, conn, recombinant_type):
+def _update_records(records, org_detail, conn, resource_name):
     """
     Update records on solr core
 
@@ -178,10 +180,10 @@ def _update_records(records, org_detail, conn, recombinant_type):
     :param conn: solr connection
     :ptype conn: obj
 
-    :param recombinant_type: type being
+    :param resource_name: type being updated
     """
-    table = get_chromo(recombinant_type)
-    pk = table.get('datastore_primary_key', [])
+    chromo = get_chromo(resource_name)
+    pk = chromo.get('datastore_primary_key', [])
     if not isinstance(pk, list):
         pk = [pk]
 
@@ -197,6 +199,10 @@ def _update_records(records, org_detail, conn, recombinant_type):
         return s
 
     out = []
+
+    choice_fields = dict(
+        (f['datastore_id'], dict(f['choices']))
+        for f in recombinant_choice_fields(resource_name, all_languages=True))
 
     for r in records:
         unique = unique_id(r)
@@ -216,7 +222,7 @@ def _update_records(records, org_detail, conn, recombinant_type):
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
             }
 
-        for f in table['fields']:
+        for f in chromo['fields']:
             key = f['datastore_id']
             value = r[key]
 
@@ -247,11 +253,9 @@ def _update_records(records, org_detail, conn, recombinant_type):
                     pass
             solrrec[key] = value
 
-            choices = f.get('choices')
+            choices = choice_fields.get(f['datastore_id'])
             if not choices:
-                if 'choices_source' not in f:
-                    continue
-                choices = f['choices'] = extract_choices(f['choices_source'])
+                continue
 
             if key.endswith('_code'):
                 key = key[:-5]
@@ -272,13 +276,3 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
-
-def extract_choices(filename):
-    "Convert choices stored as json lines to the format expected above"
-    here = os.path.dirname(os.path.abspath(__file__))
-    f = open(here + '/download/' + filename, 'rb')
-    out = {}
-    for line in f:
-        choice = json.loads(line)
-        out[choice['id']] = choice
-    return out
