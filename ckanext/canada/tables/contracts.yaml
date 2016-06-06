@@ -152,6 +152,7 @@ resources:
     datastore_type: text
     excel_column_width: 10
     choices_source: commodity_code.jsonl
+    choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
     label: Country of Origin

@@ -5,6 +5,10 @@ import unicodecsv
 import requests
 import json
 import sys
+import os.path
+
+OUTPUT_FILE = os.path.join(os.path.split(os.path.abspath(__file__))[0],
+    '../ckanext/canada/tables/choices/commodity_code.json')
 
 DATA_SOURCE = 'http://open.canada.ca/data'
 
@@ -14,7 +18,7 @@ GSIN_COLUMNS = {'id': 0, 'en':2, 'fr':3}
 COMMODITY_DATASET = '92214e02-bb86-433e-81b9-c2a78a518e75'
 COMMODITY_COLUMNS = {'id': 9, 'en': 10, 'fr': 11}
 
-seen_ids = set()
+choices = {}
 
 def download_csv_filter_output(source, dataset_id, columns):
     """
@@ -34,14 +38,14 @@ def download_csv_filter_output(source, dataset_id, columns):
         # skip blanks
         if not out['id']:
             continue
-        if out['id'] in seen_ids:
+        if out['id'] in choices:
             sys.stderr.write('duplicate id: %r!\n' % out['id'])
             continue
-        seen_ids.add(out['id'])
 
-        print json.dumps(out)
+        choices[out['id']] = {'en': out['en'], 'fr': out['fr']}
 
 download_csv_filter_output(DATA_SOURCE, GSIN_DATASET, GSIN_COLUMNS)
 download_csv_filter_output(DATA_SOURCE, COMMODITY_DATASET, COMMODITY_COLUMNS)
 
-sys.stderr.write('wrote %d items\n' % len(seen_ids))
+json.dump(choices, open(OUTPUT_FILE, 'wb'))
+sys.stderr.write('wrote %d items\n' % len(choices))
