@@ -169,7 +169,9 @@ class CanadaController(BaseController):
             return h.redirect_to(controller='user',
                 action='login', locale=lang)
 
-    def datatable(self, resource_id):
+    def datatable(self, resource_name, resource_id):
+        from ckanext.recombinant.tables import get_chromo
+        t = get_chromo(resource_name)
         echo = int(request.params['sEcho'])
         search_text = unicode(request.params['sSearch'])
         offset = int(request.params['iDisplayStart'])
@@ -186,7 +188,7 @@ class CanadaController(BaseController):
             limit=1,
             )
 
-        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        cols = [f['datastore_id'] for f in t['fields']]
         sort_str = ''
         if sort_cols:
             sort_str = cols[sort_by_num] + ' ' + sort_order
@@ -194,6 +196,7 @@ class CanadaController(BaseController):
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
+            fields=cols,
             offset=offset,
             limit=limit,
             sort=sort_str)
