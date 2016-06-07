@@ -979,6 +979,111 @@ msgstr "Ce jeu de données comprend tous les rapports ayant trait à la reclassi
 msgid "Position Number"
 msgstr "Numéro du poste"
 
+msgid "Economic Object Code"
+msgstr "Code d’article économique"
+
+msgid "Instrument Type"
+msgstr "Type d’instrument"
+
+msgid "Unique Identifier"
+msgstr "Identifiant unique"
+
+msgid "Title (English)"
+msgstr "Titre (anglais)"
+
+msgid "Title (French)"
+msgstr "Titre (français)"
+
+msgid "Description (French)"
+msgstr "Description (français)"
+
+msgid "Location (French)"
+msgstr "Lieu (français)"
+
+msgid "Description (English)"
+msgstr "Description (anglais)"
+
+msgid "Location (English)"
+msgstr "Lieu (anglais)"
+
+msgid "Job Number"
+msgstr "Numéro d'emploi"
+
+msgid "Position Title (French)"
+msgstr "Titre du poste (français)"
+
+msgid "Position Title (English)"
+msgstr "Titre du poste (anglais)"
+
+msgid "Previous Position Classification Group"
+msgstr "Groupe de classification du poste antérieur"
+
+msgid "Previous Position Classification Sub Group"
+msgstr "Sous-groupe de classification du poste antérieur"
+
+msgid "Previous Position Classification Level Number"
+msgstr "Numéro de niveau de la classification du poste antérieur"
+
+msgid "Reclassified Position Classification Group"
+msgstr "Groupe de classification du poste reclassifié"
+
+msgid "Reclassified Position Classification Sub Group"
+msgstr "Groupe de classification du poste reclassifié"
+
+msgid "Reclassified Position Classification Level Number"
+msgstr "Numéro de niveau de la classification du poste reclassifié"
+
+msgid "Purpose of Travel (French)"
+msgstr "But du voyage (français)"
+
+msgid "Purpose of Travel (English)"
+msgstr "But du voyage (anglais)"
+
+msgid "Travel Start Date"
+msgstr "Date du début du voyage"
+
+msgid "Travel End Date(s)"
+msgstr "Date de fin du voyage"
+
+msgid "Destination (French)"
+msgstr "Destination (français)"
+
+msgid "Destination (English)"
+msgstr "Destination (anglais)"
+
+msgid "Program Name (English)"
+msgstr "Nom du programme (anglais)"
+
+msgid "Program Name (French)"
+msgstr "Nom du programme (français)"
+
+msgid "Project Name (English)"
+msgstr "Nom du bénéficiaire (anglais)"
+
+msgid "Project Name (French)"
+msgstr "Nom du bénéficiaire (français)"
+
+msgid "Recipient Name (English)"
+msgstr "Nom du récipient (anglais)"
+
+msgid "Recipient Name (French)"
+msgstr "Nom du récipient (français)"
+
+msgid "Country"
+msgstr "Pays"
+
+msgid "Region (English)"
+msgstr "Région (anglais)"
+
+msgid "Region (French)"
+msgstr "Région (français)"
+
+msgid "Additional Information (English)"
+msgstr "Informations supplémentaires (anglais)"
+
+msgid "Additional Information (French)"
+msgstr "Informations supplémentaires (français)"
+
 msgid "English Position Title"
 msgstr "Titre du poste anglais"
 
@@ -994,13 +1099,13 @@ msgstr "Classification du poste reclassifié"
 msgid "Previous Supervisory Differential"
 msgstr "Ancienne prime de surveillance"
 
-msgid "Supervisory Differential"
-msgstr "Prime de surveillance"
+msgid "Reclassified Supervisory Differential"
+msgstr "Prime de surveillance précédente"
 
-msgid "English Reason for Reclassification"
+msgid "Reason for Reclassification (English)"
 msgstr "Raison de la decision en anglais"
 
-msgid "French Reason for Reclassification"
+msgid "Reason for Reclassification (French)"
 msgstr "Raison de la decision en français"
 
 
@@ -1012,6 +1117,48 @@ msgstr "Élément spatial"
 
 msgid "Bilingual (English and French)"
 msgstr "Bilingue (français et anglais)"
+
+msgid "Open Data Inventory"
+msgstr "Inventaire des données ouvertes"
+
+msgid "This dataset houses your departmental open data inventory. This is where you can access and upload your open data inventory template."
+msgstr "Ce jeu de données contient l’inventaire des données ouvertes de votre ministère. C’est l’occasion pour accéder à et pour télécharger votre modèle d'inventaire des données ouvertes. "
+
+msgid "Title English"
+msgstr "Titre en anglais"
+
+msgid "Title French"
+msgstr "Titre en français"
+
+msgid "Description English"
+msgstr "Description en anglais"
+
+msgid "Description French"
+msgstr "Description en français"
+
+msgid "Publisher - English Name at Publication"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication, en anglais"
+
+msgid "Publisher - French Name at Publication"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication, en français"
+
+msgid "Date Published"
+msgstr "Date de publication "
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Size"
+msgstr "Taille "
+
+msgid "Privacy Impact Assessment"
+msgstr "Évaluation des facteurs relatifs à la vie privée"
+
+msgid "Date Released"
+msgstr "Date de sortie"
+
+msgid "Download URL"
+msgstr "URL de téléchargement"
 
 #FIXME - 2015-01-12 These are translations from the ckanext-recombinant extension
 

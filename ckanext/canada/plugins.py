@@ -93,7 +93,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
             m.connect('/newuser', action='view_new_user')
-            m.connect('/datatable/{resource_id}', action='datatable')
+            m.connect('/datatable/{resource_name}/{resource_id}', 
+                action='datatable')
         return map
 
     def get_helpers(self):
@@ -144,6 +145,7 @@ ckanext.canada:tables/reclassification.yaml
 ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
+ckanext.canada:tables/inventory.yaml
 """
 
     def dataset_facets(self, facets_dict, package_type):

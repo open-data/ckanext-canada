@@ -14,6 +14,11 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+  - datastore_id: job_number
+    label: Job Number
+    datastore_type: text
+    excel_column_width: 20
+
   - datastore_id: pos_number
     label: Position Number
     datastore_type: text
@@ -27,42 +32,58 @@ resources:
     extract_date_month: true
 
   - datastore_id: pos_title_en
-    label: English Position Title
+    label: Position Title (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: pos_title_fr
-    label: French Position Title
+    label: Position Title (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: pos_prev_class
-    label: Previous Position Classification
+  - datastore_id: old_class_group_code
+    label: Previous Position Classification Group
     datastore_type: text
-    excel_column_width: 5
+    excel_column_width: 10
+    choices_file: choices/classification_group.yaml
 
-  - datastore_id: pos_class
-    label: Reclassified Position Classification
+  - datastore_id: old_class_level
+    label: Previous Position Classification Level Number
+    datastore_type: int
+    excel_column_width: 10
+    choices_file: choices/level_number.yaml
+
+  - datastore_id: new_class_group_code
+    label: Reclassified Position Classification Group
     datastore_type: text
-    excel_column_width: 5
+    excel_column_width: 10
+    choices_file: choices/classification_group.yaml
 
-  - datastore_id: pos_prev_differential
+  - datastore_id: new_class_level
+    label: Reclassified Position Classification Level Number
+    datastore_type: int
+    excel_column_width: 10
+    choices_file: choices/level_number.yaml
+
+  - datastore_id: old_differential
     label: Previous Supervisory Differential
     datastore_type: text
     excel_column_width: 5
+    choices_file: choices/supervisory_differential.yaml
 
-  - datastore_id: pos_differential
-    label: Supervisory Differential
+  - datastore_id: new_differential
+    label: Reclassified Supervisory Differential
     datastore_type: text
     excel_column_width: 5
+    choices_file: choices/supervisory_differential.yaml
 
   - datastore_id: reason_en
-    label: English Reason for Reclassification
+    label: Reason for Reclassification (English)
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: reason_fr
-    label: French reason for Reclassification
+    label: Reason for Reclassification (French)
     datastore_type: text
     excel_column_width: 41
 

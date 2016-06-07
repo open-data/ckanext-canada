@@ -20,36 +20,56 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: title
-    label: Title
+  - datastore_id: title_en
+    label: Title (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: description
-    label: Description
+  - datastore_id: title_fr
+    label: Title (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: date
-    label: Date
+  - datastore_id: description_en
+    label: Description (English)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: description_fr
+    label: Description (French)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: start_date
+    label: Start Date
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
 
+  - datastore_id: end_date
+    label: End Date
+    datastore_type: date
+    excel_column_width: 20
+
   - datastore_id: attendees
     label: Attendee(s)
+    datastore_type: int
+    excel_column_width: 20
+
+  - datastore_id: location_en
+    label: Location (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: location
-    label: Location
+  - datastore_id: location_fr
+    label: Location (French)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: total
     label: Total Amount
-    datastore_type: text
+    datastore_type: money
     excel_column_width: 20
 
     solr_float_range_facet:
