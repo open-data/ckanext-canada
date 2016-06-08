@@ -49,28 +49,6 @@
     {% endif %}
   {% endblock %}
 
-{% block filter_list %}
-{% for field in c.fields_grouped %}
-  {% set search_facets_items = c.search_facets.get(field)['items'] %}
-  <span class="facet">{{ c.facet_titles.get(field) }}:</span>
-  {% for value in c.fields_grouped[field] %}
-    <span class="filtered pill background-accent facet-filter">
-      {%- if c.translated_fields and c.translated_fields.has_key((field,value)) -%}
-        {{ c.translated_fields[(field,value)] }}
-      {% elif field == 'subject' %}
-        {# since we separate subjects by two spaces instead of a pipe... #}
-        {{ cr.split_subject_field(value, h.lang()) }}
-      {%- else -%}
-        {{ cr.split_bilingual_field(h.list_dict_filter(
-            search_facets_items , 'name', 'display_name', value),
-          h.lang()) }}
-      {%- endif %}
-      <a href="{{ c.remove_field(field, value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
-    </span>
-  {% endfor %}
-{% endfor %}
-{% endblock %}
-
 {% block try_another_search %}
 <p class="extra">
 {%- trans -%}
