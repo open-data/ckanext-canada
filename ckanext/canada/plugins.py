@@ -358,9 +358,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
         search_params['facet.range.gap'] = '+100YEARS'
 
         # FIXME: so terrible. hack out WET4 wbdisable parameter
-        search_params['fq'] = search_params['fq'].replace(
-            'wbdisable:"true"', '').replace(
-            'wbdisable:"false"', '')
+        try:
+            search_params['fq'] = search_params['fq'].replace(
+                'wbdisable:"true"', '').replace(
+                'wbdisable:"false"', '')
+        except:
+            pass
         from pylons import c
         try:
             c.fields_grouped.pop('wbdisable', None)
