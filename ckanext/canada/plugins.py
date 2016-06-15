@@ -362,12 +362,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
             search_params['fq'] = search_params['fq'].replace(
                 'wbdisable:"true"', '').replace(
                 'wbdisable:"false"', '')
-        except:
+        except Exception:
             pass
         from pylons import c
         try:
             c.fields_grouped.pop('wbdisable', None)
-        except:
+        except Exception:
             pass
 
         return search_params
