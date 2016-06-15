@@ -197,6 +197,6 @@ def contact_information(info):
     """
     try:
         return json.loads(info)[h.lang()]
-    except:
+    except Exception:
         return {}
 

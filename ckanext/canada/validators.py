@@ -110,7 +110,7 @@ def geojson_validator(value):
                 value = json.loads(value)
             shape = asShape(value)
             wkt.dumps(shape)
-        except:
+        except Exception:
             raise Invalid(_("Invalid GeoJSON"))
         # must store as JSON
         return json.dumps(value)
