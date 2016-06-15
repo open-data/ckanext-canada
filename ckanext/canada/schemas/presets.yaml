@@ -1715,7 +1715,7 @@ presets:
       fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
     label:
       en: "Maintenance and Update Frequency"
-      fr: "Fréquence mis à jour"
+      fr: "Fréquence mise à jour"
     required: true
     form_include_blank_choice: true
     choices:
@@ -1806,7 +1806,7 @@ presets:
       fr: Date de modification
     help_text:
       en: The date on which the information asset was changed, updated or modified.
-      fr: Date à laquelle la ressource d’information a été changé, mis à jour ou modifié
+      fr: Date à laquelle la ressource d’information a été changé, mise à jour ou modifié
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
