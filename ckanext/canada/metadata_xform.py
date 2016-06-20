@@ -139,9 +139,6 @@ def _process(line):
         r['format'] = resource_choices['format'].get(
             r['format'], r['format'])
 
-        # XXX: disable uploading stored files for now
-        r.pop('url_type', None)
-
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
