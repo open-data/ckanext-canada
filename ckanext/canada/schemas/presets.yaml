@@ -42,6 +42,10 @@ presets:
         en: Open Maps
         fr: Cartes Ouvertes
       value: fgp
+    - label:
+        en: Publications
+        fr: Publication
+      value: publication
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
