@@ -23,11 +23,7 @@ dataset_fields:
 - preset: canada_dataset_name
 
 - preset: canada_collection
-  choices:
-  - label:
-      en: Publications
-      fr: Publication
-    value: publication
+  form_restrict_choices_to: [publication]
 
 - preset: canada_title
 - preset: canada_owner_org

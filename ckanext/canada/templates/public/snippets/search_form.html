@@ -2,14 +2,17 @@
 
 {% block search_input_label %}
 
-
-<div class="row mrgn-bttm-sm mrgn-rght-sm">
-  <div class="col-md-12">
-    <section class="alert alert-info" >
-    <p>{{ _('Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map.')|safe }}</p>
-    </section>
+{# only on maps site for now #}
+{% if facets.search.collection['items']|length == 1 and
+    facets.search.collection['items'].0.name == 'fgp' %}
+  <div class="row mrgn-bttm-sm mrgn-rght-sm">
+    <div class="col-md-12">
+      <section class="alert alert-info" >
+      <p>{{ _('Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map.')|safe }}</p>
+      </section>
+    </div>
   </div>
-</div>
+{% endif %}
 
 <div class="row mrgn-bttm-md mrgn-tp-md">
   <div class="col-md-12">

@@ -183,7 +183,12 @@ def _set_new_schema_dataset_choices():
     def choice_mapping(f):
         old_new = {}
         for ch in f['choices']:
-            old = ch.get('label', {'en': ch['value']})['en'].replace(',', '')
+            old = ch.get('label', {'en': ch['value']})
+            try:
+                old = old['en']
+            except TypeError:
+                pass
+            old = old.replace(',', '')
             value = ch['value']
             old_new[old] = value
             for r in ch.get('replaces', ()):
