@@ -23,6 +23,7 @@ pip install -r requirements.txt
 pip install -e git+https://github.com/open-data/ckanext-wet-boew@wet4-scheming#egg=ckanext-wet-boew
 pip install -e git+https://github.com/open-data/ckanext-scheming#egg=ckanext-scheming
 pip install -e git+https://github.com/open-data/ckanext-fluent#egg=ckanext-fluent
+pip install -e git+https://github.com/ckan/ckantoolkit#egg=ckantoolkit
 
 python setup.py develop
 
