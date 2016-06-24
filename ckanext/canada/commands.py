@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from ckan.lib.cli import CkanCommand
 from ckan.logic.validators import isodate, boolean_validator
 from ckan.lib.navl.dictization_functions import Invalid
@@ -5,6 +7,7 @@ import paste.script
 from paste.script.util.logging_config import fileConfig
 from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
+import ckan.lib.uploader as uploader
 
 import re
 import os
@@ -18,16 +21,27 @@ from contextlib import contextmanager
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.metadata_xform import metadata_xform
 
-from ckanapi import (RemoteCKAN, LocalCKAN, NotFound,
-    ValidationError, NotAuthorized, SearchIndexError, CKANAPIError)
+from ckanapi import (
+    RemoteCKAN,
+    LocalCKAN,
+    NotFound,
+    NotAuthorized,
+    CKANAPIError
+)
 
-PAST_RE = (r'^'
-    r'(?:(\d+)d)?' # days
-    r'(?:(\d+)h)?' # hours
-    r'(?:(\d+)m)?' # minutes
-    r'$')
+PAST_RE = (
+    r'^'
+    # Days
+    r'(?:(\d+)d)?'
+    # Hours
+    r'(?:(\d+)h)?'
+    # Minutes
+    r'(?:(\d+)m)?'
+    r'$'
+)
 
 DATASET_TYPES = 'info', 'dataset'
+
 
 class CanadaCommand(CkanCommand):
     """
@@ -72,16 +86,34 @@ class CanadaCommand(CkanCommand):
     usage = __doc__
 
     parser = paste.script.command.Command.standard_parser(verbose=True)
-    parser.add_option('-c', '--config', dest='config',
-        default='development.ini', help='Config file to use.')
-    parser.add_option('-p', '--processes', dest='processes',
-        default=1, type="int")
-    parser.add_option('-u', '--ckan-user', dest='ckan_user',
-        default=None)
+    parser.add_option(
+        '-c',
+        '--config',
+        dest='config',
+        default='development.ini',
+        help='Config file to use.'
+    )
+    parser.add_option(
+        '-p',
+        '--processes',
+        dest='processes',
+        default=1,
+        type='int'
+    )
+    parser.add_option(
+        '-u',
+        '--ckan-user',
+        dest='ckan_user',
+        default=None
+    )
     parser.add_option('-l', '--log', dest='log', default=None)
     parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
-    parser.add_option('-a', '--push-apikey', dest='push_apikey',
-        default=None)
+    parser.add_option(
+        '-a',
+        '--push-apikey',
+        dest='push_apikey',
+        default=None
+    )
     parser.add_option('-s', '--server', dest='server', default=None)
     parser.add_option('-b', '--brief', dest='brief', action='store_true')
     parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
@@ -115,7 +147,6 @@ class CanadaCommand(CkanCommand):
         else:
             print self.__doc__
 
-
     def _app_config(self):
         """
         This is the first part of CkanCommand._load_config()
@@ -126,9 +157,11 @@ class CanadaCommand(CkanCommand):
             raise self.BadCommand(msg)
         self.filename = os.path.abspath(self.options.config)
         if not os.path.exists(self.filename):
-            raise AssertionError('Config filename %r does not exist.' % self.filename)
+            raise AssertionError(
+                'Config filename %r does not exist.' % self.filename
+            )
         fileConfig(self.filename)
-        conf = appconfig('config:' + self.filename)
+        appconfig('config:' + self.filename)
 
     def portal_update(self, source, activity_date=None):
         """
@@ -150,9 +183,13 @@ class CanadaCommand(CkanCommand):
         if activity_date:
             past = re.match(PAST_RE, activity_date)
             if past:
-                days, hours, minutes = (int(x) if x else 0 for x in past.groups())
-                activity_date = datetime.now() - timedelta(days=days,
-                    seconds=(hours * 60 + minutes) * 60)
+                days, hours, minutes = (
+                    int(x) if x else 0 for x in past.groups()
+                )
+                activity_date = datetime.now() - timedelta(
+                    days=days,
+                    seconds=(hours * 60 + minutes) * 60
+                )
             else:
                 activity_date = isodate(activity_date, None)
         else:
@@ -179,14 +216,21 @@ class CanadaCommand(CkanCommand):
                 yield package_ids, next_date
                 start_date = next_date
 
-        cmd = [sys.argv[0], 'canada', 'copy-datasets', source,
-             '-c', self.options.config]
+        cmd = [
+            sys.argv[0],
+            'canada',
+            'copy-datasets',
+            source,
+            '-c',
+            self.options.config
+        ]
         if self.options.push_apikey:
             cmd.extend(['-a', self.options.push_apikey])
         else:
             cmd.append('-f')
         if self.options.mirror:
             cmd.append('-m')
+
         pool = worker_pool(
             cmd,
             self.options.processes,
@@ -194,7 +238,9 @@ class CanadaCommand(CkanCommand):
             stop_when_jobs_done=False,
             stop_on_keyboard_interrupt=False,
             )
-        pool.next() # advance generator so we may call send() below
+
+        # Advance generator so we may call send() below
+        pool.next()
 
         def append_log(finished, package_id, action, reason):
             if not log:
@@ -209,10 +255,15 @@ class CanadaCommand(CkanCommand):
             log.flush()
 
         with _quiet_int_pipe():
-            append_log(None, None, "started updating from:",
-                activity_date.isoformat())
+            append_log(
+                None,
+                None,
+                "started updating from:",
+                activity_date.isoformat()
+            )
 
-            for package_ids, next_date in changed_package_id_runs(activity_date):
+            for package_ids, next_date in (
+                    changed_package_id_runs(activity_date)):
                 job_ids, finished, result = pool.send(enumerate(package_ids))
                 stats = completion_stats(self.options.processes)
                 while result is not None:
@@ -223,12 +274,17 @@ class CanadaCommand(CkanCommand):
                     job_ids, finished, result = pool.next()
 
                 print " --- next batch starting at: " + next_date.isoformat()
-                append_log(None, None, "next batch starting at:",
-                    next_date.isoformat())
+                append_log(
+                    None,
+                    None,
+                    "next batch starting at:",
+                    next_date.isoformat()
+                )
                 self._portal_update_activity_date = next_date.isoformat()
             self._portal_update_completed = True
 
-    def _changed_package_ids_since(self, registry, since_time, seen_id_set=None):
+    def _changed_package_ids_since(self, registry, since_time,
+                                   seen_id_set=None):
         """
         Query source ckan instance for packages changed since_time.
         returns (package ids, next since_time to query) or (None, None)
@@ -266,7 +322,6 @@ class CanadaCommand(CkanCommand):
 
         return package_ids, since_time
 
-
     def copy_datasets(self, remote, package_ids=None):
         """
         a process that accepts package ids on stdin which are passed to
@@ -300,8 +355,13 @@ class CanadaCommand(CkanCommand):
             except NotAuthorized:
                 source_pkg = None
             except (CKANAPIError, urllib2.URLError), e:
-                sys.stdout.write(json.dumps([package_id, 'source error',
-                    unicode(e.args)]) + '\n')
+                sys.stdout.write(
+                    json.dumps([
+                        package_id,
+                        'source error',
+                        unicode(e.args)
+                    ]) + '\n'
+                )
                 raise
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
@@ -322,13 +382,19 @@ class CanadaCommand(CkanCommand):
                     reason = 'release date in future'
 
             try:
-                target_pkg = portal.call_action('package_show',
-                    {'id':package_id})
+                target_pkg = portal.call_action('package_show', {
+                    'id': package_id
+                })
             except (NotFound, NotAuthorized):
                 target_pkg = None
             except (CKANAPIError, urllib2.URLError), e:
-                sys.stdout.write(json.dumps([package_id, 'target error',
-                    unicode(e.args)]) + '\n')
+                sys.stdout.write(
+                    json.dumps([
+                        package_id,
+                        'target error',
+                        unicode(e.args)
+                    ]) + '\n'
+                )
                 raise
             if target_pkg and target_pkg['state'] == 'deleted':
                 target_pkg = None
@@ -356,9 +422,29 @@ class CanadaCommand(CkanCommand):
                 action = 'updated'
                 portal.action.package_update(**source_pkg)
 
+            # If we're updating or creating this package we want to also update
+            # the package's resources.
+            if action not in ('unchanged', 'deleted'):
+                for resource_blob in source_pkg.get('resources', []):
+                    if resource_blob['url_type'] != 'upload':
+                        # Not a file upload, the original
+                        # package_create/_update was enough to handle this
+                        # case.
+                        continue
+                    # In 2.5+ we could use the IUploader's get_path method to
+                    # find this file on disk. Pre 2.5 we need to use the
+                    # ResourceUpload class directly.
+                    upload = uploader.ResourceUpload(resource_blob)
+                    file_path = upload.get_path(resource_blob['id'])
+
+                    with open(file_path, 'rb') as file_:
+                        portal.action.resource_patch(
+                            id=resource_blob['id'],
+                            upload=file_
+                        )
+
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
-
 
     def changed_datasets(self, since_date):
         """
@@ -414,10 +500,10 @@ def _trim_package(pkg):
     for r in pkg['resources']:
         for k in ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
-                'webstore_last_updated', 'id', 'state', 'hash',
+                'webstore_last_updated', 'state', 'hash',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'last_modified', 'position', 'url_type']:
+                'last_modified', 'position']:
             if k in r:
                 del r[k]
         for k in ['name', 'size']:
