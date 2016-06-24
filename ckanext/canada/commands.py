@@ -440,7 +440,7 @@ class CanadaCommand(CkanCommand):
                     with open(file_path, 'rb') as file_:
                         portal.action.resource_patch(
                             id=resource_blob['id'],
-                            upload=file_
+                            upload=(resource_blob['url'].split('/')[-1], file_)
                         )
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
