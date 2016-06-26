@@ -17,22 +17,22 @@
 <tr>
   <td>
     {% snippet 'scheming/snippets/display_field.html',
-      field=name_field, data=res, schema=schema %}
+      field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
 
   <td>
     {% snippet 'scheming/snippets/display_field.html',
-      field=type_field, data=res, schema=schema %}
+      field=type_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
 
   <td>
     {% snippet 'scheming/snippets/display_field.html',
-      field=format_field, data=res, schema=schema %}
+      field=format_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
 
   <td>
     {% snippet 'scheming/snippets/display_field.html',
-      field=lang_field, data=res, schema=schema %}
+      field=lang_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
 
   <td>

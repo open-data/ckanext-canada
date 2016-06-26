@@ -172,15 +172,16 @@
     {% endif %}
   {% endif %}
   {% if pkg.geographic_region %}
+    {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
     {% set geo_region = h.scheming_field_by_name(schema.dataset_fields,
       'geographic_region') %}
     <div class="col-md-4">
       <h4>{{
-      h.scheming_language_text(geo_region.label).lstrip('*') }}: {# FIXME lstrip #}</h4>
+      h.scheming_language_text(geo_region.label) }}: </h4>
     </div>
     <div class="col-md-8">
       {% snippet 'scheming/snippets/display_field.html',
-        field=geo_region, data=pkg, schema=schema %}
+        field=geo_region, data=pkg, entity_type='dataset', object_type=pkg.type %}
     </div>
 
   {% endif %}
