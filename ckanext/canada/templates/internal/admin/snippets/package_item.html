@@ -1,86 +1,12 @@
-{#
-Displays a single of dataset.
+{% extends 'snippets/package_item.html' %}
 
-package        - A package to display.
-item_class     - The class name to use on the list item.
-hide_resources - If true hides the resources (default: false).
-banner         - If true displays a popular banner (default: false).
-truncate       - The length to trucate the description to (default: 180)
-truncate_title - The length to truncate the title to (default: 80).
-
-Example:
-
-  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
-
-#}
-
-{% import 'macros/canada_read.html' as cr %}
-{% set client_lang = h.lang() %}
-{% set truncate = truncate or 180 %}
-{% set truncate_title = truncate_title or 80 %}
-{% set notes = h.markdown_extract(package.notes[client_lang], extract_length=truncate) %}
-{% set publisher_field = schema_description.dataset_field_by_id['owner_org'] %}
-
-<li>
-  {% block package_item_content %}
-    <div class="panel panel-default">
-      <strong>
-        {% if package.private %}
-          <span class="dataset-private label label-inverse">
-            <i class="icon-lock"></i>
-            {{ _('Private') }}
-          </span>
-        {% endif %}
-
-        {{ h.link_to(h.truncate(package.title[client_lang], truncate_title),
-          h.url_for(controller='package', action='read', id=package.name)) }}
-
-        {% if package.get('state', '').startswith('draft') %}
-          <span class="label label-info">{{ _('Draft') }}</span>
-        {% elif package.get('state', '').startswith('deleted') %}
-          <span class="label label-important">{{ _('Deleted') }}</span>
-        {% endif %}
-        {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
-      </strong>
-      {% if banner %}
-        <span class="banner">Popular</span>
-      {% endif %}
-      {% if notes %}
-        <div>{{ notes|urlize }}</div>
-      {% else %}
-        <p class="empty">{{ _("This dataset has no description") }}</p>
-      {% endif %}
-
-
-    <div class="publisher_info">
-     {# <em>{{ cr.field_label(publisher_field, client_lang) }}:</em> #}
-      <em>{{ _('Organization') }}: </em>
-      {{ cr.org_field(package, client_lang) }}
+{% block resources_outer %}
+  {{ super.super() }}  {# strip map cart buttons #}
+  {% if h.is_ready_to_publish(package) %}
+    <div class="col-md-3 pull-right">
+      <label class="form-checkbox">
+        <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/> {{ _('Publish?') }}
+      </label>
     </div>
-
-    {% if package.resources and not hide_resources %}
-    <div class="row">
-      <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
-      <div class="col-md-6">
-        <ul class="list-inline list-unstyled" >
-          {% set formats = [] %}
-          {% for resource in package.resources %}
-            {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
-          {% endfor %}
-
-          {% for format in h.remove_duplicates(formats) %}
-            <li><span class="badge">{{ format }}</span></li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="col-md-3">
-        {% if h.is_ready_to_publish(package) %}
-        <label class="form-checkbox">
-          <input type="checkbox" name="publish" id="publish" value="{{package.id}}"/> {{ _('Publish?') }}
-        </label></div>
-        {% endif %}
-    </div>
-          </div>
-    {% endif %}
-  {% endblock %}
-</li>
+  {% endif %}
+{% endblock %}

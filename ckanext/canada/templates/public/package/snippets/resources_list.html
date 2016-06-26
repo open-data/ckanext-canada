@@ -14,9 +14,7 @@
   </thead>
 
 {% for resource in resources %}
-  {% if resource.format != 'app' %}
-    {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-  {% endif %}
+  {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
 {% endfor %}
 
 </table>
