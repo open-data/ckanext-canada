@@ -77,11 +77,7 @@
           {% endif %}
         {% endfor %}
         {% if nonapps %}
-
-          {% block package_resources %}
-            {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
-          {% endblock %}
-
+          {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=nonapps %}
         {% endif %}
       {% endif %}
       </div>
