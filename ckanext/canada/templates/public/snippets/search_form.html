@@ -24,11 +24,7 @@
       {% else %}
         <label for="search_field" >{{ _('Search Datasets') }}</label>
       {% endif %}
-      {% if h.lang() == 'en' %}
-        <a href="/en/suggested-datasets" class="btn btn-success btn-sm pull-right">Suggest a Dataset</a>
-      {% else %}
-        <a href="/fr/jeux-de-donnees-suggeres" class="btn btn-success btn-sm pull-right">Proposer un jeu de données</a>
-      {% endif %}
+      <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
     </h2>
   </div>
 </div>
