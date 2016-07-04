@@ -37,7 +37,7 @@
 {% endif %}
 
 {# Kludge to hide this facet if looking at open-information searches. #}
-{% if c.facets.collection|length != 1 and 'info' not in c.facets.collection %}
+{% if c.facets.collection|length != 1 or 'info' not in c.facets.collection %}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['topic_category'],
     name='topic_category',
@@ -58,7 +58,7 @@
   extras=extras %}
 
 {# Kludge to hide this facet if looking at open-information searches. #}
-{% if c.facets.collection|length != 1 and 'info' not in c.facets.collection %}
+{% if c.facets.collection|length != 1 or 'info' not in c.facets.collection %}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['spatial_representation_type'],
     name='spatial_representation_type',
