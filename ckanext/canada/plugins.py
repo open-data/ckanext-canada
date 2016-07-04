@@ -1,11 +1,14 @@
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.base import render, h
+from ckan.lib.base import render
 from ckan.lib.plugins import DefaultDatasetForm
 from ckan.logic.action import create
 from wcms import wcms_configure
 from routes.mapper import SubMapper
 from logging import getLogger
+
+from ckantoolkit import h
+
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.validators import (
     if_empty_generate_uuid,
@@ -227,7 +230,7 @@ ckanext.canada:schemas/info.yaml
         ''' Update the facets_dict and return it. '''
 
         facets_dict = {
-            'type': _('Portal Type'),
+            'portal_type': _('Portal Type'),
             'organization': _('Organization'),
             'collection': _('Collection Type'),
             'keywords': _('Keywords'),
@@ -389,8 +392,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
         data_dict['topic_category'] = json.loads(data_dict.get(
             'topic_category', '[]'))
-        data_dict['spatial_representation_type'] = json.loads(data_dict.get(
-            'spatial_representation_type', '[]'))
+        try:
+            data_dict['spatial_representation_type'] = json.loads(data_dict.get(
+                'spatial_representation_type'))
+        except (TypeError, ValueError):
+            data_dict['spatial_representation_type'] = []
 
         if data_dict.get('portal_release_date'):
             data_dict.pop('ready_to_publish', None)
@@ -398,6 +404,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
             data_dict['ready_to_publish'] = 'true'
         else:
             data_dict['ready_to_publish'] = 'false'
+
+        geno = h.recombinant_get_geno(data_dict['type'])
+        if geno and 'portal_type' in geno:
+            data_dict['portal_type'] = geno['portal_type']
+        else:
+            data_dict['portal_type'] = data_dict['type']
 
         return data_dict
 

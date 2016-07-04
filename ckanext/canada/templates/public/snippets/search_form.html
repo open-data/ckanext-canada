@@ -45,8 +45,20 @@
   <ul class="list-inline">
   {% set alternative_url=h.get_site_url(h.lang()) %}
   {% for field in c.fields_grouped %}
-    {% set preset_choices =
-      (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
+    {% if field=='portal_type' %}
+      {% set preset_choices = [
+          {'value': 'dataset', 'label': _('Open Data')},
+          {'value': 'info', 'label': _('Open Information')},
+          {'value': 'pd', 'label': _('Proactive Disclosure')},
+          ] %}
+      {% for t in h.recombinant_get_types() %}
+        {% do preset_choices.append({
+          'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+      {% endfor %}
+    {% else %}
+      {% set preset_choices =
+        (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
+    {% endif %}
     {% for value in c.fields_grouped[field] %}
       <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
          class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">

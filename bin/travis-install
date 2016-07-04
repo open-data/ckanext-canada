@@ -12,17 +12,19 @@ git clone https://github.com/open-data/ckan
 cd -
 
 cd dl/ckan
-git checkout canada-v2.3
+git checkout canada-v2.5
 python setup.py develop
 cd -
 
 ln -s ../dl/ckan links/ckan
 pip install -r links/ckan/requirements.txt --allow-all-external
 pip install -r links/ckan/dev-requirements.txt --allow-all-external
-pip install -r requirements.txt
 pip install -e git+https://github.com/open-data/ckanext-wet-boew@wet4-scheming#egg=ckanext-wet-boew
 pip install -e git+https://github.com/open-data/ckanext-scheming#egg=ckanext-scheming
 pip install -e git+https://github.com/open-data/ckanext-fluent#egg=ckanext-fluent
+pip install -e git+https://github.com/open-data/ckanext-recombinant#egg=ckanext-recombinant
+pip install -e git+https://github.com/ckan/ckantoolkit#egg=ckantoolkit
+pip install -r requirements.txt
 
 python setup.py develop
 
