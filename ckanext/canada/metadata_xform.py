@@ -128,12 +128,15 @@ def _process(line):
         if r['resource_type'] == 'app':
             r['related_record'] = 'application'
 
-        r['resource_type'] = {
-            None: 'dataset',
-            'file': 'dataset',
-            'doc': 'guide',
-            'api': 'dataset',
-            'app': 'dataset',
+        if rec['type'] == 'info' and r['resource_type'] == 'file':
+            r['resource_type'] = 'strategic_plan'
+        else:
+            r['resource_type'] = {
+                None: 'dataset',
+                'file': 'dataset',
+                'doc': 'guide',
+                'api': 'dataset',
+                'app': 'dataset',
             }[r.get('resource_type', 'file')]
 
         r['format'] = resource_choices['format'].get(
