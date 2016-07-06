@@ -1,5 +1,11 @@
 {% ckan_extends %}
 
+{% import 'macros/canada_read.html' as cr %}
+
+{% block organization_display %}
+  {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
+{% endblock %}
+
 {# we want a wide display for the table #}
 {% block secondary_content %}{% endblock %}
 
