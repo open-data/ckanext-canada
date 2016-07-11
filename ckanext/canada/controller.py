@@ -122,6 +122,44 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
+    def datatable(self, resource_id):
+        draw = int(request.params['draw'])
+        search_text = unicode(request.params['search[value]'])
+        offset = int(request.params['start'])
+        limit = int(request.params['length'])
+        sort_by_num = int(request.params['order[0][column]'])
+        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
+                      else 'asc'
+                      )
+
+        lc = LocalCKAN(username=c.user)
+
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+        )
+
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = cols[sort_by_num] + ' ' + sort_order
+
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=sort_str
+        )
+
+        return json.dumps({
+            'draw': draw,
+            'iTotalRecords': unfiltered_response.get('total', 0),
+            'iTotalDisplayRecords': response.get('total', 0),
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']
+            ],
+        })
+
 
 class CanadaUserController(UserController):
     def logged_in(self):
@@ -179,30 +217,6 @@ class CanadaUserController(UserController):
                 controller='user',
                 action='login', locale=lang
             )
-
-    def datatable(self, resource_name, resource_id):
-        from ckanext.recombinant.tables import get_chromo
-        t = get_chromo(resource_name)
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
-        cols = [f['datastore_id'] for f in t['fields']]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
-
-        response = lc.action.datastore_search(
-            q=search_text,
-            resource_id=resource_id,
-            fields=cols,
-            offset=offset,
-            limit=limit,
-            sort=sort_str)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.

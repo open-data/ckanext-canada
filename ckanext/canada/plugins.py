@@ -156,7 +156,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             m.connect('/help', action='view_help')
             m.connect('/datatable/{resource_name}/{resource_id}', 
                 action='datatable')
-            m.connect('/datatable/{resource_id}', action='datatable')
         return map
 
     def get_helpers(self):
