@@ -8,11 +8,9 @@
   data-mode="columntoggle" >
   <thead>
     <tr class="font-small">
-      {% set i = 1 %}
+      {% set i = 2 %}
       {% for field_name in ds_fields %}
-        {% if field_name['id'] != '_id' %}
-          <th scope="col" data-priority="dtprv-{{i}}">{{field_name['label']}}</th>
-        {% endif %}
+        <th scope="col" data-priority="dtprv-{{i}}">{{field_name['label']}}</th>
         {% set i = i + 1 %}
       {% endfor %}
     </tr>
