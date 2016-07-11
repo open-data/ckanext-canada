@@ -12,6 +12,11 @@ resources:
   resource_name: contracts
   fields:
 
+  - datastore_id: unique_identifier
+    label: Unique Identifier
+    datastore_type: text
+    excel_column_width: 20
+
   - datastore_id: ref_number
     label: Reference Number
     datastore_type: text
@@ -28,6 +33,12 @@ resources:
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
+
+  - datastore_id: economic_object_code
+    label: Economic Object Code
+    datastore_type: text
+    excel_column_width: 10
+    choices_file: choices/economic_object_code.json
 
   - datastore_id: description_en
     label: Description of Work English
@@ -101,31 +112,31 @@ resources:
     excel_column_width: 10
     choices:
       Y:
-        en: WTO/NAFTA/AIT
-        fr: OMC/ALÉNA/ACI
+        en: World Trade Organization/North American Free Trade Agreement/Agreement on Internal Trade
+        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain/Accord sur le commerce intérieur
       Z:
-        en: WTO/NAFTA
-        fr: OMC/ALÉNA
+        en: World Trade Organization/North American Free Trade Agreement
+        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain
       X:
-        en: WTO/AIT
-        fr: OMC/ACI
+        en: World Trade Organization/Agreement on Internal Trade
+        fr: Organisation mondiale du commerce/Accord sur le commerce intérieur
       C:
-        en: NAFTA/AIT
-        fr: ALÉNA/ACI
+        en: North American Free Trade Agreement/Agreement on Internal Trade
+        fr: Accord de libre-échange nord-américain/Accord sur le commerce intérieur
       W:
-        en: WTO
-        fr: OMC
+        en: World Trade Organization
+        fr: Organisation mondiale du commerce
       N:
-        en: NAFTA
-        fr: ALÉNA
+        en: North American Free Trade Agreement
+        fr: Accord de libre-échange nord-américain
       I:
-        en: AIT
-        fr: ACI
+        en: Agreement on Internal Trade
+        fr: Accord sur le commerce intérieur
       A:
-        en: ABSA (PSAB)
+        en: Aboriginal Business Set-Aside (Procurement Strategy for Aboriginal Business)
         fr: MREA
       R:
-        en: LCSA (CLCA)
+        en: Land Claim Set Aside (Comprehensive Land Claim Agreement)
         fr: MRRT
 
   - datastore_id: commodity_type_code
@@ -147,13 +158,13 @@ resources:
     label: Commodity Code
     datastore_type: text
     excel_column_width: 10
-    choices_source: commodity_code.jsonl
+    choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
     label: Country of Origin
     datastore_type: text
     excel_column_width: 10
-    choices_source: country_of_origin.jsonl
+    choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure_code
     label: Solicitation Procedure
@@ -352,7 +363,7 @@ resources:
     excel_column_width: 20
 
   - datastore_id: document_type_code
-    label: Document Type
+    label: Instrument Type
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -371,7 +382,7 @@ resources:
     datastore_type: text
     excel_column_width: 10
 
-  datastore_primary_key: [ref_number]
+  datastore_primary_key: [unique_identifier]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -387,7 +398,7 @@ resources:
 
   examples:
     record:
-      ref_number: "1980198"
+      unique_identifier: "1980198"
       vendor_name: Jane Smith
       contract_date: "2016-01-01"
       contract_value: "50000.00"
@@ -398,5 +409,5 @@ resources:
       agreement_type: W
       country_of_origin: US
     filter_one:
-      ref_number: "1980198"
+      unique_identifier: "1980198"
     sort: contract_date desc

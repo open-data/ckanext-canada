@@ -26,5 +26,10 @@ refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
 {% block primary %}
   {{ super() }}
 
-{{ h.get_datapreview_recombinant(dataset.dataset_type, resource.id) }}
+    <section>
+        <div>
+            {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
+        </div>
+    </section>
+  </div>
 {% endblock %}

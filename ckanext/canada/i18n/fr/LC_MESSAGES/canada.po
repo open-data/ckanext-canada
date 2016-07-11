@@ -669,11 +669,18 @@ msgstr "Compte créé"
 msgid "Your file was successfully uploaded into the central system."
 msgstr "Votre fichier a été téléchargé avec succès dans le système central."
 
+
+msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions."
+msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à open-ouvert@tbs-sct.gc.ca."
+
+msgid "ATI Summaries / ATI Nothing to Report"
+msgstr "Accès à l’information sommaires complétés / Accès à l’information rien à signaler"
+
 msgid "ATI Summaries"
 msgstr "Accès à l’information sommaires complétés"
 
-msgid "This dataset houses all of your completed ATI summaries. This is where you upload all of your ATI summaries. This dataset houses all of the months where you had nothing to report regarding completed ATI requests. This is where you explicitly identify which month your organization had nothing to report."
-msgstr "Ce jeux de données contient tous vos sommaires d'AI completé. Vous pouvez téléchargez tous vos sommaires d'AI completé d'ici. Ce jeux de données contient tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées. C'est là que vous identifier explicitement les mois, votre organisation a rien à signaler."
+msgid "This dataset houses all of your completed ATI summaries and the months where your department had nothing to report."
+msgstr "Ce jeu de données contient tous vos sommaires d'AI completé et tous les mois où vous avez eu rien à signaler en ce qui concerne les demandes d'AI terminées"
 
 msgid "ATI Nothing to Report"
 msgstr "Accès à l’information rien à signaler"
@@ -759,6 +766,66 @@ msgstr "Participant(s)"
 
 msgid "Location"
 msgstr "Lieu"
+
+msgid "Proactive Disclosure - Aggregated Contracts from -$10K to $10K"
+msgstr "Divulgation proactive - Profil des éléments de données - Modèle des marchés annuels (de -10 000 $ à 10 000 $)"
+
+msgid "Reporting Period"
+msgstr "Période de déclaration"
+
+msgid "Number of Goods Contracts $10K and under"
+msgstr "Nombre de marchés de biens de 10 000 $ et moins"
+
+msgid "Goods Contracts $10K and under – Original Value ($ 000)"
+msgstr "Marchés de biens de 10 000 $ et moins - Valeur initiale (000 $)"
+
+msgid "Goods Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)"
+msgstr "Modifications de marchés de biens de -10 000 $ à 10 000 $ - Valeur nette des modifications (000 $)"
+
+msgid "Goods Contracts $10K and under - Total Value ($ 000)"
+msgstr "Marchés de biens de 10 000 $ et moins - Valeur totale (000 $)"
+
+msgid "Number of Service Contracts $10K and under"
+msgstr "Nombre de marchés de services de 10 000 $ et moins"
+
+msgid "Service Contracts $10K and under – Original Value ($ 000)"
+msgstr "Marchés de services de 10 000 $ et moins – Valeur initiale (000 $)"
+
+msgid "Service Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)"
+msgstr "Marchés de services de -10 000 $ à 10 000 $ - Valeur nette des modifications (000 $)"
+
+msgid "Service Contracts $10K and under - Total Value ($ 000)"
+msgstr "Marchés de services de 10 000 $ et moins - Valeur totale (000 $)"
+
+msgid "Number of Construction Contracts $10K and under"
+msgstr "Nombre de marchés de services de construction de 10 000 $ et moins"
+
+msgid "Construction Contracts $10K and under – Original Value ($ 000)"
+msgstr "Marchés de services de construction de 10 000 $ et moins - Valeur initiale (000 $)"
+
+msgid "Construction Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)"
+msgstr "Modifications de marchés de construction de -10 000 $ à 10 000 $ - Valeur nette des modifications (000 $)"
+
+msgid "Construction Contracts $10K and under - Total Value ($ 000)"
+msgstr "Marchés de services de construction de 10 000 $ et moins - Valeur totale (000 $)"
+
+msgid "Total Number of Contracts $10K and under"
+msgstr "Nombre total de marchés de 10 000 $ et moins"
+
+msgid "Total Original Value of All Contracts $10K and under ($ 000)"
+msgstr "Valeur initiale totale de tous les marchés de 10 000 $ et moins (000 $)"
+
+msgid "Total Net Amendment Value of All Contracts Amendments from -$10K to $10K ($ 000)"
+msgstr "Valeur totale des modifications nettes de toutes les modifications de marchés de -10 000 $ à 10 000 $ (000 $)"
+
+msgid "Total Value of All Contracts $10K and under ($ 000)"
+msgstr "Valeur totale de tous les marchés de 10 000 $ et moins (000 $)"
+
+msgid "Number of Acquisition Card Transactions for all Dollar Values"
+msgstr "Nombre d'opérations réalisées au moyen de la carte d'acquisition pour toutes les valeurs en dollars"
+
+msgid "Acquisition Card Transactions for all dollar values – Total Value ($ 000)"
+msgstr "Carte d'acquisition pour toutes les valeurs en dollars– Valeur totale (000 $)"
 
 msgid "Proactive Disclosure - Contracts"
 msgstr "Divulgation proactive - Contrats"
@@ -862,9 +929,6 @@ msgstr "Numéro de l’offre à commandes"
 msgid "Document Type"
 msgstr "Type de document"
 
-msgid "Reporting Period"
-msgstr "Période de déclaration"
-
 msgid "Proactive Disclosure - Grants and Contributions"
 msgstr "Divulgation proactive - Subventions et les contributions"
 
@@ -916,11 +980,11 @@ msgstr "Divulgation proactive - Dépenses annuelles totales de voyages"
 msgid "This dataset includes all of the annual reports on travel expenses incurred within your organization."
 msgstr "Ce jeu de données comprend tous les rapports annuels sur les dépenses de voyage engagées au sein de votre organisation."
 
-msgid "Travel - Public Servants (Current Year)"
-msgstr "Voyages - fonctionnaires (exercice en cours)"
+msgid "Public Servants - Compared Fiscal Year"
+msgstr "Voyages des fonctionnaires - comparaison avec l’exercice précédent"
 
-msgid "Travel - Public Servants (Previous Year)"
-msgstr "Voyages - fonctionnaires (exercice précédent)"
+msgid "Non-Public Servants - Compared Fiscal Year"
+msgstr "Voyages des non-fonctionnaires - comparaison avec l’exercice précédent"
 
 msgid "Travel - Public Servants (Change)"
 msgstr "Voyages - fonctionnaires (modification)"
@@ -931,6 +995,9 @@ msgstr "Voyages - non-fonctionnaires (exercice en cours)"
 msgid "Travel - Non-Public Servants (Previous Year)"
 msgstr "Voyages - non-fonctionnaires (exercice précédent)"
 
+msgid "Travel - Non-Public Servants (Change)"
+msgstr "Voyages - non-fonctionnaires (modification)"
+
 msgid "Total Travel - Current Year"
 msgstr "Total des dépenses de voyage - exercice en cours"
 
@@ -940,8 +1007,8 @@ msgstr "Total des dépenses de voyage - exercice précédent"
 msgid "Total Travel - Change"
 msgstr "Total des dépenses de voyage - modification"
 
-msgid "Hospitality - Current Year"
-msgstr "Accueil - exercice en cours"
+msgid "Hospitality - Compared Fiscal Year"
+msgstr "Accueil - comparaison avec l’exercice précédent"
 
 msgid "Hospitality - Previous Year"
 msgstr "Accueil - exercice précédent"
@@ -949,8 +1016,8 @@ msgstr "Accueil - exercice précédent"
 msgid "Hospitality - Change"
 msgstr "Accueil - modification"
 
-msgid "Conference Fees - Current Year"
-msgstr "Frais de conférence - exercice en cours"
+msgid "Conference Fees - Compared Fiscal Year"
+msgstr "Frais de conférence - comparaison avec l’exercice précédent"
 
 msgid "Conference Fees - Previous Year"
 msgstr "Frais de conférence - exercice précédent"
@@ -1012,6 +1079,111 @@ msgstr "Ce jeu de données comprend tous les rapports ayant trait à la reclassi
 msgid "Position Number"
 msgstr "Numéro du poste"
 
+msgid "Economic Object Code"
+msgstr "Code d’article économique"
+
+msgid "Instrument Type"
+msgstr "Type d’instrument"
+
+msgid "Unique Identifier"
+msgstr "Identifiant unique"
+
+msgid "Title (English)"
+msgstr "Titre (anglais)"
+
+msgid "Title (French)"
+msgstr "Titre (français)"
+
+msgid "Description (French)"
+msgstr "Description (français)"
+
+msgid "Location (French)"
+msgstr "Lieu (français)"
+
+msgid "Description (English)"
+msgstr "Description (anglais)"
+
+msgid "Location (English)"
+msgstr "Lieu (anglais)"
+
+msgid "Job Number"
+msgstr "Numéro d'emploi"
+
+msgid "Position Title (French)"
+msgstr "Titre du poste (français)"
+
+msgid "Position Title (English)"
+msgstr "Titre du poste (anglais)"
+
+msgid "Previous Position Classification Group"
+msgstr "Groupe de classification du poste antérieur"
+
+msgid "Previous Position Classification Sub Group"
+msgstr "Sous-groupe de classification du poste antérieur"
+
+msgid "Previous Position Classification Level Number"
+msgstr "Numéro de niveau de la classification du poste antérieur"
+
+msgid "Reclassified Position Classification Group"
+msgstr "Groupe de classification du poste reclassifié"
+
+msgid "Reclassified Position Classification Sub Group"
+msgstr "Groupe de classification du poste reclassifié"
+
+msgid "Reclassified Position Classification Level Number"
+msgstr "Numéro de niveau de la classification du poste reclassifié"
+
+msgid "Purpose of Travel (French)"
+msgstr "But du voyage (français)"
+
+msgid "Purpose of Travel (English)"
+msgstr "But du voyage (anglais)"
+
+msgid "Travel Start Date"
+msgstr "Date du début du voyage"
+
+msgid "Travel End Date(s)"
+msgstr "Date de fin du voyage"
+
+msgid "Destination (French)"
+msgstr "Destination (français)"
+
+msgid "Destination (English)"
+msgstr "Destination (anglais)"
+
+msgid "Program Name (English)"
+msgstr "Nom du programme (anglais)"
+
+msgid "Program Name (French)"
+msgstr "Nom du programme (français)"
+
+msgid "Project Name (English)"
+msgstr "Nom du bénéficiaire (anglais)"
+
+msgid "Project Name (French)"
+msgstr "Nom du bénéficiaire (français)"
+
+msgid "Recipient Name (English)"
+msgstr "Nom du récipient (anglais)"
+
+msgid "Recipient Name (French)"
+msgstr "Nom du récipient (français)"
+
+msgid "Country"
+msgstr "Pays"
+
+msgid "Region (English)"
+msgstr "Région (anglais)"
+
+msgid "Region (French)"
+msgstr "Région (français)"
+
+msgid "Additional Information (English)"
+msgstr "Informations supplémentaires (anglais)"
+
+msgid "Additional Information (French)"
+msgstr "Informations supplémentaires (français)"
+
 msgid "English Position Title"
 msgstr "Titre du poste anglais"
 
@@ -1027,13 +1199,13 @@ msgstr "Classification du poste reclassifié"
 msgid "Previous Supervisory Differential"
 msgstr "Ancienne prime de surveillance"
 
-msgid "Supervisory Differential"
-msgstr "Prime de surveillance"
+msgid "Reclassified Supervisory Differential"
+msgstr "Prime de surveillance précédente"
 
-msgid "English Reason for Reclassification"
+msgid "Reason for Reclassification (English)"
 msgstr "Raison de la decision en anglais"
 
-msgid "French Reason for Reclassification"
+msgid "Reason for Reclassification (French)"
 msgstr "Raison de la decision en français"
 
 
@@ -1069,6 +1241,48 @@ msgstr "Élément spatial"
 
 msgid "Bilingual (English and French)"
 msgstr "Bilingue (français et anglais)"
+
+msgid "Open Data Inventory"
+msgstr "Inventaire des données ouvertes"
+
+msgid "This dataset houses your departmental open data inventory. This is where you can access and upload your open data inventory template."
+msgstr "Ce jeu de données contient l’inventaire des données ouvertes de votre ministère. C’est l’occasion pour accéder à et pour télécharger votre modèle d'inventaire des données ouvertes. "
+
+msgid "Title English"
+msgstr "Titre en anglais"
+
+msgid "Title French"
+msgstr "Titre en français"
+
+msgid "Description English"
+msgstr "Description en anglais"
+
+msgid "Description French"
+msgstr "Description en français"
+
+msgid "Publisher - English Name at Publication"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication, en anglais"
+
+msgid "Publisher - French Name at Publication"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication, en français"
+
+msgid "Date Published"
+msgstr "Date de publication "
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Size"
+msgstr "Taille "
+
+msgid "Privacy Impact Assessment"
+msgstr "Évaluation des facteurs relatifs à la vie privée"
+
+msgid "Date Released"
+msgstr "Date de sortie"
+
+msgid "Download URL"
+msgstr "URL de téléchargement"
 
 #FIXME - 2015-01-12 These are translations from the ckanext-recombinant extension
 

@@ -9,7 +9,7 @@ outputs the header row and all rows with total value > 10k
 import csv
 import sys
 
-VALUE_COLUMN = "Total Contract Value / Valeur totale du contrat"
+VALUE_COLUMN = "contract_value"
 MINIMUM_CONTRACT_VALUE = 10000
 
 def main():

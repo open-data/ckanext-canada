@@ -3,11 +3,15 @@ ckanext-canada
 
 Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
-Team: Ian Ward, Ross Thompson, Peder Jakobsen, Denis Zgonjanin
-
 Features:
 
 * Forms and Validation for GoC Metadata Schema
+
+  * complete, see wet4-scheming branch for upcoming scheming version
+
+* Batch import of data
+
+  * merged into ckanapi
 
 Installation:
 
@@ -142,15 +146,6 @@ You will need to rebuild your search index using::
    paster --plugin ckan search-index rebuild
 
 
-
-Working with the API
---------------------
-
-To view a raw dataset using the api, use the ``ckanapi`` command line tool, e.g.::
-
-  ckanapi package_show id=0007a010-556d-4f83-bb8e-6e22dcc62e84
-
-
 Compiling the updated French localization strings
 -------------------------------------------------
 
@@ -201,103 +196,3 @@ Drupal. Run the following SQL commands to create the necessary views in the Drup
     alter view public.opendata_package_count_v owner to <db_user>;
 
 Substitute <db_user> with the appropriate SQL user account.
-
-Automating ATI and PD Dataset Promotion from Registry to Portal (Optional)
---------------------------------------------------------------------------
-
-This section outlines the process of automating the promotion of ATI
-and PD datasets from the Registry to the Portal through the invocation
-of the ``bin/reg2portal.sh`` and ``bin/csv2solr.sh`` scripts.
-
-*The Registry*
-
-On the registry, the ``bin/reg2portal.sh`` script pushes specified
-datasets to the registry's CKAN installation. It takes the following
-parameters:
-
-  ``CKAN-INI-FILE``
-    The path to the configuration file of the CKAN registry installation
-
-  ``PORTAL-URL``
-    The URL of the CKAN public portal
-
-  ``API-KEY``
-    The API key to use in invoking the CKAN API to propagate ATI and PD
-    datasets to the portal
-
-  ``TARGET-DATASET:PACKAGE-ID ...``
-    One or more space-separated and colon-delimited mappings
-    (e.g. ``ati:00000000-0000-0000-0000-000000000000``) between target
-    datasets and their respective names or identifiers on the portal
-
-  ``VIRTUAL-ENV-HOME`` (optional)
-    If present, the root directory of the python virtual environment to
-    activate, under which the script will operate
-
-First, the execution of the script activates the virtual environment
-if specified.
-
-Then, it uses ckanext-recombinant to parse all target datasets from
-its (JSON) recombinant tables file. For each such target dataset
-mapped on the command line, the execution queries ckanext-recombinant
-for its respective dataset types (e.g.; ati-none, ati-summaries).
-The script calls ckanext-recombinant to combine CKAN content for
-each of these dataset types into a temporary .csv file for promotion.
-
-The script then calls, for each target dataset mapped on the command
-line, the ``bin\reg2portal.py`` script, specifying:
-* the CKAN configuration file
-* the URL for the portal
-* the API key
-* the mapped identifier for the target dataset
-* all paths to temporary combined .csv files germane to the target dataset
-
-The ``bin\reg2portal.py`` script invokes the CKAN API to patch the
-package by its specified identifier, clearing out existing resources
-and uploading the combined .csv files to the portal in their stead.
-
-Finally, the ``bin\reg2portal.sh`` script cleans up the temporary
-files it created in its operations.
-
-For the registry host, a sample crontab entry automating daily
-ATI and PD propagation (specifying names for the datasets on the
-registry, to a portal on host devubu3) follows:
-
-    ``0 2 * * * /opt/open-data/ckanext-canada/bin/reg2portal.sh /opt/open-data/ckanext-canada/development.ini http://devubu3:5000 141d4974-7d48-47b9-a003-b09d5f8e7c3a ati:ati pd:pd /opt/venvs/env-ckan-2.1 >> /var/log/reg2portal.log 2>&1``
-
-*The Portal*
-
-On the portal, the ``bin/csv2solr.sh`` script rebuilds the configured
-local solr core with the content of specified datasets from the local
-CKAN installation. It takes the following parameters:
-
-  ``CKAN-INI-FILE``
-    The path to the configuration file of the CKAN portal installation
-
-  ``TARGET-DATASET:PACKAGE-ID ...``
-    One or more space-separated and colon-delimited mappings
-    (e.g. ``pd:11111111-1111-1111-1111-111111111111``) between target
-    datasets and their respective names or identifiers on the portal
-
-  ``VIRTUAL-ENV-HOME`` (optional)
-    If present, the root directory of the python virtual environment to
-    activate, under which the script will operate
-
-First, the execution of the script activates the virtual environment
-if specified.
-
-Then, uses ckanext-recombinant to parse all target datasets from
-its (JSON) recombinant tables file. For each such target dataset
-mapped on the command line, the script calls ckanext-canada to
-locate its associated resources on the portal. The operation
-downloads these resources and uses them to rebuild the target
-dataset from them via ckanext-canada.
-
-Finally, the script cleans up the temporary files it created
-in its operations.
-
-For the portal host, a sample crontab entry automating daily
-ATI and PD solr core rebuild (specifying identifiers for the
-datasets on the portal) follows:
-
-    ``0 2 * * * /opt/open-data/ckanext-canada/bin/csv2solr.sh /opt/open-data/ckanext-canada/development.ini ati:636893c9-e4b4-451c-b652-571f2f1349dd pd:ca8f5f4b-b5d8-4884-a8d5-4a87dca4f6f6 /opt/venvs/env-ckan-2.3 >> /var/log/csv2solr.log 2>&1``
