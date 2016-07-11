@@ -154,8 +154,8 @@ class DataGCCAInternal(p.SingletonPlugin):
         with mapper as m:
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
-            m.connect('/datatable/{resource_id}', action='datatable')
-
+            m.connect('/datatable/{resource_name}/{resource_id}', 
+                action='datatable')
         return map
 
     def get_helpers(self):
@@ -208,12 +208,14 @@ class DataGCCAPublic(p.SingletonPlugin):
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/contracts.yaml
+ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
 ckanext.canada:tables/hospitalityq.yaml
 ckanext.canada:tables/reclassification.yaml
 ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
+ckanext.canada:tables/inventory.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['scheming.presets'] = """

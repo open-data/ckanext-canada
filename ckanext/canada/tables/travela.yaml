@@ -42,7 +42,25 @@ resources:
     excel_column_width: 20
 
   - datastore_id: non_public_servant_change
-    label: Travel - Public Servants (Change)
+    label: Travel - Non-Public Servants (Change)
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: minister_current_year
+    label: International Travel by Minister and Minister's Staff
+           (also included in Non-Public Servant Travel) - Current Year
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: minister_previous_year
+    label: International Travel by Minister and Minister's Staff
+           (also included in Non-Public Servant Travel) - Previous Year
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: minister_change
+    label: International Travel by Minister and Minister's Staff
+           (also included in Non-Public Servant Travel) - Change
     datastore_type: text
     excel_column_width: 20
 
@@ -106,41 +124,23 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: minister_current_year
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Current Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_previous_year
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Previous Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_change
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Change
-    datastore_type: text
-    excel_column_width: 20
-
   - datastore_id: public_servant_compared_fiscal_year
-    label: Travel - Public Servants (Current Year)
+    label: Public Servants - Compared Fiscal Year
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year
-    label: Travel - Non-Public Servants (Current Year)
+    label: Non-Public Servants - Compared Fiscal Year
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year
-    label: Hospitality - Current Year
+    label: Hospitality - Compared Fiscal Year
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year
-    label: Conference Fees - Current Year
+    label: Conference Fees - Compared Fiscal Year
     datastore_type: text
     excel_column_width: 20
 

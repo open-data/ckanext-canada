@@ -2,12 +2,12 @@
   <div class="col-md-12">
     <h2 id="prtable">{{_("Preview")}}</h2>
       <table id="dtprv" class="wb-tables table table-striped"
-        data-wb-tables='{"paging": true, "serverSide": true, "processing": true, "ajax": "/datatable/{{ resource_id }}"}'
+        data-wb-tables='{"paging": true, "serverSide": true, "processing": true, "ajax": "/datatable/{{ resource_name }}/{{ resource_id }}"}'
         data-role="table"
         data-mode="columntoggle" >
       <thead>
         <tr class="font-small">
-          {% set i = 1 %}
+          {% set i = 2 %}
           {% for field_name in ds_fields %}
             {% if field_name['id'] != '_id' %}
               <th scope="col" data-priority="dtprv-{{i}}">{{field_name['label']}}</th>

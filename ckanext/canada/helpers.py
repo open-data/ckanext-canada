@@ -166,27 +166,25 @@ def get_datapreview_recombinant(resource_name, res_id):
     from ckanext.recombinant.tables import get_chromo
     t = get_chromo(resource_name)
     default_preview_args = {}
-    if 'default_preview_sort' in t:
-        default_preview_args['sort'] = t['default_preview_sort']
 
     lc = ckanapi.LocalCKAN(username=c.user)
     results = lc.action.datastore_search(
-        resource_id=res_id, limit=0,
-        **default_preview_args)
+        resource_id=res_id,
+        limit=0,
+        )
 
     lang = h.lang()
     field_label = {}
-    for f in t['fields']:
-        field_label[f['datastore_id']] = h._(f['label'])
-    fields = [{
-        'type': f['type'],
-        'id': f['id'],
-        'label': field_label.get(f['id'], f['id'])}
-        for f in results['fields']]
+    ds_fields = [{
+        'type': f['datastore_type'],
+        'id': f['datastore_id'],
+        'label': h._(f['label'])}
+        for f in t['fields']]
 
     return h.snippet('package/wet_datatable.html',
+        resource_name=resource_name,
         resource_id=res_id,
-        ds_fields=fields)
+        ds_fields=ds_fields)
 
 def fgp_url():
     return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
@@ -199,4 +197,3 @@ def contact_information(info):
         return json.loads(info)[h.lang()]
     except Exception:
         return {}
-
