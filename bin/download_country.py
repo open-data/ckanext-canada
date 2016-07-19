@@ -27,7 +27,7 @@ def download_csv_filter_output(url):
             sys.stderr.write('duplicate id: %r!\n' % line['ISO3166-1-Alpha-2'])
             continue
         choices[line['ISO3166-1-Alpha-2']] = {
-            'en': line['official_name'],
+            'en': line['official_name_en'],
             'fr': line['official_name_fr']}
 
 
