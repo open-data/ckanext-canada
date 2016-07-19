@@ -5,69 +5,95 @@
 
 {% block primary_content %}
 <div class="row">
-    <div class="col-md-6">
-        <section>
-            <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Add Open Data Records') }}</a></h2>
-            <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Add Open Information Records') }}</a></h2>
-            <p>{{ _('Add information about government programs, activities and publications.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add ATI Summaries Records') }}</a></h2>
-            <p>{{ _('Add all your completed Access to Information summaries.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add ATI Nothing to Report Records') }}</a></h2>
-            <p>{{ _('Add all the months where you had no ATI Requests to report.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Contracts Over 10 K Records') }}</a></h2>
-            <p>{{ _('Add all the reports on contracts issued for your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Travel Expenditures Records') }}</a></h2>
-            <p>{{ _('Add all the reports on travel expenditures incurred within your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">Add Hospitality Records') }}</a></h2>
-            <p>Add all the reports on hospitality expenditure incurred within your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Grants and Contributions Records') }}</a></h2>
-            <p>{{ _('Add all the reports on grants and contributions awarded by your organization.') }}</p>
-        </section>
-    </div>
-    <div class="col-md-6">
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Position Re-classification Records') }}</a></h2>
-            <p>{{ _('Add all the reports on the reclassification of occupied positions hospitality expenditure incurred within your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Annual Expenditures on Travel Records') }}</a></h2>
-            <p>{{ _('Add all the annual reports on travel expenditures incurred within your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Add Founded Wrongdoing Records') }}</a></h2>
-            <p>{{ _('Add all the reports on the disclosure of wrongdoing within your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Search your Organization Records') }}</a></h2>
-            <p>{{ _('Search all records in the Registry, for your Organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('Search All Records') }}</a></h2>
-            <p>{{ _('Add all Open Data and Information records in the Registry.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('View Members of your Organization') }}</a></h2>
-            <p>{{ _('View the list of members linked to your organization.') }}</p>
-        </section>
-        <section>
-            <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
-            <p>{{ _('View and download the organizational reports.') }}</p>
-        </section>
-    </div>
+  <div class="col-md-6">
+    <section>
+      <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Add Open Data Records') }}</a></h2>
+      <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Add Open Information Records') }}</a></h2>
+      <p>{{ _('Add information about government programs, activities and publications.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='ati') }}">{{
+          _('Add ATI Summaries Records') }}</a></h2>
+      <p>{{ _('Add all your completed Access to Information summaries.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='ati') }}">{{
+          _('Add ATI Nothing to Report Records') }}</a></h2>
+      <p>{{ _('Add all the months where you had no ATI Requests to report.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+         h.url_for('recombinant_type', resource_name='contracts') }}">{{
+           _('Add Contracts Over 10 K Records') }}</a></h2>
+      <p>{{ _('Add all the reports on contracts issued for your organization.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='travelq') }}">{{
+          _('Add Travel Expenditures Records') }}</a></h2>
+      <p>{{ _('Add all the reports on travel expenditures incurred within your organization.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='hospitalityq') }}">{{
+          _('Add Hospitality Records') }}</a></h2>
+      <p>{{ _('Add all the reports on hospitality expenditure incurred within your organization.') }}</p>
+    </section>
+  </div>
+  <div class="col-md-6">
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='grants') }}">{{ 
+          _('Add Grants and Contributions Records') }}</a></h2>
+      <p>{{ _('Add all the reports on grants and contributions awarded by your organization.') }}</p>
+    </section>
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='reclassification') }}">{{
+          _('Add Position Re-classification Records') }}</a></h2>
+      <p>{{ _('Add all the reports on the reclassification of occupied positions hospitality expenditure incurred within your organization.') }}</p>
+    </section>
+    {#<section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='travela') }}">{{
+          _('Add Annual Expenditures on Travel Records') }}</a></h2>
+      <p>{{ _('Add all the annual reports on travel expenditures incurred within your organization.') }}</p>
+    </section>#}
+    <section>
+      <h2 class="h5"><a href="{{
+        h.url_for('recombinant_type', resource_name='wrongdoing') }}">{{
+          _('Add Founded Wrongdoing Records') }}</a></h2>
+      <p>{{ _('Add all the reports on the disclosure of wrongdoing within your organization.') }}</p>
+    </section>
+    {% set orgs = h.organizations_available('read') %}
+    {% if orgs %}
+      {% set org = orgs[0] %}
+      <section>
+        <h2 class="h5"><a href="{{
+          h.url_for('organization_read', id=org.name) }}">{{
+            _('Search your Organization Records') }}</a></h2>
+        <p>{{ _('Search all records in the Registry, for your Organization.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('dataset_search') }}">{{
+          _('Search All Records') }}</a></h2>
+        <p>{{ _('Add all Open Data and Information records in the Registry.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{
+            h.url_for('organization_members', id=org.name) }}">{{ _('View Members of your Organization') }}</a></h2>
+        <p>{{ _('View the list of members linked to your organization.') }}</p>
+      </section>
+      {#<section>
+        <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
+        <p>{{ _('View and download the organizational reports.') }}</p>
+      </section>#}
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
