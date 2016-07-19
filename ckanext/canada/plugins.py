@@ -231,7 +231,7 @@ ckanext.canada:schemas/info.yaml
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict = {
+        facets_dict.update({
             'portal_type': _('Portal Type'),
             'organization': _('Organization'),
             'collection': _('Collection Type'),
@@ -245,7 +245,7 @@ ckanext.canada:schemas/info.yaml
             'spatial_representation_type': _('Spatial Representation Type'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
-            }
+            })
 
         return facets_dict
 
