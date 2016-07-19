@@ -38,7 +38,9 @@ def _process(line):
     if rec.get('catalog_type','').startswith('Geo'):
         return
 
-    rec['type'] = u'info' if rec['type'] == 'info' else u'dataset'
+    if rec['type'] not in ('info', 'dataset'):
+        continue
+
     rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
     rec['imso_approval'] = u'true' if rec.get('portal_release_date') else u'false'
