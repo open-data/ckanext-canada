@@ -186,7 +186,7 @@ class CanadaUserController(UserController):
             user_dict = get_action('user_show')(context, data_dict)
 
             h.flash_success(
-                _('<strong>Note</strong><br>{} is now logged in').format(
+                _('<strong>Note</strong><br>{0} is now logged in').format(
                     user_dict['display_name']
                 ),
                 allow_html=True
