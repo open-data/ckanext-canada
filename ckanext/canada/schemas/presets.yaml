@@ -85,7 +85,7 @@ presets:
   values:
     field_name: owner_org
     label:
-      en: Publisher
+      en: Publisher - Current Organization Name
       fr: Organisation
     help_text:
       en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
@@ -111,12 +111,37 @@ presets:
       fr:
         en: Publisher - Organization Name at Publication (French)
         fr: Organisation - Titre lors de la publication (français)
+    fluent_help_text:
+      en:
+        en: The English organization title at publication time
+      fr:
+        en: The French organziation title at publication time
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+
+- preset_name: canada_org_section_name
+  values:
+    field_name: org_section
+    label:
+      en: Publisher - Organization Section Name
+    fluent_form_label:
+      en:
+        en: Publisher - Organization Section Name (English)
+      fr:
+        en: Publisher - Organization Section Name (French)
+    fluent_help_text:
+      en:
+        en: The English names of the work groups, units of work, business
+            units, etc. of the organization that publishes the dataset
+            (separate multuple names by commas)
+      fr:
+        en: The French names of the work groups, units of work, business
+            units, etc. of the organization that publishes the dataset
+            (separate multuple names by commas)
 
 - preset_name: canada_creator
   values:
