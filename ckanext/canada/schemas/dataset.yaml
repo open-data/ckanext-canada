@@ -56,6 +56,7 @@ dataset_fields:
 - preset: canada_title
 - preset: canada_owner_org
 - preset: canada_org_title_at_publication
+- preset: canada_org_section_name
 - preset: canada_creator
 
 # FGP fields (hidden from form)
@@ -161,6 +162,7 @@ dataset_fields:
       fr: Services communication
     value: utilities_communication
 
+- preset: canada_contributor
 - preset: canada_maintainer_email
 - preset: canada_notes
 - preset: canada_keywords
