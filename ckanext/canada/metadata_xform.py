@@ -39,7 +39,7 @@ def _process(line):
         return
 
     if rec['type'] not in ('info', 'dataset'):
-        continue
+        return
 
     rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
