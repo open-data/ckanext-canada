@@ -2307,6 +2307,12 @@ presets:
       value: video
 
 
+#
+#   RESOURCE FIELDS
+#
+
+# Field = Unique Identifier.
+# {A unique phrase or string which identifies the resource}
 - preset_name: canada_resource_unique_identifier
   values:
     field_name: unique_identifier
@@ -2316,6 +2322,35 @@ presets:
     help_text:
       en: A unique phrase or string which identifies the resource.
       fr: Expression ou segment unique désignant la ressource.
+
+# Field = Title English.
+# {An English name given to the resource}
+# Field = Title French.
+# {A French name given to the resource}
+- preset_name: canada_resource_name
+  values:
+    field_name: name_translated
+    label:
+      en: Title
+      fr: Titre
+    fluent_form_label:
+      en:
+        en: "Title English"
+        fr: "Titre anglais"
+      fr:
+        en: "Title French"
+        fr: "Titre français"
+
+    help_text:
+      en: An English name given to the resource.
+      fr: Nom anglais attribué à la ressource
+    required: true
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output
 
 - preset_name: canada_resource_related_record
   values:
@@ -2344,619 +2379,9 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
-
-- preset_name: canada_resource_language
-  values:
-    choices:
-    - label:
-        en: English
-        fr: Anglais
-      value: en
-    - label:
-        en: French
-        fr: Français
-      value: fr
-    - label:
-        en: Albanian
-        fr: Albanais
-      value: sq
-    - label:
-        en: Algonquian languages
-        fr: Algonquines, langues
-      value: alg
-    - label:
-        en: Amharic
-        fr: amharique
-      value: am
-    - label:
-        en: Apache languages
-        fr: Apache
-      value: apa
-    - label:
-        en: Arabic
-        fr: Arabe
-      value: ar
-    - label:
-        en: Armenian
-        fr: Arménien
-      value: hy
-    - label:
-        en: Artificial (Other)
-        fr: Artificielles, autres langues
-      value: art
-    - label:
-        en: Baltic (Other)
-        fr: Baltiques, autres langues
-      value: bat
-    - label:
-        en: Belarusian
-        fr: Biélorusse
-      value: be
-    - label:
-        en: Bengali
-        fr: bengali
-      value: bn
-    - label:
-        en: Bosnian
-        fr: Bosniaque
-      value: bs
-    - label:
-        en: Bulgarian
-        fr: Bulgare
-      value: bg
-    - label:
-        en: Catalan
-        fr: catalan
-      value: ca
-    - label:
-        en: Cherokee
-        fr: Cherokee
-      value: chr
-    - label:
-        en: Cheyenne
-        fr: Cheyenne
-      value: chy
-    - label:
-        en: Chinese
-        fr: Chinois
-      value: zh
-    - label:
-        en: Chipewyan
-        fr: Chipewyan
-      value: chp
-    - label:
-        en: Cree
-        fr: Cree
-      value: cr
-    - label:
-        en: Creoles and pidgins
-        fr: créoles et pidgins
-      value: crp
-    - label:
-        en: Croatian
-        fr: Croate
-      value: hr
-    - label:
-        en: Czech
-        fr: Tchèque
-      value: cs
-    - label:
-        en: Danish
-        fr: Danois
-      value: da
-    - label:
-        en: Dogrib
-        fr: dogrib
-      value: dgr
-    - label:
-        en: Dutch
-        fr: Néerlandais
-      value: nl
-    - label:
-        en: Finnish
-        fr: Finnois
-      value: fi
-    - label:
-        en: Galician
-        fr: galicien
-      value: gl
-    - label:
-        en: German
-        fr: Allemand
-      value: de
-    - label:
-        en: Greek, Modern (1453-)
-        fr: Grec moderne (après 1453)
-      value: el
-    - label:
-        en: Gujarati
-        fr: goudjrati
-      value: gu
-    - label:
-        en: Hebrew
-        fr: Hébreu
-      value: he
-    - label:
-        en: Hindi
-        fr: Hindi
-      value: hi
-    - label:
-        en: Hungarian
-        fr: Hongrois
-      value: hu
-    - label:
-        en: Indonesian
-        fr: Indonésien
-      value: id
-    - label:
-        en: Inuinnaqtun
-        fr: Innuinaqtun
-      value: inuinnaqtun
-    - label:
-        en: Inuktitut
-        fr: Inuktitut
-      value: iu
-    - label:
-        en: Inuvialuqtun
-        fr: Inuvialuqtun
-      value: inuvialuqtun
-    - label:
-        en: Iroquoian languages
-        fr: Iroquoises, langues (famille)
-      value: iro
-    - label:
-        en: Italian
-        fr: Italien
-      value: it
-    - label:
-        en: Japanese
-        fr: Japonais
-      value: ja
-    - label:
-        en: Korean
-        fr: Coréen
-      value: ko
-    - label:
-        en: Latin
-        fr: Latin
-      value: la
-    - label:
-        en: Micmac
-        fr: Micmac
-      value: mic
-    - label:
-        en: Miscellaneous languages
-        fr: Diverses, langues
-      value: mis
-    - label:
-        en: Mohawk
-        fr: Mohawk
-      value: moh
-    - label:
-        en: Multiple languages
-        fr: Multilingue
-      value: mul
-    - label:
-        en: Navajo
-        fr: Navaho
-      value: nv
-    - label:
-        en: Nootkan
-        fr: Nootkan
-      value: wak
-    - label:
-        en: North American Indian
-        fr: Indiennes d'Amérique du Nord
-      value: nai
-    - label:
-        en: Norwegian
-        fr: Norvégien
-      value: 'no'
-    - label:
-        en: Nunatsiavummiutut
-        fr: Nunatsiavummiutut
-      value: nunatsiavummiutut
-    - label:
-        en: Ojibwa
-        fr: Ojibwa
-      value: oj
-    - label:
-        en: Persian
-        fr: Persan
-      value: fa
-    - label:
-        en: Philippine (Other)
-        fr: Philippines, autres langues
-      value: phi
-    - label:
-        en: Polish
-        fr: Polonais
-      value: pl
-    - label:
-        en: Portuguese
-        fr: Portugais
-      value: pt
-    - label:
-        en: Punjabi
-        fr: Pendjabi
-      value: pa
-    - label:
-        en: Romanian
-        fr: Roumain
-      value: ro
-    - label:
-        en: Russian
-        fr: Russe
-      value: ru
-    - label:
-        en: Salishan
-        fr: Salishan
-      value: sal
-    - label:
-        en: Serbian
-        fr: Serbe
-      value: sr
-    - label:
-        en: Sign Languages
-        fr: Langage gestuel
-      value: sgn
-    - label:
-        en: Siouan languages
-        fr: Sioux, langues
-      value: sio
-    - label:
-        en: Slovak
-        fr: Slovaque
-      value: sk
-    - label:
-        en: Somali
-        fr: somali
-      value: so
-    - label:
-        en: Spanish; Castilian
-        fr: Espagnol; castillan
-      value: es
-    - label:
-        en: Swahili
-        fr: swahili
-      value: ss
-    - label:
-        en: Swedish
-        fr: Suédois
-      value: sv
-    - label:
-        en: Tagalog
-        fr: tagalog
-      value: tl
-    - label:
-        en: Tamil
-        fr: tamoul
-      value: ta
-    - label:
-        en: Thai
-        fr: thaï
-      value: th
-    - label:
-        en: Turkish
-        fr: Turc
-      value: tr
-    - label:
-        en: Undetermined
-        fr: Indéterminée
-      value: und
-    - label:
-        en: Urdu
-        fr: Ourdou
-      value: ur
-    - label:
-        en: Vietnamese
-        fr: Vietnamien
-      value: vi
-    - label:
-        en: Welsh
-        fr: Gallois
-      value: cy
-    - label:
-        en: Yiddish
-        fr: Yiddish
-      value: yi
-    - label:
-        en: No linguistic content; Not applicable
-        fr: pas de contenu linguistique; non applicable
-      value: zxx
-    field_name: language
-    help_text:
-      en: The language of the resource.
-      fr: Langue de la ressource.
-    label:
-      en: Language
-      fr: Langue
-    required: true
-    display_snippet: br_multiple_choice.html
-    # copied from multiple_select preset
-    form_snippet: multiple_select.html
-    validators: scheming_multiple_choice
-    output_validators: scheming_multiple_choice_output
-
-
-- preset_name: canada_resource_name
-  values:
-    field_name: name_translated
-    label:
-      en: Title
-      fr: Titre
-    fluent_form_label:
-      en:
-        en: "Title English"
-        fr: "Titre anglais"
-      fr:
-        en: "Title French"
-        fr: "Titre français"
-
-    help_text:
-      en: An English name given to the resource.
-      fr: Nom anglais attribué à la ressource
-    required: true
-    # copied from fluent_text preset
-    form_snippet: fluent_text.html
-    display_snippet: fluent_text.html
-    error_snippet: fluent_text.html
-    validators: fluent_text
-    output_validators: fluent_core_translated_output
-
-- preset_name: canada_resource_url
-  values:
-    field_name: url
-    label:
-      en: Download URL
-      fr: URL de téléchargement
-    upload_label:
-      en: "File Upload"
-      fr: "Téléchargement du fichier"
-    help_text:
-      en: The location for online access to the distribution of the resource.
-      fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
-    required: true
-    # copied from resource_url_upload
-    validators: not_empty unicode remove_whitespace
-    form_snippet: upload.html
-    upload_field: upload
-    upload_clear: clear_upload
-
-- preset_name: canada_resource_size
-  values:
-    field_name: size
-    label:
-      en: Size
-      fr: Taille
-    help_text:
-      en: The [estimated] size of a distribution in bytes.
-      fr: Taille [estimative] d’une distribution en octets
-    validators: ignore_missing int_validator
-
-- preset_name: canada_resource_format
-  values:
-    help_text:
-      en: The file format, physical medium, or dimensions of the resource.
-      fr: Format du fichier, support physique ou dimensions de la ressource
-    field_name: format
-    label:
-      en: "Format"
-      fr: "Format"
-    form_snippet: select.html
-    display_snippet: select.html
-    validators: scheming_required scheming_choices
-    required: true
-    choices:
-    - value: AAC
-      mimetype: audio/mp4
-    - value: AIFF
-      mimetype: audio/aiff
-    - value: ASCII Grid
-      mimetype: application/x-ascii-grid
-      replaces: [ascii grid]
-    - label: Android Application
-      value: APK
-    - value: AVI
-      mimetype: video/vnd.avi
-    - value: BMP
-      mimetype: image/bmp
-      replaces: [bmp]
-    - value: BWF
-    - value: CCT
-    - value: CDED ASCII
-      replaces: [cded ascii]
-    - value: CDR
-      replaces: [cdr]
-    - label: Blackberry Application
-      value: COD
-    - value: CSV
-      mimetype: text/csv
-      openness_score: 3
-    - value: DBF
-      mimetype: application/dbf
-    - value: DICOM
-      mimetype: application/dicom
-    - value: DNG
-      mimetype: image/dng
-    - value: DOC
-      mimetype: application/msword
-      replaces: [doc]
-    - value: DOCX
-      mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
-      replaces: [docx]
-    - value: DXF
-      mimetype: image/vnd.dxf
-      replaces: [dxf]
-    - value: E00
-      replaces: [e00]
-    - value: ECW
-      mimetype: application/x-ecw
-      replaces: [ecw]
-    - value: EDI
-    - value: EMF
-      mimetype: image/emf
-      replaces: [emf]
-    - value: EPUB3
-      mimetype: application/epub+zip
-      replaces: [epub3]
-    - value: EPUB2
-      mimetype: application/epub+zip
-    - value: EPS
-      mimetype: application/postscript
-      replaces: [eps]
-    - value: ESRI REST
-    - value: EXE
-      mimetype: application/vnd.microsoft.portable-executable
-      replaces: [exe]
-    - value: FGDB/GDB
-      openness_score: 3
-      replaces: ["FGDB / GDB", "fgdb / gdb"]
-      mimetype: application/x-filegdb
-    - value: Flat raster binary
-      replaces: [flat raster binary]
-    - value: GeoPDF
-      mimetype: application/pdf
-      replaces: [geopdf]
-    - value: GeoRSS
-      mimetype: application/rss+xml
-      replaces: [georss]
-    - value: GeoTIF
-      mimetype: image/tiff
-      replaces: [geotif]
-    - value: GIF
-      mimetype: image/gif
-      replaces: [gif]
-    - value: GML
-      mimetype: application/gml+xml
-      openness_score: 3
-      replaces: gml
-    - value: HDF
-      mimetype: application/x-hdf
-      replaces: ["GNU Zipped HDF", "hdf"]
-    - value: HTML
-      mimetype: text/html
-    - value: IATI
-      mimetype: application/xml
-      replaces: [iati]
-    - label: IOS Application
-      value: IPA
-    - value: JFIF
-      mimetype: image/jpeg
-    - value: JP2
-      mimetype: image/jp2
-      replaces: [jpeg 2000]
-    - value: JPG
-      mimetype: image/jpeg
-      replaces: [jpg]
-    - value: JSON
-      mimetype: application/json
-      openness_score: 3
-    - value: JSONL
-      mimetype: application/json-l
-      openness_score: 3
-      replaces: [jsonl]
-    - value: KML
-      mimetype: application/vnd.google-earth.kml+xml
-      replaces: ["kml / kmz"]
-      openness_score: 3
-    - value: KMZ
-      openness_score: 3
-      mimetype: application/vnd.google-earth.kmz
-    - value: MFX
-      mimetype: application/mxf
-    - value: MOV
-      mimetype: video/mov
-    - value: MPEG
-      mimetype: video/mpeg
-    - value: MPEG-1
-      mimetype: video/mpeg
-    - value: MP3
-      mimetype: audio/mpeg
-    - value: NetCDF
-      mimetype: application/x-netcdf
-      replaces: [netcdf]
-    - value: ODP
-      mimetype: application/vnd.oasis.opendocument.presentation
-      replaces: [odp]
-    - value: ODS
-      mimetype: application/vnd.oasis.opendocument.spreadsheet
-      openness_score: 2
-      replaces: [ods]
-    - value: ODT
-      mimetype: application/vnd.oasis.opendocument.text
-      replaces: [odt]
-    - value: PDF
-      mimetype: application/pdf
-    - value: PDF/A-1
-      mimetype: application/pdf
-    - value: PDF/A-2
-      mimetype: application/pdf
-    - value: PNG
-      mimetype: image/png
-      replaces: [png]
-    - value: PPT
-      mimetype: application/vnd.ms-powerpoint
-      replaces: [ppt]
-    - value: RDF
-      mimetype: application/rdf+xml
-      openness_score: 4
-    - value: RDFa
-      mimetype: text/html
-      openness_score: 4
-      replaces: [rdfa]
-    - value: RSS
-      mimetype: application/rss+xml
-      replaces: [rss]
-    - value: RTF
-      mimetype: text/rtf
-      replaces: [rtf]
-    - value: SAR
-    - value: SAV
-    - value: SEGY
-    - value: SHP
-      mimetype: application/x-shapefile
-      replaces: [SHAPE]
-    - value: SQL
-      mimetype: application/sql
-      replaces: [sql]
-    - value: SVG
-      mimetype: image/svg+xml
-      replaces: [svg]
-    - value: TIFF
-      mimetype: image/tiff
-      replaces: [tiff]
-    - value: TXT
-      mimetype: text/plain
-      replaces: ["ASCII", "text", "TXT"]
-    - value: WAV
-      mimetype: audio/wav
-    - value: WFS
-      mimetype: text/xml
-      openness_score: 3
-      replaces: [wfs]
-    - value: WMS
-      mimetype: application/vnd.ogc.wms_xml
-      openness_score: 3
-      replaces: [wms]
-    - value: WMTS
-      mimetype: application/xml
-      replaces: [wmts]
-    - value: WMV
-      mimetype: video/x-ms-wmv
-    - value: XML
-      mimetype: application/xml
-      openness_score: 3
-    - value: XLSM
-    - value: XLS
-      mimetype: application/vnd.ms-excel
-      openness_score: 2
-    - value: ZIP
-    - label:
-        en: Other
-        fr: Autre
-      value: other
-
+# Field = Date Published.
+# Add a Calendar control to select a Date.
+# {Date of issuance of the resource (e.g. publication)}
 - preset_name: canada_resource_date_published
   values:
     field_name: date_published
@@ -2971,15 +2396,19 @@ presets:
     display_snippet: date.html
     validators: scheming_required
 
+# Field = Resource Type.
+# List box Source: Resource Type code table (refer to Data Migration).
+# Format: Displayed text is the concatenation of First and Second Level Terms separated by “-“. Example: Assessment - Audit
+# {The nature or genre of the resource, i.e. dataset, supporting document, data dictionary, API, App.}
 - preset_name: canada_resource_type
   values:
+    label:
+      en: Resource Type
+      fr: Type de content
     help_text:
       en: The nature or genre of the content of the resource. (For example; dataset, supporting documentation, data dictionary, API or App).
       fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
     field_name: resource_type
-    label:
-      en: Resource Type
-      fr: Type de content
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -3389,6 +2818,617 @@ presets:
         fr: flux des travaux
       value: workflow
 
+# Field = Format.
+# List box Source: Format code table (refer to Data Migration).
+# {The file format, physical medium or dimensions of the resource}
+- preset_name: canada_resource_format
+  values:
+    help_text:
+      en: The file format, physical medium, or dimensions of the resource.
+      fr: Format du fichier, support physique ou dimensions de la ressource
+    field_name: format
+    label:
+      en: "Format"
+      fr: "Format"
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+    required: true
+    choices:
+    - value: AAC
+      mimetype: audio/mp4
+    - value: AIFF
+      mimetype: audio/aiff
+    - value: ASCII Grid
+      mimetype: application/x-ascii-grid
+      replaces: [ascii grid]
+    - label: Android Application
+      value: APK
+    - value: AVI
+      mimetype: video/vnd.avi
+    - value: BMP
+      mimetype: image/bmp
+      replaces: [bmp]
+    - value: BWF
+    - value: CCT
+    - value: CDED ASCII
+      replaces: [cded ascii]
+    - value: CDR
+      replaces: [cdr]
+    - label: Blackberry Application
+      value: COD
+    - value: CSV
+      mimetype: text/csv
+      openness_score: 3
+    - value: DBF
+      mimetype: application/dbf
+    - value: DICOM
+      mimetype: application/dicom
+    - value: DNG
+      mimetype: image/dng
+    - value: DOC
+      mimetype: application/msword
+      replaces: [doc]
+    - value: DOCX
+      mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      replaces: [docx]
+    - value: DXF
+      mimetype: image/vnd.dxf
+      replaces: [dxf]
+    - value: E00
+      replaces: [e00]
+    - value: ECW
+      mimetype: application/x-ecw
+      replaces: [ecw]
+    - value: EDI
+    - value: EMF
+      mimetype: image/emf
+      replaces: [emf]
+    - value: EPUB3
+      mimetype: application/epub+zip
+      replaces: [epub3]
+    - value: EPUB2
+      mimetype: application/epub+zip
+    - value: EPS
+      mimetype: application/postscript
+      replaces: [eps]
+    - value: ESRI REST
+    - value: EXE
+      mimetype: application/vnd.microsoft.portable-executable
+      replaces: [exe]
+    - value: FGDB/GDB
+      openness_score: 3
+      replaces: ["FGDB / GDB", "fgdb / gdb"]
+      mimetype: application/x-filegdb
+    - value: Flat raster binary
+      replaces: [flat raster binary]
+    - value: GeoPDF
+      mimetype: application/pdf
+      replaces: [geopdf]
+    - value: GeoRSS
+      mimetype: application/rss+xml
+      replaces: [georss]
+    - value: GeoTIF
+      mimetype: image/tiff
+      replaces: [geotif]
+    - value: GIF
+      mimetype: image/gif
+      replaces: [gif]
+    - value: GML
+      mimetype: application/gml+xml
+      openness_score: 3
+      replaces: gml
+    - value: HDF
+      mimetype: application/x-hdf
+      replaces: ["GNU Zipped HDF", "hdf"]
+    - value: HTML
+      mimetype: text/html
+    - value: IATI
+      mimetype: application/xml
+      replaces: [iati]
+    - label: IOS Application
+      value: IPA
+    - value: JFIF
+      mimetype: image/jpeg
+    - value: JP2
+      mimetype: image/jp2
+      replaces: [jpeg 2000]
+    - value: JPG
+      mimetype: image/jpeg
+      replaces: [jpg]
+    - value: JSON
+      mimetype: application/json
+      openness_score: 3
+    - value: JSONL
+      mimetype: application/json-l
+      openness_score: 3
+      replaces: [jsonl]
+    - value: KML
+      mimetype: application/vnd.google-earth.kml+xml
+      replaces: ["kml / kmz"]
+      openness_score: 3
+    - value: KMZ
+      openness_score: 3
+      mimetype: application/vnd.google-earth.kmz
+    - value: MFX
+      mimetype: application/mxf
+    - value: MOV
+      mimetype: video/mov
+    - value: MPEG
+      mimetype: video/mpeg
+    - value: MPEG-1
+      mimetype: video/mpeg
+    - value: MP3
+      mimetype: audio/mpeg
+    - value: NetCDF
+      mimetype: application/x-netcdf
+      replaces: [netcdf]
+    - value: ODP
+      mimetype: application/vnd.oasis.opendocument.presentation
+      replaces: [odp]
+    - value: ODS
+      mimetype: application/vnd.oasis.opendocument.spreadsheet
+      openness_score: 2
+      replaces: [ods]
+    - value: ODT
+      mimetype: application/vnd.oasis.opendocument.text
+      replaces: [odt]
+    - value: PDF
+      mimetype: application/pdf
+    - value: PDF/A-1
+      mimetype: application/pdf
+    - value: PDF/A-2
+      mimetype: application/pdf
+    - value: PNG
+      mimetype: image/png
+      replaces: [png]
+    - value: PPT
+      mimetype: application/vnd.ms-powerpoint
+      replaces: [ppt]
+    - value: RDF
+      mimetype: application/rdf+xml
+      openness_score: 4
+    - value: RDFa
+      mimetype: text/html
+      openness_score: 4
+      replaces: [rdfa]
+    - value: RSS
+      mimetype: application/rss+xml
+      replaces: [rss]
+    - value: RTF
+      mimetype: text/rtf
+      replaces: [rtf]
+    - value: SAR
+    - value: SAV
+    - value: SEGY
+    - value: SHP
+      mimetype: application/x-shapefile
+      replaces: [SHAPE]
+    - value: SQL
+      mimetype: application/sql
+      replaces: [sql]
+    - value: SVG
+      mimetype: image/svg+xml
+      replaces: [svg]
+    - value: TIFF
+      mimetype: image/tiff
+      replaces: [tiff]
+    - value: TXT
+      mimetype: text/plain
+      replaces: ["ASCII", "text", "TXT"]
+    - value: WAV
+      mimetype: audio/wav
+    - value: WFS
+      mimetype: text/xml
+      openness_score: 3
+      replaces: [wfs]
+    - value: WMS
+      mimetype: application/vnd.ogc.wms_xml
+      openness_score: 3
+      replaces: [wms]
+    - value: WMTS
+      mimetype: application/xml
+      replaces: [wmts]
+    - value: WMV
+      mimetype: video/x-ms-wmv
+    - value: XML
+      mimetype: application/xml
+      openness_score: 3
+    - value: XLSM
+    - value: XLS
+      mimetype: application/vnd.ms-excel
+      openness_score: 2
+    - value: ZIP
+    - label:
+        en: Other
+        fr: Autre
+      value: other
+
+# Field = Size.
+# {The [estimated] size of a distribution in kilobytes}
+
+# NOTE: core CKAN size field value is in bytes, not KB
+- preset_name: canada_resource_size
+  values:
+    field_name: size
+    label:
+      en: Size
+      fr: Taille
+    help_text:
+      en: The [estimated] size of a distribution in bytes.
+      fr: Taille [estimative] d’une distribution en octets
+    validators: ignore_missing int_validator
+
+# Field = Character Set.
+# {This is the character set of the dataset} 
+
+# XXX: add this. controlled list?
+
+
+# Field = Language.
+# List box Source: Language code table (refer to Data Migration).
+# Order: Blank, English and French first, followed by all other language options in alphabetic order. 
+# {The language of the resource}
+- preset_name: canada_resource_language
+  values:
+    field_name: language
+    label:
+      en: Language
+      fr: Langue
+    help_text:
+      en: The language of the resource.
+      fr: Langue de la ressource.
+    required: true
+    display_snippet: br_multiple_choice.html
+    choices:
+    - label:
+        en: English
+        fr: Anglais
+      value: en
+    - label:
+        en: French
+        fr: Français
+      value: fr
+    - label:
+        en: Albanian
+        fr: Albanais
+      value: sq
+    - label:
+        en: Algonquian languages
+        fr: Algonquines, langues
+      value: alg
+    - label:
+        en: Amharic
+        fr: amharique
+      value: am
+    - label:
+        en: Apache languages
+        fr: Apache
+      value: apa
+    - label:
+        en: Arabic
+        fr: Arabe
+      value: ar
+    - label:
+        en: Armenian
+        fr: Arménien
+      value: hy
+    - label:
+        en: Artificial (Other)
+        fr: Artificielles, autres langues
+      value: art
+    - label:
+        en: Baltic (Other)
+        fr: Baltiques, autres langues
+      value: bat
+    - label:
+        en: Belarusian
+        fr: Biélorusse
+      value: be
+    - label:
+        en: Bengali
+        fr: bengali
+      value: bn
+    - label:
+        en: Bosnian
+        fr: Bosniaque
+      value: bs
+    - label:
+        en: Bulgarian
+        fr: Bulgare
+      value: bg
+    - label:
+        en: Catalan
+        fr: catalan
+      value: ca
+    - label:
+        en: Cherokee
+        fr: Cherokee
+      value: chr
+    - label:
+        en: Cheyenne
+        fr: Cheyenne
+      value: chy
+    - label:
+        en: Chinese
+        fr: Chinois
+      value: zh
+    - label:
+        en: Chipewyan
+        fr: Chipewyan
+      value: chp
+    - label:
+        en: Cree
+        fr: Cree
+      value: cr
+    - label:
+        en: Creoles and pidgins
+        fr: créoles et pidgins
+      value: crp
+    - label:
+        en: Croatian
+        fr: Croate
+      value: hr
+    - label:
+        en: Czech
+        fr: Tchèque
+      value: cs
+    - label:
+        en: Danish
+        fr: Danois
+      value: da
+    - label:
+        en: Dogrib
+        fr: dogrib
+      value: dgr
+    - label:
+        en: Dutch
+        fr: Néerlandais
+      value: nl
+    - label:
+        en: Finnish
+        fr: Finnois
+      value: fi
+    - label:
+        en: Galician
+        fr: galicien
+      value: gl
+    - label:
+        en: German
+        fr: Allemand
+      value: de
+    - label:
+        en: Greek, Modern (1453-)
+        fr: Grec moderne (après 1453)
+      value: el
+    - label:
+        en: Gujarati
+        fr: goudjrati
+      value: gu
+    - label:
+        en: Hebrew
+        fr: Hébreu
+      value: he
+    - label:
+        en: Hindi
+        fr: Hindi
+      value: hi
+    - label:
+        en: Hungarian
+        fr: Hongrois
+      value: hu
+    - label:
+        en: Indonesian
+        fr: Indonésien
+      value: id
+    - label:
+        en: Inuinnaqtun
+        fr: Innuinaqtun
+      value: inuinnaqtun
+    - label:
+        en: Inuktitut
+        fr: Inuktitut
+      value: iu
+    - label:
+        en: Inuvialuqtun
+        fr: Inuvialuqtun
+      value: inuvialuqtun
+    - label:
+        en: Iroquoian languages
+        fr: Iroquoises, langues (famille)
+      value: iro
+    - label:
+        en: Italian
+        fr: Italien
+      value: it
+    - label:
+        en: Japanese
+        fr: Japonais
+      value: ja
+    - label:
+        en: Korean
+        fr: Coréen
+      value: ko
+    - label:
+        en: Latin
+        fr: Latin
+      value: la
+    - label:
+        en: Micmac
+        fr: Micmac
+      value: mic
+    - label:
+        en: Miscellaneous languages
+        fr: Diverses, langues
+      value: mis
+    - label:
+        en: Mohawk
+        fr: Mohawk
+      value: moh
+    - label:
+        en: Multiple languages
+        fr: Multilingue
+      value: mul
+    - label:
+        en: Navajo
+        fr: Navaho
+      value: nv
+    - label:
+        en: Nootkan
+        fr: Nootkan
+      value: wak
+    - label:
+        en: North American Indian
+        fr: Indiennes d'Amérique du Nord
+      value: nai
+    - label:
+        en: Norwegian
+        fr: Norvégien
+      value: 'no'
+    - label:
+        en: Nunatsiavummiutut
+        fr: Nunatsiavummiutut
+      value: nunatsiavummiutut
+    - label:
+        en: Ojibwa
+        fr: Ojibwa
+      value: oj
+    - label:
+        en: Persian
+        fr: Persan
+      value: fa
+    - label:
+        en: Philippine (Other)
+        fr: Philippines, autres langues
+      value: phi
+    - label:
+        en: Polish
+        fr: Polonais
+      value: pl
+    - label:
+        en: Portuguese
+        fr: Portugais
+      value: pt
+    - label:
+        en: Punjabi
+        fr: Pendjabi
+      value: pa
+    - label:
+        en: Romanian
+        fr: Roumain
+      value: ro
+    - label:
+        en: Russian
+        fr: Russe
+      value: ru
+    - label:
+        en: Salishan
+        fr: Salishan
+      value: sal
+    - label:
+        en: Serbian
+        fr: Serbe
+      value: sr
+    - label:
+        en: Sign Languages
+        fr: Langage gestuel
+      value: sgn
+    - label:
+        en: Siouan languages
+        fr: Sioux, langues
+      value: sio
+    - label:
+        en: Slovak
+        fr: Slovaque
+      value: sk
+    - label:
+        en: Somali
+        fr: somali
+      value: so
+    - label:
+        en: Spanish; Castilian
+        fr: Espagnol; castillan
+      value: es
+    - label:
+        en: Swahili
+        fr: swahili
+      value: ss
+    - label:
+        en: Swedish
+        fr: Suédois
+      value: sv
+    - label:
+        en: Tagalog
+        fr: tagalog
+      value: tl
+    - label:
+        en: Tamil
+        fr: tamoul
+      value: ta
+    - label:
+        en: Thai
+        fr: thaï
+      value: th
+    - label:
+        en: Turkish
+        fr: Turc
+      value: tr
+    - label:
+        en: Undetermined
+        fr: Indéterminée
+      value: und
+    - label:
+        en: Urdu
+        fr: Ourdou
+      value: ur
+    - label:
+        en: Vietnamese
+        fr: Vietnamien
+      value: vi
+    - label:
+        en: Welsh
+        fr: Gallois
+      value: cy
+    - label:
+        en: Yiddish
+        fr: Yiddish
+      value: yi
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx
+    # copied from multiple_select preset
+    form_snippet: multiple_select.html
+    validators: scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
+
+# Field = Download URL.
+# {The location for online access to the distribution of the resource, if the file resides elsewhere.}
+- preset_name: canada_resource_url
+  values:
+    field_name: url
+    label:
+      en: Download URL
+      fr: URL de téléchargement
+    upload_label:
+      en: "File Upload"
+      fr: "Téléchargement du fichier"
+    help_text:
+      en: The location for online access to the distribution of the resource, if the file resides elsewhere.
+      fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
+    required: true
+    # copied from resource_url_upload
+    validators: not_empty unicode remove_whitespace
+    form_snippet: upload.html
+    upload_field: upload
+    upload_clear: clear_upload
+
+# Field = Data Includes URI.
+# Default Value = Unchecked.
+# {The most important data items in this resource have a URI, e.g. data in RDF format.}
+# Field = Data Includes Links.
+# Default Value = Unchecked.
+# {The data includes links to other data for providing context, and those links are kept up to date (not broken).}
 - preset_name: canada_resource_data_quality
   values:
     field_name: data_quality
