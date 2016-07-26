@@ -26,13 +26,45 @@ dataset_fields:
   form_restrict_choices_to: [publication]
 
 - preset: canada_title
+  fluent_help_text:
+    en:
+      en: The English name by which the information asset is known
+      fr: Nom anglais désignant la ressource d’information
+    fr:
+      en: The French name by which the information asset is known
+      fr: Nom français désignant la ressource d’information
+
 - preset: canada_owner_org
+  help_text:
+    en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
+    fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
+
 - preset: canada_org_title_at_publication
 - preset: canada_creator
 - preset: canada_maintainer_email
 - preset: canada_notes
+  fluent_help_text:
+    en:
+      en: "An account of the information asset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+    fr:
+      en: "An account of the information asset, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+
 - preset: canada_keywords
+  fluent_help_text:
+    en:
+      en: Commonly used words or phrases which describe the information asset, in English
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+    fr:
+      en: Commonly used words or phrases which describe the information asset, in English
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+
 - preset: canada_subject
+  help_text:
+    en: "The topic of the content of the information asset"
+    fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
+
 - preset: canada_audience
 
 - field_name: place_of_publication
@@ -46,15 +78,40 @@ dataset_fields:
 - preset: canada_geographic_region
 - preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
+
 - preset: canada_frequency
+  help_text:
+    en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
+    fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
+
 - preset: canada_date_published
+  help_text:
+    en: The date of issuance (e.g., publication) of the information asset.
+    fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
+
 - preset: canada_date_modified
+  help_text:
+    en: The date on which the information asset was changed, updated or modified.
+    fr: Date à laquelle la ressource d’information a été changé, mise à jour ou modifié
+
 - preset: canada_program_page_url
+  help_text:
+    en: A program or homepage that can be navigated to gain additional or contextual information about the information asset.
+    fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
+
 - preset: canada_jurisdiction
+  help_text:
+    en: The extent or range of judicial, law enforcement, or other authority. For example, the level of government has contributed the information asset.
+    fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+
 - preset: canada_license_id
 - preset: canada_imso_approval
 - preset: canada_ready_to_publish
+
 - preset: canada_portal_release_date
+  help_text:
+    en: The date the dataset may be published on the Open Information Portal
+    fr: La date que le jeu de données peut être publier sur le portail information ouvertes
 
 
 #
@@ -64,7 +121,8 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-- preset: canada_resource_related_record
+- preset: canada_resource_related_relationship
+- preset: canada_resource_related_type
 - preset: canada_resource_date_published
 - preset: canada_resource_type
 - preset: canada_resource_format
