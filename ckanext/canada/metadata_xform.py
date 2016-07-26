@@ -128,7 +128,7 @@ def _process(line):
         r['language'] = langs
 
         if r['resource_type'] == 'app':
-            r['related_record'] = 'application'
+            r['related_type'] = 'application'
 
         if rec['type'] == 'info' and r['resource_type'] == 'file':
             r['resource_type'] = 'strategic_plan'

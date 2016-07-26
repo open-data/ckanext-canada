@@ -2352,12 +2352,94 @@ presets:
     validators: fluent_text
     output_validators: fluent_core_translated_output
 
-- preset_name: canada_resource_related_record
+
+# Field = Relationship Type.
+# List box Source: Relationship Type code table (refer to Data Migration).
+# {The Related Record’s relationship with the dataset}
+- preset_name: canada_resource_related_relationship
   values:
-    field_name: related_record
+    field_name: related_relationship
+    label:
+      en: Related Record Relationship Type
+    help_text:
+      en: The Related Record’s relationship with the dataset (Related Records only)
+    choices:
+    - label:
+        en: Continues
+        fr: Se poursuit
+      value: continues
+    - label:
+        en: Continued by
+        fr: Se poursuit par
+      value: continued_by
+    - label:
+        en: Continues in part
+        fr: Se poursuit en partie
+      value: continues_in_part
+    - label:
+        en: Continued in part by
+        fr: Se poursuit en partie par
+      value: continued_in_part_by
+    - label:
+        en: Supersedes
+        fr: Remplace
+      value: supersedes
+    - label:
+        en: Superseded by
+        fr: Remplacé par
+      value: superseded_by
+    - label:
+        en: Formed by the union of
+        fr: Formé par l’union de
+      value: formed_by_the_union_of
+    - label:
+        en: Superseded in part by
+        fr: Remplacé en partie par
+      value: superseded_in_part_by
+    - label:
+        en: Absorbed
+        fr: Absorbé
+      value: absorbed
+    - label:
+        en: Absorbed by
+        fr: Absorbé par
+      value: absorbed_by
+    - label:
+        en: Absorbed in part
+        fr: Absorbé en partie
+      value: absorbed_in_part
+    - label:
+        en: Absorbed in part by
+        fr: Absorbé en partie par
+      value: absorbed_in_part_by
+    - label:
+        en: Separated from
+        fr: Séparé de
+      value: separated_from
+    - label:
+        en: Split into ...
+        fr: Divisé en …
+      value: split_into
+    - label:
+        en: Merged with ...
+        fr: Fusionné avec
+      value: merged_into
+    - label:
+        en: Changed back to
+        fr: Restauré à
+      value: changed_back_to
+
+# Field = Record Type.
+# List box Source: Record Type code table (refer to Data Migration).
+# {The portal or page to which the Related Record belongs}
+- preset_name: canada_resource_related_type
+  values:
+    field_name: related_type
     label:
       en: Related Record Type
       fr: Type de record
+    help_text:
+      en: The portal or page to which the Related Record belongs (Related Records only)
     choices:
     - label:
         en: Open Data

@@ -392,7 +392,8 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-- preset: canada_resource_related_record
+- preset: canada_resource_related_relationship
+- preset: canada_resource_related_type
 - preset: canada_resource_date_published
 - preset: canada_resource_type
 - preset: canada_resource_size

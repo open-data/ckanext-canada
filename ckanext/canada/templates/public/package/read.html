@@ -72,7 +72,7 @@
       {% if pkg.resources %}
         {% set nonapps = [] %}
         {% for resource in pkg.resources %}
-          {% if not resource.related_record %}
+          {% if not resource.related_type %}
             {% do nonapps.append(resource) %}
           {% endif %}
         {% endfor %}
@@ -87,7 +87,7 @@
 
       {% set apps = [] %}
       {% for resource in pkg.resources %}
-        {% if resource.related_record %}
+        {% if resource.related_type %}
           {% do apps.append(resource) %}
         {% endif %}
       {% endfor %}
