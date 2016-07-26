@@ -173,7 +173,8 @@ dataset_fields:
   label:
     en: Place of Publication
     fr: Place de publication
-  help_text: ''
+  help_text:
+    en: "The region where the dataset was originally published"
   preset: canada_geographic_region # use same multi-select controlled list
 
 - preset: canada_spatial
@@ -186,13 +187,9 @@ dataset_fields:
 - preset: canada_program_page_url
 - preset: canada_data_series_name
 - preset: canada_data_series_issue_identification
+- preset: canada_digital_object_identifier
 
 # FGP fields (hidden from form)
-- field_name: digital_object_identifier
-  label:
-    en: Digital Object Identifier
-    fr: Identificateur d’objet numérique
-  form_snippet: null
 - field_name: reference_system_information
   label:
     en: Reference System Information
