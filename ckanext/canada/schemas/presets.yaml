@@ -2048,7 +2048,7 @@ presets:
       en: Digital Object Identifier (DOI)
       fr: Identificateur d’objet numérique
     help_text:
-      en: The Digital Object Identifier assigned to the dataset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html
+      en: "The Digital Object Identifier assigned to the dataset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
 
 # Field = Jurisdiction.
 # Default displayed value = Federal. 
@@ -2060,7 +2060,7 @@ presets:
       en: Jurisdiction
       fr: Jurisdiction
     help_text:
-      en: The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset.
+      en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
     display_snippet: null
     form_restrict_choices_to: [federal]
