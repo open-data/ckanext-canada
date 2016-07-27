@@ -2097,6 +2097,24 @@ presets:
       en: The licence applied to the dataset
     required: true
 
+#Field = Access Restrictions.
+#Default Value = Unrestricted.
+#{These are the access restrictions of the asset}
+- preset_name: canada_restrictions
+  values:
+    field_name: restrictions
+    required: true
+    choices:
+    - label:
+        en: Unrestricted
+        fr: Non affecté
+      value: unrestricted
+    # copied from select preset
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+
+
 # Field = IMSO Approval.
 # List box options are Yes and No.
 # {Has IMSO approval been obtained for this dataset? By selecting yes, you agree to release this dataset under the Open Government Licence - Canada}
