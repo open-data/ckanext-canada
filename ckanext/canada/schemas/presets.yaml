@@ -3164,7 +3164,7 @@ presets:
 
 # NOTE: we've adopted the preferred MIME name or name from
 # http://www.iana.org/assignments/character-sets/character-sets.xhtml
-- preset_nane: canada_character_set
+- preset_name: canada_resource_character_set
   values:
     field_name: character_set
     label:
