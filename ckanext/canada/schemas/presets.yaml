@@ -3144,13 +3144,85 @@ presets:
 # Field = Character Set.
 # {This is the character set of the dataset} 
 
-# XXX: add this. controlled list?
+# NOTE: we've adopted the preferred MIME name or name from
+# http://www.iana.org/assignments/character-sets/character-sets.xhtml
+- preset_nane: canada_character_set
+  values:
+    field_name: character_set
+    label:
+      en: Character Set
+    help_text:
+      en: This is the character set of the resource
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+    choices:
+    - value: UTF-8
+      replaces: [utf8]
+    - value: US-ASCII
+      replaces: [usAscii]
+    - value: ISO-10646-UCS-2
+      label: UCS-2
+      replaces: [ucs2]
+    - value: ISO-10646-UCS-4
+      label: UCS-4
+      replaces: [ucs2]
+    - value: UTF-7
+      replaces: [utf7]
+    - value: UTF-16
+      replaces: [utf16]
+    - value: ISO-8859-1
+      replaces: [8859part1]
+    - value: ISO-8859-2
+      replaces: [8859part2]
+    - value: ISO-8859-3
+      replaces: [8859part3]
+    - value: ISO-8859-4
+      replaces: [8859part4]
+    - value: ISO-8859-5
+      replaces: [8859part5]
+    - value: ISO-8859-6
+      replaces: [8859part6]
+    - value: ISO-8859-7
+      replaces: [8859part7]
+    - value: ISO-8859-8
+      replaces: [8859part8]
+    - value: ISO-8859-9
+      replaces: [8859part9]
+    - value: ISO-8859-10
+      replaces: [8859part10]
+    - value: TIS-620
+      label: ISO-8859-11
+      replaces: [8859part11]
+    - value: ISO-8859-13
+      replaces: [8859part13]
+    - value: ISO-8859-14
+      replaces: [8859part14]
+    - value: ISO-8859-15
+      replaces: [8859part15]
+    - value: ISO-8859-16
+      replaces: [8859part16]
+    - value: JIS_Encoding
+      replaces: [jis]
+    - value: Shift_JIS
+      replaces: [shiftJIS]
+    - value: EUC-JP
+      replaces: [eucJP]
+    - value: EUC-KR
+      replaces: [eucKR]
+    - value: Big5
+      replaces: [big5]
+    - value: GB2312
+    - value: EBCDIC-US
+      replaces: [ebcdic]
 
 
 # Field = Language.
 # List box Source: Language code table (refer to Data Migration).
 # Order: Blank, English and French first, followed by all other language options in alphabetic order. 
 # {The language of the resource}
+
+# NOTE: we've adopted BCP47 for language values
 - preset_name: canada_resource_language
   values:
     field_name: language
