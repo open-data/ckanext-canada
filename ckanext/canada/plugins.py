@@ -10,12 +10,7 @@ from logging import getLogger
 from ckantoolkit import h
 
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.validators import (
-    if_empty_generate_uuid,
-    canada_tags,
-    geojson_validator,
-    protect_portal_release_date
-)
+from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
@@ -326,10 +321,13 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
 
     def get_validators(self):
         return {
-            'if_empty_generate_uuid': if_empty_generate_uuid,
-            'canada_tags': canada_tags,
-            'geojson_validator': geojson_validator,
-            'protect_portal_release_date': protect_portal_release_date,
+            'if_empty_generate_uuid': validators.if_empty_generate_uuid,
+            'canada_tags': validators.canada_tags,
+            'geojson_validator': validators.geojson_validator,
+            'protect_portal_release_date':
+                validators.protect_portal_release_date,
+            'canada_copy_from_org_name':
+                validators.canada_copy_from_org_name,
             }
 
 

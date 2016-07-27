@@ -131,12 +131,13 @@ presets:
         en: Publisher - Organization Name at Publication (French)
         fr: Organisation - Titre lors de la publication (français)
     help_text:
-      en: The organization Title at publication Time
+      en: The organization Title at publication Time. Leave these fields blank
+        to copy names from Current Organization Name
+    validators: fluent_text canada_copy_from_org_name
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
     output_validators: fluent_text_output
 
 # Field = Publisher - Organization Section Name English.

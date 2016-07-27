@@ -15,6 +15,8 @@ from shapely import wkt
 import json
 import uuid
 
+from ckanapi import LocalCKAN, NotFound
+
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
 
@@ -115,3 +117,23 @@ def geojson_validator(value):
         # must store as JSON
         return json.dumps(value)
     return value
+
+def canada_copy_from_org_name(key, data, errors, context):
+    """
+    When org name at publication not provided, copy from owner_org
+    """
+    value = data[key]
+    if value and json.loads(value) != {'en':'', 'fr':''}:
+        return
+    org_id = data[('owner_org',)]
+    if not org_id:
+        return
+    try:
+        org = LocalCKAN(username='').action.organization_show(id=org_id)
+    except NotFound:
+        return
+
+    data[key] = json.dumps({
+        'en': org['title'].split(' | ')[0],
+        'fr': org['title'].split(' | ')[-1],
+    })
