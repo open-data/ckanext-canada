@@ -43,6 +43,7 @@ def _process(line):
 
     rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
+    rec['restrictions'] = u'unrestricted'
     rec['imso_approval'] = u'true' if rec.get('portal_release_date') else u'false'
 
     # dump tags: redundant
