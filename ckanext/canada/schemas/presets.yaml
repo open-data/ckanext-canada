@@ -2103,6 +2103,8 @@ presets:
 - preset_name: canada_restrictions
   values:
     field_name: restrictions
+    label:
+      en: Access Restrictions
     required: true
     choices:
     - label:

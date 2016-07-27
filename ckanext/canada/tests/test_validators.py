@@ -76,6 +76,7 @@ class TestNAVLSchema(FunctionalTestBase):
             'imso_approval': 'true',
             'jurisdiction': 'federal',
             'maintainer_email': 'not@all.example.com',
+            'restrictions': 'unrestricted',
             'resources': [{
                 'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
                 'format': u'TXT',
