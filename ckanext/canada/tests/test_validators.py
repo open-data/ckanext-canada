@@ -184,15 +184,17 @@ class TestNAVLSchema(FunctionalTestBase):
     def test_copy_org_name(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
-        assert_equal(pkg['org_title_at_publication'],
-            {'en': 'en org name', 'fr': 'fr org name'})
+        pkg = self.normal_action.package_show(id=pkg['id'])
+        assert_equal(sorted(pkg['org_title_at_publication']), ['en', 'fr'])
+        assert_equal(pkg['org_title_at_publication']['en'], 'en org name')
+        assert_equal(pkg['org_title_at_publication']['fr'], 'fr org name')
 
     def test_dont_copy_org_name(self):
         pkg = self.normal_action.package_create(**dict(
             self.complete_pkg, org_title_at_publication={'en':'a', 'fr':'b'}))
 
-        assert_equal(pkg['org_title_at_publication'],
-            {'en': 'a', 'fr': 'a'})
+        assert_equal(pkg['org_title_at_publication']['en'], 'a')
+        assert_equal(pkg['org_title_at_publication']['fr'], 'b')
 
     def test_generated_fields(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)

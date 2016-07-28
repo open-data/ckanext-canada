@@ -123,7 +123,7 @@ def canada_copy_from_org_name(key, data, errors, context):
     When org name at publication not provided, copy from owner_org
     """
     value = data[key]
-    if value and json.loads(value) != {'en':'', 'fr':''}:
+    if json.loads(value) not in ({}, {'en':'', 'fr':''}):
         return
     org_id = data[('owner_org',)]
     if not org_id:
