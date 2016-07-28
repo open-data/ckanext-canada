@@ -94,14 +94,17 @@ def canada_tags(value, context):
     return value
 
 
-def if_empty_generate_uuid(value):
+def canada_validate_generate_uuid(value):
     """
-    Generate a uuid for this dataset early so that it may be
-    copied into the name field.
+    Accept UUID-shaped values or generate a uuid for this
+    dataset early so that it may be copied into the name field.
     """
     if not value or value is missing:
         return str(uuid.uuid4())
-    return value
+    try:
+        return str(uuid.UUID(value))
+    except ValueError:
+        raise Invalid(_("Badly formed hexadecimal UUID string"))
 
 
 def geojson_validator(value):
