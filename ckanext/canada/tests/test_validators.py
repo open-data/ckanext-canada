@@ -136,15 +136,12 @@ class TestNAVLSchema(FunctionalTestBase):
                 keywords={'en':['these', 'ones', 'are', 'a-ok'], 'fr':['test']}))
 
     def test_custom_dataset_id(self):
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
+        self.normal_action.package_create(
+            name='custom_dataset_id', id='30569200-43b9-43f1-a1fb-9e7974cbb997',
+                **self.complete_pkg)
 
-        self.sysadmin_action.package_create(
-            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
-
-        resp = self.action.package_show(id='my-custom-id')
-        assert resp['id'] == 'my-custom-id'
+        resp = self.action.package_show(id='custom_dataset_id')
+        assert resp['id'] == '30569200-43b9-43f1-a1fb-9e7974cbb997'
         assert resp['name'] == 'custom_dataset_id'
 
         assert_raises(ValidationError,
