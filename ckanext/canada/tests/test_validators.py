@@ -184,7 +184,6 @@ class TestNAVLSchema(FunctionalTestBase):
     def test_copy_org_name(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
-        pkg = self.normal_action.package_show(id=pkg['id'])
         assert_equal(sorted(pkg['org_title_at_publication']), ['en', 'fr'])
         assert_equal(pkg['org_title_at_publication']['en'], 'en org name')
         assert_equal(pkg['org_title_at_publication']['fr'], 'fr org name')
