@@ -54,7 +54,8 @@ class TestNAVLSchema(FunctionalTestBase):
     def setup(self):
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
-        org = factories.Organization()
+        self.org = factories.Organization(
+            title='en org name | fr org name')
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action
@@ -64,7 +65,7 @@ class TestNAVLSchema(FunctionalTestBase):
 
         self.sysadmin_action.organization_member_create(
             username=self.normal_user['name'],
-            id=org['name'],
+            id=self.org['name'],
             role='editor')
 
         self.incomplete_pkg = {
@@ -88,9 +89,7 @@ class TestNAVLSchema(FunctionalTestBase):
         }
 
         self.complete_pkg = dict(self.incomplete_pkg,
-            owner_org=org['name'],
-            org_title_at_publication={
-                'en': u'en org name', 'fr': u'fr org name'},
+            owner_org=self.org['name'],
             title_translated={
                 'en': u'A Novel By Tolstoy', 'fr':u'Un novel par Tolstoy'},
             frequency=u'as_needed',
@@ -181,6 +180,20 @@ class TestNAVLSchema(FunctionalTestBase):
                     )],
                 )
             )
+
+    def test_copy_org_name(self):
+        pkg = self.normal_action.package_create(**self.complete_pkg)
+
+        assert_equal(sorted(pkg['org_title_at_publication']), ['en', 'fr'])
+        assert_equal(pkg['org_title_at_publication']['en'], 'en org name')
+        assert_equal(pkg['org_title_at_publication']['fr'], 'fr org name')
+
+    def test_dont_copy_org_name(self):
+        pkg = self.normal_action.package_create(**dict(
+            self.complete_pkg, org_title_at_publication={'en':'a', 'fr':'b'}))
+
+        assert_equal(pkg['org_title_at_publication']['en'], 'a')
+        assert_equal(pkg['org_title_at_publication']['fr'], 'b')
 
     def test_generated_fields(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
