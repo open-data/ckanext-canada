@@ -6,7 +6,7 @@ import unicodedata
 from pylons.i18n import _
 from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckan.lib.navl.validators import StopOnError
-from ckan.new_authz import is_sysadmin
+from ckan.authz import is_sysadmin
 from ckan import model
 
 from ckanext.canada.helpers import may_publish_datasets
@@ -94,14 +94,17 @@ def canada_tags(value, context):
     return value
 
 
-def if_empty_generate_uuid(value):
+def canada_validate_generate_uuid(value):
     """
-    Generate a uuid for this dataset early so that it may be
-    copied into the name field.
+    Accept UUID-shaped values or generate a uuid for this
+    dataset early so that it may be copied into the name field.
     """
     if not value or value is missing:
         return str(uuid.uuid4())
-    return value
+    try:
+        return str(uuid.UUID(value))
+    except ValueError:
+        raise Invalid(_("Badly formed hexadecimal UUID string"))
 
 
 def geojson_validator(value):

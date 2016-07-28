@@ -321,7 +321,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
 
     def get_validators(self):
         return {
-            'if_empty_generate_uuid': validators.if_empty_generate_uuid,
+            'canada_validate_generate_uuid':
+                validators.canada_validate_generate_uuid,
             'canada_tags': validators.canada_tags,
             'geojson_validator': validators.geojson_validator,
             'protect_portal_release_date':
