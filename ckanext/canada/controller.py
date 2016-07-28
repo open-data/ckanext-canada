@@ -15,7 +15,7 @@ from ckan.lib.base import (
 )
 from ckan.logic import get_action, check_access, schema
 from ckan.controllers.user import UserController
-import ckan.new_authz as new_authz
+from ckan.authz import is_sysadmin
 from ckan.lib.helpers import Page, date_str_to_datetime, url
 from ckan.controllers.feed import (
     FeedController,
@@ -38,10 +38,9 @@ class CanadaController(BaseController):
         if not c.user:
             h.redirect_to(controller='user', action='login')
 
-        is_sysadmin = new_authz.is_sysadmin(c.user)
         is_new = not h.check_access('package_create')
 
-        if is_sysadmin or is_new:
+        if is_sysadmin(c.user) or is_new:
             return h.redirect_to(controller='package', action='search')
         return render('home/quick_links.html')
 
@@ -84,7 +83,7 @@ class CanadaController(BaseController):
         error_summary = error_summary or {}
 
         vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.is_sysadmin = is_sysadmin(c.user)
         c.form = render('user/new_user_form.html', extra_vars=vars)
         return render('user/new.html')
 
@@ -248,7 +247,7 @@ class CanadaUserController(UserController):
         error_summary = error_summary or {}
 
         d = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = new_authz.is_sysadmin(c.user)
+        c.is_sysadmin = is_sysadmin(c.user)
         c.form = render('user/new_user_form.html', extra_vars=d)
         return render('user/new.html')
 
@@ -377,8 +376,7 @@ class CanadaAdminController(PackageController):
     def _guess_package_type(self, expecting_name=False):
         # this is a bit unortodox, but this method allows us to conveniently
         # alter the search method without much code duplication.
-        sysadmin = new_authz.is_sysadmin(c.user)
-        if not sysadmin:
+        if not is_sysadmin(c.user):
             abort(401, _('Not authorized to see this page'))
 
         # always set ready_to_publish to true for the publishing interface

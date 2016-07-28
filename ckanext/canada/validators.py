@@ -6,7 +6,7 @@ import unicodedata
 from pylons.i18n import _
 from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckan.lib.navl.validators import StopOnError
-from ckan.new_authz import is_sysadmin
+from ckan.authz import is_sysadmin
 from ckan import model
 
 from ckanext.canada.helpers import may_publish_datasets
