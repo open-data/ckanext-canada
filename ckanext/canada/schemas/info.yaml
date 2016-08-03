@@ -148,7 +148,11 @@ dataset_fields:
     en: "The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click)"
     fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
 
+# Field = Audience.
+# List box Source: Audience code table (refer to Data Migration).
+# {A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click).}
 - preset: canada_audience
+
 
 - field_name: place_of_publication
   label:
