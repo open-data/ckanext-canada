@@ -53,6 +53,29 @@ dataset_fields:
       en: "An account of the information asset, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
       fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
 
+# Field = Note English.
+# { General information relating to an asset, in English }
+# Field = Note English.
+# { General information relating to an asset, in French }
+- field_name: additional_notes
+  label:
+    en: Note
+  fluent_form_label:
+    en:
+      en: Note (English)
+    fr:
+      en: Note (French)
+  fluent_help_text:
+    en:
+      en: General information relating to an asset, in English
+    fr:
+      en: General information relating to an asset, in French
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  output_validators: fluent_text_output
+
 - preset: canada_keywords
   fluent_help_text:
     en:
