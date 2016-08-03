@@ -201,6 +201,11 @@ presets:
         en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
       fr:
         en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    output_validators: fluent_text_output
 
 
 # Field = Contact Email.
