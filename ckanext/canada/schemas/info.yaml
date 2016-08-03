@@ -44,13 +44,20 @@ dataset_fields:
 - preset: canada_creator
 - preset: canada_contributor
 - preset: canada_maintainer_email
+
+# Field = Description English
+# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
+# {An account of the information asset, in English. A description may include abstract, table of contents or a free-text.}
+# Field = Description French. 
+# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
+# {An account of the information asset, in French. A description may include abstract, table of contents or a free-text.}
 - preset: canada_notes
   fluent_help_text:
     en:
-      en: "An account of the information asset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+      en: "An account of the information asset, in English. A description may include abstract, table of contents or a free-text"
       fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
     fr:
-      en: "An account of the information asset, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+      en: "An account of the information asset, in French. A description may include abstract, table of contents or a free-text"
       fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
 
 # Field = Note English.
@@ -76,18 +83,25 @@ dataset_fields:
   error_snippet: fluent_text.html
   output_validators: fluent_text_output
 
+# Field = Keywords English.
+# {Commonly used words or phrases which describe the asset, in English}
+# Field = Keywords French.
+# {Commonly used words or phrases which describe the asset, in French}
 - preset: canada_keywords
   fluent_help_text:
     en:
-      en: Commonly used words or phrases which describe the information asset, in English
+      en: Commonly used words or phrases which describe the asset, in English
       fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
     fr:
-      en: Commonly used words or phrases which describe the information asset, in English
+      en: Commonly used words or phrases which describe the asset, in French
       fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
 
+# Field = Subject.
+# List box Source: Subject code table (refer to Data Migration).
+# {The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click).}
 - preset: canada_subject
   help_text:
-    en: "The topic of the content of the information asset"
+    en: "The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click)"
     fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
 
 - preset: canada_audience
