@@ -2459,6 +2459,9 @@ presets:
         en: Changed back to
         fr: Restauré à
       value: changed_back_to
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
 
 # Field = Record Type.
 # List box Source: Record Type code table (refer to Data Migration).
