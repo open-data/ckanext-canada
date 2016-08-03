@@ -25,25 +25,69 @@ dataset_fields:
 - preset: canada_collection
   form_restrict_choices_to: [publication]
 
+# Field = Title English.
+# {The English name by which the asset is known}
+# Field = Title French.
+# {The French name by which the asset is known}
 - preset: canada_title
   fluent_help_text:
     en:
-      en: The English name by which the information asset is known
+      en: The English name by which the asset is known
       fr: Nom anglais désignant la ressource d’information
     fr:
-      en: The French name by which the information asset is known
+      en: The French name by which the asset is known
       fr: Nom français désignant la ressource d’information
 
+# Field = Publisher - Current Organization Name.
+# List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
+# Populate the list box with the Titles of all the organizations the currently logged-in user is linked to.
+# {The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset}
 - preset: canada_owner_org
   help_text:
-    en: An entity (GC Department or Agency) primarily responsible for publishing the information asset
+    en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset
     fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
 
+# Field = Publisher - Organization Name at Publication (English).
+# {The organization Title at publication Time}
+# Field = Publisher - Organization Name at Publication (French).
+# {The organization Title at publication Time}
 - preset: canada_org_title_at_publication
+
+# Field = Publisher - Organization Section Name English.
+# {The English names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
+# Field = Publisher - Organization Section Name French.
+# {The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
 - preset: canada_org_section_name
+  fluent_help_text:
+    en:
+      en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+    fr:
+      en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+
+# Field = Creator.
+# { Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas).}
 - preset: canada_creator
+  help_text:
+    en: Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas)
+    fr: Entité [individuelle] principalement responsable de produire la ressource d’information
+
+# Field = Contributor English.
+# {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
+# Field = Contributor English.
+# {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 - preset: canada_contributor
+  fluent_help_text:
+    en:
+      en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas)
+    fr:
+      en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas)
+
+# Field = Contact Email.
+# {The contact person's email for the information asset}
 - preset: canada_maintainer_email
+  help_text:
+    en: The contact person's email for the information asset
+    fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
 
 # Field = Description English
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax

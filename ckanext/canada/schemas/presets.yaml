@@ -178,7 +178,7 @@ presets:
       en: Creator
       fr: Créateur
     help_text:
-      en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).
+      en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
       fr: Entité [individuelle] principalement responsable de produire la ressource d’information
 
 
@@ -198,9 +198,9 @@ presets:
         en: Contributor (French)
     fluent_help_text:
       en:
-        en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
+        en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
       fr:
-        en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
+        en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
