@@ -310,15 +310,41 @@ dataset_fields:
     en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
     fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
 
+# Field = Date Published.
+# Add a Calendar control to select a Date.
+# {The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)}
 - preset: canada_date_published
   help_text:
-    en: The date of issuance (e.g., publication) of the information asset.
+    en: The date of issuance (e.g., publication) of the information asset
     fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
 
+# Field = Date Modified.
+# Add a Calendar control to select a Date.
+# {The date on which the information asset was updated (YYYY-MM-DD)}
 - preset: canada_date_modified
   help_text:
-    en: The date on which the information asset was changed, updated or modified.
+    en: The date on which the information asset was updated
     fr: Date à laquelle la ressource d’information a été changé, mise à jour ou modifié
+
+# Field = Date Created.
+# Add a Calendar control to select a Date.
+# {The date of creation of the asset (YYYY-MM-DD)}
+- field_name: date_created
+  label:
+    en: Date Created
+  help_text:
+    en: The date of creation of the asset
+  preset: date
+
+# Field = Date Captured.
+# Add a Calendar control to select a Date.
+# {The date on which the asset was digitized or a subsequent snapshot was taken (YYYY-MM-DD)}
+- field_name: date_captured
+  label:
+    en: Date Captured
+  help_text:
+    en: The date on which the asset was digitized or a subsequent snapshot was taken
+  preset: date
 
 - preset: canada_program_page_url
   help_text:
