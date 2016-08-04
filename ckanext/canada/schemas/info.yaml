@@ -463,7 +463,7 @@ dataset_fields:
 
 # Field = Access Restrictions.
 # Default Value = Unrestricted.
-# {These are the access restrictions of the asset} 
+# {These are the access restrictions of the asset}
 - preset: canada_restrictions
   help_text:
     en: These are the access restrictions of the asset
@@ -498,13 +498,50 @@ dataset_fields:
 #
 resource_fields:
 
+# Field = Unique Identifier.
+# {A unique phrase or string which identifies the resource}
 - preset: canada_resource_unique_identifier
+
+# Field = Title English.
+# {An English name given to the resource}
+# Field = Title French.
+# {A French name given to the resource}
 - preset: canada_resource_name
+
 - preset: canada_resource_related_relationship
 - preset: canada_resource_related_type
+
+# Field = Date Published.
+# Add a Calendar control to select a Date.
+# {Date of issuance of the resource (e.g. publication)}
 - preset: canada_resource_date_published
+  help_text:
+    en: Date of issuance of the resource (e.g. publication)
+
+# Field = Resource Type.
+# List box Source: Resource Type code table (refer to Data Migration).
+# Format: Displayed text is the concatenation of First and Second Level Terms separated by “-“. Example: Assessment - Audit
+# {The nature or genre of the resource, i.e. publication, briefing material.}
 - preset: canada_resource_type
+
+# Field = Format.
+# List box Source: Format code table (refer to Data Migration).
+# {The file format, physical medium or dimensions of the resource}
 - preset: canada_resource_format
+
+# Field = Size.
+# {The [estimated] size of a distribution in kilobytes}
 - preset: canada_resource_size
+
+# Field = Language.
+# List box Source: Language code table (refer to Data Migration).
+# Order: Blank, English and French first, followed by all other language options in alphabetic order. 
+# {The language of the resource}
 - preset: canada_resource_language
+
+# This control opens a file selection dialogue in order to find and select a file to upload as a resource.  
+# Label = Upload URL.
+# {The location for online access to the distribution of the resource}
+# Field = Location.
+# {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
