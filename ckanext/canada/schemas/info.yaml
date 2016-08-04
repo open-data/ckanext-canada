@@ -92,7 +92,7 @@ dataset_fields:
 # Field = Description English
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in English. A description may include abstract, table of contents or a free-text.}
-# Field = Description French. 
+# Field = Description French.
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in French. A description may include abstract, table of contents or a free-text.}
 - preset: canada_notes
@@ -153,20 +153,159 @@ dataset_fields:
 # {A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click).}
 - preset: canada_audience
 
-
+# Field = Place pf Publication.
+# List box Source: Geographic Region Name code table (refer to Data Migration).
+# {The region where the asset was originally published}
 - field_name: place_of_publication
   label:
     en: Place of Publication
     fr: Place de publication
-  help_text: ''
+  help_text:
+    en: The region where the asset was originally published
   preset: canada_geographic_region # use same multi-select controlled list
 
+# Field = Spatial.
+# {The range of spatial applicability of an information asset. This element could include either a bounding box, or GeoJson string.}
 - preset: canada_spatial
+
+# Field = Geographic Region Name.
+# List box Source: Geographic Region name code table (refer to Data Migration).
+# Format: {Province – Region}, e.g. Ontario – Sudbury.
+# {The geographic region of an asset. You may select multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
+
+# Field = Time Period Coverage Start Date.
+# Add a Calendar control to select a Date.
+# {The start date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_start
+
+# Field = Time Period Coverage End Date.
+# Add a Calendar control to select a Date.
+# {The end date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_end
 
-- preset: canada_frequency
+# Field = Issuance.
+# List box Source: Issuance code table (refer to Data Migration).
+# { A term that designates how the resource is issued }
+- field_name: issuance
+  label:
+    en: Issuance
+  help_text:
+    en: A term that designates how the resource is issued
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+  choices:
+  - label:
+      en: Monographic
+      fr: Monographique
+    value: monographic
+  - label:
+      en: Single Unit
+      fr: Unité simple
+    value: single_unit
+  - label:
+      en: Multipart monograph
+      fr: Monographie en plusieurs volumes
+    value: multipart_monograph
+  - label:
+      en: Continuing
+      fr: Suite
+    value: continuing
+  - label:
+      en: Serial
+      fr: Série
+    value: serial
+  - label:
+      en: Integrating Resource
+      fr: Ressource intégratrice
+    value: integrating_resource
+
+# Field = Frequency of Issuance.
+# List box Source: Frequency of Issuance code table (refer to Data Migration).
+# { A statement of publication frequency in textual form }
+- field_name: issuance_frequency
+  label:
+    en: Frequency of Issuance
+  help_text:
+    en: A statement of publication frequency in textual form
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+  choices:
+  - label:
+      en: Continuously updated
+      fr: Continuellement actualisé
+    value: continual
+  - label:
+      en: Daily
+      fr: Quotidien
+    value: P1D
+  - label:
+      en: Semiweekly
+      fr: Bihebdomadaire
+    value: P0.5W
+  - label:
+      en: Three times a week
+      fr: Trois fois par semaine
+    value: P0.33W
+  - label:
+      en: Weekly
+      fr: Chaque semaine
+    value: P1W
+  - label:
+      en: Biweekly
+      fr: Aux deux semaines
+    value: P2W
+  - label:
+      en: Three times a month
+      fr: Trois fois par mois
+    value: P0.33M
+  - label:
+      en: Semimonthly
+      fr: Deux fois par mois
+    value: P0.5M
+  - label:
+      en: Monthly
+      fr: Chaque mois (par mois)
+    value: P1M
+  - label:
+      en: Bimonthly
+      fr: Bimensuel
+    value: P2M
+  - label:
+      en: Quarterly
+      fr: Trimestriel
+    value: P3M
+  - label:
+      en: Three times a year
+      fr: Trois fois par année
+    value: P4M
+  - label:
+      en: Semiannual
+      fr: Semi-annuel
+    value: P6M
+  - label:
+      en: Annual
+      fr: Annuel
+    value: P1Y
+  - label:
+      en: Biennial
+      fr: Deux fois année
+    value: P2Y
+  - label:
+      en: Triennial
+      fr: Trois fois par année
+    value: P3Y
+  - label:
+      en: Completely irregular
+      fr: Entièrement irrégulier
+    value: irregular
+
+# Field = Maintenance and Update Frequency.
+# List box Source: Maintenance and Update Frequency code table (refer to Data Migration).
+# {The frequency with which changes and additions are made to the initial asset}
+- preset canada_frequency
   help_text:
     en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
     fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
