@@ -305,7 +305,7 @@ dataset_fields:
 # Field = Maintenance and Update Frequency.
 # List box Source: Maintenance and Update Frequency code table (refer to Data Migration).
 # {The frequency with which changes and additions are made to the initial asset}
-- preset canada_frequency
+- preset: canada_frequency
   help_text:
     en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
     fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
@@ -445,13 +445,13 @@ dataset_fields:
   label:
     en: Digital Object Identifier (DOI)
   help_text:
-    en: The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html
+    en: "The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
 
 # Field = Jurisdiction.
 # {The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset.}
 - preset: canada_jurisdiction
   help_text:
-    en: The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset
+    en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset"
     fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information
 
 # Field = Licence.
