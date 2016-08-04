@@ -163,6 +163,11 @@ presets:
         en: The French names of the work groups, units of work, business
             units, etc. of the organization that publishes the dataset
             (separate multuple names by commas).
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    output_validators: fluent_text_output
 
 # Field = Creator.
 # {Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).}
@@ -173,7 +178,7 @@ presets:
       en: Creator
       fr: Créateur
     help_text:
-      en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).
+      en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
       fr: Entité [individuelle] principalement responsable de produire la ressource d’information
 
 
@@ -193,9 +198,14 @@ presets:
         en: Contributor (French)
     fluent_help_text:
       en:
-        en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
+        en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
       fr:
-        en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).
+        en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    output_validators: fluent_text_output
 
 
 # Field = Contact Email.
@@ -2449,6 +2459,9 @@ presets:
         en: Changed back to
         fr: Restauré à
       value: changed_back_to
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
 
 # Field = Record Type.
 # List box Source: Record Type code table (refer to Data Migration).
