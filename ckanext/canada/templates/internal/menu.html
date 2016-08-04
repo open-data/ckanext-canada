@@ -37,6 +37,14 @@
           <li><a href="#">{{ _('About the Registry') }}</a></li>
         </ul>
       </li>
+      {% if c.userobj %}
+      <li><a href="{{ h.url_for(controller='user', action='logout') }}" class="item">{{ _('Log out') }}</a></li>
+      {% else %}
+        {% if h.check_access('user_create') %}
+        <li><a href="{% url_for controller='user', action='register', class_='sub' %}" class="item">{{ _('Register') }}</a></li>
+        {% endif %}
+      <li><a href="{% url_for controller='user', action='login' %}" class="item">{{ _('Log in') }}</a></li>
+      {% endif %}
     </ul>
   </div>
 </div>
