@@ -33,12 +33,12 @@ resources:
     datastore_type: text
     excel_column_width: 50
 
-  - datastore_id: historical_publisher_en
+  - datastore_id: publisher_en
     label: Publisher - Name at Publication (English)
     datastore_type: text
     excel_column_width: 30
 
-  - datastore_id: historical_publisher_fr
+  - datastore_id: publisher_fr
     label: Publisher - Name at Publication (French)
     datastore_type: text
     excel_column_width: 30
@@ -123,13 +123,25 @@ resources:
 
   examples:
     record:
-      ref_number: "1980198"
-      proj_number: "19876198"
-      title_en: "Data released"
-      date_published: "2016-01-01"
-      language: "xzz"
+      ref_number: "OD-2016-00001"
+      title_en: "Annual Insolvency Rates"
+      title_fr: "Taux annuels d’insolvabilité"
+      description_en: "The consumer insolvency rate is defined as the number of consumer insolvencies per thousand residents aged 18 years or above. The business insolvency rate is defined as the number of business insolvencies per thousand businesses. Annual insolvency rates are available for consumers starting from 1987 and for businesses starting from 1998. [Office of the Superintendent of Bankruptcy Canada]"
+      description_fr: "Le taux d'insolvabilité des consommateurs renvoie au nombre de personnes insolvables par millier d'habitants âgés de 18 ans ou plus et le taux d'insolvabilité des entreprises désigne le nombre d'entreprises insolvables par millier d'entreprises. Les taux annuels d'insolvabilité sont présentés à partir de 1987 pour les consommateurs et de 1998 pour les entreprises. [Bureau du surintendant des faillites Canada]"
+      publisher_en: "Industry Canada"
+      publisher_fr: "Industrie Canada"
+      date_published: "2016-04-01"
+      language: "en+fr"
+      size: "392000"
+      eligible_for_release: "TRUE"
+      program_alignment_architecture_en: "Government wide programs design and delivery"
+      program_alignment_architecture_fr: "Conception et prestation des programmes pangouvernementaux"
+      date_released: "2016-04-01"
+      portal_url_en: "http://open.canada.ca/data/en/dataset/0e52f1b0-089a-430e-bbd1-1367d7328a2e"
+      portal_url_fr: "http://ouvert.canada.ca/data/fr/dataset/0e52f1b0-089a-430e-bbd1-1367d7328a2e"
+
     filters:
       language: "en"
     filter_one:
-      ref_number: "1980198"
+      ref_number: "OD-2016-00005"
     sort: date_published desc
