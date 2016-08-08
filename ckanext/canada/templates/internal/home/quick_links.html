@@ -3,73 +3,39 @@
 
 {% block toolbar %}{% endblock %}
 
+{% macro quick_link(r_type) %}
+  <section>
+    {#- XXX bit of a hack: we "know" that our dataset types have
+       resource names with the same values #}
+    {%- set geno = h.recombinant_get_geno(r_type) -%}
+    <h2 class="h5"><a href="{{
+      h.url_for('recombinant_type', resource_name=r_type) }}">{{
+        _(geno.title) }}</a></h2>
+    <p>{{ _(geno.notes) }}</p>
+  </section>
+{% endmacro %}
+
 {% block primary_content %}
 <div class="row">
   <div class="col-md-6">
     <section>
-      <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Add Open Data Records') }}</a></h2>
+      <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
       <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
     </section>
     <section>
-      <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Add Open Information Records') }}</a></h2>
+      <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>
       <p>{{ _('Add information about government programs, activities and publications.') }}</p>
     </section>
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='ati') }}">{{
-          _('Add ATI Summaries Records') }}</a></h2>
-      <p>{{ _('Add all your completed Access to Information summaries.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='ati') }}">{{
-          _('Add ATI Nothing to Report Records') }}</a></h2>
-      <p>{{ _('Add all the months where you had no ATI Requests to report.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{
-         h.url_for('recombinant_type', resource_name='contracts') }}">{{
-           _('Add Contracts Over 10 K Records') }}</a></h2>
-      <p>{{ _('Add all the reports on contracts issued for your organization.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='travelq') }}">{{
-          _('Add Travel Expenditures Records') }}</a></h2>
-      <p>{{ _('Add all the reports on travel expenditures incurred within your organization.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='hospitalityq') }}">{{
-          _('Add Hospitality Records') }}</a></h2>
-      <p>{{ _('Add all the reports on hospitality expenditure incurred within your organization.') }}</p>
-    </section>
+    {{ quick_link('ati') }}
+    {{ quick_link('contracts') }}
+    {{ quick_link('hospitalityq') }}
+    {{ quick_link('travelq') }}
+    {{ quick_link('grants') }}
   </div>
   <div class="col-md-6">
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='grants') }}">{{ 
-          _('Add Grants and Contributions Records') }}</a></h2>
-      <p>{{ _('Add all the reports on grants and contributions awarded by your organization.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='reclassification') }}">{{
-          _('Add Position Re-classification Records') }}</a></h2>
-      <p>{{ _('Add all the reports on the reclassification of occupied positions hospitality expenditure incurred within your organization.') }}</p>
-    </section>
-    {#<section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='travela') }}">{{
-          _('Add Annual Expenditures on Travel Records') }}</a></h2>
-      <p>{{ _('Add all the annual reports on travel expenditures incurred within your organization.') }}</p>
-    </section>#}
-    <section>
-      <h2 class="h5"><a href="{{
-        h.url_for('recombinant_type', resource_name='wrongdoing') }}">{{
-          _('Add Founded Wrongdoing Records') }}</a></h2>
-      <p>{{ _('Add all the reports on the disclosure of wrongdoing within your organization.') }}</p>
-    </section>
+    {{ quick_link('reclassification') }}
+    {{ quick_link('wrongdoing') }}
+    {{ quick_link('inventory') }}
     {% set orgs = h.organizations_available('read') %}
     {% if orgs %}
       {% set org = orgs[0] %}
