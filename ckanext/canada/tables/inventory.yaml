@@ -26,22 +26,22 @@ resources:
   - datastore_id: description_en
     label: Description (English)
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 50
 
   - datastore_id: description_fr
     label: Description (French)
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 50
 
   - datastore_id: historical_publisher_en
     label: Publisher - Name at Publication (English)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: historical_publisher_fr
     label: Publisher - Name at Publication (French)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: date_published
     label: Date Published
@@ -51,7 +51,7 @@ resources:
   - datastore_id: language
     label: Language
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 15
     choices:
       en:
         en: English
@@ -75,22 +75,22 @@ resources:
   - datastore_id: size
     label: Size
     datastore_type: int
-    excel_column_width: 20
+    excel_column_width: 15
 
   - datastore_id: eligible_for_release
     label: Eligible for Release
     datastore_type: boolean
-    excel_column_width: 10
+    excel_column_width: 15
     
   - datastore_id: program_alignment_architecture_en
     label: Program Alignment Architecture (English)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: program_alignment_architecture_fr
     label: Program Alignment Architecture (French)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: date_released
     label: Date Released
@@ -100,25 +100,26 @@ resources:
   - datastore_id: portal_url_en
     label: Open Government Portal Record (English)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: portal_url_fr
     label: Open Government Portal Record (French)
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FF8BCCCB
+      fgColor: FF005172
     Font:
       bold: true
+      color: FFFFFFFF
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF689998
+      fgColor: FF3095b4
 
   examples:
     record:
