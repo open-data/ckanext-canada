@@ -1251,23 +1251,11 @@ msgstr "Inventaire des données ouvertes"
 msgid "This dataset houses your departmental open data inventory. This is where you can access and upload your open data inventory template."
 msgstr "Ce jeu de données contient l’inventaire des données ouvertes de votre ministère. C’est l’occasion pour accéder à et pour télécharger votre modèle d'inventaire des données ouvertes. "
 
-msgid "Title English"
-msgstr "Titre en anglais"
+msgid "Publisher - Name at Publication (English)"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication (anglais)"
 
-msgid "Title French"
-msgstr "Titre en français"
-
-msgid "Description English"
-msgstr "Description en anglais"
-
-msgid "Description French"
-msgstr "Description en français"
-
-msgid "Publisher - English Name at Publication"
-msgstr "Éditeur – Nom de l'organisation au moment de la publication, en anglais"
-
-msgid "Publisher - French Name at Publication"
-msgstr "Éditeur – Nom de l'organisation au moment de la publication, en français"
+msgid "Publisher - Name at Publication (French)"
+msgstr "Éditeur – Nom de l'organisation au moment de la publication (français)"
 
 msgid "Date Published"
 msgstr "Date de publication "
@@ -1276,16 +1264,26 @@ msgid "Language"
 msgstr "Langue"
 
 msgid "Size"
-msgstr "Taille "
+msgstr "Taille"
 
-msgid "Privacy Impact Assessment"
-msgstr "Évaluation des facteurs relatifs à la vie privée"
+msgid "Eligible for Release"
+msgstr "Admissible à la publication"
+
+msgid "Program Alignment Architecture (English)"
+msgstr "Architecture d'alignement des programmes (anglais)"
+
+msgid "Program Alignment Architecture (French)"
+msgstr "Architecture d'alignement des programmes (français)"
 
 msgid "Date Released"
 msgstr "Date de sortie"
 
-msgid "Download URL"
-msgstr "URL de téléchargement"
+msgid "Open Government Portal Record (English)"
+msgstr "Enregistrement de la portail du Gouvernement ouvert (anglais)"
+
+msgid "Open Government Portal Record (French)"
+msgstr "Enregistrement de la portail du Gouvernement ouvert (français)"
+
 
 #FIXME - 2015-01-12 These are translations from the ckanext-recombinant extension
 
