@@ -98,9 +98,9 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
         a_uuid = '6d582cf8-f52a-4bc7-b7d6-e0a5cfb7c25f'
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='custom_dataset_id', id=a_uuid, **self.complete_pkg)
+            name='custom_dataset_id', id='bad-uuid', **self.complete_pkg)
 
-        self.sysadmin_action.package_create(
+        self.normal_action.package_create(
             name='custom_dataset_id', id=a_uuid, **self.complete_pkg)
 
         resp = self.action.package_show(id=a_uuid)
