@@ -95,20 +95,21 @@ class TestNAVLSchema(WsgiAppCase, CheckMethods):
             **dict(self.complete_pkg, keywords='these, ones, are, a-ok'))
 
     def test_custom_dataset_id(self):
+        a_uuid = '6d582cf8-f52a-4bc7-b7d6-e0a5cfb7c25f'
         self.assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
+            name='custom_dataset_id', id=a_uuid, **self.complete_pkg)
 
         self.sysadmin_action.package_create(
-            name='custom_dataset_id', id='my-custom-id', **self.complete_pkg)
+            name='custom_dataset_id', id=a_uuid, **self.complete_pkg)
 
-        resp = self.action.package_show(id='my-custom-id')
-        assert resp['id'] == 'my-custom-id'
+        resp = self.action.package_show(id=a_uuid)
+        assert resp['id'] == a_uuid
         assert resp['name'] == 'custom_dataset_id'
 
         self.assert_raises(ValidationError,
             self.sysadmin_action.package_create,
-            name='different_dataset_id', id='my-custom-id', **self.complete_pkg)
+            name='different_dataset_id', id=a_uuid, **self.complete_pkg)
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
