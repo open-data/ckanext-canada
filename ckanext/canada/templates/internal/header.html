@@ -1,5 +1,5 @@
 {% ckan_extends %}
-{% set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu') %}
+{% set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') %}
 {% block sitemenu %}
 <nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="{{ menu }}">
   <div class="container nvbar">
