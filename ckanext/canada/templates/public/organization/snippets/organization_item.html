@@ -13,4 +13,7 @@
   {%- else -%}
     <span>{{ _('0 Datasets') }}</span>
   {%- endif -%}
+  {% if h.check_access('group_update') %}
+  <a href="{% url_for controller='organization', action='edit', id=organization.id %}" class="btn btn-default">{{ _('Edit') }}</a>
+  {% endif %}
 </dd>
