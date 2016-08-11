@@ -1,0 +1,45 @@
+{% ckan_extends %}
+
+{# Separate our resource fields into common and resource/related-specific panels #}
+
+{% block basic_fields %}
+  {% set schema = h.scheming_get_dataset_schema(dataset_type) %}
+
+  {%- for field in schema.resource_fields -%}
+    {%- if not field.form_panel -%}
+      {%- snippet 'scheming/snippets/form_field.html',
+        field=field, data=data, errors=errors,
+        entity_type='dataset', object_type=dataset_type -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="panel panel-default">
+    <header class="panel-heading">
+      {{ _("Metadata Fields for Resources Only (not for Related Items)") }}
+    </header>
+    <div class="panel-body">
+      {%- for field in schema.resource_fields -%}
+        {%- if field.form_panel == 'resource' -%}
+          {%- snippet 'scheming/snippets/form_field.html',
+            field=field, data=data, errors=errors,
+            entity_type='dataset', object_type=dataset_type -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <header class="panel-heading">
+      {{ _("Metadata Fields for Related Items Only") }}
+    </header>
+    <div class="panel-body">
+      {%- for field in schema.resource_fields -%}
+        {%- if field.form_panel == 'related' -%}
+          {%- snippet 'scheming/snippets/form_field.html',
+            field=field, data=data, errors=errors,
+            entity_type='dataset', object_type=dataset_type -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{% endblock %}

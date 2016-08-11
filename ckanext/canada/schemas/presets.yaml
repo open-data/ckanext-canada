@@ -2353,6 +2353,7 @@ presets:
     help_text:
       en: A unique phrase or string which identifies the resource.
       fr: Expression ou segment unique désignant la ressource.
+    form_panel: resource
 
 # Field = Title English.
 # {An English name given to the resource}
@@ -2393,7 +2394,8 @@ presets:
     label:
       en: Related Record Relationship Type
     help_text:
-      en: The Related Record’s relationship with the dataset (Related Records only)
+      en: The Related Record’s relationship with the dataset
+    form_panel: related
     choices:
     - label:
         en: Continues
@@ -2473,7 +2475,8 @@ presets:
       en: Related Record Type
       fr: Type de record
     help_text:
-      en: The portal or page to which the Related Record belongs (Related Records only)
+      en: The portal or page to which the Related Record belongs
+    form_panel: related
     choices:
     - label:
         en: Open Data
@@ -2507,6 +2510,7 @@ presets:
     help_text:
       en: Date of formal issuance (e.g., publication) of the resource.
       fr: Date officielle d’émission (c.-à-d. de publication) de la ressource
+    form_panel: resource
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -2529,6 +2533,7 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
+    form_panel: resource
     choices:
     - label:
         en: abstract
@@ -2950,6 +2955,7 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
+    form_panel: resource
     choices:
     - value: AAC
       mimetype: audio/mp4
@@ -3173,6 +3179,7 @@ presets:
     help_text:
       en: The [estimated] size of a distribution in bytes.
       fr: Taille [estimative] d’une distribution en octets
+    form_panel: resource
     validators: ignore_missing int_validator
 
 # Field = Character Set.
@@ -3187,6 +3194,7 @@ presets:
       en: Character Set
     help_text:
       en: This is the character set of the resource
+    form_panel: resource
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -3623,6 +3631,7 @@ presets:
     label:
       en: Data Includes URIs and Links
       fr: Les données comprennent les URI et les liens
+    form_panel: resource
     choices:
     - label:
         en: The most important data items in this resource have a URI, e.g. data in RDF format
