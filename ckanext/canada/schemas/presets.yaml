@@ -2478,6 +2478,7 @@ presets:
       en: The portal or page to which the Related Record belongs
     form_panel: related
     required: true
+    form_include_blank_choice: true
     choices:
     - label:
         en: Open Data
@@ -2497,7 +2498,9 @@ presets:
       value: other
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    # no 'scheming_required' in validators because this field may be omitted
+    # for non-related-item resources
+    validators: scheming_choices
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.
@@ -2532,7 +2535,7 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: canada_non_related_required scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
@@ -2955,7 +2958,7 @@ presets:
       fr: "Format"
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: canada_non_related_required scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
