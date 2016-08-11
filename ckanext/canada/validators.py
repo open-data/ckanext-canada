@@ -4,7 +4,6 @@ import re
 import unicodedata
 
 from pylons.i18n import _
-from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -16,7 +15,7 @@ import json
 import uuid
 
 from ckanapi import LocalCKAN, NotFound
-from ckantoolkit import get_validator
+from ckantoolkit import get_validator, Invalid, missing
 
 not_empty = get_validator('not_empty')
 
@@ -148,5 +147,6 @@ def canada_non_related_required(key, data, errors, context):
     """
     Required resource field *if* this resource is not a related item
     """
-    if not data.get(key[:-1] + ('related_type',)):
+    related_type = data.get(key[:-1] + ('related_type',))
+    if not related_type or related_type is Missing:
         return not_empty(key, data, errors, context)
