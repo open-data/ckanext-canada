@@ -2477,6 +2477,7 @@ presets:
     help_text:
       en: The portal or page to which the Related Record belongs
     form_panel: related
+    required: true
     choices:
     - label:
         en: Open Data
@@ -3620,6 +3621,18 @@ presets:
     form_snippet: upload.html
     upload_field: upload
     upload_clear: clear_upload
+
+# XXX This is a copy of the resource URL field to be displayed only in the
+#     related item panel but is not used directly in any schemas 
+- preset_name: _canada_related_resource_url
+  values:
+    field_name: url
+    label:
+      en: Record URL
+    help_text:
+      en: The URL for online access to the related record
+    required: true
+    form_snippet: url_only.html
 
 # Field = Data Includes URI.
 # Default Value = Unchecked.
