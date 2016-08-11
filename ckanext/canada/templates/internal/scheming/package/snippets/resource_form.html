@@ -14,9 +14,9 @@
   {%- endfor -%}
 
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
-    <details class="acc-group" open="open">
+    <details class="acc-group" {% if not data.related_type %}open="open"{% endif %}>
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Resources Only") }}
+        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
       </summary>
       <div class="tgl-panel">
         {%- for field in schema.resource_fields -%}
@@ -28,7 +28,7 @@
         {%- endfor -%}
       </div>
     </details>
-    <details class="acc-group">
+    <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
         {{ _("Metadata Fields for Related Items Only") }}
       </summary>

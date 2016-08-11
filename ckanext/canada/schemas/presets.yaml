@@ -2533,6 +2533,7 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
+    form_include_blank_choice: true
     form_panel: resource
     choices:
     - label:
@@ -2955,6 +2956,7 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
+    form_include_blank_choice: true
     form_panel: resource
     choices:
     - value: AAC
