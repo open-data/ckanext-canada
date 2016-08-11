@@ -4,7 +4,6 @@ import re
 import unicodedata
 
 from pylons.i18n import _
-from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -16,6 +15,10 @@ import json
 import uuid
 
 from ckanapi import LocalCKAN, NotFound
+from ckantoolkit import get_validator, Invalid, missing
+
+not_empty = get_validator('not_empty')
+ignore_missing = get_validator('ignore_missing')
 
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
@@ -140,3 +143,11 @@ def canada_copy_from_org_name(key, data, errors, context):
         'en': org['title'].split(' | ')[0],
         'fr': org['title'].split(' | ')[-1],
     })
+
+def canada_non_related_required(key, data, errors, context):
+    """
+    Required resource field *if* this resource is not a related item
+    """
+    if not data.get(key[:-1] + ('related_type',)):
+        return not_empty(key, data, errors, context)
+    return ignore_missing(key, data, errors, context)

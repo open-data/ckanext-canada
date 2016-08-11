@@ -2,6 +2,13 @@
 {% ckan_extends %}
 {% import 'macros/form_canada.html' as cform %}
 
+{%- block stages -%}
+  {% if stage %}
+    {{ h.snippet('package/snippets/stages.html', stages=stage,
+      pkg_name=pkg_name, dataset_type=dataset_type) }}
+  {% endif %}
+{%- endblock -%}
+
 {%- block errors -%}
   {{- cform.errors(
   errors, schema_description.resource_field_by_id, h.lang()) -}}

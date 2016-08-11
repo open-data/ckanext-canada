@@ -17,10 +17,15 @@ Example:
 
 <ol class="nav nav-pills nav-justified stages stage-2">
   <li role="presentation" class="first {{ s1 }}">
-    {% if s1 != 'complete' %}
-      <a><span class="highlight">{{ _('Add Dataset Metadata') }}</span></a>
+    {% if dataset_type == 'info' %}
+      {% set m1 = _('Add Asset Metadata') %}
     {% else %}
-      <a><button class="btn-link highlight" name="save" value="go-dataset" type="submit">{{ _('Add Dataset Metadata') }}</button></a>
+      {% set m1 = _('Add Dataset Metadata') %}
+    {% endif %}
+    {% if s1 != 'complete' %}
+      <a><span class="highlight">{{ m1 }}</span></a>
+    {% else %}
+      <a><button class="btn-link highlight" name="save" value="go-dataset" type="submit">{{ m1 }}</button></a>
     {% endif %}
   </li>
   <li class="last {{ s2 }}">

@@ -366,6 +366,11 @@ dataset_fields:
       en: Series Dates of Publication and/or Sequential Designation (English)
     fr:
       en: Series Dates of Publication and/or Sequential Designation (French)
+  fluent_help_text:
+    en:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English
+    fr:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
   preset: fluent_text
 
 # Field = Homepage English.
@@ -532,6 +537,10 @@ resource_fields:
 # Field = Size.
 # {The [estimated] size of a distribution in kilobytes}
 - preset: canada_resource_size
+
+# Field = Character Set.
+# {This is the character set of the dataset} 
+- preset: canada_resource_character_set
 
 # Field = Language.
 # List box Source: Language code table (refer to Data Migration).

@@ -329,6 +329,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
+            'canada_non_related_required':
+                validators.canada_non_related_required,
             }
 
 

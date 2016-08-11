@@ -400,8 +400,6 @@ resource_fields:
 - preset: canada_resource_size
 
 - preset: canada_resource_character_set
-  form_restrict_choices_to: [UTF-8, US-ASCII]
-
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url

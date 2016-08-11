@@ -2353,6 +2353,7 @@ presets:
     help_text:
       en: A unique phrase or string which identifies the resource.
       fr: Expression ou segment unique désignant la ressource.
+    form_panel: resource
 
 # Field = Title English.
 # {An English name given to the resource}
@@ -2393,7 +2394,8 @@ presets:
     label:
       en: Related Record Relationship Type
     help_text:
-      en: The Related Record’s relationship with the dataset (Related Records only)
+      en: The Related Record’s relationship with the dataset
+    form_panel: related
     choices:
     - label:
         en: Continues
@@ -2473,7 +2475,10 @@ presets:
       en: Related Record Type
       fr: Type de record
     help_text:
-      en: The portal or page to which the Related Record belongs (Related Records only)
+      en: The portal or page to which the Related Record belongs
+    form_panel: related
+    required: true
+    form_include_blank_choice: true
     choices:
     - label:
         en: Open Data
@@ -2493,7 +2498,9 @@ presets:
       value: other
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    # no 'scheming_required' in validators because this field may be omitted
+    # for non-related-item resources
+    validators: ignore_missing scheming_choices
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.
@@ -2507,6 +2514,7 @@ presets:
     help_text:
       en: Date of formal issuance (e.g., publication) of the resource.
       fr: Date officielle d’émission (c.-à-d. de publication) de la ressource
+    form_panel: resource
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -2527,8 +2535,10 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: canada_non_related_required scheming_choices
     required: true
+    form_include_blank_choice: true
+    form_panel: resource
     choices:
     - label:
         en: abstract
@@ -2948,8 +2958,10 @@ presets:
       fr: "Format"
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: canada_non_related_required scheming_choices
     required: true
+    form_include_blank_choice: true
+    form_panel: resource
     choices:
     - value: AAC
       mimetype: audio/mp4
@@ -3173,6 +3185,7 @@ presets:
     help_text:
       en: The [estimated] size of a distribution in bytes.
       fr: Taille [estimative] d’une distribution en octets
+    form_panel: resource
     validators: ignore_missing int_validator
 
 # Field = Character Set.
@@ -3187,9 +3200,12 @@ presets:
       en: Character Set
     help_text:
       en: This is the character set of the resource
+    form_panel: resource
     form_snippet: select.html
+    form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
     validators: scheming_required scheming_choices
+    form_panel: resource
     choices:
     - value: UTF-8
       replaces: [utf8]
@@ -3611,6 +3627,18 @@ presets:
     upload_field: upload
     upload_clear: clear_upload
 
+# XXX This is a copy of the resource URL field to be displayed only in the
+#     related item panel but is not used directly in any schemas 
+- preset_name: _canada_related_resource_url
+  values:
+    field_name: url
+    label:
+      en: Record URL
+    help_text:
+      en: The URL for online access to the related record
+    required: true
+    form_snippet: url_only.html
+
 # Field = Data Includes URI.
 # Default Value = Unchecked.
 # {The most important data items in this resource have a URI, e.g. data in RDF format.}
@@ -3623,6 +3651,7 @@ presets:
     label:
       en: Data Includes URIs and Links
       fr: Les données comprennent les URI et les liens
+    form_panel: resource
     choices:
     - label:
         en: The most important data items in this resource have a URI, e.g. data in RDF format
