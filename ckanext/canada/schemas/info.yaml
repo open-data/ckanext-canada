@@ -538,6 +538,10 @@ resource_fields:
 # {The [estimated] size of a distribution in kilobytes}
 - preset: canada_resource_size
 
+# Field = Character Set.
+# {This is the character set of the dataset} 
+- preset: canada_resource_character_set
+
 # Field = Language.
 # List box Source: Language code table (refer to Data Migration).
 # Order: Blank, English and French first, followed by all other language options in alphabetic order. 

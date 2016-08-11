@@ -3202,8 +3202,10 @@ presets:
       en: This is the character set of the resource
     form_panel: resource
     form_snippet: select.html
+    form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
     validators: scheming_required scheming_choices
+    form_panel: resource
     choices:
     - value: UTF-8
       replaces: [utf8]
