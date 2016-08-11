@@ -13,33 +13,38 @@
     {%- endif -%}
   {%- endfor -%}
 
-  <div class="panel panel-default">
-    <header class="panel-heading">
-      {{ _("Metadata Fields for Resources Only (not for Related Items)") }}
-    </header>
-    <div class="panel-body">
-      {%- for field in schema.resource_fields -%}
-        {%- if field.form_panel == 'resource' -%}
-          {%- snippet 'scheming/snippets/form_field.html',
-            field=field, data=data, errors=errors,
-            entity_type='dataset', object_type=dataset_type -%}
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <header class="panel-heading">
-      {{ _("Metadata Fields for Related Items Only") }}
-    </header>
-    <div class="panel-body">
-      {%- for field in schema.resource_fields -%}
-        {%- if field.form_panel == 'related' -%}
-          {%- snippet 'scheming/snippets/form_field.html',
-            field=field, data=data, errors=errors,
-            entity_type='dataset', object_type=dataset_type -%}
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
+  <ul class="list-unstyled mrgn-tp-lg">
+    <li>
+      <details open="open">
+        <summary>
+          {{ _("Metadata Fields for Resources Only (not for Related Items)") }}
+        </summary>
+        <div class="panel-body">
+          {%- for field in schema.resource_fields -%}
+            {%- if field.form_panel == 'resource' -%}
+              {%- snippet 'scheming/snippets/form_field.html',
+                field=field, data=data, errors=errors,
+                entity_type='dataset', object_type=dataset_type -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </details>
+    </li>
+    <li>
+      <details open="open">
+        <summary>
+          {{ _("Metadata Fields for Related Items Only") }}
+        </summary>
+        <div class="panel-body">
+          {%- for field in schema.resource_fields -%}
+            {%- if field.form_panel == 'related' -%}
+              {%- snippet 'scheming/snippets/form_field.html',
+                field=field, data=data, errors=errors,
+                entity_type='dataset', object_type=dataset_type -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </details>
+    </li>
+  </ul>
 {% endblock %}
