@@ -2500,7 +2500,7 @@ presets:
     display_snippet: select.html
     # no 'scheming_required' in validators because this field may be omitted
     # for non-related-item resources
-    validators: scheming_choices
+    validators: ignore_missing scheming_choices
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.

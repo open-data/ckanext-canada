@@ -18,6 +18,7 @@ from ckanapi import LocalCKAN, NotFound
 from ckantoolkit import get_validator, Invalid, missing
 
 not_empty = get_validator('not_empty')
+ignore_missing = get_validator('ignore_missing')
 
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
@@ -147,6 +148,6 @@ def canada_non_related_required(key, data, errors, context):
     """
     Required resource field *if* this resource is not a related item
     """
-    related_type = data.get(key[:-1] + ('related_type',))
-    if not related_type or related_type is Missing:
+    if not data.get(key[:-1] + ('related_type',)):
         return not_empty(key, data, errors, context)
+    return ignore_missing(key, data, errors, context)
