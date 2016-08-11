@@ -13,38 +13,34 @@
     {%- endif -%}
   {%- endfor -%}
 
-  <ul class="list-unstyled mrgn-tp-lg">
-    <li>
-      <details open="open">
-        <summary>
-          {{ _("Metadata Fields for Resources Only (not for Related Items)") }}
-        </summary>
-        <div class="panel-body">
-          {%- for field in schema.resource_fields -%}
-            {%- if field.form_panel == 'resource' -%}
-              {%- snippet 'scheming/snippets/form_field.html',
-                field=field, data=data, errors=errors,
-                entity_type='dataset', object_type=dataset_type -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </details>
-    </li>
-    <li>
-      <details open="open">
-        <summary>
-          {{ _("Metadata Fields for Related Items Only") }}
-        </summary>
-        <div class="panel-body">
-          {%- for field in schema.resource_fields -%}
-            {%- if field.form_panel == 'related' -%}
-              {%- snippet 'scheming/snippets/form_field.html',
-                field=field, data=data, errors=errors,
-                entity_type='dataset', object_type=dataset_type -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </details>
-    </li>
-  </ul>
+  <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
+    <details class="acc-group" open="open">
+      <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+        {{ _("Metadata Fields for Resources Only") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'resource' -%}
+            {%- snippet 'scheming/snippets/form_field.html',
+              field=field, data=data, errors=errors,
+              entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
+    <details class="acc-group">
+      <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+        {{ _("Metadata Fields for Related Items Only") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'related' -%}
+            {%- snippet 'scheming/snippets/form_field.html',
+              field=field, data=data, errors=errors,
+              entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
+  </div>
 {% endblock %}
