@@ -366,6 +366,11 @@ dataset_fields:
       en: Series Dates of Publication and/or Sequential Designation (English)
     fr:
       en: Series Dates of Publication and/or Sequential Designation (French)
+  fluent_help_text:
+    en:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English
+    fr:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
   preset: fluent_text
 
 # Field = Homepage English.
