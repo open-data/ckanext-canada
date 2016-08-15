@@ -191,12 +191,16 @@ def _update_records(records, org_detail, conn, resource_name):
     orghash = hashlib.md5(org).hexdigest()
 
     def unique_id(r):
+        "return hash, friendly id"
         s = orghash
+        f = org
         if not pk:
             s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
+            f += u':' + unicode(r['_id'])
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
-        return s
+            f += u':' + unicode(r[k])
+        return s, f
 
     out = []
 
@@ -205,7 +209,7 @@ def _update_records(records, org_detail, conn, resource_name):
         for f in recombinant_choice_fields(resource_name, all_languages=True))
 
     for r in records:
-        unique = unique_id(r)
+        unique, friendly = unique_id(r)
 
         shortform = None
         shortform_fr = None
@@ -217,6 +221,7 @@ def _update_records(records, org_detail, conn, resource_name):
 
         solrrec = {
             'id': unique,
+            'unique_id': friendly,
             'org_name_code': org_detail['name'],
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
