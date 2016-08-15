@@ -8,10 +8,11 @@
   data-mode="columntoggle" >
   <thead>
     <tr class="font-small">
-      {% set i = 2 %}
-      {% for field_name in ds_fields %}
-        <th scope="col" data-priority="dtprv-{{i}}">{{field_name['label']}}</th>
-        {% set i = i + 1 %}
+      {% set magic_priority_no_field_should_be_below = 2 %}
+      {% for field in ds_fields %}
+        <th scope="col" data-priority="dtprv-{{
+            field.priority + magic_priority_no_field_should_be_below
+            }}">{{field.label}}</th>
       {% endfor %}
     </tr>
   </thead>
