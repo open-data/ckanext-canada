@@ -36,12 +36,10 @@
       {% set names = (prefix ~ 'key', prefix ~ 'value', prefix ~ 'deleted') %}
       {% set error = errors[prefix ~ 'key'] or errors[prefix ~ 'value'] %}
 
-      <div class="input-prepend" style="display: inline-block;">
+      <div class="form-group control-full" style="margin-left:0; margin-right:0">
+        <label for="{{ id }}-value">{{ key }}</label>
+        <input id="{{ id }}-value" class="form-control" type="text" name="{{ names[1] }}" value="{{ extra_values.get(key, '') | empty_and_escape }}"/>
         <input id="{{ id }}-key" name="{{ names[0] }}" type="hidden" value="{{ key | empty_and_escape }}" />
-        <label for="{{ id }}-value" class="add-on span-1">{{ key }}</label>
-        <div class="span-4">
-          <input id="{{ id }}-value" type="text" name="{{ names[1] }}" value="{{ extra_values.get(key, '') | empty_and_escape }}"/>
-        </div>
       </div>
     {% endfor %}
   {% endblock %}
@@ -50,9 +48,9 @@
       {% block delete_button %}
         {% if h.check_access('organization_delete', {'id': data.id})  %}
           {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Organization?')}) %}
-          <a class="button button-alert pull-left" href="{% url_for controller='organization', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+          <a class="btn btn-alert" href="{% url_for controller='organization', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
         {% endif %}
       {% endblock %}
-    <p><button class="button button-accent" name="save" type="submit" >{% block save_text %}{{ _('Save Organization') }}{% endblock %}</button></p>
+    <p><button class="btn btn-primary" name="save" type="submit" >{% block save_text %}{{ _('Save Organization') }}{% endblock %}</button></p>
   </div>
 </form>
