@@ -196,10 +196,10 @@ def _update_records(records, org_detail, conn, resource_name):
         f = org
         if not pk:
             s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
-            f += u':' + unicode(r['_id'])
+            f += u'|' + unicode(r['_id'])
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
-            f += u':' + unicode(r[k])
+            f += u'|' + unicode(r[k])
         return s, f
 
     out = []
