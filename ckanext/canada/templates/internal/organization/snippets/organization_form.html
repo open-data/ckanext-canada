@@ -26,7 +26,7 @@
     {% for extra in data.extras %}
       {% do extra_values.update({extra.key: extra.value}) %}
     {% endfor %}
-    {% for key in ['ati_email', 'department_number', 'shortform', 'shortform_fr'] %}
+    {% for key in ['shortform', 'shortform_fr', 'department_number', 'ati_email', 'opengov_email'] %}
       {% set prefix = 'extras__%d__' % loop.index0 %}
       {% set id = 'field-extras-%d' % loop.index %}
       {% set label_id = id %}
