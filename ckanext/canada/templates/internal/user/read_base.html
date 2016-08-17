@@ -9,4 +9,7 @@
   {% if c.is_myself %}
     {{ h.build_nav_icon('user_reports', _('Reports'), id=user.name) }}
   {% endif %}
+  {% if h.check_access('user_update', {'id': user.name}) %}
+    {{ h.build_nav_icon('user_edit', _('Edit'), id=user.name) }}
+  {% endif %}
 {% endblock %}
