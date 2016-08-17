@@ -19,9 +19,6 @@
 
     {{ form.markdown('description', label=_('Description'), id='field-description', placeholder=_('A little information about my organization...'), value=data.description, error=errors.description) }}
 
-    {% set attrs = {'class' : 'width-90'} %}
-    {{ form.input('image_url', label=_('Image URL'), id='field-image-url', type='url', placeholder=_('http://example.com/my-image.jpg'), value=data.image_url, error=errors.image_url, classes=['control-full'], attrs=attrs) }}
-
   {% endblock %}
 
   {% block custom_fields %}
