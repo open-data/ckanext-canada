@@ -34,7 +34,7 @@
       {% set error = errors[prefix ~ 'key'] or errors[prefix ~ 'value'] %}
 
       <div class="form-group control-full" style="margin-left:0; margin-right:0">
-        <label for="{{ id }}-value">{{ key }}</label>
+        <label for="{{ id }}-value">{{ _(key) }}</label>
         <input id="{{ id }}-value" class="form-control" type="text" name="{{ names[1] }}" value="{{ extra_values.get(key, '') | empty_and_escape }}"/>
         <input id="{{ id }}-key" name="{{ names[0] }}" type="hidden" value="{{ key | empty_and_escape }}" />
       </div>
