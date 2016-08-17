@@ -17,17 +17,19 @@ EXTRAS = set([
     'shortform',
     'shortform_fr',
     'ati_email',
+    'opengov_email',
     ])
 
 users = '--users' in sys.argv
 
 for l in sys.stdin:
     o = json.loads(l)
+    old_extras = dict((e['key'], e['value']) for e in o['extras'])
     line = {
         "title": o["title"],
         "id": o["id"],
-        "extras": [{"value": e["value"], "key": e["key"]}
-            for e in o["extras"] if e["key"] in EXTRAS],
+        "extras": [{"value": old_extras.get(ename, ''), "key": ename}
+            for ename in EXTRAS],
         "name": o["name"],
         }
     if users:
