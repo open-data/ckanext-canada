@@ -146,6 +146,8 @@ def _process(line):
 
         r['format'] = resource_choices['format'].get(
             r['format'], r['format'])
+        if r['format'] == 'app':
+            r['format'] = 'other'
 
     _process.count[1] += 1
     logging.debug('Skipped {0}, processed {1}'.format(*_process.count))
