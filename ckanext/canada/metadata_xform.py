@@ -108,6 +108,8 @@ def _process(line):
     rec['title_translated'] = rec.pop('title')
     rec['notes_translated'] = rec.pop('notes')
 
+    rec.pop('extras', None)
+
     # merge per-resource name, name_fra to fluent text
     for r in rec['resources']:
         if 'name_fra' in r:
