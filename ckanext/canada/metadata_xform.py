@@ -103,7 +103,7 @@ def _process(line):
     if not rec.get('maintainer_email'):
         rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
 
-    rec['ready_to_publish'] = str(rec.get('ready_to_publish', '')).lower()
+    rec['ready_to_publish'] = str(rec.get('ready_to_publish', 'false')).lower()
 
     rec['title_translated'] = rec.pop('title')
     rec['notes_translated'] = rec.pop('notes')
