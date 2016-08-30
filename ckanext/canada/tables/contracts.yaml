@@ -352,8 +352,13 @@ resources:
     choices:
       PSPCSOSA:
         en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by PSPC
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC
       SSCSOSA:
         en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by SSC
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPC
+      DSOSA:
+        en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by the department
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par le ministère
 
   - datastore_id: standing_offer_number
     label: Standing Offer or Supply Arrangement Number
