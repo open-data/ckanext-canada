@@ -28,7 +28,7 @@ resources:
     extract_date_month: true
 
   - datastore_id: economic_object_code
-    label: Description of Work Code
+    label: Economic Object Code
     datastore_type: text
     excel_column_width: 10
     choices_file: choices/economic_object_code.json
