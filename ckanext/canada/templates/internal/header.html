@@ -13,7 +13,7 @@
             {% endif %}
             <li><a href="{{ h.url_for(controller='package', action='search') }}" class="item">{{ _('Search') }}</a></li>
             <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}" class="item">{{ _('Organizations') }}</a></li>
-            <li><a href="{{ menu }}#help-aide" class="item">{{ _('Help') }}</a></li>
+            <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}" class="item">{{ _('FAQ') }}</a></li>
             {% if c.userobj %}
             <li><a href="{{ h.url_for(controller='user', action='logout') }}" class="item">{{ _('Log out') }}</a></li>
             {% else %}
