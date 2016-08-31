@@ -97,6 +97,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
+            '/links',
+            action='links',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
             '/menu',
             action='registry_menu',
             controller='ckanext.canada.controller:CanadaController'
