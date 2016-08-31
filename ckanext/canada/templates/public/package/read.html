@@ -13,7 +13,9 @@
     <ul class="nav nav-pills">
         {% if h.check_access('package_update', {'id':pkg.id }) %}
           {% block actions_content_inner %}
-          <li>{% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-default' %}</li>
+          {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary' %}
+          {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
+          {{ h.follow_button('dataset', pkg.name) }}
           {% endblock %}
         {% endif %}
     </ul>
