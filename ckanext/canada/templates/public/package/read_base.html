@@ -27,6 +27,47 @@ Remove the markdown_extract call because our notes is a dict not a string:
 
   <div class="panel panel-default">
     <div class="panel-heading">
+      <div class="panel-title">
+        {{ _('Additional Information') }}
+      </div>
+    </div>
+    <ul class="list-group">
+      {% set exclude = [
+        "title",
+        "owner_org",
+        "org_title_at_publication",
+        "collection",
+        "title_translated",
+        "notes_translated",
+        "restrictions",
+        "imso_approval",
+        "ready_to_publish"
+      ] %}
+      {% for field in schema.dataset_fields if field.field_name not in exclude %}
+        {% set field_title = h.scheming_language_text(field.label) %}
+        {% if field_title %}
+          {% set field_value = pkg[field.field_name] %}
+          {% if pkg[field.field_name] is mapping %}
+          {% set field_value = h.scheming_language_text(field_value) %}
+          {% endif %}
+          {% if field_value %}
+            <li class="list-group-item">
+              <strong>{{ field_title }}:</strong>
+              {% snippet 'scheming/snippets/display_field.html',
+                field=field,
+                data=pkg,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
     <div class="panel-title">{{_('About this Record')}}</div>
     <a href="{{ h.url_for(action='history', controller='package', id=pkg.id)
       }}?format=atom" title="RSS"><span class="fa fa-rss"></span> {{_('RSS Feed')}}</a>
