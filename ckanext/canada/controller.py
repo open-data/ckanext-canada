@@ -42,6 +42,11 @@ class CanadaController(BaseController):
 
         if is_sysadmin(c.user) or is_new:
             return h.redirect_to(controller='package', action='search')
+        return h.redirect_to(
+            controller='ckanext.canada.controller:CanadaController',
+            action='links')
+
+    def links(self):
         return render('home/quick_links.html')
 
     def registry_menu(self):
@@ -171,6 +176,8 @@ class CanadaUserController(UserController):
             came_from = request.params.get('came_from', '')
             if came_from.startswith('/fr'):
                 lang = 'fr'
+            else:
+                lang = 'en'
 
         session.save()
 
@@ -209,7 +216,10 @@ class CanadaUserController(UserController):
                       '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
                       'open-ouvert@tbs-sct.gc.ca</a>'), True)
 
-            return h.redirect_to('/{0}'.format(lang or ''))
+            return h.redirect_to(
+                controller='ckanext.canada.controller:CanadaController',
+                action='home',
+                locale=lang)
         else:
             h.flash_error(_('Login failed. Bad username or password.'))
             return h.redirect_to(
