@@ -38,15 +38,6 @@
     extras=extras %}
 {% endif %}
 
-{# Kludge to hide this facet if looking at open-information searches. #}
-{% if c.facets.collection|length != 1 or 'info' not in c.facets.collection %}
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['topic_category'],
-    name='topic_category',
-    scheming_choices=h.scheming_get_preset('canada_topic_category').choices,
-    extras=extras %}
-{% endif %}
-
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['res_format'],
   name='res_format',
@@ -58,15 +49,6 @@
   name='res_type',
   scheming_choices=h.scheming_get_preset('canada_resource_type').choices,
   extras=extras %}
-
-{# Kludge to hide this facet if looking at open-information searches. #}
-{% if c.facets.collection|length != 1 or 'info' not in c.facets.collection %}
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['spatial_representation_type'],
-    name='spatial_representation_type',
-    scheming_choices=h.scheming_get_preset('canada_spatial_representation_type').choices,
-    extras=extras %}
-{% endif %}
 
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['frequency'],
