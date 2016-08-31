@@ -19,34 +19,27 @@
     {% snippet 'scheming/snippets/display_field.html',
       field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
-
-  <td>
+  <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',
       field=type_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
-
-  <td>
+  <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',
       field=format_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
-
-  <td>
+  <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',
       field=lang_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
-
-  <td nowrap>
-
-    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}"
-        class="resource-url-analytics btn btn-primary" target="_blank">{{ _('Access') }}</a>
-
+  <td nowrap class="td-center">
+    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}" class="resource-url-analytics btn btn-primary" target="_blank">
+      {{ _('Access') }}
+    </a>
     {% if res.webstore_last_updated %}
-    &nbsp;
     <a href="{{ url }}" class="btn btn-default" >{{ _('Preview') }}</a>
     {% endif %}
     {% if can_edit %}
-    <a href="{{ h.url_for(controller='package', action='resource_edit', id=pkg.name, resource_id=res.id) }}"
-      class="btn btn-default" >{{ _('Edit') }}</a>
+    {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-default' %}
     {% endif %}
   </td>
 </tr>
