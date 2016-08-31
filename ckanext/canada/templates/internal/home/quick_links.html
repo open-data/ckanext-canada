@@ -22,27 +22,27 @@
       <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>') | safe }}</p>
     </section>
   </div>
-  <div class="col-md-6">
-    <section>
-      <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
-      <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
-    </section>
-    <section>
-      <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>
-      <p>{{ _('Add information about government programs, activities and publications.') }}</p>
-    </section>
-    {{ quick_link('ati') }}
-    {{ quick_link('contracts') }}
-    {{ quick_link('hospitalityq') }}
-    {{ quick_link('travelq') }}
-    {{ quick_link('grants') }}
-  </div>
-  <div class="col-md-6">
-    {{ quick_link('reclassification') }}
-    {{ quick_link('wrongdoing') }}
-    {{ quick_link('inventory') }}
-    {% set orgs = h.organizations_available('read') %}
-    {% if orgs %}
+  {% set orgs = h.organizations_available('read') %}
+  {% if orgs %}
+    <div class="col-md-6">
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
+        <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>
+        <p>{{ _('Add information about government programs, activities and publications.') }}</p>
+      </section>
+      {{ quick_link('ati') }}
+      {{ quick_link('contracts') }}
+      {{ quick_link('hospitalityq') }}
+      {{ quick_link('travelq') }}
+      {{ quick_link('grants') }}
+    </div>
+    <div class="col-md-6">
+      {{ quick_link('reclassification') }}
+      {{ quick_link('wrongdoing') }}
+      {{ quick_link('inventory') }}
       {% set org = orgs[0] %}
       <section>
         <h2 class="h5"><a href="{{
@@ -64,7 +64,7 @@
         <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
         <p>{{ _('View and download the organizational reports.') }}</p>
       </section>#}
-    {% endif %}
-  </div>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
