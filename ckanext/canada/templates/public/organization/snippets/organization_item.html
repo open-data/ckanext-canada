@@ -8,8 +8,8 @@
   {{ h.truncate(cr.split_bilingual_field(organization.display_name, h.lang()), length=70, whole_word=True) }}</a>
 </dt>
 <dd class="text-right">
-  {%- if organization.packages -%}
-    <span>{{ ungettext('{num} Dataset', '{num} Datasets', organization.packages).format(num=organization.packages) }}</span>
+  {%- if organization.package_count -%}
+    <span>{{ ungettext('{num} Dataset', '{num} Datasets', organization.package_count).format(num=organization.package_count) }}</span>
   {%- else -%}
     <span>{{ _('0 Datasets') }}</span>
   {%- endif -%}
