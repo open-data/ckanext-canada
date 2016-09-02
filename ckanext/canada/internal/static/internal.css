@@ -43,3 +43,17 @@ width: 100%;
 .resource-list td {
 vertical-align: middle !important;
 }
+.alert-error,
+.label-error,
+.label-error[href]:active,
+.label-error[href]:focus,
+.label-error[href]:hover,
+details.alert-error {
+    background: #f3e9e8;
+    border-color: #d3080c;
+    color: #000;
+}
+.alert-error>:first-child:before {
+    color: #d3080c;
+    content: "\e101";
+}
