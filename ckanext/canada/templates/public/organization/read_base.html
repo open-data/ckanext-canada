@@ -19,10 +19,6 @@
           <a href="{{h.url(controller='organization', action='activity', id=c.group_dict.name)}}">{{_('Activity')}}</a>
         </li>
         {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
-          {# FIXME: orgs are copied from original registry for now 
-          <li class="{% if c.action == 'edit' %}active{% endif %}">
-            <a href="{{h.url(controller='organization', action='edit', id=c.group_dict.name)}}">{{_('Edit Organization')}}</a>
-          </li>#}
           <li class="{% if c.action == 'members' %}active{% endif %}">
             <a href="{{h.url(controller='organization', action='members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
           </li>
