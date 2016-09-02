@@ -85,6 +85,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
+        p.toolkit.add_public_directory(config, 'internal/static')
 
         config.update({
             "ckan.user_list_limit": 2000
@@ -154,8 +155,10 @@ class DataGCCAInternal(p.SingletonPlugin):
         with mapper as m:
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
-            m.connect('/datatable/{resource_name}/{resource_id}', 
-                action='datatable')
+            m.connect(
+                '/datatable/{resource_name}/{resource_id}',
+                action='datatable'
+            )
         return map
 
     def get_helpers(self):
@@ -401,8 +404,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['topic_category'] = json.loads(data_dict.get(
             'topic_category', '[]'))
         try:
-            data_dict['spatial_representation_type'] = json.loads(data_dict.get(
-                'spatial_representation_type'))
+            data_dict['spatial_representation_type'] = json.loads(
+                data_dict.get('spatial_representation_type')
+            )
         except (TypeError, ValueError):
             data_dict['spatial_representation_type'] = []
 
