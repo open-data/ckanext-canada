@@ -52,8 +52,13 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  - datastore_id: attendees
-    label: Attendee(s)
+  - datastore_id: employee_attendees
+    label: Attendees (Government of Canada Employees)
+    datastore_type: int
+    excel_column_width: 20
+
+  - datastore_id: guest_attendees
+    label: Attendees (Guests)
     datastore_type: int
     excel_column_width: 20
 
