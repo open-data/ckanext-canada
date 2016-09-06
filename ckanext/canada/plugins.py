@@ -58,7 +58,7 @@ def notify_ckan_user_create(context, data_dict):
                 ckan_user_create_dict['email_address'],
                 (
                     u'New data.gc.ca Registry Account Created / Nouveau compte'
-                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert',
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
                 ),
                 render(
                     'user/new_user_email.html',
