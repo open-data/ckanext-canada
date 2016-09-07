@@ -37,7 +37,7 @@
 
     {% block resources_outer %}
       {{ super() }}
-      {% if package.collection == 'fgp' %}
+      {% if 'fgp_viewer' in package.get('display_flags', []) %}
         <div>
         <hr>
         <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
