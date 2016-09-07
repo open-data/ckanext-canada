@@ -383,6 +383,17 @@ dataset_fields:
   # copied from select preset
   display_snippet: select.html
   validators: scheming_required scheming_choices
+- field_name: display_flags
+  label:
+    en: Display Flags
+  form_snippet: null
+  display_snippet: null
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  choices:
+  - label:
+      en: FGP viewer is supported
+    value: fgp_viewer
 
 
 
