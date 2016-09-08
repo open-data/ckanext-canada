@@ -131,6 +131,20 @@ class CanadaController(BaseController):
             ],
         })
 
+    def package_delete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The dataset has been removed from'
+            ' the Open Government Portal. <br/> The record may re-appear'
+            ' if it is re-harvested or updated. Please ensure that the'
+            ' record is deleted and purged from the source catalogue in'
+            ' order to prevent it from reappearing.'
+            ),
+            allow_html=True
+        )
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_delete(id=pkg_id)
+        return redirect('/')
+
 
 class CanadaUserController(UserController):
     def logged_in(self):
@@ -232,20 +246,6 @@ class CanadaUserController(UserController):
         if c.is_myself:
             return render('user/reports.html')
         abort(403)
-
-    def package_delete(self, pkg_id):
-        h.flash_success(_(
-            '<strong>Note</strong><br> The dataset has been removed from'
-            ' the Open Government Portal. <br/> The record may re-appear'
-            ' if it is re-harvested or updated. Please ensure that the'
-            ' record is deleted and purged from the source catalogue in'
-            ' order to prevent it from reappearing.'
-            ),
-            allow_html=True
-        )
-        lc = LocalCKAN(username=c.user)
-        lc.action.package_delete(id=pkg_id)
-        return redirect('/')
 
 
 class CanadaFeedController(FeedController):
@@ -371,6 +371,7 @@ def notice_no_access():
     '''flash_notice if logged-in user can't actually do anything yet'''
     if h.check_access('package_create'):
         return
+
     h.flash_notice(
         '<strong>' + _('Account Created') +
         '</strong><br>' +
