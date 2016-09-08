@@ -24,6 +24,8 @@ dataset_fields:
 
 - preset: canada_collection
   form_restrict_choices_to: [publication]
+  form_attrs:
+    readonly: ""
 
 # Field = Title English.
 # {The English name by which the asset is known}

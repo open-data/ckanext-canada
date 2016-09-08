@@ -24,6 +24,8 @@ dataset_fields:
 
 - preset: canada_collection
   form_restrict_choices_to: [primary]
+  form_attrs:
+    readonly: ''
 
 # FGP fields (hidden from form)
 - field_name: metadata_contact
@@ -408,6 +410,16 @@ resource_fields:
 - preset: canada_resource_related_type
 - preset: canada_resource_date_published
 - preset: canada_resource_type
+  form_restrict_choices_to:
+  - application
+  - api
+  - dataset
+  - guide
+  - faq
+  - specification
+  - terminology
+  - tool
+  - website
 - preset: canada_resource_size
 
 - preset: canada_resource_character_set

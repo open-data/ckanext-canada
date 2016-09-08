@@ -2117,6 +2117,8 @@ presets:
     label:
       en: Access Restrictions
     required: true
+    form_attrs:
+      readonly: ''
     choices:
     - label:
         en: Unrestricted
