@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import webhelpers.feedgenerator
+from webob.exc import HTTPFound
 
 from ckan.lib.base import (
     BaseController,
@@ -164,23 +165,7 @@ class CanadaUserController(UserController):
                 allow_html=True
             )
 
-            if not h.check_access('package_create'):
-                h.flash_notice(
-                    '<strong>' + _('Account Created') +
-                    '</strong><br>' +
-                    _('Thank you for creating your account for the Open '
-                      'Government registry. Although your account is active, '
-                      'it has not yet been linked to your department. Until '
-                      'the account is linked to your department you will not '
-                      'be able to create or modify datasets in the '
-                      'registry.') +
-                    '<br><br>' +
-                    _('You should receive an email within the next business '
-                      'day once the account activation process has been '
-                      'completed. If you require faster processing of the '
-                      'account, please send the request directly to: '
-                      '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
-                      'open-ouvert@tbs-sct.gc.ca</a>'), True)
+            notice_no_access()
 
             return h.redirect_to(
                 controller='ckanext.canada.controller:CanadaController',
@@ -211,8 +196,12 @@ class CanadaUserController(UserController):
             abort(401, _('Unauthorized to create a user'))
 
         if context['save'] and not data:
-            uc = UserController()
-            return uc._save_new(context)
+            try:
+                return self._save_new(context)
+            except HTTPFound:
+                # redirected after successful user create
+                notice_no_access()
+                raise
 
         if c.user and not data:
             # #1799 Don't offer the registration form if already logged in
@@ -376,3 +365,25 @@ class CanadaAdminController(PackageController):
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))
+
+
+def notice_no_access():
+    '''flash_notice if logged-in user can't actually do anything yet'''
+    if h.check_access('package_create'):
+        return
+    h.flash_notice(
+        '<strong>' + _('Account Created') +
+        '</strong><br>' +
+        _('Thank you for creating your account for the Open '
+          'Government registry. Although your account is active, '
+          'it has not yet been linked to your department. Until '
+          'the account is linked to your department you will not '
+          'be able to create or modify datasets in the '
+          'registry.') +
+        '<br><br>' +
+        _('You should receive an email within the next business '
+          'day once the account activation process has been '
+          'completed. If you require faster processing of the '
+          'account, please send the request directly to: '
+          '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
+          'open-ouvert@tbs-sct.gc.ca</a>'), True)
