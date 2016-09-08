@@ -39,7 +39,7 @@
     <a href="{{ url }}" class="btn btn-default" >{{ _('Preview') }}</a>
     {% endif %}
     {% if can_edit %}
-    {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-default' %}
+    {% link_for _('Edit'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn btn-default' %}
     {% endif %}
   </td>
 </tr>
