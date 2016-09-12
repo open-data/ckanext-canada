@@ -151,3 +151,14 @@ def canada_non_related_required(key, data, errors, context):
     if not data.get(key[:-1] + ('related_type',)):
         return not_empty(key, data, errors, context)
     return ignore_missing(key, data, errors, context)
+
+
+def if_empty_set_to(default_value):
+    """
+    Provide a default value when not given by user
+    """
+    def validator(value):
+        if not value or value is missing:
+            return default_value
+
+    return validator
