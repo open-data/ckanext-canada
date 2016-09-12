@@ -28,13 +28,13 @@
             {% block resource_content %}
               <a class="button" href="{{ res.url }}"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
               <div class="prose notes" property="rdfs:label">
-                {%- set notes = h.scheming_language_text(pkg.notes_translated) -%}
+                {%- set notes = h.get_translated(pkg, 'notes') -%}
                 {%- if notes -%}
                   <h3>{{ _('From the asset abstract') }}</h3>
                   <p>{{ h.markdown_extract(notes) }}</p>
                   <p>
                   {% trans
-                    dataset=pkg.title[h.lang()],
+                    dataset=h.get_translated(pkg, 'title'),
                     url=h.url_for(
                         controller='package',
                         action='read',

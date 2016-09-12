@@ -32,13 +32,13 @@
     {% block package_item_title %}
     <section class="module-content indent-large">
 
-      <h1>{{ pkg.title_translated[client_lang] or pkg.name }}
+      <h1>{{ h.get_translated(pkg, 'title') or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
       </h1>
       <div>
-        {{ h.render_markdown(pkg.notes_translated[client_lang]) }}
+        {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
       </div>
 
       {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
@@ -167,9 +167,9 @@
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
     {% if wkt %}
       {% if h.get_map_type() == 'static' %}
-        {% snippet 'snippets/geomap_static.html', gid=pkg['title_translated'][client_lang], wkt=wkt %}
+        {% snippet 'snippets/geomap_static.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
       {% else %}
-        {% snippet 'snippets/geomap_dynamic.html', gid=pkg['title_translated'][client_lang], wkt=wkt %}
+        {% snippet 'snippets/geomap_dynamic.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
       {% endif %}
     {% endif %}
   {% endif %}

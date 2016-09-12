@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block subtitle %}
-{{ _('Resources') }} - {{ h.scheming_language_text(pkg.title) }}
+{{ _('Resources') }} - {{ h.get_translated(pkg, 'title') }}
 {% endblock %}
 
 {% block primary_content_inner %}
