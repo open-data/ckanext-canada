@@ -20,7 +20,7 @@
             <a href="{{h.url(controller='organization', action='members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
           </li>
         {% endif %}
-        {% if h.check_access('group_update') %}
+        {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
         <li class="{% if c.action == 'edit' %}active{% endif %}">
           <a href="{% url_for controller='organization' if c.group_dict.type == 'organization' else 'group', action='edit', id=c.group_dict.id %}">{{ _('Edit') }}</a>
         </li>
