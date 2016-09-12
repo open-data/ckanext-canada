@@ -143,7 +143,11 @@ class CanadaController(BaseController):
         )
         lc = LocalCKAN(username=c.user)
         lc.action.package_delete(id=pkg_id)
-        return redirect('/')
+
+        return h.redirect_to(
+            controller='package',
+            action='search'
+        )
 
 
 class CanadaUserController(UserController):
