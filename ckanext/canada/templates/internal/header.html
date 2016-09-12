@@ -1,7 +1,7 @@
 {% ckan_extends %}
 {# set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') #}
 {# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
-{% set menu = 'wet_no_menu_loader' %}
+{% set menu = '/wet_no_menu_loader' %}
 {% block sitemenu %}
 <nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="{{ menu }}">
   <div class="container nvbar">
