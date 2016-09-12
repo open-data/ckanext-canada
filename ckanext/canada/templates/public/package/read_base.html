@@ -41,7 +41,10 @@ Remove the markdown_extract call because our notes is a dict not a string:
         "notes_translated",
         "restrictions",
         "imso_approval",
-        "ready_to_publish"
+        "ready_to_publish",
+        "date_published",
+        "date_modified",
+        "frequency"
       ] %}
       {% for field in schema.dataset_fields if field.field_name not in exclude %}
         {% set field_title = h.scheming_language_text(field.label) %}
