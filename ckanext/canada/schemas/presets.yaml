@@ -2075,6 +2075,8 @@ presets:
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
     display_snippet: null
     form_restrict_choices_to: [federal]
+    form_attrs:
+      readonly: ''
     required: true
     choices:
     - label:
