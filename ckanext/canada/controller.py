@@ -41,7 +41,7 @@ class CanadaController(BaseController):
 
         is_new = not h.check_access('package_create')
 
-        if is_sysadmin(c.user) or is_new:
+        if is_new:
             return h.redirect_to(controller='package', action='search')
         return h.redirect_to(
             controller='ckanext.canada.controller:CanadaController',

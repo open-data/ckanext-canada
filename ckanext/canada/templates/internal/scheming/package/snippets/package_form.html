@@ -1,5 +1,9 @@
 {% ckan_extends %}
 
+{% block stages %}
+  {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+{% endblock %}
+
 {% block basic_fields %}
   <ul class="list-unstyled">
     <li class="bg-info">

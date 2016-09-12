@@ -219,7 +219,7 @@ presets:
     help_text:
       en: The contact person's email for the information asset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
-    required: true
+    validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca)
 
 
 # Field = Description (English).
@@ -2075,6 +2075,8 @@ presets:
       fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
     display_snippet: null
     form_restrict_choices_to: [federal]
+    form_attrs:
+      readonly: ''
     required: true
     choices:
     - label:
@@ -2532,8 +2534,8 @@ presets:
       en: Resource Type
       fr: Type de content
     help_text:
-      en: The nature or genre of the content of the resource. (For example; dataset, supporting documentation, data dictionary, API or App).
-      fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
+      en: The nature or genre of the content of the resource
+      fr: Nature ou genre du contenu de la ressource
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
