@@ -1,8 +1,8 @@
 {% ckan_extends %}
 
 {% block subtitle %}{{ _('Edit') }} -
-  {{ h.scheming_language_text(res.name) }} -
-  {{ h.scheming_language_text(pkg.title) }}
+  {{ h.get_translated(res, 'name') }} -
+  {{ h.get_translated(pkg, 'title') }}
 {% endblock %}
 
 {% block secondary_content %}
