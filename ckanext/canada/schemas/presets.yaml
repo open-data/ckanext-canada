@@ -2532,8 +2532,8 @@ presets:
       en: Resource Type
       fr: Type de content
     help_text:
-      en: The nature or genre of the content of the resource. (For example; dataset, supporting documentation, data dictionary, API or App).
-      fr: Nature ou genre du contenu de la ressource (p. ex. jeu de données, documents d’appui, dictionnaire de données, API ou application)
+      en: The nature or genre of the content of the resource
+      fr: Nature ou genre du contenu de la ressource
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
