@@ -10,7 +10,10 @@
 {% block secondary_content %}{% endblock %}
 
 {% block primary_content %}
-  {{ super() }}
+<div class="row">
+  <div class="col-md-9">
+    {{ super() }}
+  </div>
   <aside class="col-md-3">
     <div class="panel panel-primary">
       <div class="panel-heading">{{ _("Guide") }}</div>
@@ -21,15 +24,10 @@ refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
       </div>
     </div>
   </aside>
+</div>
 {% endblock %}
 
 {% block primary %}
   {{ super() }}
-
-    <section>
-        <div>
-            {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
-        </div>
-    </section>
-  </div>
+  {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
 {% endblock %}
