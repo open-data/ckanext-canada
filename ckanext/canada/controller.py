@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
+import socket
+from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
 
@@ -230,6 +232,12 @@ class CanadaUserController(UserController):
                 return self._save_new(context)
             except HTTPFound:
                 # redirected after successful user create
+                notify_ckan_user_create(
+                    email=request.params.get('email', ''),
+                    fullname=request.params.get('fullname', ''),
+                    username=request.params.get('name', ''),
+                    phoneno=request.params.get('phoneno', ''),
+                    dept=request.params.get('department', ''))
                 notice_no_access()
                 raise
 
@@ -404,3 +412,61 @@ def notice_no_access():
           'account, please send the request directly to: '
           '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
           'open-ouvert@tbs-sct.gc.ca</a>'), True)
+
+
+def notify_ckan_user_create(email, fullname, username, phoneno, dept):
+    """
+    Send an e-mail notification about new users that register on the site to
+    the configured recipient and to the new user
+    """
+    import ckan.lib.mailer
+
+    try:
+        if 'canada.notification_new_user_email' in config:
+            xtra_vars = {
+                'email': email,
+                'fullname': fullname,
+                'username': username,
+                'phoneno': phoneno,
+                'dept': dept
+            }
+            ckan.lib.mailer.mail_recipient(
+                config['canada.notification_new_user_email'],
+                config.get('canada.notification_new_user_name',
+                    config['canada.notification_new_user_email']),
+                (
+                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+                ),
+                render(
+                    'user/new_user_email.html',
+                    extra_vars=xtra_vars
+                )
+            )
+    except ckan.lib.mailer.MailerException as m:
+        log = getLogger('ckanext')
+        log.error(m.message)
+
+    try:
+        xtra_vars = {
+            'email': email,
+            'fullname': fullname,
+            'username': username,
+            'phoneno': phoneno,
+            'dept': dept
+        }
+        ckan.lib.mailer.mail_recipient(
+            email,
+            fullname or email,
+            (
+                u'Welcome to the Open Government Registry / '
+                u'Bienvenue au Registre de Gouvernement Ouvert'
+            ),
+            render(
+                'user/user_welcome_email.html',
+                extra_vars=xtra_vars
+            )
+        )
+    except (ckan.lib.mailer.MailerException, socket.error) as m:
+        log = getLogger('ckanext')
+        log.error(m.message)
