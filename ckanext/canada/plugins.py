@@ -144,6 +144,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
         )
+        map.connect(
+            '/dataset/{id}/resource_edit/{resource_id}',
+            action='resource_edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
         return map
 
     def after_map(self, map):

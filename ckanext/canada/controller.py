@@ -150,6 +150,18 @@ class CanadaController(BaseController):
         )
 
 
+class CanadaDatasetController(PackageController):
+    def resource_edit(self, id, resource_id, data=None, errors=None,
+            error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).resource_edit(
+                id, resource_id, data, errors, error_summary)
+        except HTTPFound:
+            h.flash_success(_(u'Resource updated.'))
+            # resource read page is unfinished, return to dataset page
+            h.redirect_to(controller='package', action='read', id=id)
+
+
 class CanadaUserController(UserController):
     def logged_in(self):
         # we need to set the language via a redirect
