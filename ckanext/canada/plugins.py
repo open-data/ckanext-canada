@@ -16,61 +16,6 @@ from ckanext.canada import helpers
 
 import json
 
-# Ugly monkey patch to let us hook into the user_create action
-
-ckan_user_create = create.user_create
-ckan_user_create_dict = {}
-
-
-def notify_ckan_user_create(context, data_dict):
-    """
-    Send an e-mail notification about new users that register on the site to
-    the configured recipient
-    @param context: standard context object
-    @param data_dict: dictionary with field values from the user registration
-                      form.
-    @raise:
-    """
-
-    user = ckan_user_create(context, data_dict)
-    if not ckan_user_create_dict:
-        return user
-
-    import ckan.lib.mailer
-
-    try:
-        if ckan_user_create_dict['email_address']:
-            new_email = data_dict['email'].strip()
-            new_fullname = data_dict['fullname'].strip()
-            new_username = data_dict['name'].strip()
-            new_phoneno = data_dict['phoneno'].strip()
-            new_dept = data_dict['department'].strip()
-
-            xtra_vars = {
-                'email': new_email,
-                'fullname': new_fullname,
-                'username': new_username,
-                'phoneno': new_phoneno,
-                'dept': new_dept
-            }
-            ckan.lib.mailer.mail_recipient(
-                ckan_user_create_dict['email_name'],
-                ckan_user_create_dict['email_address'],
-                (
-                    u'New data.gc.ca Registry Account Created / Nouveau compte'
-                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
-                ),
-                render(
-                    'user/new_user_email.html',
-                    extra_vars=xtra_vars
-                )
-            )
-    except ckan.lib.mailer.MailerException as m:
-        log = getLogger('ckanext')
-        log.error(m.message)
-
-    return user
-
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -79,7 +24,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.IActions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
 
@@ -144,6 +88,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
         )
+        map.connect(
+            '/dataset/{id}/resource_edit/{resource_id}',
+            action='resource_edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
         return map
 
     def after_map(self, map):
@@ -174,22 +123,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     def configure(self, config):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
-
-        if 'canada.notification_new_user_email' in config:
-            ckan_user_create_dict['email_address'] = config[
-                'canada.notification_new_user_email'
-            ]
-            if 'canada.notification_new_user_name' in config:
-                ckan_user_create_dict['email_name'] = config[
-                    'canada.notification_new_user_name'
-                ]
-            else:
-                ckan_user_create_dict['email_name'] = config[
-                    'canada.notification_new_user_email'
-                ]
-
-    def get_actions(self):
-        return {'user_create': notify_ckan_user_create}
 
 
 class DataGCCAPublic(p.SingletonPlugin):
@@ -434,10 +367,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
+        # FIXME: flash_success makes no sense if this was an API call
+        # consider moving this to an overridden controller method instead
         if context.get('allow_state_change') and data_dict.get(
                 'state') == 'active':
             h.flash_success(
-                _("Your asset %s has been saved.")
+                _("Your record %s has been saved.")
                 % data_dict['id']
             )
         return data_dict
