@@ -434,10 +434,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
+        # FIXME: flash_success makes no sense if this was an API call
+        # consider moving this to an overridden controller method instead
         if context.get('allow_state_change') and data_dict.get(
                 'state') == 'active':
             h.flash_success(
-                _("Your asset %s has been saved.")
+                _("Your record %s has been saved.")
                 % data_dict['id']
             )
         return data_dict
