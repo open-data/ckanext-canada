@@ -1,5 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
-{% import 'macros/form_wet.html' as form %}
+{% import 'macros/form.html' as form %}
 {% import 'macros/canada_read.html' as cr %}
 
 {#
@@ -27,7 +27,7 @@ norm_key    - h.normalize_strip_accents helper (optional)
     'value': data[id],
     'error': errors[id],
     'id': 'field-' + id,
-    'classes': ['control-medium'],
+    'classes': [''],
     } -%}
 
   {%- if lang -%}
@@ -37,7 +37,7 @@ norm_key    - h.normalize_strip_accents helper (optional)
   {%- endif -%}
 
   {%- if 'disabled' in field.get('ui_options', []) -%}
-    {%- do inputargs.update({'attrs': {'class': 'ui-disabled'}}) -%}
+    {%- do inputargs.update({'attrs': {'disabled': 'disabled'}}) -%}
   {%- endif -%}
 
   {%- set widget = form.input -%}
@@ -142,7 +142,7 @@ norm_key    - h.normalize_strip_accents helper (optional)
   {%- else -%}
     {%- call widget(**inputargs) -%}
       {%- if field.description -%}
-        {{ form.info(field.description_html[client_lang]) }}
+        {{ form.info(field.description[client_lang]) }}
       {%- endif -%}
     {%- endcall -%}
   {%- endif -%}
@@ -164,20 +164,20 @@ classes     - An array of classes to apply to the control-group.
     classes=[], attrs=[]) %}
   {%- set extra_html = caller() if caller -%}
     {%- call form.input_block('', '', error, classes, extra_html=extra_html) -%}
-    <fieldset>
-      <legend>{{label or name}}</legend>
+    <div class="form-group">
+      <h3 class="h3">{{label or name}}</h3>
       {% for o in options %}
-        <label class="form-checkbox" for="{{ name }}-{{ loop.index0 }}"
-            style="font-weight: normal; margin-bottom: 0"> {# FIXME: remove style #}
+
+        <label class="checkbox">
           <input id="{{ name }}-{{ loop.index0 }}" type="checkbox" name="{{ name 
               }}" value="{{ o.value | empty_and_escape }}" {{
               "checked " if o.value in selected }} />
           {{ o.text }}
         </label>
+
       {% endfor %}
-    </fieldset>
+    </div>
     {%- endcall -%}
-    <div class="clear"></div>
 {% endmacro %}
 
 {% macro geo_checkbox_field(name, id, label, options, selected, error,
@@ -264,8 +264,8 @@ Example:
 {%- macro errors(errors={}, schema_fields, client_lang) -%}
   {%- set client_lang = 'fra' if client_lang == 'fr' else 'eng' -%}
   {%- if errors -%}
-    <div class="error-explanation module-alert margin-bottom-large alert-{{ type }}{{ " " ~ classes | join(' ') }}">
-      <h2>{{_('Errors in form')}}</h2>
+    <section class="alert alert-danger{{ " " ~ classes | join(' ') }}">
+      <h3>{{_('Errors in form')}}</h3>
       <p>{{ _('The form contains invalid entries:') }}</p>
       <ul>
         {%- for key, error in errors.items() -%}
@@ -282,12 +282,12 @@ Example:
                 schema_description.resource_field_by_id.language.choices[
                 2 if key.endswith('_fra') else 1][client_lang] -%}
             {%- endif -%}
-            <li data-field-label="{{ key }}">{%- if key -%}{{
-              label }}: {%- endif -%}{{ ', '.join(error) }}</li>
+            <li data-field-label="{{ key }}">{%- if key -%}<strong>{{
+              label }}</strong>: {%- endif -%}{{ ', '.join(error) }}</li>
           {%- endif -%}
         {%- endfor -%}
       </ul>
-    </div>
+    </section>
   {%- endif -%}
 {%- endmacro -%}
 

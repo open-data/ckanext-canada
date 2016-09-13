@@ -1,0 +1,73 @@
+{% ckan_extends %}
+
+{% block search_input_label %}
+
+{# only on maps site for now #}
+{% if facets.search.collection['items']|length == 1 and
+    facets.search.collection['items'].0.name == 'fgp' %}
+  <div class="row mrgn-bttm-sm mrgn-rght-sm">
+    <div class="col-md-12">
+      <section class="alert alert-info" >
+      <p>{{ _('Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map.')|safe }}</p>
+      </section>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row mrgn-bttm-md mrgn-tp-md">
+  <div class="col-md-12">
+    <h2 class="mrgn-tp-0 mrgn-bttm-0">
+      {# Special case until we launch with all types #}
+      {% if facets.search.collection['items']|length == 1 and
+          facets.search.collection['items'].0.name == 'fgp' %}
+        <label for="search_field" >{{ _('Search Open Maps') }}</label>
+      {% else %}
+        <label for="search_field" >{{ _('Search Datasets') }}</label>
+      {% endif %}
+      <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
+    </h2>
+  </div>
+</div>
+<div class="ogscartwrapper mrgn-bttm-md" style="display:none;visibility:hidden;">
+	<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
+	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
+	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe"></span> {{ _('View on Map') }}</a>
+	<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
+</div>
+
+{% endblock %}
+
+
+{% block filter_list %}
+{# assume that facets will have scheming presets names canada_<something>
+   and use those presets to get the labels to display #}
+<div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
+  <ul class="list-inline">
+  {% set alternative_url=h.get_site_url(h.lang()) %}
+  {% for field in c.fields_grouped %}
+    {% if field=='portal_type' %}
+      {% set preset_choices = [
+          {'value': 'dataset', 'label': _('Open Data')},
+          {'value': 'info', 'label': _('Open Information')},
+          {'value': 'pd', 'label': _('Proactive Disclosure')},
+          ] %}
+      {% for t in h.recombinant_get_types() %}
+        {% do preset_choices.append({
+          'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+      {% endfor %}
+    {% else %}
+      {% set preset_choices =
+        (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
+    {% endif %}
+    {% for value in c.fields_grouped[field] %}
+      <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
+         class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
+        {{ h.scheming_language_text(
+          h.list_dict_filter(preset_choices, 'value', 'label', value)) }}
+        <span class="glyphicon glyphicon-remove"></span></a>
+      </a>
+    {% endfor %}
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}

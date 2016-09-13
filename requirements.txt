@@ -1,5 +1,7 @@
 ckanapi>=2.1
 lxml
-shapely
+shapely==1.2.17
 docopt
 pyyaml
+ckantoolkit
+pytz

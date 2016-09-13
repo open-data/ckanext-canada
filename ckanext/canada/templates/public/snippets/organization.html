@@ -14,41 +14,42 @@ Example:
 {% import 'macros/canada_read.html' as cr %}
 
 {% with truncate=truncate or 0, url=h.url_for(controller='organization', action='read', id=organization.name) %}
-<div class="module">
-  <section>
-    <div class="span-2">
-      <h3 class="align-center">{{cr.split_bilingual_field(organization.title or organization.name, h.lang())}}</h3>
-
-      {% if organization.description %}
-      <p>
-        {{ h.markdown_extract(organization.description, 180) }}
-        {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
-      </p>
-      {% else %}
-      <p>
-        {{ _('There is no description for this organization') }}
-      </p>
-      {% endif %}
-    </div>
-    {% if show_nums %}
-      <div class="span-2">
-        <div class="span-1 row-start">
-          <h4 class="align-center">{{ _('Members') }}</h4>
-          <p class="font-xlarge align-center">
-            {{ h.SI_number_span(organization.members|length) }}
-          </p>
-        </div>
-        <div class="span-1 row-end">
-          <h4 class="align-center">{{ _('Datasets') }}</h4>
-          <p class="font-xlarge align-center">
-            {{ h.SI_number_span(organization.package_count) }}
-          </p>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
+<div class="panel panel-info">
+  <div class="panel-heading text-center">{{cr.split_bilingual_field(organization.title or organization.name,
+    h.lang())}}
+  </div>
+  <div class="panel-body">
+    {% if organization.description %}
+    <p>
+      {{ h.markdown_extract(organization.description, 180) }}
+      {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
+    </p>
+    {% else %}
+    <p>
+      {{ _('There is no description for this organization') }}
+    </p>
     {% endif %}
 
-  </section>
+    {% if show_nums %}
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-center">{{ _('Members') }}</h4>
+        <p class="font-xlarge text-center">
+          {{ h.SI_number_span(organization.users|length) }}
+        </p>
+      </div>
+      <div class="col-md-6">
+        <h4 class="text-center">{{ _('Datasets') }}</h4>
+
+        <p class="font-xlarge text-center">
+          {{ h.SI_number_span(organization.package_count) }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+  {% endif %}
+
 </div>
+
 {% endwith %}

@@ -2,6 +2,13 @@
 {% ckan_extends %}
 {% import 'macros/form_canada.html' as cform %}
 
+{%- block stages -%}
+  {% if stage %}
+    {{ h.snippet('package/snippets/stages.html', stages=stage,
+      pkg_name=pkg_name, dataset_type=dataset_type) }}
+  {% endif %}
+{%- endblock -%}
+
 {%- block errors -%}
   {{- cform.errors(
   errors, schema_description.resource_field_by_id, h.lang()) -}}
@@ -15,13 +22,13 @@
 {% endblock %}
 
 {% block again_button %}
-  <button class="button" name="save" value="again" type="submit">{{ _('Add another resource') }}</button>
+  <button class="btn mrgn-rght-sm" name="save" value="again" type="submit">{{ _('Save and add another resource') }}</button>
 {% endblock %}
 
 {% block save_button %}
   {% if stage %}
-    <button class="button button-accent" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Next: Additional Info') }}{% endblock %}</button>
+    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-metadata" type="submit">{% block save_button_text %}{{ _('Submit') }}{% endblock %}</button>
   {% else %}
-    <button class="button button-accent" name="save" value="go-dataset-search" type="submit">{{ _('Finish') }}</button>
+    <button class="btn btn-primary mrgn-rght-sm" name="save" value="go-dataset-search" type="submit">{{ _('Finish') }}</button>
   {% endif %}
 {% endblock %}

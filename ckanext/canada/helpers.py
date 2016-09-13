@@ -1,4 +1,6 @@
+import json
 from pylons import c, config
+from pylons.i18n import _
 from ckan.model import User, Package
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
@@ -7,13 +9,18 @@ import unicodedata
 import ckanapi
 
 import ckan.lib.helpers as h
-from ckanext.canada.metadata_schema import schema_description
+from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
+SHOW_SITE_MSG_OPTION = 'canada.show_site_message'
+SHOW_SITE_MSG_DEFAULT = 'False'
+DATAPREVIEW_MAX = 500
+FGP_URL_OPTION = 'fgp.ramp_base_url'
+FGP_URL_DEFAULT = 'http://localhost/'
 
 
 def may_publish_datasets(userobj=None):
@@ -32,23 +39,28 @@ def may_publish_datasets(userobj=None):
 
 def openness_score(pkg):
     score = 0
-    fmt = schema_description.resource_field_by_id['format']['choices_by_key']
-    for r in pkg['resources']:
-        if r['resource_type'] != 'file' and r['resource_type'] != 'api':
+    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+    resource_formats = set(r['format'] for r in pkg['resources'])
+    for f in fmt_choices:
+        if 'openness_score' not in f:
             continue
-        resource_score = fmt[r['format']]['openness_score']
-        if boolean_validator(r.get('data_includes_uris', ''), {}):
-            resource_score = 4
-            if boolean_validator(r.get('data_includes_links', ''), {}):
-                resource_score = 5
+        if f['value'] not in resource_formats:
+            continue
+        resource_score = f.get('openness_score', 0)
         score = max(score, resource_score)
+
+    for r in pkg['resources']:
+        if 'data_includes_uris' in r.get('data_quality', []):
+            score = max(4, score)
+            if 'data_includes_links' in r.get('data_quality', []):
+                score = max(5, score)
     return score
 
 
 def user_organizations(user):
     u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
-    
+
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     
@@ -109,6 +121,9 @@ def dataset_comment_count(package_id):
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+
+def is_site_message_showing():
+    return str(config.get(SHOW_SITE_MSG_OPTION, SHOW_SITE_MSG_DEFAULT))
     
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
@@ -137,19 +152,11 @@ def parse_release_date_facet(facet_results):
                       'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
     
     return facet_dict
-    
+
 def is_ready_to_publish(package):
-    portal_release_date = None
-    for e in package['extras']:
-        if e['key'] == 'ready_to_publish':
-            ready_to_publish = e['value']
-            continue
-        elif e['key'] == 'portal_release_date':
-            portal_release_date = e['value']
-            continue
-            
-    #if datetime.datetime.strptime(portal_release_date, "%Y-%m-%d %H:%M:%S") < datetime.datetime.now():
-    
+    portal_release_date = package.get('portal_release_date')
+    ready_to_publish = package['ready_to_publish']
+
     if ready_to_publish == 'true' and not portal_release_date:
         return True
     else:
@@ -178,3 +185,15 @@ def get_datapreview_recombinant(resource_name, res_id):
         resource_name=resource_name,
         resource_id=res_id,
         ds_fields=ds_fields)
+
+def fgp_url():
+    return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
+
+def contact_information(info):
+    """
+    produce label, value pairs from contact info
+    """
+    try:
+        return json.loads(info)[h.lang()]
+    except Exception:
+        return {}

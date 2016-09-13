@@ -1,54 +1,45 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
 {% import 'macros/canada_read.html' as cr %}
 
-{% set url = h.url_for(controller='package', action='resource_read', id=pkg.name, resource_id=res.id) %}
-{% set lang_field = schema_description.resource_field_by_id['language'] %}
-{% set format_field = schema_description.resource_field_by_id['format'] %}
-{% set size_field = schema_description.resource_field_by_id['size'] %}
+{% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
-<tr> 
-  <td>
-    {% set name_field = 'name_fra' if h.lang() == 'fr' else 'name' %}
-    {% if name_field in res and res[name_field] %}
-      {{ h.markdown_extract(res[name_field], extract_length=80) }}
-    {% else %}
-      <span class="empty">{{ _('No description for this resource') }}</span>
-    {% endif %}
-  </td>
-  
-  <td>
-    {{ cr.lookup_field(format_field, res, client_lang) }}
-  </td>
+{# Previous variables from Open Maps, delete if no issue #}
+{# set size_field = schema_description.resource_field_by_id['size'] #}
 
+{% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+{% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
+{% set type_field = h.scheming_field_by_name(schema.resource_fields, 'resource_type') %}
+{% set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') %}
+{% set lang_field = h.scheming_field_by_name(schema.resource_fields, 'language') %}
+
+{# FIXME: using tables for formatting #}
+<tr>
   <td>
-    {{ cr.lookup_field(lang_field, res, client_lang) }}
+    {% snippet 'scheming/snippets/display_field.html',
+      field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
-  
-  <td>
-    <a href="{{ res.url }}" class="resource-url-analytics button button-accent button-small" title="{{_('Resource') ~ ' ' ~ res_num}}" target="_blank">{{ _('Download') }}</a>
+  <td class="td-center">
+    {% snippet 'scheming/snippets/display_field.html',
+      field=type_field, data=res, entity_type='dataset', object_type=pkg.type %}
+  </td>
+  <td class="td-center">
+    {% snippet 'scheming/snippets/display_field.html',
+      field=format_field, data=res, entity_type='dataset', object_type=pkg.type %}
+  </td>
+  <td class="td-center">
+    {% snippet 'scheming/snippets/display_field.html',
+      field=lang_field, data=res, entity_type='dataset', object_type=pkg.type %}
+  </td>
+  <td nowrap class="td-center">
+    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}" class="resource-url-analytics btn btn-primary" target="_blank">
+      {{ _('Access') }}
+    </a>
     {% if res.webstore_last_updated %}
-    &nbsp;<a href="{{ url }}" class="button button-accent button-small">{{ _('Preview') }}</a>
+    <a href="{{ url }}" class="btn btn-default" >{{ _('Preview') }}</a>
+    {% endif %}
+    {% if can_edit %}
+    {% link_for _('Edit'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn btn-default' %}
     {% endif %}
   </td>
 </tr>
-<!--  
-  {% block resource_item_explore %}
-  <div class="dropdown btn-group">
-    <ul class="menu-horizontal">
-      {% block resource_item_explore_links %}
-      {# if the resource is stored locally, then offer the preview button
-        h.debug_inspect(res) #}
-      {% if res.webstore_last_updated %}
-      <li>
-        <a href="{{ url }}" class="button"><span class="wb-icon-table"></span>{{ _('Preview') }}</a>
-      </li>
-      {% endif %}
-      <li>
-        <a href="{{ res.url }}" class="resource-url-analytics button" target="_blank"><span class="wb-icon-drive-download"></span>{{ _('Download') }}</a>
-      </li>
-      {% endblock %}
-    </ul>
-  </div>
-  {% endblock %}
---> 
-

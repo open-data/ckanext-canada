@@ -1,90 +1,57 @@
-{#
-Displays a single of dataset.
-
-package        - A package to display.
-item_class     - The class name to use on the list item.
-hide_resources - If true hides the resources (default: false).
-banner         - If true displays a popular banner (default: false).
-truncate       - The length to trucate the description to (default: 180)
-truncate_title - The length to truncate the title to (default: 80).
-
-Example:
-
-  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
-
-#}
-
+{% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
-{% set client_lang = h.lang() %}
+{% block package_item %}
+<li>
+  <article class="panel panel-default mrgn-bttm-sm">
+    <header class="panel-heading"><h3 class="panel-title">
+      {% block heading %}
+        {% set my_title = h.get_translated(package, 'title') %}
+        {% block heading_private %}
+          {{ super() }}
+        {% endblock %}
+        {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+        {% block heading_meta %}
+          {{ super() }}
+        {% endblock %}
+      {% endblock %}
+    </h3></header>
 
-{% set truncate = truncate or 180 %}
-{% set truncate_title = truncate_title or 80 %}
-{% set notes = h.markdown_extract(cr.field(schema_description.dataset_field_by_id['notes'], package, client_lang), extract_length=truncate) %}
-{% set title = schema_description.dataset_field_by_id['title'] %}
-{% set publisher_field = schema_description.dataset_field_by_id['owner_org'] %}
-
-<li class="{{ item_class or "dataset-item" }}">
-  {% block package_item_content %}
-    <div>
-      <strong>
-        {% if package.private %}
-          <span class="dataset-private label label-inverse">
-            <i class="icon-lock"></i>
-            {{ _('Private') }}
-          </span>
+    <div class="panel-body">
+      {% block banner %}
+        {{ super() }}
+      {% endblock %}
+      {% block notes %}
+        {% set notes = h.get_translated(package, 'notes') %}
+        {% if notes %}
+          <div>{{ h.markdown_extract(notes, extract_length=300) }}</div>
+        {% else %}
+          <p class="empty">{{ _("This dataset has no description") }}</p>
         {% endif %}
-
-        {%- if 'title_fra' not in package -%}
-          {% set title = _(package.title) %}
-          {% set desc = _(package.notes) %}
-        {%- else -%}
-          {% set title = cr.field_id('title', package, client_lang) %}
-          {% set desc = cr.field_id('notes', package, client_lang) %}
-        {%- endif -%}
-
-        {{ h.link_to(title, h.url_for(controller='package', action='read', id=package.name)) }}
-
-        {% if package.get('state', '').startswith('draft') %}
-          <span class="label label-info">{{ _('Draft') }}</span>
-        {% elif package.get('state', '').startswith('deleted') %}
-          <span class="label label-important">{{ _('Deleted') }}</span>
-        {% endif %}
-        {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
-      </strong>
-      {% if banner %}
-        <span class="banner">Popular</span>
-      {% endif %}
-      {% if desc[300:] %}
-        <div>{{ desc[0:300] }}...</div>
-      {% elif desc %}
-        <div>{{ desc }}</div>
-      {% else %}
-        <p class="empty">{{ _("This dataset has no description") }}</p>
-      {% endif %}
+      {% endblock %}
+    {% block publisher_info %}
+    <div class="row mrgn-tp-sm">
+      <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
+      <div class="cold-md-9">{{ cr.org_field(package, client_lang) }}</div>
     </div>
-    <br/>
-    <div class="publisher_info">
-     {# <em>{{ cr.field_label(publisher_field, client_lang) }}:</em> #}
-      <em>{{ _('Organization') }}: </em>
-      {{ cr.org_field(package, client_lang) }}
+    {% endblock %}
+
+    {% block resources_outer %}
+      {{ super() }}
+      {% if 'fgp_viewer' in package.get('display_flags', []) %}
+        <div>
+        <hr>
+        <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
+          class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
+          ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
+        <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
+          class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
+          ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
+        </div>
+      {% endif %}
+    {% endblock %}
     </div>
-    {% if package.resources and not hide_resources %}
-    <div style="display:inline-block;">
-      <span class="span-1 margin-left-none margin-bottom-small">
-        <em>{{ _('Resource Formats') }}:</em>
-      </span>
-      <ul class="menu-horizontal margin-top-none span-3 margin-bottom-none" >
-        {% set formats = [] %}
-        {% for resource in package.resources %}
-          {% do formats.append( cr.lookup_field(schema_description.resource_field_by_id['format'], resource, client_lang) ) %}
-        {% endfor %}
-        
-        {% for format in h.remove_duplicates(formats) %}
-          <li style="padding:0;">
-            <code>{{ format }}</code>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endblock %}
+  </article>
 </li>
+{% endblock %}
+
+

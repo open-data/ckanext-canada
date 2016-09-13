@@ -1,15 +1,12 @@
-{% extends "gwcu_wet.html" %}
+{% ckan_extends %}
 
-{% block site_title %}
-<a href="{% if h.lang() == 'en' %}/eng{% else %}/fra{% endif %}">{{ _('data.gc.ca') }}</a>
-{% endblock %}
-
-{% block links %}
-
+{%- block links -%}
+{{super()}}
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ h.googleanalytics_id() }}']);
   _gaq.push(['_setDomainName', 'auto']);
+  _gaq.push(['_gat._anonymizeIp']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -17,11 +14,28 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
+{%- endblock -%}
 
-{% endblock %}
+{%- block gtm_datalayer -%}
+  <script>dataLayer1 = [];</script>
+{%- endblock -%}
 
-{% block scripts %}
-{{ super() }}
-{% resource 'js/googleanalytics_event_tracking.js' %}
-{% endblock %}
+{%- block gtm -%}
+  <!-- Google Tag Manager -->
+  <noscript><iframe title="Google Tag Manager" src="//www.googletagmanager.com/ns.html?id=GTM-TLGQ9K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer1'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer1','GTM-TLGQ9K');</script>
+  <!-- End Google Tag Manager -->
+{%- endblock -%}
+
+{%- block wet_scripts -%}
+  <script type="text/javascript">
+  // Add Google Analytics Event Tracking to resource download links.
+  jQuery('a.resource-url-analytics').on('click', function() {
+  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
+  if (resource_url) {
+  _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+  }
+  });
+  </script>
+{%- endblock -%}
 

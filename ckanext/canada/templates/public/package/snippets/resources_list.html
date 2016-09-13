@@ -1,0 +1,26 @@
+{% ckan_extends %}
+
+<h4>{% block resource_list_title %}{{ _('Resources') }}{% endblock %}</h4>
+
+{% block resource_list_inner %}
+
+<table class="table table-striped resource-list">
+  <thead>
+    <tr>
+      <th scope="col" nowrap class="td-full">{{ _('Resource Name') }}</th>
+      <th scope="col" nowrap class="td-center">{{ _('Resource Type') }}</th>
+      <th scope="col" class="td-center">{{ _('Format') }}</th>
+      <th scope="col" class="td-center">{{ _('Language') }}</th>
+      <th scope="col" nowrap class="td-center">{{ _('Links') }}</th>
+    </tr>
+  </thead>
+
+{% for resource in resources %}
+  {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+{% endfor %}
+
+</table>
+{% endblock %}
+
+
+

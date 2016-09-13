@@ -1,11 +1,30 @@
 {% ckan_extends %}
 
-{% block main_content %}
+{% import 'macros/canada_read.html' as cr %}
 
-  <div class="span-8">
-    {% block primary_content %}
-      {{ super() }}
-    {% endblock %}
+{% block organization_display %}
+  {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
+{% endblock %}
+
+{# we want a wide display for the table #}
+{% block secondary_content %}{% endblock %}
+
+{% block primary_content %}
+  {{ super() }}
+  <aside class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("Guide") }}</div>
+      <div class="panel-body">
+        <p>{% trans
+%}For information on how to prepare, maintain and upload templates to the Registry,
+refer to the appropriate documentation posted on GCPEDIA{% endtrans %}</p>
+      </div>
+    </div>
+  </aside>
+{% endblock %}
+
+{% block primary %}
+  {{ super() }}
 
     <section>
         <div>

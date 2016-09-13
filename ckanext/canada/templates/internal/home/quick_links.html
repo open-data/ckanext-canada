@@ -1,0 +1,70 @@
+{% extends "page.html" %}
+{% block subtitle %}{{ _("Quick Links") }}{% endblock %}
+
+{% block toolbar %}{% endblock %}
+
+{% macro quick_link(r_type) %}
+  <section>
+    {#- XXX bit of a hack: we "know" that our dataset types have
+       resource names with the same values #}
+    {%- set geno = h.recombinant_get_geno(r_type) -%}
+    <h2 class="h5"><a href="{{
+      h.url_for('recombinant_type', resource_name=r_type) }}">{{
+        _(geno.title) }}</a></h2>
+    <p>{{ _(geno.notes) }}</p>
+  </section>
+{% endmacro %}
+
+{% block primary_content %}
+<div class="row">
+  <div class="col-md-12">
+    <section>
+      <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>') | safe }}</p>
+    </section>
+  </div>
+  {% set orgs = h.organizations_available('read') %}
+  {% if orgs %}
+    <div class="col-md-6">
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
+        <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>
+        <p>{{ _('Add information about government programs, activities and publications.') }}</p>
+      </section>
+      {{ quick_link('ati') }}
+      {{ quick_link('contracts') }}
+      {{ quick_link('hospitalityq') }}
+      {{ quick_link('travelq') }}
+      {{ quick_link('grants') }}
+    </div>
+    <div class="col-md-6">
+      {{ quick_link('reclassification') }}
+      {{ quick_link('wrongdoing') }}
+      {{ quick_link('inventory') }}
+      {% set org = orgs[0] %}
+      <section>
+        <h2 class="h5"><a href="{{
+          h.url_for('organization_read', id=org.name) }}">{{
+            _('Search your Organization Records') }}</a></h2>
+        <p>{{ _('Search all records in the Registry, for your Organization.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{ h.url_for('dataset_search') }}">{{
+          _('Search All Records') }}</a></h2>
+        <p>{{ _('Add all Open Data and Information records in the Registry.') }}</p>
+      </section>
+      <section>
+        <h2 class="h5"><a href="{{
+            h.url_for('organization_members', id=org.name) }}">{{ _('View Members of your Organization') }}</a></h2>
+        <p>{{ _('View the list of members linked to your organization.') }}</p>
+      </section>
+      {#<section>
+        <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
+        <p>{{ _('View and download the organizational reports.') }}</p>
+      </section>#}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

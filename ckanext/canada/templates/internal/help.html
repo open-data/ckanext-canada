@@ -1,121 +1,28 @@
-{% extends "page_wet.html" %}
-      
-{# For the homepage, re-arrange the normal primary/secondary layout from side-by-side
-   to stacked
-#}
-{% block content %}
-  <div role="main">
-      {{ self.flash() }}
-      {{ self.primary_content() }}
-  </div>
-  <div>
-      {{ self.secondary_content() }}
-  </div>
-{% endblock %}
-
+{% extends "page.html" %}
+{% block primary %}
+<h1>Frequently Asked Questions (FAQ)</h1>
 {% block primary_content %}
-  <div class="span-1"></div>
-  <div class="span-6">
-    <div class="module-poster indent-large">
-      {% if h.lang() == 'en' %}
-        <h1>Help</h1>
-        
-        <p>This page provides instructions on using the Open Data Metadata Registry to add dataset metadata records to the <a href="http://open.canada.ca">Government of Canada Open Data Portal.</a></p>
-        
-        <p>Additional information on creating metadata for the Registry is found in the <em>Government of Canada Open Data Portal Metadata Implementation Guide, 2nd Edition.</em></p>
-        
-        <h2>Adding a Dataset</h2>
-        <p>To add a dataset to the Open Data Portal, you must create a metadata record for that dataset and add it to the Registry. To add a metadata record:</p>
-        
-        <ol>
-          <li>Click <b>'Add Dataset'</b></li>
-          <li>Ensure that the dataset you are adding meets the requirements in the <em>Dataset Criteria</em> list. This list is also found under <em>Guidelines</em> in the Registry.</li>
-          <li>Follow the instructions provided in the <em><a href="/static/Open_Data_Portal_Metadata_Implementation_Guide_-_2nd_edition.doc">Government of Canada Open Data Portal Metadata Implementation Guide</a></em>.</li>
-        </ol>
-        
-        <h2>Reviewing your Datasets</h2>
-        <p>To review your dataset metadata records or to see the complete list of records, click <b>Dashboard</b>. The records are listed in the order in which they were entered in the Registry.</p>
-        
-        <h2>Reviewing the Datasets of your Department or Agency</h2>
-        <p>To see the complete set of metadata records belonging to your department or agency, click <b>Organizations</b>.</p>
-        
-        <p>To see a record within the Registry, click the name of the dataset.</p>
-        
-        <h2>Searching the Registry</h2>
-        <p>Use Search to find metadata records published in the Registry. This feature is the same as <em>Advanced Search</em> on the Open Data Portal website.</p>
-        
-        <p>To search the Registry:</p>
-        <ol>
-          <li>Type your search keywords under <b>Search open data </b>.</li>
-        </ol>
-        
-        <p>The list of results shows datasets matching your search query in the order in which they were entered in the Registry (chronological).</p>
-        
-        <h2>Browsing the Registry</h2>
-        
-        <p>Use the <em>Browse</em> feature to find metadata records published in the Registry. This feature is similar to <em>Browse</em> on the Open Data Portal website.</p>
-        
-        <p>You can browse the Registry in three ways:</p>
-        
-        <ol>
-          <li><b>By department</b>. Click on a department or agency name to see all datasets published by that organization.</li>
-          <li><b>By subject</b>. Click on a subject to find all datasets 'tagged' with that subject.</li>
-          <li><b>By datatype</b>. Click on a datatype name to find all datasets in that format.</li>
-        </ol>
-        
-        <p>The list of results displays datasets in the order in which they were entered in the Registry (chronological).</p>
-        
-      {% else %}
-        <h1>Aide</h1>
-        
-        <p>La présente page fournit des directives sur l'utilisation du Registre de métadonnées pour <a href="http://ouvert.canada.ca">le Portail de données ouvertes du gouvernement du Canada</a>.</p>
-        
-        <p>Il est possible d’obtenir de plus amples renseignements en consultant le document intitulé <em>Guide de mise en œuvre des métadonnées dans le cadre du Portail de données ouvertes du gouvernement du Canada, 2e édition</em></p>
-        
-        <h2>Ajout un jeu de données</h2>
-        
-        <p>Pour ajouter un jeu de données dans le Portail de données ouvertes, vous devez créer un dossier de métadonnées pour ce jeu de données, puis ajouter ce dernier au registre. Veuillez suivre les étapes suivantes pour ajouter un dossier de métadonnées :</p>
-        
+<h2>General Registry Information</h2>
+  <details>
+    <summary>Why can’t I create an account?</summary>
+    <p>
+      The most common reason is duplicate accounts. If you tried to create an account and you receive this error message “That login name is not available”, it means you already have an account with this username, but you either forgot or you are not certain it was already created. If you remember the password, try to log into the Registry using the same username and password. If you forgot the password, refer to the Reset your Password function, and a new one will be emailed to you. For any other reasons, ask for assistance via e-mail to open-ouvert@tbs-sct.gc.ca.
+    </p>
+  </details>
+  <details>
+    <summary>Have you forgotten your password?</summary>
+    <p>
+      If you failed to login to the Registry and received this error massage “Login failed. Bad username or password”, start by requesting a password reset following these steps:
       <ol>
-        <li>Cliquez sur &lt;<b>Ajouter un jeu de données</b>&gt;</li>
-        <li>Veillez à ce que le jeu de données que vous voulez verser au Portail soit conforme à la liste des critères qui s’appliquent aux jeux de données. Cette liste figure également sous <em>Lignes directrices</em> dans le Registre.</li>
-        <li>Suivez les directives fournies dans le document intitulé <a href="http://www.gcpedia.gc.ca/gcwiki/images/a/ac/Guide_de_mise_en_place_des_m%C3%A9tadonn%C3%A9es_du_portail_de_donn%C3%A9es_ouvertes.docx">Guide de mise en place des métadonnées du Portail de données ouvertes du gouvernement du Canada.</a></li>
-      </ol>  
-      
-      <h2>Révision de vos jeux de données</h2>
-      <p>Pour réviser vos jeux de données et les dossiers de métadonnées connexes, ou encore pour consulter la liste complète des dossiers, veuillez cliquer sur <b>Tableu de bord</b>. Les dossiers sont présentés dans l'ordre où ils ont été versés au Registre.</p>
-      
-      <h2>Révision des jeux de données de votre ministère ou organisme</h2>
-      <p>Pour réviser le jeu des dossiers de métadonnées de votre ministère ou organisme, veuillez cliquer sur <b>Organisations</b>.</p>
-      
-      <p>Pour consulter un dossier dans le Registre, cliquez sur le nom du jeu de données correspondant.</p>
-      
-      <h2>Effectuer une recherche dans le Registre</h2>
-      <p>Utilisez la fonction Recherche pour trouver des dossiers de métadonnées publiés dans le Registre. Cette fonction est la même que la fonction <em>Recherche avancée</em> que l’on retrouve dans le site Web du Portail de données ouvertes.</p>
-      
-      <p>Pour effectuer une recherche dans le Registre :</p>
-      <ol>
-        <li>Entrez les <b>mots-clés</b> dans la fenêtre de recherche de données.</li>
+        <li>Click the Forgotten your password? button. The “Reset Your Password” page is displayed.</li>
+        <li>Enter your Username, Example: djohn, and click Request Reset button.</li>
+        <li>If you receive the error message “No such user: djohn”, it means your Username is incorrect and you should e-mail open-ouvert@tbs-sct.gc.ca for assistance.</li>
+        <li>If you receive the message “Please check your inbox for a reset code”, check your e-mail inbox and open the e-mail received from the Registry.</li>
+        <li>Click the confirmation link included in the e-mail. The “Reset Your Password” page will then be displayed.</li>
+        <li>Enter a new password in both the “Password” and “Confirm” fields, then click Update Password button. Message “Your password has been reset” is displayed.</li>
+        <li>Login again using the new password. The message “{your name} is now logged in” will then be displayed.</li>
       </ol>
-      
-      <p>Une liste des jeux de données correspondant à vos critères de recherche sera affichée. Les jeux de données figureront dans l'ordre où ils ont été versés au Registre (ordre chronologique).</p>
-      
-      <h2>Naviguer à l'intérieur du Registre</h2>
-      
-      <p>Utilisez la fonction de <em>navigation pour</em> trouver des dossiers de métadonnées publiés dans le Registre. C'est une fonction similaire à naviguer sur le Portail de données ouvertes.</p>
-      
-      <p>Vous pouvez naviguer dans le Registre selon trois paramètres :</p>
-      
-      <ol>
-        <li><b>Par ministère</b> – Cliquez sur le nom d'un ministère ou d'un organisme pour voir quels jeux de données ont été publiés par cette organisation.</li>
-        <li><b>Par sujet</b> – Cliquez sur un sujet pour voir tous les jeux de données auxquels ce sujet a été associé.</li>
-        <li><b>Par type de données</b> – Cliquez sur un format de données pour voir tous les jeux de données produits dans ce format.</li>
-      </ol>
-      
-      <p>Les jeux de données sont publiés dans l'ordre où ils ont été versés au Registre (ordre chronologique).</p>
-      
-      {% endif %}
-    </div>
-  
-  <div class="clear"></div>
+    </p>
+  </details>
 {% endblock primary_content %}
+{% endblock %}

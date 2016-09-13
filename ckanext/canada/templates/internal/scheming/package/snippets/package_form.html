@@ -1,0 +1,53 @@
+{% ckan_extends %}
+
+{% block stages %}
+  {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+{% endblock %}
+
+{% block basic_fields %}
+  <ul class="list-unstyled">
+    <li class="bg-info">
+      <details>
+        <summary>
+          {{_('Catalogue Metadata')}}
+        </summary>
+        <div class="mrgn-lft-md mrgn-rght-md">
+          <div class="form-group control-medium">
+            <small class="text-info">{{_('This section of the form only displays system-populated data elements used to describe the record type and the placement in the registry')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Portal Type')}}</label>
+            <input class="form-control" readonly
+              value="
+                {%- if dataset_type=='dataset' -%}
+                  {{- _('Open Data') -}}
+                {%- elif dataset_type=='info' -%}
+                  {{- _('Open Information') -}}
+                {%- endif -%}
+              " />
+            <small class="text-info">{{_('The portal to which the metadata record belongs')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Scheme')}}</label>
+            <input class="form-control" readonly
+              value="{{ _('Open Data Metadata Element Set') }}" />
+            <small class="text-info">{{_('The name of the metadata scheme used (including profile name)')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Scheme Version')}}</label>
+            <input class="form-control" readonly
+              value="2.0" />
+            <small class="text-info">{{_('The version of the metadata scheme used (version of the profile)')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Record Identifier')}}</label>
+            <input class="form-control" readonly
+              value="{% if data %}{{ data.name }}{% endif %}" />
+            <small class="text-info">{{_('A unique phrase or string which identifies the metadata record within the Open Government Portal')}}</small>
+          </div>
+        </div>
+      </details>
+    </li>
+  </ul>
+  {{ super() }}
+{% endblock %}

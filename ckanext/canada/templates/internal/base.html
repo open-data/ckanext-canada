@@ -1,9 +1,15 @@
-{% extends "gwcu_wet.html" %}
+{% ckan_extends %}
 
 {% block site_title %}
 <a href="{{ h.url_for(controller='package', action='search') }}"
     >{{ _('Open Data Registry') }}</a>
 {% endblock %}
+
+{# Remove when WET v4.0.21 is out #}
+{%- block custom_styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/internal.css" type="text/css" />
+{%- endblock -%}
 
 {% block footer %}
 {% include "footer_gwcu.html" %}
