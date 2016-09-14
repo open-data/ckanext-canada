@@ -48,27 +48,56 @@
     </section>
     {%- endblock -%}
 
-    <section class="module-content indent-large">
-      <div class="span-6 margin-top-medium">
-        <div>
-          <h4>{{_('Licence')}}: </h4>
-        </div>
-        <div>
-
-        {% block package_item_license_inner %}
-          {% if client_lang == 'fr' %}
-            {% set license = h.get_license(pkg.license_id) %}
-            <a href="{{ license.url_fra }}">{{ license.title_fra }}</a>
-          {% else %}
-            <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
+    {# Display some publisher-specific details on this dataset inline with the
+    dataset notes. #}
+    <ul class="list-group dataset-inline-details">
+      {# For legacy reasons, organization titles are not stores the same way as
+      other multilingual fields, so special case it. #}
+      {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
+      <li class="list-group-item">
+        <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
+        {{ cr.split_bilingual_field(pkg.organization.title) }}
+      </li>
+      {# Only the list of fields included below will be included #}
+      {% set include_labels = [
+        "org_title_at_publication",
+        "license",
+      ] %}
+      {% for field in schema.dataset_fields if field.field_name in include_labels %}
+        {% set field_title = h.scheming_language_text(field.label) %}
+        {% if field_title %}
+          {% set field_value = pkg[field.field_name] %}
+          {% if pkg[field.field_name] is mapping %}
+          {% set field_value = h.scheming_language_text(field_value) %}
           {% endif %}
-        {% endblock %}
+          {% if field_value %}
+            <li class="list-group-item">
+              <strong>{{ field_title }}:</strong>
+              {% snippet 'scheming/snippets/display_field.html',
+                field=field,
+                data=pkg,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {# Some core CKAN fields not part of the schema. #}
+      <li class="list-group-item"> 
+        <strong>{{ _('Contributor') }}:</strong>
+        {{ pkg.maintainer }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Licence') }}:</strong>
+        {% if client_lang == 'fr' %}
+          <a href="{{ pkg.license_url_fra }}">{{ pkg.license_title_fra }}</a>
+        {% else %}
+          <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
+        {% endif %}
+      </li>
+    </ul>
 
-        </div>
-        <div class="clear"></div>
-      </div>
-    </section>
-    
     <section id="dataset-resources" class="module-content indent-large">
       <div class="span-6 margin-top-medium">
       {% if pkg.resources %}

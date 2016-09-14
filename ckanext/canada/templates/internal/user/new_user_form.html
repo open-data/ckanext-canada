@@ -8,7 +8,6 @@
   {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder="Joe Bloggs", value=data.fullname, error=errors.fullname) }}
   {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder="joe.bloggs@tbs-sct.gc.ca", value=data.email, error=errors.email) }}
   {% set format_attrs = {'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-key': 'title'} %}
-  <br />
   {{ form.input('department', id='field-department', label=_('Department'), placeholder=_('Treasury Board Secretariat'), value=data.department, error=errors.department, classes=['control-medium'], attrs=format_attrs) }}
   {{ form.input("phoneno", id="field-phoneno", label=_("Phone Number"), placeholder="000 000 0000", value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) }}
   {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1) }}
