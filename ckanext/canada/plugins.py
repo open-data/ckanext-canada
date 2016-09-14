@@ -1,11 +1,8 @@
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.base import render
 from ckan.lib.plugins import DefaultDatasetForm
-from ckan.logic.action import create
 from wcms import wcms_configure
 from routes.mapper import SubMapper
-from logging import getLogger
 
 from ckantoolkit import h
 
@@ -226,6 +223,11 @@ ckanext.canada:schemas/info.yaml
             '/dataset/delete/{pkg_id}',
             controller='ckanext.canada.controller:CanadaController',
             action='package_delete'
+        )
+        map.connect(
+            '/organization/autocomplete',
+            action='organization_autocomplete',
+            controller='ckanext.canada.controller:CanadaController',
         )
         return map
 

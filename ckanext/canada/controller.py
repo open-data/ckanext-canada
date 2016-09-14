@@ -27,6 +27,7 @@ from ckan.controllers.feed import (
     _FixedAtom1Feed
 )
 from ckan.lib import i18n
+import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents
@@ -151,10 +152,32 @@ class CanadaController(BaseController):
             action='search'
         )
 
+    @jsonp.jsonpify
+    def organization_autocomplete(self):
+        q = request.params.get('q', '')
+        limit = request.params.get('limit', 20)
+        organization_list = []
+
+        if q:
+            context = {'user': c.user, 'model': model}
+            data_dict = {'q': q, 'limit': limit}
+            organization_list = get_action(
+                'organization_autocomplete'
+            )(context, data_dict)
+
+        def _org_key(org):
+            return org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+
+        return [{
+            'id': o['id'],
+            'name': _org_key(o),
+            'title': _org_key(o)
+        } for o in organization_list]
+
 
 class CanadaDatasetController(PackageController):
     def resource_edit(self, id, resource_id, data=None, errors=None,
-            error_summary=None):
+                      error_summary=None):
         try:
             return super(CanadaDatasetController, self).resource_edit(
                 id, resource_id, data, errors, error_summary)
@@ -433,16 +456,16 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
             ckan.lib.mailer.mail_recipient(
                 config['canada.notification_new_user_email'],
                 config.get('canada.notification_new_user_name',
-                    config['canada.notification_new_user_email']),
-                (
-                    u'New data.gc.ca Registry Account Created / Nouveau compte'
-                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
-                ),
-                render(
-                    'user/new_user_email.html',
-                    extra_vars=xtra_vars
-                )
+                config['canada.notification_new_user_email']
+            ), (
+                u'New data.gc.ca Registry Account Created / Nouveau compte'
+                u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+            ),
+            render(
+                'user/new_user_email.html',
+                extra_vars=xtra_vars
             )
+        )
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
         log.error(m.message)
