@@ -9,77 +9,48 @@ resources:
   resource_name: travela
   fields:
 
-  - datastore_id: ref_number
-    label: Reference Number
-    datastore_type: text
+  - datastore_id: year
+    label: Year
+    datastore_type: int
     excel_column_width: 20
 
-  - datastore_id: public_servant_current_year
-    label: Travel - Public Servants (Current Year)
-    datastore_type: text
+  - datastore_id: public_servants
+    label: Travel - Public Servants
+    datastore_type: money
     excel_column_width: 20
+    solr_sum_to_field: total_travel
+    solr_compare_previous_year:
+      previous_year: public_servants_previous_year
+      change: public_servants_change
+      sum_previous_year: total_travel_previous_year
+      sum_change: total_travel_change
 
-  - datastore_id: public_servant_previous_year
-    label: Travel - Public Servants (Previous Year)
-    datastore_type: text
+  - datastore_id: non_public_servants
+    label: Travel - Non-Public Servants
+    datastore_type: money
     excel_column_width: 20
+    solr_sum_to_field: total_travel
+    solr_compare_previous_year:
+      previous_year: non_public_servants_previous_year
+      change: non_public_servants_change
+      sum_previous_year: total_travel_previous_year
+      sum_change: total_travel_change
 
-  - datastore_id: public_servant_change
-    label: Travel - Public Servants (Change)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_current_year
-    label: Travel - Non-Public Servants (Current Year)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_previous_year
-    label: Travel - Non-Public Servants (Previous Year)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_change
-    label: Travel - Non-Public Servants (Change)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_current_year
+  - datastore_id: minister
     label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Current Year
-    datastore_type: text
+           (also included in Non-Public Servant Travel)
+    datastore_type: money
     excel_column_width: 20
+    solr_sum_to_field: total_travel
+    solr_compare_previous_year:
+      previous_year: minister_previous_year
+      change: minister_change
+      sum_previous_year: total_travel_previous_year
+      sum_change: total_travel_change
 
-  - datastore_id: minister_previous_year
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Previous Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_change
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Change
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_travel_current_year
-    label: Total Travel - Current Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_travel_previous_year
-    label: Total Travel - Previous Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_travel_change
-    label: Total Travel - Change
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: hospitality_current_year
-    label: Hospitality - Current Year
-    datastore_type: text
+  - datastore_id: hospitality
+    label: Hospitality
+    datastore_type: money
     excel_column_width: 20
 
   - datastore_id: hospitality_previous_year
