@@ -87,7 +87,7 @@ resources:
     xls_column_width: 20
 
   - datastore_id: acquisition_card_transactions_total_value
-    label: Acquisition Card Transactions for all dollar values – Total Value ($ 000)
+    label: Acquisition Card Transactions for all dollar values – Total Value
     datastore_type: int
     xls_column_width: 20
 
