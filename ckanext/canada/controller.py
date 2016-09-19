@@ -5,6 +5,7 @@ from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
 
+import pkg_resources
 from ckan.lib.base import (
     BaseController,
     c,
@@ -60,7 +61,24 @@ class CanadaController(BaseController):
         return render('guidelines.html')
 
     def view_help(self):
-        return render('help.html')
+        def _get_help_text(language):
+            return pkg_resources.resource_string(
+                __name__,
+                '/'.join(['public', 'static', 'faq_{language}.md'.format(
+                    language=language
+                )])
+            )
+
+        try:
+            # Try to load FAQ text for the user's language.
+            faq_text = _get_help_text(c.language)
+        except IOError:
+            # Fall back to using English if no local langauge could be found.
+            faq_text = _get_help_text(u'en')
+
+        return render('help.html', extra_vars={
+            'faq_text': faq_text
+        })
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -455,17 +473,19 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
             }
             ckan.lib.mailer.mail_recipient(
                 config['canada.notification_new_user_email'],
-                config.get('canada.notification_new_user_name',
-                config['canada.notification_new_user_email']
-            ), (
-                u'New data.gc.ca Registry Account Created / Nouveau compte'
-                u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
-            ),
-            render(
-                'user/new_user_email.html',
-                extra_vars=xtra_vars
+                config.get(
+                    'canada.notification_new_user_name',
+                    config['canada.notification_new_user_email']
+                ),
+                (
+                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+                ),
+                render(
+                    'user/new_user_email.html',
+                    extra_vars=xtra_vars
+                )
             )
-        )
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
         log.error(m.message)

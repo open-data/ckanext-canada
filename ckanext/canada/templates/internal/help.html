@@ -2,27 +2,6 @@
 {% block primary %}
 <h1>Frequently Asked Questions (FAQ)</h1>
 {% block primary_content %}
-<h2>General Registry Information</h2>
-  <details>
-    <summary>Why can’t I create an account?</summary>
-    <p>
-      The most common reason is duplicate accounts. If you tried to create an account and you receive this error message “That login name is not available”, it means you already have an account with this username, but you either forgot or you are not certain it was already created. If you remember the password, try to log into the Registry using the same username and password. If you forgot the password, refer to the Reset your Password function, and a new one will be emailed to you. For any other reasons, ask for assistance via e-mail to open-ouvert@tbs-sct.gc.ca.
-    </p>
-  </details>
-  <details>
-    <summary>Have you forgotten your password?</summary>
-    <p>
-      If you failed to login to the Registry and received this error massage “Login failed. Bad username or password”, start by requesting a password reset following these steps:
-      <ol>
-        <li>Click the Forgotten your password? button. The “Reset Your Password” page is displayed.</li>
-        <li>Enter your Username, Example: djohn, and click Request Reset button.</li>
-        <li>If you receive the error message “No such user: djohn”, it means your Username is incorrect and you should e-mail open-ouvert@tbs-sct.gc.ca for assistance.</li>
-        <li>If you receive the message “Please check your inbox for a reset code”, check your e-mail inbox and open the e-mail received from the Registry.</li>
-        <li>Click the confirmation link included in the e-mail. The “Reset Your Password” page will then be displayed.</li>
-        <li>Enter a new password in both the “Password” and “Confirm” fields, then click Update Password button. Message “Your password has been reset” is displayed.</li>
-        <li>Login again using the new password. The message “{your name} is now logged in” will then be displayed.</li>
-      </ol>
-    </p>
-  </details>
 {% endblock primary_content %}
+{{ h.render_markdown(faq_text) }}
 {% endblock %}
