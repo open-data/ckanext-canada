@@ -3,5 +3,5 @@
 <h1>Frequently Asked Questions (FAQ)</h1>
 {% block primary_content %}
 {% endblock primary_content %}
-{{ h.render_markdown(faq_text) }}
+{{ faq_html|safe }}
 {% endblock %}

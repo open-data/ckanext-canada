@@ -6,6 +6,8 @@ import webhelpers.feedgenerator
 from webob.exc import HTTPFound
 
 import pkg_resources
+import lxml.etree as ET
+import lxml.html as html
 from ckan.lib.base import (
     BaseController,
     c,
@@ -20,7 +22,12 @@ from ckan.lib.base import (
 from ckan.logic import get_action, check_access, schema
 from ckan.controllers.user import UserController
 from ckan.authz import is_sysadmin
-from ckan.lib.helpers import Page, date_str_to_datetime, url
+from ckan.lib.helpers import (
+    Page,
+    date_str_to_datetime,
+    url,
+    render_markdown
+)
 from ckan.controllers.feed import (
     FeedController,
     _package_search,
@@ -76,7 +83,40 @@ class CanadaController(BaseController):
             # Fall back to using English if no local langauge could be found.
             faq_text = _get_help_text(u'en')
 
+        # Convert the markdown to HTML ...
+        faq_html = render_markdown(faq_text)
+        h = html.fromstring(faq_html)
+
+        # Get every FAQ point header.
+        for faq_section in h.xpath('.//h2'):
+
+            details = ET.Element('details')
+            summary = ET.Element('summary')
+
+            # Place the new details tag where the FAQ section header used to
+            # be.
+            faq_section.addprevious(details)
+
+            # Get all the text that follows the FAQ header.
+            while True:
+                next_node = faq_section.getnext()
+                if next_node is None or next_node.tag in ('h1', 'h2'):
+                    break
+                # ... and add it to the details.
+                details.append(next_node)
+
+            # Move the FAQ header to the top of the summary tag.
+            summary.insert(0, faq_section)
+            # Move the summary tag to the top of the details tag.
+            details.insert(0, summary)
+
+            # We don't actaully want the FAQ headers to be headings, so strip
+            # the tags and just leave the text.
+            faq_section.drop_tag()
+
         return render('help.html', extra_vars={
+            'faq_html': html.tostring(h),
+            # For use with the inline debugger.
             'faq_text': faq_text
         })
 
