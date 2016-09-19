@@ -167,6 +167,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
+    validators: fluent_text
     output_validators: fluent_text_output
 
 # Field = Creator.
@@ -205,6 +206,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
+    validators: fluent_text
     output_validators: fluent_text_output
 
 
