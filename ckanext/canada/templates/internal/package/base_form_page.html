@@ -1,42 +1,6 @@
 {% ckan_extends %}
 
 {% block secondary_content %}
-  {% block info_module %}
-
-  {% block what_are_datasets %}
-  {% endblock %}
-
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <div class="panel-title"><span class="glyphicon glyphicon-book"></span> {{_('Guidelines')}}</div>
-    </div>
-    <div class="panel-body">
-      <p>{{ _('Open data is structured data that is machine-readable, freely shared, used and built on without restrictions.')}}</p>
-      <p>{{ _('Review the <a href="/en/guidelines">criteria</a> and the <a href="http://www.gcpedia.gc.ca/wiki/Open_Data_Portal_Metadata_Implementation_Guide">guide</a> for preparing and publishing assets on the Open Government Portal.')|safe }}</p>
-    </div>
-  </div>
-
-  {#
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <div class="panel-title"><span
-          class="glyphicon glyphicon-book"></span> {{_('Open Data Portal Metadata Implementation Guide')}}</div>
-    </div>
-    <div class="panel-body">
-      {% if h.lang() == 'en' %}
-      Review the <a href="http://www.gcpedia.gc.ca/wiki/Open_Data_Portal_Metadata_Implementation_Guide">Open Data Portal Metadata Implementation Guide</a>
-      {% else %}
-      Revoir le <a href="http://www.gcpedia.gc.ca/wiki/Guide_de_mise_en_place_des_m%C3%A9tadonn%C3%A9es_pour_les_ressources_Web">Guide de mise en place des métadonnées pour les ressources Web</a>
-      {% endif %}
-    </div>
-  </div>
-  #}
-  {% endblock %}
-
-  {% block resources_module %}
-    {# TODO: Pass in a list of previously created resources and the current package dict #}
-    {% snippet "package/snippets/resources.html", pkg={}, action='new_resource' %}
-  {% endblock %}
 {% endblock %}
 
 {% block page_header %}{% endblock %}
