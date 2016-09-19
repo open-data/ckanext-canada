@@ -151,6 +151,7 @@ ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
 """
         config['ckan.search.show_all_types'] = True
+        config['search.facets.limit'] = 200  # because org list
         config['scheming.presets'] = """
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
