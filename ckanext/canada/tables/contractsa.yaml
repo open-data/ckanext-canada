@@ -13,18 +13,18 @@ resources:
   - datastore_id: year
     label: Year
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
 
   - datastore_id: contract_goods_number_of
     label: Number of Goods Contracts entered into or amended
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_goods_original_value
     label: Goods Contracts – Original Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_goods_total_value
     solr_sum_to_field: contracts_total_original_value
     solr_sum_to_field: contracts_total_total_value
@@ -32,7 +32,7 @@ resources:
   - datastore_id: contracts_goods_amendment_value
     label: Goods Contracts Amendments – Net Amendment Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_goods_total_value
     solr_sum_to_field: contracts_total_amendment_value
     solr_sum_to_field: contracts_total_total_value
@@ -40,13 +40,13 @@ resources:
   - datastore_id: contract_service_number_of
     label: Number of Service Contracts entered into or amended
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_service_original_value
     label: Service Contracts – Original Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_service_total_value
     solr_sum_to_field: contracts_total_original_value
     solr_sum_to_field: contracts_total_total_value
@@ -54,7 +54,7 @@ resources:
   - datastore_id: contracts_service_amendment_value
     label: Service Contracts and Contract Amendments – Net Amendment Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_service_total_value
     solr_sum_to_field: contracts_total_amendment_value
     solr_sum_to_field: contracts_total_total_value
@@ -62,13 +62,13 @@ resources:
   - datastore_id: contract_construction_number_of
     label: Number of Construction Contracts
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_construction_original_value
     label: Construction Contracts – Original Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_construction_total_value
     solr_sum_to_field: contracts_total_original_value
     solr_sum_to_field: contracts_total_total_value
@@ -76,7 +76,7 @@ resources:
   - datastore_id: contracts_construction_amendment_value
     label: Construction Contracts Amendments – Net Amendment Value
     datastore_type: money
-    xls_column_width: 20
+    excel_column_width: 20
     solr_sum_to_field: contracts_construction_total_value
     solr_sum_to_field: contracts_total_amendment_value
     solr_sum_to_field: contracts_total_total_value
@@ -84,12 +84,12 @@ resources:
   - datastore_id: acquisition_card_transactions_number_of
     label: Number of Acquisition Card Transactions for all Dollar Values
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
 
   - datastore_id: acquisition_card_transactions_total_value
     label: Acquisition Card Transactions for all dollar values – Total Value
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
 
   datastore_primary_key: [year]
   datastore_indexes: ""
