@@ -67,9 +67,10 @@ def _process(line):
                 rec.pop(k_fra, None))))
 
     # convert subject english-sp-sp-french content to fluent text
-    rec['subject'] = [
-        dataset_choices['subject'][s.lstrip().split(SP_SP, 1)[0]]
-            for s in rec.get('subject', [])]
+    if '  ' in rec.get('subject', []):
+        rec['subject'] = [
+            dataset_choices['subject'][s.lstrip().split(SP_SP, 1)[0]]
+                for s in rec.get('subject', [])]
 
     rec['topic_category'] = [
         dataset_choices['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
@@ -105,8 +106,10 @@ def _process(line):
 
     rec['ready_to_publish'] = str(rec.get('ready_to_publish', 'false')).lower()
 
-    rec['title_translated'] = rec.pop('title')
-    rec['notes_translated'] = rec.pop('notes')
+    if 'title_translated' not in rec:
+        rec['title_translated'] = rec.pop('title')
+    if 'notes_translated' not in rec:
+        rec['notes_translated'] = rec.pop('notes')
 
     rec.pop('extras', None)
 
@@ -115,20 +118,21 @@ def _process(line):
         if 'name_fra' in r:
             r['name_translated'] = dict(
                 zip(LANG_KEYS, (r.pop('name', None), r.pop('name_fra', None))))
-        elif 'name_translaged' not in r:
+        elif 'name_translated' not in r:
             r['name_translated'] = r.pop('name')
 
         langs = []
         language = r.get('language', '')
-        if 'eng' in language:
-            langs.append('en')
-        if 'fra' in language:
-            langs.append('fr')
-        if 'iku' in language:
-            langs.append('iku')
-        if 'zxx' in language:
-            langs.append('zxx')
-        r['language'] = langs
+        if not isinstance(language, list):
+            if 'eng' in language:
+                langs.append('en')
+            if 'fra' in language:
+                langs.append('fr')
+            if 'iku' in language:
+                langs.append('iku')
+            if 'zxx' in language:
+                langs.append('zxx')
+            r['language'] = langs
 
         if r['resource_type'] == 'app':
             r['related_type'] = 'application'
@@ -136,13 +140,16 @@ def _process(line):
         if rec['type'] == 'info' and r['resource_type'] == 'file':
             r['resource_type'] = 'strategic_plan'
         else:
-            r['resource_type'] = {
+            trans = {
                 None: 'dataset',
                 'file': 'dataset',
                 'doc': 'guide',
                 'api': 'dataset',
                 'app': 'dataset',
-            }[r.get('resource_type', 'file')]
+            }
+            typ = r.get('resource_type', 'file')
+            if typ in trans:
+                r['resource_type'] = trans[typ]
 
         r['format'] = resource_choices['format'].get(
             r['format'], r['format'])
