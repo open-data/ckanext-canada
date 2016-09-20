@@ -50,8 +50,9 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
                 ('resources', n, existing['resources'][n]))
 
     def test_pilot_uuids(self):
+        a_uuid = '6d582cf8-f52a-4bc7-b7d6-e0a5cfb7c25e'
         example = dict(self.example_pkg[1],
-            id='something-different',
+            id=a_uuid,
             subject="3AC17C98-F356-4CC8-BAEB-886037E5C2EE")
         resp = self.sysadmin_action.package_create(**example)
 

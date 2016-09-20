@@ -2,7 +2,7 @@ dataset_type: contractsa
 target_dataset: contractsa
 
 title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
-notes: NEED CONTENT - Notes
+notes: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
 
 resources:
 - title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
@@ -10,104 +10,88 @@ resources:
   fields:
 
 
-  - datastore_id: reporting_period
-    label: Reporting Period
-    datastore_type: text
-    xls_column_width: 20
+  - datastore_id: year
+    label: Year
+    datastore_type: int
+    excel_column_width: 20
 
   - datastore_id: contract_goods_number_of
-    label: Number of Goods Contracts entered into or amended from -$10K to 10K
+    label: Number of Goods Contracts entered into or amended
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
+    solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_goods_original_value
-    label: Goods Contracts $10K and under – Original Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
+    label: Goods Contracts – Original Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_goods_total_value
+    solr_sum_to_field: contracts_total_original_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: contracts_goods_amendment_value
-    label: Goods Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_goods_total_value
-    label: Goods Contracts and Contracts Amendments from -$10K to $10K - Total Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
+    label: Goods Contracts Amendments – Net Amendment Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_goods_total_value
+    solr_sum_to_field: contracts_total_amendment_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: contract_service_number_of
-    label: Number of Service Contracts entered into or amended -$10K to $10K
+    label: Number of Service Contracts entered into or amended
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
+    solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_service_original_value
-    label: Service Contracts $10K and under – Original Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
+    label: Service Contracts – Original Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_service_total_value
+    solr_sum_to_field: contracts_total_original_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: contracts_service_amendment_value
-    label: Service Contracts and Contract Amendments from -$10K to $10K – Net Amendment Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_service_total_value
-    label: Service Contracts $10K and under - Total Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
+    label: Service Contracts and Contract Amendments – Net Amendment Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_service_total_value
+    solr_sum_to_field: contracts_total_amendment_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: contract_construction_number_of
-    label: Number of Construction Contracts $10K and under
+    label: Number of Construction Contracts
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
+    solr_sum_to_field: contract_total_number_of
 
   - datastore_id: contracts_construction_original_value
-    label: Construction Contracts $10K and under – Original Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
+    label: Construction Contracts – Original Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_construction_total_value
+    solr_sum_to_field: contracts_total_original_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: contracts_construction_amendment_value
-    label: Construction Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_construction_total_value
-    label: Construction Contracts $10K and under - Total Value ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-
-  - datastore_id: contract_total_number_of
-    label: Total Number of Contracts $10K and under
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_total_original_value
-    label: Total Original Value of All Contracts $10K and under ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_total_amendment_value
-    label: Total Net Amendment Value of All Contracts Amendments from -$10K to $10K ($ 000)
-    datastore_type: int
-    xls_column_width: 20
-
-  - datastore_id: contracts_total_total_value
-    label: Total Value of All Contracts $10K and under ($ 000)
-    datastore_type: int
-    xls_column_width: 20
+    label: Construction Contracts Amendments – Net Amendment Value
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: contracts_construction_total_value
+    solr_sum_to_field: contracts_total_amendment_value
+    solr_sum_to_field: contracts_total_total_value
 
   - datastore_id: acquisition_card_transactions_number_of
     label: Number of Acquisition Card Transactions for all Dollar Values
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
 
   - datastore_id: acquisition_card_transactions_total_value
-    label: Acquisition Card Transactions for all dollar values – Total Value ($ 000)
+    label: Acquisition Card Transactions for all dollar values – Total Value
     datastore_type: int
-    xls_column_width: 20
+    excel_column_width: 20
 
-  datastore_primary_key: [reporting_period]
+  datastore_primary_key: [year]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:

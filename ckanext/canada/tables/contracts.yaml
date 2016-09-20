@@ -10,13 +10,13 @@ resources:
   resource_name: contracts
   fields:
 
-  - datastore_id: unique_identifier
-    label: Unique Identifier
+  - datastore_id: reference_number
+    label: Reference Number
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: ref_number
-    label: Reference Number
+  - datastore_id: procurement_id
+    label: Procurement Identification Number
     datastore_type: text
     excel_column_width: 20
 
@@ -109,33 +109,51 @@ resources:
     datastore_type: text
     excel_column_width: 10
     choices:
+      0:
+        en: None
+        fr: Aucun
       Y:
-        en: World Trade Organization/North American Free Trade Agreement/Agreement on Internal Trade
-        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain/Accord sur le commerce intérieur
+        en: WTO-AGP/NAFTA/AIT/CCFTA/CCoFTA/CHFTA/CPaFTA/CPFTA/CKFTA (World Trade Organization – Agreement on Government Procurement/North American Free Trade Agreement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement/Canada-Peru Free Trade Agreement /Canada-South Korea Free Trade Agreement)
+        fr: AMP-OMC / ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS (Accord sur les marchés publics de l’Organisation mondiale du commerce / Accord de libre-échange nord-américain / Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama / Accord de libre-échange Canada-Pérou / Accord de libre-échange Canada-Corée du Sud)
       Z:
-        en: World Trade Organization/North American Free Trade Agreement
-        fr: Organisation mondiale du commerce/Accord de libre-échange nord-américain
+        en: WTO-AGP/NAFTA ( World Trade Organization – Agreement on Government Procurement/North American Free Trade Agreement/)
+        fr: AMP-OMC / ALENA (Accord sur les marchés publics de l’Organisation mondiale du commerce / Accord de libre-échange nord-américain)
       X:
-        en: World Trade Organization/Agreement on Internal Trade
-        fr: Organisation mondiale du commerce/Accord sur le commerce intérieur
+        en: WTO-AGP/AIT/CCFTA/CKFTA (World Trade Organization – Agreement on Government Procurement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-South Korea Free Trade Agreement)
+        fr: AMP-OMC / ACI / ALECC / ALECCS (Accord sur les marchés publics de l’Organisation mondiale du commerce / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Corée du Sud)
       C:
-        en: North American Free Trade Agreement/Agreement on Internal Trade
-        fr: Accord de libre-échange nord-américain/Accord sur le commerce intérieur
+        en: NAFTA/AIT (North American Free Trade Agreement/Agreement on Internal Trade)
+        fr: ALENA / ACI (Accord de libre-échange nord-américain / Accord sur le commerce intérieur)
       W:
-        en: World Trade Organization
-        fr: Organisation mondiale du commerce
+        en: WTO-AGP/AIT/CCFTA/CCoFTA/CHFTA/CPaFTA/CPFTA/CKFTA (World Trade Organization – Agreement on Government Procurement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement/Canada-Peru Free Trade Agreement /Canada-South Korea Free Trade Agreement)
+        fr: AMP-OMC / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS (Accord sur les marchés publics de l’Organisation mondiale du commerce / Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama / Accord de libre-échange Canada-Pérou / Accord de libre-échange Canada-Corée du Sud)
       N:
-        en: North American Free Trade Agreement
-        fr: Accord de libre-échange nord-américain
+        en: NAFTA/CCFTA/CCoFTA/CHFTA/CPaFTA (North American Free Trade Agreement/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement)
+        fr: ALENA / ALECC / ALECCo / ALECH / ALECPa (Accord de libre-échange nord-américain / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama)
       I:
-        en: Agreement on Internal Trade
-        fr: Accord sur le commerce intérieur
+        en: AIT (Agreement on Internal Trade)
+        fr: ACI (Accord sur le commerce intérieur)
       A:
-        en: Aboriginal Business Set-Aside (Procurement Strategy for Aboriginal Business)
-        fr: MREA
+        en: ABSA (PSAB) (Aboriginal Business Set Aside – Procurement Strategy for Aboriginal Business))
+        fr: MREA (SAEA) (Marchés réservés aux entreprises autochtones – Stratégie d’approvisionnement auprès des entreprises autochtones))
       R:
-        en: Land Claim Set Aside (Comprehensive Land Claim Agreement)
-        fr: MRRT
+        en: LCSA (CLCA) (Land Claim Set Aside – Comprehensive Land Claim Agreement)
+        fr: MRERT (ERTG) (Marchés réservés dans le cadre des ententes sur les revendications territoriales – Ententes sur les revendications territoriales globales)
+      P:
+        en: NAFTA/AIT/CCFTA/CCoFTA/CHFTA/CPaFTA (North American Free Trade Agreement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement)
+        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa (Accord de libre-échange nord-américain / Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama)
+      S:
+        en: NAFTA/AIT/CCFTA/CCoFTA/CHFTA/CPaFTA/CKFTA (North American Free Trade Agreement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement/Canada-South Korea Free Trade Agreement)
+        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECCS (Accord de libre-échange nord-américain / Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama / Accord de libre-échange Canada-Corée du Sud)
+      T:
+        en: NAFTA/AIT/CCFTA/CCoFTA/CHFTA/CPaFTA/CPFTA/CKFTA (North American Free Trade Agreement/Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-Colombia Free Trade Agreement/Canada-Honduras Free Trade Agreement/Canada-Panama Free Trade Agreement/Canada-Peru Free Trade Agreement/Canada-South Korea Free Trade Agreement)
+        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS (Accord de libre-échange nord-américain / Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Colombie / Accord de libre-échange Canada-Honduras / Accord de libre-échange Canada-Panama / Accord de libre-échange Canada-Pérou / Accord de libre-échange Canada-Corée du Sud)
+      U:
+        en: CCFTA (Canada-Chile Free Trade Agreement)
+        fr: ALECC (Accord de libre-échange Canada-Chili)
+      V:
+        en: AIT/CCFTA/CKFTA (Agreement on Internal Trade/Canada-Chile Free Trade Agreement/Canada-South Korea Free Trade Agreement)
+        fr: ACI / ALECC / ALECCS (Accord sur le commerce intérieur / Accord de libre-échange Canada-Chili / Accord de libre-échange Canada-Corée du Sud)
 
   - datastore_id: commodity_type_code
     label: Commodity Type
@@ -187,6 +205,9 @@ resources:
     datastore_type: text
     excel_column_width: 10
     choices:
+      "00":
+        en: None
+        fr: Aucune valeur
       "05":
         en: No response to bid solicitation
         fr: Aucune réponse à une invitation à soumissionner
@@ -337,7 +358,9 @@ resources:
       C:
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
-      "": Not Applicable
+      NA:
+        en: Not Applicable
+        fr: Sans objet
 
   - datastore_id: potential_commercial_exploitation
     label: Potential for Commercial Exploitation
@@ -352,8 +375,18 @@ resources:
   - datastore_id: standing_offer
     label: Call-up or Contract against a Standing Offer or Supply
            Arrangement Agreement
-    datastore_type: boolean
+    datastore_type: text
     excel_column_width: 10
+    choices:
+      PSPCSOSA:
+        en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by PSPC
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC
+      SSCSOSA:
+        en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by SSC
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPC
+      DSOSA:
+        en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement established by the department
+        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par le ministère
 
   - datastore_id: standing_offer_number
     label: Standing Offer or Supply Arrangement Number
@@ -380,7 +413,8 @@ resources:
     datastore_type: text
     excel_column_width: 10
 
-  datastore_primary_key: [unique_identifier]
+
+  datastore_primary_key: [reference_number]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:

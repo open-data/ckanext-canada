@@ -9,145 +9,118 @@ resources:
   resource_name: travela
   fields:
 
-  - datastore_id: ref_number
-    label: Reference Number
-    datastore_type: text
+  - datastore_id: year
+    label: Year
+    datastore_type: int
     excel_column_width: 20
 
-  - datastore_id: public_servant_current_year
-    label: Travel - Public Servants (Current Year)
-    datastore_type: text
+  - datastore_id: public_servants
+    label: Travel - Public Servants
+    datastore_type: money
     excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: public_servants_previous_year
+      change: public_servants_change
+      sum_previous_year: [total_travel_previous_year, total_previous_year]
+      sum_change: [total_travel_change, total_change]
 
-  - datastore_id: public_servant_previous_year
-    label: Travel - Public Servants (Previous Year)
-    datastore_type: text
+  - datastore_id: non_public_servants
+    label: Travel - Non-Public Servants
+    datastore_type: money
     excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: non_public_servants_previous_year
+      change: non_public_servants_change
+      sum_previous_year: [total_travel_previous_year, total_previous_year]
+      sum_change: [total_travel_change, total_change]
 
-  - datastore_id: public_servant_change
-    label: Travel - Public Servants (Change)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_current_year
-    label: Travel - Non-Public Servants (Current Year)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_previous_year
-    label: Travel - Non-Public Servants (Previous Year)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_change
-    label: Travel - Non-Public Servants (Change)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_current_year
+  - datastore_id: minister
     label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Current Year
+           (also included in Non-Public Servant Travel)
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: minister_previous_year
+      change: minister_change
+      sum_previous_year: [total_travel_previous_year, total_previous_year]
+      sum_change: [total_travel_change, total_change]
+
+  - datastore_id: hospitality
+    label: Hospitality
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: total
+    solr_compare_previous_year:
+      previous_year: hospitality_previous_year
+      change: hospitality_change
+      sum_previous_year: total_previous_year
+      sum_change: total_change
+
+  - datastore_id: conference_fees
+    label: Conference Fees
+    datastore_type: money
+    excel_column_width: 20
+    solr_sum_to_field: total
+    solr_compare_previous_year:
+      previous_year: conference_fees_previous_year
+      change: conference_fees_change
+      sum_previous_year: total_previous_year
+      sum_change: total_change
+
+  - datastore_id: public_servant_compared_fiscal_year_en
+    label: Public Servants - Compared Fiscal Year (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: minister_previous_year
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Previous Year
+  - datastore_id: public_servant_compared_fiscal_year_fr
+    label: Public Servants - Compared Fiscal Year (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: minister_change
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel) - Change
+  - datastore_id: non_public_servant_compared_fiscal_year_en
+    label: Non-Public Servants - Compared Fiscal Year (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: total_travel_current_year
-    label: Total Travel - Current Year
+  - datastore_id: non_public_servant_compared_fiscal_year_fr
+    label: Non-Public Servants - Compared Fiscal Year (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: total_travel_previous_year
-    label: Total Travel - Previous Year
+  - datastore_id: hospitality_compared_fiscal_year_en
+    label: Hospitality - Compared Fiscal Year (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: total_travel_change
-    label: Total Travel - Change
+  - datastore_id: hospitality_compared_fiscal_year_fr
+    label: Hospitality - Compared Fiscal Year (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: hospitality_current_year
-    label: Hospitality - Current Year
+  - datastore_id: conference_fees_compared_fiscal_year_en
+    label: Conference Fees - Compared Fiscal Year (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: hospitality_previous_year
-    label: Hospitality - Previous Year
+  - datastore_id: conference_fees_compared_fiscal_year_fr
+    label: Conference Fees - Compared Fiscal Year (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: hospitality_change
-    label: Hospitality - Change
+  - datastore_id: minister_compared_fiscal_year_en
+    label: Minister and Minister's Staff - Compared Fiscal Year (English)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: conference_fees_current_year
-    label: Conference Fees - Current Year
+  - datastore_id: minister_compared_fiscal_year_fr
+    label: Minister and Minister's Staff - Compared Fiscal Year (French)
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: conference_fees_previous_year
-    label: Conference Fees - Previous Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: conference_fees_change
-    label: Conference Fees - Change
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_current_year
-    label: Total - Current Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_previous_year
-    label: Total - Previous Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: total_change
-    label: Total - Change
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: public_servant_compared_fiscal_year
-    label: Public Servants - Compared Fiscal Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: non_public_servant_compared_fiscal_year
-    label: Non-Public Servants - Compared Fiscal Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: hospitality_compared_fiscal_year
-    label: Hospitality - Compared Fiscal Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: conference_fees_compared_fiscal_year
-    label: Conference Fees - Compared Fiscal Year
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: minister_compared_fiscal_year
-    label: International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year
-    datastore_type: text
-    excel_column_width: 20
-
-  datastore_primary_key: [ref_number]
+  datastore_primary_key: [year]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -162,16 +135,14 @@ resources:
 
   examples:
     record:
-      ref_number: "1980198"
-      name: Jane Smith
-      date: "2016-01-01"
-      destination: Halifax
-      airfare: "600.00"
-      other_transport: "0"
-      other_expenses: "50.00"
-      total: "650.00"
+      year: "2016"
+      public_servants: "500.00"
+      non_public_servants: "60.00"
+      minister: "1000.00"
+      hospitality: "700.00"
+      conference_fees: "50.00"
     filters:
-      name: Jane Smith
+      hospitality: "0"
     filter_one:
-      ref_number: "1980198"
-    sort: date desc
+      year: "2016"
+    sort: year desc

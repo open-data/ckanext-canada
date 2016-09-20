@@ -65,7 +65,7 @@ def _schema_update(schema, purpose):
             if v != duplicate_extras_key]
 
     if purpose == 'create':
-        schema['id'] = [protect_new_dataset_id, if_empty_generate_uuid,
+        schema['id'] = [canada_validate_generate_uuid,
             unicode, name_validator, package_id_doesnt_exist]
         schema['name'] = [if_empty_same_as('id'), unicode, name_validator,
             package_name_validator]
@@ -202,25 +202,17 @@ def keywords_validate(key, data, errors, context):
         raise e
 
 
-def protect_new_dataset_id(key, data, errors, context):
+def canada_validate_generate_uuid(value):
     """
-    Allow dataset ids to be set for packages created by a sysadmin
-    """
-    if not data[key] or data[key] is missing:
-        return
-    if is_sysadmin(context['user']):
-        return
-    empty(key, data, errors, context)
-
-
-def if_empty_generate_uuid(value):
-    """
-    Generate a uuid for this dataset early so that it may be
-    copied into the name field.
+    Accept UUID-shaped values or generate a uuid for this
+    dataset early so that it may be copied into the name field.
     """
     if not value or value is missing:
         return str(uuid.uuid4())
-    return value
+    try:
+        return str(uuid.UUID(value))
+    except ValueError:
+        raise Invalid(_("Badly formed hexadecimal UUID string"))
 
 
 def package_id_doesnt_exist(key, data, errors, context):

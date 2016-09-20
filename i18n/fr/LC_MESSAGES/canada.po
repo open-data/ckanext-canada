@@ -661,8 +661,11 @@ msgstr "Divulgation proactive - Accueil"
 msgid "This dataset includes all of the reports on hospitality expenses incurred within your organization."
 msgstr "Ce jeu de données comprend tous les rapports sur les dépenses relatives à l’accueil qui ont été engagées au sein de votre organisation."
 
-msgid "Attendee(s)"
-msgstr "Participant(s)"
+msgid "Attendees (Government of Canada Employees)"
+msgstr "Participants (Nombre d’employés du gouvernement du Canada)"
+
+msgid "Attendees (Guests)"
+msgstr "Participants (Nombre d’invités)"
 
 msgid "Location"
 msgstr "Lieu"
@@ -739,11 +742,14 @@ msgstr "Nom du fournisseur"
 msgid "Contract Date"
 msgstr "Date du contrat"
 
+msgid "Economic Object Code"
+msgstr "Code d’article économique"
+
 msgid "Description of Work English"
-msgstr "Description du travail anglaise"
+msgstr "Description du travail en anglais"
 
 msgid "Description of Work French"
-msgstr "Description du travail française"
+msgstr "Description du travail en français"
 
 msgid "Contract Period Start Date"
 msgstr "Date de début du contrat"
@@ -770,7 +776,7 @@ msgid "$5,000,000+"
 msgstr "5 000 000 $ +"
 
 msgid "Original Contract Value"
-msgstr "Valeur d'origine du contrat"
+msgstr "Valeur du contrat à l’origine"
 
 msgid "Contract Amendment Value"
 msgstr "Valeur de modification"
@@ -809,7 +815,7 @@ msgid "Derogation"
 msgstr "Dérogation"
 
 msgid "Procurement Strategy for Aboriginal Business Incidental Indicator"
-msgstr "Stratégie d'approvisionnement auprès des entreprises autochtones"
+msgstr "Indicateur de la stratégie d’approvisionnement auprès des entreprises autochtones"
 
 msgid "Intellectual Property Indicator"
 msgstr "Indicateur de propriété intellectuelle"
@@ -824,10 +830,10 @@ msgid "Call-up or Contract against a Standing Offer or Supply Arrangement Agreem
 msgstr "Commande subséquente à une l'offre à commandes ou arrangements en matière d'approvisionnement"
 
 msgid "Standing Offer or Supply Arrangement Number"
-msgstr "Numéro de l’offre à commandes"
+msgstr "Numéro de l’offre à commandes ou de l’accord en matière d’approvisionnement"
 
 msgid "Document Type"
-msgstr "Type de document"
+msgstr "Type d’instrument"
 
 msgid "Proactive Disclosure - Grants and Contributions"
 msgstr "Divulgation proactive - Subventions et les contributions"
@@ -976,11 +982,14 @@ msgstr "Divulgation proactive - Reclassifications de postes"
 msgid "This dataset includes all of the reports on the reclassification of occupied positions within your organization."
 msgstr "Ce jeu de données comprend tous les rapports ayant trait à la reclassification des postes comblés au sein de votre organisation."
 
+msgid "Procurement Identification Number"
+msgstr "Numéro d’identification d’approvisionnement"
+
 msgid "Position Number"
 msgstr "Numéro du poste"
 
-msgid "Economic Object Code"
-msgstr "Code d’article économique"
+msgid "Description of Work Code"
+msgstr "Code de la description du travail"
 
 msgid "Instrument Type"
 msgstr "Type d’instrument"
