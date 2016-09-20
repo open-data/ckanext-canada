@@ -36,7 +36,7 @@ presets:
       en: Collection Type
       fr: Type de collection
     help_text:
-      en: The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial
+      en: "The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial"
     required: true
     choices:
     - label:
