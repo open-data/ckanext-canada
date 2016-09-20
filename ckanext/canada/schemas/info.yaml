@@ -155,6 +155,8 @@ dataset_fields:
 # List box Source: Audience code table (refer to Data Migration).
 # {A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click).}
 - preset: canada_audience
+  help_text:
+    en: "A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click)"
 
 # Field = Place pf Publication.
 # List box Source: Geographic Region Name code table (refer to Data Migration).
@@ -176,16 +178,25 @@ dataset_fields:
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
 # {The geographic region of an asset. You may select multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
+  help_text:
+    en: The geographic region of the asset. You may select multiple regions (Ctrl+Click)
+    fr: La région géographique de l’ensemble de données
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
 # {The start date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_start
+  help_text:
+    en: The start date of the period covered by the asset
+    fr: La date de début couvertes par les données
 
 # Field = Time Period Coverage End Date.
 # Add a Calendar control to select a Date.
 # {The end date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_end
+  help_text:
+    en: The end date of the period covered by the asset
+    fr: La date de fin par les données
 
 # Field = Issuance.
 # List box Source: Issuance code table (refer to Data Migration).
@@ -194,7 +205,7 @@ dataset_fields:
   label:
     en: Issuance
   help_text:
-    en: A term that designates how the resource is issued
+    en: A term that designates how the asset is issued
   form_snippet: select.html
   display_snippet: select.html
   validators: scheming_required scheming_choices

@@ -35,6 +35,8 @@ presets:
     label:
       en: Collection Type
       fr: Type de collection
+    help_text:
+      en: The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial
     required: true
     choices:
     - label:
@@ -103,8 +105,8 @@ presets:
       en: Publisher - Current Organization Name
       fr: Organisation
     help_text:
-      en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset
-      fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
+      en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
+      fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier de l’ensemble de données
     required: true
     form_include_blank_choice: true
     form_select_attrs:
@@ -219,8 +221,8 @@ presets:
       en: "Contact Email"
       fr: "Adresse électronique du contact"
     help_text:
-      en: The contact person's email for the information asset
-      fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
+      en: The contact person's email for the dataset
+      fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca)
 
 
@@ -548,8 +550,8 @@ presets:
       fr: Élément spatial
     validators: scheming_required geojson_validator
     help_text:
-      en: The range of spatial applicability of an information asset, as a GeoJson string.
-      fr: Étendue de l’applicabilité spatiale d’une ressource d’information, une chaîne GeoJson.
+      en: The range of spatial applicability of a dataset, as a GeoJson string.
+      fr: Étendue de l’applicabilité spatiale de l’ensemble de données, une chaîne GeoJson.
 
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
@@ -1822,8 +1824,8 @@ presets:
   values:
     field_name: time_period_coverage_start
     help_text:
-      en: The start date of the period covered by the dataset (YYYY-MM-DD)
-      fr: La date de début couvertes par les données. (AAAA-MM-JJ)
+      en: The start date of the period covered by the dataset
+      fr: La date de début couvertes par les données
     label:
       en: Time Period Coverage Start
       fr: Couverture de la période de temps
@@ -1838,8 +1840,8 @@ presets:
   values:
     field_name: time_period_coverage_end
     help_text:
-      en: The end date of the period covered by the dataset (YYYY-MM-DD)
-      fr: La date de fin par les données. (AAAA-MM-JJ)
+      en: The end date of the period covered by the dataset
+      fr: La date de fin par les données
     label:
       en: Time Period Coverage End
       fr: Couverture de la période de temps
@@ -2120,6 +2122,8 @@ presets:
     field_name: restrictions
     label:
       en: Access Restrictions
+    help_text:
+      en: The access restrictions of the dataset
     required: true
     form_attrs:
       readonly: ''
@@ -2379,9 +2383,13 @@ presets:
         en: "Title French"
         fr: "Titre français"
 
-    help_text:
-      en: An English name given to the resource.
-      fr: Nom anglais attribué à la ressource
+    fluent_help_text:
+      en:
+        en: An English name given to the resource.
+        fr: Nom anglais attribué à la ressource
+      fr:
+        en: A French name given to the resource.
+        fr: Nom français attribué à la ressource
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
