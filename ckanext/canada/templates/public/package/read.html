@@ -123,13 +123,8 @@
         {% endif %}
       {% endfor %}
 
-      {% if apps or pkg.collection == 'fgp' %}
+      {% if apps %}
       <h4>{{ _('Related Items') }}</h4>
-      {% if pkg.collection == 'fgp' %}
-      <a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">
-          {{ _("HNAP ISO:19115 Metadata Record") }}
-      </a>
-      {% endif %}
       <table class="table table-striped resource-list">
         <thead>
           <tr>
@@ -154,7 +149,6 @@
               %}
             </td>
             <td class="td-center">
-              {# Relationship #}
               {% snippet 'scheming/snippets/display_field.html',
                 field=h.scheming_field_by_name(schema.resource_fields, 'related_relationship'),
                 data=resource,
@@ -180,7 +174,9 @@
             </td>
             <td nowrap class="td-center">
               <a href="{{ resource.url }}" class="btn btn-primary" >{{ _('Access') }}</a>
+              {% if h.check_access('package_update', {'id': pkg.id}) %}
               {% link_for _('Edit'), controller='package', action='resource_edit', id=pkg.name, resource_id=resource.id, class_='btn btn-default' %}
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
