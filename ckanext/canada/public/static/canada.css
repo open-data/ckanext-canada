@@ -19,3 +19,10 @@ img.openness-rating-stars {
 .table>thead>tr>th {
     border: 1px solid #ddd;
 }
+
+.list-facets a {
+    text-decoration: none;
+}
+
+.list-facets a:visited {
+    color: #295376;
