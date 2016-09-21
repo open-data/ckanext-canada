@@ -90,48 +90,32 @@ Remove the markdown_extract call because our notes is a dict not a string:
   <div class="panel panel-default">
     <div class="panel-heading">
     <div class="panel-title">{{_('About this Record')}}</div>
-    <a href="{{ h.url_for(action='history', controller='package', id=pkg.id)
-      }}?format=atom" title="RSS"><span class="fa fa-rss"></span> {{_('RSS Feed')}}</a>
     </div>
 
     <ul class="list-group">
-      {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
-      <li class="list-group-item"><b>{{ h.scheming_language_text(owner_org.label) }}:</b>
-        <br/>
-        {{ cr.split_bilingual_field(pkg.organization.title) }}
+      <li class="list-group-item">
+        <strong>{{ _('Record Released') }}:</strong>
+        {{ h.render_datetime(pkg.metadata_created, '%Y-%m-%d') }}
       </li>
-
-      {% if pkg.date_modified %}
-        {% set date_modified = h.scheming_field_by_name(schema.dataset_fields,
-          'date_modified') %}
-        <li class="list-group-item"><b>{{
-          h.scheming_language_text(date_modified.label) }}:</b>
-          {% snippet 'scheming/snippets/display_field.html',
-            field=date_modified, data=pkg, entity_type='dataset', object_type=pkg.type %}
-        </li>
-      {% endif %}
-
-
-      {% if pkg.type == 'dataset' and pkg.get('collection') != 'fgp' %}
-        <li class="list-group-item">
-          <ul class="list-unstyled">
-            <li><a href="{{ '/en/openness-rating' if h.lang() == 'en' else
-                '/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness rating') }}</b></a>:
-                {%- set openness = h.openness_score(pkg) -%}
-                <img src="{{ h.url_for_static('/static/img/stars/star'
-                  ~ openness ~ '.png') }}" alt="{{
-                    ['',
-                    _('one star'),
-                    _('two stars'),
-                    _('three stars'),
-                    _('four stars'),
-                    _('five stars'),
-                    ][openness] }}"
-                    class="image-actual margin-bottom-none openness-rating-stars" />
-            </li>
-          </ul>
-        </li>
-      {% endif %}
+      <li class="list-group-item">
+        <strong>{{ _('Record Modified') }}:</strong>
+        {{ h.render_datetime(pkg.metadata_modified, '%Y-%m-%d') }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Record ID') }}:</strong>
+        {{ pkg.id }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Metadata') }}:</strong>
+        <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">
+          {{ _('Link to JSON format') }}
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="{{ h.url_for(action='history', controller='package', id=pkg.id) }}?format=atom" title="RSS">
+          <span class="icon-rss-sign"></span> {{_('Atom Feed')}}
+        </a>
+      </li>
       {% if pkg.status %}
         {% set status = h.scheming_field_by_name(schema.dataset_fields,
           'status') %}
