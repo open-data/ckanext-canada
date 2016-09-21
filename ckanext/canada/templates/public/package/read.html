@@ -124,16 +124,68 @@
       {% endfor %}
 
       {% if apps or pkg.collection == 'fgp' %}
-      <h2>{{ _('Related Items') }}</h2>
-        <ul class="list-bullet-none">
-        {% if pkg.collection == 'fgp' %}
-          <li><a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">{{ _("HNAP ISO:19115 Metadata Record") }}</a></li>
-        {% endif %}
+      <h4>{{ _('Related Items') }}</h4>
+      {% if pkg.collection == 'fgp' %}
+      <a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">
+          {{ _("HNAP ISO:19115 Metadata Record") }}
+      </a>
+      {% endif %}
+      <table class="table table-striped resource-list">
+        <thead>
+          <tr>
+            <th class="td-full">Title</th>
+            <th class="td-center">Relationship</th>
+            <th nowrap class="td-center">Portal Type</th>
+            <th class="td-center">Language</th>
+            <th class="td-center">Links</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+        {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
         {% for resource in apps %}
-          {% snippet 'package/snippets/app_item.html',
-              pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+          <tr>
+            <td class="td-full">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=name_field,
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td class="td-center">
+              {# Relationship #}
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'related_relationship'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td class="td-centre">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'related_type'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td class="td-center">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'language'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td nowrap class="td-center">
+              <a href="{{ resource.url }}" class="btn btn-primary" >{{ _('Access') }}</a>
+              {% link_for _('Edit'), controller='package', action='resource_edit', id=pkg.name, resource_id=resource.id, class_='btn btn-default' %}
+            </td>
+          </tr>
         {% endfor %}
-        </ul>
+        </tbody>
+      </table>
       {% endif %}
     </section>
 
@@ -161,21 +213,6 @@
 {% endblock %}
 
 {% block related_items %}
-{#
-<div class="span-6 margin-top-medium">
-  <h4>{{ _('Related Items') }}</h4>
-    <font color="red">
-    <ul class="list-unstyled">
-      <li class="mrgn-bttm-md"><a href="#">These related items</a></li>
-      <li class="mrgn-bttm-md"><a href="#">are part of core</a></li>
-      <li class="mrgn-bttm-md"><a href="#">CKAN 2.3 / multi-scheming</a></li>
-      <li class="mrgn-bttm-md"><a href="#">work, not as part of</a></li>
-      <li class="mrgn-bttm-md"><a href="#">Open Maps.</a></li>
-      <li class="mrgn-bttm-md"><a href="#">(Except the) HNAP Source XML</a></li>
-    </ul>
-    </font>
-</div>
-#}
 {% endblock related_items %}
 
 {% block package_item_geo_preview %}
