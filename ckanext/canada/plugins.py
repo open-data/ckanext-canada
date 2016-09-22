@@ -90,6 +90,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='resource_edit',
             controller='ckanext.canada.controller:CanadaDatasetController'
         )
+        # reset to regular delete controller for internal site
+        map.connect(
+            'dataset_delete',
+            '/dataset/delete/{id}',
+            controller='package',
+            action='delete'
+        )
         return map
 
     def after_map(self, map):
