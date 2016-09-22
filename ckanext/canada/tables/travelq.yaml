@@ -4,7 +4,8 @@ target_dataset: travelq
 title: Proactive Disclosure - Travel Expenses
 notes: Access, upload and modify the quarterly travel expense reports for your organization
 
-portal_type: pd
+portal_type: info
+collection: pd
 
 resources:
 - title: Travel Expenditures
