@@ -74,7 +74,7 @@ def _process(line, portal=False):
                 rec.pop(k_fra, None))))
 
     # convert subject english-sp-sp-french content to fluent text
-    if '  ' in rec.get('subject', []):
+    if '  ' in rec.get('subject', [''])[0]:
         rec['subject'] = [
             dataset_choices['subject'][s.lstrip().split(SP_SP, 1)[0]]
             for s in rec.get('subject', [])
