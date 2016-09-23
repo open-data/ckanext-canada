@@ -3155,6 +3155,8 @@ presets:
     - value: TIFF
       mimetype: image/tiff
       replaces: [tiff]
+    - value: TFW
+      replaces: [tiff world file]
     - value: TXT
       mimetype: text/plain
       replaces: ["ASCII", "text", "TXT"]
