@@ -25,7 +25,7 @@ SP_PIPE_SP = ' | '
 dataset_choices = {}
 resource_choices = {}
 
-def _process(line):
+def _process(line, portal=False):
     """
     Process one JSONL record of input, return None if Geo data and
     metadata in alignment with ckan-2.3 otherwise
@@ -35,8 +35,9 @@ def _process(line):
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
-    if rec.get('catalog_type','').startswith('Geo'):
-        return
+    if not portal:
+        if rec.get('catalog_type','').startswith('Geo'):
+            return
 
     if rec['type'] not in ('info', 'dataset'):
         return
@@ -162,22 +163,21 @@ def _process(line):
     return rec
 _process.count = [0, 0]
 
-def _main(fpath_jsonl_old):
+def _main(portal):
     """
     With input JSONL data file, open and process a line at a time;
     """
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-    with open(fpath_jsonl_old, 'rb') as fp_in:
-        try:
-            for line in fp_in:
-                rec = _process(line.rstrip())
-                if (rec):
-                    print simplejson.dumps(rec)
-        except IOError:
-            print >> sys.stderr, (
-                'Error: input file <{0}> not gzipped'.format(
-                    fpath_jsonl_old))
+    try:
+        for line in sys.stdin:
+            rec = _process(line.rstrip(), portal)
+            if (rec):
+                print simplejson.dumps(rec)
+    except IOError:
+        print >> sys.stderr, (
+            'Error: input file <{0}> not gzipped'.format(
+                fpath_jsonl_old))
 
 def usage():
     """
@@ -221,18 +221,9 @@ def _set_new_schema_dataset_choices():
         if 'choices' in f:
             resource_choices[f['field_name']] = choice_mapping(f)
 
-def metadata_xform(fpath_jsonl_old):
-    if path.islink(fpath_jsonl_old):
-        fpath_jsonl_old = readlink(fpath_jsonl_old)
-    if not path.isfile(fpath_jsonl_old):
-        usage()
-
-    # Input path must refer to a gzipped file
-    fpath_jsonl_old = path.expanduser(
-        path.expandvars(path.abspath(fpath_jsonl_old)))
-
+def metadata_xform(portal):
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
 
     # Process input file
-    _main(fpath_jsonl_old)
+    _main(portal)

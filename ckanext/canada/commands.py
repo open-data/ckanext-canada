@@ -56,7 +56,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets <remote server> [<dataset-id> ...]
                                     [-f | -a <push-apikey>] [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
-                      metadata-xform <input.jsonl>
+                      metadata-xform [--portal]
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -76,6 +76,7 @@ class CanadaCommand(CkanCommand):
                                     unreleased datasets as deleted
         -p/--processes <num>        sets the number of worker processes,
                                     default: 1
+        --portal                    don't filter record types
         -s/--server <remote server> retrieve from <remote server>
         -t/--tries <num>            try <num> times, set > 1 to retry on
                                     failures, default: 1
@@ -119,6 +120,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-f', '--fetch', dest='fetch', action='store_true')
     parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
     parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
+    parser.add_option('--portal', dest='portal', action='store_true')
 
     def command(self):
         '''
@@ -142,7 +144,7 @@ class CanadaCommand(CkanCommand):
             self.changed_datasets(*self.args[1:])
 
         elif cmd == 'metadata-xform':
-            metadata_xform(self.args[1])
+            metadata_xform(self.options.portal)
 
         else:
             print self.__doc__
