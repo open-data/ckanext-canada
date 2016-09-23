@@ -424,27 +424,6 @@ class CanadaCommand(CkanCommand):
                 action = 'updated'
                 portal.action.package_update(**source_pkg)
 
-            # If we're updating or creating this package we want to also update
-            # the package's resources.
-            if action not in ('unchanged', 'deleted'):
-                for resource_blob in source_pkg.get('resources', []):
-                    if resource_blob['url_type'] != 'upload':
-                        # Not a file upload, the original
-                        # package_create/_update was enough to handle this
-                        # case.
-                        continue
-                    # In 2.5+ we could use the IUploader's get_path method to
-                    # find this file on disk. Pre 2.5 we need to use the
-                    # ResourceUpload class directly.
-                    upload = uploader.ResourceUpload(resource_blob)
-                    file_path = upload.get_path(resource_blob['id'])
-
-                    with open(file_path, 'rb') as file_:
-                        portal.action.resource_patch(
-                            id=resource_blob['id'],
-                            upload=(resource_blob['url'].split('/')[-1], file_)
-                        )
-
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
 
