@@ -4,7 +4,8 @@ target_dataset: hospitalityq
 title: Proactive Disclosure - Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
 
-portal_type: pd
+portal_type: info
+collection: pd
 
 resources:
 - title: Proactive Disclosure - Hospitality
@@ -53,8 +54,13 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  - datastore_id: attendees
-    label: Attendee(s)
+  - datastore_id: employee_attendees
+    label: Attendees (Government of Canada Employees)
+    datastore_type: int
+    excel_column_width: 20
+
+  - datastore_id: guest_attendees
+    label: Attendees (Guests)
     datastore_type: int
     excel_column_width: 20
 

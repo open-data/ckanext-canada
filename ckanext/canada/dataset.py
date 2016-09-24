@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import os
 from unicodecsv import DictReader
 from pylons import config
@@ -69,7 +70,9 @@ def data_batch(org_id, lc, target_dataset):
         
     if not result:
         return
-    assert len(result) == 1, result
+    if len(result) != 1:
+       sys.stderr.write('1 record expected for %s %s, found %d' %
+            (dataset_type, org_id, len(result)))
 
     dataset = result[0]
     for resource in dataset['resources']:

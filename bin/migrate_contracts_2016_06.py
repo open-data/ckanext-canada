@@ -10,6 +10,6 @@ out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf
 out_csv.writeheader()
 
 for line in in_csv:
-    if not line['unique_identifier'] or line['unique_identifier'] == 'None':
+    if not line.get('unique_identifier') or line['unique_identifier'] == 'None':
         line['unique_identifier'] = line['ref_number']
     out_csv.writerow(line)

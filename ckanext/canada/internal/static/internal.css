@@ -57,3 +57,11 @@ details.alert-error {
     color: #d3080c;
     content: "\e101";
 }
+
+.list-facets a {
+    text-decoration: none;
+}
+
+.list-facets a:visited {
+    color: #295376;
+}

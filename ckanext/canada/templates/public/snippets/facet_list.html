@@ -10,8 +10,7 @@
 
     {% if items %}
       <nav>
-
-        <ul class="list-unstyled" style="margin-left: 7px;">
+        <ul class="list-unstyled list-facets">
           {% for item in items | sort(attribute='display_name') %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label =
@@ -21,13 +20,14 @@
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                 <a href="{{ href }}">
+                  <span class="icon-check{{ "-empty" if not item.active else "" }}"></span>
                   <span>{{ label }} {{ count }}</span>
                 </a>
               </li>
           {% endfor %}
         </ul>
       </nav>
-      <ul style="margin-left: 15px;" class="list-unstyled">
+      <ul class="list-unstyled list-facets" style="margin-bottom: 0;">
         {% if item_count > 5 %}
           {% if h.get_param_int('_%s_limit' % name) %}
             <li><a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
@@ -41,6 +41,12 @@
               {{ _('Show less') }}</a></li>
           {% endif %}
         {% endif %}
+        <li>
+          <a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action"
+               title="{{_('Clear All')}} {{facet_name}}">
+            <span class="glyphicon glyphicon-remove"></span> {{ _('Clear All') }}</a></li>
+          </a>
+        </li>
       </ul>
       {% else %}
         <p>{{ _('There are no filters for this search') }}</p>

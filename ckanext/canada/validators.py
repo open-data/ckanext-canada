@@ -160,5 +160,6 @@ def if_empty_set_to(default_value):
     def validator(value):
         if not value or value is missing:
             return default_value
+        return value
 
     return validator

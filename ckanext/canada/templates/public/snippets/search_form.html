@@ -38,6 +38,15 @@
 
 {% endblock %}
 
+{% macro active_filter_button(field, value, extras, alternative_url, preset_choices) %}
+  <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
+     class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
+    {{ h.scheming_language_text(
+      h.list_dict_filter(preset_choices, 'value', 'label', value)) }}
+    <span class="glyphicon glyphicon-remove"></span></a>
+  </a>
+{% endmacro %}
+
 
 {% block filter_list %}
 {# assume that facets will have scheming presets names canada_<something>
@@ -61,12 +70,13 @@
         (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
     {% endif %}
     {% for value in c.fields_grouped[field] %}
-      <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
-         class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
-        {{ h.scheming_language_text(
-          h.list_dict_filter(preset_choices, 'value', 'label', value)) }}
-        <span class="glyphicon glyphicon-remove"></span></a>
-      </a>
+      {% if value is not string %}
+        {% for v in value %}
+        {{ active_filter_button(field, v, extras, alternative_url, preset_choices) }}
+        {% endfor %}
+      {% else %}
+        {{ active_filter_button(field, value, extras, alternative_url, preset_choices) }}
+      {% endif %}
     {% endfor %}
   {% endfor %}
   </ul>
