@@ -3023,6 +3023,7 @@ presets:
       mimetype: application/x-ecw
       replaces: [ecw]
     - value: EDI
+      replaces: [edi]
     - value: EMF
       mimetype: image/emf
       replaces: [emf]
@@ -3059,7 +3060,7 @@ presets:
     - value: GML
       mimetype: application/gml+xml
       openness_score: 3
-      replaces: gml
+      replaces: [gml]
     - value: HDF
       mimetype: application/x-hdf
       replaces: ["GNU Zipped HDF", "hdf"]
@@ -3143,6 +3144,7 @@ presets:
     - value: SAR
     - value: SAV
     - value: SEGY
+      replaces: [segy]
     - value: SHP
       mimetype: application/x-shapefile
       replaces: [SHAPE]
