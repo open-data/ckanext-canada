@@ -1,13 +1,7 @@
 """
 Transform metadata .jsonl file from CKAN 2.1 alignment to 2.3
 """
-
-from os import readlink
-
-import gzip
 import logging
-import os.path as path
-import subprocess
 import sys
 
 # from pylons.i18n import _
@@ -20,12 +14,15 @@ LEN_SUFFIX_FRA = len(SUFFIX_FRA)
 LANG_KEYS = ('en', 'fr')
 SP_SP = '  '
 SP_PIPE_SP = ' | '
+CANSIM_ROOT = 'http://www5.statcan.gc.ca/cansim/home-accueil?lang=eng'
+SUMMARY_ROOT = 'http://www.statcan.gc.ca/tables-tableaux/sum-som/'
 
 # new schema description, data field choices
 dataset_choices = {}
 resource_choices = {}
 
-def _process(line):
+
+def _process(line, portal=False):
     """
     Process one JSONL record of input, return None if Geo data and
     metadata in alignment with ckan-2.3 otherwise
@@ -35,8 +32,16 @@ def _process(line):
     logging.debug('Before:')
     logging.debug(simplejson.dumps(rec, indent=4 * ' '))
 
-    if rec.get('catalog_type','').startswith('Geo'):
-        return
+    if not portal:
+        if rec.get('catalog_type', '').startswith('Geo'):
+            return
+
+        # Don't inclued CANSIM records.
+        if rec.get('url') == CANSIM_ROOT:
+            return
+
+        if rec.get('url') and rec['url'].startswith(SUMMARY_ROOT):
+            return
 
     if rec['type'] not in ('info', 'dataset'):
         return
@@ -44,7 +49,9 @@ def _process(line):
     rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
     rec['jurisdiction'] = u'federal'
     rec['restrictions'] = u'unrestricted'
-    rec['imso_approval'] = u'true' if rec.get('portal_release_date') else u'false'
+    rec['imso_approval'] = (
+        u'true' if rec.get('portal_release_date') else u'false'
+    )
 
     # dump tags: redundant
     rec['tags'] = []
@@ -67,14 +74,16 @@ def _process(line):
                 rec.pop(k_fra, None))))
 
     # convert subject english-sp-sp-french content to fluent text
-    if '  ' in rec.get('subject', []):
+    if '  ' in rec.get('subject', [''])[0]:
         rec['subject'] = [
             dataset_choices['subject'][s.lstrip().split(SP_SP, 1)[0]]
-                for s in rec.get('subject', [])]
+            for s in rec.get('subject', [])
+        ]
 
     rec['topic_category'] = [
         dataset_choices['topic_category'][s.lstrip().split(SP_SP, 1)[0]]
-            for s in rec.get('topic_category',[])]
+        for s in rec.get('topic_category', [])
+    ]
 
     if rec.get('presentation_form'):
         rec['presentation_form'] = (
@@ -91,7 +100,7 @@ def _process(line):
     rec['geographic_region'] = [
         dataset_choices[u'geographic_region'].get(
             gr.lstrip().split(SP_SP, 1)[0], gr)
-        for gr in rec.get('geographic_region',[])]
+        for gr in rec.get('geographic_region', [])]
 
     if rec.get('spatial_representation_type'):
         rec['spatial_representation_type'] = [
@@ -162,22 +171,21 @@ def _process(line):
     return rec
 _process.count = [0, 0]
 
-def _main(fpath_jsonl_old):
+
+def _main(portal):
     """
     With input JSONL data file, open and process a line at a time;
     """
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-    with open(fpath_jsonl_old, 'rb') as fp_in:
-        try:
-            for line in fp_in:
-                rec = _process(line.rstrip())
-                if (rec):
-                    print simplejson.dumps(rec)
-        except IOError:
-            print >> sys.stderr, (
-                'Error: input file <{0}> not gzipped'.format(
-                    fpath_jsonl_old))
+    try:
+        for line in sys.stdin:
+            rec = _process(line.rstrip(), portal)
+            if (rec):
+                print simplejson.dumps(rec)
+    except IOError:
+        print >> sys.stderr, 'Error while reading line.'
+
 
 def usage():
     """
@@ -188,6 +196,7 @@ def usage():
     print >> sys.stderr, (
         'where <in-file> is a gzipped ckanext-canada@v2.1 metadata file')
     sys.exit(-1)
+
 
 def _set_new_schema_dataset_choices():
     """
@@ -221,18 +230,10 @@ def _set_new_schema_dataset_choices():
         if 'choices' in f:
             resource_choices[f['field_name']] = choice_mapping(f)
 
-def metadata_xform(fpath_jsonl_old):
-    if path.islink(fpath_jsonl_old):
-        fpath_jsonl_old = readlink(fpath_jsonl_old)
-    if not path.isfile(fpath_jsonl_old):
-        usage()
 
-    # Input path must refer to a gzipped file
-    fpath_jsonl_old = path.expanduser(
-        path.expandvars(path.abspath(fpath_jsonl_old)))
-
+def metadata_xform(portal):
     # Set dataset choice tree
     _set_new_schema_dataset_choices()
 
     # Process input file
-    _main(fpath_jsonl_old)
+    _main(portal)

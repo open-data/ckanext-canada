@@ -90,6 +90,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='resource_edit',
             controller='ckanext.canada.controller:CanadaDatasetController'
         )
+        # reset to regular delete controller for internal site
+        map.connect(
+            'dataset_delete',
+            '/dataset/delete/{id}',
+            controller='package',
+            action='delete'
+        )
         return map
 
     def after_map(self, map):
@@ -177,6 +184,7 @@ ckanext.canada:schemas/info.yaml
             'frequency': _('Maintenance and Update Frequency'),
             'topic_category': _('Topic Categories'),
             'spatial_representation_type': _('Spatial Representation Type'),
+            'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             })
@@ -207,6 +215,8 @@ ckanext.canada:schemas/info.yaml
             'is_site_message_showing',
             'fgp_url',
             'contact_information',
+            'show_subject_facet',
+            'show_fgp_facets',
             ])
 
     def before_map(self, map):
@@ -359,6 +369,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
         if 'collection' in geno:
             data_dict['collection'] = geno['collection']
+
+        if 'fgp_viewer' in data_dict.get('display_flags', []):
+            data_dict['fgp_viewer'] = 'map_view'
 
         return data_dict
 

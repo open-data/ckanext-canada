@@ -2,9 +2,7 @@
 
 {% block search_input_label %}
 
-{# only on maps site for now #}
-{% if facets.search.collection['items']|length == 1 and
-    facets.search.collection['items'].0.name == 'fgp' %}
+{% if h.show_fgp_facets() %}
   <div class="row mrgn-bttm-sm mrgn-rght-sm">
     <div class="col-md-12">
       <section class="alert alert-info" >

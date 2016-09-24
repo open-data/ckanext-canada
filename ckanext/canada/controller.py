@@ -451,7 +451,10 @@ class CanadaAdminController(PackageController):
 
         # always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
-        return 'info'
+
+        # This MUST be None, otherwise the default filtering will apply and
+        # restrict to just dataset_type=dataset.
+        return None
 
     def publish(self):
         lc = LocalCKAN(username=c.user)
@@ -466,7 +469,7 @@ class CanadaAdminController(PackageController):
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
-                    )
+                )
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))
