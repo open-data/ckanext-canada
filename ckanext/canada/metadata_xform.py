@@ -40,7 +40,7 @@ def _process(line, portal=False):
         if rec.get('url') == CANSIM_ROOT:
             return
 
-        if rec.get('url', '').startswith(SUMMARY_ROOT):
+        if rec.get('url') and rec['url'].startswith(SUMMARY_ROOT):
             return
 
     if rec['type'] not in ('info', 'dataset'):
