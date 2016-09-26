@@ -515,11 +515,11 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
                 'dept': dept
             }
             ckan.lib.mailer.mail_recipient(
-                config['canada.notification_new_user_email'],
                 config.get(
                     'canada.notification_new_user_name',
                     config['canada.notification_new_user_email']
                 ),
+                config['canada.notification_new_user_email'],
                 (
                     u'New data.gc.ca Registry Account Created / Nouveau compte'
                     u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
@@ -542,8 +542,8 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
             'dept': dept
         }
         ckan.lib.mailer.mail_recipient(
-            email,
             fullname or email,
+            email,
             (
                 u'Welcome to the Open Government Registry / '
                 u'Bienvenue au Registre de Gouvernement Ouvert'
