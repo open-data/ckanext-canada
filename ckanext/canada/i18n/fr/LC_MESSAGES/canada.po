@@ -1592,8 +1592,22 @@ msgid "Open Data Metadata Element Set"
 msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
 
 
+#: ckan/controllers/user.py:383
+msgid "Login failed. Bad username or password."
+msgstr "L'authentification a échoué. Mauvais nom d'utilisateur ou mot de passe."
 
+#: ckan/templates/organization/new_organization_form.html:19
+msgid "Create Organization"
+msgstr "Créer l'orgaisation"
 
+#: ckan/templates/package/search.html:60
+#, python-format
+msgid ""
+" You can also access this registry using the %(api_link)s (see "
+"%(api_doc_link)s). "
+msgstr ""
+" Vous pouvez également accéder à ce catalogue en utilisant %(api_link)s "
+"(voir documentation de l’API %(api_doc_link))"
 
 
 
