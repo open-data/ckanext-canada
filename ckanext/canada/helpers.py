@@ -46,7 +46,7 @@ def openness_score(pkg):
             continue
         if f['value'] not in resource_formats:
             continue
-        resource_score = f.get('openness_score', 0)
+        resource_score = f.get('openness_score', 1)
         score = max(score, resource_score)
 
     for r in pkg['resources']:
