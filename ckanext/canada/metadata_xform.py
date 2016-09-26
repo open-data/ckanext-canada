@@ -46,7 +46,12 @@ def _process(line, portal=False):
     if rec['type'] not in ('info', 'dataset'):
         return
 
-    rec['collection'] = u'publication' if rec['type'] == 'info' else u'primary'
+    if rec['type'] == 'info':
+        rec['collection'] = u'publication'
+    elif rec.get('catalog_type', '').startswith('Geo'):
+        rec['collection'] = u'geogratis'
+    else:
+        rec['collection'] = u'primary'
     rec['jurisdiction'] = u'federal'
     rec['restrictions'] = u'unrestricted'
     rec['imso_approval'] = (

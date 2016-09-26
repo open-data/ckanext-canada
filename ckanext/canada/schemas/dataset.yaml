@@ -177,6 +177,7 @@ dataset_fields:
     fr: Place de publication
   help_text:
     en: "The region where the dataset was originally published"
+    fr: "La région où le jeu de données a été publié initialement"
   preset: canada_geographic_region # use same multi-select controlled list
 
 - preset: canada_spatial

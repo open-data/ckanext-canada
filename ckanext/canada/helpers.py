@@ -222,6 +222,7 @@ def show_fgp_facets():
             'topic_category', 'spatial_representation_type', 'fgp_viewer']:
         if any(f['active'] for f in h.get_facet_items_dict(group)):
             return True
-    return all(
-        f['active'] is (f['name'] == 'fgp')
-        for f in h.get_facet_items_dict('collection'))
+    for f in h.get_facet_items_dict('collection'):
+        if f['name'] == 'fgp':
+            return f['active']
+    return False
