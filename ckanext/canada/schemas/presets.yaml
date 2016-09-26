@@ -37,6 +37,7 @@ presets:
       fr: Type de collection
     help_text:
       en: "The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial"
+      fr: "Portail auquel le dossier de métadonnées appartient (Données ouvertes ou Information ouverte)"
     required: true
     choices:
     - label:
@@ -133,8 +134,18 @@ presets:
         en: Publisher - Organization Name at Publication (French)
         fr: Organisation - Titre lors de la publication (français)
     help_text:
-      en: The organization Title at publication Time. Leave these fields blank
-        to copy names from Current Organization Name
+      en:
+        en: The english organization Title at publication Time. Leave these fields blank
+          to copy names from Current Organization Name
+        fr: Nom de l’organisation au moment de la publication, en anglais. Ne rien
+          inscrire dans ces champs pour que les noms soient copiés à partir du Nom
+          actuel de l’organisation. 
+      fr:
+        en: The french organization Title at publication Time. Leave these fields blank
+          to copy names from Current Organization Name
+        fr: Nom de l’organisation au moment de la publication, en français. Ne rien
+          inscrire dans ces champs pour que les noms soient copiés à partir du Nom
+          actuel de l’organisation. 
     validators: fluent_text canada_copy_from_org_name
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -154,17 +165,26 @@ presets:
     fluent_form_label:
       en:
         en: Publisher - Organization Section Name (English)
+        fr: Éditeur - Organisation - Nom de la section (anglais)
       fr:
         en: Publisher - Organization Section Name (French)
+        fr: Éditeur - Organisation - Nom de la section (français)
     fluent_help_text:
       en:
         en: The English names of the work groups, units of work, business
             units, etc. of the organization that publishes the dataset
             (separate multuple names by commas).
+        fr: Noms anglais des groupes de travail, des unités de travail, des
+            unités opérationnelles, etc. de l’organisation qui publie le jeu
+            de données (séparer les multiples noms par des virgules).. 
       fr:
         en: The French names of the work groups, units of work, business
             units, etc. of the organization that publishes the dataset
             (separate multuple names by commas).
+        fr: Noms français des groupes de travail, des unités de travail, des
+            unités opérationnelles, etc. de l’organisation qui publie le jeu
+            de données (séparer les multiples noms par des virgules).. 
+
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -182,7 +202,7 @@ presets:
       fr: Créateur
     help_text:
       en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
-      fr: Entité [individuelle] principalement responsable de produire la ressource d’information
+      fr: Entités individuelles (personnes) principalement responsables du  jeu de données (séparer les multiples entités par des virgules)
 
 
 # Field = Contributor English.
@@ -194,16 +214,21 @@ presets:
     field_name: contributor
     label:
       en: Contributor
+      fr: Contributeur
     fluent_form_label:
       en:
         en: Contributor (English)
+        fr: Contributeur (anglais)
       fr:
-        en: Contributor (French)
+        en: Contributor (Anglais)
+        fr: Contributeur (français)
     fluent_help_text:
       en:
         en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
+        fr: Les noms anglais des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution à le jeu de données (séparer les multiples entités par des virgules)
       fr:
         en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
+        fr: Les noms français des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution au jeu de données (séparer les multiples entités par des virgules)
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -254,10 +279,10 @@ presets:
     fluent_help_text:
       en:
         en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
-        fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+        fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
       fr:
         en: "An account of the dataset, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
-        fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+        fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
     required: true
     # copied from fluent_markdown preset
     form_snippet: fluent_markdown.html
@@ -287,10 +312,10 @@ presets:
     fluent_help_text:
       en:
         en: Commonly used words or phrases which describe the dataset, in English
-        fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais
       fr:
         en: Commonly used words or phrases which describe the dataset, in French
-        fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en français
     required: true
     tag_validators: canada_tags
     # copied from fluent_tags preset
@@ -314,7 +339,7 @@ presets:
       fr: "Sujet"
     help_text:
       en: "The topic of the content of the dataset. You may select multiple subjects (Ctrl+Click)"
-      fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
+      fr: "Le sujet du contenu du jeu de données. Vous pouvez sélectionner de multiples sujets (Ctrl+Clic)"
     required: true
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
@@ -428,6 +453,7 @@ presets:
       fr: Audience
     help_text:
       en: "A description of the audience or group of people for whom the described dataset is intended or useful. You may select multiple options (Ctrl+Click)"
+      fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner de multiples options (Ctrl+Clic)"
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
@@ -551,7 +577,7 @@ presets:
     validators: scheming_required geojson_validator
     help_text:
       en: The range of spatial applicability of a dataset, as a GeoJson string.
-      fr: Étendue de l’applicabilité spatiale de l’ensemble de données, une chaîne GeoJson.
+      fr: Étendue de l’applicabilité spatiale de la ressource d’information. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
 
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
@@ -569,7 +595,7 @@ presets:
       fr: Nom du région géographique
     help_text:
       en: The geographic region of the dataset. You may select multiple regions (Ctrl+Click)
-      fr: La région géographique de l’ensemble de données
+      fr: Région géographique d’un produit. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
     choices:
     - label:
         en: Canada
@@ -1828,7 +1854,7 @@ presets:
       fr: La date de début couvertes par les données
     label:
       en: Time Period Coverage Start
-      fr: Couverture de la période de temps
+      fr: Couverture de la période de temps - date de début
     form_snippet: date.html
     display_snippet: date.html
     validators: scheming_required isodate
@@ -1844,7 +1870,7 @@ presets:
       fr: La date de fin par les données
     label:
       en: Time Period Coverage End
-      fr: Couverture de la période de temps
+      fr: Couverture de la période de temps - date de fin
     form_snippet: date.html
     display_snippet: date.html
     validators: scheming_required isodate
@@ -1857,10 +1883,10 @@ presets:
     field_name: frequency
     help_text:
       en: The frequency with which changes and additions are made to the initial dataset
-      fr: Fréquence à laquelle les changements et les ajouts sont apportés la ressource d’information une fois la ressource initiale complétée
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés le jeu de données initial
     label:
       en: "Maintenance and Update Frequency"
-      fr: "Fréquence mise à jour"
+      fr: "Fréquence d'entretien et de mise à jour"
     required: true
     form_include_blank_choice: true
     choices:
@@ -1939,7 +1965,7 @@ presets:
       fr: "Date de publication"
     help_text:
       en: The date of issuance (e.g., publication) of the dataset (YYYY-MM-DD)
-      fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
+      fr: Date de publication du jeu de données (AAAA-MM-JJ)
     required: true
     # copied from date preset
     form_snippet: date.html
@@ -1957,7 +1983,7 @@ presets:
       fr: Date de modification
     help_text:
       en: The date on which the dataset was updated (YYYY-MM-DD)
-      fr: Date à laquelle la ressource d’information a été changé, mise à jour ou modifié
+      fr: Date à laquelle le jeu de données a été mis à jour (AAAA-MM-JJ)
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
@@ -1981,8 +2007,12 @@ presets:
         en: Homepage (French)
         fr: URL de la page d’accueil (française)
     help_text:
-      en: A program or homepage that can be navigated to gain additional or contextual information about the dataset
-      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
+      en:
+        en: English program or homepage that can be navigated to gain additional or contextual information about the dataset
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en anglais.
+      fr:
+        en: French program or homepage that can be navigated to gain additional or contextual information about the dataset
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en français.
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -1998,24 +2028,26 @@ presets:
   values:
     field_name: data_series_name
     label:
-      en: Series Title
-      fr: Nom de la série de l’ensemble de données
+      en:
+        en: English series Title
+        fr: Nom de la série (anglais)
+      fr:
+        en: French series Title
+        fr: Nom de la série (français)
     fluent_form_label:
       en:
         en: Series Title (English)
-        fr: Nom de la série de l’ensemble de données (anglais)
+        fr: Nom de la série (anglais)
       fr:
         en: Series Title (French)
-        fr: Nom de la série de l’ensemble de données (français)
+        fr: Nom de la série (français)
     fluent_help_text:
       en:
         en: The English name of the series, or aggregate dataset, of which the dataset is a part
-        fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
-          de données fait partie
+        fr: Nom anglais de la série, ou du produit global, dont le produit fait partie)
       fr:
         en: The French name of the series, or aggregate dataset, of which the dataset is a part
-        fr: Le nom de la série ou du groupement d’ensembles de données, auquel l’ensemble
-          de données fait partie
+        fr: Nom français de la série, ou du produit global, dont le produit fait partie
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -2032,21 +2064,21 @@ presets:
     field_name: data_series_issue_identification
     label:
       en: Series Issue ID
-      fr: Identification de l’ensemble de données
+      fr: Numéro de publication de la série
     fluent_form_label:
       en:
         en: Series Issue ID (English)
-        fr: Identification de l’ensemble de données (anglais)
+        fr: Numéro de publication de la série (anglais)
       fr:
         en: Series Issue ID (French)
-        fr: Identification de l’ensemble de données (français)
+        fr: Numéro de publication de la série (français)
     fluent_help_text:
       en:
         en: English identification of the series’ issue information
-        fr: L’identification de l’ensemble de données de la série
+        fr: Identification en anglais des renseignements sur la publication de la série
       fr:
         en: French identification of the series’ issue information
-        fr: L’identification de l’ensemble de données de la série
+        fr: Identification en français des renseignements sur la publication de la série
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -2064,6 +2096,7 @@ presets:
       fr: Identificateur d’objet numérique
     help_text:
       en: "The Digital Object Identifier assigned to the dataset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
+      fr: "L'identificateur d'objet numérique assigné au jeu de données. Pour obtenir de plus amples renseignements, veuillez consulter le site http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
 
 # Field = Jurisdiction.
 # Default displayed value = Federal. 
@@ -2076,7 +2109,7 @@ presets:
       fr: Jurisdiction
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
-      fr: Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, le palier de gouvernement ayant fourni la ressource d’information.
+      fr: "Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais."
     display_snippet: null
     form_restrict_choices_to: [federal]
     form_attrs:
@@ -2112,6 +2145,7 @@ presets:
       fr: "Licence"
     help_text:
       en: The licence applied to the dataset
+      fr: Licence s’appliquant au jeu de données
     required: true
 
 #Field = Access Restrictions.
@@ -2122,8 +2156,10 @@ presets:
     field_name: restrictions
     label:
       en: Access Restrictions
+      fr: Restrictions d'accès
     help_text:
       en: The access restrictions of the dataset
+      fr: Restrictions d’accès du produit
     required: true
     form_attrs:
       readonly: ''
@@ -2149,6 +2185,7 @@ presets:
       fr: Approbation de la CSGI
     help_text:
       en: Has IMSO approval been obtained for this dataset? By selecting ‘Yes’ you agree to release this dataset under the Open Government Licence - Canada
+      fr: L’approbation du CSGI a-t-elle été obtenue pour ce jeu de données? En sélectionnant oui, vous accepter de publier ce produit conformément à la Licence du gouvernement ouvert – Canada
     required: true
     form_include_blank_choice: true
     choices:
@@ -2176,6 +2213,7 @@ presets:
       fr: Prêt à publier
     help_text:
       en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’
+      fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
     required: true
     form_include_blank_choice: true
     choices:
@@ -2204,6 +2242,7 @@ presets:
       fr: Date de lancement du portail
     help_text:
       en: The date the dataset may be published on the Portal (YYYY-MM-DD)
+      fr: La date à laquelle le jeu de données peut être publié dans le portail (AAAA-MM-JJ)
     form_snippet: portal_release_date.html
     display_snippet: date.html
     # order is very important here:
@@ -2407,8 +2446,10 @@ presets:
     field_name: related_relationship
     label:
       en: Related Record Relationship Type
+      fr: Type de relation
     help_text:
       en: The Related Record’s relationship with the dataset
+      fr: Relation du dossier connexe avec le jeu de données
     form_panel: related
     choices:
     - label:
@@ -2490,6 +2531,7 @@ presets:
       fr: Type de record
     help_text:
       en: The portal or page to which the Related Record belongs
+      fr: Portail auquel appartient le dossier connexe
     form_panel: related
     required: true
     form_include_blank_choice: true
@@ -3218,6 +3260,7 @@ presets:
       en: Character Set
     help_text:
       en: This is the character set of the resource
+      fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
     form_panel: resource
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]

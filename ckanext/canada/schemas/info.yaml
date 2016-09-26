@@ -101,10 +101,10 @@ dataset_fields:
   fluent_help_text:
     en:
       en: "An account of the information asset, in English. A description may include abstract, table of contents or a free-text"
-      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+      fr: "Description de la ressource d’information, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
     fr:
       en: "An account of the information asset, in French. A description may include abstract, table of contents or a free-text"
-      fr: "Description de la ressource d’information, en anglais. La description peut contenir, mais sans s’y limiter : un résumé, une table des matières ou un texte libre sur la ressource."
+      fr: "Description de la ressource d’information, en français. La description peut comprendre un résumé, une table des matières ou un texte libre."
 
 # Field = Note English.
 # { General information relating to an asset, in English }
@@ -116,8 +116,10 @@ dataset_fields:
   fluent_form_label:
     en:
       en: Note (English)
+      fr: Remarque (anglais)
     fr:
       en: Note (French)
+      fr: Remarque (français)
   fluent_help_text:
     en:
       en: General information relating to an asset, in English
@@ -138,10 +140,10 @@ dataset_fields:
   fluent_help_text:
     en:
       en: Commonly used words or phrases which describe the asset, in English
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+      fr: Mots ou phrases couramment utilisés qui décrivent de la ressource d’information, en anglais
     fr:
       en: Commonly used words or phrases which describe the asset, in French
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en anglais
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en français
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
@@ -149,7 +151,7 @@ dataset_fields:
 - preset: canada_subject
   help_text:
     en: "The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click)"
-    fr: "Sujet du contenu du jeu de données ou de la ressource d’information"
+    fr: "Le sujet du contenu de la ressource d’information. Vous pouvez sélectionner de multiples sujets (Ctrl+Clic)"
 
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
@@ -157,6 +159,7 @@ dataset_fields:
 - preset: canada_audience
   help_text:
     en: "A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click)"
+    fr: "Description de l’audience ou du groupe de personnes pour lequel de la ressource d’information décrit est destiné ou utile. Vous pouvez sélectionner de multiples options (Ctrl+Clic)"
 
 # Field = Place pf Publication.
 # List box Source: Geographic Region Name code table (refer to Data Migration).
@@ -167,6 +170,7 @@ dataset_fields:
     fr: Place de publication
   help_text:
     en: The region where the asset was originally published
+    fr: La région où de la ressource d’information a été publié initialement
   preset: canada_geographic_region # use same multi-select controlled list
 
 # Field = Spatial.
@@ -180,7 +184,7 @@ dataset_fields:
 - preset: canada_geographic_region
   help_text:
     en: The geographic region of the asset. You may select multiple regions (Ctrl+Click)
-    fr: La région géographique de l’ensemble de données
+    fr: Région géographique d’un produit. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
@@ -204,8 +208,10 @@ dataset_fields:
 - field_name: issuance
   label:
     en: Issuance
+    fr: Publication
   help_text:
     en: A term that designates how the asset is issued
+    fr: Un terme qui décrit comment la ressource est publié
   form_snippet: select.html
   display_snippet: select.html
   validators: scheming_required scheming_choices
@@ -241,8 +247,10 @@ dataset_fields:
 - field_name: issuance_frequency
   label:
     en: Frequency of Issuance
+    fr: Fréquence de publication
   help_text:
     en: A statement of publication frequency in textual form
+    fr: Représentation textuelle de la fréquence de publication
   form_snippet: select.html
   display_snippet: select.html
   validators: scheming_required scheming_choices
@@ -330,7 +338,7 @@ dataset_fields:
 - preset: canada_date_published
   help_text:
     en: The date of issuance (e.g., publication) of the information asset
-    fr: Date d’émission (c.-à-d. de publication) du jeu de données ou de la ressource d’information
+    fr: Date de publication du produit d’information (AAAA-MM-JJ)
 
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
@@ -338,7 +346,7 @@ dataset_fields:
 - preset: canada_date_modified
   help_text:
     en: The date on which the information asset was updated
-    fr: Date à laquelle la ressource d’information a été changé, mise à jour ou modifié
+    fr: Date à laquelle le produit a été mis à jour (AAAA-MM-JJ)
 
 # Field = Date Created.
 # Add a Calendar control to select a Date.
@@ -346,8 +354,10 @@ dataset_fields:
 - field_name: date_created
   label:
     en: Date Created
+    fr: Date de création
   help_text:
     en: The date of creation of the asset
+    fr: Date de création du produit (AAAA-MM-JJ)
   preset: date
 
 # Field = Date Captured.
@@ -356,8 +366,10 @@ dataset_fields:
 - field_name: date_captured
   label:
     en: Date Captured
+    fr: Date de saisie
   help_text:
     en: The date on which the asset was digitized or a subsequent snapshot was taken
+    fr: Date à laquelle le produit a été numérisé ou un instantané subséquent a été pris (AAAA-MM-DD)
   preset: date
 
 # Field = Edition.
@@ -367,6 +379,7 @@ dataset_fields:
     en: Edition
   help_text:
     en: Information identifying the version of the asset
+    fr: Information qui identifie la version du produit
 
 # Field = Series Dates of Publication and/or Sequential Designation English.
 # {The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English}
@@ -378,13 +391,17 @@ dataset_fields:
   fluent_form_label:
     en:
       en: Series Dates of Publication and/or Sequential Designation (English)
+      fr: Dates de publication des séries et/ou de désignation séquentielle (eanglais)
     fr:
       en: Series Dates of Publication and/or Sequential Designation (French)
+      fr: Dates de publication des séries et/ou de désignation séquentielle (français)
   fluent_help_text:
     en:
       en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English
+      fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en anglais
     fr:
       en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
+      fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en français
   preset: fluent_text
 
 # Field = Homepage English.
@@ -393,8 +410,12 @@ dataset_fields:
 # {A program or homepage that can benavigated to gain additional or contextual information about the asset.}
 - preset: canada_program_page_url
   help_text:
-    en: A program or homepage that can be navigated to gain additional or contextual information about the asset
-    fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet de la ressource d’information
+    en:
+      en: English program or homepage that can be navigated to gain additional or contextual information about the asset
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en anglais.
+    fr:
+      en: French program or homepage that can be navigated to gain additional or contextual information about the asset
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en français.
 
 # Field = Series Title English.
 # {The English name of the series, or aggregate asset, of which the asset is a part}
@@ -433,38 +454,47 @@ dataset_fields:
     en: ISSN
   help_text:
     en: The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency
+    fr: Identification du Numéro international normalisé des publications en série du produit, un identificateur unique assigné aux publications en série par un organisme d’enregistrement
 
 # Field = Government of Canada Catalogue Number.
 # {The identification of the asset’s  GC Catalogue Number}
 - field_name: gc_catalogue_number
   label:
     en: Government of Canada Catalogue Number
+    fr: Numéro de catalogue du gouvernement du Canada
   help_text:
     en: The identification of the asset’s  GC Catalogue Number
+    fr: Identification du numéro du produit dans le catalogue du GC
 
 # Field = Departmental Identification Number.
 # {The identification number of the organization which published the asset}
 - field_name: departmental_identification_number
   label:
     en: Departmental Identification Number
+    fr: Numéro d’identification du ministère
   help_text:
     en: The identification number of the organization which published the asset
+    fr: Numéro d’identification de l’organisation qui a publié le produit
 
 # Field = PSPC System Identifier.
 # {The identification number given to the asset by Public Service and Procurement Canada}
 - field_name: pspc_identification_number
   label:
     en: PSPC System Identifier
+    fr: Identificateur de système de SPAC
   help_text:
     en: The identification number given to the asset by Public Service and Procurement Canada
+    fr: Le numéro d’identification attribué au produit par Services publics et Approvisionnement Canada
 
 # Field = Digital Object Identifier DOI.
 # {The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
 - field_name: doi
   label:
     en: Digital Object Identifier (DOI)
+    fr: Identificateur d’objet numérique
   help_text:
     en: "The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
+    fr: "L'identificateur d'objet numérique assigné au jeu de données. Pour obtenir de plus amples renseignements, veuillez consulter le site http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
 
 # Field = Jurisdiction.
 # {The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset.}
@@ -479,6 +509,7 @@ dataset_fields:
 - preset: canada_license_id
   help_text:
     en: The licence applied to the information asset
+    fr: Licence s’appliquant au produit d'information
 
 # Field = Access Restrictions.
 # Default Value = Unrestricted.

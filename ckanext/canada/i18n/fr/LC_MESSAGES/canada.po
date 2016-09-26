@@ -73,10 +73,10 @@ msgid "Reports"
 msgstr "Rapports"
 
 msgid "Trash"
-msgstr "Jeux de données supprimés"
+msgstr "Dossiers supprimés"
 
 msgid "Publish Records"
-msgstr "Publier des jeux de données"
+msgstr "Publier des dossiers"
 
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
@@ -146,16 +146,16 @@ msgstr "Aucune description disponible pour cet ensemble de données"
 
 msgid "{number} dataset found for \"{query}\""
 msgid_plural "{number} datasets found for \"{query}\""
-msgstr[0] "{number} jeu de données trouvé"
-msgstr[1] "{number} jeux de données trouvés"
+msgstr[0] "{number} dossier trouvé"
+msgstr[1] "{number} dossiers trouvés"
 
 msgid "Sorry no datasets found for \"{query}\""
 msgstr "0 ensemble de données trouvé"
 
 msgid "{number} dataset found"
 msgid_plural "{number} datasets found"
-msgstr[0] "{number} jeu de données trouvé"
-msgstr[1] "{number} jeux de données trouvés"
+msgstr[0] "{number} dossier trouvé"
+msgstr[1] "{number} dossiers trouvés"
 
 msgid "Sorry no datasets found"
 msgstr "0 ensembles de données trouvés"
@@ -275,10 +275,10 @@ msgid "No problem, use our password recovery form to reset it"
 msgstr "Utilisez notre formulaire de récupération de mot de passe pour rétablir votre identité"
 
 msgid "Search Data"
-msgstr "Recherche de données"
+msgstr "Recherche de dossiers"
 
 msgid "Search Datasets"
-msgstr "Recherche de données"
+msgstr "Recherche de dossiers"
 
 msgid "Search Open Maps"
 msgstr "Recherche de cartes ouvertes"
@@ -390,6 +390,9 @@ msgstr "Taille (Mo)"
 msgid "Link"
 msgstr "Lien"
 
+msgid "Links"
+msgstr "Liens"
+
 msgid "Program Page"
 msgstr "Page du programme"
 
@@ -400,7 +403,7 @@ msgid "You can use <a href='http://daringfireball.net/projects/markdown/syntax' 
 msgstr "Vous pouvez utiliser le formatage <a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Markdown</a> ici"
 
 msgid "Forgotten your password?"
-msgstr "Vous avez oublié votre mot de passe?"
+msgstr "Réinitialiser le mot de passe"
 
 msgid "Save and add another resource"
 msgstr "Ajouter une autre ressource"
@@ -526,7 +529,7 @@ msgid "Open Data - Main page"
 msgstr "Données ouvertes - Page principal"
 
 msgid "Showcase"
-msgstr "Recherche de données"
+msgstr "Recherche de dossiers"
 
 msgid "Open Data in Canada"
 msgstr "Données ouvertes au Canada"
@@ -580,7 +583,7 @@ msgid "data.gc.ca"
 msgstr "donnees.gc.ca"
 
 msgid "Search Filters"
-msgstr "Critères de recherche"
+msgstr "Filtres de recherche"
 
 msgid "Search Results:"
 msgstr "Résultats de la recherche:"
@@ -1333,7 +1336,7 @@ msgid "Add Asset"
 msgstr "Ajouter des biens"
 
 msgid "Update Asset"
-msgstr "Mis à jour le bien"
+msgstr "Mis à jour le dossier"
 
 msgid "Reset password"
 msgstr "Vous avez oublié votre mot de passe?"
@@ -1401,10 +1404,10 @@ msgid "No file chosen"
 msgstr "Aucun fichier choisi"
 
 msgid "{actor} created the dataset {dataset}"
-msgstr "{actor} a créé le bien {dataset}"
+msgstr "{actor} a créé le dosier {dataset}"
 
 msgid "{actor} updated the dataset {dataset}"
-msgstr "{actor} a mis à jour le bien {dataset}"
+msgstr "{actor} a mis à jour le dossier {dataset}"
 
 msgid "The server encountered a problem processing the file uploaded. Please try copying your data into the latest version of the template and uploading again. If this problem continues, send your Excel file open-ouvert@tbs-sct.gc.ca so we may investigate."
 msgstr "Le serveur a éprouvé un problème dans le traitement du fichier qui a été téléchargé. Veuillez tenter de copier vos données dans la version la plus récente du modèle et de télécharger le tout de nouveau. Si ce problème persiste, envoyez votre fichier Excel à open-ouvert@… afin que nous puissions faire enquête."
@@ -1468,13 +1471,13 @@ msgid "Format"
 msgstr "Format"
 
 msgid "Resource Type"
-msgstr "Type de contenu"
+msgstr "Type de ressource"
 
 msgid "Spatial Representation Type"
 msgstr "Type de représentation spatiale"
 
 msgid "Maintenance and Update Frequency"
-msgstr "Fréquence de la mise à jour"
+msgstr "Fréquence d'entretien et de mise à jour"
 
 # Dataset view page
 
@@ -1506,3 +1509,93 @@ msgstr "Adresse de courrier électronique"
 
 msgid "Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map."
 msgstr "Rechercher des données géospatiales ou cliquer sur <b>Ajouter au panier</b> pour sélectionner de multiples jeux de données à tracer sur une seule carte."
+
+msgid "Record Released"
+msgstr "Dossier publié"
+
+msgid "Record Modified"
+msgstr "Dossier modifié"
+
+msgid "Record ID"
+msgstr "Identificateur du dossier"
+
+msgid "Metadata"
+msgstr "Métadonnées"
+
+msgid "Atom Feed"
+msgstr "Fil de nouvelles Atom"
+
+msgid "Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_)"
+msgstr "N’employer que des lettres minuscules (a-z) et des chiffres (0-9) et, facultativement, des traits d’union (-) et des traits de soulignement (_)"
+
+msgid "Next Step..."
+msgstr "Prochaine étape..."
+
+msgid "Select the role this user should have within this organization."
+msgstr "Sélectionnez le rôle du nouvel utilisateur au sein de cette organisation."
+
+msgid "IMSO Approval"
+msgstr "Approbation du CSGI"
+
+msgid "IMSO Approved"
+msgstr "Approuvé du CSGI"
+
+msgid "Open Information"
+msgstr "Information ouverte"
+
+msgid "Change your details"
+msgstr "Modifier vos détails"
+
+msgid "Change your password"
+msgstr "Modifier votre mot de passe"
+
+msgid "Catalogue Metadata"
+msgstr "Métadonnées de catalogue"
+
+msgid "This section of the form only displays system-populated data elements used to describe the record type and the placement in the registry"
+msgstr "Cette section du formulaire n'affiche que les éléments de données alimentés par le système utilisés pour décrire le type et l'emplacement du dossier dans le registre"
+
+msgid "The portal to which the metadata record belongs"
+msgstr "Portail auquel le dossier de métadonnées appartient (Données ouvertes ou Information ouverte)"
+
+msgid "Metadata Scheme"
+msgstr "Schéma de métadonnée"
+
+msgid "The name of the metadata scheme used (including profile name)"
+msgstr "Nom anglais du schéma de métadonnées utilisé (y compris le nom du profil)"
+
+msgid "Metadata Scheme Version"
+msgstr "Version du schéma de métadonnées"
+
+msgid "The version of the metadata scheme used (version of the profile)"
+msgstr "Version du schéma de métadonnées utilisé (version du profil)"
+
+msgid "Metadata Record Identifier"
+msgstr "Identificateur du dossier de métadonnées"
+
+msgid "A unique phrase or string which identifies the metadata record within the Open Government Portal"
+msgstr "Expression ou chaîne unique désignant le dossier de métadonnées dans le Portail du gouvernement ouvert"
+
+msgid "Add Dataset Metadata"
+msgstr "Ajouter les métadonnées de produit"
+
+msgid "Metadata Fields for Resources Only (Not for Related Items)"
+msgstr "Champs de métadonnées pour les ressources seulement (non pour les éléments connexes)"
+
+msgid "Metadata Fields for Related Items Only"
+msgstr "Champs de métadonnées pour les éléments connexes seulement"
+
+msgid "Use the Download URL field above to link to the related record."
+msgstr "Utiliser le champ de téléchargement de l’URL ci-dessus pour établir un lien avec le dossier afférent."
+
+msgid "Open Data Metadata Element Set"
+msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
+
+
+
+
+
+
+
+
+
