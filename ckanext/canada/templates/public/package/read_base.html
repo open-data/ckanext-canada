@@ -17,7 +17,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
 {% block content_primary_nav %}{% endblock %}
 
 {% set page_title  = _('{record_title} - Open Data Portal - Open Data') %}
-{% block title %}{{ pkg.title[client_lang] }}{% endblock %}
+{% block title %}{{ h.dataset_display_name(pkg) }} - {{ super() }}{% endblock %}
 
 {% block secondary_content %}
 
