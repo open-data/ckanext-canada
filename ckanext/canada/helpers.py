@@ -38,7 +38,7 @@ def may_publish_datasets(userobj=None):
     return False
 
 def openness_score(pkg):
-    score = 0
+    score = 1
     fmt_choices = scheming_get_preset('canada_resource_format')['choices']
     resource_formats = set(r['format'] for r in pkg['resources'])
     for f in fmt_choices:
@@ -46,8 +46,7 @@ def openness_score(pkg):
             continue
         if f['value'] not in resource_formats:
             continue
-        resource_score = f.get('openness_score', 1)
-        score = max(score, resource_score)
+        score = max(score, f['openness_score'])
 
     for r in pkg['resources']:
         if 'data_includes_uris' in r.get('data_quality', []):
