@@ -133,7 +133,7 @@ presets:
       fr:
         en: Publisher - Organization Name at Publication (French)
         fr: Organisation - Titre lors de la publication (français)
-    help_text:
+    fluent_help_text:
       en:
         en: The english organization Title at publication Time. Leave these fields blank
           to copy names from Current Organization Name
@@ -2006,7 +2006,7 @@ presets:
       fr:
         en: Homepage (French)
         fr: URL de la page d’accueil (française)
-    help_text:
+    fluent_help_text:
       en:
         en: English program or homepage that can be navigated to gain additional or contextual information about the dataset
         fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en anglais.
