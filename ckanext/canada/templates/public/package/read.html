@@ -23,7 +23,7 @@
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
-      <div class="module-alert">
+      <div class="module-alert alert alert-danger">
         <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
       </div>
       {% endif %}
