@@ -1,21 +1,24 @@
 {% import 'macros/form.html' as form %}
 
 {%- set options=[] -%}
+{%- set form_restrict_choices_to=field.get('form_restrict_choices_to') -%}
 {%- if field.get('form_include_blank_choice', false) -%}
     {%- do options.append({
         'value': '',
         'text': ''}) -%}
 {%- endif -%}
 {%- for license_desc, license_id in licenses -%}
-  {%- if license_id or not h.scheming_field_required(field) -%}
-    {%- if h.lang() == 'en' -%}
-      {%- do options.append({
-        'value': license_id,
-        'text': license_desc}) -%}
-    {%- else -%}
-      {%- do options.append({
-        'value': license_id,
-        'text': h.get_license(license_id).title_fra}) -%}
+  {%- if not form_restrict_choices_to or license_id in form_restrict_choices_to -%}
+    {%- if license_id or not h.scheming_field_required(field) -%}
+      {%- if h.lang() == 'en' -%}
+        {%- do options.append({
+          'value': license_id,
+          'text': license_desc}) -%}
+      {%- else -%}
+        {%- do options.append({
+          'value': license_id,
+          'text': h.get_license(license_id).title_fra}) -%}
+      {%- endif -%}
     {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
