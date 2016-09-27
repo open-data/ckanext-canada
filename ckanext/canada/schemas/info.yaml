@@ -488,10 +488,7 @@ dataset_fields:
 
 # Field = Digital Object Identifier DOI.
 # {The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
-- field_name: doi
-  label:
-    en: Digital Object Identifier (DOI)
-    fr: Identificateur d’objet numérique
+- preset: canada_digital_object_identifier
   help_text:
     en: "The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
     fr: "L'identificateur d'objet numérique assigné au jeu de données. Pour obtenir de plus amples renseignements, veuillez consulter le site http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
