@@ -65,3 +65,7 @@ details.alert-error {
 .list-facets a:visited {
     color: #295376;
 }
+
+.form-control.select2-container {
+    display: block;
+}
