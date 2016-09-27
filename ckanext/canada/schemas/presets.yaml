@@ -249,6 +249,7 @@ presets:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca)
+  display_snippet: fluent_link.html
 
 
 # Field = Description (English).
@@ -2015,7 +2016,7 @@ presets:
         fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en français.
     # copied from fluent_text preset
     form_snippet: fluent_text.html
-    display_snippet: fluent_text.html
+    display_snippet: fluent_link.html
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
