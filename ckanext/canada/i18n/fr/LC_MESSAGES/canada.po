@@ -406,7 +406,7 @@ msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
 msgid "Save and add another resource"
-msgstr "Ajouter une autre ressource"
+msgstr "Sauvegarder et Ajouter une autre ressource ou article connexe"
 
 msgid "Dataset Resources"
 msgstr "Ressources de l'ensemble de données"
@@ -1391,8 +1391,8 @@ msgstr "Ajouter les métadonnées des ressources"
 msgid "* indicates a mandatory field"
 msgstr "* Indique un champ obligatoire "
 
-msgid "Next: Add Resource Metadata"
-msgstr "Prochaine étape : Ajouter des métadonnées de ressources"
+msgid "Next: Add Resource or Related Item"
+msgstr "Suivant: Ajouter une ressource ou un article connexe"
 
 msgid "Errors in form"
 msgstr "Erreurs dans le formulaire"
@@ -1577,7 +1577,10 @@ msgid "A unique phrase or string which identifies the metadata record within the
 msgstr "Expression ou chaîne unique désignant le dossier de métadonnées dans le Portail du gouvernement ouvert"
 
 msgid "Add Dataset Metadata"
-msgstr "Ajouter les métadonnées de produit"
+msgstr "Ajouter une ressource ou un article connexe"
+
+msgid "You can add either a Resource or a Related Item per session, i.e. not both:"
+msgstr "Vous pouvez ajouter soit une ressource ou un article connexe par session, pas les deux:"
 
 msgid "Metadata Fields for Resources Only (Not for Related Items)"
 msgstr "Champs de métadonnées pour les ressources seulement (non pour les éléments connexes)"

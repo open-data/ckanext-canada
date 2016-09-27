@@ -13,6 +13,8 @@
     {%- endif -%}
   {%- endfor -%}
 
+  <p class="alert alert-info mrgn-tp-md">{{ _("You can add either a Resource or a Related Item per session, i.e. not both:") }}</p>
+
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
     <details class="acc-group" {% if not data.related_type %}open="open"{% endif %}>
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
