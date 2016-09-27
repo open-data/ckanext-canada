@@ -236,6 +236,11 @@ ckanext.canada:schemas/info.yaml
             action='package_delete'
         )
         map.connect(
+            '/dataset/undelete/{pkg_id}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='package_undelete'
+        )
+        map.connect(
             '/organization/autocomplete',
             action='organization_autocomplete',
             controller='ckanext.canada.controller:CanadaController',

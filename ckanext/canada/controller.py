@@ -210,6 +210,24 @@ class CanadaController(BaseController):
             action='search'
         )
 
+    def package_undelete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The record has been restored.'),
+            allow_html=True
+        )
+
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_patch(
+            id=pkg_id,
+            state='active'
+        )
+
+        return h.redirect_to(
+            controller='package',
+            action='read',
+            id=pkg_id
+        )
+
     @jsonp.jsonpify
     def organization_autocomplete(self):
         q = request.params.get('q', '')

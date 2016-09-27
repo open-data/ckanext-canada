@@ -16,6 +16,11 @@
           {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary', icon="pencil" %}
           {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
           {{ h.follow_button('dataset', pkg.name) }}
+          {% if pkg.state == "deleted" %}
+            {% if h.check_access('package_update', {'id': pkg.id}) %}
+              {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
+            {% endif %}
+          {% endif %}
           {% endblock %}
         {% endif %}
     </ul>
