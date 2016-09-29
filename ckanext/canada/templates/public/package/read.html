@@ -134,7 +134,7 @@
         <thead>
           <tr>
             <th class="td-full">{{ _('Title') }}</th>
-            <th class="td-center">{{ _('Relationship') }}</th>
+            <th nowrap class="td-center">{{ _('Relationship') }}</th>
             <th nowrap class="td-center">{{ _('Portal Type') }}</th>
             <th class="td-center">{{ _('Language') }}</th>
             <th class="td-center">{{ _('Links') }}</th>
@@ -161,7 +161,7 @@
                 object_type=pkg.type
               %}
             </td>
-            <td class="td-centre">
+            <td class="td-center">
               {% snippet 'scheming/snippets/display_field.html',
                 field=h.scheming_field_by_name(schema.resource_fields, 'related_type'),
                 data=resource,
