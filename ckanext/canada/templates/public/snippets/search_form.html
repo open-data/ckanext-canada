@@ -1,4 +1,5 @@
 {% ckan_extends %}
+{% import 'macros/canada_read.html' as cr %}
 
 {% block search_input_label %}
 
@@ -39,8 +40,27 @@
 {% macro active_filter_button(field, value, extras, alternative_url, preset_choices) %}
   <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
      class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
-    {{ h.scheming_language_text(
-      h.list_dict_filter(preset_choices, 'value', 'label', value)) }}
+    {% if field == 'organization' %}
+      {#
+      We special case organization label lookups because unlike the rest of
+      the possible facets these don't have presets and can be edited by users.
+      #}
+      {% set org = h.get_organization(value) %}
+      {%- if org -%}
+        {{ cr.split_bilingual_field(org.title, h.lang()) }}
+      {%- else -%}
+        {{ value }}
+      {%- endif -%}
+    {%- else -%}
+      {{ h.scheming_language_text(
+        h.list_dict_filter(
+          preset_choices,
+          'value',
+          'label',
+          value
+        )) 
+      }}
+    {%- endif %}
     <span class="glyphicon glyphicon-remove"></span></a>
   </a>
 {% endmacro %}

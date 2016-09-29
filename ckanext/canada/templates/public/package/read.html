@@ -62,7 +62,7 @@
         {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
         <li class="list-group-item">
           <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
-          {{ cr.split_bilingual_field(pkg.organization.title, client_lang) }}
+          {{ cr.split_bilingual_field(pkg.organization.title, h.lang()) }}
         </li>
         {# Only the list of fields included below will be included #}
         {% set include_labels = [
