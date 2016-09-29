@@ -171,19 +171,11 @@ presets:
         fr: Éditeur - Organisation - Nom de la section (français)
     fluent_help_text:
       en:
-        en: The English names of the work groups, units of work, business
-            units, etc. of the organization that publishes the dataset
-            (separate multuple names by commas).
-        fr: Noms anglais des groupes de travail, des unités de travail, des
-            unités opérationnelles, etc. de l’organisation qui publie le jeu
-            de données (séparer les multiples noms par des virgules).. 
+        en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
+        fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie la ressource d’information (séparer les multiples noms par des virgules)
       fr:
-        en: The French names of the work groups, units of work, business
-            units, etc. of the organization that publishes the dataset
-            (separate multuple names by commas).
-        fr: Noms français des groupes de travail, des unités de travail, des
-            unités opérationnelles, etc. de l’organisation qui publie le jeu
-            de données (séparer les multiples noms par des virgules).. 
+        en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
+        fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie ressource d’information(séparer les multiples noms par des virgules)
 
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -202,7 +194,7 @@ presets:
       fr: Créateur
     help_text:
       en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
-      fr: Entités individuelles (personnes) principalement responsables du  jeu de données (séparer les multiples entités par des virgules)
+      fr: Entités individuelles (personnes) principalement responsables de la ressource d’information (séparer les multiples entités par des virgules)
 
 
 # Field = Contributor English.
@@ -225,10 +217,10 @@ presets:
     fluent_help_text:
       en:
         en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
-        fr: Les noms anglais des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution à le jeu de données (séparer les multiples entités par des virgules)
+        fr: Les noms anglais des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution à de la ressource d’information (séparer les multiples entités par des virgules)
       fr:
         en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
-        fr: Les noms français des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution au jeu de données (séparer les multiples entités par des virgules)
+        fr: Les noms français des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution de la ressource d’information (séparer les multiples entités par des virgules)
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -1852,7 +1844,7 @@ presets:
     field_name: time_period_coverage_start
     help_text:
       en: The start date of the period covered by the dataset
-      fr: La date de début couvertes par les données
+      fr: Date de début de la période couverte par le produit (AAAA-MM-JJ)
     label:
       en: Time Period Coverage Start
       fr: Couverture de la période de temps - date de début
@@ -1868,7 +1860,7 @@ presets:
     field_name: time_period_coverage_end
     help_text:
       en: The end date of the period covered by the dataset
-      fr: La date de fin par les données
+      fr: Date de fin de la période couverte par le produit (AAAA-MM-JJ)
     label:
       en: Time Period Coverage End
       fr: Couverture de la période de temps - date de fin
@@ -1884,7 +1876,7 @@ presets:
     field_name: frequency
     help_text:
       en: The frequency with which changes and additions are made to the initial dataset
-      fr: Fréquence à laquelle les changements et les ajouts sont apportés le jeu de données initial
+      fr: Fréquence à laquelle les changements et les ajouts sont apportés au jeu de données initial
     label:
       en: "Maintenance and Update Frequency"
       fr: "Fréquence d'entretien et de mise à jour"
@@ -2010,10 +2002,10 @@ presets:
     fluent_help_text:
       en:
         en: English program or homepage that can be navigated to gain additional or contextual information about the dataset
-        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en anglais.
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en anglais
       fr:
         en: French program or homepage that can be navigated to gain additional or contextual information about the dataset
-        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en français.
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en français
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
@@ -2045,7 +2037,7 @@ presets:
     fluent_help_text:
       en:
         en: The English name of the series, or aggregate dataset, of which the dataset is a part
-        fr: Nom anglais de la série, ou du produit global, dont le produit fait partie)
+        fr: Nom anglais de la série, ou du produit global, dont le produit fait partie
       fr:
         en: The French name of the series, or aggregate dataset, of which the dataset is a part
         fr: Nom français de la série, ou du produit global, dont le produit fait partie
@@ -2113,10 +2105,10 @@ presets:
     field_name: jurisdiction
     label:
       en: Jurisdiction
-      fr: Jurisdiction
+      fr: Juridiction
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
-      fr: "Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais."
+      fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
     display_snippet: null
     form_restrict_choices_to: [federal]
     form_attrs:
@@ -2194,7 +2186,7 @@ presets:
       fr: Approbation de la CSGI
     help_text:
       en: Has IMSO approval been obtained? By selecting yes, you agree to release this asset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
-      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce produit sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+      fr: L’approbation du CSGI a-t-elle été obtenue pour ce produit? En sélectionnant oui, vous accepter de publier ce produit sous la Licence de gouvernement ouvert - Canada
     required: true
     form_include_blank_choice: true
     choices:
@@ -2222,7 +2214,7 @@ presets:
       fr: Prêt à publier
     help_text:
       en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’
-      fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
+      fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
     required: true
     form_include_blank_choice: true
     choices:
@@ -3268,6 +3260,7 @@ presets:
     field_name: character_set
     label:
       en: Character Set
+      fr: Jeu de caractères
     help_text:
       en: This is the character set of the resource
       fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
