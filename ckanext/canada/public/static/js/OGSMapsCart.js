@@ -172,7 +172,7 @@ function viewOnMap()
 	{ alert('Select an item to view on RAMP first') }
 	else
 	{
-		location.href='/data/'+OGSMapsCart_lang+'/ramp/ramp?keys='+OGSMapsChecked_ids.join(',')
+		location.href='/data/'+wb.lang+'/ramp/ramp?keys='+OGSMapsChecked_ids.join(',')
 		//alert('/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(','))
 	}
 }
