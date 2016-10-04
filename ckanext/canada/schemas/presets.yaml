@@ -241,7 +241,7 @@ presets:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca)
-  display_snippet: fluent_link.html
+    display_snippet: email.html
 
 
 # Field = Description (English).
@@ -2021,12 +2021,8 @@ presets:
   values:
     field_name: data_series_name
     label:
-      en:
-        en: English series Title
-        fr: Nom de la série (anglais)
-      fr:
-        en: French series Title
-        fr: Nom de la série (français)
+      en: Series Title
+      fr: Nom de la série
     fluent_form_label:
       en:
         en: Series Title (English)

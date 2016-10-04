@@ -60,9 +60,10 @@
         {# For legacy reasons, organization titles are not stores the same way as
         other multilingual fields, so special case it. #}
         {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
+        {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
         <li class="list-group-item">
           <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
-          {{ cr.split_bilingual_field(pkg.organization.title) }}
+          {{ owner_org_title }}
         </li>
         {# Only the list of fields included below will be included #}
         {% set include_labels = [
@@ -79,6 +80,8 @@
             {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
             {% if field_value %}
+              {# FIXME: This special case needs to go; Ideally convince client of futility #}
+              {% if field.field_name != 'org_title_at_publication' or field_value != owner_org_title %}
               <li class="list-group-item">
                 <strong>{{ field_title }}:</strong>
                 {% snippet 'scheming/snippets/display_field.html',
@@ -88,6 +91,7 @@
                   object_type=pkg.type
                 %}
               </li>
+              {% endif %}
             {% endif %}
           {% endif %}
         {% endfor %}
@@ -133,11 +137,11 @@
       <table class="table table-striped resource-list">
         <thead>
           <tr>
-            <th class="td-full">Title</th>
-            <th class="td-center">Relationship</th>
-            <th nowrap class="td-center">Portal Type</th>
-            <th class="td-center">Language</th>
-            <th class="td-center">Links</th>
+            <th class="td-full">{{ _('Title') }}</th>
+            <th nowrap class="td-center">{{ _('Relationship') }}</th>
+            <th nowrap class="td-center">{{ _('Portal Type') }}</th>
+            <th class="td-center">{{ _('Language') }}</th>
+            <th class="td-center">{{ _('Links') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -161,7 +165,7 @@
                 object_type=pkg.type
               %}
             </td>
-            <td class="td-centre">
+            <td class="td-center">
               {% snippet 'scheming/snippets/display_field.html',
                 field=h.scheming_field_by_name(schema.resource_fields, 'related_type'),
                 data=resource,

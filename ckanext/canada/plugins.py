@@ -1,8 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 from wcms import wcms_configure
 from routes.mapper import SubMapper
+from paste.reloader import watch_file
 
 from ckantoolkit import h
 
@@ -168,6 +173,15 @@ ckanext.canada:schemas/presets.yaml
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 """
+
+        if 'ckan.i18n_directory' in config:
+            # Reload when translaton files change, because I'm slowly going
+            # insane.
+            translations_dir = config['ckan.i18n_directory']
+            if os.path.isdir(translations_dir):
+                for folder, subs, files in os.walk(translations_dir):
+                    for filename in files:
+                        watch_file(os.path.join(folder, filename))
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
