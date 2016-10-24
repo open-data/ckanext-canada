@@ -16,7 +16,7 @@ Features:
 Installation:
 
 * Use `open-data fork of CKAN <https://github.com/open-data/ckan>`_ ,
-  branch canada-v2.3
+  branch canada-v2.5
 
 From a clean database you must run::
 
@@ -57,7 +57,7 @@ Requirements
    - Plugins
  * - CKAN
    - `open-data/ckan <https://github.com/open-data/ckan>`_
-   - canada-v2.3
+   - canada-v2.5
    - N/A
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
@@ -138,7 +138,7 @@ Both servers need::
 Configuration: Solr
 ----------------------
 
-This extension uses a custom Solr schema based on the ckan 2.3 schema. You can find the schema in the root directory of the project.
+This extension uses a custom Solr schema based on the ckan 2.5 schema. You can find the schema in the root directory of the project.
 Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using::
