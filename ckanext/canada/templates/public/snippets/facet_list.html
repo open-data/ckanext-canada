@@ -11,7 +11,7 @@
     {% if items %}
       <nav>
         <ul class="list-unstyled list-facets">
-          {% for item in items | sort(attribute='display_name') %}
+          {% for item in items | sort(attribute='count', reverse=true) %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set label =
               h.scheming_choices_label(scheming_choices, item.name)
