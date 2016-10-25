@@ -1,9 +1,11 @@
 dataset_type: hospitalityq
 target_dataset: hospitalityq
 
-title: Proactive Disclosure - Hospitality
-notes: This dataset includes all of the reports on hospitality expenses
-       incurred within your organization.
+title: Proactive Disclosure - Hospitality Expenses
+notes: Access, upload and modify the quarterly hospitality expenses for your organization
+
+portal_type: info
+collection: pd
 
 resources:
 - title: Proactive Disclosure - Hospitality

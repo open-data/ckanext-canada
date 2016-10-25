@@ -68,12 +68,11 @@ Render the field label for the given field object and client language
 Render a list of keywords for the client language
 #}
 {%- macro keyword_field(f, pkg, client_lang) -%}
-  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
-    {% set tags = pkg.get(
-      f.id + ('_fra' if client_lang == 'fr' else ''), '') -%}
-    {%- for tag in tags.split(',') -%}
+  <ul class='list-inline'>
+    {% set tags = pkg.get(f.id, {}).get(client_lang, []) %}
+    {%- for tag in tags -%}
       <li>
-        <a class="button button-none button-small" href="
+        <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
           {%- if client_lang == 'fr' -%}
             {%- url_for controller='package', action='search',
               keywords_fra=tag.strip() -%}
@@ -82,19 +81,6 @@ Render a list of keywords for the client language
               keywords=tag.strip() -%}
           {%- endif -%}
           " title="{{ _('Keyword') ~ ' ' ~ tag.strip() }}">{{ tag.strip() }}</a>
-      </li>
-    {%- endfor -%}
-  </ul>
-{%- endmacro -%}
-
-{%- macro subject_field(f, pkg, client_lang) -%}
-  <ul class='menu-horizontal margin-top-none margin-bottom-none'>
-    {%- for tag in pkg[f.id] -%}
-      <li>
-        {% set s = tag.split('  ')[1 if client_lang == 'fr' else 0] %}
-        <a class="button button-none button-small" href="
-        {%- url_for controller='package', action='search', subject=tag.strip() -%}
-        " title="{{ _('Subject') ~ ' ' ~ s.strip() }}">{{ s.strip() }}</a>
       </li>
     {%- endfor -%}
   </ul>
@@ -153,20 +139,6 @@ Display a resource format in the correct language
 {%- endmacro -%}
 
 {#
-Display the catalog type in the correct language
-#}
-
-{%- macro catalog_type(type, client_lang) -%}
-  {%- set type_field = schema_description.dataset_field_by_id.catalog_type -%}
-  {%- if type in type_field.choices_by_key -%}
-    {{- type_field.choices_by_key[type][full_lang(client_lang)] -}}
-  {%- else -%}
-    {{- format -}}
-  {%- endif -%}
-{%- endmacro -%}
-
-
-{#
 Display a license name in the correct language
 #}
 {%- macro license_name(license_id, client_lang) -%}
@@ -182,7 +154,7 @@ Display a license name in the correct language
 Choose the most appropriate display name for a resource
 #}
 {%- macro resource_display_name(res, client_lang) -%}
-  {%- set name = res.name_fra if client_lang == 'fr' else res.name -%}
+  {%- set name = res.name.fr if client_lang == 'fr' else res.name.en -%}
   {%- if name -%}
     {{- name -}}
   {%- else -%}
@@ -248,10 +220,6 @@ Search Facet Formatters
 
 {%- macro subject_label(subject, lang) -%}
   {{- split_subject_field(subject.name, lang) -}}
-{%- endmacro -%}
-
-{%- macro catalog_label(catalog, lang) -%}
-  {{- catalog_type(catalog.name, lang) -}}
 {%- endmacro -%}
 
 {%- macro license_lookup(license, lang) -%}

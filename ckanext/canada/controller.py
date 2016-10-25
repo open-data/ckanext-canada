@@ -1,70 +1,124 @@
-import logging
+# -*- coding: utf-8 -*-
 import json
-import ckan.model as model
+import socket
+from logging import getLogger
 import webhelpers.feedgenerator
+from webob.exc import HTTPFound
 
-from ckan.lib.base import (BaseController, c, render, model, request, h, g,
-    response, abort)
-from ckan.logic import get_action, check_access, schema, NotAuthorized
+import pkg_resources
+import lxml.etree as ET
+import lxml.html as html
+from ckan.lib.base import (
+    BaseController,
+    c,
+    render,
+    model,
+    request,
+    h,
+    response,
+    abort,
+    redirect
+)
+from ckan.logic import get_action, check_access, schema
 from ckan.controllers.user import UserController
-import ckan.new_authz as new_authz
-from ckan.lib.helpers import Page, date_str_to_datetime, url
-from ckan.controllers.feed import (FeedController, _package_search,
-    _create_atom_id, _FixedAtom1Feed)
+from ckan.authz import is_sysadmin
+from ckan.lib.helpers import (
+    Page,
+    date_str_to_datetime,
+    url,
+    render_markdown
+)
+from ckan.controllers.feed import (
+    FeedController,
+    _package_search,
+    _create_atom_id,
+    _FixedAtom1Feed
+)
 from ckan.lib import i18n
-from ckan.lib.base import h, redirect
+import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
-import ckan.lib.dictization.model_dictize as model_dictize
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
-from ckanapi import LocalCKAN, NotFound, NotAuthorized
+from ckanapi import LocalCKAN, NotAuthorized
+
 
 class CanadaController(BaseController):
+    def home(self):
+        if not c.user:
+            h.redirect_to(controller='user', action='login')
+
+        is_new = not h.check_access('package_create')
+
+        if is_new:
+            return h.redirect_to(controller='package', action='search')
+        return h.redirect_to(
+            controller='ckanext.canada.controller:CanadaController',
+            action='links')
+
+    def links(self):
+        return render('home/quick_links.html')
+
+    def registry_menu(self):
+        return render("menu.html")
+
     def view_guidelines(self):
         return render('guidelines.html')
 
     def view_help(self):
-        return render('help.html')
-
-    def register(self, data=None, errors=None, error_summary=None):
-        '''GET to display a form for registering a new user.
-           or POST the form data to actually do the user registration.
-
-           The bulk of this code is pulled directly from ckan/controlllers/user.py
-        '''
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema(),
-                   'save': 'save' in request.params}
+        def _get_help_text(language):
+            return pkg_resources.resource_string(
+                __name__,
+                '/'.join(['public', 'static', 'faq_{language}.md'.format(
+                    language=language
+                )])
+            )
 
         try:
-            check_access('user_create', context)
-        except NotAuthorized:
-            abort(401, _('Unauthorized to create a user'))
+            # Try to load FAQ text for the user's language.
+            faq_text = _get_help_text(c.language)
+        except IOError:
+            # Fall back to using English if no local langauge could be found.
+            faq_text = _get_help_text(u'en')
 
-        if context['save'] and not data:
-            uc = UserController()
-            return uc._save_new(context)
+        # Convert the markdown to HTML ...
+        faq_html = render_markdown(faq_text)
+        h = html.fromstring(faq_html)
 
-        if c.user and not data:
-            # #1799 Don't offer the registration form if already logged in
-            return render('user/logout_first.html')
+        # Get every FAQ point header.
+        for faq_section in h.xpath('.//h2'):
 
-        data = data or {}
-        errors = errors or {}
-        error_summary = error_summary or {}
+            details = ET.Element('details')
+            summary = ET.Element('summary')
 
-        vars = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = new_authz.is_sysadmin(c.user)
-        c.form = render('user/new_user_form.html', extra_vars=vars)
-        return render('user/new.html')
+            # Place the new details tag where the FAQ section header used to
+            # be.
+            faq_section.addprevious(details)
 
+            # Get all the text that follows the FAQ header.
+            while True:
+                next_node = faq_section.getnext()
+                if next_node is None or next_node.tag in ('h1', 'h2'):
+                    break
+                # ... and add it to the details.
+                details.append(next_node)
 
-    def view_new_user(self):
-        return render('newuser.html')
+            # Move the FAQ header to the top of the summary tag.
+            summary.insert(0, faq_section)
+            # Move the summary tag to the top of the details tag.
+            details.insert(0, summary)
+
+            # We don't actaully want the FAQ headers to be headings, so strip
+            # the tags and just leave the text.
+            faq_section.drop_tag()
+
+        return render('help.html', extra_vars={
+            'faq_html': html.tostring(h),
+            # For use with the inline debugger.
+            'faq_text': faq_text
+        })
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,
@@ -100,16 +154,128 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
+    def datatable(self, resource_id):
+        draw = int(request.params['draw'])
+        search_text = unicode(request.params['search[value]'])
+        offset = int(request.params['start'])
+        limit = int(request.params['length'])
+        sort_by_num = int(request.params['order[0][column]'])
+        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
+                      else 'asc'
+                      )
+
+        lc = LocalCKAN(username=c.user)
+
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+        )
+
+        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        sort_str = cols[sort_by_num] + ' ' + sort_order
+
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=sort_str
+        )
+
+        return json.dumps({
+            'draw': draw,
+            'iTotalRecords': unfiltered_response.get('total', 0),
+            'iTotalDisplayRecords': response.get('total', 0),
+            'aaData': [
+                [row[colname] for colname in cols]
+                for row in response['records']
+            ],
+        })
+
+    def package_delete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The dataset has been removed from'
+            ' the Open Government Portal. <br/> The record may re-appear'
+            ' if it is re-harvested or updated. Please ensure that the'
+            ' record is deleted and purged from the source catalogue in'
+            ' order to prevent it from reappearing.'
+            ),
+            allow_html=True
+        )
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_delete(id=pkg_id)
+
+        return h.redirect_to(
+            controller='package',
+            action='search'
+        )
+
+    def package_undelete(self, pkg_id):
+        h.flash_success(_(
+            '<strong>Note</strong><br> The record has been restored.'),
+            allow_html=True
+        )
+
+        lc = LocalCKAN(username=c.user)
+        lc.action.package_patch(
+            id=pkg_id,
+            state='active'
+        )
+
+        return h.redirect_to(
+            controller='package',
+            action='read',
+            id=pkg_id
+        )
+
+    @jsonp.jsonpify
+    def organization_autocomplete(self):
+        q = request.params.get('q', '')
+        limit = request.params.get('limit', 20)
+        organization_list = []
+
+        if q:
+            context = {'user': c.user, 'model': model}
+            data_dict = {'q': q, 'limit': limit}
+            organization_list = get_action(
+                'organization_autocomplete'
+            )(context, data_dict)
+
+        def _org_key(org):
+            return org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+
+        return [{
+            'id': o['id'],
+            'name': _org_key(o),
+            'title': _org_key(o)
+        } for o in organization_list]
+
+
+class CanadaDatasetController(PackageController):
+    def resource_edit(self, id, resource_id, data=None, errors=None,
+                      error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).resource_edit(
+                id, resource_id, data, errors, error_summary)
+        except HTTPFound:
+            h.flash_success(_(u'Resource updated.'))
+            # resource read page is unfinished, return to dataset page
+            h.redirect_to(controller='package', action='read', id=id)
+
+
+class CanadaUserController(UserController):
     def logged_in(self):
         # we need to set the language via a redirect
 
-        # Lang is not being retrieved properly by the Babel i18n lib in this redirect, so using
-        # this clunky workaround for now.
+        # Lang is not being retrieved properly by the Babel i18n lib in
+        # this redirect, so using this clunky workaround for now.
         lang = session.pop('lang', None)
         if lang is None:
             came_from = request.params.get('came_from', '')
             if came_from.startswith('/fr'):
                 lang = 'fr'
+            else:
+                lang = 'en'
 
         session.save()
 
@@ -118,97 +284,92 @@ class CanadaController(BaseController):
         i18n.set_lang(lang)
 
         if c.user:
-            is_new = False
-            is_sysadmin = new_authz.is_sysadmin(c.user)
-
-            # Retrieve information about the current user
-            context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema()}
+            context = None
             data_dict = {'id': c.user}
 
             user_dict = get_action('user_show')(context, data_dict)
 
-            # This check is not needed (or correct) for sys admins
-            if not is_sysadmin:
-
-                # Get all organizations and all groups the user belongs to
-                orgs_q = model.Session.query(model.Group) \
-                    .filter(model.Group.is_organization == True) \
-                    .filter(model.Group.state == 'active')
-                q = model.Session.query(model.Member) \
-                    .filter(model.Member.table_name == 'user') \
-                    .filter(model.Member.table_id == user_dict['id'])
-
-                group_ids = []
-                for row in q.all():
-                    group_ids.append(row.group_id)
-
-                if not group_ids:
-                    is_new = True
-                else:
-                    orgs_q = orgs_q.filter(model.Group.id.in_(group_ids))
-
-                    orgs_list = model_dictize.group_list_dictize(orgs_q.all(), context)
-
-                    if len(orgs_list) == 0:
-                        is_new = True
-
-            h.flash_success(_("<p><strong>Note</strong></p>"
-                "<p>%s is now logged in</p>") %
-                user_dict['display_name'], allow_html=True)
-
-            if is_new:
-                return h.redirect_to(controller='ckanext.canada.controller:CanadaController',
-                                         action='view_new_user', locale=lang)
-            else:
-                return h.redirect_to(controller='package',
-                    action='search', locale=lang)
-        else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(controller='user',
-                action='login', locale=lang)
-
-    def datatable(self, resource_name, resource_id):
-        from ckanext.recombinant.tables import get_chromo
-        t = get_chromo(resource_name)
-        echo = int(request.params['sEcho'])
-        search_text = unicode(request.params['sSearch'])
-        offset = int(request.params['iDisplayStart'])
-        limit = int(request.params['iDisplayLength'])
-        sort_cols = int(request.params['iSortingCols'])
-        if sort_cols:
-            sort_by_num = int(request.params['iSortCol_0'])
-            sort_order = 'desc' if request.params['sSortDir_0'] == 'desc' else 'asc'
-
-        lc = LocalCKAN(username=c.user)
-
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
+            h.flash_success(
+                _('<strong>Note</strong><br>{0} is now logged in').format(
+                    user_dict['display_name']
+                ),
+                allow_html=True
             )
 
-        cols = [f['datastore_id'] for f in t['fields']]
-        sort_str = ''
-        if sort_cols:
-            sort_str = cols[sort_by_num] + ' ' + sort_order
+            notice_no_access()
 
-        response = lc.action.datastore_search(
-            q=search_text,
-            resource_id=resource_id,
-            fields=cols,
-            offset=offset,
-            limit=limit,
-            sort=sort_str)
+            return h.redirect_to(
+                controller='ckanext.canada.controller:CanadaController',
+                action='home',
+                locale=lang)
+        else:
+            h.flash_error(_('Login failed. Bad username or password.'))
+            return h.redirect_to(
+                controller='user',
+                action='login', locale=lang
+            )
 
-        return json.dumps({
-            'sEcho': echo,
-            'iTotalRecords': unfiltered_response.get('total', 0),
-            'iTotalDisplayRecords': response.get('total', 0),
-            'aaData': [
-                [row[colname] for colname in cols]
-                for row in response['records']],
-            })
+    def register(self, data=None, errors=None, error_summary=None):
+        '''GET to display a form for registering a new user.
+           or POST the form data to actually do the user registration.
+
+           The bulk of this code is pulled directly from
+           ckan/controlllers/user.py
+        '''
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author,
+                   'schema': schema.user_new_form_schema(),
+                   'save': 'save' in request.params}
+
+        try:
+            check_access('user_create', context)
+        except NotAuthorized:
+            abort(401, _('Unauthorized to create a user'))
+
+        if context['save'] and not data:
+            try:
+                return self._save_new(context)
+            except HTTPFound:
+                # redirected after successful user create
+                notify_ckan_user_create(
+                    email=request.params.get('email', ''),
+                    fullname=request.params.get('fullname', ''),
+                    username=request.params.get('name', ''),
+                    phoneno=request.params.get('phoneno', ''),
+                    dept=request.params.get('department', ''))
+                notice_no_access()
+                raise
+
+        if c.user and not data:
+            # #1799 Don't offer the registration form if already logged in
+            return render('user/logout_first.html')
+
+        data = data or {}
+        errors = errors or {}
+        error_summary = error_summary or {}
+
+        d = {'data': data, 'errors': errors, 'error_summary': error_summary}
+        c.is_sysadmin = is_sysadmin(c.user)
+        c.form = render('user/new_user_form.html', extra_vars=d)
+        return render('user/new.html')
+
+    def reports(self, id=None):
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user or c.author, 'auth_user_obj': c.userobj,
+                   'for_view': True}
+        data_dict = {'id': id,
+                     'user_obj': c.userobj,
+                     'include_datasets': True,
+                     'include_num_followers': True}
+
+        context['with_related'] = True
+
+        self._setup_template_variables(context, data_dict)
+
+        if c.is_myself:
+            return render('user/reports.html')
+        abort(403)
+
 
 class CanadaFeedController(FeedController):
     def general(self):
@@ -229,14 +390,16 @@ class CanadaFeedController(FeedController):
 
         alternate_url = self._alternate_url(params)
 
-        return self.output_feed(results,
-            feed_title=_(u'data.gc.ca Dataset Feed'),
+        return self.output_feed(
+            results,
+            feed_title=_(u'Open Government Dataset Feed'),
             feed_description='',
             feed_link=alternate_url,
             feed_guid=_create_atom_id(
-            u'/feeds/dataset.atom'),
+                u'/feeds/dataset.atom'),
             feed_url=feed_url,
-            navigation_urls=navigation_urls)
+            navigation_urls=navigation_urls
+        )
 
     def output_feed(self, results, feed_title, feed_description,
                     feed_link, feed_url, navigation_urls, feed_guid):
@@ -262,15 +425,18 @@ class CanadaFeedController(FeedController):
         )
 
         if c.language == 'fr':
-            def lx(x): return x + '_fra'
+            def lx(x):
+                return x + '_fra'
         else:
-            def lx(x): return x
+            def lx(x):
+                return x
 
         for pkg in results:
             feed.add_item(
                 title=pkg.get(lx('title'), ''),
                 link=self.base_url + url(str(
-                        '/api/action/package_show?id=%s' % pkg['name'])),
+                    '/api/action/package_show?id=%s' % pkg['name'])
+                ),
                 description=pkg.get(lx('notes'), ''),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
@@ -278,8 +444,8 @@ class CanadaFeedController(FeedController):
                 author_name=pkg.get('author', ''),
                 author_email=pkg.get('author_email', ''),
                 categories=''.join(e['value']
-                    for e in pkg.get('extras',[])
-                    if e['key'] == lx('keywords')).split(','),
+                                   for e in pkg.get('extras', [])
+                                   if e['key'] == lx('keywords')).split(','),
                 enclosure=webhelpers.feedgenerator.Enclosure(
                     self.base_url + url(str(
                         '/api/action/package_show?id=%s' % pkg['name'])),
@@ -288,37 +454,123 @@ class CanadaFeedController(FeedController):
             )
         response.content_type = feed.mime_type
         return feed.writeString('utf-8')
-        
-class PublishController(PackageController):
-    
+
+
+class CanadaAdminController(PackageController):
+
     def _search_template(self, package_type):
-        return 'publish/search.html'
-        
+        return 'admin/publish_search.html'
+
     def _guess_package_type(self, expecting_name=False):
-        # this is a bit unortodox, but this method allows us to conveniently alter the
-        # search method without much code duplication.
-        sysadmin = new_authz.is_sysadmin(c.user)
-        if not sysadmin:
+        # this is a bit unortodox, but this method allows us to conveniently
+        # alter the search method without much code duplication.
+        if not is_sysadmin(c.user):
             abort(401, _('Not authorized to see this page'))
-        
-        #always set ready_to_publish to true for the publishing interface
+
+        # always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
-        return 'dataset'
-        
+
+        # This MUST be None, otherwise the default filtering will apply and
+        # restrict to just dataset_type=dataset.
+        return None
+
     def publish(self):
         lc = LocalCKAN(username=c.user)
-        
-        publish_date = date_str_to_datetime(request.str_POST['publish_date']
-            ).strftime("%Y-%m-%d %H:%M:%S")
-        
+
+        publish_date = date_str_to_datetime(
+            request.str_POST['publish_date']
+        ).strftime("%Y-%m-%d %H:%M:%S")
+
         # get a list of package id's from the for POST data
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
-                old = lc.action.package_show(id=package_id)
-                lc.call_action('package_update', dict(old,
-                    portal_release_date=publish_date))
-           
-        #return us to the publishing interface
-        url = h.url_for(controller='ckanext.canada.controller:PublishController',
-                        action='search')
-        redirect(url)
+                lc.action.package_patch(
+                    id=package_id,
+                    portal_release_date=publish_date,
+                )
+
+        # return us to the publishing interface
+        redirect(h.url_for('ckanadmin_publish'))
+
+
+def notice_no_access():
+    '''flash_notice if logged-in user can't actually do anything yet'''
+    if h.check_access('package_create'):
+        return
+
+    h.flash_notice(
+        '<strong>' + _('Account Created') +
+        '</strong><br>' +
+        _('Thank you for creating your account for the Open '
+          'Government registry. Although your account is active, '
+          'it has not yet been linked to your department. Until '
+          'the account is linked to your department you will not '
+          'be able to create or modify datasets in the '
+          'registry.') +
+        '<br><br>' +
+        _('You should receive an email within the next business '
+          'day once the account activation process has been '
+          'completed. If you require faster processing of the '
+          'account, please send the request directly to: '
+          '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
+          'open-ouvert@tbs-sct.gc.ca</a>'), True)
+
+
+def notify_ckan_user_create(email, fullname, username, phoneno, dept):
+    """
+    Send an e-mail notification about new users that register on the site to
+    the configured recipient and to the new user
+    """
+    import ckan.lib.mailer
+
+    try:
+        if 'canada.notification_new_user_email' in config:
+            xtra_vars = {
+                'email': email,
+                'fullname': fullname,
+                'username': username,
+                'phoneno': phoneno,
+                'dept': dept
+            }
+            ckan.lib.mailer.mail_recipient(
+                config.get(
+                    'canada.notification_new_user_name',
+                    config['canada.notification_new_user_email']
+                ),
+                config['canada.notification_new_user_email'],
+                (
+                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+                ),
+                render(
+                    'user/new_user_email.html',
+                    extra_vars=xtra_vars
+                )
+            )
+    except ckan.lib.mailer.MailerException as m:
+        log = getLogger('ckanext')
+        log.error(m.message)
+
+    try:
+        xtra_vars = {
+            'email': email,
+            'fullname': fullname,
+            'username': username,
+            'phoneno': phoneno,
+            'dept': dept
+        }
+        ckan.lib.mailer.mail_recipient(
+            fullname or email,
+            email,
+            (
+                u'Welcome to the Open Government Registry / '
+                u'Bienvenue au Registre de Gouvernement Ouvert'
+            ),
+            render(
+                'user/user_welcome_email.html',
+                extra_vars=xtra_vars
+            )
+        )
+    except (ckan.lib.mailer.MailerException, socket.error) as m:
+        log = getLogger('ckanext')
+        log.error(m.message)

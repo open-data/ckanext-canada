@@ -1,0 +1,432 @@
+
+scheming_version: 1
+dataset_type: dataset
+
+about: 'open.canada.ca: raw open data metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+catalog_type_label:
+  en: Raw/Geo Data
+  fr: Données/géo
+
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+
+- preset: canada_collection
+  form_restrict_choices_to: [primary]
+  form_attrs:
+    readonly: ''
+
+# FGP fields (hidden from form)
+- field_name: metadata_contact
+  label:
+    en: Metadata contact
+    fr: Contact métadonnée
+  preset: fluent_text
+  form_snippet: null
+- field_name: parent_id
+  label:
+    en: Parent identifier
+    fr: Identifiant parent
+  form_snippet: null
+- field_name: hierarchy_level
+  label:
+    en: Hierarchy level
+    fr: Portée hiérarchique
+  form_snippet: null
+- field_name: file_id
+  label:
+    en: File Identifier
+    fr: Identifiant métadonnées
+  form_snippet: null
+- field_name: short_key
+  label:
+    en: Short Key
+    fr: Identifiant court
+  form_snippet: null
+
+- preset: canada_title
+- preset: canada_owner_org
+- preset: canada_org_title_at_publication
+- preset: canada_org_section_name
+- preset: canada_creator
+
+# FGP fields (hidden from form)
+- field_name: position_name
+  label:
+    en: Position Name
+    fr: Nom position
+  preset: fluent_text
+  form_snippet: null
+- field_name: responsible_role
+  label:
+    en: Role
+    fr: Rôle
+  form_snippet: null
+- field_name: contact_information
+  label:
+    en: Contact Information
+    fr: Information contact
+  form_snippet: null
+- field_name: topic_category
+  label:
+    en: Topic category
+    fr: Catégorie thématique
+  form_snippet: null
+  display_snippet: list_inline.html
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  choices:
+  - label:
+      en: Farming
+      fr: Agriculture
+    value: farming
+  - label:
+      en: Biota
+      fr: Biote
+    value: biota
+  - label:
+      en: Boundaries
+      fr: Frontières
+    value: boundaries
+  - label:
+      en: Climatology Meteorology Atmosphere
+      fr: Climatologie Météorologie Atmosphère
+    value: climatology_meterology_atmosphere
+  - label:
+      en: Economy
+      fr: Économie
+    value: economy
+  - label:
+      en: Elevation
+      fr: Élévation
+    value: elevation
+  - label:
+      en: Environment
+      fr: Environnement
+    value: environment
+  - label:
+      en: Geoscientific Information
+      fr: Information géoscientifique
+    value: geoscientific_information
+  - label:
+      en: Health
+      fr: Santé
+    value: health
+  - label:
+      en: Imagery Base Maps Earth Cover
+      fr: Imagerie carte de base couverture terrestre
+    value: imagery_base_maps_earth_cover
+  - label:
+      en: Intelligence Military
+      fr: Renseignements militaires
+    value: intelligence_military
+  - label:
+      en: Inland Waters
+      fr: Eaux intérieures
+    value: inland_waters
+  - label:
+      en: Location
+      fr: Localisation
+    value: location
+  - label:
+      en: Oceans
+      fr: Océans
+    value: oceans
+  - label:
+      en: Planning Cadastre
+      fr: Aménagement cadastre
+    value: planning_cadastre
+  - label:
+      en: Society
+      fr: Société
+    value: society
+  - label:
+      en: Structure
+      fr: Structures
+    value: structure
+  - label:
+      en: Transportation
+      fr: Transport
+    value: transport
+  - label:
+      en: Utilities Communication
+      fr: Services communication
+    value: utilities_communication
+
+- preset: canada_contributor
+- preset: canada_maintainer_email
+- preset: canada_notes
+- preset: canada_keywords
+- preset: canada_subject
+- preset: canada_audience
+
+- field_name: place_of_publication
+  label:
+    en: Place of Publication
+    fr: Place de publication
+  help_text:
+    en: "The region where the dataset was originally published"
+    fr: "La région où le jeu de données a été publié initialement"
+  preset: canada_geographic_region # use same multi-select controlled list
+
+- preset: canada_spatial
+- preset: canada_geographic_region
+- preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
+- preset: canada_frequency
+- preset: canada_date_published
+- preset: canada_date_modified
+- preset: canada_program_page_url
+- preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
+- preset: canada_digital_object_identifier
+
+# FGP fields (hidden from form)
+- field_name: reference_system_information
+  label:
+    en: Reference System Information
+    fr: Information système référence
+  form_snippet: null
+- field_name: distributor
+  label:
+    en: Distributor
+    fr: Distributeur
+  form_snippet: null
+- field_name: status
+  label:
+    en: Status
+    fr: État
+  form_snippet: null
+  choices:
+  - label:
+      en: Completed
+      fr: Complété
+    value: completed
+  - label:
+      en: Historical Archive
+      fr: Aarchive historique
+    value: historical_archive
+  - label:
+      en: Obsolete
+      fr: Périmé
+    value: obsolete
+  - label:
+      en: Ongoing
+      fr: En continue
+    value: ongoing
+  - label:
+      en: Planned
+      fr: Planifié
+    value: planned
+  - label:
+      en: Required
+      fr: Requis
+    value: required
+  - label:
+      en: Under Development
+      fr: En production
+    value: under_development
+  - label:
+      en: Proposed
+      fr: Proposé
+    value: proposed
+  # copied from select preset
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+
+- field_name: association_type
+  label:
+    en: Association Type
+    fr: Type association
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  form_snippet: null
+  choices:
+  - label:
+      en: Cross Reference
+      fr: Référence croisée
+    value: cross_reference
+  - label:
+      en: Larger Work Citation
+      fr: Référence générique
+    value: larger_work_citation
+  - label:
+      en: Part of Seamless Database
+      fr: Partie de base de données continue
+    value: part_of_seamless_database
+  - label:
+      en: Source
+      fr: Source
+    value: source
+  - label:
+      en: Stereo Mate
+      fr: Stéréo associée
+    value: stereo_mate
+  - label:
+      en: Is Composed Of
+      fr: Est composé de
+    value: is_composed_of
+- field_name: aggregate_identifier
+  label:
+    en: Aggregate dataset identifier
+    fr: Identifiant jeu données aggrégées
+  form_snippet: null
+- preset: canada_spatial_representation_type
+
+
+- preset: canada_jurisdiction
+- preset: canada_license_id
+- preset: canada_restrictions
+- preset: canada_imso_approval
+- preset: canada_ready_to_publish
+- preset: canada_portal_release_date
+
+# fields hidden from the form to support loading fgp and geogratis data
+
+- field_name: presentation_form
+  label:
+    en: Presentation Form
+    fr: Type de représentation spatiale
+  help_text:
+    en: The form in which the resource is available
+    fr: Le format dans lequel la ressource est disponible
+  choices:
+  - label:
+      en: Document Digital
+      fr: Document numérique
+    value: document_digital
+  - label:
+      en: Document Hardcopy
+      fr: Document papier
+    value: document_hardcopy
+  - label:
+      en: Image Digital
+      fr: Image numérique
+    value: image_digital
+  - label:
+      en: Image Hardcopy
+      fr: Image papier
+    value: image_hardcopy
+  - label:
+      en: Map Digital
+      fr: Carte numérique
+    value: map_digital
+  - label:
+      en: Map Hardcopy
+      fr: Carte papier
+    value: map_hardcopy
+  - label:
+      en: Model Digital
+      fr: Modèle numérique
+    value: model_digital
+  - label:
+      en: Model Hardcopy
+      fr: Maquette
+    value: model_hardcopy
+  - label:
+      en: Profile Digital
+      fr: Profil numérique
+    value: profile_digital
+  - label:
+      en: Profile Hardcopy
+      fr: Profil papier
+    value: profile_hardcopy
+  - label:
+      en: Table Digital
+      fr: Table numérique
+    value: table_digital
+  - label:
+      en: Table Hardcopy
+      fr: Table papier
+    value: table_hardcopy
+  - label:
+      en: Video Digital
+      fr: Vidéo numérique
+    value: video_digital
+  - label:
+      en: Video Hardcopy
+      fr: Vidéo film
+    value: video_hardcopy
+  - label:
+      en: Audio Digital
+      fr: Audio numérique
+    value: audio_digital
+  - label:
+      en: Audio Hardcopy
+      fr: Audio analogique
+    value: audio_hardcopy
+  - label:
+      en: Multimedia Digital
+      fr: Multimédia numérique
+    value: multimedia_digital
+  - label:
+      en: Multimedia Hardcopy
+      fr: Multimédia analogique
+    value: multimedia_hardcopy
+  - label:
+      en: Diagram Digital
+      fr: Diagramme numérique
+    value: diagram_digital
+  - label:
+      en: Diagram Hardcopy
+      fr: Diagramme papier
+    value: diagram_hardcopy
+  form_snippet: null
+  # copied from select preset
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+- field_name: display_flags
+  label:
+    en: Display Flags
+  form_snippet: null
+  display_snippet: null
+  validators: scheming_multiple_choice
+  output_validators: scheming_multiple_choice_output
+  choices:
+  - label:
+      en: FGP viewer is supported
+    value: fgp_viewer
+
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields:
+
+- preset: canada_resource_unique_identifier
+- preset: canada_resource_name
+- preset: canada_resource_related_relationship
+- preset: canada_resource_related_type
+- preset: canada_resource_date_published
+- preset: canada_resource_type
+  form_restrict_choices_to:
+  - application
+  - api
+  - dataset
+  - guide
+  - faq
+  - specification
+  - terminology
+  - tool
+  - website
+- preset: canada_resource_size
+
+- preset: canada_resource_character_set
+- preset: canada_resource_format
+- preset: canada_resource_language
+- preset: canada_resource_url
+- preset: canada_resource_data_quality
+
+

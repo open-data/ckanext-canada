@@ -1,0 +1,6 @@
+{% ckan_extends %}
+{% block header_user_snippet %}
+{%- if c.userobj -%}
+{{ super() }}
+{%- endif -%}
+{% endblock %}

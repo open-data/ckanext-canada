@@ -1,52 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+import os.path
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.base import render
 from ckan.lib.plugins import DefaultDatasetForm
-from ckan.logic.action import create
 from wcms import wcms_configure
 from routes.mapper import SubMapper
-from logging import getLogger
+from paste.reloader import watch_file
+
+from ckantoolkit import h
+
 from ckanext.canada.metadata_schema import schema_description
-from ckanext.canada.navl_schema import (create_package_schema,
-         update_package_schema, show_package_schema)
+from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import helpers
 
-# Ugly monkey patch to let us hook into the user_create action
-
-ckan_user_create = create.user_create
-ckan_user_create_dict = {}
-
-
-def notify_ckan_user_create(context, data_dict):
-    """
-    Send an e-mail notification about new users that register on the site to the configured recipient
-    @param context: standard context object
-    @param data_dict: dictionary with field values from the user registration form.
-    @raise:
-    """
-
-    ckan_user_create(context, data_dict)
-
-    import ckan.lib.mailer
-
-    try:
-        if ckan_user_create_dict['email_address']:
-            new_email = str(data_dict['email']).strip()
-            new_fullname = str(data_dict['fullname']).strip()
-            new_username = str(data_dict['name']).strip()
-            new_phoneno = str(data_dict['phoneno']).strip()
-            new_dept = str(data_dict['department']).strip()
-
-            xtra_vars = {'email': new_email, 'fullname': new_fullname, 'username': new_username,
-                         'phoneno': new_phoneno, 'dept': new_dept}
-            email_body = render('user/new_user_email.html', extra_vars=xtra_vars)
-            ckan.lib.mailer.mail_recipient(ckan_user_create_dict['email_name'], ckan_user_create_dict['email_address'],
-                   u'New data.gc.ca Registry Account Created / Nouveau compte cr\u00e9\u00e9 dans le registre de donnees.gc.ca',
-                   email_body)
-    except ckan.lib.mailer.MailerException as m:
-        log = getLogger('ckanext')
-        log.error(m.message)
+import json
 
 
 class DataGCCAInternal(p.SingletonPlugin):
@@ -56,45 +26,97 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
+        p.toolkit.add_public_directory(config, 'internal/static')
 
-    def dataset_facets(self, facets_dict, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def group_facets(self, facets_dict, group_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
+        config.update({
+            "ckan.user_list_limit": 2000
+        })
 
     def before_map(self, map):
-        map.connect('/', controller='user', action='login')
-        map.connect('/user/logged_in', action='logged_in',
-            controller='ckanext.canada.controller:CanadaController')
-        map.connect('/publish', action='search', 
-            controller='ckanext.canada.controller:PublishController')
-        map.connect('/publish_datasets', action='publish', conditions= dict(method=['POST']),
-            controller='ckanext.canada.controller:PublishController')
-        map.connect('/user/register', action='register',
-                    controller='ckanext.canada.controller:CanadaController')
+        map.connect(
+            '/',
+            action='home',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
+            '/links',
+            action='links',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
+            '/menu',
+            action='registry_menu',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
+            '/user/logged_in',
+            action='logged_in',
+            controller='ckanext.canada.controller:CanadaUserController'
+        )
+        map.connect(
+            '/user/register',
+            action='register',
+            controller='ckanext.canada.controller:CanadaUserController'
+        )
+        map.connect(
+            'user_reports',
+            '/user/reports/{id}',
+            action='reports',
+            controller='ckanext.canada.controller:CanadaUserController',
+            ckan_icon='bar-chart'
+        )
+        map.connect(
+            'ckanadmin_listusers',
+            '/ckan-admin',
+            action='index',
+            controller='user',
+            ckan_icon='user'
+        )
+        map.connect(
+            'ckanadmin_publish',
+            '/ckan-admin/publish',
+            action='search',
+            controller='ckanext.canada.controller:CanadaAdminController',
+            ckan_icon='cloud-upload'
+        )
+        map.connect(
+            '/ckan_admin/publish_datasets',
+            action='publish',
+            conditions=dict(method=['POST']),
+            controller='ckanext.canada.controller:CanadaAdminController'
+        )
+        map.connect(
+            '/dataset/{id}/resource_edit/{resource_id}',
+            action='resource_edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
+        # reset to regular delete controller for internal site
+        map.connect(
+            'dataset_delete',
+            '/dataset/delete/{id}',
+            controller='package',
+            action='delete'
+        )
         return map
 
     def after_map(self, map):
-        with SubMapper(map,
-                controller='ckanext.canada.controller:CanadaController') as m:
+        mapper = SubMapper(
+            map,
+            controller='ckanext.canada.controller:CanadaController'
+        )
+
+        with mapper as m:
             m.connect('/guidelines', action='view_guidelines')
             m.connect('/help', action='view_help')
-            m.connect('/newuser', action='view_new_user')
-            m.connect('/datatable/{resource_name}/{resource_id}', 
-                action='datatable')
+            m.connect(
+                '/datatable/{resource_name}/{resource_id}',
+                action='datatable'
+            )
         return map
 
     def get_helpers(self):
@@ -111,17 +133,10 @@ class DataGCCAInternal(p.SingletonPlugin):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
 
-        if 'canada.notification_new_user_email' in config:
-            ckan_user_create_dict['email_address'] = config['canada.notification_new_user_email']
-            if 'canada.notification_new_user_name' in config:
-                ckan_user_create_dict['email_name'] = config['canada.notification_new_user_name']
-            else:
-                ckan_user_create_dict['email_name'] = config['canada.notification_new_user_email']
-            create.user_create = notify_ckan_user_create
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
-    Plugin for public-facing version of data.gc.ca site, aka the "portal"
+    Plugin for public-facing version of Open Government site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurable)
@@ -147,19 +162,46 @@ ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
 """
+        config['ckan.search.show_all_types'] = True
+        config['search.facets.limit'] = 200  # because org list
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+"""
+        config['scheming.dataset_schemas'] = """
+ckanext.canada:schemas/dataset.yaml
+ckanext.canada:schemas/info.yaml
+"""
+
+        if 'ckan.i18n_directory' in config:
+            # Reload when translaton files change, because I'm slowly going
+            # insane.
+            translations_dir = config['ckan.i18n_directory']
+            if os.path.isdir(translations_dir):
+                for folder, subs, files in os.walk(translations_dir):
+                    for filename in files:
+                        watch_file(os.path.join(folder, filename))
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
-        facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Data Type'),
-                      'subject': _('Subject'),
-                      'organization': _('Organization'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
+        facets_dict.update({
+            'portal_type': _('Portal Type'),
+            'organization': _('Organization'),
+            'collection': _('Collection Type'),
+            'keywords': _('Keywords'),
+            'keywords_fra': _('Keywords'),
+            'subject': _('Subject'),
+            'res_format': _('Format'),
+            'res_type': _('Resource Type'),
+            'frequency': _('Maintenance and Update Frequency'),
+            'topic_category': _('Topic Categories'),
+            'spatial_representation_type': _('Spatial Representation Type'),
+            'fgp_viewer': _('Map Viewer'),
+            'ready_to_publish': _('Record Status'),
+            'imso_approval': _('IMSO Approval'),
+            })
 
         return facets_dict
 
@@ -167,19 +209,9 @@ ckanext.canada:tables/inventory.yaml
         ''' Update the facets_dict and return it. '''
         return facets_dict
 
-    def organization_facets(self, facets_dict, organization_type, package_type):
-        ''' Update the facets_dict and return it. '''
-
-        facets_dict = {
-                      'keywords': _('Tags'),
-                      'keywords_fra': _('Tags'),
-                      'res_format': _('File Format'),
-                      'catalog_type': _('Data Type'),
-                      'subject': _('Subject'),
-                      'ready_to_publish': _('Ready to Publish'),
-                      'license_id': _('Licence') }
-
-        return facets_dict
+    def organization_facets(self, facets_dict, organization_type,
+                            package_type):
+        return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -193,7 +225,12 @@ ckanext.canada:tables/inventory.yaml
             'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
-            'drupal_session_present'
+            'drupal_session_present',
+            'is_site_message_showing',
+            'fgp_url',
+            'contact_information',
+            'show_subject_facet',
+            'show_fgp_facets',
             ])
 
     def before_map(self, map):
@@ -207,6 +244,21 @@ ckanext.canada:tables/inventory.yaml
             controller='ckanext.canada.controller:CanadaFeedController',
             action='general',
         )
+        map.connect(
+            '/dataset/delete/{pkg_id}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='package_delete'
+        )
+        map.connect(
+            '/dataset/undelete/{pkg_id}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='package_undelete'
+        )
+        map.connect(
+            '/organization/autocomplete',
+            action='organization_autocomplete',
+            controller='ckanext.canada.controller:CanadaController',
+        )
         return map
 
     def configure(self, config):
@@ -214,13 +266,14 @@ ckanext.canada:tables/inventory.yaml
         if ('ckan.drupal.url' in config):
             wcms_configure(config['ckan.drupal.url'])
 
+
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
     p.implements(p.IConfigurable)
     p.implements(p.IActions)
-    p.implements(p.IDatasetForm, inherit=True)
+    p.implements(p.IValidators, inherit=True)
 
     # IConfigurable
 
@@ -237,30 +290,23 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ])
         return actions
 
-    # IDatasetForm
+    # IValidators
 
-    def is_fallback(self):
-        """
-        Return True to register this plugin as the default handler for
-        package types not handled by any other IDatasetForm plugin.
-        """
-        return True
-
-    def package_types(self):
-        """
-        This plugin doesn't handle any special package types, it just
-        registers itself as the default (above).
-        """
-        return []
-
-    def create_package_schema(self):
-        return create_package_schema()
-
-    def update_package_schema(self):
-        return update_package_schema()
-
-    def show_package_schema(self):
-        return show_package_schema()
+    def get_validators(self):
+        return {
+            'canada_validate_generate_uuid':
+                validators.canada_validate_generate_uuid,
+            'canada_tags': validators.canada_tags,
+            'geojson_validator': validators.geojson_validator,
+            'protect_portal_release_date':
+                validators.protect_portal_release_date,
+            'canada_copy_from_org_name':
+                validators.canada_copy_from_org_name,
+            'canada_non_related_required':
+                validators.canada_non_related_required,
+            'if_empty_set_to':
+                validators.if_empty_set_to,
+            }
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
@@ -285,12 +331,26 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
-        #we're going to group portal_release_date into two bins - to today and after today        
+        # We're going to group portal_release_date into two bins - to today and
+        # after today.
         search_params['facet.range'] = 'portal_release_date'
         search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
         search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
         search_params['facet.range.gap'] = '+100YEARS'
-        
+
+        # FIXME: so terrible. hack out WET4 wbdisable parameter
+        try:
+            search_params['fq'] = search_params['fq'].replace(
+                'wbdisable:"true"', '').replace(
+                'wbdisable:"false"', '')
+        except Exception:
+            pass
+        from pylons import c
+        try:
+            c.fields_grouped.pop('wbdisable', None)
+        except Exception:
+            pass
+
         return search_params
 
     def after_search(self, search_results, search_params):
@@ -302,35 +362,36 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return search_results
 
     def before_index(self, data_dict):
-        def kw(name):
-            s = data_dict.get(name, '').strip()
-            if not s:
-                return []
-            return [k.strip() for k in s.split(',')]
+        kw = json.loads(data_dict.get('extras_keywords', '{}'))
+        data_dict['keywords'] = kw.get('en', [])
+        data_dict['keywords_fra'] = kw.get('fr', [])
+        data_dict['catalog_type'] = data_dict.get('type', '')
 
-        data_dict['keywords'] = kw('extras_keywords')
-        data_dict['keywords_fra'] = kw('extras_keywords_fra')
-        data_dict['catalog_type'] = data_dict.get('extras_catalog_type', '')
-        
-        data_dict['subject'] = list()
-        
-        if 'vocab_gc_core_subject_thesaurus' in data_dict:
-            data_dict['subject'] = data_dict['vocab_gc_core_subject_thesaurus']
-        
-        if 'vocab_iso_topic_categories' in data_dict:
-            topics = data_dict['vocab_iso_topic_categories']
-            for topic in topics:
-                subject_ids = schema_description.dataset_field_by_id['topic_category']['choices_by_key'][topic]['subject_ids']
-                for subject_id in subject_ids:
-                    data_dict['subject'].append(schema_description.dataset_field_by_id['subject']['choices_by_id'][subject_id]['key'])
-        
-        if 'portal_release_date' in data_dict:
+        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
+        data_dict['topic_category'] = json.loads(data_dict.get(
+            'topic_category', '[]'))
+        try:
+            data_dict['spatial_representation_type'] = json.loads(
+                data_dict.get('spatial_representation_type')
+            )
+        except (TypeError, ValueError):
+            data_dict['spatial_representation_type'] = []
+
+        if data_dict.get('portal_release_date'):
             data_dict.pop('ready_to_publish', None)
-        elif 'extras_ready_to_publish' in data_dict and data_dict['extras_ready_to_publish'] == 'true':
+        elif data_dict.get('ready_to_publish') == 'true':
             data_dict['ready_to_publish'] = 'true'
         else:
             data_dict['ready_to_publish'] = 'false'
-        
+
+        geno = h.recombinant_get_geno(data_dict['type']) or {}
+        data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
+        if 'collection' in geno:
+            data_dict['collection'] = geno['collection']
+
+        if 'fgp_viewer' in data_dict.get('display_flags', []):
+            data_dict['fgp_viewer'] = 'map_view'
+
         return data_dict
 
     def before_view(self, pkg_dict):
@@ -340,6 +401,14 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_update(self, context, data_dict):
+        # FIXME: flash_success makes no sense if this was an API call
+        # consider moving this to an overridden controller method instead
+        if context.get('allow_state_change') and data_dict.get(
+                'state') == 'active':
+            h.flash_success(
+                _("Your record %s has been saved.")
+                % data_dict['id']
+            )
         return data_dict
 
     def after_delete(self, context, data_dict):
@@ -350,4 +419,3 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
-

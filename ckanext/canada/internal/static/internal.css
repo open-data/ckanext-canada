@@ -1,0 +1,71 @@
+#wb-so {text-align: right;}
+#wb-so .row {background: #fff; padding: 1em 0 0;}
+#wb-so .container {border-left: 1px solid #ccc; border-right: 1px solid #ccc;}
+.header-title-box {
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+padding-top: 12px;
+}
+.header-title-box > h1 {
+margin-top: 0;
+margin-bottom: 12px;
+border-bottom: 1px solid #ccc;
+font-size: 30px;
+}
+ol.breadcrumb {
+margin-bottom: 0px;
+}
+#wb-cont {
+font-size: 24px;
+}
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+border: 1px solid #ddd;
+}
+.table>caption+thead>tr:first-child>td,
+.table>caption+thead>tr:first-child>th,
+.table>colgroup+thead>tr:first-child>td,
+.table>colgroup+thead>tr:first-child>th,
+.table>thead:first-child>tr:first-child>td,
+.table>thead:first-child>tr:first-child>th {
+border: 1px solid #ddd;
+}
+.td-center {
+text-align: center;
+}
+.td-full {
+width: 100%;
+}
+.resource-list td {
+vertical-align: middle !important;
+}
+.alert-error,
+.label-error,
+.label-error[href]:active,
+.label-error[href]:focus,
+.label-error[href]:hover,
+details.alert-error {
+    background: #f3e9e8;
+    border-color: #d3080c;
+    color: #000;
+}
+.alert-error>:first-child:before {
+    color: #d3080c;
+    content: "\e101";
+}
+
+.list-facets a {
+    text-decoration: none;
+}
+
+.list-facets a:visited {
+    color: #295376;
+}
+
+.form-control.select2-container {
+    display: block;
+}

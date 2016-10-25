@@ -1,36 +1,23 @@
-{% block opendatacanada_comments %}
-
-<div class="module">
-  <section class="module-content indent-large">
-    
-    {% set pkg = c.pkg_dict %}
-
-    {% set comment_list = h.dataset_comments(pkg.id, h.lang()) %}
-
-    <h3><a id="comments"></a>{{ _('Comments') }}</h3>
-
-    {% if comment_list %}
-    <div class="span-5 module-comment">
-      <ol class="wet-boew-zebra">
+<section class="indent-large">
+<div class="span-6 margin-top-medium">
+    {%- set pkg = c.pkg_dict -%}
+    {%- set comment_list = h.dataset_comments(pkg.id, h.lang()) -%}
+    <h4><a id="comments"></a>{{ _('Comments') }}</h4>
+    {%- if comment_list -%}
+      <ul class="list-group">
       {% for comment in comment_list %}
-        <li>
-          <div>{{ comment['user']}}</div>
-          <div>{{ comment['date'] }}</div>
-          {{ comment['comment_body']|striptags }}
+        <li class="list-group-item">
+          <p>{{ comment['user']}}</p>
+          <p>{{ comment['date'] }}</p>
+          <p>{{ comment['comment_body']|striptags }}</p>
         </li>
       {% endfor %}
-      </ol>
+      </ul>
+
+    {%- endif -%}
+    <div class="margin-top-medium">
+      <a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/dataset/{{pkg.name}}"
+          class="btn btn-default btn-lg">{{_('Comment')}}</a>
     </div>
-    <div class="clear"></div>
-    {% endif %}
-    
-     <ul class="button-group">
-          <li class="button"><a href="/{% if h.lang() == 'fr' %}fra{% else %}eng{% endif %}/dataset/{{pkg.name}}">{{_('Comment')}}</a></li>
-     </ul>
-    
-  </section>
 </div>
-
-{% endblock %}
-
-
+</section>

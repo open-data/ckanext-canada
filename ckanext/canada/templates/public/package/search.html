@@ -7,81 +7,47 @@
 {%- endblock -%}
 
 {% block breadcrumb_content %}
+    <li>{{ _('Search Open Data') }}</li>
 {% endblock %}
 
+{% block subtitle %}{{ _(g.site_title) }}{% endblock %}
+
+{%- block title -%}{{ _(g.site_title) }}{% endblock %}
+
+{% block page_primary_action %}{% endblock %}
+
 {% block secondary_content %}
-  <section role="complementary">
+
     <h2>{{ _('Search Filters') }}</h2>
-  
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['organization'],
-      name='organization') }}
-    
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['catalog_type'], name='catalog_type', label_function=cr.catalog_label ) }}
-    
-    {% if h.lang() == 'en' %}
-      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords'],
-      name='keywords') }}
-    {% elif h.lang() == 'fr' %}
-      {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['keywords_fra'],
-      name='keywords_fra') }}
-    {% endif %}
-  
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['subject'],
-      name='subject', label_function=cr.subject_label) }}
-  
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['res_format'],
-      name='res_format', label_function=cr.res_label) }}
-    
-    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles['license_id'],
-      name='license_id', label_function=cr.license_lookup) }}
-    
+
+    {% snippet 'snippets/dataset_facets.html',
+      organization_facet=h.snippet(
+        'snippets/facet_list.html', title=c.facet_titles['organization'],
+        name='organization') %}
+
     {% block extra_facets %}
-      
+
     {% endblock %}
-        
-    <section>
-      {% set license = h.get_license('ca-ogl-lgo') %}
-      {% if license != None %}
+
+    {% set license = h.get_license('ca-ogl-lgo') %}
+    {% if license != None %}
+    <div class="well well-sm">
         {% if h.lang() == 'en' %}
           <a href="{{ license.url }}">View the {{ license.title }}</a>
         {% else %}
           <a href="{{ license.url_fra }}">Voir la {{
             license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
         {% endif %}
-      {% endif %}
-    </section>
-  </section>
+    </div>
+    {% endif %}
+
 {% endblock %}
 
-{% block filter_list %}
-{% for field in c.fields_grouped %}
-  {% set search_facets_items = c.search_facets.get(field)['items'] %}
-  <span class="facet">{{ c.facet_titles.get(field) }}:</span>
-  {% for value in c.fields_grouped[field] %}
-    <span class="filtered pill background-accent facet-filter">
-      {%- if c.translated_fields and c.translated_fields.has_key((field,value)) -%}
-        {{ c.translated_fields[(field,value)] }}
-      {% elif field == 'subject' %}
-        {# since we separate subjects by two spaces instead of a pipe... #}
-        {{ cr.split_subject_field(value, h.lang()) }}
-      {%- else -%}
-        {{ cr.split_bilingual_field(h.list_dict_filter(
-            search_facets_items , 'name', 'display_name', value),
-          h.lang()) }}
-      {%- endif %}
-      <a href="{{ c.remove_field(field, value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
-    </span>
-  {% endfor %}
-{% endfor %}
-{% endblock %}
-
-{% block suggest_a_dataset_button %}
-  {% if h.lang() == 'en' %}
-  <a href="/eng/suggested-datasets" class="button">Can’t find what you’re looking for?</a>
-  {% else %}
-  <a href="/fra/suggested-datasets" class="button">Vous ne trouvez pas ce que vous cherchez?</a>
-  {% endif %}
-{% endblock %}
+  {% block search_title %}
+    {% if not no_title %}
+      {% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}
+    {% endif %}
+  {% endblock %}
 
 {% block try_another_search %}
 <p class="extra">
@@ -90,3 +56,70 @@ Please review your spelling, or reduce the number of filters selected.
 {%- endtrans -%}
 </p>
 {% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+<!-- i18n -->
+<script src="{{ h.url_for_static('/static/js/i18n.js') }}"></script>
+<!-- OGS Map Shopping Cart -->
+<script src="{{ h.url_for_static('/static/js/OGSCookie.js') }}"></script>
+<script src="{{ h.url_for_static('/static/js/OGSMapsCart.js') }}"></script>
+<script type="text/javascript">
+var OGSMapsCart_lang = '{{ h.lang() }}'
+
+$( document ).ready(function() {
+  initCart()
+  updateCartUI()
+
+  $("#OGSCartPlotItems").click(function() {
+    viewOnMap()
+  });
+
+  // Part UI ease of use and part system reset
+  $("#OGSCartDumpItems").click(function() {
+    dumpCart()
+    updateCartUI()
+  });
+
+  $(".ogscartviewbtn").click(function() {
+    var action = $(this).attr('id').split('_')
+    type = action[0]
+    id = action[1]
+
+    location.href='http://open.canada.ca/data/en/ramp/ramp-{{ h.lang() }}-ckan.html?keys='+id
+    return false
+  });
+
+  $(".ogscartbtn").click(function() {
+    var action = $(this).attr('id').split('_')
+    type = action[0]
+    id = action[1]
+
+    // Action
+    if(type == 'OGSCartAdd')    { addCartItem(id)    }
+    if(type == 'OGSCartRemove') { removeCartItem(id) }
+    updateCartUI()  
+  });
+
+  // Changes to the cart in another tab/window should be accounted for
+  $(window).focus(function() {
+    initCart()
+    updateCartUI() 
+  });
+
+<!-- End Cart -->
+
+});
+</script>
+
+{% endblock %}
+
+
+
+

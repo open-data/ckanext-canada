@@ -10,3 +10,51 @@ img.openness-rating-stars {
 .pkg-rss-feed-text {
     color: white;
 }
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+border: 1px solid #ddd;
+}
+.table>caption+thead>tr:first-child>td,
+.table>caption+thead>tr:first-child>th,
+.table>colgroup+thead>tr:first-child>td,
+.table>colgroup+thead>tr:first-child>th,
+.table>thead:first-child>tr:first-child>td,
+.table>thead:first-child>tr:first-child>th {
+border: 1px solid #ddd;
+}
+.td-center {
+text-align: center;
+}
+.td-full {
+width: 100%;
+}
+.resource-list td {
+vertical-align: middle !important;
+}
+.alert-error,
+.label-error,
+.label-error[href]:active,
+.label-error[href]:focus,
+.label-error[href]:hover,
+details.alert-error {
+    background: #f3e9e8;
+    border-color: #d3080c;
+    color: #000;
+}
+.alert-error>:first-child:before {
+    color: #d3080c;
+    content: "\e101";
+}
+
+.list-facets a {
+    text-decoration: none;
+}
+
+.list-facets a:visited {
+    color: #295376;
+}

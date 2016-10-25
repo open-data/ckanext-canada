@@ -15,25 +15,25 @@ Features:
 
 Installation:
 
-* Use open-data fork of CKAN, branch canada-v2.1
+* Use `open-data fork of CKAN <https://github.com/open-data/ckan>`_ ,
+  branch canada-v2.5
 
 From a clean database you must run::
 
-    paster canada create-vocabularies
-    ckanapi load organizations -I transitional_orgs.jsonl
+   ckanapi load organizations -I transitional_orgs.jsonl
 
-Once to create the tag vocabularies and organizations this extension requires
+Once to create the organizations this extension requires
 before loading any data.
 
 
-Plugins
--------
+Plugins in this extension
+-------------------------
 
 ``canada_forms``
-  dataset forms for data.gc.ca metadata schema
+  dataset forms for Open Canada metadata schema
 
 ``canada_public``
-  base and public facing data.gc.ca templates (requires
+  base and public facing Open Canada templates (requires
   ``canada_forms`` and ``wet_theme`` from
   `ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_ )
 
@@ -57,19 +57,27 @@ Requirements
    - Plugins
  * - CKAN
    - `open-data/ckan <https://github.com/open-data/ckan>`_
-   - canada-v2.1
-   - * stats
+   - canada-v2.5
+   - N/A
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
-   - master
+   - wet4-scheming
    - * canada_forms
      * canada_internal
      * canada_public
      * canada_package
  * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
-   - master
+   - wet4-scheming
    - * wet_theme
+ * - Scheming extension
+   - `open-data/ckanext-scheming <https://github.com/open-data/ckanext-scheming>`_
+   - master
+   - scheming_datasets
+ * - Fluent extension
+   - `open-data/ckanext-fluent <https://github.com/open-data/ckanext-fluent>`_
+   - master
+   - N/A
  * - ckanapi
    - `ckan/ckanapi <https://github.com/ckan/ckanapi>`_
    - master
@@ -87,51 +95,50 @@ Requirements
 Configuration: development.ini or production.ini
 ------------------------------------------------
 
-The CKAN ini file needs the following plugins for the registry server::
+The CKAN ini file needs the following settings for the registry server::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_internal canada_public canada_package wet_theme datastore recombinant
+   ckan.plugins = googleanalytics canada_forms canada_internal
+        canada_public canada_package wet_boew_theme_gc_intranet datastore recombinant
+        scheming_datasets fluent
+
+   recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
 For the public server use only::
 
-   ckan.plugins = stats googleanalytics canada_forms canada_public canada_package wet_theme
-
-CKAN also needs to be able to find the licenses file for the license list
-to be correctly populated::
-
-   licenses_group_url = http://<ckan instance>/static/licenses.json
-
-Users that don't belong to an Organization should not be allowed to create
-datasets, without this setting the form will be presented but fail during
-validation::
-
-   ckan.auth.create_dataset_if_not_in_organization = false
-
-We aren't using notification emails, so they need to be disabled::
-
-   ckan.activity_streams_email_notifications = false
-
-Additionally, we want to limit the search results page to 10 results per page::
-
-   ckan.datasets_per_page = 10
-
-To integrate Google Analytics::
-
-   googleanalytics.id = UA-1010101-1 (your analytics account id)
-   googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
-
-For the public server, also set the Drupal portal URL::
+   ckan.plugins = googleanalytics canada_forms
+        canada_public canada_package wet_boew_gcweb
+        scheming_datasets fluent
 
    canada.portal_url = http://myserver.com
 
-For the registry server set up recombinant configuration for ATI summaries::
+Both servers need::
 
-   recombinant.tables = ckanext.canada:recombinant_tables.yaml
+   scheming.dataset_schemas =
+       ckanext.canada:schemas/dataset.yaml
+       ckanext.canada:schemas/info.yaml
+
+   scheming.presets = ckanext.scheming:presets.json
+       ckanext.fluent:presets.json
+       ckanext.canada:schemas/presets.yaml
+
+   licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
+
+   ckan.i18n_directory = <path to this extension>/build
+
+   ckan.auth.create_dataset_if_not_in_organization = false
+
+   ckan.activity_streams_email_notifications = false
+
+   ckan.datasets_per_page = 10
+
+   googleanalytics.id = UA-1010101-1 (your analytics account id)
+   googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
 
 
 Configuration: Solr
 ----------------------
 
-This extension uses a custom Solr schema based on the ckan 2.1 schema. You can find the schema in the root directory of the project.
+This extension uses a custom Solr schema based on the ckan 2.5 schema. You can find the schema in the root directory of the project.
 Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using::
@@ -164,12 +171,18 @@ If this value is not defined, then the extension will not attempt to read from t
 The installed Drupal site must have the opendata_package module enabled. In additional, 3 views are used by the
 Drupal. Run the following SQL commands to create the necessary views in the Drupal database::
 
-    create or replace view opendata_package_v as  select to_char(to_timestamp(c.changed::double precision),
-        'YYYY-MM-DD'::text) AS changed, c.name, c.thread, f.comment_body_value, c.language, o.pkg_id FROM comment c
-        JOIN field_data_comment_body f ON c.cid = f.entity_id
-        JOIN opendata_package o ON (c.nid IN ( SELECT n.nid
-        FROM node n
-        WHERE n.nid = o.pkg_node_id and c.status = 1));
+    create or replace view opendata_package_v as  SELECT to_char(to_timestamp(c.created::double precision), 'YYYY-MM-DD'::text) AS changed,
+    c.name,
+    c.thread,
+    f.comment_body_value,
+    c.language,
+    o.pkg_id
+     FROM comment c
+     JOIN field_data_comment_body f ON c.cid = f.entity_id
+     JOIN opendata_package o ON (c.nid IN ( SELECT n.nid
+     FROM node n
+    WHERE n.nid = o.pkg_node_id AND c.status = 1))
+    ORDER BY c.thread;
 
     create view opendata_package_rating_v as select avg(v.value)/25+1 as rating, p.pkg_id from opendata_package p
                  inner join votingapi_vote v on p.pkg_node_id = v.entity_id group by p.pkg_id;

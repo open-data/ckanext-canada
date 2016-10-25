@@ -1,9 +1,11 @@
 dataset_type: contracts
 target_dataset: contracts
 
-title: Proactive Disclosure - Contracts
-notes: This dataset includes all of the reports on contracts issued by or on
-       behalf of your organization.
+title: Proactive Disclosure - Contracts over 10K (Quarterly)
+notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
+
+portal_type: info
+collection: pd
 
 resources:
 - title: Proactive Disclosure - Contracts

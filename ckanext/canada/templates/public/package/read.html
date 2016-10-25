@@ -1,186 +1,314 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
-{% extends "package/read_base.html" %}
+{% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
+{% set wet_server = h.wet_url() %}
 
-{% block subtitle %}{{ cr.field_id('title', pkg, client_lang) }}{% endblock %}
+{% block subtitle %}{% endblock %}
+{% block page_title %}{% endblock %}
 
 {% block primary_content_inner %}
-
+  {% block actions_content %}
+    <ul class="nav nav-pills">
+        {% if h.check_access('package_update', {'id':pkg.id }) %}
+          {% block actions_content_inner %}
+          {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary', icon="pencil" %}
+          {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
+          {{ h.follow_button('dataset', pkg.name) }}
+          {% if pkg.state == "deleted" %}
+            {% if h.check_access('package_update', {'id': pkg.id}) %}
+              {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
+            {% endif %}
+          {% endif %}
+          {% endblock %}
+        {% endif %}
+    </ul>
+  {% endblock %}
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
-      <div class="module-alert">
+      <div class="module-alert alert alert-danger">
         <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
       </div>
       {% endif %}
     </section>
-  
+
+    {% block package_item_title %}
     <section class="module-content indent-large">
-      <h1>{{ cr.field_id('title', pkg, client_lang) or pkg.name }}
+
+      <h1>{{ h.get_translated(pkg, 'title') or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
       </h1>
-      {% if c.pkg_notes_formatted %}
-        <div>
-          {{ cr.field_id('notes', pkg, client_lang) }}
-        </div>
-      {% endif %} 
+      <div>
+        {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+      </div>
+
+      {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
+        <p><a href="/data/{{ h.lang() }}/ramp/ramp?keys={{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>    
+      {% endif %}
 
     </section>
-    <section class="module-content indent-large">
+    {%- endblock -%}
+
+    {# Display some publisher-specific details on this dataset inline with the
+    dataset notes. #}
+    <section>
+      <ul class="list-group dataset-inline-details">
+        {# For legacy reasons, organization titles are not stores the same way as
+        other multilingual fields, so special case it. #}
+        {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
+        {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
+        <li class="list-group-item">
+          <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
+          {{ owner_org_title }}
+        </li>
+        {# Only the list of fields included below will be included #}
+        {% set include_labels = [
+          "org_title_at_publication",
+          "org_section",
+          "contributor",
+          "license",
+        ] %}
+        {% for field in schema.dataset_fields if field.field_name in include_labels %}
+          {% set field_title = h.scheming_language_text(field.label) %}
+          {% if field_title %}
+            {% set field_value = pkg[field.field_name] %}
+            {% if pkg[field.field_name] is mapping %}
+            {% set field_value = h.scheming_language_text(field_value) %}
+            {% endif %}
+            {% if field_value %}
+              {# FIXME: This special case needs to go; Ideally convince client of futility #}
+              {% if field.field_name != 'org_title_at_publication' or field_value != owner_org_title %}
+              <li class="list-group-item">
+                <strong>{{ field_title }}:</strong>
+                {% snippet 'scheming/snippets/display_field.html',
+                  field=field,
+                  data=pkg,
+                  entity_type='dataset',
+                  object_type=pkg.type
+                %}
+              </li>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {# Some core CKAN fields not part of the schema. #}
+        <li class="list-group-item">
+          <strong>{{ _('Licence') }}:</strong>
+          {% if client_lang == 'fr' %}
+            <a href="{{ c.pkg.license.url_fra }}">{{ c.pkg.license.title_fra }}</a>
+          {% else %}
+            <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
+          {% endif %}
+        </li>
+      </ul>
+    </section>
+
+    <section id="dataset-resources" class="module-content indent-large">
       <div class="span-6 margin-top-medium">
-        <div>
-          <h2>{{_('Licence')}}: </h2>
-        </div>
-        <div>
-        {% if client_lang == 'fr' %}
-          <a href="{{ pkg.license_url_fra }}">{{ pkg.license_title_fra }}</a>
-        {% else %}
-          <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
+      {% if pkg.resources %}
+        {% set nonapps = [] %}
+        {% for resource in pkg.resources %}
+          {% if not resource.related_type %}
+            {% do nonapps.append(resource) %}
+          {% endif %}
+        {% endfor %}
+        {% if nonapps %}
+          {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=nonapps %}
         {% endif %}
-        </div>
-        <div class="clear"></div>
+      {% endif %}
       </div>
     </section>
-    
-    <section id="dataset-resources" class="resources module-content indent-large">
 
-      <h2>{{ _('Dataset Resources') }}</h2>
-      {% if pkg.resources %}
-        <div class="span-6">
-          <table class="wet-boew-zebra span-5" title="{{ _('Resources associates with this dataset.')}}">
-            <thead>
-              <tr>
-                <th scope="col">{{ _('Resource Name') }}</th>
-                <th scope="col">{{ _('Format') }}</th>
-                <th scope="col">{{ _('Language') }}</th>
-                <th scope="col">{{ _('Link') }}</th>
-              </tr>
-            </thead>
-          {% for resource in pkg.resources %}
-            {% if resource.format != 'app' %}
-              {% snippet 'package/snippets/resource_item.html',
-                pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-            {% endif %}
-          {% endfor %}
-          </table>
-        </div>
-      {% endif %}
-    </section>
-    
     <section class="indent-large">
 
       {% set apps = [] %}
       {% for resource in pkg.resources %}
-        {% if resource.format == 'app' %}
+        {% if resource.related_type %}
           {% do apps.append(resource) %}
         {% endif %}
       {% endfor %}
 
-      {% if apps|length > 0 %}
-      <h2>{{ _('Related Items') }}</h2>
-        <ul class="list-bullet-none">
-        {% for resource in apps %}
-          {% snippet 'package/snippets/app_item.html',
-              pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-        {% endfor %}
-        </ul>
-      {% endif %}
-
-      <h2>{{ _('Developer Tools') }}</h2>
-        <ul class="list-bullet-none">
-          <li class="margin-bottom-medium">{{ _('The information on this page (the dataset metadata) is also available in JSON format') }}<br/>
-          <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">{{ _('Link to JSON format') }}</a></li>
-        </ul>
-    </section>
-
-    <br>
-
-    {% if pkg.geographic_region or pkg.spatial %}
-    <section class="indent-medium">
-      <h2>{{ _('Geographic Information') }}</h2>
-      {% if pkg.spatial %}
-        {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
-        {% if wkt %}
-          {% snippet 'snippets/geomap.html', gid=cr.field_id('title', pkg, client_lang), wkt=wkt %}
-        {% endif %}
-      {% endif %}
-      {% if pkg.geographic_region %}
-        {% set geo_region = schema_description.dataset_field_by_id['geographic_region'] %}
-        <div class="span-6 margin-top-medium">
-          <div class="span-2 row-start equalize align-bottom ">
-            <h3>{{ cr.field_label(geo_region, client_lang) }}</h3>
-          </div>
-          <div class="span-4 row-end equalize align-bottom ">
-            {{ cr.tag_vocab_field(geo_region, pkg, client_lang) }}
-          </div>
-        </div>
-      {% endif %}
-    </section>
-    {% endif %}
-
-{#
-    <table class="table table-striped table-bordered table-condensed span-6">
-      <thead>
-        <tr>
-          <th scope="col">Field</th>
-          <th scope="col">Value</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for f in schema_description.dataset_fields %}
-        {% if f.id not in ('title', 'name', 'language', 'author_email',
-          'portal_release_date' ) %}
+      {% if apps %}
+      <h4>{{ _('Related Items') }}</h4>
+      <table class="table table-striped resource-list">
+        <thead>
           <tr>
-            <td>
-              <strong>{{ cr.field_label(f, client_lang) }}</strong>:
+            <th class="td-full">{{ _('Title') }}</th>
+            <th nowrap class="td-center">{{ _('Relationship') }}</th>
+            <th nowrap class="td-center">{{ _('Portal Type') }}</th>
+            <th class="td-center">{{ _('Language') }}</th>
+            <th class="td-center">{{ _('Links') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+        {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
+        {% for resource in apps %}
+          <tr>
+            <td class="td-full">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=name_field,
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
             </td>
-            <td>
-            {%- if f.type == 'keywords' -%}
-              {{ cr.keyword_field(f, pkg, client_lang) }}
-
-            {%- elif f.type == 'tag_vocabulary' -%}
-              {{ cr.tag_vocab_field(f, pkg, client_lang) }}
-
-            {%- elif f.type == 'url' -%}
-              {{ cr.url_field(f, pkg) }}
-
-            {%- elif f.type == 'boolean' -%}
-              {{ cr.bool_field(f, pkg) }}
-
-            {%- elif f.id == 'owner_org' -%}
-              {{ cr.org_field(pkg, client_lang) }}
-
-            {%- else -%}
-              {{ cr.field(f, pkg, client_lang) }}
-            {%- endif -%}
+            <td class="td-center">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'related_relationship'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td class="td-center">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'related_type'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td class="td-center">
+              {% snippet 'scheming/snippets/display_field.html',
+                field=h.scheming_field_by_name(schema.resource_fields, 'language'),
+                data=resource,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </td>
+            <td nowrap class="td-center">
+              <a href="{{ resource.url }}" class="btn btn-primary" >{{ _('Access') }}</a>
+              {% if h.check_access('package_update', {'id': pkg.id}) %}
+              {% link_for _('Edit'), controller='package', action='resource_edit', id=pkg.name, resource_id=resource.id, class_='btn btn-default' %}
+              {% endif %}
             </td>
           </tr>
-        {% endif %}
-      {% endfor %}
-        <tr>
-          <td>
-            <strong>{{ _('Openness rating') }}</strong>:
-          </td>
-          <td>
-            {% for star in range(h.openness_score(pkg)) -%}
-              *
-            {%- endfor %}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-#}
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </section>
+
+{% block package_item_apps %}
+  <div class="span-6 margin-top-medium">
+    {% set apps = [] %}
+    {% for resource in pkg.resources %}
+      {% if resource.format == 'app' %}
+        {% do apps.append(resource) %}
+      {% endif %}
+    {% endfor %}
   </div>
 
-{% block drupal_comments %}
-{% include "package/comments.html" %}
-{% endblock drupal_comments %}
-    
+  {% if apps|length > 0 %}
+    <div class="span-6 margin-top-medium">
+      <h4>{{ _('Related Items') }}</h4>
+      <ul class="list-unstyled">
+      {% for resource in apps %}
+        {% snippet 'package/snippets/app_item.html',
+            pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+      {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
 {% endblock %}
+
+{% block related_items %}
+{% endblock related_items %}
+
+{% block package_item_geo_preview %}
+{% if pkg.geographic_region or pkg.spatial %}
+<div class="span-6 margin-top-medium">
+  <h4>{{ _('Geographic Information') }}</h4>
+  {% if pkg.spatial %}
+    {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
+    {% if wkt %}
+      {% if h.get_map_type() == 'static' %}
+        {% snippet 'snippets/geomap_static.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
+      {% else %}
+        {% snippet 'snippets/geomap_dynamic.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if pkg.geographic_region %}
+    {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+    {% set geo_region = h.scheming_field_by_name(schema.dataset_fields,
+      'geographic_region') %}
+    <div class="col-md-4">
+      <h4>{{
+      h.scheming_language_text(geo_region.label) }}: </h4>
+    </div>
+    <div class="col-md-8">
+      {% snippet 'scheming/snippets/display_field.html',
+        field=geo_region, data=pkg, entity_type='dataset', object_type=pkg.type %}
+    </div>
+
+  {% endif %}
+</div>
+{% endif %}
+{% endblock package_item_geo_preview %}
+
+{% block contact_information %}
+  {% set info = h.contact_information(pkg.get('contact_information')) %}
+  {% if info %}
+    <div class="span-6 margin-top-medium">
+      <h4>{{ _('Contact Information') }}</h4>
+      {% if 'delivery_point' in info %}
+        <p>{{ _('Delivery Point') }}: {{ info['delivery_point'] }}</p>
+      {% endif %}
+      {% if 'city' in info %}
+        <p>{{ _('City') }}: {{ info['city'] }}</p>
+      {% endif %}
+      {% if 'administrative_area' in info %}
+        <p>{{ _('Administrative Area') }}: {{ info['administrative_area'] }}</p>
+      {% endif %}
+      {% if 'postal_code' in info %}
+        <p>{{ _('Postal Code') }}: {{ info['postal_code'] }}</p>
+      {% endif %}
+      {% if 'country' in info %}
+        <p>{{ _('Country') }}: {{ info['country'] }}</p>
+      {% endif %}
+      {% if 'electronic_mail_address' in info %}
+        <p>{{ _('Electronic Mail Address') }}:
+        <a href="mailto:{{ info['electronic_mail_address'] }}"
+          >{{ info['electronic_mail_address'] }}</a></p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock contact_information %}
+
+{% block package_comments %}
+{% include "package/comments.html" %}
+{% endblock %}
+
+  </div>
+{% endblock primary_content_inner %}
+
+{% block scripts %}
+{{ super() }}
+<!--[if gte IE 9 | !IE ]><!-->
+<script src="{{ wet_server }}/geomapzoom.js" type="text/javascript"></script>
+<!--<![endif]--><!--[if lt IE 9]>
+<script src="{{ wet_server }}/geomapzoom.js"></script>
+<![endif]-->
+
+<script>
+// Add Google Analytics Event Tracking to resource download links.
+jQuery('a.resource-url-analytics').on('click', function() {
+  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
+  if (resource_url) {
+      _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+    }
+  });
+</script>
+
+{% endblock %}
+
+{% block package_license %}{% endblock %}
+{% block package_item_notes %}{% endblock %}
+
 

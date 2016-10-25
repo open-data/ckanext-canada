@@ -1,8 +1,10 @@
 dataset_type: reclassification
 target_dataset: reclassification
 title: Proactive Disclosure - Position Reclassification
-notes: This dataset includes all of the reports on the reclassification of
-       occupied positions within your organization.
+notes: Access, upload and modify the position reclassification reports for your organization
+
+portal_type: info
+collection: pd
 
 resources:
 - title: Proactive Disclosure - Position Reclassification

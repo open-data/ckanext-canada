@@ -1,0 +1,112 @@
+{% ckan_extends %}
+{% import 'macros/canada_read.html' as cr %}
+
+{% block search_input_label %}
+
+<div class="col-md-12">
+  <section class="alert alert-info" >
+    {% if h.lang() =='fr' %}
+    <p>Au moment où nous nous apprêtons à lancer cette recherche intégrée améliorée du Portail du gouvernement ouvert, il se pourrait que vous remarquiez que le nombre d’enregistrements sur l’information ouverte a été réduit. Veuillez prendre note qu’il vous est possible d’accéder aux publications qui n’y figurent plus en visitant les sites suivants : <a href="http://publications.gc.ca/">Publications du gouvernement du Canada</a> et <a href="http://www.bac-lac.gc.ca/Pages/default.aspx">Bibliothèque et Archives Canada</a>. Si vous avez des commentaires ou des questions, <a href="http://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires">contactez-nous</a>!</p>
+    {% else %}
+    <p>As we launch this enhanced integrated Open Government Portal search, you may notice that there has been a reduction in the number of open information records.  Please note that you can still access the publications that no longer appear here by visiting: <a href="http://publications.gc.ca/">Government of Canada Publications</a> and <a href="http://www.bac-lac.gc.ca/">Library and Archives Canada</a>. If you have any comments or questions <a href="http://open.canada.ca/en/forms/contact-us">contact us</a>!</p>
+    {% endif %}
+  </section>
+</div>
+
+{% if h.show_fgp_facets() %}
+  <div class="row mrgn-bttm-sm mrgn-rght-sm">
+    <div class="col-md-12">
+      <section class="alert alert-info" >
+      <p>{{ _('Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map.')|safe }}</p>
+      </section>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row mrgn-bttm-md mrgn-tp-md">
+  <div class="col-md-12">
+    <h2 class="mrgn-tp-0 mrgn-bttm-0">
+      {# Special case until we launch with all types #}
+      {% if facets.search.collection['items']|length == 1 and
+          facets.search.collection['items'].0.name == 'fgp' %}
+        <label for="search_field" >{{ _('Search Open Maps') }}</label>
+      {% else %}
+        <label for="search_field" >{{ _('Search Datasets') }}</label>
+      {% endif %}
+      <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
+    </h2>
+  </div>
+</div>
+
+<div class="ogscartwrapper mrgn-bttm-md" style="display:none;visibility:hidden;">
+	<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
+	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
+	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe"></span> {{ _('View on Map') }}</a>
+	<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
+</div>
+
+{% endblock %}
+
+{% macro active_filter_button(field, value, extras, alternative_url, preset_choices) %}
+  <a href="{{ h.remove_url_param(field, value, extras=extras, alternative_url=alternative_url) }}"
+     class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
+    {% if field == 'organization' %}
+      {#
+      We special case organization label lookups because unlike the rest of
+      the possible facets these don't have presets and can be edited by users.
+      #}
+      {% set org = h.get_organization(value) %}
+      {%- if org -%}
+        {{ cr.split_bilingual_field(org.title, h.lang()) }}
+      {%- else -%}
+        {{ value }}
+      {%- endif -%}
+    {%- else -%}
+      {{ h.scheming_language_text(
+        h.list_dict_filter(
+          preset_choices,
+          'value',
+          'label',
+          value
+        )) 
+      }}
+    {%- endif %}
+    <span class="glyphicon glyphicon-remove"></span></a>
+  </a>
+{% endmacro %}
+
+
+{% block filter_list %}
+{# assume that facets will have scheming presets names canada_<something>
+   and use those presets to get the labels to display #}
+<div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
+  <ul class="list-inline">
+  {% set alternative_url=h.get_site_url(h.lang()) %}
+  {% for field in c.fields_grouped %}
+    {% if field=='portal_type' %}
+      {% set preset_choices = [
+          {'value': 'dataset', 'label': _('Open Data')},
+          {'value': 'info', 'label': _('Open Information')},
+          {'value': 'pd', 'label': _('Proactive Disclosure')},
+          ] %}
+      {% for t in h.recombinant_get_types() %}
+        {% do preset_choices.append({
+          'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+      {% endfor %}
+    {% else %}
+      {% set preset_choices =
+        (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
+    {% endif %}
+    {% for value in c.fields_grouped[field] %}
+      {% if value is not string %}
+        {% for v in value %}
+        {{ active_filter_button(field, v, extras, alternative_url, preset_choices) }}
+        {% endfor %}
+      {% else %}
+        {{ active_filter_button(field, value, extras, alternative_url, preset_choices) }}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}
