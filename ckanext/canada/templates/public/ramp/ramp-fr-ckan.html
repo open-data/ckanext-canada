@@ -1,116 +1,204 @@
-{% extends "page.html" %}
-{% set ramp_server = 'http://open.canada.ca/rampviewer/' %}
-{% set jsPrefix = 'http://open.canada.ca/rampviewer/' %}
-{% set wetLocation = 'http://open.canada.ca/wet/themes-dist-4.0.14-gcweb/' %}
-{% block breadcrumb_content %}
-<li>{{ _('Geospatial Viewer') }}</li> {% endblock %}
-<!DOCTYPE html>
-<html class="no-js" lang="fr" dir="ltr">
 
+
+<!DOCTYPE html> <!--[if lt IE 9]>
+<html class="no-js lt-ie9" lang="fr" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
+<html class="no-js" lang="fr" dir="ltr"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
-		wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
-    <title>Plateforme de cartographie accessible et réutilisable (PCAR) - Canada.ca Thème - Canada.ca</title>
-    <meta content="width=device-width,initial-scale=1" name="viewport">
-    <!-- Meta data -->
-    <meta name="description" content="La Boîte à outils de l’expérience Web (BOEW) rassemble différents composants réutilisables et prêts-à-utiliser pour la conception et la mise à jour de sites Web innovateurs qui sont à la fois accessibles, conviviaux et interopérables. Tous ces composants réutilisables sont des logiciels libres mis à la disposition des ministères et des collectivités Web externes.">
-    <!-- Meta data-->
-    <link href="{{wetLocation}}assets/favicon.ico" rel="icon" type="image/x-icon">
-    <link rel="stylesheet" href="{{wetLocation}}css/wet-boew.min.css">
-    <link rel="stylesheet" href="{{wetLocation}}css/theme.min.css">
-    <!--[if IE 9]>
-        
-        
-        <![endif]-->
-    <noscript>
-        <link rel="stylesheet" href="{{wetLocation}}css/noscript.min.css" />
-    </noscript>
-    <script>
-    dataLayer1 = [];
-    </script>{% block custom_wet_css %}
+    
+    <title>Portail des données ouvertes - cartes ouvertes</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="description" content=""/>
+
+  
+  <!--[if gte IE 9 | !IE ]><!-->
+  <link href="/wet/themes-dist-4.0.14-gcweb/assets/favicon.ico" rel="icon" type="image/x-icon"/>
+  <link rel="stylesheet" href="/wet/themes-dist-4.0.14-gcweb/css/wet-boew.min.css"/>
+  <!--<![endif]-->
+  <link rel="stylesheet" href="/wet/themes-dist-4.0.14-gcweb/css/theme.min.css"/>
+  <!--[if lt IE 9]>
+  <link href="/wet/themes-dist-4.0.14-gcweb/assets/favicon.ico" rel="shortcut icon"/>
+  <link rel="stylesheet" href="/wet/themes-dist-4.0.14-gcweb/css/ie8-wet-boew.min.css"/>
+  <link rel="stylesheet" href="/wet/themes-dist-4.0.14-gcweb/css/ie8-theme.min.css"/>
+  <script src="/wet/themes-dist-4.0.14-gcweb/jquery-1.11.1.min.js"></script>
+  <script src="/wet/themes-dist-4.0.14-gcweb/js/ie8-wet-boew.min.js"></script><![endif]-->
+  
     <!-- RAMP CSS Start -->
-    <link href="{{ramp_server}}css/lib/lib.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ramp_server}}css/theme.less.min.css" rel="stylesheet" type="text/css">
+    <link href="/rampviewer/css/lib/lib.min.css" rel="stylesheet" type="text/css">
+    <link href="/rampviewer/css/theme.less.min.css" rel="stylesheet" type="text/css">
     <!-- RAMP CSS End -->
     <!-- EsriCSSStart -->
     <!--<link media="screen" href="http://js.arcgis.com/3.10/js/esri/css/esri.css"
               rel="stylesheet" rel="stylesheet">-->
     <link media="screen" href="http://js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css" type="text/css" rel="stylesheet">
     <!-- EsriCSSEnd -->
-    <script></script>{% endblock %}</head>
+    <script></script>
+  
 
-<body vocab="http://schema.org/" typeof="WebPage">
-    <ul id="wb-tphp">
-        <li class="wb-slc"><a class="wb-sl" href="#wb-cont">Passer au contenu principal</a></li>
-        <li class="wb-slc visible-sm visible-md visible-lg"><a class="wb-sl" href="#wb-info">Passer à «&#160;À propos de ce site&#160;»</a></li>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'None']);
+  _gaq.push(['_setDomainName', 'auto']);
+  _gaq.push(['_gat._anonymizeIp']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/wet/themes-dist-4.0.14-gcweb/css/noscript.min.css"/>
+  </noscript>
+  <script>dataLayer1 = [];</script>
+  </head>
+  <body vocab="http://schema.org/" typeof="WebPage">
+    <!-- Google Tag Manager -->
+    <noscript><iframe title="Google Tag Manager" src="//www.googletagmanager.com/ns.html?id=GTM-TLGQ9K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer1'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer1','GTM-TLGQ9K');</script>
+    <!-- End Google Tag Manager -->
+    
+
+  
+  
+<!-- Snippet snippets/skip.html start -->
+<ul id="wb-tphp">
+  <li class="wb-slc"><a class="wb-sl" href="#wb-cont">Passer au contenu principal</a></li>
+  <li class="wb-slc visible-md visible-lg"><a class="wb-sl" href="#wb-info">Passer aux informations sur le site</a></li>
+</ul>
+<!-- Snippet snippets/skip.html end -->
+
+  
+
+  
+
+
+  <header role="banner">
+    
+<div id="wb-bnr" class="container">
+
+
+  <section class="visible-md visible-lg text-right" id="wb-lng">
+  
+    <h2 class="wb-inv">Sélection de la langue</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline margin-bottom-none">
+          <li><a lang="en" href="/data/en/ramp/ramp-fr-ckan.html?keys=f6d91e82-c783-4a63-8235-7bf53b16b706">English</a></li>
+        </ul>
+      </div>
+    </div>
+  
+  </section>
+<div class="row">
+  <div class="brand col-xs-8 col-sm-9 col-md-6">
+    
+    <a href="http://www.canada.ca/fr/index.html">
+      <object type="image/svg+xml" tabindex="-1" role="img" data="/wet/themes-dist-4.0.14-gcweb/assets/sig-blk-fr.svg"
+              aria-label="Gouvernement du Canada"></object>
+    </a>
+    
+  </div>
+  <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
+    <h2>Recherche et menus</h2>
+    <ul class="list-inline text-right chvrn">
+      <li><a href="#mb-pnl" title="Search and menus" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span
+          class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Recherche et menus</span></span></span></a>
+      </li>
     </ul>
-    <header role="banner">
-        <div id="wb-bnr" class="container">
-            <section id="wb-lng" class="visible-md visible-lg text-right">
-                <h2 class="wb-inv">Sélection de la langue</h2>
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="list-inline margin-bottom-none">
-                            <li><a lang="en" href="ramp-en.html">English</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <div class="row">
-                <div class="brand col-xs-8 col-sm-9 col-md-6">
-                    <a href="http://www.canada.ca/fr/index.html">
-                        <object type="image/svg+xml" tabindex="-1" data="{{wetLocation}}assets/sig-blk-fr.svg"></object><span class="wb-inv">Gouvernement du Canada</span></a>
-                </div>
-                <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
-                    <h2>Recherche et menus</h2>
-                    <ul class="list-inline text-right chvrn">
-                        <li><a href="#mb-pnl" title="Recherche et menus" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">Recherche et menus</span></span></span></a></li>
-                    </ul>
-                    <div id="mb-pnl"></div>
-                </section>
-            </div>
+    <div id="mb-pnl"></div>
+  </section>
+</div>
+
+</div>
+
+
+
+<nav role="navigation" id="wb-sm" data-ajax-fetch="http://cdn.canada.ca/gcweb-cdn-live/sitemenu/sitemenu-fr.html" data-trgt="mb-pnl"
+     class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement">
+  <h2 class="wb-inv">Menu des sujets</h2>
+  <div class="container visible-md visible-lg nvbar">
+    <div class="row">
+      <ul class="list-inline menu">
+        <li><a href="http://www.edsc.gc.ca/fr/emplois/index.page">Emplois</a></li>
+        <li><a href="http://www.cic.gc.ca/francais/index.asp">Immigration</a></li>
+        <li><a href="http://voyage.gc.ca">Voyage</a></li>
+        <li><a href="http://www.canada.ca/fr/services/entreprises/index.html">Entreprises</a></li>
+        <li><a href="http://www.canada.ca/fr/services/prestations/index.html">Prestations</a></li>
+        <li><a href="http://canadiensensante.gc.ca/index-fra.php">Santé</a></li>
+        <li><a href="http://www.canada.ca/fr/services/impots/index.html">Impôts</a></li>
+        <li><a href="http://www.canada.ca/fr/services/index.html">Autres services</a></li>
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+
+  
+
+
+ 
+    <nav role="navigation" id="wb-bc" property="breadcrumb"><h2>Vous êtes ici:</h2>
+
+      <div class="container">
+        <div class="row">
+          <ol class="breadcrumb">
+            
+<!-- Snippet snippets/home_breadcrumb_item.html start -->
+
+
+<li><a href="http://canada.gc.ca/fr">Accueil</a></li>
+<li><a href="/fr">Gouvernement ouvert</a></li>
+<li><a href="/fr/donnees-ouvertes">Données ouvertes</a></li>
+
+<!-- Snippet snippets/home_breadcrumb_item.html end -->
+
+            
+<!-- 4 -->
+<li><a href="http://ouvert.canada.ca/maps/fr/dataset?q=">Recherche de cartes ouvertes</a></li>
+<li>Visualisateur géospatial</li>
+
+          </ol>
         </div>
-        <nav role="navigation" id="wb-sm" class="wb-menu visible-md visible-lg" data-trgt="mb-pnl" data-ajax-fetch="ajax/sitemenu-fr.html" typeof="SiteNavigationElement">
-            <h2 class="wb-inv">Menu des sujets</h2>
-            <div class="container visible-md visible-lg nvbar">
-                <div class="row">
-                    <ul class="list-inline menu">
-                        <li><a href="http://www.canada.ca/fr/services/emplois/index.html">Emplois</a></li>
-                        <li><a href="http://www.cic.gc.ca/francais/index.asp">Immigration</a></li>
-                        <li><a href="http://voyage.gc.ca/">Voyage</a></li>
-                        <li><a href="http://www.canada.ca/fr/services/entreprises/index.html">Entreprises</a></li>
-                        <li><a href="http://www.canada.ca/fr/services/prestations/index.html">Prestations</a></li>
-                        <li><a href="http://canadiensensante.gc.ca/index-fra.php">Santé</a></li>
-                        <li><a href="http://www.canada.ca/fr/services/impots/index.html">Impôts</a></li>
-                        <li><a href="http://www.canada.ca/fr/services/index.html">Autres services</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <nav role="navigation" id="wb-bc" class="" property="breadcrumb">
-            <h2 class="wb-inv">Vous êtes ici :</h2>
-            <div class="container">
-                <div class="row">
-                    <ol class="breadcrumb">
-                        <li><a href="http://www.canada.ca/en/index.html">Home</a></li>
-                        <li>Plateforme de cartographie accessible et réutilisable (PCAR) - Canada.ca Thème</li>
-                    </ol>
-                </div>
-            </div>
-        </nav>
-    </header>{% block content %}
+      </div>
+    </nav>
+     
+
+
+  
+    
+    <div class="container">
+    <div class="row">
+      <div data-ajax-replace="/static/_site_messaging/header_od_ckan.fr"></div>
+    </div>
+    </div>
+
+  
+  </header>
+
+  
+
+  
+
+  
     <main role="main" property="mainContentOfPage" class="container">
         <h1 id="wb-cont" class="wb-invisible" property="name">Plateforme de cartographie accessible et réutilisable - Canada.ca Thème</h1>
         <section class="height-100 viewport small">
             <!--<h2 id="ramp-title" class="wb-invisible">
         Plateforme de cartographie accessible et réutilisable (PCAR)
     </h2>-->
+<div class="row"><section class="alert alert-info margin-bottom-none"><p>Le lecteur géospatial éprouve des problèmes techniques intermittents. Veuillez recharger la page si vous éprouvez des difficultés. Nous tentons toujours de trouver une solution à ce problème.</p></section></div>
             <section id="map-div" class="height-100 margin-bottom-none">
                 <!--<div class="margin-bottom-medium margin-top-medium margin-right-medium text-right">-->
                 <ul id="map-toolbar" class="text-right">
                     <li id="basemapControls" class="pull-left map-toolbar-item" style="display: inline">
-                        <button class="btn btn-xs map-toolbar-item-button button-none" id="baseMapToggle"><span>Topographic</span><span class="separator"><i class="fa fa-angle-down"></i></span></button>
+                        <button class="btn btn-xs map-toolbar-item-button button-none" id="baseMapToggle"><span>Topographique</span><span class="separator"><i class="fa fa-angle-down"></i></span></button>
                         <div id="basemapGallery"></div>
                     </li>
                     <li class="map-toolbar-item">
@@ -150,6 +238,9 @@
                     <li class="map-toolbar-item wb-invisible">
                         <button class="btn btn-xs map-toolbar-item-button button-none" id="advanced-toggle"><i class="fa fa-cog"></i><span class="on-right">Outils</span></button>
                         <div id="advanced-toolbar"></div>
+                    </li>
+                    <li class="map-toolbar-item">
+                        <button class="btn btn-xs map-toolbar-item-button button-none" id="gotocart"><i class="fa fa-shopping-cart fa-1x"></i><span class="on-right">panier de cartes</span></button>
                     </li>
                     <li class="map-toolbar-item">
                         <button class="btn btn-xs map-toolbar-item-button button-none" id="fullScreenToggle"><i class="fa fa-arrows-alt"></i><span class="on-right">Plein écran</span></button>
@@ -228,7 +319,7 @@
                                                         <p>Les contrôles de navigation servent à modifier la taille de l’affichage de la carte; la grille de données sera actualisée et ajustée selon le contenu visible dans l’affichage en cours.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_navigation_toolbar.png" title="Contrôles de navigation sur la carte"><img src="{{ramp_server}}./assets/images/help/fr/help_navigation_toolbar.png" alt="Contrôles de navigation sur la carte" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_navigation_toolbar.png" title="Contrôles de navigation sur la carte"><img src="/rampviewer/./assets/images/help/fr/help_navigation_toolbar.png" alt="Contrôles de navigation sur la carte" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Contrôles de navigation sur la carte</p>
                                                             </figcaption>
@@ -252,7 +343,7 @@
                                                         <p>Utilisez le sélecteur de fond de carte pour remplacer le fond de carte et afficher divers contextes géographiques.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_basemaps.png" title="Fenêtre de sélection de fond de carte"><img src="{{ramp_server}}./assets/images/help/fr/help_basemaps.png" alt="Fenêtre de sélection de fond de carte" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_basemaps.png" title="Fenêtre de sélection de fond de carte"><img src="/rampviewer/./assets/images/help/fr/help_basemaps.png" alt="Fenêtre de sélection de fond de carte" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Fenêtre de sélection de fond de carte</p>
                                                             </figcaption>
@@ -271,7 +362,7 @@
                                                         <p>L’option « Obtenir le lien » est utilisée pour générer une URL partageable de l’état actuel de la carte avec les ensembles de données sélectionnés.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_getlink.png" title="Fenêtre « Obtenir le lien »"><img src="{{ramp_server}}./assets/images/help/fr/help_getlink.png" alt="Fenêtre « Obtenir le lien »" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_getlink.png" title="Fenêtre « Obtenir le lien »"><img src="/rampviewer/./assets/images/help/fr/help_getlink.png" alt="Fenêtre « Obtenir le lien »" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Fenêtre « Obtenir le lien »</p>
                                                             </figcaption>
@@ -309,7 +400,7 @@
                                                         <!-- Layer Types -->
                                                         <h4>Types de couche</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_datasets.png" title="Ensembles de données"><img src="{{ramp_server}}./assets/images/help/fr/help_datasets.png" alt="Ensembles de données" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_datasets.png" title="Ensembles de données"><img src="/rampviewer/./assets/images/help/fr/help_datasets.png" alt="Ensembles de données" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Ensembles de données</p>
                                                             </figcaption>
@@ -326,7 +417,7 @@
                                                         <!-- WMS Query Toggle -->
                                                         <h4>Activer ou désactiver les requêtes du Service de cartes Web (SCW)</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_wms_query.png" title="Activer ou désactiver les requêtes du SCW"><img src="{{ramp_server}}./assets/images/help/fr/layer_wms_query.png" alt="Activer ou désactiver les requêtes du SCW" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_wms_query.png" title="Activer ou désactiver les requêtes du SCW"><img src="/rampviewer/./assets/images/help/fr/layer_wms_query.png" alt="Activer ou désactiver les requêtes du SCW" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Activer ou désactiver les requêtes du SCW</p>
                                                             </figcaption>
@@ -336,7 +427,7 @@
                                                         <!-- Layer Legends -->
                                                         <h4>Légende des couches</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_legends.png" title="Légendes"><img src="{{ramp_server}}./assets/images/help/fr/layer_legends.png" alt="Légendes" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_legends.png" title="Légendes"><img src="/rampviewer/./assets/images/help/fr/layer_legends.png" alt="Légendes" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Légendes</p>
                                                             </figcaption>
@@ -346,7 +437,7 @@
                                                         <!-- Handling Layer Errors -->
                                                         <h4>Traitement des erreurs de couche</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_errors.png" title="Erreurs de couche"><img src="{{ramp_server}}./assets/images/help/fr/layer_errors.png" alt="Erreurs de couche" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_errors.png" title="Erreurs de couche"><img src="/rampviewer/./assets/images/help/fr/layer_errors.png" alt="Erreurs de couche" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Erreurs de couche</p>
                                                             </figcaption>
@@ -356,7 +447,7 @@
                                                         <!-- Layer Reordering -->
                                                         <h4>Changement de l’ordre des couches</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_datasets_reordering.png" title="Changement de l’ordre des couches"><img src="{{ramp_server}}./assets/images/help/fr/help_datasets_reordering.png" alt="Changement de l’ordre des couches" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_datasets_reordering.png" title="Changement de l’ordre des couches"><img src="/rampviewer/./assets/images/help/fr/help_datasets_reordering.png" alt="Changement de l’ordre des couches" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Changement de l’ordre des couches</p>
                                                             </figcaption>
@@ -364,7 +455,7 @@
                                                         <p>Cliquez et faites glisser les six points à gauche de l’ensemble de données vers le haut ou vers le bas pour changer l’ordre d’affichage des couches sur la carte.</p>
                                                         <div class="clearfix"></div>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_grouping.png" title="Limites du groupe de couche"><img src="{{ramp_server}}./assets/images/help/fr/layer_grouping.png" alt="Limites du groupe de couche" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_grouping.png" title="Limites du groupe de couche"><img src="/rampviewer/./assets/images/help/fr/layer_grouping.png" alt="Limites du groupe de couche" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Limites du groupe de couche</p>
                                                             </figcaption>
@@ -377,21 +468,21 @@
                                                         <!-- Layer Settings -->
                                                         <h4>Paramètres de la couche</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_settings.png" title="Paramètres des couches"><img src="{{ramp_server}}./assets/images/help/fr/layer_settings.png" alt="Paramètres des couches" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_settings.png" title="Paramètres des couches"><img src="/rampviewer/./assets/images/help/fr/layer_settings.png" alt="Paramètres des couches" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Paramètres des couches</p>
                                                             </figcaption>
                                                         </figure>
-                                                        <p>Cliquez sur le lien « Settings » (Paramètres) pour avoir accès aux options supplémentaires pour la couche.</p>
+                                                        <p>Cliquez sur le lien « Settings » (Paramètres) pour avoir accès aux options supplémentaires pour la couche.</p>
                                                         <ul>
                                                             <li>La transparence de la couche peut être ajustée au moyen de la commande de réglage</li>
                                                             <li>Si la couche a un cadre englobant, sa visibilité peut être activée et désactivée au moyen de la case à cocher.</li>
-                                                            <li>Si la couche est une couche de composants et qu’elle est en mode sur demande, l’option « Load All Features » (Charger tous les composants) est disponible. Le mode sur demande signifie que la couche sera téléchargée en partie en fonction des besoins. Cliquer sur « Load All Features » fera charger toutes les données de couches dans le navigateur en même temps, offrant de meilleurs temps de réponse une fois le téléchargement terminé. Cela s’appelle le mode instantané. Tenter cela avec de très grands ensembles de données peut geler le site ou faire planter la couche. Une couche en mode instantané aura le lien « Load All Features » désactivé et un crochet à côté du lien.</li>
+                                                            <li>Si la couche est une couche de composants et qu’elle est en mode sur demande, l’option « Load All Features » (Charger tous les composants) est disponible. Le mode sur demande signifie que la couche sera téléchargée en partie en fonction des besoins. Cliquer sur « Load All Features » fera charger toutes les données de couches dans le navigateur en même temps, offrant de meilleurs temps de réponse une fois le téléchargement terminé. Cela s’appelle le mode instantané. Tenter cela avec de très grands ensembles de données peut geler le site ou faire planter la couche. Une couche en mode instantané aura le lien « Load All Features » désactivé et un crochet à côté du lien.</li>
                                                         </ul>
                                                         <!-- Zoom Scale Dependent Layers -->
                                                         <h4>Couches dépendantes de l’échelle de zoom</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/layer_zoom_scale.png" title="Couches dépendantes de l’échelle de zoom"><img src="{{ramp_server}}./assets/images/help/fr/layer_zoom_scale.png" alt="Couches dépendantes de l’échelle de zoom" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/layer_zoom_scale.png" title="Couches dépendantes de l’échelle de zoom"><img src="/rampviewer/./assets/images/help/fr/layer_zoom_scale.png" alt="Couches dépendantes de l’échelle de zoom" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Couches dépendantes de l’échelle de zoom</p>
                                                             </figcaption>
@@ -407,21 +498,21 @@
                                                 <summary class="h5 mrgn-tp-0 mrgn-bttm-md">Ensembles de données ajoutées par l’utilisateur.</summary>
                                                 <div>
                                                     <div class="helpSectionBody">
-                                                        <p>Des ensembles de données supplémentaires peuvent être ajoutés au visualisateur de cartes (map viewer). Les formats pris en charge sont : couche de fonctionnalité (Feature Layer) ESRI, WMS, GeoJSON, Shapefile (fichier de forme) et fichier CSV. Le bouton « + » au coin supérieur gauche du sélecteur de couche (Layer Selector) lancera l’assistant « Ajouter ensemble de données » (Add Dataset).</p>
+                                                        <p>Des ensembles de données supplémentaires peuvent être ajoutés au visualisateur de cartes (map viewer). Les formats pris en charge sont : couche de fonctionnalité (Feature Layer) ESRI, WMS, GeoJSON, Shapefile (fichier de forme) et fichier CSV. Le bouton « + » au coin supérieur gauche du sélecteur de couche (Layer Selector) lancera l’assistant « Ajouter ensemble de données » (Add Dataset).</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <h4>Types de couche</h4>
-                                                        <p>Sélectionner le type de données sources à ajouter : « Service » (Service) pour ajouter un service de carte Web; « Fichier » (File) pour télécharger un fichier GeoJSON, CSV ou Shapefile.</p>
+                                                        <p>Sélectionner le type de données sources à ajouter : « Service » (Service) pour ajouter un service de carte Web; « Fichier » (File) pour télécharger un fichier GeoJSON, CSV ou Shapefile.</p>
                                                         <h4>Préciser l’emplacement de l’ensemble de données.</h4>
-                                                        <p>Saisir l’emplacement du service URL ou du fichier de l’ensemble de données. Si l’ensemble de données est un fichier du système de dossiers, sélectionner le bouton « Fichier » (File) et naviguer jusqu’à l’emplacement.</p>
+                                                        <p>Saisir l’emplacement du service URL ou du fichier de l’ensemble de données. Si l’ensemble de données est un fichier du système de dossiers, sélectionner le bouton « Fichier » (File) et naviguer jusqu’à l’emplacement.</p>
                                                         <p>Une adresse URL peut être tapée ou collée dans la case.</p>
                                                         <p>RAMP prédira le type d’ensemble de données; si elles sont incorrectes, cliquer sur le bouton qui précise le type exact.</p>
-                                                        <p>Cliquer sur le bouton « Connecter » (Connect) ou « Charger » (Load) pour amorcer le chargement de l’ensemble de données.</p>
+                                                        <p>Cliquer sur le bouton « Connecter » (Connect) ou « Charger » (Load) pour amorcer le chargement de l’ensemble de données.</p>
                                                         <h4>Préciser les caractéristiques de l’ensemble de données.</h4>
                                                         <p>Selon le type d’ensemble de données chargé, divers paramètres peuvent être établis à cette étape-ci.</p>
-                                                        <p>Un service de fonctionnalité (Feature Service) permet de choisir un attribut primaire, qui détermine l’attribut servant à déterminer une caractéristique dans la grille de données et des conseils sur la cartographie. Tous les autres renseignements proviennent des métadonnées du service.</p>
+                                                        <p>Un service de fonctionnalité (Feature Service) permet de choisir un attribut primaire, qui détermine l’attribut servant à déterminer une caractéristique dans la grille de données et des conseils sur la cartographie. Tous les autres renseignements proviennent des métadonnées du service.</p>
                                                         <p>Un service WMS permet de choisir le nom de la couche, ce qui détermine la couche du WMS qui servira de source de l’ensemble de données. Tous les autres renseignements proviennent des métadonnées du service.</p>
-                                                        <p>Les ensembles de données axés sur les fichiers permettent de choisir ce qui suit : le nom de l’ensemble de données, qui sera affiché dans le sélecteur de couche (Layer Selector); un attribut primaire (Primary Attribute), qui agit de la même manière que le service de fonctionnalité (Feature Service); une couleur de symbole (Symbol colour), qui détermine la couleur des points, des lignes, des polygones sur la carte.</p>
-                                                        <p>En cliquant sur le bouton « Ajouter ensemble de données » (Add Dataset), on peut insérer la couche dans la carte.</p>
+                                                        <p>Les ensembles de données axés sur les fichiers permettent de choisir ce qui suit : le nom de l’ensemble de données, qui sera affiché dans le sélecteur de couche (Layer Selector); un attribut primaire (Primary Attribute), qui agit de la même manière que le service de fonctionnalité (Feature Service); une couleur de symbole (Symbol colour), qui détermine la couleur des points, des lignes, des polygones sur la carte.</p>
+                                                        <p>En cliquant sur le bouton « Ajouter ensemble de données » (Add Dataset), on peut insérer la couche dans la carte.</p>
                                                         <div class="clearfix"></div>
                                                     </div>
                                                 </div>
@@ -436,7 +527,7 @@
                                                         <p>La grille synthèse affiche les renseignements de base sur tous les éléments visibles dans l’affichage de la carte en cours.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/screenshot.jpg" title="Grille synthèse"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/screenshot.jpg" alt="Grille synthèse" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/screenshot.jpg" title="Grille synthèse"><img src="/rampviewer/./assets/images/help/fr/summary_grid/screenshot.jpg" alt="Grille synthèse" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Grille synthèse</p>
                                                             </figcaption>
@@ -444,7 +535,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Trier</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/sort_button.jpg" title="Bouton « Trier »"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/sort_button.jpg" alt="Bouton « Trier »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/sort_button.jpg" title="Bouton « Trier »"><img src="/rampviewer/./assets/images/help/fr/summary_grid/sort_button.jpg" alt="Bouton « Trier »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Trier »</p>
                                                             </figcaption>
@@ -453,7 +544,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Détails</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/details_button.jpg" title="Bouton « Détails »"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/details_button.jpg" alt="Bouton « Détails »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/details_button.jpg" title="Bouton « Détails »"><img src="/rampviewer/./assets/images/help/fr/summary_grid/details_button.jpg" alt="Bouton « Détails »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Détails »</p>
                                                             </figcaption>
@@ -462,7 +553,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Zoom vers</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/zoomto_button.jpg" title="Bouton « Zoom vers »"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/zoomto_button.jpg" alt="Bouton « Zoom vers »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/zoomto_button.jpg" title="Bouton « Zoom vers »"><img src="/rampviewer/./assets/images/help/fr/summary_grid/zoomto_button.jpg" alt="Bouton « Zoom vers »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Zoom vers »</p>
                                                             </figcaption>
@@ -471,7 +562,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Zoom arrière</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/zoomback_button.jpg" title="Bouton « Zoom arrière »"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/zoomback_button.jpg" alt="Bouton « Zoom arrière »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/zoomback_button.jpg" title="Bouton « Zoom arrière »"><img src="/rampviewer/./assets/images/help/fr/summary_grid/zoomback_button.jpg" alt="Bouton « Zoom arrière »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Zoom arrière »</p>
                                                             </figcaption>
@@ -480,7 +571,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Pagination</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/summary_grid/pagination.jpg" title="Contrôle de pagination"><img src="{{ramp_server}}./assets/images/help/fr/summary_grid/pagination.jpg" alt="Contrôle de pagination" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/summary_grid/pagination.jpg" title="Contrôle de pagination"><img src="/rampviewer/./assets/images/help/fr/summary_grid/pagination.jpg" alt="Contrôle de pagination" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Contrôle de pagination</p>
                                                             </figcaption>
@@ -501,7 +592,7 @@
                                                         <p>La grille étendue présente les renseignements détaillés de tous les éléments interactifs qui apparaissent dans l’étendue de la carte courante.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/extended_grid/screenshot_1.jpg" title="Grille étendue"><img src="{{ramp_server}}./assets/images/help/fr/extended_grid/screenshot_1.jpg" alt="Grille étendue" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/extended_grid/screenshot_1.jpg" title="Grille étendue"><img src="/rampviewer/./assets/images/help/fr/extended_grid/screenshot_1.jpg" alt="Grille étendue" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Grille étendue</p>
                                                             </figcaption>
@@ -509,7 +600,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Bouton « Données complètes »</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/extended_grid_button.jpg" title="Bouton « Grille étendue »"><img src="{{ramp_server}}./assets/images/help/fr/extended_grid_button.jpg" alt="Bouton « Grille étendue »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/extended_grid_button.jpg" title="Bouton « Grille étendue »"><img src="/rampviewer/./assets/images/help/fr/extended_grid_button.jpg" alt="Bouton « Grille étendue »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Grille étendue »</p>
                                                             </figcaption>
@@ -518,7 +609,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Bouton « Résumé des données »</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/data_summary_button.jpg" title="Bouton « Résumé des données »"><img src="{{ramp_server}}./assets/images/help/fr/data_summary_button.jpg" alt="Bouton « Résumé des données »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/data_summary_button.jpg" title="Bouton « Résumé des données »"><img src="/rampviewer/./assets/images/help/fr/data_summary_button.jpg" alt="Bouton « Résumé des données »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Résumé des données »</p>
                                                             </figcaption>
@@ -527,7 +618,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Trier</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/extended_grid/sorting.jpg" title="Contrôle de pagination"><img src="{{ramp_server}}./assets/images/help/fr/extended_grid/sorting.jpg" alt="Contrôle de pagination" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/extended_grid/sorting.jpg" title="Contrôle de pagination"><img src="/rampviewer/./assets/images/help/fr/extended_grid/sorting.jpg" alt="Contrôle de pagination" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Contrôle de pagination</p>
                                                             </figcaption>
@@ -536,7 +627,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Détails</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/extended_grid/details_button.jpg" title="Bouton « Détails »"><img src="{{ramp_server}}./assets/images/help/fr/extended_grid/details_button.jpg" alt="Bouton « Détails »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/extended_grid/details_button.jpg" title="Bouton « Détails »"><img src="/rampviewer/./assets/images/help/fr/extended_grid/details_button.jpg" alt="Bouton « Détails »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Détails »</p>
                                                             </figcaption>
@@ -545,7 +636,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Pagination</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/extended_grid/pagination.jpg" title="Contrôles de pagination"><img src="{{ramp_server}}./assets/images/help/fr/extended_grid/pagination.jpg" alt="Contrôles de pagination" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/extended_grid/pagination.jpg" title="Contrôles de pagination"><img src="/rampviewer/./assets/images/help/fr/extended_grid/pagination.jpg" alt="Contrôles de pagination" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Contrôles de pagination</p>
                                                             </figcaption>
@@ -566,7 +657,7 @@
                                                         <p>Le panneau d’information affiche les données associées à l’élément interactif sélectionné.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_infopanel.png" title="Panneau d’information"><img src="{{ramp_server}}./assets/images/help/fr/help_infopanel.png" alt="Panneau d’information" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_infopanel.png" title="Panneau d’information"><img src="/rampviewer/./assets/images/help/fr/help_infopanel.png" alt="Panneau d’information" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Panneau d’information</p>
                                                             </figcaption>
@@ -582,24 +673,24 @@
                                                 <summary class="h5 mrgn-tp-0 mrgn-bttm-md">Exporter la carte</summary>
                                                 <div>
                                                     <div class="helpSectionBody">
-                                                        <p>« Map Export » est utilisé pour convertir le contenu de la carte en une image qui peut être téléchargée par l’utilisateur.</p>
+                                                        <p>« Map Export » est utilisé pour convertir le contenu de la carte en une image qui peut être téléchargée par l’utilisateur.</p>
                                                         <h3 class="h5">Utilisation</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_map_export.png" title="Le bouton de la barre d’outils"><img src="{{ramp_server}}./assets/images/help/fr/help_map_export.png" alt="Le bouton de la barre d’outils" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_map_export.png" title="Le bouton de la barre d’outils"><img src="/rampviewer/./assets/images/help/fr/help_map_export.png" alt="Le bouton de la barre d’outils" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Le bouton de la barre d’outils</p>
                                                             </figcaption>
                                                         </figure>
-                                                        <p>Cliquez sur le bouton « Map Export » (Exporter la carte) dans la barre d’outils pour amorcer la génération de l’image. La fenêtre « Map Export » s’ouvrira. Un message de chargement s’affichera et l’aperçu de l’image s’affichera une fois qu’il sera généré. Cliquez sur le bouton « Download Image » (Télécharger l’image) pour enregistrer l’image. Cliquez sur le X pour fermer la fenêtre « Map Export ».</p>
+                                                        <p>Cliquez sur le bouton « Map Export » (Exporter la carte) dans la barre d’outils pour amorcer la génération de l’image. La fenêtre « Map Export » s’ouvrira. Un message de chargement s’affichera et l’aperçu de l’image s’affichera une fois qu’il sera généré. Cliquez sur le bouton « Download Image » (Télécharger l’image) pour enregistrer l’image. Cliquez sur le X pour fermer la fenêtre « Map Export ».</p>
                                                         <div class="clearfix"></div>
                                                         <h3 class="h5">Restrictions</h3>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/help_map_export_download.png" title="Bouton « Download Image » (Télécharger l’image)"><img src="{{ramp_server}}./assets/images/help/fr/help_map_export_download.png" alt="Bouton « Download Image » (Télécharger l’image)" class="image-actual"></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/help_map_export_download.png" title="Bouton « Download Image » (Télécharger l’image)"><img src="/rampviewer/./assets/images/help/fr/help_map_export_download.png" alt="Bouton « Download Image » (Télécharger l’image)" class="image-actual"></a>
                                                             <figcaption class="caption text-right">
-                                                                <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Download Image » (Télécharger l’image)</p>
+                                                                <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Download Image » (Télécharger l’image)</p>
                                                             </figcaption>
                                                         </figure>
-                                                        <p>Pour l’instant, « Map Export » ne capturera que les couches hébergées sur un service Internet public. Les couches hébergées sur un service privé (p. ex. sur un intranet) ou ajoutées depuis des sources en fichiers n’apparaîtront pas dans le fichier d’image subséquent. Les images ne sont disponibles qu’en format PNG pour l’instant.</p>
+                                                        <p>Pour l’instant, « Map Export » ne capturera que les couches hébergées sur un service Internet public. Les couches hébergées sur un service privé (p. ex. sur un intranet) ou ajoutées depuis des sources en fichiers n’apparaîtront pas dans le fichier d’image subséquent. Les images ne sont disponibles qu’en format PNG pour l’instant.</p>
                                                     </div>
                                                 </div>
                                             </details>
@@ -633,7 +724,7 @@
                                                         <h3 class="h5">Utilisation</h3>
                                                         <h4>Ouvrir la barre d’outils</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/advanced_toolbar_button.jpg" title="Bouton « Barre d’outils »"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/advanced_toolbar_button.jpg" alt="Bouton « Barre d’outils »" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/advanced_toolbar_button.jpg" title="Bouton « Barre d’outils »"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/advanced_toolbar_button.jpg" alt="Bouton « Barre d’outils »" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Bouton « Barre d’outils »</p>
                                                             </figcaption>
@@ -642,7 +733,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Activation de la barre d’outils</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/advanced_toolbar.jpg" title="Barre d’outils avancée"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/advanced_toolbar.jpg" alt="Barre d’outils avancée" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/advanced_toolbar.jpg" title="Barre d’outils avancée"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/advanced_toolbar.jpg" alt="Barre d’outils avancée" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Barre d’outils avancée</p>
                                                             </figcaption>
@@ -651,7 +742,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Outil de population</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/population_tool.jpg" title="Polygone de population et résultats"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/population_tool.jpg" alt="Polygone de population et résultats" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/population_tool.jpg" title="Polygone de population et résultats"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/population_tool.jpg" alt="Polygone de population et résultats" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Polygone de population et résultats</p>
                                                             </figcaption>
@@ -660,7 +751,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Outil de délimitation</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/buffer_tool.jpg" title="Saisie de la délimitation et résultats"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/buffer_tool.jpg" alt="Saisie de la délimitation et résultats" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/buffer_tool.jpg" title="Saisie de la délimitation et résultats"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/buffer_tool.jpg" alt="Saisie de la délimitation et résultats" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Saisie de la délimitation et résultats</p>
                                                             </figcaption>
@@ -669,7 +760,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Outil de zone</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/measure_tool.jpg" title="Polygone de la zone et résultats"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/measure_tool.jpg" alt="Polygone de la zone et résultats" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/measure_tool.jpg" title="Polygone de la zone et résultats"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/measure_tool.jpg" alt="Polygone de la zone et résultats" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Polygone de la zone et résultats</p>
                                                             </figcaption>
@@ -678,7 +769,7 @@
                                                         <div class="clearfix"></div>
                                                         <h4>Outil de distance</h4>
                                                         <figure class="thumbnail col-md-4 pull-right">
-                                                            <a class="wb-lbx" href="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/distance_tool.jpg" title="Ligne de distance et résultats"><img src="{{ramp_server}}./assets/images/help/fr/advanced_toolbar/distance_tool.jpg" alt="Ligne de distance et résultats" class=""></a>
+                                                            <a class="wb-lbx" href="/rampviewer/./assets/images/help/fr/advanced_toolbar/distance_tool.jpg" title="Ligne de distance et résultats"><img src="/rampviewer/./assets/images/help/fr/advanced_toolbar/distance_tool.jpg" alt="Ligne de distance et résultats" class=""></a>
                                                             <figcaption class="caption text-right">
                                                                 <p class="mrgn-tp-sm mrgn-bttm-sm pstn-bttm-md pstn-rght-md caption-header small">Ligne de distance et résultats</p>
                                                             </figcaption>
@@ -780,102 +871,152 @@
         <dl id="wb-dtmd" class="small">
             <dt>Date de modification&#160;:&#32;</dt>
             <dd>
-                <time property="dateModified">2014-11-04</time>
+                <time property="dateModified">2016-06-06</time>
             </dd>
         </dl>
-    </main>{% endblock %}
-    <footer role="contentinfo" id="wb-info">
-        <div class="footer-container">
-            <nav role="navigation" class="container visible-sm visible-md visible-lg wb-navcurr">
-                <h2 class="wb-inv">À propos de ce site</h2>
-                <div class="row">
-                    <div class="col-sm-3 col-lg-3">
-                        <section>
-                            <h3>Coordonnées</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Lien 1</a></li>
-                                <li><a href="#">Lien 2</a></li>
-                                <li><a href="#">Lien 3</a></li>
-                            </ul>
-                        </section>
-                        <section>
-                            <h3>Nouvelles</h3>
-                            <ul class="list-unstyled">
-                                <li><a href="http://nouvelles.gc.ca/web/index-fr.do">Salle de presse</a></li>
-                                <li><a href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=1">Communiqués de presse</a></li>
-                                <li><a href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=3">Avis aux médias</a></li>
-                                <li><a href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=970">Discours</a></li>
-                                <li><a href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=980">Déclarations</a></li>
-                            </ul>
-                        </section>
-                    </div>
-                    <section class="col-sm-3 col-lg-3">
-                        <h3>Gouvernement</h3>
-                        <ul class="list-unstyled">
-                            <li><a href="http://www.canada.ca/fr/gouv/systeme/index.html">Comment le gouvernement fonctionne</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/min/index.html">Ministères et organismes</a></li>
-                            <li><a href="http://pm.gc.ca/fra">Premier ministre</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/ministres/index.html">Ministres</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/politique/index.html">Politiques, règlements et lois</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/bibliotheques/index.html">Bibliothèques</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/publications/index.html">Publications</a></li>
-                            <li><a href="http://www.canada.ca/fr/gouv/statistiques/index.html">Statistiques et données</a></li>
-                            <li><a href="http://www.canada.ca/fr/nouveausite.html">À propos de Canada.ca</a></li>
-                        </ul>
-                    </section>
-                    <section class="col-sm-3 col-lg-3 brdr-lft">
-                        <h3>Transparence</h3>
-                        <ul class="list-unstyled">
-                            <li><a href="http://www.canada.ca/fr/transparence/rapports.html">Établissement de rapports à l'échelle du gouvernement</a></li>
-                            <li><a href="http://www.canada.ca/fr/transparence/ouvert.html">Gouvernement ouvert</a></li>
-                            <li><a href="http://www.canada.ca/fr/transparence/divulgation.html">Divulgation proactive</a></li>
-                            <li><a href="http://www.canada.ca/fr/transparence/avis.html">Avis</a></li>
-                            <li><a href="http://www.canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
-                        </ul>
-                    </section>
-                    <div class="col-sm-3 col-lg-3 brdr-lft">
-                        <section>
-                            <h3>Rétroaction</h3>
-                            <p>
-                                <a href="http://www.canada.ca/fr/contact/retroaction.html"><img src="{{wetLocation}}assets/feedback.png" class="img-responsive" alt="Rétroaction sur ce site Web"></a>
-                            </p>
-                        </section>
-                        <section>
-                            <h3>Médias sociaux</h3>
-                            <p>
-                                <a href="http://www.canada.ca/fr/sociaux/index.html"><img src="{{wetLocation}}assets/social.png" class="img-responsive" alt="Médias sociaux"></a>
-                            </p>
-                        </section>
-                        <section>
-                            <h3>Centre mobile</h3>
-                            <p>
-                                <a href="http://www.canada.ca/fr/mobile/index.html"><img src="{{wetLocation}}assets/mobile.png" class="img-responsive" alt="Centre mobile"></a>
-                            </p>
-                        </section>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <div class="brand">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6 visible-sm visible-xs tofpg"><a href="#wb-cont">Haut de la page <span class="glyphicon glyphicon-chevron-up"></span></a></div>
-                    <div class="col-xs-6 col-md-12 text-right">
-                        <object type="image/svg+xml" tabindex="-1" role="img" data="{{wetLocation}}assets/wmms-blk.svg" aria-label="Symbole du gouvernement du Canada"></object>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>{% block page_extra_scripts %}
+    </main>
+
+  
+  
+
+
+
+
+<footer role="contentinfo" id="wb-info">
+
+
+
+<nav role="navigation" class="container visible-sm visible-md visible-lg wb-navcurr">
+
+  <h2 class="wb-inv">Information du site</h2>
+
+  <div class="col-sm-3 col-lg-3">
+    <section>
+      <h3>Coordonnées</h3>
+      <ul class="list-unstyled">
+        <li><a class="gl-footer" href="/fr/formulaire/faites-nous-part-de-vos-commentaires">Contactez Gouvernement ouvert</a></li>
+        <li><a class="gl-footer" href="/fr/user">Ouverture de session Gouvernement ouvert</a></li>
+        <li><a class="gl-footer" href="/fr/formulaire/courriels-gouvernement-ouvert">Courriels sur le Gouvernement ouvert</a></li>
+        <li><a class="gl-footer" href="http://www.canada.ca/fr/contact/index.html#slq">Sujets sur lesquels portent la plupart des
+          questions</a></li>
+        <li><a class="gl-footer" href="http://www.canada.ca/fr/contact/index.html#spe">Renseignements spécifiques</a></li>
+        <li><a class="gl-footer" href="http://www.canada.ca/fr/contact/index.html#gen">Renseignements généraux</a></li>
+      </ul>
+    </section>
+    <section>
+      <h3>Nouvelles</h3>
+      <ul class="list-unstyled">
+        <li><a class="gl-footer" href="http://nouvelles.gc.ca/web/index-fr.do" rel="external">Salle de presse</a></li>
+        <li><a class="gl-footer" href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=1"
+               rel="external">Communiqués de presse</a></li>
+        <li><a class="gl-footer" href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=3"
+               rel="external">Avis aux médias</a></li>
+        <li><a class="gl-footer" href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=970"
+               rel="external">Discours</a></li>
+        <li><a class="gl-footer" href="http://nouvelles.gc.ca/web/nwsprdct-fr.do?mthd=tp&amp;crtr.tp1D=980"
+               rel="external">Déclarations</a></li>
+      </ul>
+    </section>
+  </div>
+  <section class="col-sm-3 col-lg-3">
+    <h3>Gouvernement</h3>
+    <ul class="list-unstyled">
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/systeme/index.html">Comment le gouvernement fonctionne</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/min/index.html">Ministères et organismes</a></li>
+      <li><a class="gl-footer" href="http://pm.gc.ca/fra" rel="external">Premier ministre</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/ministres/index.html">Ministres</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/politique/index.html">Politiques, règlements et lois</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/bibliotheques/index.html">Bibliothèques</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/publications/index.html">Publications</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/gouv/statistiques/index.html">Statistiques et données</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/nouveausite.html">À propos de Canada.ca</a></li>
+    </ul>
+  </section>
+  <section class="col-sm-3 col-lg-3 brdr-lft">
+    <h3>Transparence</h3>
+    <ul class="list-unstyled">
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/transparence/rapports.html">Établissement de rapports à l'échelle du
+        gouvernement</a></li>
+      <li><a class="gl-footer" href="/fr/">Gouvernement ouvert</a></li>
+      <li><a class="gl-footer" href="http://www.tbs-sct.gc.ca/pd-dp/gr-rg/index-fra.asp" rel="external">Divulgation
+        proactive</a></li>
+      <li><a class="gl-footer" href="http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada">Avis</a></li>
+      <li><a class="gl-footer" href="http://www.canada.ca/fr/transparence/confidentialite.html">Confidentialité</a></li>
+    </ul>
+  </section>
+  <div class="col-sm-3 col-lg-3 brdr-lft">
+    <section>
+      <h3>Rétroaction</h3>
+
+      <p><a class="gl-footer" href="http://www.canada.ca/fr/contact/retroaction.html"><img src="/wet/themes-dist-4.0.14-gcweb/assets/feedback.png"
+                                                                       alt="Rétroaction sur ce site Web"></a></p>
+    </section>
+    <section>
+      <h3>Médias sociaux</h3>
+
+      <p><a class="gl-footer" href="http://www.canada.ca/fr/sociaux/index.html"><img src="/wet/themes-dist-4.0.14-gcweb/assets/social.png" alt="Médias sociaux"></a>
+      </p>
+    </section>
+    <section>
+      <h3>Centre mobile</h3>
+
+      <p><a class="gl-footer" href="http://www.canada.ca/fr/mobile/index.html"><img src="/wet/themes-dist-4.0.14-gcweb/assets/mobile.png" alt="Centre mobile"></a>
+      </p>
+    </section>
+  </div>
+
+</nav>
+<div class="brand">
+  <div class="container">
+    <div class="row ">
+      <div class="col-xs-6 visible-sm visible-xs tofpg"><a class="gl-footer" href="#wb-cont">Haut de la page <span
+          class="glyphicon glyphicon-chevron-up"></span></a></div>
+      <div class="col-xs-6 col-md-12 text-right">
+        <object type="image/svg+xml" tabindex="-1" role="img" data="/wet/themes-dist-4.0.14-gcweb/assets/wmms-blk.svg"
+                aria-label="Symbole du gouvernement du Canada"></object>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
+
+</footer>
+
+
+
+
+
+
+    <!--[if gte IE 9 | !IE ]><!-->
+    <script src="/wet/themes-dist-4.0.14-gcweb/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/wet/themes-dist-4.0.14-gcweb/js/wet-boew.min.js" type="text/javascript"></script>
+    <!--<![endif]--><!--[if lt IE 9]>
+    <script src="/wet/themes-dist-4.0.14-gcweb/js/ie8-wet-boew2.min.js"></script>
+    <![endif]-->
+    
     <script>
-    var ckanPrefix = '{{jsPrefix}}';
-    var staticPath = '{{jsPrefix}}';
+    var staticPath = '/rampviewer/';
+    var mapCartPrefix = '/redirects/ramp/';
     </script>
     <!--[if IE 9]>
-        <script src="{{ramp_server}}js/polyfill/xhook.min.js"></script>
-        <script src="{{ramp_server}}js/polyfill/xhook-cors-ie9.js"></script>
+        <script src="/rampviewer/js/polyfill/xhook.min.js"></script>
+        <script src="/rampviewer/js/polyfill/xhook-cors-ie9.js"></script>
         <![endif]-->
     <!-- RAMP-starter.js is now directly appended to lib.js -->
-    <script type="text/javascript" src="{{ramp_server}}js/lib/lib.min.js"></script>{% endblock %}</body>
+    <script type="text/javascript" src="/rampviewer/js/lib/lib.min.js"></script>
+    
+  <script type="text/javascript">
+  // Add Google Analytics Event Tracking to resource download links.
+  jQuery('a.resource-url-analytics').on('click', function() {
+  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
+  if (resource_url) {
+  _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+  }
+  });
+  </script>
 
+  </body>
 </html>
