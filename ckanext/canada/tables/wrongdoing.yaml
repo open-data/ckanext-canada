@@ -121,6 +121,8 @@ resources:
     label: Year
     datastore_type: year
     excel_column_width: 5
+    choices:
+      2016: "2016"
 
   - datastore_id: quarter
     label: Quarter
