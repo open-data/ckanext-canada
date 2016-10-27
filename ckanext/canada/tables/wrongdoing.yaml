@@ -111,3 +111,55 @@ resources:
     filter_one:
       ref_number: "1980198"
     sort: file_id_date desc
+
+
+- title: Proactive Disclosure - Founded Wrongdoing Nothing to Report
+  resource_name: wrongdoing-nil
+  fields:
+
+  - datastore_id: year
+    label: Year
+    datastore_type: year
+    excel_column_width: 5
+
+  - datastore_id: quarter
+    label: Quarter
+    datastore_type: text
+    excel_column_width: 
+    choices:
+      Q1:
+        en: April 1 - June 30
+        fr: avril 1 - juin 30
+      Q2:
+        en: July 1 - September 30
+        fr: juillet 1 - septembre 30
+      Q3:
+        en: October 1 - December 31
+        fr: octobre 1 - décembre 31
+      Q4:
+        en: January 1 - March 31
+        fr: janvier 1 - mars 31
+
+  datastore_primary_key: [year, quarter]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFA8CC8B
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF7E9968
+
+  examples:
+    record:
+      year: 2016
+      quarter: Q2
+    filters:
+      year: 2016
+    filter_one:
+      year: 2016
+      quarter: Q2
+    sort: year desc, quarter desc
