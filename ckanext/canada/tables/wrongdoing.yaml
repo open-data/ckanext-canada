@@ -129,16 +129,16 @@ resources:
     choices:
       Q1:
         en: April 1 - June 30
-        fr: avril 1 - juin 30
+        fr: 1 avril - 30 juin
       Q2:
         en: July 1 - September 30
-        fr: juillet 1 - septembre 30
+        fr: 1 juillet - 30 septembre
       Q3:
         en: October 1 - December 31
-        fr: octobre 1 - décembre 31
+        fr: 1 octobre - 31 décembre
       Q4:
         en: January 1 - March 31
-        fr: janvier 1 - mars 31
+        fr: 1 janvier - 31 mars
 
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
