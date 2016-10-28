@@ -69,3 +69,7 @@ details.alert-error {
 .form-control.select2-container {
     display: block;
 }
+
+/* DataTables Overrides */
+div.dt-button-collection {width:50%;}
+div.dt-button-collection a.dt-button {display: inline-block}
