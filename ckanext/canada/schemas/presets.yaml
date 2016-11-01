@@ -210,9 +210,9 @@ presets:
     fluent_form_label:
       en:
         en: Contributor (English)
-        fr: Contributeur (anglais)
+        fr: Contributor (anglais)
       fr:
-        en: Contributor (Anglais)
+        en: Contributor (French)
         fr: Contributeur (français)
     fluent_help_text:
       en:
@@ -2176,7 +2176,8 @@ presets:
       fr: Approbation de la CSGI
     help_text:
       en: Has IMSO approval been obtained? By selecting yes, you agree to release this asset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
-      fr: L’approbation du CSGI a-t-elle été obtenue pour ce produit? En sélectionnant oui, vous accepter de publier ce produit sous la Licence de gouvernement ouvert - Canada
+      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce produit sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+
     required: true
     form_include_blank_choice: true
     choices:

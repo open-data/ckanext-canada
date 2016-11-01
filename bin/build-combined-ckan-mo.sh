@@ -7,6 +7,7 @@ DEST="$HERE/../build/i18n/fr/LC_MESSAGES/"
 mkdir -p $DEST
 msgcat --use-first \
     "$HERE/../ckanext/canada/i18n/fr/LC_MESSAGES/canada.po" \
+    "$HERE/../../ckanext-recombinant/ckanext/recombinant/i18n/fr/LC_MESSAGES/recombinant.po" \
     "$HERE/../../ckan/ckan/i18n/fr/LC_MESSAGES/ckan.po" \
     "$HERE/../../ckanext-wet-boew/ckanext/wet_boew/i18n/fr/LC_MESSAGES/wet_boew.po" \
     "$HERE/../../ckanext-wet-boew/ckanext/GCWeb/i18n/fr/LC_MESSAGES/GCWeb.po" \

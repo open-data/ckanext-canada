@@ -90,7 +90,7 @@ There are many reasons why you could not upload Proactive Disclosure data to the
 2. Prepare your data in the proper template for a given organization and Proactive Disclosure type, 
 3. The abbreviated name of the organization, i.e. aandc-aadnc, must stay in cell C1 of the template, as downloaded. This a key info for the system to identify the uploaded template,
 4. Make sure the template to be uploaded has all the required fields for this Proactive Disclosure Type,
-5. Enter only valid data in the template. Refer to [How to ensure valid data is entered in the template](#_How_to_ensure)**?** , 
+5. Enter only valid data in the template,
 6. Your completed data template must be an Excel spreadsheet of the XLS or XLSX format.
 7. Ensure that you do not rename the file. The system requires the Unique ID that is applied to each template. This ID is the file name applied to the template in the system. If you rename it, you will experience issues.
 
