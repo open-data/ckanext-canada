@@ -87,7 +87,7 @@ Il existe plusieurs raisons pour lesquelles vous n’avez pas pu téléverser de
 2. Préparez vos données dans le bon modèle pour une organisation et un type de divulgation proactive donnés. 
 3. Le sigle ou l’acronyme du nom d’une organisation (p. ex., aandc-aadnc) doit être indiqué dans la cellule C1 du modèle téléchargé. Il s’agit d’une information clé afin que le système détermine le modèle téléversé.
 4. Veillez à ce que le modèle devant être téléversé comprenne tous les champs requis pour ce type de divulgation proactive.
-5. Ne saisissez que des données valides dans le modèle. Consultez « [Comment puis-je m’assurer de saisir des données valides dans le modèle?](#_How_to_ensure) ».   
+5. Ne saisissez que des données valides dans le modèle.
 6. Votre modèle de données rempli doit être une feuille Excel en format XLS ou XLSX.
 7. Assurez-vous de ne pas renommer le document. Le système requiert le numéro d’identification unique qui est associé à chaque modèle. Ce numéro d’identification est le nom du document associé au modèle dans le système. Si vous renommez ce document, vous aurez des problèmes.
 
