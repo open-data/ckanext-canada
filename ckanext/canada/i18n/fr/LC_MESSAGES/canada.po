@@ -684,10 +684,6 @@ msgstr "Ministère"
 msgid "Account Created"
 msgstr "Compte créé"
 
-msgid "Your file was successfully uploaded into the central system."
-msgstr "Votre fichier a été téléchargé avec succès dans le système central."
-
-
 msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions."
 msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à open-ouvert@tbs-sct.gc.ca."
 
@@ -735,9 +731,6 @@ msgstr "Accès, téléversement et modification des rapports trimestriels sur le
 
 msgid "Reference Number"
 msgstr "Numéro de demande"
-
-msgid "Reference"
-msgstr "Référence"
 
 # this might be too broad (CKAN translates to "Titre")
 msgid "Name"
@@ -1345,14 +1338,6 @@ msgid "Open Government Portal Record (French)"
 msgstr "Enregistrement de la portail du Gouvernement ouvert (français)"
 
 
-#FIXME - 2015-01-12 These are translations from the ckanext-recombinant extension
-
-msgid "Download template Excel spreadsheet"
-msgstr "Télécharger modèle Excel"
-
-msgid "Create and update records from Excel spreadsheet"
-msgstr "Créer et mettre à jour les données de la feuille de calcul Excel"
-
 msgid "Template"
 msgstr "Modèle"
 
@@ -1361,9 +1346,6 @@ msgstr "Vous n'avez pas la permission de télécharger à {0}"
 
 msgid "You must provide a valid file"
 msgstr "Voud devez fournir un fichier valide"
-
-msgid "Invalid sheet for this organization. Sheet must be labeled for {0}, but you supplied a sheet for {1}"
-msgstr "Le feuille n'est pas valide pour cette organisation. La feuille doit être étiquetée pour {0}, mais vous avez fourni une feuille pour {1}"
 
 msgid "Sheet name '{0}' not found in list of valid tables"
 msgstr "Le nom de la feuille '{0}' n'a pas été trouvé dans la liste des tableaux valides"
@@ -1456,9 +1438,6 @@ msgstr "{actor} a créé le dosier {dataset}"
 
 msgid "{actor} updated the dataset {dataset}"
 msgstr "{actor} a mis à jour le dossier {dataset}"
-
-msgid "The server encountered a problem processing the file uploaded. Please try copying your data into the latest version of the template and uploading again. If this problem continues, send your Excel file open-ouvert@tbs-sct.gc.ca so we may investigate."
-msgstr "Le serveur a éprouvé un problème dans le traitement du fichier qui a été téléchargé. Veuillez tenter de copier vos données dans la version la plus récente du modèle et de télécharger le tout de nouveau. Si ce problème persiste, envoyez votre fichier Excel à open-ouvert@… afin que nous puissions faire enquête."
 
 # Footer links
 
@@ -1711,32 +1690,11 @@ msgstr "Faire une recherche dans tous les dossiers du registre."
 msgid "View the list of members linked to your organization."
 msgstr "Voir la liste des membres liés à votre organisation"
 
-msgid "(required)"
-msgstr "(obligatoire)"
-
-msgid "API Access"
-msgstr "Accès par API"
-
-msgid "row"
-msgstr "ligne"
-
-msgid "rows"
-msgstr "lignes"
-
 msgid "For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href=\"http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca\">GCPEDIA</a>"
 msgstr "Pour obtenir des renseignements sur la façon de préparer, de tenir à jour et de verser des modèles de données pour le registre, consultez la documentation appropriée qui est publiée dans <a href='http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.ca'>Gcpédia</a>"
-
-msgid "Delete existing records"
-msgstr "Supprimer les dossiers existants"
-
-msgid "Enter one record per line, e.g:"
-msgstr "Entrer un (1) dossier par ligne"
 
 msgid "Edit Profile"
 msgstr "Modifier le profil"
 
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "Foire aux questions"
-
-msgid "Field choices reference"
-msgstr "Listes de choix pour les champs"
