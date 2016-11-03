@@ -127,7 +127,7 @@ resources:
   - datastore_id: quarter
     label: Quarter
     datastore_type: text
-    excel_column_width: 
+    excel_column_width:
     choices:
       Q1:
         en: April 1 - June 30
