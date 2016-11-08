@@ -42,5 +42,6 @@ setup(
     travelq=ckanext.canada.pd:PDCommand
     hospitalityq=ckanext.canada.pd:PDCommand
     contractsa=ckanext.canada.pd:PDCommand
+    inventory=ckanext.canada.pd:PDCommand
     """,
 )

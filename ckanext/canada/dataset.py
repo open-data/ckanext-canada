@@ -106,7 +106,8 @@ def csv_data_batch(csv_path, target_dataset):
     assert filename.endswith('.csv')
 
     chromo = get_chromo(filename[:-4])
-    assert chromo['target_dataset'] == target_dataset
+    geno = get_geno(chromo['dataset_type'])
+    assert geno.get('target_dataset') == target_dataset
 
     with open(csv_path) as f:
         csv_in = DictReader(f)
