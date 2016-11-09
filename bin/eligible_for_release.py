@@ -16,7 +16,10 @@ def main():
     writer = csv.DictWriter(sys.stdout, reader.fieldnames)
     writer.writerow(dict(zip(reader.fieldnames, reader.fieldnames)))
     for row in reader:
-        if asbool(row[FILTER_COLUMN]):
-            writer.writerow(row)
+        try:
+            if asbool(row[FILTER_COLUMN]):
+                writer.writerow(row)
+        except ValueError:
+            pass
 
 main()
