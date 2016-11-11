@@ -54,8 +54,9 @@ class PDNilCommand(CkanCommand):
     parser.add_option(
         '-f',
         '--csv',
-        dest='csv_file',
-        help='CSV file to use as input (or default CKAN DB)')
+        nargs=2,
+        dest='csv_files',
+        help='CSV files to use as input (or default CKAN DB)')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -70,7 +71,7 @@ class PDNilCommand(CkanCommand):
         elif cmd == 'clear':
             return self._clear_index()
         elif cmd == 'rebuild':
-            return self._rebuild(self.options.csv_file)
+            return self._rebuild(self.options.csv_files)
 
     def _clear_index(self):
         conn = solr_connection(self.command_name)
@@ -91,16 +92,16 @@ class PDNilCommand(CkanCommand):
 
         conn = solr_connection(self.command_name)
         lc = LocalCKAN()
-        if csv_file:
-            count = {}
-            for org_id, records in csv_data_batch(csv_file, self.command_name):
-                if org_id not in count:
-                    count[org_id] = 0
-                org_detail = lc.action.organization_show(id=org_id)
-                _update_records(records, org_detail, conn, self.command_name)
-                count[org_id] += len(records)
-            for org_id in lc.action.organization_list():
-                print org_id, count.get(org_id, 0)
+        if csv_files:
+            for csv_file in csv_files:
+                print csv_file + ':'
+                for org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
+                    try:
+                        org_detail = lc.action.organization_show(id=org_id)
+                    except NotFound:
+                        continue
+                    print "    {0:s} {1}".format(org_id, len(records))
+                    _update_records(records, org_detail, conn)
         else:
             for org in lc.action.organization_list():
                 count = 0
