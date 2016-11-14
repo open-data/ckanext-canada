@@ -92,7 +92,7 @@ class PDCommand(CkanCommand):
         lc = LocalCKAN()
         if csv_file:
             count = {}
-            for org_id, records in csv_data_batch(csv_file, self.command_name):
+            for resource_name, org_id, records in csv_data_batch(csv_file, self.command_name):
                 if org_id not in count:
                     count[org_id] = 0
                 org_detail = lc.action.organization_show(id=org_id)
@@ -104,8 +104,8 @@ class PDCommand(CkanCommand):
             for org in lc.action.organization_list():
                 count = 0
                 org_detail = lc.action.organization_show(id=org)
-                for records in data_batch(org_detail['id'], lc, self.command_name):
-                    _update_records(records, org_detail, conn, self.command_name)
+                for resource_name, records in data_batch(org_detail['id'], lc, self.command_name):
+                    _update_records(records, org_detail, conn, resource_name)
                     count += len(records)
                 print org, count
 
