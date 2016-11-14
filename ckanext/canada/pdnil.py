@@ -78,7 +78,7 @@ class PDNilCommand(CkanCommand):
         conn.delete_query("*:*")
         conn.commit()
 
-    def _rebuild(self, csv_file=None):
+    def _rebuild(self, csv_files=None):
         """
         Implement rebuild command
 
@@ -95,13 +95,13 @@ class PDNilCommand(CkanCommand):
         if csv_files:
             for csv_file in csv_files:
                 print csv_file + ':'
-                for org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
+                for org_id, records in csv_data_batch(csv_file, self.command_name):
                     try:
                         org_detail = lc.action.organization_show(id=org_id)
                     except NotFound:
                         continue
                     print "    {0:s} {1}".format(org_id, len(records))
-                    _update_records(records, org_detail, conn)
+                    _update_records(records, org_detail, conn, self.command_name)
         else:
             for org in lc.action.organization_list():
                 count = 0
