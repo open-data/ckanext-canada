@@ -1,7 +1,14 @@
 <section>
   <h2 id="prtable">{{_("Preview")}}</h2>
     <table id="dtprv" class="wb-tables table table-striped"
-      data-wb-tables='{"paging": true, "serverSide": true, "processing": true, "ajax": "/datatable/{{ resource_name }}/{{ resource_id }}"}'
+      data-wb-tables='{
+        "paging": true,
+        "serverSide": true,
+        "processing": true,
+        "ajax": {
+          "url": "/datatable/{{ resource_name }}/{{ resource_id }}",
+          "type": "POST"
+        }}'
       data-role="table"
       data-mode="columntoggle" >
     <thead>
