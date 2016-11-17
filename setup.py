@@ -34,12 +34,12 @@ setup(
     canada=ckanext.canada.commands:CanadaCommand
     ati=ckanext.canada.ati:ATICommand
 
-    contracts=ckanext.canada.pdnil:PDNilCommand
-    grants=ckanext.canada.pdnil:PDNilCommand
-    reclassification=ckanext.canada.pdnil:PDNilCommand
+    contracts=ckanext.canada.pd:PDNilCommand
+    grants=ckanext.canada.pd:PDNilCommand
+    reclassification=ckanext.canada.pd:PDNilCommand
     travela=ckanext.canada.pd:PDCommand
-    travelq=ckanext.canada.pdnil:PDNilCommand
-    hospitalityq=ckanext.canada.pdnil:PDNilCommand
+    travelq=ckanext.canada.pd:PDNilCommand
+    hospitalityq=ckanext.canada.pd:PDNilCommand
     contractsa=ckanext.canada.pd:PDCommand
     inventory=ckanext.canada.pd:PDCommand
     wrongdoing=ckanext.canada.pd:PDCommand
