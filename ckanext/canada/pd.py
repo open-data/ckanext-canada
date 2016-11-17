@@ -14,8 +14,7 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN, NotFound
 
-from ckanext.recombinant.write_excel import excel_template
-from ckanext.recombinant.tables import get_chromo, get_dataset_types
+from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
     recombinant_language_text)
@@ -24,9 +23,6 @@ from ckanext.canada.dataset import (
     solr_connection,
     data_batch,
     csv_data_batch)
-
-
-SPLIT_XLS_ROWS = 50002
 
 
 class PDCommand(CkanCommand):
@@ -64,11 +60,6 @@ class PDCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        if cmd == 'build-templates':
-            return build_templates(
-                self.command_name,
-                self.args[1:-1],
-                self.args[2:][-1])
         elif cmd == 'clear':
             return clear_index(self.command_name)
         elif cmd == 'rebuild':
@@ -81,8 +72,7 @@ class PDNilCommand(CkanCommand):
 
     Usage::
 
-        paster <pd-type> build-templates <sources> <dest-dir>
-                         clear
+        paster <pd-type> clear
                          rebuild [-f <file> <file>]
 
     Options::
@@ -112,11 +102,6 @@ class PDNilCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        if cmd == 'build-templates':
-            return build_templates(
-                self.command_name,
-                self.args[1:-1],
-                self.args[2:][-1])
         elif cmd == 'clear':
             return clear_index(self.command_name)
         elif cmd == 'rebuild':
@@ -130,7 +115,7 @@ def clear_index(self):
 
 
 
-def _rebuild(self, csv_files=None):
+def rebuild(self, csv_files=None):
     """
     Implement rebuild command
 
@@ -162,63 +147,6 @@ def _rebuild(self, csv_files=None):
                 _update_records(records, org_detail, conn, resource_name)
                 count += len(records)
             print org, count
-
-
-def build_templates(command_name, template_names, output_path):
-    """
-    Implement build-templates command
-    """
-    lc = LocalCKAN()
-    output_files = {}
-    next_row = {}
-    output_counter = {}
-    dataset_types = get_dataset_types(command_name)
-    table = get_chromo(dataset_types[0])
-
-    def close_write_file(org_id):
-        book = output_files[org_id]
-        if not book:
-            return
-        book.save(os.path.join(output_path,
-            org_id + '-' + str(output_counter[org_id]) + '.xls'))
-        output_files[org_id] = None
-
-    def out_file(org_id):
-        if org_id in output_files:
-            next_row[org_id] += 1
-            # need to start a new file?
-            if next_row[org_id] > SPLIT_XLS_ROWS:
-                close_write_file(org_id)
-            else:
-                return output_files[org_id], next_row[org_id]
-        try:
-            org = lc.action.organization_show(
-                id=org_id, include_data_batch=False)
-        except NotFound:
-            logging.error('org id', org_id, 'not found')
-            output_files[org_id] = None
-            next_row[org_id] = 0
-            return None, None
-        book = excel_template(dataset_types[0], org)
-        output_files[org_id] = book
-        output_counter[org_id] = output_counter.get(org_id, 0) + 1
-        next_row[org_id] = len(book.get_sheet(0).get_rows())
-        return book, next_row[org_id]
-
-    def add_row(book, row, d):
-        sheet = book.get_sheet(0)
-        for i, f in enumerate(table['fields']):
-            sheet.write(row, i, d[f['datastore_id']])
-
-    for f in template_names:
-        for d in DictReader(open(f, 'rb')):
-            book, row = out_file(d['organization'])
-            if not book:
-                continue
-            add_row(book, row, d)
-
-    for org_id in output_files:
-        close_write_file(org_id)
 
 
 def _update_records(records, org_detail, conn, resource_name):
