@@ -60,10 +60,12 @@ class PDCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        elif cmd == 'clear':
+        if cmd == 'clear':
             return clear_index(self.command_name)
         elif cmd == 'rebuild':
-            return rebuild([self.options.csv_file])
+            return rebuild(
+                self.command_name,
+                [self.options.csv_file] if self.options.csv_file else None)
 
 
 class PDNilCommand(CkanCommand):
@@ -102,20 +104,20 @@ class PDNilCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        elif cmd == 'clear':
+        if cmd == 'clear':
             return clear_index(self.command_name)
         elif cmd == 'rebuild':
-            return rebuild(self.options.csv_files)
+            return rebuild(self.command_name, self.options.csv_files)
 
 
-def clear_index(self):
-    conn = solr_connection(self.command_name)
+def clear_index(command_name):
+    conn = solr_connection(command_name)
     conn.delete_query("*:*")
     conn.commit()
 
 
 
-def rebuild(self, csv_files=None):
+def rebuild(command_name, csv_files=None):
     """
     Implement rebuild command
 
@@ -125,14 +127,14 @@ def rebuild(self, csv_files=None):
     :return: Nothing
     :rtype: None
     """
-    self._clear_index()
+    clear_index(command_name)
 
-    conn = solr_connection(self.command_name)
+    conn = solr_connection(command_name)
     lc = LocalCKAN()
     if csv_files:
         for csv_file in csv_files:
             print csv_file + ':'
-            for resource_name, org_id, records in csv_data_batch(csv_file, self.command_name):
+            for resource_name, org_id, records in csv_data_batch(csv_file, command_name):
                 try:
                     org_detail = lc.action.organization_show(id=org_id)
                 except NotFound:
@@ -143,7 +145,7 @@ def rebuild(self, csv_files=None):
         for org in lc.action.organization_list():
             count = 0
             org_detail = lc.action.organization_show(id=org)
-            for resource_name, records in data_batch(org_detail['id'], lc, self.command_name):
+            for resource_name, records in data_batch(org_detail['id'], lc, command_name):
                 _update_records(records, org_detail, conn, resource_name)
                 count += len(records)
             print org, count
