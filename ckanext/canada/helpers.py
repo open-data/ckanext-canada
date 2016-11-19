@@ -225,3 +225,33 @@ def show_fgp_facets():
         if f['name'] == 'fgp':
             return f['active']
     return False
+
+
+# FIXME: terrible hacks
+def gravatar(*args, **kwargs):
+    '''Brute force disable gravatar'''
+    return ''
+
+# FIXME: terrible, terrible hacks
+def linked_user(user, maxlength=0, avatar=20):
+    '''Brute force disable gravatar, mostly copied from ckan/lib/helpers'''
+    from ckan import model
+    if not isinstance(user, model.User):
+        user_name = unicode(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+    if user:
+        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
+        displayname = user.display_name
+
+        if maxlength and len(user.display_name) > maxlength:
+            displayname = displayname[:maxlength] + '...'
+
+        return h.literal(h.link_to(
+                displayname,
+                h.url_for(controller='user', action='read', id=name)
+            )
+        )
+# FIXME: because ckan/lib/activity_streams is terrible
+h.linked_user = linked_user

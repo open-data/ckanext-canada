@@ -231,6 +231,8 @@ ckanext.canada:schemas/info.yaml
             'contact_information',
             'show_subject_facet',
             'show_fgp_facets',
+            'gravatar',
+            'linked_user',
             ])
 
     def before_map(self, map):

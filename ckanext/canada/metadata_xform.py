@@ -116,7 +116,7 @@ def _process(line, portal=False):
         rec['spatial_representation_type'] = []
 
     if not rec.get('maintainer_email'):
-        rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
+        rec['maintainer_email'] = 'open-ouvert@tbs-sct.gc.ca'
 
     rec['ready_to_publish'] = str(rec.get('ready_to_publish', 'false')).lower()
 
