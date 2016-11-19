@@ -14,7 +14,7 @@ resources:
 
   - datastore_id: year
     label: Year
-    datastore_type: int
+    datastore_type: year
     excel_column_width: 20
 
   - datastore_id: public_servants
