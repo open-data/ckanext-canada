@@ -7,6 +7,7 @@ import logging
 import json
 from unicodecsv import DictReader
 from _csv import Error as _csvError
+from babel.numbers import format_currency
 
 import paste.script
 from pylons import config
@@ -215,19 +216,17 @@ def _update_records(records, org_detail, conn, resource_name):
             key = f['datastore_id']
             value = r[key]
 
-            facet_range = f.get('solr_float_range_facet')
+            facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
                 try:
                     float_value = float(value)
                 except ValueError:
                     pass
                 else:
-                    for i, fac in enumerate(facet_range):
-                        if 'less_than' not in fac or float_value < fac['less_than']:
-                            solrrec[key + '_range'] = str(i)
-                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[0]
-                            solrrec[key + '_range_fr'] = fac['label'].split(' | ')[-1]
-                            break
+                    solrrec.update(dollar_range_facet(
+                        key,
+                        facet_range,
+                        float_value))
 
             if f.get('datastore_type') == 'date':
                 try:
@@ -265,3 +264,39 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
+
+def en_dollars(v):
+    return format_currency(v, 'CAD', locale='en_CA')
+
+
+def fr_dollars(v):
+    return format_currency(v, 'CAD', locale='fr_CA')
+
+
+def dollar_range_facet(key, facet_range, float_value):
+    """
+    return solr range fields for dollar float_value in ranges
+    given by facet_range, in English and French
+
+    E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
+    "$0 - $999.99", "$1,000 - $4,999.99", "$5,000 +" in English
+    """
+    last_fac = None
+    for i, fac in enumerate(facet_range):
+        if float_value < fac:
+            break
+        last_fac = fac
+    else:
+        return {
+            key + u'_range': unicode(i),
+            key + u'_en': en_dollars(fac) + u'+',
+            key + u'_fr': fr_dollars(fac) + u' +'}
+
+    if last_fac is None:
+        return {}
+
+    return {
+        key + u'_range': unicode(i - 1),
+        key + u'_en': en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
+        key + u'_fr': fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
