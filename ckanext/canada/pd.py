@@ -228,6 +228,14 @@ def _update_records(records, org_detail, conn, resource_name):
                         facet_range,
                         float_value))
 
+            sum_to = f.get('solr_sum_to_field')
+            if sum_to:
+                # accept list or single field name from config
+                if not isinstance(sum_to, list):
+                    sum_to = [sum_to]
+                for fname in sum_to:
+                    sum_to_field(solrrec, fname, value)
+
             if f.get('datastore_type') == 'date':
                 try:
                     value = date2zulu(value)
@@ -300,3 +308,18 @@ def dollar_range_facet(key, facet_range, float_value):
         key + u'_range': unicode(i - 1),
         key + u'_en': en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
         key + u'_fr': fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+
+
+def sum_to_field(solrrec, key, value):
+    """
+    modify solrrec dict in-place to add this value to solrrec[key]
+    """
+    try:
+        float_value = float(value)
+    except ValueError:
+        solrrec[key] = None # failed to find sum
+        return
+    try:
+        solrrec[key] = float_value + solrrec.get(key, 0)
+    except TypeError:
+        pass # None can stay as None
