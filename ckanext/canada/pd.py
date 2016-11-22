@@ -382,7 +382,7 @@ def compare_output(prev_solrrec, solrrec, chromo):
         try:
             float_prev = float(prev_value)
             float_cur = float(solrrec[f['datastore_id']])
-            change = float_prev - float_cur
+            change = float_cur - float_prev
         except ValueError:
             float_prev = None
             float_cur = None
