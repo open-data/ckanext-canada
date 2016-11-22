@@ -10,8 +10,8 @@ import openpyxl
 
 def main():
     reader = csv.reader(sys.stdin)
-    book = openpyxl.Workbook()
-    sheet = book.active
+    book = openpyxl.Workbook(write_only=True)
+    sheet = book.create_sheet()
 
     for row in reader:
         sheet.append(row)
