@@ -231,6 +231,9 @@ def show_fgp_facets():
 def gravatar(*args, **kwargs):
     '''Brute force disable gravatar'''
     return ''
+def linked_gravatar(*args, **kwargs):
+    '''Brute force disable gravatar'''
+    return ''
 
 # FIXME: terrible, terrible hacks
 def linked_user(user, maxlength=0, avatar=20):

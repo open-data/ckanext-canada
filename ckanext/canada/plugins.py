@@ -232,6 +232,7 @@ ckanext.canada:schemas/info.yaml
             'show_subject_facet',
             'show_fgp_facets',
             'gravatar',
+            'linked_gravatar',
             'linked_user',
             ])
 
