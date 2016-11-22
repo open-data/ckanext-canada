@@ -135,37 +135,38 @@ def rebuild(command_name, csv_files=None):
     if csv_files:
         for csv_file in csv_files:
             print csv_file + ':'
+            unmatched = None
             for resource_name, org_id, records in csv_data_batch(csv_file, command_name):
                 try:
                     org_detail = lc.action.organization_show(id=org_id)
                 except NotFound:
                     continue
                 print "    {0:s} {1}".format(org_id, len(records))
-                _update_records(records, org_detail, conn, resource_name)
+                unmatched = _update_records(
+                    records, org_detail, conn, resource_name, unmatched)
     else:
         for org in lc.action.organization_list():
             count = 0
             org_detail = lc.action.organization_show(id=org)
+            unmatched = None
             for resource_name, records in data_batch(org_detail['id'], lc, command_name):
-                _update_records(records, org_detail, conn, resource_name)
+                unmatched = _update_records(
+                    records, org_detail, conn, resource_name, unmatched)
                 count += len(records)
             print org, count
 
 
-def _update_records(records, org_detail, conn, resource_name):
+def _update_records(records, org_detail, conn, resource_name, unmatched):
     """
     Update records on solr core
 
     :param records: record dicts
-    :ptype records: sequence of record dicts
-
     :param org_detail: org structure as returned via local CKAN
-    :ptype org_detail: dict with local CKAN org structure
-
     :param conn: solr connection
-    :ptype conn: obj
-
     :param resource_name: type being updated
+    :param unmatched: yet-unmatched values for comparing prev/next year
+
+    :returns: new unmatched for next call for same org+resource_name
     """
     chromo = get_chromo(resource_name)
     pk = chromo.get('datastore_primary_key', [])
@@ -192,6 +193,13 @@ def _update_records(records, org_detail, conn, resource_name):
     choice_fields = dict(
         (f['datastore_id'], dict(f['choices']))
         for f in recombinant_choice_fields(resource_name, all_languages=True))
+
+    if any('solr_compare_previous_year' in f for f in chromo['fields']):
+        if not unmatched:
+            # previous years, next years
+            unmatched = ({}, {})
+    else:
+        unmatched = None
 
     for r in records:
         unique, friendly = unique_id(r)
@@ -228,11 +236,8 @@ def _update_records(records, org_detail, conn, resource_name):
                         facet_range,
                         float_value))
 
-            sum_to = f.get('solr_sum_to_field')
+            sum_to = list_or_none(f.get('solr_sum_to_field'))
             if sum_to:
-                # accept list or single field name from config
-                if not isinstance(sum_to, list):
-                    sum_to = [sum_to]
                 for fname in sum_to:
                     sum_to_field(solrrec, fname, value)
 
@@ -250,20 +255,24 @@ def _update_records(records, org_detail, conn, resource_name):
             solrrec[key] = value
 
             choices = choice_fields.get(f['datastore_id'])
-            if not choices:
-                continue
-
-            if key.endswith('_code'):
-                key = key[:-5]
-            solrrec[key + '_en'] = recombinant_language_text(
-                choices.get(value, ''), 'en')
-            solrrec[key + '_fr'] = recombinant_language_text(
-                choices.get(value, ''), 'fr')
+            if choices:
+                if key.endswith('_code'):
+                    key = key[:-5]
+                solrrec[key + '_en'] = recombinant_language_text(
+                    choices.get(value, ''), 'en')
+                solrrec[key + '_fr'] = recombinant_language_text(
+                    choices.get(value, ''), 'fr')
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
-        out.append(solrrec)
 
-    conn.add_many(out, _commit=True)
+        if unmatched:
+            match_compare_output(solrrec, out, unmatched, chromo)
+        else:
+            out.append(solrrec)
+
+    if out:
+        conn.add_many(out, _commit=True)
+    return unmatched
 
 
 def date2zulu(yyyy_mm_dd):
@@ -272,6 +281,19 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
+def list_or_none(v):
+    """
+    None -> None
+    "str" -> ["str"]
+    ["a", "b"] -> ["a", "b"]
+    """
+    if v is None:
+        return
+    # accept list or single field name from config
+    if not isinstance(v, list):
+        return [v]
+    return v
 
 
 def en_dollars(v):
@@ -323,3 +345,56 @@ def sum_to_field(solrrec, key, value):
         solrrec[key] = float_value + solrrec.get(key, 0)
     except TypeError:
         pass # None can stay as None
+
+
+def match_compare_output(solrrec, out, unmatched, chromo):
+    """
+    pop matching prev/next records from unmatched, create compare fields
+    and append on out
+    """
+    year = int(solrrec['year'])
+    prev_years, next_years = unmatched
+    p_rec = prev_years.pop(year - 1, None)
+    if p_rec:
+        out.append(compare_output(p_rec, solrrec, chromo))
+    else:
+        next_years[year] = solrrec
+    n_rec = next_years.pop(year + 1, None)
+    if n_rec:
+        out.append(compare_output(solrrec, n_rec, chromo))
+    else:
+        prev_years[year] = solrrec
+
+
+def compare_output(prev_solrrec, solrrec, chromo):
+    """
+    process solr_compare_previous_year fields and return solrrec with
+    extra sum and change fields added
+    """
+    out = dict(solrrec)
+
+    for f in chromo['fields']:
+        comp = f.get('solr_compare_previous_year')
+        if not comp:
+            continue
+        prev_value = prev_solrrec[f['datastore_id']]
+        out[comp['previous_year']] = prev_value
+        try:
+            float_cur = float(prev_value)
+            float_prev = float(solrrec[f['datastore_id']])
+            change = float_prev - float_cur
+        except ValueError:
+            float_cur = None
+            float_prev = None
+            change = None
+
+        out[comp['change']] = change
+
+        if 'sum_previous_year' in comp:
+            for sp in list_or_none(comp['sum_previous_year']):
+                sum_to_field(out, sp, float_prev)
+        if 'sum_change' in comp:
+            for sc in list_or_none(comp['sum_change']):
+                sum_to_field(out, sc, change)
+
+    return out
