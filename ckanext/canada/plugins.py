@@ -234,6 +234,7 @@ ckanext.canada:schemas/info.yaml
             'gravatar',
             'linked_gravatar',
             'linked_user',
+            'json_loads'
             ])
 
     def before_map(self, map):

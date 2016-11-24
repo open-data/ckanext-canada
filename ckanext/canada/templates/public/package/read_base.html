@@ -176,24 +176,40 @@ Remove the markdown_extract call because our notes is a dict not a string:
         </li>
       {% endif %}
     </ul>
-
-    <!-- 
-    {# Need these for Open Maps
-    <ul class="list-group">
-      <li class="list-group-item" style="background-color:#FFC0CB"><b>Status:</b>
-        <small>
-        {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
-        </small>
-      </li>      
-      <li class="list-group-item" style="background-color:#FFC0CB"><b>Spatial Representation Type:</b>
-        <small>
-        {# {{ cr.subject_field(subjects, pkg, client_lang) }} #}
-        </small>
-      </li>      
-    </ul>
-    #}
-    -->
-
   </div>
+
+  {% if pkg.get('distributor') %}
+  {% set dist = h.json_loads(pkg['distributor'])[h.lang()] %}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+    <div class="panel-title">{{_('Distributor Contact')}}</div>
+    </div>
+
+    <ul class="list-group">
+      {# FIXME: Evaluate ckanext-composite as an alternative to this pseudo-schema. #}
+      {% set dis_fields = (
+        {'field_name': 'organization_name', 'label': 'Organization Name'},
+        {'field_name': 'phone', 'label': 'Telephone Number'},
+        {'field_name': 'electronic_mail_address', 'label': 'Email', 'display_snippet': 'email.html'},
+        {'field_name': 'address', 'label': 'Address'},
+        {'field_name': 'city', 'label': 'City'},
+        {'field_name': 'country', 'label': 'Country'},
+        {'field_name': 'postal_code', 'label': 'Postal Code'},
+        {'field_name': 'administrative_area', 'label': 'Administrative Area'},
+        {'field_name': 'role', 'label': 'Role'}
+      )
+      %}
+      {% for field in dis_fields %}
+      {% if field.field_name in dist %}
+      <li class="list-group-item">
+        <b>{{ _(field.label) }}:</b><br />
+        {% snippet 'scheming/snippets/display_field.html',
+        field=field, data=dist,  entitiy_type='dataset', object_type=pkg.type %}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
 
 {% endblock %}

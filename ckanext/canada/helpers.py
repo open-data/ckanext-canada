@@ -227,6 +227,10 @@ def show_fgp_facets():
     return False
 
 
+def json_loads(value):
+    return json.loads(value)
+
+
 # FIXME: terrible hacks
 def gravatar(*args, **kwargs):
     '''Brute force disable gravatar'''
