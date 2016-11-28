@@ -7,12 +7,6 @@ Features:
 
 * Forms and Validation for GoC Metadata Schema
 
-  * complete, see wet4-scheming branch for upcoming scheming version
-
-* Batch import of data
-
-  * merged into ckanapi
-
 Installation:
 
 * Use `open-data fork of CKAN <https://github.com/open-data/ckan>`_ ,
@@ -61,14 +55,14 @@ Requirements
    - N/A
  * - data.gc.ca extension
    - `open-data/ckanext-canada <https://github.com/open-data/ckanext-canada>`_
-   - wet4-scheming
+   - master
    - * canada_forms
      * canada_internal
      * canada_public
      * canada_package
  * - WET-BOEW theme
    - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
-   - wet4-scheming
+   - master
    - * wet_theme
  * - Scheming extension
    - `open-data/ckanext-scheming <https://github.com/open-data/ckanext-scheming>`_
