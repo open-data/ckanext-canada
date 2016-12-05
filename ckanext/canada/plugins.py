@@ -232,7 +232,9 @@ ckanext.canada:schemas/info.yaml
             'show_subject_facet',
             'show_fgp_facets',
             'gravatar',
+            'linked_gravatar',
             'linked_user',
+            'json_loads'
             ])
 
     def before_map(self, map):
