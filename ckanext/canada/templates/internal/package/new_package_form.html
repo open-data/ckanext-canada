@@ -1,0 +1,7 @@
+{% extends 'package/snippets/package_form.html' %}
+
+{% block delete_button %}
+  {% if c.pkg_dict and h.check_access('package_delete', {'id': c.pkg_dict.id}) %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
