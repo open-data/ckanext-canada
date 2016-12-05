@@ -1,0 +1,10 @@
+{% set chromo = h.recombinant_get_chromo(res.name) %}
+
+{% for f in chromo.fields %}
+  {% snippet 'scheming/form_snippets/text.html',
+    field={
+      'field_name': f.datastore_id,
+      'label': f.label,
+      'required': f.datastore_id in chromo.datastore_primary_key,
+    }, data={}, errors={} %}
+{% endfor %}

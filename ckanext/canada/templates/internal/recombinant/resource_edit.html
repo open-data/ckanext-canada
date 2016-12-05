@@ -31,6 +31,21 @@
 {% endblock %}
 
 
+{% block tabpanels %}
+  {# XXX: For now only Travel Annual gets a custom form #}
+  {% if dataset.resources.0.name == 'travela' %}
+    <details id="update-one">
+      <summary><span class="glyphicon glyphicon-plus"></span>
+        {{ _("Update") }}
+      </summary>
+      {% snippet "snippets/travel_annual_form.html",
+        pkg=dataset, res=resource %}
+    </details>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+
 {% block scripts %}
   {{ super() }}
   <script>
