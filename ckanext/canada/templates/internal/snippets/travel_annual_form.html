@@ -1,29 +1,45 @@
 {% set chromo = h.recombinant_get_chromo(res.name) %}
 
 <form>
+  <div class='container-fluid'>
   <h3>{{ _('Create and update individual records') }}</h3>
-  {% for f in chromo.fields %}
-      {% snippet 'scheming/form_snippets/text.html',
-        field={
-          'field_name': f.datastore_id,
-          'label': f.label,
-          'form_placeholder':
-            '0.00' if f.datastore_type == 'money' else
-            '20XX' if f.datastore_type == 'year' else '',
-          'form_attrs': {'size': 60} if f.datastore_type == 'text' else {},
-          'required':
-            f.datastore_id in chromo.datastore_primary_key
-            or f.datastore_type == 'money',
-        }, data={}, errors={} %}
+    {% for f in chromo.fields %}
       {% if 'solr_compare_previous_year' in f %}
+        <div class='row'>
+        <div class='col-md-7'>
+          {% snippet 'scheming/form_snippets/text.html',
+            field={
+              'field_name': f.datastore_id,
+              'label': f.label,
+              'form_placeholder': '0.00',
+              'required': True,
+            }, data={}, errors={} %}
+        </div>
+        <div class='col-md-5 align-bottom'>
+          {% snippet 'scheming/form_snippets/text.html',
+            field={
+              'field_name': f.datastore_id + '_prev',
+              'label': _('Previous Year'),
+              'form_placeholder': '0.00',
+              'required': True,
+            }, data={}, errors={} %}
+        </div>
+        </div>
+      {% else %}
         {% snippet 'scheming/form_snippets/text.html',
           field={
-            'field_name': f.datastore_id + '_prev',
-            'label': f.label + ' ' + _('(Previous Year)'),
-            'form_placeholder': '0.00',
-            'required': True,
+            'field_name': f.datastore_id,
+            'label': f.label,
+            'form_placeholder':
+              '0.00' if f.datastore_type == 'money' else
+              '20XX' if f.datastore_type == 'year' else '',
+            'form_attrs': {'size': 60} if f.datastore_type == 'text' else {},
+            'required':
+              f.datastore_id in chromo.datastore_primary_key
+              or f.datastore_type == 'money',
           }, data={}, errors={} %}
-
       {% endif %}
-  {% endfor %}
+    {% endfor %}
+    <input class='btn btn-primary' type='submit' value='{{ _('Submit') }}' />
+  </div>
 </form>
