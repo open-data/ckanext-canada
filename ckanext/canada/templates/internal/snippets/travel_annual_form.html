@@ -1,25 +1,29 @@
 {% set chromo = h.recombinant_get_chromo(res.name) %}
 
-{% for f in chromo.fields %}
-  <form>
-    {% snippet 'scheming/form_snippets/text.html',
-      field={
-        'field_name': f.datastore_id,
-        'label': f.label,
-        'form_placeholder':
-          '0.00' if f.datastore_type == 'money' else
-          '20XX' if f.datastore_type == 'year' else '',
-        'form_attrs': {'size': 60} if f.datastore_type == 'text' else {},
-        'required': f.datastore_id in chromo.datastore_primary_key,
-      }, data={}, errors={} %}
-    {% if 'solr_compare_previous_year' in f %}
+<form>
+  <h3>{{ _('Create and update individual records') }}</h3>
+  {% for f in chromo.fields %}
       {% snippet 'scheming/form_snippets/text.html',
         field={
-          'field_name': f.datastore_id + '_prev',
-          'label': f.label + ' ' + _('(Previous Year)'),
-          'form_placeholder': '0.00',
+          'field_name': f.datastore_id,
+          'label': f.label,
+          'form_placeholder':
+            '0.00' if f.datastore_type == 'money' else
+            '20XX' if f.datastore_type == 'year' else '',
+          'form_attrs': {'size': 60} if f.datastore_type == 'text' else {},
+          'required':
+            f.datastore_id in chromo.datastore_primary_key
+            or f.datastore_type == 'money',
         }, data={}, errors={} %}
+      {% if 'solr_compare_previous_year' in f %}
+        {% snippet 'scheming/form_snippets/text.html',
+          field={
+            'field_name': f.datastore_id + '_prev',
+            'label': f.label + ' ' + _('(Previous Year)'),
+            'form_placeholder': '0.00',
+            'required': True,
+          }, data={}, errors={} %}
 
-    {% endif %}
-  </form>
-{% endfor %}
+      {% endif %}
+  {% endfor %}
+</form>
