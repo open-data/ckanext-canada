@@ -102,6 +102,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='package',
             action='delete'
         )
+        map.connect(
+            '/travela/{id}/{resource_id}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='create_travela',
+            conditions=dict(method=['POST']),
+        )
+
         return map
 
     def after_map(self, map):

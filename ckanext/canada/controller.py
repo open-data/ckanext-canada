@@ -581,5 +581,35 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 
 class PDUpdateController(BaseController):
-    def update(self):
-        request
+
+    def create_travela(self, id, resource_id):
+        lc = LocalCKAN(username=c.user)
+        pkg = lc.action.package_show(id=id)
+        res = lc.action.resource_show(id=resource_id)
+        org = lc.action.organization_show(id=pkg['owner_org'])
+        dataset = lc.action.recombinant_show(
+            dataset_type='travela', owner_org=org['name'])
+
+        chromo = h.recombinant_get_chromo('travela')
+        data = {}
+        data_prev = {}
+        form_data = {}
+        for f in chromo['fields']:
+            data[f['datastore_id']] = request.params.getone(f['datastore_id'])
+            if f['datastore_id'] + '_prev' in request.params:
+                 data_prev[f['datastore_id']] = request.params.getone(f['datastore_id'] + '_prev')
+                 form_data[f['datastore_id'] + '_prev'] = data_prev[f['datastore_id']]
+        create_errors = {'year': [_(u'bad stuff')]}
+        form_data.update(data)
+
+        return render('recombinant/resource_edit.html',
+            extra_vars={
+                'create_errors': create_errors,
+                'create_data': form_data,
+                'delete_errors': [],
+                'dataset': dataset,
+                'resource': res,
+                'organization': org,
+                'filters': {},
+                'action': 'edit'})
+

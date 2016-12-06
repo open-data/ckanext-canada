@@ -1,12 +1,16 @@
 {% set chromo = h.recombinant_get_chromo(res.name) %}
 
-<form action="{{ h.url_for(controller='ckanext.canada.controller:PDUpdateController', action='update') }}" method="POST" id="update_form">
+<form action="{{ h.url_for(
+  controller='ckanext.canada.controller:PDUpdateController',
+  action='create_travela',
+  id=pkg.id,
+  resource_id=res.id ) }}" method="POST" id="create_form">
   <div class='container-fluid'>
   <h3>{{ _('Create new record') }}</h3>
     {% for f in chromo.fields %}
       {% set required = f.get('form_required', False) %}
       {% set form_placeholder = f.get('form_placeholder', '') %}
-      {% set form_attrs = f.get('form_attrs', '') %}
+      {% set form_attrs = f.get('form_attrs', {}) %}
       {% if 'solr_compare_previous_year' in f %}
         <div class='row'>
         <div class='col-md-7'>
@@ -14,18 +18,18 @@
             field={
               'field_name': f.datastore_id,
               'label': f.label,
-              'form_placeholder': placeholder,
+              'form_placeholder': form_placeholder,
               'required': required,
-            }, data={}, errors={} %}
+            }, data=data, errors=errors %}
         </div>
         <div class='col-md-5 align-bottom'>
           {% snippet 'scheming/form_snippets/text.html',
             field={
               'field_name': f.datastore_id + '_prev',
               'label': _('Previous Year'),
-              'form_placeholder': placeholder,
+              'form_placeholder': form_placeholder,
               'required': required,
-            }, data={}, errors={} %}
+            }, data=data, errors=errors %}
         </div>
         </div>
       {% else %}
@@ -33,10 +37,10 @@
           field={
             'field_name': f.datastore_id,
             'label': f.label,
-            'form_placeholder': placeholder,
-            'form_attrs': {'size': 60} if f.datastore_type == 'text' else {},
+            'form_placeholder': form_placeholder,
+            'form_attrs': form_attrs,
             'required': required,
-          }, data={}, errors={} %}
+          }, data=data, errors=errors %}
       {% endif %}
     {% endfor %}
     <input class='btn btn-primary' type='submit' value='{{ _('Submit') }}' />

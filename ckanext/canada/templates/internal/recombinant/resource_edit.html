@@ -36,10 +36,13 @@
   {% if dataset.resources.0.name == 'travela' %}
     <details id="update-one">
       <summary><span class="glyphicon glyphicon-plus"></span>
-        {{ _("Update") }}
+        {{ _("Create") }}
       </summary>
       {% snippet "snippets/travel_annual_form.html",
-        pkg=dataset, res=resource %}
+        pkg=dataset,
+        res=resource,
+        data=create_data or {},
+        errors=create_errors or {} %}
     </details>
   {% endif %}
   {{ super() }}
