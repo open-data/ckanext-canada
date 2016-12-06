@@ -8,18 +8,8 @@ from webob.exc import HTTPFound
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
-from ckan.lib.base import (
-    BaseController,
-    c,
-    render,
-    model,
-    request,
-    h,
-    response,
-    abort,
-    redirect
-)
-from ckan.logic import get_action, check_access, schema
+from ckan.lib.base import model
+from ckan.logic import schema
 from ckan.controllers.user import UserController
 from ckan.authz import is_sysadmin
 from ckan.lib.helpers import (
@@ -41,6 +31,20 @@ from ckan.controllers.package import PackageController
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
+
+from ckantoolkit import (
+    c,
+    BaseController,
+    h,
+    render,
+    request,
+    response,
+    abort,
+    redirect_to,
+    get_action,
+    check_access,
+    )
+
 
 from ckanapi import LocalCKAN, NotAuthorized
 
