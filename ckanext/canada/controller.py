@@ -8,7 +8,7 @@ from webob.exc import HTTPFound
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
-from ckan.lib.base import model
+from ckan.lib.base import model, redirect
 from ckan.logic import schema
 from ckan.controllers.user import UserController
 from ckan.authz import is_sysadmin
@@ -16,7 +16,7 @@ from ckan.lib.helpers import (
     Page,
     date_str_to_datetime,
     url,
-    render_markdown
+    render_markdown,
 )
 from ckan.controllers.feed import (
     FeedController,
@@ -40,13 +40,16 @@ from ckantoolkit import (
     request,
     response,
     abort,
-    redirect_to,
     get_action,
     check_access,
+    get_validator,
+    Invalid,
     )
 
 
 from ckanapi import LocalCKAN, NotAuthorized
+
+int_validator = get_validator('int_validator')
 
 
 class CanadaController(BaseController):
@@ -599,17 +602,59 @@ class PDUpdateController(BaseController):
             if f['datastore_id'] + '_prev' in request.params:
                  data_prev[f['datastore_id']] = request.params.getone(f['datastore_id'] + '_prev')
                  form_data[f['datastore_id'] + '_prev'] = data_prev[f['datastore_id']]
-        create_errors = {'year': [_(u'bad stuff')]}
+
         form_data.update(data)
 
-        return render('recombinant/resource_edit.html',
-            extra_vars={
-                'create_errors': create_errors,
-                'create_data': form_data,
-                'delete_errors': [],
-                'dataset': dataset,
-                'resource': res,
-                'organization': org,
-                'filters': {},
-                'action': 'edit'})
+        def error(errors):
+            return render('recombinant/resource_edit.html',
+                extra_vars={
+                    'create_errors': errors,
+                    'create_data': form_data,
+                    'delete_errors': [],
+                    'dataset': dataset,
+                    'resource': res,
+                    'organization': org,
+                    'filters': {},
+                    'action': 'edit'})
 
+        try:
+            year = int_validator(data['year'], None)
+        except Invalid:
+            year = None
+
+        if not year:
+            return error({'year': [_(u'Invalid year')]})
+
+        response = lc.action.datastore_search(resource_id=resource_id,
+            filters={'year': data['year']})
+        if response['records']:
+            return error({'year': [_(u'Data for this year has already been entered')]})
+
+        response = lc.action.datastore_search(resource_id=resource_id,
+            filters={'year': year - 1})
+        if response['records']:
+            prev = response['records'][0]
+            errors = {}
+            for p in data_prev:
+                if prev[p] != data_prev[p]:
+                    errors[p + '_prev'] = [_(u'Does not match previous data "%s"') % prev[p]]
+            if errors:
+                return error(errors)
+        else:
+            lc.action.datastore_upsert(resource_id=resource_id,
+                method='insert',
+                records=[dict(data_prev, year=year - 1)])
+            h.flash_success(_("Record for %d added.") % (year - 1))
+
+        lc.action.datastore_upsert(resource_id=resource_id,
+            method='insert',
+            records=[data])
+
+        h.flash_success(_("Record for %d added.") % year)
+
+        redirect(h.url_for(
+            controller='ckanext.recombinant.controller:UploadController',
+            action='preview_table',
+            resource_name=res['name'],
+            owner_org=org['name'],
+            ))
