@@ -3093,7 +3093,8 @@ presets:
       replaces: [geotif]
     - value: GeoJSON
       mimetype: application/geo+json
-    - value: GeoPackage
+    - label: GeoPackage
+      value: GPKG
     - value: GIF
       mimetype: image/gif
       replaces: [gif]
@@ -3138,7 +3139,8 @@ presets:
       mimetype: application/vnd.google-earth.kmz
     - value: LAS
     - value: LYR
-    - value: MapInfo
+    - label: MapInfo
+      value: TAB
     - value: MFX
       mimetype: application/mxf
     - value: MOV
@@ -3178,10 +3180,10 @@ presets:
     - value: RDF
       mimetype: application/rdf+xml
       openness_score: 4
-    - value: RDF/XML
-      mimetype: application/rdf+xml 
-    - value: RDF Turtle
-    - value: RDF n-triples
+    - label: RDF Turtle
+      value: TTL
+    - label: RDF n-triples
+      value: NT
     - value: RDFa
       mimetype: text/html
       openness_score: 4
@@ -3202,7 +3204,10 @@ presets:
     - value: SQL
       mimetype: application/sql
       replaces: [sql]
-    - value: SQL Lite
+    - label: SQL Lite3
+      value: SQLITE3
+    - label: SQL Lite
+      value: SQLITE
     - value: SVG
       mimetype: image/svg+xml
       replaces: [svg]
