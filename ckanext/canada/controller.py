@@ -574,3 +574,8 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket.error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+
+class PDUpdateController(BaseController):
+    def update(self):
+        request

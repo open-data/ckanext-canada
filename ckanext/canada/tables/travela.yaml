@@ -15,11 +15,13 @@ resources:
   - datastore_id: year
     label: Fiscal Year Ending
     datastore_type: year
+    form_required: true
     excel_column_width: 20
 
   - datastore_id: public_servants
     label: Travel - Public Servants
     datastore_type: money
+    form_required: true
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -31,6 +33,7 @@ resources:
   - datastore_id: non_public_servants
     label: Travel - Non-Public Servants
     datastore_type: money
+    form_required: true
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -42,6 +45,7 @@ resources:
   - datastore_id: hospitality
     label: Hospitality
     datastore_type: money
+    form_required: true
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -53,6 +57,7 @@ resources:
   - datastore_id: conference_fees
     label: Conference Fees
     datastore_type: money
+    form_required: true
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -65,6 +70,7 @@ resources:
     label: International Travel by Minister and Minister's Staff
            (also included in Non-Public Servant Travel)
     datastore_type: money
+    form_required: true
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
