@@ -3030,6 +3030,7 @@ presets:
     - value: CCT
     - value: CDED ASCII
       replaces: [cded ascii]
+    - value: CDF
     - value: CDR
       replaces: [cdr]
     - label: Blackberry Application
@@ -3037,6 +3038,7 @@ presets:
     - value: CSV
       mimetype: text/csv
       openness_score: 3
+    - value: DBD
     - value: DBF
       mimetype: application/dbf
     - value: DICOM
@@ -3089,6 +3091,10 @@ presets:
     - value: GeoTIF
       mimetype: image/tiff
       replaces: [geotif]
+    - value: GEOJSON
+      mimetype: application/geo+json
+    - label: GeoPackage
+      value: GPKG
     - value: GIF
       mimetype: image/gif
       replaces: [gif]
@@ -3096,6 +3102,8 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GRIB1
+    - value: GRIB2
     - value: HDF
       mimetype: application/x-hdf
       replaces: ["GNU Zipped HDF", "hdf"]
@@ -3117,6 +3125,8 @@ presets:
     - value: JSON
       mimetype: application/json
       openness_score: 3
+    - label: JSON-LD
+      value: JSONLD
     - value: JSONL
       mimetype: application/json-l
       openness_score: 3
@@ -3128,6 +3138,10 @@ presets:
     - value: KMZ
       openness_score: 3
       mimetype: application/vnd.google-earth.kmz
+    - value: LAS
+    - value: LYR
+    - label: MapInfo
+      value: TAB
     - value: MFX
       mimetype: application/mxf
     - value: MOV
@@ -3138,6 +3152,7 @@ presets:
       mimetype: video/mpeg
     - value: MP3
       mimetype: audio/mpeg
+    - value: MXD
     - value: NetCDF
       mimetype: application/x-netcdf
       replaces: [netcdf]
@@ -3166,6 +3181,10 @@ presets:
     - value: RDF
       mimetype: application/rdf+xml
       openness_score: 4
+    - label: RDF Turtle
+      value: TTL
+    - label: RDF n-triples
+      value: NT
     - value: RDFa
       mimetype: text/html
       openness_score: 4
@@ -3186,17 +3205,24 @@ presets:
     - value: SQL
       mimetype: application/sql
       replaces: [sql]
+    - label: SQL Lite3
+      value: SQLITE3
+    - label: SQL Lite
+      value: SQLITE
     - value: SVG
       mimetype: image/svg+xml
       replaces: [svg]
     - value: TIFF
       mimetype: image/tiff
       replaces: [tiff]
+    - value: TRIG
+    - value: TRIX
     - value: TFW
       replaces: [tiff world file]
     - value: TXT
       mimetype: text/plain
       replaces: ["ASCII", "text", "TXT"]
+    - value: VPF
     - value: WAV
       mimetype: audio/wav
     - value: WFS
@@ -3212,6 +3238,7 @@ presets:
       replaces: [wmts]
     - value: WMV
       mimetype: video/x-ms-wmv
+    - value: WPS
     - value: XML
       mimetype: application/xml
       openness_score: 3
