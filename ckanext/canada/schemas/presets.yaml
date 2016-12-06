@@ -3211,12 +3211,11 @@ presets:
     - value: SVG
       mimetype: image/svg+xml
       replaces: [svg]
-    - value: TAB
     - value: TIFF
       mimetype: image/tiff
       replaces: [tiff]
-    - value: TRiG
-    - value: TRiX
+    - value: TRIG
+    - value: TRIX
     - value: TFW
       replaces: [tiff world file]
     - value: TXT
