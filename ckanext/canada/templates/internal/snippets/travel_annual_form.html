@@ -5,7 +5,8 @@
   <h3>{{ _('Create new record') }}</h3>
     {% for f in chromo.fields %}
       {% set required = f.get('form_required', False) %}
-      {% set placeholder = f.get('form_placeholder', '') %}
+      {% set form_placeholder = f.get('form_placeholder', '') %}
+      {% set form_attrs = f.get('form_attrs', '') %}
       {% if 'solr_compare_previous_year' in f %}
         <div class='row'>
         <div class='col-md-7'>

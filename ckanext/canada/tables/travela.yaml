@@ -88,51 +88,61 @@ resources:
   - datastore_id: public_servant_compared_fiscal_year_en
     label: Travel Public Servants - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: public_servant_compared_fiscal_year_fr
     label: Travel Public Servants - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year_en
     label: Travel Non-Public Servants - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year_fr
     label: Travel Non-Public Servants - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year_en
     label: Hospitality - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year_fr
     label: Hospitality - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year_en
     label: Conference Fees - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year_fr
     label: Conference Fees - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: minister_compared_fiscal_year_en
     label: International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: minister_compared_fiscal_year_fr
     label: International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   datastore_primary_key: [year]
