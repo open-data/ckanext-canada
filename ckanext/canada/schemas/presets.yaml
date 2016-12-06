@@ -3091,7 +3091,7 @@ presets:
     - value: GeoTIF
       mimetype: image/tiff
       replaces: [geotif]
-    - value: GeoJSON
+    - value: GEOJSON
       mimetype: application/geo+json
     - label: GeoPackage
       value: GPKG
@@ -3125,7 +3125,8 @@ presets:
     - value: JSON
       mimetype: application/json
       openness_score: 3
-    - value: JSON-LD
+    - label: JSON-LD
+      value: JSONLD
     - value: JSONL
       mimetype: application/json-l
       openness_score: 3
