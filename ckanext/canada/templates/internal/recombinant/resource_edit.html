@@ -31,7 +31,7 @@
 {% endblock %}
 
 
-{% block tabpanels %}
+{% block update_panel %}
   {# XXX: For now only Travel Annual gets a custom form #}
   {% if dataset.resources.0.name == 'travela' %}
     <details id="update-one">
@@ -44,8 +44,9 @@
         data=create_data or {},
         errors=create_errors or {} %}
     </details>
+  {% else %}
+    {{ super() }}
   {% endif %}
-  {{ super() }}
 {% endblock %}
 
 
