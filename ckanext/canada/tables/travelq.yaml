@@ -27,6 +27,16 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
+  - datastore_id: disclosure_group
+    label: Disclosure Group
+    datastore_type: text
+    excel_column_width: 15
+    choices:
+      exempt:
+        en: Minister/Parliamentary Secretaries/Exempt Staff
+      nonexempt:
+        en: Senior Level Employees
+
   - datastore_id: title_fr
     label: Title (French)
     datastore_type: text
