@@ -22,6 +22,16 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+  - datastore_id: disclosure_group
+    label: Disclosure Group
+    datastore_type: text
+    excel_column_width: 15
+    choices:
+      exempt:
+        en: Minister/Parliamentary Secretaries/Exempt Staff
+      nonexempt:
+        en: Senior Level Employees
+
   - datastore_id: title_en
     label: Title (English)
     datastore_type: text
@@ -86,6 +96,17 @@ resources:
      - 1000
      - 5000
      - 25000
+  
+  - datastore_id: additional_comments_en
+    label: Additional Comments English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: additional_comments_fr
+    label: Additional Comments French
+    datastore_type: text
+    excel_column_width: 20
+
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
@@ -103,6 +124,7 @@ resources:
   examples:
     record:
       ref_number: "1980198"
+      disclosure_group: nonexempt
       name: Jane Smith
       date: "2016-01-01"
       location: Halifax
