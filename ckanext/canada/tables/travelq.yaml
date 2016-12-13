@@ -27,9 +27,9 @@ resources:
     datastore_type: text
     excel_column_width: 15
     choices:
-      exempt:
+      MPSES:
         en: Minister/Parliamentary Secretaries/Exempt Staff
-      nonexempt:
+      SLE:
         en: Senior Level Employees
 
   - datastore_id: title_en
@@ -164,7 +164,7 @@ resources:
     record:
       ref_number: "1980198"
       name: Jane Smith
-      disclosure_group: nonexempt
+      disclosure_group: SLE
       date: "2016-01-01"
       destination: Halifax
       airfare: "600.00"
