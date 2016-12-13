@@ -10,7 +10,6 @@ msgcat --use-first \
     "$HERE/../../ckanext-recombinant/ckanext/recombinant/i18n/fr/LC_MESSAGES/recombinant.po" \
     "$HERE/../../ckan/ckan/i18n/fr/LC_MESSAGES/ckan.po" \
     "$HERE/../../ckanext-wet-boew/ckanext/wet_boew/i18n/fr/LC_MESSAGES/wet_boew.po" \
-    "$HERE/../../ckanext-wet-boew/ckanext/GCWeb/i18n/fr/LC_MESSAGES/GCWeb.po" \
     | msgfmt - -o "$DEST/ckan.mo"
 
 # English overrides
