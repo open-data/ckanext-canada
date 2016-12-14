@@ -48,6 +48,7 @@ from ckantoolkit import (
 
 
 from ckanapi import LocalCKAN, NotAuthorized
+from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
 
@@ -598,7 +599,8 @@ class PDUpdateController(BaseController):
         data_prev = {}
         form_data = {}
         for f in chromo['fields']:
-            data[f['datastore_id']] = request.params.getone(f['datastore_id'])
+            dirty = request.params.getone(f['datastore_id'])
+            data[f['datastore_id']] = canonicalize(dirty, f['datastore_type'])
             if f['datastore_id'] + '_prev' in request.params:
                  data_prev[f['datastore_id']] = request.params.getone(f['datastore_id'] + '_prev')
                  form_data[f['datastore_id'] + '_prev'] = data_prev[f['datastore_id']]
