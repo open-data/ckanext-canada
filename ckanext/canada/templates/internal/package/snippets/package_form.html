@@ -27,4 +27,10 @@
   </p>
 {% endblock %}
 
-{% block save_button_text %}{{ _('Next: Add Resource or Related Item') }}{% endblock %}
+{% block save_button_text %}
+  {% if c.action == 'new' %}
+    {{ _('Next: Add Resource or Related Item') }}
+  {% else %}
+    {{ _('Update Dataset') }}
+  {% endif %}
+{% endblock %}
