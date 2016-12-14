@@ -195,7 +195,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [row[colname] for colname in cols]
+                [row.get(colname, '') for colname in cols]
                 for row in response['records']
             ],
         })
