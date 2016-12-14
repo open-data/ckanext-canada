@@ -161,7 +161,7 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
-    def datatable(self, resource_id):
+    def datatable(self, resource_name, resource_id):
         draw = int(request.params['draw'])
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
@@ -171,14 +171,14 @@ class CanadaController(BaseController):
                       else 'asc'
                       )
 
+        chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-
         unfiltered_response = lc.action.datastore_search(
             resource_id=resource_id,
             limit=1,
         )
 
-        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        cols = [f['datastore_id'] for f in chromo['fields']]
         sort_str = cols[sort_by_num] + ' ' + sort_order
 
         response = lc.action.datastore_search(
