@@ -22,10 +22,8 @@ resources:
     datastore_type: text
     excel_column_width: 15
     choices:
-      MPSES:
-        en: Minister/Parliamentary Secretaries/Exempt Staff
-      SLE:
-        en: Senior Level Employees
+      MPSES: Minister/Parliamentary Secretaries/Exempt Staff
+      SLE: Senior Level Employees
 
   - datastore_id: name
     label: Name
