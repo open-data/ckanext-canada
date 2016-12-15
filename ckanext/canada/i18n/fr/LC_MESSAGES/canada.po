@@ -735,6 +735,9 @@ msgstr "Nombre de pages"
 msgid "Proactive Disclosure - Travel Expenses"
 msgstr "Divulgation proactive – Dépenses de voyage"
 
+msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
+msgstr "Divulgation proactive – Dépenses de voyage (Rien à signaler)"
+
 msgid "Travel Expenditures"
 msgstr "Divulgation proactive – Dépenses de voyage"
 
@@ -769,11 +772,17 @@ msgstr "Autres dépenses"
 msgid "Total Amount"
 msgstr "Montant total"
 
+msgid "Quarter"
+msgstr "trimestre"
+
+msgid "Fiscal Year Ending"
+msgstr "Exercice financier se terminant"
+
 msgid "Proactive Disclosure - Hospitality Expenses"
 msgstr "Divulgation proactive – Dépenses d'accueil"
 
-msgid "Proactive Disclosure - Hospitality"
-msgstr "Divulgation proactive – Dépenses d'accueil"
+msgid "Proactive Disclosure - Hospitality Nothing to Report"
+msgstr "Divulgation proactive – Dépenses d'accueil (Rien à signaler)"
 
 msgid "Access, upload and modify the quarterly hospitality expenses for your organization"
 msgstr "Accès, téléversement et modification des dépenses trimestrielles liées à l’accueil pour votre organisation"
@@ -868,6 +877,9 @@ msgstr "Carte d'acquisition pour toutes les valeurs en dollars– Valeur totale 
 msgid "Proactive Disclosure - Contracts"
 msgstr "Divulgation proactive - Contrats"
 
+msgid "Proactive Disclosure - Contracts Nothing to Report"
+msgstr "Divulgation proactive – Contrats (Rien à signaler)"
+
 msgid "Proactive Disclosure"
 msgstr "Divulgation proactive"
 
@@ -961,8 +973,8 @@ msgstr "Type d’instrument"
 msgid "Proactive Disclosure - Grants and Contributions"
 msgstr "Divulgation proactive - Subventions et les contributions"
 
-msgid "Access, upload and modify the Grants and Contributions reports for your organization"
-msgstr "Accès, téléversement et modifications des rapports sur les contributions et les subventions pour votre organisation"
+msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
+msgstr "Divulgation proactive - Subventions et les contributions  (Rien à signaler)"
 
 msgid "Program Number"
 msgstr "Numéro d’identification du programme"
@@ -1003,17 +1015,17 @@ msgstr "Informations supplémentaires en anglais"
 msgid "Additional Information French"
 msgstr "Informations supplémentaires en français"
 
-msgid "Proactive Disclosure - Annual Expenditures on Travel"
-msgstr "Divulgation proactive - Dépenses annuelles totales de voyages"
+msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
+msgstr "Divulgation proactive – dépenses de voyages, d’accueil, de conférences et d’événements"
 
 msgid "This dataset includes all of the annual reports on travel expenses incurred within your organization."
 msgstr "Ce jeu de données comprend tous les rapports annuels sur les dépenses de voyage engagées au sein de votre organisation."
 
-msgid "Public Servants - Compared Fiscal Year"
-msgstr "Voyages des fonctionnaires - comparaison avec l’exercice précédent"
+msgid "Travel Public Servants - Explanation of Significant Variance"
+msgstr "Voyages des fonctionnaires : Comparaison avec l’exercice financier précédent"
 
-msgid "Non-Public Servants - Compared Fiscal Year"
-msgstr "Voyages des non-fonctionnaires - comparaison avec l’exercice précédent"
+msgid "Travel Non-Public Servants - Explanation of Significant Variance"
+msgstr "Voyages des non-fonctionnaires : Comparaison avec l’exercice financier précédent"
 
 msgid "Travel - Public Servants (Change)"
 msgstr "Voyages - fonctionnaires (modification)"
@@ -1036,8 +1048,8 @@ msgstr "Total des dépenses de voyage - exercice précédent"
 msgid "Total Travel - Change"
 msgstr "Total des dépenses de voyage - modification"
 
-msgid "Hospitality - Compared Fiscal Year"
-msgstr "Accueil - comparaison avec l’exercice précédent"
+msgid "Hospitality - Explanation of Significant Variance"
+msgstr "Voyages des fonctionnaires : Comparaison avec l’exercice financier précédent"
 
 msgid "Hospitality - Previous Year"
 msgstr "Accueil - exercice précédent"
@@ -1045,8 +1057,8 @@ msgstr "Accueil - exercice précédent"
 msgid "Hospitality - Change"
 msgstr "Accueil - modification"
 
-msgid "Conference Fees - Compared Fiscal Year"
-msgstr "Frais de conférence - comparaison avec l’exercice précédent"
+msgid "Conference Fees - Explanation of Significant Variance"
+msgstr "Frais de conférence : Comparaison avec l’exercice financier précédent"
 
 msgid "Conference Fees - Previous Year"
 msgstr "Frais de conférence - exercice précédent"
@@ -1071,6 +1083,9 @@ msgstr "Voyages à l’étranger du ministre et de son personnel (aussi inclus d
 
 msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Change"
 msgstr "Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - modification"
+
+msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance"
+msgstr "Dépenses du ministre et de son personnel : Comparaison avec l’exercice financier précédent"
 
 msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
 msgstr "Divulgation proactive – Dossiers sur les actes répréhensibles fondés"
@@ -1104,6 +1119,12 @@ msgstr "Recommendations et mesures Correctives françaises"
 
 msgid "Proactive Disclosure - Position Reclassification"
 msgstr "Divulgation proactive - Reclassifications de postes"
+
+msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
+msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
+
+msgid "Access, upload and modify the Grants and Contributions reports for your organization"
+msgstr "Accès, téléversement et modifications des rapports sur les contributions et les subventions pour votre organisation"
 
 msgid "Access, upload and modify the position reclassification reports for your organization"
 msgstr "Accès, téléversement et modifications des rapports sur les contributions et les subventions pour votre organisation"
@@ -1693,3 +1714,13 @@ msgstr "S.V.P. consulter votre boîte à lettres électronique pour confirmer vo
 
 msgid "Column visibility"
 msgstr "Visibilité des colonnes"
+
+msgid "Create"
+msgstr "Créer"
+
+msgid "Record for %d added."
+msgstr "Record pour %d ajoutée."
+
+msgid "Previous Year"
+msgstr "année précédente"
+
