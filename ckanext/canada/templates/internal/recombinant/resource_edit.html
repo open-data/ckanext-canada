@@ -18,11 +18,9 @@
     <div class="panel panel-primary">
       <div class="panel-heading">{{ _("Guide") }}</div>
       <div class="panel-body">
-        {% if resource['name'] == 'inventory' %}
-          {% set gcpedialink = "http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes" %}
-        {% else %}
-          {% set gcpedialink = _('http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') %}
-        {% endif %}
+        {% set gcpedialink = _( h.recombinant_get_geno(dataset.dataset_type).get(
+             'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
+        %}
         <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
       </div>
     </div>
