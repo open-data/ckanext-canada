@@ -91,7 +91,7 @@ class ATICommand(CkanCommand):
         if csv_files:
             for csv_file in csv_files:
                 print csv_file + ':'
-                for org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
+                for resource_name, org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
                     try:
                         org_detail = lc.action.organization_show(id=org_id)
                     except NotFound:
@@ -102,7 +102,7 @@ class ATICommand(CkanCommand):
             for org_id in lc.action.organization_list():
                 count = 0
                 org_detail = lc.action.organization_show(id=org_id)
-                for records in data_batch(org_detail['id'], lc, TARGET_DATASET):
+                for resource_name, records in data_batch(org_detail['id'], lc, TARGET_DATASET):
                     _update_records(records, org_detail, conn)
                     count += len(records)
                 print org_id, count

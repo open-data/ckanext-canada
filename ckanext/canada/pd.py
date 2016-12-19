@@ -7,6 +7,7 @@ import logging
 import json
 from unicodecsv import DictReader
 from _csv import Error as _csvError
+from babel.numbers import format_currency
 
 import paste.script
 from pylons import config
@@ -14,8 +15,7 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN, NotFound
 
-from ckanext.recombinant.write_excel import excel_template
-from ckanext.recombinant.tables import get_chromo, get_dataset_types
+from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
     recombinant_language_text)
@@ -24,9 +24,6 @@ from ckanext.canada.dataset import (
     solr_connection,
     data_batch,
     csv_data_batch)
-
-
-SPLIT_XLS_ROWS = 50002
 
 
 class PDCommand(CkanCommand):
@@ -64,123 +61,112 @@ class PDCommand(CkanCommand):
         cmd = self.args[0]
         self._load_config()
 
-        if cmd == 'build-templates':
-            return self._build_templates()
-        elif cmd == 'clear':
-            return self._clear_index()
+        if cmd == 'clear':
+            return clear_index(self.command_name)
         elif cmd == 'rebuild':
-            return self._rebuild(self.options.csv_file)
+            return rebuild(
+                self.command_name,
+                [self.options.csv_file] if self.options.csv_file else None)
 
-    def _clear_index(self):
-        conn = solr_connection(self.command_name)
-        conn.delete_query("*:*")
-        conn.commit()
 
-    def _rebuild(self, csv_file=None):
-        """
-        Implement rebuild command
+class PDNilCommand(CkanCommand):
+    """
+    Manage the Proactive Disclosures SOLR indexes + data files
 
-        :param csv_file: path to .csv file for input
-        :type csv_file: str
+    Usage::
 
-        :return: Nothing
-        :rtype: None
-        """
-        self._clear_index()
+        paster <pd-type> clear
+                         rebuild [-f <file> <file>]
 
-        conn = solr_connection(self.command_name)
-        lc = LocalCKAN()
-        if csv_file:
-            count = {}
-            for org_id, records in csv_data_batch(csv_file, self.command_name):
-                if org_id not in count:
-                    count[org_id] = 0
-                org_detail = lc.action.organization_show(id=org_id)
-                _update_records(records, org_detail, conn, self.command_name)
-                count[org_id] += len(records)
-            for org_id in lc.action.organization_list():
-                print org_id, count.get(org_id, 0)
-        else:
-            for org in lc.action.organization_list():
-                count = 0
-                org_detail = lc.action.organization_show(id=org)
-                for records in data_batch(org_detail['id'], lc, self.command_name):
-                    _update_records(records, org_detail, conn, self.command_name)
-                    count += len(records)
-                print org, count
+    Options::
 
-    def _build_templates(self):
-        """
-        Implement build-templates command
-        """
-        lc = LocalCKAN()
-        output_files = {}
-        next_row = {}
-        output_counter = {}
-        output_path = self.args[2:][-1]
-        dataset_types = get_dataset_types(self.command_name)
-        table = get_chromo(dataset_types[0])
+        -f/--csv-file <file> <file>     use specified CSV files as PD and
+                                        PD-nil input, instead of the
+                                        (default) CKAN database
+    """
+    summary = __doc__.split('\n')[0]
+    usage = __doc__
 
-        def close_write_file(org_id):
-            book = output_files[org_id]
-            if not book:
-                return
-            book.save(os.path.join(output_path,
-                org_id + '-' + str(output_counter[org_id]) + '.xls'))
-            output_files[org_id] = None
+    parser = paste.script.command.Command.standard_parser(verbose=True)
+    parser.add_option('-c', '--config', dest='config',
+        default='development.ini', help='Config file to use.')
+    parser.add_option(
+        '-f',
+        '--csv',
+        nargs=2,
+        dest='csv_files',
+        help='CSV files to use as input (or default CKAN DB)')
 
-        def out_file(org_id):
-            if org_id in output_files:
-                next_row[org_id] += 1
-                # need to start a new file?
-                if next_row[org_id] > SPLIT_XLS_ROWS:
-                    close_write_file(org_id)
-                else:
-                    return output_files[org_id], next_row[org_id]
-            try:
-                org = lc.action.organization_show(
-                    id=org_id, include_data_batch=False)
-            except NotFound:
-                logging.error('org id', org_id, 'not found')
-                output_files[org_id] = None
-                next_row[org_id] = 0
-                return None, None
-            book = excel_template(dataset_types[0], org)
-            output_files[org_id] = book
-            output_counter[org_id] = output_counter.get(org_id, 0) + 1
-            next_row[org_id] = len(book.get_sheet(0).get_rows())
-            return book, next_row[org_id]
+    def command(self):
+        if not self.args or self.args[0] in ['--help', '-h', 'help']:
+            print self.__doc__
+            return
 
-        def add_row(book, row, d):
-            sheet = book.get_sheet(0)
-            for i, f in enumerate(table['fields']):
-                sheet.write(row, i, d[f['datastore_id']])
+        cmd = self.args[0]
+        self._load_config()
 
-        for f in self.args[1:-1]:
-            for d in DictReader(open(f, 'rb')):
-                book, row = out_file(d['organization'])
-                if not book:
+        if cmd == 'clear':
+            return clear_index(self.command_name)
+        elif cmd == 'rebuild':
+            return rebuild(self.command_name, self.options.csv_files)
+
+
+def clear_index(command_name):
+    conn = solr_connection(command_name)
+    conn.delete_query("*:*")
+    conn.commit()
+
+
+
+def rebuild(command_name, csv_files=None):
+    """
+    Implement rebuild command
+
+    :param csv_file: path to .csv file for input
+    :type csv_file: str
+
+    :return: Nothing
+    :rtype: None
+    """
+    clear_index(command_name)
+
+    conn = solr_connection(command_name)
+    lc = LocalCKAN()
+    if csv_files:
+        for csv_file in csv_files:
+            print csv_file + ':'
+            unmatched = None
+            for resource_name, org_id, records in csv_data_batch(csv_file, command_name):
+                try:
+                    org_detail = lc.action.organization_show(id=org_id)
+                except NotFound:
                     continue
-                add_row(book, row, d)
+                print "    {0:s} {1}".format(org_id, len(records))
+                unmatched = _update_records(
+                    records, org_detail, conn, resource_name, unmatched)
+    else:
+        for org in lc.action.organization_list():
+            count = 0
+            org_detail = lc.action.organization_show(id=org)
+            unmatched = None
+            for resource_name, records in data_batch(org_detail['id'], lc, command_name):
+                unmatched = _update_records(
+                    records, org_detail, conn, resource_name, unmatched)
+                count += len(records)
+            print org, count
 
-        for org_id in output_files:
-            close_write_file(org_id)
 
-
-def _update_records(records, org_detail, conn, resource_name):
+def _update_records(records, org_detail, conn, resource_name, unmatched):
     """
     Update records on solr core
 
     :param records: record dicts
-    :ptype records: sequence of record dicts
-
     :param org_detail: org structure as returned via local CKAN
-    :ptype org_detail: dict with local CKAN org structure
-
     :param conn: solr connection
-    :ptype conn: obj
-
     :param resource_name: type being updated
+    :param unmatched: yet-unmatched values for comparing prev/next year
+
+    :returns: new unmatched for next call for same org+resource_name
     """
     chromo = get_chromo(resource_name)
     pk = chromo.get('datastore_primary_key', [])
@@ -208,6 +194,13 @@ def _update_records(records, org_detail, conn, resource_name):
         (f['datastore_id'], dict(f['choices']))
         for f in recombinant_choice_fields(resource_name, all_languages=True))
 
+    if any('solr_compare_previous_year' in f for f in chromo['fields']):
+        if not unmatched:
+            # previous years, next years
+            unmatched = ({}, {})
+    else:
+        unmatched = None
+
     for r in records:
         unique, friendly = unique_id(r)
 
@@ -231,19 +224,22 @@ def _update_records(records, org_detail, conn, resource_name):
             key = f['datastore_id']
             value = r[key]
 
-            facet_range = f.get('solr_float_range_facet')
+            facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
                 try:
                     float_value = float(value)
                 except ValueError:
                     pass
                 else:
-                    for i, fac in enumerate(facet_range):
-                        if 'less_than' not in fac or float_value < fac['less_than']:
-                            solrrec[key + '_range'] = str(i)
-                            solrrec[key + '_range_en'] = fac['label'].split(' | ')[0]
-                            solrrec[key + '_range_fr'] = fac['label'].split(' | ')[-1]
-                            break
+                    solrrec.update(dollar_range_facet(
+                        key,
+                        facet_range,
+                        float_value))
+
+            sum_to = list_or_none(f.get('solr_sum_to_field'))
+            if sum_to:
+                for fname in sum_to:
+                    sum_to_field(solrrec, fname, value)
 
             if f.get('datastore_type') == 'date':
                 try:
@@ -259,20 +255,24 @@ def _update_records(records, org_detail, conn, resource_name):
             solrrec[key] = value
 
             choices = choice_fields.get(f['datastore_id'])
-            if not choices:
-                continue
-
-            if key.endswith('_code'):
-                key = key[:-5]
-            solrrec[key + '_en'] = recombinant_language_text(
-                choices.get(value, ''), 'en')
-            solrrec[key + '_fr'] = recombinant_language_text(
-                choices.get(value, ''), 'fr')
+            if choices:
+                if key.endswith('_code'):
+                    key = key[:-5]
+                solrrec[key + '_en'] = recombinant_language_text(
+                    choices.get(value, ''), 'en')
+                solrrec[key + '_fr'] = recombinant_language_text(
+                    choices.get(value, ''), 'fr')
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
-        out.append(solrrec)
 
-    conn.add_many(out, _commit=True)
+        if unmatched:
+            match_compare_output(solrrec, out, unmatched, chromo)
+        else:
+            out.append(solrrec)
+
+    if out:
+        conn.add_many(out, _commit=True)
+    return unmatched
 
 
 def date2zulu(yyyy_mm_dd):
@@ -281,3 +281,120 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
+def list_or_none(v):
+    """
+    None -> None
+    "str" -> ["str"]
+    ["a", "b"] -> ["a", "b"]
+    """
+    if v is None:
+        return
+    # accept list or single field name from config
+    if not isinstance(v, list):
+        return [v]
+    return v
+
+
+def en_dollars(v):
+    return format_currency(v, 'CAD', locale='en_CA')
+
+
+def fr_dollars(v):
+    return format_currency(v, 'CAD', locale='fr_CA')
+
+
+def dollar_range_facet(key, facet_range, float_value):
+    """
+    return solr range fields for dollar float_value in ranges
+    given by facet_range, in English and French
+
+    E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
+    "$0 - $999.99", "$1,000 - $4,999.99", "$5,000 +" in English
+    """
+    last_fac = None
+    for i, fac in enumerate(facet_range):
+        if float_value < fac:
+            break
+        last_fac = fac
+    else:
+        return {
+            key + u'_range': unicode(i),
+            key + u'_en': en_dollars(fac) + u'+',
+            key + u'_fr': fr_dollars(fac) + u' +'}
+
+    if last_fac is None:
+        return {}
+
+    return {
+        key + u'_range': unicode(i - 1),
+        key + u'_en': en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
+        key + u'_fr': fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+
+
+def sum_to_field(solrrec, key, value):
+    """
+    modify solrrec dict in-place to add this value to solrrec[key]
+    """
+    try:
+        float_value = float(value)
+    except ValueError:
+        solrrec[key] = None # failed to find sum
+        return
+    try:
+        solrrec[key] = float_value + solrrec.get(key, 0)
+    except TypeError:
+        pass # None can stay as None
+
+
+def match_compare_output(solrrec, out, unmatched, chromo):
+    """
+    pop matching prev/next records from unmatched, create compare fields
+    and append on out
+    """
+    year = int(solrrec['year'])
+    prev_years, next_years = unmatched
+    p_rec = prev_years.pop(year - 1, None)
+    if p_rec:
+        out.append(compare_output(p_rec, solrrec, chromo))
+    else:
+        next_years[year] = solrrec
+    n_rec = next_years.pop(year + 1, None)
+    if n_rec:
+        out.append(compare_output(solrrec, n_rec, chromo))
+    else:
+        prev_years[year] = solrrec
+
+
+def compare_output(prev_solrrec, solrrec, chromo):
+    """
+    process solr_compare_previous_year fields and return solrrec with
+    extra sum and change fields added
+    """
+    out = dict(solrrec)
+
+    for f in chromo['fields']:
+        comp = f.get('solr_compare_previous_year')
+        if not comp:
+            continue
+        prev_value = prev_solrrec[f['datastore_id']]
+        out[comp['previous_year']] = prev_value
+        try:
+            float_prev = float(prev_value)
+            float_cur = float(solrrec[f['datastore_id']])
+            change = float_cur - float_prev
+        except ValueError:
+            float_prev = None
+            float_cur = None
+            change = None
+
+        out[comp['change']] = change
+
+        if 'sum_previous_year' in comp:
+            for sp in list_or_none(comp['sum_previous_year']):
+                sum_to_field(out, sp, float_prev)
+        if 'sum_change' in comp:
+            for sc in list_or_none(comp['sum_change']):
+                sum_to_field(out, sc, change)
+
+    return out

@@ -34,14 +34,14 @@ setup(
     canada=ckanext.canada.commands:CanadaCommand
     ati=ckanext.canada.ati:ATICommand
 
-    contracts=ckanext.canada.pd:PDCommand
-    grants=ckanext.canada.pd:PDCommand
-    wrongdoing=ckanext.canada.pd:PDCommand
-    reclassification=ckanext.canada.pd:PDCommand
+    contracts=ckanext.canada.pd:PDNilCommand
+    grants=ckanext.canada.pd:PDNilCommand
+    reclassification=ckanext.canada.pd:PDNilCommand
     travela=ckanext.canada.pd:PDCommand
-    travelq=ckanext.canada.pd:PDCommand
-    hospitalityq=ckanext.canada.pd:PDCommand
+    travelq=ckanext.canada.pd:PDNilCommand
+    hospitalityq=ckanext.canada.pd:PDNilCommand
     contractsa=ckanext.canada.pd:PDCommand
     inventory=ckanext.canada.pd:PDCommand
+    wrongdoing=ckanext.canada.pd:PDCommand
     """,
 )
