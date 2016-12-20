@@ -102,6 +102,13 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='package',
             action='delete'
         )
+        map.connect(
+            '/travela/{id}/{resource_id}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='create_travela',
+            conditions=dict(method=['POST']),
+        )
+
         return map
 
     def after_map(self, map):
@@ -226,7 +233,6 @@ ckanext.canada:schemas/info.yaml
             'portal_url',
             'googleanalytics_id',
             'drupal_session_present',
-            'is_site_message_showing',
             'fgp_url',
             'contact_information',
             'show_subject_facet',

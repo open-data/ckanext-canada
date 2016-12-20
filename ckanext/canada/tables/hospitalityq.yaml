@@ -8,7 +8,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Hospitality
+- title: Proactive Disclosure - Hospitality Expenses
   resource_name: hospitalityq
   fields:
 
@@ -16,6 +16,14 @@ resources:
     label: Reference Number
     datastore_type: text
     excel_column_width: 20
+
+  - datastore_id: disclosure_group
+    label: Disclosure Group
+    datastore_type: text
+    excel_column_width: 15
+    choices:
+      MPSES: Minister/Parliamentary Secretaries/Exempt Staff
+      SLE: Senior Level Employees
 
   - datastore_id: name
     label: Name
@@ -79,18 +87,24 @@ resources:
     datastore_type: money
     excel_column_width: 20
 
-    solr_float_range_facet:
-     - label: $0 - $249.99
-       less_than: 250
-     - label: $250 - $499.99
-       less_than: 500
-     - label: $500 - $999.99
-       less_than: 1000
-     - label: $1,000 - $4,999.99
-       less_than: 5000
-     - label: $5,000 - $24,999.99
-       less_than: 25000
-     - label: $25,000+
+    solr_dollar_range_facet:
+     - 0
+     - 250
+     - 500
+     - 1000
+     - 5000
+     - 25000
+  
+  - datastore_id: additional_comments_en
+    label: Additional Comments English
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: additional_comments_fr
+    label: Additional Comments French
+    datastore_type: text
+    excel_column_width: 20
+
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
@@ -108,6 +122,7 @@ resources:
   examples:
     record:
       ref_number: "1980198"
+      disclosure_group: SLE
       name: Jane Smith
       date: "2016-01-01"
       location: Halifax
@@ -118,3 +133,79 @@ resources:
     filter_one:
       ref_number: "1980198"
     sort: date desc
+
+
+- title: Proactive Disclosure - Hospitality Nothing to Report
+  resource_name: hospitalityq-nil
+  fields:
+
+  - datastore_id: year
+    label: Year
+    datastore_type: year
+    excel_column_width: 10
+    choices:
+      2017: "2017"
+      2016: "2016"
+      2015: "2015"
+      2014: "2014"
+      2013: "2013"
+      2012: "2012"
+      2011: "2011"
+      2010: "2010"
+      2009: "2009"
+      2008: "2008"
+      2007: "2007"
+      2006: "2006"
+      2005: "2005"
+      2004: "2004"
+      2003: "2003"
+      2002: "2002"
+      2001: "2001"
+      2000: "2000"
+      1999: "1999"
+      1998: "1998"
+      1997: "1997"
+      1996: "1996"
+      1995: "1995"
+
+  - datastore_id: quarter
+    label: Quarter
+    datastore_type: text
+    excel_column_width: 10
+    choices:
+      Q1:
+        en: March 2 - June 1
+        fr: 2 mars - 1 juin
+      Q2:
+        en: June 2 - September 1
+        fr: 2 juin - 1 septembre
+      Q3:
+        en: September 2 - December 1
+        fr: 2 septembre - 1 décembre
+      Q4:
+        en: December 2 - March 1
+        fr: 2 décembre - 1 mars
+
+  datastore_primary_key: [year, quarter]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFC8E1EA
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FF90C3D4
+
+  examples:
+    record:
+      year: 2016
+      quarter: Q2
+    filters:
+      year: 2016
+    filter_one:
+      year: 2016
+      quarter: Q2
+    sort: year desc, quarter desc

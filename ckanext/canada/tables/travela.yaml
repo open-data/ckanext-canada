@@ -1,6 +1,6 @@
 dataset_type: travela
 target_dataset: travela
-title: Proactive Disclosure - Annual Expenditures on Travel
+title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
 notes: This dataset includes all of the annual reports on travel expenses
        incurred within your organization.
 
@@ -8,18 +8,22 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Annual Expenditures on Travel
+- title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
   resource_name: travela
   fields:
 
   - datastore_id: year
-    label: Year
-    datastore_type: int
+    label: Fiscal Year Ending
+    datastore_type: year
+    form_required: true
+    form_placeholder: 20XX
     excel_column_width: 20
 
   - datastore_id: public_servants
     label: Travel - Public Servants
     datastore_type: money
+    form_required: true
+    form_placeholder: '0.00'
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -31,6 +35,8 @@ resources:
   - datastore_id: non_public_servants
     label: Travel - Non-Public Servants
     datastore_type: money
+    form_required: true
+    form_placeholder: '0.00'
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -39,21 +45,11 @@ resources:
       sum_previous_year: [total_travel_previous_year, total_previous_year]
       sum_change: [total_travel_change, total_change]
 
-  - datastore_id: minister
-    label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel)
-    datastore_type: money
-    excel_column_width: 20
-    solr_sum_to_field: [total_travel, total]
-    solr_compare_previous_year:
-      previous_year: minister_previous_year
-      change: minister_change
-      sum_previous_year: [total_travel_previous_year, total_previous_year]
-      sum_change: [total_travel_change, total_change]
-
   - datastore_id: hospitality
     label: Hospitality
     datastore_type: money
+    form_required: true
+    form_placeholder: '0.00'
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -65,6 +61,8 @@ resources:
   - datastore_id: conference_fees
     label: Conference Fees
     datastore_type: money
+    form_required: true
+    form_placeholder: '0.00'
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -73,54 +71,78 @@ resources:
       sum_previous_year: total_previous_year
       sum_change: total_change
 
+  - datastore_id: minister
+    label: International Travel by Minister and Minister's Staff
+           (also included in Non-Public Servant Travel)
+    datastore_type: money
+    form_required: true
+    form_placeholder: '0.00'
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: minister_previous_year
+      change: minister_change
+      sum_previous_year: [total_travel_previous_year, total_previous_year]
+      sum_change: [total_travel_change, total_change]
+
   - datastore_id: public_servant_compared_fiscal_year_en
-    label: Public Servants - Compared Fiscal Year (English)
+    label: Travel Public Servants - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: public_servant_compared_fiscal_year_fr
-    label: Public Servants - Compared Fiscal Year (French)
+    label: Travel Public Servants - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year_en
-    label: Non-Public Servants - Compared Fiscal Year (English)
+    label: Travel Non-Public Servants - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: non_public_servant_compared_fiscal_year_fr
-    label: Non-Public Servants - Compared Fiscal Year (French)
+    label: Travel Non-Public Servants - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year_en
-    label: Hospitality - Compared Fiscal Year (English)
+    label: Hospitality - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: hospitality_compared_fiscal_year_fr
-    label: Hospitality - Compared Fiscal Year (French)
+    label: Hospitality - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year_en
-    label: Conference Fees - Compared Fiscal Year (English)
+    label: Conference Fees - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: conference_fees_compared_fiscal_year_fr
-    label: Conference Fees - Compared Fiscal Year (French)
+    label: Conference Fees - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: minister_compared_fiscal_year_en
-    label: Minister and Minister's Staff - Compared Fiscal Year (English)
+    label: International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (English)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   - datastore_id: minister_compared_fiscal_year_fr
-    label: Minister and Minister's Staff - Compared Fiscal Year (French)
+    label: International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (French)
     datastore_type: text
+    form_attrs: {'size': 60}
     excel_column_width: 20
 
   datastore_primary_key: [year]

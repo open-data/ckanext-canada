@@ -8,25 +8,15 @@ from webob.exc import HTTPFound
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
-from ckan.lib.base import (
-    BaseController,
-    c,
-    render,
-    model,
-    request,
-    h,
-    response,
-    abort,
-    redirect
-)
-from ckan.logic import get_action, check_access, schema
+from ckan.lib.base import model, redirect
+from ckan.logic import schema
 from ckan.controllers.user import UserController
 from ckan.authz import is_sysadmin
 from ckan.lib.helpers import (
     Page,
     date_str_to_datetime,
     url,
-    render_markdown
+    render_markdown,
 )
 from ckan.controllers.feed import (
     FeedController,
@@ -42,7 +32,25 @@ from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
 from pylons import config, session
 
+from ckantoolkit import (
+    c,
+    BaseController,
+    h,
+    render,
+    request,
+    response,
+    abort,
+    get_action,
+    check_access,
+    get_validator,
+    Invalid,
+    )
+
+
 from ckanapi import LocalCKAN, NotAuthorized
+from ckanext.recombinant.datatypes import canonicalize
+
+int_validator = get_validator('int_validator')
 
 
 class CanadaController(BaseController):
@@ -154,7 +162,7 @@ class CanadaController(BaseController):
         )
         return render('organization/index.html')
 
-    def datatable(self, resource_id):
+    def datatable(self, resource_name, resource_id):
         draw = int(request.params['draw'])
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
@@ -164,14 +172,14 @@ class CanadaController(BaseController):
                       else 'asc'
                       )
 
+        chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-
         unfiltered_response = lc.action.datastore_search(
             resource_id=resource_id,
             limit=1,
         )
 
-        cols = [f['id'] for f in unfiltered_response['fields']][1:]
+        cols = [f['datastore_id'] for f in chromo['fields']]
         sort_str = cols[sort_by_num] + ' ' + sort_order
 
         response = lc.action.datastore_search(
@@ -187,7 +195,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [row[colname] for colname in cols]
+                [row.get(colname, '') for colname in cols]
                 for row in response['records']
             ],
         })
@@ -574,3 +582,81 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket.error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+
+class PDUpdateController(BaseController):
+
+    def create_travela(self, id, resource_id):
+        lc = LocalCKAN(username=c.user)
+        pkg = lc.action.package_show(id=id)
+        res = lc.action.resource_show(id=resource_id)
+        org = lc.action.organization_show(id=pkg['owner_org'])
+        dataset = lc.action.recombinant_show(
+            dataset_type='travela', owner_org=org['name'])
+
+        chromo = h.recombinant_get_chromo('travela')
+        data = {}
+        data_prev = {}
+        form_data = {}
+        for f in chromo['fields']:
+            dirty = request.params.getone(f['datastore_id'])
+            data[f['datastore_id']] = canonicalize(dirty, f['datastore_type'])
+            if f['datastore_id'] + '_prev' in request.params:
+                 data_prev[f['datastore_id']] = request.params.getone(f['datastore_id'] + '_prev')
+                 form_data[f['datastore_id'] + '_prev'] = data_prev[f['datastore_id']]
+
+        form_data.update(data)
+
+        def error(errors):
+            return render('recombinant/resource_edit.html',
+                extra_vars={
+                    'create_errors': errors,
+                    'create_data': form_data,
+                    'delete_errors': [],
+                    'dataset': dataset,
+                    'resource': res,
+                    'organization': org,
+                    'filters': {},
+                    'action': 'edit'})
+
+        try:
+            year = int_validator(data['year'], None)
+        except Invalid:
+            year = None
+
+        if not year:
+            return error({'year': [_(u'Invalid year')]})
+
+        response = lc.action.datastore_search(resource_id=resource_id,
+            filters={'year': data['year']})
+        if response['records']:
+            return error({'year': [_(u'Data for this year has already been entered')]})
+
+        response = lc.action.datastore_search(resource_id=resource_id,
+            filters={'year': year - 1})
+        if response['records']:
+            prev = response['records'][0]
+            errors = {}
+            for p in data_prev:
+                if prev[p] != data_prev[p]:
+                    errors[p + '_prev'] = [_(u'Does not match previous data "%s"') % prev[p]]
+            if errors:
+                return error(errors)
+        else:
+            lc.action.datastore_upsert(resource_id=resource_id,
+                method='insert',
+                records=[dict(data_prev, year=year - 1)])
+            h.flash_success(_("Record for %d added.") % (year - 1))
+
+        lc.action.datastore_upsert(resource_id=resource_id,
+            method='insert',
+            records=[data])
+
+        h.flash_success(_("Record for %d added.") % year)
+
+        redirect(h.url_for(
+            controller='ckanext.recombinant.controller:UploadController',
+            action='preview_table',
+            resource_name=res['name'],
+            owner_org=org['name'],
+            ))
