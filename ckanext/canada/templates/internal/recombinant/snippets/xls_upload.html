@@ -2,9 +2,10 @@
 
 {% block upload_submit %}
   {{ super() }}
-  {% if pkg.resources.0.name == 'ati' %}
-    <div class="row">
-      <p class="color-attention">{% trans %}ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions.{% endtrans %}</p>
+  {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
+  {% if 'upload_info' in geno %}
+    <div class="alert alert-info" role="alert">
+      <p>{{ _(geno.upload_info) }}</p>
     </div>
   {% endif %}
 {% endblock %}
