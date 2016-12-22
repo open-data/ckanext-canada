@@ -2128,7 +2128,7 @@ presets:
   values:
     field_name: license_id
     form_snippet: license.html
-    form_restrict_choices_to: [ca-ogl-lgo]
+    form_restrict_choices_to: [ca-ogl-lgo, ca-odla-aldg]
     form_attrs:
       readonly: ''
     label:
