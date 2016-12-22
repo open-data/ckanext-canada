@@ -134,17 +134,10 @@ def _update_records(records, org_detail, conn):
         unique = hashlib.md5(orghash
             + r.get('request_number', repr((year, month))
             ).encode('utf-8')).hexdigest()
-        shortform = None
-        shortform_fr = None
-        ati_email = None
+        shortform = org_detail['shortform']
+        shortform_fr = org_detail['shortform_fr']
+        ati_email = org_detail['ati_email']
         month = max(1, min(12, month))
-        for e in org_detail['extras']:
-            if e['key'] == 'shortform':
-                shortform = e['value']
-            elif e['key'] == 'shortform_fr':
-                shortform_fr = e['value']
-            elif e['key'] == 'ati_email':
-                ati_email = e['value']
 
         # don't ask why, just doing it the way it was done before
         en_record = {
@@ -161,7 +154,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_month_en': '{0:02d}'.format(month),
             'ss_ati_monthname_en': calendar.month_name[month],
             'ss_ati_number_of_pages_en': r.get('pages', ''),
-            'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
+            'ss_ati_organization_en': org_detail['title_translated']['en'],
             'ss_ati_year_en': year,
             'ss_ati_org_shortform_en': shortform,
             'ss_ati_org_name_code': org,
@@ -184,7 +177,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_month_fr': '{0:02d}'.format(month),
             'ss_ati_monthname_fr': MONTHS_FR[month],
             'ss_ati_number_of_pages_fr': r.get('pages', ''),
-            'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
+            'ss_ati_organization_fr': org_detail['title_translated']['fr'],
             'ss_ati_year_fr': year,
             'ss_ati_org_shortform_fr': shortform_fr,
             'ss_ati_org_name_code': org,

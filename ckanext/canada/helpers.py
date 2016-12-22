@@ -11,6 +11,16 @@ import ckanapi
 import ckan.lib.helpers as h
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
+from ckan.logic import get_action
+from ckan.lib.base import model
+
+from sqlalchemy.sql import select
+
+import ckan.logic as ckan_logic
+import ckan.plugins as p
+import ckan.lib.plugins as lib_plugins
+import ckan.lib.dictization.model_dictize as dictize
+from ckan.lib.navl.dictization_functions import Missing
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -20,6 +30,72 @@ DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.ramp_base_url'
 FGP_URL_DEFAULT = 'http://localhost/'
 
+def group_or_org_plugin_dictize(context, group_dict, include_followers, is_org):
+    plugins = p
+    if is_org:
+        plugin_type = plugins.IOrganizationController
+    else:
+        plugin_type = plugins.IGroupController
+
+    for item in plugins.PluginImplementations(plugin_type):
+        item.read(group)
+
+    group_plugin = lib_plugins.lookup_group_plugin(group_dict['type'])
+    try:
+        schema = group_plugin.db_to_form_schema_options({
+            'type': 'show',
+            'api': 'api_version' in context,
+            'context': context})
+    except AttributeError:
+        schema = group_plugin.db_to_form_schema()
+
+    if include_followers:
+        model = context['model']
+        group_dict['num_followers'] = logic.get_action('group_follower_count')(
+            {'model': model, 'session': model.Session},
+            {'id': group_dict['id']})
+    else:
+        group_dict['num_followers'] = 0
+    if not group_dict.get('display_name'):
+        group_dict['display_name'] = None
+    if not group_dict.get('package_count'):
+        group_dict['package_count'] = None
+
+    schema = ckan_logic.schema.default_show_group_schema()
+    group_dict, errors = lib_plugins.plugin_validate(
+        group_plugin, context, group_dict, schema,
+        'organization_show' if is_org else 'group_show')
+    return group_dict
+
+
+def _query_organization_extras(context, data_dict):
+    model = context['model']
+    group = model.group_table
+    is_latest_revision = not(context.get('revision_id') or
+                         context.get('revision_date'))
+    execute = dictize._execute if is_latest_revision else dictize._execute_with_revision
+
+    # customize: owner org extras
+    extra = model.group_extra_table
+    q = select([extra]).where(extra.c.group_id == data_dict["id"])
+    result = execute(q, group, context)
+    org_extras = dictize.extras_list_dictize(result, context)
+    data_dict["extras"] = org_extras
+    data_dict = group_or_org_plugin_dictize(context, data_dict, False, True)
+    return data_dict
+
+# overwrite
+def organizations_available(permission='edit_group'):
+    '''Return a list of organizations that the current user has the specified
+    permission for.
+    '''
+    context = {'user': c.user}
+    data_dict = {'permission': permission}
+    results = get_action('organization_list_for_user')(context, data_dict)
+    organization_results = []
+    for org in results:
+        organization_results.append(_query_organization_extras(context, org))
+    return organization_results
 
 def may_publish_datasets(userobj=None):
     if not userobj:
@@ -53,10 +129,26 @@ def openness_score(pkg):
                 score = max(5, score)
     return score
 
+def get_organization(name):
+    context = {'model': model}
+    data_dict = {'name': name,
+        "include_extra": True,
+        'all_fields': True}
+    organization = get_action('organization_show')(context, data_dict)
+    return organization
 
 def user_organizations(user):
     u = User.get(user['name'])
-    return u.get_groups(group_type = "organization")
+    groups = u.get_groups(group_type="organization")
+    groups_data = []
+    for group in groups:
+        context = {'model': model}
+        data_dict = {'id': group.id,
+                    "include_extra": True,
+                    'all_fields': True}
+        group_dict = get_action('organization_show')(context, data_dict)
+        groups_data.append(group_dict)
+    return groups_data
 
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
@@ -257,3 +349,4 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
+h.organizations_available = organizations_available

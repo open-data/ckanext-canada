@@ -32,3 +32,11 @@
   </div>
 </div>
 {% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Organizations'), controller='organization', action='index' %}</li>
+  {% block breadcrumb_content_inner %}
+    <li>{% link_for h.get_translated(c.group_dict, 'title')| truncate(30), controller='organization', action='read', id=organization.name %}</li>
+    <li class="active">{% link_for _('Manage'), controller='organization', action='edit', id=organization.name %}</li>
+  {% endblock %}
+{% endblock %}

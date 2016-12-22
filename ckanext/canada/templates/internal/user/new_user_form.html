@@ -2,17 +2,17 @@
 
 <form role="form" action="" method="post">
   {{ form.errors(error_summary) }}
-  {% call form.input("name", id="field-username", label=_("Username"), placeholder="username", value=data.name, error=errors.name, is_required=true)  %}
+  {% call form.input("name", id="field-username", label=_("Username"), placeholder=_("username"), value=data.name, error=errors.name, is_required=true)  %}
     {{ form.info(_('Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_)')) }}
   {% endcall %}
+  {% set prefix = h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_autocomplete') %}
   {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder="Joe Bloggs", value=data.fullname, error=errors.fullname, is_required=true) }}
   {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder="joe.bloggs@tbs-sct.gc.ca", value=data.email, error=errors.email, is_required=true) }}
-  {% set format_attrs = {'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-key': 'title'} %}
+  {% set format_attrs = {'data-module': 'autocomplete', 'data-module-source': prefix+'?q=?', 'data-key': 'title'} %}
   {{ form.input('department', id='field-department', label=_('Organization'), placeholder=_('Treasury Board Secretariat'), value=data.department, error=errors.department, classes=['control-medium'], attrs=format_attrs, is_required=true) }}
   {{ form.input("phoneno", id="field-phoneno", label=_("Phone Number"), placeholder="000 000 0000", value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) }}
   {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1, is_required=true) }}
   {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", placeholder="••••••••", value=data.password2, error=errors.password1, is_required=true) }}
-
 
   <div class="form-group">
     <button class="btn btn-primary" type="submit" name="save">{{ _("Create Account") }}</button>
