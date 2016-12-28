@@ -1159,6 +1159,12 @@ msgstr "Lieu (français)"
 msgid "Description (English)"
 msgstr "Description (anglais)"
 
+msgid "Start Date"
+msgstr "Date du début"
+
+msgid "End Date"
+msgstr "Date de fin"
+
 msgid "Location (English)"
 msgstr "Lieu (anglais)"
 
@@ -1224,6 +1230,9 @@ msgstr "Nom du récipient (anglais)"
 
 msgid "Recipient Name (French)"
 msgstr "Nom du récipient (français)"
+
+msgid "Recipient Business Number"
+msgstr "Numéro de l’entreprise bénéficiaire"
 
 msgid "Country"
 msgstr "Pays"
@@ -1388,10 +1397,10 @@ msgid_plural "{number} assets found"
 msgstr[0] "{number}  bien  trouvé"
 msgstr[1] "{number} biens  trouvés"
 
-msgid "{number} Dataset"
-msgid_plural "{number} Datasets"
-msgstr[0] "{number}  Jeu de données"
-msgstr[1] "{number} Jeux de données"
+msgid "{num} Dataset"
+msgid_plural "{num} Datasets"
+msgstr[0] "{num} dossiers"
+msgstr[1] "{num} dossiers"
 
 msgid "{number} Asset"
 msgid_plural "{number} Assets"
@@ -1404,7 +1413,7 @@ msgstr[0] "{number} heure avant "
 msgstr[1] "{number} heures avant"
 
 msgid "0 Datasets"
-msgstr "0 Jeu de données"
+msgstr "0 dossiers"
 
 msgid "0 Assets"
 msgstr "0 Biens"
@@ -1708,6 +1717,9 @@ msgstr "http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.c
 msgid "Edit Profile"
 msgstr "Modifier le profil"
 
+msgid "My Profile"
+msgstr "Mes paramètres"
+
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "Foire aux questions"
 
@@ -1727,3 +1739,5 @@ msgstr "Record pour %d ajoutée."
 msgid "Previous Year"
 msgstr "année précédente"
 
+msgid "Treasury Board Secretariat"
+msgstr "Secrétariat du Conseil du Trésor"
