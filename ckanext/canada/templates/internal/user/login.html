@@ -27,33 +27,14 @@
 
 {% block primary_content %}
   <div class="panel">
-    {% if h.lang() == 'en' %}
-    <h2>Welcome to the Open Government Registry</h2>
-
-    <p>
-    Use the Registry to publish government resources on the Open Government Portal.
-    <br/> For more information on using the Registry or to report errors, contact
-    open-ouvert@tbs-sct.gc.ca.
-    </p>
-    {% else %}
-    <h2>Bienvenue au registre du gouvernement ouvert</h2>
-
-    <p>
-    Utilisez le registre pour publier des ressources gouvernementales dans le <a href="http://ouvert.canada.ca/fr">Portail du gouvernement ouvert</a>.
-    <br />Pour obtenir de plus amples renseignements sur l'utilisation du registre ou pour signaler des erreurs, communiquez avec open-ouvert@tbs-sct.gc.ca.
-    </p>
-    {% endif %}
+    {% trans %}login welcome text{% endtrans %}
 
     {% block form %}
       {{ super() }}
     {% endblock %}
 
     <div class="text-info">
-      {% if h.lang() == 'en' %}
-      NOTE: Username and password are case sensitive.
-      {% else %}
-      NOTE: Le nom d'utilisateur et mot de passe sont sensibles à la casse.
-      {% endif %}
+      {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
     </div>
   </div>
 {% endblock %}
