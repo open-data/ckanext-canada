@@ -24,6 +24,11 @@ from ckan.controllers.feed import (
     _create_atom_id,
     _FixedAtom1Feed
 )
+from ckan.model.group import Group
+from ckan.model.group_extra import GroupExtra, group_extra_table
+from ckan.model import meta
+from sqlalchemy import or_, and_
+
 from ckan.lib import i18n
 import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
@@ -51,6 +56,35 @@ from ckanapi import LocalCKAN, NotAuthorized
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
+
+
+def _search_by_name_or_title(cls, data_dict, group_type=None, is_org=False):
+    text_query = data_dict.get('q')
+    text_query = text_query.strip().lower()
+    q = meta.Session.query(Group.id, Group.name).filter(cls.state == 'active') \
+            .filter(or_(cls.name.contains(text_query),
+                        cls._extras.any(GroupExtra.value.contains(text_query))))
+    if is_org:
+        q = q.filter(cls.type == 'organization')
+    else:
+        q = q.filter(cls.type != 'organization')
+        if group_type:
+            q = q.filter(cls.type == group_type)
+
+    organization_list = []
+    limit = data_dict.get('limit', 20)
+    for organization in q.limit(limit).all():
+        result_dict = {}
+        context = {'model': model}
+        data_dict = {'id': organization.id,
+                     "include_extra": True,
+                     'all_fields': True}
+        group_dict = get_action('organization_show')(context, data_dict)
+        for k in ['id', 'name', 'title_translated', 'title']:
+            result_dict[k] = group_dict.get(k)
+        organization_list.append(result_dict)
+
+    return organization_list
 
 
 class CanadaController(BaseController):
@@ -133,7 +167,7 @@ class CanadaController(BaseController):
                    'user': c.user or c.author, 'for_view': True,
                    'with_private': False}
 
-        data_dict = {'all_fields': True}
+        data_dict = {'all_fields': True, 'include_extras': True}
 
         try:
             check_access('site_read', context)
@@ -149,7 +183,7 @@ class CanadaController(BaseController):
         results = get_action('organization_list')(context, data_dict)
 
         def org_key(org):
-            title = org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+            title = org['title_translated'][c.language]
             return normalize_strip_accents(title)
 
         results.sort(key=org_key)
@@ -239,24 +273,28 @@ class CanadaController(BaseController):
     @jsonp.jsonpify
     def organization_autocomplete(self):
         q = request.params.get('q', '')
+        if len(q) < 3:
+            return []
         limit = request.params.get('limit', 20)
         organization_list = []
 
         if q:
             context = {'user': c.user, 'model': model}
             data_dict = {'q': q, 'limit': limit}
-            organization_list = get_action(
-                'organization_autocomplete'
-            )(context, data_dict)
+            organization_list = _search_by_name_or_title(Group, data_dict, is_org=True)
 
         def _org_key(org):
-            return org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+            if org.get('title_translated'):
+                return org['title_translated'][c.language]
+            else:
+                return org['title']
 
-        return [{
+        results = [{
             'id': o['id'],
             'name': _org_key(o),
             'title': _org_key(o)
-        } for o in organization_list]
+             } for o in organization_list]
+        return sorted(results, key=lambda x: x['title'])
 
 
 class CanadaDatasetController(PackageController):

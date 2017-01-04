@@ -55,7 +55,7 @@ class TestNAVLSchema(FunctionalTestBase):
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
         self.org = factories.Organization(
-            title='en org name | fr org name')
+            title_translated={'en': u'An Org', 'fr':u'Un Org'})
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action

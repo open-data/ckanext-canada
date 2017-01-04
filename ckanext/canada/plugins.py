@@ -18,7 +18,6 @@ from ckanext.canada import helpers
 
 import json
 
-
 class DataGCCAInternal(p.SingletonPlugin):
     """
     Plugin for internal version of data.gc.ca site, aka the "registry"
@@ -425,7 +424,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return data_dict
 
     def after_show(self, context, data_dict):
-        return data_dict
+        data_dict["organization"] = helpers._query_organization_extras(
+            context, data_dict["organization"])
 
     def update_facet_titles(self, facet_titles):
         return facet_titles

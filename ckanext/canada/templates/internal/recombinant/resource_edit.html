@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% import 'macros/canada_read.html' as cr %}
-
 {% block organization_display %}
-  {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
+  {{- h.get_translated(org, 'title') | truncate(60) -}}
 {% endblock %}
 
 {# we want a wide display for the table #}
