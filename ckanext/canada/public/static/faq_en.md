@@ -53,7 +53,7 @@ For any other questions that you cannot find in the page, e-mail open-ouvert@tbs
 ## How do I add an open data or open information record?
 To add an open data or open information record to the Open Government Portal, you must create a metadata record for that dataset and add it to the Registry. To add a metadata record:
 
-1. Review the instructions outlined in the ‘Open Government Registry Guide’
+1. Review the instructions outlined in the [Open Government Registry Guide](http://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources)
 2. Click 'Add Open Data' or ‘Add Open Information’,
 3. Fill out the required metadata elements,
 4. Select ‘Yes’ for ‘IMSO Approval’ and ‘Ready to Publish’ as appropriate
