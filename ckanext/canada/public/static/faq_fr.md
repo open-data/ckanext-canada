@@ -51,7 +51,7 @@ Pour toutes les questions que vous ne trouvez pas sur la page, envoyez un courri
 ## Comment puis-je ajouter un dossier d’information ou de données ouvertes?
 Pour ajouter un dossier d’information ou de données ouvertes au Portail du gouvernement ouvert, vous devez créer un dossier de métadonnées pour cet ensemble de données, puis l’ajouter au Registre. Pour ajouter un dossier de métadonnées :
 
-1. Passez en revue les directives indiquées dans le [guide du Registre du gouvernement ouvert](http://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources).
+1. Passez en revue les directives indiquées dans le <a href="http://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources" target="_blank">guide du Registre du gouvernement ouvert</a>.
 2. Cliquez sur « Ajouter des données ouvertes » ou sur « Ajouter de l’information ouverte ».
 3. Remplissez les éléments requis liés aux métadonnées.
 4. Sélectionnez « Oui » pour l’approbation du cadre supérieur responsable de la gestion de l’information et « Prêt à être publié », selon le cas.

@@ -92,7 +92,7 @@ class CanadaController(BaseController):
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
-        faq_html = render_markdown(faq_text)
+        faq_html = render_markdown(faq_text.decode("utf-8"), allow_html=True)
         h = html.fromstring(faq_html)
 
         # Get every FAQ point header.
