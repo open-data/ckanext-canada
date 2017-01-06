@@ -75,10 +75,10 @@ La liste de résultats affiche les dossiers dans l’ordre selon lequel ils ont 
 # Information relative à la divulgation proactive
 
 ## Comment puis-je ajouter, modifier ou supprimer des dossiers du Registre?
-Si vous devez ajouter, modifier ou supprimer des postes relatifs aux demandes de divulgation proactive ou d’accès à l’information, veuillez consulter les guides de formation de notre page GCpédia concernant la divulgation proactive. 
+Si vous devez ajouter, modifier ou supprimer des postes relatifs aux demandes de divulgation proactive ou d’accès à l’information, veuillez consulter les guides de formation de notre page <a href="http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.ca" target="_blank">GCpédia concernant la divulgation proactive</a>.
 
 ## Comment fais-je pour savoir quels formats et données saisir dans les modèles?
-Vous pouvez télécharger tous les profils d’éléments de données pour chaque type de divulgation proactive à partir de notre page GCpédia sur la divulgation proactive.
+Vous pouvez télécharger tous les profils d’éléments de données pour chaque type de divulgation proactive à partir de notre page <a href="http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.ca" target="_blank">GCpédia sur la divulgation proactive</a>.
 
 ## Pourquoi le système refuse-t-il de téléverser mes données?
 Il existe plusieurs raisons pour lesquelles vous n’avez pas pu téléverser des données de divulgation proactive dans le Registre. Avant de téléverser des données, assurez-vous de les avoir préparées selon les directives suivantes :
