@@ -165,6 +165,10 @@ resources:
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  solr_static_fields:
+    nothing_to_report_en: Nothing to report for this period
+    nothing_to_report_fr: Rien à signaler ce mois-ci
+
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
   excel_organization_style:

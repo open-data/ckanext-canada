@@ -265,6 +265,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
 
+        if 'solr_static_fields' in chromo:
+            solrrec.update(chromo['solr_static_fields'])
+
         if unmatched:
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
