@@ -16,4 +16,21 @@
     )
 }}
 {# image_upload macro doesn't support call #}
+<input id="hack-url-upload" name="clear_upload" value="" disabled="true" hidden >
+<script>
+  onload=function() {
+    var clear_upload = document.getElementById('hack-url-upload');
+    var newurl = document.getElementById('field-image-url');
+    clear_upload.value = newurl.value;
+    clear_upload.disabled = true;
+    newurl.oninput = function() {
+      if (newurl.value != clear_upload.value) {
+        clear_upload.disabled = false;
+      } else {
+        clear_upload.disabled = true;
+      }
+    };
+  };
+</script>
+
 {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
