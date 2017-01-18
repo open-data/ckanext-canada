@@ -8,12 +8,14 @@ Eg:
       http://registry.open.canada.ca 12 > report.csv
 """
 import sys
+from datetime import datetime
 
 from unicodecsv import DictWriter
 import ckanapi
 from docopt import docopt
 
 UTF8_BOM = u'\uFEFF'.encode('utf-8')
+
 
 def main():
     opts = docopt(__doc__)
@@ -32,15 +34,38 @@ def main():
     sys.stderr.write('getting published datasets...\n')
     published_datasets = set(portal.action.package_list())
 
-    orgs = {o['name']: o for o in org_list}
-    months = []
+    orgs = {o['id']: o for o in org_list}
+    now = datetime.utcnow()
+    months = [(now.year, now.month)]
+    counts = {o['id']: [0] for o in org_list}
+
+    sys.stderr.write('collecting activities...\n')
+    for act in activities(registry):
+        y, m = act['timestamp'][:7].split('-')
+        act_ym = int(y), int(m)
+        if act_ym != months[-1]:
+            while len(months) <= num_months:
+                months.append(prior_month(months[-1]))
+                for c in counts:
+                    counts[c].append(0)
+                if months[-1] == act_ym:
+                    break
+            else:
+                break
+
+        if act['object_id'] not in published_datasets:
+            continue
+        if act.get('owner_org') not in counts:
+            continue
+
+        act_type = act['activity_type']
+        if act_type == 'new package':
+            counts[act['owner_org']][-1] += 1
+        elif act_type == 'deleted package':
+            counts[act['owner_org']][-1] -= 1
 
     fieldnames = [
         u'id', u'title_en', u'title_fr', u'url', u'current_datasets']
-
-    sys.stderr.write('collecting activities...\n')
-    offset = 0
-
 
     sys.stdout.write(UTF8_BOM)
     out = DictWriter(sys.stdout, fieldnames=fieldnames, encoding='utf-8')
@@ -55,5 +80,24 @@ def main():
             'current_datasets': o['package_count']
             })
 
+
+def prior_month(ym):
+    y, m = ym
+    if m == 1:
+        return y - 1, 12
+    return y, m - 1
+
+
+def activities(registry):
+    offset = 0
+
+    while True:
+        batch = registry.action.recently_changed_packages_activity_list(
+            offset=offset)
+        if not batch:
+            return
+        for act in batch:
+            yield act
+        offset += len(batch)
 
 main()
