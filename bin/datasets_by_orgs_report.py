@@ -50,11 +50,11 @@ def main():
                 months.append(prior_month(months[-1]))
                 for c in counts:
                     counts[c].append(0)
-                if months[-1] == act_ym:
-                    break
                 sys.stderr.write(unicode(processed) + u'\n'
                     + ym_head(months[-1]) + u':')
                 processed = 0
+                if months[-1] == act_ym:
+                    break
             else:
                 break
 
@@ -71,8 +71,6 @@ def main():
             counts[owner_org][-1] += 1
         elif act_type == 'deleted package':
             counts[owner_org][-1] -= 1
-        else:
-            continue
         processed += 1
     sys.stderr.write(unicode(processed) + u'\n')
 
