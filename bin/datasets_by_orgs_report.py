@@ -56,6 +56,7 @@ def main():
                 if months[-1] == act_ym:
                     break
             else:
+                sys.stderr.write(u'all months collected.\n')
                 break
 
         if 'package' not in act['data']:
@@ -111,9 +112,10 @@ def activities(registry):
         batch = registry.action.recently_changed_packages_activity_list(
             offset=offset, limit=1000)
         if not batch:
-            return
+            break
         for act in batch:
             yield act
         offset += len(batch)
+    sys.stderr.write(u'activity list ended at %d\n' % offset)
 
 main()
