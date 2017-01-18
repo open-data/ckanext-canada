@@ -10,7 +10,7 @@ Eg:
 import sys
 from datetime import datetime
 
-from unicodecsv import DictWriter
+from unicodecsv import writer
 import ckanapi
 from docopt import docopt
 
@@ -38,8 +38,10 @@ def main():
     now = datetime.utcnow()
     months = [(now.year, now.month)]
     counts = {o['id']: [0] for o in org_list}
+    processed = 0
 
     sys.stderr.write('collecting activities...\n')
+    sys.stderr.write(ym_head(months[-1]) + u':')
     for act in activities(registry):
         y, m = act['timestamp'][:7].split('-')
         act_ym = int(y), int(m)
@@ -50,35 +52,47 @@ def main():
                     counts[c].append(0)
                 if months[-1] == act_ym:
                     break
+                sys.stderr.write(unicode(processed) + u'\n'
+                    + ym_head(months[-1]) + u':')
+                processed = 0
             else:
                 break
 
+        if 'package' not in act['data']:
+            continue
         if act['object_id'] not in published_datasets:
             continue
-        if act.get('owner_org') not in counts:
+        owner_org = act['data']['package'].get('owner_org')
+        if owner_org not in counts:
             continue
 
         act_type = act['activity_type']
         if act_type == 'new package':
-            counts[act['owner_org']][-1] += 1
+            counts[owner_org][-1] += 1
         elif act_type == 'deleted package':
-            counts[act['owner_org']][-1] -= 1
+            counts[owner_org][-1] -= 1
+        else:
+            continue
+        processed += 1
+    sys.stderr.write(unicode(processed) + u'\n')
 
     fieldnames = [
-        u'id', u'title_en', u'title_fr', u'url', u'current_datasets']
+        u'id', u'title_en', u'title_fr', u'url', u'current_datasets',
+        ] + [ym_head(ym) for ym in months]
 
     sys.stdout.write(UTF8_BOM)
-    out = DictWriter(sys.stdout, fieldnames=fieldnames, encoding='utf-8')
+    out = writer(sys.stdout, encoding='utf-8')
+    out.writerow(fieldnames)
 
     for o in org_list:
-        out.writerow({
-            'id': o['id'],
-            'title_en': o['title'].split(' | ')[0],
-            'title_fr': o['title'].split(' | ')[-1],
-            'url': opts['PORTAL_URL'].rstrip('/') 
+        out.writerow([
+            o['id'],
+            o['title'].split(' | ')[0],
+            o['title'].split(' | ')[-1],
+            opts['PORTAL_URL'].rstrip('/')
                 + u'/organization/' + o['name'],
-            'current_datasets': o['package_count']
-            })
+            o['package_count']
+            ] + counts[o['id']])
 
 
 def prior_month(ym):
@@ -86,6 +100,10 @@ def prior_month(ym):
     if m == 1:
         return y - 1, 12
     return y, m - 1
+
+
+def ym_head(ym):
+    return u'%04d-%02d' % ym
 
 
 def activities(registry):
