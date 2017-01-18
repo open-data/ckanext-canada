@@ -13,22 +13,24 @@ from sqlalchemy import (
 )
 
 # SQLalchemy MetaData object for the Drupal WCMS.
-_metadata = None
+_drupal_db = None
 
 
 class _DrupalDatabase(object):
     # Class to encapsulate the SQLAlchemy tables of Drupal database and give us
     # access to the user comments and ratings for CKAN datasets
-    global _metadata
+
     log = logging.getLogger(__name__)
     drupal_comments_table = None
     drupal_comments_count_table = None
     drupal_ratings_table = None
 
-    def define_drupal_comments_table(self):
+    def __init__(self, metadata):
+        self._metadata = metadata
+
         self.drupal_comments_table = Table(
             'opendata_package_v',
-            _metadata,
+            self._metadata,
             Column(
                 'changed',
                 types.UnicodeText,
@@ -44,29 +46,25 @@ class _DrupalDatabase(object):
 
         self.drupal_comments_count_table = Table(
             'opendata_package_count_v',
-            _metadata,
+            self._metadata,
             Column('count', types.Integer),
             Column('pkg_id', types.UnicodeText)
         )
 
         self.drupal_ratings_table = Table(
             'opendata_package_rating_v',
-            _metadata,
+            self._metadata,
             Column('rating', types.Float),
             Column('pkg_id', types.UnicodeText)
         )
 
 
-_drupal_db = None
-
-
 def wcms_configure(drupal_url):
-    global _drupal_db, _metadata
+    global _drupal_db
+
     # Load just once
-    if _metadata is None:
-        _drupal_db = _DrupalDatabase()
-        _metadata = MetaData(drupal_url)
-        _drupal_db.define_drupal_comments_table()
+    if _drupal_db is None:
+        _drupal_db = _DrupalDatabase(MetaData(drupal_url))
 
 
 def wcms_dataset_comments(pkg_id, lang):
