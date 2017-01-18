@@ -46,7 +46,7 @@ def main():
         y, m = act['timestamp'][:7].split('-')
         act_ym = int(y), int(m)
         if act_ym != months[-1]:
-            while len(months) <= num_months:
+            while len(months) < num_months:
                 months.append(prior_month(months[-1]))
                 for c in counts:
                     counts[c].append(0)
@@ -111,7 +111,7 @@ def activities(registry):
 
     while True:
         batch = registry.action.recently_changed_packages_activity_list(
-            offset=offset)
+            offset=offset, limit=1000)
         if not batch:
             return
         for act in batch:
