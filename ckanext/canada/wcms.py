@@ -3,6 +3,7 @@ import logging
 from lxml.html.clean import clean_html
 
 from sqlalchemy import (
+    create_engine,
     Column,
     MetaData,
     Table,
@@ -62,9 +63,28 @@ class _DrupalDatabase(object):
 def wcms_configure(drupal_url):
     global _drupal_db
 
+    required_tables = (
+        'opendata_package_v',
+        'opendata_package_count_v',
+        'opendata_package_rating_v'
+    )
+
     # Load just once
     if _drupal_db is None:
-        _drupal_db = _DrupalDatabase(MetaData(drupal_url))
+        engine = create_engine(drupal_url)
+        metadata = MetaData(bind=engine)
+
+        for rq_table in required_tables:
+            if not engine.dialect.has_table(engine, rq_table):
+                logging.error(
+                    'Required drupal table {0!r} missing.'.format(
+                        rq_table
+                    )
+                )
+                _drupal_db = None
+                return
+
+        _drupal_db = _DrupalDatabase(metadata)
 
 
 def wcms_dataset_comments(pkg_id, lang):
