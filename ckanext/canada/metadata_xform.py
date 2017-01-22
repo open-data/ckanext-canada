@@ -120,11 +120,8 @@ def _process(line, portal=False):
     else:
         rec['spatial_representation_type'] = []
 
-    if not rec.get('maintainer_email'):
-        if rec['collection'] == u'geogratis':
-            rec['maintainer_email'] = 'NRCan.geogratis-geogratis.RNCan@canada.ca'
-        else:
-            rec['maintainer_email'] = 'open-ouvert@tbs-sct.g.ca'
+    if rec['collection'] == u'geogratis':
+        rec['maintainer_email'] = 'NRCan.geogratis-geogratis.RNCan@canada.ca'
 
     rec['ready_to_publish'] = str(rec.get('ready_to_publish', 'false')).lower()
 
