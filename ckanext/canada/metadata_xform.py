@@ -77,6 +77,11 @@ def _process(line, portal=False):
             rec[k] = dict(zip(LANG_KEYS, (
                 rec.pop(k, None),
                 rec.pop(k_fra, None))))
+    if rec['collection'] == u'geogratis':
+        if not rec['keywords']['fr']:
+            rec['keywords']['fr'] = [u'geogratis']
+        if not rec['keywords']['en']:
+            rec['keywords']['en'] = [u'geogratis']
 
     # convert subject english-sp-sp-french content to fluent text
     if '  ' in rec.get('subject', [''])[0]:
@@ -115,8 +120,8 @@ def _process(line, portal=False):
     else:
         rec['spatial_representation_type'] = []
 
-    if not rec.get('maintainer_email'):
-        rec['maintainer_email'] = 'open-ouvert@tbs-sct.gc.ca'
+    if rec['collection'] == u'geogratis':
+        rec['maintainer_email'] = 'NRCan.geogratis-geogratis.RNCan@canada.ca'
 
     rec['ready_to_publish'] = str(rec.get('ready_to_publish', 'false')).lower()
 
@@ -128,6 +133,10 @@ def _process(line, portal=False):
     rec.pop('extras', None)
 
     # merge per-resource name, name_fra to fluent text
+    if not 'resources' in rec:
+        print >> sys.stderr, ('No resources')
+        _process.count[0] += 1
+        return
     for r in rec['resources']:
         if 'name_fra' in r:
             r['name_translated'] = dict(
