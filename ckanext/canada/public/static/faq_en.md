@@ -53,7 +53,7 @@ For any other questions that you cannot find in the page, e-mail open-ouvert@tbs
 ## How do I add an open data or open information record?
 To add an open data or open information record to the Open Government Portal, you must create a metadata record for that dataset and add it to the Registry. To add a metadata record:
 
-1. Review the instructions outlined in the [Open Government Registry Guide](http://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources)
+1. Review the instructions outlined in the <a href="http://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources" target="_blank">Open Government Registry Guide<a/>
 2. Click 'Add Open Data' or ‘Add Open Information’,
 3. Fill out the required metadata elements,
 4. Select ‘Yes’ for ‘IMSO Approval’ and ‘Ready to Publish’ as appropriate
@@ -78,10 +78,10 @@ The list of results displays records in the order in which they were entered or 
 # Proactive Disclosure Information
 
 ## How do I add, modify or delete records in the Registry?
-If you need to add, modify or delete line items for proactive disclosure or ATI requests, please refer to the training guides on our [Proactive Disclosure GCpedia page](http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca). 
+If you need to add, modify or delete line items for proactive disclosure or ATI requests, please refer to the training guides on our <a href="http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca" target="_blank">Proactive Disclosure GCpedia page</a>.
 
 ## How do I know what data and formats to populate the templates with?
-You can download all the Data Element Profiles for each proactive disclosure type from our [Proactive Disclosure GCpedia page](http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca).
+You can download all the Data Element Profiles for each proactive disclosure type from our <a href="http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca" target="_blank">Proactive Disclosure GCpedia page</a>.
 
 ## Why won’t the system upload my data?
 There are many reasons why you could not upload Proactive Disclosure data to the Registry. Before uploading, make sure your data is prepared according to the following directives:
