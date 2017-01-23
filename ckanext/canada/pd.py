@@ -135,8 +135,11 @@ def rebuild(command_name, csv_files=None):
     if csv_files:
         for csv_file in csv_files:
             print csv_file + ':'
+            prev_org = None
             unmatched = None
             for resource_name, org_id, records in csv_data_batch(csv_file, command_name):
+                if org_id != prev_org:
+                    unmatched = None
                 try:
                     org_detail = lc.action.organization_show(id=org_id)
                 except NotFound:
