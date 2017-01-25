@@ -79,9 +79,9 @@ def _process(line, portal=False):
                 rec.pop(k_fra, None))))
     if rec['collection'] == u'geogratis':
         if not rec['keywords']['fr']:
-            rec['keywords']['fr'] = [u'geogratis']
+            rec['keywords']['fr'] = [u'g\u00e9ogratis', u'g\u00e9ospatiale']
         if not rec['keywords']['en']:
-            rec['keywords']['en'] = [u'geogratis']
+            rec['keywords']['en'] = [u'geogratis', u'geospatial']
 
     # convert subject english-sp-sp-french content to fluent text
     if '  ' in rec.get('subject', [''])[0]:
