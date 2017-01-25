@@ -451,6 +451,7 @@ resources:
     label: Year
     datastore_type: year
     excel_column_width: 10
+    extract_date_year: true
     choices:
       2017: "2017-2018"
       2016: "2016-2017"
