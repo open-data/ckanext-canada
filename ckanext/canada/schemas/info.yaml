@@ -63,8 +63,10 @@ dataset_fields:
   fluent_help_text:
     en:
       en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+      fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le produit (séparer les multiples noms par des virgules).
     fr:
       en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+      fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le produit (séparer les multiples noms par des virgules).
 
 # Field = Creator.
 # { Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas).}
