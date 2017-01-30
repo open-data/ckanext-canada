@@ -68,7 +68,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             '/user/reports/{id}',
             action='reports',
             controller='ckanext.canada.controller:CanadaUserController',
-            ckan_icon='bar-chart'
+            ckan_icon='bar-chart-o'
         )
         map.connect(
             'ckanadmin_listusers',
