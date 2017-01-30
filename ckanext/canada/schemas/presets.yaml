@@ -37,7 +37,7 @@ presets:
       fr: Type de collection
     help_text:
       en: "The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial"
-      fr: "Portail auquel le dossier de métadonnées appartient (Données ouvertes ou Information ouverte)"
+      fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : données non spatiales"
     required: true
     choices:
     - label:
@@ -135,17 +135,19 @@ presets:
         fr: Organisation - Titre lors de la publication (français)
     fluent_help_text:
       en:
-        en: The english organization Title at publication Time. Leave these fields blank
-          to copy names from Current Organization Name
-        fr: Nom de l’organisation au moment de la publication, en anglais. Ne rien
-          inscrire dans ces champs pour que les noms soient copiés à partir du Nom
-          actuel de l’organisation. 
+        en: The english organization Title at publication Time. Please leave blank
+          if the organization name at time of publication is identical to
+          your current organization name.
+        fr: Nom de l’organisation au moment de la publication, en anglais. Veuillez
+          laisser le champ libre si le nom de l'organisation lors de la publication
+          est identique au nom actuel de votre organisation.
       fr:
-        en: The french organization Title at publication Time. Leave these fields blank
-          to copy names from Current Organization Name
-        fr: Nom de l’organisation au moment de la publication, en français. Ne rien
-          inscrire dans ces champs pour que les noms soient copiés à partir du Nom
-          actuel de l’organisation. 
+        en: The french organization Title at publication Time. Please leave blank
+          if the organization name at time of publication is identical to
+          your current organization name.
+        fr: Nom de l’organisation au moment de la publication, en français. Veuillez
+          laisser le champ libre si le nom de l'organisation lors de la publication
+          est identique au nom actuel de votre organisation.
     validators: fluent_text canada_copy_from_org_name
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -304,11 +306,11 @@ presets:
 
     fluent_help_text:
       en:
-        en: Commonly used words or phrases which describe the dataset, in English
-        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais
+        en: Commonly used words or phrases which describe the dataset, in English. (Separate multiple entries by commas)
+        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais. (Séparer les mots ou phrases par une virgule)
       fr:
-        en: Commonly used words or phrases which describe the dataset, in French
-        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en français
+        en: Commonly used words or phrases which describe the dataset, in French. (Separate multiple entries by commas)
+        fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en français. (Séparer les mots ou phrases par une virgule)
     required: true
     tag_validators: canada_tags
     # copied from fluent_tags preset
@@ -2204,7 +2206,7 @@ presets:
       en: Ready to Publish
       fr: Prêt à publier
     help_text:
-      en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’
+      en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’
       fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
     required: true
     form_include_blank_choice: true
