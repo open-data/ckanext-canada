@@ -296,16 +296,23 @@
 <script src="{{ wet_server }}/geomapzoom.js"></script>
 <![endif]-->
 
-<script>
+
+<script type="text/javascript">
 // Add Google Analytics Event Tracking to resource download links.
 jQuery('a.resource-url-analytics').on('click', function() {
   var resource_url = encodeURIComponent(jQuery(this).prop('href'));
   if (resource_url) {
-      _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
-    }
-  });
+    // Legacy GA
+    // _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'resource',
+      eventAction: 'download',
+      eventLabel: resource_url
+    });
+  }
+});
 </script>
-
 {% endblock %}
 
 {% block package_license %}{% endblock %}
