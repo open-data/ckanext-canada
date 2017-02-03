@@ -143,11 +143,11 @@ dataset_fields:
 - preset: canada_keywords
   fluent_help_text:
     en:
-      en: Commonly used words or phrases which describe the asset, in English
-      fr: Mots ou phrases couramment utilisés qui décrivent de la ressource d’information, en anglais
+      en: Commonly used words or phrases which describe the asset, in English.(Separate multiple entries by commas)
+      fr: Mots ou phrases couramment utilisés qui décrivent de la ressource d’information, en anglais. (Séparer les mots ou phrases par une virgule)
     fr:
-      en: Commonly used words or phrases which describe the asset, in French
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en français
+      en: Commonly used words or phrases which describe the asset, in French. (Separate multiple entries by commas)
+      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en français. (Séparer les mots ou phrases par une virgule)
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
@@ -173,8 +173,8 @@ dataset_fields:
     en: Place of Publication
     fr: Place de publication
   help_text:
-    en: The region where the asset was originally published
-    fr: La région où de la ressource d’information a été publié initialement
+    en: The region where the asset was originally published. You may select multiple options (Ctrl+Click)
+    fr: La région où le produit a été publié initialement. Vous pouvez sélectionner de multiples options (Ctrl+Clic)
   preset: canada_geographic_region # use same multi-select controlled list
 
 # Field = Spatial.
@@ -195,16 +195,16 @@ dataset_fields:
 # {The start date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_start
   help_text:
-    en: The start date of the period covered by the asset
-    fr: La date de début couvertes par les données
+    en: The start date of the period covered by the asset (YYYY-MM-DD)
+    fr: La date de début couvertes par les données (AAAA-MM-JJ)
 
 # Field = Time Period Coverage End Date.
 # Add a Calendar control to select a Date.
 # {The end date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_end
   help_text:
-    en: The end date of the period covered by the asset
-    fr: La date de fin par les données
+    en: The end date of the period covered by the asset (YYYY-MM-DD)
+    fr: La date de fin par les données (AAAA-MM-JJ)
 
 # Field = Issuance.
 # List box Source: Issuance code table (refer to Data Migration).
@@ -340,7 +340,7 @@ dataset_fields:
 # {The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)}
 - preset: canada_date_published
   help_text:
-    en: The date of issuance (e.g., publication) of the information asset
+    en: The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)
     fr: Date de publication du produit d’information (AAAA-MM-JJ)
 
 # Field = Date Modified.
@@ -348,7 +348,7 @@ dataset_fields:
 # {The date on which the information asset was updated (YYYY-MM-DD)}
 - preset: canada_date_modified
   help_text:
-    en: The date on which the information asset was updated
+    en: The date on which the information asset was updated (YYYY-MM-DD)
     fr: Date à laquelle le produit a été mis à jour (AAAA-MM-JJ)
 
 # Field = Date Created.
@@ -359,7 +359,7 @@ dataset_fields:
     en: Date Created
     fr: Date de création
   help_text:
-    en: The date of creation of the asset
+    en: The date of creation of the asset (YYYY-MM-DD)
     fr: Date de création du produit (AAAA-MM-JJ)
   preset: date
 
@@ -371,8 +371,8 @@ dataset_fields:
     en: Date Captured
     fr: Date de saisie
   help_text:
-    en: The date on which the asset was digitized or a subsequent snapshot was taken
-    fr: Date à laquelle le produit a été numérisé ou un instantané subséquent a été pris (AAAA-MM-DD)
+    en: The date on which the asset was digitized or a subsequent snapshot was taken (YYYY-MM-DD)
+    fr: Date à laquelle le produit a été numérisé ou un instantané subséquent a été pris (AAAA-MM-JJ)
   preset: date
 
 # Field = Edition.
@@ -526,13 +526,15 @@ dataset_fields:
 - preset: canada_imso_approval
   help_text:
     en: Has IMSO approval been obtained for this asset? By selecting yes, you agree to release this asset under the Open Government Licence - Canada
+    fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
 
 # Field = Ready to Publish.
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
   help_text:
-    en: Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’
+    en: Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’
+    fr: La sélection de l’option « Oui » désigne le produit comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
 
 # Field = Date Released.
 # Available only for an Admin user.

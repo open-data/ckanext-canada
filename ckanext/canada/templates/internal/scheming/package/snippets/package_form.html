@@ -13,6 +13,11 @@
         <summary>
           {{_('Catalogue Metadata')}}
         </summary>
+        {% if dataset_type == 'info' %}
+          {% set m1 = _('Open Information Metadata Element Set') %}
+        {% else %}
+          {% set m1 = _('Open Data Metadata Element Set') %}
+        {% endif %}
         <div class="mrgn-lft-md mrgn-rght-md">
           <div class="form-group control-medium">
             <small class="text-info">{{_('This section of the form only displays system-populated data elements used to describe the record type and the placement in the registry')}}</small>
@@ -32,7 +37,7 @@
           <div class="form-group control-medium">
             <label>{{_('Metadata Scheme')}}</label>
             <input class="form-control" readonly
-              value="{{ _('Open Data Metadata Element Set') }}" />
+              value="{{ m1 }}" size='30'/>
             <small class="text-info">{{_('The name of the metadata scheme used (including profile name)')}}</small>
           </div>
           <div class="form-group control-medium">
