@@ -1,5 +1,6 @@
 {% extends 'admin/base.html' %}
 {% import 'macros/form.html' as form %}
+{% import 'macros/canada_read.html' as cr %}
 
 {% block primary_content_inner %}
 
@@ -34,24 +35,14 @@
         </strong>
         <div class="filter-list">
           {% block filter_list %}
-          {% for field in c.fields_grouped %}
-            {% set search_facets_items = c.search_facets.get(field)['items'] %}
-            <span class="facet">{{ c.facet_titles.get(field) }}:</span>
-            {% for value in c.fields_grouped[field] %}
-              <span class="filtered pill background-accent facet-filter">
-                {%- if c.translated_fields and c.translated_fields.has_key((field,value)) -%}
-                  {{ c.translated_fields[(field,value)] }}
-                {% elif field == 'subject' %}
-                  {# since we separate subjects by two spaces instead of a pipe... #}
-                  {{ cr.split_subject_field(value, h.lang()) }}
-                {%- else -%}
-                  {{ h.list_dict_filter(search_facets_items , 'name', 'display_name', value) }}
-                {%- endif %}
-                <a href="{{ h.remove_url_param(field, value=value) }}" class="remove" title="{{ _('Remove') }}"><span class="wb-icon-x"></span></a>
-              </span>
-            {% endfor %}
-          {% endfor %}
-          {% endblock %}
+              <ul class="list-inline">
+              {% for field in c.fields_grouped %}
+                {% if field != 'ready_to_publish' %}
+                  {{ cr.filter_buttons(h, c, field) }}
+                {% endif %}
+              {% endfor %}
+              </ul>
+        {% endblock %}
         </div>
         {% if request.params and c.page.item_count == 0 %}
           {% block try_another_search %}
