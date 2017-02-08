@@ -15,8 +15,9 @@
     </tr>
   </thead>
 
+{% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
 {% for resource in resources %}
-  {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
+  {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang, can_edit=can_edit %}
 {% endfor %}
 
 </table>
