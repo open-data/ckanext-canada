@@ -41,33 +41,6 @@
 
 {% endblock %}
 
-{% macro active_filter_button(field, value, extras, preset_choices) %}
-  <a href="{{ h.remove_url_param(field, value, extras=extras) }}"
-     class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{{ _('Remove') }}">
-    {% if field == 'organization' %}
-      {#
-      We special case organization label lookups because unlike the rest of
-      the possible facets these don't have presets and can be edited by users.
-      #}
-      {% set org = h.get_organization(value) %}
-      {%- if org -%}
-        {{ cr.split_bilingual_field(org.title, h.lang()) }}
-      {%- else -%}
-        {{ value }}
-      {%- endif -%}
-    {%- else -%}
-      {{ h.scheming_language_text(
-        h.list_dict_filter(
-          preset_choices,
-          'value',
-          'label',
-          value
-        )) 
-      }}
-    {%- endif %}
-    <span class="glyphicon glyphicon-remove"></span></a>
-  </a>
-{% endmacro %}
 
 
 {% block filter_list %}
@@ -76,37 +49,7 @@
 <div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
   <ul class="list-inline">
   {% for field in c.fields_grouped %}
-    {% if field=='portal_type' %}
-      {% set preset_choices = [
-          {'value': 'dataset', 'label': _('Open Data')},
-          {'value': 'info', 'label': _('Open Information')},
-          ] %}
-      {% for t in h.recombinant_get_types() %}
-        {% do preset_choices.append({
-          'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
-      {% endfor %}
-    {% else %}
-      {% set preset_choices =
-        (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
-      {% if field=='collection' %}
-        {# collection is special, see also dataset_facets #}
-        {% do preset_choices.append({
-          'value': 'pd', 'label': _('Proactive Disclosure')}) %}
-          {% for t in h.recombinant_get_types() %}
-            {% do preset_choices.append({
-              'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
-          {% endfor %}
-      {% endif %}
-    {% endif %}
-    {% for value in c.fields_grouped[field] %}
-      {% if value is not string %}
-        {% for v in value %}
-        {{ active_filter_button(field, v, extras, preset_choices) }}
-        {% endfor %}
-      {% else %}
-        {{ active_filter_button(field, value, extras, preset_choices) }}
-      {% endif %}
-    {% endfor %}
+    {{ cr.filter_buttons(h, c, field) }}
   {% endfor %}
   </ul>
 </div>
