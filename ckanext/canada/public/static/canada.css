@@ -58,3 +58,11 @@ details.alert-error {
 .list-facets a:visited {
     color: #295376;
 }
+
+.breadcrumb li:last-child a {
+  background: transparent !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}

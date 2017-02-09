@@ -80,10 +80,10 @@ presets:
     fluent_help_text:
       en:
         en: The English name by which the dataset is known
-        fr: Nom anglais désignant la ressource d’information
+        fr: Nom anglais désignant le jeu de données
       fr:
         en: The French name by which the dataset is known
-        fr: Nom français désignant la ressource d’information
+        fr: Nom français désignant le jeu de données
     form_placeholder:
       en: Canada Border Wait Times
       fr: Temps d’attente à la frontière
@@ -174,10 +174,10 @@ presets:
     fluent_help_text:
       en:
         en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
-        fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie la ressource d’information (séparer les multiples noms par des virgules)
+        fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le jeu de données (séparer les multiples noms par des virgules)
       fr:
         en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
-        fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie ressource d’information(séparer les multiples noms par des virgules)
+        fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le jeu de données (séparer les multiples noms par des virgules)
 
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -193,10 +193,10 @@ presets:
     field_name: creator
     label:
       en: Creator
-      fr: Créateur
+      fr: Auteur
     help_text:
       en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
-      fr: Entités individuelles (personnes) principalement responsables de la ressource d’information (séparer les multiples entités par des virgules)
+      fr: Entités individuelles (personnes) principalement responsables de produire le jeu de données (séparer les multiples entités par des virgules)
 
 
 # Field = Contributor English.
@@ -219,10 +219,10 @@ presets:
     fluent_help_text:
       en:
         en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
-        fr: Les noms anglais des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution à de la ressource d’information (séparer les multiples entités par des virgules)
+        fr: Les noms anglais des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution à le jeu de données (séparer les multiples entités par des virgules)
       fr:
         en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas)
-        fr: Les noms français des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution de la ressource d’information (séparer les multiples entités par des virgules)
+        fr: Les noms français des entités (personnes, groupes, ministères ou organismes du GC) qui ont apporté une contribution au jeu de données (séparer les multiples entités par des virgules)
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -572,7 +572,7 @@ presets:
     validators: scheming_required geojson_validator
     help_text:
       en: The range of spatial applicability of a dataset, as a GeoJson string.
-      fr: Étendue de l’applicabilité spatiale de la ressource d’information. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
+      fr: Étendue de l’applicabilité spatiale d’un produit. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
 
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
@@ -590,7 +590,7 @@ presets:
       fr: Nom du région géographique
     help_text:
       en: The geographic region of the dataset. You may select multiple regions (Ctrl+Click)
-      fr: Région géographique d’un produit. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
+      fr: Région géographique d’un jeu de données. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
     choices:
     - label:
         en: Canada
@@ -1845,8 +1845,8 @@ presets:
   values:
     field_name: time_period_coverage_start
     help_text:
-      en: The start date of the period covered by the dataset
-      fr: Date de début de la période couverte par le produit (AAAA-MM-JJ)
+      en: The start date of the period covered by the dataset (YYYY-MM-DD)
+      fr: Date de début de la période couverte par le jeu de données (AAAA-MM-JJ)
     label:
       en: Time Period Coverage Start
       fr: Couverture de la période de temps - date de début
@@ -1861,8 +1861,8 @@ presets:
   values:
     field_name: time_period_coverage_end
     help_text:
-      en: The end date of the period covered by the dataset
-      fr: Date de fin de la période couverte par le produit (AAAA-MM-JJ)
+      en: The end date of the period covered by the dataset (YYYY-MM-DD)
+      fr: Date de fin de la période couverte par le jeu de données (AAAA-MM-JJ)
     label:
       en: Time Period Coverage End
       fr: Couverture de la période de temps - date de fin
@@ -2004,10 +2004,10 @@ presets:
     fluent_help_text:
       en:
         en: English program or homepage that can be navigated to gain additional or contextual information about the dataset
-        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en anglais
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en anglais
       fr:
         en: French program or homepage that can be navigated to gain additional or contextual information about the dataset
-        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en français
+        fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du jeu de données, en français
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
@@ -2035,10 +2035,10 @@ presets:
     fluent_help_text:
       en:
         en: The English name of the series, or aggregate dataset, of which the dataset is a part
-        fr: Nom anglais de la série, ou du produit global, dont le produit fait partie
+        fr: Nom anglais de la série, ou du jeu de données globales, dont le jeu de données fait partie
       fr:
         en: The French name of the series, or aggregate dataset, of which the dataset is a part
-        fr: Nom français de la série, ou du produit global, dont le produit fait partie
+        fr: Nom français de la série, ou du jeu de données globales, dont le jeu de données fait partie
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -2152,7 +2152,7 @@ presets:
       fr: Restrictions d'accès
     help_text:
       en: The access restrictions of the dataset
-      fr: Restrictions d’accès du produit
+      fr: Restrictions d’accès du jeu de données
     required: true
     form_attrs:
       readonly: ''
@@ -2177,8 +2177,8 @@ presets:
       en: IMSO Approval
       fr: Approbation de la CSGI
     help_text:
-      en: Has IMSO approval been obtained? By selecting yes, you agree to release this asset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
-      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce produit sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+      en: Has IMSO approval been obtained? By selecting yes, you agree to release this dataset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
+      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
 
     required: true
     form_include_blank_choice: true
