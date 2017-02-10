@@ -1,0 +1,51 @@
+{% extends "page.html" %}
+{% block subtitle %}{{ _("Open Maps Data Viewer") }}{% endblock %}
+{% block toolbar %}{% endblock %}
+{% block primary_content %}
+{% set rcsLang = h.lang() + "-CA" %}
+<div class="fgpv" id="open-data-map" rv-config="{{ h.url_for_static('static/config.rcs.{}.json'.format(rcsLang)) }}" rv-langs='["{{rcsLang}}"]' rv-restore-bookmark="bookmark" data-rv-service-endpoint="http://section917.cloudapp.net:8000/" data-rv-wait="true">
+    <noscript>
+        <p>{{ _('This interactive map requires JavaScript. To view this content please enable JavaScript in your browser or download a browser that supports it.') }}</p>
+    </noscript>
+ </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="http://open.canada.ca/fgpv-vpgf/lib/bootstrap.js"></script>
+  <script>
+    const needIePolyfills = [
+        'Promise' in window,
+        'TextDecoder' in window,
+        'findIndex' in Array.prototype,
+        'find' in Array.prototype,
+        'from' in Array,
+        'startsWith' in String.prototype,
+        'endsWith' in String.prototype
+    ].some(function(x) { return !x; });
+    if (needIePolyfills) {
+        document.write('<script src="../lib/ie-polyfills.js"><\/script>');
+    }
+    // https://css-tricks.com/snippets/javascript/get-url-variables/
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+    function bookmark(){
+        return new Promise(function (resolve) {
+            var thing = getQueryVariable("rv");
+            console.log(thing);
+            resolve(thing);
+        });
+    }
+    var keys = '{{ pkg_id }}'.split(',');
+    RV.getMap('open-data-map').restoreSession(keys);
+  </script>
+{% endblock %}

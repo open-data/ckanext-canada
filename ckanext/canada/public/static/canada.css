@@ -66,3 +66,10 @@ details.alert-error {
   cursor: default;
   text-decoration: none;
 }
+
+.fgpv {
+  height: 700px;
+  border: 1px solid black;
+  margin: 1em 0;
+  position: relative;
+}
