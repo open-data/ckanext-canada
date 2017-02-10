@@ -207,20 +207,15 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     for r in records:
         unique, friendly = unique_id(r)
 
-        shortform = None
-        shortform_fr = None
-        for e in org_detail['extras']:
-            if e['key'] == 'shortform':
-                shortform = e['value']
-            elif e['key'] == 'shortform_fr':
-                shortform_fr = e['value']
+        shortform = org_detail['shortform']
+        shortform_fr = org_detail['shortform_fr']
 
         solrrec = {
             'id': unique,
             'unique_id': friendly,
             'org_name_code': org_detail['name'],
-            'org_name_en': org_detail['title'].split(' | ', 1)[0],
-            'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
+            'org_name_en': org_detail['title_tranlated']['en'],
+            'org_name_fr': org_detail['title_tranlsated']['fr'],
             }
 
         for f in chromo['fields']:

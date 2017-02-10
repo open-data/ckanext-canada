@@ -93,7 +93,7 @@ The CKAN ini file needs the following settings for the registry server::
 
    ckan.plugins = googleanalytics canada_forms canada_internal
         canada_public canada_package wet_boew_theme_gc_intranet datastore recombinant
-        scheming_datasets fluent
+        scheming_datasets scheming_organizations fluent
 
    recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
@@ -101,11 +101,13 @@ For the public server use only::
 
    ckan.plugins = googleanalytics canada_forms
         canada_public canada_package wet_boew_gcweb
-        scheming_datasets fluent
+        scheming_datasets scheming_organizations fluent
 
    canada.portal_url = http://myserver.com
 
 Both servers need::
+
+   scheming.organization_schemas = ckanext.canada:schemas/organization.yaml
 
    scheming.dataset_schemas =
        ckanext.canada:schemas/dataset.yaml

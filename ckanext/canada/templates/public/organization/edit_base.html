@@ -1,3 +1,2 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
-{% block subtitle %}{{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}{% endblock %}
+{% block subtitle %}{{ h.get_translated(c.group_dict, 'title') }}{% endblock %}

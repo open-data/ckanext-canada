@@ -236,7 +236,7 @@ Search Facet Formatters
       #}
       {% set org = h.get_organization(value) %}
       {%- if org -%}
-        {{ split_bilingual_field(org.title, h.lang()) }}
+        {{ h.get_translated(org, 'title') }}
       {%- else -%}
         {{ value }}
       {%- endif -%}

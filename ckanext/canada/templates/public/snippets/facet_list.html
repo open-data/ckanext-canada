@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% set facet_name = title + 's' %}
 
@@ -13,10 +12,11 @@
         <ul class="list-unstyled list-facets">
           {% for item in items | sort(attribute='count', reverse=true) %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+            {% set translated_title = h.get_translated( h.get_organization_extra(item), 'title') if name=='organization' else item.display_name %}
             {% set label =
               h.scheming_choices_label(scheming_choices, item.name)
               if scheming_choices
-              else cr.split_bilingual_field(item.display_name, h.lang()) %}
+              else translated_title %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                 <a href="{{ href }}">
