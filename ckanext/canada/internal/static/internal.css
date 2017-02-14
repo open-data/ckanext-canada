@@ -1,6 +1,3 @@
-#wb-so {text-align: right;}
-#wb-so .row {background: #fff; padding: 1em 0 0;}
-#wb-so .container {border-left: 1px solid #ccc; border-right: 1px solid #ccc;}
 .header-title-box {
 border-left: 1px solid #ccc;
 border-right: 1px solid #ccc;
@@ -17,6 +14,22 @@ margin-bottom: 0px;
 }
 #wb-cont {
 font-size: 24px;
+}
+#wb-info a {
+text-decoration: none;
+}
+
+#wb-info > .wb-navcurr {
+padding-top: 2em;
+padding-bottom: 2em;
+}
+.ftr-urlt-lnk li:before {
+content: "\2022";
+margin-right: 0.7em;
+}
+.ftr-urlt-lnk li:first-child:before {
+content: none;
+
 }
 .table>tbody>tr>td,
 .table>tbody>tr>th,
