@@ -49,7 +49,7 @@
 <div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
   <ul class="list-inline">
   {% for field in c.fields_grouped %}
-    {{ cr.filter_buttons(h, c, field) }}
+    {{ cr.filter_buttons(h, c, field, extras) }}
   {% endfor %}
   </ul>
 </div>
