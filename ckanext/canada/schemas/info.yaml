@@ -24,6 +24,9 @@ dataset_fields:
 
 - preset: canada_collection
   form_restrict_choices_to: [publication]
+  help_text:
+    en: "The collection (domain specific) to which the metadata record belongs, Example: Publications"
+    fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : Publication"
   form_attrs:
     readonly: ""
 
