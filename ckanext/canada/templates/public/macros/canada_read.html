@@ -250,11 +250,11 @@ Search Facet Formatters
         ))
       }}
     {%- endif %}
-    <span class="glyphicon glyphicon-remove"></span></a>
+    <span class="glyphicon glyphicon-remove"></span>
   </a>
 {% endmacro %}
 
-{% macro filter_buttons(h, c, field) %}
+{% macro filter_buttons(h, c, field, extras) %}
     {% if field=='portal_type' %}
       {% set preset_choices = [
           {'value': 'dataset', 'label': _('Open Data')},
