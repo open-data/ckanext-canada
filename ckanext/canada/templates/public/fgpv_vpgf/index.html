@@ -7,7 +7,48 @@
 {% endblock %}
 
 {% block toolbar %}{% endblock %}
-{% block primary_content %}
+
+
+{# Markup to make the viewer full width - start #}
+{% block content %}
+<div class=""><div class="row">
+  {% block flash %}{{super()}}{% endblock %}
+  {% block maintag %}{{super()}}{% endblock %}
+  {% block pre_primary %}{{super()}}{% endblock %}
+  {% block primary %}
+    {% block page_title %}
+      <div class="container"><div class="row"><h1 property="name" id="wb-cont">
+        {%- block page_heading -%}{{ super() }}{%- endblock -%}
+      </h1></div></div>
+    {% endblock %}
+    {% block primary_content %}
+          <div class="row">
+              {% if self.content_primary_nav()|trim != '' %}
+              <div class="col-md-12">
+                <ul class="nav nav-pills" style="margin-bottom:1em">
+                    {% block content_primary_nav %}{% endblock %}
+                </ul>
+              </div>
+              {% endif %}
+              <div class="col-md-12">
+                  {% if self.page_primary_action() | trim %}
+                    <div class="page_primary_action">
+                    {% block page_primary_action %}{% endblock %}
+                    </div>
+                  {% endif %}
+                  {{ self.primary_content_inner() }}
+              </div>
+          </div>
+        {% endblock primary_content %}
+  {% endblock %}
+  {% block secondary %}{{super()}}{% endblock %}
+  </div>
+  </main>
+</div></div>
+{% endblock content %}
+{# Markup to make the viewer full width - end #}
+
+{% block primary_content_inner %}
 {% set rcsLang = h.lang() + "-CA" %}
 <div class="fgpv" id="open-data-map" rv-config="{{ h.url_for_static('static/config.rcs.{}.json'.format(rcsLang)) }}" rv-langs='["{{rcsLang}}"]' rv-restore-bookmark="bookmark" rv-service-endpoint="http://160.106.128.113/" data-rv-wait="true">
     <noscript>
