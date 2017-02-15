@@ -1,9 +1,15 @@
 {% extends "page.html" %}
 {% block subtitle %}{{ _("Open Maps Data Viewer") }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li><a href="/maps/dataset?q=">Search Open Maps</a></li>
+  <li>Geospatial Viewer</li>
+{% endblock %}
+
 {% block toolbar %}{% endblock %}
 {% block primary_content %}
 {% set rcsLang = h.lang() + "-CA" %}
-<div class="fgpv" id="open-data-map" rv-config="{{ h.url_for_static('static/config.rcs.{}.json'.format(rcsLang)) }}" rv-langs='["{{rcsLang}}"]' rv-restore-bookmark="bookmark" data-rv-service-endpoint="http://section917.cloudapp.net:8000/" data-rv-wait="true">
+<div class="fgpv" id="open-data-map" rv-config="{{ h.url_for_static('static/config.rcs.{}.json'.format(rcsLang)) }}" rv-langs='["{{rcsLang}}"]' rv-restore-bookmark="bookmark" rv-service-endpoint="http://160.106.128.113/" data-rv-wait="true">
     <noscript>
         <p>{{ _('This interactive map requires JavaScript. To view this content please enable JavaScript in your browser or download a browser that supports it.') }}</p>
     </noscript>
