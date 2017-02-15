@@ -475,8 +475,9 @@ class CanadaAdminController(PackageController):
         if not is_sysadmin(c.user):
             abort(401, _('Not authorized to see this page'))
 
-        # always set ready_to_publish to true for the publishing interface
+        # always set ready_to_publish and imso_approval to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
+        request.GET['imso_approval'] = u'true'
 
         # This MUST be None, otherwise the default filtering will apply and
         # restrict to just dataset_type=dataset.
