@@ -9,18 +9,14 @@ import codecs
 import sys
 import openpyxl
 
-def peekBOM(f):
-    first3bytes = f.read(3)
-    if first3bytes == codecs.BOM_UTF8:
-        f.seek(3)
-    else:
-        f.seek(0)
-    return f
-
 def main():
-    reader = csv.reader(peekBOM(sys.stdin))
+    reader = csv.reader(sys.stdin)
     book = openpyxl.Workbook(write_only=True)
     sheet = book.create_sheet()
+
+    firstrow = next(reader)
+    firstrow[0] = firstrow[0].lstrip(codecs.BOM_UTF8)
+    sheet.append(firstrow)
 
     for row in reader:
         sheet.append(row)
