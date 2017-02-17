@@ -402,6 +402,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         if 'fgp_viewer' in data_dict.get('display_flags', []):
             data_dict['fgp_viewer'] = 'map_view'
 
+        titles = json.loads(data_dict.get('title_translated', '{}'))
+        data_dict['title_fr'] = titles.get('fr','')
+        data_dict['title'] = titles.get('en','')
         return data_dict
 
     def before_view(self, pkg_dict):

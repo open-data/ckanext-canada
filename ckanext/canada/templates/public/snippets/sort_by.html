@@ -10,10 +10,11 @@ Example:
 #}
 <div class="form-group">
   <label for="field-order-by" class="control-label">{{ _('Order by') }}</label>
-
-  <select id="field-order-by" name="sort" class="form-control input-sm">
-    <option value="title_string asc"{% if sort=='title_string asc' %} selected="selected"{% endif %}>{{ _('Name Ascending') }}</option>
-    <option value="title_string desc"{% if sort=='title_string desc' %} selected="selected"{% endif %}>{{ _('Name Descending') }}</option>
+  {% set title_asc =_("title_string asc") %}
+  {% set title_desc =_("title_string desc") %}
+  <select id="field-order-by" name="sort" class="form-control input-sm" onchange="this.form.submit()">
+    <option value="{{ title_asc }}"{% if sort==title_asc %} selected="selected"{% endif %}>{{ _('Name Ascending') }}</option>
+    <option value="{{ title_desc }}"{% if sort==title_desc %} selected="selected"{% endif %}>{{ _('Name Descending') }}</option>
     <option value="metadata_modified desc"{% if sort=='metadata_modified desc' or sort is none %} selected="selected"{% endif %}>{{ _('Last Modified') }}</option>
   </select>
 
