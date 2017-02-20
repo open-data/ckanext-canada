@@ -6,3 +6,6 @@ pyyaml
 ckantoolkit
 pytz
 babel
+-e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
+rdflib-jsonld
+gemoet
