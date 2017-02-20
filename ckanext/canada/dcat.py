@@ -107,3 +107,10 @@ class CanadaDCATProfile(RDFProfile):
             _r_add(DCAT.media_type, 'mimetype')
             _r_add(DCT['format'], 'format')
             _r_add(DCAT.access_url, 'url')
+            _smart_add(
+                g,
+                dataset_dict,
+                resource,
+                DCT.license,
+                'license_title'
+            )
