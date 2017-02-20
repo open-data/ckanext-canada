@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from functools import partial
 
-from rdflib import BNode, Literal
+from rdflib import URIRef, BNode, Literal
 from rdflib.namespace import RDF
 from ckanext.dcat.profiles import RDFProfile, DCT, DCAT, VCARD
 from ckan.lib.helpers import url_for
@@ -35,6 +35,8 @@ def _smart_add(g, dataset_dict, dataset_ref, type_, key, sc_key=None):
 
                 for vv in v:
                     g.add((dataset_ref, type_, Literal(vv, lang=k)))
+        elif value is None:
+            return
         else:
             g.add((dataset_ref, type_, Literal(value)))
 
@@ -84,3 +86,24 @@ class CanadaDCATProfile(RDFProfile):
         g.add((contact_details, VCARD.hasEmail, Literal(
             dataset_dict['maintainer_email']
         )))
+
+        for resource_dict in dataset_dict.get('resources', []):
+            resource = URIRef(url_for(
+                controller='package',
+                action='resource_read',
+                id=resource_dict['id'],
+                qualified=True
+            ))
+
+            _r_add = partial(_smart_add, g, resource_dict, resource)
+
+            g.add((dataset_ref, DCAT.distrubtion, resource))
+            g.add((resource, RDF.type, DCAT.Distribution))
+
+            _r_add(DCT.title, 'name')
+            _r_add(DCT.description, 'description')
+            _r_add(DCT.issued, 'created')
+            _r_add(DCT.modified, 'last_modified')
+            _r_add(DCAT.media_type, 'mimetype')
+            _r_add(DCT['format'], 'format')
+            _r_add(DCAT.access_url, 'url')
