@@ -2,27 +2,41 @@
 # -*- coding: utf-8 -*-
 from functools import partial
 
-from rdflib import URIRef, BNode, Literal
+from rdflib import BNode, Literal
 from rdflib.namespace import RDF
 from ckanext.dcat.profiles import RDFProfile, DCT, DCAT, VCARD
 from ckan.lib.helpers import url_for
+from ckanext.scheming import helpers as scheming_helpers
 
 
-def _smart_add(g, dataset_dict, dataset_ref, type_, key):
+def _smart_add(g, dataset_dict, dataset_ref, type_, key, sc_key=None):
+    if sc_key:
+        preset = scheming_helpers.scheming_get_preset(sc_key)
+
     try:
-        value = dataset_dict[key + '_translated']
+        values = dataset_dict[key + '_translated']
     except KeyError:
-        value = dataset_dict[key]
+        values = dataset_dict[key]
 
-    if isinstance(value, dict):
-        for k, v in value.iteritems():
-            if not isinstance(v, list):
-                v = [v]
+    if not isinstance(values, list):
+        values = [values]
 
-            for vv in v:
-                g.add((dataset_ref, type_, Literal(vv, lang=k)))
-    else:
-        g.add((dataset_ref, type_, Literal(value)))
+    for value in values:
+        if sc_key:
+            for c in preset['choices']:
+                if c['value'] == value:
+                    value = c.get('label', value)
+                    break
+
+        if isinstance(value, dict):
+            for k, v in value.iteritems():
+                if not isinstance(v, list):
+                    v = [v]
+
+                for vv in v:
+                    g.add((dataset_ref, type_, Literal(vv, lang=k)))
+        else:
+            g.add((dataset_ref, type_, Literal(value)))
 
 
 class CanadaDCATProfile(RDFProfile):
@@ -42,19 +56,17 @@ class CanadaDCATProfile(RDFProfile):
         _add(DCT.issued, 'date_published')
         _add(DCT.modified, 'metadata_modified')
         _add(DCT.publisher, 'org_title_at_publication')
-        # FIXME: ckanext-scheming lookup..
-        _add(DCT.accuralPeriodicity, 'frequency')
+        _add(DCT.accuralPeriodicity, 'frequency', 'canada_frequency')
         _add(DCT.identifier, 'id')
-        # _add(DCT.spatial, '')
+        _add(DCT.spatial, 'spatial')
+        # This *should* be the period (from start to finish) that the dataset
+        # covers, however we don't seem to have a field for this.
         # _add(DCT.temporal, '')
 
         g.add((dataset_ref, DCT.language, Literal('en')))
         g.add((dataset_ref, DCT.language, Literal('fr')))
 
-        for subject in dataset_dict.get('subject', []):
-            # FIXME: ckanext-scheming lookup..
-            g.add((dataset_ref, DCAT.theme, Literal(subject)))
-
+        _add(DCAT.theme, 'subject', 'canada_subject')
         _add(DCAT.keyword, 'keywords')
         g.add((dataset_ref, DCAT.landing_page, Literal(
             url_for(
