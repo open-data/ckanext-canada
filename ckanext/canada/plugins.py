@@ -404,7 +404,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr','')
-        data_dict['title'] = titles.get('en','')
+        data_dict['title_string'] = titles.get('en','')
         return data_dict
 
     def before_view(self, pkg_dict):
