@@ -11,14 +11,7 @@
 {% endblock %}
 
 {% block file_input %}
-  <input required
-      class="form-control"
-      style="height: auto"
-      type="file"
-      name="xls_update"
-      id="xls_update"
-      oninvalid="setCustomValidity(' {{ _('You must provide a valid file') }} ')" onchange="setCustomValidity('')"
-      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+  {{ super() }}
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_warn' in geno %}
     <div class="alert alert-danger">
