@@ -552,8 +552,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
   help_text:
-    en: The date the asset may be published on the Portal
-    fr: La date que le jeu de données peut être publier sur le portail information ouvertes
+    en: The date the asset may be published on the Portal (YYYY-MM-DD)
+    fr: La date que le jeu de données peut être publier sur le portail information ouvertes (AAAA-MM-JJ)
 
 
 #
