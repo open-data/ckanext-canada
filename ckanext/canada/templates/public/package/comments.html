@@ -4,15 +4,22 @@
     {%- set comment_list = h.dataset_comments(pkg.id, h.lang()) -%}
     <h4><a id="comments"></a>{{ _('Comments') }}</h4>
     {%- if comment_list -%}
-      <ul class="list-group">
+      {% set previous_thread = [] %}
       {% for comment in comment_list %}
-        <li class="list-group-item">
-          <p>{{ comment['user']}}</p>
-          <p>{{ comment['date'] }}</p>
+        {% set thread = comment['thread'].split('.') %}
+        {% if thread|length > previous_thread|length and previous_thread|length > 0 %}
+            <div class="indented">
+        {% elif thread|length < previous_thread|length %}
+            {% for step in range(previous_thread|length - thread|length) %}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <article class="comment ">
+          <header><p class="author-datetime"><span class="comment-author">{{ comment['user']}}</span> - <span class="comment-datetime">{{ comment['date'] }}</span></p></header>
           <p>{{ comment['comment_body']|striptags }}</p>
-        </li>
+        </article>
+       {% set previous_thread = thread %}
       {% endfor %}
-      </ul>
 
     {%- endif -%}
     <div class="margin-top-medium">

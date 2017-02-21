@@ -318,4 +318,9 @@ jQuery('a.resource-url-analytics').on('click', function() {
 {% block package_license %}{% endblock %}
 {% block package_item_notes %}{% endblock %}
 
+{%- block custom_styles %}
+{{ super() }}
+<link rel="stylesheet" href="http://open.canada.ca/sites/all/modules/custom/opendata_blog/css/opendata_blog.css" />
+{% endblock %}
+
 
