@@ -104,10 +104,10 @@ presets:
     field_name: owner_org
     label:
       en: Publisher - Current Organization Name
-      fr: Organisation
+      fr: Éditeur - Nom actuel de l’organisation
     help_text:
       en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
-      fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier de l’ensemble de données
+      fr: Titre de l’organisation actuelle (organisme ou ministère du GC) principalement responsable de publier le jeu de données
     required: true
     form_include_blank_choice: true
     form_select_attrs:
@@ -129,10 +129,10 @@ presets:
     fluent_form_label:
       en:
         en: Publisher - Organization Name at Publication (English)
-        fr: Organisation - Titre lors de la publication (anglais)
+        fr: Éditeur - Nom de l’organisation lors de la publication (anglais)
       fr:
         en: Publisher - Organization Name at Publication (French)
-        fr: Organisation - Titre lors de la publication (français)
+        fr: Éditeur - Nom de l’organisation lors de la publication (français)
     fluent_help_text:
       en:
         en: The english organization Title at publication Time. Please leave blank
