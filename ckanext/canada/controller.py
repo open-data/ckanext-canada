@@ -258,6 +258,11 @@ class CanadaController(BaseController):
             'title': _org_key(o)
         } for o in organization_list]
 
+    def fgpv_vpgf(self, pkg_id):
+        return render('fgpv_vpgf/index.html', extra_vars={
+            'pkg_id': pkg_id,
+        })
+
 
 class CanadaDatasetController(PackageController):
     def resource_edit(self, id, resource_id, data=None, errors=None,

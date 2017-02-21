@@ -245,6 +245,11 @@ ckanext.canada:schemas/info.yaml
 
     def before_map(self, map):
         map.connect(
+            '/fgpv_vpgf/{pkg_id}',
+            action='fgpv_vpgf',
+            controller='ckanext.canada.controller:CanadaController'
+        )
+        map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',
             action='organization_index',
