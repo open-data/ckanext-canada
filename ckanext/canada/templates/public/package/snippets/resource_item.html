@@ -21,18 +21,18 @@
     {% if csv_dict %}
       <details style="display: inline; border-style: none;"><summary style="outline: none;">{{ _('Data Columns info') }}</summary>
       <table class="table table-striped resource-list">
-        <thread>
+        <thead>
           <tr>
               <th>{{ _('Column name') }}</th>
               <th>{{ _('English descirption') }}</th>
               <th>{{ _('French description') }}</th>
           </tr>
-        </thread>
+        </thead>
       {% for col_name, col_en, col_fr in csv_dict %}
           <tr>
-              <td>{{ col_name }}</th>
-              <td>{{ col_en }}</th>
-              <td>{{ col_fr }}</th>
+              <td>{{ col_name }}</td>
+              <td>{{ col_en }}</td>
+              <td>{{ col_fr }}</td>
           </tr>
       {% endfor %}
       </table>
