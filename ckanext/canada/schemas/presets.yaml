@@ -104,10 +104,10 @@ presets:
     field_name: owner_org
     label:
       en: Publisher - Current Organization Name
-      fr: Organisation
+      fr: Éditeur - Nom actuel de l’organisation
     help_text:
       en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
-      fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier de l’ensemble de données
+      fr: Titre de l’organisation actuelle (organisme ou ministère du GC) principalement responsable de publier le jeu de données
     required: true
     form_include_blank_choice: true
     form_select_attrs:
@@ -129,10 +129,10 @@ presets:
     fluent_form_label:
       en:
         en: Publisher - Organization Name at Publication (English)
-        fr: Organisation - Titre lors de la publication (anglais)
+        fr: Éditeur - Nom de l’organisation lors de la publication (anglais)
       fr:
         en: Publisher - Organization Name at Publication (French)
-        fr: Organisation - Titre lors de la publication (français)
+        fr: Éditeur - Nom de l’organisation lors de la publication (français)
     fluent_help_text:
       en:
         en: The english organization Title at publication Time. Please leave blank
@@ -238,7 +238,7 @@ presets:
     field_name: maintainer_email
     label:
       en: "Contact Email"
-      fr: "Adresse électronique du contact"
+      fr: "Courriel - Personne-ressource"
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
@@ -261,7 +261,7 @@ presets:
     fluent_form_label:
       en:
         en: "Description (English)"
-        fr: "Description (en anglais)"
+        fr: "Description (anglais)"
       fr:
         en: "Description (French)"
         fr: "Description (français)"
@@ -1996,11 +1996,11 @@ presets:
       fr: URL de la page d'accueil
     fluent_form_label:
       en:
-        en: Homepage (English)
-        fr: URL de la page d’accueil (anglaise)
+        en: Homepage URL (English)
+        fr: URL de la page d’accueil (anglais)
       fr:
-        en: Homepage (French)
-        fr: URL de la page d’accueil (française)
+        en: Homepage URL (French)
+        fr: URL de la page d’accueil (français)
     fluent_help_text:
       en:
         en: English program or homepage that can be navigated to gain additional or contextual information about the dataset
@@ -2395,7 +2395,7 @@ presets:
       fr: Identificateur unique
     help_text:
       en: A unique phrase or string which identifies the resource.
-      fr: Expression ou segment unique désignant la ressource.
+      fr: Expression ou chaîne unique désignant la ressource.
     form_panel: resource
 
 # Field = Title English.
@@ -2439,7 +2439,7 @@ presets:
   values:
     field_name: related_relationship
     label:
-      en: Related Record Relationship Type
+      en: Relationship Type
       fr: Type de relation
     help_text:
       en: The Related Record’s relationship with the dataset
@@ -3364,8 +3364,8 @@ presets:
       en: Language
       fr: Langue
     help_text:
-      en: The language of the resource.
-      fr: Langue de la ressource.
+      en: The language of the resource. You may select multiple languages (Ctrl+Click).
+      fr: Langue de la ressource. Vous pouvez sélectionner de multiples langues (Ctrl+Clic).
     required: true
     display_snippet: br_multiple_choice.html
     choices:
