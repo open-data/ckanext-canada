@@ -15,7 +15,7 @@
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_warn' in geno %}
     <div class="alert alert-danger">
-      <p>{{ _(geno.upload_warn) }}</p>
+      <p>{{ _(geno.upload_warn) | safe }}</p>
     </div>
   {% endif %}
 {% endblock %}
