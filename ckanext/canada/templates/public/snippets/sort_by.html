@@ -11,7 +11,7 @@ Example:
 <div class="form-group">
   <label for="field-order-by" class="control-label">{{ _('Order by') }}</label>
   <select id="field-order-by" name="sort" class="form-control input-sm" onchange="this.form.submit()">
-    <option value="score desc,metadata_modified desc" >{{ _('Relevance') }}</option>
+    <option value="" >{{ _('Relevance') }}</option>
     {% if h.lang() == 'fr' %}
       <option value="title_fr asc"{% if sort=="title_fr asc" %} selected="selected"{% endif %}>{{ _('Name Ascending') }}</option>
       <option value="title_fr desc"{% if sort=="title_fr desc" %} selected="selected"{% endif %}>{{ _('Name Descending') }}</option>
