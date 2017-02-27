@@ -90,6 +90,54 @@ msgstr "Confirmer la suppression"
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
+msgid "Create new record"
+msgstr "Créer un nouveau dossier"
+
+msgid "Travel - Public Servants"
+msgstr "Voyages des fonctionnaires"
+
+msgid "Travel - Non-Public Servants"
+msgstr "Voyages des non-fonctionnaires"
+
+msgid "Hospitality"
+msgstr "Accueil"
+
+msgid "Conference Fees"
+msgstr "Frais de participation aux conférence"
+
+msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre (aussi inclus dans les voyages des non-fonctionnaires)"
+
+msgid "Travel Public Servants - Explanation of Significant Variance (English)"
+msgstr "Voyages des fonctionnaires - Explication d’un écart important (anglais)"
+
+msgid "Travel Public Servants - Explanation of Significant Variance (French)"
+msgstr "Voyages des fonctionnaires - Explication d’un écart important (français)"
+
+msgid "Travel Non-Public Servants - Explanation of Significant Variance (English)"
+msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (anglais)"
+
+msgid "Travel Non-Public Servants - Explanation of Significant Variance (French)"
+msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (français)"
+
+msgid "Hospitality - Explanation of Significant Variance (English)"
+msgstr "Accueil - Explication d’un écart important (anglais)"
+
+msgid "Hospitality - Explanation of Significant Variance (French)"
+msgstr "Accueil - Explication d’un écart important (français)"
+
+msgid "Conference Fees - Explanation of Significant Variance (English)"
+msgstr "Frais de participation aux conférence - Explication d’un écart important (anglais)"
+
+msgid "Conference Fees - Explanation of Significant Variance (French)"
+msgstr "Frais de participation aux conférence - Explication d’un écart important (français)"
+
+msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (English)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (anglais)"
+
+msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (French)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (français)"
+
 msgid "What are datasets?"
 msgstr "Qu’est-ce qu’un ensemble de données?"
 
@@ -471,6 +519,9 @@ msgstr "Type de données"
 msgid "No datasets were found to match your query."
 msgstr "Aucun jeu de données ne correspond aux termes de recherche spécifiés."
 
+msgid "No datasets found for \"{query}\""
+msgstr "Aucun dossier trouvé pour \"{query}\""
+
 msgid "Please review your spelling, or reduce the number of filters selected."
 msgstr "S'il vous plaît vérifier l’orthographe, ou réduire le nombre de filtres sélectionnés."
 
@@ -708,8 +759,8 @@ msgstr "Ministère"
 msgid "Account Created"
 msgstr "Compte créé"
 
-msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions."
-msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à open-ouvert@tbs-sct.gc.ca."
+msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> with any questions."
+msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>."
 
 msgid "Please note – if you have downloaded a template before DECEMBER 19, 2016, please download the updated version before submitting your information."
 msgstr "Veuillez noter que les modèles Excel ont été mis-à-jour le 19 décembre 2016. Si le modèle que vous utilisez a été téléchargé avant cette date, veuillez télécharger la nouvelle version avant de soumettre vos informations."
@@ -1655,10 +1706,10 @@ msgid "Use the Download URL field above to link to the related record."
 msgstr "Utilisez le champ URL de téléchargement ci-dessus pour créer un lien vers le dossier connexe."
 
 msgid "Open Data Metadata Element Set"
-msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
+msgstr "Ensemble d’éléments de métadonnées de données ouvertes"
 
 msgid "Open Information Metadata Element Set"
-msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
+msgstr "Ensemble d’éléments de métadonnées d’information ouverte"
 
 
 #: ckan/controllers/user.py:383
