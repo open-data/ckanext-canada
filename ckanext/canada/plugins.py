@@ -181,6 +181,9 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 """
 
+        # Enable our custom DCAT profile.
+        config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
+
         if 'ckan.i18n_directory' in config:
             # Reload when translaton files change, because I'm slowly going
             # insane.
@@ -408,8 +411,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
             data_dict['fgp_viewer'] = 'map_view'
 
         titles = json.loads(data_dict.get('title_translated', '{}'))
-        data_dict['title_fr'] = titles.get('fr','')
-        data_dict['title_string'] = titles.get('en','')
+        data_dict['title_fr'] = titles.get('fr', '')
+        data_dict['title_string'] = titles.get('en', '')
         return data_dict
 
     def before_view(self, pkg_dict):
