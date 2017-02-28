@@ -140,9 +140,23 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </li>
       <li class="list-group-item">
         <strong>{{ _('Metadata') }}:</strong>
-        <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">
-          {{ _('Link to JSON format') }}
-        </a>
+        <ul class="list-group" style="margin-bottom: 0;">
+          <li class="list-group-item">
+            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">
+              {{ _('Link to JSON format') }}
+            </a>
+          </li>
+          <li class="list-group-item" style="border: none;">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld">
+              {{ _('DCAT (JSON-LD)') }}
+            </a>
+          </li>
+          <li class="list-group-item" style="border: none;">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml">
+              {{ _('DCAT (XML)') }}
+            </a>
+          </li>
+        </ul>
       </li>
       {% if pkg.collection == 'fgp' %}
       <li class="list-group-item">
