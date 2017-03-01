@@ -59,7 +59,6 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="http://open.canada.ca/fgpv-vpgf/lib/bootstrap.js"></script>
   <script>
     const needIePolyfills = [
         'Promise' in window,
@@ -71,8 +70,11 @@
         'endsWith' in String.prototype
     ].some(function(x) { return !x; });
     if (needIePolyfills) {
-        document.write('<script src="../lib/ie-polyfills.js"><\/script>');
+        document.write('<script src="http://open.canada.ca/fgpv-vpgf/lib/ie-polyfills.js"><\/script>');
     }
+  </script>
+  <script src="http://open.canada.ca/fgpv-vpgf/lib/bootstrap.js"></script>
+  <script>
     // https://css-tricks.com/snippets/javascript/get-url-variables/
     function getQueryVariable(variable)
     {
