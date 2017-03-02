@@ -136,6 +136,22 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 30
+    choices:
+      CB:
+        en: Collaborate
+        fr: Collaborer
+      CS:
+        en: Consult
+        fr: Consulter
+      PA:
+        en: Partner
+        fr: Associer
+      IF:
+        en: Inform
+        fr: Informer
+      IV:
+        en: Involve
+        fr: Impliquer
 
   # 3.9
   - datastore_id: description_en
