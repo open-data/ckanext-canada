@@ -1,0 +1,372 @@
+dataset_type: consultations
+target_dataset: consultations
+
+title: PCO Consultations and Public Engagement
+notes: Access, upload and modify the PCO Consultations and Public Engagement records for your organization
+
+portal_type: info
+collection: pd
+
+resources:
+- title: PCO Consultations and Public Engagement
+  resource_name: consultations
+  fields:
+
+  # 3.1
+  - datastore_id: registration_number
+    label:
+      en: Registration Number
+      fr: Numéro d’enregistrement
+    description: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+    obligation: Mandatory
+    format_type: Free text
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.2
+  - datastore_id: publishable
+    label:
+      en: Publishable record
+      fr: Dossier publiable
+    description: This field identifies whether this record can be published as a summary on the appropriate public facing website
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: No
+    occurrence: single
+    datastore_type: boolean
+
+  # 3.3
+  - datastore_id: partner_departments
+    label:
+      en: Partner Department(s)
+      fr: Ministère(s) partenaire(s)
+    description: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
+    obligation: Optional
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: None
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_column_width: 20
+    # choices here come from department codes from org table
+
+  # 3.4
+  - datastore_id: sector
+    label:
+      en: Sector
+      fr: Secteur
+    description: This field indicates the sector of the engagement process.
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 15
+    choices:
+      sdfsdkjslfj
+
+  # 3.5
+  - datastore_id: subjects
+    label:
+      en: Subjects
+      fr: Sujets
+    description: This field indicates the different subjects related to the engagement process.
+    obligation: Mandatory
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.6
+  - datastore_id: title_en
+    label:
+      en: Consultation Title (English)
+      fr: Titre de la consultation (en anglais)
+    description: This field contains the complete name of the consultation in English.
+    obligation: Mandatory
+    format_type: Free Text
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.7
+  - datastore_id: title_fr
+    label:
+      en: Consultation Title (French)
+      fr: Titre de la consultation (en français)
+    description: This field identifies the complete name of the consultation in French.
+    obligation: Mandatory
+    format_type: Free Text
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.8
+  - datastore_id: goals
+    label:
+      en: Goal(s)
+      fr: Objectif(s)
+    description: This field intend to capture the main goals of consulting and/or engaging the public or stakeholders.
+    obligation: Mandatory
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_column_width: 30
+
+  # 3.9
+  - datastore_id: description_en
+    label:
+      en: Description of the Approach (English)
+      fr: Description de l’approche (en anglais)
+    description: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+    obligation: Mandatory
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: The field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.10
+  - datastore_id: description_fr
+    label:
+      en: Description of the Approach (French)
+      fr: Description de l’approche (en français)
+    description: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+    obligation: Mandatory
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: The field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.11
+  - datastore_id: public_opinion_research
+    label:
+      en: Public Opinion Research
+      fr: Recherche sur l’opinion publique
+    description: This field indicates if public opinion research is conducted to design and/or inform the engagement process.
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+     Travel Start Date
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.12
+  - datastore_id: public_opinion_research_standing_offer
+    label:
+      en: Standing Offer Public Opinion Research
+      fr: Recherche sur l’opinion publique – offre à commandes
+    description: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: No
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.13
+  - datastore_id: target_participants_and_audience
+    label:
+      en: Target Participants and Audience
+      fr: Participants visés et public cible
+    description: This field provides information regarding the target participants and audience of the engagement process.
+    obligation: Mandatory
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+      fr: Recherche sur l’opinion publique – offre à commandes
+    description: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.14
+  - datastore_id: planned_start_date
+    label:
+      en: Planned Start Date
+      fr: Date de début prévue
+    description: This field indicates the planned consultation starting date. A consultation is considered open when engagement activities are under way/or when a department is accepting input form participants.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    excel_column_width: 20
+
+  # 3.15
+  - datastore_id: planned_end_date
+    label:
+      en: Planned End Date
+      fr: Date de fin prévue
+    description: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    excel_column_width: 20
+
+  # 3.16
+  - datastore_id: status
+    label:
+      en: Status
+      fr: État
+    description: The field indicates the current status of the engagement process.
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.17
+  - datastore_id: further_information_en
+    label:
+      en: Further Information Link (English)
+      fr: Lien – renseignements supplémentaires (en anglais)
+    description: This field provides the link to the English engagement information page on the Consulting with Canadians website.
+    obligation: Mandatory
+    format_type: Web address
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.18
+  - datastore_id: further_information_fr
+    label:
+      en: Further Information Link (French)
+      fr: Lien – renseignements supplémentaires (en français)
+    description: This field provides the link to the French engagement information page on the Consulting with Canadians website.
+    obligation: Mandatory
+    format_type: Web address
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.19
+  - datastore_id: report_available_online
+    label:
+      en: Report Available online
+      fr: Rapport disponible en ligne
+    description: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
+    obligation: Mandatory
+    format_type: Controlled List
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.20
+  - datastore_id: report_link
+    label:
+      en: Link to the “What we Heard” Report
+      fr: Lien – rapport « Ce que nous avons entendu »
+    description: This field provides the link to the “What we Heard” report when it is available online.
+    obligation: Optional
+    format_type: Web address
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.21
+  - datastore_id: contact_email
+    label:
+      en: Departmental Consultation Contact
+      fr: Responsable de la consultation au ministère
+    description: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
+    obligation: Optional
+    format_type: Email
+    validation: None
+    visible_to_public: No
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.22
+  - datastore_id: policy_program_lead_email
+    label:
+      en: Policy/Program Lead for the Consultation
+      fr: Responsable des politiques ou des programmes pour la consultation
+    description: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
+    obligation: Optional
+    format_type: Email
+    validation: None
+    visible_to_public: No
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.23
+  - datastore_id: remarks_en
+    label:
+      en: Remarks (English)
+      fr: Remarques (en anglais)
+    description: This field identifies additional information on the consultation that could not be submitted in other fields, in English
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: No
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.24
+  - datastore_id: remarks_fr
+    label:
+      en: Remarks (French)
+      fr: Remarques (en français)
+    description: This field identifies additional information on the consultation that could not be submitted in other fields, in French.
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: No
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 20
+
+
+  examples:
+    record:
+      registration_number: "1980198"
+      name: Jane Smith
+      disclosure_group: SLE
+      date: "2016-01-01"
+      destination: Halifax
+      airfare: "600.00"
+      other_transport: "0"
+      other_expenses: "50.00"
+      total: "650.00"
+    filters:
+      name: Jane Smith
+    filter_one:
+      registration_number: "1980198"
+    sort: date desc
