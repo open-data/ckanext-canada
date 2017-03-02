@@ -68,7 +68,18 @@ resources:
     datastore_type: text
     excel_column_width: 15
     choices:
-      sdfsdkjslfj
+      NRE:
+        en: Natural Resources / Environment 
+        fr: Ressources naturelles/ Environnement 
+      SE:
+        en: Social / Economic
+        fr: Social / Économique
+      DSI:
+        en: Defence / Security / International
+        fr: Défense / Sécurité / International
+      S:
+        en: Scientific
+        fr: Scientifique
 
   # 3.5
   - datastore_id: subjects
