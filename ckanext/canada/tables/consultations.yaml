@@ -218,6 +218,16 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+      NA:
+        en: N/A
+        fr: S/O
 
   # 3.13
   - datastore_id: target_participants_and_audience
