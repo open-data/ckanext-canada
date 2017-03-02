@@ -69,8 +69,8 @@ resources:
     excel_column_width: 15
     choices:
       NRE:
-        en: Natural Resources / Environment 
-        fr: Ressources naturelles/ Environnement 
+        en: Natural Resources / Environment
+        fr: Ressources naturelles/ Environnement
       SE:
         en: Social / Economic
         fr: Social / Économique
@@ -94,6 +94,7 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     excel_column_width: 30
+    choices_file: choices/consultation_subject.yaml
 
   # 3.6
   - datastore_id: title_en
