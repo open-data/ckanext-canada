@@ -52,7 +52,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 20
-    # choices here come from department codes from org table
+    choices_file: choices/consultation_org.yaml
 
   # 3.4
   - datastore_id: sector
@@ -244,6 +244,7 @@ resources:
     description: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
     datastore_type: text
     excel_column_width: 20
+    choices_file: choices/consultation_audience.yaml
 
   # 3.14
   - datastore_id: planned_start_date
