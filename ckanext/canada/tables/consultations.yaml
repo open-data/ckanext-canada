@@ -192,9 +192,18 @@ resources:
     validation: This field must not be empty.
     visible_to_public: Yes
     occurrence: Single
-     Travel Start Date
     datastore_type: text
     excel_column_width: 30
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+      TBD:
+        en: To be determined
+        fr: A déterminer
 
   # 3.12
   - datastore_id: public_opinion_research_standing_offer
