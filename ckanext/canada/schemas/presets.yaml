@@ -3124,6 +3124,9 @@ presets:
     - value: JPG
       mimetype: image/jpeg
       replaces: [jpg]
+    - value: JPEG
+      mimetype: image/jpeg
+      replaces: [jpeg]
     - value: JSON
       mimetype: application/json
       openness_score: 3
