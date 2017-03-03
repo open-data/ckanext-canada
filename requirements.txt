@@ -7,5 +7,6 @@ ckantoolkit
 pytz
 babel
 -e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
+-e git+https://github.com/open-data/ckanext-extendedactivity.git#egg=ckanext-extendedactivity
 rdflib-jsonld
 geomet

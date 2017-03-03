@@ -92,8 +92,8 @@ Configuration: development.ini or production.ini
 The CKAN ini file needs the following settings for the registry server::
 
    ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public canada_package wet_boew_theme_gc_intranet datastore recombinant
-        scheming_datasets fluent
+        canada_public canada_package canada_activity wet_boew_theme_gc_intranet datastore recombinant
+        scheming_datasets fluent extendedactivity
 
    recombinant.tables = ckanext.canada:recombinant_tables.yaml
 

@@ -27,6 +27,7 @@ setup(
     canada_public=ckanext.canada.plugins:DataGCCAPublic
     canada_forms=ckanext.canada.plugins:DataGCCAForms
     canada_package=ckanext.canada.plugins:DataGCCAPackageController
+    canada_activity=ckanext.canada.plugins:CanadaActivity
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
