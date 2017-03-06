@@ -18,6 +18,7 @@ def main():
     for row in reader:
         try:
             if asbool(row[FILTER_COLUMN]):
+                row[FILTER_COLUMN] = 'True'
                 writer.writerow(row)
         except ValueError:
             pass
