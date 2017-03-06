@@ -146,7 +146,6 @@ def rebuild(command_name, csv_files=None):
 
             chromo = get_chromo(resource_name)
             geno = get_geno(chromo['dataset_type'])
-            assert geno.get('target_dataset') == command_name
 
             for org_id, records in csv_data_batch(csv_file, chromo):
                 records = [dict((k, safe_for_solr(v)) for k, v in

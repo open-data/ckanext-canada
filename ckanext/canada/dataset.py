@@ -42,7 +42,7 @@ def solr_connection(ini_prefix):
         return SolrConnection(url, http_user=user, http_pass=password)
     return SolrConnection(url)
 
-def data_batch(org_id, lc, target_dataset):
+def data_batch(org_id, lc, dataset_type):
     """
     Generator of dataset dicts for organization with name org
 
@@ -50,19 +50,11 @@ def data_batch(org_id, lc, target_dataset):
     :ptype org_id: str
     :param lc: local CKAN
     :ptype lc: obj
-    :param target_dataset: name of target dataset (e.g., 'ati', 'pd', etc.)
-    :ptype target_dataset: str
+    :param dataset_type: e.g., 'ati', 'pd', etc.
+    :ptype dataset_type: str
 
     generates (resource name, batch of records) tuples
     """
-    dataset_types = get_dataset_types()
-    for dataset_type in dataset_types:
-        geno = get_geno(dataset_type)
-        if geno.get('target_dataset') == target_dataset:
-            break
-    else:
-        return
-
     result = lc.action.package_search(
         q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
         rows=2)['results']
