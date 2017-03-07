@@ -4,7 +4,6 @@
 
 {% block breadcrumb_content %}
   {% set pkg_url = h.url(controller='package', action='read', id=pkg.id) %}
-  <li>{% link_for _('Search Records'), named_route='dataset_search' %}</li>
   {% if c.action != 'new' and pkg %}
     {% set dataset = h.get_translated(pkg, 'title') %}
     <li>{% link_for dataset|truncate(30), controller='package', action='read', id=pkg.name %}</li>
