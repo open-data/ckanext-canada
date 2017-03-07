@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 import socket
-from StringIO import StringIO
 from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
@@ -11,7 +10,6 @@ import lxml.etree as ET
 import lxml.html as html
 import unicodecsv
 import codecs
-from ckan.lib.i18n import get_lang, set_lang
 from ckan.lib.base import model, redirect
 from ckan.logic import schema
 from ckan.controllers.user import UserController
@@ -266,40 +264,30 @@ class CanadaController(BaseController):
         return render('fgpv_vpgf/index.html', extra_vars={
             'pkg_id': pkg_id,
         })
+
     def data_dictionary(self, pd_file):
         names = pd_file.split('.')
         if not (len(names)==2 and names[1]=='csv'):
-            return None
+            abort(404, _('Resource not found'))
         chromo = h.recombinant_get_chromo(names[0])
         if not chromo:
-            return None
+            abort(404, _('Resource not found'))
 
-        current_lang= get_lang()
-        set_lang('fr')
-        csv_dict = [(u'Field Name / Nom de la zone',
-            u'English Description / Description en anglais',
-            u'French description / Description en français')]
-        csv_dict += [ (f['datastore_id'], f['label'], _(f['label']))
-                for f in chromo['fields'] ]
-        set_lang(current_lang)
-
-        csv_dict.append(('owner_org', 'owner organization',
-                _('owner organization') ))
-        csv_dict.append(('owner_org_title', 'owner organization title',
-                _('owner organization title') ))
-
-        blob = StringIO()
-        blob.write(codecs.BOM_UTF8)
-        out = unicodecsv.writer(blob)
-        for row in csv_dict:
-            out.writerow([unicode(col).encode('utf-8') for col in row])
-        contents = blob.getvalue()
-        blob.close()
+        csv_dict = [(_('Field Name'), _('Description'))]
+        for f in chromo['fields']:
+            csv_dict.append((f['datastore_id'],
+                h.recombinant_language_text(f['label'])))
+        csv_dict.append(('owner_org',_('owner organization') ))
+        csv_dict.append(('owner_org_title',_('owner organization title')))
 
         response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = (
             'inline; filename="{0}"'.format(pd_file))
-        return contents
+        response.write(codecs.BOM_UTF8)
+        out = unicodecsv.writer(response)
+        for row in csv_dict:
+            out.writerow([unicode(col).encode('utf-8') for col in row])
+        return
 
 
 class CanadaDatasetController(PackageController):
