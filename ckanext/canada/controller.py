@@ -296,7 +296,7 @@ class CanadaController(BaseController):
         contents = blob.getvalue()
         blob.close()
 
-        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = (
             'inline; filename="{0}"'.format(pd_file))
         return contents
