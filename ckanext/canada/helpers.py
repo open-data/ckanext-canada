@@ -8,7 +8,7 @@ import unicodedata
 
 import ckanapi
 
-import ckan.lib.helpers as h
+from ckantoolkit import h
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
 
@@ -174,7 +174,7 @@ def get_datapreview_recombinant(resource_name, res_id):
         out = {
             'type': f['datastore_type'],
             'id': f['datastore_id'],
-            'label': h._(f['label'])}
+            'label': h.recombinant_language_text(f['label'])}
         if out['id'] in chromo['datastore_primary_key']:
             out['priority'] = pk_priority
             pk_priority += 1

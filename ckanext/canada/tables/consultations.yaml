@@ -419,13 +419,13 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFECECEA
+      fgColor: FFFFF056
     Font:
       bold: true
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF74AFAD
+      fgColor: FFDFE2DB
   default_preview_sort: year desc, month desc
   examples:
     record:
