@@ -195,7 +195,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [unicode(row.get(colname, '')) for colname in cols]
+                [datatablify(row.get(colname, u'')) for colname in cols]
                 for row in response['records']
             ],
         })
@@ -262,6 +262,21 @@ class CanadaController(BaseController):
         return render('fgpv_vpgf/index.html', extra_vars={
             'pkg_id': pkg_id,
         })
+
+
+def datatablify(v):
+    '''
+    format value from datastore v for display in a datatable preview
+    '''
+    if v is None:
+        return u''
+    if v is True:
+        return u'TRUE'
+    if v is False:
+        return u'FALSE'
+    if isinstance(v, list):
+        return u', '.join(unicode(e) for e in v)
+    return unicode(v)
 
 
 class CanadaDatasetController(PackageController):
