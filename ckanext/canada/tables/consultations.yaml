@@ -166,7 +166,7 @@ resources:
     validation: The field must not be empty.
     visible_to_public: Yes
     occurrence: Repeatable
-    datastore_type: _text
+    datastore_type: text
     excel_column_width: 30
 
   # 3.10
@@ -180,7 +180,7 @@ resources:
     validation: The field must not be empty.
     visible_to_public: Yes
     occurrence: Repeatable
-    datastore_type: _text
+    datastore_type: text
     excel_column_width: 30
 
   # 3.11
