@@ -426,20 +426,37 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FFDFE2DB
-  default_preview_sort: year desc, month desc
+  default_preview_sort: registration_number
   examples:
     record:
-      registration_number: "1980198"
-      name: Jane Smith
-      disclosure_group: SLE
-      date: "2016-01-01"
-      destination: Halifax
-      airfare: "600.00"
-      other_transport: "0"
-      other_expenses: "50.00"
-      total: "650.00"
+      contact_email: first.last@example.gc.ca
+      description_en: 
+        To engage and obtain Provincial and Territorial partner views
+      description_fr:
+        Obtenir les opinions des partenaires provinciaux et territoriaux
+      further_information_en: ""
+      further_information_fr: ""
+      goals: ["CB", "CS"]
+      partner_departments: ["271", "141"]
+      planned_end_date: "2017-05-30"
+      planned_start_date: "2017-05-15"
+      policy_program_lead_email: program.lead@example.gc.ca
+      public_opinion_research: N
+      public_opinion_research_standing_offer: NA
+      publishable: false
+      registration_number: CCC0249
+      remarks_en: ""
+      remarks_fr: ""
+      report_available_online: false
+      report_link: ""
+      sector: SE
+      status: P
+      subjects: ["AP", "CD", "HS", "SE"]
+      target_participants_and_audience: ["IP", "IG", "PT"]
+      title_en: Family Services Program Reform
+      title_fr: Réforme du programme des services à l'enfance
     filters:
-      name: Jane Smith
+      sector: SE
     filter_one:
-      registration_number: "1980198"
-    sort: date desc
+      registration_number: CCC0249
+    sort: planned_start_date desc
