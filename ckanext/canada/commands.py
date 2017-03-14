@@ -470,6 +470,9 @@ class CanadaCommand(CkanCommand):
             rettype=u'trigger',
             definition=u'''
                 BEGIN
+                    IF (NEW.registration_number = '') THEN
+                        RAISE EXCEPTION 'Registration number is required';
+                    END IF;
                     IF NOT (NEW.sector = ANY {sectors}) THEN
                         RAISE EXCEPTION 'Invalid sector: "%"', NEW.sector;
                     END IF;
