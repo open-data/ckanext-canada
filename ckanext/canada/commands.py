@@ -21,6 +21,8 @@ from contextlib import contextmanager
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.metadata_xform import metadata_xform
 
+from ckantoolkit import h
+
 from ckanapi import (
     RemoteCKAN,
     LocalCKAN,
@@ -57,6 +59,7 @@ class CanadaCommand(CkanCommand):
                                     [-f | -a <push-apikey>] [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
+                      update-triggers
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -145,6 +148,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'metadata-xform':
             metadata_xform(self.options.portal)
+
+        elif cmd == 'update-triggers':
+            self.update_triggers()
 
         else:
             print self.__doc__
@@ -450,6 +456,32 @@ class CanadaCommand(CkanCommand):
                 print i
             if not self.options.brief:
                 print "# {0}".format(since_date.isoformat())
+
+
+    def update_triggers(self):
+        """Create/update triggers used by PD tables"""
+        lc = LocalCKAN()
+        choices = dict(
+            (f['datastore_id'], f['choices'])
+            for f in h.recombinant_choice_fields('consultations'))
+        lc.action.datastore_function_create(
+            name=u'consultations_trigger',
+            or_replace=True,
+            rettype=u'trigger',
+            definition=u'''
+                BEGIN
+                    IF NOT (NEW.sector = ANY {sectors}) THEN
+                        RAISE EXCEPTION 'Invalid sector: "%"', NEW.sector;
+                    END IF;
+                    RETURN NEW;
+                END;
+                '''.format(
+                    sectors=pg_array(choices['sector'])))
+
+
+def pg_array(choices):
+    from ckanext.datastore.helpers import literal_string
+    return u'(ARRAY[' + u','.join(literal_string(c[0]) for c in choices) + u'])'
 
 
 def _trim_package(pkg):

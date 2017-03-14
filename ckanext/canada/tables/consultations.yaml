@@ -427,6 +427,10 @@ resources:
       patternType: solid
       fgColor: FFDFE2DB
   default_preview_sort: registration_number
+
+  triggers:
+  - consultations_trigger
+
   examples:
     record:
       contact_email: first.last@example.gc.ca
