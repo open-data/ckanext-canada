@@ -528,6 +528,12 @@ class CanadaCommand(CkanCommand):
                     IF bad_target_participants_and_audience <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for target_participants_and_audience: "%"', bad_target_participants_and_audience;
                     END IF;
+                    IF (NEW.planned_start_date IS NULL) THEN
+                        RAISE EXCEPTION 'This field must not be empty: planned_start_date';
+                    END IF;
+                    IF (NEW.planned_end_date IS NULL) THEN
+                        RAISE EXCEPTION 'This field must not be empty: planned_end_date';
+                    END IF;
                     IF NOT (NEW.status = ANY {status}) THEN
                         RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
                     END IF;
