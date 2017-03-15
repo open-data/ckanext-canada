@@ -470,23 +470,23 @@ class CanadaCommand(CkanCommand):
             rettype=u'trigger',
             definition=u'''
                 DECLARE
-                    bad_partner_departments _text := ARRAY(
+                    bad_partner_departments text := array_to_string(ARRAY(
                         SELECT unnest(NEW.partner_departments)
-                        EXCEPT SELECT unnest({partner_departments}));
-                    bad_subjects _text := ARRAY(
+                        EXCEPT SELECT unnest({partner_departments})), ', ');
+                    bad_subjects text := array_to_string(ARRAY(
                         SELECT unnest(NEW.subjects)
-                        EXCEPT SELECT unnest({subjects}));
-                    bad_goals _text := ARRAY(
+                        EXCEPT SELECT unnest({subjects})), ', ');
+                    bad_goals text := array_to_string(ARRAY(
                         SELECT unnest(NEW.goals)
-                        EXCEPT SELECT unnest({goals}));
-                    bad_target_participants_and_audience _text := ARRAY(
+                        EXCEPT SELECT unnest({goals})), ', ');
+                    bad_target_participants_and_audience text := array_to_string(ARRAY(
                         SELECT unnest(NEW.target_participants_and_audience)
-                        EXCEPT SELECT unnest({target_participants_and_audience}));
+                        EXCEPT SELECT unnest({target_participants_and_audience})), ', ');
                 BEGIN
                     IF (NEW.registration_number = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: registration_number';
                     END IF;
-                    IF array_length(bad_partner_departments, 1) > 0 THEN
+                    IF bad_partner_departments <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
                     END IF;
                     IF NOT (NEW.sector = ANY {sectors}) THEN
@@ -495,7 +495,7 @@ class CanadaCommand(CkanCommand):
                     IF NEW.subjects = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: subjects';
                     END IF;
-                    IF array_length(bad_subjects, 1) > 0 THEN
+                    IF bad_subjects <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for subjects: "%"', bad_subjects;
                     END IF;
                     IF (NEW.title_en = '') THEN
@@ -507,7 +507,7 @@ class CanadaCommand(CkanCommand):
                     IF NEW.goals = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: goals';
                     END IF;
-                    IF array_length(bad_goals, 1) > 0 THEN
+                    IF bad_goals <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for goals: "%"', bad_goals;
                     END IF;
                     IF (NEW.description_en = '') THEN
@@ -525,7 +525,7 @@ class CanadaCommand(CkanCommand):
                     IF NEW.target_participants_and_audience = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
                     END IF;
-                    IF array_length(bad_target_participants_and_audience, 1) > 0 THEN
+                    IF bad_target_participants_and_audience <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for target_participants_and_audience: "%"', bad_target_participants_and_audience;
                     END IF;
                     IF NOT (NEW.status = ANY {status}) THEN
