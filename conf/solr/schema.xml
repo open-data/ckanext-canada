@@ -169,6 +169,7 @@
 <copyField source="urls" dest="text"/>
 <copyField source="name" dest="text"/>
 <copyField source="title" dest="text"/>
+<copyField source="title_fr" dest="text" />
 <copyField source="text" dest="text"/>
 <copyField source="license" dest="text"/>
 <copyField source="notes" dest="text"/>
