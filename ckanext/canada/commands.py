@@ -469,22 +469,33 @@ class CanadaCommand(CkanCommand):
             or_replace=True,
             rettype=u'trigger',
             definition=u'''
+                DECLARE
+                    bad_partner_departments _text := ARRAY(
+                        SELECT unnest(NEW.partner_departments)
+                        EXCEPT SELECT unnest({partner_departments}));
                 BEGIN
                     IF (NEW.registration_number = '') THEN
-                        RAISE EXCEPTION 'Registration number is required';
+                        RAISE EXCEPTION 'This field must not be empty: "registration_number"';
+                    END IF;
+                    IF array_length(bad_partner_departments, 1) > 0 THEN
+                        RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
                     END IF;
                     IF NOT (NEW.sector = ANY {sectors}) THEN
-                        RAISE EXCEPTION 'Invalid sector: "%"', NEW.sector;
+                        RAISE EXCEPTION 'Invalid choice for sector: "%"', NEW.sector;
                     END IF;
                     RETURN NEW;
                 END;
                 '''.format(
-                    sectors=pg_array(choices['sector'])))
+                    sectors=pg_array(choices['sector']),
+                    partner_departments=pg_array(choices['partner_departments']),
+                )
+            )
 
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
-    return u'(ARRAY[' + u','.join(literal_string(c[0]) for c in choices) + u'])'
+    return u'(ARRAY[' + u','.join(
+        literal_string(unicode(c[0])) for c in choices) + u'])'
 
 
 def _trim_package(pkg):
