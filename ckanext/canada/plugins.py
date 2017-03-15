@@ -453,7 +453,7 @@ class CanadaActivity(p.SingletonPlugin):
     def get_actions(self):
         #override datastore_upsert and datastore_delete
         for plugin in p.PluginImplementations(p.IActions):
-            if plugin == self:
+            if plugin is self:
                 continue
             actions = plugin.get_actions()
             if 'datastore_upsert' in actions and (
