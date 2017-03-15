@@ -473,9 +473,18 @@ class CanadaCommand(CkanCommand):
                     bad_partner_departments _text := ARRAY(
                         SELECT unnest(NEW.partner_departments)
                         EXCEPT SELECT unnest({partner_departments}));
+                    bad_subjects _text := ARRAY(
+                        SELECT unnest(NEW.subjects)
+                        EXCEPT SELECT unnest({subjects}));
+                    bad_goals _text := ARRAY(
+                        SELECT unnest(NEW.goals)
+                        EXCEPT SELECT unnest({goals}));
+                    bad_target_participants_and_audience _text := ARRAY(
+                        SELECT unnest(NEW.target_participants_and_audience)
+                        EXCEPT SELECT unnest({target_participants_and_audience}));
                 BEGIN
                     IF (NEW.registration_number = '') THEN
-                        RAISE EXCEPTION 'This field must not be empty: "registration_number"';
+                        RAISE EXCEPTION 'This field must not be empty: registration_number';
                     END IF;
                     IF array_length(bad_partner_departments, 1) > 0 THEN
                         RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
@@ -483,11 +492,66 @@ class CanadaCommand(CkanCommand):
                     IF NOT (NEW.sector = ANY {sectors}) THEN
                         RAISE EXCEPTION 'Invalid choice for sector: "%"', NEW.sector;
                     END IF;
+                    IF NEW.subjects = '{{}}' THEN
+                        RAISE EXCEPTION 'This field must not be empty: subjects';
+                    END IF;
+                    IF array_length(bad_subjects, 1) > 0 THEN
+                        RAISE EXCEPTION 'Invalid choice for subjects: "%"', bad_subjects;
+                    END IF;
+                    IF (NEW.title_en = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: title_en';
+                    END IF;
+                    IF (NEW.title_fr = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: title_fr';
+                    END IF;
+                    IF NEW.goals = '{{}}' THEN
+                        RAISE EXCEPTION 'This field must not be empty: goals';
+                    END IF;
+                    IF array_length(bad_goals, 1) > 0 THEN
+                        RAISE EXCEPTION 'Invalid choice for goals: "%"', bad_goals;
+                    END IF;
+                    IF (NEW.description_en = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: description_en';
+                    END IF;
+                    IF (NEW.description_fr = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: description_fr';
+                    END IF;
+                    IF NOT (NEW.public_opinion_research = ANY {public_opinion_research}) THEN
+                        RAISE EXCEPTION 'Invalid choice for public_opinion_research: "%"', NEW.public_opinion_research;
+                    END IF;
+                    IF NOT (NEW.public_opinion_research_standing_offer = ANY {public_opinion_research_standing_offer}) THEN
+                        RAISE EXCEPTION 'Invalid choice for public_opinion_research_standing_offer: "%"', NEW.public_opinion_research_standing_offer;
+                    END IF;
+                    IF NEW.target_participants_and_audience = '{{}}' THEN
+                        RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
+                    END IF;
+                    IF array_length(bad_target_participants_and_audience, 1) > 0 THEN
+                        RAISE EXCEPTION 'Invalid choice for target_participants_and_audience: "%"', bad_target_participants_and_audience;
+                    END IF;
+                    IF NOT (NEW.status = ANY {status}) THEN
+                        RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
+                    END IF;
+                    IF (NEW.further_information_en = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: further_information_en';
+                    END IF;
+                    IF (NEW.further_information_fr = '') THEN
+                        RAISE EXCEPTION 'This field must not be empty: further_information_fr';
+                    END IF;
                     RETURN NEW;
                 END;
                 '''.format(
                     sectors=pg_array(choices['sector']),
-                    partner_departments=pg_array(choices['partner_departments']),
+                    partner_departments=pg_array(
+                        choices['partner_departments']),
+                    subjects=pg_array(choices['subjects']),
+                    goals=pg_array(choices['goals']),
+                    target_participants_and_audience=pg_array(
+                        choices['target_participants_and_audience']),
+                    public_opinion_research=pg_array(
+                        choices['public_opinion_research']),
+                    public_opinion_research_standing_offer=pg_array(
+                        choices['public_opinion_research_standing_offer']),
+                    status=pg_array(choices['status']),
                 )
             )
 
