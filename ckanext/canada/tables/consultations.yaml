@@ -1,11 +1,11 @@
 dataset_type: consultations
 target_dataset: consultations
 
-title: PCO Consultations and Public Engagement
+title: Open Dialogue - Consultations
 notes: Access, upload and modify the PCO Consultations and Public Engagement records for your organization
 
-portal_type: info
-collection: pd
+portal_type: dialog
+collection: consultations
 
 resources:
 - title: PCO Consultations and Public Engagement
@@ -69,18 +69,18 @@ resources:
     datastore_type: text
     excel_column_width: 15
     choices:
-      NRE:
-        en: Natural Resources / Environment
-        fr: Ressources naturelles/ Environnement
-      SE:
-        en: Social / Economic
-        fr: Social / Économique
-      DSI:
-        en: Defence / Security / International
-        fr: Défense / Sécurité / International
-      S:
-        en: Scientific
-        fr: Scientifique
+      ER:
+        en: Economic and Regional Development Policy
+        fr: Politiques de développement économique et régional
+      FD:
+        en: Foreign and Defence Policy
+        fr: Politiques étrangère et de défense
+      G:
+        en: Governance
+        fr: Gouvernance
+      SD:
+        en: Social Development Policy
+        fr: Politiques de développement social
 
   # 3.5
   - datastore_id: subjects
@@ -288,18 +288,18 @@ resources:
     datastore_type: text
     excel_column_width: 20
     choices:
-      P:      
+      P:
         en: Planned
         fr: Prévue
       O:
         en: Open – Accepting input
-        fr: Ouverte – Avis acceptés 
+        fr: Ouverte – Avis acceptés
       CA:
         en: Closed – Analyzing input
         fr: Fermée – Analyse en cours
       CR:
         en: Closed – Report Available
-        fr: Fermée – Rapport disponible 
+        fr: Fermée – Rapport disponible
 
   # 3.17
   - datastore_id: further_information_en
@@ -344,10 +344,10 @@ resources:
     excel_column_width: 20
 
   # 3.20
-  - datastore_id: report_link
+  - datastore_id: report_link_en
     label:
-      en: Link to the “What we Heard” Report
-      fr: Lien – rapport « Ce que nous avons entendu »
+      en: Link to the “What we Heard” Report in English
+      fr: Lien – rapport « Ce que nous avons entendu » en anglais
     description: This field provides the link to the “What we Heard” report when it is available online.
     obligation: Optional
     format_type: Web address
@@ -358,6 +358,20 @@ resources:
     excel_column_width: 20
 
   # 3.21
+  - datastore_id: report_link_fr
+    label:
+      en: Link to the “What we Heard” Report in French
+      fr: Lien – rapport « Ce que nous avons entendu » en français
+    description: This field provides the link to the “What we Heard” report when it is available online.
+    obligation: Optional
+    format_type: Web address
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.22
   - datastore_id: contact_email
     label:
       en: Departmental Consultation Contact
@@ -371,7 +385,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.22
+  # 3.23
   - datastore_id: policy_program_lead_email
     label:
       en: Policy/Program Lead for the Consultation
@@ -385,7 +399,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.23
+  # 3.24
   - datastore_id: remarks_en
     label:
       en: Remarks (English)
@@ -399,7 +413,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.24
+  # 3.25
   - datastore_id: remarks_fr
     label:
       en: Remarks (French)
@@ -412,6 +426,45 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     excel_column_width: 20
+
+  # 2.26
+  - datastore_id: rationale
+    label:
+      en: Rationale
+      fr: Raison
+    description: The field indicates the rationale behind the public engagement initiative. This field include only criteria that define high profile public engagement.
+    validation: Mandatory
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: This field must not be empty.
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_column_width: 20
+    choices:
+      B16:
+        en: Budget 2016
+        fr: Budget 2016
+      B17:
+        en: Budget 2017
+        fr: Budget 2017
+      B18:
+        en: Budget 2018
+        fr: Budget 2018
+      LC:
+        en: Legal duty to Consult
+        fr: Obligation légale de consulter
+      ML:
+        en: Mandate Letter
+        fr: Lettre de mandat
+      MP:
+        en: Minister and/or Parliamentary Secretary Involvement and/or announcement
+        fr: Implication ou annonce du ministre ou du secrétaire parlementaire
+      PC:
+        en: Parliament Committee
+        fr: Comité parlementaire
+      ST:
+        en: Speech of the Throne
+        fr: Discours du Trône
 
 
   datastore_primary_key: registration_number
@@ -434,7 +487,7 @@ resources:
   examples:
     record:
       contact_email: first.last@example.gc.ca
-      description_en: 
+      description_en:
         To engage and obtain Provincial and Territorial partner views
       description_fr:
         Obtenir les opinions des partenaires provinciaux et territoriaux
@@ -452,13 +505,15 @@ resources:
       remarks_en: ""
       remarks_fr: ""
       report_available_online: false
-      report_link: ""
-      sector: SE
+      report_link_en: ""
+      report_link_fr: ""
+      sector: ER
       status: P
       subjects: ["AP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
+      rationale: ["B17"]
     filters:
       sector: SE
     filter_one:

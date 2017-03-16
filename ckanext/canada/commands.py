@@ -482,6 +482,9 @@ class CanadaCommand(CkanCommand):
                     bad_target_participants_and_audience text := array_to_string(ARRAY(
                         SELECT unnest(NEW.target_participants_and_audience)
                         EXCEPT SELECT unnest({target_participants_and_audience})), ', ');
+                    bad_rationale text := array_to_string(ARRAY(
+                        SELECT unnest(NEW.rationale)
+                        EXCEPT SELECT unnest({rationale})), ', ');
                 BEGIN
                     IF (NEW.registration_number = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: registration_number';
@@ -543,6 +546,12 @@ class CanadaCommand(CkanCommand):
                     IF (NEW.further_information_fr = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: further_information_fr';
                     END IF;
+                    IF NEW.rationale = '{{}}' THEN
+                        RAISE EXCEPTION 'This field must not be empty: rationale';
+                    END IF;
+                    IF bad_rationale <> '' THEN
+                        RAISE EXCEPTION 'Invalid choice for rationale: "%"', bad_rationale;
+                    END IF;
                     RETURN NEW;
                 END;
                 '''.format(
@@ -558,6 +567,7 @@ class CanadaCommand(CkanCommand):
                     public_opinion_research_standing_offer=pg_array(
                         choices['public_opinion_research_standing_offer']),
                     status=pg_array(choices['status']),
+                    rationale=pg_array(choices['rationale']),
                 )
             )
 
