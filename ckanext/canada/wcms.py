@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from urllib import urlencode
 from lxml.html.clean import clean_html
 
 from sqlalchemy import (
@@ -12,10 +13,18 @@ from sqlalchemy import (
     bindparam,
     and_
 )
+import ckan.lib.helpers as h
 
 # SQLalchemy MetaData object for the Drupal WCMS.
 _drupal_db = None
 
+def _encode_params(params):
+    return [(k, v.encode('utf-8') if isinstance(v, basestring) else str(v))
+            for k, v in params]
+
+def search_url(params, package_id):
+    url = h.url_for(controller='package', action='read', id=package_id)
+    return url + u'?' + urlencode(params)
 
 class _DrupalDatabase(object):
     # Class to encapsulate the SQLAlchemy tables of Drupal database and give us
@@ -87,7 +96,7 @@ def wcms_configure(drupal_url):
         _drupal_db = _DrupalDatabase(metadata)
 
 
-def wcms_dataset_comments(pkg_id, lang):
+def wcms_dataset_comments(request, c, pkg_id, lang):
     """
     Retrieve the comments for this dataset that have been saved in the Drupal
     database
@@ -101,6 +110,21 @@ def wcms_dataset_comments(pkg_id, lang):
     ct = _drupal_db.drupal_comments_table.c
 
     try:
+        params_nopage = [(k, v) for k, v in request.params.items()
+                         if k != 'page']
+        def pager_url(q=None, page=None):
+            params = list(params_nopage)
+            params.append(('page', page))
+            return search_url(params, pkg_id)
+
+        page = 1 #self._get_page_number(request.params)
+        limit = 50
+        for k, v in request.params.items():
+            if k == 'page':
+                page = int(v)
+            if k == 'pagelimit':
+                limit = int(v)
+
         stmt = select(
             [
                 _drupal_db.drupal_comments_table
@@ -109,7 +133,9 @@ def wcms_dataset_comments(pkg_id, lang):
                 ct.pkg_id == bindparam('pkg_id'),
                 ct.language == bindparam('language')
             ),
-            order_by=[_drupal_db.drupal_comments_table.c.thread]
+            limit = limit,
+            offset = (page -1)*limit,
+            order_by=[_drupal_db.drupal_comments_table.c.thread.desc()]
         )
 
         for comment in stmt.execute(pkg_id=pkg_id, language=lang):
@@ -120,6 +146,14 @@ def wcms_dataset_comments(pkg_id, lang):
                  'comment_body': comment_body,
                  'user': comment[1]
             })
+        c.page = h.Page(
+            collection=comment_list,
+            page=page,
+            url=pager_url,
+            item_count=wcms_dataset_comment_count(pkg_id),
+            items_per_page=limit
+        )
+        c.pagelimit = limit
     except KeyError:
         # I can't figure out why this try...except is here, so lets log it
         # upstream and see if Sentry can tell us why.

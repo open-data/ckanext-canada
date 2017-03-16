@@ -1,9 +1,27 @@
 <section class="indent-large">
 <div class="span-6 margin-top-medium">
     {%- set pkg = c.pkg_dict -%}
-    {%- set comment_list = h.dataset_comments(pkg.id, h.lang()) -%}
-    <h4><a id="comments"></a>{{ _('Comments') }}</h4>
+    {%- set comment_list = h.dataset_comments(request, c, pkg.id, h.lang()) -%}
+
     {%- if comment_list -%}
+      <div class="row">
+        <div class="col-md-4"><h4 style="display:inline-block;">{{ _('Comments') }}({{ c.page.item_count }} )</h4></div>
+
+        {% block page_pagination_top %}
+          <div class="col-md-4"><small>{{ c.page.pager(q=c.q) }}</small></div>
+         {% endblock %}
+
+        <div class="text-right"><small>
+          <form class="form-inline mrgn-bttm-sm mrgn-tp-md form-group form-horizontal" role="form" method="get" >
+            <select id="field-page-limit" name="pagelimit" class="form-control input-sm" onchange="this.form.submit()">
+              <option value="20" {% if c.pagelimit==20 %} selected="selected"{% endif %}>20</option>
+              <option value="50" {% if c.pagelimit==50 %} selected="selected"{% endif %}>50</option>
+              <option value="100" {% if c.pagelimit==100 %} selected="selected"{% endif %}>100</option>
+            </select>
+            <label for="field-page-limit" class="control-label">{{ _('Per Page') }}</label>
+          </form>
+        </small></div>
+      </div>
       {% set previous_thread = [] %}
       {% for comment in comment_list %}
         {% set thread = comment['thread'].split('.') %}
@@ -21,6 +39,11 @@
        {% set previous_thread = thread %}
       {% endfor %}
 
+      {% block page_pagination %}
+      {{ c.page.pager(q=c.q) }}
+      {% endblock %}
+    {% else %}
+      <h4>{{ _('Comments') }}(0)</h4>
     {%- endif -%}
     <div class="margin-top-medium">
       <a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/dataset/{{pkg.name}}"
