@@ -134,7 +134,7 @@
 
       {% if apps %}
       <h4>{{ _('Related Items') }}</h4>
-      <table class="table table-striped resource-list">
+      <table id="related_items" class="table table-striped resource-list">
         <thead>
           <tr>
             <th class="td-full">{{ _('Title') }}</th>
@@ -312,6 +312,14 @@ jQuery('a.resource-url-analytics').on('click', function() {
     });
   }
 });
+
+</script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#related_items').DataTable({"bPaginate": false, "searching":false, "info":false});
+    $('#resource_list').DataTable({"bPaginate": false, "searching":false, "info":false});
+    } );
 </script>
 {% endblock %}
 
