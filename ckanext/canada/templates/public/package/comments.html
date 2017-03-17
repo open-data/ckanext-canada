@@ -14,9 +14,9 @@
         <div class="text-right"><small>
           <form class="form-inline mrgn-bttm-sm mrgn-tp-md form-group form-horizontal" role="form" method="get" >
             <select id="field-page-limit" name="pagelimit" class="form-control input-sm" onchange="this.form.submit()">
-              <option value="20" {% if c.pagelimit==20 %} selected="selected"{% endif %}>20</option>
-              <option value="50" {% if c.pagelimit==50 %} selected="selected"{% endif %}>50</option>
-              <option value="100" {% if c.pagelimit==100 %} selected="selected"{% endif %}>100</option>
+              {% for value in [20, 50, 100] %}
+                <option value="{{ value }}" {% if c.pagelimit==value %} selected="selected"{% endif %}>{{ value }}</option>
+              {% endfor %}
             </select>
             <label for="field-page-limit" class="control-label">{{ _('Per Page') }}</label>
           </form>

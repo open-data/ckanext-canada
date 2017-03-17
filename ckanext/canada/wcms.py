@@ -112,18 +112,14 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
     try:
         params_nopage = [(k, v) for k, v in request.params.items()
                          if k != 'page']
+
         def pager_url(q=None, page=None):
             params = list(params_nopage)
             params.append(('page', page))
             return search_url(params, pkg_id)
 
-        page = 1 #self._get_page_number(request.params)
-        limit = 50
-        for k, v in request.params.items():
-            if k == 'page':
-                page = int(v)
-            if k == 'pagelimit':
-                limit = int(v)
+        page = int(request.params.get('page', 1))
+        limit = min(100, int(request.params.get('pagelimit', 50)))
 
         stmt = select(
             [
@@ -134,7 +130,7 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
                 ct.language == bindparam('language')
             ),
             limit = limit,
-            offset = (page -1)*limit,
+            offset = (page - 1) * limit,
             order_by=[_drupal_db.drupal_comments_table.c.thread.desc()]
         )
 
