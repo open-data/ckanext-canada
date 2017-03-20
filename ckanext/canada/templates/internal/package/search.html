@@ -2,6 +2,10 @@
 
 {# internal theme has title already visible above #}
 {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+{% block breadcrumb_content %}
+  <li class="active">{{ h.nav_link(_('Datasets'), controller='package', action='search', highlight_actions = 'new index') }}</li>
+{% endblock %}
+
 
 {% block extra_facets %}
 
