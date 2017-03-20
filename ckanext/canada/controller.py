@@ -482,6 +482,7 @@ class CanadaAdminController(PackageController):
 
         # always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
+        request.GET['imso_approval'] = u'true'
 
         # This MUST be None, otherwise the default filtering will apply and
         # restrict to just dataset_type=dataset.
