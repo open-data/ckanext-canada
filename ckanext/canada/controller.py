@@ -266,10 +266,10 @@ class CanadaController(BaseController):
         })
 
     def data_dictionary(self, pd_file):
-        names = pd_file.split('.')
-        if not (len(names)==2 and names[1]=='csv'):
+        name, dot, ext = pd_file.partition('.')
+        if ext != 'csv':
             abort(404, _('Resource not found'))
-        chromo = h.recombinant_get_chromo(names[0])
+        chromo = h.recombinant_get_chromo(name)
         if not chromo:
             abort(404, _('Resource not found'))
 
