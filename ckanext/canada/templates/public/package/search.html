@@ -11,6 +11,10 @@
 {%- block title -%}{{ _(g.site_title) }}{% endblock %}
 
 {% block page_primary_action %}{% endblock %}
+{% block breadcrumb_content %}
+  <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
+{% endblock %}
+
 
 {% block secondary_content %}
 
