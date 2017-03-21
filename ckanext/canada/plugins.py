@@ -10,7 +10,7 @@ from wcms import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h
+from ckantoolkit import h, chained_action
 import ckanapi
 from ckan.lib.base import c
 
@@ -446,82 +446,71 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def update_facet_titles(self, facet_titles):
         return facet_titles
 
+
+@chained_action
+def datastore_upsert(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0)
+    result = up_func(context, data_dict)
+
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0) - count
+
+    act.datastore_activity_create(context, {'count':count,
+                                            'activity_type': 'changed datastore',
+                                            'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
+@chained_action
+def datastore_delete(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters=data_dict['filters'],
+        limit=1,
+    )
+    result = up_func(context, data_dict)
+    act.datastore_activity_create(context,
+                                  {'count':res.get('total', 0),
+                                   'activity_type': 'deleted datastore',
+                                   'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
 class CanadaActivity(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(IActivity)
 
     def get_actions(self):
-        #override datastore_upsert and datastore_delete
-        for plugin in p.PluginImplementations(p.IActions):
-            if plugin is self:
-                continue
-            actions = plugin.get_actions()
-            if 'datastore_upsert' in actions and (
-                    'datastore_delete' in actions):
-                old_upsert = actions['datastore_upsert']
-
-                def new_datastore_upsert(context, data_dict):
-                    lc = ckanapi.LocalCKAN(username=c.user)
-                    res_data = lc.action.datastore_search(
-                        resource_id=data_dict['resource_id'],
-                        filters={},
-                        limit =1,
-                        )
-                    count = res_data.get('total', 0)
-                    result = old_upsert(context, data_dict)
-
-                    res_data = lc.action.datastore_search(
-                        resource_id=data_dict['resource_id'],
-                        filters={},
-                        limit =1,
-                        )
-                    count = res_data.get('total', 0) - count
-
-                    act.datastore_activity_create(context, {'count':count,
-                        'activity_type': 'changed datastore',
-                        'resource_id': data_dict['resource_id']})
-                    return result
-                actions.update({'datastore_upsert': new_datastore_upsert})
-
-                old_delete = actions['datastore_delete']
-
-                def new_datastore_delete(context, data_dict):
-                    lc = ckanapi.LocalCKAN(username=c.user)
-                    res = lc.action.datastore_search(
-                        resource_id=data_dict['resource_id'],
-                        filters=data_dict['filters'],
-                        limit =10,
-                        )
-                    result = old_delete(context, data_dict)
-                    act.datastore_activity_create(context,
-                        {'count':res.get('total', 0),
-                        'activity_type': 'deleted datastore',
-                        'resource_id': data_dict['resource_id']})
-                    return result
-                actions.update({'datastore_delete': new_datastore_delete})
-
-                def new_get_actions():
-                    return actions
-                setattr(plugin, 'get_actions', new_get_actions)
-                break
-
-        return {}
-
+        return ({'datastore_upsert':datastore_upsert,
+                'datastore_delete': datastore_delete})
 
     def string_icons(self, string_icons):
         string_icons.update({'deleted datastore': 'file',
-            'changed datastore': 'file'})
+                             'changed datastore': 'file'})
 
     def snippet_functions(self, snippet_functions):
         snippet_functions.update({'datastore': act.get_snippet_datastore,})
         snippet_functions.update({'datastore_detail':
-                    act.get_snippet_datastore_detail,})
+                                  act.get_snippet_datastore_detail,})
 
     def string_functions(self, string_functions):
         string_functions.update({'changed datastore':
-                    act.activity_stream_string_changed_datastore,})
+                                 act.activity_stream_string_changed_datastore,})
         string_functions.update({'deleted datastore':
-                    act.activity_stream_string_deleted_datastore,})
+                                 act.activity_stream_string_deleted_datastore,})
 
     def actions_obj_id_validator(self, obj_id_validators):
         obj_id_validators.update({
