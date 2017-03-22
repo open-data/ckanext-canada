@@ -486,8 +486,12 @@ class CanadaCommand(CkanCommand):
                         SELECT unnest(NEW.rationale)
                         EXCEPT SELECT unnest({rationale})), ', ');
                 BEGIN
-                    IF (NEW.registration_number = '') THEN
+                    IF (NEW.registration_number = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: registration_number';
+                    END IF;
+
+                    IF NEW.publishable IS NULL THEN
+                        RAISE EXCEPTION 'This field must not be empty: publishable';
                     END IF;
 
                     IF bad_partner_departments <> '' THEN
@@ -511,11 +515,11 @@ class CanadaCommand(CkanCommand):
                         SELECT c FROM(SELECT unnest({subjects}) as c) u
                         WHERE c in (SELECT unnest(NEW.subjects)));
 
-                    IF (NEW.title_en = '') THEN
+                    IF (NEW.title_en = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: title_en';
                     END IF;
 
-                    IF (NEW.title_fr = '') THEN
+                    IF (NEW.title_fr = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: title_fr';
                     END IF;
 
@@ -529,11 +533,11 @@ class CanadaCommand(CkanCommand):
                         SELECT c FROM(SELECT unnest({goals}) as c) u
                         WHERE c in (SELECT unnest(NEW.goals)));
 
-                    IF (NEW.description_en = '') THEN
+                    IF (NEW.description_en = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: description_en';
                     END IF;
 
-                    IF (NEW.description_fr = '') THEN
+                    IF (NEW.description_fr = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: description_fr';
                     END IF;
 
@@ -555,11 +559,11 @@ class CanadaCommand(CkanCommand):
                         SELECT c FROM(SELECT unnest({target_participants_and_audience}) as c) u
                         WHERE c in (SELECT unnest(NEW.target_participants_and_audience)));
 
-                    IF (NEW.planned_start_date IS NULL) THEN
+                    IF NEW.planned_start_date IS NULL THEN
                         RAISE EXCEPTION 'This field must not be empty: planned_start_date';
                     END IF;
 
-                    IF (NEW.planned_end_date IS NULL) THEN
+                    IF NEW.planned_end_date IS NULL THEN
                         RAISE EXCEPTION 'This field must not be empty: planned_end_date';
                     END IF;
 
@@ -567,12 +571,16 @@ class CanadaCommand(CkanCommand):
                         RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
                     END IF;
 
-                    IF (NEW.further_information_en = '') THEN
+                    IF (NEW.further_information_en = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: further_information_en';
                     END IF;
 
-                    IF (NEW.further_information_fr = '') THEN
+                    IF (NEW.further_information_fr = '') IS NOT FALSE THEN
                         RAISE EXCEPTION 'This field must not be empty: further_information_fr';
+                    END IF;
+
+                    IF NEW.report_available_online IS NULL THEN
+                        RAISE EXCEPTION 'This field must not be empty: report_available_online';
                     END IF;
 
                     IF NEW.rationale = '{{}}' THEN
