@@ -489,69 +489,102 @@ class CanadaCommand(CkanCommand):
                     IF (NEW.registration_number = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: registration_number';
                     END IF;
+
                     IF bad_partner_departments <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
                     END IF;
+                    NEW.partner_departments := ARRAY(
+                        SELECT c FROM(SELECT unnest({partner_departments}) as c) u
+                        WHERE c in (SELECT unnest(NEW.partner_departments)));
+
                     IF NOT (NEW.sector = ANY {sectors}) THEN
                         RAISE EXCEPTION 'Invalid choice for sector: "%"', NEW.sector;
                     END IF;
+
                     IF NEW.subjects = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: subjects';
                     END IF;
                     IF bad_subjects <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for subjects: "%"', bad_subjects;
                     END IF;
+                    NEW.subjects := ARRAY(
+                        SELECT c FROM(SELECT unnest({subjects}) as c) u
+                        WHERE c in (SELECT unnest(NEW.subjects)));
+
                     IF (NEW.title_en = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: title_en';
                     END IF;
+
                     IF (NEW.title_fr = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: title_fr';
                     END IF;
+
                     IF NEW.goals = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: goals';
                     END IF;
                     IF bad_goals <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for goals: "%"', bad_goals;
                     END IF;
+                    NEW.goals := ARRAY(
+                        SELECT c FROM(SELECT unnest({goals}) as c) u
+                        WHERE c in (SELECT unnest(NEW.goals)));
+
                     IF (NEW.description_en = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: description_en';
                     END IF;
+
                     IF (NEW.description_fr = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: description_fr';
                     END IF;
+
                     IF NOT (NEW.public_opinion_research = ANY {public_opinion_research}) THEN
                         RAISE EXCEPTION 'Invalid choice for public_opinion_research: "%"', NEW.public_opinion_research;
                     END IF;
+
                     IF NOT (NEW.public_opinion_research_standing_offer = ANY {public_opinion_research_standing_offer}) THEN
                         RAISE EXCEPTION 'Invalid choice for public_opinion_research_standing_offer: "%"', NEW.public_opinion_research_standing_offer;
                     END IF;
+
                     IF NEW.target_participants_and_audience = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
                     END IF;
                     IF bad_target_participants_and_audience <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for target_participants_and_audience: "%"', bad_target_participants_and_audience;
                     END IF;
+                    NEW.target_participants_and_audience := ARRAY(
+                        SELECT c FROM(SELECT unnest({target_participants_and_audience}) as c) u
+                        WHERE c in (SELECT unnest(NEW.target_participants_and_audience)));
+
                     IF (NEW.planned_start_date IS NULL) THEN
                         RAISE EXCEPTION 'This field must not be empty: planned_start_date';
                     END IF;
+
                     IF (NEW.planned_end_date IS NULL) THEN
                         RAISE EXCEPTION 'This field must not be empty: planned_end_date';
                     END IF;
+
                     IF NOT (NEW.status = ANY {status}) THEN
                         RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
                     END IF;
+
                     IF (NEW.further_information_en = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: further_information_en';
                     END IF;
+
                     IF (NEW.further_information_fr = '') THEN
                         RAISE EXCEPTION 'This field must not be empty: further_information_fr';
                     END IF;
+
                     IF NEW.rationale = '{{}}' THEN
                         RAISE EXCEPTION 'This field must not be empty: rationale';
                     END IF;
                     IF bad_rationale <> '' THEN
                         RAISE EXCEPTION 'Invalid choice for rationale: "%"', bad_rationale;
                     END IF;
+                    NEW.rationale := ARRAY(
+                        SELECT c FROM(SELECT unnest({rationale}) as c) u
+                        WHERE c in (SELECT unnest(NEW.rationale)));
+
                     RETURN NEW;
                 END;
                 '''.format(
