@@ -19,3 +19,29 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block errors %}
+    <div class="span-3 text-danger">
+      {% for error in errors %}
+        {% set error_message = error.partition(': ')[2] %}
+        {% if error_message.startswith("This field must not be empty:") %}
+          {% set datastore_id = error.split(': ')[-1] %}
+          {{ error.split(':')[0] }}:
+          {{ _("This field must not be empty") }}:
+          {{ h.recombinant_language_text(
+            h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
+            or datastore_id }}
+        {% elif error_message.startswith("Invalid choice for") %}
+          {% set datastore_id = error_message.split(':')[0][19:] %}
+          {{ error.split(':')[0] }}:
+          {{ _("Invalid choice for") }}
+          {{ h.recombinant_language_text(
+            h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
+            or datastore_id }}:
+          {{ error_message.split(':')[-1] }}
+        {% else %}
+          {{ error }}
+        {% endif %}
+      {% endfor %}
+    </div>
+{% endblock %}
