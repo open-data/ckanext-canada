@@ -518,6 +518,15 @@ resources:
         en: Speech of the Throne
         fr: Discours du Trône
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
 
   datastore_primary_key: registration_number
   datastore_indexes: ""
