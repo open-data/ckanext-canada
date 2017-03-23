@@ -51,8 +51,7 @@ class _DrupalDatabase(object):
             Column('thread', types.Unicode(255)),
             Column('comment_body_value', types.UnicodeText),
             Column('language', types.Unicode(12)),
-            Column('pkg_id', types.UnicodeText),
-            Column('changed', types.TIMESTAMP)
+            Column('pkg_id', types.UnicodeText)
         )
 
         self.drupal_comments_count_table = Table(
@@ -132,7 +131,7 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
             ),
             limit = limit,
             offset = (page - 1) * limit,
-            order_by=[_drupal_db.drupal_comments_table.c.changed.desc()]
+            order_by=[_drupal_db.drupal_comments_table.c.thread.desc()]
         )
 
         for comment in stmt.execute(pkg_id=pkg_id, language=lang):
