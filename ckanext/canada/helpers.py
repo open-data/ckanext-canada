@@ -58,6 +58,9 @@ def user_organizations(user):
     u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
 
+def catalogue_last_update_date():
+    return datetime.datetime.now().strftime("%Y-%m-%d")
+
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     
