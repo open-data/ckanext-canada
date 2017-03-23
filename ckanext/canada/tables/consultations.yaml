@@ -544,6 +544,7 @@ resources:
 
   triggers:
   - consultations_trigger
+  - update_record_modified_created_trigger
 
   examples:
     record:

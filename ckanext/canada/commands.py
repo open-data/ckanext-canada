@@ -611,6 +611,35 @@ class CanadaCommand(CkanCommand):
                     rationale=pg_array(choices['rationale']),
                 )
             )
+        lc.action.datastore_function_create(
+            name=u'update_record_modified_created_trigger',
+            or_replace=True,
+            rettype=u'trigger',
+            definition=u'''
+                BEGIN
+                    IF TG_OP = 'INSERT' THEN
+                        IF NEW.record_created IS NULL THEN
+                            NEW.record_created := now() at time zone 'utc';
+                        END IF;
+                        IF NEW.record_modified IS NULL THEN
+                            NEW.record_modified := NEW.record_created;
+                        END IF;
+                        RETURN NEW;
+                    END IF;
+
+                    IF NEW.record_created IS NULL THEN
+                        NEW.record_created := OLD.record_created;
+                    END IF;
+                    IF NEW.record_modified IS NULL THEN
+                        NEW.record_modified := OLD.record_modified;
+                    END IF;
+                    IF OLD = NEW THEN
+                        RETURN NULL;
+                    END IF;
+                    NEW.record_modified := now() at time zone 'utc';
+                    RETURN NEW;
+                END;
+                ''')
 
 
 def pg_array(choices):
