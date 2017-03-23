@@ -1,7 +1,8 @@
 import json
 from pylons import c, config
 from pylons.i18n import _
-from ckan.model import User, Package
+from ckan.model import User, Package, Activity
+import ckan.model as model
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
 import unicodedata
@@ -59,7 +60,10 @@ def user_organizations(user):
     return u.get_groups(group_type = "organization")
 
 def catalogue_last_update_date():
-    return datetime.datetime.now().strftime("%Y-%m-%d")
+    q = model.Session.query(Activity.timestamp).filter(
+        Activity.activity_type.endswith('package')).order_by(
+        Activity.timestamp.desc()).limit(1).one()
+    return q[0].replace(microsecond=0).isoformat()
 
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
