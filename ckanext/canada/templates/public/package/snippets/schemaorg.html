@@ -3,7 +3,7 @@
     <div vocab="http://schema.org/" typeof="DataSet" style="display:none;">
         <div property="includedInDataCatalog" typeof="DataCatalog">
             <span property="name" value="{{ _('Government of Canada Open Government Portal') }}">
-            {%- if data.get('collection')== 'geogratis' or data.get('collection')== 'fgp' or data.get('spatial') -%}
+            {%- if data.get('spatial') -%}
               <span property="spatialCoverage" typeof="Place">
                 <span property="geo" typeof="GeoShape">
                   <span property="name" value="Dataset Boundary"></span>
