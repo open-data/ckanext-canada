@@ -3,7 +3,7 @@
     <div vocab="http://schema.org/" typeof="DataSet" style="display:none;">
         <div property="includedInDataCatalog" typeof="DataCatalog">
             <span property="name" value="{{ _('Government of Canada Open Government Portal') }}">
-            {%- if data.get('collection')== 'geogratis' or data.get('collection')== 'fgp' -%}
+            {%- if data.get('collection')== 'geogratis' or data.get('collection')== 'fgp' or data.get('spatial') -%}
               <span property="spatialCoverage" typeof="Place">
                 <span property="geo" typeof="GeoShape">
                   <span property="name" value="Dataset Boundary"></span>
@@ -19,7 +19,7 @@
             <span property="description" value="{{ _('This catalog contains metadata records describing open datasets available from the Government of Canada') }}"></span>
             <span property="datePublished" value="2013-06-19"></span>
             <span property="dateModified" value="{{ h.catalogue_last_update_date() }}"></span>
-            <span property="inLanguage" value="{{ _('en-CA') }}"></span>
+            <span property="inLanguage" value="{{ h.lang() }}-CA"></span>
             <span property="sameAs" value="{{ _('http://open.canada.ca') }}"></span>
 
             <span property="publisher" typeof="Organization">
@@ -62,10 +62,6 @@
             <span property="keywords">{{ keyword }}</span>
         {%- endfor -%}
         <span property="sameAs" value="{{ h.url_for(controller='package', action='read', id=data.id) }}"></span>
-            {%- set schema = h.scheming_get_dataset_schema(data.type) -%}
-            {%- set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') -%}
-            {%- set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') -%}
-            {%- set lang_field = h.scheming_field_by_name(schema.resource_fields, 'language') -%}
           {%- if data.resources -%}
             {%- set nonapps = [] -%}
             {%- for resource in data.resources -%}
@@ -76,8 +72,8 @@
             {%- if nonapps -%}
               {% for res in nonapps %}
                 <span property="distribution" typeof="DataDownload">
-                    <span property="inLanguage" content="{{ ','.join(res[lang_field.field_name]) }}"> </span>
-                    <span property="name" lang="{{ h.lang() }}">{{ h.scheming_language_text(res[name_field.field_name]) }}</span>
+                    <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
+                    <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
                     {%- if res.get('date_published') -%}
                       <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
                     {%- endif -%}

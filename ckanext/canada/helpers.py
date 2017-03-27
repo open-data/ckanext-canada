@@ -62,8 +62,8 @@ def user_organizations(user):
 def catalogue_last_update_date():
     q = model.Session.query(Activity.timestamp).filter(
         Activity.activity_type.endswith('package')).order_by(
-        Activity.timestamp.desc()).limit(1).one()
-    return q[0].replace(microsecond=0).isoformat()
+        Activity.timestamp.desc()).first()
+    return q[0].replace(microsecond=0).isoformat() if q else ''
 
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
