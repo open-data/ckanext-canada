@@ -1,7 +1,8 @@
 import json
 from pylons import c, config
 from pylons.i18n import _
-from ckan.model import User, Package
+from ckan.model import User, Package, Activity
+import ckan.model as model
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
 import unicodedata
@@ -57,6 +58,12 @@ def openness_score(pkg):
 def user_organizations(user):
     u = User.get(user['name'])
     return u.get_groups(group_type = "organization")
+
+def catalogue_last_update_date():
+    q = model.Session.query(Activity.timestamp).filter(
+        Activity.activity_type.endswith('package')).order_by(
+        Activity.timestamp.desc()).first()
+    return q[0].replace(microsecond=0).isoformat() if q else ''
 
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")

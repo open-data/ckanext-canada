@@ -243,7 +243,8 @@ ckanext.canada:schemas/info.yaml
             'gravatar',
             'linked_gravatar',
             'linked_user',
-            'json_loads'
+            'json_loads',
+            'catalogue_last_update_date'
             ])
 
     def before_map(self, map):
