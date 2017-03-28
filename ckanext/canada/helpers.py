@@ -18,7 +18,7 @@ ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 DATAPREVIEW_MAX = 500
-FGP_URL_OPTION = 'fgp.ramp_base_url'
+FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
 
 
