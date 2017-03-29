@@ -542,6 +542,11 @@ resources:
     import_template_include: false
     datastore_type: timestamp
 
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+
   datastore_primary_key: registration_number
   datastore_indexes: ""
   excel_organization_style:

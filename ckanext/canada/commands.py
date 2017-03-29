@@ -619,6 +619,12 @@ class CanadaCommand(CkanCommand):
             or_replace=True,
             rettype=u'trigger',
             definition=u'''
+                DECLARE
+                    req_user_modified text := NEW.user_modified;
+                    username text NOT NULL := (SELECT username
+                        FROM datastore_user);
+                    sysadmin boolean NOT NULL := (SELECT sysadmin
+                        FROM datastore_user);
                 BEGIN
                     IF TG_OP = 'INSERT' THEN
                         IF NEW.record_created IS NULL THEN
@@ -626,6 +632,9 @@ class CanadaCommand(CkanCommand):
                         END IF;
                         IF NEW.record_modified IS NULL THEN
                             NEW.record_modified := NEW.record_created;
+                        END IF;
+                        IF (NEW.user_modified = '') IS NOT FALSE OR NOT sysadmin THEN
+                            NEW.user_modified := username;
                         END IF;
                         RETURN NEW;
                     END IF;
@@ -636,10 +645,16 @@ class CanadaCommand(CkanCommand):
                     IF NEW.record_modified IS NULL THEN
                         NEW.record_modified := OLD.record_modified;
                     END IF;
+                    IF NEW.user_modified IS NULL THEN
+                        NEW.user_modified := OLD.user_modified;
+                    END IF;
                     IF OLD = NEW THEN
                         RETURN NULL;
                     END IF;
                     NEW.record_modified := now() at time zone 'utc';
+                    IF (req_user_modified = '') IS NOT FALSE OR NOT sysadmin THEN
+                        NEW.user_modified := username;
+                    END IF;
                     RETURN NEW;
                 END;
                 ''')

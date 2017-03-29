@@ -1,8 +1,11 @@
 from ckan.logic.action import get as core_get
-from ckan.logic import get_or_bust, ValidationError, side_effect_free
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
+
+from ckan.plugins.toolkit import (
+    get_or_bust, ValidationError, side_effect_free)
+from ckan.authz import is_sysadmin
 
 from pylons import config
 import functools
@@ -177,3 +180,24 @@ def _activities_from_user_list_since(since, limit,user_id):
     q = q.order_by(model.Activity.timestamp)
     q = q.filter(model.Activity.timestamp > since)
     return q.limit(limit)
+
+
+def datastore_create_temp_user_table(context):
+    '''
+    Create a table to pass the current username and sysadmin
+    state to our triggers for marking modified rows
+    '''
+    from ckanext.datastore.helpers import literal_string
+    connection = context['connection']
+    username = context['user']
+    connection.execute(u'''
+        CREATE TEMP TABLE datastore_user (
+            username text NOT NULL,
+            sysadmin boolean NOT NULL
+            ) ON COMMIT DROP;
+        INSERT INTO datastore_user VALUES (
+            {username}, {sysadmin}
+            );
+        '''.format(
+            username=literal_string(username),
+            sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
