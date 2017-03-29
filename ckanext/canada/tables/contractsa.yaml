@@ -3,6 +3,7 @@ target_dataset: contractsa
 
 title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
 notes: Access, upload and modify the aggregated Contracts from -$10K to $10K reports for your organization
+upload_warn: 'Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href="https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676" target="_blank">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines'
 
 portal_type: info
 collection: pd
