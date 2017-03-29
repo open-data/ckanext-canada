@@ -142,20 +142,20 @@ Remove the markdown_extract call because our notes is a dict not a string:
         <strong>{{ _('Metadata') }}:</strong>
         <ul class="list-group" style="margin-bottom: 0;">
           <li class="list-group-item">
-            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">
+            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
               {{ _('Link to JSON format') }}
             </a>
           </li>
           {% if h.plugin_loaded('dcat_json_interface') %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld" rel="nofollow">
               {{ _('DCAT (JSON-LD)') }}
             </a>
           </li>
           {% endif %}
           {% if h.plugin_loaded('dcat') %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml" rel="nofollow">
               {{ _('DCAT (XML)') }}
             </a>
           </li>
