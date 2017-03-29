@@ -490,8 +490,8 @@ class CanadaCommand(CkanCommand):
                         RAISE EXCEPTION 'This field must not be empty: registration_number';
                     END IF;
 
-                    IF NEW.publishable IS NULL THEN
-                        RAISE EXCEPTION 'This field must not be empty: publishable';
+                    IF NOT (NEW.publishable = ANY {publishable}) THEN
+                        RAISE EXCEPTION 'Invalid choice for publishable: "%"', NEW.publishable;
                     END IF;
 
                     IF bad_partner_departments <> '' THEN
@@ -579,8 +579,8 @@ class CanadaCommand(CkanCommand):
                         RAISE EXCEPTION 'This field must not be empty: further_information_fr';
                     END IF;
 
-                    IF NEW.report_available_online IS NULL THEN
-                        RAISE EXCEPTION 'This field must not be empty: report_available_online';
+                    IF NOT (NEW.report_available_online = ANY {report_available_online}) THEN
+                        RAISE EXCEPTION 'Invalid choice for report_available_online: "%"', NEW.report_available_online;
                     END IF;
 
                     IF NEW.rationale = '{{}}' THEN
@@ -597,6 +597,7 @@ class CanadaCommand(CkanCommand):
                 END;
                 '''.format(
                     sectors=pg_array(choices['sector']),
+                    publishable=pg_array(choices['publishable']),
                     partner_departments=pg_array(
                         choices['partner_departments']),
                     subjects=pg_array(choices['subjects']),
@@ -608,6 +609,8 @@ class CanadaCommand(CkanCommand):
                     public_opinion_research_standing_offer=pg_array(
                         choices['public_opinion_research_standing_offer']),
                     status=pg_array(choices['status']),
+                    report_available_online=pg_array(
+                        choices['report_available_online']),
                     rationale=pg_array(choices['rationale']),
                 )
             )
