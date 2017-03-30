@@ -5,16 +5,21 @@ import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+from ckan.logic import validators as logic_validators
 from wcms import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h
+from ckantoolkit import h, chained_action
+import ckanapi
+from ckan.lib.base import c
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import helpers
+from ckanext.canada import activity as act
+from ckanext.extendedactivity.plugins import IActivity
 
 import json
 
@@ -441,3 +446,74 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
+
+
+@chained_action
+def datastore_upsert(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0)
+    result = up_func(context, data_dict)
+
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0) - count
+
+    act.datastore_activity_create(context, {'count':count,
+                                            'activity_type': 'changed datastore',
+                                            'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
+@chained_action
+def datastore_delete(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters=data_dict['filters'],
+        limit=1,
+    )
+    result = up_func(context, data_dict)
+    act.datastore_activity_create(context,
+                                  {'count':res.get('total', 0),
+                                   'activity_type': 'deleted datastore',
+                                   'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
+class CanadaActivity(p.SingletonPlugin):
+    p.implements(p.IActions)
+    p.implements(IActivity)
+
+    def get_actions(self):
+        return ({'datastore_upsert':datastore_upsert,
+                'datastore_delete': datastore_delete})
+
+    def string_icons(self, string_icons):
+        string_icons.update({'deleted datastore': 'file',
+                             'changed datastore': 'file'})
+
+    def snippet_functions(self, snippet_functions):
+        snippet_functions.update({'datastore': act.get_snippet_datastore,
+                                  'datastore_detail':act.get_snippet_datastore_detail})
+
+    def string_functions(self, string_functions):
+        string_functions.update({'changed datastore':
+                                 act.activity_stream_string_changed_datastore,})
+        string_functions.update({'deleted datastore':
+                                 act.activity_stream_string_deleted_datastore,})
+
+    def actions_obj_id_validator(self, obj_id_validators):
+        obj_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+                })
