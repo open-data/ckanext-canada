@@ -195,7 +195,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [datatablify(row.get(colname, u'')) for colname in cols]
+                [datatablify(row.get(colname, u''), colname) for colname in cols]
                 for row in response['records']
             ],
         })
@@ -264,7 +264,7 @@ class CanadaController(BaseController):
         })
 
 
-def datatablify(v):
+def datatablify(v, colname):
     '''
     format value from datastore v for display in a datatable preview
     '''
@@ -276,6 +276,8 @@ def datatablify(v):
         return u'FALSE'
     if isinstance(v, list):
         return u', '.join(unicode(e) for e in v)
+    if colname in ('record_created', 'record_modified'):
+        return h.time_ago_from_timestamp(v)
     return unicode(v)
 
 
