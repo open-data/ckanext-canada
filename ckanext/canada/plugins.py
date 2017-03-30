@@ -502,9 +502,8 @@ class CanadaActivity(p.SingletonPlugin):
                              'changed datastore': 'file'})
 
     def snippet_functions(self, snippet_functions):
-        snippet_functions.update({'datastore': act.get_snippet_datastore,})
-        snippet_functions.update({'datastore_detail':
-                                  act.get_snippet_datastore_detail,})
+        snippet_functions.update({'datastore': act.get_snippet_datastore,
+                                  'datastore_detail':act.get_snippet_datastore_detail})
 
     def string_functions(self, string_functions):
         string_functions.update({'changed datastore':

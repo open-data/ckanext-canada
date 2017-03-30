@@ -1,8 +1,10 @@
 from ckantoolkit import h
 from ckan.logic import get_action
-from ckan.common import _
+from ckan.common import _, ungettext
 from ckan.lib.helpers import url_for
 import datetime
+
+MERGE_ACTIVITIES_WITHIN_SECONDS = 2
 
 
 def datastore_activity_create(context, act_data):
@@ -18,7 +20,7 @@ def datastore_activity_create(context, act_data):
         act = model.activity.user_activity_list(user_id, 1, 0)
         now = datetime.datetime.now()
         if act and len(act)>0 and (
-                now - act[0].timestamp).total_seconds()<2 and (
+                now - act[0].timestamp).total_seconds()<MERGE_ACTIVITIES_WITHIN_SECONDS and (
                 act[0].activity_type == activity_type):
             act = act[0]
             act.data['count'] += count
@@ -53,13 +55,14 @@ def datastore_activity_create(context, act_data):
     }
     get_action('activity_create')(activity_create_context, activity_dict)
 
+
 def get_snippet_datastore(activity, detail):
     if activity['data'].get('pkg_type'):
         org_name = activity['data']['owner_org']
         resource_name = activity['data']['resource_name']
         url = url_for(resource_name=resource_name,owner_org=org_name,
-            action='preview_table',
-            controller='ckanext.recombinant.controller:UploadController')
+                      action='preview_table',
+                      controller='ckanext.recombinant.controller:UploadController')
         chromo = h.recombinant_get_chromo(resource_name)
         return ''.join(['<a href="', url, '">', _(chromo['title']), '</a>'])
     else:
@@ -68,10 +71,12 @@ def get_snippet_datastore(activity, detail):
 
 def get_snippet_datastore_detail(activity, detail):
     count = activity['data']['count']
-    return ''.join([' ', str(count), ' ', _('entries')])
+    return ''.join([' ', str(count), ' ', ungettext(_('entry'), _('entries'), count)])
+
 
 def activity_stream_string_changed_datastore(context, activity):
     return _("{actor} updated the record {datastore} {datastore_detail}")
+
 
 def activity_stream_string_deleted_datastore(context, activity):
     return _("{actor} deleted the record {datastore} {datastore_detail}")
