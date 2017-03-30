@@ -4,6 +4,7 @@ import socket
 from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
+from pytz import timezone, utc
 
 import pkg_resources
 import lxml.etree as ET
@@ -51,6 +52,8 @@ from ckanapi import LocalCKAN, NotAuthorized
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
+
+ottawa_tz = timezone('America/Montreal')
 
 
 class CanadaController(BaseController):
@@ -277,7 +280,8 @@ def datatablify(v, colname):
     if isinstance(v, list):
         return u', '.join(unicode(e) for e in v)
     if colname in ('record_created', 'record_modified'):
-        return h.time_ago_from_timestamp(v)
+        return h.date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
+            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
     return unicode(v)
 
 
