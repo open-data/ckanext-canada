@@ -626,6 +626,9 @@ class CanadaCommand(CkanCommand):
                     sysadmin boolean NOT NULL := (SELECT sysadmin
                         FROM datastore_user);
                 BEGIN
+                    IF NOT sysadmin OR (req_user_modified = '') IS NOT FALSE THEN
+                        req_user_modified := NULL;
+                    END IF;
                     IF TG_OP = 'INSERT' THEN
                         IF NEW.record_created IS NULL THEN
                             NEW.record_created := now() at time zone 'utc';
@@ -633,7 +636,7 @@ class CanadaCommand(CkanCommand):
                         IF NEW.record_modified IS NULL THEN
                             NEW.record_modified := NEW.record_created;
                         END IF;
-                        IF (NEW.user_modified = '') IS NOT FALSE OR NOT sysadmin THEN
+                        IF req_user_modified IS NULL THEN
                             NEW.user_modified := username;
                         END IF;
                         RETURN NEW;
@@ -645,15 +648,17 @@ class CanadaCommand(CkanCommand):
                     IF NEW.record_modified IS NULL THEN
                         NEW.record_modified := OLD.record_modified;
                     END IF;
-                    IF NEW.user_modified IS NULL THEN
+                    IF req_user_modified IS NULL THEN
                         NEW.user_modified := OLD.user_modified;
                     END IF;
                     IF OLD = NEW THEN
                         RETURN NULL;
                     END IF;
                     NEW.record_modified := now() at time zone 'utc';
-                    IF (req_user_modified = '') IS NOT FALSE OR NOT sysadmin THEN
+                    IF req_user_modified IS NULL THEN
                         NEW.user_modified := username;
+                    ELSE
+                        NEW.user_modified := req_user_modified;
                     END IF;
                     RETURN NEW;
                 END;
