@@ -110,6 +110,17 @@ def canada_validate_generate_uuid(value):
         raise Invalid(_("Badly formed hexadecimal UUID string"))
 
 
+email_pattern = re.compile(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$")
+def email_validator(value):
+    if value:
+        try:
+            if not email_pattern.match(value):
+                raise Invalid(_('Please enter a valid email address.'))
+        except:
+            raise Invalid(_('Please enter a valid email address.'))
+    return value
+
+
 def geojson_validator(value):
     if value:
         try:
