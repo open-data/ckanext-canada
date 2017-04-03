@@ -3078,6 +3078,8 @@ presets:
     - value: EXE
       mimetype: application/vnd.microsoft.portable-executable
       replaces: [exe]
+    - value: FEFLOW
+      replaces: [feflow]
     - value: FGDB/GDB
       openness_score: 3
       replaces: ["FGDB / GDB", "fgdb / gdb"]
@@ -3104,6 +3106,10 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GOCAD Model
+      replaces: [gocad model]
+    - value: GOCAD Object
+      replaces: [gocad object]
     - value: GRIB1
     - value: GRIB2
     - value: HDF
@@ -3142,10 +3148,20 @@ presets:
       mimetype: application/vnd.google-earth.kmz
     - value: LAS
     - value: LYR
+    - value: Leapfrog Mining
+      replaces: [leapfrog mining]
+    - value: Leapfrog Hydro
+      replaces: [leapfrog hydro]
+    - value: Leapfrog Viewer
+      replaces: [leapfrog viewer]
     - label: MapInfo
       value: TAB
+    - value: MapInfo Grid
+      replaces: [mapInfo grid]
     - value: MFX
       mimetype: application/mxf
+    - value: MODFLOW
+      replaces: [modflow]
     - value: MOV
       mimetype: video/mov
     - value: MPEG
@@ -3170,6 +3186,8 @@ presets:
       replaces: [odt]
     - value: PDF
       mimetype: application/pdf
+    - value: PDF 3D
+      replaces: [pdf 3d]
     - value: PDF/A-1
       mimetype: application/pdf
     - value: PDF/A-2
@@ -3227,6 +3245,8 @@ presets:
     - value: VPF
     - value: WAV
       mimetype: audio/wav
+    - value: WATFLOW
+      replaces: [watflow]
     - value: WFS
       mimetype: text/xml
       openness_score: 3
