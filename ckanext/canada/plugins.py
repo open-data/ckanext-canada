@@ -145,6 +145,15 @@ class DataGCCAInternal(p.SingletonPlugin):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
 
+        # FIXME: monkey-patch datastore upsert_data
+        from ckanext.datastore import db
+        original_upsert_data = db.upsert_data
+        def patched_upsert_data(context, data_dict):
+            logic.datastore_create_temp_user_table(context)
+            return original_upsert_data(context, data_dict)
+        if db.upsert_data.__name__ == 'upsert_data':
+            db.upsert_data = patched_upsert_data
+
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -173,6 +182,7 @@ ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
+ckanext.canada:tables/consultations.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list

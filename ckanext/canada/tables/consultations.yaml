@@ -1,14 +1,14 @@
 dataset_type: consultations
 target_dataset: consultations
 
-title: PCO Consultations and Public Engagement
-notes: Access, upload and modify the PCO Consultations and Public Engagement records for your organization
+title: Open Dialogue - Consultations
+notes: Access, upload and modify consultation reports for your organization
 
-portal_type: info
-collection: pd
+portal_type: dialogue
+collection: consultations
 
 resources:
-- title: PCO Consultations and Public Engagement
+- title: Open Dialogue - Consultations
   resource_name: consultations
   fields:
 
@@ -17,10 +17,12 @@ resources:
     label:
       en: Registration Number
       fr: Numéro d’enregistrement
-    description: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+    description:
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      fr: Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer.
     obligation: Mandatory
     format_type: Free text
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -31,21 +33,32 @@ resources:
     label:
       en: Publishable record
       fr: Dossier publiable
-    description: This field identifies whether this record can be published as a summary on the appropriate public facing website
+    description:
+      en: This field identifies whether this record can be published as a summary on the appropriate public facing website.
+      fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: No
-    occurrence: single
-    datastore_type: boolean
+    occurrence: Single
+    datastore_type: text
     excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   # 3.3
   - datastore_id: partner_departments
     label:
       en: Partner Department(s)
       fr: Ministère(s) partenaire(s)
-    description: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
+    description:
+      en: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
+      fr: Cette zone indique le ministère ou les ministères qui collaborent au processus de mobilisation en question. Il faut indiquer le nom complet des ministères (aucun acronyme).
     obligation: Optional
     format_type: Free text (comma separated list of codes from reference table)
     validation: None
@@ -60,40 +73,44 @@ resources:
     label:
       en: Sector
       fr: Secteur
-    description: This field indicates the sector of the engagement process.
+    description:
+      en: This field indicates the sector of the engagement process.
+      fr: Cette zone indique le secteur visé par le processus de mobilisation.
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 15
     choices:
-      NRE:
-        en: Natural Resources / Environment
-        fr: Ressources naturelles/ Environnement
-      SE:
-        en: Social / Economic
-        fr: Social / Économique
-      DSI:
-        en: Defence / Security / International
-        fr: Défense / Sécurité / International
-      S:
-        en: Scientific
-        fr: Scientifique
+      ER:
+        en: Economic and Regional Development Policy
+        fr: Politiques de développement économique et régional
+      FD:
+        en: Foreign and Defence Policy
+        fr: Politiques étrangère et de défense
+      G:
+        en: Governance
+        fr: Gouvernance
+      SD:
+        en: Social Development Policy
+        fr: Politiques de développement social
 
   # 3.5
   - datastore_id: subjects
     label:
       en: Subjects
       fr: Sujets
-    description: This field indicates the different subjects related to the engagement process.
+    description:
+      en: This field indicates the different subjects related to the engagement process.
+      fr: Cette zone indique les différents sujets sur lesquels porte le processus de mobilisation.
     obligation: Mandatory
     format_type: Free text (comma separated list of codes from reference table)
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
-    datastore_type: text
+    datastore_type: _text
     excel_column_width: 30
     choices_file: choices/consultation_subject.yaml
 
@@ -102,10 +119,12 @@ resources:
     label:
       en: Consultation Title (English)
       fr: Titre de la consultation (en anglais)
-    description: This field contains the complete name of the consultation in English.
+    description:
+      en: This field contains the complete name of the consultation in English.
+      fr: Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
-    format_type: Free Text
-    validation: This field must not be empty.
+    format_type: Free text
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -116,10 +135,12 @@ resources:
     label:
       en: Consultation Title (French)
       fr: Titre de la consultation (en français)
-    description: This field identifies the complete name of the consultation in French.
+    description:
+      en: This field identifies the complete name of the consultation in French.
+      fr: Cette zone indique le titre, en français, de la consultation.
     obligation: Mandatory
     format_type: Free Text
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -130,10 +151,12 @@ resources:
     label:
       en: Goal(s)
       fr: Objectif(s)
-    description: This field intend to capture the main goals of consulting and/or engaging the public or stakeholders.
+    description:
+      en: This field intend to capture the main goals of consulting and/or engaging the public or stakeholders.
+      fr: Cette zone indique les principaux objectifs de la consultation ou de la mobilisation du public ou des parties concernées.
     obligation: Mandatory
     format_type: Free text (comma separated list of codes from reference table)
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
@@ -160,10 +183,12 @@ resources:
     label:
       en: Description of the Approach (English)
       fr: Description de l’approche (en anglais)
-    description: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+    description:
+      en: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+      fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     format_type: Free Text (separate paragraphs with two blank lines)
-    validation: The field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -174,10 +199,12 @@ resources:
     label:
       en: Description of the Approach (French)
       fr: Description de l’approche (en français)
-    description: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+    description:
+      en: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
+      fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     format_type: Free Text (separate paragraphs with two blank lines)
-    validation: The field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -188,14 +215,16 @@ resources:
     label:
       en: Public Opinion Research
       fr: Recherche sur l’opinion publique
-    description: This field indicates if public opinion research is conducted to design and/or inform the engagement process.
+    description:
+      en: This field indicates if public opinion research is conducted to design and/or inform the engagement process.
+      fr: Cette zone indique si une recherche sur l’opinion publique sera menée pour concevoir ou orienter le processus de mobilisation.
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 20
     choices:
       Y:
         en: "Yes"
@@ -212,10 +241,12 @@ resources:
     label:
       en: Standing Offer Public Opinion Research
       fr: Recherche sur l’opinion publique – offre à commandes
-    description: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
+    description:
+      en: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
+      fr: Si une recherche sur l’opinion publique a été menée dans le cadre du processus de mobilisation, Cette zone indique si celle-ci était visée par une offre à commandes du BCP.
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: No
     occurrence: Single
     datastore_type: text
@@ -236,15 +267,15 @@ resources:
     label:
       en: Target Participants and Audience
       fr: Participants visés et public cible
-    description: This field provides information regarding the target participants and audience of the engagement process.
+    description:
+      en: This field provides information regarding the target participants and audience of the engagement process.
+      fr: Cette zone précise les participants visés et le public cible du processus de mobilisation.
     obligation: Mandatory
     format_type: Free text (comma separated list of codes from reference table)
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
-      fr: Recherche sur l’opinion publique – offre à commandes
-    description: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
-    datastore_type: text
+    datastore_type: _text
     excel_column_width: 20
     choices_file: choices/consultation_audience.yaml
 
@@ -253,10 +284,12 @@ resources:
     label:
       en: Planned Start Date
       fr: Date de début prévue
-    description: This field indicates the planned consultation starting date. A consultation is considered open when engagement activities are under way/or when a department is accepting input form participants.
+    description:
+      en: This field indicates the planned consultation starting date. A consultation is considered open when engagement activities are under way/or when a department is accepting input form participants.
+      fr: Cette zone indique la date de début prévue de la consultation. Une consultation est considérée comme commencée lorsque les activités de mobilisation sont en cours ou lorsqu’un ministère accepte les avis des participants.
     obligation: Mandatory
     format_type: Date (Please format the data as YYYY-MM-DD)
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
@@ -267,10 +300,12 @@ resources:
     label:
       en: Planned End Date
       fr: Date de fin prévue
-    description: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
+    description:
+      en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
+      fr: Cette zone indique la date de fin prévue de la consultation. Une consultation est considérée comme terminée lorsqu’il n’y a plus d’activités de mobilisation ou lorsqu’un ministère commence à analyser les données recueillies durant le processus de mobilisation.
     obligation: Mandatory
     format_type: Date (Please format the data as YYYY-MM-DD)
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
@@ -281,37 +316,41 @@ resources:
     label:
       en: Status
       fr: État
-    description: The field indicates the current status of the engagement process.
+    description:
+      en: The field indicates the current status of the engagement process.
+      fr: Cette zone indique l’état d’avancement du processus de mobilisation.
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
     choices:
-      P:      
+      P:
         en: Planned
         fr: Prévue
       O:
         en: Open – Accepting input
-        fr: Ouverte – Avis acceptés 
+        fr: Ouverte – Avis acceptés
       CA:
         en: Closed – Analyzing input
         fr: Fermée – Analyse en cours
       CR:
         en: Closed – Report Available
-        fr: Fermée – Rapport disponible 
+        fr: Fermée – Rapport disponible
 
   # 3.17
   - datastore_id: further_information_en
     label:
       en: Further Information Link (English)
       fr: Lien – renseignements supplémentaires (en anglais)
-    description: This field provides the link to the English engagement information page on the Consulting with Canadians website.
+    description:
+      en: This field provides the link to the English engagement information page on the Consulting with Canadians website.
+      fr: Cette zone contient le lien vers la page anglaise du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     format_type: Web address
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -322,10 +361,12 @@ resources:
     label:
       en: Further Information Link (French)
       fr: Lien – renseignements supplémentaires (en français)
-    description: This field provides the link to the French engagement information page on the Consulting with Canadians website.
+    description:
+      en: This field provides the link to the French engagement information page on the Consulting with Canadians website.
+      fr: Cette zone contient le lien vers la page française du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     format_type: Web address
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -336,21 +377,32 @@ resources:
     label:
       en: Report Available online
       fr: Rapport disponible en ligne
-    description: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
+    description:
+      en: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
+      fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
     format_type: Controlled List
-    validation: This field must not be empty.
+    validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
-    datastore_type: boolean
+    datastore_type: text
     excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   # 3.20
-  - datastore_id: report_link
+  - datastore_id: report_link_en
     label:
-      en: Link to the “What we Heard” Report
-      fr: Lien – rapport « Ce que nous avons entendu »
-    description: This field provides the link to the “What we Heard” report when it is available online.
+      en: Link to the “What we Heard” Report in English
+      fr: Lien – rapport « Ce que nous avons entendu » en anglais
+    description:
+      en: This field provides the link to the “What we Heard” report when it is available online.
+      fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » en anglais après que le rapport est affiché en ligne.
     obligation: Optional
     format_type: Web address
     validation: None
@@ -360,25 +412,29 @@ resources:
     excel_column_width: 20
 
   # 3.21
-  - datastore_id: contact_email
+  - datastore_id: report_link_fr
     label:
-      en: Departmental Consultation Contact
-      fr: Responsable de la consultation au ministère
-    description: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
+      en: Link to the “What we Heard” Report in French
+      fr: Lien – rapport « Ce que nous avons entendu » en français
+    description:
+      en: This field provides the link to the “What we Heard” report when it is available online.
+      fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » après que le rapport est affiché en ligne.
     obligation: Optional
-    format_type: Email
+    format_type: Web address
     validation: None
-    visible_to_public: No
+    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
 
   # 3.22
-  - datastore_id: policy_program_lead_email
+  - datastore_id: contact_email
     label:
-      en: Policy/Program Lead for the Consultation
-      fr: Responsable des politiques ou des programmes pour la consultation
-    description: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
+      en: Departmental Consultation Contact
+      fr: Responsable de la consultation au ministère
+    description:
+      en: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
+      fr: Cette zone indique l’adresse courriel de la personne du ministère responsable de la consultation et de la mobilisation du public (s’il y a lieu). Le responsable de la consultation au ministère est le principal responsable des consultations du ministère.
     obligation: Optional
     format_type: Email
     validation: None
@@ -388,25 +444,29 @@ resources:
     excel_column_width: 20
 
   # 3.23
-  - datastore_id: remarks_en
+  - datastore_id: policy_program_lead_email
     label:
-      en: Remarks (English)
-      fr: Remarques (en anglais)
-    description: This field identifies additional information on the consultation that could not be submitted in other fields, in English
+      en: Policy/Program Lead for the Consultation
+      fr: Responsable des politiques ou des programmes pour la consultation
+    description:
+      en: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
+      fr: Cette zone indique l’adresse courriel du responsable des politiques ou des programmes pour la consultation. Il s’agit de la personne qui dirige la consultation en question et qui doit rendre des comptes sur les activités de mobilisation.
     obligation: Optional
-    format_type: Free Text (separate paragraphs with two blank lines)
+    format_type: Email
     validation: None
     visible_to_public: No
-    occurrence: Repeatable
+    occurrence: Single
     datastore_type: text
     excel_column_width: 20
 
   # 3.24
-  - datastore_id: remarks_fr
+  - datastore_id: remarks_en
     label:
-      en: Remarks (French)
-      fr: Remarques (en français)
-    description: This field identifies additional information on the consultation that could not be submitted in other fields, in French.
+      en: Remarks (English)
+      fr: Remarques (en anglais)
+    description:
+      en: This field identifies additional information on the consultation that could not be submitted in other fields, in English
+      fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en anglais).
     obligation: Optional
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: None
@@ -415,20 +475,128 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
+  # 3.25
+  - datastore_id: remarks_fr
+    label:
+      en: Remarks (French)
+      fr: Remarques (en français)
+    description:
+      en: This field identifies additional information on the consultation that could not be submitted in other fields, in French.
+      fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en français).
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: No
+    occurrence: Repeatable
+    datastore_type: text
+    excel_column_width: 20
+
+  # 2.26
+  - datastore_id: rationale
+    label:
+      en: Rationale
+      fr: Raison
+    description:
+      en: The field indicates the rationale behind the public engagement initiative. This field include only criteria that define high profile public engagement.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une initiative importante de participation du public.
+    validation: Mandatory
+    format_type: Free text (comma separated list of codes from reference table)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_column_width: 20
+    choices:
+      B16:
+        en: Budget 2016
+        fr: Budget 2016
+      B17:
+        en: Budget 2017
+        fr: Budget 2017
+      B18:
+        en: Budget 2018
+        fr: Budget 2018
+      LC:
+        en: Legal duty to Consult
+        fr: Obligation légale de consulter
+      ML:
+        en: Mandate Letter
+        fr: Lettre de mandat
+      MP:
+        en: Minister and/or Parliamentary Secretary Involvement and/or announcement
+        fr: Implication ou annonce du ministre ou du secrétaire parlementaire
+      PC:
+        en: Parliament Committee
+        fr: Comité parlementaire
+      ST:
+        en: Speech of the Throne
+        fr: Discours du Trône
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+
+  datastore_primary_key: registration_number
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFFFF056
+    Font:
+      bold: true
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFDFE2DB
+  default_preview_sort: registration_number
+
+  triggers:
+  - consultations_trigger
+  - update_record_modified_created_trigger
 
   examples:
     record:
-      registration_number: "1980198"
-      name: Jane Smith
-      disclosure_group: SLE
-      date: "2016-01-01"
-      destination: Halifax
-      airfare: "600.00"
-      other_transport: "0"
-      other_expenses: "50.00"
-      total: "650.00"
+      contact_email: first.last@example.gc.ca
+      description_en:
+        To engage and obtain Provincial and Territorial partner views
+      description_fr:
+        Obtenir les opinions des partenaires provinciaux et territoriaux
+      further_information_en: ""
+      further_information_fr: ""
+      goals: ["CB", "CS"]
+      partner_departments: ["271", "141"]
+      planned_end_date: "2017-05-30"
+      planned_start_date: "2017-05-15"
+      policy_program_lead_email: program.lead@example.gc.ca
+      public_opinion_research: N
+      public_opinion_research_standing_offer: NA
+      publishable: "N"
+      registration_number: CCC0249
+      remarks_en: ""
+      remarks_fr: ""
+      report_available_online: "N"
+      report_link_en: ""
+      report_link_fr: ""
+      sector: ER
+      status: P
+      subjects: ["AP", "CD", "HS", "SE"]
+      target_participants_and_audience: ["IP", "IG", "PT"]
+      title_en: Family Services Program Reform
+      title_fr: Réforme du programme des services à l'enfance
+      rationale: ["B17"]
     filters:
-      name: Jane Smith
+      sector: SE
     filter_one:
-      registration_number: "1980198"
-    sort: date desc
+      registration_number: CCC0249
+    sort: planned_start_date desc

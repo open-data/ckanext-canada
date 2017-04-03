@@ -4,6 +4,7 @@ import socket
 from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
+from pytz import timezone, utc
 
 import pkg_resources
 import lxml.etree as ET
@@ -51,6 +52,8 @@ from ckanapi import LocalCKAN, NotAuthorized
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
+
+ottawa_tz = timezone('America/Montreal')
 
 
 class CanadaController(BaseController):
@@ -195,7 +198,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [unicode(row.get(colname, '')) for colname in cols]
+                [datatablify(row.get(colname, u''), colname) for colname in cols]
                 for row in response['records']
             ],
         })
@@ -262,6 +265,24 @@ class CanadaController(BaseController):
         return render('fgpv_vpgf/index.html', extra_vars={
             'pkg_id': pkg_id,
         })
+
+
+def datatablify(v, colname):
+    '''
+    format value from datastore v for display in a datatable preview
+    '''
+    if v is None:
+        return u''
+    if v is True:
+        return u'TRUE'
+    if v is False:
+        return u'FALSE'
+    if isinstance(v, list):
+        return u', '.join(unicode(e) for e in v)
+    if colname in ('record_created', 'record_modified'):
+        return h.date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
+            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+    return unicode(v)
 
 
 class CanadaDatasetController(PackageController):

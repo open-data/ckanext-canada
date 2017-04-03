@@ -41,6 +41,10 @@ presets:
     required: true
     choices:
     - label:
+        en: Consultations
+        fr: Consultations
+      value: consultations
+    - label:
         en: Non-Spatial
         fr: Non spatiales
       value: primary

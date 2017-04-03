@@ -8,6 +8,8 @@ upload_warn: 'Please ensure that transactions uploaded into the Registry meet th
 portal_type: info
 collection: pd
 
+datastore_text_types: true
+
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
   resource_name: contracts
