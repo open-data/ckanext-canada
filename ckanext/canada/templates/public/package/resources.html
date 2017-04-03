@@ -6,20 +6,8 @@
 
 {% block primary_content_inner %}
   {% if pkg.resources %}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col" nowrap class="td-full">{{ _('Resource Name') }}</th>
-          <th scope="col" nowrap class="td-center">{{ _('Resource Type') }}</th>
-          <th scope="col" class="td-center">{{ _('Format') }}</th>
-          <th scope="col" class="td-center">{{ _('Language') }}</th>
-          <th scope="col" nowrap class="td-center">{{ _('Links') }}</th>
-        </tr>
-      </thead>
-      {% for resource in pkg.resources %}
-        {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, url_is_edit=true %}
-      {% endfor %}
-    </table>
+
+    {% snippet 'package/snippets/all_resources_list.html', pkg=pkg %}
   {% else %}
     {% trans url=h.url_for(controller='package', action='new_resource', id=pkg.name) %}
       <p class="empty">This asset has no resources, <a href="{{ url }}">why not add some?</a></p>
@@ -28,4 +16,9 @@
 {% endblock %}
 
 {% block secondary_content %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ h.url_for_wet('/js/deps/jquery.dataTables.min.js') }}"> </script>
 {% endblock %}
