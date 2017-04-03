@@ -380,37 +380,41 @@ class CanadaCommand(CkanCommand):
 
             _trim_package(source_pkg)
 
+            action = None
             if source_pkg and not self.options.mirror:
                 # treat unpublished packages same as deleted packages
                 if not source_pkg['portal_release_date']:
-                    source_pkg = None
+                    action = 'skip'
                     reason = 'release date not set'
                 elif isodate(source_pkg['portal_release_date'], None) > now:
-                    source_pkg = None
+                    action = 'skip'
                     reason = 'release date in future'
 
-            try:
-                target_pkg = portal.call_action('package_show', {
-                    'id': package_id
-                })
-            except (NotFound, NotAuthorized):
-                target_pkg = None
-            except (CKANAPIError, urllib2.URLError), e:
-                sys.stdout.write(
-                    json.dumps([
-                        package_id,
-                        'target error',
-                        unicode(e.args)
-                    ]) + '\n'
-                )
-                raise
-            if target_pkg and target_pkg['state'] == 'deleted':
-                target_pkg = None
-                target_deleted = True
+            if action != 'skip':
+                try:
+                    target_pkg = portal.call_action('package_show', {
+                        'id': package_id
+                    })
+                except (NotFound, NotAuthorized):
+                    target_pkg = None
+                except (CKANAPIError, urllib2.URLError), e:
+                    sys.stdout.write(
+                        json.dumps([
+                            package_id,
+                            'target error',
+                            unicode(e.args)
+                        ]) + '\n'
+                    )
+                    raise
+                if target_pkg and target_pkg['state'] == 'deleted':
+                    target_pkg = None
+                    target_deleted = True
 
-            _trim_package(target_pkg)
+                _trim_package(target_pkg)
 
-            if target_pkg is None and source_pkg is None:
+            if action == 'skip':
+                pass
+            elif target_pkg is None and source_pkg is None:
                 action = 'unchanged'
                 reason = reason or 'deleted on registry'
             elif target_deleted:
