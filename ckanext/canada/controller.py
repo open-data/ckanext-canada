@@ -4,6 +4,7 @@ import socket
 from logging import getLogger
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
+from pytz import timezone, utc
 
 import pkg_resources
 import lxml.etree as ET
@@ -56,6 +57,8 @@ from ckanapi import LocalCKAN, NotAuthorized
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
+
+ottawa_tz = timezone('America/Montreal')
 
 
 def _search_by_name_or_title(cls, data_dict, group_type=None, is_org=False):
@@ -228,7 +231,7 @@ class CanadaController(BaseController):
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
             'aaData': [
-                [unicode(row.get(colname, '')) for colname in cols]
+                [datatablify(row.get(colname, u''), colname) for colname in cols]
                 for row in response['records']
             ],
         })
@@ -294,6 +297,29 @@ class CanadaController(BaseController):
             'title': _org_key(o)
              } for o in organization_list]
         return sorted(results, key=lambda x: x['title'])
+
+    def fgpv_vpgf(self, pkg_id):
+        return render('fgpv_vpgf/index.html', extra_vars={
+            'pkg_id': pkg_id,
+        })
+
+
+def datatablify(v, colname):
+    '''
+    format value from datastore v for display in a datatable preview
+    '''
+    if v is None:
+        return u''
+    if v is True:
+        return u'TRUE'
+    if v is False:
+        return u'FALSE'
+    if isinstance(v, list):
+        return u', '.join(unicode(e) for e in v)
+    if colname in ('record_created', 'record_modified'):
+        return h.date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
+            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+    return unicode(v)
 
 
 class CanadaDatasetController(PackageController):
@@ -514,6 +540,7 @@ class CanadaAdminController(PackageController):
 
         # always set ready_to_publish to true for the publishing interface
         request.GET['ready_to_publish'] = u'true'
+        request.GET['imso_approval'] = u'true'
 
         # This MUST be None, otherwise the default filtering will apply and
         # restrict to just dataset_type=dataset.

@@ -37,7 +37,7 @@
           {% block filter_list %}
               <ul class="list-inline">
               {% for field in c.fields_grouped %}
-                {% if field != 'ready_to_publish' %}
+                {% if field != 'ready_to_publish' and field != 'imso_approval' %}
                   {{ cr.filter_buttons(h, c, field) }}
                 {% endif %}
               {% endfor %}
@@ -79,15 +79,6 @@
 {% block secondary_content %}
 <div class="filters">
   <div>
-    {% snippet 'snippets/facet_list.html',
-      title=c.facet_titles['imso_approval'],
-      name='ready_to_publish',
-      scheming_choices=[
-        {'value': 'true', 'label': _("IMSO Approved")},
-        {'value': 'false', 'label': _("Not Approved")},
-      ],
-      extras=extras %}
-
     {% snippet 'snippets/dataset_facets.html',
       organization_facet=h.snippet(
         'snippets/facet_list.html', title=c.facet_titles['organization'],

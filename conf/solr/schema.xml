@@ -131,6 +131,7 @@
     <!-- Copy the title field into titleString, and treat as a string
          (rather than text type).  This allows us to sort on the titleString -->
     <field name="title_string" type="string" indexed="true" stored="false" />
+    <field name="title_fr" type="string" indexed="true" stored="false" />
 
     <field name="data_dict" type="string" indexed="false" stored="true" />
     <field name="validated_data_dict" type="string" indexed="false" stored="true" />
@@ -168,6 +169,7 @@
 <copyField source="urls" dest="text"/>
 <copyField source="name" dest="text"/>
 <copyField source="title" dest="text"/>
+<copyField source="title_fr" dest="text" />
 <copyField source="text" dest="text"/>
 <copyField source="license" dest="text"/>
 <copyField source="notes" dest="text"/>

@@ -140,9 +140,27 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </li>
       <li class="list-group-item">
         <strong>{{ _('Metadata') }}:</strong>
-        <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}">
-          {{ _('Link to JSON format') }}
-        </a>
+        <ul class="list-group" style="margin-bottom: 0;">
+          <li class="list-group-item">
+            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
+              {{ _('Link to JSON format') }}
+            </a>
+          </li>
+          {% if h.plugin_loaded('dcat_json_interface') %}
+          <li class="list-group-item" style="border: none;">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld" rel="nofollow">
+              {{ _('DCAT (JSON-LD)') }}
+            </a>
+          </li>
+          {% endif %}
+          {% if h.plugin_loaded('dcat') %}
+          <li class="list-group-item" style="border: none;">
+            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml" rel="nofollow">
+              {{ _('DCAT (XML)') }}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
       </li>
       {% if pkg.collection == 'fgp' %}
       <li class="list-group-item">
@@ -154,7 +172,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       {% endif %}
       <li class="list-group-item">
         <a href="{{ h.url_for(action='history', controller='package', id=pkg.id) }}?format=atom" title="RSS">
-          <span class="fa-rss-square"></span> {{_('Atom Feed')}}
+          <span class="fa fa-rss-square"></span> {{_('Atom Feed')}}
         </a>
       </li>
       {% if pkg.status %}

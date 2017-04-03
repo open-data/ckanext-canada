@@ -3,6 +3,7 @@ import hashlib
 import calendar
 import datetime
 import logging
+import os
 from unicodecsv import DictReader
 from _csv import Error as _csvError
 
@@ -12,12 +13,15 @@ from ckan.lib.cli import CkanCommand
 from solr.core import SolrException
 
 from ckanapi import LocalCKAN, NotFound
-
+from ckanext.recombinant.tables import (
+    get_geno,
+    get_chromo)
+from ckanext.recombinant.read_csv import csv_data_batch
 from ckanext.canada.dataset import (
     MONTHS_FR,
     solr_connection,
     data_batch,
-    csv_data_batch)
+    safe_for_solr)
 
 
 TARGET_DATASET = 'ati'
@@ -91,7 +95,17 @@ class ATICommand(CkanCommand):
         if csv_files:
             for csv_file in csv_files:
                 print csv_file + ':'
-                for resource_name, org_id, records in csv_data_batch(csv_file, TARGET_DATASET):
+                firstpart, filename = os.path.split(csv_file)
+                assert filename.endswith('.csv')
+                resource_name = filename[:-4]
+
+                chromo = get_chromo(resource_name)
+                geno = get_geno(chromo['dataset_type'])
+                assert geno.get('target_dataset') == TARGET_DATASET
+
+                for org_id, records in csv_data_batch(csv_file, chromo):
+                    records = [dict((k, safe_for_solr(v)) for k, v in
+                            row_dict.items()) for row_dict in records]
                     try:
                         org_detail = lc.action.organization_show(id=org_id)
                     except NotFound:

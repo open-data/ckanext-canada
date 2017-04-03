@@ -3,7 +3,7 @@ import sys
 import os
 from unicodecsv import DictReader
 from pylons import config
-from ckanext.recombinant.tables import get_chromo, get_geno, get_dataset_types
+from ckanext.recombinant.tables import get_geno, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -42,7 +42,7 @@ def solr_connection(ini_prefix):
         return SolrConnection(url, http_user=user, http_pass=password)
     return SolrConnection(url)
 
-def data_batch(org_id, lc, target_dataset):
+def data_batch(org_id, lc, dataset_type):
     """
     Generator of dataset dicts for organization with name org
 
@@ -50,19 +50,11 @@ def data_batch(org_id, lc, target_dataset):
     :ptype org_id: str
     :param lc: local CKAN
     :ptype lc: obj
-    :param target_dataset: name of target dataset (e.g., 'ati', 'pd', etc.)
-    :ptype target_dataset: str
+    :param dataset_type: e.g., 'ati', 'pd', etc.
+    :ptype dataset_type: str
 
     generates (resource name, batch of records) tuples
     """
-    dataset_types = get_dataset_types()
-    for dataset_type in dataset_types:
-        geno = get_geno(dataset_type)
-        if geno.get('target_dataset') == target_dataset:
-            break
-    else:
-        return
-
     result = lc.action.package_search(
         q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
         rows=2)['results']
@@ -86,50 +78,6 @@ def data_batch(org_id, lc, target_dataset):
                 break
             offset += len(records)
             yield (resource['name'], records)
-
-
-def csv_data_batch(csv_path, target_dataset):
-    """
-    Generator of dataset records from csv file
-
-    :param csv_path: file to parse
-    """
-    records = []
-    current_owner_org = None
-
-    firstpart, filename = os.path.split(csv_path)
-    assert filename.endswith('.csv')
-    resource_name = filename[:-4]
-
-    chromo = get_chromo(resource_name)
-    geno = get_geno(chromo['dataset_type'])
-    assert geno.get('target_dataset') == target_dataset
-
-    with open(csv_path) as f:
-        csv_in = DictReader(f)
-        cols = csv_in.unicode_fieldnames
-
-        expected = [f['datastore_id'] for f in chromo['fields']]
-        assert cols[:-2] == expected, 'column mismatch:\n{0}\n{1}'.format(
-            cols[:-2], expected)
-
-        for row_dict in csv_in:
-            owner_org = row_dict.pop('owner_org')
-            owner_org_title = row_dict.pop('owner_org_title')
-            if owner_org != current_owner_org:
-                if records:
-                    yield (resource_name, current_owner_org, records)
-                records = []
-                current_owner_org = owner_org
-
-            row_dict = dict((k, safe_for_solr(v)) for k, v in row_dict.items())
-            records.append(row_dict)
-            if len(records) >= BATCH_SIZE:
-                yield (resource_name, current_owner_org, records)
-                records = []
-    if records:
-        yield (resource_name, current_owner_org, records)
-
 
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
 

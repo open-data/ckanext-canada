@@ -3,12 +3,15 @@ target_dataset: contracts
 
 title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
+upload_warn: 'Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href="https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676" target="_blank">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines'
 
 portal_type: info
 collection: pd
 
+datastore_text_types: true
+
 resources:
-- title: Proactive Disclosure - Contracts
+- title: Proactive Disclosure - Contracts over 10K (Quarterly)
   resource_name: contracts
   fields:
 

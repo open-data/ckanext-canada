@@ -1,14 +1,15 @@
 import json
 from pylons import c, config
 from pylons.i18n import _
-from ckan.model import User, Package
+from ckan.model import User, Package, Activity
+import ckan.model as model
 from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
 import datetime
 import unicodedata
 
 import ckanapi
 
-import ckan.lib.helpers as h
+from ckantoolkit import h
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
 from ckan.logic import get_action
@@ -27,7 +28,7 @@ ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 DATAPREVIEW_MAX = 500
-FGP_URL_OPTION = 'fgp.ramp_base_url'
+FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
 
 def group_or_org_plugin_dictize(context, group_dict, include_followers, is_org):
@@ -150,6 +151,12 @@ def user_organizations(user):
         groups_data.append(group_dict)
     return groups_data
 
+def catalogue_last_update_date():
+    q = model.Session.query(Activity.timestamp).filter(
+        Activity.activity_type.endswith('package')).order_by(
+        Activity.timestamp.desc()).first()
+    return q[0].replace(microsecond=0).isoformat() if q else ''
+
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
     
@@ -266,7 +273,7 @@ def get_datapreview_recombinant(resource_name, res_id):
         out = {
             'type': f['datastore_type'],
             'id': f['datastore_id'],
-            'label': h._(f['label'])}
+            'label': h.recombinant_language_text(f['label'])}
         if out['id'] in chromo['datastore_primary_key']:
             out['priority'] = pk_priority
             pk_priority += 1

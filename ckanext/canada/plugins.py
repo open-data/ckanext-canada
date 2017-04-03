@@ -5,16 +5,21 @@ import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+from ckan.logic import validators as logic_validators
 from wcms import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h
+from ckantoolkit import h, chained_action
+import ckanapi
+from ckan.lib.base import c
 
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import helpers
+from ckanext.canada import activity as act
+from ckanext.extendedactivity.plugins import IActivity
 
 import json
 
@@ -139,6 +144,15 @@ class DataGCCAInternal(p.SingletonPlugin):
         if 'ckan.drupal.url' in config:
             wcms_configure(config['ckan.drupal.url'])
 
+        # FIXME: monkey-patch datastore upsert_data
+        from ckanext.datastore import db
+        original_upsert_data = db.upsert_data
+        def patched_upsert_data(context, data_dict):
+            logic.datastore_create_temp_user_table(context)
+            return original_upsert_data(context, data_dict)
+        if db.upsert_data.__name__ == 'upsert_data':
+            db.upsert_data = patched_upsert_data
+
 
 class DataGCCAPublic(p.SingletonPlugin):
     """
@@ -167,6 +181,7 @@ ckanext.canada:tables/travela.yaml
 ckanext.canada:tables/travelq.yaml
 ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
+ckanext.canada:tables/consultations.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -179,6 +194,9 @@ ckanext.canada:schemas/presets.yaml
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 """
+
+        # Enable our custom DCAT profile.
+        config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
 
         if 'ckan.i18n_directory' in config:
             # Reload when translaton files change, because I'm slowly going
@@ -240,10 +258,16 @@ ckanext.canada:schemas/info.yaml
             'gravatar',
             'linked_gravatar',
             'linked_user',
-            'json_loads'
+            'json_loads',
+            'catalogue_last_update_date'
             ])
 
     def before_map(self, map):
+        map.connect(
+            '/fgpv_vpgf/{pkg_id}',
+            action='fgpv_vpgf',
+            controller='ckanext.canada.controller:CanadaController'
+        )
         map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',
@@ -402,6 +426,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         if 'fgp_viewer' in data_dict.get('display_flags', []):
             data_dict['fgp_viewer'] = 'map_view'
 
+        titles = json.loads(data_dict.get('title_translated', '{}'))
+        data_dict['title_fr'] = titles.get('fr', '')
+        data_dict['title_string'] = titles.get('en', '')
         return data_dict
 
     def before_view(self, pkg_dict):
@@ -430,3 +457,74 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
+
+
+@chained_action
+def datastore_upsert(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0)
+    result = up_func(context, data_dict)
+
+    res_data = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters={},
+        limit=1,
+    )
+    count = res_data.get('total', 0) - count
+
+    act.datastore_activity_create(context, {'count':count,
+                                            'activity_type': 'changed datastore',
+                                            'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
+@chained_action
+def datastore_delete(up_func, context, data_dict):
+    lc = ckanapi.LocalCKAN(username=c.user)
+    res = lc.action.datastore_search(
+        resource_id=data_dict['resource_id'],
+        filters=data_dict['filters'],
+        limit=1,
+    )
+    result = up_func(context, data_dict)
+    act.datastore_activity_create(context,
+                                  {'count':res.get('total', 0),
+                                   'activity_type': 'deleted datastore',
+                                   'resource_id': data_dict['resource_id']}
+                                  )
+    return result
+
+
+class CanadaActivity(p.SingletonPlugin):
+    p.implements(p.IActions)
+    p.implements(IActivity)
+
+    def get_actions(self):
+        return ({'datastore_upsert':datastore_upsert,
+                'datastore_delete': datastore_delete})
+
+    def string_icons(self, string_icons):
+        string_icons.update({'deleted datastore': 'file',
+                             'changed datastore': 'file'})
+
+    def snippet_functions(self, snippet_functions):
+        snippet_functions.update({'datastore': act.get_snippet_datastore,
+                                  'datastore_detail':act.get_snippet_datastore_detail})
+
+    def string_functions(self, string_functions):
+        string_functions.update({'changed datastore':
+                                 act.activity_stream_string_changed_datastore,})
+        string_functions.update({'deleted datastore':
+                                 act.activity_stream_string_deleted_datastore,})
+
+    def actions_obj_id_validator(self, obj_id_validators):
+        obj_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+                })

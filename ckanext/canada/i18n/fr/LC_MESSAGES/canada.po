@@ -90,6 +90,54 @@ msgstr "Confirmer la suppression"
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
+msgid "Create new record"
+msgstr "Créer un nouveau dossier"
+
+msgid "Travel - Public Servants"
+msgstr "Voyages des fonctionnaires"
+
+msgid "Travel - Non-Public Servants"
+msgstr "Voyages des non-fonctionnaires"
+
+msgid "Hospitality"
+msgstr "Accueil"
+
+msgid "Conference Fees"
+msgstr "Frais de participation aux conférence"
+
+msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre (aussi inclus dans les voyages des non-fonctionnaires)"
+
+msgid "Travel Public Servants - Explanation of Significant Variance (English)"
+msgstr "Voyages des fonctionnaires - Explication d’un écart important (anglais)"
+
+msgid "Travel Public Servants - Explanation of Significant Variance (French)"
+msgstr "Voyages des fonctionnaires - Explication d’un écart important (français)"
+
+msgid "Travel Non-Public Servants - Explanation of Significant Variance (English)"
+msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (anglais)"
+
+msgid "Travel Non-Public Servants - Explanation of Significant Variance (French)"
+msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (français)"
+
+msgid "Hospitality - Explanation of Significant Variance (English)"
+msgstr "Accueil - Explication d’un écart important (anglais)"
+
+msgid "Hospitality - Explanation of Significant Variance (French)"
+msgstr "Accueil - Explication d’un écart important (français)"
+
+msgid "Conference Fees - Explanation of Significant Variance (English)"
+msgstr "Frais de participation aux conférence - Explication d’un écart important (anglais)"
+
+msgid "Conference Fees - Explanation of Significant Variance (French)"
+msgstr "Frais de participation aux conférence - Explication d’un écart important (français)"
+
+msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (English)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (anglais)"
+
+msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (French)"
+msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (français)"
+
 msgid "What are datasets?"
 msgstr "Qu’est-ce qu’un ensemble de données?"
 
@@ -112,7 +160,7 @@ msgid "Next: Add Data"
 msgstr "Suivant : ajouter données"
 
 msgid "Last Modified"
-msgstr "date de modification"
+msgstr "Date de modification"
 
 msgid "Save & add another"
 msgstr "Sauvegarder et ajouter un autre "
@@ -195,6 +243,12 @@ msgstr "Activité en lien avec les éléments que vous surveillez"
 
 msgid "My Datasets"
 msgstr "Mes ensembles de données"
+
+msgid "Datasets"
+msgstr "Dossiers"
+
+msgid "Upload"
+msgstr "Téléverser"
 
 msgid "No reports are available"
 msgstr "Aucun rapport n’est disponible"
@@ -349,8 +403,8 @@ msgstr ""
 " L'administrateur du registre peut autoriser les utilisateurs à publier des"
 " dossiers pour le compte de leurs organisations."
 
-msgid "Search Records"
-msgstr "Recherche de dossiers"
+msgid "Search Open Government"
+msgstr "Recherche du Gouvernement ouvert"
 
 msgid "Search Open Information"
 msgstr "Chercher dans les information ouvertes"
@@ -465,6 +519,9 @@ msgstr "Type de données"
 msgid "No datasets were found to match your query."
 msgstr "Aucun jeu de données ne correspond aux termes de recherche spécifiés."
 
+msgid "No datasets found for \"{query}\""
+msgstr "Aucun dossier trouvé pour \"{query}\""
+
 msgid "Please review your spelling, or reduce the number of filters selected."
 msgstr "S'il vous plaît vérifier l’orthographe, ou réduire le nombre de filtres sélectionnés."
 
@@ -501,6 +558,9 @@ msgstr "Vous devriez recevoir un courriel, au cours des deux "
 
 msgid "A resource has been added"
 msgstr "Une ressource a été ajoutée"
+
+msgid "A related item has been added"
+msgstr "Un article connexe a été ajouté"
 
 
 msgid "This dataset is currently unrated"
@@ -702,14 +762,11 @@ msgstr "Ministère"
 msgid "Account Created"
 msgstr "Compte créé"
 
-msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions."
-msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à open-ouvert@tbs-sct.gc.ca."
+msgid "ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> with any questions."
+msgstr "Les documents modèles « L’accès à l’information sommaires complétés » et « L’accès à l’information rien à signaler » ont été combinées. À partir de maintenant, vous n’aurez besoin de télécharger et d'envoyer qu’un seul document modèle (voir les 2 languettes dans le modèle). Si vous avez des questions, veuillez envoyer un courriel à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>."
 
 msgid "Please note – if you have downloaded a template before DECEMBER 19, 2016, please download the updated version before submitting your information."
 msgstr "Veuillez noter que les modèles Excel ont été mis-à-jour le 19 décembre 2016. Si le modèle que vous utilisez a été téléchargé avant cette date, veuillez télécharger la nouvelle version avant de soumettre vos informations."
-
-msgid "ATI Summaries/Nothing to Report"
-msgstr "Accès à l’information sommaires complétés / Accès à l’information rien à signaler"
 
 msgid "ATI Summaries"
 msgstr "Accès à l’information sommaires complétés"
@@ -719,6 +776,12 @@ msgstr "Accès, téléversement et modification des sommaires mensuels des deman
 
 msgid "ATI Nothing to Report"
 msgstr "Accès à l’information rien à signaler"
+
+msgid "IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval."
+msgstr "IMPORTANT : De nouvelles rangées/répertoires seront créé(e)s ou mis(es) à jour chaque jour au site ouvert.canada.ca. Il est important d’obtenir l’approbation d’un CSGI et d’envoyer celle-ci à l’adresse <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> avant de procéder au téléversement de vos données de répertoire. En cliquant sur le bouton « Soumettre », vous confirmez que vous avez obtenu l’approbation du CSGI."
+
+msgid "Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href=\"https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676\" target=\"_blank\">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines"
+msgstr "Veuillez vous assurer que les opérations téléchargées dans le registre respectent les exigences en matière de divulgation publique énoncées dans les <a href=\"https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676\" target=\"_blank\">Lignes directrices sur la divulgation proactive des marchés</a>. Le registre divulguera publiquement toutes les opérations saisies dans le gabarit, sans retirer les opérations qui ne devraient pas être divulguées. À titre d’exemple, les opérations devraient être conformes aux montants précisés à la section 4.1.1 des lignes directives."
 
 msgid "Year"
 msgstr "Année"
@@ -798,12 +861,6 @@ msgstr "Accès, téléversement et modification des dépenses trimestrielles li�
 
 msgid "Disclosure Group"
 msgstr "Groupe de divulgation"
-
-msgid "Minister/Parliamentary Secretaries/Exempt Staff"
-msgstr "Ministres/Secrétaires parlementaires/Personnel exonéré"
-
-msgid "Senior Level Employees"
-msgstr "Employés de niveau supérieur"
 
 msgid "Attendees (Government of Canada Employees)"
 msgstr "Participants (Nombre d’employés du gouvernement du Canada)"
@@ -1025,7 +1082,7 @@ msgid "Additional Information French"
 msgstr "Informations supplémentaires en français"
 
 msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
-msgstr "Divulgation proactive – dépenses de voyages, d’accueil, de conférences et d’événements"
+msgstr "Divulgation proactive – Dépenses de voyages, d’accueil, de conférences et d’événements"
 
 msgid "This dataset includes all of the annual reports on travel expenses incurred within your organization."
 msgstr "Ce jeu de données comprend tous les rapports annuels sur les dépenses de voyage engagées au sein de votre organisation."
@@ -1466,6 +1523,12 @@ msgstr "{actor} a créé le dosier {dataset}"
 msgid "{actor} updated the dataset {dataset}"
 msgstr "{actor} a mis à jour le dossier {dataset}"
 
+msgid "{actor} updated the record {datastore} {datastore_detail}"
+msgstr "{actor} a mis à jour le dossier {datastore} {datastore_detail}"
+
+msgid "{actor} deleted the record {datastore} {datastore_detail}"
+msgstr "{actor} a supprimé le jeu de données {datastore} {datastore_detail}"
+
 # Footer links
 
 msgid "Open Government Contact"
@@ -1646,10 +1709,10 @@ msgid "Use the Download URL field above to link to the related record."
 msgstr "Utilisez le champ URL de téléchargement ci-dessus pour créer un lien vers le dossier connexe."
 
 msgid "Open Data Metadata Element Set"
-msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
+msgstr "Ensemble d’éléments de métadonnées de données ouvertes"
 
 msgid "Open Information Metadata Element Set"
-msgstr "Ensemble d’éléments de métadonnées ouvert d’information"
+msgstr "Ensemble d’éléments de métadonnées d’information ouverte"
 
 
 #: ckan/controllers/user.py:383
@@ -1749,7 +1812,7 @@ msgid "Record for %d added."
 msgstr "Record pour %d ajoutée."
 
 msgid "Previous Year"
-msgstr "année précédente"
+msgstr "Année précédente"
 
 msgid "Record Status"
 msgstr "État du dossier"
@@ -1759,6 +1822,24 @@ msgstr "En attente"
 
 msgid "Published"
 msgstr "Publié"
+
+msgid "FGP Metadata"
+msgstr "Métadonnées de la PGF"
+
+msgid "Data Contact"
+msgstr "Personne-ressource responsable des données"
+
+msgid "Distributor Contact"
+msgstr "Personne-ressource responsable de la distribution"
+
+msgid "Organization Name"
+msgstr "Nom de l'organisation"
+
+msgid "Telephone Number"
+msgstr "Numéro de téléphone"
+
+msgid "Address"
+msgstr "Adresse"
 
 msgid "login welcome text"
 msgstr ""
@@ -1775,8 +1856,95 @@ msgstr "Ce champ est obligatoire."
 msgid "Please enter a valid email address."
 msgstr "S\\'il vous plaît, mettez une adresse email valide."
 
+msgid "Created On"
+msgstr "Date de création"
+
+msgid "Return to Index"
+msgstr "Retourner à la page de recherche"
+
 msgid "This record has been removed from %s."
 msgstr "Ce dossier a été supprimé de %s."
 
 msgid "Dataset Deleted"
 msgstr "Dossier supprimé"
+
+msgid "Government of Canada Open Government Portal"
+msgstr "Gouvernement du Canada site gouvernemental ouvert"
+
+msgid "This catalog contains metadata records describing open datasets available from the Government of Canada"
+msgstr "Ce catalogue contient des enregistrements de métadonnées décrivant des ensembles de données ouverts disponibles auprès du gouvernement du Canada"
+
+msgid "Government of Canada, Treasury Board of Canada Secretariat"
+msgstr "Gouvernement du Canada, Secrétariat du Conseil du Trésor du Canad"
+
+msgid "Information and Communications Government and Politics"
+msgstr "Information et communications Gouvernement et politique"
+
+msgid "Rights under which the catalog can be reused are outlined in the Open Government Licence - Canada"
+msgstr "Les droits sous lesquels le catalogue peut être réutilisé sont décrits dans la Licence du gouvernement ouvert - Canada"
+
+msgid "Open Maps Data Viewer"
+msgstr "Visualisateur de donnèes de Cartes ouvertes"
+
+msgid "Open Dialogue"
+msgstr "Dialogue ouvert"
+
+msgid "Consultations"
+msgstr "Consultations"
+
+msgid "Open Dialogue - Consultations"
+msgstr "Dialogue ouvert - Consultations"
+
+msgid "Access, upload and modify consultation reports for your organization"
+msgstr "Accès, téléversement et modifications des rapports sur les consultations pour votre organisation"
+
+msgid "Mandatory"
+msgstr "Obligatoire"
+
+msgid "Optional"
+msgstr "Facultatif"
+
+msgid "Free text"
+msgstr "Texte libre"
+
+msgid "Free text (comma separated list of codes from reference table)"
+msgstr "Texte libre (liste des codes de la table de référence, séparées par des virgules)"
+
+msgid "Free Text (separate paragraphs with two blank lines)"
+msgstr "Texte libre (Séparez les paragraphes par deux lignes vides)"
+
+msgid "Date (Please format the data as YYYY-MM-DD)"
+msgstr "Date (format suivant: AAAA-MM-JJ)"
+
+msgid "Web address"
+msgstr "Adresse Web"
+
+msgid "This field must not be empty"
+msgstr "Cette zone ne doit pas être vide"
+
+msgid "Controlled List"
+msgstr "Liste contrôlée"
+
+msgid "Single"
+msgstr "Une seule"
+
+msgid "Repeatable"
+msgstr "Plusieurs"
+
+msgid "Sheet {0} Row {1}:"
+msgstr "Feuille {0} rangée {1}:"
+
+msgid "invalid input syntax for type boolean"
+msgstr "Syntaxe d’entrée non valide pour ce type de recherche booléenne"
+
+msgid "invalid input syntax for type date"
+msgstr "Syntaxe d’entrée non valide pour le type de date"
+
+msgid "Invalid choice for"
+msgstr "Choix non valide pour"
+
+msgid "Record Creation Time"
+msgstr "Heure de la création du dossier"
+
+msgid "Last Record Modification Time"
+msgstr "Heure de la dernière modification au dossier"

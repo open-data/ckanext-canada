@@ -1,5 +1,6 @@
 {% set type_choices = [
   {'value': 'dataset', 'label': _('Open Data')},
+  {'value': 'dialogue', 'label': _('Open Dialogue')},
   {'value': 'info', 'label': _('Open Information')},
   ] %}
 {% snippet 'snippets/facet_list.html',
@@ -20,7 +21,8 @@
   title=c.facet_titles['collection'],
   name='collection',
   scheming_choices=collection_choices,
-  extras=extras %}
+  extras=extras,
+  unlimit=True %}
 
 {{ organization_facet }}
 

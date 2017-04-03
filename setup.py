@@ -1,6 +1,5 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-import sys, os
-
 version = '0.3.0'
 
 setup(
@@ -9,7 +8,7 @@ setup(
     description="Open Canada CKAN extension",
     long_description="""
     """,
-    classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+    classifiers=[],
     keywords='',
     author='Government of Canada',
     author_email='Michel.Gendron@statcan.gc.ca',
@@ -22,13 +21,13 @@ setup(
     install_requires=[
         # -*- Extra requirements: -*-
     ],
-    entry_points=\
-    """
+    entry_points="""
     [ckan.plugins]
     canada_internal=ckanext.canada.plugins:DataGCCAInternal
     canada_public=ckanext.canada.plugins:DataGCCAPublic
     canada_forms=ckanext.canada.plugins:DataGCCAForms
     canada_package=ckanext.canada.plugins:DataGCCAPackageController
+    canada_activity=ckanext.canada.plugins:CanadaActivity
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
@@ -43,5 +42,8 @@ setup(
     contractsa=ckanext.canada.pd:PDCommand
     inventory=ckanext.canada.pd:PDCommand
     wrongdoing=ckanext.canada.pd:PDCommand
+
+    [ckan.rdf.profiles]
+    canada_dcat=ckanext.canada.dcat:CanadaDCATProfile
     """,
 )

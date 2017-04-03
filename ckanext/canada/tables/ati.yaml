@@ -1,13 +1,15 @@
 dataset_type: ati
 target_dataset: ati
 
-title: ATI Summaries/Nothing to Report
+title: ATI Summaries
 notes: Access, upload and modify the monthly ATI Summaries and ATI Nothing to Report for your organization
 
 portal_type: info
 collection: ati
 
-upload_info: ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email open-ouvert@tbs-sct.gc.ca with any questions.
+datastore_text_types: true
+
+upload_info: ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with any questions.
 
 resources:
 - title: ATI Summaries

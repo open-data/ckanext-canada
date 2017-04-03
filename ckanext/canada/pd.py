@@ -15,7 +15,10 @@ from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN, NotFound
 
-from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.tables import (
+    get_geno,
+    get_chromo)
+from ckanext.recombinant.read_csv import csv_data_batch
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
     recombinant_language_text)
@@ -23,7 +26,7 @@ from ckanext.recombinant.helpers import (
 from ckanext.canada.dataset import (
     solr_connection,
     data_batch,
-    csv_data_batch)
+    safe_for_solr)
 
 
 class PDCommand(CkanCommand):
@@ -137,7 +140,16 @@ def rebuild(command_name, csv_files=None):
             print csv_file + ':'
             prev_org = None
             unmatched = None
-            for resource_name, org_id, records in csv_data_batch(csv_file, command_name):
+            firstpart, filename = os.path.split(csv_file)
+            assert filename.endswith('.csv')
+            resource_name = filename[:-4]
+
+            chromo = get_chromo(resource_name)
+            geno = get_geno(chromo['dataset_type'])
+
+            for org_id, records in csv_data_batch(csv_file, chromo):
+                records = [dict((k, safe_for_solr(v)) for k, v in
+                            row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
                     unmatched = None
                 try:

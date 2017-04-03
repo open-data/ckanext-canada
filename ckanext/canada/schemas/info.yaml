@@ -24,6 +24,9 @@ dataset_fields:
 
 - preset: canada_collection
   form_restrict_choices_to: [publication]
+  help_text:
+    en: "The collection (domain specific) to which the metadata record belongs, Example: Publications"
+    fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : Publication"
   form_attrs:
     readonly: ""
 
@@ -144,10 +147,10 @@ dataset_fields:
   fluent_help_text:
     en:
       en: Commonly used words or phrases which describe the asset, in English.(Separate multiple entries by commas)
-      fr: Mots ou phrases couramment utilisés qui décrivent de la ressource d’information, en anglais. (Séparer les mots ou phrases par une virgule)
+      fr: Mots ou phrases couramment utilisés qui décrivent le produit, en anglais. (Séparer les mots ou phrases par une virgule)
     fr:
       en: Commonly used words or phrases which describe the asset, in French. (Separate multiple entries by commas)
-      fr: Mots ou phrases couramment utilisés qui décrivent la ressource d’information, en français. (Séparer les mots ou phrases par une virgule)
+      fr: Mots ou phrases couramment utilisés qui décrivent le produit, en français. (Séparer les mots ou phrases par une virgule)
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
@@ -412,12 +415,19 @@ dataset_fields:
 # Field = Homepage French.
 # {A program or homepage that can benavigated to gain additional or contextual information about the asset.}
 - preset: canada_program_page_url
-  help_text:
+  fluent_form_label:
     en:
-      en: English program or homepage that can be navigated to gain additional or contextual information about the asset
+      en: Homepage URL (English)
+      fr: URL de la page d’accueil (anglais)
+    fr:
+      en: Homepage URL (French)
+      fr: URL de la page d’accueil (français)
+  fluent_help_text:
+    en:
+      en: A program or homepage that can be navigated to gain additional or contextual information about the asset, in English
       fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en anglais.
     fr:
-      en: French program or homepage that can be navigated to gain additional or contextual information about the asset
+      en: A program or homepage that can be navigated to gain additional or contextual information about the asset, in French
       fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en français.
 
 # Field = Series Title English.
@@ -542,8 +552,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
   help_text:
-    en: The date the asset may be published on the Portal
-    fr: La date que le jeu de données peut être publier sur le portail information ouvertes
+    en: The date the asset may be published on the Portal (YYYY-MM-DD)
+    fr: La date que le jeu de données peut être publier sur le portail information ouvertes (AAAA-MM-JJ)
 
 
 #
