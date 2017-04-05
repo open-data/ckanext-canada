@@ -356,4 +356,3 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
-h.organizations_available = organizations_available
