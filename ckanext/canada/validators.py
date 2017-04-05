@@ -109,6 +109,21 @@ def canada_validate_generate_uuid(value):
     except ValueError:
         raise Invalid(_("Badly formed hexadecimal UUID string"))
 
+#pattern from https://html.spec.whatwg.org/#e-mail-state-(type=email)
+email_pattern = re.compile(r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]"\
+                           "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]"\
+                           "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+
+
+def email_validator(value):
+    if value:
+        try:
+            if not email_pattern.match(value):
+                raise Invalid(_('Please enter a valid email address.'))
+        except TypeError:
+            raise Invalid(_('Please enter a valid email address.'))
+    return value
+
 
 def geojson_validator(value):
     if value:

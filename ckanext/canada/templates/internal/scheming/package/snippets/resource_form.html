@@ -13,12 +13,15 @@
     {%- endif -%}
   {%- endfor -%}
 
-  <p class="alert alert-info mrgn-tp-md">{{ _("You can add either a Resource or a Related Item per session, i.e. not both:") }}</p>
+  {%- if c.action=='new_resource' -%}
+    <p class="alert alert-info mrgn-tp-md">{{ _("You can add either a Resource or a Related Item per session, i.e. not both:") }}</p>
+  {% endif %}
 
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
-    <details class="acc-group" {% if not data.related_type %}open="open"{% endif %}>
+    {%- if (not data.related_type) or c.action=='new_resource' -%}
+    <details class="acc-group" open="open">
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
+        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}{{ c.action }}
       </summary>
       <div class="tgl-panel">
         {%- for field in schema.resource_fields -%}
@@ -30,6 +33,8 @@
         {%- endfor -%}
       </div>
     </details>
+    {% endif %}
+    {%- if data.related_type  or c.action=='new_resource' -%}
     <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
         {{ _("Metadata Fields for Related Items Only") }}
@@ -47,5 +52,6 @@
         </p>
       </div>
     </details>
+    {% endif %}
   </div>
 {% endblock %}
