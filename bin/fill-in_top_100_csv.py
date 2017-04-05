@@ -13,6 +13,8 @@ argparser.add_argument('-f', '--file', action='store', default='', dest='csvfile
                        help='Empty CSV file from TBS')
 argparser.add_argument('-c', '--config', action='store', default='development.ini', dest='configfile',
                        help='Config file')
+argparser.add_argument('-o', '--outfile', action='store', default='output.csv', dest='outfile',
+                       help='CSV file to write out to')
 argparser.add_argument('-l', '--lang', action='store', default='en', dest='lang',
                        help='language [en|fr]')
 args = argparser.parse_args()
@@ -26,10 +28,11 @@ def main():
     # Create CKAN API connector to the portal
     ckan_portal = RemoteCKAN(remote_ckan_url, apikey=remote_apikey)
 
-    f = open(args.csvfile, 'r')
+    fi = open(args.csvfile, 'r')
+    fo = open(args.outfile, 'w')
 
-    csv_in = unicodecsv.reader(f, encoding='utf-8')
-    csv_out = unicodecsv.writer(stdout)
+    csv_in = unicodecsv.reader(fi, encoding='utf-8')
+    csv_out = unicodecsv.writer(fo, encoding='utf-8')
     csv_out.writerow(csv_in.next())
     for row in csv_in:
         # Look up the package in CKAN
