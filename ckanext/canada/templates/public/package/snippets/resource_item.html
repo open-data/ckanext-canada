@@ -14,9 +14,10 @@
 
 {# FIXME: using tables for formatting #}
 <tr>
-  <td>
+  <td class="wrapall">
     {% snippet 'scheming/snippets/display_field.html',
       field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}
+
   </td>
   <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',
