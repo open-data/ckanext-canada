@@ -73,13 +73,11 @@ resources:
     label: Previous Supervisory Differential
     datastore_type: text
     excel_column_width: 5
-    choices_file: choices/supervisory_differential.yaml
 
   - datastore_id: new_differential
     label: Reclassified Supervisory Differential
     datastore_type: text
     excel_column_width: 5
-    choices_file: choices/supervisory_differential.yaml
 
   - datastore_id: reason_en
     label: Reason for Reclassification (English)
