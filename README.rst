@@ -181,9 +181,8 @@ Drupal. Run the following SQL commands to create the necessary views in the Drup
     create view opendata_package_rating_v as select avg(v.value)/25+1 as rating, p.pkg_id from opendata_package p
                  inner join votingapi_vote v on p.pkg_node_id = v.entity_id group by p.pkg_id;
 
-    create or replace view opendata_package_count_v as select count(c.*), o.pkg_id from comment c
-        inner join opendata_package o
-        on o.pkg_node_id = c.nid and c.status = 1 group by o.pkg_id;
+    create or replace view opendata_package_count_v as select count(c.*), o.pkg_id, c.language from comment c 
+                 inner join opendata_package o on o.pkg_node_id = c.nid and c.status = 1 group by o.pkg_id, c.language;
 
     alter view public.opendata_package_v owner to <db_user>;
     alter view public.opendata_package_rating_v owner to <db_user>;
