@@ -242,7 +242,7 @@ msgid "Activity from items that you follow"
 msgstr "Activité en lien avec les éléments que vous surveillez"
 
 msgid "My Datasets"
-msgstr "Mes ensembles de données"
+msgstr "Mes dossiers"
 
 msgid "Datasets"
 msgstr "Dossiers"
@@ -293,7 +293,7 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 msgid "You are not following anything"
-msgstr "Vous ne faites aucun suivi"
+msgstr "Vous ne suivez rien"
 
 msgid "E-mail"
 msgstr "Courriel"
@@ -1476,11 +1476,6 @@ msgid_plural "{number} Assets"
 msgstr[0] "{number} Bien"
 msgstr[1] "{number} Biens"
 
-msgid "{hours} hour ago"
-msgid_plural "{hours} hours ago"
-msgstr[0] "{number} heure avant "
-msgstr[1] "{number} heures avant"
-
 msgid "0 Datasets"
 msgstr "0 dossiers"
 
@@ -1822,6 +1817,9 @@ msgstr "Visibilité des colonnes"
 
 msgid "Create"
 msgstr "Créer"
+
+msgid "Go back"
+msgstr "Retourner"
 
 msgid "Record for %d added."
 msgstr "Record pour %d ajoutée."

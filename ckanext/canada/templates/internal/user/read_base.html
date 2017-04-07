@@ -2,6 +2,7 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {% block breadcrumb_content %}
+  {{ h.build_nav('user_index', _('Users')) }}
   {{ h.build_nav('user_datasets', user.display_name|truncate(35), id=user.name) }}
 {% endblock %}
 
