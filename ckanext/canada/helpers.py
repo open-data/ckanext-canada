@@ -118,9 +118,9 @@ def dataset_rating(package_id):
     return wcms_dataset_rating(package_id)
 
 
-def dataset_comment_count(package_id):
+def dataset_comment_count(package_id, lang):
 
-    return wcms_dataset_comment_count(package_id)
+    return wcms_dataset_comment_count(package_id, lang)
 
 
 def portal_url():

@@ -11,7 +11,8 @@ from sqlalchemy import (
     types,
     select,
     bindparam,
-    and_
+    and_,
+    func
 )
 import ckan.lib.helpers as h
 
@@ -58,7 +59,8 @@ class _DrupalDatabase(object):
             'opendata_package_count_v',
             self._metadata,
             Column('count', types.Integer),
-            Column('pkg_id', types.UnicodeText)
+            Column('pkg_id', types.UnicodeText),
+            Column('language', types.Unicode(12)),
         )
 
         self.drupal_ratings_table = Table(
@@ -146,7 +148,7 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
             collection=comment_list,
             page=page,
             url=pager_url,
-            item_count=wcms_dataset_comment_count(pkg_id),
+            item_count=wcms_dataset_comment_count(pkg_id, lang),
             items_per_page=limit
         )
         c.pagelimit = limit
@@ -189,7 +191,7 @@ def wcms_dataset_rating(package_id):
     return int(0 if rating is None else rating)
 
 
-def wcms_dataset_comment_count(package_id):
+def wcms_dataset_comment_count(package_id, lang=''):
     """
     Get a count of the number of comments for the dataset. This count is
     displayed in a seperate field on the dataset page
@@ -203,14 +205,28 @@ def wcms_dataset_comment_count(package_id):
     ct = _drupal_db.drupal_comments_count_table.c
 
     try:
-        stmt = select(
-            [
-                _drupal_db.drupal_comments_count_table
-            ],
-            whereclause=ct.pkg_id == bindparam('pkg_id')
-        )
+        if lang:
+            stmt = select(
+                [
+                    _drupal_db.drupal_comments_count_table
+                ],
+                and_(
+                    ct.pkg_id == bindparam('pkg_id'),
+                    ct.language == bindparam('language')
+                )
+            )
+            row = stmt.execute(pkg_id=package_id, language=lang).fetchone()
+        else:
+            stmt = select(
+                [
+                    func.sum(_drupal_db.drupal_comments_count_table.c.count)
+                ],
+                and_(
+                    ct.pkg_id == bindparam('pkg_id'),
+                )
+            )
+            row = stmt.execute(pkg_id=package_id).fetchone()
 
-        row = stmt.execute(pkg_id=package_id).fetchone()
         if row:
             count = row[0]
     except KeyError:
