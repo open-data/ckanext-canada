@@ -81,12 +81,12 @@ resources:
     excel_column_width: 20
 
   - datastore_id: location_en
-    label: Location (English)
+    label: Location and Hospitality Provider (English)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: location_fr
-    label: Location (French)
+    label: Location and Hospitality Provider (French)
     datastore_type: text
     excel_column_width: 20
 
