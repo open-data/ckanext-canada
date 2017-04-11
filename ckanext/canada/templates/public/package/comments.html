@@ -1,3 +1,19 @@
+{%- macro display_comment(comment_list) -%}
+  {%- if comment_list|length > 0 -%}
+    {%- set indent = comment_list[0][1]['thread'].split('.')|length  -%}
+    {%- if indent >  1 -%}<div class="indented">{% endif %}
+    {% for item in comment_list %}
+       {% set sub_comments, comment = item[0], item[1] %}
+        <article class="comment ">
+          <header><p class="author-datetime"><span class="comment-author">{{ comment['user']}}</span> - <span class="comment-datetime">{{ comment['date'] }}</span></p></header>
+          <p>{{ comment['comment_body']|striptags }}</p>
+        </article>
+        {{ display_comment(sub_comments) }}
+    {% endfor %}
+    {%- if indent >  1 -%}</div>{% endif %}
+  {% endif %}
+{%- endmacro -%}
+
 <section class="indent-large">
 <div class="span-6 margin-top-medium">
     {%- set pkg = c.pkg_dict -%}
@@ -5,7 +21,7 @@
 
     {%- if comment_list -%}
       <div class="row">
-        <div class="col-md-4"><h4 style="display:inline-block;">{{ _('Comments') }}({{ c.page.item_count }} )</h4></div>
+        <div class="col-md-3"><h4 style="display:inline-block;">{{ _('Comments') }}({{ c.page.item_count }} )</h4></div>
 
         {% block page_pagination_top %}
           <div class="col-md-4"><small>{{ c.page.pager(q=c.q) }}</small></div>
@@ -13,6 +29,13 @@
 
         <div class="text-right"><small>
           <form class="form-inline mrgn-bttm-sm mrgn-tp-md form-group form-horizontal" role="form" method="get" >
+              <label for="field-order-by" class="control-label">{{ _('Order by') }}</label>
+              <select id="field-order-by" name="sort" class="form-control input-sm" onchange="this.form.submit()">
+              {% for value in ['time_descend', 'time_ascend'] %}
+                <option value="{{ value }}" {% if c.sort==value %} selected="selected"{% endif %}>{{ _(value) }}</option>
+              {% endfor %}
+              </select>
+
             <select id="field-page-limit" name="pagelimit" class="form-control input-sm" onchange="this.form.submit()">
               {% for value in [20, 50, 100] %}
                 <option value="{{ value }}" {% if c.pagelimit==value %} selected="selected"{% endif %}>{{ value }}</option>
@@ -22,22 +45,7 @@
           </form>
         </small></div>
       </div>
-      {% set previous_thread = [] %}
-      {% for comment in comment_list %}
-        {% set thread = comment['thread'].split('.') %}
-        {% if thread|length > previous_thread|length and previous_thread|length > 0 %}
-            <div class="indented">
-        {% elif thread|length < previous_thread|length %}
-            {% for step in range(previous_thread|length - thread|length) %}
-                </div>
-            {% endfor %}
-        {% endif %}
-        <article class="comment ">
-          <header><p class="author-datetime"><span class="comment-author">{{ comment['user']}}</span> - <span class="comment-datetime">{{ comment['date'] }}</span></p></header>
-          <p>{{ comment['comment_body']|striptags }}</p>
-        </article>
-       {% set previous_thread = thread %}
-      {% endfor %}
+      {{ display_comment(comment_list) }}
 
       {% block page_pagination %}
       {{ c.page.pager(q=c.q) }}
