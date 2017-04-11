@@ -710,6 +710,8 @@ def _trim_package(pkg):
                 'last_modified', 'position']:
             if k in r:
                 del r[k]
+        if .get('url_type') == 'upload':
+            r['url'] = 'upload'
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
