@@ -279,7 +279,7 @@ def datatablify(v, colname):
         return u'FALSE'
     if isinstance(v, list):
         return u', '.join(unicode(e) for e in v)
-    if colname in ('record_created', 'record_modified'):
+    if colname in ('record_created', 'record_modified') and v:
         return h.date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
     return unicode(v)

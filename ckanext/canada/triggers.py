@@ -6,6 +6,22 @@ def update_triggers():
     """Create/update triggers used by PD tables"""
 
     lc = LocalCKAN()
+
+    lc.action.datastore_function_create(
+        name=u'text_not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+
     choices = dict(
         (f['datastore_id'], f['choices'])
         for f in h.recombinant_choice_fields('consultations'))
@@ -31,9 +47,7 @@ def update_triggers():
                     SELECT unnest(NEW.rationale)
                     EXCEPT SELECT unnest({rationale})), ', ');
             BEGIN
-                IF (NEW.registration_number = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: registration_number';
-                END IF;
+                PERFORM text_not_empty(NEW.registration_number, 'registration_number');
 
                 IF NOT (NEW.publishable = ANY {publishable}) THEN
                     RAISE EXCEPTION 'Invalid choice for publishable: "%"', NEW.publishable;
@@ -60,13 +74,8 @@ def update_triggers():
                     SELECT c FROM(SELECT unnest({subjects}) as c) u
                     WHERE c in (SELECT unnest(NEW.subjects)));
 
-                IF (NEW.title_en = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: title_en';
-                END IF;
-
-                IF (NEW.title_fr = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: title_fr';
-                END IF;
+                PERFORM text_not_empty(NEW.title_en, 'title_en');
+                PERFORM text_not_empty(NEW.title_fr, 'title_fr');
 
                 IF NEW.goals = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: goals';
@@ -78,13 +87,8 @@ def update_triggers():
                     SELECT c FROM(SELECT unnest({goals}) as c) u
                     WHERE c in (SELECT unnest(NEW.goals)));
 
-                IF (NEW.description_en = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: description_en';
-                END IF;
-
-                IF (NEW.description_fr = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: description_fr';
-                END IF;
+                PERFORM text_not_empty(NEW.description_en, 'description_en');
+                PERFORM text_not_empty(NEW.description_fr, 'description_fr');
 
                 IF NOT (NEW.public_opinion_research = ANY {public_opinion_research}) THEN
                     RAISE EXCEPTION 'Invalid choice for public_opinion_research: "%"', NEW.public_opinion_research;
@@ -116,13 +120,8 @@ def update_triggers():
                     RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
                 END IF;
 
-                IF (NEW.further_information_en = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: further_information_en';
-                END IF;
-
-                IF (NEW.further_information_fr = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: further_information_fr';
-                END IF;
+                PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
+                PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
 
                 IF NOT (NEW.report_available_online = ANY {report_available_online}) THEN
                     RAISE EXCEPTION 'Invalid choice for report_available_online: "%"', NEW.report_available_online;
