@@ -383,13 +383,13 @@ class CanadaCommand(CkanCommand):
             action = None
             if source_pkg and not self.options.mirror:
                 if source_pkg.get('ready_to_publish') == 'false':
-                    action = 'skip'
+                    source_pkg = None
                     reason = 'marked not ready to publish'
                 elif not source_pkg.get('portal_release_date'):
-                    action = 'skip'
+                    source_pkg = None
                     reason = 'release date not set'
                 elif isodate(source_pkg['portal_release_date'], None) > now:
-                    action = 'skip'
+                    source_pkg = None
                     reason = 'release date in future'
 
             if action != 'skip':
