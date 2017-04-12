@@ -36,6 +36,20 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'text_array_not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value = '{{}}' THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'text_choice_one_of',
         or_replace=True,
         arguments=[
@@ -86,29 +100,17 @@ def update_triggers():
                 PERFORM text_choice_one_of(NEW.publishable, {publishable}, 'publishable');
                 PERFORM text_array_choices_from(NEW.partner_departments, {partner_departments}, 'partner_departments');
                 PERFORM text_choice_one_of(NEW.sector, {sectors}, 'sector');
-
-                IF NEW.subjects = '{{}}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: subjects';
-                END IF;
-
+                PERFORM text_array_not_empty(NEW.subjects, 'subjects');
                 PERFORM text_array_choices_from(NEW.subjects, {subjects}, 'subjects');
                 PERFORM text_not_empty(NEW.title_en, 'title_en');
                 PERFORM text_not_empty(NEW.title_fr, 'title_fr');
-
-                IF NEW.goals = '{{}}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: goals';
-                END IF;
-
+                PERFORM text_array_not_empty(NEW.goals, 'goals');
                 PERFORM text_array_choices_from(NEW.goals, {goals}, 'goals');
                 PERFORM text_not_empty(NEW.description_en, 'description_en');
                 PERFORM text_not_empty(NEW.description_fr, 'description_fr');
                 PERFORM text_choice_one_of(NEW.public_opinion_research, {public_opinion_research}, 'public_opinion_research');
                 PERFORM text_choice_one_of(NEW.public_opinion_research_standing_offer, {public_opinion_research_standing_offer}, 'public_opinion_research_standing_offer');
-
-                IF NEW.target_participants_and_audience = '{{}}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
-                END IF;
-                
+                PERFORM text_array_not_empty(NEW.target_participants_and_audience, 'target_participants_and_audience');
                 PERFORM text_array_choices_from(NEW.target_participants_and_audience, {target_participants_and_audience}, 'target_participants_and_audience');
                 PERFORM date_not_empty(NEW.planned_start_date, 'planned_start_date');
                 PERFORM date_not_empty(NEW.planned_end_date, 'planned_end_date');
@@ -116,11 +118,7 @@ def update_triggers():
                 PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
                 PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
                 PERFORM text_choice_one_of(NEW.report_available_online, {report_available_online}, 'report_available_online');
-
-                IF NEW.rationale = '{{}}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: rationale';
-                END IF;
-
+                PERFORM text_array_not_empty(NEW.rationale, 'rationale');
                 PERFORM text_array_choices_from(NEW.rationale, {rationale}, 'rationale');
 
                 RETURN NEW;
