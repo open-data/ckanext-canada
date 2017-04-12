@@ -50,6 +50,29 @@ def update_triggers():
             END;
         ''')
 
+    lc.action.datastore_function_create(
+        name=u'text_array_choices_from',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            DECLARE
+                bad_choices text := array_to_string(ARRAY(
+                    SELECT unnest(value)
+                    EXCEPT SELECT unnest(choices)), ', ');
+            BEGIN
+                IF bad_choices <> '' THEN
+                    RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, bad_choices;
+                END IF;
+                RETURN ARRAY(
+                    SELECT c FROM(SELECT unnest(choices) as c) u
+                    WHERE c in (SELECT unnest(value)));
+            END;
+        ''')
+
     choices = dict(
         (f['datastore_id'], f['choices'])
         for f in h.recombinant_choice_fields('consultations'))
@@ -58,58 +81,25 @@ def update_triggers():
         or_replace=True,
         rettype=u'trigger',
         definition=u'''
-            DECLARE
-                bad_partner_departments text := array_to_string(ARRAY(
-                    SELECT unnest(NEW.partner_departments)
-                    EXCEPT SELECT unnest({partner_departments})), ', ');
-                bad_subjects text := array_to_string(ARRAY(
-                    SELECT unnest(NEW.subjects)
-                    EXCEPT SELECT unnest({subjects})), ', ');
-                bad_goals text := array_to_string(ARRAY(
-                    SELECT unnest(NEW.goals)
-                    EXCEPT SELECT unnest({goals})), ', ');
-                bad_target_participants_and_audience text := array_to_string(ARRAY(
-                    SELECT unnest(NEW.target_participants_and_audience)
-                    EXCEPT SELECT unnest({target_participants_and_audience})), ', ');
-                bad_rationale text := array_to_string(ARRAY(
-                    SELECT unnest(NEW.rationale)
-                    EXCEPT SELECT unnest({rationale})), ', ');
             BEGIN
                 PERFORM text_not_empty(NEW.registration_number, 'registration_number');
                 PERFORM text_choice_one_of(NEW.publishable, {publishable}, 'publishable');
-
-                IF bad_partner_departments <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
-                END IF;
-                NEW.partner_departments := ARRAY(
-                    SELECT c FROM(SELECT unnest({partner_departments}) as c) u
-                    WHERE c in (SELECT unnest(NEW.partner_departments)));
-
+                PERFORM text_array_choices_from(NEW.partner_departments, {partner_departments}, 'partner_departments');
                 PERFORM text_choice_one_of(NEW.sector, {sectors}, 'sector');
 
                 IF NEW.subjects = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: subjects';
                 END IF;
-                IF bad_subjects <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for subjects: "%"', bad_subjects;
-                END IF;
-                NEW.subjects := ARRAY(
-                    SELECT c FROM(SELECT unnest({subjects}) as c) u
-                    WHERE c in (SELECT unnest(NEW.subjects)));
 
+                PERFORM text_array_choices_from(NEW.subjects, {subjects}, 'subjects');
                 PERFORM text_not_empty(NEW.title_en, 'title_en');
                 PERFORM text_not_empty(NEW.title_fr, 'title_fr');
 
                 IF NEW.goals = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: goals';
                 END IF;
-                IF bad_goals <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for goals: "%"', bad_goals;
-                END IF;
-                NEW.goals := ARRAY(
-                    SELECT c FROM(SELECT unnest({goals}) as c) u
-                    WHERE c in (SELECT unnest(NEW.goals)));
 
+                PERFORM text_array_choices_from(NEW.goals, {goals}, 'goals');
                 PERFORM text_not_empty(NEW.description_en, 'description_en');
                 PERFORM text_not_empty(NEW.description_fr, 'description_fr');
                 PERFORM text_choice_one_of(NEW.public_opinion_research, {public_opinion_research}, 'public_opinion_research');
@@ -118,13 +108,8 @@ def update_triggers():
                 IF NEW.target_participants_and_audience = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
                 END IF;
-                IF bad_target_participants_and_audience <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for target_participants_and_audience: "%"', bad_target_participants_and_audience;
-                END IF;
-                NEW.target_participants_and_audience := ARRAY(
-                    SELECT c FROM(SELECT unnest({target_participants_and_audience}) as c) u
-                    WHERE c in (SELECT unnest(NEW.target_participants_and_audience)));
-
+                
+                PERFORM text_array_choices_from(NEW.target_participants_and_audience, {target_participants_and_audience}, 'target_participants_and_audience');
                 PERFORM date_not_empty(NEW.planned_start_date, 'planned_start_date');
                 PERFORM date_not_empty(NEW.planned_end_date, 'planned_end_date');
                 PERFORM text_choice_one_of(NEW.status, {status}, 'status');
@@ -135,12 +120,8 @@ def update_triggers():
                 IF NEW.rationale = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: rationale';
                 END IF;
-                IF bad_rationale <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for rationale: "%"', bad_rationale;
-                END IF;
-                NEW.rationale := ARRAY(
-                    SELECT c FROM(SELECT unnest({rationale}) as c) u
-                    WHERE c in (SELECT unnest(NEW.rationale)));
+
+                PERFORM text_array_choices_from(NEW.rationale, {rationale}, 'rationale');
 
                 RETURN NEW;
             END;
