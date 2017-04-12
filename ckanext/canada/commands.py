@@ -382,12 +382,14 @@ class CanadaCommand(CkanCommand):
 
             action = None
             if source_pkg and not self.options.mirror:
-                # treat unpublished packages same as deleted packages
-                if not source_pkg['portal_release_date']:
-                    action = 'skip'
+                if source_pkg.get('ready_to_publish') == 'false':
+                    source_pkg = None
+                    reason = 'marked not ready to publish'
+                elif not source_pkg.get('portal_release_date'):
+                    source_pkg = None
                     reason = 'release date not set'
                 elif isodate(source_pkg['portal_release_date'], None) > now:
-                    action = 'skip'
+                    source_pkg = None
                     reason = 'release date in future'
 
             if action != 'skip':
@@ -710,6 +712,8 @@ def _trim_package(pkg):
                 'last_modified', 'position']:
             if k in r:
                 del r[k]
+        if .get('url_type') == 'upload':
+            r['url'] = 'upload'
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
