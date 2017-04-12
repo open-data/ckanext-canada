@@ -21,6 +21,20 @@ def update_triggers():
             END;
         ''')
 
+    lc.action.datastore_function_create(
+        name=u'text_choice_one_of',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF NOT (value = ANY (choices)) THEN
+                    RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
+                END IF;
+            END;
+        ''')
 
     choices = dict(
         (f['datastore_id'], f['choices'])
@@ -48,10 +62,7 @@ def update_triggers():
                     EXCEPT SELECT unnest({rationale})), ', ');
             BEGIN
                 PERFORM text_not_empty(NEW.registration_number, 'registration_number');
-
-                IF NOT (NEW.publishable = ANY {publishable}) THEN
-                    RAISE EXCEPTION 'Invalid choice for publishable: "%"', NEW.publishable;
-                END IF;
+                PERFORM text_choice_one_of(NEW.publishable, {publishable}, 'publishable');
 
                 IF bad_partner_departments <> '' THEN
                     RAISE EXCEPTION 'Invalid choice for partner_departments: "%"', bad_partner_departments;
@@ -60,9 +71,7 @@ def update_triggers():
                     SELECT c FROM(SELECT unnest({partner_departments}) as c) u
                     WHERE c in (SELECT unnest(NEW.partner_departments)));
 
-                IF NOT (NEW.sector = ANY {sectors}) THEN
-                    RAISE EXCEPTION 'Invalid choice for sector: "%"', NEW.sector;
-                END IF;
+                PERFORM text_choice_one_of(NEW.sector, {sectors}, 'sector');
 
                 IF NEW.subjects = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: subjects';
@@ -89,14 +98,8 @@ def update_triggers():
 
                 PERFORM text_not_empty(NEW.description_en, 'description_en');
                 PERFORM text_not_empty(NEW.description_fr, 'description_fr');
-
-                IF NOT (NEW.public_opinion_research = ANY {public_opinion_research}) THEN
-                    RAISE EXCEPTION 'Invalid choice for public_opinion_research: "%"', NEW.public_opinion_research;
-                END IF;
-
-                IF NOT (NEW.public_opinion_research_standing_offer = ANY {public_opinion_research_standing_offer}) THEN
-                    RAISE EXCEPTION 'Invalid choice for public_opinion_research_standing_offer: "%"', NEW.public_opinion_research_standing_offer;
-                END IF;
+                PERFORM text_choice_one_of(NEW.public_opinion_research, {public_opinion_research}, 'public_opinion_research');
+                PERFORM text_choice_one_of(NEW.public_opinion_research_standing_offer, {public_opinion_research_standing_offer}, 'public_opinion_research_standing_offer');
 
                 IF NEW.target_participants_and_audience = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: target_participants_and_audience';
@@ -116,16 +119,10 @@ def update_triggers():
                     RAISE EXCEPTION 'This field must not be empty: planned_end_date';
                 END IF;
 
-                IF NOT (NEW.status = ANY {status}) THEN
-                    RAISE EXCEPTION 'Invalid choice for status: "%"', NEW.status;
-                END IF;
-
+                PERFORM text_choice_one_of(NEW.status, {status}, 'status');
                 PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
                 PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
-
-                IF NOT (NEW.report_available_online = ANY {report_available_online}) THEN
-                    RAISE EXCEPTION 'Invalid choice for report_available_online: "%"', NEW.report_available_online;
-                END IF;
+                PERFORM text_choice_one_of(NEW.report_available_online, {report_available_online}, 'report_available_online');
 
                 IF NEW.rationale = '{{}}' THEN
                     RAISE EXCEPTION 'This field must not be empty: rationale';
@@ -211,5 +208,5 @@ def update_triggers():
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
-    return u'(ARRAY[' + u','.join(
-        literal_string(unicode(c[0])) for c in choices) + u'])'
+    return u'ARRAY[' + u','.join(
+        literal_string(unicode(c[0])) for c in choices) + u']'
