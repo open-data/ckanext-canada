@@ -43,7 +43,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF value = '{{}}' THEN
+                IF value = '{}' THEN
                     RAISE EXCEPTION 'This field must not be empty: %', field_name;
                 END IF;
             END;
@@ -98,28 +98,45 @@ def update_triggers():
             BEGIN
                 PERFORM text_not_empty(NEW.registration_number, 'registration_number');
                 PERFORM text_choice_one_of(NEW.publishable, {publishable}, 'publishable');
-                PERFORM text_array_choices_from(NEW.partner_departments, {partner_departments}, 'partner_departments');
+                NEW.partner_departments := text_array_choices_from(
+                    NEW.partner_departments, {partner_departments}, 'partner_departments');
                 PERFORM text_choice_one_of(NEW.sector, {sectors}, 'sector');
                 PERFORM text_array_not_empty(NEW.subjects, 'subjects');
-                PERFORM text_array_choices_from(NEW.subjects, {subjects}, 'subjects');
+                NEW.subjects := text_array_choices_from(
+                    NEW.subjects, {subjects}, 'subjects');
                 PERFORM text_not_empty(NEW.title_en, 'title_en');
                 PERFORM text_not_empty(NEW.title_fr, 'title_fr');
                 PERFORM text_array_not_empty(NEW.goals, 'goals');
-                PERFORM text_array_choices_from(NEW.goals, {goals}, 'goals');
+                NEW.goals := text_array_choices_from(NEW.goals, {goals}, 'goals');
                 PERFORM text_not_empty(NEW.description_en, 'description_en');
                 PERFORM text_not_empty(NEW.description_fr, 'description_fr');
-                PERFORM text_choice_one_of(NEW.public_opinion_research, {public_opinion_research}, 'public_opinion_research');
-                PERFORM text_choice_one_of(NEW.public_opinion_research_standing_offer, {public_opinion_research_standing_offer}, 'public_opinion_research_standing_offer');
-                PERFORM text_array_not_empty(NEW.target_participants_and_audience, 'target_participants_and_audience');
-                PERFORM text_array_choices_from(NEW.target_participants_and_audience, {target_participants_and_audience}, 'target_participants_and_audience');
+                PERFORM text_choice_one_of(
+                    NEW.public_opinion_research,
+                    {public_opinion_research},
+                    'public_opinion_research');
+                PERFORM text_choice_one_of(
+                    NEW.public_opinion_research_standing_offer,
+                    {public_opinion_research_standing_offer},
+                    'public_opinion_research_standing_offer');
+                PERFORM text_array_not_empty(
+                    NEW.target_participants_and_audience,
+                    'target_participants_and_audience');
+                NEW.target_participants_and_audience := text_array_choices_from(
+                    NEW.target_participants_and_audience,
+                    {target_participants_and_audience},
+                    'target_participants_and_audience');
                 PERFORM date_not_empty(NEW.planned_start_date, 'planned_start_date');
                 PERFORM date_not_empty(NEW.planned_end_date, 'planned_end_date');
                 PERFORM text_choice_one_of(NEW.status, {status}, 'status');
                 PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
                 PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
-                PERFORM text_choice_one_of(NEW.report_available_online, {report_available_online}, 'report_available_online');
+                PERFORM text_choice_one_of(
+                    NEW.report_available_online,
+                    {report_available_online},
+                    'report_available_online');
                 PERFORM text_array_not_empty(NEW.rationale, 'rationale');
-                PERFORM text_array_choices_from(NEW.rationale, {rationale}, 'rationale');
+                NEW.rationale := text_array_choices_from(
+                    NEW.rationale, {rationale}, 'rationale');
 
                 RETURN NEW;
             END;
