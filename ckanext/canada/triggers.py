@@ -22,6 +22,20 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'date_not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'text_choice_one_of',
         or_replace=True,
         arguments=[
@@ -111,14 +125,8 @@ def update_triggers():
                     SELECT c FROM(SELECT unnest({target_participants_and_audience}) as c) u
                     WHERE c in (SELECT unnest(NEW.target_participants_and_audience)));
 
-                IF NEW.planned_start_date IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: planned_start_date';
-                END IF;
-
-                IF NEW.planned_end_date IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: planned_end_date';
-                END IF;
-
+                PERFORM date_not_empty(NEW.planned_start_date, 'planned_start_date');
+                PERFORM date_not_empty(NEW.planned_end_date, 'planned_end_date');
                 PERFORM text_choice_one_of(NEW.status, {status}, 'status');
                 PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
                 PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
