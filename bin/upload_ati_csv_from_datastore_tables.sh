@@ -55,16 +55,8 @@ mv "${TMPDIR}/inventory.csv" "${TMPDIR}/raw-inventory.csv"
 bin/eligible_for_release.py \
         < "${TMPDIR}/raw-inventory.csv" \
         > "${TMPDIR}/inventory.csv"
-#mv "${TMPDIR}/hospitalityq.csv" "${TMPDIR}/raw-hospitalityq.csv"
-#bin/filter_disclosure_group.py \
-#        < "${TMPDIR}/raw-hospitalityq.csv" \
-#        > "${TMPDIR}/hospitalityq.csv"
-#mv "${TMPDIR}/travelq.csv" "${TMPDIR}/raw-travelq.csv"
-#bin/filter_disclosure_group.py \
-#        < "${TMPDIR}/raw-travelq.csv" \
-#        > "${TMPDIR}/travelq.csv"
 
-# NEW WAY TO UPLOAD
+# UPLOAD
 ckanapi action resource_patch -c $REGISTRY_INI \
 	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"${TMPDIR}/ati.csv"
 ckanapi action resource_patch -c $REGISTRY_INI \

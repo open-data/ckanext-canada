@@ -5,8 +5,6 @@ set -e
 
 . /var/www/html/venv/staging-portal/bin/activate
 
-# new way:
-
 /var/www/html/open_gov/staging-portal/ckanext-canada/bin/csv2solr.sh \
     /var/www/html/open_gov/staging-portal/ckan/production.ini \
     http://open.canada.ca/data \
@@ -23,16 +21,3 @@ set -e
 if [ $? -ne 0 ]; then
    /home/odatsrv/bin/sendsentry.sh -t 'rebuild_pd_solr_from_uploaded_csv.sh failed to complete, please investigate' -f /home/odatsrv/run_log/rebuild_pd_solr_from_uploaded_csv.log
 fi
-
-#. /var/www/html/open_gov/venv/od/bin/activate
-#
-#/var/www/html/open_gov/open_data/ckanext-canada/bin/csv2solr.sh \
-#    /var/www/html/open_gov/open_data/ckan/production-cli.ini \
-#    http://f7odwebb4.stcpaz.statcan.gc.ca/vl \
-#    contracts:contracts \
-#    contractsa:contractsa \
-#    grants:grants \
-#    hospitalityq:hospitalityq \
-#    reclassification:reclassification \
-#    travelq:travelq \
-#    wrongdoing:wrongdoing
