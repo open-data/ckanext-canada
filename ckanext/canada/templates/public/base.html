@@ -16,6 +16,15 @@
 </script>
 {%- endblock -%}
 
+{%- block custom_styles -%}
+  {{ super() }}
+  {# Temporary styles until the panels styles are resolved in GCWeb #}
+  <style>
+    .panel .panel-heading {background: #335075; border:1px solid #335075}
+    .panel .panel-heading a {color: #fff}
+  </style>
+{% endblock %}
+
 {%- block gtm_datalayer -%}
   <script>dataLayer1 = [];</script>
 {%- endblock -%}
