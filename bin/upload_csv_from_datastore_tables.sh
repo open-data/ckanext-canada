@@ -39,10 +39,6 @@ cp inventory.csv /var/www/html/static/inventory.csv
 
 # Custom business logic (filtering out records) here
 cd /var/www/html/rc_reg/ckanext-canada
-mv "${TMPDIR}/contracts.csv" "${TMPDIR}/raw-contracts.csv"
-bin/contracts_10k_filter.py \
-        < "${TMPDIR}/raw-contracts.csv" \
-        > "${TMPDIR}/contracts.csv"
 mv "${TMPDIR}/ati.csv" "${TMPDIR}/raw-ati.csv"
 bin/window_csv_results.py \
         < "${TMPDIR}/raw-ati.csv" \
