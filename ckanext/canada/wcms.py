@@ -11,7 +11,9 @@ from sqlalchemy import (
     types,
     select,
     bindparam,
-    and_
+    and_,
+    or_,
+    func
 )
 import ckan.lib.helpers as h
 
@@ -58,7 +60,8 @@ class _DrupalDatabase(object):
             'opendata_package_count_v',
             self._metadata,
             Column('count', types.Integer),
-            Column('pkg_id', types.UnicodeText)
+            Column('pkg_id', types.UnicodeText),
+            Column('language', types.Unicode(12)),
         )
 
         self.drupal_ratings_table = Table(
@@ -96,6 +99,86 @@ def wcms_configure(drupal_url):
         _drupal_db = _DrupalDatabase(metadata)
 
 
+# fetch all sub comments
+def fetch_comments_by_id(thread):
+    global _drupal_db
+
+    if _drupal_db is None:
+        return []
+
+    comment_list = []
+    ct = _drupal_db.drupal_comments_table.c
+
+    try:
+        stmt = select(
+            [
+                _drupal_db.drupal_comments_table
+            ],
+        ).where(
+            or_(ct.thread == (thread + '/'),
+                ct.thread.like(thread + '.%')
+                )
+        )
+
+        for comment in stmt.execute():
+            comment_body = clean_html(comment[3])
+            comment_list.append({
+                 'date': comment[0],
+                 'thread': comment[2],
+                 'comment_body': comment_body,
+                 'user': comment[1]
+            })
+    except KeyError:
+        # I can't figure out why this try...except is here, so lets log it
+        # upstream and see if Sentry can tell us why.
+        logging.exception('KeyError occured while pulling dataset comments.')
+    return comment_list
+
+
+# group comments by thread id, asc or desc; fetch parent thread if necessary
+def comments_by_thread(comment_list, asc=True):
+    res = []
+    com_ids = [c['thread'] for c in comment_list]
+    for com in comment_list:
+        thread = com['thread']
+        parent_id = thread.strip('/').partition('.')[0]
+        if (parent_id + '/') not in com_ids:
+            cs = fetch_comments_by_id(parent_id)
+            for c in cs:
+                if c['thread'] not in com_ids:
+                    res.append(c)
+                    com_ids.append(c['thread'])
+    res += comment_list
+
+    clist = {}  # key: thread_id,, value: [children, comment]
+
+    def buildNode(parents, comment):
+        root = clist
+        node = None
+        for id in parents:
+            if root.get(id) is None:
+                root[id] = [{}, None]
+            node = root[id]
+            root=root[id][0]
+        node[1] =comment
+
+    #now we have all comments with parent; build subtree, then sort by date
+    #step1: build tree
+    for c in res:
+        thread = c['thread']
+        c['parents'] = thread.strip('/').split('.')
+        buildNode(c['parents'], c)
+
+    def sortDict(d):
+        ordered_d = sorted(d.items(), key=lambda x: x[0], reverse=(not asc))
+        for k,v in ordered_d:
+            if v[0]:
+                v[0] = sortDict(v[0])
+        return [v[1] for v in ordered_d]
+    #step 2: sort
+    return sortDict(clist)
+
+
 def wcms_dataset_comments(request, c, pkg_id, lang):
     """
     Retrieve the comments for this dataset that have been saved in the Drupal
@@ -120,6 +203,8 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
 
         page = int(request.params.get('page', 1))
         limit = min(100, int(request.params.get('pagelimit', 50)))
+        sort_by = request.params.get('sort', 'time_descend')
+        asc = sort_by=='time_ascend'
 
         stmt = select(
             [
@@ -129,9 +214,11 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
                 ct.pkg_id == bindparam('pkg_id'),
                 ct.language == bindparam('language')
             ),
-            limit = limit,
-            offset = (page - 1) * limit,
-            order_by=[_drupal_db.drupal_comments_table.c.thread.desc()]
+            limit=limit,
+            offset=(page - 1) * limit,
+            order_by=[_drupal_db.drupal_comments_table.c.thread.asc() if asc
+                      else
+                      _drupal_db.drupal_comments_table.c.thread.desc()]
         )
 
         for comment in stmt.execute(pkg_id=pkg_id, language=lang):
@@ -142,14 +229,16 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
                  'comment_body': comment_body,
                  'user': comment[1]
             })
+        comment_list = comments_by_thread(comment_list, asc)
         c.page = h.Page(
             collection=comment_list,
             page=page,
             url=pager_url,
-            item_count=wcms_dataset_comment_count(pkg_id),
+            item_count=wcms_dataset_comment_count(pkg_id, lang),
             items_per_page=limit
         )
         c.pagelimit = limit
+        c.sort = sort_by
     except KeyError:
         # I can't figure out why this try...except is here, so lets log it
         # upstream and see if Sentry can tell us why.
@@ -189,7 +278,7 @@ def wcms_dataset_rating(package_id):
     return int(0 if rating is None else rating)
 
 
-def wcms_dataset_comment_count(package_id):
+def wcms_dataset_comment_count(package_id, lang=''):
     """
     Get a count of the number of comments for the dataset. This count is
     displayed in a seperate field on the dataset page
@@ -203,14 +292,28 @@ def wcms_dataset_comment_count(package_id):
     ct = _drupal_db.drupal_comments_count_table.c
 
     try:
-        stmt = select(
-            [
-                _drupal_db.drupal_comments_count_table
-            ],
-            whereclause=ct.pkg_id == bindparam('pkg_id')
-        )
+        if lang:
+            stmt = select(
+                [
+                    _drupal_db.drupal_comments_count_table
+                ],
+                and_(
+                    ct.pkg_id == bindparam('pkg_id'),
+                    ct.language == bindparam('language')
+                )
+            )
+            row = stmt.execute(pkg_id=package_id, language=lang).fetchone()
+        else:
+            stmt = select(
+                [
+                    func.sum(_drupal_db.drupal_comments_count_table.c.count)
+                ],
+                and_(
+                    ct.pkg_id == bindparam('pkg_id'),
+                )
+            )
+            row = stmt.execute(pkg_id=package_id).fetchone()
 
-        row = stmt.execute(pkg_id=package_id).fetchone()
         if row:
             count = row[0]
     except KeyError:

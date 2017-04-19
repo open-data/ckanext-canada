@@ -101,6 +101,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
       </li>
       {% endif %}
       {% if pkg.type == 'dataset' %}
+        {% block openness %}
         <li class="list-group-item"><a
            href="{{ '/en/openness-rating' if h.lang() == 'en' else
             '/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness Rating') }}</b></a>:
@@ -116,6 +117,7 @@ Remove the markdown_extract call because our notes is a dict not a string:
                 ][openness] }}"
                 class="image-actual margin-bottom-none openness-rating-stars" />
         </li>
+        {% endblock %}
       {% endif %}
     </ul>
   </div>
