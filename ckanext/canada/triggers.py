@@ -8,7 +8,7 @@ def update_triggers():
     lc = LocalCKAN()
 
     lc.action.datastore_function_create(
-        name=u'text_not_empty',
+        name=u'not_empty',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
@@ -22,7 +22,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'date_not_empty',
+        name=u'not_empty',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'date'},
@@ -36,7 +36,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'text_array_not_empty',
+        name=u'not_empty',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'_text'},
@@ -50,7 +50,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'text_choice_one_of',
+        name=u'choice_one_of',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
@@ -65,7 +65,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'text_array_choices_from',
+        name=u'choices_from',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'_text'},
@@ -96,46 +96,46 @@ def update_triggers():
         rettype=u'trigger',
         definition=u'''
             BEGIN
-                PERFORM text_not_empty(NEW.registration_number, 'registration_number');
-                PERFORM text_choice_one_of(NEW.publishable, {publishable}, 'publishable');
-                NEW.partner_departments := text_array_choices_from(
+                PERFORM not_empty(NEW.registration_number, 'registration_number');
+                PERFORM choice_one_of(NEW.publishable, {publishable}, 'publishable');
+                NEW.partner_departments := choices_from(
                     NEW.partner_departments, {partner_departments}, 'partner_departments');
-                PERFORM text_choice_one_of(NEW.sector, {sectors}, 'sector');
-                PERFORM text_array_not_empty(NEW.subjects, 'subjects');
-                NEW.subjects := text_array_choices_from(
+                PERFORM choice_one_of(NEW.sector, {sectors}, 'sector');
+                PERFORM not_empty(NEW.subjects, 'subjects');
+                NEW.subjects := choices_from(
                     NEW.subjects, {subjects}, 'subjects');
-                PERFORM text_not_empty(NEW.title_en, 'title_en');
-                PERFORM text_not_empty(NEW.title_fr, 'title_fr');
-                PERFORM text_array_not_empty(NEW.goals, 'goals');
-                NEW.goals := text_array_choices_from(NEW.goals, {goals}, 'goals');
-                PERFORM text_not_empty(NEW.description_en, 'description_en');
-                PERFORM text_not_empty(NEW.description_fr, 'description_fr');
-                PERFORM text_choice_one_of(
+                PERFORM not_empty(NEW.title_en, 'title_en');
+                PERFORM not_empty(NEW.title_fr, 'title_fr');
+                PERFORM not_empty(NEW.goals, 'goals');
+                NEW.goals := choices_from(NEW.goals, {goals}, 'goals');
+                PERFORM not_empty(NEW.description_en, 'description_en');
+                PERFORM not_empty(NEW.description_fr, 'description_fr');
+                PERFORM choice_one_of(
                     NEW.public_opinion_research,
                     {public_opinion_research},
                     'public_opinion_research');
-                PERFORM text_choice_one_of(
+                PERFORM choice_one_of(
                     NEW.public_opinion_research_standing_offer,
                     {public_opinion_research_standing_offer},
                     'public_opinion_research_standing_offer');
-                PERFORM text_array_not_empty(
+                PERFORM not_empty(
                     NEW.target_participants_and_audience,
                     'target_participants_and_audience');
-                NEW.target_participants_and_audience := text_array_choices_from(
+                NEW.target_participants_and_audience := choices_from(
                     NEW.target_participants_and_audience,
                     {target_participants_and_audience},
                     'target_participants_and_audience');
-                PERFORM date_not_empty(NEW.planned_start_date, 'planned_start_date');
-                PERFORM date_not_empty(NEW.planned_end_date, 'planned_end_date');
-                PERFORM text_choice_one_of(NEW.status, {status}, 'status');
-                PERFORM text_not_empty(NEW.further_information_en, 'further_information_en');
-                PERFORM text_not_empty(NEW.further_information_fr, 'further_information_fr');
-                PERFORM text_choice_one_of(
+                PERFORM not_empty(NEW.planned_start_date, 'planned_start_date');
+                PERFORM not_empty(NEW.planned_end_date, 'planned_end_date');
+                PERFORM choice_one_of(NEW.status, {status}, 'status');
+                PERFORM not_empty(NEW.further_information_en, 'further_information_en');
+                PERFORM not_empty(NEW.further_information_fr, 'further_information_fr');
+                PERFORM choice_one_of(
                     NEW.report_available_online,
                     {report_available_online},
                     'report_available_online');
-                PERFORM text_array_not_empty(NEW.rationale, 'rationale');
-                NEW.rationale := text_array_choices_from(
+                PERFORM not_empty(NEW.rationale, 'rationale');
+                NEW.rationale := choices_from(
                     NEW.rationale, {rationale}, 'rationale');
 
                 RETURN NEW;
