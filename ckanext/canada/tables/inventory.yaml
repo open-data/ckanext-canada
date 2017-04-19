@@ -89,8 +89,15 @@ resources:
 
   - datastore_id: eligible_for_release
     label: Eligible for Release
-    datastore_type: boolean
-    excel_column_width: 15
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
     
   - datastore_id: program_alignment_architecture_en
     label: Program Alignment Architecture (English)
@@ -143,7 +150,7 @@ resources:
       date_published: "2016-04-01"
       language: "en+fr"
       size: "392000"
-      eligible_for_release: "TRUE"
+      eligible_for_release: "Y"
       program_alignment_architecture_en: "Government wide programs design and delivery"
       program_alignment_architecture_fr: "Conception et prestation des programmes pangouvernementaux"
       date_released: "2016-04-01"
