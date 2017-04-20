@@ -3,7 +3,7 @@ source $HOME/.bashrc
 
 set -e
 
-. /var/www/html/venv/rc_reg/bin/activate 
+. /var/www/html/venv/rc_reg/bin/activate
 
 REGISTRY_INI="/var/www/html/rc_reg/ckan/production-cli.ini"
 
@@ -24,6 +24,7 @@ tar czvf "$TARGET/pd-$DT.tar.gz" \
         ati.csv ati-nil.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
+	consultations.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
@@ -36,6 +37,9 @@ tar czvf "$TARGET/pd-$DT.tar.gz" \
 cp inventory.csv /var/www/html/static/inventory.csv
 /var/www/html/rc_reg/ckanext-canada/bin/csv2xlsx.py \
 	< inventory.csv > /var/www/html/static/inventory.xlsx
+
+# make consultations csv available pre-filtering
+cp consultations.csv /var/www/html/static/consultations.csv
 
 # Custom business logic (filtering out records) here
 cd /var/www/html/rc_reg/ckanext-canada
