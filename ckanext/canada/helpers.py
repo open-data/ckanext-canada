@@ -94,9 +94,8 @@ def remove_duplicates(a_list):
 
 
 # Retrieve the comments for this dataset that have been saved in the Drupal database
-def dataset_comments(request, c, pkg_id, lang=''):
-
-    return wcms_dataset_comments(request, c, pkg_id, lang)
+def dataset_comments(request, c, pkg_id):
+    return wcms_dataset_comments(request, c, pkg_id)
 
 
 def get_license(license_id):
@@ -118,9 +117,8 @@ def dataset_rating(package_id):
     return wcms_dataset_rating(package_id)
 
 
-def dataset_comment_count(package_id, lang=''):
-
-    return wcms_dataset_comment_count(package_id, lang)
+def dataset_comment_count(package_id):
+    return wcms_dataset_comment_count(package_id)
 
 
 def portal_url():
