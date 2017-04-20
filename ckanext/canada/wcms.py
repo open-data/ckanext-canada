@@ -179,7 +179,7 @@ def comments_by_thread(comment_list, asc=True):
     return sortDict(clist)
 
 
-def wcms_dataset_comments(request, c, pkg_id, lang):
+def wcms_dataset_comments(request, c, pkg_id):
     """
     Retrieve the comments for this dataset that have been saved in the Drupal
     database
@@ -210,18 +210,13 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
             [
                 _drupal_db.drupal_comments_table
             ],
-            and_(
-                ct.pkg_id == bindparam('pkg_id'),
-                ct.language == bindparam('language')
-            ),
             limit=limit,
             offset=(page - 1) * limit,
             order_by=[_drupal_db.drupal_comments_table.c.thread.asc() if asc
                       else
                       _drupal_db.drupal_comments_table.c.thread.desc()]
-        )
-
-        for comment in stmt.execute(pkg_id=pkg_id, language=lang):
+        ).where(ct.pkg_id== pkg_id)
+        for comment in stmt.execute():
             comment_body = clean_html(comment[3])
             comment_list.append({
                  'date': comment[0],
@@ -234,7 +229,7 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
             collection=comment_list,
             page=page,
             url=pager_url,
-            item_count=wcms_dataset_comment_count(pkg_id, lang),
+            item_count=wcms_dataset_comment_count(pkg_id),
             items_per_page=limit
         )
         c.pagelimit = limit
@@ -278,7 +273,7 @@ def wcms_dataset_rating(package_id):
     return int(0 if rating is None else rating)
 
 
-def wcms_dataset_comment_count(package_id, lang=''):
+def wcms_dataset_comment_count(package_id):
     """
     Get a count of the number of comments for the dataset. This count is
     displayed in a seperate field on the dataset page
@@ -292,27 +287,15 @@ def wcms_dataset_comment_count(package_id, lang=''):
     ct = _drupal_db.drupal_comments_count_table.c
 
     try:
-        if lang:
-            stmt = select(
-                [
-                    _drupal_db.drupal_comments_count_table
-                ],
-                and_(
-                    ct.pkg_id == bindparam('pkg_id'),
-                    ct.language == bindparam('language')
-                )
+        stmt = select(
+            [
+                func.sum(_drupal_db.drupal_comments_count_table.c.count)
+            ],
+            and_(
+                ct.pkg_id == bindparam('pkg_id'),
             )
-            row = stmt.execute(pkg_id=package_id, language=lang).fetchone()
-        else:
-            stmt = select(
-                [
-                    func.sum(_drupal_db.drupal_comments_count_table.c.count)
-                ],
-                and_(
-                    ct.pkg_id == bindparam('pkg_id'),
-                )
-            )
-            row = stmt.execute(pkg_id=package_id).fetchone()
+        )
+        row = stmt.execute(pkg_id=package_id).fetchone()
 
         if row:
             count = row[0]
