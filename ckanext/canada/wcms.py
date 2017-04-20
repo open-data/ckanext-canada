@@ -210,18 +210,19 @@ def wcms_dataset_comments(request, c, pkg_id, lang):
             [
                 _drupal_db.drupal_comments_table
             ],
-            and_(
-                ct.pkg_id == bindparam('pkg_id'),
-                ct.language == bindparam('language')
-            ),
             limit=limit,
             offset=(page - 1) * limit,
             order_by=[_drupal_db.drupal_comments_table.c.thread.asc() if asc
                       else
                       _drupal_db.drupal_comments_table.c.thread.desc()]
         )
-
-        for comment in stmt.execute(pkg_id=pkg_id, language=lang):
+        if lang:
+            stmt = stmt.where(and_(ct.pkg_id==pkg_id,
+                                   ct.language==lang)
+                              )
+        else:
+            stmt = stmt.where(ct.pkg_id== pkg_id)
+        for comment in stmt.execute():
             comment_body = clean_html(comment[3])
             comment_list.append({
                  'date': comment[0],

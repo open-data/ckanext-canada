@@ -17,7 +17,7 @@
 <section class="indent-large">
 <div class="span-6 margin-top-medium">
     {%- set pkg = c.pkg_dict -%}
-    {%- set comment_list = h.dataset_comments(request, c, pkg.id, h.lang()) -%}
+    {%- set comment_list = h.dataset_comments(request, c, pkg.id) -%}
 
     {%- if comment_list -%}
       <div class="row">
