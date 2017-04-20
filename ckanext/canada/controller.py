@@ -458,18 +458,11 @@ class CanadaFeedController(FeedController):
             last_page=navigation_urls['last'],
         )
 
-        if c.language == 'fr':
-            def lx(x):
-                return x + '_fra'
-        else:
-            def lx(x):
-                return x
-
         for pkg in results:
             feed.add_item(
-                title=pkg.get(lx('title'), ''),
+                title= h.get_translated(pkg, 'title'),
                 link=h.url_for(controller='package', action='read', id=pkg['id']),
-                description=pkg.get(lx('notes'), ''),
+                description= h.get_translated(pkg, 'notes'),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
                 unique_id=_create_atom_id(u'/dataset/%s' % pkg['id']),
