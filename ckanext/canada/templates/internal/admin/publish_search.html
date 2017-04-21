@@ -17,7 +17,7 @@
 
         <div class="pull-right">
           {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
-          <button type="submit" class="btn btn-large btn-primary" value="{{ _('Search') }}">{{ _('Submit') }}</button>
+          <button type="submit" class="btn btn-large btn-primary" value="{{ _('Search') }}">{{ _('Search') }}</button>
         </div>
 
         {% if c.fields -%}
@@ -78,6 +78,7 @@
 
 {% block secondary_content %}
 <div class="filters">
+  <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaAdminController', action='search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
     {% snippet 'snippets/dataset_facets.html',
       organization_facet=h.snippet(
