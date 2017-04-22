@@ -293,6 +293,11 @@ ckanext.canada:schemas/info.yaml
             action='organization_autocomplete',
             controller='ckanext.canada.controller:CanadaController',
         )
+        map.connect(
+            '/data-dictionary/{pd_file}',
+            controller='ckanext.canada.controller:CanadaController',
+            action='data_dictionary'
+        )
         return map
 
     def configure(self, config):

@@ -9,6 +9,8 @@ from pytz import timezone, utc
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
+import unicodecsv
+import codecs
 from ckan.lib.base import model, redirect
 from ckan.logic import schema
 from ckan.controllers.user import UserController
@@ -265,6 +267,30 @@ class CanadaController(BaseController):
         return render('fgpv_vpgf/index.html', extra_vars={
             'pkg_id': pkg_id,
         })
+
+    def data_dictionary(self, pd_file):
+        name, dot, ext = pd_file.partition('.')
+        if ext != 'csv':
+            abort(404, _('Resource not found'))
+        chromo = h.recombinant_get_chromo(name)
+        if not chromo:
+            abort(404, _('Resource not found'))
+
+        csv_dict = [(_('Field Name'), _('Description'))]
+        for f in chromo['fields']:
+            csv_dict.append((f['datastore_id'],
+                h.recombinant_language_text(f['label'])))
+        csv_dict.append(('owner_org',_('owner organization') ))
+        csv_dict.append(('owner_org_title',_('owner organization title')))
+
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = (
+            'inline; filename="{0}"'.format(pd_file))
+        response.write(codecs.BOM_UTF8)
+        out = unicodecsv.writer(response)
+        for row in csv_dict:
+            out.writerow([unicode(col).encode('utf-8') for col in row])
+        return
 
 
 def datatablify(v, colname):
