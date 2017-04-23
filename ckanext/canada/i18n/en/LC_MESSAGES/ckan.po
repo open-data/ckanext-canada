@@ -504,6 +504,10 @@ msgstr ""
 msgid "Unauthorized to create a resource"
 msgstr ""
 
+#: ckan/controllers/package.py:744
+msgid "A related resource has been added"
+msgstr "A related item has been added"
+
 #: ckan/controllers/package.py:750
 msgid "Unauthorized to create a resource for this package"
 msgstr ""
