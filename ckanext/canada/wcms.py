@@ -304,4 +304,7 @@ def wcms_dataset_comment_count(package_id):
         # upstream and see if Sentry can tell us why.
         logging.exception('KeyError occured while pulling comment count.')
 
-    return count
+    try:
+        return int(count) if count else 0
+    except ValueError:
+        return 0
