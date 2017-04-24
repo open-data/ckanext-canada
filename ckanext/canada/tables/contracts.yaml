@@ -69,6 +69,7 @@ resources:
     excel_column_width: 20
 
     solr_dollar_range_facet:
+     - 0
      - 10000
      - 25000
      - 100000
