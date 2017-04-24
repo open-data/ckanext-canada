@@ -303,8 +303,8 @@ def wcms_dataset_comment_count(package_id):
         # I can't figure out why this try...except is here, so lets log it
         # upstream and see if Sentry can tell us why.
         logging.exception('KeyError occured while pulling comment count.')
-    
+
     try:
-        return int(count)
+        return int(count) if count else 0
     except ValueError:
         return 0
