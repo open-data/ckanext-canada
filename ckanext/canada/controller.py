@@ -565,7 +565,7 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
                 ),
                 config['canada.notification_new_user_email'],
                 (
-                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u'New Registry Account Created / Nouveau compte'
                     u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
                 ),
                 render(
