@@ -499,8 +499,8 @@ def _trim_package(pkg):
                 'last_modified', 'position']:
             if k in r:
                 del r[k]
-        if r.get('url_type') == 'upload':
-            r['url'] = 'upload'
+        if r.get('url_type') == 'upload' and r['url']:
+            r['url'] = os.path.basename(r['url'])
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
