@@ -20,46 +20,104 @@ resources:
 
   - datastore_id: ref_number
     label: Reference Number
+    description:
+      en: The unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow departments to locate a specific item in the system if revisions or deletions are required. This element will not be displayed to the public.
+      fr: Un identificateur unique est attribué à chaque poste dans la feuille de calcul. Un identificateur unique pour chaque poste permettra aux ministères de trouver un élément précis dans le système, si des modifications ou des suppressions sont nécessaires. Cet élément ne sera pas présenté au public.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: title_en
     label: Title (English)
+    description:
+      en: The English name by which the dataset is known.
+      fr: Le nom en anglais sous lequel le jeu de données est connu.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: title_fr
     label: Title (French)
+    description:
+      en: The French name by which the dataset is known.
+      fr: Le nom en français sous lequel le jeu de données est connu.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: description_en
     label: Description (English)
+    description:
+      en: An account of the dataset, in English. A description may include but is not limited to, an abstract, a table of contents, or a free-text account of the dataset.
+      fr: Un compte rendu du jeu de données en anglais. Une description peut inclure, entre autres, un résumé, une table des matières ou du texte libre sur le jeu de données.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 50
 
   - datastore_id: description_fr
     label: Description (French)
+    description:
+      en: An account of the dataset, in French. A description may include but is not limited to, an abstract, a table of contents, or a free-text account of the dataset.
+      fr: Un compte rendu du jeu de données en français. Une description peut inclure, entre autres, un résumé, une table des matières ou du texte libre sur le jeu de données.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 50
 
   - datastore_id: publisher_en
     label: Publisher - Name at Publication (English)
+    description:
+      en: Name, in English, of the organization primarily responsible for publishing the dataset at the time of the publication (if applicable, i.e. if different than current name).
+      fr: Nom, en anglais, de l’organisation principalement responsable de l’édition du jeu de données au moment de la publication (s’il y a lieu, c.-à-d. s’il est différent du nom actuel)
+    obligation: Optional
+    occurrence: Repeatable
+    format_type:
+      en: Free text (Comma-delimited multiple Publisher names)
+      fr: Texte libre (séparation des noms d’éditeurs par une virgule)
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: publisher_fr
     label: Publisher - Name at Publication (French)
+    description:
+      en: Name, in French, of the organization primarily responsible for publishing the dataset at the time of the publication (if applicable, i.e. if different than current name).
+      fr: Nom, en français, de l’organisation principalement responsable de l’édition du jeu de données au moment de la publication (s’il y a lieu, c.-à-d. s’il est différent du nom actuel)
+    obligation: Optional
+    occurrence: Repeatable
+    format_type:
+      en: Free text (Comma-delimited multiple Publisher names)
+      fr: Texte libre (séparation des noms d’éditeurs par une virgule)
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: date_published
     label: Date Published
+    description:
+      en: The date of issuance (e.g., publication) of the dataset
+      fr: Date de diffusion (p. ex., publication) du jeu de données.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: language
     label: Language
+    description:
+      en: The language of the resource.
+      fr: Langue de la ressource
+    obligation: Mandatory
+    occurrence: Repeatable
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 15
     choices:
@@ -84,11 +142,23 @@ resources:
 
   - datastore_id: size
     label: Size
+    description:
+      en: The [estimated] size of the resource(in Bytes)
+      fr: La taille [estimée] de la ressource (en octets).
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: int
     excel_column_width: 15
 
   - datastore_id: eligible_for_release
     label: Eligible for Release
+    description:
+      en: Is all of the content within the dataset eligible to be publicly released based on the application of the Eligibility Criteria in the Guide to Implementing the Directive on Open Government?
+      fr: Tout le contenu du jeu de données peut être diffusé publiquement selon les critères d’admissibilité mentionnés dans le guide de la mise en œuvre de la Directive sur le gouvernement ouvert?
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 20
     choices:
@@ -101,26 +171,60 @@ resources:
     
   - datastore_id: program_alignment_architecture_en
     label: Program Alignment Architecture (English)
+    description:
+      en: The Program Alignment Architecture (PAA) in English. The Program Alignment Architecture (PAA) is an inventory of each organization’s programs. It provides an overview of the organization’s responsibilities.
+      fr: L’Architecture d’alignement des programmes (AAP) en anglais. L’Architecture d’alignement des programmes (AAP) est un inventaire des programmes de chaque organisation. Il offre un aperçu des responsabilités de l’organisation.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: program_alignment_architecture_fr
     label: Program Alignment Architecture (French)
+    description:
+      en: The Program Alignment Architecture (PAA) in French. The Program Alignment Architecture (PAA) is an inventory of each organization’s programs. It provides an overview of the organization’s responsibilities.
+      fr: L’Architecture d’alignement des programmes (AAP) en français. L’Architecture d’alignement des programmes (AAP) est un inventaire des programmes de chaque organisation. Il offre un aperçu des responsabilités de l’organisation.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: date_released
     label: Date Released
+    description:
+      en: The date on which the metadata record was released, made available, on the Open Government portal; only if applicable
+      fr: La date à laquelle l’enregistrement de métadonnées a été diffusé et rendu accessible à partir du Portail du gouvernement ouvert, s’il y a lieu seulement.
+    obligation: Mandatory
+    occurrence: Single
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: portal_url_en
     label: Open Government Portal Record (English)
+    description:
+      en: The location for online access to the distribution of the resource, in French. This element is only mandatory if applicable The entry should point to the metadata record page on Open.Canada.ca.
+      fr: L’emplacement en ligne où il est possible d’accéder à la ressource, en anglais. Cet élément n’est obligatoire que le cas échéant. La valeur saisie doit mener à la page de l’enregistrement sur ouvert.canada.ca.
+    obligation: Mandatory
+    occurrence: Single
+    format_type:
+      en: Free text (URL) (Comma-delimited multiple URLs)
+      fr: Texte libre (URL) (séparation des URL par une virgule)
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: portal_url_fr
     label: Open Government Portal Record (French)
+    description:
+      en: The location for online access to the distribution of the resource, in French. This element is only mandatory if applicable The entry should point to the metadata record page on Open.Canada.ca.
+      fr: L’emplacement en ligne où il est possible d’accéder à la ressource, en français. Cet élément n’est obligatoire que le cas échéant. La valeur saisie doit mener à la page de l’enregistrement sur ouvert.canada.ca.
+    occurrence: Single
+    format_type:
+      en: Free text (URL) (Comma-delimited multiple URLs)
+      fr: Texte libre (URL) (séparation des URL par une virgule)
+    obligation: Mandatory
     datastore_type: text
     excel_column_width: 30
 
