@@ -209,6 +209,53 @@ def update_triggers():
             END;
             ''')
 
+    lc.action.datastore_function_create(
+        name=u'inventory_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.ref_number, 'ref_number');
+                PERFORM not_empty(NEW.title_en, 'title_en');
+                PERFORM not_empty(NEW.title_fr, 'title_fr');
+                PERFORM not_empty(NEW.description_en, 'description_en');
+                PERFORM not_empty(NEW.description_fr, 'description_fr');
+                PERFORM not_empty(NEW.date_published, 'date_published');
+                PERFORM not_empty(NEW.language, 'language');
+                PERFORM choice_one_of(NEW.language, {language}, 'language');
+                PERFORM not_empty(NEW.size, 'size');
+                PERFORM not_empty(NEW.eligible_for_release, 'eligible_for_release');
+                PERFORM choice_one_of(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
+                PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
+                PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
+                PERFORM not_empty(NEW.date_released, 'date_released');
+            END;
+            ''')
+
+    lc.action.datastore_function_create(
+        name=u'protect_user_votes_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            DECLARE
+                req_user_votes int := NEW.user_votes;
+                sysadmin boolean NOT NULL := (SELECT sysadmin
+                    FROM datastore_user);
+            BEGIN
+                IF NOT sysadmin OR (req_user_votes = '') IS NOT FALSE THEN
+                    req_user_votes := NULL;
+                END IF;
+                IF TG_OP = 'INSERT' THEN
+                    NEW.user_votes = req_user_votes;
+                    RETURN NEW;
+                END IF;
+
+                IF req_user_votes IS NULL THEN
+                    NEW.user_votes := OLD.user_votes;
+                END IF;
+                RETURN NEW;
+            END;
+            ''')
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
