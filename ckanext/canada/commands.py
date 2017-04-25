@@ -500,7 +500,7 @@ def _trim_package(pkg):
             if k in r:
                 del r[k]
         if r.get('url_type') == 'upload' and r['url']:
-            r['url'] = os.path.basename(r['url'])
+            r['url'] = r['url'].rsplit('/', 1)[-1]
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
