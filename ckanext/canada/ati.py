@@ -204,7 +204,7 @@ def _update_records(records, org_detail, conn):
             'ss_ati_org_name_code': org,
             'ss_ati_contact_email_fr': ati_email,
             'ss_ati_nothing_to_report_fr': ('' if 'request_number' in r else
-                u'Rien à signaler ce mois-ci'),
+                u'Rien à signaler pour cette période'),
             'ss_language': 'fr',
             }
 
