@@ -358,8 +358,11 @@ def sum_to_field(solrrec, key, value):
     modify solrrec dict in-place to add this value to solrrec[key]
     """
     try:
-        float_value = float(value)
-    except ValueError:
+        if isinstance(value, basestring):
+            float_value = float(value.replace(',', ''))
+        else:
+            float_value = float(value)
+    except (ValueError, TypeError):
         solrrec[key] = None # failed to find sum
         return
     try:
