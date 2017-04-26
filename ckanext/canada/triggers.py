@@ -87,7 +87,7 @@ def update_triggers():
             END;
         ''')
 
-    choices = dict(
+    consultations_choices = dict(
         (f['datastore_id'], f['choices'])
         for f in h.recombinant_choice_fields('consultations'))
     lc.action.datastore_function_create(
@@ -141,22 +141,22 @@ def update_triggers():
                 RETURN NEW;
             END;
             '''.format(
-                sectors=pg_array(choices['sector']),
-                publishable=pg_array(choices['publishable']),
+                sectors=pg_array(consultations_choices['sector']),
+                publishable=pg_array(consultations_choices['publishable']),
                 partner_departments=pg_array(
-                    choices['partner_departments']),
-                subjects=pg_array(choices['subjects']),
-                goals=pg_array(choices['goals']),
+                    consultations_choices['partner_departments']),
+                subjects=pg_array(consultations_choices['subjects']),
+                goals=pg_array(consultations_choices['goals']),
                 target_participants_and_audience=pg_array(
-                    choices['target_participants_and_audience']),
+                    consultations_choices['target_participants_and_audience']),
                 public_opinion_research=pg_array(
-                    choices['public_opinion_research']),
+                    consultations_choices['public_opinion_research']),
                 public_opinion_research_standing_offer=pg_array(
-                    choices['public_opinion_research_standing_offer']),
-                status=pg_array(choices['status']),
+                    consultations_choices['public_opinion_research_standing_offer']),
+                status=pg_array(consultations_choices['status']),
                 report_available_online=pg_array(
-                    choices['report_available_online']),
-                rationale=pg_array(choices['rationale']),
+                    consultations_choices['report_available_online']),
+                rationale=pg_array(consultations_choices['rationale']),
             )
         )
     lc.action.datastore_function_create(
@@ -209,6 +209,9 @@ def update_triggers():
             END;
             ''')
 
+    inventory_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('inventory'))
     lc.action.datastore_function_create(
         name=u'inventory_trigger',
         or_replace=True,
@@ -230,7 +233,11 @@ def update_triggers():
                 PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
                 PERFORM not_empty(NEW.date_released, 'date_released');
             END;
-            ''')
+            '''.format(
+                language=pg_array(inventory_choices['language']),
+                eligible_for_release=pg_array(inventory_choices['eligible_for_release']),
+            )
+        )
 
     lc.action.datastore_function_create(
         name=u'protect_user_votes_trigger',
@@ -242,7 +249,7 @@ def update_triggers():
                 sysadmin boolean NOT NULL := (SELECT sysadmin
                     FROM datastore_user);
             BEGIN
-                IF NOT sysadmin OR (req_user_votes = '') IS NOT FALSE THEN
+                IF NOT sysadmin THEN
                     req_user_votes := NULL;
                 END IF;
                 IF TG_OP = 'INSERT' THEN

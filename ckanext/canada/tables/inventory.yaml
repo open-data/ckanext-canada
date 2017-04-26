@@ -146,7 +146,7 @@ resources:
     obligation: Mandatory
     occurrence: Single
     format_type: Free text
-    datastore_type: int
+    datastore_type: bigint
     excel_column_width: 15
 
   - datastore_id: eligible_for_release
