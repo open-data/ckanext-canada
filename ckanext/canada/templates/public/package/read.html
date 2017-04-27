@@ -9,7 +9,9 @@
 {% block page_title %}{% endblock %}
 
 {% block primary_content_inner %}
+  {% if not c.is_activity_archive %}
   {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
+  {% endif %}
   {% block actions_content %}
     <ul class="nav nav-pills">
         {% if h.check_access('package_update', {'id':pkg.id }) %}
