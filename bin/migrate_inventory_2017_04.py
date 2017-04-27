@@ -23,7 +23,7 @@ def unfunk_date(d):
         datetime.strptime(d, '%Y-%m-%d')
         return d
     except ValueError:
-        sys.stderr.write('bad date: %s\n' % d)
+        sys.stderr.write((u'bad date: %s\n' % d).encode('utf-8'))
     return ''
 
 for line in in_csv:
