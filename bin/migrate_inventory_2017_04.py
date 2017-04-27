@@ -13,7 +13,13 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
-def unfunk_date(d):
+err_csv = unicodecsv.DictWriter(sys.stderr, fieldnames=[
+    'owner_org', 'owner_org_title', 'ref_number', 'field', 'value'], encoding='utf=8')
+sys.stderr.write(codecs.BOM_UTF8)
+err_csv.writeheader()
+
+def unfunk_date(field, line):
+    d = line[field]
     if not d:
         return ''
     d = d.strip()
@@ -23,10 +29,16 @@ def unfunk_date(d):
         datetime.strptime(d, '%Y-%m-%d')
         return d
     except ValueError:
-        sys.stderr.write((u'bad date: %s\n' % d).encode('utf-8'))
+        err_csv.writerow({
+            'owner_org': line['owner_org'],
+            'owner_org_title': line['owner_org_title'],
+            'ref_number': line['ref_number'],
+            'field': field,
+            'value': line[field],
+        })
     return ''
 
 for line in in_csv:
-    line['date_published'] = unfunk_date(line['date_published'])
-    line['date_released'] = unfunk_date(line['date_released'])
+    line['date_published'] = unfunk_date('date_published', line)
+    line['date_released'] = unfunk_date('date_released', line)
     out_csv.writerow(line)
