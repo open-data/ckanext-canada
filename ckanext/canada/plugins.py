@@ -489,7 +489,7 @@ def datastore_delete(up_func, context, data_dict):
     lc = ckanapi.LocalCKAN(username=c.user)
     res = lc.action.datastore_search(
         resource_id=data_dict['resource_id'],
-        filters=data_dict['filters'],
+        filters=data_dict.get('filters'),
         limit=1,
     )
     result = up_func(context, data_dict)
