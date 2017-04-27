@@ -59,6 +59,7 @@ class CanadaCommand(CkanCommand):
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
                       update-triggers
+                      update-inventory-votes <votes.json>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -150,6 +151,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'update-triggers':
             update_triggers()
+
+        elif cmd == 'update-inventory-votes':
+            update_inventory_votes(*self.args[1:])
 
         else:
             print self.__doc__
@@ -540,3 +544,35 @@ def _quiet_int_pipe():
     except IOError, e:
         if e.errno != 32:
             raise
+
+
+def update_inventory_votes(json_name):
+    with open(json_name) as j:
+        votes = json.load(j)
+
+    registry = LocalCKAN()
+    for org in votes:
+        print org, len(votes[org]),
+        rs = registry.action.recombinant_show(
+            dataset_type='inventory',
+            owner_org=org)
+        resource_id = rs['resources'][0]['id']
+        result = registry.action.datastore_search(
+            resource_id=resource_id,
+            limit=len(votes[org]),
+            filters={'ref_number': list(votes[org])})
+
+        update = []
+        for r in result['records']:
+            expected = votes[org][r['ref_number']]
+            if r['user_votes'] != expected:
+                r['user_votes'] = expected
+                del r['_id']
+                update.append(r)
+
+        print len(update)
+
+        if update:
+            registry.action.datastore_upsert(
+                resource_id=resource_id,
+                records=update)
