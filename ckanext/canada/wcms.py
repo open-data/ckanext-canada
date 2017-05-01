@@ -71,6 +71,13 @@ class _DrupalDatabase(object):
             Column('pkg_id', types.UnicodeText)
         )
 
+        self.drupal_inventory_votes_table = Table(
+            'opendata_solr_inventory_v',
+            self._metadata,
+            Column('unique_id', types.UnicodeText),
+            Column('up_vote_count', types.Integer),
+        )
+
 
 def wcms_configure(drupal_url):
     global _drupal_db
@@ -78,7 +85,8 @@ def wcms_configure(drupal_url):
     required_tables = (
         'opendata_package_v',
         'opendata_package_count_v',
-        'opendata_package_rating_v'
+        'opendata_package_rating_v',
+        'opendata_solr_inventory_v',
     )
 
     # Load just once
@@ -308,3 +316,17 @@ def wcms_dataset_comment_count(package_id):
         return int(count) if count else 0
     except ValueError:
         return 0
+
+def wcms_inventory_votes():
+    """
+    return the latest inventory vote values as
+    { org_shortform: { record_id: count, ...}, ... }
+    """
+    stmt = select([_drupal_db.drupal_inventory_votes_table])
+    rows = stmt.execute().fetchall()
+    out = []
+    orgs = {}
+    for r in rows:
+        org, sep, record_id = r['unique_id'].partition('|')
+        orgs.setdefault(org, {})[record_id] = r['up_vote_count']
+    return orgs
