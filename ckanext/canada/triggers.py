@@ -36,6 +36,31 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'year_optional_month_day',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            DECLARE
+                ymd _text := regexp_matches(value,
+                    '(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?');
+            BEGIN
+                IF ymd IS NULL THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                END IF;
+                IF ymd[3] IS NOT NULL THEN
+                    PERFORM value::date;
+                ELSIF NOT ymd[2]::int BETWEEN 1 AND 12 THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                END IF;
+            EXCEPTION
+                WHEN others THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'not_empty',
         or_replace=True,
         arguments=[
@@ -224,6 +249,7 @@ def update_triggers():
                 PERFORM not_empty(NEW.description_en, 'description_en');
                 PERFORM not_empty(NEW.description_fr, 'description_fr');
                 PERFORM not_empty(NEW.date_published, 'date_published');
+                PERFORM year_optional_month_day(NEW.date_published, 'date_published');
                 PERFORM not_empty(NEW.language, 'language');
                 PERFORM choice_one_of(NEW.language, {language}, 'language');
                 PERFORM not_empty(NEW.size, 'size');
@@ -232,6 +258,7 @@ def update_triggers():
                 PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
                 PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
                 PERFORM not_empty(NEW.date_released, 'date_released');
+                PERFORM year_optional_month_day(NEW.date_released, 'date_released');
             END;
             '''.format(
                 language=pg_array(inventory_choices['language']),
