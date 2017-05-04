@@ -166,7 +166,7 @@ resources:
       N:
         en: "No"
         fr: Non
-    
+
   - datastore_id: program_alignment_architecture_en
     label: Program Alignment Architecture (English)
     description:
@@ -233,6 +233,7 @@ resources:
       fr: Nombre d’utilisateurs qui ont voté pour ce jeu de données sur le site Web ouvert.canada.ca
     import_template_include: false
     datastore_type: int
+    preview_class: bg-info
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
