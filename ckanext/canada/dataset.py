@@ -86,5 +86,7 @@ def safe_for_solr(s):
     return a string that is safe for solr to ingest by removing all
     control characters except for CR and LF
     """
+    if s is None:
+        return u''
     assert isinstance(s, unicode)
     return s.translate(_REMOVE_CONTROL_CODES)
