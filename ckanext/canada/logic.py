@@ -4,11 +4,13 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free)
+    get_or_bust, ValidationError, side_effect_free, check_access)
 from ckan.authz import is_sysadmin
 
 from pylons import config
 import functools
+
+from ckanext.canada.wcms import wcms_inventory_votes
 
 
 def limit_api_logic():
@@ -201,3 +203,9 @@ def datastore_create_temp_user_table(context):
         '''.format(
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+
+
+@side_effect_free
+def inventory_votes_show(context, data_dict):
+    check_access('inventory_votes_show', context, data_dict)
+    return wcms_inventory_votes()

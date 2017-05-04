@@ -17,6 +17,7 @@ from ckan.lib.base import c
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
+from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.extendedactivity.plugins import IActivity
@@ -162,6 +163,8 @@ class DataGCCAPublic(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
+    p.implements(p.IActions)
+    p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
@@ -299,6 +302,12 @@ ckanext.canada:schemas/info.yaml
 
         if ('ckan.drupal.url' in config):
             wcms_configure(config['ckan.drupal.url'])
+
+    def get_actions(self):
+        return {'inventory_votes_show': logic.inventory_votes_show}
+
+    def get_auth_functions(self):
+        return {'inventory_votes_show': auth.inventory_votes_show}
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
