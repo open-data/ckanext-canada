@@ -148,7 +148,8 @@ def rebuild(command_name, csv_files=None):
             geno = get_geno(chromo['dataset_type'])
 
             for org_id, records in csv_data_batch(csv_file, chromo):
-                records = [dict((k, safe_for_solr(v)) for k, v in
+                records = [dict((k, safe_for_solr(v))
+                            if v is not None else (k, u'') for k, v in
                             row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
                     unmatched = None
