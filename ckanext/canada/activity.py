@@ -54,29 +54,3 @@ def datastore_activity_create(context, act_data):
         'session': context['session'],
     }
     get_action('activity_create')(activity_create_context, activity_dict)
-
-
-def get_snippet_datastore(activity, detail):
-    if activity['data'].get('pkg_type'):
-        org_name = activity['data']['owner_org']
-        resource_name = activity['data']['resource_name']
-        url = url_for(resource_name=resource_name,owner_org=org_name,
-                      action='preview_table',
-                      controller='ckanext.recombinant.controller:UploadController')
-        chromo = h.recombinant_get_chromo(resource_name)
-        return ''.join(['<a href="', url, '">', _(chromo['title']), '</a>'])
-    else:
-        return ''
-
-
-def get_snippet_datastore_detail(activity, detail):
-    count = activity['data']['count']
-    return ''.join([' ', str(count), ' ', ungettext(_('entry'), _('entries'), count)])
-
-
-def activity_stream_string_changed_datastore(context, activity):
-    return _("{actor} updated the record {datastore} {datastore_detail}")
-
-
-def activity_stream_string_deleted_datastore(context, activity):
-    return _("{actor} deleted the record {datastore} {datastore_detail}")

@@ -287,3 +287,20 @@ Search Facet Formatters
       {% endif %}
     {% endfor %}
 {% endmacro %}
+
+{% macro entries(ungettext, activity) %}
+{% set count = activity.data.count %}
+{{ count|string + ' ' + ungettext(_('entry'), _('entries'), count) }}
+{% endmacro %}
+
+{% macro pd_link(h, activity) %}
+{% set resource_name = activity.data.resource_name %}
+{% set org_name = activity.data.owner_org %}
+{% set resource_link=h.url_for(resource_name=resource_name,owner_org=org_name,
+                      action='preview_table',
+                      controller='ckanext.recombinant.controller:UploadController') %}
+{% set resource_name= _(h.recombinant_get_chromo(resource_name)['title'])  %}
+<span class="datastore">
+ <a href="{{ resource_link }}">{{ resource_name }}</a>
+</span>
+{% endmacro %}

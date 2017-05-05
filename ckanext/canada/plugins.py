@@ -510,18 +510,13 @@ class CanadaActivity(p.SingletonPlugin):
                 'datastore_delete': datastore_delete})
 
     def string_icons(self, string_icons):
-        string_icons.update({'deleted datastore': 'file',
-                             'changed datastore': 'file'})
+        pass
 
     def snippet_functions(self, snippet_functions):
-        snippet_functions.update({'datastore': act.get_snippet_datastore,
-                                  'datastore_detail':act.get_snippet_datastore_detail})
+        pass
 
     def string_functions(self, string_functions):
-        string_functions.update({'changed datastore':
-                                 act.activity_stream_string_changed_datastore,})
-        string_functions.update({'deleted datastore':
-                                 act.activity_stream_string_deleted_datastore,})
+        pass
 
     def actions_obj_id_validator(self, obj_id_validators):
         obj_id_validators.update({
