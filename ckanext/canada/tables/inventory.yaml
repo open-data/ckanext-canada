@@ -8,8 +8,6 @@ notes: This dataset houses your departmental open data inventory. This is where 
 portal_type: dataset
 collection: inventory
 
-datastore_text_types: true
-
 gcpedia_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
 upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval.'
 
@@ -148,7 +146,7 @@ resources:
     obligation: Mandatory
     occurrence: Single
     format_type: Free text
-    datastore_type: int
+    datastore_type: bigint
     excel_column_width: 15
 
   - datastore_id: eligible_for_release
@@ -168,7 +166,7 @@ resources:
       N:
         en: "No"
         fr: Non
-    
+
   - datastore_id: program_alignment_architecture_en
     label: Program Alignment Architecture (English)
     description:
@@ -228,6 +226,15 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
+  - datastore_id: user_votes
+    label: User Votes
+    description:
+      en: Count of users that voted for this dataset on open.canada.ca
+      fr: Nombre d’utilisateurs qui ont voté pour ce jeu de données sur le site Web ouvert.canada.ca
+    import_template_include: false
+    datastore_type: int
+    preview_class: bg-info
+
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   excel_organization_style:
@@ -241,6 +248,9 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FF3095b4
+
+  triggers:
+  - protect_user_votes_trigger
 
   examples:
     record:
