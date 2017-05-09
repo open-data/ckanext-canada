@@ -451,7 +451,7 @@ resources:
   default_preview_sort: contract_period_start desc, delivery_date desc
 
   triggers:
-  - contracts_triggers
+  - contracts_trigger
 
   examples:
     record:

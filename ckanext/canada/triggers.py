@@ -323,6 +323,7 @@ def update_triggers():
                 NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
                 NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
                 NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+                RETURN NEW;
             END;
             ''')
 
