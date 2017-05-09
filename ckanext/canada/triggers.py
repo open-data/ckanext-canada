@@ -291,6 +291,27 @@ def update_triggers():
             END;
             ''')
 
+    contracts_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('contracts'))
+    lc.action.datastore_function_create(
+        name=u'contracts_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.reference_number, 'reference_number');
+                PERFORM choice_one_of(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
+                PERFORM choice_one_of(NEW.potential_commercial_exploitation, {potential_commercial_exploitation}, 'potential_commercial_exploitation');
+                PERFORM choice_one_of(NEW.former_public_servant, {former_public_servant}, 'former_public_servant');
+            END;
+            '''.format(
+                aboriginal_business=pg_array(inventory_choices['aboriginal_business']),
+                potential_commercial_exploitation=pg_array(inventory_choices['potential_commercial_exploitation']),
+                former_public_servant=pg_array(inventory_choices['former_public_servant']),
+            )
+        )
+
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
     return u'ARRAY[' + u','.join(

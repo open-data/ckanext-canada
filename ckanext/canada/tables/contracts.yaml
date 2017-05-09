@@ -4,11 +4,11 @@ target_dataset: contracts
 title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 upload_warn: 'Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href="https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676" target="_blank">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines'
+upload_info: Please note – if you have downloaded a template before MAY 10, 2017, please download the updated version before submitting your information.
+
 
 portal_type: info
 collection: pd
-
-datastore_text_types: true
 
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
@@ -32,7 +32,7 @@ resources:
 
   - datastore_id: contract_date
     label: Contract Date
-    datastore_type: date
+    datastore_type: text
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
@@ -55,12 +55,12 @@ resources:
 
   - datastore_id: contract_period_start
     label: Contract Period Start Date
-    datastore_type: date
+    datastore_type: text
     excel_column_width: 20
 
   - datastore_id: delivery_date
     label: Contract Period End Date or Delivery Date
-    datastore_type: date
+    datastore_type: text
     excel_column_width: 20
 
   - datastore_id: contract_value
@@ -317,8 +317,15 @@ resources:
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator
-    datastore_type: boolean
+    datastore_type: text
     excel_column_width: 10
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   - datastore_id: intellectual_property_code
     label: Intellectual Property Indicator
@@ -366,13 +373,27 @@ resources:
 
   - datastore_id: potential_commercial_exploitation
     label: Potential for Commercial Exploitation
-    datastore_type: boolean
+    datastore_type: text
     excel_column_width: 10
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   - datastore_id: former_public_servant
     label: Former Public Servant in receipt of a PSSA pension
-    datastore_type: boolean
+    datastore_type: text
     excel_column_width: 10
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   - datastore_id: standing_offer
     label: Call-up or Contract against a Standing Offer or Supply
@@ -415,7 +436,6 @@ resources:
     datastore_type: text
     excel_column_width: 10
 
-
   datastore_primary_key: [reference_number]
   datastore_indexes: ""
   excel_organization_style:
@@ -430,9 +450,12 @@ resources:
       fgColor: FF90C3D4
   default_preview_sort: contract_period_start desc, delivery_date desc
 
+  triggers:
+  - contracts_triggers
+
   examples:
     record:
-      unique_identifier: "1980198"
+      reference_number: "1980198"
       vendor_name: Jane Smith
       contract_date: "2016-01-01"
       contract_value: "50000.00"
@@ -443,7 +466,7 @@ resources:
       agreement_type: W
       country_of_origin: US
     filter_one:
-      unique_identifier: "1980198"
+      reference_number: "1980198"
     sort: contract_date desc
 
 
