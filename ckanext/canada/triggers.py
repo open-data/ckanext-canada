@@ -291,9 +291,28 @@ def update_triggers():
             END;
             ''')
 
-    contracts_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('contracts'))
+    lc.action.datastore_function_create(
+        name=u'truthy_to_yn',
+        or_replace=True,
+        arguments=[{u'argname': u'value', u'argtype': u'text'}],
+        rettype=u'text',
+        definition=u'''
+            DECLARE
+                truthy boolean := value ~*
+                    '[[:<:]](true|t|vrai|v|1|yes|y|oui|o)[[:>:]]';
+                falsy boolean := value ~*
+                    '[[:<:]](false|f|faux|0|no|n|non)[[:>:]]';
+            BEGIN
+                IF truthy AND NOT falsy THEN
+                    RETURN 'Y';
+                ELSIF falsy AND NOT truthy THEN
+                    RETURN 'N';
+                ELSE
+                    RETURN NULL;
+                END IF;
+            END;
+            ''')
+
     lc.action.datastore_function_create(
         name=u'contracts_trigger',
         or_replace=True,
@@ -301,16 +320,11 @@ def update_triggers():
         definition=u'''
             BEGIN
                 PERFORM not_empty(NEW.reference_number, 'reference_number');
-                PERFORM choice_one_of(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
-                PERFORM choice_one_of(NEW.potential_commercial_exploitation, {potential_commercial_exploitation}, 'potential_commercial_exploitation');
-                PERFORM choice_one_of(NEW.former_public_servant, {former_public_servant}, 'former_public_servant');
+                NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
+                NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
+                NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
             END;
-            '''.format(
-                aboriginal_business=pg_array(inventory_choices['aboriginal_business']),
-                potential_commercial_exploitation=pg_array(inventory_choices['potential_commercial_exploitation']),
-                former_public_servant=pg_array(inventory_choices['former_public_servant']),
-            )
-        )
+            ''')
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
