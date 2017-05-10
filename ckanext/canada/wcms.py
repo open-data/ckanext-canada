@@ -177,14 +177,14 @@ def comments_by_thread(comment_list, asc=True):
         c['parents'] = thread.strip('/').split('.')
         buildNode(c['parents'], c)
 
-    def sortDict(d):
-        ordered_d = sorted(d.items(), key=lambda x: x[0], reverse=(not asc))
+    def sortDict(d, depth):
+        ordered_d = sorted(d.items(), key=lambda x: x[0], reverse=(not asc and depth==0))
         for k,v in ordered_d:
             if v[0]:
-                v[0] = sortDict(v[0])
+                v[0] = sortDict(v[0], depth+1)
         return [v[1] for v in ordered_d]
-    #step 2: sort
-    return sortDict(clist)
+    #step 2: sort, top level by <asc:value>, subtree always by ascend/oldest first
+    return sortDict(clist, 0)
 
 
 def wcms_dataset_comments(request, c, pkg_id):
