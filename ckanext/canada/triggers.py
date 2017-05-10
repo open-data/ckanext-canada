@@ -291,6 +291,42 @@ def update_triggers():
             END;
             ''')
 
+    lc.action.datastore_function_create(
+        name=u'truthy_to_yn',
+        or_replace=True,
+        arguments=[{u'argname': u'value', u'argtype': u'text'}],
+        rettype=u'text',
+        definition=u'''
+            DECLARE
+                truthy boolean := value ~*
+                    '[[:<:]](true|t|vrai|v|1|yes|y|oui|o)[[:>:]]';
+                falsy boolean := value ~*
+                    '[[:<:]](false|f|faux|0|no|n|non)[[:>:]]';
+            BEGIN
+                IF truthy AND NOT falsy THEN
+                    RETURN 'Y';
+                ELSIF falsy AND NOT truthy THEN
+                    RETURN 'N';
+                ELSE
+                    RETURN NULL;
+                END IF;
+            END;
+            ''')
+
+    lc.action.datastore_function_create(
+        name=u'contracts_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.reference_number, 'reference_number');
+                NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
+                NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
+                NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+                RETURN NEW;
+            END;
+            ''')
+
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
     return u'ARRAY[' + u','.join(
