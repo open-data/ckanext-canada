@@ -3,3 +3,8 @@
 {% block pre_primary %}
             <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" />
+{% endblock %}
