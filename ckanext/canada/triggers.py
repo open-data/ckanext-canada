@@ -279,13 +279,15 @@ def update_triggers():
                 IF NOT sysadmin THEN
                     req_user_votes := NULL;
                 END IF;
-                IF TG_OP = 'INSERT' THEN
+
+                IF req_user_votes IS NULL AND TG_OP = 'UPDATE' THEN
+                    NEW.user_votes := OLD.user_votes;
+                ELSE
                     NEW.user_votes = req_user_votes;
-                    RETURN NEW;
                 END IF;
 
-                IF req_user_votes IS NULL THEN
-                    NEW.user_votes := OLD.user_votes;
+                IF NEW.user_votes IS NULL THEN
+                    NEW.user_votes := 0;
                 END IF;
                 RETURN NEW;
             END;
