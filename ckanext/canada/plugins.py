@@ -532,3 +532,96 @@ class CanadaActivity(p.SingletonPlugin):
             'changed datastore': logic_validators.package_id_exists,
             'deleted datastore': logic_validators.package_id_exists,
                 })
+
+
+class CanadaOpenByDefault(p.SingletonPlugin):
+    """
+    Plugin for public-facing version of Open By Default site
+    This plugin requires the DataGCCAForms plugin
+    """
+    p.implements(p.IConfigurer)
+    p.implements(p.IFacets)
+    p.implements(p.ITemplateHelpers)
+    p.implements(p.IRoutes, inherit=True)
+
+    def update_config(self, config):
+        # add our templates
+        p.toolkit.add_template_directory(config, 'templates/obd')
+        p.toolkit.add_template_directory(config, 'templates/public')
+        p.toolkit.add_public_directory(config, 'public')
+        p.toolkit.add_resource('public/static/js', 'js')
+        config['ckan.search.show_all_types'] = True
+        config['search.facets.limit'] = 200  # because org list
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+"""
+        config['scheming.dataset_schemas'] = """
+ckanext.canada:schemas/doc.yaml
+"""
+
+    def dataset_facets(self, facets_dict, package_type):
+        ''' Update the facets_dict and return it. '''
+
+        facets_dict.update({
+            'organization': _('Organization'),
+            'collection': _('Collection Type'),
+            'keywords': _('Keywords'),
+            'keywords_fra': _('Keywords'),
+            'subject': _('Subject'),
+            'res_format': _('Format'),
+            'res_type': _('Resource Type'),
+            })
+
+        return facets_dict
+
+    def group_facets(self, facets_dict, group_type, package_type):
+        ''' Update the facets_dict and return it. '''
+        return facets_dict
+
+    def organization_facets(self, facets_dict, organization_type,
+                            package_type):
+        return self.dataset_facets(facets_dict, package_type)
+
+    def get_helpers(self):
+        return dict((h, getattr(helpers, h)) for h in [
+            'user_organizations',
+            'dataset_comments',
+            'openness_score',
+            'remove_duplicates',
+            'get_license',
+            'normalize_strip_accents',
+            'dataset_rating',
+            'dataset_comment_count',
+            'portal_url',
+            'googleanalytics_id',
+            'drupal_session_present',
+            'fgp_url',
+            'contact_information',
+            'show_subject_facet',
+            'show_fgp_facets',
+            'gravatar',
+            'linked_gravatar',
+            'linked_user',
+            'json_loads',
+            'catalogue_last_update_date'
+            ])
+
+    def before_map(self, map):
+        map.connect(
+            'organizations_index', '/organization',
+            controller='ckanext.canada.controller:CanadaController',
+            action='organization_index',
+        )
+        map.connect(
+            'general', '/feeds/dataset.atom',
+            controller='ckanext.canada.controller:CanadaFeedController',
+            action='general',
+        )
+        map.connect(
+            '/organization/autocomplete',
+            action='organization_autocomplete',
+            controller='ckanext.canada.controller:CanadaController',
+        )
+        return map

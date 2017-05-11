@@ -28,6 +28,7 @@ setup(
     canada_forms=ckanext.canada.plugins:DataGCCAForms
     canada_package=ckanext.canada.plugins:DataGCCAPackageController
     canada_activity=ckanext.canada.plugins:CanadaActivity
+    canada_obd=ckanext.canada.plugins:CanadaOpenByDefault
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
