@@ -18,11 +18,23 @@ resources:
 
   - datastore_id: ref_number
     label: Reference Number
+    description:
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+    obligation: Mandatory
+    format_type:
+      en: "H-2015-Q1-00001 – this sequence will continue for each line item (i.e.: H-2015-Q1-00001, H-2015-Q1-00002, H-2015-Q1-00001….)"
+      fr: H-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-Q1-00002, H -2016-Q1-00003….)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: disclosure_group
     label: Disclosure Group
+    description:
+      en: This field will display the Group of the claimant.
+      fr: Ce champ indique le groupe du demandeur.
+    obligation: Optional
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 15
     choices:
@@ -35,31 +47,61 @@ resources:
 
   - datastore_id: name
     label: Name
+    description:
+      en: This field will display the name of the claimant.
+      fr: Ce champ affiche le nom du demandeur.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: title_en
     label: Title (English)
+    description:
+      en: This field will display the title of the claimant, in English
+      fr: Cette zone indique le titre du demandeur, en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: title_fr
     label: Title (French)
+    description:
+      en: This field will display the title of the claimant, in French.
+      fr: Cette zone indique le titre du demandeur, en français.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: description_en
     label: Description (English)
+    description:
+      en: This will cover both the form (e.g. breakfast, lunch, dinner, reception, refreshments, coffee and muffins, theatre tickets) and circumstances (i.e. the purpose) of the hospitality, in English.
+      fr: Cette zone comprend le genre d’activité (p. ex., déjeuner, dîner, souper, réception, rafraîchissements, cafés et muffins, billet de pièce de théâtre) et les circonstances (c.‑à‑d. le but) de l’accueil, en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: description_fr
     label: Description (French)
+    description:
+      en: This will cover both the form (e.g. breakfast, lunch, dinner, reception, refreshments, coffee and muffins, theatre tickets) and circumstances (i.e. the purpose) of the hospitality, in French.
+      fr: Cette zone comprend le genre d’activité (p. ex., déjeuner, dîner, souper, réception, rafraîchissements, cafés et muffins, billet de pièce de théâtre) et les circonstances (c.‑à‑d. le but) de l’accueil, en français.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: start_date
     label: Start Date
+    description:
+      en: The start date on which the hospitality was provided.
+      fr: La date du début auxquelles les activités d’accueil ont eu lieu.
+    obligation: Mandatory
+    format_type: Date (YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -67,30 +109,62 @@ resources:
 
   - datastore_id: end_date
     label: End Date
+    description:
+      en: The end date on which the hospitality was provided. (can be the same as start date)
+      fr: La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
+    obligation: Mandatory
+    format_type: Date (YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: employee_attendees
     label: Attendees (Government of Canada Employees)
+    description:
+      en: The total number of attendees (Government of Canada employees)
+      fr: Nombre total de participants et leur ventilation en fonction du nombre de fonctionnaires fédéraux et d’invités
+    obligation: Mandatory
+    format_type: Controlled List
     datastore_type: int
     excel_column_width: 20
 
   - datastore_id: guest_attendees
     label: Attendees (Guests)
+    description:
+      en: The total number of attendees (Guests)
+      fr: Nombre total de participants (invités)
+    obligation: Optional
+    format_type: Controlled List
     datastore_type: int
     excel_column_width: 20
 
   - datastore_id: location_en
     label: Location and Hospitality Provider (English)
+    description:
+      en: Must include the city where hospitality was provided and the name of the commercial establishment (i.e. restaurant or other location) and/or caterer (for in-house hospitality) that provided it, in English
+      fr: Comprend la ville où l’activité d’accueil a eu lieu et le nom de l’établissement commercial (c.-à-d. restaurant ou autre endroit) ou du traiteur (accueil interne) qui a fourni le service, en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: location_fr
     label: Location and Hospitality Provider (French)
+    description:
+      en: Must include the city where hospitality was provided and the name of the commercial establishment (i.e. restaurant or other location) and/or caterer (for in-house hospitality) that provided it, in French.
+      fr: Comprend la ville où l’activité d’accueil a eu lieu et le nom de l’établissement commercial (c.-à-d. restaurant ou autre endroit) ou du traiteur (accueil interne) qui a fourni le service, en français.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: total
+    description:
+      en: The total cost incurred for the hospitality in question.
+      fr: Total des frais engagés au titre de l’accueil
+    obligation: Mandatory
+    format_type:
+      en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     label: Total Amount
     datastore_type: money
     excel_column_width: 20
@@ -105,11 +179,21 @@ resources:
 
   - datastore_id: additional_comments_en
     label: Additional Comments English
+    description:
+      en: This field may be populated with additional comments in English.
+      fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: additional_comments_fr
     label: Additional Comments French
+    description:
+      en: This field may be populated with additional comments in French.
+      fr: Ce champ peut indiquer des commentaires supplémentaires en français.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
