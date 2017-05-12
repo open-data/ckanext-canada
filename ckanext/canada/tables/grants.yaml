@@ -15,72 +15,148 @@ resources:
 
   - datastore_id: ref_number
     label: Reference Number
+    description:
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+    obligation: Mandatory
+    format_type:
+      en: "GC-2015-Q1-00001 – this sequence will continue for each line item (i.e.: GC-2015-Q1-00001, GC-2015-Q1-00002, GC-2015-Q1-00001….)"
+      fr: GC-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. GC-2016-Q1-00001, GC-2016-Q1-00002, |GC-2016-Q1-00003….)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: prog_number
     label: Program Number
+    description:
+      en: This field should be self-populated.  It identifies (by number or other tracking ID) the internal department program number.
+      fr: Cette zone renferme l’identificateur de la subvention.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: prog_name_en
     label: Program Name (English)
+    description:
+      en: This field identifies the name of the program for the grant or contribution awarded, in English. Each organization has its own programs.
+      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: prog_name_fr
     label: Program Name (French)
+    description:
+      en: This field identifies the name, in French, of the program for the grant or contribution awarded. Each organization has its own programs.
+      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: proj_number
     label: Project Number
+    description:
+      en: This field identifies the internal project number of the Grant / Contribution awarded.
+      fr: Cette zone indique le Numéro du projet pour les subventions ou les contributions accordées.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: proj_name_en
     label: Project Name (English)
+    description:
+      en: This field identifies the name of the grant or contribution awarded, in English. Each organization has its own projects.
+      fr: Cette zone renferme le nom du bénéficiaire, en anglais, de la subvention ou contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: proj_name_fr
     label: Project Name (French)
+    description:
+      en: This field identifies the name of the program, in French, for the grant or contribution awarded. Each organization has its own programs.
+      fr: Si disponible, cette zone renferme le nom du bénéficiaire, en francais, de la subvention ou contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_name_en
     label: Recipient Name (English)
+    description:
+      en: This field describes the name of the individual, company or organization to which the award is paid, in English. Typically it is the name indicated on the funding agreement.
+      fr: Cette zone indique, en anglais, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_name_fr
     label: Recipient Name (French)
+    description:
+      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
+      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_business_number
     label: Recipient Business Number
+    description:
+      en: This field describes the business number applied to the recipient. Not all departments capture this information.
+      fr: Ce champ décrit le numéro d'entreprise appliquée au destinataire. Tous les départements saisissent cette information.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_country
     label: Country
+    description:
+      en: This field identified the country of the Country of residence of the  place of business / headquarters of the Recipient
+      fr: Cette zone indique le pays de résidence de l’établissement ou du siège du bénéficiaire
+    obligation: Mandatory
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 10
     choices_file: choices/country.json
 
   - datastore_id: recipient_region_en
     label: Region (English)
+    description:
+      en: This field identifies the municipality, Province or Territory of the place of business / headquarters of the Recipient, in English. Typically as indicated on the face of the cheque(s) issued as payment(s) of the award.
+      fr: Cette zone indique en anglais la ville, la province ou le territoire de l’établissement ou du siège du bénéficiaire. Correspond habituellement à ce qui est indiqué au recto des chèques émis comme paiement de la subvention ou de la contribution.
+    obligation: Mandatory
+    format_type:
+      en: "Free text – please use full city/region, province/state where possible (i.e.: Ottawa, Ontario,  New York City, New York)"
+      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l'État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: recipient_region_fr
     label: Region (French)
+    description:
+      en: This field identifies the municipality, Province or Territory of place of business / headquarters of the Recipient, in French. Typically as indicated on the face of the cheque(s) issued as payment(s) of the award.
+      fr: Cette zone indique, en français, la ville, la province ou le territoire de l’établissement ou du siège du bénéficiaire. Correspond habituellement à ce qui est indiqué au recto des chèques émis comme paiement de la subvention ou de la contribution.
+    obligation: Mandatory
+    format_type:
+      en: "Free text – please use full city/region, province/state where possible (i.e.: Ottawa, Ontario,  New York City, New York)"
+      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l'État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: date
     label: Date
+    description:
+      en: This field is the date at which the awarding of a grant or contribution has been officially authorized and, by extension, results in a commitment in favour of a recipient.
+      fr: Cette zone montre la date (trimestre) à la laquelle le fournisseur a reçu la subvention ou contribution.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -88,6 +164,13 @@ resources:
 
   - datastore_id: value
     label: Value
+    description:
+      en: This field is populated by the dollar value of the award. In the case where a good or service is awarded as a grant or contribution, the fair market value at the time of the award should be reported. In those instances where a grant or contribution as awarded applies to more than one fiscal year, the total amount of the award is to be posted. In such instances, departments and agencies are to include a notation to this effect in the Comments information field.
+      fr: Cette zone renferme la valeur de la subvention ou contribution accordée au fournisseur.
+    obligation: Mandatory
+    format_type:
+      en: Free text – Note, please do not include a dollar sign, numeric value only ($)
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
@@ -100,6 +183,11 @@ resources:
 
   - datastore_id: type
     label: Type
+    description:
+      en: This field describes the type of award (i.e., Grant or Contribution)
+      fr: Cette zone décrit le type de subvention ou contribution.
+    obligation: Mandatory
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 20
     choices:
@@ -112,31 +200,71 @@ resources:
 
   - datastore_id: purpose_en
     label: Purpose English
+    description:
+      en: This field describes the purpose of the Grant / Contribution in English. Departments and agencies should endeavour to provide entries that are as descriptive as possible as to the purpose of the grant or contribution being awarded.
+      fr: Cette zone décrit le but de la subvention ou contribution en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: purpose_fr
     label: Purpose French
+    description:
+      en: This field describes the purpose of the Grant/Contribution in French. Departments and agencies should endeavour to provide entries that are as descriptive as possible as to the purpose of the grant or contribution being awarded.
+      fr: Cette zone décrit le but de la subvention ou contribution en français.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: comments_en
     label: Comments English
+    description:
+      en: "It is expected that entries in this information field will be provided on an exceptional basis only. Departments and agencies must nonetheless provide information in this field in those instances where one or more of the following circumstances apply:
+(Notation that) recipient reallocates or otherwise redistributes grant or contribution award to third-party beneficiaries;
+(Advisory where) two or more departments or agencies are involved in the funding of and/or the awarding of a particular grant or contribution award;
+Restatement, due to a material error, of a previously-reported grant or contribution award together with appropriate cross-referencing;
+Belated reporting of a grant or contribution award; and
+Award provided and spanning more than one fiscal year."
+      fr: Cette zone accepte une brève description normalisée en anglais de la subvention ou contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: comments_fr
     label: Comments French
+    description:
+      en: "It is expected that entries in this information field will be provided on an exceptional basis only. Departments and agencies must nonetheless provide information in this field in those instances where one or more of the following circumstances apply:
+(Notation that) recipient reallocates or otherwise redistributes grant or contribution award to third-party beneficiaries;
+(Advisory where) two or more departments or agencies are involved in the funding of and/or the awarding of a particular grant or contribution award;
+Restatement, due to a material error, of a previously-reported grant or contribution award together with appropriate cross-referencing;
+Belated reporting of a grant or contribution award; and
+Award provided and spanning more than one fiscal year."
+      fr: Cette zone accepte une brève description normalisée en français de la subvention ou contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: additional_info_en
     label: Additional Information English
+    description:
+      en: This field provide supplemental information to describe the program or project that will benefit from the grant or contribution, in English.
+      fr: Cette zone offre, en anglais, des renseignements supplémentaires et décrit le programme ou le projet qui bénéficiera de la subvention ou de la contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
   - datastore_id: additional_info_fr
     label: Additional Information French
+    description:
+      en: This field provide supplemental information to describe the program or project that will benefit from the grant or contribution, in French.
+      fr: Cette zone offre, en francais, des renseignements supplémentaires et décrit le programme ou le projet qui bénéficiera de la subvention ou de la contribution.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 41
 
