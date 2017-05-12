@@ -15,16 +15,33 @@ resources:
 
   - datastore_id: ref_number
     label: Reference Number
+    description:
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+    obligation: Mandatory
+    format_type:
+      en: "FW-2015-Q1-00001 – this sequence will continue for each line item (i.e.: FW-2015-Q1-00001, FW-2015-Q1-00002, FW-2015-Q1-00001….)"
+      fr: FW-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. FW-2016-Q1-00001, FW-2016-Q1-00002, FW-2016-Q1-00003….)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: file_id_number
     label: File Identification Number
+    description:
+      en: This field will contain the file identification number of the founded wrongdoing file.
+      fr: Cette zone renferme le numéro d’identification du dossier de l’acte répréhensible constaté.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: file_id_date
     label: File Identification date
+    description:
+      en: This field will provide the date that the file was created/received.
+      fr: Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -32,16 +49,31 @@ resources:
 
   - datastore_id: case_description_en
     label: English Case Description
+    description:
+      en: The field will contain the case description, in English.
+      fr: Cette zone renferme la description du cas en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: case_description_fr
     label: French Case Description
+    description:
+      en: This field will contain the case description, in French.
+      fr: Cette zone renferme la description du cas en français.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: findings_conclusions
     label: Findings and Conclusions
+    description:
+      en: The field will contain the Findings and Conclusions with a dropdown text refer to the legislation for the dropdown text.
+      fr: Cette zone renferme les constatations et conclusions avec un texte déroulant renvoyant à la législation.
+    obligation: Mandatory
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 40
     choices:
@@ -81,11 +113,21 @@ resources:
 
   - datastore_id: recommendations_corrective_measures_en
     label: English Recommendations and Corrective Measures
+    description:
+      en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in English.
+      fr: Cette zone renferme les recommandations et mesures correctives en anglais, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: recommendations_corrective_measures_fr
     label: Recommendations and Corrective Measures
+    description:
+      en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in French.
+      fr: Cette zone renferme les recommandations et mesures correctives en français, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 40
 

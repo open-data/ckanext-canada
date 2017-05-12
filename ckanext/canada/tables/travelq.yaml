@@ -101,7 +101,7 @@ resources:
       en: To cover the date the travel started
       fr: Date du début du voyage
     obligation: Mandatory
-    format_type: Date (YYYY-MM-DD)
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -113,7 +113,7 @@ resources:
       en: To cover the date the travel ended
       fr: Date de fin du voyage (peut être la même date que la date du début du voyage)
     obligation: Mandatory
-    format_type: Date (YYYY-MM-DD)
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 

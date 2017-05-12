@@ -101,7 +101,7 @@ resources:
       en: The start date on which the hospitality was provided.
       fr: La date du début auxquelles les activités d’accueil ont eu lieu.
     obligation: Mandatory
-    format_type: Date (YYYY-MM-DD)
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -113,7 +113,7 @@ resources:
       en: The end date on which the hospitality was provided. (can be the same as start date)
       fr: La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
     obligation: Mandatory
-    format_type: Date (YYYY-MM-DD)
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
