@@ -18,11 +18,23 @@ resources:
 
   - datastore_id: ref_number
     label: Reference Number
+    description:
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+    obligation: Mandatory
+    format_type:
+        en: "T-2015-Q1-00001 – this sequence will continue for each line item (i.e.: T-2015-Q1-00001, T-2015-Q1-00002, T-2015-Q1-00001….)"
+        fr: T-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2016-Q1-00001, T-2016-Q1-00002, T-2016-Q1-00003….)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: disclosure_group
     label: Disclosure Group
+    description:
+      en: This field will display the Group of the claimant.
+      fr: Ce champ indique le groupe du demandeur.
+    obligation: Optional
+    format_type: Controlled List
     datastore_type: text
     excel_column_width: 15
     choices:
@@ -35,31 +47,61 @@ resources:
 
   - datastore_id: name
     label: Name
+    description:
+      en: This field will display the name of the claimant.
+      fr: Ce champ affiche le nom du demandeur.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: title_en
     label: Title (English)
+    description:
+      en: This field will display the title of the claimant, in English
+      fr: Cette zone indique le titre du demandeur, en anglais.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: title_fr
     label: Title (French)
+    description:
+      en: This field will display the title of the claimant, in French.
+      fr: Cette zone indique le titre du demandeur, en français.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: purpose_en
     label: Purpose of Travel (English)
+    description:
+      en: A description of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in English.
+      fr: Description de la raison du voyage, en anglais, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: purpose_fr
     label: Purpose of Travel (French)
+    description:
+      en: A description, in French, of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in French
+      fr: Description de la raison du voyage, en français, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: start_date
     label: Travel Start Date
+    description:
+      en: To cover the date the travel started
+      fr: Date du début du voyage
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -67,21 +109,47 @@ resources:
 
   - datastore_id: end_date
     label: Travel End Date
+    description:
+      en: To cover the date the travel ended
+      fr: Date de fin du voyage (peut être la même date que la date du début du voyage)
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: destination_en
     label: Destination (English)
+    description:
+      en: To include names of all places visited to conduct government business during the trip in question, in English
+      fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+    obligation: Mandatory
+    format_type:
+      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
+      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: destination_fr
     label: Destination (French)
+    description:
+      en: To include names of all places visited to conduct government business during the trip in question, in French
+      fr: Cette zone indique, en français, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+    obligation: Mandatory
+    format_type:
+      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
+      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: airfare
     label: Airfare
+    description:
+      en: Total cost of the airline ticket, if applicable.
+      fr: Coût total du billet d’avion, s’il y a lieu.
+    obligation: Optional
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
@@ -95,11 +163,25 @@ resources:
 
   - datastore_id: other_transport
     label: Other transportation
+    description:
+      en: Total cost of all other forms of transportation, e.g. train, bus, vehicle rental, private vehicle, taxis, etc, if applicable.
+      fr: Coût total de tous les autres moyens de transport (p. ex., train, autobus, véhicule loué, véhicule particulier, taxis), s’il y a lieu.
+    obligation: Optional
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
   - datastore_id: accomodation
     label: Accommodation
+    description:
+      en: Total cost of accommodation.
+      fr: Coût total de l’hébergement
+    obligation: Mandatory
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
@@ -113,11 +195,25 @@ resources:
 
   - datastore_id: meals
     label: Meals and incidentals
+    description:
+      en: Total cost of meals and incidentals.
+      fr: Total des frais de repas et accessoires
+    obligation: Mandatory
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
   - datastore_id: other_expenses
     label: Other expenses
+    description:
+      en: All other expenses incurred that are not reflected in the information fields above (e.g. cost of a special passport, visas, and associated photos, calls to the office or home, dependant care where applicable, etc.).
+      fr: Toutes les autres dépenses engagées qui ne sont pas comprises dans les zones ci‑dessus (p. ex., coût de passeport spécial, visas et photos associées, appels au bureau ou à la maison, garde des personnes à charge, le cas échéant)
+    obligation: Optional
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
@@ -131,6 +227,13 @@ resources:
 
   - datastore_id: total
     label: Total Amount
+    description:
+      en: The total cost incurred for the trip in question.
+      fr: Total des dépenses engagées au titre du voyage
+    obligation: Mandatory
+    format_type:
+      en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
+      fr: Texte libre
     datastore_type: money
     excel_column_width: 20
 
@@ -144,11 +247,21 @@ resources:
 
   - datastore_id: additional_comments_en
     label: Additional Comments English
+    description:
+      en: This field may be populated with additional comments in English.
+      fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: additional_comments_fr
     label: Additional Comments French
+    description:
+      en: This field may be populated with additional comments in French.
+      fr: Ce champ peut indiquer des commentaires supplémentaires en français.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
