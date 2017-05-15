@@ -58,15 +58,16 @@ def main():
     usr_reg = sys.argv[1]
     usr_portal = sys.argv[2]
     slack_url = sys.argv[3]
-    if get_csv_upload(usr_reg) ==15:
-        text = ' csv ok,'
-    else:
-        text = ' csv bad,'
+    def reason(code, total):
+        if code==total:
+            return 'ok'
+        return 'file not updated.' if code==-1 else
+                '{0} transfered but {1} expected.'.format(code, total)
+    ret_code1 = get_csv_upload(usr_reg)
+    ret_code2 = get_pd_update(usr_portal)
 
-    if get_pd_update(usr_portal) ==9:
-        text += ' solr ok.'
-    else:
-        text += ' solr bad.'
+    text = ' '.join(['csv', reason(ret_code1, 15),
+                     'solr', reason(ret_code2, 9)])
 
     send_slack(text, slack_url)
 
