@@ -9,7 +9,9 @@
 {% block page_title %}{% endblock %}
 
 {% block primary_content_inner %}
+  {% if not c.is_activity_archive %}
   {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
+  {% endif %}
   {% block actions_content %}
     <ul class="nav nav-pills">
         {% if h.check_access('package_update', {'id':pkg.id }) %}
@@ -35,6 +37,18 @@
       {% endif %}
     </section>
 
+    {% block package_archive_notice %}
+    {% if c.is_activity_archive %}
+    <div class="alert alert-error">
+      {% trans url=h.url_for(controller='package', action='read', id=pkg.id) %}
+      You're currently viewing an old version of this dataset. Some resources
+      may no longer exist or the dataset may not display correctly. To see the
+      current version, click <a href="{{ url }}">here</a>.
+      {% endtrans %}
+    </div>
+    {% endif %}
+    {% endblock %}
+
     {% block package_item_title %}
     <section class="module-content indent-large">
 
@@ -58,6 +72,7 @@
     dataset notes. #}
     <section>
       <ul class="list-group dataset-inline-details">
+        {% if pkg.organization %}
         {# For legacy reasons, organization titles are not stores the same way as
         other multilingual fields, so special case it. #}
         {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
@@ -66,6 +81,7 @@
           <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
           {{ owner_org_title }}
         </li>
+        {% endif %}
         {# Only the list of fields included below will be included #}
         {% set include_labels = [
           "org_title_at_publication",
@@ -211,24 +227,6 @@
 <!--<![endif]--><!--[if lt IE 9]>
 <script src="{{ wet_server }}/geomapzoom.js"></script>
 <![endif]-->
-
-
-<script type="text/javascript">
-// Add Google Analytics Event Tracking to resource download links.
-jQuery('a.resource-url-analytics').on('click', function() {
-  var resource_url = encodeURIComponent(jQuery(this).prop('href'));
-  if (resource_url) {
-    // Legacy GA
-    // _gaq.push(['_trackEvent', 'Resource', 'Download', resource_url]);
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'resource',
-      eventAction: 'download',
-      eventLabel: resource_url
-    });
-  }
-});
-</script>
 {% endblock %}
 
 {% block package_license %}{% endblock %}

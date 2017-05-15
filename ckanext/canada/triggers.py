@@ -36,6 +36,31 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'year_optional_month_day',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            DECLARE
+                ymd _text := regexp_matches(value,
+                    '(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?');
+            BEGIN
+                IF ymd IS NULL THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                END IF;
+                IF ymd[3] IS NOT NULL THEN
+                    PERFORM value::date;
+                ELSIF NOT ymd[2]::int BETWEEN 1 AND 12 THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                END IF;
+            EXCEPTION
+                WHEN others THEN
+                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'not_empty',
         or_replace=True,
         arguments=[
@@ -87,7 +112,7 @@ def update_triggers():
             END;
         ''')
 
-    choices = dict(
+    consultations_choices = dict(
         (f['datastore_id'], f['choices'])
         for f in h.recombinant_choice_fields('consultations'))
     lc.action.datastore_function_create(
@@ -141,22 +166,22 @@ def update_triggers():
                 RETURN NEW;
             END;
             '''.format(
-                sectors=pg_array(choices['sector']),
-                publishable=pg_array(choices['publishable']),
+                sectors=pg_array(consultations_choices['sector']),
+                publishable=pg_array(consultations_choices['publishable']),
                 partner_departments=pg_array(
-                    choices['partner_departments']),
-                subjects=pg_array(choices['subjects']),
-                goals=pg_array(choices['goals']),
+                    consultations_choices['partner_departments']),
+                subjects=pg_array(consultations_choices['subjects']),
+                goals=pg_array(consultations_choices['goals']),
                 target_participants_and_audience=pg_array(
-                    choices['target_participants_and_audience']),
+                    consultations_choices['target_participants_and_audience']),
                 public_opinion_research=pg_array(
-                    choices['public_opinion_research']),
+                    consultations_choices['public_opinion_research']),
                 public_opinion_research_standing_offer=pg_array(
-                    choices['public_opinion_research_standing_offer']),
-                status=pg_array(choices['status']),
+                    consultations_choices['public_opinion_research_standing_offer']),
+                status=pg_array(consultations_choices['status']),
                 report_available_online=pg_array(
-                    choices['report_available_online']),
-                rationale=pg_array(choices['rationale']),
+                    consultations_choices['report_available_online']),
+                rationale=pg_array(consultations_choices['rationale']),
             )
         )
     lc.action.datastore_function_create(
@@ -209,6 +234,100 @@ def update_triggers():
             END;
             ''')
 
+    inventory_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('inventory'))
+    lc.action.datastore_function_create(
+        name=u'inventory_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.ref_number, 'ref_number');
+                PERFORM not_empty(NEW.title_en, 'title_en');
+                PERFORM not_empty(NEW.title_fr, 'title_fr');
+                PERFORM not_empty(NEW.description_en, 'description_en');
+                PERFORM not_empty(NEW.description_fr, 'description_fr');
+                PERFORM not_empty(NEW.date_published, 'date_published');
+                PERFORM year_optional_month_day(NEW.date_published, 'date_published');
+                PERFORM not_empty(NEW.language, 'language');
+                PERFORM choice_one_of(NEW.language, {language}, 'language');
+                PERFORM not_empty(NEW.size, 'size');
+                PERFORM not_empty(NEW.eligible_for_release, 'eligible_for_release');
+                PERFORM choice_one_of(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
+                PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
+                PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
+                PERFORM not_empty(NEW.date_released, 'date_released');
+                PERFORM year_optional_month_day(NEW.date_released, 'date_released');
+            END;
+            '''.format(
+                language=pg_array(inventory_choices['language']),
+                eligible_for_release=pg_array(inventory_choices['eligible_for_release']),
+            )
+        )
+
+    lc.action.datastore_function_create(
+        name=u'protect_user_votes_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            DECLARE
+                req_user_votes int := NEW.user_votes;
+                sysadmin boolean NOT NULL := (SELECT sysadmin
+                    FROM datastore_user);
+            BEGIN
+                IF NOT sysadmin THEN
+                    req_user_votes := NULL;
+                END IF;
+
+                IF req_user_votes IS NULL AND TG_OP = 'UPDATE' THEN
+                    NEW.user_votes := OLD.user_votes;
+                ELSE
+                    NEW.user_votes = req_user_votes;
+                END IF;
+
+                IF NEW.user_votes IS NULL THEN
+                    NEW.user_votes := 0;
+                END IF;
+                RETURN NEW;
+            END;
+            ''')
+
+    lc.action.datastore_function_create(
+        name=u'truthy_to_yn',
+        or_replace=True,
+        arguments=[{u'argname': u'value', u'argtype': u'text'}],
+        rettype=u'text',
+        definition=u'''
+            DECLARE
+                truthy boolean := value ~*
+                    '[[:<:]](true|t|vrai|v|1|yes|y|oui|o)[[:>:]]';
+                falsy boolean := value ~*
+                    '[[:<:]](false|f|faux|0|no|n|non)[[:>:]]';
+            BEGIN
+                IF truthy AND NOT falsy THEN
+                    RETURN 'Y';
+                ELSIF falsy AND NOT truthy THEN
+                    RETURN 'N';
+                ELSE
+                    RETURN NULL;
+                END IF;
+            END;
+            ''')
+
+    lc.action.datastore_function_create(
+        name=u'contracts_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.reference_number, 'reference_number');
+                NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
+                NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
+                NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+                RETURN NEW;
+            END;
+            ''')
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string

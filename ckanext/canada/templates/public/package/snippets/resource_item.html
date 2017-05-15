@@ -32,7 +32,7 @@
       field=lang_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
   <td nowrap class="td-center">
-    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}" class="resource-url-analytics btn btn-primary" target="_blank">
+    <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}" class="resource-url-analytics btn btn-primary" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
       {{ _('Access') }}
     </a>
     {% if res.webstore_last_updated %}

@@ -184,6 +184,7 @@ class CanadaController(BaseController):
 
         cols = [f['datastore_id'] for f in chromo['fields']]
         sort_str = cols[sort_by_num] + ' ' + sort_order
+        sort_str += ' NULLS LAST'
 
         response = lc.action.datastore_search(
             q=search_text,
@@ -565,7 +566,7 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
                 ),
                 config['canada.notification_new_user_email'],
                 (
-                    u'New data.gc.ca Registry Account Created / Nouveau compte'
+                    u'New Registry Account Created / Nouveau compte'
                     u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
                 ),
                 render(

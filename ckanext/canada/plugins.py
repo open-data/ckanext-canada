@@ -17,6 +17,7 @@ from ckan.lib.base import c
 from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
+from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.extendedactivity.plugins import IActivity
@@ -162,6 +163,8 @@ class DataGCCAPublic(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
+    p.implements(p.IActions)
+    p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
@@ -299,6 +302,12 @@ ckanext.canada:schemas/info.yaml
 
         if ('ckan.drupal.url' in config):
             wcms_configure(config['ckan.drupal.url'])
+
+    def get_actions(self):
+        return {'inventory_votes_show': logic.inventory_votes_show}
+
+    def get_auth_functions(self):
+        return {'inventory_votes_show': auth.inventory_votes_show}
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
@@ -489,7 +498,7 @@ def datastore_delete(up_func, context, data_dict):
     lc = ckanapi.LocalCKAN(username=c.user)
     res = lc.action.datastore_search(
         resource_id=data_dict['resource_id'],
-        filters=data_dict['filters'],
+        filters=data_dict.get('filters'),
         limit=1,
     )
     result = up_func(context, data_dict)
@@ -510,18 +519,13 @@ class CanadaActivity(p.SingletonPlugin):
                 'datastore_delete': datastore_delete})
 
     def string_icons(self, string_icons):
-        string_icons.update({'deleted datastore': 'file',
-                             'changed datastore': 'file'})
+        pass
 
     def snippet_functions(self, snippet_functions):
-        snippet_functions.update({'datastore': act.get_snippet_datastore,
-                                  'datastore_detail':act.get_snippet_datastore_detail})
+        pass
 
     def string_functions(self, string_functions):
-        string_functions.update({'changed datastore':
-                                 act.activity_stream_string_changed_datastore,})
-        string_functions.update({'deleted datastore':
-                                 act.activity_stream_string_deleted_datastore,})
+        pass
 
     def actions_obj_id_validator(self, obj_id_validators):
         obj_id_validators.update({

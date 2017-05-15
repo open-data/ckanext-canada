@@ -8,7 +8,13 @@
         "ajax": {
           "url": "/datatable/{{ resource_name }}/{{ resource_id }}",
           "type": "POST"
-        }}'
+        },
+        "columns": [
+          {% for f in h.recombinant_get_chromo(resource_name).fields %}
+            {{- "null" if 'preview_class' not in f else
+              '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
+            {%- if not loop.last %},{% endif %}
+          {% endfor %}]}'
       data-role="table"
       data-mode="columntoggle" >
     <thead>
