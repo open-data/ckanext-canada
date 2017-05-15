@@ -251,6 +251,8 @@ def linked_user(user, maxlength=0, avatar=20):
     if user:
         name = user.name if model.User.VALID_NAME.match(user.name) else user.id
         displayname = user.display_name
+        if displayname==config.get('ckan.site_id', '').strip():
+            displayname = _('A system administrator')
 
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
