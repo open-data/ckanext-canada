@@ -273,13 +273,9 @@ def update_triggers():
         definition=u'''
             DECLARE
                 req_user_votes int := NEW.user_votes;
-                sysadmin boolean NOT NULL := TRUE;
+                sysadmin boolean NOT NULL := (SELECT sysadmin
+                    FROM datastore_user);
             BEGIN
-                IF (SELECT relname FROM pg_class
-                    WHERE relname='datastore_user') THEN
-                    sysadmin := (SELECT sysadmin FROM datastore_user);
-                END IF;
-
                 IF NOT sysadmin THEN
                     req_user_votes := NULL;
                 END IF;
