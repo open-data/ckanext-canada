@@ -428,13 +428,17 @@ class DataGCCAPackageController(p.SingletonPlugin):
         else:
             data_dict['ready_to_publish'] = 'false'
 
-        geno = h.recombinant_get_geno(data_dict['type']) or {}
-        data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
-        if 'collection' in geno:
-            data_dict['collection'] = geno['collection']
+        try:
+            geno = h.recombinant_get_geno(data_dict['type']) or {}
+        except AttributeError:
+            pass
+        else:
+            data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
+            if 'collection' in geno:
+                data_dict['collection'] = geno['collection']
 
-        if 'fgp_viewer' in data_dict.get('display_flags', []):
-            data_dict['fgp_viewer'] = 'map_view'
+            if 'fgp_viewer' in data_dict.get('display_flags', []):
+                data_dict['fgp_viewer'] = 'map_view'
 
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
