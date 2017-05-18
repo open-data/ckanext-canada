@@ -11,17 +11,17 @@
     {% if items %}
       <nav>
         <ul class="list-unstyled list-facets">
-          {% for item in items | sort(attribute='name', reverse=false) %}
+          {% for item in items %}
+            {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
+              if scheming_choices else cr.split_bilingual_field(item.display_name, h.lang()) }) %}
+          {% endfor %}
+          {% for item in items | sort(attribute='label', reverse=false) %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
-            {% set label =
-              h.scheming_choices_label(scheming_choices, item.name)
-              if scheming_choices
-              else cr.split_bilingual_field(item.display_name, h.lang()) %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                 <a href="{{ href }}">
                   <i class="fa fa-{{ "check-" if item.active else "" }}square-o"></i>&nbsp;
-                  <span>{{ label }} {{ count }}</span>
+                  <span>{{ item.label }} {{ count }}</span>
                 </a>
               </li>
           {% endfor %}
