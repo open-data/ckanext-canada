@@ -437,8 +437,8 @@ class DataGCCAPackageController(p.SingletonPlugin):
             if 'collection' in geno:
                 data_dict['collection'] = geno['collection']
 
-            if 'fgp_viewer' in data_dict.get('display_flags', []):
-                data_dict['fgp_viewer'] = 'map_view'
+        if 'fgp_viewer' in data_dict.get('display_flags', []):
+            data_dict['fgp_viewer'] = 'map_view'
 
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
