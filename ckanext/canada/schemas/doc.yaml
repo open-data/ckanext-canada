@@ -51,6 +51,8 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
+- field_name: resource_type
+  form_snippet: null
 - preset: canada_resource_size
 - preset: canada_resource_format
 - preset: canada_resource_language
