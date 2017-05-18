@@ -1,0 +1,59 @@
+
+scheming_version: 1
+dataset_type: doc
+
+about: 'open.canada.ca: Open By Default metadata schema'
+about_url: http://github.com/open-data/ckanext-canada
+catalog_type_label:
+  en: DOC
+  fr: DOC
+
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+
+- preset: canada_collection
+  form_restrict_choices_to: [primary]
+  form_attrs:
+    readonly: ''
+
+- preset: canada_title
+- preset: canada_owner_org
+- preset: canada_org_title_at_publication
+- preset: canada_org_section_name
+- preset: canada_creator
+- preset: canada_contributor
+- preset: canada_maintainer_email
+- preset: canada_notes
+- preset: canada_keywords
+- preset: canada_subject
+- preset: canada_audience
+- preset: canada_date_published
+- preset: canada_date_modified
+- preset: canada_jurisdiction
+- preset: canada_license_id
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields:
+
+- preset: canada_resource_unique_identifier
+- preset: canada_resource_name
+- field_name: resource_type
+  form_snippet: null
+- preset: canada_resource_size
+- preset: canada_resource_format
+- preset: canada_resource_language
+- preset: canada_resource_url
