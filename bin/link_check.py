@@ -182,11 +182,10 @@ class Records():
                             details =txn.get(url.encode('utf-8'))
                             if details:
                                 details = json.loads(details.decode('utf-8'))
-                                if self.quick:  # short re-run test
-                                    if now - details.get('timestamp', 0) < 34 * 3600 and (details['status']!= -1):
+                                if self.quick and now - details.get('timestamp', 0) < 34 * 3600:  # short re-run test
+                                    if  details['status'] == requests.codes.ok or (
+                                        details['status'] == 404):
                                         continue
-                                if details['status'] == requests.codes.ok:
-                                    continue
                             new_url[url].append('/'.join([id, res['id']]))
                             if record.get('organization'):
                                 urls[url]={'name': record['organization']['name'],
@@ -204,7 +203,9 @@ class Records():
         outf.write(codecs.BOM_UTF8)
         out = unicodecsv.writer(outf)
         #Header
-        out.writerow(['Metadata ID / Métadonnées ID',
+        out.writerow([
+                      'English URL / URL en anglais',
+                      'French URL / URL en français',
                       'Metadata Record Portal Type / Type de portail de la record de métadonnées',
                       'Metadata Record Name English / Nom de la record de la métadonnées anglais',
                       'Metadata Record Name French / Nom de la record de la métadonnées français',
@@ -244,7 +245,8 @@ class Records():
                         except:
                             timestamp = None
                         detail.update({
-                                       'metadata_id': full_id,
+                                       'url_en':'/'.join(['http://open.canada.ca/data/en/dataset',id,'resource',res['id']]),
+                                       'url_fr':'/'.join(['http://open.canada.ca/data/fr/dataset',id,'resource',res['id']]),
                                        'portal_type': record['type'],  # record['collection'],
                                        'record_name_en': record['title_translated']['en'],
                                        'record_name_fr': record['title_translated']['fr'],
@@ -265,7 +267,7 @@ class Records():
         for id, res in data.items():
             status = res['status'] if res['status']!= -1 else 'timeout / temps libre'
             portal_type = portal_type_dict.get(res['portal_type'], None)
-            line=[res['metadata_id'], portal_type, res['record_name_en'], res['record_name_fr'],
+            line=[res['url_en'], res['url_fr'], portal_type, res['record_name_en'], res['record_name_fr'],
                   res['org_name_en'], res['org_name_fr'], res['name_en'], res['name_fr'],
                   res['year'], res['month'], res['link'], status]
             out.writerow(line)
