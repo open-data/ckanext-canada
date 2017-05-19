@@ -26,7 +26,7 @@
           {% snippet 'scheming/form_snippets/text.html',
             field={
               'field_name': f.datastore_id + '_prev',
-              'label': f.label ~ ', ' ~ _('Previous Year'),
+              'label': _(f.label) ~ ', ' ~ _('Previous Year'),
               'form_placeholder': form_placeholder,
               'required': required,
             }, data=data, errors=errors %}
