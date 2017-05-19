@@ -2211,8 +2211,8 @@ presets:
       en: Ready to Publish
       fr: Prêt à publier
     help_text:
-      en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’
-      fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
+      en: Selecting ‘Yes’ will set this dataset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’. If the dataset is already published on the portal, selecting 'No' will unpublish it.
+      fr: La sélection de l’option « Oui » désigne le jeu de données comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche ». Si le jeu de données a déjà été publié dans le portail, le fait de sélectionner « Non » fera en sorte qu’il ne le sera plus.
     required: true
     form_include_blank_choice: true
     choices:

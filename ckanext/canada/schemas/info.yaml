@@ -543,8 +543,8 @@ dataset_fields:
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
   help_text:
-    en: Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’
-    fr: La sélection de l’option « Oui » désigne le produit comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche »
+    en: Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’. If the asset is already published on the portal, selecting “No” will unpublish it.
+    fr: La sélection de l’option « Oui » désigne le produit comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche ». Si le produit a déjà été publié dans le portail, le fait de sélectionner « Non » fera en sorte qu’il ne le sera plus.
 
 # Field = Date Released.
 # Available only for an Admin user.
