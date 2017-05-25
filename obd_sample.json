@@ -7,18 +7,17 @@
   "author": null,
   "author_email": null,
   "collection": "primary",
-  "contributor": {
-    "en": "",
-    "fr": ""
-  },
   "creator": "",
   "creator_user_id": "069962fd-460f-450a-8f85-eb5536a69fe3",
   "date_modified": "2017-05-01 00:00:00",
   "date_published": "2017-05-01 00:00:00",
+  "doc_classification_code": {
+    "en": "Unrestricted",
+    "fr": "Sans Restriction"
+  },
   "groups": [],
   "id": "48faf331-a3ba-46bd-9344-c7e096b14bc4",
   "isopen": false,
-  "jurisdiction": "federal",
   "keywords": {
     "en": [
       "helmet",
@@ -45,12 +44,8 @@
   "num_resources": 2,
   "num_tags": 0,
   "org_section": {
-    "en": "",
-    "fr": ""
-  },
-  "org_title_at_publication": {
-    "en": "Canadian Radio-television and Telecommunications Commission",
-    "fr": "Conseil de la radiodiffusion et des télécommunications canadiennes"
+    "en": "Alpha Section",
+    "fr": "Section Alpha"
   },
   "organization": {
     "approval_status": "approved",
@@ -93,6 +88,7 @@
       },
       "package_id": "48faf331-a3ba-46bd-9344-c7e096b14bc4",
       "position": 0,
+      "resource_type": "agreement",
       "revision_id": "c83f0eb8-2a25-4ef0-9f1a-ba82e71e9f3e",
       "state": "active",
       "unique_identifier": "12345",
@@ -124,6 +120,7 @@
       },
       "package_id": "48faf331-a3ba-46bd-9344-c7e096b14bc4",
       "position": 1,
+      "resource_type": "agreement",
       "revision_id": "c83f0eb8-2a25-4ef0-9f1a-ba82e71e9f3e",
       "state": "active",
       "unique_identifier": "12345",
@@ -147,5 +144,9 @@
   },
   "type": "doc",
   "url": null,
+  "usage_condition": {
+    "en": "None",
+    "fr": "Sans restriction"
+  },
   "version": null
 }
