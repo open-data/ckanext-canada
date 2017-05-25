@@ -458,18 +458,11 @@ class CanadaFeedController(FeedController):
             last_page=navigation_urls['last'],
         )
 
-        chromos = h.recombinant_get_types()
-
         for pkg in results:
-            title, notes = None, None
-            if pkg['type'] in chromos:
-                chromo = h.recombinant_get_chromo(pkg['type'])
-                title= _(chromo['title'])
-                notes = _(pkg['notes'])
             feed.add_item(
-                title= title or h.get_translated(pkg, 'title'),
+                title= h.get_translated(pkg, 'title'),
                 link=h.url_for(controller='package', action='read', id=pkg['id']),
-                description= notes or h.get_translated(pkg, 'notes'),
+                description= h.get_translated(pkg, 'notes'),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
                 unique_id=_create_atom_id(u'/dataset/%s' % pkg['id']),
