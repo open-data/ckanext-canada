@@ -1989,6 +1989,50 @@ presets:
     display_snippet: date.html
     validators: scheming_required isodate
 
+# Field = Usage Condition Type - Organization Section Name English.
+# {The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
+# Field = Publisher - Organization Section Name French.
+# {The French text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
+- preset_name: canada_usage_condition
+  values:
+    field_name: usage_condition
+    label:
+      en: Usage Conditions
+      fr: Conditions d'utilisation
+    fluent_form_label:
+      en:
+        en: Usage Conditions (English)
+        fr: Conditions d'utilisation (anglais)
+      fr:
+        en: Usage Conditions (French)
+        fr: Conditions d'utilisation (français)
+    fluent_help_text:
+      en:
+        en: The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).
+        fr: Les descriptions françaises des limitations et restrictions concernant la façon dont  une ressource d'information peut être utilisée (séparer les multiples noms par des virgules).
+      fr:
+        en: The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).
+        fr: Les descriptions françaises des limitations et restrictions concernant la façon dont  une ressource d'information peut être utilisée (séparer les multiples noms par des virgules).
+
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+
+# Field = Classification code
+# {Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).}
+- preset_name: canada_doc_classification_code
+  values:
+    field_name: doc_classification_code
+    label:
+      en: Classification Code
+      fr: Code de classification
+    help_text:
+      en: Classification Code
+      fr: Code de classification
+
 # Field = Homepage English.
 # {A program or homepage that can be navigated to gain additional or contextual information about the dataset.}
 # Field = Homepage French.
