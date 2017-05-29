@@ -1,5 +1,9 @@
 #!/bin/bash
-wget -O /tmp/od-canada.jl.gz http://open.canada.ca/static/od-do-canada.jl.gz
+source $HOME/.bashrc
+
+set -e
+
+wget -O /tmp/od-do-canada.jl.gz http://open.canada.ca/static/od-do-canada.jl.gz
 
 rm -rf /tmp/od_linkcheker2.db
 TMPDIR="/home/odatsrv/tmp"
