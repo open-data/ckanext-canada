@@ -38,6 +38,9 @@ Plugins in this extension
 ``canada_package``
   package processing between CKAN and Solr
 
+``canada_obd``
+  Open By Default site plugin
+
 
 Requirements
 ------------
@@ -86,16 +89,14 @@ Requirements
    - * recombinant
 
 
-Configuration: development.ini or production.ini
-------------------------------------------------
+OD Configuration: development.ini or production.ini
+---------------------------------------------------
 
 The CKAN ini file needs the following settings for the registry server::
 
    ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
         canada_public canada_package canada_activity wet_boew_theme_gc_intranet datastore recombinant
         scheming_datasets fluent extendedactivity
-
-   recombinant.tables = ckanext.canada:recombinant_tables.yaml
 
 For the public server use only::
 
@@ -106,14 +107,6 @@ For the public server use only::
    canada.portal_url = http://myserver.com
 
 Both servers need::
-
-   scheming.dataset_schemas =
-       ckanext.canada:schemas/dataset.yaml
-       ckanext.canada:schemas/info.yaml
-
-   scheming.presets = ckanext.scheming:presets.json
-       ckanext.fluent:presets.json
-       ckanext.canada:schemas/presets.yaml
 
    licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
@@ -127,6 +120,16 @@ Both servers need::
 
    googleanalytics.id = UA-1010101-1 (your analytics account id)
    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+
+
+OBD Configuration
+-----------------
+
+We use a different list of plugins for Open By Default::
+
+   ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
+        canada_obd canada_package wet_boew_gcweb scheming_datasets
+        fluent cloudstorage
 
 
 Configuration: Solr
