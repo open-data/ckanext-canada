@@ -49,8 +49,6 @@ def test_ftp(url):
             res.status_code = 200
         else:
             res.status_code = 404
-    except KeyboardInterrupt:
-        os._exit(-1)
     except Exception as e:
         print('ftp exception', url)
         return e
