@@ -114,6 +114,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='create_travela',
             conditions=dict(method=['POST']),
         )
+        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
+            m.connect('/feeds/organization/{id}.atom', action='organization')
 
         return map
 
