@@ -15,9 +15,12 @@ import lmdb
 
 import requests
 import asyncio
+import concurrent.futures
+
 from functools import partial
 from requests.models import Response
 import urllib
+import socket
 from urllib.request import urlopen
 import traceback
 import unicodecsv
@@ -26,6 +29,7 @@ import codecs
 proxy= os.environ['http_proxy']
 temp_db = '/tmp/od_linkcheker2.db'
 USER_AGENT="open.canada.ca dataset link checker; abuse report open-ouvert@tbs-sct.gc.ca"
+URL_TIMEOUT=20
 
 ''' Check the resource links of datasets on open.canada.ca
 dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
@@ -39,14 +43,15 @@ def test_ftp(url):
         req = urllib.request.Request(url)
         if proxy:
             req.set_proxy(proxy, 'http')
-        response = urlopen(req, timeout=30)
+        response = urlopen(req, timeout=URL_TIMEOUT)
         chunk = response.read(16)
         if len(chunk) == 16:
             res.status_code = 200
         else:
             res.status_code = 404
-    except:
-        res.status_code = 404
+    except Exception as e:
+        print('ftp exception', url)
+        return e
     print(url, res.status_code)
     return res
 
@@ -66,21 +71,24 @@ def get_a_byte(response, *args, **kwargs):
 def test_urls(urls, results):
     loop = asyncio.get_event_loop()
     futures =[]
-    for url in urls:
-        if url[:6].lower() =='ftp://':
-            future = loop.run_in_executor(None, test_ftp,url)
-        else:
-            future = loop.run_in_executor(None, partial(requests.get, headers={"user-agent":USER_AGENT},
-                                          hooks={'response': get_a_byte}, verify=False,
-                                          timeout=30, stream=True), url)
-        futures.append(future)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as e:
+        for url in urls:
+            if url[:6].lower() =='ftp://':
+                future = loop.run_in_executor(e, test_ftp,url)
+            else:
+                future = loop.run_in_executor(e, partial(requests.get, headers={"user-agent":USER_AGENT},
+                                              hooks={'response': get_a_byte}, verify=False,
+                                              timeout=URL_TIMEOUT, stream=True), url)
+            futures.append(future)
     for future in futures:
         try:
             res = yield from future
         except requests.exceptions.ProxyError:
             print('proxy error', urls[futures.index(future)])
             res = Exception()
-        except requests.exceptions.ReadTimeout:
+        except (requests.exceptions.ReadTimeout, requests.packages.urllib3.exceptions.MaxRetryError,
+                requests.exceptions.ConnectTimeout, requests.packages.urllib3.exceptions.ConnectTimeoutError,
+                socket.timeout):
             print('timeout', urls[futures.index(future)])
             res = Exception()
         except (requests.exceptions.InvalidSchema, requests.exceptions.InvalidURL):
@@ -190,7 +198,7 @@ class Records():
                             if record.get('organization'):
                                 urls[url]={'name': record['organization']['name'],
                                            'title': record['organization']['title']}
-            if len(new_url) >=500:
+            if len(new_url) >=5000:
                 self.test_links(new_url, urls)
                 new_url = defaultdict(list)
                 urls = {}
@@ -213,8 +221,6 @@ class Records():
                       "Department Name French / Nom département de français",
                       "Resource Name English/ Non de la resource angalis",
                       "Resource Name French/ Non de la resource français",
-                      "Year / Année",
-                      "Month / Mois",
                       "Broken Link / Lien brisé",
                       "Status / Statut",
                       ])
@@ -254,8 +260,6 @@ class Records():
                                        'org_name_fr': record['organization']['title'].split('|')[-1],
                                        'name_en': res['name_translated']['en'],
                                        'name_fr': res['name_translated']['fr'],
-                                       'year': timestamp.year if timestamp else None,
-                                       'month': timestamp.month if timestamp else None,
                                        'link': url,
                                      })
 
@@ -269,7 +273,7 @@ class Records():
             portal_type = portal_type_dict.get(res['portal_type'], None)
             line=[res['url_en'], res['url_fr'], portal_type, res['record_name_en'], res['record_name_fr'],
                   res['org_name_en'], res['org_name_fr'], res['name_en'], res['name_fr'],
-                  res['year'], res['month'], res['link'], status]
+                  res['link'], status]
             out.writerow(line)
             count += 1
             if status == 'timeout / temps libre':

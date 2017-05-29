@@ -19,6 +19,7 @@ def send_slack(text, url):
                 break
         except (requests.exceptions.ProxyError,
                 requests.exceptions.ReadTimeout):
+            print('slack exception')
             pass
         time.sleep(5)
 
@@ -61,8 +62,8 @@ def main():
     def reason(code, total):
         if code==total:
             return 'ok'
-        return 'file not updated.' if code==-1 else
-                '{0} transfered but {1} expected.'.format(code, total)
+        return ('file not updated.' if code==-1 else
+                '{0} transfered but {1} expected.'.format(code, total))
     ret_code1 = get_csv_upload(usr_reg)
     ret_code2 = get_pd_update(usr_portal)
 
