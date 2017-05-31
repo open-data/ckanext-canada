@@ -6,7 +6,7 @@ from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 from ckan.logic import validators as logic_validators
-from wcms import wcms_configure
+from wcms7 import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
@@ -246,13 +246,10 @@ ckanext.canada:schemas/info.yaml
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
-            'dataset_comments',
             'openness_score',
             'remove_duplicates',
             'get_license',
             'normalize_strip_accents',
-            'dataset_rating',
-            'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
             'drupal_session_present',
@@ -265,7 +262,10 @@ ckanext.canada:schemas/info.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date'
-            ])
+            ],
+            dataset_comments=helpers.dataset_comments_drupal7,
+            dataset_rating=helpers.dataset_rating_drupal7,
+            dataset_comment_count=helpers.dataset_comment_count_drupal7)
 
     def before_map(self, map):
         map.connect(

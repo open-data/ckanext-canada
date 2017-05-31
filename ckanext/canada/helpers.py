@@ -3,7 +3,8 @@ from pylons import c, config
 from pylons.i18n import _
 from ckan.model import User, Package, Activity
 import ckan.model as model
-from wcms import wcms_dataset_comments, wcms_dataset_comment_count, wcms_dataset_rating
+import wcms
+import wcms7
 import datetime
 import unicodedata
 
@@ -95,7 +96,10 @@ def remove_duplicates(a_list):
 
 # Retrieve the comments for this dataset that have been saved in the Drupal database
 def dataset_comments(request, c, pkg_id):
-    return wcms_dataset_comments(request, c, pkg_id)
+    return wcms.dataset_comments(request, c, pkg_id)
+
+def dataset_comments_drupal7(request, c, pkg_id):
+    return wcms7.dataset_comments(request, c, pkg_id)
 
 
 def get_license(license_id):
@@ -113,13 +117,17 @@ def normalize_strip_accents(s):
 
 
 def dataset_rating(package_id):
+    return wcms.dataset_rating(package_id)
 
-    return wcms_dataset_rating(package_id)
+def dataset_rating_drupal7(package_id):
+    return wcms7.dataset_rating(package_id)
 
 
 def dataset_comment_count(package_id):
-    return wcms_dataset_comment_count(package_id)
+    return wcms.dataset_comment_count(package_id)
 
+def dataset_comment_count_drupal7(package_id):
+    return wcms7.dataset_comment_count(package_id)
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))

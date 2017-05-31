@@ -9,10 +9,6 @@ from lxml.html.clean import clean_html
 import ckan.lib.helpers as h
 
 
-def wcms_configure(*args, **kwargs):
-    pass
-
-
 def wcms_inventory_votes():
     return {}
 

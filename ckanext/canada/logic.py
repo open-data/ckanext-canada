@@ -10,7 +10,7 @@ from ckan.authz import is_sysadmin
 from pylons import config
 import functools
 
-from ckanext.canada.wcms import wcms_inventory_votes
+from ckanext.canada.wcms7 import wcms_inventory_votes
 
 
 def limit_api_logic():
