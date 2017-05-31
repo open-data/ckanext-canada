@@ -54,8 +54,9 @@
       <h4>{{ _('Comments') }}(0)</h4>
     {%- endif -%}
     <div class="margin-top-medium">
-      <a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/dataset/{{pkg.name}}"
-          class="btn btn-default btn-lg">{{_('Comment')}}</a>
+      <a href="/external-entity/ckan-{{ pkg.id }}"
+          class="btn btn-default btn-lg">{{_('Comment')}}
+      </a>
     </div>
 </div>
 </section>
