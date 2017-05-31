@@ -3,7 +3,6 @@
 
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
-{% set wet_server = h.wet_url() %}
 
 {% block subtitle %}{% endblock %}
 {% block page_title %}{% endblock %}
@@ -223,9 +222,9 @@
 {% block scripts %}
 {{ super() }}
 <!--[if gte IE 9 | !IE ]><!-->
-<script src="{{ wet_server }}/geomapzoom.js" type="text/javascript"></script>
+<script src="/geomapzoom.js" type="text/javascript"></script>
 <!--<![endif]--><!--[if lt IE 9]>
-<script src="{{ wet_server }}/geomapzoom.js"></script>
+<script src="/geomapzoom.js"></script>
 <![endif]-->
 {% endblock %}
 
