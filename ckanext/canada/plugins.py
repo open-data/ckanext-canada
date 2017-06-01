@@ -244,7 +244,7 @@ ckanext.canada:schemas/info.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
+        return dict(((h, getattr(helpers, h)) for h in [
             'user_organizations',
             'openness_score',
             'remove_duplicates',
@@ -262,7 +262,7 @@ ckanext.canada:schemas/info.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date'
-            ],
+            ]),
             dataset_comments=helpers.dataset_comments_drupal7,
             dataset_rating=helpers.dataset_rating_drupal7,
             dataset_comment_count=helpers.dataset_comment_count_drupal7)
