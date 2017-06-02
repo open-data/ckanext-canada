@@ -3293,10 +3293,11 @@ presets:
     - value: XML
       mimetype: application/xml
       openness_score: 3
-    - value: XLSM
     - value: XLS
       mimetype: application/vnd.ms-excel
       openness_score: 2
+    - value: XLSM
+    - value: XLSX
     - value: ZIP
     - label:
         en: Other
