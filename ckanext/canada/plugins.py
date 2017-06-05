@@ -557,6 +557,7 @@ class CanadaOpenByDefault(p.SingletonPlugin):
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
         config['ckan.search.show_all_types'] = True
+        config['ckan.extra_resource_fields'] = 'language'
         config['search.facets.limit'] = 200  # because org list
         config['scheming.presets'] = """
 ckanext.scheming:presets.json
