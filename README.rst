@@ -131,6 +131,7 @@ We use a different list of plugins for Open By Default::
         canada_obd canada_package wet_boew_gcweb scheming_datasets
         fluent cloudstorage
 
+   ckan.extra_resource_fields = language
 
 Configuration: Solr
 ----------------------
