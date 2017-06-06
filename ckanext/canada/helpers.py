@@ -99,7 +99,7 @@ def dataset_comments(request, c, pkg_id):
     return wcms.dataset_comments(request, c, pkg_id)
 
 def dataset_comments_drupal7(request, c, pkg_id):
-    return wcms7.dataset_comments(request, c, pkg_id)
+    return wcms7.wcms_dataset_comments(request, c, pkg_id)
 
 
 def get_license(license_id):
@@ -120,7 +120,7 @@ def dataset_rating(package_id):
     return wcms.dataset_rating(package_id)
 
 def dataset_rating_drupal7(package_id):
-    return wcms7.dataset_rating(package_id)
+    return wcms7.wcms_dataset_rating(package_id)
 
 
 def dataset_comment_count(package_id):
