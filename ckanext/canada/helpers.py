@@ -127,7 +127,7 @@ def dataset_comment_count(package_id):
     return wcms.dataset_comment_count(package_id)
 
 def dataset_comment_count_drupal7(package_id):
-    return wcms7.dataset_comment_count(package_id)
+    return wcms7.wcms_dataset_comment_count(package_id)
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
