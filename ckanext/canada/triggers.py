@@ -36,6 +36,34 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value = '{}' THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
+:        name=u'no_surrounding_whitespace',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'year_optional_month_day',
         or_replace=True,
         arguments=[
@@ -57,20 +85,6 @@ def update_triggers():
             EXCEPTION
                 WHEN others THEN
                     RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value = '{}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
             END;
         ''')
 
@@ -244,21 +258,23 @@ def update_triggers():
         definition=u'''
             BEGIN
                 PERFORM not_empty(NEW.ref_number, 'ref_number');
+                PERFORM no_surrounding_whitespace(NEW.ref_number, 'ref_number');
                 PERFORM not_empty(NEW.title_en, 'title_en');
                 PERFORM not_empty(NEW.title_fr, 'title_fr');
-                PERFORM not_empty(NEW.description_en, 'description_en');
-                PERFORM not_empty(NEW.description_fr, 'description_fr');
-                PERFORM not_empty(NEW.date_published, 'date_published');
-                PERFORM year_optional_month_day(NEW.date_published, 'date_published');
-                PERFORM not_empty(NEW.language, 'language');
-                PERFORM choice_one_of(NEW.language, {language}, 'language');
-                PERFORM not_empty(NEW.size, 'size');
-                PERFORM not_empty(NEW.eligible_for_release, 'eligible_for_release');
-                PERFORM choice_one_of(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
-                PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
-                PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
-                PERFORM not_empty(NEW.date_released, 'date_released');
-                PERFORM year_optional_month_day(NEW.date_released, 'date_released');
+                -- PERFORM not_empty(NEW.description_en, 'description_en');
+                -- PERFORM not_empty(NEW.description_fr, 'description_fr');
+                -- PERFORM not_empty(NEW.date_published, 'date_published');
+                -- PERFORM year_optional_month_day(NEW.date_published, 'date_published');
+                -- PERFORM not_empty(NEW.language, 'language');
+                -- PERFORM choice_one_of(NEW.language, {language}, 'language');
+                -- PERFORM not_empty(NEW.size, 'size');
+                NEW.eligible_for_release := truthy_to_yn(NEW.eligible_for_release);
+                -- PERFORM not_empty(NEW.eligible_for_release, 'eligible_for_release');
+                -- PERFORM choice_one_of(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
+                -- PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
+                -- PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
+                -- PERFORM not_empty(NEW.date_released, 'date_released');
+                -- PERFORM year_optional_month_day(NEW.date_released, 'date_released');
             END;
             '''.format(
                 language=pg_array(inventory_choices['language']),
