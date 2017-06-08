@@ -8,14 +8,15 @@
   {% set item_count = items | length %}
   {% set items = items[0:5] if ( not unlimit) and h.get_param_int('_%s_limit' % name) else items %}
 
+  {% for item in items %}
+    {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
+      if scheming_choices else cr.split_bilingual_field(item.display_name, h.lang()) }) %}
+  {% endfor %}
+  {% set items = h.sorted_by_locale(items, locale='en_US', attribute='label') %}
     {% if items %}
       <nav>
         <ul class="list-unstyled list-facets">
           {% for item in items %}
-            {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
-              if scheming_choices else cr.split_bilingual_field(item.display_name, h.lang()) }) %}
-          {% endfor %}
-          {% for item in items | sort(attribute='label', reverse=false) %}
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
