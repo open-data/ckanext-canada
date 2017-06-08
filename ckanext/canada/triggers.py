@@ -275,6 +275,7 @@ def update_triggers():
                 -- PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
                 -- PERFORM not_empty(NEW.date_released, 'date_released');
                 -- PERFORM year_optional_month_day(NEW.date_released, 'date_released');
+                RETURN NEW;
             END;
             '''.format(
                 language=pg_array(inventory_choices['language']),
