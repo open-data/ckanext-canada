@@ -50,15 +50,15 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-:        name=u'no_surrounding_whitespace',
+        name=u'no_surrounding_whitespace',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
+        definition=ur'''
             BEGIN
-                IF (value = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                IF trim(both E'\t\n\x0b\x0c\r ' from value) <> value THEN
+                    RAISE EXCEPTION 'This field must not have surrounding whitespace: %', field_name;
                 END IF;
             END;
         ''')
