@@ -261,6 +261,7 @@ ckanext.canada:schemas/info.yaml
             'linked_gravatar',
             'linked_user',
             'json_loads',
+            'sorted_by_locale',
             'catalogue_last_update_date'
             ]),
             dataset_comments=helpers.dataset_comments_drupal7,
@@ -609,6 +610,7 @@ ckanext.canada:schemas/doc.yaml
             'linked_gravatar',
             'linked_user',
             'json_loads',
+            'sorted_by_locale',
             'catalogue_last_update_date'
             ])
 

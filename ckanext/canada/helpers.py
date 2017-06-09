@@ -1,3 +1,4 @@
+import icu
 import json
 from pylons import c, config
 from pylons.i18n import _
@@ -22,6 +23,16 @@ DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
 
+
+def sorted_by_locale(strings, locale=None, attribute=None, reverse=False):
+    def key_func(x):
+        _val = (x.get(attribute) if attribute else x)
+        if locale is None:
+            return _val
+        else:
+            collator = icu.Collator.createInstance(icu.Locale(locale))
+            return collator.getSortKey(_val)
+    return sorted(strings, key=key_func, reverse=reverse)
 
 def may_publish_datasets(userobj=None):
     if not userobj:
