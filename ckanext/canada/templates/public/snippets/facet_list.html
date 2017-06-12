@@ -15,7 +15,13 @@
             {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
               if scheming_choices else cr.split_bilingual_field(item.display_name, h.lang()) }) %}
           {% endfor %}
-          {% for item in items | sort(attribute='label', reverse=false) %}
+
+          {%- macro _text_key(d) -%}
+            {{- h.normalize_strip_accents(d.label) -}}
+          {%- endmacro -%}
+          {%- do items.sort(key=_text_key) -%}
+          {% for item in items %}
+
             {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
             {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
               <li class="nav-item{% if item.active %} active{% endif %} facet-item" >

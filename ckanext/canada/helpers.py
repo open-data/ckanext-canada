@@ -110,6 +110,8 @@ def normalize_strip_accents(s):
     """
     utility function to help with sorting our French strings
     """
+    if isinstance(s, str):
+        return s
     if not s:
         s = u''
     s = unicodedata.normalize('NFD', s)
