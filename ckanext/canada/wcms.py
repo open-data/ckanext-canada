@@ -9,11 +9,11 @@ from lxml.html.clean import clean_html
 import ckan.lib.helpers as h
 
 
-def wcms_inventory_votes():
+def inventory_votes():
     return {}
 
 
-def wcms_dataset_comments(request, c, pkg_id):
+def dataset_comments(request, c, pkg_id):
     # [{
     # 'date': ...,
     # 'thread': ...,
@@ -81,11 +81,11 @@ def wcms_dataset_comments(request, c, pkg_id):
     return cbt[0]
 
 
-def wcms_dataset_rating(package_id):
+def dataset_rating(package_id):
     return 0
 
 
-def wcms_dataset_comment_count(package_id):
+def dataset_comment_count(package_id):
     url = config.get('ckanext.canada.drupal_url')
     if not url:
         return []
