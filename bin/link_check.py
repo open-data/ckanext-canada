@@ -165,11 +165,17 @@ class Records():
                          'status': -1,
                          'resources': new_url[url]}
                 else:
-                    res={'timestamp': now,
-                         'status':response.status_code}
-                    if response.status_code != requests.codes.ok:
-                        res['resources'] = new_url[url]
-                        res['org'] = urls.get(url, None)
+                    try:
+                        res={'timestamp': now,
+                             'status':response.status_code}
+                        if response.status_code != requests.codes.ok:
+                            res['resources'] = new_url[url]
+                            res['org'] = urls.get(url, None)
+                    except AttributeError:
+                        res={'timestamp': now,
+                             'status': -1,
+                             'resources': new_url[url]}
+
                 txn.put(url.encode('utf-8'), json.dumps(res).encode('utf-8'))
         if links:
             time.sleep(5)
@@ -217,13 +223,13 @@ class Records():
                       'Metadata Record Portal Type / Type de portail de la record de métadonnées',
                       'Metadata Record Name English / Nom de la record de la métadonnées anglais',
                       'Metadata Record Name French / Nom de la record de la métadonnées français',
-                      "Department Name English / Nom d'département d'anglais",
-                      "Department Name French / Nom département de français",
-                      "Resource Name English/ Non de la resource angalis",
-                      "Resource Name French/ Non de la resource français",
+                      "Department Name English / Nom du ministère en anglais",
+                      "Department Name French / Nom du ministère en français",
+                      "Resource Name English/ Nom de la resource en angalis",
+                      "Resource Name French/ Nom de la resource en français",
                       "Broken Link / Lien brisé",
                       "Status / Statut",
-                      ])
+                    ])
         data = {}
         with self.env.begin() as txn:
             for url, value in txn.cursor():
