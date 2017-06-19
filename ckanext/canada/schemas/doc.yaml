@@ -33,6 +33,7 @@ dataset_fields:
 - preset: canada_creator
 - preset: canada_maintainer_email
 - preset: canada_notes
+  required: false
 - preset: canada_keywords
 - preset: canada_subject
 - preset: canada_audience
