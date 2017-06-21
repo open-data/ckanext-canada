@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 '''
 Usage:
-    openness_report.py --file <od-do-canada.jl.gz> --format <presets.yaml>
+    openness_report.py --site <http://open.canada.ca/data>
                        --dump <openness_report.csv>
 '''
 import argparse
@@ -13,6 +13,7 @@ import sys
 import logging
 import tempfile
 import gzip
+import StringIO, requests, io
 import json
 import yaml
 from collections import defaultdict
@@ -21,48 +22,39 @@ from functools import partial
 import traceback
 import unicodecsv
 import codecs
+from ckanext.canada.helpers import openness_score
+from ckanext.scheming.plugins import SchemingDatasetsPlugin as p
+
+import ckanapi
+import ckan
+from ckanapi.errors import CKANAPIError
 
 proxy= os.environ['http_proxy']
 
 
 class Records():
-    def __init__(self, file, fmt_file):
-        self.file = file
-        if not os.path.isfile(self.file):
-            self.file = None
-        self.download_file = None
-        with open(fmt_file, 'r') as f:
-            presets = yaml.load(f)
-        fmt = None
-        for it in presets['presets']:
-            if it['preset_name']=='canada_resource_format':
-                fmt = it['values']['choices']
-        if not fmt:
-            raise Exception('no resource format loaded')
-        self.fmt = filter(lambda x: 'openness_score' in x, fmt)
+    def __init__(self, site_url):
+        self.site = ckanapi.RemoteCKAN(site_url)
 
-    def __delete__(self):
-        if not self.file:
-            if self.download_file:
-                os.unlink(self.download_file)
-                print('temp file deleted', self.download_file)
+        p.instance = p()
+        p.instance._load_presets(config={'scheming.presets':"ckanext.canada:schemas/presets.yaml"})
 
     def download(self):
-        if not self.file:
-            # dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
-            url='http://open.canada.ca/static/od-do-canada.jl.gz'
-            r = requests.get(url, stream=True)
+        # dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
+        ds = self.site.action.package_show(id='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
+        url = None
+        for res in ds['resources']:
+            if res['url'][-3:] == '.gz':
+                url = res['url']
+                break
+        assert(url)
 
-            f = tempfile.NamedTemporaryFile(delete=False)
-            for chunk in r.iter_content(1024 * 64):
-                    f.write(chunk)
-            f.close()
-            self.download_file = f.name
+        r = requests.get(url, stream=True)
+        zf = StringIO.StringIO(r.content)
 
         records = []
-        fname = self.file or f.name
         try:
-            with gzip.open(fname, 'rb') as fd:
+            with gzip.GzipFile(fileobj=zf, mode='rb') as fd:
                 for line in fd:
                     records.append(json.loads(line.decode('utf-8')))
                     if len(records) >= 50:
@@ -77,25 +69,13 @@ class Records():
             traceback.print_exc()
             print('error reading downloaded file')
 
-
     def iter_resources(self):
         count = 0
         reports = defaultdict(lambda: defaultdict(int))
         for records in self.download():
             for record in records:
+                score = openness_score(record)
                 report = reports[record['organization']['title']]
-                formats = map(lambda x: x['format'], record['resources'])
-                scores = map(lambda x:x['openness_score'],
-                             filter(lambda x: x['value'] in formats,
-                                    self.fmt))
-                scores.append(1)
-                score = max(scores)
-
-                for r in record['resources']:
-                    if 'data_includes_uris' in r.get('data_quality', []):
-                        score = max(4, score)
-                        if 'data_includes_links' in r.get('data_quality', []):
-                            score = max(5, score)
                 report[score] += 1
         self.reports = reports
 
@@ -119,14 +99,13 @@ class Records():
 
 def main():
     parser = argparse.ArgumentParser(description='''portal records openness report''')
-    parser.add_argument("--file", dest="file", required=True, help='''site gz file contains links.
+    parser.add_argument("--site", dest="site", required=True, help='''site gz file contains links.
                          download from http://open.canada.ca/static/od-do-canada.jl.gz.''')
-    parser.add_argument("--format", dest="fmt", required=True, help="format presets")
     parser.add_argument("--dump", dest="dump", help="dump to csv file")
 
     options = parser.parse_args()
 
-    site = Records(options.file, options.fmt)
+    site = Records(options.site)
     site.iter_resources()
     if options.dump:
         site.dump(options.dump)
