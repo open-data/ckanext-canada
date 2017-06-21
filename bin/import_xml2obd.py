@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 '''
 Usage:
-    import_xml2_obd.py <xml file> <organizations json file> <presets.yaml> > <jsonl file>
+    import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
     import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
 '''
 import argparse
 import os
+import glob
 import time
 from datetime import datetime
 import sys
@@ -20,11 +21,11 @@ import ckan
 from ckanapi.errors import CKANAPIError
 import traceback
 
-presets = None
 audience = None
 canada_resource_type = None
 canada_subject = None
 canada_resource_language = None
+canada_resource_format = None
 
 
 def read_presets(filename):
@@ -88,15 +89,6 @@ def title(k,v):
     return 'title_translated', {sub_key:v}
 
 organizations = {}
-
-
-def read_organizations_from_json(filename):
-    with open(filename) as f:
-        for line in f:
-            rec = json.loads(line)
-            title = rec['title'].split('|')[0].strip()
-            organizations[title] = rec['id']
-    assert(len(organizations)>100)
 
 
 def owner_org(k,v):
@@ -178,10 +170,10 @@ def xml_obd_mapping(dict_data, map_dict):
     return res
 
 
-def get_preset(name):
-    for it in presets['presets']:
-        if it['preset_name']==name:
-            return it['values']
+def get_preset(fields, name):
+    for it in fields:
+        if it.get('preset', None)==name:
+            return it
     return None
 
 
@@ -227,34 +219,14 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
         print("updated for " + os.path.basename(source))
 
 
-def main():
-    global presets, audience, canada_resource_type,canada_subject
-    global canada_resource_language
-    canada_resource_format = None
-
-    # upload the generated json to remote site and upload the file
-    if sys.argv[1] =='upload':
-        return upload_resources(*sys.argv[2:])
-
-    refs, extras = read_xml(sys.argv[1])
-    read_organizations_from_json(sys.argv[2])
-    presets = read_presets(sys.argv[3])  # TODO: read from doc.yaml
-    audience = get_preset('canada_audience')
-    canada_resource_type = get_preset('canada_resource_type')
-    canada_subject = get_preset('canada_subject')
-    canada_resource_language = get_preset('canada_resource_language')
-    canada_resource_format = map(lambda x:x['value'],
-                                 get_preset('canada_resource_format')['choices'])
-
+def convert(refs, filename):
     ds = xml_obd_mapping(refs, xml2obd)
     ds['collection'] = 'publication'
     release_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if not ds.get('date_published'):
         ds['date_published'] = release_date
     ds['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
-                   'http://dev.obd.ca/' + sys.argv[1]))
-    ds['name'] = ds['id']
-    ds['title'] = ds['title_translated']['en']
+                   'http://obd.open.canada.ca/' + filename))
     ds['state'] = 'active'
     ds['type'] = 'doc'
     ds['license_id'] = "ca-ogl-lgo"
@@ -264,20 +236,16 @@ def main():
         ds['keywords']={'en':['statcan'], 'fr':['statcan']}
     if not ds.get('subject', None):
         ds['subject'] = ["information_and_communications"]
-    if not ds.get('notes_translated', None):
-        ds['notes_translated'] = {'en':'n/a', 'fr':'n/a'}
-    if not ds['notes_translated'].get('fr', None):
-        ds['notes_translated']['fr'] = ds['notes_translated']['en']
     if not ds['title_translated'].get('fr', None):
         ds['title_translated']['fr'] = ds['title_translated']['en']
 
     res = xml_obd_mapping(refs, xml2resource)
-    res_name = sys.argv[1].split('/')[-1][:-4]
+    res_name = filename[:-4]
     res['name_translated']={'en':res_name, 'fr':res_name}
     res['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
-                    'http://dev.obd.ca/resources/' + sys.argv[1]))
-    res['url'] = 'http://dev.obd.ca/' + sys.argv[1].split('/')[-1][:-4]
-    res['format'] = sys.argv[1].split('/')[-1].split('.')[-2].upper()
+                    'http://obd.open.canada.ca/resources/' + filename))
+    res['url'] = 'http://obd.open.canada.ca/' + filename[:-4]
+    res['format'] = filename.split('.')[-2].upper()
     if res['format'] not in canada_resource_format:
         res['format'] = 'other'
     if not res.get('language'):
@@ -286,6 +254,50 @@ def main():
         res['resource_type']='guide'
     ds['resources'] = [res]
     print(json.dumps(ds))
+
+
+def main():
+    global audience, canada_resource_type,canada_subject
+    global canada_resource_language, organizations
+    global canada_resource_format
+
+    # upload the generated json to remote site and upload the file
+    if sys.argv[1] =='upload':
+        return upload_resources(*sys.argv[2:])
+
+    site = ckanapi.RemoteCKAN(sys.argv[2])
+
+    doc = site.action.scheming_dataset_schema_show(type='doc')
+    orgs = site.action.organization_list(all_fields=True)
+    for rec in orgs:
+        title = rec['title'].split('|')[0].strip()
+        organizations[title] = rec['id']
+    assert(len(organizations)>100)
+
+    fields = doc['dataset_fields']
+    res_fields = doc['resource_fields']
+
+    audience = get_preset(fields, 'canada_audience')
+    canada_resource_type = get_preset(res_fields, 'canada_resource_type')
+    canada_subject = get_preset(fields, 'canada_subject')
+    canada_resource_language = get_preset(res_fields, 'canada_resource_language')
+    canada_resource_format = get_preset(res_fields, 'canada_resource_format')
+
+    assert(audience and canada_resource_type and canada_resource_language
+           and canada_subject and canada_resource_format)
+    canada_resource_format = [x['value'] for x in canada_resource_format['choices']]
+
+    filename = sys.argv[1]
+    files = []
+    if os.path.isfile(filename):
+        files.append(filename)
+    elif os.path.isdir(filename):
+        files = glob.glob(filename + '/*.xml')
+    assert(files)
+
+    for filename in files:
+        refs, extras = read_xml(filename)
+        convert(refs, os.path.basename(filename))
 
 if __name__=='__main__':
     main()
