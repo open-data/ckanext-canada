@@ -3,8 +3,15 @@
 Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
     import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
+    import_xml2obd.py pull <conf file> <output directory>
+
+    sample conf file:
+    [storage]
+    source = azure://user:key@container
+    dest = azure://user:key@container
 '''
 import argparse
+import configparser
 import os
 import glob
 import time
@@ -15,6 +22,10 @@ from collections import defaultdict, OrderedDict
 from lxml import etree
 import yaml
 import uuid
+
+from azure.storage.blob import BlockBlobService
+from azure.common import AzureMissingResourceHttpError
+from azure.storage.blob import ContentSettings
 
 import ckanapi
 import ckan
@@ -256,6 +267,80 @@ def convert(refs, filename):
     print(json.dumps(ds))
 
 
+class RemoteStorage():
+    def __init__(self, user, key, container):
+        self.bs = BlockBlobService(account_name=user, account_key=key)
+        self.container = container
+
+    def get_obj(self, blob_name):
+        try:
+            return self.bs.get_blob_properties(self.container, blob_name)
+        except AzureMissingResourceHttpError:
+            return None
+
+    def download_blob(self, blob_name, localf):
+        self.bs.get_blob_to_path(self.container, blob_name, localf)
+
+    def del_blob(self, blob_name):
+        try:
+            self.bs.delete_blob(self.container, blob_name)
+        except:
+            pass
+
+    def upload(self, blob_name, localf):
+        self.bs.create_blob_from_path(
+                self.container, blob_name, localf,
+                content_settings=ContentSettings(content_type='text/xml'))
+
+    def new_docs(self):
+        res = []
+        for blob in self.bs.list_blobs(self.container):
+            res.append(blob.name)
+        return res
+
+
+def read_conf(filename):
+    config = configparser.ConfigParser()
+    config.read(filename)
+    src_str = config.get('storage', 'source')
+    dest_str = config.get('storage', 'dest')
+    import re
+    r = re.match(r'^azure://(.*):(.*)@(.*)', src_str)
+    r2 = re.match(r'^azure://(.*):(.*)@(.*)', dest_str)
+    return (r.group(1), r.group(2), r.group(3),
+            r2.group(1), r2.group(2), r2.group(3),)
+
+
+def pull_docs(conf_file, local_dir):
+    ''' Iterate src container for *.xml *(doc) and download/(remove after) them to local
+        directory. Upload *.xml to dest container for history tracking.
+        Rename on uploading if name conflicts (name, name-timestring).
+    '''
+    src_user, src_key, src_container, dest_user, dest_key, dest_container = read_conf(conf_file)
+    src = RemoteStorage(src_user, src_key, src_container)
+
+    all_docs = src.new_docs()
+    xmls = [x for x in all_docs if x[-4:]=='.xml' and x[:-4] in all_docs and
+            x[:-4] + '.ind' in all_docs]
+    docs = [x[:-4] for x in xmls]
+    inds = [x + '.ind' for x in docs]
+    files = xmls + docs
+    for fname in files:
+        print 'Downloading ',fname
+        src.download_blob(fname, local_dir + '/' + fname.split('/')[-1])
+
+    dest = RemoteStorage(dest_user, dest_key, dest_container)
+    for fname in xmls:
+        filename = fname.split('/')[-1]
+        print 'Uploading ',filename
+        dest.upload('archived-doc-xmls/' + filename,
+                    local_dir + '/' + filename)
+
+    files += inds
+    for fname in files:
+        src.delete_obj(fname)
+
+
 def main():
     global audience, canada_resource_type,canada_subject
     global canada_resource_language, organizations
@@ -264,6 +349,8 @@ def main():
     # upload the generated json to remote site and upload the file
     if sys.argv[1] =='upload':
         return upload_resources(*sys.argv[2:])
+    elif sys.argv[1] =='pull':
+        return pull_docs(*sys.argv[2:])
 
     site = ckanapi.RemoteCKAN(sys.argv[2])
 
