@@ -27,9 +27,11 @@ from azure.storage.blob import BlockBlobService
 from azure.common import AzureMissingResourceHttpError
 from azure.storage.blob import ContentSettings
 
+import urllib2
 import ckanapi
 import ckan
 from ckanapi.errors import CKANAPIError
+from ckan.logic import (NotAuthorized, NotFound)
 import traceback
 
 audience = None
@@ -97,6 +99,13 @@ def title(k,v):
         sub_key='fr'
     else:
         raise Exception('no such desc')
+
+    # guess: remove file extension and underscores
+    titles = v.split('.')
+    if len(titles[-1]) <=4:
+        v = '.'.join(titles[:-1])
+    v = v.replace('_', ' ')
+
     return 'title_translated', {sub_key:v}
 
 organizations = {}
@@ -199,18 +208,29 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
     ds = read_json(jsonfile)
     for rec in ds:
         try:
+            target_pkg = site.action.package_show(id=rec['id'])
+        except (NotFound, NotAuthorized):
+            target_pkg = None
+        except (CKANAPIError, urllib2.URLError), e:
+            sys.stdout.write(
+                json.dumps([
+                    rec['id'],
+                    'target error',
+                    unicode(e.args)
+                ]) + '\n'
+            )
+            raise
+
+        try:
             #site.action.package_delete(id=rec['id'])
             #return
             #site.action.package_create(**rec)
-            site.action.package_update(**rec)
-        except ckan.logic.NotFound:
-            try:
+            if target_pkg:
+                site.action.package_update(**rec)
+            else:
                 site.action.package_create(**rec)
-            except ckan.logic.ValidationError:
-                traceback.print_exc()
-                print(rec)
-                continue
-        except ckan.logic.ValidationError:
+        except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
+                ckan.logic.ValidationError):
             traceback.print_exc()
             print(rec)
             continue
@@ -338,7 +358,7 @@ def pull_docs(conf_file, local_dir):
 
     files += inds
     for fname in files:
-        src.delete_obj(fname)
+        src.delete_blob(fname)
 
 
 def main():
