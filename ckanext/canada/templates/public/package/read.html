@@ -97,7 +97,7 @@
             {% endif %}
             {% if field_value %}
               {# FIXME: This special case needs to go; Ideally convince client of futility #}
-              {% if field.field_name != 'org_title_at_publication' or field_value != owner_org_title %}
+              {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
               <li class="list-group-item">
                 <strong>{{ field_title }}:</strong>
                 {% snippet 'scheming/snippets/display_field.html',
