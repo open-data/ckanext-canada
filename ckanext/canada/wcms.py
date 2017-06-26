@@ -107,7 +107,7 @@ def dataset_comment_count(package_id):
 
     j = r.json()
 
-    return len(j['data'])
+    return len(j.get('data', []))
 
 
 def comments_by_thread(comment_list, asc=True):
