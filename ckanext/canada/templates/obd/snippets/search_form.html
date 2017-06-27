@@ -1,56 +1,5 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
-{% block search_input_label %}
-
-<div class="col-md-12">
-  <section class="alert alert-info" >
-    {% if h.lang() =='fr' %}
-    <p>L’initiative « Ouvert par défaut » donne accès aux documents de travail utilisés par le gouvernement du Canada. La plupart de ces renseignements ne sont pas publiés. Les documents peuvent être sous la forme d’ébauche et sont en général disponibles dans la langue dans laquelle ils ont été créés. À moins d’indication contraire, les renseignements sont disponibles en vertu de la <a href="http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada">licence du gouvernement ouvert</a>.</p>
-    {% else %}
-    <p>Open by Default provides access to working documents used by the Government of Canada. Most of this information is unpublished. Documents may be in draft form, and are generally available in the language in which they were created. Unless otherwise indicated, information is made available under the <a href="http://open.canada.ca/en/open-government-licence-canada">Open Government Licence</a>.</p>
-    {% endif %}
-  </section>
-</div>
-
-{% if h.show_fgp_facets() %}
-  <div class="row mrgn-bttm-sm mrgn-rght-sm">
-    <div class="col-md-12">
-      <section class="alert alert-info" >
-        <p>{{ _('Search for geospatial data or click <b>Add to cart</b> to select multiple datasets to plot on a single map.<br/>Click <b>View on Map</b> to visualize and overlay the datasets using a geospatial viewer')|safe }}</p>
-      </section>
-    </div>
-  </div>
-{% endif %}
-
-<div class="row mrgn-bttm-md mrgn-tp-md">
-  <div class="col-md-12">
-    <h2 class="mrgn-tp-0 mrgn-bttm-0">
-      <label for="search_field" >{{ _('Search Datasets') }}</label>
-      <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
-    </h2>
-  </div>
-</div>
-
-<div class="ogscartwrapper mrgn-bttm-md" style="display:none;visibility:hidden;">
-	<span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
-	<a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt"></span> {{ _('List Cart Items') }}</a>
-	<a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe"></span> {{ _('View on Map') }}</a>
-	<a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o"></span> {{ _('Empty Cart') }}</a>
-</div>
-
-{% endblock %}
-
-
-
-{% block filter_list %}
-{# assume that facets will have scheming presets names canada_<something>
-   and use those presets to get the labels to display #}
-<div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
-  <ul class="list-inline">
-  {% for field in c.fields_grouped %}
-    {{ cr.filter_buttons(h, c, field, extras) }}
-  {% endfor %}
-  </ul>
-</div>
+{% block search_alert_info %}
+    <p>{{ _('Open by Default provides access to working documents used by the Government of Canada. Most of this information is unpublished. Documents may be in draft form, and are generally available in the language in which they were created. Unless otherwise indicated, information is made available under the <a href="http://open.canada.ca/en/open-government-licence-canada">Open Government Licence</a>.')|safe }}</p>
 {% endblock %}
