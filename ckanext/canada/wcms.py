@@ -82,7 +82,42 @@ def dataset_comments(request, c, pkg_id):
 
 
 def dataset_rating(package_id):
-    return 0
+    """
+    Retrieve the average of the user's 5 star ratings of the dataset
+    """
+    url = config.get('ckanext.canada.drupal_url')
+    if not url:
+        return 0
+
+    r = requests.get(
+        url + '/jsonapi/vote_result/vote_result',
+        params={
+            '_format': 'api_json',
+            'filter[ckan][condition][path]': 'entity_id',
+            'filter[ckan][condition][value]': 'ckan-' + package_id,
+            'filter[group][group][conjunction]': 'OR',
+            'filter[avg][condition][path]': 'function',
+            'filter[avg][condition][value]': 'vote_average',
+            'filter[avg][condition][memberOf]': 'group',
+        },
+        auth=(
+            config.get('ckanext.canada.drupal_user'),
+            config.get('ckanext.canada.drupal_pass')
+        )
+    )
+
+    j = r.json()
+
+    try:
+        d = j['data']
+    except KeyError:
+        return 0
+
+    for entry in d:
+        if entry['attributes']['function'] == 'vote_average':
+            return entry['attributes']['value']
+    else:
+        return 0
 
 
 def dataset_comment_count(package_id):
