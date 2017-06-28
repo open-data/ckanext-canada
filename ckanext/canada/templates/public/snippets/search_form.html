@@ -29,7 +29,9 @@
   <div class="col-md-12">
     <h2 class="mrgn-tp-0 mrgn-bttm-0">
       <label for="search_field" >{{ _('Search Datasets') }}</label>
-      <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
+      {% block search_suggest_dataset %}
+        <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
+      {% endblock %}
     </h2>
   </div>
 </div>
