@@ -358,7 +358,7 @@ def pull_docs(conf_file, local_dir):
 
     files += inds
     for fname in files:
-        src.delete_blob(fname)
+        pass  # src.delete_blob(fname)
 
 
 def main():
