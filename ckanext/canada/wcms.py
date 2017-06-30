@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import logging
 import datetime
 from urllib import urlencode
+from functools import wraps
 
 import requests
 from pylons import config
@@ -9,10 +11,27 @@ from lxml.html.clean import clean_html
 import ckan.lib.helpers as h
 
 
+logger = logging.getLogger(__name__)
+
+
 def inventory_votes():
     return {}
 
 
+def never_ever_fail(f, default=None):
+    @wraps(f)
+    def _f(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception:
+            logger.exception('Failed during a call to wcms')
+            if callable(default):
+                return default()
+            return default
+    return _f
+
+
+@never_ever_fail(default=list)
 def dataset_comments(request, c, pkg_id):
     # [{
     # 'date': ...,
@@ -81,6 +100,7 @@ def dataset_comments(request, c, pkg_id):
     return cbt[0]
 
 
+@never_ever_fail(default=0)
 def dataset_rating(package_id):
     """
     Retrieve the average of the user's 5 star ratings of the dataset
@@ -120,10 +140,11 @@ def dataset_rating(package_id):
         return 0
 
 
+@never_ever_fail(default=0)
 def dataset_comment_count(package_id):
     url = config.get('ckanext.canada.drupal_url')
     if not url:
-        return []
+        return 0
 
     r = requests.get(
         url + '/jsonapi/external_comment/external_comment',
@@ -145,6 +166,7 @@ def dataset_comment_count(package_id):
     return len(j.get('data', []))
 
 
+@never_ever_fail(default=dict)
 def comments_by_thread(comment_list, asc=True):
     res = []
     res += comment_list
