@@ -18,17 +18,19 @@ def inventory_votes():
     return {}
 
 
-def never_ever_fail(f, default=None):
-    @wraps(f)
-    def _f(*args, **kwargs):
-        try:
-            return f(*args, **kwargs)
-        except Exception:
-            logger.exception('Failed during a call to wcms')
-            if callable(default):
-                return default()
-            return default
-    return _f
+def never_ever_fail(default=None):
+    def _never_ever_fail(f):
+        @wraps(f)
+        def _f(*args, **kwargs):
+            try:
+                return f(*args, **kwargs)
+            except Exception:
+                logger.exception('Failed during a call to wcms')
+                if callable(default):
+                    return default()
+                return default
+        return _f
+    return _never_ever_fail
 
 
 @never_ever_fail(default=list)
