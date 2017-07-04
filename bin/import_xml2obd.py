@@ -2,7 +2,7 @@
 '''
 Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
-    import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
+    import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory> <conf file>
     import_xml2obd.py pull <conf file> <output directory>
 
     sample conf file:
@@ -12,6 +12,8 @@ Usage:
 '''
 import argparse
 import configparser
+import hashlib
+import base64
 import os
 import glob
 import time
@@ -40,6 +42,15 @@ canada_subject = None
 canada_resource_language = None
 canada_resource_format = None
 
+
+def md5str(fname):
+    return hashlib.md5(open(fname, 'rb').read()).hexdigest().strip()
+
+def base64md5str(val):
+    if not val:
+        return None
+    a = base64.b64decode(val)
+    return ''.join([ '%02x'%(ord(c)) for c in a]).strip()
 
 def read_presets(filename):
     with open(filename, 'r') as f:
@@ -115,6 +126,8 @@ def owner_org(k,v):
     v = v.split('|')[0].strip()
     if v =='Public Works and Government Services Canada':
         v='Public Services and Procurement Canada'
+    if v =='Environment Canada':
+        v='Environment and Climate Change Canada'
     id = organizations.get(v, None)
     if not id:
         raise Exception('No such organiztion ' + v)
@@ -124,9 +137,10 @@ def owner_org(k,v):
 def _get_choices_value(preset, val):
     name = preset['field_name']
     res = []
+    val = val.lower()
     for item in preset['choices']:
         for label in item['label'].values():
-            if label in val:
+            if label.lower() in val:
                 res.append(item['value'])
                 break
     return name, res
@@ -135,11 +149,16 @@ def _get_choices_value(preset, val):
 def _get_single_choices_value(preset, val):
     name = preset['field_name']
     res = []
+    val = val.lower()
     for item in preset['choices']:
         for label in item['label'].values():
-            if label in val:
+            if label.lower() in val:
                 res.append(item['value'])
                 break
+    if not res:
+        print ('not found', name, val)
+        raise Exception(name)
+
     return name, res[0]
 
 xml2obd=OrderedDict([
@@ -197,96 +216,6 @@ def get_preset(fields, name):
     return None
 
 
-def upload_resources(remote_site, api_key, jsonfile, resource_directory):
-    #remote site
-    site = ckanapi.RemoteCKAN(
-        remote_site,
-        apikey=api_key,
-        user_agent='ckanapi-uploader/1.0')
-
-    #load dataset and resource file to cloud
-    ds = read_json(jsonfile)
-    for rec in ds:
-        try:
-            target_pkg = site.action.package_show(id=rec['id'])
-        except (NotFound, NotAuthorized):
-            target_pkg = None
-        except (CKANAPIError, urllib2.URLError), e:
-            sys.stdout.write(
-                json.dumps([
-                    rec['id'],
-                    'target error',
-                    unicode(e.args)
-                ]) + '\n'
-            )
-            raise
-
-        try:
-            #site.action.package_delete(id=rec['id'])
-            #return
-            #site.action.package_create(**rec)
-            if target_pkg:
-                site.action.package_update(**rec)
-            else:
-                site.action.package_create(**rec)
-        except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
-                ckan.logic.ValidationError):
-            traceback.print_exc()
-            print(rec)
-            continue
-        res = rec['resources'][0]
-        source = resource_directory + '/' + res['url'].split('/')[-1]
-        with open(source) as f:
-            try:
-                rc = site.action.resource_patch(
-                    id=res['id'],
-                    upload=(os.path.basename(source), f))
-            except ckanapi.errors.CKANAPIError:
-                traceback.print_exc()
-                print(rec)
-                print("failed upload " + os.path.basename(source))
-                continue
-
-        print("updated for " + os.path.basename(source))
-
-
-def convert(refs, filename):
-    ds = xml_obd_mapping(refs, xml2obd)
-    ds['collection'] = 'publication'
-    release_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    if not ds.get('date_published'):
-        ds['date_published'] = release_date
-    ds['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
-                   'http://obd.open.canada.ca/' + filename))
-    ds['state'] = 'active'
-    ds['type'] = 'doc'
-    ds['license_id'] = "ca-ogl-lgo"
-    if not ds.get('owner_org', None):
-        ds['owner_org'] = "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
-    if not ds.get('keywords', None):
-        ds['keywords']={'en':['statcan'], 'fr':['statcan']}
-    if not ds.get('subject', None):
-        ds['subject'] = ["information_and_communications"]
-    if not ds['title_translated'].get('fr', None):
-        ds['title_translated']['fr'] = ds['title_translated']['en']
-
-    res = xml_obd_mapping(refs, xml2resource)
-    res_name = filename[:-4]
-    res['name_translated']={'en':res_name, 'fr':res_name}
-    res['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
-                    'http://obd.open.canada.ca/resources/' + filename))
-    res['url'] = 'http://obd.open.canada.ca/' + filename[:-4]
-    res['format'] = filename.split('.')[-2].upper()
-    if res['format'] not in canada_resource_format:
-        res['format'] = 'other'
-    if not res.get('language'):
-        res['language'] = ['en']
-    if not res.get('resource_type'):
-        res['resource_type']='guide'
-    ds['resources'] = [res]
-    print(json.dumps(ds))
-
-
 class RemoteStorage():
     def __init__(self, user, key, container):
         self.bs = BlockBlobService(account_name=user, account_key=key)
@@ -331,6 +260,115 @@ def read_conf(filename):
             r2.group(1), r2.group(2), r2.group(3),)
 
 
+def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_file):
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        remote_site,
+        apikey=api_key,
+        user_agent='ckanapi-uploader/1.0')
+
+    src_user, src_key, src_container, dest_user, dest_key, dest_container = read_conf(conf_file)
+    dest = RemoteStorage(dest_user, dest_key, dest_container)
+
+    #load dataset and resource file to cloud
+    ds = read_json(jsonfile)
+    for rec in ds:
+        try:
+            target_pkg = site.action.package_show(id=rec['id'])
+        except (NotFound, NotAuthorized):
+            target_pkg = None
+        except (CKANAPIError, urllib2.URLError), e:
+            sys.stdout.write(
+                json.dumps([
+                    rec['id'],
+                    'target error',
+                    unicode(e.args)
+                ]) + '\n'
+            )
+            raise
+
+        try:
+            #site.action.package_delete(id=rec['id'])
+            #return
+            #site.action.package_create(**rec)
+            if target_pkg:
+                site.action.package_update(**rec)
+            else:
+                site.action.package_create(**rec)
+        except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
+                ckan.logic.ValidationError):
+            traceback.print_exc()
+            print(rec)
+            continue
+        res = rec['resources'][0]
+        source = resource_directory + '/' + res['url'].split('/')[-1]
+        fname='/'.join(['resources', res['id'], res['url'].split('/')[-1]])
+
+        obj = dest.get_obj(fname.lower())
+        skip = False
+        if obj:
+            objmd5 = base64md5str(obj.properties.content_settings.content_md5)
+            srcmd5 = md5str(source)
+            if objmd5 == srcmd5:
+               print('\tsame remote file exists ',  os.path.basename(source))
+               skip = True
+            else:
+                print (objmd5, srcmd5)
+        if not skip:
+            with open(source) as f:
+                try:
+                    rc = site.action.resource_patch(
+                        id=res['id'],
+                        upload=(os.path.basename(source), f))
+                except ckanapi.errors.CKANAPIError:
+                    traceback.print_exc()
+                    print(rec)
+                    print("failed upload " + os.path.basename(source))
+                    continue
+            print('\tresource uploaded ', os.path.basename(source))
+
+        print("updated for " + os.path.basename(source))
+
+
+def convert(refs, filename):
+    ds = xml_obd_mapping(refs, xml2obd)
+    ds['collection'] = 'publication'
+    release_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if not ds.get('date_published'):
+        ds['date_published'] = release_date
+    ds['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + filename))
+    ds['state'] = 'active'
+    ds['type'] = 'doc'
+    ds['license_id'] = "ca-ogl-lgo"
+    if not ds.get('owner_org', None):
+        ds['owner_org'] = "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
+    if not ds.get('keywords', None):
+        ds['keywords']={'en':['statcan'], 'fr':['statcan']}
+    if not ds.get('subject', None):
+        ds['subject'] = ["information_and_communications"]
+    if not ds['title_translated'].get('fr', None):
+        ds['title_translated']['fr'] = ds['title_translated']['en']
+    if not ds['title_translated'].get('en', None):
+        ds['title_translated']['en'] = ds['title_translated']['fr']
+
+    res = xml_obd_mapping(refs, xml2resource)
+    res_name = filename[:-4]
+    res['name_translated']={'en':res_name, 'fr':res_name}
+    res['id'] = str(uuid.uuid5(uuid.NAMESPACE_URL,
+                    'http://obd.open.canada.ca/resources/' + filename))
+    res['url'] = 'http://obd.open.canada.ca/' + filename[:-4]
+    res['format'] = filename.split('.')[-2].upper()
+    if res['format'] not in canada_resource_format:
+        res['format'] = 'other'
+    if not res.get('language'):
+        res['language'] = ['en']
+    if not res.get('resource_type'):
+        res['resource_type']='guide'
+    ds['resources'] = [res]
+    print(json.dumps(ds))
+
+
 def pull_docs(conf_file, local_dir):
     ''' Iterate src container for *.xml *(doc) and download/(remove after) them to local
         directory. Upload *.xml to dest container for history tracking.
@@ -340,6 +378,7 @@ def pull_docs(conf_file, local_dir):
     src = RemoteStorage(src_user, src_key, src_container)
 
     all_docs = src.new_docs()
+    print 'total source files ', len(all_docs)
     xmls = [x for x in all_docs if x[-4:]=='.xml' and x[:-4] in all_docs and
             x[:-4] + '.ind' in all_docs]
     docs = [x[:-4] for x in xmls]
@@ -347,12 +386,25 @@ def pull_docs(conf_file, local_dir):
     files = xmls + docs
     for fname in files:
         print 'Downloading ',fname
-        src.download_blob(fname, local_dir + '/' + fname.split('/')[-1])
+        obj = src.get_obj(fname)
+        localname = local_dir + '/' + fname.split('/')[-1]
+        objmd5 = base64md5str(obj.properties.content_settings.content_md5)
+        if os.path.isfile(localname) and objmd5 == md5str(localname):
+            print ('\tsame local file exists')
+        else:
+            src.download_blob(fname, localname)
 
     dest = RemoteStorage(dest_user, dest_key, dest_container)
     for fname in xmls:
         filename = fname.split('/')[-1]
+        localname = local_dir + '/' + filename
         print 'Uploading ',filename
+        obj = dest.get_obj(fname)
+        if obj:
+           objmd5 = base64md5str(obj.properties.content_settings.content_md5)
+           if objmd5 == md5str(localname):
+               print('\tsame remote file exists')
+               continue
         dest.upload('archived-doc-xmls/' + filename,
                     local_dir + '/' + filename)
 
