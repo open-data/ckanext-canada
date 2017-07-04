@@ -47,10 +47,16 @@ canada_resource_format = None
 def md5str(fname):
     return hashlib.md5(open(fname, 'rb').read()).hexdigest().strip()
 
+def md5_file(fname):
+    return hashlib.md5(open(fname, 'rb').read()).digest()
+
 def base64md5str(val):
     if not val:
         return None
-    return binascii.hexlify(base64.b64decode(val))
+    try:
+        return binascii.hexlify(base64.b64decode(val))
+    except TypeError:
+        return None
 
 def read_presets(filename):
     with open(filename, 'r') as f:
@@ -306,16 +312,21 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
 
         obj = dest.get_obj(fname.lower())
         skip = False
-        srcmd5 = md5str(source)
+        md5 = md5_file(source)
+        srcmd5 = binascii.hexlify(md5)
         if obj:
             objmd5 = base64md5str(obj.properties.content_settings.content_md5)
             if objmd5 == srcmd5:
                skip = True
             else:
                 print (objmd5, srcmd5)
-        if target_pkg:
+        if target_pkg and not skip:
             for res in target_pkg['resources']:
                 rmd5 = res.get('hash', None)
+                if rmd5[:4] == 'md5-':
+                    rmd5 = base64md5str(rmd5[4:])
+                else:
+                    continue
                 if rmd5 and srcmd5 in rmd5:
                     skip = True
                     break
@@ -326,7 +337,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
                 try:
                     rc = site.action.resource_patch(
                         id=res['id'],
-                        hash='md5-%s'%srcmd5,
+                        hash='md5-%s'%base64.b64encode(md5),
                         upload=(os.path.basename(source), f))
                 except ckanapi.errors.CKANAPIError:
                     traceback.print_exc()
@@ -407,13 +418,14 @@ def pull_docs(conf_file, local_dir):
         filename = fname.split('/')[-1]
         localname = local_dir + '/' + filename
         print 'Uploading ',filename
-        obj = dest.get_obj(fname)
+        remote_name = 'archived-doc-xmls/' + filename
+        obj = dest.get_obj(remote_name)
         if obj:
            objmd5 = base64md5str(obj.properties.content_settings.content_md5)
            if objmd5 == md5str(localname):
                print('\tsame remote file exists')
                continue
-        dest.upload('archived-doc-xmls/' + filename,
+        dest.upload(remote_name,
                     local_dir + '/' + filename)
 
     files += inds
