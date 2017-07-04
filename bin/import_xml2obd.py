@@ -14,6 +14,7 @@ import argparse
 import configparser
 import hashlib
 import base64
+import binascii
 import os
 import glob
 import time
@@ -49,8 +50,7 @@ def md5str(fname):
 def base64md5str(val):
     if not val:
         return None
-    a = base64.b64decode(val)
-    return ''.join([ '%02x'%(ord(c)) for c in a]).strip()
+    return binascii.hexlify(base64.b64decode(val))
 
 def read_presets(filename):
     with open(filename, 'r') as f:
@@ -306,19 +306,27 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
 
         obj = dest.get_obj(fname.lower())
         skip = False
+        srcmd5 = md5str(source)
         if obj:
             objmd5 = base64md5str(obj.properties.content_settings.content_md5)
-            srcmd5 = md5str(source)
             if objmd5 == srcmd5:
-               print('\tsame remote file exists ',  os.path.basename(source))
                skip = True
             else:
                 print (objmd5, srcmd5)
-        if not skip:
+        if target_pkg:
+            for res in target_pkg['resources']:
+                rmd5 = res.get('hash', None)
+                if rmd5 and srcmd5 in rmd5:
+                    skip = True
+                    break
+        if skip:
+            print('\tsame remote file exists ' + os.path.basename(source))
+        else:
             with open(source) as f:
                 try:
                     rc = site.action.resource_patch(
                         id=res['id'],
+                        hash='md5-%s'%srcmd5,
                         upload=(os.path.basename(source), f))
                 except ckanapi.errors.CKANAPIError:
                     traceback.print_exc()
