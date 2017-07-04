@@ -7,6 +7,7 @@ from functools import wraps
 import requests
 from pylons import config
 from lxml.html.clean import clean_html
+from pytz import utc
 
 import ckan.lib.helpers as h
 
@@ -66,7 +67,7 @@ def dataset_comments(request, c, pkg_id):
         'date': h.time_ago_from_timestamp(
             datetime.datetime.utcfromtimestamp(
                 rec['attributes']['changed']
-            )
+            ).replace(tzinfo=utc)
         ),
         'thread': rec['attributes']['thread'],
         'user': rec['attributes']['name'],
