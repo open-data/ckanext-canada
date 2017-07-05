@@ -56,8 +56,9 @@ def md5str(fname, md5_hexdigest=None):
         except IOError:
             return None
 
-    def _md5_file(filename):
+    def _checksum_file(filename):
         m = hashlib.md5()
+        sha = hashlib.sha384()
         try:
             with open(filename, 'rb') as f:
                 while True:
@@ -65,21 +66,24 @@ def md5str(fname, md5_hexdigest=None):
                     if not data:
                         break
                     m.update(data)
+                    sha.update(data)
         except IOError:
             return None
-        return m.hexdigest().strip()
+        return m.hexdigest().strip() + ' ' + sha.hexdigest().strip()
 
     # write to fname.md5
     if md5_hexdigest:
-        return _save_md5(fname, md5_hexdigest)
+        md5_sha384 = _checksum_file(fname)
+        assert(md5_hexdigest in md5_sha384)
+        return _save_md5(fname, md5_sha384)
 
     # try to read fname.md5 file
     digest = _read_md5(fname)
-    if digest:
+    if len(digest.split(' ')) == 2:
         return digest
 
     # calculate and save fname.md5
-    digest = _md5_file(fname)
+    digest = _checksum_file(fname)
     if not digest:
         return None
 
@@ -193,10 +197,10 @@ def _get_choices_value(preset, val):
 def _get_single_choices_value(preset, val):
     name = preset['field_name']
     res = []
-    val = val.lower()
+    val = val.lower().split(' | ')[0]
     for item in preset['choices']:
         for label in item['label'].values():
-            if label.lower() in val:
+            if val in label.lower():
                 res.append(item['value'])
                 break
     if not res:
@@ -303,6 +307,22 @@ def read_conf(filename):
     return (r.group(1), r.group(2), r.group(3),
             r2.group(1), r2.group(2), r2.group(3),)
 
+def _compare_pkgs(rec, pkg):
+    for k,v in rec.iteritems():
+        if k in ['date_published', 'metadata_modified', 'metadata_created', 'resources']:
+            continue
+        if v != pkg.get(k, None):
+            return False
+    for k,v in rec['resources'][0].iteritems():
+        if k in ['created']:
+            if v in pkg['resources'][0].get(k, None):
+                continue
+        if k in ['url']:
+            if v.split('/')[-1].lower() == pkg['resources'][0].get(k, None).split('/')[-1]:
+                continue
+        if v != pkg['resources'][0].get(k, None):
+            return False
+    return True
 
 def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_file):
     #remote site
@@ -336,7 +356,11 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
             #return
             #site.action.package_create(**rec)
             if target_pkg:
-                site.action.package_update(**rec)
+                skip = _compare_pkgs(rec, target_pkg)
+                if not skip:
+                    site.action.package_update(**rec)
+                else:
+                    print("\tskip package update for " + rec['resources'][0]['url'].split('/')[-1])
             else:
                 site.action.package_create(**rec)
         except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
@@ -350,10 +374,13 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
 
         obj = dest.get_obj(fname.lower())
         skip = False
-        srcmd5 = md5str(source)
-        if not srcmd5:
+        digests = md5str(source)
+        if not digests:
             raise Exception('not found ' + source)
+        digests = digests.split(' ')
+        srcmd5 = digests[0]
         md5 = binascii.unhexlify(srcmd5)
+        sha384 = binascii.unhexlify(digests[1])
         if obj:
             objmd5 = base64md5str(obj.properties.content_settings.content_md5)
             if objmd5 == srcmd5:
@@ -361,13 +388,18 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
             else:
                 print (objmd5, srcmd5)
         if target_pkg and not skip:
+            def _get_md5_hash(s):
+                if not s:
+                    return None
+                for s in s.split(' '):
+                    if s[:4] == 'md5-':
+                        return base64md5str(s[4:])
+                return None
             for res in target_pkg['resources']:
-                rmd5 = res.get('hash', None)
-                if rmd5[:4] == 'md5-':
-                    rmd5 = base64md5str(rmd5[4:])
-                else:
+                rmd5 = _get_md5_hash(res.get('hash', None))
+                if not rmd5:
                     continue
-                if rmd5 and srcmd5 in rmd5:
+                if srcmd5 in rmd5:
                     skip = True
                     break
         if skip:
@@ -377,7 +409,8 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
                 try:
                     rc = site.action.resource_patch(
                         id=res['id'],
-                        hash='md5-%s' % base64.b64encode(md5),
+                        hash='md5-%s sha384-%s' %(
+                            base64.b64encode(md5),base64.b64encode(sha384)),
                         upload=(os.path.basename(source), f))
                 except ckanapi.errors.CKANAPIError:
                     traceback.print_exc()
@@ -401,9 +434,10 @@ def convert(refs, filename):
     ds['type'] = 'doc'
     ds['license_id'] = "ca-ogl-lgo"
     if not ds.get('owner_org', None):
-        ds['owner_org'] = "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
+        raise('no owner org '+filename)
+        #ds['owner_org'] = "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
     if not ds.get('keywords', None):
-        ds['keywords']={'en':['statcan'], 'fr':['statcan']}
+        ds['keywords']={}
     if not ds.get('subject', None):
         ds['subject'] = ["information_and_communications"]
     if not ds['title_translated'].get('fr', None):
@@ -443,12 +477,20 @@ def pull_docs(conf_file, local_dir):
     docs = [x[:-4] for x in xmls]
     inds = [x + '.ind' for x in docs]
     files = xmls + docs
+    file_timestamp= {}
     for fname in files:
         print 'Downloading ',fname
+        f_basename = fname.split('/')[-1]
         obj = src.get_obj(fname)
+        ts = time.mktime(obj.properties.last_modified.timetuple())
+        if file_timestamp.get(f_basename, 0) < ts:
+            file_timestamp[f_basename] = ts
+        else:
+            print '\t same file name, but older ', f_basename
+            continue
         localname = local_dir + '/' + fname.split('/')[-1]
         objmd5 = base64md5str(obj.properties.content_settings.content_md5)
-        if os.path.isfile(localname) and objmd5 == md5str(localname):
+        if os.path.isfile(localname) and objmd5 in md5str(localname):
             print ('\tsame local file exists')
         else:
             src.download_blob(fname, localname)
@@ -463,7 +505,7 @@ def pull_docs(conf_file, local_dir):
         obj = dest.get_obj(remote_name)
         if obj:
            objmd5 = base64md5str(obj.properties.content_settings.content_md5)
-           if objmd5 == md5str(localname):
+           if objmd5 in md5str(localname):
                print('\tsame remote file exists')
                continue
         dest.upload(remote_name,
