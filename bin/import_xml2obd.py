@@ -44,11 +44,48 @@ canada_resource_language = None
 canada_resource_format = None
 
 
-def md5str(fname):
-    return hashlib.md5(open(fname, 'rb').read()).hexdigest().strip()
+def md5str(fname, md5_hexdigest=None):
+    def _save_md5(filename,digest):
+        with open(filename + '.md5', 'wb') as f:
+            f.write(digest)
 
-def md5_file(fname):
-    return hashlib.md5(open(fname, 'rb').read()).digest()
+    def _read_md5(filename):
+        try:
+            with open(filename + '.md5', 'rb') as f:
+                return f.read()
+        except IOError:
+            return None
+
+    def _md5_file(filename):
+        m = hashlib.md5()
+        try:
+            with open(filename, 'rb') as f:
+                while True:
+                    data = f.read(4 * 1014 * 1024)
+                    if not data:
+                        break
+                    m.update(data)
+        except IOError:
+            return None
+        return m.hexdigest().strip()
+
+    # write to fname.md5
+    if md5_hexdigest:
+        return _save_md5(fname, md5_hexdigest)
+
+    # try to read fname.md5 file
+    digest = _read_md5(fname)
+    if digest:
+        return digest
+
+    # calculate and save fname.md5
+    digest = _md5_file(fname)
+    if not digest:
+        return None
+
+    _save_md5(fname, digest)
+    return digest
+
 
 def base64md5str(val):
     if not val:
@@ -57,6 +94,7 @@ def base64md5str(val):
         return binascii.hexlify(base64.b64decode(val))
     except TypeError:
         return None
+
 
 def read_presets(filename):
     with open(filename, 'r') as f:
@@ -312,8 +350,10 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
 
         obj = dest.get_obj(fname.lower())
         skip = False
-        md5 = md5_file(source)
-        srcmd5 = binascii.hexlify(md5)
+        srcmd5 = md5str(source)
+        if not srcmd5:
+            raise Exception('not found ' + source)
+        md5 = binascii.unhexlify(srcmd5)
         if obj:
             objmd5 = base64md5str(obj.properties.content_settings.content_md5)
             if objmd5 == srcmd5:
@@ -337,7 +377,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
                 try:
                     rc = site.action.resource_patch(
                         id=res['id'],
-                        hash='md5-%s'%base64.b64encode(md5),
+                        hash='md5-%s' % base64.b64encode(md5),
                         upload=(os.path.basename(source), f))
                 except ckanapi.errors.CKANAPIError:
                     traceback.print_exc()
@@ -412,6 +452,7 @@ def pull_docs(conf_file, local_dir):
             print ('\tsame local file exists')
         else:
             src.download_blob(fname, localname)
+            md5str(localname, objmd5)
 
     dest = RemoteStorage(dest_user, dest_key, dest_container)
     for fname in xmls:
