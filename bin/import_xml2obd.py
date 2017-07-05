@@ -2,7 +2,7 @@
 '''
 Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
-    import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory> <conf file>
+    import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
     import_xml2obd.py pull <conf file> <output directory>
 
     sample conf file:
@@ -79,7 +79,7 @@ def md5str(fname, md5_hexdigest=None):
 
     # try to read fname.md5 file
     digest = _read_md5(fname)
-    if len(digest.split(' ')) == 2:
+    if digest and len(digest.split(' ')) == 2:
         return digest
 
     # calculate and save fname.md5
@@ -324,15 +324,12 @@ def _compare_pkgs(rec, pkg):
             return False
     return True
 
-def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_file):
+def upload_resources(remote_site, api_key, jsonfile, resource_directory):
     #remote site
     site = ckanapi.RemoteCKAN(
         remote_site,
         apikey=api_key,
         user_agent='ckanapi-uploader/1.0')
-
-    src_user, src_key, src_container, dest_user, dest_key, dest_container = read_conf(conf_file)
-    dest = RemoteStorage(dest_user, dest_key, dest_container)
 
     #load dataset and resource file to cloud
     ds = read_json(jsonfile)
@@ -372,7 +369,6 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
         source = resource_directory + '/' + res['url'].split('/')[-1]
         fname='/'.join(['resources', res['id'], res['url'].split('/')[-1]])
 
-        obj = dest.get_obj(fname.lower())
         skip = False
         digests = md5str(source)
         if not digests:
@@ -381,13 +377,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
         srcmd5 = digests[0]
         md5 = binascii.unhexlify(srcmd5)
         sha384 = binascii.unhexlify(digests[1])
-        if obj:
-            objmd5 = base64md5str(obj.properties.content_settings.content_md5)
-            if objmd5 == srcmd5:
-               skip = True
-            else:
-                print (objmd5, srcmd5)
-        if target_pkg and not skip:
+        if target_pkg:
             def _get_md5_hash(s):
                 if not s:
                     return None
@@ -417,7 +407,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory, conf_fi
                     print(rec)
                     print("failed upload " + os.path.basename(source))
                     continue
-            print('\tresource uploaded ', os.path.basename(source))
+            print('\tresource uploaded ' + os.path.basename(source))
 
         print("updated for " + os.path.basename(source))
 
