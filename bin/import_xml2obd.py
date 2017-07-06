@@ -10,6 +10,7 @@ Usage:
     source = azure://user:key@container
     dest = azure://user:key@container
 '''
+import re
 import argparse
 import configparser
 import hashlib
@@ -140,6 +141,8 @@ def read_xml(filename):
 
     return refs, extras
 
+def _strip_newline(s):
+    return s.replace('\n', ' ').replace('\r', '')
 
 def desc(k,v):
     if 'English' in k:
@@ -148,7 +151,13 @@ def desc(k,v):
         sub_key='fr'
     else:
         raise Exception('no such desc')
-    return 'notes_translated', {sub_key:v}
+
+    # hack
+    vs = v.split(' | ')
+    if len(vs) == 2:
+        return 'notes_translated', {'en':_strip_newline(vs[0]), 'fr':_strip_newline(vs[1])}
+    else:
+        return 'notes_translated', {sub_key:v}
 
 
 def title(k,v):
@@ -165,7 +174,24 @@ def title(k,v):
         v = '.'.join(titles[:-1])
     v = v.replace('_', ' ')
 
-    return 'title_translated', {sub_key:v}
+    # hack
+    vs = v.split(' | ')
+    if len(vs) == 2:
+        return 'title_translated', {'en':_strip_newline(vs[0]), 'fr':_strip_newline(vs[1])}
+    else:
+        return 'title_translated', {sub_key:v}
+
+
+def keywords(k,v):
+    vs = v.split(' | ')
+    def _to_list(val):
+        r = val.replace('\n',',').replace(u'\u00a0',',').split(',')
+        r = [x.strip() for x in r]
+        return [x for x in r if len(x)>=2]
+    if len(vs) == 2:
+        return 'keywords', {'en':_to_list(vs[0]), 'fr':_to_list(vs[1])}
+    else:
+        return 'keywords', {'en':_to_list(v)}
 
 organizations = {}
 
@@ -210,12 +236,13 @@ def _get_single_choices_value(preset, val):
     return name, res[0]
 
 xml2obd=OrderedDict([
-    ('Description English', desc),
     ('Description French', desc),
-    ('Title English', title),
+    ('Description English', desc),
     ('Title French', title),
+    ('Title English', title),
     ('Audience', lambda k,v: _get_choices_value(audience, v),),
-    ('Subject', lambda k,v: _get_choices_value(canada_subject, v),),
+#    ('Subject', lambda k,v: _get_choices_value(canada_subject, v),),
+    ('Subject', keywords),
     ('Publisher Organization', owner_org),
 
     ('Date Created', lambda k, v: ('metadata_created',v)),
