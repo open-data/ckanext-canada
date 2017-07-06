@@ -307,6 +307,7 @@ def read_conf(filename):
     return (r.group(1), r.group(2), r.group(3),
             r2.group(1), r2.group(2), r2.group(3),)
 
+
 def _compare_pkgs(rec, pkg):
     for k,v in rec.iteritems():
         if k in ['date_published', 'metadata_modified', 'metadata_created', 'resources']:
@@ -323,6 +324,7 @@ def _compare_pkgs(rec, pkg):
         if v != pkg['resources'][0].get(k, None):
             return False
     return True
+
 
 def upload_resources(remote_site, api_key, jsonfile, resource_directory):
     #remote site
@@ -424,7 +426,7 @@ def convert(refs, filename):
     ds['type'] = 'doc'
     ds['license_id'] = "ca-ogl-lgo"
     if not ds.get('owner_org', None):
-        raise('no owner org '+filename)
+        raise('no owner org ' + filename)
         #ds['owner_org'] = "A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC"
     if not ds.get('keywords', None):
         ds['keywords']={}
@@ -467,22 +469,32 @@ def pull_docs(conf_file, local_dir):
     docs = [x[:-4] for x in xmls]
     inds = [x + '.ind' for x in docs]
     files = xmls + docs
-    file_timestamp= {}
+    files_info= {}
+
+    print 'Scanning...'
     for fname in files:
-        print 'Downloading ',fname
         f_basename = fname.split('/')[-1]
         obj = src.get_obj(fname)
         ts = time.mktime(obj.properties.last_modified.timetuple())
-        if file_timestamp.get(f_basename, 0) < ts:
-            file_timestamp[f_basename] = ts
+        details = files_info.get(f_basename, None)
+        if (not details) or details['ts'] < ts:
+            objmd5 = base64md5str(obj.properties.content_settings.content_md5)
+            files_info[f_basename] = {'ts':ts,
+                                      'fname':fname,
+                                      'objmd5':objmd5}
         else:
-            print '\t same file name, but older ', f_basename
-            continue
-        localname = local_dir + '/' + fname.split('/')[-1]
-        objmd5 = base64md5str(obj.properties.content_settings.content_md5)
+            print '\t same file name, but older ', fname
+
+    for f_basename, details in files_info.iteritems():
+        fname = details['fname']
+        objmd5 = details['objmd5']
+        print 'Downloading ',fname
+
+        localname = local_dir + '/' + f_basename
         if os.path.isfile(localname) and objmd5 in md5str(localname):
             print ('\tsame local file exists')
         else:
+            print ('\t' + fname + ' --> ' + localname)
             src.download_blob(fname, localname)
             md5str(localname, objmd5)
 
