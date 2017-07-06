@@ -3230,6 +3230,8 @@ presets:
     - value: PPT
       mimetype: application/vnd.ms-powerpoint
       replaces: [ppt]
+    - value: PPTX
+      mimetype: application/vnd.openxmlformats-officedocument.presentationml.presentation
     - value: RDF
       mimetype: application/rdf+xml
       openness_score: 4
