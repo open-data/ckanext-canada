@@ -573,6 +573,8 @@ ckanext.canada:schemas/doc.yaml
 
         facets_dict.update({
             'organization': _('Organization'),
+            'keywords': _('Keywords'),
+            'keywords_fra': _('Keywords'),
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'res_extras_language': _('Resource Language'),
