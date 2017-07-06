@@ -183,6 +183,13 @@ def title(k,v):
 
 
 def keywords(k,v):
+    # first try presets, another hack
+    name, res = _get_choices_value(canada_subject, v)
+
+    if res:
+        return name, res
+
+    #now try as keywords
     vs = v.split(' | ')
     def _to_list(val):
         r = val.replace('\n',',').replace(u'\u00a0',',').split(',')
