@@ -36,6 +36,9 @@ def never_ever_fail(default=None):
 
 @never_ever_fail(default=list)
 def dataset_comments(request, c, pkg_id):
+    # FIXME: This is a temporary change until drupal comment moderation is
+    # enabled.
+    return []
     # [{
     # 'date': ...,
     # 'thread': ...,
