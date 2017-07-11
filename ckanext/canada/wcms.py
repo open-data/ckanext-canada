@@ -36,9 +36,6 @@ def never_ever_fail(default=None):
 
 @never_ever_fail(default=list)
 def dataset_comments(request, c, pkg_id):
-    # FIXME: This is a temporary change until drupal comment moderation is
-    # enabled.
-    return []
     # [{
     # 'date': ...,
     # 'thread': ...,
@@ -56,7 +53,9 @@ def dataset_comments(request, c, pkg_id):
             'filter[ckan][condition][path]': 'commented_external_entity',
             'filter[ckan][condition][value]': 'ckan-{0}'.format(
                 pkg_id
-            )
+            ),
+            'filter[status-filter][condition][path]': 'status',
+            'filter[status-filter][condition][value]': '1'
         },
         auth=(
             config.get('ckanext.canada.drupal_user'),
