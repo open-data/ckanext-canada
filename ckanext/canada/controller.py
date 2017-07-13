@@ -619,7 +619,7 @@ class PDUpdateController(BaseController):
         form_data = {}
         for f in chromo['fields']:
             dirty = request.params.getone(f['datastore_id'])
-            data[f['datastore_id']] = canonicalize(dirty, f['datastore_type'])
+            data[f['datastore_id']] = canonicalize(dirty, f['datastore_type'], False)
             if f['datastore_id'] + '_prev' in request.params:
                  data_prev[f['datastore_id']] = request.params.getone(f['datastore_id'] + '_prev')
                  form_data[f['datastore_id'] + '_prev'] = data_prev[f['datastore_id']]
