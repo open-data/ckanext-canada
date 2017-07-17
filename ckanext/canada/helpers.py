@@ -137,6 +137,9 @@ def portal_url():
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
     
+def loop11_key():
+    return str(config.get('loop11.key', ''))
+
 def drupal_session_present(request):
     for name in request.cookies.keys():
         if name.startswith("SESS"):

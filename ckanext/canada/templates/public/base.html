@@ -15,10 +15,13 @@ if (location.hostname == 'localhost') {
 ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
-<script type="text/javascript">
-  window.loop11_key = "bca42f834d21755c050b437dcc881bcde963b08e";
-</script>
-<script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
+{% set loop11_key = h.loop11_key() %}
+{% if loop11_key %}
+  <script type="text/javascript">
+    window.loop11_key = '{{ loop11_key }}';
+  </script>
+  <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
+{% endif %}
 {%- endblock -%}
 
 {%- block gtm_datalayer -%}
