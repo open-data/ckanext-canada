@@ -158,7 +158,9 @@ def dataset_comment_count(package_id):
             'filter[ckan][condition][path]': 'commented_external_entity',
             'filter[ckan][condition][value]': 'ckan-{0}'.format(
                 package_id
-            )
+            ),
+            'filter[status-filter][condition][path]': 'status',
+            'filter[status-filter][condition][value]': '1'
         },
         auth=(
             config.get('ckanext.canada.drupal_user'),
