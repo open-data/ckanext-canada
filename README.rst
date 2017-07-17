@@ -120,6 +120,7 @@ Both servers need::
 
    googleanalytics.id = UA-1010101-1 (your analytics account id)
    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+   loop11.key = bca42f834d21755c050b437dcc881bcde963b08e
 
 
 OBD Configuration
