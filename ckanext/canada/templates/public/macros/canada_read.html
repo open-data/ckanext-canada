@@ -269,8 +269,12 @@ Search Facet Formatters
         (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}
       {% if field=='collection' %}
         {# collection is special, see also dataset_facets #}
-        {% do preset_choices.append({
-          'value': 'pd', 'label': _('Proactive Disclosure')}) %}
+        {% set collection_choices = preset_choices %}
+        {% set preset_choices = [{'value': 'pd', 'label': _('Proactive Disclosure')}] %}
+
+            {% for t in collection_choices %}
+              {% do preset_choices.append(t) %}
+            {% endfor %}
           {% for t in h.recombinant_get_types() %}
             {% do preset_choices.append({
               'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
