@@ -87,7 +87,7 @@ do
 	echo "FPATH $FPATH"
         CSV_FILES="${CSV_FILES} ${FPATH}"
 	echo "CSV_FILES $CSV_FILES"
-        wget --connect-timeout=10 --read-timeout=30 --dns-timeout=10 -t 20 -w 15 -q ${CSV_URL} -O "${FPATH}"
+        ./wget.sh --connect-timeout=10 --read-timeout=30 --dns-timeout=10 -t 20 -w 15 -q ${CSV_URL} -O "${FPATH}"
         log 'INFO' "Downloaded $(wc -c ${FPATH} | cut -d ' ' -f1) bytes: [${CSV_URL}]"
     done
     CSV_FILES=${CSV_FILES/ /}
