@@ -578,14 +578,15 @@ resources:
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
+      fgColor: FF336B87
       patternType: solid
-      fgColor: FFFFF056
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FFDFE2DB
+      fgColor: FF90AFC5
   default_preview_sort: registration_number
 
   triggers:
