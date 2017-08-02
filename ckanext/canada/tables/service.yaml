@@ -346,7 +346,7 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: No
+    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
@@ -416,21 +416,384 @@ resources:
         en: Environmental
         fr: Environnement
 
+  # 3.19
+  - datastore_id: cra_business_number
+    label:
+      en: Use of CRA Business Number
+      fr: Utilisation du numéro d’entreprise de l’ARC
+    description:
+      en: Identifies whether the Canada Revenue Agency's Business Number is used in the delivery of the service if the service is delivered to a business.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.20
+  - datastore_id: volumes_per_channel_online
+    label:
+      en: "Volumes per Channel (Applications): Online"
+      fr: "Mode de prestation du service en ligne (volume des demandes)"
+    description:
+      en: "This field is populated by the user.
+      Identifies the number of applications received in a fiscal year for each of the following channels
+      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
+    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber({cells})),{cells}<>"NA")'
+    format_type: Free text; numeric
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.21
+  - datastore_id: volumes_per_channel_telephone
+    label:
+      en: "Volumes per Channel (Applications): Telephone"
+      fr: "Mode de prestation du service par téléphone (volume des demandes)"
+    description:
+      en: "This field is populated by the user.
+      Identifies the number of applications received in a fiscal year for each of the following channels
+      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
+    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber({cells})),{cells}<>"NA")'
+    format_type: Free text; numeric
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.22
+  - datastore_id: volumes_per_channel_in_person
+    label:
+      en: "Volumes per Channel (Applications): In-Person"
+      fr: "Mode de prestation du service en personne (volume des demandes)"
+    description:
+      en: "This field is populated by the user.
+      Identifies the number of applications received in a fiscal year for each of the following channels
+      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
+    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber({cells})),{cells}<>"NA")'
+    format_type: Free text; numeric
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.23
+  - datastore_id: volumes_per_channel_mail
+    label:
+      en: "Volumes per Channel (Applications): Mail"
+      fr: "Mode de prestation du service par la poste (volume des demandes)"
+    description:
+      en: "s field is populated by the user.
+      Identifies the number of applications received in a fiscal year for each of the following channels
+      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank."
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
+    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber({cells})),{cells}<>"NA")'
+    format_type: Free text; numeric
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+
+  # 3.24
+  - datastore_id: user_fee
+    label:
+      en: User Fee
+      fr: Frais d’utilisation
+    description:
+      en: Identifies whether a user fee is collected for the provision of the service. 
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.25
+  - datastore_id: targets_published_en
+    label:
+      en: Service Standards and Performance Targets Published (English)
+      fr: Normes de service et objectifs de rendement publiés (en anglais)
+    description:
+      en: "This field is populated by the user.
+      Identifies whether there are service standards and performance targets for the service. Performance targets are usually outlined in a department's performance measurement framework (for details on the difference between service standards and performance targets, consult the Service Standards section of the Guideline on Service Management)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.26
+  - datastore_id: targets_published_fr
+    label:
+      en: Service Standards and Performance Targets Published (French)
+      fr: Normes de service et objectifs de rendement publiés (en français)
+    description:
+      en: "This field is populated by the user.
+      Identifies whether there are service standards and performance targets for the service. Performance targets are usually outlined in a department's performance measurement framework (for details on the difference between service standards and performance targets, consult the Service Standards section of the Guideline on Service Management)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.27
+  - datastore_id: e_registration
+    label:
+      en: "E-enabled Services: Account Registration/Enrollment"
+      fr: "Services électroniques : Enregistrement/ inscription du compte"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. Note: For more information on each interaction point, consult the Guideline on Service Management.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.28
+  - datastore_id: e_authentication
+    label:
+      en: "E-enabled Services: Authentication"
+      fr: "Services électroniques : Authentification"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. 
+      
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.29
+  - datastore_id: e_application
+    label:
+      en: "E-enabled Services: Application"
+      fr: "Services électroniques : Demande"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. 
+      
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.30
+  - datastore_id: e_decision
+    label:
+      en: "E-enabled Services: Decision"
+      fr: "Services électroniques : Décision"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. 
+      
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.31
+  - datastore_id: e_issuance
+    label:
+      en: "E-enabled Services: Issuance"
+      fr: "Services électroniques : Délivrance"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. 
+      
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.32
+  - datastore_id: e_feedback
+    label:
+      en: "E-enabled Services: Issue Resolution and Feedback"
+      fr: "Services électroniques : Solution de problème et rétroaction"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. 
+      
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.33
+  - datastore_id: percentage_end_to_end_online
+    label:
+      en: "E-enabled Services: Estimated % of the service completed online, end-to-end"
+      fr: "Pourcentage du service effectué en ligne, de bout en bout."
+    description:
+      en: "Indicates, from the client's perspective, the percentage of the service's activities that is completed online end-to-end, based on the number of applicable interaction points of the service."
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),left(cell("format",{cell}),1)<>"P",or(not(isnumber({cell})),{cell}<0,{cell}>100)) '
+    format_type: Free text; percentage
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 20
+
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -453,7 +816,7 @@ resources:
   default_preview_sort: service_id_number
 
   triggers:
-  - service_trigger
+#  - service_trigger
   - update_record_modified_created_trigger
 
   examples:
