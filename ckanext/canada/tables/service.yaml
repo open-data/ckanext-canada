@@ -20,6 +20,7 @@ resources:
       fr: Numéro d'identification du service
     description:
       en: This field is populated by the user. Identifies the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
+      fr: Cette zone doit être remplie par l’utilisateur. Identifie le numéro unique attribué à un service dans le répertoire par un ministère pour faciliter la consultation de données sur les services particuliers.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -36,6 +37,7 @@ resources:
       fr: Nom du service (en anglais)
     description:
       en: This field is populated by the user.  Identifies the official name of the service.
+      fr: Cette zone doit être remplie par l’utilisateur. Identifie le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -52,6 +54,7 @@ resources:
       fr: Nom du service (en français)
     description:
       en: This field is populated by the user.  Identifies the official name of the service.
+      fr: Cette zone doit être remplie par l’utilisateur. Identifie le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -68,6 +71,7 @@ resources:
       fr: Service externe ou service intégré interne
     description:
       en: Identifies the service as either an external service or internal enterprise service, as defined in the Policy on Service.
+      fr: Identifie le service en tant que service externe ou service interne intégré au sens des définitions données dans la Politique sur les services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -91,8 +95,10 @@ resources:
   - datastore_id: service_type
     label:
       en: Service Type
+      fr: Type de service
     description:
       en: Identifies the external or internal service type.
+      fr: Identifie le type de service parmi les service externes ou services internes intégrés.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -156,6 +162,7 @@ resources:
       fr: Désignations spéciales
     description:
       en: Identifies the service as a priority service, a mission critical service and/or an essential service. These designations are not mutually exclusive and more than one designation can be listed.
+      fr: Identifie le service comme un service prioritaire, un service critique à la mission et / ou un service essentiel. Ces désignations ne sont pas mutuellement exclusives et plus d'une désignation être indiquée.
     obligation: Mandatory
     excel_required: true
     format_type: Free text (comma separated list of codes from reference table)
@@ -197,6 +204,7 @@ resources:
       fr: Description du service (en anglais)
     description:
       en: This field is populated by the user.  Provides a brief description of the service
+      fr: Cette zone doit être remplie par l’utilisateur.  Fournit une brève description du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -213,6 +221,7 @@ resources:
       fr: Description du service (en français)
     description:
       en: This field is populated by the user.  Provides a brief description of the service
+      fr: Cette zone doit être remplie par l’utilisateur.  Fournit une brève description du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -229,6 +238,7 @@ resources:
       fr: Secteur de responsabilité (en anglais)
     description:
       en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -245,6 +255,7 @@ resources:
       fr: Secteur de responsabilité (en français)
     description:
       en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -261,6 +272,7 @@ resources:
       fr: Instruments habilitants (en anglais)
     description:
       en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie une liste de lois, réglements et/ou de politiques qui confèrent le pouvoir d’établir le service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -277,6 +289,7 @@ resources:
       fr: Instruments habilitants (en français)
     description:
       en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie une liste de lois, réglements et/ou de politiques qui confèrent le pouvoir d’établir le service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -293,6 +306,7 @@ resources:
       fr: Désignation du programme (en anglais)
     description:
       en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du programme en vertu duquel le service est offert.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -309,7 +323,7 @@ resources:
       fr: Désignation du programme (en français)
     description:
       en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
-
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du programme en vertu duquel le service est offert.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -326,6 +340,7 @@ resources:
       fr: Code d'identification du programme 
     description:
       en: This field is populated by the user.  Identifies the unique program number associated with program elements for all strategic outcomes, programs, sub-programs, and sub-sub-programs. Corporate planners in the department who are responsible for the Policy on Results can assist in identifying the program ID Number, if needed. 
+      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le numéro unique associé aux éléments de programme pour l’ensemble des résultats stratégiques, programmes, sous-programmes et sous sous programmes. Au besoin, les planificateurs ministériels responsables de la Politique sur les résultats du ministère peuvent aider à trouver le code d'identification du programme.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -342,6 +357,7 @@ resources:
       fr: Propriétaire du service
     description:
       en: This field is populated by the user.  Identifies the owner of the service, the organization that is responsible for it based on established authorities. If the owner is another organization, provide that name.    Organizations are encouraged to use applied titles, in accordance with the Federal Identity Program. For a list of applied titles, consult the Registry of Applied Titles.
+      fr: Identifie le propriétaire du service, l’organisation qui en est responsable, selon les instruments habilitants. Si le propriétaire est un autre ministère, il faut en préciser le nom. Les ministères sont encouragés à utiliser le titre d’usage approuvé du ministère, en conformité avec le Programme fédéral de coordination de l’image de marque. Pour obtenir une liste des titres, veuillez consulter le Registre des titres d’usage.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -359,6 +375,7 @@ resources:
       fr: Ententes de service
     description:
       en: Identifies whether service agreements are in place to support the delivery of the service.
+      fr: Identifie si des ententes de service ont été conclues pour appuyer la prestation du service.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -385,6 +402,8 @@ resources:
       fr: Clients/groupes cibles
     description:
       en: "Identifies the clients or target groups of the service.  Note: Should you require further clarification with regard to these categories, please consult the Standard on Tagging, in the Policy on Results."
+      fr: "Identifie les clients ou les groupes de services cibles.
+      Remarque : Pour obtenir d’autres éclaircissements relativement à ces catégories, veuillez consulter la Norme sur l’étiquetage prévue dans la Politique sur les résultats."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -423,6 +442,7 @@ resources:
       fr: Utilisation du numéro d’entreprise de l’ARC
     description:
       en: Identifies whether the Canada Revenue Agency's Business Number is used in the delivery of the service if the service is delivered to a business.
+      fr: Identifie si le numéro d'entreprise de l'Agence du Revenu du Canada est utilisé dans la prestation du service, si le service est livré à une entreprise.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -451,6 +471,8 @@ resources:
       en: "This field is populated by the user.
       Identifies the number of applications received in a fiscal year for each of the following channels
       Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie le nombre de demandes reçues en ligne au cours d’un exercice financier. Remarque : Si un service n’est pas offert en ligne, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
@@ -471,6 +493,10 @@ resources:
       en: "This field is populated by the user.
       Identifies the number of applications received in a fiscal year for each of the following channels
       Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie le nombre de demandes reçues par téléphone au cours d’un exercice financier. 
+
+      Remarque : Si un service n’est pas offert par téléphone, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
@@ -491,6 +517,8 @@ resources:
       en: "This field is populated by the user.
       Identifies the number of applications received in a fiscal year for each of the following channels
       Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank. "
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie le nombre de demandes reçues en personne au cours d’un exercice financier. Remarque : Si un service n’est pas offert en personne, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
@@ -508,9 +536,11 @@ resources:
       en: "Volumes per Channel (Applications): Mail"
       fr: "Mode de prestation du service par la poste (volume des demandes)"
     description:
-      en: "s field is populated by the user.
+      en: "This field is populated by the user.
       Identifies the number of applications received in a fiscal year for each of the following channels
       Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please leave the cell blank."
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie le nombre de demandes reçues par la poste au cours d’un exercice financier. Remarque : Si un service n’est pas offert par la poste, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide"
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber({cell})),{cell}<>"NA")'
@@ -529,6 +559,7 @@ resources:
       fr: Frais d’utilisation
     description:
       en: Identifies whether a user fee is collected for the provision of the service. 
+      fr: Indique si un frais d'utilisation est  perçu pour le service.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -553,6 +584,10 @@ resources:
     description:
       en: "This field is populated by the user.
       Identifies whether there are service standards and performance targets for the service. Performance targets are usually outlined in a department's performance measurement framework (for details on the difference between service standards and performance targets, consult the Service Standards section of the Guideline on Service Management)."
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie s’il y a des normes de service et des cibles de rendement pour le service.
+
+      Les cibles de rendement sont habituellement décrites dans un Cadre de mesure du rendement du ministère (pour obtenir des détails sur la différence entre les normes de services et les cibles de rendement opérationnel, consultez la section Normes de service de la Ligne directrice sur la gestion des services)."
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -570,6 +605,10 @@ resources:
     description:
       en: "This field is populated by the user.
       Identifies whether there are service standards and performance targets for the service. Performance targets are usually outlined in a department's performance measurement framework (for details on the difference between service standards and performance targets, consult the Service Standards section of the Guideline on Service Management)."
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Identifie s’il y a des normes de service et des cibles de rendement pour le service.
+
+      Les cibles de rendement sont habituellement décrites dans un Cadre de mesure du rendement du ministère (pour obtenir des détails sur la différence entre les normes de services et les cibles de rendement opérationnel, consultez la section Normes de service de la Ligne directrice sur la gestion des services)."
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -590,6 +629,11 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent s’enregistrer / s'inscrire à un compte personnalisé. 
+
+      S/O: Le point d'interaction n'est pas applicable au service. 
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne. 
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -620,6 +664,11 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent établir des justificatifs d'identité et s'authentifier à l'aide du service de courtier de justificatifs d'identité ou la Clé GC.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -650,6 +699,14 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent:
+      -  Compléter et envoyer une demande;
+      -  Recevoir la confirmation de la réception / l'état de la demande; 
+      -  Effectuer un paiement.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -680,6 +737,9 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent être informés d'une décision / état de la demande. S/O: Le point d'interaction n'est pas applicable au service. 
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne. 
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -710,6 +770,17 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent recevoir un(e):
+         - paiement;
+         - autorisation;
+         - permis;
+         - licence;
+         - certification; ou
+         - consultation.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -740,6 +811,13 @@ resources:
       N/A:  This interaction point is not applicable to the service.
       Yes: This interaction point is applicable to the service and is e-enabled.
       No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent:
+      - Demander une assistance en ligne et compléter les points d'interaction; 
+      - Fournir une rétroaction.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -766,6 +844,8 @@ resources:
       fr: "Pourcentage du service effectué en ligne, de bout en bout."
     description:
       en: "Indicates, from the client's perspective, the percentage of the service's activities that is completed online end-to-end, based on the number of applicable interaction points of the service."
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Indique, du point de vue du client, le pourcentage des activités du service qui est exécuté en ligne de bout en bout, en fonction du nombre de points d'interaction applicables au service."
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),left(cell("format",{cell}),1)<>"P",or(not(isnumber({cell})),{cell}<0,{cell}>100)) '
@@ -784,6 +864,8 @@ resources:
       fr: "Pourcentage du service effectué en ligne"
     description:
       en: "Indicates, from the client's perspective, the percentage of the service's activities that is completed online, based on the number of applicable interaction points of the service."
+      fr: "Cette zone doit être remplie par l’utilisateur.
+      Indique, du point de vue du client, le pourcentage des activités du service qui est exécuté, en fonction du nombre de points d'interaction applicables au service"
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),left(cell("format",{cell}),1)<>"P",or(not(isnumber({cell})),{cell}<0,{cell}>100)) '
@@ -830,7 +912,7 @@ resources:
       patternType: solid
       fgColor: FFEFBD09
   excel_error_background_color: "CD7213"
-  excel_required_border_color: "16253D"
+  excel_required_border_color: "CD7213"
 
   default_preview_sort: service_id_number
 
