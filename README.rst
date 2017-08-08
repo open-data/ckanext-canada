@@ -134,6 +134,11 @@ We use a different list of plugins for Open By Default::
 
    ckan.extra_resource_fields = language
 
+Update OBD documents (example)::
+   import_xml2obd.py  pull ./production.ini ./obd-repo  > /tmp/pull.log
+   import_xml2obd.py ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan  >  ./data/obd-20170704.jsonl
+   import_xml2obd.py upload  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key> ./data/obd-20170704.jsonl ./obd-repo
+
 Configuration: Solr
 ----------------------
 
