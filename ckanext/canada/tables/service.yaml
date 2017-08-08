@@ -769,6 +769,25 @@ resources:
     obligation: Mandatory
     excel_required: true
     excel_cell_error_formula: 'and(not(isblank({cell})),left(cell("format",{cell}),1)<>"P",or(not(isnumber({cell})),{cell}<0,{cell}>100)) '
+    excel_header_error_formula: 'sumproduct((not(isblank({cells})))*(left(cell("format",{cells}),1)<>"P")*((not(isnumber({cells})))+({cells}<0)+({cells}>100)))>0'
+    format_type: Free text; percentage
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 20
+
+  # 3.34
+  - datastore_id: percentage_online
+    label:
+      en: "E-enabled Services: Estimated % of the service completed online"
+      fr: "Pourcentage du service effectué en ligne"
+    description:
+      en: "Indicates, from the client's perspective, the percentage of the service's activities that is completed online, based on the number of applicable interaction points of the service."
+    obligation: Mandatory
+    excel_required: true
+    excel_cell_error_formula: 'and(not(isblank({cell})),left(cell("format",{cell}),1)<>"P",or(not(isnumber({cell})),{cell}<0,{cell}>100)) '
+    excel_header_error_formula: 'sumproduct((not(isblank({cells})))*(left(cell("format",{cells}),1)<>"P")*((not(isnumber({cells})))+({cells}<0)+({cells}>100)))>0'
     format_type: Free text; percentage
     validation: This field must not be empty
     visible_to_public: Yes
