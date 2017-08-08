@@ -520,7 +520,8 @@ resources:
     description:
       en: The field indicates the rationale behind the public engagement initiative. This field include only criteria that define high profile public engagement.
       fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une initiative importante de participation du public.
-    validation: Mandatory
+    obligation: Mandatory
+    excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
