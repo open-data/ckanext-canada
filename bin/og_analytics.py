@@ -112,7 +112,7 @@ class DatasetDownload():
     def __init__(self, ga, view_id, conf_file):
         self.ga = ga
         self.view_id = view_id
-        self.file = '/tmp/od-do-canada.jl.gz'
+        self.file = None
         self.site = ckanapi.RemoteCKAN('http://open.canada.ca/data')
         self.read_orgs()
 
@@ -249,7 +249,9 @@ class DatasetDownload():
             org_title = [x.strip() for x in org_title]
             rows.append( [rec_id, rec_title['en'], rec_title['fr'],
                           org_title[0], org_title[1], count])
-        sheet1 = {'name':'Top 20 Datasets',
+        rows.append([])
+        rows.append([self.start_date, self.end_date])
+        sheet1 = {'name':'Top 20 Information',
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
