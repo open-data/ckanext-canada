@@ -165,11 +165,11 @@ resources:
       fr: Identifie le service comme un service prioritaire, un service critique à la mission et / ou un service essentiel. Ces désignations ne sont pas mutuellement exclusives et plus d'une désignation être indiquée.
     obligation: Mandatory
     excel_required: true
-    format_type: Free text (comma separated list of codes from reference table)
+    format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
-    occurrence: Repeatable
-    datastore_type: _text
+    occurrence: Single
+    datastore_type: text
     excel_column_width: 30
     choices:
       1:
@@ -917,41 +917,47 @@ resources:
   default_preview_sort: service_id_number
 
   triggers:
-#  - service_trigger
+  - service_trigger
   - update_record_modified_created_trigger
 
   examples:
     record:
-      contact_email: first.last@example.gc.ca
-      description_en:
-        To engage and obtain Provincial and Territorial partner views
-      description_fr:
-        Obtenir les opinions des partenaires provinciaux et territoriaux
-      further_information_en: ""
-      further_information_fr: ""
-      goals: ["CB", "CS"]
-      partner_departments: ["271", "141"]
-      planned_end_date: "2017-05-30"
-      planned_start_date: "2017-05-15"
-      policy_program_lead_email: program.lead@example.gc.ca
-      public_opinion_research: N
-      public_opinion_research_standing_offer: NA
-      publishable: "N"
-      service_id_number: CCC0249
-      remarks_en: ""
-      remarks_fr: ""
-      report_available_online: "N"
-      report_link_en: ""
-      report_link_fr: ""
-      sector: ER
-      status: P
-      subjects: ["AP", "CD", "HS", "SE"]
-      target_participants_and_audience: ["IP", "IG", "PT"]
-      title_en: Family Services Program Reform
-      title_fr: Réforme du programme des services à l'enfance
-      rationale: ["B17"]
+      service_id_number: S0123
+      service_name_en: Partner views
+      service_name_fr: Opinions des partenaires
+      external_internal: EX
+      service_type: RES
+      special_designations: "8"
+      service_description_en: Family Services Program Reform
+      service_description_fr: Réforme du programme des services à l'enfance
+      responsibility_area_en: Family Services
+      responsibility_area_fr: Services à l'enfance
+      authority_en: Program Reform
+      authority_fr: Réforme du programme
+      program_name_en: Partner views
+      program_name_fr: Opinions des partenaires
+      program_id_number: P0124
+      service_owner: "271"
+      service_agreements: NA
+      client_target_groups: [PP, IO]
+      cra_business_number: Y
+      volumes_per_channel_online: 20
+      volumes_per_channel_telephone: NA
+      volumes_per_channel_in_person: NA
+      volumes_per_channel_mail: NA
+      user_fee: Y
+      targets_published_en: Service Standards
+      targets_published_fr: Normes de service
+      e_registration: Y
+      e_authentication: Y
+      e_application: NA
+      e_decision: N
+      e_issuance: NA
+      e_feedback: Y
+      percentage_end_to_end_online: 90
+      percentage_online: 100
     filters:
-      sector: SE
+      external_internal: EX
     filter_one:
-      service_id_number: CCC0249
-    sort: planned_start_date desc
+      service_id_number: S0123
+    sort: service_id_number asc
