@@ -240,14 +240,14 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FF005172
+      fgColor: FF004d47
     Font:
-      bold: true
+      size: 14
       color: FFFFFFFF
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF3095b4
+      fgColor: FFb9c4c9
 
   triggers:
   - inventory_trigger

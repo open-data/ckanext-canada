@@ -105,13 +105,14 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFA1D490
+      fgColor: FF3f6c45
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FFA1D490
+      fgColor: FFeeece1
   default_preview_sort: year desc, month desc
 
   examples:
