@@ -27,6 +27,8 @@ from lxml import etree
 import yaml
 import uuid
 
+import csv
+
 from azure.storage.blob import BlockBlobService
 from azure.common import AzureMissingResourceHttpError
 from azure.storage.blob import ContentSettings
@@ -551,6 +553,53 @@ def pull_docs(conf_file, local_dir):
     for fname in files:
         pass  # src.delete_blob(fname)
 
+def read_csv(filename):
+    content=[]
+    with open(filename) as f:
+        reader = csv.reader(f)
+        for x in reader:
+            if x:
+                content.append(x[0].strip())
+    return content[1:]
+
+def delete_docs(csv_file, file_dir, site_url, api_key):
+    ids = read_csv(csv_file)
+    print len(ids), ids[:5]
+    files = glob.glob(file_dir + '/*.xml')
+    all_files = []
+    for filename in files:
+        fbasename = os.path.basename(filename)
+        all_files.append([fbasename, filename])
+    to_del = []
+    for id in ids:
+        s = ''.join(['-', id, '.'])
+        for [fbase, full] in all_files:
+            if s in fbase:
+                to_del.append([fbase, full])
+    print len(to_del), to_del[:5]
+    assert( len(to_del)==len(ids))
+
+    datasets = []
+    for [fbase, filename] in to_del:
+        id = str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase))
+        datasets.append(id)
+    print datasets[:5]
+
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=api_key,
+        user_agent='ckanapi-uploader/1.0')
+    for id in datasets:
+        try:
+            site.action.package_delete(id=id)
+        except ckan.logic.NotAuthorized as e:
+            raise Exception('API key error')
+        except:
+            print ( id, 'delete failed')
+        else:
+            print ( id, 'deleted')
 
 def main():
     global audience, canada_resource_type,canada_subject
@@ -562,6 +611,8 @@ def main():
         return upload_resources(*sys.argv[2:])
     elif sys.argv[1] =='pull':
         return pull_docs(*sys.argv[2:])
+    elif sys.argv[1] == 'delete':
+        return delete_docs(*sys.argv[2:])
 
     site = ckanapi.RemoteCKAN(sys.argv[2])
 
@@ -592,6 +643,23 @@ def main():
     elif os.path.isdir(filename):
         files = glob.glob(filename + '/*.xml')
     assert(files)
+
+    if len(sys.argv) >=4: # only update the files in this list
+        with open(sys.argv[3]) as f:
+            flist = f.read()
+        flist=flist.split()
+        files = []
+        assert(os.path.isdir(sys.argv[1]))
+        for fname in flist:
+            if fname[-4:] == '.md5':
+                continue
+            fname = os.path.basename(fname)
+            fname = sys.argv[1] + '/' + fname
+            if fname[-4:] != '.xml':
+                fname += '.xml'
+                if fname in files:
+                    continue
+            files.append(fname)
 
     for filename in files:
         refs, extras = read_xml(filename)
