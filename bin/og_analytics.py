@@ -11,6 +11,7 @@ from oauth2client import file
 from oauth2client import tools
 
 import os
+import time
 import gzip
 import json
 import urllib
@@ -61,6 +62,17 @@ def write_csv(filename, rows, header=None):
     for row in rows:
         writer.writerow(row)
 
+def read_csv(filename):
+    content=[]
+    with open(filename) as f:
+        reader = csv.reader(f)
+        firstrow = next(reader)
+        firstrow[0] = firstrow[0].lstrip(codecs.BOM_UTF8)
+        content.append(firstrow)
+        for x in reader:
+            content.append(x)
+    return content
+
 proxy= os.environ['http_proxy']
 
 # https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py
@@ -108,11 +120,36 @@ def initialize_analyticsreporting(client_secrets_path):
 
   return analytics
 
+def parseReport(response, dimension_name, metric_name):
+    data, nextPage = [], None
+    for report in response.get('reports', []):
+        columnHeader = report.get('columnHeader', {})
+        dimensionHeaders = columnHeader.get('dimensions', [])
+        metricHeaders = columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
+
+        if dimension_name:
+            id_idx = dimensionHeaders.index(dimension_name) # raise exception ValueError if not there
+
+        metricHeaders = [ v['name'] for v in metricHeaders]
+        count_idx = metricHeaders.index(metric_name)
+        rows = report.get('data', {}).get('rows', [])
+
+        for row in rows:
+          dimensions = row.get('dimensions', [])
+          dateRangeValues = row.get('metrics', [])
+          if dimension_name:
+            data.append([dimensions[id_idx], dateRangeValues[0]['values'][count_idx]])
+          else:
+            data.append([dateRangeValues[0]['values'][count_idx]])
+        nextPage = report.get('nextPageToken', None)
+        break
+    return data, nextPage
+
 class DatasetDownload():
     def __init__(self, ga, view_id, conf_file):
         self.ga = ga
         self.view_id = view_id
-        self.file = None
+        self.file = '/tmp/od-do-canada.jl.gz'
         self.site = ckanapi.RemoteCKAN('http://open.canada.ca/data')
         self.read_orgs()
 
@@ -341,6 +378,7 @@ class DatasetDownload():
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
+        write_csv("/tmp/od_ga_top100.csv", rows)
 
         for org_id, recs in org_recs.iteritems():
             rows = []
@@ -368,7 +406,7 @@ class DatasetDownload():
         sheets.sort(key=lambda x: x['name'])
         sheets.insert(0, sheet2)
         sheets.insert(0, sheet1)
-        write_xls('/tmp/downloads.xls', sheets)
+        write_xls('/tmp/od_ga_downloads.xls', sheets)
         
     def getRawReport(self, start='0', size = '1000'):
           return self.ga.reports().batchGet(
@@ -404,23 +442,7 @@ class DatasetDownload():
           ).execute()
 
     def parseReport(self, response):
-        for report in response.get('reports', []):
-            columnHeader = report.get('columnHeader', {})
-            dimensionHeaders = columnHeader.get('dimensions', [])
-            metricHeaders = columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
-            
-            id_idx = dimensionHeaders.index('ga:pagePath') # raise exception ValueError if not there
-            
-            metricHeaders = [ v['name'] for v in metricHeaders]
-            count_idx = metricHeaders.index('ga:totalEvents') 
-            rows = report.get('data', {}).get('rows', [])
-
-            data = []
-            for row in rows:
-              dimensions = row.get('dimensions', [])
-              dateRangeValues = row.get('metrics', [])
-              data.append([dimensions[id_idx], dateRangeValues[0]['values'][count_idx]])
-            return data, report.get('nextPageToken', None)
+        return parseReport(response, 'ga:pagePath', 'ga:totalEvents')
 
     def download(self):
         if not self.file:
@@ -453,11 +475,178 @@ class DatasetDownload():
             traceback.print_exc()
             print('error reading downloaded file')
             sys.exit(0)
+    def monthly_usage(self, start, end, csv_file):
+        total, downloads = 0, 0
+        nextPage='0'
+        body={
+            'reportRequests': [
+            {
+              'viewId': self.view_id,
+              'dateRanges': [{'startDate': start, 'endDate': end}],
+          'metrics': [{'expression': 'ga:sessions'},
+                      {'expression': 'ga:pageviews'} ],
+#          'dimensions':[{'name':'ga:pagePath'}],
+          'dimensionFilterClauses': [ {
+                'operator': 'OR',
+                'filters': [{
+                    'dimensionName': 'ga:pagePath',
+                    'operator': "BEGINS_WITH",
+                    'expressions': ['/data/en/dataset']
+                    },{
+                     'dimensionName': 'ga:pagePath',
+                     'operator': "BEGINS_WITH",
+                    'expressions': ['/data/fr/dataset']
+                    }]
+                }],
+          'orderBys':[
+            {'fieldName': 'ga:pageviews',
+             'sortOrder': 'DESCENDING'
+            }],
+           'pageToken': nextPage,
+           'pageSize': '100',
+        }]
+        }
+        while True:
+            body['reportRequests'][0]['pageToken'] = nextPage
+            response = self.ga.reports().batchGet(body=body
+            ).execute()
+            data, nextPage = parseReport(response, None, 'ga:pageviews')
+            for [vcount] in data:
+                total += int(vcount)
+            if not nextPage or nextPage =='0':
+                break
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': start, 'endDate': end}],
+                      'metrics': [{'expression': 'ga:totalEvents'},
+                                  {'expression': 'ga:eventValue'},
+                                  {'expression': 'ga:uniqueEvents'} ],
+                      'dimensionFilterClauses': [ {
+                            'filters': [{
+                                'dimensionName': 'ga:eventCategory',
+                                'operator': "BEGINS_WITH",
+                                'expressions': ['resource']
+                                }]
+                            }],
+                      'orderBys':[
+                        {'fieldName': 'ga:totalEvents',
+                         'sortOrder': 'DESCENDING'
+                        }],
+                       'pageToken': '0',
+                       'pageSize': '100',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, None, 'ga:totalEvents')
+        downloads = int(data[0][0])
+        print total, downloads
+        [year, month, _] = start.split('-')
+        data = read_csv(csv_file)
+        if int(data[1][0]) == int(year) and int(data[1][1]) == int(month):
+            print 'entry exists, no overwriting'
+            return
+        row = [year, month, total, downloads]
+        data[0] = ['year / année', 'month / mois', 'visits / visites', 'downloads / téléchargements']
+        data.insert(1, row)
+        write_csv(csv_file, data)
 
-def report(client_secret_path, view_id, og_config_file, start, end, og_type):
+    def by_country(self, end, csv_file):
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': '2012-01-01', 'endDate': end}],
+                      'metrics': [{'expression': 'ga:pageviews'} ],
+                  'dimensions':[{'name':'ga:country'}],
+                  'dimensionFilterClauses': [ {
+                        'operator': 'OR',
+                        'filters': [{
+                            'dimensionName': 'ga:pagePath',
+                            'operator': "BEGINS_WITH",
+                            'expressions': ['/data/en/dataset']
+                            },{
+                             'dimensionName': 'ga:pagePath',
+                             'operator': "BEGINS_WITH",
+                            'expressions': ['/data/fr/dataset']
+                            }]
+                        }],
+                  'orderBys':[
+                    {'fieldName': 'ga:pageviews',
+                     'sortOrder': 'DESCENDING'
+                    }],
+                   'pageToken': '0',
+                   'pageSize': '1000',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, 'ga:country', 'ga:pageviews')
+        total = 0
+        data = [ [country, int(count)] for [country, count] in data ]
+        for c, count in data:
+            total += count
+        data = [ [country, int(count), "%.2f"%((count*100.0)/total) + '%' ] for [country, count] in data ]
+
+        data.insert(0,['region / Région', 'visits / Visites', 'percentage of total visits / Pourcentage du nombre total de visites'])
+        write_csv(csv_file, data)
+
+    def by_region(self, end, csv_file):
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': '2012-01-01', 'endDate': end}],
+                      'metrics': [{'expression': 'ga:pageviews'} ],
+                  'dimensions':[{'name':'ga:region'}],
+                  'dimensionFilterClauses': [ {
+                        'filters': [{
+                                'dimensionName': 'ga:country',
+                                'operator': "BEGINS_WITH",
+                                'expressions': ['Canada']
+                            }],
+                       }, {
+                           'operator': 'OR',
+                            'filters': [{
+                                'dimensionName': 'ga:pagePath',
+                                'operator': "BEGINS_WITH",
+                                'expressions': ['/data/en/dataset']
+                                },{
+                                 'dimensionName': 'ga:pagePath',
+                                 'operator': "BEGINS_WITH",
+                                'expressions': ['/data/fr/dataset']
+                              }]
+                        }],
+                  'orderBys':[
+                    {'fieldName': 'ga:pageviews',
+                     'sortOrder': 'DESCENDING'
+                    }],
+                   'pageToken': '0',
+                   'pageSize': '1000',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, 'ga:region', 'ga:pageviews')
+        total = 0
+        data = [ [country, int(count)] for [country, count] in data ]
+        for c, count in data:
+            total += count
+        data = [ [country if country !='(not set)' else 'unknown', int(count), "%.2f"%((count*100.0)/total) + '%' ] for [country, count] in data ]
+
+        data.insert(0,['region / Région', 'visits / Visites', 'percentage of total visits / Pourcentage du nombre total de visites'])
+        write_csv(csv_file, data)
+
+def report(client_secret_path, view_id, og_config_file, start, end, va):
+      og_type = va
       analytics = initialize_analyticsreporting(client_secret_path)
       ds = DatasetDownload(analytics, view_id, og_config_file)
-      ds.getStats(start, end, og_type)
+      ds.getStats(start, end, og_type); time.sleep(2)
+      ds.monthly_usage(start, end, '/tmp/od_ga_month.csv'); time.sleep(2)
+      ds.by_country(end, '/tmp/od_ga_by_country.csv'); time.sleep(2)
+      ds.by_region(end, '/tmp/od_ga_by_resion.csv')
 
 def main():
     report(*sys.argv[1:])
