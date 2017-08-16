@@ -376,14 +376,14 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'integer_or_na',
+        name=u'integer_or_na_nd',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF value <> 'NA' AND NOT value ~ '^[0-9]+$' THEN
+                IF value <> 'NA' AND value <> 'ND' AND NOT value ~ '^[0-9]+$' THEN
                     RAISE EXCEPTION 'This field must be NA or an integer: %', field_name;
                 END IF;
             END;
@@ -422,18 +422,17 @@ def update_triggers():
                 PERFORM not_empty(NEW.service_agreements, 'service_agreements');
                 PERFORM choice_one_of(NEW.service_agreements, {service_agreements}, 'service_agreements');
                 PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
-                NEW.client_target_groups := choices_from(
-                    NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
+                PERFORM choice_one_of(NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
                 PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
                 PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
                 PERFORM not_empty(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
-                PERFORM integer_or_na(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
+                PERFORM integer_or_na_nd(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
                 PERFORM not_empty(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
-                PERFORM integer_or_na(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
+                PERFORM integer_or_na_nd(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
                 PERFORM not_empty(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
-                PERFORM integer_or_na(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
+                PERFORM integer_or_na_nd(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
                 PERFORM not_empty(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
-                PERFORM integer_or_na(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
+                PERFORM integer_or_na_nd(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
                 PERFORM not_empty(NEW.user_fee, 'user_fee');
                 PERFORM choice_one_of(NEW.user_fee, {user_fee}, 'user_fee');
                 PERFORM not_empty(NEW.targets_published_en, 'targets_published_en');
@@ -450,8 +449,10 @@ def update_triggers():
                 PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
                 PERFORM not_empty(NEW.e_feedback, 'e_feedback');
                 PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
-                PERFORM not_empty(NEW.percentage_end_to_end_online, 'percentage_end_to_end_online');
-                PERFORM valid_percentage(NEW.percentage_end_to_end_online, 'percentage_end_to_end_online');
+                PERFORM not_empty(NEW.interaction_points_online, 'interaction_points_online');
+                PERFORM choice_one_of(NEW.interaction_points_online, {interaction_points_online}, 'interaction_points_online');
+                PERFORM not_empty(NEW.interaction_points_total, 'interaction_points_total');
+                PERFORM choice_one_of(NEW.interaction_points_total, {interaction_points_total}, 'interaction_points_total');
                 PERFORM not_empty(NEW.percentage_online, 'percentage_online');
                 PERFORM valid_percentage(NEW.percentage_online, 'percentage_online');
                 RETURN NEW;
@@ -471,6 +472,8 @@ def update_triggers():
                 e_decision=pg_array(service_choices['e_decision']),
                 e_issuance=pg_array(service_choices['e_issuance']),
                 e_feedback=pg_array(service_choices['e_feedback']),
+                interaction_points_online=pg_array(service_choices['interaction_points_online']),
+                interaction_points_total=pg_array(service_choices['interaction_points_total']),
             )
         )
 
