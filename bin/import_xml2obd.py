@@ -4,6 +4,7 @@ Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
     import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
     import_xml2obd.py pull <conf file> <output directory>
+    import_xml2obd.py de-dup <output directory> <site_url>
 
     sample conf file:
     [storage]
@@ -226,7 +227,7 @@ def _get_choices_value(preset, val):
             if label.lower() in val:
                 res.append(item['value'])
                 break
-    return name, res
+    return name, list(set(res))
 
 
 def _get_single_choices_value(preset, val):
@@ -601,6 +602,51 @@ def delete_docs(csv_file, file_dir, site_url, api_key):
         else:
             print ( id, 'deleted')
 
+def duplicate_docs(file_dir, site_url):
+    raw_files = glob.glob(file_dir + '/*.md5')
+    files = []
+    for filename in raw_files:
+        fbasename = os.path.basename(filename)
+        fname = fbasename[:-4]
+        if fname[-4:] == '.xml':
+            continue
+        with open(filename) as f:
+            md5 = f.readline().split(' ')[0].strip()
+        files.append([md5, fname])
+    md5dict = defaultdict(list)
+    for [md5, fname] in files:
+        md5dict[md5].append(fname)
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=None,
+        user_agent='ckanapi-uploader/1.0')
+
+    for md5, flist in md5dict.iteritems():
+        if len(flist) > 1:
+            ids = [ str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase + '.xml')) for fbase in flist]
+            out = [str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase + '.xml'))+':'+fbase for fbase in flist]
+            count = 0
+            for id in ids:
+                try:
+                    target_pkg = site.action.package_show(id=id)
+                    count += 1
+                except (NotFound, NotAuthorized):
+                    target_pkg = None
+                except (CKANAPIError, urllib2.URLError), e:
+                    sys.stdout.write(
+                        json.dumps([
+                            rec['id'],
+                            'target error',
+                            unicode(e.args)
+                        ]) + '\n'
+                    )
+                    raise
+            if count > 1:
+                print out
+
 def main():
     global audience, canada_resource_type,canada_subject
     global canada_resource_language, organizations
@@ -613,6 +659,8 @@ def main():
         return pull_docs(*sys.argv[2:])
     elif sys.argv[1] == 'delete':
         return delete_docs(*sys.argv[2:])
+    elif sys.argv[1] == 'de-dup':
+        return duplicate_docs(*sys.argv[2:])
 
     site = ckanapi.RemoteCKAN(sys.argv[2])
 
