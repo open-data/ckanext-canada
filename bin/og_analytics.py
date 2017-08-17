@@ -935,7 +935,23 @@ class DatasetDownload():
 
         #need to rotate, merge column 2, and 3, update the title
         del header[2]
-        header[2] = 'prior to ' + header[3]
+        def prior_header(h):
+            hs = h.split(' / ')
+            if len(hs) ==2:  # new header
+                return ' '.join(['prior to', hs[0], ' / Avant', hs[1]])
+            else:  # old english header
+                hs = h.split('-')
+                mi = en_months.index(hs[0].strip())
+                nh = fr_months[mi] + '-' + hs[1]
+                return ' '.join(['prior to', h, ' / Avant', nh])
+        header[2] = prior_header(header[3])
+        for i in range(3, len(header)-2):
+            h = header[i]
+            if len(h.split(' / ')) == 1:  #translate
+                hs = h.split('-')
+                mi = en_months.index(hs[0].strip())
+                nh = fr_months[mi] + '-' + hs[1]
+                header[i] = h + ' / ' + nh
 
         # update exists one
         exists = {}
@@ -981,7 +997,7 @@ class DatasetDownload():
         var = total_num - int(total[-1])
         total[-1] = total_num
         total.insert(-1, var)
-        pr, c = int(total[2]), int(total[3])
+        pr, c = int(total[2]), int(total[3].replace(',', ''))
         del total[2]
         total[2] = pr + c
 
@@ -992,6 +1008,9 @@ def report(client_secret_path, view_id, og_config_file, start, end, va):
       og_type = va
       analytics = initialize_analyticsreporting(client_secret_path)
       ds = DatasetDownload(analytics, view_id, og_config_file)
+      if og_type == 'info':
+          return ds.getStats(start, end, og_type)
+
       ds.getStats(start, end, og_type); time.sleep(2)
       ds.monthly_usage(start, end, '/tmp/od_ga_month.csv'); time.sleep(2)
       ds.by_country(end, '/tmp/od_ga_by_country.csv'); time.sleep(2)
