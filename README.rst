@@ -144,6 +144,13 @@ Update OBD documents (example)::
 Delete OBD documents (only change the dataset state):
    import_xml2obd.py delete ./to_delete.csv ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key>
 
+Verify OBD documents:
+   # check resource exists
+   import_xml2obd.py <site_url> azure_user azure_key azure_container
+
+   # check duplicates
+   import_xml2obd.py de-dup <site_url>
+
 Configuration: Solr
 ----------------------
 
