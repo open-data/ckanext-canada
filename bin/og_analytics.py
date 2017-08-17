@@ -11,6 +11,7 @@ from oauth2client import file
 from oauth2client import tools
 
 import os
+import time
 import gzip
 import json
 import urllib
@@ -61,6 +62,17 @@ def write_csv(filename, rows, header=None):
     for row in rows:
         writer.writerow(row)
 
+def read_csv(filename):
+    content=[]
+    with open(filename) as f:
+        reader = csv.reader(f)
+        firstrow = next(reader)
+        firstrow[0] = firstrow[0].lstrip(codecs.BOM_UTF8)
+        content.append(firstrow)
+        for x in reader:
+            content.append(x)
+    return content
+
 proxy= os.environ['http_proxy']
 
 # https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py
@@ -108,12 +120,38 @@ def initialize_analyticsreporting(client_secrets_path):
 
   return analytics
 
+def parseReport(response, dimension_name, metric_name):
+    data, nextPage = [], None
+    for report in response.get('reports', []):
+        columnHeader = report.get('columnHeader', {})
+        dimensionHeaders = columnHeader.get('dimensions', [])
+        metricHeaders = columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
+
+        if dimension_name:
+            id_idx = dimensionHeaders.index(dimension_name) # raise exception ValueError if not there
+
+        metricHeaders = [ v['name'] for v in metricHeaders]
+        count_idx = metricHeaders.index(metric_name)
+        rows = report.get('data', {}).get('rows', [])
+
+        for row in rows:
+          dimensions = row.get('dimensions', [])
+          dateRangeValues = row.get('metrics', [])
+          if dimension_name:
+            data.append([dimensions[id_idx], dateRangeValues[0]['values'][count_idx]])
+          else:
+            data.append([dateRangeValues[0]['values'][count_idx]])
+        nextPage = report.get('nextPageToken', None)
+        break
+    return data, nextPage
+
 class DatasetDownload():
     def __init__(self, ga, view_id, conf_file):
         self.ga = ga
         self.view_id = view_id
-        self.file = None
+        self.file = '/tmp/od-do-canada.jl.gz'
         self.site = ckanapi.RemoteCKAN('http://open.canada.ca/data')
+
         self.read_orgs()
 
         user, passwd, host, db = self.read_conf(conf_file)
@@ -163,7 +201,16 @@ class DatasetDownload():
         return target_pkg
 
     def read_orgs(self):
-        orgs = self.site.action.organization_list(all_fields=True)
+        count = 0
+        while count <=5:
+            try:
+                print 'reading organizations...'
+                orgs = self.site.action.organization_list(all_fields=True)
+                break
+            except ckanapi.errors.CKANAPIError:
+                count += 1
+                print 'Error read org list from open.canada.ca'
+                time.sleep(2)
         self.orgs = {}
         self.org_name2id = {}
         self.org_id2name = {}
@@ -195,6 +242,8 @@ class DatasetDownload():
                 self.org_count[rec['owner_org']] += 1
             
     def getStats(self, start_date, end_date, og_type):
+        self.set_catalogue_file(end_date)
+
         self.start_date = start_date
         self.end_date = end_date
         self.og_type = og_type
@@ -341,6 +390,7 @@ class DatasetDownload():
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
+        write_csv("/tmp/od_ga_top100.csv", rows)
 
         for org_id, recs in org_recs.iteritems():
             rows = []
@@ -368,7 +418,7 @@ class DatasetDownload():
         sheets.sort(key=lambda x: x['name'])
         sheets.insert(0, sheet2)
         sheets.insert(0, sheet1)
-        write_xls('/tmp/downloads.xls', sheets)
+        write_xls('/tmp/od_ga_downloads.xls', sheets)
         
     def getRawReport(self, start='0', size = '1000'):
           return self.ga.reports().batchGet(
@@ -404,23 +454,7 @@ class DatasetDownload():
           ).execute()
 
     def parseReport(self, response):
-        for report in response.get('reports', []):
-            columnHeader = report.get('columnHeader', {})
-            dimensionHeaders = columnHeader.get('dimensions', [])
-            metricHeaders = columnHeader.get('metricHeader', {}).get('metricHeaderEntries', [])
-            
-            id_idx = dimensionHeaders.index('ga:pagePath') # raise exception ValueError if not there
-            
-            metricHeaders = [ v['name'] for v in metricHeaders]
-            count_idx = metricHeaders.index('ga:totalEvents') 
-            rows = report.get('data', {}).get('rows', [])
-
-            data = []
-            for row in rows:
-              dimensions = row.get('dimensions', [])
-              dateRangeValues = row.get('metrics', [])
-              data.append([dimensions[id_idx], dateRangeValues[0]['values'][count_idx]])
-            return data, report.get('nextPageToken', None)
+        return parseReport(response, 'ga:pagePath', 'ga:totalEvents')
 
     def download(self):
         if not self.file:
@@ -453,11 +487,535 @@ class DatasetDownload():
             traceback.print_exc()
             print('error reading downloaded file')
             sys.exit(0)
+    def monthly_usage(self, start, end, csv_file):
+        total, downloads = 0, 0
+        nextPage='0'
+        body={
+            'reportRequests': [
+            {
+              'viewId': self.view_id,
+              'dateRanges': [{'startDate': start, 'endDate': end}],
+          'metrics': [{'expression': 'ga:sessions'},
+                      {'expression': 'ga:pageviews'} ],
+#          'dimensions':[{'name':'ga:pagePath'}],
+          'orderBys':[
+            {'fieldName': 'ga:pageviews',
+             'sortOrder': 'DESCENDING'
+            }],
+           'pageToken': nextPage,
+           'pageSize': '100',
+        }]
+        }
+        while True:
+            body['reportRequests'][0]['pageToken'] = nextPage
+            response = self.ga.reports().batchGet(body=body
+            ).execute()
+            data, nextPage = parseReport(response, None, 'ga:sessions')
+            for [vcount] in data:
+                total += int(vcount)
+            if not nextPage or nextPage =='0':
+                break
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': start, 'endDate': end}],
+                      'metrics': [{'expression': 'ga:totalEvents'},
+                                  {'expression': 'ga:eventValue'},
+                                  {'expression': 'ga:uniqueEvents'} ],
+#                      'dimensionFilterClauses': [ {
+#                            'filters': [{
+#                                'dimensionName': 'ga:eventCategory',
+#                                'operator': "BEGINS_WITH",
+#                                'expressions': ['resource']
+#                                }]
+#                            }],
+                      'dimensionFilterClauses': [ {
+                            'filters': [{
+                                'dimensionName': 'ga:eventAction',
+                                'operator': "PARTIAL",
+                                'expressions': ['download']
+                                }]
+                            }],
+                      'orderBys':[
+                        {'fieldName': 'ga:totalEvents',
+                         'sortOrder': 'DESCENDING'
+                        }],
+                       'pageToken': '0',
+                       'pageSize': '100',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, None, 'ga:totalEvents')
+        downloads = int(data[0][0])
+        print total, downloads
+        [year, month, _] = start.split('-')
+        data = read_csv(csv_file)
+        if int(data[1][0]) == int(year) and int(data[1][1]) == int(month):
+            print 'entry exists, no overwriting'
+            return
+        row = [year, month, total, downloads]
+        data[0] = ['year / année', 'month / mois', 'visits / visites', 'downloads / téléchargements']
+        data.insert(1, row)
+        write_csv(csv_file, data)
 
-def report(client_secret_path, view_id, og_config_file, start, end, og_type):
+    def by_country(self, end, csv_file):
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': '2012-01-01', 'endDate': end}],
+                      'metrics': [{'expression': 'ga:sessions'} ],
+                  'dimensions':[{'name':'ga:country'}],
+#                  'dimensionFilterClauses': [ {
+#                        'operator': 'OR',
+#                        'filters': [{
+#                            'dimensionName': 'ga:pagePath',
+#                            'operator': "BEGINS_WITH",
+#                            'expressions': ['/data/en/dataset']
+#                            },{
+#                             'dimensionName': 'ga:pagePath',
+#                             'operator': "BEGINS_WITH",
+#                            'expressions': ['/data/fr/dataset']
+#                            }]
+#                        }],
+                  'orderBys':[
+                    {'fieldName': 'ga:sessions',
+                     'sortOrder': 'DESCENDING'
+                    }],
+                   'pageToken': '0',
+                   'pageSize': '1000',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, 'ga:country', 'ga:sessions')
+        total = 0
+        country_fr = u'''Canada
+            États-Unis
+            Inde
+            France
+            Royaume Unis
+            Chine
+            Allemagne
+            Australie
+            Brésil
+            Inconnu
+            Russie
+            Pakistan
+            Algérie
+            Espagne
+            Mexique
+            Japon
+            Philippines
+            Corée du Sud
+            Italie
+            Émirats Arabe Unis
+            Turquie
+            Maroc
+            Ukraine
+            Hollande
+            Arabie Saoudite
+            Iran
+            Taiwan
+            Nigéria
+            Hong Kong
+            Vietnam
+            Indonésie
+            Belgique
+            Singapour
+            Bangladesh
+            Suisse
+            Malaysie
+            Égypte
+            Colombie
+            Tunisie
+            Thaïlande
+            Afrique du Sud
+            Pologne
+            Irlande
+            Roumanie
+            Suède
+            Kenya
+            Israël
+            Nouvelle-Zélande
+            Argentine
+            Grèce
+            Portugal
+            Liban
+            Tchétchénie
+            Côte d’Ivoire
+            Danemark
+            Autriche
+            Norvège
+            Cameroon
+            Finlande
+            Pérou
+            Qatar
+            Chili
+            Hongrie
+            Sri Lanka
+            Jordanie
+            Bulgarie
+            Koweit
+            Kazakhstan
+            Iraq
+            Jamaïque
+            Serbie
+            Sénégal
+            Népal
+            Vénézuela
+            Ghana
+            Croatie
+            Syrie
+            Slovaquie
+            Costa Rica
+            Équateur
+            République Dominicaine
+            Soudan
+            Biélorussie
+            Éthiopie
+            Oman
+            Haïti
+            Moldavie
+            Lithuanie
+            Trinidad & Tobago
+            Tanzanie
+            Albanie
+            Maurice
+            Bénin
+            Congo - Kinshasa
+            Luxembourg
+            Madagascar
+            Togo
+            Ouganda
+            Géorgie
+            Slovénie'''
+        country_en = u'''Canada
+            United States
+            India
+            France
+            United Kingdom
+            China
+            Germany
+            Australia
+            Brazil
+            Unknown
+            Russia
+            Pakistan
+            Algeria
+            Spain
+            Mexico
+            Japan
+            Philippines
+            South Korea
+            Italy
+            United Arab Emirates
+            Turkey
+            Morocco
+            Ukraine
+            Netherlands
+            Saudi Arabia
+            Iran
+            Taiwan
+            Nigeria
+            Hong Kong
+            Vietnam
+            Indonesia
+            Belgium
+            Singapore
+            Bangladesh
+            Switzerland
+            Malaysia
+            Egypt
+            Colombia
+            Tunisia
+            Thailand
+            South Africa
+            Poland
+            Ireland
+            Romania
+            Sweden
+            Kenya
+            Israel
+            New Zealand
+            Argentina
+            Greece
+            Portugal
+            Lebanon
+            Czechia
+            Côte d’Ivoire
+            Denmark
+            Austria
+            Norway
+            Cameroon
+            Finland
+            Peru
+            Qatar
+            Chile
+            Hungary
+            Sri Lanka
+            Jordan
+            Bulgaria
+            Kuwait
+            Kazakhstan
+            Iraq
+            Jamaica
+            Serbia
+            Senegal
+            Nepal
+            Venezuela
+            Ghana
+            Croatia
+            Syria
+            Slovakia
+            Costa Rica
+            Ecuador
+            Dominican Republic
+            Sudan
+            Belarus
+            Ethiopia
+            Oman
+            Haiti
+            Moldova
+            Lithuania
+            Trinidad & Tobago
+            Tanzania
+            Albania
+            Mauritius
+            Benin
+            Congo - Kinshasa
+            Luxembourg
+            Madagascar
+            Togo
+            Uganda
+            Georgia
+            Slovenia'''
+        country_fr = [c.strip() for c in country_fr.split('\n')]
+        country_en = [c.strip() for c in country_en.split('\n')]
+        assert( len(country_en)==len(country_fr))
+        country_dict = { country_en[i]:country_fr[i] for i in range(len(country_en)) }
+
+        for row in data:
+            c = row[0]
+            if c == '(not set)':
+                row[0] = 'unknown / Inconnu'
+            else:
+                c_fr = country_dict.get(c, c)
+                row[0] = c + u' | ' + c_fr
+            row[1] = int(row[1])
+
+        for c, count in data:
+            total += count
+        data = [ [country, int(count), "%.2f"%((count*100.0)/total) + '%' ] for [country, count] in data ]
+
+        data.insert(0,['region / Région', 'visits / Visites', 'percentage of total visits / Pourcentage du nombre total de visites'])
+        write_csv(csv_file, data)
+
+    def by_region(self, end, csv_file):
+        body={
+            'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': '2012-01-01', 'endDate': end}],
+                      'metrics': [{'expression': 'ga:sessions'} ],
+                  'dimensions':[{'name':'ga:region'}],
+                  'dimensionFilterClauses': [ {
+                        'filters': [{
+                                'dimensionName': 'ga:country',
+                                'operator': "BEGINS_WITH",
+                                'expressions': ['Canada']
+                            }],
+                       }
+#                       , {
+#                           'operator': 'OR',
+#                            'filters': [{
+#                                'dimensionName': 'ga:pagePath',
+#                                'operator': "BEGINS_WITH",
+#                                'expressions': ['/data/en/dataset']
+#                                },{
+#                                 'dimensionName': 'ga:pagePath',
+#                                 'operator': "BEGINS_WITH",
+#                                'expressions': ['/data/fr/dataset']
+#                              }]
+#                          }
+                        ],
+                  'orderBys':[
+                    {'fieldName': 'ga:sessions',
+                     'sortOrder': 'DESCENDING'
+                    }],
+                   'pageToken': '0',
+                   'pageSize': '1000',
+                }]
+            }
+        response = self.ga.reports().batchGet(body=body
+            ).execute()
+        data, nextPage = parseReport(response, 'ga:region', 'ga:sessions')
+        total = 0
+        data = [ [country, int(count)] for [country, count] in data ]
+        for c, count in data:
+            total += count
+        region_dict = {
+                    'Ontario': u'Ontario',
+                    'Quebec': u'Québec',
+                    'British Columbia': u'Colombie-Britannique',
+                    'Alberta': u'Alberta',
+                    'Nova Scotia': u'Nouvelle-Écosse',
+                    'Manitoba': u'Manitoba',
+                    'Saskatchewan': u'Saskatchewan',
+                    'New Brunswick': u'Nouveau-Brunswick',
+                    'Newfoundland and Labrador': u'Terre-Neuve-et-Labrador',
+                    'Prince Edward Island': u'Île-du-Prince-Édouard',
+                    'Northwest Territories':u'Territoires du Nord-Ouest',
+                    'Yukon Territory':u'Yukon',
+                    'Nunavut':u'Nunavut',
+        }
+        data = [ [country if country !='(not set)' else 'unknown / Inconnu', int(count), "%.2f"%((count*100.0)/total) + '%' ] for [country, count] in data ]
+        for row in data:
+            r = row[0]
+            if r == '(not set)':
+                row[0] = 'unknown / Inconnu'
+            else:
+                r_fr = region_dict.get(r, r)
+                row[0] = r + u' | ' + r_fr
+
+        data.insert(0,['region / Région', 'visits / Visites', 'percentage of total visits / Pourcentage du nombre total de visites'])
+        write_csv(csv_file, data)
+    def set_catalogue_file(self, end):
+        y,m,d = end.split('-')
+        self.file = ''.join(['/var/www/html/data/od_catalogue/od-do-canada.',y,m,d,'.jl.gz'])
+        if not os.path.exists(self.file):
+            raise Exception('not found ' + self.file)
+    def by_org(self, org_stats, csv_file):
+        rows = []
+        header = ['Department or Agency', 'Ministère ou organisme',
+                     'Department or Agency datasets', 'Jeux de données du Ministère ou organisme' , 'Total']
+        for org_id, count in org_stats.iteritems():
+            [title_en, title_fr] = self.orgs.get(org_id, ['', ''])
+            name = self.org_id2name[org_id][0]
+            link_en = 'http://open.canada.ca/data/en/dataset?organization=' + name
+            link_fr = 'http://ouvert.canada.ca//data/fr/dataset?organization=' + name
+            rows.append([title_en, title_fr, link_en, link_fr, count])
+        rows.sort(key=lambda x: x[0])
+        write_csv(csv_file, rows, header)
+
+    def by_org_month(self, end, csv_month_file, csv_file):
+        self.set_catalogue_file(end)
+        # need to use cataloge file downloaded at 1st day of each month (or last day of prev month), same for by_org
+        # need to update the last column, insert before last column
+        # insert row if new org is created
+        org_stats = defaultdict(int)
+        total_num = 0
+        for records in self.download():
+            total_num += len(records)
+            for rec in records:
+                org_stats[rec['owner_org']] += 1
+        org_stats = dict(org_stats)
+        self.by_org(org_stats, csv_file)
+
+        ds = read_csv(csv_month_file)
+        header = ds[0]
+        total = ds[-1]
+
+        ds = ds[1:-1]
+        en_months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+        fr_months = ['janv.','févr.','mars','avril','mai','juin','juil.','août','sept.','oct.','nov.','déc.']
+        [y,m,d] = end.split('-')
+        en_header = en_months[int(m)-1]+'-'+y
+        fr_header = fr_months[int(m)-1]+'-'+y
+        new_header = en_header + ' / ' + fr_header
+        if header[-2] == new_header:
+            print 'exists ', new_header
+            return
+        header[0] = 'Government of Canada Department or Agency / Ministère ou organisme'
+        header[1] = 'Department or Agency datasets / Jeux de données du Ministère ou organisme'
+        header[-1] = 'Total number of datasets / Nombre de jeux de données'
+        header.insert(-1, new_header)
+
+        #need to rotate, merge column 2, and 3, update the title
+        del header[2]
+        def prior_header(h):
+            hs = h.split(' / ')
+            if len(hs) ==2:  # new header
+                return ' '.join(['prior to', hs[0], ' / Avant', hs[1]])
+            else:  # old english header
+                hs = h.split('-')
+                mi = en_months.index(hs[0].strip())
+                nh = fr_months[mi] + '-' + hs[1]
+                return ' '.join(['prior to', h, ' / Avant', nh])
+        header[2] = prior_header(header[3])
+        for i in range(3, len(header)-2):
+            h = header[i]
+            if len(h.split(' / ')) == 1:  #translate
+                hs = h.split('-')
+                mi = en_months.index(hs[0].strip())
+                nh = fr_months[mi] + '-' + hs[1]
+                header[i] = h + ' / ' + nh
+
+        # update exists one
+        exists = {}
+        for row in ds:
+            #get org shortname
+            name = row[1].split('=')[-1]
+            org_id = self.org_name2id[name]
+            exists[org_id] = True
+            titles =  self.orgs.get(org_id, ['', ''])
+            title = titles[0] + ' | ' + titles[1]
+            link_en = 'http://open.canada.ca/data/en/dataset?organization=' + name
+            link_fr = 'http://ouvert.canada.ca//data/fr/dataset?organization=' + name
+            link = link_en + ' | ' + link_fr
+            row[0] = title
+            row[1] = link
+
+            count = org_stats.get(org_id, 0)
+            var = count - int(row[-1])
+            row[-1] = count
+            row.insert(-1, var)
+
+            pr, c = int(row[2]), int(row[3])
+            del row[2]
+            row[2] = pr + c
+
+        # New org
+        for org_id, count in org_stats.iteritems():
+            if org_id in exists:
+                continue
+            titles =  self.orgs.get(org_id, ['', ''])
+            title = titles[0] + ' | ' + titles[1]
+            name = self.org_id2name[org_id][0]
+            link_en = 'http://open.canada.ca/data/en/dataset?organization=' + name
+            link_fr = 'http://ouvert.canada.ca//data/fr/dataset?organization=' + name
+            link = link_en + ' | ' + link_fr
+            row = [ 0 for i in range(len(header)) ]
+            row[0] = title
+            row[1] = link
+            row[-2] = row[-1] = count
+            ds.append(row)
+        ds.sort(key=lambda x:x[0])
+
+        var = total_num - int(total[-1])
+        total[-1] = total_num
+        total.insert(-1, var)
+        pr, c = int(total[2]), int(total[3].replace(',', ''))
+        del total[2]
+        total[2] = pr + c
+
+        ds.append(total)
+        write_csv(csv_month_file, ds, header)
+
+def report(client_secret_path, view_id, og_config_file, start, end, va):
+      og_type = va
       analytics = initialize_analyticsreporting(client_secret_path)
       ds = DatasetDownload(analytics, view_id, og_config_file)
-      ds.getStats(start, end, og_type)
+      if og_type == 'info':
+          return ds.getStats(start, end, og_type)
+
+      ds.getStats(start, end, og_type); time.sleep(2)
+      ds.monthly_usage(start, end, '/tmp/od_ga_month.csv'); time.sleep(2)
+      ds.by_country(end, '/tmp/od_ga_by_country.csv'); time.sleep(2)
+      ds.by_region(end, '/tmp/od_ga_by_region.csv')
+      ds.by_org_month(end, '/tmp/od_ga_by_org_month.csv', '/tmp/od_ga_by_org.csv')
 
 def main():
     report(*sys.argv[1:])
