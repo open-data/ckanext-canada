@@ -373,37 +373,54 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
     #load dataset and resource file to cloud
     ds = read_json(jsonfile)
     for rec in ds:
-        try:
-            target_pkg = site.action.package_show(id=rec['id'])
-        except (NotFound, NotAuthorized):
-            target_pkg = None
-        except (CKANAPIError, urllib2.URLError), e:
-            sys.stdout.write(
-                json.dumps([
-                    rec['id'],
-                    'target error',
-                    unicode(e.args)
-                ]) + '\n'
-            )
-            raise
+        retries = 5
+        while True:
+            try:
+                target_pkg = site.action.package_show(id=rec['id'])
+            except (NotFound, NotAuthorized):
+                target_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                retries -= 1
+                if retries > 0:
+                    time.sleep(1)
+                    continue
+                sys.stdout.write(
+                    json.dumps([
+                        rec['id'],
+                        'target error',
+                        unicode(e.args)
+                    ]) + '\n'
+                )
+                #raise
+            break
+        if retries <=0:
+                continue
 
-        try:
-            #site.action.package_delete(id=rec['id'])
-            #return
-            #site.action.package_create(**rec)
-            if target_pkg:
-                skip = _compare_pkgs(rec, target_pkg)
-                if not skip:
-                    site.action.package_update(**rec)
+        retries = 5
+        while True:
+            try:
+                #site.action.package_delete(id=rec['id'])
+                #return
+                #site.action.package_create(**rec)
+                if target_pkg:
+                    skip = _compare_pkgs(rec, target_pkg)
+                    if not skip:
+                        site.action.package_update(**rec)
+                    else:
+                        print("\tskip package update for " + rec['resources'][0]['url'].split('/')[-1])
                 else:
-                    print("\tskip package update for " + rec['resources'][0]['url'].split('/')[-1])
-            else:
-                site.action.package_create(**rec)
-        except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
-                ckan.logic.ValidationError):
-            traceback.print_exc()
-            print(rec)
-            continue
+                    site.action.package_create(**rec)
+            except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
+                    ckan.logic.ValidationError):
+                retries -= 1
+                if retries > 0:
+                    time.sleep(1)
+                    continue
+                traceback.print_exc()
+                print(rec)
+            break
+        if retries <=0:
+                continue
         res = rec['resources'][0]
         source = resource_directory + '/' + res['url'].split('/')[-1]
         fname='/'.join(['resources', res['id'], res['url'].split('/')[-1]])
@@ -647,6 +664,37 @@ def duplicate_docs(file_dir, site_url):
             if count > 1:
                 print out
 
+def de_dup2(site_url):
+    count =0
+    start = 0
+    rows = 50
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=None,
+        user_agent='ckanapi-uploader/1.0')
+    records = defaultdict(list)
+    while True:
+        # a list with a hard upper limit 1000, need to loop
+        p_records = site.action.package_search(q='',
+                use_default_schema=True, start=start, rows=rows)
+        if count == 0:
+            count =  p_records['count']
+        for v in p_records['results']:
+            res = v['resources'][0]
+            name = json.loads(res['name_translated'])['en']
+            url = res['url']
+            md5 = res['hash']
+            records[md5].append([name, url])
+        start += len( p_records['results'] )
+        if start >= count:
+            break
+    print 'Total records ', count
+
+    for k, vl in records.iteritems():
+        if len(vl) <=1: continue
+        print vl
+
 def main():
     global audience, canada_resource_type,canada_subject
     global canada_resource_language, organizations
@@ -660,7 +708,10 @@ def main():
     elif sys.argv[1] == 'delete':
         return delete_docs(*sys.argv[2:])
     elif sys.argv[1] == 'de-dup':
-        return duplicate_docs(*sys.argv[2:])
+        if len(sys.argv[2:])==1:
+            return de_dup2(*sys.argv[2:])
+        else:
+            return duplicate_docs(*sys.argv[2:])
 
     site = ckanapi.RemoteCKAN(sys.argv[2])
 
