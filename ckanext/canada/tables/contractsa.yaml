@@ -101,13 +101,13 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFEAE1C8
+      fgColor: FFd1b280
     Font:
-      bold: true
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FFD4C390
+      fgColor: FFefefef
   default_preview_sort: reporting_period desc, contracts_total_total_value desc
 
   examples:
