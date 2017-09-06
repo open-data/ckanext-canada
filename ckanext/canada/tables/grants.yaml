@@ -273,13 +273,14 @@ Award provided and spanning more than one fiscal year."
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FF8BCCCB
+      fgColor: FFd35c37
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF689998
+      fgColor: FFc09a77
 
   examples:
     record:
@@ -359,13 +360,14 @@ Award provided and spanning more than one fiscal year."
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FF8BCCCB
+      fgColor: FFd35c37
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF689998
+      fgColor: FFc09a77
 
   examples:
     record:

@@ -136,13 +136,13 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFA8CC8B
+      fgColor: FFa1be95
     Font:
-      bold: true
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF7E9968
+      fgColor: FFe2dfa2
 
   examples:
     record:

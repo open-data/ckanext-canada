@@ -203,13 +203,14 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFC8E1EA
+      fgColor: FF5d535e
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF90C3D4
+      fgColor: FF9a9eab
 
   examples:
     record:
@@ -291,13 +292,14 @@ resources:
   excel_organization_style:
     PatternFill:
       patternType: solid
-      fgColor: FFC8E1EA
+      fgColor: FF5d535e
     Font:
-      bold: true
+      color: FFFFFF
+      size: 14
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FF90C3D4
+      fgColor: FF9a9eab
 
   examples:
     record:
