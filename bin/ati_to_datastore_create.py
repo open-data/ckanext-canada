@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+r'''
+Example usage:
+
+paster recombinant combine ati | ./ati_to_datastore_create.py \
+ | ckanapi action datastore_create -i -r http://open.canada.ca/data -a ...
+'''
 
 import unicodecsv
 import json
