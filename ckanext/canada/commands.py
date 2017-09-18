@@ -491,6 +491,8 @@ def _trim_package(pkg):
             'resource_type',
             # new in 2.3:
             'creator_user_id',
+            # make public when publishing
+            'private',
             ]:
         if k in pkg:
             del pkg[k]
@@ -508,8 +510,6 @@ def _trim_package(pkg):
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
-    for k in ['private']:
-        pkg[k] = boolean_validator(unicode(pkg.get(k, '')), None)
     if 'name' not in pkg:
         pkg['name'] = pkg['id']
     if 'type' not in pkg:
