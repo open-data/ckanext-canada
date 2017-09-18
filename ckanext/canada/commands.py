@@ -394,6 +394,9 @@ class CanadaCommand(CkanCommand):
                 elif isodate(source_pkg['portal_release_date'], None) > now:
                     source_pkg = None
                     reason = 'release date in future'
+                else:
+                    # portal packages published public
+                    source_pkg['private'] = False
 
             if action != 'skip':
                 try:
