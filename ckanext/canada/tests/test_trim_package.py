@@ -1,4 +1,4 @@
-from ckan.tests import WsgiAppCase, CheckMethods
+from ckan.tests.legacy import WsgiAppCase, CheckMethods
 import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model

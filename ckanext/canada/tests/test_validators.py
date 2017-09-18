@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
-from ckan.new_tests.helpers import FunctionalTestBase, call_action
-from ckan.new_tests import factories
+from ckan.tests.helpers import FunctionalTestBase, call_action
+from ckan.tests import factories
 import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model

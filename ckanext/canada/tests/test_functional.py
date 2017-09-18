@@ -10,7 +10,7 @@ from ckan.tests import *
 import ckan.model as model
 from ckan.lib.create_test_data import CreateTestData
 
-from ckan.new_tests.helpers import FunctionalTestBase
+from ckan.tests.helpers import FunctionalTestBase
 
 class TestNew(FunctionalTestBase):
     pkg_names = []
