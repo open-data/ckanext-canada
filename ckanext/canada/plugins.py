@@ -158,13 +158,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
 
-    def create(pkg):
+    def create(self, pkg):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
 
-    def edit(pkg):
+    def edit(self, pkg):
         """
         All datasets on registry should now be marked private
         """
