@@ -34,6 +34,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
+    p.implements(p.IPackageController, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -156,6 +157,18 @@ class DataGCCAInternal(p.SingletonPlugin):
             return original_upsert_data(context, data_dict)
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
+
+    def create(pkg):
+        """
+        All datasets on registry should now be marked private
+        """
+        pkg.private = True
+
+    def edit(pkg):
+        """
+        All datasets on registry should now be marked private
+        """
+        pkg.private = True
 
 
 class DataGCCAPublic(p.SingletonPlugin):
