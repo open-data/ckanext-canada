@@ -1,7 +1,6 @@
 import cgi
 import datetime
 
-from genshi.core import escape as genshi_escape
 from nose.tools import assert_equal
 from nose.plugins.skip import SkipTest
 
