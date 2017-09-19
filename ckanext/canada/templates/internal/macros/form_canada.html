@@ -261,7 +261,7 @@ Example:
   {{ form.errors(error_summary, type="warning") }}
 
 #}
-{%- macro errors(errors={}, schema_fields, client_lang) -%}
+{%- macro errors(errors, schema_fields, client_lang) -%}
   {%- set client_lang = 'fra' if client_lang == 'fr' else 'eng' -%}
   {%- if errors -%}
     <section class="alert alert-danger{{ " " ~ classes | join(' ') }}">
