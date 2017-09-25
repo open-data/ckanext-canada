@@ -3224,6 +3224,8 @@ presets:
       mimetype: application/pdf
     - value: PDF/A-2
       mimetype: application/pdf
+    - value: PDF/UA
+      mimetype: application/pdf
     - value: PNG
       mimetype: image/png
       replaces: [png]
