@@ -4,6 +4,7 @@ Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
     import_xml2obd.py upload <site_url> <api_key> <jsonl file> <doc directory>
     import_xml2obd.py pull <conf file> <output directory>
+    import_xml2obd.py de-dup <output directory> <site_url>
 
     sample conf file:
     [storage]
@@ -26,6 +27,8 @@ from collections import defaultdict, OrderedDict
 from lxml import etree
 import yaml
 import uuid
+
+import csv
 
 from azure.storage.blob import BlockBlobService
 from azure.common import AzureMissingResourceHttpError
@@ -224,7 +227,7 @@ def _get_choices_value(preset, val):
             if label.lower() in val:
                 res.append(item['value'])
                 break
-    return name, res
+    return name, list(set(res))
 
 
 def _get_single_choices_value(preset, val):
@@ -370,37 +373,54 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
     #load dataset and resource file to cloud
     ds = read_json(jsonfile)
     for rec in ds:
-        try:
-            target_pkg = site.action.package_show(id=rec['id'])
-        except (NotFound, NotAuthorized):
-            target_pkg = None
-        except (CKANAPIError, urllib2.URLError), e:
-            sys.stdout.write(
-                json.dumps([
-                    rec['id'],
-                    'target error',
-                    unicode(e.args)
-                ]) + '\n'
-            )
-            raise
+        retries = 5
+        while True:
+            try:
+                target_pkg = site.action.package_show(id=rec['id'])
+            except (NotFound, NotAuthorized):
+                target_pkg = None
+            except (CKANAPIError, urllib2.URLError), e:
+                retries -= 1
+                if retries > 0:
+                    time.sleep(1)
+                    continue
+                sys.stdout.write(
+                    json.dumps([
+                        rec['id'],
+                        'target error',
+                        unicode(e.args)
+                    ]) + '\n'
+                )
+                #raise
+            break
+        if retries <=0:
+                continue
 
-        try:
-            #site.action.package_delete(id=rec['id'])
-            #return
-            #site.action.package_create(**rec)
-            if target_pkg:
-                skip = _compare_pkgs(rec, target_pkg)
-                if not skip:
-                    site.action.package_update(**rec)
+        retries = 5
+        while True:
+            try:
+                #site.action.package_delete(id=rec['id'])
+                #return
+                #site.action.package_create(**rec)
+                if target_pkg:
+                    skip = _compare_pkgs(rec, target_pkg)
+                    if not skip:
+                        site.action.package_update(**rec)
+                    else:
+                        print("\tskip package update for " + rec['resources'][0]['url'].split('/')[-1])
                 else:
-                    print("\tskip package update for " + rec['resources'][0]['url'].split('/')[-1])
-            else:
-                site.action.package_create(**rec)
-        except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
-                ckan.logic.ValidationError):
-            traceback.print_exc()
-            print(rec)
-            continue
+                    site.action.package_create(**rec)
+            except (ckan.logic.NotFound, ckanapi.errors.CKANAPIError,
+                    ckan.logic.ValidationError):
+                retries -= 1
+                if retries > 0:
+                    time.sleep(1)
+                    continue
+                traceback.print_exc()
+                print(rec)
+            break
+        if retries <=0:
+                continue
         res = rec['resources'][0]
         source = resource_directory + '/' + res['url'].split('/')[-1]
         fname='/'.join(['resources', res['id'], res['url'].split('/')[-1]])
@@ -551,6 +571,129 @@ def pull_docs(conf_file, local_dir):
     for fname in files:
         pass  # src.delete_blob(fname)
 
+def read_csv(filename):
+    content=[]
+    with open(filename) as f:
+        reader = csv.reader(f)
+        for x in reader:
+            if x:
+                content.append(x[0].strip())
+    return content[1:]
+
+def delete_docs(csv_file, file_dir, site_url, api_key):
+    ids = read_csv(csv_file)
+    print len(ids), ids[:5]
+    files = glob.glob(file_dir + '/*.xml')
+    all_files = []
+    for filename in files:
+        fbasename = os.path.basename(filename)
+        all_files.append([fbasename, filename])
+    to_del = []
+    for id in ids:
+        s = ''.join(['-', id, '.'])
+        for [fbase, full] in all_files:
+            if s in fbase:
+                to_del.append([fbase, full])
+    print len(to_del), to_del[:5]
+    assert( len(to_del)==len(ids))
+
+    datasets = []
+    for [fbase, filename] in to_del:
+        id = str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase))
+        datasets.append(id)
+    print datasets[:5]
+
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=api_key,
+        user_agent='ckanapi-uploader/1.0')
+    for id in datasets:
+        try:
+            site.action.package_delete(id=id)
+        except ckan.logic.NotAuthorized as e:
+            raise Exception('API key error')
+        except:
+            print ( id, 'delete failed')
+        else:
+            print ( id, 'deleted')
+
+def duplicate_docs(file_dir, site_url):
+    raw_files = glob.glob(file_dir + '/*.md5')
+    files = []
+    for filename in raw_files:
+        fbasename = os.path.basename(filename)
+        fname = fbasename[:-4]
+        if fname[-4:] == '.xml':
+            continue
+        with open(filename) as f:
+            md5 = f.readline().split(' ')[0].strip()
+        files.append([md5, fname])
+    md5dict = defaultdict(list)
+    for [md5, fname] in files:
+        md5dict[md5].append(fname)
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=None,
+        user_agent='ckanapi-uploader/1.0')
+
+    for md5, flist in md5dict.iteritems():
+        if len(flist) > 1:
+            ids = [ str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase + '.xml')) for fbase in flist]
+            out = [str(uuid.uuid5(uuid.NAMESPACE_URL,
+                   'http://obd.open.canada.ca/' + fbase + '.xml'))+':'+fbase for fbase in flist]
+            count = 0
+            for id in ids:
+                try:
+                    target_pkg = site.action.package_show(id=id)
+                    count += 1
+                except (NotFound, NotAuthorized):
+                    target_pkg = None
+                except (CKANAPIError, urllib2.URLError), e:
+                    sys.stdout.write(
+                        json.dumps([
+                            rec['id'],
+                            'target error',
+                            unicode(e.args)
+                        ]) + '\n'
+                    )
+                    raise
+            if count > 1:
+                print out
+
+def de_dup2(site_url):
+    count =0
+    start = 0
+    rows = 50
+    #remote site
+    site = ckanapi.RemoteCKAN(
+        site_url,
+        apikey=None,
+        user_agent='ckanapi-uploader/1.0')
+    records = defaultdict(list)
+    while True:
+        # a list with a hard upper limit 1000, need to loop
+        p_records = site.action.package_search(q='',
+                use_default_schema=True, start=start, rows=rows)
+        if count == 0:
+            count =  p_records['count']
+        for v in p_records['results']:
+            res = v['resources'][0]
+            name = json.loads(res['name_translated'])['en']
+            url = res['url']
+            md5 = res['hash']
+            records[md5].append([name, url])
+        start += len( p_records['results'] )
+        if start >= count:
+            break
+    print 'Total records ', count
+
+    for k, vl in records.iteritems():
+        if len(vl) <=1: continue
+        print vl
 
 def main():
     global audience, canada_resource_type,canada_subject
@@ -562,6 +705,13 @@ def main():
         return upload_resources(*sys.argv[2:])
     elif sys.argv[1] =='pull':
         return pull_docs(*sys.argv[2:])
+    elif sys.argv[1] == 'delete':
+        return delete_docs(*sys.argv[2:])
+    elif sys.argv[1] == 'de-dup':
+        if len(sys.argv[2:])==1:
+            return de_dup2(*sys.argv[2:])
+        else:
+            return duplicate_docs(*sys.argv[2:])
 
     site = ckanapi.RemoteCKAN(sys.argv[2])
 
@@ -592,6 +742,23 @@ def main():
     elif os.path.isdir(filename):
         files = glob.glob(filename + '/*.xml')
     assert(files)
+
+    if len(sys.argv) >=4: # only update the files in this list
+        with open(sys.argv[3]) as f:
+            flist = f.read()
+        flist=flist.split()
+        files = []
+        assert(os.path.isdir(sys.argv[1]))
+        for fname in flist:
+            if fname[-4:] == '.md5':
+                continue
+            fname = os.path.basename(fname)
+            fname = sys.argv[1] + '/' + fname
+            if fname[-4:] != '.xml':
+                fname += '.xml'
+                if fname in files:
+                    continue
+            files.append(fname)
 
     for filename in files:
         refs, extras = read_xml(filename)
