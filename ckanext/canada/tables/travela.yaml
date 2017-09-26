@@ -80,7 +80,6 @@ resources:
     form_required: true
     form_placeholder: '0.00'
     excel_column_width: 20
-    solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
       previous_year: minister_previous_year
       change: minister_change
