@@ -80,12 +80,9 @@ resources:
     form_required: true
     form_placeholder: '0.00'
     excel_column_width: 20
-    solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
       previous_year: minister_previous_year
       change: minister_change
-      sum_previous_year: [total_travel_previous_year, total_previous_year]
-      sum_change: [total_travel_change, total_change]
 
   - datastore_id: public_servant_compared_fiscal_year_en
     label: Travel Public Servants - Explanation of Significant Variance (English)
