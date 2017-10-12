@@ -69,6 +69,41 @@ class Records():
             traceback.print_exc()
             print('error reading downloaded file')
 
+    def details(self, csvfile):
+        reports = defaultdict(list)
+        for records in self.download():
+            for record in records:
+              try:
+                id = record['id']
+                score = openness_score(record)
+                report = reports[record['organization']['title']]
+                title = record["title_translated"]
+                title = title['en'] + ' | ' + title['fr']
+                url = ''.join(['http://open.canada.ca/data/en/dataset/', id, ' | ',
+                      'http://ouvert.canada.ca/data/fr/dataset/', id])
+                report.append([title, url, score])
+              except:
+                  import pdb; pdb.set_trace()
+
+        orgs = list(reports)
+        orgs.sort()
+        outf=open(csvfile, 'wb')
+        outf.write(codecs.BOM_UTF8)
+        out = unicodecsv.writer(outf)
+        #Header
+        out.writerow([
+                      "Department Name Englist | Nom du ministère en français",
+                      "Title English | Titre en français",
+                      "URL",
+                      "Openness Rating | Cote d'ouverture",
+                    ])
+        for k in orgs:
+            rlist = reports[k]
+            for r in rlist:
+                line=[k, r[0], r[1], r[2]]
+                out.writerow(line)
+        outf.close()
+
     def iter_resources(self):
         count = 0
         reports = defaultdict(lambda: defaultdict(int))
@@ -95,17 +130,20 @@ class Records():
             out.writerow(line)
         outf.close()
 
-
-
 def main():
     parser = argparse.ArgumentParser(description='''portal records openness report''')
     parser.add_argument("--site", dest="site", required=True, help='''site gz file contains links.
                          download from http://open.canada.ca/static/od-do-canada.jl.gz.''')
+    parser.add_argument("--detail", dest="detail",  action='store_true', default=False,
+                        help="list each record")
     parser.add_argument("--dump", dest="dump", help="dump to csv file")
 
     options = parser.parse_args()
 
     site = Records(options.site)
+    if options.detail:
+        return site.details(options.dump)
+
     site.iter_resources()
     if options.dump:
         site.dump(options.dump)
