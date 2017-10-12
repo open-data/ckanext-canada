@@ -241,6 +241,35 @@ class DatasetDownload():
                                       'owner_org':rec['owner_org']}
                 self.org_count[rec['owner_org']] += 1
             
+    def getVisitStats(self, start_date, end_date, og_type):
+        self.set_catalogue_file(end_date)
+
+        self.start_date = start_date
+        self.end_date = end_date
+        self.og_type = og_type
+
+        start = '0'
+        stats = defaultdict(int)
+        while True:
+            response = self.getRawVisitReport(start)
+            data, start = parseReport(response, 'ga:pagePath', 'ga:pageViews')
+            for [url, count] in data:
+                id = url.split('/')[-1]
+                if id[:8] == 'dataset?': continue
+                id = id.split('&')[0]
+                id = id.strip()
+                if len(id)!=36: continue #make sure it is an UUID
+                stats[id] += int(count)
+            if len(data)==0 or not start:
+                print 'Done ', start, len(stats)
+                break
+            else:
+                print start
+        stats = dict(stats)
+        self.read_portal(stats)
+
+        self.dump(stats, True)
+
     def getStats(self, start_date, end_date, og_type):
         self.set_catalogue_file(end_date)
 
@@ -307,13 +336,16 @@ class DatasetDownload():
         sheets.insert(0, sheet1)
         write_xls('/tmp/downloads_info.xls', sheets)
 
-    def dump(self, data):
+    def dump(self, data, ignore_deleted=False):
         #further reduce to departments
         ds = defaultdict(int)
         sheets = defaultdict(list)
         deleted_ds = {}
         for id,c in data.iteritems():
             rec = self.ds.get(id, None)
+            if (not rec) and ignore_deleted:
+                deleted_ds[id] = True
+                continue
             if not rec:
                 print id, ' deleted'
                 rec_title, org_id = self.get_deleted_dataset(id)
@@ -326,7 +358,10 @@ class DatasetDownload():
 
             sheet = sheets[org_id]
             sheet.append(id)
-            
+        if ignore_deleted:
+            for k,v in deleted_ds.iteritems():
+                data.pop(k)
+            deleted_ds = {}
         
         rows = []
         for k,v in ds.iteritems():
@@ -342,9 +377,9 @@ class DatasetDownload():
         #write_csv('/tmp/a.csv', rows, header)
         
         #now save to xls
-        self.saveXls(sheets, data, ds, deleted_ds)
+        self.saveXls(sheets, data, ds, deleted_ds, ignore_deleted)
 
-    def saveXls(self, org_recs, data, org_stats, deleted_ds):
+    def saveXls(self, org_recs, data, org_stats, deleted_ds, isVisit=False):
         sheets =[]
         rows =[]
         for k, [name, title] in self.org_id2name.iteritems():
@@ -358,6 +393,8 @@ class DatasetDownload():
                         "Department Name English / Nom du ministère en anglais",
                         "Department Name French / Nom du ministère en français",
                         "Number of downloads / Nombre de téléchargements"])
+        if isVisit:
+            rows[0][3] = "Number of visits / Nombre de visites"
         sheet1 = {'name':'Summary by departments',
                   'data': rows,
                    'col_width':{0:26, 1:50, 2:50, 3:40}  # col:width
@@ -372,6 +409,8 @@ class DatasetDownload():
                  "Department Name English / Nom du ministère en anglais",
                  "Department Name French / Nom du ministère en français",
                  "number of downloads / nombre de téléchargements"]]
+        if isVisit:
+            rows[0][5] = "Number of visits / Nombre de visites"
         for rec_id,count in top100:
             rec = self.ds.get(rec_id, None)
             if not rec:
@@ -409,6 +448,8 @@ class DatasetDownload():
                             'Title English / Titre en anglais',
                             'Title French / Titre en français',
                             'Number of downloads / Nombre de téléchargements'])
+            if isVisit:
+                rows[0][3] = "Number of visits / Nombre de visites"
             rows.append(['total','','', org_stats.get(org_id)])
             sheets.append({'name':title,
                            'data': rows,
@@ -455,6 +496,39 @@ class DatasetDownload():
 
     def parseReport(self, response):
         return parseReport(response, 'ga:pagePath', 'ga:totalEvents')
+
+    def getRawVisitReport(self, start='0', size = '1000'):
+          return self.ga.reports().batchGet(
+              body={
+                'reportRequests': [
+                {
+                  'viewId': self.view_id,
+                  'dateRanges': [{'startDate': self.start_date, 'endDate': self.end_date}],
+#                  'dateRanges': [{'startDate': '2017-06-01', 'endDate': '2017-06-30'}],
+                  'metrics': [{'expression': 'ga:sessions'},
+                              {'expression': 'ga:pageViews'}],
+                  'dimensions':[{'name':'ga:pagePath'}],
+                  'dimensionFilterClauses': [ {
+                        'operator': 'OR',
+                        'filters': [{
+                            'dimensionName': 'ga:pagePath',
+                            'operator': "BEGINS_WITH",
+                            'expressions': ['/data/en/dataset/']
+                            },{
+                             'dimensionName': 'ga:pagePath',
+                             'operator': "BEGINS_WITH",
+                            'expressions': ['/data/fr/dataset/']
+                            }]
+                        }],
+                  'orderBys':[
+                    {'fieldName': 'ga:pageViews',
+                     'sortOrder': 'DESCENDING'
+                    }],
+                   'pageToken': start,
+                   'pageSize': size,
+                }]
+              }
+          ).execute()
 
     def download(self):
         if not self.file:
@@ -1009,6 +1083,10 @@ def report(client_secret_path, view_id, og_config_file, start, end, va):
       analytics = initialize_analyticsreporting(client_secret_path)
       ds = DatasetDownload(analytics, view_id, og_config_file)
       if og_type == 'info':
+          return ds.getStats(start, end, og_type)
+      elif og_type == 'visit':
+          return ds.getVisitStats(start, end, og_type)
+      elif og_type == 'download':
           return ds.getStats(start, end, og_type)
 
       ds.getStats(start, end, og_type); time.sleep(2)
