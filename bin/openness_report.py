@@ -39,6 +39,56 @@ class Records():
         p.instance = p()
         p.instance._load_presets(config={'scheming.presets':"ckanext.canada:schemas/presets.yaml"})
 
+    def org_info(self, csv_file):
+        count = 0
+        while count <=5:
+            try:
+                print 'reading organizations...'
+                orgs = self.site.action.organization_list(all_fields=True)
+                break
+            except ckanapi.errors.CKANAPIError:
+                count += 1
+                print 'Error read org list from open.canada.ca'
+                time.sleep(2)
+        res = []
+        for rec in orgs:
+            count = 0
+            while count <=50:
+                try:
+                    org = self.site.action.organization_show(id=rec['id'])
+                    break
+                except ckanapi.errors.CKANAPIError:
+                    count += 1
+                    org = None
+                    print 'Error read org ' + rec['name']
+                    time.sleep(2)
+            if not org:
+                print 'Network error'
+                os.exit(-1)
+            extras = org['extras']
+            ati_email = None
+            for ei in extras:
+                if ei['key'] == 'ati_email':
+                    ati_email = ei['value']
+                    break
+            name = org['display_name']
+
+            names = name.split(" | ")
+            if len(names)==1:
+                names.append(names[0])
+            res.append([rec['name'], names[0], names[1], ati_email])
+        res.sort(key=lambda x:x[0])
+        res.insert(0, [ 'ID / Identificateur',
+                        "Department Name English / Nom du ministère en anglais",
+                        "Department Name French / Nom du ministère en français",
+                        "ATI Email"])
+        outf=open(csv_file, 'wb')
+        outf.write(codecs.BOM_UTF8)
+        out = unicodecsv.writer(outf)
+        for line in res:
+            out.writerow(line)
+        outf.close()
+
     def download(self):
         # dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
         ds = self.site.action.package_show(id='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
@@ -92,7 +142,7 @@ class Records():
         out = unicodecsv.writer(outf)
         #Header
         out.writerow([
-                      "Department Name Englist | Nom du ministère en français",
+                      "Department Name English | Nom du ministère en français",
                       "Title English | Titre en français",
                       "URL",
                       "Openness Rating | Cote d'ouverture",
@@ -138,9 +188,15 @@ def main():
                         help="list each record")
     parser.add_argument("--dump", dest="dump", help="dump to csv file")
 
-    options = parser.parse_args()
+    parser.add_argument("--org", dest="org",  action='store_true', default=False,
+                        help="list organization record")
 
+    options = parser.parse_args()
     site = Records(options.site)
+
+    if options.org:
+        return site.org_info(options.dump)
+
     if options.detail:
         return site.details(options.dump)
 
