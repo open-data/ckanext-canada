@@ -77,3 +77,7 @@ ckanapi action resource_patch -c $PORTAL_INI \
 	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${TMPFILE}"
 echo 'deleted datasets done' >> /home/odatsrv/tmp/og_analytics_top20info.log
 
+#update resource on registry site, this can be run on registry site
+#ckanapi dump datasets  2916fad5-ebcc-4c86-b0f3-4f619b29f412  -r http://open.canada.ca/data > /tmp/c.jsonl
+#ckanapi load datasets  -I /tmp/c.jsonl -c <config file> OR
+#ckanapi load datasets  -I /tmp/c.jsonl -r http://registry.open.canada.ca -a <API_KEY>
