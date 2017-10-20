@@ -123,6 +123,8 @@ class Records():
         reports = defaultdict(list)
         for records in self.download():
             for record in records:
+              if record['type'] != 'dataset':
+                continue
               try:
                 id = record['id']
                 score = openness_score(record)
