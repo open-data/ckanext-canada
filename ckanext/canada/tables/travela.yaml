@@ -21,6 +21,36 @@ resources:
     form_placeholder: 20XX
     excel_column_width: 20
 
+  - datastore_id: mandate_description_en
+    label:
+      en: Description of departmental mandate (English)
+      fr: Description du mandat du ministère (anglais)
+    description:
+      en: "Provide a brief explanation, in English, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
+      fr: "Expliquez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère, incluant les changements importants apportés à la structure ou aux programmes."
+    obligation: Mandatory
+    format_type: Free text
+    validation: This field must not be empty
+    datastore_type: text
+    form_required: true
+    form_attrs: {'size': 60}
+    excel_column_width: 50
+
+  - datastore_id: mandate_description_fr
+    label:
+      en: Description of departmental mandate (French)
+      fr: Description du mandat du ministère (français)
+    description:
+      en: "Provide a brief explanation, in English, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
+      fr: "Expliquez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère, incluant les changements importants apportés à la structure ou aux programmes."
+    obligation: Mandatory
+    format_type: Free text
+    validation: This field must not be empty
+    datastore_type: text
+    form_required: true
+    form_attrs: {'size': 60}
+    excel_column_width: 50
+
   - datastore_id: public_servants
     label: Travel - Public Servants
     datastore_type: money

@@ -53,7 +53,7 @@ resources:
 
   - datastore_id: old_class_level
     label: Previous Position Classification Level Number
-    datastore_type: int
+    datastore_type: text
     excel_column_width: 10
     choices_file: choices/level_number.yaml
 
@@ -65,7 +65,7 @@ resources:
 
   - datastore_id: new_class_level
     label: Reclassified Position Classification Level Number
-    datastore_type: int
+    datastore_type: text
     excel_column_width: 10
     choices_file: choices/level_number.yaml
 

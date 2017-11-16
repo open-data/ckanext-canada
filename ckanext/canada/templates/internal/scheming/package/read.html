@@ -1,26 +1,4 @@
-{% extends "package/read.html" %}
-
-{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
-
-{% block package_notes %}
-  {%- if not dataset_type -%}
-    <p>
-    dataset_type not passed to template. your version of CKAN
-    might not be compatible with ckanext-scheming
-    </p>
-  {%- endif -%}
-  {% if h.scheming_field_by_name(schema.dataset_fields, 'notes') and
-    pkg.notes%}
-    <div class="notes embedded-content">
-      {{ h.render_markdown(pkg.notes) }}
-    </div>
-  {% endif %}
-{% endblock %}
-
-{% block package_additional_info %}
-  {% snippet "scheming/package/snippets/additional_info.html",
-    pkg_dict=pkg, dataset_type=dataset_type, schema=schema %}
-{% endblock %}
+{% ckan_extends %}
 
 {# restore the original Edit button replaced on the public site #}
 {% block actions_content_inner %}
