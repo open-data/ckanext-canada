@@ -233,7 +233,7 @@
 
 {%- block custom_styles %}
 {{ super() }}
-<link rel="stylesheet" href="/data/static/opendata_blog.css" />
+<link rel="stylesheet" href="{{ h.url_for_static('/static/opendata_blog.css') }}" />
 {% endblock %}
 
 
