@@ -298,10 +298,10 @@ class CanadaCommand(CkanCommand):
         if not data:
             return None, None
 
-        package_ids = []
+        packages = []
         for result in data:
             package_id = result['data']['package']['id']
-            packages.append(registry.action.package_show(id=package_id))
+            packages.append(json.dumps(registry.action.package_show(id=package_id)))
 
         if data:
             since_time = isodate(data[-1]['timestamp'], None)
@@ -323,7 +323,8 @@ class CanadaCommand(CkanCommand):
         packages = iter(sys.stdin.readline, '')
 
         for package in packages:
-            source_package = json.loads(package)
+            source_pkg = json.loads(package)
+            package_id = source_pkg['id']
             reason = None
             target_deleted = False
             if source_pkg and source_pkg['state'] == 'deleted':
