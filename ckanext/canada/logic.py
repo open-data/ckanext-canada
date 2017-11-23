@@ -4,7 +4,7 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, check_access)
+    get_or_bust, ValidationError, side_effect_free, check_access, chained_action)
 from ckan.authz import is_sysadmin
 
 from pylons import config
@@ -31,29 +31,6 @@ def limit_api_logic():
         'dashboard_activity_list': (20, 100),
         'dashboard_activity_list_html': (20, 100),
         }
-
-    # shields up
-    disable_anon_logic = [
-        'current_package_list_with_resources',
-        'revision_list',
-        'package_revision_list',
-        'user_list',
-        'resource_search',
-        'user_activity_list',
-        'member_list',
-        'group_revision_list',
-        #'user_show',  FIXME: required for password reset
-        'package_autocomplete',
-        'format_autocomplete',
-        'user_autocomplete',
-        'group_activity_list',
-        'organization_activity_list',
-        'user_activity_list_html',
-        'group_activity_list_html',
-        'organization_activity_list_html',
-        'recently_changed_packages_activity_list_html',
-        'group_package_show',
-    ]
 
     out = {}
     for name, (default, limit) in context_limit_packages.items():
@@ -85,16 +62,6 @@ def limit_api_logic():
             return action(context, data_dict)
         if hasattr(action, 'side_effect_free'):
             wrapper.side_effect_free = action.side_effect_free
-        out[name] = wrapper
-
-    for name in disable_anon_logic:
-        action = getattr(core_get, name)
-        @functools.wraps(action)
-        def wrapper(context, data_dict, action=action):
-            if context.get('user', 'visitor') in ('', 'visitor'):
-                return []
-            return action(context, data_dict)
-
         out[name] = wrapper
 
     return out

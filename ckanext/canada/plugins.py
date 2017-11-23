@@ -10,7 +10,7 @@ from wcms7 import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action
+from ckantoolkit import h, chained_action, side_effect_free
 import ckanapi
 from ckan.lib.base import c
 
@@ -35,6 +35,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IActions)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -169,6 +170,24 @@ class DataGCCAInternal(p.SingletonPlugin):
         All datasets on registry should now be marked private
         """
         pkg.private = True
+
+    def get_actions(self):
+        return {k: disabled_anon_action for k in [
+            'package_activity_list',
+            'recently_changed_packages_activity_list',
+            'dashboard_activity_list',
+            'changed_packages_activity_list_since',
+            ]}
+
+
+@chained_action
+def disabled_anon_action(up_func, context, data_dict):
+    if context.get('user', 'visitor') in ('', 'visitor'):
+        return []
+    return up_func(context, data_dict)
+disabled_anon_action.side_effect_free = True
+disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
+
 
 
 class DataGCCAPublic(p.SingletonPlugin):
@@ -348,6 +367,24 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_list_since',
             ])
+        actions.update({k: disabled_anon_action for k in [
+            'current_package_list_with_resources',
+            'revision_list',
+            'package_revision_list',
+            'user_list',
+            'resource_search',
+            'user_activity_list',
+            'member_list',
+            'group_revision_list',
+            #'user_show',  FIXME: required for password reset
+            'package_autocomplete',
+            'format_autocomplete',
+            'user_autocomplete',
+            'group_activity_list',
+            'organization_activity_list',
+            'group_package_show',
+            'activity_detail_list',
+            ]})
         return actions
 
     # IValidators
