@@ -447,8 +447,6 @@ def _trim_package(pkg):
             'resource_type',
             # new in 2.3:
             'creator_user_id',
-            # make public when publishing
-            'private',
             ]:
         if k in pkg:
             del pkg[k]
