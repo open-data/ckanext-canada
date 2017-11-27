@@ -657,7 +657,7 @@ class PDUpdateController(BaseController):
             prev = response['records'][0]
             errors = {}
             for p in data_prev:
-                if prev[p] != data_prev[p]:
+                if prev[p] != data_prev[p] and prev[p]:
                     errors[p + '_prev'] = [_(u'Does not match previous data "%s"') % prev[p]]
             if errors:
                 return error(errors)
