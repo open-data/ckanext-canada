@@ -14,8 +14,6 @@
 
   {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error) }}
 
-  {{ form.checkbox('remember', label=_("Remember me"), id='field-remember', value="63072000") }}
-
   <div class="form-actions">
     {% block login_button %}
       <div class="clear"></div>
