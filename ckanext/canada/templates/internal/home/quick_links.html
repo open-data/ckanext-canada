@@ -21,6 +21,9 @@
     <section>
       <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
     </section>
+    <section>
+    <div class="alert alert-danger" style="font-weight:bold">{{_('Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.')}}</div>
+    </section>
   </div>
   {% set orgs = h.organizations_available('read') %}
   {% if orgs %}
