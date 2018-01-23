@@ -2000,3 +2000,33 @@ msgstr "Portail « Ouvert par défaut »"
 
 msgid "Open by Default provides access to working documents used by the Government of Canada. Most of this information is unpublished. Documents may be in draft form, and are generally available in the language in which they were created. Unless otherwise indicated, information is made available under the <a href=\"http://open.canada.ca/en/open-government-licence-canada\">Open Government Licence</a>. To obtain documents in the official language of your choice, or in an accessible format, please <a href=\"http://open.canada.ca/en/forms/contact-us\">contact us</a>."
 msgstr "L’initiative « Ouvert par défaut » donne accès aux documents de travail utilisés par le gouvernement du Canada. La plupart de ces renseignements ne sont pas publiés. Les documents peuvent être sous la forme d’ébauche et sont en général disponibles dans la langue dans laquelle ils ont été créés. À moins d’indication contraire, les renseignements sont disponibles en vertu de la <a href=\"http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada\">licence du gouvernement ouvert</a>. Afin d’obtenir les documents dans la langue officielle de votre choix ou dans un format accessible, veuillez <a href=\"http://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires\">communiquer avec nous</a>."
+
+msgid "Dear %(user_name)s,"
+msgstr "Cher %(user_name)s,"
+
+msgid ""
+"You have requested your password on %(site_title)s to be reset.\n"
+"\n"
+"Please click the following link to confirm this request:\n"
+"\n"
+"   %(reset_link)s"
+msgstr "Vous avez demandé la réinitialisation de votre mot de passe sur le site %(site_title)s.\n\nMerci de cliquer sur le lien suivant pour confirmer votre requête :\n%(reset_link)s"
+
+msgid "Invite for %(site_title)s"
+msgstr "Invitation pour %(site_title)s"
+
+msgid ""
+"You have been invited to %(site_title)s.\n"
+"\n"
+"A user has already been created to you with the username %(user_name)s. You can change it later.\n"
+"\n"
+"To accept this invite, please reset your password at:\n"
+"\n"
+"   %(reset_link)s\n"
+msgstr "Vous avez été invité sur %(site_title)s.\n\nUn utilisateur a déjà été créé pour vous avec l'identifiant %(user_name)s. Vous pourrez le changer ultérieurement.\n\nPour accepter cette invitation, veuillez réinitialiser votre mot de passe via :\n%(reset_link)s\n"
+
+msgid "Have a nice day."
+msgstr "Bonne journée."
+
+msgid "Message sent by %(site_title)s (%(site_url)s)"
+msgstr "Message envoyé par %(site_title)s (%(site_url)s)"
