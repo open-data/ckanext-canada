@@ -295,11 +295,11 @@ ckanext.canada:schemas/info.yaml
             'linked_gravatar',
             'linked_user',
             'json_loads',
-            'catalogue_last_update_date'
+            'catalogue_last_update_date',
+            'dataset_rating',
+            'dataset_comment_count',
+            'dataset_comments',
             ]),
-            dataset_comments=helpers.dataset_comments_drupal7,
-            dataset_rating=helpers.dataset_rating_drupal7,
-            dataset_comment_count=helpers.dataset_comment_count_drupal7)
 
     def before_map(self, map):
         map.connect(
