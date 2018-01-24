@@ -1,0 +1,19 @@
+Dear {{ user_name }},
+
+We have detected an unusually large amount of login attempts for your account.
+As a security precaution, we have temporarily blocked logins with your credentials.
+If you have any questions please contact open-ouvert@tbs.sct.gc.ca
+
+
+Message sent by {{ site_title }} ({{ site_url }})
+
+
+
+{{ user_name }},
+
+Nous avons détecté un nombre inhabituellement important de tentatives de connexion pour votre compte.
+Par mesure de sécurité, nous avons temporairement suspendu les connexions pour vos identifiants.
+Si vous avez des questions, veuillez vous adresser à open-ouvert@tbs.sct.gc.ca
+
+
+Message envoyé par {{ site_title }} ({{ site_url }})
