@@ -277,7 +277,7 @@ ckanext.canada:schemas/info.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        return dict(((h, getattr(helpers, h)) for h in [
+        return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
             'openness_score',
             'remove_duplicates',
@@ -299,7 +299,7 @@ ckanext.canada:schemas/info.yaml
             'dataset_rating',
             'dataset_comment_count',
             'dataset_comments',
-            ]),
+            ])
 
     def before_map(self, map):
         map.connect(
