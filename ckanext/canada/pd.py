@@ -116,7 +116,7 @@ class PDNilCommand(CkanCommand):
 
 def clear_index(command_name):
     conn = solr_connection(command_name)
-    conn.delete_query("*:*")
+    conn.delete(q="*:*")
     conn.commit()
 
 
@@ -292,7 +292,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             out.append(solrrec)
 
     if out:
-        conn.add_many(out, _commit=True)
+        conn.add(out)
     return unmatched
 
 

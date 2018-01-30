@@ -32,15 +32,15 @@ def solr_connection(ini_prefix):
     :return a solr connection from configured URL, user, password settings
     :rtype object
     """
-    from solr import SolrConnection
+    from pysolr import Solr
     url = config.get('{0:s}.solr_url'.format(ini_prefix))
     user = config.get('{0:s}.solr_user'.format(ini_prefix))
     password = config.get('{0:s}.solr_password'.format(ini_prefix))
     if url is None:
         raise KeyError('{0:s}.solr_url'.format(ini_prefix))
     if user is not None and password is not None:
-        return SolrConnection(url, http_user=user, http_pass=password)
-    return SolrConnection(url)
+        return Solr(url, http_user=user, http_pass=password)
+    return Solr(url)
 
 def data_batch(org_id, lc, dataset_type):
     """
