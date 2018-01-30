@@ -21,6 +21,14 @@
   <div class="panel">
     {% trans %}login welcome text{% endtrans %}
 
+    <section class="alert alert-info">
+      <p>{{ _('As part of moving open.canada.ca to new infrastructure we have implemented new password '
+        'standards for all accounts. You will need to use the Reset password link to regain access to '
+        'your account. If you no longer have access to the email associated with your account please '
+        'contact us at open-ouvert@tbs-sct.gc.ca') }}
+      </p>
+    </section>
+
     {% block form %}
       {{ super() }}
     {% endblock %}
