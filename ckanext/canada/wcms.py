@@ -140,7 +140,7 @@ def dataset_rating(package_id):
 
     for entry in d:
         if entry['attributes']['function'] == 'vote_average':
-            return entry['attributes']['value']
+            return int(entry['attributes']['value']+0.5)
     else:
         return 0
 
