@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set reset_link = h.url_for(controller='user', action='request_reset') %}
+
 {% block secondary_content %}
 
   <div class="panel panel-info">
@@ -16,7 +18,7 @@
     <div class="panel-body">
       <p>{{ _('No problem, use our password recovery form to reset it') }}.</p>
       <p>
-        <a class="btn btn-warning btn-xs" href="{{ h.url_for(controller='user', action='request_reset') }}" role="button">{{ _('Reset password') }}</a>
+        <a class="btn btn-warning btn-xs" href="{{ reset_link }}" role="button">{{ _('Reset password') }}</a>
       </p>
     </div>
   </div>
@@ -27,10 +29,14 @@
     {% trans %}login welcome text{% endtrans %}
 
     <section class="alert alert-info">
-      <p>{{ _('As part of moving open.canada.ca to new infrastructure we have implemented new password '
-        'standards for all accounts. You will need to use the Reset password link to regain access to '
-        'your account. If you no longer have access to the email associated with your account please '
-        'contact us at open-ouvert@tbs-sct.gc.ca') }}
+      <p>
+        {% trans %}
+          As part of moving open.canada.ca to new infrastructure we have implemented new password
+          standards for all accounts. You will need to use the
+          <a href="{{ reset_link }}">Reset password</a> link to regain access to
+          your account. If you no longer have access to the email associated with your account please
+          contact us at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>
+        {% endtrans %}
       </p>
     </section>
 
