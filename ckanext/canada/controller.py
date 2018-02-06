@@ -375,7 +375,7 @@ class CanadaUserController(UserController):
                 notice_no_access()
                 raise
 
-        if c.user and not data:
+        if c.user and not data and not is_sysadmin(c.user):
             # #1799 Don't offer the registration form if already logged in
             return render('user/logout_first.html')
 
