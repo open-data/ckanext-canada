@@ -291,8 +291,18 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         else:
             out.append(solrrec)
 
-    if out:
-        conn.add(out)
+    import pysolr
+    for a in reversed(range(10)):
+        try:
+            if out:
+                conn.add(out)
+            break
+        except pysolr.SolrError:
+            if not a:
+                raise
+            print "retrying..."
+            import time
+            time.sleep(5)
     return unmatched
 
 
