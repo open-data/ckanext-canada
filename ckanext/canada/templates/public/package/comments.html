@@ -1,6 +1,6 @@
 {%- macro display_comment(comment_list) -%}
   {%- if comment_list|length > 0 -%}
-    {%- if commen_list[0][1] -%}
+    {%- if comment_list[0][1] -%}
       {%- set indent = comment_list[0][1]['thread'].split('.')|length  -%}
       {%- if indent >  1 -%}<div class="indented">{% endif %}
       {% for item in comment_list %}
