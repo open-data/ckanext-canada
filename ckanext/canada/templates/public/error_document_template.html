@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{% block page_heading %}
+  {{ super() }}
+  {% block subtitle %}
+    {% if c.code[0] == '404' %}
+      {{ _('We couldn\'t find that Web page') }}
+    {% else %}
+      {{ _('We encountered an error') }}
+    {% endif %}
+  {% endblock %}
+{% endblock %}
+
+{% block primary %}
+  {% block page_title %}{{ super() }}{% endblock %}
+  <div class="row">
+    <div class="col-md-12">
+      {% if c.code[0] == '500' %}
+        <p>{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists.') | safe }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

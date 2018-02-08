@@ -55,6 +55,9 @@ int_validator = get_validator('int_validator')
 
 ottawa_tz = timezone('America/Montreal')
 
+class IntentionalServerError(Exception):
+    pass
+
 
 class CanadaController(BaseController):
     def home(self):
@@ -130,6 +133,9 @@ class CanadaController(BaseController):
             # For use with the inline debugger.
             'faq_text': faq_text
         })
+
+    def server_error(self):
+        raise IntentionalServerError()
 
     def organization_index(self):
         context = {'model': model, 'session': model.Session,

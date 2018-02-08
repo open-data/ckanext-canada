@@ -332,6 +332,11 @@ ckanext.canada:schemas/info.yaml
             action='organization_autocomplete',
             controller='ckanext.canada.controller:CanadaController',
         )
+        map.connect(
+            '/500',
+            action='server_error',
+            controller='ckanext.canada.controller:CanadaController'
+        )
         return map
 
     def configure(self, config):
