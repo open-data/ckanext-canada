@@ -3,9 +3,7 @@
 {% block page_heading %}
   {{ super() }}
   {% block subtitle %}
-    {% if c.code[0] == '404' %}
-      {{ _('We couldn\'t find that Web page') }}
-    {% else %}
+    {% if c.code[0] == '500' %}
       {{ _('We encountered an error') }}
     {% endif %}
   {% endblock %}
