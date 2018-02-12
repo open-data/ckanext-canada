@@ -1,9 +1,10 @@
 {% ckan_extends %}
 
 {% block page_heading %}
-  {{ super() }}
   {% block subtitle %}
-    {% if c.code[0] == '500' %}
+    {% if c.code[0] == '404' %}
+      {{ _('We couldn\'t find that Web page') }}
+    {% else %}
       {{ _('We encountered an error') }}
     {% endif %}
   {% endblock %}
