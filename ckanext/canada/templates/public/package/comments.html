@@ -53,7 +53,7 @@
       {{ c.page.pager(q=c.q) }}
       {% endblock %}
     {% else %}
-      <h4>{{ _('Comments') }}(0)</h4>
+      <h4><a name="comments"></a>{{ _('Comments') }}(0)</h4>
     {%- endif -%}
     <div class="margin-top-medium">
       {% block comment_link %}
