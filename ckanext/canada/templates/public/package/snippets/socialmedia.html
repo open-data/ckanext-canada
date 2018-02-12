@@ -19,7 +19,7 @@
         h.url_for_static('/static/img/leaves/' + rating_img, qualified=true)
         }}" alt="{{ rating_alt }}"><br />
         <a href="{% if h.lang() == 'en' %}/en{% else %}/fr{% endif
-          %}/dataset/{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
+          %}/external-entity/ckan-{{pkg.name}}">{{ _('Rate this dataset') }}</a></li>
 
       <li><a href="#comments">{{ h.dataset_comment_count(pkg.name) }} {{
         _('Comment(s)') }}</a></li>
