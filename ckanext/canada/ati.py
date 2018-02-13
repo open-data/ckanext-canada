@@ -80,9 +80,9 @@ class ATICommand(CkanCommand):
         elif cmd == 'rebuild':
             return self._rebuild(self.options.csv_files, self.options.solr_url)
 
-    def _clear_index(self):
+    def _clear_index(self, solr_url=None, commit=True):
         conn = solr_connection('ati')
-        conn.delete(q="*:*")
+        conn.delete(q="*:*", commit=commit)
 
     def _rebuild(self, csv_files=None, solr_url=None):
         """
@@ -94,7 +94,7 @@ class ATICommand(CkanCommand):
         :return: Nothing
         :rtype: None
         """
-        self._clear_index()
+        self._clear_index(solr_url, False)
 
         conn = solr_connection('ati', solr_url)
         lc = LocalCKAN()

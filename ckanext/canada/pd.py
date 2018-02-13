@@ -131,9 +131,9 @@ class PDNilCommand(CkanCommand):
                 self.options.solr_url)
 
 
-def clear_index(command_name):
-    conn = solr_connection(command_name)
-    conn.delete(q="*:*")
+def clear_index(command_name, solr_url=None, commit=True):
+    conn = solr_connection(command_name, solr_url)
+    conn.delete(q="*:*", commit=commit)
 
 
 
@@ -147,7 +147,7 @@ def rebuild(command_name, csv_files=None, solr_url=None):
     :return: Nothing
     :rtype: None
     """
-    clear_index(command_name)
+    clear_index(command_name, solr_url, False)
 
     conn = solr_connection(command_name, solr_url)
     lc = LocalCKAN()
