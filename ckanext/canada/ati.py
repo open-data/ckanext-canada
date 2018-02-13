@@ -127,6 +127,9 @@ class ATICommand(CkanCommand):
                     count += len(records)
                 print org_id, count
 
+        print "commit"
+        conn.commit()
+
 
 def _update_records(records, org_detail, conn):
     """
@@ -227,5 +230,3 @@ def _update_records(records, org_detail, conn):
     except SolrException, e:
         print e.body
         raise
-    print "commit"
-    conn.commit()

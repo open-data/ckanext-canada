@@ -186,6 +186,9 @@ def rebuild(command_name, csv_files=None, solr_url=None):
                 count += len(records)
             print org, count
 
+    print "commit"
+    conn.commit()
+
 
 def _update_records(records, org_detail, conn, resource_name, unmatched):
     """
@@ -319,8 +322,6 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             print "retrying..."
             import time
             time.sleep(5)
-    print "commit"
-    conn.commit()
     return unmatched
 
 
