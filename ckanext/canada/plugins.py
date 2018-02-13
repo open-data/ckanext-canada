@@ -6,7 +6,6 @@ from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
 from ckan.logic import validators as logic_validators
-from wcms7 import wcms_configure
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
@@ -147,9 +146,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             ])
 
     def configure(self, config):
-        if 'ckan.drupal.url' in config:
-            wcms_configure(config['ckan.drupal.url'])
-
         # FIXME: monkey-patch datastore upsert_data
         from ckanext.datastore import db
         original_upsert_data = db.upsert_data
@@ -195,7 +191,6 @@ class DataGCCAPublic(p.SingletonPlugin):
     Plugin for public-facing version of Open Government site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
     """
-    p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.IActions)
     p.implements(p.IAuthFunctions)
@@ -338,11 +333,6 @@ ckanext.canada:schemas/info.yaml
             controller='ckanext.canada.controller:CanadaController'
         )
         return map
-
-    def configure(self, config):
-
-        if ('ckan.drupal.url' in config):
-            wcms_configure(config['ckan.drupal.url'])
 
     def get_actions(self):
         return {'inventory_votes_show': logic.inventory_votes_show}

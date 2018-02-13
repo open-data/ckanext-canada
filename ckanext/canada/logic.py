@@ -10,7 +10,7 @@ from ckan.authz import is_sysadmin
 from pylons import config
 import functools
 
-from ckanext.canada.wcms7 import wcms_inventory_votes
+from ckanext.canada.wcms import inventory_votes
 
 
 def limit_api_logic():
@@ -175,4 +175,4 @@ def datastore_create_temp_user_table(context):
 @side_effect_free
 def inventory_votes_show(context, data_dict):
     check_access('inventory_votes_show', context, data_dict)
-    return wcms_inventory_votes()
+    return inventory_votes()
