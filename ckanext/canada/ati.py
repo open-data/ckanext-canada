@@ -83,7 +83,6 @@ class ATICommand(CkanCommand):
     def _clear_index(self):
         conn = solr_connection('ati')
         conn.delete(q="*:*")
-        conn.commit()
 
     def _rebuild(self, csv_files=None, solr_url=None):
         """
@@ -224,7 +223,9 @@ def _update_records(records, org_detail, conn):
         out.append(record)
 
     try:
-        conn.add(out)
+        conn.add(out, commit=False)
     except SolrException, e:
         print e.body
         raise
+    print "commit"
+    conn.commit()

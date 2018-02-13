@@ -134,7 +134,6 @@ class PDNilCommand(CkanCommand):
 def clear_index(command_name):
     conn = solr_connection(command_name)
     conn.delete(q="*:*")
-    conn.commit()
 
 
 
@@ -312,7 +311,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     for a in reversed(range(10)):
         try:
             if out:
-                conn.add(out)
+                conn.add(out, commit=False)
             break
         except pysolr.SolrError:
             if not a:
@@ -320,6 +319,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             print "retrying..."
             import time
             time.sleep(5)
+    print "commit"
+    conn.commit()
     return unmatched
 
 
