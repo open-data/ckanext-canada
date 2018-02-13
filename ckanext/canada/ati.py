@@ -35,13 +35,15 @@ class ATICommand(CkanCommand):
     Usage::
 
         paster ati clear
-                   rebuild [-f <file> <file>]
+                   rebuild [-f <file> <file>] [-s <solr-url>]
 
     Options::
 
         -f/--csv-file <file> <file>    use specified CSV files as ati.csv
                                        and ati-nil.csv input, instead of the
                                        (default) CKAN database
+        -s/--solr-url <url>            use specified solr URL as output,
+                                       instead of default from ini file.
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -59,6 +61,11 @@ class ATICommand(CkanCommand):
         nargs=2,
         dest='csv_files',
         help='CSV files to use as input (or default CKAN DB)')
+    parser.add_option(
+        '-s',
+        '--solr-url',
+        dest='solr_url',
+        help='Solr URL for output')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -71,14 +78,14 @@ class ATICommand(CkanCommand):
         if cmd == 'clear':
             return self._clear_index()
         elif cmd == 'rebuild':
-            return self._rebuild(self.options.csv_files)
+            return self._rebuild(self.options.csv_files, self.options.solr_url)
 
     def _clear_index(self):
         conn = solr_connection('ati')
         conn.delete(q="*:*")
         conn.commit()
 
-    def _rebuild(self, csv_files=None):
+    def _rebuild(self, csv_files=None, solr_url=None):
         """
         Implement rebuild command
 
@@ -90,7 +97,7 @@ class ATICommand(CkanCommand):
         """
         self._clear_index()
 
-        conn = solr_connection('ati')
+        conn = solr_connection('ati', solr_url)
         lc = LocalCKAN()
         if csv_files:
             for csv_file in csv_files:

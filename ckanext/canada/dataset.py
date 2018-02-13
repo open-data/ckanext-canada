@@ -22,7 +22,7 @@ MONTHS_FR = [
     u'décembre',
     ]
 
-def solr_connection(ini_prefix):
+def solr_connection(ini_prefix, solr_url=None):
     """
     Set up solr connection
     :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
@@ -33,9 +33,14 @@ def solr_connection(ini_prefix):
     :rtype object
     """
     from pysolr import Solr
-    url = config.get('{0:s}.solr_url'.format(ini_prefix))
-    user = config.get('{0:s}.solr_user'.format(ini_prefix))
-    password = config.get('{0:s}.solr_password'.format(ini_prefix))
+    if not solr_url:
+        url = config.get('{0:s}.solr_url'.format(ini_prefix))
+        user = config.get('{0:s}.solr_user'.format(ini_prefix))
+        password = config.get('{0:s}.solr_password'.format(ini_prefix))
+    else:
+        url = solr_url
+        user = None
+        password = None
     if url is None:
         raise KeyError('{0:s}.solr_url'.format(ini_prefix))
     if user is not None and password is not None:

@@ -35,14 +35,15 @@ class PDCommand(CkanCommand):
 
     Usage::
 
-        paster <pd-type> build-templates <sources> <dest-dir>
-                         clear
-                         rebuild [-f <file>]
+        paster <pd-type> clear
+                         rebuild [-f <file>] [-s <solr-url>]
 
     Options::
 
         -f/--csv-file <file>       use specified CSV files as contracts input,
                                    instead of the (default) CKAN database
+        -s/--solr-url <url>        use specified solr URL as output,
+                                   instead of default from ini file.
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -55,6 +56,11 @@ class PDCommand(CkanCommand):
         '--csv',
         dest='csv_file',
         help='CSV file to use as input (or default CKAN DB)')
+    parser.add_option(
+        '-s',
+        '--solr-url',
+        dest='solr_url',
+        help='Solr URL for output')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -69,7 +75,8 @@ class PDCommand(CkanCommand):
         elif cmd == 'rebuild':
             return rebuild(
                 self.command_name,
-                [self.options.csv_file] if self.options.csv_file else None)
+                [self.options.csv_file] if self.options.csv_file else None,
+                self.options.solr_url)
 
 
 class PDNilCommand(CkanCommand):
@@ -79,13 +86,15 @@ class PDNilCommand(CkanCommand):
     Usage::
 
         paster <pd-type> clear
-                         rebuild [-f <file> <file>]
+                         rebuild [-f <file> <file>] [-s <solr-url>]
 
     Options::
 
         -f/--csv-file <file> <file>     use specified CSV files as PD and
                                         PD-nil input, instead of the
                                         (default) CKAN database
+        -s/--solr-url <url>             use specified solr URL as output,
+                                        instead of default from ini file.
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -99,6 +108,11 @@ class PDNilCommand(CkanCommand):
         nargs=2,
         dest='csv_files',
         help='CSV files to use as input (or default CKAN DB)')
+    parser.add_option(
+        '-s',
+        '--solr-url',
+        dest='solr_url',
+        help='Solr URL for output')
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -111,7 +125,10 @@ class PDNilCommand(CkanCommand):
         if cmd == 'clear':
             return clear_index(self.command_name)
         elif cmd == 'rebuild':
-            return rebuild(self.command_name, self.options.csv_files)
+            return rebuild(
+                self.command_name,
+                self.options.csv_files,
+                self.options.solr_url)
 
 
 def clear_index(command_name):
@@ -121,7 +138,7 @@ def clear_index(command_name):
 
 
 
-def rebuild(command_name, csv_files=None):
+def rebuild(command_name, csv_files=None, solr_url=None):
     """
     Implement rebuild command
 
@@ -133,7 +150,7 @@ def rebuild(command_name, csv_files=None):
     """
     clear_index(command_name)
 
-    conn = solr_connection(command_name)
+    conn = solr_connection(command_name, solr_url)
     lc = LocalCKAN()
     if csv_files:
         for csv_file in csv_files:
