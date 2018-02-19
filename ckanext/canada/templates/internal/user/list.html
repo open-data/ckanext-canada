@@ -2,7 +2,9 @@
 
 {% block primary_content_inner %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
-    <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
+    {% if c.userobj.sysadmin %}
+      <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
+    {% endif %}
     {% block users_list %}
     <table class="wb-tables" data-wb-tables='{"pageLength": 25}' style="width:100%">
       <thead>
