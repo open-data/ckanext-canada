@@ -93,9 +93,9 @@ def remove_duplicates(a_list):
     return s
 
 
-# Retrieve the comments for this dataset that have been saved in the Drupal database
-def dataset_comments(request, c, pkg_id):
-    return wcms.dataset_comments(request, c, pkg_id)
+def dataset_comments(pkg_id):
+    if config.get('ckanext.canada.drupal_url'):
+        return '/' + h.lang() + '/external-entity/ckan-' + pkg_id + '?_wrapper_format=ajax'
 
 
 def get_license(license_id):
