@@ -42,7 +42,7 @@
     {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
     {% for resource in apps %}
       <tr>
-        <td class="td-full wrapall">
+        <td class="td-full">
           {% snippet 'scheming/snippets/display_field.html',
             field=name_field,
             data=resource,
