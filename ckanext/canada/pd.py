@@ -284,6 +284,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         solrrec['date_year'] = value.split('-', 1)[0]
                     if f.get('extract_date_month'):
                         solrrec['date_month'] = value.split('-')[1]
+                    if f.get('extract_date_clean'):
+                        solrrec['date_clean'] = value
                 except ValueError:
                     pass
             elif f.get('datastore_type') == 'year':
