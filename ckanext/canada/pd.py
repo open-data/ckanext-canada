@@ -321,9 +321,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         except pysolr.SolrError:
             if not a:
                 raise
-            print "retrying..."
+            print "waiting..."
             import time
-            time.sleep(5)
+            time.sleep((10-a) * 5)
+            print "retrying..."
     return unmatched
 
 
