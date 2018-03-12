@@ -7,6 +7,8 @@
 : ${LOG_DIR:=/project/ga/logs}
 : ${WORK_DIR:=/project/ga/tmp}
 
+export WORK_DIR
+
 set -e
 
 mkdir -p $LOG_DIR

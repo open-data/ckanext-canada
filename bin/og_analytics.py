@@ -74,7 +74,6 @@ def read_csv(filename):
             content.append(x)
     return content
 
-proxy= os.environ['http_proxy']
 
 # https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py
 # https://developers.google.com/analytics/devguides/reporting/core/v4/basics
@@ -92,7 +91,7 @@ def initialize_analyticsreporting(client_secrets_path, ca_certs):
   DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
 
   credentials = service_account.Credentials.from_service_account_file(
-      client_secrets_path, scope=SCOPES)
+      client_secrets_path, scopes=SCOPES)
 
   http = http=httplib2.Http(ca_certs=ca_certs)
 
