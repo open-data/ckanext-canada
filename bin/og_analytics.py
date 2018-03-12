@@ -6,9 +6,7 @@ import argparse
 
 from apiclient.discovery import build
 import httplib2
-from oauth2client import client
-from oauth2client import file
-from oauth2client import tools
+from google.oauth2 import service_account
 
 import os
 import time
@@ -32,6 +30,9 @@ import traceback
 
 import openpyxl
 import heapq
+
+
+WORK_DIR=os.environ['WORK_DIR']
 
 def write_xls(filename, sheets):
     #book = openpyxl.load_workbook('sheets.xlsx')
@@ -81,7 +82,7 @@ proxy= os.environ['http_proxy']
 #VIEW_ID = '<REPLACE_WITH_VIEW_ID>'
 
 
-def initialize_analyticsreporting(client_secrets_path):
+def initialize_analyticsreporting(client_secrets_path, ca_certs):
   """Initializes the analyticsreporting service object.
 
   Returns:
@@ -90,33 +91,14 @@ def initialize_analyticsreporting(client_secrets_path):
   SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
   DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
 
-  # Parse command-line arguments.
-  parser = argparse.ArgumentParser(
-      formatter_class=argparse.RawDescriptionHelpFormatter,
-      parents=[tools.argparser])
-  # flags = parser.parse_args(['--noauth_local_webserver'])
-  flags = parser.parse_args([])
+  credentials = service_account.Credentials.from_service_account_file(
+      client_secrets_path, scope=SCOPES)
 
-  # Set up a Flow object to be used if we need to authenticate.
-  flow = client.flow_from_clientsecrets(
-      client_secrets_path, scope=SCOPES,
-      message=tools.message_if_missing(client_secrets_path))
-
-  # Prepare credentials, and authorize HTTP object with them.
-  # If the credentials don't exist or are invalid run through the native client
-  # flow. The Storage object will ensure that if successful the good
-  # credentials will get written back to a file.
-  storage = file.Storage('analyticsreporting.dat')
-  credentials = storage.get()
-
-  pi = httplib2.proxy_info_from_environment('http')
-  if credentials is None or credentials.invalid:
-    credentials = tools.run_flow(flow, storage, flags, http=httplib2.Http(proxy_info=pi))
-
-  http = credentials.authorize(http=httplib2.Http(proxy_info=pi))
+  http = http=httplib2.Http(ca_certs=ca_certs)
 
   # Build the service object.
-  analytics = build('analytics', 'v4', http=http, discoveryServiceUrl=DISCOVERY_URI)
+  analytics = build('analytics', 'v4', credentials=credentials, http=http,
+    discoveryServiceUrl=DISCOVERY_URI)
 
   return analytics
 
@@ -149,7 +131,7 @@ class DatasetDownload():
     def __init__(self, ga, view_id, conf_file):
         self.ga = ga
         self.view_id = view_id
-        self.file = '/tmp/od-do-canada.jl.gz'
+        self.file = WORK_DIR + '/od-do-canada.jl.gz'
         self.site = ckanapi.RemoteCKAN('http://open.canada.ca/data')
 
         self.read_orgs()
@@ -334,7 +316,7 @@ class DatasetDownload():
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
         sheets.insert(0, sheet1)
-        write_xls('/tmp/downloads_info.xls', sheets)
+        write_xls(WORK_DIR + '/downloads_info.xls', sheets)
 
     def dump(self, data, ignore_deleted=False):
         #further reduce to departments
@@ -429,7 +411,7 @@ class DatasetDownload():
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
-        write_csv("/tmp/od_ga_top100.csv", rows)
+        write_csv(WORK_DIR + "/od_ga_top100.csv", rows)
 
         for org_id, recs in org_recs.iteritems():
             rows = []
@@ -459,8 +441,8 @@ class DatasetDownload():
         sheets.sort(key=lambda x: x['name'])
         sheets.insert(0, sheet2)
         sheets.insert(0, sheet1)
-        write_xls('/tmp/od_ga_downloads.xls', sheets)
-        
+        write_xls(WORK_DIR + '/od_ga_downloads.xls', sheets)
+
     def getRawReport(self, start='0', size = '1000'):
           return self.ga.reports().batchGet(
               body={
@@ -1078,9 +1060,9 @@ class DatasetDownload():
         ds.append(total)
         write_csv(csv_month_file, ds, header)
 
-def report(client_secret_path, view_id, og_config_file, start, end, va):
+def report(client_secret_path, view_id, og_config_file, start, end, va, ca_certs=None):
       og_type = va
-      analytics = initialize_analyticsreporting(client_secret_path)
+      analytics = initialize_analyticsreporting(client_secret_path, ca_certs)
       ds = DatasetDownload(analytics, view_id, og_config_file)
       if og_type == 'info':
           return ds.getStats(start, end, og_type)
@@ -1090,14 +1072,14 @@ def report(client_secret_path, view_id, og_config_file, start, end, va):
           return ds.getStats(start, end, og_type)
 
       ds.getStats(start, end, og_type); time.sleep(2)
-      ds.monthly_usage(start, end, '/tmp/od_ga_month.csv'); time.sleep(2)
-      ds.by_country(end, '/tmp/od_ga_by_country.csv'); time.sleep(2)
-      ds.by_region(end, '/tmp/od_ga_by_region.csv')
-      ds.by_org_month(end, '/tmp/od_ga_by_org_month.csv', '/tmp/od_ga_by_org.csv')
+      ds.monthly_usage(start, end, WORK_DIR + '/od_ga_month.csv'); time.sleep(2)
+      ds.by_country(end, WORK_DIR + '/od_ga_by_country.csv'); time.sleep(2)
+      ds.by_region(end, WORK_DIR + '/od_ga_by_region.csv')
+      ds.by_org_month(end, WORK_DIR + '/od_ga_by_org_month.csv', WORK_DIR + '/od_ga_by_org.csv')
 
 def main():
     report(*sys.argv[1:])
-      
+
 if __name__ == '__main__':
   main()
 
