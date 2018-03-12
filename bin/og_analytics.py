@@ -82,24 +82,25 @@ def read_csv(filename):
 
 
 def initialize_analyticsreporting(client_secrets_path, ca_certs):
-  """Initializes the analyticsreporting service object.
+    """Initializes the analyticsreporting service object.
 
-  Returns:
-    analytics an authorized analyticsreporting service object.
-  """
-  SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-  DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
+    Returns:
+      analytics an authorized analyticsreporting service object.
+    """
+    SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
+    DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
 
-  credentials = service_account.Credentials.from_service_account_file(
-      client_secrets_path, scopes=SCOPES)
+    credentials = service_account.Credentials.from_service_account_file(
+        client_secrets_path, scopes=SCOPES)
 
-  http = http=httplib2.Http(ca_certs=ca_certs)
+    if ca_certs:
+        http = httplib2.Http(ca_certs=ca_certs)
+        analytics = build('analytics', 'v4', credentials=credentials, http=http)
+    else:
+        analytics = build('analytics', 'v4', credentials=credentials)
+    #,discoveryServiceUrl=DISCOVERY_URI)
 
-  # Build the service object.
-  analytics = build('analytics', 'v4', credentials=credentials, http=http,
-    discoveryServiceUrl=DISCOVERY_URI)
-
-  return analytics
+    return analytics
 
 def parseReport(response, dimension_name, metric_name):
     data, nextPage = [], None
