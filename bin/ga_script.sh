@@ -3,40 +3,22 @@
 
 : ${CLIENT_SECRET:=/project/client_secret.json}
 : ${PORTAL_INI:=/project/development.ini}
-: ${STATIC_DIR:=/project/public"}
+: ${STATIC_DIR:=/project/public}
 : ${LOG_DIR:=/project/ga/logs}
 : ${WORK_DIR:=/project/ga/tmp}
+
+set -e
 
 mkdir -p $LOG_DIR
 mkdir -p $WORK_DIR
 
-set `date +%m" "%Y`
-CURMTH=$1
-CURYR=$2
-
-if [ $CURMTH -eq 1 ]
-then PRVMTH=12
-     PRVYR=`expr $CURYR - 1`
-     STARTYR=$PRVYR
-else PRVMTH=`expr $CURMTH - 1`
-     PRVYR=$CURYR
-     STARTYR=`expr $CURYR - 1`
-fi
-
-
-if [ $PRVMTH -lt 10 ]
-then PRVMTH="0"$PRVMTH
-fi
-
-
-LASTDY=`cal $PRVMTH $PRVYR | egrep "28|29|30|31" |tail -1 |awk '{print $NF}'`
+read CURYR CURMTH < <(python -c'from datetime import date; print date.today().strftime("%Y %m")')
+read PRVYR PRVMTH LASTDY < <(python -c'from datetime import date,timedelta; print (date(date.today().year, date.today().month, 1) - timedelta(1)).strftime("%Y %m %d")')
 
 echo First Day: 01-$PRVMTH-$PRVYR > $LOG_DIR/og_analytics_top20info.log
 echo Last Day: $LASTDY-$PRVMTH-$PRVYR >> $LOG_DIR/og_analytics_top20info.log
 
 echo Start Day: 01-$CURMTH-$STARTYR >> $LOG_DIR/og_analytics_top20info.log
-
-set -e
 
 CATAFILE=$STATIC_DIR/od-do-canada.$PRVYR$PRVMTH$LASTDY.jl.gz
 if [ -f $CATAFILE ]
