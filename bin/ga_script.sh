@@ -12,7 +12,7 @@ set -e
 mkdir -p $LOG_DIR
 mkdir -p $WORK_DIR
 
-read CURYR CURMTH < <(python -c'from datetime import date; print date.today().strftime("%Y %m")')
+read STARTYR CURMTH < <(python -c'from datetime import date; print date.today().strftime("%Y %m")')
 read PRVYR PRVMTH LASTDY < <(python -c'from datetime import date,timedelta; print (date(date.today().year, date.today().month, 1) - timedelta(1)).strftime("%Y %m %d")')
 
 echo First Day: 01-$PRVMTH-$PRVYR > $LOG_DIR/og_analytics_top20info.log
