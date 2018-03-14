@@ -32,7 +32,7 @@ fi
 
 
 rm -f $WORK_DIR/downloads_info.xls
-python $(dirname $0)/og_analytics.py $CLIENT_SECRET 68455797 $PORTAL_INI $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY info >> $LOG_DIR/og_analytics_top20info.log 2>&1
+python $(dirname $0)/og_analytics.py $CLIENT_SECRET 68455797 $PORTAL_INI $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY info 2>&1 | tee -a $LOG_DIR/og_analytics_top20info.log
 cp -f $WORK_DIR/downloads_info.xls $STATIC_DIR/openDataPortal.siteAnalytics.top20Info.xls
 
 wget -q https://open.canada.ca/static/openDataPortal.siteAnalytics.datasetsByOrgByMonth.bilingual.csv -O $WORK_DIR/od_ga_by_org_month.csv

@@ -132,7 +132,7 @@ class DatasetDownload():
         self.ga = ga
         self.view_id = view_id
         self.file = WORK_DIR + '/od-do-canada.jl.gz'
-        self.site = ckanapi.RemoteCKAN('http://open.canada.ca/data')
+        self.site = ckanapi.RemoteCKAN('https://open.canada.ca/data')
 
         self.read_orgs()
 
