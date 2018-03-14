@@ -52,10 +52,10 @@ resources:
     excel_column_width: 50
 
   - datastore_id: public_servants
-    label: Travel - Public Servants
+    label: Travel - Public Servants ($ thousands)
     datastore_type: money
     form_required: true
-    form_placeholder: '0.00'
+    form_placeholder: '0'
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -65,10 +65,10 @@ resources:
       sum_change: [total_travel_change, total_change]
 
   - datastore_id: non_public_servants
-    label: Travel - Non-Public Servants
+    label: Travel - Non-Public Servants ($ thousands)
     datastore_type: money
     form_required: true
-    form_placeholder: '0.00'
+    form_placeholder: '0'
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
@@ -78,10 +78,10 @@ resources:
       sum_change: [total_travel_change, total_change]
 
   - datastore_id: hospitality
-    label: Hospitality
+    label: Hospitality ($ thousands)
     datastore_type: money
     form_required: true
-    form_placeholder: '0.00'
+    form_placeholder: '0'
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -91,10 +91,10 @@ resources:
       sum_change: total_change
 
   - datastore_id: conference_fees
-    label: Conference Fees
+    label: Conference Fees ($ thousands)
     datastore_type: money
     form_required: true
-    form_placeholder: '0.00'
+    form_placeholder: '0'
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -105,10 +105,10 @@ resources:
 
   - datastore_id: minister
     label: International Travel by Minister and Minister's Staff
-           (also included in Non-Public Servant Travel)
+           (also included in Non-Public Servant Travel) ($ thousands)
     datastore_type: money
     form_required: true
-    form_placeholder: '0.00'
+    form_placeholder: '0'
     excel_column_width: 20
     solr_compare_previous_year:
       previous_year: minister_previous_year
@@ -190,11 +190,11 @@ resources:
   examples:
     record:
       year: "2016"
-      public_servants: "500.00"
-      non_public_servants: "60.00"
-      minister: "1000.00"
-      hospitality: "700.00"
-      conference_fees: "50.00"
+      public_servants: "500"
+      non_public_servants: "60"
+      minister: "1000"
+      hospitality: "700"
+      conference_fees: "50"
     filters:
       hospitality: "0"
     filter_one:
