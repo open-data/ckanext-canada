@@ -23,7 +23,7 @@
 
     {%- if comment_list -%}
       <div class="row">
-        <div class="col-md-3"><h4 style="display:inline-block;">{{ _('Comments') }} ({{ c.page.item_count }})</h4></div>
+        <div class="col-md-3"><h4><a name="comments"></a><h4 style="display:inline-block;">{{ _('Comments') }} ({{ c.page.item_count }})</h4></div>
 
         {% block page_pagination_top %}
           <div class="col-md-4"><small>{{ c.page.pager(q=c.q) }}</small></div>
