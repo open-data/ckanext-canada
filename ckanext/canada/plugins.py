@@ -24,8 +24,11 @@ from ckanext.extendedactivity.plugins import IActivity
 import json
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
-import libcloud.common.azure
-libcloud.common.azure.API_VERSION = '2014-02-14'
+try:
+    import libcloud.common.azure
+    libcloud.common.azure.API_VERSION = '2014-02-14'
+except ImportError:
+    pass
 
 
 class DataGCCAInternal(p.SingletonPlugin):
