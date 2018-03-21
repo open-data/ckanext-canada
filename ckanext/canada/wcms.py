@@ -75,67 +75,6 @@ def dataset_rating(package_id):
         return 0
 
 
-@never_ever_fail(default=0)
-def dataset_comment_count(package_id):
-    url = config.get('ckanext.canada.drupal_url')
-    if not url:
-        return 0
-
-    r = requests.get(
-        url + '/jsonapi/external_comment/external_comment',
-        params={
-            '_format': 'api_json',
-            'filter[ckan][condition][path]': 'commented_external_entity',
-            'filter[ckan][condition][value]': 'ckan-{0}'.format(
-                package_id
-            ),
-            'filter[status-filter][condition][path]': 'status',
-            'filter[status-filter][condition][value]': '1'
-        },
-        auth=(
-            config.get('ckanext.canada.drupal_user'),
-            config.get('ckanext.canada.drupal_pass')
-        )
-    )
-
-    j = r.json()
-
-    return len(j.get('data', []))
-
-
-@never_ever_fail(default=dict)
-def comments_by_thread(comment_list, asc=True):
-    res = []
-    res += comment_list
-
-    clist = {}  # key: thread_id,, value: [children, comment]
-
-    def buildNode(parents, comment):
-        root = clist
-        node = None
-        for id in parents:
-            if root.get(id) is None:
-                root[id] = [{}, None]
-            node = root[id]
-            root = root[id][0]
-        node[1] = comment
-
-    for c in res:
-        thread = c['thread']
-        c['parents'] = thread.strip('/').split('.')
-        buildNode(c['parents'], c)
-
-    def sortDict(d, depth):
-        ordered_d = sorted(
-            d.items(),
-            key=lambda x: x[0],
-            reverse=(not asc and depth == 0)
-        )
-        for k, v in ordered_d:
-            if v[0]:
-                v[0] = sortDict(v[0], depth+1)
-        return [v[1] for v in ordered_d]
-    return sortDict(clist, 0)
 
 
 def search_url(params, package_id):
