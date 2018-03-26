@@ -78,3 +78,11 @@ details.alert-error {
   word-break: break-all;
   white-space: normal;
 }
+.btn .icon {
+  padding-left: 0;
+  min-height: 0;
+  min-width: 0;
+}
+.field--name-field-vote {
+  display: none;
+}
