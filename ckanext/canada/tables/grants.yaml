@@ -14,18 +14,308 @@ resources:
   resource_name: grants
   fields:
 
-  - datastore_id: ref_number
-    label: Reference Number
+  # 3.1 Departmental Project Identifier  (Formerly « ref_number »)
+  - datastore_id: project_identifier
+    label:
+      en: Departmental Project Identifier
+      fr: Identificateur de projet ministériel
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+      en: This field is populated user.   The departmental project identifier is intended to allow departments to   quickly identify reports generated within their own system. Departments   should use a number that makes sense to them. This information will be   published as part of the report.
+      fr: Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
     obligation: Mandatory
-    format_type:
-      en: "GC-2015-Q1-00001 – this sequence will continue for each line item (i.e.: GC-2015-Q1-00001, GC-2015-Q1-00002, GC-2015-Q1-00001….)"
-      fr: GC-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. GC-2016-Q1-00001, GC-2016-Q1-00002, |GC-2016-Q1-00003….)
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.3 Amendment Number (New Field)
+  - datastore_id: amendment_number
+    label:
+      en: Amendment Number
+      fr: Numéro de modification
+    description:
+      en: This field is populated user.   It is meant to identify amendments(sequentially).
+      fr: Ce champ est rempli par l’utilisateur. Il est conçu pour identifier les modifications (séquentiellement).
+    obligation:
+      en: Mandatory for amendments only
+      fr: Obligatoire pour les modifications seulement
+    format_type: Numeric only
+    datastore_type: numeric
+    excel_column_width: 20
+
+  # 3.5 Amendment Date (New Field)
+  - datastore_id: amendment_date
+    label:
+      en: Amendment Date
+      fr: Date de modification
+    description:
+      en: This field is populated user.   The departmental project identifier is intended to allow departments to   quickly identify reports generated within their own system. Departments   should use a number that makes sense to them. This information will be   published as part of the report.
+      fr: Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
+    obligation:
+      en: Mandatory if amendment number set
+      fr: Obligatoire si le numéro de modification est défini
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_column_width: 20
+    
+  # 3.7 Agreement Type (Formerly “Type”- 3.16)
+  - datastore_id: agreement_type
+    label:
+      en: Agreement Type
+      fr: Type d’entente
+    description:
+      en: This field is populated user. It is a selection of whether the disclosure is a grant, contribution, or other type of transfer payment.
+      fr: Ce champ est rempli par l’utilisateur. C’est une sélection de la divulgation que ce soit pour une subvention, une contribution, ou un autre paiement de transfert.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      G:
+        en: Grant
+        fr: subventions
+      C:
+        en: Contribution
+        fr: contributions
+      O:
+        en: Other type of transfer payment
+        fr: autre paiment de transfert
+  
+  # 3.9 Recipient Type (New field)
+  - datastore_id: recipient_type
+    label:
+      en: Recipient Type
+      fr: Type de bénéficiaire
+    description:
+      en: This field is populated user. It is to display the category of recipient that has received grant and/or contribution funding.
+      fr: Ce champ est rempli par l’utilisateur. Il affiche la catégorie du bénéficiaire qui a reçu un financement de subvention ou de contribution.
+    obligation: Mandatory
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      F:
+        en: For-Profit Organizations
+        fr: organisme à but lucratif
+      N:
+        en: Not-For-Profit Organizations and Charities
+        fr: organisme à but non lucratif et organisme de bienfaisance
+      S:
+        en: Academia and Public Institutions
+        fr: établissement universitaire et institution publique
+      A:
+        en: Aboriginal Recipients
+        fr: bénéficiaire autochtone
+      G:
+        en: Government
+        fr: gouvernement
+      I:
+        en: International
+        fr: organisation internationale (non gouvernementale)
+      P:
+        en: Individual or Sole Proprietorships
+        fr: particulier ou entreprise à propriétaire unique
+      O:
+        en: Other
+        fr: autre
+
+  # 3.11 Recipient Business Number
+  - datastore_id: recipient_business_number
+    label: Recipient Business Number
+    description:
+      en: This field is populated user. This field will be the business number, or charity number, of the recipient. If the recipient is an individual or does not have a business number, should be left blank
+      fr: Ce champ est rempli par l’utilisateur. Ce champ sera le numéro d’entreprise, ou le numéro d’enregistrement d’un organisme de bienfaisance, du bénéficiaire. Si le bénéficiaire est une personne ou n’a pas un numéro d’entreprise, ce champ devra rester vide.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 20
+  
+  # 3.13 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
+  - datastore_id: recipient_legal_name
+    label:
+      en: Recipient Legal Name
+      fr: Nom légal du bénéficiaire
+    description:
+      en: This field is populated by the user. It will display the legal name of the recipient. 
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le nom légal du bénéficiaire.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 50
+
+  # 3.15 Recipient Operating Name (English) (New Field)
+  - datastore_id: recipient_operating_name_en
+    label:
+      en: Recipient Operating Name (English)
+      fr: Nom commercial du bénéficiaire (anglais)
+    description:
+      en: This field is populated by the user. It will display a name when a recipient operates under a different name than their legal name.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le nom légal du bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.16 Recipient Operating Name (French) (New Field)
+  - datastore_id: recipient_operating_name_fr
+    label:
+      en: Recipient Operating Name (French)
+      fr: Nom commercial du bénéficiaire (français)
+    description:
+      en: This field is populated by the user. It will display a name when a recipient operates under a different name than their legal name.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le nom légal du bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.17 Research Organization (English) (New Field)
+  - datastore_id: research_organization_name_en
+    label:
+      en: Research Organization (English)
+      fr: Organisme de recherche (anglais)
+    description:
+      en: This field is populated by user. This is to display information when a recipient receives their funding through an organization (i.e. when a recipient is researching collaboratively with the University of Ottawa).
+      fr: Ce champ est rempli par l’utilisateur. Il affiche les renseignements lorsqu’un bénéficiaire reçoit son financement par une organisation (c’est-à-dire, lorsqu’un bénéficiaire fait sa recherche conjointement avec l’Université d’Ottawa).
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.18 Research Organization (French) (New Field)
+  - datastore_id: research_organization_name_fr
+    label:
+      en: Research Organization (French)
+      fr: Organisme de recherche (français)
+    description:
+      en: This field is populated by user. This is to display information when a recipient receives their funding through an organization (i.e. when a recipient is researching collaboratively with the University of Ottawa).
+      fr: Ce champ est rempli par l’utilisateur. Il affiche les renseignements lorsqu’un bénéficiaire reçoit son financement par une organisation (c’est-à-dire, lorsqu’un bénéficiaire fait sa recherche conjointement avec l’Université d’Ottawa).
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.19 Recipient Country 
+  - datastore_id: recipient_country
+    label:
+      en: Recipient Country
+      fr: Pays du bénéficiaire 
+    description:
+      en: This field is populated by the user. It will display the Operating country of the recipient. 
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le pays d’exploitation du bénéficiaire.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 10
+    choices_file: choices/country.json  
+  
+  # 3.20 Recipient Province or Territory (New Field)
+  - datastore_id: recipient_province
+    label:
+      en: Recipient Province or Territory
+      fr: Province ou territoire du bénéficiaire
+    description:
+      en: This field is populated by the user. It will display the Operating province of the recipient.
+      fr: Ce champ est rempli soit par l’utilisateur. Il affichera la province d’exploitation du bénéficiaire.
+    obligation: Optional
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      ON:
+        en: Ontario
+        fr: Ontario
+      QC:
+        en: Quebec
+        fr: Québec
+      NB:
+        en: New Brunswick
+        fr: Nouveau-Brunswick
+      NL: 
+        en: Newfoundland & Labrador
+        fr: Terre-Neuve-et-Labrador
+      PE:
+        en: Prince Edward Island
+        fr: Île-du-Prince-Édouard
+      SK:
+        en: Saskatchewan
+        fr: Saskatchewan
+      YT:
+        en: Yukon
+        fr: Yukon
+      AB:
+        en: Alberta
+        fr: Alberta
+      BC:
+        en: British Columbia
+        fr: Colombie-Britannique
+      MB:
+        en: Manitoba
+        fr: Manitoba
+      NT:
+        en: Northwest Territories
+        fr: Territoires du Nord-Ouest
+      NU:
+        en: Nunavut
+        fr: Nunavut
+      NS:
+        en: Nova Scotia
+        fr: Nouvelle-Écosse
+
+  # 3.23 Recipient City (English) (New Field)
+  - datastore_id: recipient_city_en
+    label:
+      en: Recipient City (English)
+      fr: Ville du bénéficiaire (anglais)
+    description:
+      en: This field is populated by the user. It will display the Operating city of the recipient.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.24 Recipient City (French) (New Field)
+  - datastore_id: recipient_operating_name_fr
+    label:
+      en: Recipient City (French)
+      fr: Ville du bénéficiaire (français)
+    description:
+      en: This field is populated by the user. It will display the Operating city of the recipient.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.25 Recipient Postal Code (New Field)
+  - datastore_id: recipient_postal_code
+    label:
+      en: Recipient Postal Code
+      fr: Code postal du bénéficiaire
+    description:
+      en: This field is populated by the user. It will display the Operating city of the recipient.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
+    obligation: Mandatory for Canada only
+    format_type: Text format locked to (X#X #X#)
+    datastore_type: text
+    excel_column_width: 30
+
+  
+  - datastore_id: recipient_name_fr
+    label: Recipient Name (French)
+    description:
+      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
+      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
     datastore_type: text
     excel_column_width: 20
 
+  
+  
   - datastore_id: prog_number
     label: Program Number
     description:
@@ -86,46 +376,9 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  - datastore_id: recipient_name_en
-    label: Recipient Name (English)
-    description:
-      en: This field describes the name of the individual, company or organization to which the award is paid, in English. Typically it is the name indicated on the funding agreement.
-      fr: Cette zone indique, en anglais, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Mandatory
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
+  
 
-  - datastore_id: recipient_name_fr
-    label: Recipient Name (French)
-    description:
-      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
 
-  - datastore_id: recipient_business_number
-    label: Recipient Business Number
-    description:
-      en: This field describes the business number applied to the recipient. Not all departments capture this information.
-      fr: Ce champ décrit le numéro d'entreprise appliquée au destinataire. Tous les départements saisissent cette information.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: recipient_country
-    label: Country
-    description:
-      en: This field identified the country of the Country of residence of the  place of business / headquarters of the Recipient
-      fr: Cette zone indique le pays de résidence de l’établissement ou du siège du bénéficiaire
-    obligation: Mandatory
-    format_type: Controlled List
-    datastore_type: text
-    excel_column_width: 10
-    choices_file: choices/country.json
 
   - datastore_id: recipient_region_en
     label: Region (English)
@@ -182,22 +435,6 @@ resources:
      - 1000000
      - 5000000
 
-  - datastore_id: type
-    label: Type
-    description:
-      en: This field describes the type of award (i.e., Grant or Contribution)
-      fr: Cette zone décrit le type de subvention ou contribution.
-    obligation: Mandatory
-    format_type: Controlled List
-    datastore_type: text
-    excel_column_width: 20
-    choices:
-      G:
-        en: Grant
-        fr: subventions
-      C:
-        en: Contribution
-        fr: contributions
 
   - datastore_id: purpose_en
     label: Purpose English
@@ -269,7 +506,7 @@ Award provided and spanning more than one fiscal year."
     datastore_type: text
     excel_column_width: 41
 
-  datastore_primary_key: [ref_number]
+  datastore_primary_key: [project_identifier]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -285,7 +522,7 @@ Award provided and spanning more than one fiscal year."
 
   examples:
     record:
-      ref_number: "1980198"
+      project_identifier: "1980198"
       proj_number: "19876198"
       recipient_name: Jane Smith
       date: "2016-01-01"
