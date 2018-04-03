@@ -452,7 +452,10 @@ resources:
      - 1000000
      - 5000000
 
-
+  # 3.41 Foreign Currency Type (New field)
+  # french codes from https://fr.iban.com/currency-codes.html
+  - datastore_id: foreign_currency_type
+    
 
 
   - datastore_id: recipient_name_fr
