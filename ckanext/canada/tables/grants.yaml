@@ -342,26 +342,118 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # Program Name (English)
+  # 3.31 Program Name (English)
   - datastore_id: prog_name_en
-    label: Program Name (English)
+    label:
+      en: Program Name (English)
+      fr: Nom du programme (anglais)
     description:
-      en: This field identifies the name of the program for the grant or contribution awarded, in English. Each organization has its own programs.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+      en: This field is populated by the user. It will display the name of the transfer payment program from which funding was disbursed.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le nom du programme du paiement de transfert duquel le financement a été versé.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.32 Program Name (French)
+  - datastore_id: prog_name_fr
+    label:
+      en: Program Name (French)
+      fr: Nom du programme (français)
+    description:
+      en: This field is populated by the user. It will display the name of the transfer payment program from which funding was disbursed.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le nom du programme du paiement de transfert duquel le financement a été versé.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.33 Program Purpose (English) (New Field)
+  - datastore_id: prog_purpose_en
+    label:
+      en: Program Purpose (English)
+      fr: But du programme (anglais)
+    description:
+      en: This field is populated by the user. It will display the purpose of the aforementioned program. This text will come from program terms & conditions.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera l’objectif du programme susmentionné. Ce texte proviendra des modalités et des conditions du programme.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.34 Program Purpose (French) (New Field)
+  - datastore_id: prog_purpose_fr
+    label:
+      en: Program Purpose (French)
+      fr: But du programme (français)
+    description:
+      en: This field is populated by the user. It will display the purpose of the aforementioned program. This text will come from program terms & conditions.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera l’objectif du programme susmentionné. Ce texte proviendra des modalités et des conditions du programme.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.35 Agreement Title (English) (New Field)
+  - datastore_id: agreement_title_en
+    label:
+      en: Agreement Title (English)
+      fr: Titre de l’entente (anglais)
+    description:
+      en: his field is populated by the user. It will display the title of the agreement that is being signed into.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le titre de l’entente qui est signée.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.36 Agreement Title (French) (New Field)
+  - datastore_id: agreement_title_fr
+    label:
+      en: Agreement Title (French)
+      fr: Titre de l’entente (français)
+    description:
+      en: his field is populated by the user. It will display the title of the agreement that is being signed into.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le titre de l’entente qui est signée.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.37 Agreement Number (New Field)
+  - datastore_id: agreement_number
+    label:
+      en: Agreement Number
+      fr: Numéro de l’entente
+    description:
+      en: This field is populated by the user. It will display the contribution agreement number from the departments.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le numéro de l’entente de contribution des ministères.
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    excel_column_width: 30
+
+  # 3.39 Agreement Value in CAD (Formerly Field 3.15 - Value)
+  - datastore_id: value
+    label:
+      en: Agreement Value in CAD
+      fr: Valeur de l’entente en dollars canadiens
+    description:
+      en: This field is populated by the user. It will display the value of the project in Canadian dollars.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la valeur du projet en dollars canadiens.
+    obligation: Mandatory
+    datastore_type: money
     excel_column_width: 20
 
-  - datastore_id: prog_name_fr
-    label: Program Name (French)
-    description:
-      en: This field identifies the name, in French, of the program for the grant or contribution awarded. Each organization has its own programs.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
+    solr_dollar_range_facet:
+     - 10000
+     - 25000
+     - 100000
+     - 1000000
+     - 5000000
+
+
+
 
   - datastore_id: recipient_name_fr
     label: Recipient Name (French)
@@ -454,26 +546,6 @@ resources:
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
-
-  - datastore_id: value
-    label: Value
-    description:
-      en: This field is populated by the dollar value of the award. In the case where a good or service is awarded as a grant or contribution, the fair market value at the time of the award should be reported. In those instances where a grant or contribution as awarded applies to more than one fiscal year, the total amount of the award is to be posted. In such instances, departments and agencies are to include a notation to this effect in the Comments information field.
-      fr: Cette zone renferme la valeur de la subvention ou contribution accordée au fournisseur.
-    obligation: Mandatory
-    format_type:
-      en: Free text – Note, please do not include a dollar sign, numeric value only ($)
-      fr: Texte libre
-    datastore_type: money
-    excel_column_width: 20
-
-    solr_dollar_range_facet:
-     - 10000
-     - 25000
-     - 100000
-     - 1000000
-     - 5000000
-
 
   - datastore_id: purpose_en
     label: Purpose English
