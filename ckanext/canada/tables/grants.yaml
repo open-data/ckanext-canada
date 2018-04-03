@@ -56,7 +56,7 @@ resources:
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
-    
+
   # 3.7 Agreement Type (Formerly “Type”- 3.16)
   - datastore_id: agreement_type
     label:
@@ -80,7 +80,7 @@ resources:
       O:
         en: Other type of transfer payment
         fr: autre paiment de transfert
-  
+
   # 3.9 Recipient Type (New field)
   - datastore_id: recipient_type
     label:
@@ -129,14 +129,14 @@ resources:
     format_type: Free text
     datastore_type: text
     excel_column_width: 20
-  
+
   # 3.13 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
   - datastore_id: recipient_legal_name
     label:
       en: Recipient Legal Name
       fr: Nom légal du bénéficiaire
     description:
-      en: This field is populated by the user. It will display the legal name of the recipient. 
+      en: This field is populated by the user. It will display the legal name of the recipient.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le nom légal du bénéficiaire.
     obligation: Mandatory
     excel_required: true
@@ -196,21 +196,21 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.19 Recipient Country 
+  # 3.19 Recipient Country
   - datastore_id: recipient_country
     label:
       en: Recipient Country
-      fr: Pays du bénéficiaire 
+      fr: Pays du bénéficiaire
     description:
-      en: This field is populated by the user. It will display the Operating country of the recipient. 
+      en: This field is populated by the user. It will display the Operating country of the recipient.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le pays d’exploitation du bénéficiaire.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
     datastore_type: text
     excel_column_width: 10
-    choices_file: choices/country.json  
-  
+    choices_file: choices/country.json
+
   # 3.20 Recipient Province or Territory (New Field)
   - datastore_id: recipient_province
     label:
@@ -233,7 +233,7 @@ resources:
       NB:
         en: New Brunswick
         fr: Nouveau-Brunswick
-      NL: 
+      NL:
         en: Newfoundland & Labrador
         fr: Terre-Neuve-et-Labrador
       PE:
@@ -303,29 +303,46 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  
-  - datastore_id: recipient_name_fr
-    label: Recipient Name (French)
+  # 3.27 Federal Riding Name (English) (New Field)
+  - datastore_id: federal_riding_name_en
+    label:
+      en: Federal Riding Name (English)
+      fr: Nom de la circonscription fédérale (anglais)
     description:
-      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+      en: This field is populated by the user. It will display the federal riding in which the recipient is located.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la circonscription électorale fédérale dans laquelle le bénéficiaire se trouve.
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
-  
-  
-  - datastore_id: prog_number
-    label: Program Number
+  # 3.28 Federal Riding Name (French) (New Field)
+  - datastore_id: federal_riding_name_fr
+    label:
+      en: Federal Riding Name (French)
+      fr: Nom de la circonscription fédérale (français)
     description:
-      en: This field should be self-populated.  It identifies (by number or other tracking ID) the internal department program number.
-      fr: Cette zone renferme l’identificateur de la subvention.
+      en: This field is populated by the user. It will display the federal riding in which the recipient is located.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la circonscription électorale fédérale dans laquelle le bénéficiaire se trouve.
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
+  # 3.29 Federal Riding Number (New Field)
+  - datastore_id: federal_riding_number
+    label:
+      en: Federal Riding Number
+      fr: Numéro de la circonscription fédérale
+    description:
+      en: This field is populated by the user. It will display the federal riding number in which the recipient is located.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le numéro de la circonscription fédérale dans laquelle le bénéficiaire se trouve.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # Program Name (English)
   - datastore_id: prog_name_en
     label: Program Name (English)
     description:
@@ -341,6 +358,28 @@ resources:
     description:
       en: This field identifies the name, in French, of the program for the grant or contribution awarded. Each organization has its own programs.
       fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 20
+
+  - datastore_id: recipient_name_fr
+    label: Recipient Name (French)
+    description:
+      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
+      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 20
+
+
+
+  - datastore_id: prog_number
+    label: Program Number
+    description:
+      en: This field should be self-populated.  It identifies (by number or other tracking ID) the internal department program number.
+      fr: Cette zone renferme l’identificateur de la subvention.
     obligation: Optional
     format_type: Free text
     datastore_type: text
@@ -376,7 +415,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  
+
 
 
 
