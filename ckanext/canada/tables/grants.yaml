@@ -453,9 +453,60 @@ resources:
      - 5000000
 
   # 3.41 Foreign Currency Type (New field)
-  # french codes from https://fr.iban.com/currency-codes.html
   - datastore_id: foreign_currency_type
-    
+    label:
+      en: Foreign Currency Type
+      fr: Type de monnaie étrangère
+    description:
+      en: This field is populated by the user. It will display the type of foreign currency that a transfer payment was funded in, if applicable.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le type de monnaie étrangère dans laquelle un paiement de transfert a été financé, s’il y a lieu.
+    obligation: Optional
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 10
+    choices_file: choices/currency.json
+
+  # 3.43 Foreign Currency Value (New field)
+  - datastore_id: foreign_currency_value
+    label:
+      en: Foreign Currency Value
+      fr: Valeur de la monnaie étrangère
+    description:
+      en: This field is populated by the user. It will display the value of the project in foreign currency.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la valeur du projet en monnaie étrangère.
+    obligation: Mandatory if foreign currency type is selected
+    datastore_type: money
+    excel_column_width: 20
+
+  # 3.45 Agreement Start Date (Formerly 3.14 – Date)
+  - datastore_id: agreement_start_date
+    label:
+      en: Agreement Start Date
+      fr: Date de début de l’entente
+    description:
+      en: This field is populated by the user. It will display the projected start date of the project
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la date de début prévue du projet.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_column_width: 20
+    extract_date_year: true
+    extract_date_month: true
+
+  # 3.47 Projected Agreement End Date (New Field)
+  - datastore_id: agreement_end_date
+    label:
+      en: Projected Agreement End Date
+      fr: Date de fin prévue de l’entente
+    description:
+      en: This field is populated by the user. It will display the projected end date of the project
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la date de fin du projet.
+    obligation: Mandatory
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_column_width: 20
+
+  # 3.49 Coverage (English) (New Field)
 
 
   - datastore_id: recipient_name_fr
@@ -537,18 +588,6 @@ resources:
       fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l'État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
     datastore_type: text
     excel_column_width: 20
-
-  - datastore_id: date
-    label: Date
-    description:
-      en: This field is the date at which the awarding of a grant or contribution has been officially authorized and, by extension, results in a commitment in favour of a recipient.
-      fr: Cette zone montre la date (trimestre) à la laquelle le fournisseur a reçu la subvention ou contribution.
-    obligation: Mandatory
-    format_type: Date (Please format the data as YYYY-MM-DD)
-    datastore_type: date
-    excel_column_width: 20
-    extract_date_year: true
-    extract_date_month: true
 
   - datastore_id: purpose_en
     label: Purpose English
