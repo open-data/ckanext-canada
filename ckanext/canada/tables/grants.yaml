@@ -478,7 +478,7 @@ resources:
     datastore_type: money
     excel_column_width: 20
 
-  # 3.45 Agreement Start Date (Formerly 3.14 – Date)
+  # 3.45 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date
     label:
       en: Agreement Start Date
@@ -507,6 +507,121 @@ resources:
     excel_column_width: 20
 
   # 3.49 Coverage (English) (New Field)
+  - datastore_id: coverage_en
+    label:
+      en: Coverage (English)
+      fr: Portée (anglais)
+    description:
+      en: This field is populated by the user. It will display the area which the benefit accrues as a result of the project.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le domaine qui a bénéficié d’un avantage à la suite du projet.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.50 Coverage (French) (New Field)
+  - datastore_id: coverage_fr
+    label:
+      en: Coverage (French)
+      fr: Portée (français)
+    description:
+      en: This field is populated by the user. It will display the area which the benefit accrues as a result of the project.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera le domaine qui a bénéficié d’un avantage à la suite du projet.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.51 Description (English) (New Field)
+  - datastore_id: description_en
+    label:
+      en: Description (English)
+      fr: Description (anglais)
+    description:
+      en: This field is populated by the user. It will display information on the project being undertaken.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera les renseignements sur le projet entrepris.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.52 Description (French) (New Field)
+  - datastore_id: description_fr
+    label:
+      en: Description (French)
+      fr: Description (français)
+    description:
+      en: This field is populated by the user. It will display information on the project being undertaken.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera les renseignements sur le projet entrepris.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.53 NAICS Identifier (New Field)
+  - datastore_id: naics_identifier
+    label:
+      en: NAICS Identifier
+      fr: Identificateur du SCIAN
+    description:
+      en: This field is populated by the user. It will display information economic classification of the project being undertaken
+      fr: Ce champ est rempli par l’utilisateur. Il affichera la classification économique des renseignements du projet entrepris.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.51 Expected Results / Intended Outcome (English) (New Field)
+  - datastore_id: expected_results_en
+    label:
+      en: Expected Results / Intended Outcome (English)
+      fr: Résultats attendus ou visés (anglais)
+    description:
+      en: This field is populated by the user. It will display the expected results of the project.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera les résultats prévus du projet.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.52 Expected Results / Intended Outcome (French) (New Field)
+  - datastore_id: expected_results_fr
+    label:
+      en: Expected Results / Intended Outcome (French)
+      fr: Résultats attendus ou visés (français)
+    description:
+      en: This field is populated by the user. It will display the expected results of the project.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera les résultats prévus du projet.
+    obligation: Mandatory
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.57 Additional Information (English) (Formerly Fields 3.19, 3.21)
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (anglais)
+    description:
+      en: This field is populated by the user. It is to display any additional information the department wishes to disclose.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera tout renseignement additionnel que le ministère souhaite divulguer.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.58 Additional Information (French) (Formerly Fields 3.20, 3.22)
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (français)
+    description:
+      en: This field is populated by the user. It is to display any additional information the department wishes to disclose.
+      fr: Ce champ est rempli par l’utilisateur. Il affichera tout renseignement additionnel que le ministère souhaite divulguer.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
 
 
   - datastore_id: recipient_name_fr
@@ -696,33 +811,7 @@ Award provided and spanning more than one fiscal year."
     datastore_type: year
     excel_column_width: 5
     extract_date_year: true
-    choices:
-      2020: "2020"
-      2019: "2019"
-      2018: "2018"
-      2017: "2017"
-      2016: "2016"
-      2015: "2015"
-      2014: "2014"
-      2013: "2013"
-      2012: "2012"
-      2011: "2011"
-      2010: "2010"
-      2009: "2009"
-      2008: "2008"
-      2007: "2007"
-      2006: "2006"
-      2005: "2005"
-      2004: "2004"
-      2003: "2003"
-      2002: "2002"
-      2001: "2001"
-      2000: "2000"
-      1999: "1999"
-      1998: "1998"
-      1997: "1997"
-      1996: "1996"
-      1995: "1995"
+    choices_file: choices/year.yaml
 
   - datastore_id: quarter
     label: Quarter
