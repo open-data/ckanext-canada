@@ -60,6 +60,7 @@ def user_organizations(user):
     return u.get_groups(group_type = "organization")
 
 def catalogue_last_update_date():
+    return '' # FIXME: cache this value or add an index to the DB for query below
     q = model.Session.query(Activity.timestamp).filter(
         Activity.activity_type.endswith('package')).order_by(
         Activity.timestamp.desc()).first()
