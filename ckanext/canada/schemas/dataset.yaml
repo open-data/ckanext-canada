@@ -23,9 +23,10 @@ dataset_fields:
 - preset: canada_dataset_name
 
 - preset: canada_collection
-  form_restrict_choices_to: [primary]
-  form_attrs:
-    readonly: ''
+  form_restrict_choices_to:
+    - primary
+    - code
+    - api
 
 # FGP fields (hidden from form)
 - field_name: metadata_contact

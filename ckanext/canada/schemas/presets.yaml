@@ -49,6 +49,14 @@ presets:
         fr: Non spatiales
       value: primary
     - label:
+        en: Open code
+        fr: Code ouvert
+      value: code
+    - label:
+        en: API
+        fr: API
+      value: api
+    - label:
         en: Geospatial
         fr: Géospatiales
       value: geogratis
@@ -60,6 +68,22 @@ presets:
         en: Publications
         fr: Publication
       value: publication
+    - label:
+        en: Ministerial Transition Binders
+        fr: Classeurs ministériels de transition
+      value: transition
+    - label:
+        en: Reports Tabled in Parliament
+        fr: Rapports déposés au Parlement
+      value: parliament_report
+    - label:
+        en: Question Period Notes
+        fr: Notes pour la période des questions
+      value: question_period
+    - label:
+        en: Parliamentary Committee Binders
+        fr: Dossiers des comités parlementaires
+      value: parliament_committee
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
