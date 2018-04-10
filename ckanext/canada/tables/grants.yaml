@@ -39,7 +39,7 @@ resources:
       en: Mandatory for amendments only
       fr: Obligatoire pour les modifications seulement
     format_type: Numeric only
-    datastore_type: numeric
+    datastore_type: int
     excel_column_width: 20
 
   # 3.5 Amendment Date (New Field)
@@ -278,7 +278,7 @@ resources:
     excel_column_width: 40
 
   # 3.24 Recipient City (French) (previously recipient_region_fr)
-  - datastore_id: recipient_operating_name_fr
+  - datastore_id: recipient_city_fr
     label:
       en: Recipient City (French)
       fr: Ville du bénéficiaire (français)
