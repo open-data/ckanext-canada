@@ -224,7 +224,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     choices:
-      ON:
+      "ON":
         en: Ontario
         fr: Ontario
       QC:
@@ -299,7 +299,7 @@ resources:
       en: This field is populated by the user. It will display the Operating city of the recipient.
       fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
     obligation: Mandatory for Canada only
-    format_type: Text format locked to (X#X #X#)
+    format_type: "Text format locked to (X#X #X#)"
     datastore_type: text
     excel_column_width: 30
 
