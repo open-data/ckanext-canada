@@ -434,7 +434,7 @@ resources:
     excel_column_width: 30
 
   # 3.39 Agreement Value in CAD (Formerly Field 3.15 - Value)
-  - datastore_id: value
+  - datastore_id: agreement_value
     label:
       en: Agreement Value in CAD
       fr: Valeur de l’entente en dollars canadiens
@@ -641,15 +641,15 @@ resources:
   examples:
     record:
       project_identifier: "1980198"
-      proj_number: "19876198"
-      recipient_name: Jane Smith
-      date: "2016-01-01"
-      value: "50000.00"
+      agreement_number: "19876198"
+      recipient_legal_name: Jane Smith
+      agreement_date: "2016-01-01"
+      agreement_value: "50000.00"
     filters:
-      proj_number: "19876198"
+      agreement_number: "19876198"
     filter_one:
-      ref_number: "1980198"
-    sort: date desc
+      project_identifier: "1980198"
+    sort: agreement_date desc
 
 
 - title: Proactive Disclosure - Grants and Contributions Nothing to Report
