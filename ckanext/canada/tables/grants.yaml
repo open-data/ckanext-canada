@@ -7,8 +7,6 @@ upload_warn: 'Please be advised that we have experienced publishing issues with 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
 resources:
 - title: Proactive Disclosure - Grants and Contributions
   resource_name: grants
@@ -128,7 +126,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   # 3.13 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
   - datastore_id: recipient_legal_name
@@ -155,7 +153,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 35
 
   # 3.16 Recipient Operating Name (French) (New Field)
   - datastore_id: recipient_operating_name_fr
@@ -168,7 +166,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 35
 
   # 3.17 Research Organization (English) (New Field)
   - datastore_id: research_organization_name_en
@@ -208,7 +206,7 @@ resources:
     excel_required: true
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices_file: choices/country.json
 
   # 3.20 Recipient Province or Territory (New Field)
@@ -273,6 +271,7 @@ resources:
       en: This field is populated by the user. It will display the Operating city of the recipient.
       fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -286,6 +285,7 @@ resources:
       en: This field is populated by the user. It will display the Operating city of the recipient.
       fr: Ce champ est rempli par l’utilisateur. Il affichera la ville d’exploitation du bénéficiaire.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -351,6 +351,7 @@ resources:
       en: This field is populated by the user. It will display the name of the transfer payment program from which funding was disbursed.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le nom du programme du paiement de transfert duquel le financement a été versé.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -364,6 +365,7 @@ resources:
       en: This field is populated by the user. It will display the name of the transfer payment program from which funding was disbursed.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le nom du programme du paiement de transfert duquel le financement a été versé.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -377,6 +379,7 @@ resources:
       en: This field is populated by the user. It will display the purpose of the aforementioned program. This text will come from program terms & conditions.
       fr: Ce champ est rempli par l’utilisateur. Il affichera l’objectif du programme susmentionné. Ce texte proviendra des modalités et des conditions du programme.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -390,6 +393,7 @@ resources:
       en: This field is populated by the user. It will display the purpose of the aforementioned program. This text will come from program terms & conditions.
       fr: Ce champ est rempli par l’utilisateur. Il affichera l’objectif du programme susmentionné. Ce texte proviendra des modalités et des conditions du programme.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -403,6 +407,7 @@ resources:
       en: his field is populated by the user. It will display the title of the agreement that is being signed into.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le titre de l’entente qui est signée.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -416,6 +421,7 @@ resources:
       en: his field is populated by the user. It will display the title of the agreement that is being signed into.
       fr: Ce champ est rempli par l’utilisateur. Il affichera le titre de l’entente qui est signée.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -442,6 +448,7 @@ resources:
       en: This field is populated by the user. It will display the value of the project in Canadian dollars.
       fr: Ce champ est rempli par l’utilisateur. Il affichera la valeur du projet en dollars canadiens.
     obligation: Mandatory
+    excel_required: true
     datastore_type: money
     excel_column_width: 20
 
@@ -487,6 +494,7 @@ resources:
       en: This field is populated by the user. It will display the projected start date of the project
       fr: Ce champ est rempli par l’utilisateur. Il affichera la date de début prévue du projet.
     obligation: Mandatory
+    excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
@@ -637,6 +645,9 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FFc09a77
+
+  triggers:
+  - grants_trigger
 
   examples:
     record:
