@@ -20,7 +20,9 @@ def norm_date(d):
 
 for line in in_csv:
     try:
-        datetime.strptime(norm_date(line['date']), '%Y-%m-%d')
+        if datetime.strptime(norm_date(line['date']), '%Y-%m-%d'
+            ) >= datetime(2018, 4, 1):
+            raise ValueError
     except ValueError:
         sys.stderr.write('skipping "{date}" {pid} {org}\n'.format(
             date=line['date'],
