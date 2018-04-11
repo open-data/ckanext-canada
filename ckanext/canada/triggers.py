@@ -63,6 +63,19 @@ def update_triggers():
             END;
         ''')
 
+    lc.action.datastore_function_create(
+        name=u'not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'money'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
 
     lc.action.datastore_function_create(
         name=u'no_surrounding_whitespace',
@@ -474,6 +487,80 @@ def update_triggers():
                 e_feedback=pg_array(service_choices['e_feedback']),
                 interaction_points_online=pg_array(service_choices['interaction_points_online']),
                 interaction_points_total=pg_array(service_choices['interaction_points_total']),
+            )
+        )
+
+    grants_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('grants'))
+    lc.action.datastore_function_create(
+        name=u'grants_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.project_identifier, 'project_identifier');
+
+                IF NOT ((NEW.amendment_number IS NULL) AND
+                        (NEW.amendment_date IS NULL) ) THEN
+                    PERFORM not_empty(NEW.amendment_number, 'amendment_number');
+                    PERFORM not_empty(NEW.amendment_date, 'amendment_date');
+                END IF;
+
+                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE AND
+                        (NEW.foreign_currency_value IS NULL)) THEN
+                    PERFORM not_empty(NEW.foreign_currency_type, 'foreign_currency_type');
+                    PERFORM choice_one_of(
+                        NEW.foreign_currency_type,
+                        {foreign_currency_type},
+                        'foreign_currency_type');
+                    PERFORM not_empty(NEW.foreign_currency_value, 'foreign_currency_value');
+                END IF;
+
+                PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
+                IF NEW.agreement_start_date >= '2018-04-01'::date THEN
+                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
+                    PERFORM not_empty(NEW.agreement_type, 'agreement_type');
+                    PERFORM choice_one_of(
+                        NEW.agreement_type,
+                        {agreement_type},
+                        'agreement_type');
+                    PERFORM not_empty(NEW.recipient_type, 'recipient_type');
+                    PERFORM choice_one_of(
+                        NEW.recipient_type,
+                        {recipient_type},
+                        'recipient_type');
+                    PERFORM not_empty(NEW.recipient_country, 'recipient_country');
+                    PERFORM choice_one_of(
+                        NEW.recipient_country,
+                        {recipient_country},
+                        'recipient_country');
+                    PERFORM not_empty(NEW.recipient_city_en, 'recipient_city_en');
+                    PERFORM not_empty(NEW.recipient_city_fr, 'recipient_city_fr');
+                    PERFORM not_empty(NEW.agreement_end_date, 'agreement_end_date');
+                    PERFORM not_empty(NEW.description_en, 'description_en');
+                    PERFORM not_empty(NEW.description_fr, 'description_fr');
+                    PERFORM not_empty(NEW.expected_results_en, 'expected_results_en');
+                    PERFORM not_empty(NEW.expected_results_fr, 'expected_results_fr');
+                    PERFORM not_empty(NEW.agreement_title_en, 'agreement_title_en');
+                    PERFORM not_empty(NEW.agreement_title_fr, 'agreement_title_fr');
+                    PERFORM not_empty(NEW.prog_name_en, 'prog_name_en');
+                    PERFORM not_empty(NEW.prog_name_fr, 'prog_name_fr');
+                    PERFORM not_empty(NEW.prog_purpose_en, 'prog_purpose_en');
+                    PERFORM not_empty(NEW.prog_purpose_fr, 'prog_purpose_fr');
+                    IF NEW.recipient_country = 'CA' THEN
+                        PERFORM not_empty(NEW.recipient_postal_code,
+                            'recipient_postal_code');
+                    END IF;
+                END IF;
+                RETURN NEW;
+            END;
+            '''.format(
+                agreement_type=pg_array(grants_choices['agreement_type']),
+                recipient_type=pg_array(grants_choices['recipient_type']),
+                recipient_country=pg_array(grants_choices['recipient_country']),
+                recipient_province=pg_array(grants_choices['recipient_province']),
+                foreign_currency_type=pg_array(grants_choices['foreign_currency_type']),
             )
         )
 
