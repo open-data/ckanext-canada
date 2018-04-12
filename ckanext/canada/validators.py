@@ -9,6 +9,7 @@ from ckan.authz import is_sysadmin
 from ckan import model
 
 from ckanext.canada.helpers import may_publish_datasets
+import geojson
 from geomet import wkt
 import json
 import uuid
