@@ -1,13 +1,13 @@
 ckanapi>=2.1
 lxml
-shapely==1.2.17
+geojson==2.3.0
+geomet==0.2.0.post2
 docopt
 pyyaml
 ckantoolkit
 pytz
 babel
 rdflib-jsonld
-geomet
 backports.ssl-match-hostname>=3.5.0.1
 azure-storage==0.33.0
 configparser>=3.5.0
