@@ -1,6 +1,7 @@
 ckanapi>=2.1
 lxml
-shapely==1.2.17
+geojson==2.3.0
+geomet==0.2.0
 docopt
 pyyaml
 ckantoolkit

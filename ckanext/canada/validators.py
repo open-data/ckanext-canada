@@ -9,8 +9,7 @@ from ckan.authz import is_sysadmin
 from ckan import model
 
 from ckanext.canada.helpers import may_publish_datasets
-from shapely.geometry import asShape
-from shapely import wkt
+from geomet import wkt
 import json
 import uuid
 
@@ -131,7 +130,9 @@ def geojson_validator(value):
             # accept decoded geojson too
             if isinstance(value, basestring):
                 value = json.loads(value)
-            shape = asShape(value)
+            shape = geojson.GeoJSON.to_instance(value, strict=True)
+            if not shape.is_valid:
+                raise ValueError
             wkt.dumps(shape)
         except Exception:
             raise Invalid(_("Invalid GeoJSON"))
