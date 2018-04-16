@@ -39,6 +39,7 @@ resources:
     format_type: Numeric only
     datastore_type: int
     excel_column_width: 20
+    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
 
   # 3.5 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -54,6 +55,7 @@ resources:
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
 
   # 3.7 Agreement Type (Formerly “Type”- 3.16)
   - datastore_id: agreement_type
@@ -88,6 +90,7 @@ resources:
       en: This field is populated user. It is to display the category of recipient that has received grant and/or contribution funding.
       fr: Ce champ est rempli par l’utilisateur. Il affiche la catégorie du bénéficiaire qui a reçu un financement de subvention ou de contribution.
     obligation: Mandatory
+    excel_required: true
     format_type: Controlled List
     datastore_type: text
     excel_column_width: 20
@@ -471,6 +474,7 @@ resources:
     format_type: Controlled List
     datastore_type: text
     excel_column_width: 10
+    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
     choices_file: choices/currency.json
 
   # 3.43 Foreign Currency Value (New field)
@@ -484,6 +488,7 @@ resources:
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
     excel_column_width: 20
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
 
   # 3.45 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date
