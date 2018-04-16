@@ -38,7 +38,7 @@ resources:
       fr: Obligatoire pour les modifications seulement
     format_type: Numeric only
     datastore_type: int
-    excel_column_width: 20
+    excel_column_width: 25
     excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
 
   # 3.5 Amendment Date (New Field)
@@ -156,7 +156,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 35
+    excel_column_width: 40
 
   # 3.16 Recipient Operating Name (French) (New Field)
   - datastore_id: recipient_operating_name_fr
@@ -223,7 +223,7 @@ resources:
     obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 35
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
     choices:
       "ON":
@@ -318,7 +318,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    excel_column_width: 45
 
   # 3.28 Federal Riding Name (French) (New Field)
   - datastore_id: federal_riding_name_fr
@@ -454,7 +454,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: money
-    excel_column_width: 20
+    excel_column_width: 40
 
     solr_dollar_range_facet:
      - 10000
@@ -474,7 +474,7 @@ resources:
     obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
     choices_file: choices/currency.json
 
@@ -488,7 +488,7 @@ resources:
       fr: Ce champ est rempli par l’utilisateur. Il affichera la valeur du projet en monnaie étrangère.
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
-    excel_column_width: 20
+    excel_column_width: 30
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
 
   # 3.45 Agreement Start Date (Formerly 3.14 "date")
@@ -503,7 +503,7 @@ resources:
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
     extract_date_year: true
     extract_date_month: true
 
@@ -519,7 +519,7 @@ resources:
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
 
   # 3.49 Coverage (English) (New Field)
   - datastore_id: coverage_en
@@ -627,7 +627,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 40
 
   # 3.58 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -640,7 +640,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 40
 
 
   datastore_primary_key: [project_identifier]
