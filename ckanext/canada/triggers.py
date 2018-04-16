@@ -501,14 +501,14 @@ def update_triggers():
             BEGIN
                 PERFORM not_empty(NEW.project_identifier, 'project_identifier');
 
-                IF NOT ((NEW.amendment_number IS NULL) AND
-                        (NEW.amendment_date IS NULL) ) THEN
+                IF NEW.amendment_number IS NOT NULL OR
+                        NEW.amendment_date IS NOT NULL THEN
                     PERFORM not_empty(NEW.amendment_number, 'amendment_number');
                     PERFORM not_empty(NEW.amendment_date, 'amendment_date');
                 END IF;
 
-                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE AND
-                        (NEW.foreign_currency_value IS NULL)) THEN
+                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
+                        NEW.foreign_currency_value IS NOT NULL THEN
                     PERFORM not_empty(NEW.foreign_currency_type, 'foreign_currency_type');
                     PERFORM choice_one_of(
                         NEW.foreign_currency_type,
@@ -516,6 +516,8 @@ def update_triggers():
                         'foreign_currency_type');
                     PERFORM not_empty(NEW.foreign_currency_value, 'foreign_currency_value');
                 END IF;
+
+                PERFORM not_empty(NEW.agreement_value, 'agreement_value');
 
                 PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
                 IF NEW.agreement_start_date >= '2018-04-01'::date THEN
