@@ -224,6 +224,7 @@ resources:
     format_type: Controlled List
     datastore_type: text
     excel_column_width: 20
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
     choices:
       "ON":
         en: Ontario

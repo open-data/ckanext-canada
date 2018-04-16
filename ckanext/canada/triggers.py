@@ -535,6 +535,13 @@ def update_triggers():
                         NEW.recipient_country,
                         {recipient_country},
                         'recipient_country');
+                    IF NEW.recipient_country = 'CA' THEN
+                        PERFORM not_empty(NEW.recipient_province, 'recipient_province');
+                    END IF;
+                    PERFORM choice_one_of(
+                        NEW.recipient_province,
+                        {recipient_province},
+                        'recipient_province');
                     PERFORM not_empty(NEW.recipient_city_en, 'recipient_city_en');
                     PERFORM not_empty(NEW.recipient_city_fr, 'recipient_city_fr');
                     PERFORM not_empty(NEW.agreement_end_date, 'agreement_end_date');
