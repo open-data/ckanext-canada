@@ -516,6 +516,7 @@ resources:
       en: This field is populated by the user. It will display the projected end date of the project
       fr: Ce champ est rempli par l’utilisateur. Il affichera la date de fin du projet.
     obligation: Mandatory
+    excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
@@ -555,6 +556,7 @@ resources:
       en: This field is populated by the user. It will display information on the project being undertaken.
       fr: Ce champ est rempli par l’utilisateur. Il affichera les renseignements sur le projet entrepris.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
@@ -568,6 +570,7 @@ resources:
       en: This field is populated by the user. It will display information on the project being undertaken.
       fr: Ce champ est rempli par l’utilisateur. Il affichera les renseignements sur le projet entrepris.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
@@ -594,9 +597,10 @@ resources:
       en: This field is populated by the user. It will display the expected results of the project.
       fr: Ce champ est rempli par l’utilisateur. Il affichera les résultats prévus du projet.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 45
 
   # 3.52 Expected Results / Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -607,9 +611,10 @@ resources:
       en: This field is populated by the user. It will display the expected results of the project.
       fr: Ce champ est rempli par l’utilisateur. Il affichera les résultats prévus du projet.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    excel_column_width: 45
 
   # 3.57 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
