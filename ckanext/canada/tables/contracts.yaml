@@ -209,6 +209,58 @@ resources:
         - lookup: [CFTA, CCFTA, CKFTA]
         en: CFTA / CCFTA / CKFTA
         fr: ALEC / ALECC / ALECCS
+      D:
+        lookup: [CETA, CFTA]
+        en: CETA, CFTA
+        fr: AECG / ALEC
+      E:
+        lookup: [CETA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: CETA / WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: AECG / AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+      F:
+        lookup: [ETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: ETA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: AECG / AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+      AA:
+        lookup: [CCFTA, CCoFTA, CHFTA, CPaFTA]
+        en: CCFTA / CCoFTA / CHFTA / CPaFTA
+        fr: ALECC / ALECCo / ALECH / ALECPa
+      AB:
+        lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
+        en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CKFTA
+        fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECCS
+      AC:
+        lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+      AD:
+        lookup: [CETA, WTO-AGP, CFTA, CCFTA, CKFTA]
+        en: CETA / WTO-AGP / CFTA / CCFTA / CKFTA
+        fr: AECG / AMP-OMC / ALEC / ALECC / ALECCS
+      AE:
+        lookup: [CHFTA]
+        en: CHFTA
+        fr: ALECH
+      AF:
+        lookup: [CFTA, CHFTA]
+        en: CFTA / CHFTA
+        fr: ALEC / ALECH
+      AG:
+        lookup: [CETA, CFTA, CHFTA]
+        en: CETA / CFTA / CHFTA
+        fr: AECG / ALEC / ALECH
+      AH:
+        lookup: [CKFTA]
+        en: CKFTA
+        fr: ALECCS
+      AI:
+        lookup: [CFTA, CKFTA]
+        en: CFTA / CKFTA
+        fr: ALEC / ALECCS
+      AJ:
+        lookup: [CFTA, NAFTA, CKFTA]
+        en: CFTA / NAFTA / CKFTA
+        fr: ALEC / ALENA / ALECCS
 
     choices_lookup:
       WTO-AGP:
@@ -247,6 +299,9 @@ resources:
       LCSA:
         en: Land Claim Set Aside – Comprehensive Land Claim Agreement (LCSA (CLCA))
         fr: Marchés réservés dans le cadre des ententes sur les revendications territoriales – Ententes sur les revendications territoriales globales (MRERT (ERTG))
+      CETA:
+        en: Comprehensive Economic and Trade Agreement (CETA)
+        fr: Accord économique et commercial global (AEGC)
 
   - datastore_id: commodity_type_code
     label: Commodity Type
