@@ -118,61 +118,97 @@ resources:
         en: None
         fr: Aucun
       Y:
-        list_lookup: [WTO-AGP, NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
-        en: WTO-AGP / NAFTA / AIT / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
-        fr: AMP-OMC / ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [WTO-AGP, NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - lookup: [WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       Z:
-        list_lookup: [WTO-AGP, NAFTA]
+        lookup: [WTO-AGP, NAFTA]
         en: WTO-AGP / NAFTA
         fr: AMP-OMC / ALENA
       X:
-        list_lookup: [WTO-AGP, AIT, CCFTA, CKFTA]
-        en: WTO-AGP / AIT / CCFTA / CKFTA
-        fr: AMP-OMC / ACI / ALECC / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [WTO-AGP, AIT, CCFTA, CKFTA]
+        - lookup: [WTO-AGP, CFTA, CCFTA, CKFTA]
+        en: WTO-AGP / CFTA / CCFTA / CKFTA
+        fr: AMP-OMC / ALEC / ALECC / ALECCS
       C:
-        list_lookup: [NAFTA, AIT]
-        en: NAFTA / AIT
-        fr: ALENA / ACI
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [NAFTA, AIT]
+        - lookup: [NAFTA, CFTA]
+        en: NAFTA / CFTA
+        fr: ALENA / ALEC
       W:
-        list_lookup: [WTO-AGP, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
-        en: WTO-AGP / AIT / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
-        fr: AMP-OMC / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [WTO-AGP, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - lookup: [WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       N:
-        list_lookup: [NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
+        lookup: [NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
         en: NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
         fr: ALENA / ALECC / ALECCo / ALECH / ALECPa
       I:
-        list_lookup: [AIT]
-        en: AIT
-        fr: ACI
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [AIT]
+        - loolup: [CFTA]
+        en: CFTA
+        fr: ALEC
       A:
-        list_lookup: [ABSA]
+        lookup: [ABSA]
         en: ABSA
         fr: MREA
       R:
-        list_lookup: [LCSA]
+        lookup: [LCSA]
         en: LCSA
         fr: MRERT
       P:
-        list_lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA]
-        en: NAFTA / AIT / CCFTA / CCoFTA / CHFTA / CPaFTA
-        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA]
+        - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
+        en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
+        fr: ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa
       S:
-        list_lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
-        en: NAFTA / AIT / CCFTA / CCoFTA / CHFTA / CPaFTA / CKFTA
-        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
+        - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
+        en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CKFTA
+        fr: ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECCS
       T:
-        list_lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
-        en: NAFTA / AIT / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
-        fr: ALENA / ACI / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        fr: ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       U:
-        list_lookup: [CCFTA]
+        lookup: [CCFTA]
         en: CCFTA
         fr: ALECC
       V:
-        list_lookup: [AIT, CCFTA, CKFTA]
-        en: AIT / CCFTA / CKFTA
-        fr: ACI / ALECC / ALECCS
+        conditional_lookup:
+        - column: contract_date
+          less_than: 2018-01-01
+          lookup: [AIT, CCFTA, CKFTA]
+        - lookup: [CFTA, CCFTA, CKFTA]
+        en: CFTA / CCFTA / CKFTA
+        fr: ALEC / ALECC / ALECCS
 
     choices_lookup:
       WTO-AGP:
@@ -184,6 +220,9 @@ resources:
       AIT:
         en: Agreement on Internal Trade (AIT)
         fr: Accord sur le commerce intérieur (ACI)
+      CFTA:
+        en: Canadian Free Trade Agreement (CFTA)
+        fr: Accord de libre-échange Canadien (ALEC)
       CCFTA:
         en: Canada-Chile Free Trade Agreement (CCFTA)
         fr: Accord de libre-échange Canada-Chili (ALECC)
