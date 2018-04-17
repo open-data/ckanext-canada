@@ -115,12 +115,13 @@ resources:
     excel_column_width: 10
     choices:
       0:
+        lookup: [NONE]
         en: None
         fr: Aucun
       Y:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [WTO-AGP, NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         - lookup: [WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
@@ -132,7 +133,7 @@ resources:
       X:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [WTO-AGP, AIT, CCFTA, CKFTA]
         - lookup: [WTO-AGP, CFTA, CCFTA, CKFTA]
         en: WTO-AGP / CFTA / CCFTA / CKFTA
@@ -140,7 +141,7 @@ resources:
       C:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [NAFTA, AIT]
         - lookup: [NAFTA, CFTA]
         en: NAFTA / CFTA
@@ -148,7 +149,7 @@ resources:
       W:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [WTO-AGP, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         - lookup: [WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
@@ -160,7 +161,7 @@ resources:
       I:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [AIT]
         - loolup: [CFTA]
         en: CFTA
@@ -176,7 +177,7 @@ resources:
       P:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA]
         - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
         en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
@@ -184,7 +185,7 @@ resources:
       S:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
         - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
         en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CKFTA
@@ -192,7 +193,7 @@ resources:
       T:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
@@ -204,7 +205,7 @@ resources:
       V:
         conditional_lookup:
         - column: contract_date
-          less_than: 2018-01-01
+          less_than: '2018-01-01'
           lookup: [AIT, CCFTA, CKFTA]
         - lookup: [CFTA, CCFTA, CKFTA]
         en: CFTA / CCFTA / CKFTA
@@ -218,7 +219,7 @@ resources:
         en: CETA / WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       F:
-        lookup: [ETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        lookup: [CETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: ETA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AA:
@@ -263,6 +264,9 @@ resources:
         fr: ALEC / ALENA / ALECCS
 
     choices_lookup:
+      NONE:
+        en: None
+        fr: Aucun
       WTO-AGP:
         en: World Trade Organization – Agreement on Government Procurement (WTO-AGP)
         fr: Accord sur les marchés publics de l’Organisation mondiale du commerce (AMP-OMC)
