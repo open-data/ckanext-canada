@@ -331,6 +331,9 @@ def _add_choice(solrrec, key, record, choice, field):
     """
     add the english+french values for choice to solrrec
     """
+    solrrec[key + '_en'] = recombinant_language_text(choice, 'en')
+    solrrec[key + '_fr'] = recombinant_language_text(choice, 'fr')
+
     # lookups used for choices that expand to multiple values
     if 'lookup' in choice:
         lookup = choice['lookup']
@@ -343,10 +346,7 @@ def _add_choice(solrrec, key, record, choice, field):
             lookup = conditional['lookup']
             break
     else:
-        solrrec[key + '_en'] = recombinant_language_text(choice, 'en')
-        solrrec[key + '_fr'] = recombinant_language_text(choice, 'fr')
         return
-
     solrrec['multi_' + key + '_en'] = [
         recombinant_language_text(field['choices_lookup'][cl], 'en')
         for cl in lookup]
