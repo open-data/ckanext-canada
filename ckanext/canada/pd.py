@@ -5,6 +5,7 @@ import calendar
 import time
 import logging
 import json
+from datetime import date
 from unicodecsv import DictReader
 from _csv import Error as _csvError
 from babel.numbers import format_currency
@@ -297,10 +298,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             if choices:
                 if key.endswith('_code'):
                     key = key[:-5]
-                solrrec[key + '_en'] = recombinant_language_text(
-                    choices.get(value, ''), 'en')
-                solrrec[key + '_fr'] = recombinant_language_text(
-                    choices.get(value, ''), 'fr')
+                choice = choices.get(value, {})
+                _add_choice(solrrec, key, r, choice, f)
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
 
@@ -326,6 +325,34 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             time.sleep((10-a) * 5)
             print "retrying..."
     return unmatched
+
+
+def _add_choice(solrrec, key, record, choice, field):
+    """
+    add the english+french values for choice to solrrec
+    """
+    solrrec[key + '_en'] = recombinant_language_text(choice, 'en')
+    solrrec[key + '_fr'] = recombinant_language_text(choice, 'fr')
+
+    # lookups used for choices that expand to multiple values
+    if 'lookup' in choice:
+        lookup = choice['lookup']
+    elif 'conditional_lookup' in choice:
+        for conditional in choice['conditional_lookup']:
+            if 'column' in conditional:
+                column = record[conditional['column']]
+                if not column < conditional['less_than']:
+                    continue
+            lookup = conditional['lookup']
+            break
+    else:
+        return
+    solrrec['multi_' + key + '_en'] = [
+        recombinant_language_text(field['choices_lookup'][cl], 'en')
+        for cl in lookup]
+    solrrec['multi_' + key + '_fr'] = [
+        recombinant_language_text(field['choices_lookup'][cl], 'fr')
+        for cl in lookup]
 
 
 def date2zulu(yyyy_mm_dd):

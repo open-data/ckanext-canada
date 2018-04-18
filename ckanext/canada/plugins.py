@@ -299,7 +299,6 @@ ckanext.canada:schemas/info.yaml
             'json_loads',
             'catalogue_last_update_date',
             'dataset_rating',
-            'dataset_comment_count',
             'dataset_comments',
             ])
 
@@ -653,7 +652,6 @@ ckanext.canada:schemas/doc.yaml
             'get_license',
             'normalize_strip_accents',
             'dataset_rating',
-            'dataset_comment_count',
             'portal_url',
             'googleanalytics_id',
             'loop11_key',

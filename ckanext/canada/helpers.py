@@ -60,6 +60,7 @@ def user_organizations(user):
     return u.get_groups(group_type = "organization")
 
 def catalogue_last_update_date():
+    return '' # FIXME: cache this value or add an index to the DB for query below
     q = model.Session.query(Activity.timestamp).filter(
         Activity.activity_type.endswith('package')).order_by(
         Activity.timestamp.desc()).first()
@@ -117,9 +118,6 @@ def normalize_strip_accents(s):
 def dataset_rating(package_id):
     return wcms.dataset_rating(package_id)
 
-
-def dataset_comment_count(package_id):
-    return wcms.dataset_comment_count(package_id)
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))

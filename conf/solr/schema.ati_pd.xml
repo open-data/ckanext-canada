@@ -76,6 +76,7 @@
          via copyField further on in this schema  -->
     <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
 
+    <dynamicField name="multi_*" type="string" indexed="true"  stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="true"/>
 </fields>
 
