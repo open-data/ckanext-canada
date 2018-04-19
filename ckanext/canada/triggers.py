@@ -422,7 +422,7 @@ def update_triggers():
                 PERFORM not_empty(NEW.service_agreements, 'service_agreements');
                 PERFORM choice_one_of(NEW.service_agreements, {service_agreements}, 'service_agreements');
                 PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
-                PERFORM choice_one_of(NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
+                PERFORM choices_from(NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
                 PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
                 PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
                 PERFORM not_empty(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
