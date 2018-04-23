@@ -642,6 +642,27 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   datastore_primary_key: [project_identifier]
   datastore_indexes: ""
@@ -659,6 +680,7 @@ resources:
 
   triggers:
   - grants_trigger
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -703,6 +725,28 @@ resources:
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
@@ -720,6 +764,9 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FFc09a77
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
