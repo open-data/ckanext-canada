@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 from openpyxl.utils.datetime import from_excel
 
-FIELDNAMES = 'project_identifier,amendment_number,amendment_date,agreement_type,recipient_type,recipient_business_number,recipient_legal_name,recipient_operating_name_en,recipient_operating_name_fr,research_organization_name_en,research_organization_name_fr,recipient_country,recipient_province,recipient_city_en,recipient_city_fr,recipient_postal_code,federal_riding_name_en,federal_riding_name_fr,federal_riding_number,prog_name_en,prog_name_fr,prog_purpose_en,prog_purpose_fr,agreement_title_en,agreement_title_fr,agreement_number,agreement_value,foreign_currency_type,foreign_currency_value,agreement_start_date,agreement_end_date,coverage_en,coverage_fr,description_en,description_fr,naics_identifier,expected_results_en,expected_results_fr,additional_information_en,additional_information_fr,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
+FIELDNAMES = 'project_identifier,amendment_number,amendment_date,agreement_type,recipient_type,recipient_business_number,recipient_legal_name,recipient_operating_name_en,recipient_operating_name_fr,research_organization_name_en,research_organization_name_fr,recipient_country,recipient_province,recipient_city_en,recipient_city_fr,recipient_postal_code,federal_riding_name_en,federal_riding_name_fr,federal_riding_number,prog_name_en,prog_name_fr,prog_purpose_en,prog_purpose_fr,agreement_title_en,agreement_title_fr,agreement_number,agreement_value,foreign_currency_type,foreign_currency_value,agreement_start_date,agreement_end_date,coverage_en,coverage_fr,description_en,description_fr,naics_identifier,expected_results_en,expected_results_fr,additional_information_en,additional_information_fr,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
 
@@ -59,8 +59,4 @@ for line in in_csv:
         line.pop('comments_en') + '\t' + line.pop('additional_info_en')).strip()
     line['additional_information_fr'] = (
         line.pop('comments_fr') + '\t' + line.pop('additional_info_fr')).strip()
-
-    line['record_created'] = ''
-    line['record_modified'] = ''
-    line['user_modified'] = ''
     out_csv.writerow(line)
