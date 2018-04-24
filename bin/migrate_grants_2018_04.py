@@ -30,6 +30,8 @@ for line in in_csv:
     try:
         if norm_date(line['date']) >= datetime(2018, 4, 1):
             raise ValueError
+        if not line['value'].strip():
+            raise ValueError
     except ValueError:
         sys.stderr.write('{org} {pid} "{date}"\n'.format(
             date=line['date'],
