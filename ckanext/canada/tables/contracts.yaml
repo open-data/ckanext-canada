@@ -163,7 +163,7 @@ resources:
         - column: contract_date
           less_than: '2018-01-01'
           lookup: [AIT]
-        - loolup: [CFTA]
+        - lookup: [CFTA]
         en: CFTA
         fr: ALEC
       A:
