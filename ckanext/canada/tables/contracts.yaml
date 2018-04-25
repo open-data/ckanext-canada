@@ -18,21 +18,28 @@ resources:
 
   - datastore_id: reference_number
     label: Reference Number
+    obligation: Mandatory
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: procurement_id
     label: Procurement Identification Number
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: vendor_name
     label: Vendor Name
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: contract_date
     label: Contract Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -41,31 +48,43 @@ resources:
 
   - datastore_id: economic_object_code
     label: Economic Object Code
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
 
   - datastore_id: description_en
     label: Description of Work English
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: description_fr
     label: Description of Work French
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: contract_period_start
     label: Contract Period Start Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: delivery_date
     label: Contract Period End Date or Delivery Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
     excel_column_width: 20
 
   - datastore_id: contract_value
     label: Total Contract Value
+    obligation: Mandatory
+    excel_required: true
     datastore_type: money
     excel_column_width: 20
 
@@ -79,36 +98,45 @@ resources:
 
   - datastore_id: original_value
     label: Original Contract Value
+    obligation: Mandatory
+    excel_required: true
     datastore_type: money
     excel_column_width: 20
 
   - datastore_id: amendment_value
     label: Contract Amendment Value
+    obligation: Optional
     datastore_type: money
     excel_column_width: 20
 
   - datastore_id: comments_en
     label: Comments English
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: comments_fr
     label: Comments French
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: additional_comments_en
     label: Additional Comments English
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: additional_comments_fr
     label: Additional Comments French
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: agreement_type_code
     label: Agreement Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -307,6 +335,8 @@ resources:
 
   - datastore_id: commodity_type_code
     label: Commodity Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -322,18 +352,24 @@ resources:
 
   - datastore_id: commodity_code
     label: Commodity Code
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
     label: Country of Origin
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure_code
     label: Solicitation Procedure
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -352,6 +388,8 @@ resources:
 
   - datastore_id: limited_tendering_reason_code
     label: Limited Tendering Reason
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -406,6 +444,8 @@ resources:
 
   - datastore_id: exemption_code
     label: Exemption
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -446,6 +486,8 @@ resources:
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -458,6 +500,8 @@ resources:
 
   - datastore_id: intellectual_property_code
     label: Intellectual Property Indicator
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -502,6 +546,7 @@ resources:
 
   - datastore_id: potential_commercial_exploitation
     label: Potential for Commercial Exploitation
+    obligation: Optional
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -514,6 +559,8 @@ resources:
 
   - datastore_id: former_public_servant
     label: Former Public Servant in receipt of a PSSA pension
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -527,6 +574,7 @@ resources:
   - datastore_id: standing_offer
     label: Call-up or Contract against a Standing Offer or Supply
            Arrangement Agreement
+    obligation: Optional
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -542,11 +590,14 @@ resources:
 
   - datastore_id: standing_offer_number
     label: Standing Offer or Supply Arrangement Number
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: document_type_code
     label: Instrument Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -562,6 +613,9 @@ resources:
 
   - datastore_id: reporting_period
     label: Reporting Period
+    obligation: Mandatory
+    excel_required: true
+    format_type: YYYY-YYYY-QX
     datastore_type: text
     excel_column_width: 10
 
