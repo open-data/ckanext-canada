@@ -347,6 +347,9 @@ def update_triggers():
             END;
             ''')
 
+    contracts_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('contracts'))
     lc.action.datastore_function_create(
         name=u'contracts_trigger',
         or_replace=True,
@@ -357,9 +360,72 @@ def update_triggers():
                 NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
                 NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
                 NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+
+                PERFORM not_empty(NEW.contract_date, 'contract_date');
+                IF NEW.contract_date >= '2018-01-01'::date THEN
+                    PERFORM not_empty(NEW.procurement_id, 'procurement_id');
+                    PERFORM not_empty(NEW.vendor_name, 'vendor_name');
+                    PERFORM not_empty(NEW.economic_object_code, 'economic_object_code');
+                    PERFORM not_empty(NEW.description_en, 'description_en');
+                    PERFORM not_empty(NEW.description_fr, 'description_fr');
+                    PERFORM not_empty(NEW.contract_period_start, 'contract_period_start');
+                    PERFORM not_empty(NEW.delivery_date, 'delivery_date');
+                    PERFORM not_empty(NEW.contract_value, 'contract_value');
+                    PERFORM not_empty(NEW.original_value, 'original_value');
+                    PERFORM not_empty(NEW.agreement_type_code, 'agreement_type_code');
+                    PERFORM not_empty(NEW.commodity_type_code, 'commodity_type_code');
+                    PERFORM choice_one_of(NEW.commodity_type_code,
+                        {commodity_type_code},
+                        'commodity_type_code');
+                    PERFORM not_empty(NEW.commodity_code, 'commodity_code');
+                    PERFORM choice_one_of(NEW.commodity_code,
+                        {commodity_code},
+                        'commodity_code');
+                    PERFORM not_empty(NEW.country_of_origin, 'country_of_origin');
+                    PERFORM choice_one_of(NEW.country_of_origin,
+                        {country_of_origin},
+                        'country_of_origin');
+                    PERFORM not_empty(NEW.solicitation_procedure_code, 'solicitation_procedure_code');
+                    PERFORM choice_one_of(NEW.solicitation_procedure_code,
+                        {solicitation_procedure_code},
+                        'solicitation_procedure_code');
+                    PERFORM not_empty(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
+                    PERFORM choice_one_of(NEW.limited_tendering_reason_code,
+                        {limited_tendering_reason_code},
+                        'limited_tendering_reason_code');
+                    PERFORM not_empty(NEW.exemption_code, 'exemption_code');
+                    PERFORM choice_one_of(NEW.exemption_code,
+                        {exemption_code},
+                        'exemption_code');
+                    PERFORM not_empty(NEW.aboriginal_business, 'aboriginal_business');
+                    PERFORM not_empty(NEW.intellectual_property_code, 'intellectual_property_code');
+                    PERFORM choice_one_of(NEW.intellectual_property_code,
+                        {intellectual_property_code},
+                        'intellectual_property_code');
+                    PERFORM not_empty(NEW.former_public_servant, 'former_public_servant');
+                    PERFORM choice_one_of(NEW.standing_offer,
+                        {standing_offer},
+                        'standing_offer');
+                    PERFORM not_empty(NEW.document_type_code, 'document_type_code');
+                    PERFORM choice_one_of(NEW.document_type_code,
+                        {document_type_code},
+                        'document_type_code');
+                END IF;
+
                 RETURN NEW;
             END;
-            ''')
+            '''.format(
+                commodity_type_code = pg_array(contracts_choices['commodity_type_code']),
+                commodity_code = pg_array(contracts_choices['commodity_code']),
+                country_of_origin = pg_array(contracts_choices['country_of_origin']),
+                solicitation_procedure_code = pg_array(contracts_choices['solicitation_procedure_code']),
+                limited_tendering_reason_code = pg_array(contracts_choices['limited_tendering_reason_code']),
+                exemption_code = pg_array(contracts_choices['exemption_code']),
+                intellectual_property_code = pg_array(contracts_choices['intellectual_property_code']),
+                standing_offer = pg_array(contracts_choices['standing_offer']),
+                document_type_code = pg_array(contracts_choices['document_type_code']),
+            )
+        )
 
     lc.action.datastore_function_create(
         name=u'valid_percentage',
