@@ -43,7 +43,6 @@ resources:
     label: Economic Object Code
     datastore_type: text
     excel_column_width: 10
-    choices_file: choices/economic_object_code.json
 
   - datastore_id: description_en
     label: Description of Work English
