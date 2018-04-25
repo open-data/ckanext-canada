@@ -404,8 +404,8 @@ resources:
         en: Protection of Human, Animal, or Plant Life or Health
         fr: Protection de la vie ou de la santé des personnes, animaux, plantes
 
-  - datastore_id: derogation_code
-    label: Derogation
+  - datastore_id: exemption_code
+    label: Exemption
     datastore_type: text
     excel_column_width: 10
     choices:
@@ -443,25 +443,6 @@ resources:
         fr: Les marchés de Transports Canada, du ministère des
             Communications, et de Pêches et Océans dans les catégories
             FSC 70, 74, 36
-      "07":
-        en: National security exemptions incl. oil purchases relating to
-            any strategic reserve requirements
-        fr: Les exceptions au titre de la sécurité nationale comprennent
-            les achats de pétrole liés aux exigences en matière de
-            réserve stratégique
-      "08":
-        en: National security exceptions include procurements made in
-            support of safeguarding nuclear materials or technology
-        fr: Les exceptions au titre de la sécurité nationale comprennent
-            les marchés passés pour protéger les matières ou la
-            technologie nucléaire
-      "09":
-        en: Under exceptional circumstances exclude a procurement from
-            the application of AIT, Chapter 5 for regional and economic
-            development purposes
-        fr: Dans des circonstances exceptionnelles, soustraire un marché
-            public à l’application du chapitre 5 de l’ACI à des fins de
-            développement économique et régional
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator
