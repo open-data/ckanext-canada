@@ -239,14 +239,6 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     for r in records:
         unique, friendly = unique_id(r)
 
-        shortform = None
-        shortform_fr = None
-        for e in org_detail['extras']:
-            if e['key'] == 'shortform':
-                shortform = e['value']
-            elif e['key'] == 'shortform_fr':
-                shortform_fr = e['value']
-
         solrrec = {
             'id': unique,
             'unique_id': friendly,
@@ -254,6 +246,12 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
             }
+
+        org_fields = chromo.get('solr_org_fields')
+        if org_fields:
+            for e in org_detail['extras']:
+                if e['key'] in org_fields:
+                    solrrec[e['key']] = e['value']
 
         for f in chromo['fields']:
             key = f['datastore_id']
