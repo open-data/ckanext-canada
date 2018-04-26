@@ -228,6 +228,9 @@ resources:
       ref_number: "1980198"
     sort: date desc
 
+  solr_org_fields:
+  - ati_email
+
 
 - title: Proactive Disclosure - Hospitality Nothing to Report
   resource_name: hospitalityq-nil
