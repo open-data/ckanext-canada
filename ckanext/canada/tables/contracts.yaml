@@ -27,7 +27,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: vendor_name
     label: Vendor Name
@@ -51,35 +51,35 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
 
   - datastore_id: description_en
     label: Description of Work English
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: description_fr
     label: Description of Work French
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: contract_period_start
     label: Contract Period Start Date
     obligation: Mandatory
     excel_required: true
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: delivery_date
     label: Contract Period End Date or Delivery Date
     obligation: Mandatory
     excel_required: true
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: contract_value
     label: Total Contract Value
@@ -107,7 +107,7 @@ resources:
     label: Contract Amendment Value
     obligation: Optional
     datastore_type: money
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: comments_en
     label: Comments English
@@ -125,20 +125,20 @@ resources:
     label: Additional Comments English
     obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: additional_comments_fr
     label: Additional Comments French
     obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: agreement_type_code
     label: Agreement Type
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 22
     choices:
       0:
         lookup: [NONE]
@@ -338,7 +338,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       G:
         en: Good
@@ -355,7 +355,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
@@ -363,7 +363,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure_code
@@ -371,7 +371,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       AC:
         en: Advance Contract Award Notice
@@ -391,7 +391,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       "00":
         en: None
@@ -447,7 +447,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices:
       "00":
         en: None
@@ -489,7 +489,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       Y:
         en: "Yes"
@@ -503,7 +503,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       A1:
         en: Crown owned – exception 1
@@ -548,7 +548,7 @@ resources:
     label: Potential for Commercial Exploitation
     obligation: Optional
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       Y:
         en: "Yes"
@@ -562,7 +562,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       Y:
         en: "Yes"
@@ -576,7 +576,7 @@ resources:
            Arrangement Agreement
     obligation: Optional
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       PWSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
@@ -592,14 +592,14 @@ resources:
     label: Standing Offer or Supply Arrangement Number
     obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: document_type_code
     label: Instrument Type
     obligation: Mandatory
     excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices:
       C:
         en: Contract
@@ -617,7 +617,8 @@ resources:
     excel_required: true
     format_type: YYYY-YYYY-QX
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
+    choices_file: choices/quarter.yaml
 
   datastore_primary_key: [reference_number]
   datastore_indexes: ""

@@ -357,12 +357,13 @@ def update_triggers():
         definition=u'''
             BEGIN
                 PERFORM not_empty(NEW.reference_number, 'reference_number');
+                PERFORM no_surrounding_whitespace(NEW.reference_number, 'reference_number');
                 NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
                 NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
                 NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
 
                 PERFORM not_empty(NEW.contract_date, 'contract_date');
-                IF NEW.contract_date >= '2018-01-01'::date THEN
+                IF NEW.contract_date >= '2018-04-01'::date THEN
                     PERFORM not_empty(NEW.procurement_id, 'procurement_id');
                     PERFORM not_empty(NEW.vendor_name, 'vendor_name');
                     PERFORM not_empty(NEW.economic_object_code, 'economic_object_code');
@@ -410,6 +411,10 @@ def update_triggers():
                     PERFORM choice_one_of(NEW.document_type_code,
                         {document_type_code},
                         'document_type_code');
+                    PERFORM not_empty(NEW.reporting_period, 'reporting_period');
+                    PERFORM choice_one_of(NEW.reporting_period,
+                        {reporting_period},
+                        'reporting_period');
                 END IF;
 
                 RETURN NEW;
@@ -424,6 +429,7 @@ def update_triggers():
                 intellectual_property_code = pg_array(contracts_choices['intellectual_property_code']),
                 standing_offer = pg_array(contracts_choices['standing_offer']),
                 document_type_code = pg_array(contracts_choices['document_type_code']),
+                reporting_period = pg_array(contracts_choices['reporting_period']),
             )
         )
 
