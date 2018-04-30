@@ -5,6 +5,7 @@ import sys
 import codecs
 import json
 from datetime import datetime, timedelta
+from decimal import Decimal, InvalidOperation
 
 from openpyxl.utils.datetime import from_excel
 
@@ -47,6 +48,13 @@ def norm_date(d):
             pass
     return from_excel(int(d))
 
+
+def norm_money(m):
+    if len(m.split(',')) == 2:
+        m = m.replace(',', '.')
+    return unicode(Decimal(m))
+
+
 for line in in_csv:
     try:
         bad_field, bad_date = 'contract_date', line['contract_date']
@@ -61,6 +69,27 @@ for line in in_csv:
         sys.stderr.write(u'{org} {pid} {field} "{date}"\n'.format(
             field=bad_field,
             date=bad_date,
+            pid=line['reference_number'],
+            org=line['owner_org']).encode('utf-8'))
+        continue
+
+    try:
+        bad_field = 'contract_value'
+        bad_value = line[bad_field]
+        if bad_value:
+            line[bad_field] = norm_money(bad_value)
+        bad_field = 'original_value'
+        bad_value = line[bad_field]
+        if bad_value:
+            line[bad_field] = norm_money(bad_value)
+        bad_field = 'amendment_value'
+        bad_value = line[bad_field]
+        if bad_value:
+            line[bad_field] = norm_money(bad_value)
+    except InvalidOperation:
+        sys.stderr.write(u'{org} {pid} {field} "{value}"\n'.format(
+            field=bad_field,
+            value=bad_value,
             pid=line['reference_number'],
             org=line['owner_org']).encode('utf-8'))
         continue
