@@ -23,8 +23,8 @@ DATE_FORMATS = [
     '%m-%d-%Y',
     '%y-%m-%d',
     '%Y/%m/%d',
-    '%m/%d/%Y',
-    '%d/%m/%Y',
+    '%m/%d/%Y', # ambiguous 1
+    '%d/%m/%Y', # ambiguous 2
     '%Y %m %d',
     ]
 
@@ -33,6 +33,13 @@ def norm_date(d):
     d = d.replace('.', '-').strip()
     if ' [this contract' in d.lower():
         d = d.lower().split(' [this contract')[0]
+    try:
+        datetime.strptime(d, '%m/%d/%Y')
+        datetime.strptime(d, '%d/%m/%Y')
+    except ValueError:
+        pass
+    else:
+        raise ValueError('ambiguous')
     for fmt in DATE_FORMATS:
         try:
             return datetime.strptime(d, fmt)
@@ -42,20 +49,22 @@ def norm_date(d):
 
 for line in in_csv:
     try:
-        bad_date = line['contract_date']
+        bad_field, bad_date = 'contract_date', line['contract_date']
         line['contract_date'] = norm_date(line['contract_date'])
-        bad_date = line['contract_period_start']
+        bad_field, bad_date = 'contract_period_start', line['contract_period_start']
         if bad_date:
             line['contract_period_start'] = norm_date(line['contract_period_start'])
-        bad_date = line['delivery_date']
+        bad_field, bad_date = 'delivery_date', line['delivery_date']
         if bad_date:
             line['delivery_date'] = norm_date(line['delivery_date'])
     except ValueError:
-        sys.stderr.write(u'{org} {pid} "{date}"\n'.format(
+        sys.stderr.write(u'{org} {pid} {field} "{date}"\n'.format(
+            field=bad_field,
             date=bad_date,
             pid=line['reference_number'],
             org=line['owner_org']).encode('utf-8'))
         continue
 
     line['exemption_code'] = line.pop('derogation_code')
+    line['reference_number'] = line['reference_number'].strip()
     out_csv.writerow(line)
