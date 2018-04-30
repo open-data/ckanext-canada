@@ -16,10 +16,24 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
+DATE_FORMATS = [
+    '%Y-%m-%d',
+    '%Y-%m-%d %H:%M:%S',
+    '%b-%d-%Y',
+    '%m-%d-%Y',
+    '%y-%m-%d',
+    '%Y/%m/%d',
+    '%m/%d/%Y',
+    '%d/%m/%Y',
+    '%Y %m %d',
+    ]
+
 def norm_date(d):
     "handle some creative thinking about what constitutes a date"
     d = d.replace('.', '-').strip()
-    for fmt in ['%Y-%m-%d', '%b-%d-%Y', '%m/%d/%Y']:
+    if ' [this contract' in d.lower():
+        d = d.lower().split(' [this contract')[0]
+    for fmt in DATE_FORMATS:
         try:
             return datetime.strptime(d, fmt)
         except ValueError:
@@ -28,14 +42,19 @@ def norm_date(d):
 
 for line in in_csv:
     try:
+        bad_date = line['contract_date']
         line['contract_date'] = norm_date(line['contract_date'])
-        line['contract_period_start'] = norm_date(line['contct_period_start'])
-        line['delivery_date'] = norm_date(line['delivery_date'])
+        bad_date = line['contract_period_start']
+        if bad_date:
+            line['contract_period_start'] = norm_date(line['contract_period_start'])
+        bad_date = line['delivery_date']
+        if bad_date:
+            line['delivery_date'] = norm_date(line['delivery_date'])
     except ValueError:
-        sys.stderr.write('{org} {pid} "{date}"\n'.format(
-            date=line['contract_date'],
+        sys.stderr.write(u'{org} {pid} "{date}"\n'.format(
+            date=bad_date,
             pid=line['reference_number'],
-            org=line['owner_org']))
+            org=line['owner_org']).encode('utf-8'))
         continue
 
     line['exemption_code'] = line.pop('derogation_code')
