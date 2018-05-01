@@ -94,6 +94,12 @@ for line in in_csv:
             org=line['owner_org']).encode('utf-8'))
         continue
 
-    line['exemption_code'] = line.pop('derogation_code')
     line['reference_number'] = line['reference_number'].strip()
+    if not line['reference_number']:
+        sys.stderr.write(u'{org} {pid} reference_number ""\n'.format(
+            pid=line['reference_number'],
+            org=line['owner_org']).encode('utf-8'))
+        continue
+
+    line['exemption_code'] = line.pop('derogation_code')
     out_csv.writerow(line)
