@@ -10,7 +10,6 @@ upload_info: Please note – if you have downloaded a template before MAY 10, 20
 portal_type: info
 collection: pd
 
-datastore_text_types: true
 
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
@@ -19,21 +18,28 @@ resources:
 
   - datastore_id: reference_number
     label: Reference Number
+    obligation: Mandatory
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: procurement_id
     label: Procurement Identification Number
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: vendor_name
     label: Vendor Name
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: contract_date
     label: Contract Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
     excel_column_width: 20
     extract_date_year: true
@@ -42,32 +48,43 @@ resources:
 
   - datastore_id: economic_object_code
     label: Economic Object Code
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
-    choices_file: choices/economic_object_code.json
+    excel_column_width: 30
 
   - datastore_id: description_en
     label: Description of Work English
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: description_fr
     label: Description of Work French
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 40
 
   - datastore_id: contract_period_start
     label: Contract Period Start Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: delivery_date
     label: Contract Period End Date or Delivery Date
+    obligation: Mandatory
+    excel_required: true
     datastore_type: date
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: contract_value
     label: Total Contract Value
+    obligation: Mandatory
+    excel_required: true
     datastore_type: money
     excel_column_width: 20
 
@@ -81,38 +98,47 @@ resources:
 
   - datastore_id: original_value
     label: Original Contract Value
+    obligation: Mandatory
+    excel_required: true
     datastore_type: money
     excel_column_width: 20
 
   - datastore_id: amendment_value
     label: Contract Amendment Value
+    obligation: Optional
     datastore_type: money
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: comments_en
     label: Comments English
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: comments_fr
     label: Comments French
+    obligation: Optional
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: additional_comments_en
     label: Additional Comments English
+    obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: additional_comments_fr
     label: Additional Comments French
+    obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: agreement_type_code
     label: Agreement Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 22
     choices:
       0:
         lookup: [NONE]
@@ -163,7 +189,7 @@ resources:
         - column: contract_date
           less_than: '2018-01-01'
           lookup: [AIT]
-        - loolup: [CFTA]
+        - lookup: [CFTA]
         en: CFTA
         fr: ALEC
       A:
@@ -309,8 +335,10 @@ resources:
 
   - datastore_id: commodity_type_code
     label: Commodity Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       G:
         en: Good
@@ -324,20 +352,26 @@ resources:
 
   - datastore_id: commodity_code
     label: Commodity Code
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
     label: Country of Origin
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure_code
     label: Solicitation Procedure
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       AC:
         en: Advance Contract Award Notice
@@ -354,8 +388,10 @@ resources:
 
   - datastore_id: limited_tendering_reason_code
     label: Limited Tendering Reason
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       "00":
         en: None
@@ -406,10 +442,12 @@ resources:
         en: Protection of Human, Animal, or Plant Life or Health
         fr: Protection de la vie ou de la santé des personnes, animaux, plantes
 
-  - datastore_id: derogation_code
-    label: Derogation
+  - datastore_id: exemption_code
+    label: Exemption
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices:
       "00":
         en: None
@@ -445,30 +483,13 @@ resources:
         fr: Les marchés de Transports Canada, du ministère des
             Communications, et de Pêches et Océans dans les catégories
             FSC 70, 74, 36
-      "07":
-        en: National security exemptions incl. oil purchases relating to
-            any strategic reserve requirements
-        fr: Les exceptions au titre de la sécurité nationale comprennent
-            les achats de pétrole liés aux exigences en matière de
-            réserve stratégique
-      "08":
-        en: National security exceptions include procurements made in
-            support of safeguarding nuclear materials or technology
-        fr: Les exceptions au titre de la sécurité nationale comprennent
-            les marchés passés pour protéger les matières ou la
-            technologie nucléaire
-      "09":
-        en: Under exceptional circumstances exclude a procurement from
-            the application of AIT, Chapter 5 for regional and economic
-            development purposes
-        fr: Dans des circonstances exceptionnelles, soustraire un marché
-            public à l’application du chapitre 5 de l’ACI à des fins de
-            développement économique et régional
 
   - datastore_id: aboriginal_business
     label: Procurement Strategy for Aboriginal Business Incidental Indicator
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       Y:
         en: "Yes"
@@ -479,8 +500,10 @@ resources:
 
   - datastore_id: intellectual_property_code
     label: Intellectual Property Indicator
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       A1:
         en: Crown owned – exception 1
@@ -523,8 +546,9 @@ resources:
 
   - datastore_id: potential_commercial_exploitation
     label: Potential for Commercial Exploitation
+    obligation: Optional
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 30
     choices:
       Y:
         en: "Yes"
@@ -535,8 +559,10 @@ resources:
 
   - datastore_id: former_public_servant
     label: Former Public Servant in receipt of a PSSA pension
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       Y:
         en: "Yes"
@@ -548,8 +574,9 @@ resources:
   - datastore_id: standing_offer
     label: Call-up or Contract against a Standing Offer or Supply
            Arrangement Agreement
+    obligation: Optional
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 40
     choices:
       PWSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
@@ -563,13 +590,16 @@ resources:
 
   - datastore_id: standing_offer_number
     label: Standing Offer or Supply Arrangement Number
+    obligation: Optional
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
   - datastore_id: document_type_code
     label: Instrument Type
+    obligation: Mandatory
+    excel_required: true
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
     choices:
       C:
         en: Contract
@@ -583,8 +613,12 @@ resources:
 
   - datastore_id: reporting_period
     label: Reporting Period
+    obligation: Mandatory
+    excel_required: true
+    format_type: YYYY-YYYY-QX
     datastore_type: text
-    excel_column_width: 10
+    excel_column_width: 20
+    choices_file: choices/quarter.yaml
 
   datastore_primary_key: [reference_number]
   datastore_indexes: ""
@@ -625,62 +659,19 @@ resources:
   resource_name: contracts-nil
   fields:
 
-  - datastore_id: year
-    label: Year
-    datastore_type: year
-    excel_column_width: 10
-    extract_date_year: true
-    choices:
-      2020: "2020-2021"
-      2019: "2019-2020"
-      2018: "2018-2019"
-      2017: "2017-2018"
-      2016: "2016-2017"
-      2015: "2015-2016"
-      2014: "2014-2015"
-      2013: "2013-2014"
-      2012: "2012-2013"
-      2011: "2011-2012"
-      2010: "2010-2011"
-      2009: "2009-2010"
-      2008: "2008-2009"
-      2007: "2007-2008"
-      2006: "2006-2007"
-      2005: "2005-2006"
-      2004: "2004-2005"
-      2003: "2003-2004"
-      2002: "2002-2003"
-      2001: "2001-2002"
-      2000: "2000-2001"
-      1999: "1999-2000"
-      1998: "1998-1999"
-      1997: "1997-1998"
-      1996: "1996-1997"
-      1995: "1995-1996"
-
-  - datastore_id: quarter
-    label: Quarter
+  - datastore_id: reporting_period
+    label: Reporting Period
+    excel_required: true
+    format_type: YYYY-YYYY-QX
     datastore_type: text
-    excel_column_width: 10
-    choices:
-      Q1:
-        en: April 1 - June 30
-        fr: 1 avril - 30 juin
-      Q2:
-        en: July 1 - September 30
-        fr: 1 juillet - 30 septembre
-      Q3:
-        en: October 1 - December 31
-        fr: 1 octobre - 31 décembre
-      Q4:
-        en: January 1 - March 31
-        fr: 1 janvier - 31 mars
+    excel_column_width: 20
+    choices_file: choices/quarter.yaml
 
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
-  datastore_primary_key: [year, quarter]
+  datastore_primary_key: [reporting_period]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -696,11 +687,9 @@ resources:
 
   examples:
     record:
-      year: 2016
-      quarter: Q2
+      reporting_period: 2016-2017-Q2
     filters:
-      year: 2016
+      reporting_period: 2016-2017-Q2
     filter_one:
-      year: 2016
-      quarter: Q2
-    sort: year desc, quarter desc
+      reporting_period: 2016-2017-Q2
+    sort: reporting_period desc

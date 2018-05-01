@@ -19,19 +19,19 @@ class TestDollarRangeFacet(object):
         assert_equal(
             dollar_range_facet('foo', [100, 500, 1000], 5000), {
                 'foo_range': u'2',
-                'foo_en': u'$1,000.00+',
-                'foo_fr': u'1\xa0000,00\xa0$ +'})
+                'foo_en': u'A: $1,000.00+',
+                'foo_fr': u'A: 1\xa0000,00\xa0$ +'})
 
     def test_bucket_0_bottom_edge(self):
         assert_equal(
             dollar_range_facet('foo', [100, 500, 1000], 100), {
                 'foo_range': u'0',
-                'foo_en': u'$100.00 - $499.99',
-                'foo_fr': u'100,00\xa0$ - 499,99\xa0$'})
-        
+                'foo_en': u'C: $100.00 - $499.99',
+                'foo_fr': u'C: 100,00\xa0$ - 499,99\xa0$'})
+
     def test_bucket_1_top_edge(self):
         assert_equal(
             dollar_range_facet('foo', [100, 500, 1000], 999.999), {
                 'foo_range': u'1',
-                'foo_en': u'$500.00 - $999.99',
-                'foo_fr': u'500,00\xa0$ - 999,99\xa0$'})
+                'foo_en': u'B: $500.00 - $999.99',
+                'foo_fr': u'B: 500,00\xa0$ - 999,99\xa0$'})

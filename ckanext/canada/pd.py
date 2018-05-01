@@ -390,7 +390,10 @@ def dollar_range_facet(key, facet_range, float_value):
     given by facet_range, in English and French
 
     E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
-    "$0 - $999.99", "$1,000 - $4,999.99", "$5,000 +" in English
+        "A: $5,000 +"
+        "B: $1,000 - $4,999.99"
+        "C: $0 - $999.99"
+    in English
     """
     last_fac = None
     for i, fac in enumerate(facet_range):
@@ -400,16 +403,17 @@ def dollar_range_facet(key, facet_range, float_value):
     else:
         return {
             key + u'_range': unicode(i),
-            key + u'_en': en_dollars(fac) + u'+',
-            key + u'_fr': fr_dollars(fac) + u' +'}
+            key + u'_en': u'A: ' + en_dollars(fac) + u'+',
+            key + u'_fr': u'A: ' + fr_dollars(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
+    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
     return {
         key + u'_range': unicode(i - 1),
-        key + u'_en': en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
-        key + u'_fr': fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+        key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
+        key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
 
 
 def sum_to_field(solrrec, key, value):
