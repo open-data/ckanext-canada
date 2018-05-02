@@ -643,7 +643,7 @@ resources:
     excel_column_width: 40
 
 
-  datastore_primary_key: [project_identifier]
+  datastore_primary_key: [project_identifier, amendment_number]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
