@@ -2013,6 +2013,23 @@ presets:
     display_snippet: date.html
     validators: scheming_required isodate
 
+# Field = Date Expires.
+# Add a Calendar control to select a Date.
+# {The date on which the dataset expires (YYYY-MM-DD)}
+- preset_name: canada_date_expires
+  values:
+    field_name: date_expires
+    label:
+      en: Date Expires
+      fr: Date de expiration
+    help_text:
+      en: The date on which the dataset expires (YYYY-MM-DD)
+      fr: Date à laquelle le jeu de données va expirer (AAAA-MM-JJ)
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: isodate
+
 # Field = Usage Condition Type - Organization Section Name English.
 # {The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
 # Field = Publisher - Organization Section Name French.
