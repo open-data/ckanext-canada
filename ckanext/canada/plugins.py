@@ -644,14 +644,12 @@ ckanext.canada:schemas/doc.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
+        return dict(((h, getattr(helpers, h)) for h in [
             'user_organizations',
-            'dataset_comments',
             'openness_score',
             'remove_duplicates',
             'get_license',
             'normalize_strip_accents',
-            'dataset_rating',
             'portal_url',
             'googleanalytics_id',
             'loop11_key',
@@ -665,7 +663,10 @@ ckanext.canada:schemas/doc.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date'
-            ])
+            ]),
+            dataset_comments=helpers.dataset_comments_obd,
+            dataset_rating=helpers.dataset_rating_obd,
+            )
 
     def before_map(self, map):
         map.connect(
