@@ -31,15 +31,13 @@ resources:
       en: Amendment Number
       fr: Numéro de modification
     description:
-      en: This field is populated user.   It is meant to identify amendments(sequentially).
+      en: This field is populated user. It is meant to identify amendments(sequentially). Use 0 for original records.
       fr: Ce champ est rempli par l’utilisateur. Il est conçu pour identifier les modifications (séquentiellement).
-    obligation:
-      en: Mandatory for amendments only
-      fr: Obligatoire pour les modifications seulement
+    obligation: Mandatory
+    excel_required: true
     format_type: Numeric only
     datastore_type: int
     excel_column_width: 25
-    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
 
   # 3.5 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -55,7 +53,7 @@ resources:
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
-    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
 
   # 3.7 Agreement Type (Formerly “Type”- 3.16)
   - datastore_id: agreement_type
