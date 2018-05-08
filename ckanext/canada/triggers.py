@@ -574,9 +574,8 @@ def update_triggers():
             BEGIN
                 PERFORM not_empty(NEW.project_identifier, 'project_identifier');
 
-                IF NEW.amendment_number IS NOT NULL OR
-                        NEW.amendment_date IS NOT NULL THEN
-                    PERFORM not_empty(NEW.amendment_number, 'amendment_number');
+                PERFORM not_empty(NEW.amendment_number, 'amendment_number');
+                IF NEW.amendment_number <> 0 THEN
                     PERFORM not_empty(NEW.amendment_date, 'amendment_date');
                 END IF;
 

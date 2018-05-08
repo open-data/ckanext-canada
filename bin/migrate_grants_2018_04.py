@@ -61,4 +61,5 @@ for line in in_csv:
         line.pop('comments_en') + '\t' + line.pop('additional_info_en')).strip()
     line['additional_information_fr'] = (
         line.pop('comments_fr') + '\t' + line.pop('additional_info_fr')).strip()
+    line['amendment_number'] = '0'
     out_csv.writerow(line)
