@@ -212,16 +212,20 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     orghash = hashlib.md5(org).hexdigest()
 
     def unique_id(r):
-        "return hash, friendly id"
+        "return hash, friendly id, partial id"
         s = orghash
         f = org
+        p = org
         if not pk:
             s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
             f += u'|' + unicode(r['_id'])
+            p += u'|' + unicode(r['_id'])
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
             f += u'|' + unicode(r[k])
-        return s, f
+            if u'|' not in p:
+                p += u'|' + unicode(r[k])
+        return s, f, p
 
     out = []
 
@@ -237,7 +241,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         unmatched = None
 
     for r in records:
-        unique, friendly = unique_id(r)
+        unique, friendly, partial = unique_id(r)
 
         shortform = None
         shortform_fr = None
@@ -250,6 +254,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         solrrec = {
             'id': unique,
             'unique_id': friendly,
+            'partial_id': partial,
             'org_name_code': org_detail['name'],
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
