@@ -223,6 +223,7 @@ def _update_records(records, org_detail, conn):
         record = dict(en_record, **fr_record)
         record['ss_language'] = 'combined'
         record['id'] = unique
+        record['date_clean'] = '%04d-%02d' % (year, month)
         out.append(record)
 
     try:
