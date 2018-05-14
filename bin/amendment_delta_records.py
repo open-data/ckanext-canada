@@ -70,7 +70,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
 
             iterator = enumerate(batch)
             i, prev = next(iterator)
-            prev[AMENDMENT_COLUMN] = 'original'
+            prev[AMENDMENT_COLUMN] = "%02d" % i
             out_csv.writerow(prev)
 
             for i, row in iterator:
