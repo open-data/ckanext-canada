@@ -6,9 +6,12 @@
 
   <div class="panel panel-info">
     <div class="panel-heading panel-title">
-    {{ _('Request an account') }}</div>
+    {{ _('Need an account') }}</div>
     <div class="panel-body">
-      <p>{{ _('If you would like to request an account for the Open Government Registry, please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with your name, department and email') | safe }}.</p>
+      <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
+      <p class="action">
+        <a class="btn btn-primary btn-xs" href="{{ h.url_for(controller='user', action='register') }}" role="button">{{ _('Request an Account') }}</a>
+      </p>
     </div>
   </div>
 
