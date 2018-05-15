@@ -31,18 +31,6 @@
   <div class="panel">
     {% trans %}login welcome text{% endtrans %}
 
-    <section class="alert alert-info">
-      <p>
-        {% trans %}
-          As part of moving open.canada.ca to new infrastructure we have implemented new password
-          standards for all accounts. You will need to use the
-          <a href="{{ reset_link }}">Reset password</a> link to regain access to
-          your account. If you no longer have access to the email associated with your account please
-          contact us at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>
-        {% endtrans %}
-      </p>
-    </section>
-
     {% block form %}
       {{ super() }}
     {% endblock %}
