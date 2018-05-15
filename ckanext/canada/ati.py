@@ -183,6 +183,7 @@ def _update_records(records, org_detail, conn):
                 r.get('disposition', '').split(' / ', 1)[0],
             'ss_ati_month_en': '{0:02d}'.format(month),
             'ss_ati_monthname_en': calendar.month_name[month],
+            'date_clean': '%04d-%02d' % (year, month),
             'ss_ati_number_of_pages_en': r.get('pages', ''),
             'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
             'ss_ati_year_en': year,
@@ -206,6 +207,7 @@ def _update_records(records, org_detail, conn):
                 r.get('disposition', '').split(' / ', 1)[-1],
             'ss_ati_month_fr': '{0:02d}'.format(month),
             'ss_ati_monthname_fr': MONTHS_FR[month],
+            'date_clean': '%04d-%02d' % (year, month),
             'ss_ati_number_of_pages_fr': r.get('pages', ''),
             'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'ss_ati_year_fr': year,
@@ -223,7 +225,6 @@ def _update_records(records, org_detail, conn):
         record = dict(en_record, **fr_record)
         record['ss_language'] = 'combined'
         record['id'] = unique
-        record['date_clean'] = '%04d-%02d' % (year, month)
         out.append(record)
 
     try:
