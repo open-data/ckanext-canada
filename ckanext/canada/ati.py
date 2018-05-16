@@ -222,9 +222,23 @@ def _update_records(records, org_detail, conn):
         out.append(en_record)
         out.append(fr_record)
 
-        record = dict(en_record, **fr_record)
-        record['ss_language'] = 'combined'
-        record['id'] = unique
+        record = dict(dict(en_record, **fr_record), **{
+            'ss_language': 'combined',
+            'id': unique,
+            'organization': org_detail['title'].split(' | ', 1)[0],
+            'organization_en': org_detail['title'].split(' | ', 1)[0],
+            'organization_fr': = org_detail['title'].split(' | ', 1)[-1],
+            'year': year,
+            'month': '{0:02d}'.format(month),
+            'request_number': r.get('request_number', ''),
+            'request_summary_en': r.get('summary_en', ''),
+            'request_summary_fr': r.get('summary_fr', ''),
+            'disposition': r.get('disposition', '').split(' / ', 1)[0],
+            'disposition_en': r.get('disposition', '').split(' / ', 1)[0],
+            'disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
+            'number_of_pages': r.get('pages', ''),
+            'e_mail_ati_recipient': ati_email,
+            })
         out.append(record)
 
     try:
