@@ -227,7 +227,7 @@ def _update_records(records, org_detail, conn):
             'id': unique,
             'organization': org_detail['title'].split(' | ', 1)[0],
             'organization_en': org_detail['title'].split(' | ', 1)[0],
-            'organization_fr': = org_detail['title'].split(' | ', 1)[-1],
+            'organization_fr': org_detail['title'].split(' | ', 1)[-1],
             'year': year,
             'month': '{0:02d}'.format(month),
             'request_number': r.get('request_number', ''),
