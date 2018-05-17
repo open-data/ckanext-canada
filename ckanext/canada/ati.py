@@ -231,6 +231,7 @@ def _update_records(records, org_detail, conn):
             'year': year,
             'month': '{0:02d}'.format(month),
             'request_number': r.get('request_number', ''),
+            'request_summary': r.get('summary_en', ''),
             'request_summary_en': r.get('summary_en', ''),
             'request_summary_fr': r.get('summary_fr', ''),
             'disposition': r.get('disposition', '').split(' / ', 1)[0],
