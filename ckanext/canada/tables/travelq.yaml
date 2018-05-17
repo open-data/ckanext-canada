@@ -298,6 +298,9 @@ resources:
       ref_number: "1980198"
     sort: date desc
 
+  solr_org_fields:
+  - ati_email
+
 
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
@@ -306,7 +309,7 @@ resources:
   - datastore_id: year
     label: Year
     datastore_type: year
-    excel_column_width: 10 
+    excel_column_width: 10
     extract_date_year: true
     choices:
       2020: "2020"

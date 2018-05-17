@@ -373,7 +373,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'revision_list',
             'package_revision_list',
             'user_list',
-            'resource_search',
             'user_activity_list',
             'member_list',
             'group_revision_list',
