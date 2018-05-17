@@ -169,8 +169,7 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'ati_email':
                 ati_email = e['value']
 
-        record = {
-            'ss_language': 'combined',
+        out.append({
             'id': unique,
             'organization': org_detail['title'].split(' | ', 1)[0],
             'organization_en': org_detail['title'].split(' | ', 1)[0],
@@ -194,8 +193,7 @@ def _update_records(records, org_detail, conn):
                 'Nothing to report this month'),
             'nothing_to_report_fr': ('' if 'request_number' in r else
                 u'Rien à signaler pour cette période'),
-            }
-        out.append(record)
+            })
 
     try:
         conn.add(out, commit=False)
