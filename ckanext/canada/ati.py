@@ -10,7 +10,6 @@ from _csv import Error as _csvError
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
-from solr.core import SolrException
 
 from ckanapi import LocalCKAN, NotFound
 from ckanext.recombinant.tables import (
@@ -195,8 +194,4 @@ def _update_records(records, org_detail, conn):
                 u'Rien à signaler pour cette période'),
             })
 
-    try:
-        conn.add(out, commit=False)
-    except SolrException, e:
-        print e.body
-        raise
+    conn.add(out, commit=False)
