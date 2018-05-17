@@ -228,8 +228,12 @@ def _update_records(records, org_detail, conn):
             'organization': org_detail['title'].split(' | ', 1)[0],
             'organization_en': org_detail['title'].split(' | ', 1)[0],
             'organization_fr': org_detail['title'].split(' | ', 1)[-1],
+            'org_shortform_en': shortform,
+            'org_shortform_fr': shortform_fr,
             'year': year,
             'month': '{0:02d}'.format(month),
+            'month_name_en': calendar.month_name[month],
+            'month_name_fr': MONTHS_FR[month],
             'request_number': r.get('request_number', ''),
             'request_summary': r.get('summary_en', ''),
             'request_summary_en': r.get('summary_en', ''),
@@ -239,6 +243,10 @@ def _update_records(records, org_detail, conn):
             'disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
             'number_of_pages': r.get('pages', ''),
             'e_mail_ati_recipient': ati_email,
+            'nothing_to_report_en': ('' if 'request_number' in r else
+                'Nothing to report this month'),
+            'nothing_to_report_fr': ('' if 'request_number' in r else
+                u'Rien à signaler pour cette période'),
             })
         out.append(record)
 
