@@ -13,7 +13,6 @@ from ckantoolkit import h, chained_action, side_effect_free
 import ckanapi
 from ckan.lib.base import c
 
-from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
@@ -351,15 +350,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
-    p.implements(p.IConfigurable)
     p.implements(p.IActions)
     p.implements(p.IValidators, inherit=True)
-
-    # IConfigurable
-
-    def configure(self, config):
-        jinja_globals = config['pylons.app_globals'].jinja_env.globals
-        jinja_globals['schema_description'] = schema_description
 
     # IActions
 

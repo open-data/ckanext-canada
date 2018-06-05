@@ -1,29 +1,3 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
-
-{#
-Render the field value for the given dataset or resource field object
-and client language, either from a language-specific field value or by
-splitting the value on '|' for single-choice options.
-
-Doesn't handle tag values, for those see tag_field and tag_vocab_field
-below.
-#}
-{%- macro field(f, pkg, client_lang) -%}
-  {%- if f.bilingual -%}
-    {% if client_lang == 'fr' -%}
-      {{- pkg[f.id + '_fra'] -}}
-    {%- else -%}
-      {{- pkg[f.id] -}}
-    {%- endif -%}
-  {%- else -%}
-    {%- if pkg[f.id] != None and ' | ' in pkg[f.id] -%}
-      {{- pkg[f.id].split(' | ')[1 if client_lang == 'fr' else 0] -}}
-    {%- else -%}
-      {{- pkg[f.id] -}}
-    {%- endif -%}
-  {%- endif -%}
-{%- endmacro -%}
-
 {#
 Strip any time from the date passed, returning only YYYY-MM-DD
 #}
@@ -41,27 +15,6 @@ Strip any time from the date passed, returning only YYYY-MM-DD
 
 {%- macro url_field(f, pkg) -%}
   <a href="{{- pkg[f.id] -}}">{{- pkg[f.id] -}}</a>
-{%- endmacro -%}
-
-{#
-Render the field value for a given dataset field id
-#}
-{%- macro field_id(id, pkg, client_lang) -%}
-  {{- field(schema_description.dataset_field_by_id[id], pkg, client_lang) -}}
-{%- endmacro -%}
-
-{#
-'en' -> 'eng'; 'fr' -> 'fra'
-#}
-{%- macro full_lang(client_lang) -%}
-  {{- 'fra' if client_lang == 'fr' else 'eng' -}}
-{%- endmacro -%}
-
-{#
-Render the field label for the given field object and client language
-#}
-{%- macro field_label(f, client_lang) -%}
-  {{- f.label[full_lang(client_lang)] -}}
 {%- endmacro -%}
 
 {#
@@ -122,31 +75,6 @@ Render a choice field where the choice['key'] is the value stored
     {% else %}
       {{ split_bilingual_field(pkg[f.id], client_lang) }}
     {% endif %}
-  {%- endif -%}
-{%- endmacro -%}
-
-{#
-Display a resource format in the correct language
-#}
-
-{%- macro resource_format(format, client_lang) -%}
-  {%- set format_field = schema_description.resource_field_by_id.format -%}
-  {%- if format in format_field.choices_by_key -%}
-    {{- format_field.choices_by_key[format][full_lang(client_lang)] -}}
-  {%- else -%}
-    {{- format -}}
-  {%- endif -%}
-{%- endmacro -%}
-
-{#
-Display a license name in the correct language
-#}
-{%- macro license_name(license_id, client_lang) -%}
-  {%- set license_field = schema_description.dataset_field_by_id.license_id -%}
-  {%- if license_id in license_field.choices_by_key -%}
-    {{- license_field.choices_by_key[license_id][full_lang(client_lang)] -}}
-  {%- else -%}
-    {{- license_id -}}
   {%- endif -%}
 {%- endmacro -%}
 
@@ -214,16 +142,8 @@ Render a file download size field with 'O' or 'B' appended for Octets/Bytes
 Search Facet Formatters 
 #}
 
-{%- macro res_label(format, lang) -%}
-  {{- resource_format(format.name, lang) -}}
-{%- endmacro -%}
-
 {%- macro subject_label(subject, lang) -%}
   {{- split_subject_field(subject.name, lang) -}}
-{%- endmacro -%}
-
-{%- macro license_lookup(license, lang) -%}
-  {{- license_name(license.name, lang) -}}
 {%- endmacro -%}
 
 {% macro active_filter_button(h, field, value, extras, preset_choices) %}
