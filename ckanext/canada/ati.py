@@ -10,7 +10,6 @@ from _csv import Error as _csvError
 import paste.script
 from pylons import config
 from ckan.lib.cli import CkanCommand
-from solr.core import SolrException
 
 from ckanapi import LocalCKAN, NotFound
 from ckanext.recombinant.tables import (
@@ -169,66 +168,30 @@ def _update_records(records, org_detail, conn):
             elif e['key'] == 'ati_email':
                 ati_email = e['value']
 
-        # don't ask why, just doing it the way it was done before
-        en_record = {
-            'bundle': 'ati_summaries',
-            'hash': 'avexlb',
-            'id': unique + 'en',
-            'i18n_ts_en_ati_request_number': r.get('request_number', ''),
-            'i18n_ts_en_ati_request_summary': r.get('summary_en', ''),
-            'ss_ati_contact_information_en':
-                "http://open.canada.ca/data/en/organization/about/{0}"
-                .format(org),
-            'ss_ati_disposition_en':
-                r.get('disposition', '').split(' / ', 1)[0],
-            'ss_ati_month_en': '{0:02d}'.format(month),
-            'ss_ati_monthname_en': calendar.month_name[month],
-            'date_clean': '%04d-%02d' % (year, month),
-            'ss_ati_number_of_pages_en': r.get('pages', ''),
-            'ss_ati_organization_en': org_detail['title'].split(' | ', 1)[0],
-            'ss_ati_year_en': year,
-            'ss_ati_org_shortform_en': shortform,
-            'ss_ati_org_name_code': org,
-            'ss_ati_contact_email_en': ati_email,
-            'ss_ati_nothing_to_report_en': ('' if 'request_number' in r else
+        out.append({
+            'id': unique,
+            'organization': org_detail['title'].split(' | ', 1)[0],
+            'organization_en': org_detail['title'].split(' | ', 1)[0],
+            'organization_fr': org_detail['title'].split(' | ', 1)[-1],
+            'org_shortform_en': shortform,
+            'org_shortform_fr': shortform_fr,
+            'year': year,
+            'month': '{0:02d}'.format(month),
+            'month_name_en': calendar.month_name[month],
+            'month_name_fr': MONTHS_FR[month],
+            'request_number': r.get('request_number', ''),
+            'request_summary': r.get('summary_en', ''),
+            'request_summary_en': r.get('summary_en', ''),
+            'request_summary_fr': r.get('summary_fr', ''),
+            'disposition': r.get('disposition', '').split(' / ', 1)[0],
+            'disposition_en': r.get('disposition', '').split(' / ', 1)[0],
+            'disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
+            'number_of_pages': r.get('pages', ''),
+            'e_mail_ati_recipient': ati_email,
+            'nothing_to_report_en': ('' if 'request_number' in r else
                 'Nothing to report this month'),
-            'ss_language': 'en',
-            }
-        fr_record = {
-            'bundle': 'ati_summaries',
-            'hash': 'avexlb',
-            'id': unique + 'fr',
-            'i18n_ts_fr_ati_request_number': r.get('request_number', ''),
-            'i18n_ts_fr_ati_request_summary': r.get('summary_fr', ''),
-            'ss_ati_contact_information_fr':
-                "http://ouvert.canada.ca/data/fr/organization/about/{0}"
-                .format(org),
-            'ss_ati_disposition_fr':
-                r.get('disposition', '').split(' / ', 1)[-1],
-            'ss_ati_month_fr': '{0:02d}'.format(month),
-            'ss_ati_monthname_fr': MONTHS_FR[month],
-            'date_clean': '%04d-%02d' % (year, month),
-            'ss_ati_number_of_pages_fr': r.get('pages', ''),
-            'ss_ati_organization_fr': org_detail['title'].split(' | ', 1)[-1],
-            'ss_ati_year_fr': year,
-            'ss_ati_org_shortform_fr': shortform_fr,
-            'ss_ati_org_name_code': org,
-            'ss_ati_contact_email_fr': ati_email,
-            'ss_ati_nothing_to_report_fr': ('' if 'request_number' in r else
+            'nothing_to_report_fr': ('' if 'request_number' in r else
                 u'Rien à signaler pour cette période'),
-            'ss_language': 'fr',
-            }
+            })
 
-        out.append(en_record)
-        out.append(fr_record)
-
-        record = dict(en_record, **fr_record)
-        record['ss_language'] = 'combined'
-        record['id'] = unique
-        out.append(record)
-
-    try:
-        conn.add(out, commit=False)
-    except SolrException, e:
-        print e.body
-        raise
+    conn.add(out, commit=False)
