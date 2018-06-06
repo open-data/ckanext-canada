@@ -105,7 +105,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 42
+    excel_column_width: 20
     choices:
       M:
         en: Minister
@@ -144,7 +144,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 12
+    excel_column_width: 20
     choices:
 
       I:
@@ -215,7 +215,7 @@ resources:
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
-      fgColor: FF002C54
+      fgColor: FF3d4647
       patternType: solid
     Font:
       color: FFFFFF
@@ -223,7 +223,7 @@ resources:
   excel_header_style:
     PatternFill:
       patternType: solid
-      fgColor: FFEFBD09
+      fgColor: FF84acb6
   excel_error_background_color: "CD7213"
   excel_required_border_color: "CD7213"
 
