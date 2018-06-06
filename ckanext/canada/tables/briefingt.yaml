@@ -136,7 +136,7 @@ resources:
       en: Action Required
       fr: Mesure requise
     description:
-      en: The Action Required is the purpose of the briefing note; For Information: If the item is being routed solely for the information of the addressee; For Approval/Signature: If the item is for approval or signature only of the addressee; For Decision: If the item requests the addressee make a decisive decision
+      en: "The Action Required is the purpose of the briefing note; For Information: If the item is being routed solely for the information of the addressee; For Approval/Signature: If the item is for approval or signature only of the addressee; For Decision: If the item requests the addressee make a decisive decision"
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -211,7 +211,7 @@ resources:
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: service_id_number
+  datastore_primary_key: tracking_number
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
