@@ -3561,9 +3561,13 @@ presets:
         fr: Cheyenne
       value: chy
     - label:
-        en: Chinese
-        fr: Chinois
-      value: zh
+        en: Chinese (Simplified)
+        fr: Chinois (simplifié)
+      value: zh-cn
+    - label:
+        en: Chinese (Traditional)
+        fr: Chinois (traditionnel)
+      value: zh-hk
     - label:
         en: Chipewyan
         fr: Chipewyan
@@ -3661,6 +3665,10 @@ presets:
         fr: Coréen
       value: ko
     - label:
+        en: Kurdish
+        fr: Kurde
+      value: ku
+    - label:
         en: Latin
         fr: Latin
       value: la
@@ -3712,6 +3720,10 @@ presets:
         en: Philippine (Other)
         fr: Philippines, autres langues
       value: phi
+    - label:
+        en: Plains Cree
+        fr: Cris des plaines
+      value: crk
     - label:
         en: Polish
         fr: Polonais
@@ -3781,9 +3793,17 @@ presets:
         fr: thaï
       value: th
     - label:
+        en: Tigrinya
+        fr: Tigrigna
+      value: ti
+    - label:
         en: Turkish
         fr: Turc
       value: tr
+    - label:
+        en: Ukrainian
+        fr: Ukrainien
+      value: uk
     - label:
         en: Undetermined
         fr: Indéterminée
