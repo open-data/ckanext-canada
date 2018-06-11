@@ -1928,23 +1928,34 @@ presets:
       replaces: [daily]
       value: P1D
     - label:
+        en: Three times per week
+        fr: Trois fois par semaine
+      value: P0.33W
+    - label:
+        en: Two times per week
+        fr: Deux fois par semaine
+      value: P0.5W
+    - label:
         en: Weekly
         fr: Hebdomadaire
       replaces: [weekly]
       value: P1W
     - label:
-        en: Fortnightly
+        en: Every two weeks
         fr: Quinzomadaire
       replaces: [fortnightly]
       value: P2W
+    - label:
+        en: Twice monthly
+        fr: Bimensuel
     - label:
         en: Monthly
         fr: Mensuel
       replaces: [monthly]
       value: P1M
     - label:
-        en: Semimonthly
-        fr: Bimensuel
+        en: Every two months
+        fr: Bimestriel
       replaces: [semimonthly]
       value: P2M
     - label:
@@ -1952,6 +1963,10 @@ presets:
         fr: Trimestriel
       replaces: [quarterly]
       value: P3M
+    - label:
+        en: Every four months
+        fr: Trois fois par année
+      value: P4M
     - label:
         en: Biannually
         fr: Semestriel
@@ -1962,6 +1977,18 @@ presets:
         fr: Annuel
       replaces: [annually]
       value: P1Y
+    - label:
+        en: Every two years
+        fr: Biennal
+      value: P2Y
+    - label:
+        en: Every three years
+        fr: Triennal
+      value: P3Y
+    - label:
+        en: Every five years
+        fr: Quinquennal
+      value: P4Y
     - label:
         en: Irregular
         fr: Irrégulier
