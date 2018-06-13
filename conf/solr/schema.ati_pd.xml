@@ -51,7 +51,6 @@
         </analyzer>
     </fieldType>
 
-    <!-- FIXME: use correct stemming for French fields -->
     <fieldType name="text_fr" class="solr.TextField" positionIncrementGap="100">
         <analyzer type="index">
             <tokenizer class="solr.WhitespaceTokenizerFactory"/>
@@ -92,6 +91,7 @@
     <!-- catchall field, containing all other searchable text fields (implemented
          via copyField further on in this schema  -->
     <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
+    <field name="text_fr" type="text_fr" indexed="true" stored="false" multiValued="true"/>
 
     <dynamicField name="multi_*" type="string" indexed="true"  stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="true"/>
@@ -102,5 +102,6 @@
 <solrQueryParser defaultOperator="AND"/>
 
 <copyField source="*_en" dest="text"/>
+<copyField source="*_fr" dest="text_fr"/>
 
 </schema>
