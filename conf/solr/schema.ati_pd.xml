@@ -93,7 +93,8 @@
     <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
     <field name="text_fr" type="text_fr" indexed="true" stored="false" multiValued="true"/>
 
-    <dynamicField name="multi_*" type="string" indexed="true"  stored="true" multiValued="true"/>
+    <dunamicField name="doubl_*" type="double" indexed="true" stored="true" />
+    <dynamicField name="multi_*" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="true"/>
 </fields>
 
