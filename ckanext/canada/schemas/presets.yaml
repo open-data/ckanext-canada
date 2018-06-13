@@ -84,6 +84,10 @@ presets:
         en: Parliamentary Committee Binders
         fr: Dossiers des comités parlementaires
       value: parliament_committee
+    - label:
+        en: Government of Alberta
+        fr: Gouvernement de l'Alberta
+      value: alberta
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
