@@ -18,6 +18,8 @@ import codecs
 from datetime import datetime
 import requests
 
+BATCH_SIZE = 1000
+
 try:
     strings, deepldb, source_lang, target_lang, auth_key = sys.argv[1:]
 except ValueError:
@@ -32,19 +34,19 @@ header = (
     'source_lang',
     'target_lang')
 
-def deepl_query(s):
+def deepl_query(b):
     resp = requests.post('https://api.deepl.com/v1/translate', {
         'auth_key': auth_key,
         'source_lang': source_lang,
         'target_lang': target_lang,
-        'text': s}).json()['translations'][0]
-    return (
+        'text': b}).json()['translations']
+    return [(
         s,
-        resp['text'],
+        r['text'],
         unicode(datetime.utcnow()),
-        resp['detected_source_language'],
+        r['detected_source_language'],
         source_lang,
-        target_lang)
+        target_lang) for r, s in zip(resp, b)]
 
 seen = set()
 try:
@@ -68,6 +70,7 @@ def update_stats(found, added):
 
 update_stats(0, 0)
 
+batch = []
 with open(deepldb, 'a') as out_f:
     out = unicodecsv.writer(out_f)
     with open(strings) as in_f:
@@ -76,7 +79,14 @@ with open(deepldb, 'a') as out_f:
             if s.lower() in seen:
                 update_stats(1, 0)
                 continue
-            out.writerow(deepl_query(s))
-            update_stats(0, 1)
+            batch.append(s)
+
+            if len(batch) >= BATCH_SIZE:
+                out.writerows(deepl_query(batch))
+                update_stats(0, len(batch))
+                del batch[:]
+        if batch:
+            out.writerows(deepl_query(batch))
+            update_stats(0, len(batch))
 
 sys.stderr.write('\n')
