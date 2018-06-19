@@ -33,7 +33,7 @@ header = (
     'target_lang')
 
 def deepl_query(s):
-    resp = requests.get('https://api.deepl.com/v1/translate', {
+    resp = requests.post('https://api.deepl.com/v1/translate', {
         'auth_key': auth_key,
         'source_lang': source_lang,
         'target_lang': target_lang,
