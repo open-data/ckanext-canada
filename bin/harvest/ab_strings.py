@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 """
-read json lines alberta metadata on stdin, output strings for translation on stdout (one per line)
+read json lines alberta metadata on stdin, output strings for translation on stdout
+as csv with no header
 
 Strings are taken from fields we translate: title, notes, tags, resource.name
 """
@@ -11,11 +12,13 @@ import unicodecsv
 import sys
 import json
 
+out = unicodecsv.writer(sys.stdout)
+
 seen = set()
 def w(t):
     t = t.strip()
     if t and t.lower() not in seen:
-        print t.encode('utf-8')
+        out.writerow([t])
         seen.add(t.lower())
 
 for l in sys.stdin:
