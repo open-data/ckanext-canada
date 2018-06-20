@@ -31,7 +31,7 @@ header = (
 
 xlat = {}
 def x(t):
-    return xlat[t.lower()]
+    return xlat[t.lower().strip()]
 
 with open(deepldb) as f:
     reader = unicodecsv.reader(f)
@@ -39,7 +39,7 @@ with open(deepldb) as f:
     h = tuple(c.encode('utf-8') for c in h)
     assert h == header, ('wrong header', h, header)
     for src, txt, ts, dsl, sl, tl in reader:
-        xlat[src.lower()] = txt
+        xlat[src.lower().strip()] = txt
 
 ORG_FR = {
     u"Advanced Education": u"Ministère de l'Enseignement postsecondaire",
@@ -101,33 +101,33 @@ SUBJECT = {
 AUDIENCE = {
     u'aboriginal peoples': u'aboriginal_peoples',
     u'entrepreneur/self-employed': u'business',
-    u'children ': u'children',
-    u'educators ': u'educators',
+    u'children': u'children',
+    u'educators': u'educators',
     u'employers': u'employers',
-    u'funding applicants ': u'funding_applicants',
-    u'general public ': u'general_public',
+    u'funding applicants': u'funding_applicants',
+    u'general public': u'general_public',
     u'artists': u'general_public',
     u'caregivers': u'general_public',
     u'consumers': u'general_public',
     u'employees': u'general_public',
-    u'health care professionals ': u'general_public',
+    u'health care professionals': u'general_public',
     u'legal and law enforcement professionals': u'general_public',
     u'lower-income earners': u'general_public',
-    u'government ': u'government',
+    u'government': u'government',
     u'immigrants': u'immigrants',
     u'job seekers': u'job_seekers',
     u'media': u'media',
     u'nonprofit/ voluntary organization': u'nongovernmental_organizations',
     u'parents': u'parents',
-    u'persons with disabilities ': u'persons_with_disabilities',
+    u'persons with disabilities': u'persons_with_disabilities',
     u'rural residents': u'rural_community',
-    u'farmers ': u'rural_community',
+    u'farmers': u'rural_community',
     u'seniors': u'seniors',
     u'scientists': u'scientists',
     u'researchers': u'scientists',
     u'students': u'students',
     u'travellers': u'travellers',
-    u'visitors to Alberta': u'visitors_to_canada',
+    u'visitors to alberta': u'visitors_to_canada',
     u'women': u'women',
     u'youth': u'youth',
 }
@@ -194,56 +194,59 @@ FORMAT = {
     'XLS': 'XLS',
     'XLSX': 'XLSX',
     'XML': 'XML',
+    'ZIP': 'ZIP',
 }
 
-out = open(canada_ab, 'w')
+out = open(canada_ab, 'wb')
 
 for l in open(opendata_ab):
     i = json.loads(l)
-    json.dump({
-        'type': 'dataset',
-        'collection': 'alberta',
-        'id': i['id'],
-        'name': i['id'],
-        'metadata_created': i['metadata_created'],
-        'portal_release_date': i['metadata_created'],
-        'last_updated': i['last_updated'],
-        'title_translated': {
-            'en': i['title'],
-            'fr-t-en': x(i['title'])},
-        'org_title_at_publication': {
-            'en': i['organization']['title'],
-            'fr': ORG_FR[i['organization']['title']]},
-        'owner_org': 'ab',
-        'maintainer_email': i['maintainer_email'],
-        'notes_translated': {
-            'en': i['notes'],
-            'fr-t-en': x(i['notes'])},
-        'tags': {
-            'en': [tag['name'] for tag in i['tags']],
-            'fr-t-en': [x(tag['name']) for tag in i['tags']]},
-        'subject': [SUBJECT[t.lower()] for t in i['topic']],
-        'audience': [AUDIENCE[a] for a in i['audience']],
-        'jurisdiction': 'provincial',
-        'created': i['date_created'],
-        'date_published': i['date_published'],
-        'date_modified': i['date_modified'],
-        'frequency': FREQUENCY[i['updatefrequency']],
-        'program_page_url': {
-            'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']},
-        'license_id': LICENSE_ID[i['license_id']],
-        'resources': [
-            {
-                'id': r['id'],
-                'name_translated': {
-                    'en': r['name'],
-                    'fr-t-en': x(r['name'])},
-                'date_published': r['created'],
-                'resource_type': RESOURCE_TYPE[r['resource_type']],
-                'format': FORMAT[r['format']],
-                'size': r['size'],
-                'language': ['en'],
-                'url': r['url'],
-            } for r in i['resources']
-        ]
-    }, out, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+    try:
+        out.write((json.dumps({
+            'type': 'dataset',
+            'collection': 'alberta',
+            'id': i['id'],
+            'name': i['id'],
+            'metadata_created': i['metadata_created'],
+            'portal_release_date': i['metadata_created'],
+            'title_translated': {
+                'en': i['title'],
+                'fr-t-en': x(i['title'])},
+            'org_title_at_publication': {
+                'en': i['organization']['title'],
+                'fr': ORG_FR[i['organization']['title']]},
+            'owner_org': 'ab',
+            'maintainer_email': i['maintainer_email'],
+            'notes_translated': {
+                'en': i['notes'],
+                'fr-t-en': x(i['notes'])},
+            'tags': {
+                'en': [tag['name'] for tag in i['tags']],
+                'fr-t-en': [x(tag['name']) for tag in i['tags']]},
+            'subject': [SUBJECT[t.lower()] for t in i['topic']],
+            'audience': [AUDIENCE[a.lower()] for a in i['audience']],
+            'jurisdiction': 'provincial',
+            'created': i['date_created'],
+            'date_modified': i['date_modified'],
+            'frequency': FREQUENCY[i['updatefrequency']],
+            'program_page_url': {
+                'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']},
+            'license_id': LICENSE_ID[i['license_id']],
+            'resources': [
+                {
+                    'id': r['id'],
+                    'name_translated': {
+                        'en': r['name'],
+                        'fr-t-en': x(r['name'])},
+                    'date_published': r['created'],
+                    'resource_type': RESOURCE_TYPE[r['resource_type']],
+                    'format': FORMAT[r['format']],
+                    'size': r['size'],
+                    'language': ['en'],
+                    'url': r['url'],
+                } for r in i['resources']
+            ]
+        }, sort_keys=True, ensure_ascii=False, separators=(',', ':')) + u'\n')
+            .encode('utf-8'))
+    except KeyError as e:
+        sys.stderr.write('not found: ' + e.args[0] + '\n')
