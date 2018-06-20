@@ -84,6 +84,10 @@ presets:
         en: Parliamentary Committee Binders
         fr: Dossiers des comités parlementaires
       value: parliament_committee
+    - label:
+        en: Government of Alberta
+        fr: Gouvernement de l'Alberta
+      value: alberta
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -1928,23 +1932,35 @@ presets:
       replaces: [daily]
       value: P1D
     - label:
+        en: Three times per week
+        fr: Trois fois par semaine
+      value: P0.33W
+    - label:
+        en: Two times per week
+        fr: Deux fois par semaine
+      value: P0.5W
+    - label:
         en: Weekly
         fr: Hebdomadaire
       replaces: [weekly]
       value: P1W
     - label:
-        en: Fortnightly
+        en: Every two weeks
         fr: Quinzomadaire
       replaces: [fortnightly]
       value: P2W
+    - label:
+        en: Twice monthly
+        fr: Bimensuel
+      value: P0.5M
     - label:
         en: Monthly
         fr: Mensuel
       replaces: [monthly]
       value: P1M
     - label:
-        en: Semimonthly
-        fr: Bimensuel
+        en: Every two months
+        fr: Bimestriel
       replaces: [semimonthly]
       value: P2M
     - label:
@@ -1952,6 +1968,10 @@ presets:
         fr: Trimestriel
       replaces: [quarterly]
       value: P3M
+    - label:
+        en: Every four months
+        fr: Trois fois par année
+      value: P4M
     - label:
         en: Biannually
         fr: Semestriel
@@ -1962,6 +1982,18 @@ presets:
         fr: Annuel
       replaces: [annually]
       value: P1Y
+    - label:
+        en: Every two years
+        fr: Biennal
+      value: P2Y
+    - label:
+        en: Every three years
+        fr: Triennal
+      value: P3Y
+    - label:
+        en: Every five years
+        fr: Quinquennal
+      value: P4Y
     - label:
         en: Irregular
         fr: Irrégulier
@@ -3534,9 +3566,13 @@ presets:
         fr: Cheyenne
       value: chy
     - label:
-        en: Chinese
-        fr: Chinois
-      value: zh
+        en: Chinese (Simplified)
+        fr: Chinois (simplifié)
+      value: zh-cn
+    - label:
+        en: Chinese (Traditional)
+        fr: Chinois (traditionnel)
+      value: zh-hk
     - label:
         en: Chipewyan
         fr: Chipewyan
@@ -3634,6 +3670,10 @@ presets:
         fr: Coréen
       value: ko
     - label:
+        en: Kurdish
+        fr: Kurde
+      value: ku
+    - label:
         en: Latin
         fr: Latin
       value: la
@@ -3685,6 +3725,10 @@ presets:
         en: Philippine (Other)
         fr: Philippines, autres langues
       value: phi
+    - label:
+        en: Plains Cree
+        fr: Cris des plaines
+      value: crk
     - label:
         en: Polish
         fr: Polonais
@@ -3754,9 +3798,17 @@ presets:
         fr: thaï
       value: th
     - label:
+        en: Tigrinya
+        fr: Tigrigna
+      value: ti
+    - label:
         en: Turkish
         fr: Turc
       value: tr
+    - label:
+        en: Ukrainian
+        fr: Ukrainien
+      value: uk
     - label:
         en: Undetermined
         fr: Indéterminée

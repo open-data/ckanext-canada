@@ -18,7 +18,6 @@ import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
-from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada.metadata_xform import metadata_xform
 from ckanext.canada.triggers import update_triggers
 
@@ -473,17 +472,6 @@ def _trim_package(pkg):
     for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
-    for name, lang, field in schema_description.dataset_field_iter():
-        if field['type'] == 'date':
-            try:
-                pkg[name] = str(isodate(pkg[name], None)) if pkg.get(name) else ''
-            except Invalid:
-                pass # not for us to fail validation
-        elif field['type'] == 'url':
-            if not pkg.get(name): # be consistent about what an empty url is
-                pkg[name] = ""
-        elif field['type'] == 'fixed' and name in pkg:
-            del pkg[name]
 
 
 @contextmanager
