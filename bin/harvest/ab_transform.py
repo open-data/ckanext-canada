@@ -211,7 +211,7 @@ for l in open(opendata_ab):
             'portal_release_date': i['metadata_created'],
             'title_translated': {
                 'en': i['title'],
-                'fr-t-en': x(i['title'])},
+                'fr': x(i['title'])},
             'org_title_at_publication': {
                 'en': i['organization']['title'],
                 'fr': ORG_FR[i['organization']['title']]},
@@ -219,25 +219,29 @@ for l in open(opendata_ab):
             'maintainer_email': i['maintainer_email'],
             'notes_translated': {
                 'en': i['notes'],
-                'fr-t-en': x(i['notes'])},
-            'tags': {
+                'fr': x(i['notes'])},
+            'keywords': {
                 'en': [tag['name'] for tag in i['tags']],
-                'fr-t-en': [x(tag['name']) for tag in i['tags']]},
+                'fr': [x(tag['name']) for tag in i['tags']]},
             'subject': [SUBJECT[t.lower()] for t in i['topic']],
             'audience': [AUDIENCE[a.lower()] for a in i['audience']],
             'jurisdiction': 'provincial',
             'created': i['date_created'],
             'date_modified': i['date_modified'],
+            'date_published': i['date_created'],
             'frequency': FREQUENCY[i['updatefrequency']],
             'program_page_url': {
                 'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']},
             'license_id': LICENSE_ID[i['license_id']],
+            'restrictions': 'unrestricted',
+            'ready_to_publish': 'true',
+            'imso_approval': 'true',
             'resources': [
                 {
                     'id': r['id'],
                     'name_translated': {
                         'en': r['name'],
-                        'fr-t-en': x(r['name'])},
+                        'fr': x(r['name'])},
                     'date_published': r['created'],
                     'resource_type': RESOURCE_TYPE[r['resource_type']],
                     'format': FORMAT[r['format']],
