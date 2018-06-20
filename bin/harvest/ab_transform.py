@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding: UTF-8
 
 """
 Usage: ab_transform.py opendata_ab.jsonl deepldb.csv canada_ab.jsonl
@@ -8,18 +9,25 @@ from deepldb.csv to transform to overwrite canada_ab.jsonl in canada metadata
 schema
 """
 
+import codecs
 import unicodecsv
 import sys
 import json
-
-from . import deepl
-
 
 try:
     opendata_ab, deepldb, canada_ab = sys.argv[1:]
 except ValueError:
     sys.stderr.write(__doc__)
     sys.exit(1)
+
+header = (
+    codecs.BOM_UTF8 + 'source',
+    'text',
+    'timestamp',
+    'detected_source_language',
+    'source_lang',
+    'target_lang')
+
 
 xlat = {}
 def x(t):
@@ -29,7 +37,7 @@ with open(deepldb) as f:
     reader = unicodecsv.reader(f)
     h = next(reader)
     h = tuple(c.encode('utf-8') for c in h)
-    assert h == deepl.header, ('wrong header', h, header)
+    assert h == header, ('wrong header', h, header)
     for src, txt, ts, dsl, sl, tl in reader:
         xlat[src.lower()] = txt
 
@@ -60,6 +68,134 @@ ORG_FR = {
     u"Treasury Board and Finance": u"Conseil du Trésor et Finances",
 }
 
+SUBJECT = {
+    u"arts, Culture and History": u"arts_music_literature",
+    u"agriculture": u"agriculture",
+    u"economy and finance": u"economics_and_industry",
+    u"business and industry": u"economics_and_industry",
+    u"education - early childhood to grade 12": u"education_and_training",
+    u"education - post - secondary and skills training": u"education_and_training",
+    u"education - adult and continuing": u"education_and_training",
+    u"government": u"government_and_politics",
+    u"interprovincial and international affairs": u"government_and_politics",
+    u"health and wellness": u"health_and_safety",
+    u"safety and emergency services": u"health_and_safety",
+    u"employment and labour": u"labour",
+    u"laws and justice": u"law",
+    u"environment": u"nature_and_environment",
+    u"tourism and parks": u"nature_and_environment",
+    u"energy and natural resources": u"nature_and_environment",
+    u"persons with disabilities": u"persons",
+    u"Aboriginal Peoples": u"persons",
+    u"families and children": u"persons",
+    u"immigration and migration": u"persons",
+    u"seniors": u"persons",
+    u"society and communities": u"society_and_culture",
+    u"housing and utilities": u"society_and_culture",
+    u"population and demography": u"society_and_culture",
+    u"sports and recreation": u"society_and_culture",
+    u"science, technology and innovation": u"science_and_technology",
+    u"roads, driving and transport": u"transport",
+}
+
+AUDIENCE = {
+    u'aboriginal peoples': u'aboriginal_peoples',
+    u'entrepreneur/self-employed': u'business',
+    u'children ': u'children',
+    u'educators ': u'educators',
+    u'employers': u'employers',
+    u'funding applicants ': u'funding_applicants',
+    u'general public ': u'general_public',
+    u'artists': u'general_public',
+    u'caregivers': u'general_public',
+    u'consumers': u'general_public',
+    u'employees': u'general_public',
+    u'health care professionals ': u'general_public',
+    u'legal and law enforcement professionals': u'general_public',
+    u'lower-income earners': u'general_public',
+    u'government ': u'government',
+    u'immigrants': u'immigrants',
+    u'job seekers': u'job_seekers',
+    u'media': u'media',
+    u'nonprofit/ voluntary organization': u'nongovernmental_organizations',
+    u'parents': u'parents',
+    u'persons with disabilities ': u'persons_with_disabilities',
+    u'rural residents': u'rural_community',
+    u'farmers ': u'rural_community',
+    u'seniors': u'seniors',
+    u'scientists': u'scientists',
+    u'researchers': u'scientists',
+    u'students': u'students',
+    u'travellers': u'travellers',
+    u'visitors to Alberta': u'visitors_to_canada',
+    u'women': u'women',
+    u'youth': u'youth',
+}
+
+FREQUENCY = {
+    u'Annual': u'P1Y',
+    u'Biennial': u'P2Y',
+    u'Daily': u'P1D',
+    u'Every 2 weeks': u'P2W',
+    u'Every 5 years': u'P5Y',
+    u'Every 5 Years': u'P5Y',
+    u'Irregular': u'irregular',
+    u'Monthly': u'P1M',
+    u'Once': u'not_planned',
+    u'Other': u'unknown',
+    u'Quarterly': u'P3M',
+    u'Semi-annual': u'P6M',
+    u'Weekly': u'P1W',
+}
+
+LICENSE_ID = {
+    'OGLA': 'ab-ogla',
+    'QPTU': 'ab-qptu',
+}
+
+RESOURCE_TYPE = {
+    None: 'dataset',
+    'url': 'dataset',
+}
+
+FORMAT = {
+    '': 'other',
+    '6GB zipped Esri file geodatabase (FGDB)': 'FGDB/GDB',
+    'application/vnd.ms-excel (xlsx)': 'XLSX',
+    'application/x-msi': 'other',
+    'beyond 20/20': 'other',
+    'Beyond 20/20': 'other',
+    'CSV': 'CSV',
+    'DOCX': 'DOCX',
+    'ftp': 'other',
+    'FTP': 'other',
+    'GDB': 'FGDB/GDB',
+    'GIF': 'GIF',
+    'GML': 'GML',
+    'Gridded Data': 'ASCII Grid',
+    'HTML': 'HTML',
+    'HTTP': 'other',
+    'https': 'other',
+    'HTTPS': 'other',
+    'IVT': 'other',
+    'JSON': 'JSON',
+    'KML': 'KML',
+    'link': 'other',
+    'LINK': 'other',
+    'MS Word': 'DOCX',
+    'Non-GIS Data': 'other',
+    'OData': 'JSON',
+    'PDF': 'PDF',
+    'SHP': 'SHP',
+    'Tabular Data': 'other',
+    'TIFF': 'TIFF',
+    'WMS': 'WMS',
+    '.xls': 'XLS',
+    'XLS': 'XLS',
+    'XLSX': 'XLSX',
+    'XML': 'XML',
+}
+
 out = open(canada_ab, 'w')
 
 for l in open(opendata_ab):
@@ -85,8 +221,8 @@ for l in open(opendata_ab):
             'fr-t-en': x(i['notes'])},
         'tags': {
             'en': [tag['name'] for tag in i['tags']],
-            'fr-t-en': [x(tag['name']) for tag in i['tags']]}
-        'subject': [SUBJECT[t] for t in i['topic']],
+            'fr-t-en': [x(tag['name']) for tag in i['tags']]},
+        'subject': [SUBJECT[t.lower()] for t in i['topic']],
         'audience': [AUDIENCE[a] for a in i['audience']],
         'jurisdiction': 'provincial',
         'created': i['date_created'],
@@ -94,7 +230,7 @@ for l in open(opendata_ab):
         'date_modified': i['date_modified'],
         'frequency': FREQUENCY[i['updatefrequency']],
         'program_page_url': {
-            'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']}
+            'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']},
         'license_id': LICENSE_ID[i['license_id']],
         'resources': [
             {
@@ -110,4 +246,4 @@ for l in open(opendata_ab):
                 'url': r['url'],
             } for r in i['resources']
         ]
-    }, out)
+    }, out, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
