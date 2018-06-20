@@ -230,6 +230,7 @@ for l in open(opendata_ab):
             'date_modified': i['date_modified'],
             'date_published': i['date_created'],
             'frequency': FREQUENCY[i['updatefrequency']],
+            'private': False,
             'program_page_url': {
                 'en': 'https://open.alberta.ca/' + i['type'] + '/' + i['name']},
             'license_id': LICENSE_ID[i['license_id']],
