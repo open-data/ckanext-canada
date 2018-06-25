@@ -85,9 +85,9 @@ presets:
         fr: Dossiers des comités parlementaires
       value: parliament_committee
     - label:
-        en: Government of Alberta
-        fr: Gouvernement de l'Alberta
-      value: alberta
+        en: Federated Open Data
+        fr: Fédérée de données
+      value: federated
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices

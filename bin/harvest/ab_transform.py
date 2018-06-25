@@ -204,7 +204,7 @@ for l in open(opendata_ab):
     try:
         out.write((json.dumps({
             'type': 'dataset',
-            'collection': 'alberta',
+            'collection': 'federated',
             'id': i['id'],
             'name': i['id'],
             'metadata_created': i['metadata_created'],
