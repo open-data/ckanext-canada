@@ -95,6 +95,7 @@ details.alert-error {
   height: 150px;
   overflow: hidden;
   position: absolute;
+  z-index: 1;
 }
 .ribbon span {
   position: absolute;
