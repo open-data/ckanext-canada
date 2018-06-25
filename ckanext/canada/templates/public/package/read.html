@@ -112,6 +112,10 @@
             {% if field_value %}
               {# FIXME: This special case needs to go; Ideally convince client of futility #}
               {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
+              {# FIXME: more special cases, embrace the futility! #}
+              {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
+              {% set field_title = _('Issued by') %}
+              {% endif %}
               <li class="list-group-item">
                 <strong>{{ field_title }}:</strong>
                 {% snippet 'scheming/snippets/display_field.html',
