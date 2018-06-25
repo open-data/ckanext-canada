@@ -2,7 +2,10 @@
 {% import 'macros/canada_read.html' as cr %}
 {% block package_item %}
 <li>
-  <article class="panel panel-default mrgn-bttm-sm">
+  <article class="panel panel-default mrgn-bttm-sm relative">
+    {% if package.jurisdiction == 'provincial' %}
+      <div class="ribbon ribbon-top-right"><span>{{ _("Provincial") }}</span></div>
+    {% endif %}
     <header class="panel-heading"><h3 class="panel-title">
       {% block heading %}
         {% set my_title = h.get_translated(package, 'title') %}

@@ -204,7 +204,7 @@ for l in open(opendata_ab):
     try:
         out.write((json.dumps({
             'type': 'dataset',
-            'collection': 'alberta',
+            'collection': 'federated',
             'id': i['id'],
             'name': i['id'],
             'metadata_created': i['metadata_created'],
@@ -216,7 +216,7 @@ for l in open(opendata_ab):
                 'en': i['organization']['title'],
                 'fr': ORG_FR[i['organization']['title']]},
             'owner_org': 'ab',
-            'maintainer_email': i['maintainer_email'],
+            'maintainer_email': i['contact_email'] or u'open@gov.ab.ca',
             'notes_translated': {
                 'en': i['notes'],
                 'fr': x(i['notes'])},

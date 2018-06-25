@@ -86,3 +86,37 @@ details.alert-error {
 .field--name-field-vote {
   display: none;
 }
+
+
+
+/* common */
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 250px;
+  padding: 6px 0;
+  background-color: #70ad47;
+  color: #fff;
+  text-align: center;
+}
+
+/* top right*/
+.ribbon-top-right {
+  top: -3px;
+  right: -3px;
+}
+.ribbon-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+.relative {
+  position: relative;
+}
