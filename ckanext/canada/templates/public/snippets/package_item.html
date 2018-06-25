@@ -37,8 +37,15 @@
     {% block publisher_info %}
     <div class="row mrgn-tp-sm">
       <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
-      <div class="cold-md-9">{{ cr.org_field(package, client_lang) }}</div>
+      <div class="col-md-9">{{ cr.org_field(package, client_lang) }}</div>
     </div>
+    {% set issuing_org = h.scheming_language_text(package.get('org_title_at_publication')) %}
+    {% if issuing_org %}
+    <div class="row">
+      <div class="col-md-3"><em>{{ _('Issued by') }}: </em></div>
+      <div class="col-md-9">{{ issuing_org }}</div>
+    </div>
+    {% endif %}
     {% endblock %}
 
     {% block resources_outer %}
