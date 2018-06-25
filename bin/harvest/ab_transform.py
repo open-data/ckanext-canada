@@ -211,18 +211,18 @@ for l in open(opendata_ab):
             'portal_release_date': i['metadata_created'],
             'title_translated': {
                 'en': i['title'],
-                'fr': x(i['title'])},
+                'fr-t-en': x(i['title'])},
             'org_title_at_publication': {
                 'en': i['organization']['title'],
                 'fr': ORG_FR[i['organization']['title']]},
             'owner_org': 'ab',
-            'maintainer_email': i['contact_email'] or u'open@gov.ab.ca',
+            'maintainer_email': i.get('contact_email') or u'open@gov.ab.ca',
             'notes_translated': {
                 'en': i['notes'],
-                'fr': x(i['notes'])},
+                'fr-t-en': x(i['notes'])},
             'keywords': {
                 'en': [tag['name'] for tag in i['tags']],
-                'fr': [x(tag['name']) for tag in i['tags']]},
+                'fr-t-en': [x(tag['name']) for tag in i['tags']]},
             'subject': [SUBJECT[t.lower()] for t in i['topic']],
             'audience': [AUDIENCE[a.lower()] for a in i['audience']],
             'jurisdiction': 'provincial',
@@ -242,7 +242,7 @@ for l in open(opendata_ab):
                     'id': r['id'],
                     'name_translated': {
                         'en': r['name'],
-                        'fr': x(r['name'])},
+                        'fr-t-en': x(r['name'])},
                     'date_published': r['created'],
                     'resource_type': RESOURCE_TYPE[r['resource_type']],
                     'format': FORMAT[r['format']],
