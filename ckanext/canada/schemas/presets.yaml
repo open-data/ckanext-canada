@@ -2133,6 +2133,8 @@ presets:
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
+    display_attributes:
+      style: "word-wrap: break-word"
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
