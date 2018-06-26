@@ -8,7 +8,7 @@
     {% endif %}
     <header class="panel-heading"><h3 class="panel-title">
       {% block heading %}
-        {% set my_title = h.get_translated(package, 'title') %}
+        {% set my_title, machine_translated = h.get_translated_t(package, 'title') %}
         {% if 'title_translated' not in package %}
           {% set my_title = _(my_title) %}
         {% endif %}
@@ -19,6 +19,9 @@
         {% block heading_meta %}
           {{ super() }}
         {% endblock %}
+        {% if machine_translated %}
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+        {% endif %}
       {% endblock %}
     </h3></header>
 
@@ -27,9 +30,13 @@
         {{ super() }}
       {% endblock %}
       {% block notes %}
-        {% set notes = h.get_translated(package, 'notes') %}
+        {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
         {% if notes %}
-          <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}</div>
+          <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
+            {% if machine_translated %}
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+            {% endif %}
+          </div>
         {% else %}
           <p class="empty">{{ _("This dataset has no description") }}</p>
         {% endif %}
