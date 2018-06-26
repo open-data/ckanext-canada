@@ -4,7 +4,7 @@
 <li>
   <article class="panel panel-default mrgn-bttm-sm relative">
     {% if package.jurisdiction == 'provincial' %}
-      <div class="ribbon ribbon-top-right"><span>{{ _("Provincial") }}</span></div>
+      <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
     {% endif %}
     <header class="panel-heading"><h3 class="panel-title">
       {% block heading %}
