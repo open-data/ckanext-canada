@@ -265,7 +265,7 @@ ckanext.canada:schemas/info.yaml
             'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
-            'jurisdiction': _('Jursidiction'),
+            'jurisdiction': _('Jurisdiction'),
             })
 
         return facets_dict
