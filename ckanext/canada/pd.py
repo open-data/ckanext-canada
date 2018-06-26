@@ -295,6 +295,12 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             elif f.get('datastore_type') == 'year':
                 if f.get('extract_date_year'):
                     solrrec['date_year'] = value
+            if f.get('extract_double_sortable'):
+                try:
+                    solrrec['doubl_' + key] = float(value)
+                except ValueError:
+                    pass
+
             solrrec[key] = value
 
             choices = choice_fields.get(f['datastore_id'])
