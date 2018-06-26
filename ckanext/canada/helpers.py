@@ -22,6 +22,27 @@ FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
 
 
+
+def get_translated_t(data_dict, field):
+    '''
+    customized version of core get_translated helper that also looks
+    for machine translated values (e.g. en-t-fr and fr-t-en)
+
+    Returns translated_text, is_machine_translated (True/False)
+    '''
+
+    language = h.lang()
+    try:
+        return data_dict[field+'_translated'][language], False
+    except KeyError:
+        if field+'_translated' in data_dict:
+            for l in data_dict[field+'_translated']:
+                if l.startswith(language + '-t-'):
+                    return data_dict[field+'_translated'][l], True
+        val = data_dict.get(field, '')
+        return (_(val) if val and isinstance(val, basestring) else val), False
+
+
 def may_publish_datasets(userobj=None):
     if not userobj:
         userobj = c.userobj
