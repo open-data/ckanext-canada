@@ -457,7 +457,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def before_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr', [])
+        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
         data_dict['catalog_type'] = data_dict.get('type', '')
 
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
