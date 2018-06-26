@@ -157,7 +157,7 @@ msgid "Edit Resources"
 msgstr "Modifier ressources"
 
 msgid "Next: Add Data"
-msgstr "Suivant : ajouter données"
+msgstr "Suivant : Ajouter une ressource ou un connexe"
 
 msgid "Last Modified"
 msgstr "Date de modification"
@@ -493,7 +493,7 @@ msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
 msgid "Save And Add another Resource or Related Item"
-msgstr "Sauvegarder et Ajouter une autre ressource ou article connexe"
+msgstr "Sauvegarder et Ajouter une autre ressource ou objet connexe"
 
 msgid "Dataset Resources"
 msgstr "Ressources de l'ensemble de données"
@@ -1510,13 +1510,13 @@ msgid "Add Asset Metadata"
 msgstr "Ajouter les métadonnées du produit"
 
 msgid "Add Resource or Related Item"
-msgstr "Ajouter une ressource ou un article connexe"
+msgstr "Ajouter une ressource ou un objet connexe"
 
 msgid "* indicates a mandatory field"
 msgstr "* Indique un champ obligatoire "
 
 msgid "Next: Add Resource or Related Item"
-msgstr "Suivant: Ajouter une ressource ou un article connexe"
+msgstr "Suivant: Ajouter une ressource ou un objet connexe"
 
 msgid "Errors in form"
 msgstr "Erreurs dans le formulaire"
@@ -1713,7 +1713,7 @@ msgid "Add Dataset Metadata"
 msgstr "Ajouter les métadonnées du jeu de données"
 
 msgid "You can add either a Resource or a Related Item per session, i.e. not both:"
-msgstr "Vous pouvez ajouter soit une ressource ou un article connexe par session, pas les deux:"
+msgstr "Vous pouvez ajouter soit une ressource ou un article connexe par séance, mais pas les deux:"
 
 msgid "Metadata Fields for Resources Only (Not for Related Items)"
 msgstr "Champs de métadonnées pour les ressources seulement (non pour les éléments connexes)"
@@ -2081,7 +2081,7 @@ msgid "If you would like to request an account for the Open Government Registry,
 msgstr "Si vous souhaitez demander un compte pour le Répertoire du gouvernement ouvert, veuillez envoyer un courriel à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> avec votre nom, ministère et adresse courriel."
 
 msgid "Request an account"
-msgstr "Demander un compte"
+msgstr "Demande d'un compte"
 
 msgid "We encountered an error and are unable to serve your request. Please try again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists."
 msgstr "Nous rencontrons une erreur et nous ne pouvons pas répondre à votre demande. Veuillez réessayer plus tard ou communiquer avec <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> si votre demande est urgente ou si ce problème persiste."
@@ -2198,3 +2198,12 @@ msgstr ""
 "<p>Ces ressources ne sont pas contrôlées par le gouvernement du Canada, et l’hyperlien est fourni uniquement pour la facilité d’utilisation des visiteurs de notre site Web. Nous ne sommes pas responsables de l’exactitude, l’actualité et la fiabilité du contenu. Le gouvernement du Canada n’offre aucune garantie à cet égard et n’est pas responsable des renseignements trouvés par l’entremise de ce lien.</p>\n"
 "\n"
 "<p>Les visiteurs devraient également savoir que les renseignements offerts par l’entremise de ce site Web ne sont pas gérés par le gouvernement du Canada et ne relèvent pas de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/P-21/index.html\">Loi sur la protection des renseignements personnels</a> ni de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/O-3.01/\">Loi sur les langues officielles</a>, et qu’ils pourraient ne pas être accessibles aux personnes handicapées. Les renseignements offerts pourraient être uniquement disponibles dans la langue utilisée dans le site en question. En ce qui concerne la protection des renseignements personnels, les visiteurs devraient vérifier les politiques de confidentialité de ce site Web non gouvernemental avant de fournir leurs renseignements personnels.</p>"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Edit metadata"
+msgstr "Modifier les métadonnées"
+
+msgid "Finish"
+msgstr "Soumettre"
