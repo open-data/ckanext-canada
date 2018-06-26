@@ -4,8 +4,7 @@ import csv
 import sys
 
 REMOVE_COLUMNS = [
-    'external_internal',
-    'service_type',
+    'special_designations',
     'record_created',
     'record_modified',
     'user_modified',
