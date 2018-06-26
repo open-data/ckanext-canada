@@ -3,10 +3,11 @@
 {% block package_item %}
 <li>
   <article class="panel panel-default mrgn-bttm-sm relative">
+    <header class="panel-heading">
     {% if package.jurisdiction == 'provincial' %}
       <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
     {% endif %}
-    <header class="panel-heading"><h3 class="panel-title">
+    <h3 class="panel-title">
       {% block heading %}
         {% set my_title, machine_translated = h.get_translated_t(package, 'title') %}
         {% if 'title_translated' not in package %}
