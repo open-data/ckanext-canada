@@ -6,6 +6,8 @@
     <header class="panel-heading">
     {% if package.jurisdiction == 'provincial' %}
       <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
+    {% elif package.jurisdiction == 'federal' %}
+      <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
