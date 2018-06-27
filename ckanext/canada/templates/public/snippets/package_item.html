@@ -57,7 +57,16 @@
     {% endblock %}
 
     {% block resources_outer %}
-      {{ super() }}
+      <div class="row">
+        <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+        <div class="col-md-9">
+          <ul class="list-inline list-unstyled">
+            {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+              <li><span class="badge">{{ _(resource) }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
       {% if 'fgp_viewer' in package.get('display_flags', []) %}
         <div>
         <hr>
