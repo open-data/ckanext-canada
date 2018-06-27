@@ -23,7 +23,7 @@
           {{ super() }}
         {% endblock %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       {% endblock %}
     </h3></header>
@@ -37,7 +37,7 @@
         {% if notes %}
           <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
             {% if machine_translated %}
-              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
             {% endif %}
           </div>
         {% else %}
