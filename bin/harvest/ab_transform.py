@@ -162,9 +162,6 @@ FORMAT = {
     '': 'other',
     '6GB zipped Esri file geodatabase (FGDB)': 'FGDB/GDB',
     'application/vnd.ms-excel (xlsx)': 'XLSX',
-    'application/x-msi': 'other',
-    'beyond 20/20': 'other',
-    'Beyond 20/20': 'other',
     'CSV': 'CSV',
     'DOCX': 'DOCX',
     'ftp': 'other',
@@ -177,7 +174,6 @@ FORMAT = {
     'HTTP': 'other',
     'https': 'other',
     'HTTPS': 'other',
-    'IVT': 'other',
     'JSON': 'JSON',
     'KML': 'KML',
     'link': 'other',
@@ -202,6 +198,8 @@ out = open(canada_ab, 'wb')
 for l in open(opendata_ab):
     i = json.loads(l)
     try:
+        if any(t['name'].lower() == 'statcan product' for t in i['tags']):
+            continue
         out.write((json.dumps({
             'type': 'dataset',
             'collection': 'federated',

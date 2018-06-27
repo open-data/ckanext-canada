@@ -6,6 +6,8 @@
     <header class="panel-heading">
     {% if package.jurisdiction == 'provincial' %}
       <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
+    {% elif package.jurisdiction == 'federal' %}
+      <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
@@ -57,7 +59,16 @@
     {% endblock %}
 
     {% block resources_outer %}
-      {{ super() }}
+      <div class="row">
+        <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+        <div class="col-md-9">
+          <ul class="list-inline list-unstyled">
+            {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+              <li><span class="badge">{{ _(resource) }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
       {% if 'fgp_viewer' in package.get('display_flags', []) %}
         <div>
         <hr>
