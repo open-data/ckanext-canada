@@ -184,7 +184,7 @@ resources:
       fr: Date de début
     description:
       en: This field indicates when a planned consultation will begin to accept input from participants.
-      fr: Cette zone indique la date de début prévue de la consultation. Une consultation est considérée comme commencée lorsque les activités de mobilisation sont en cours ou lorsqu’un ministère accepte les avis des participants.
+      fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
@@ -201,7 +201,7 @@ resources:
       fr: Date de fin
     description:
       en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
-      fr: Cette zone indique la date de fin prévue de la consultation. Une consultation est considérée comme terminée lorsqu’il n’y a plus d’activités de mobilisation ou lorsqu’un ministère commence à analyser les données recueillies durant le processus de mobilisation.
+      fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de mobilisation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
