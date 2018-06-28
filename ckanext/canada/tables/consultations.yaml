@@ -73,36 +73,6 @@ resources:
     excel_column_width: 20
     choices_file: choices/consultation_org.yaml
 
-  # 3.4
-  - datastore_id: sector
-    label:
-      en: Sector
-      fr: Secteur
-    description:
-      en: This field indicates the sector of the engagement process.
-      fr: Cette zone indique le secteur visé par le processus de mobilisation.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 15
-    choices:
-      ER:
-        en: Economic and Regional Development Policy
-        fr: Politiques de développement économique et régional
-      FD:
-        en: Foreign and Defence Policy
-        fr: Politiques étrangère et de défense
-      G:
-        en: Governance
-        fr: Gouvernance
-      SD:
-        en: Social Development Policy
-        fr: Politiques de développement social
-
   # 3.5
   - datastore_id: subjects
     label:
@@ -155,39 +125,6 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.8
-  - datastore_id: goals
-    label:
-      en: Goal(s)
-      fr: Objectif(s)
-    description:
-      en: This field intend to capture the main goals of consulting and/or engaging the public or stakeholders.
-      fr: Cette zone indique les principaux objectifs de la consultation ou de la mobilisation du public ou des parties concernées.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text (comma separated list of codes from reference table)
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Repeatable
-    datastore_type: _text
-    excel_column_width: 30
-    choices:
-      CB:
-        en: Collaborate
-        fr: Collaborer
-      CS:
-        en: Consult
-        fr: Consulter
-      PA:
-        en: Partner
-        fr: Associer
-      IF:
-        en: Inform
-        fr: Informer
-      IV:
-        en: Involve
-        fr: Impliquer
-
   # 3.9
   - datastore_id: description_en
     label:
@@ -222,60 +159,6 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.11
-  - datastore_id: public_opinion_research
-    label:
-      en: Public Opinion Research
-      fr: Recherche sur l’opinion publique
-    description:
-      en: This field indicates if public opinion research is conducted to design and/or inform the engagement process.
-      fr: Cette zone indique si une recherche sur l’opinion publique sera menée pour concevoir ou orienter le processus de mobilisation.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 20
-    choices:
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-      TBD:
-        en: To be determined
-        fr: A déterminer
-
-  # 3.12
-  - datastore_id: public_opinion_research_standing_offer
-    label:
-      en: Standing Offer Public Opinion Research
-      fr: Recherche sur l’opinion publique – offre à commandes
-    description:
-      en: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
-      fr: Si une recherche sur l’opinion publique a été menée dans le cadre du processus de mobilisation, Cette zone indique si celle-ci était visée par une offre à commandes du BCP.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: No
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 20
-    choices:
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-      NA:
-        en: N/A
-        fr: S/O
-
   # 3.13
   - datastore_id: target_participants_and_audience
     label:
@@ -295,12 +178,12 @@ resources:
     choices_file: choices/consultation_audience.yaml
 
   # 3.14
-  - datastore_id: planned_start_date
+  - datastore_id: start_date
     label:
-      en: Planned Start Date
-      fr: Date de début prévue
+      en: Start Date
+      fr: Date de début
     description:
-      en: This field indicates the planned consultation starting date. A consultation is considered open when engagement activities are under way/or when a department is accepting input form participants.
+      en: This field indicates when a planned consultation will begin to accept input from participants.
       fr: Cette zone indique la date de début prévue de la consultation. Une consultation est considérée comme commencée lorsque les activités de mobilisation sont en cours ou lorsqu’un ministère accepte les avis des participants.
     obligation: Mandatory
     excel_required: true
@@ -312,10 +195,10 @@ resources:
     excel_column_width: 20
 
   # 3.15
-  - datastore_id: planned_end_date
+  - datastore_id: end_date
     label:
-      en: Planned End Date
-      fr: Date de fin prévue
+      en: End Date
+      fr: Date de fin
     description:
       en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
       fr: Cette zone indique la date de fin prévue de la consultation. Une consultation est considérée comme terminée lorsqu’il n’y a plus d’activités de mobilisation ou lorsqu’un ministère commence à analyser les données recueillies durant le processus de mobilisation.
@@ -349,20 +232,23 @@ resources:
         en: Planned
         fr: Prévue
       O:
-        en: Open – Accepting input
+        en: Open – Accepting Input
         fr: Ouverte – Avis acceptés
       CA:
-        en: Closed – Analyzing input
+        en: Closed – Analyzing Input
         fr: Fermée – Analyse en cours
+      CN:
+        en: Closed – No Report Expected
+        fr: Fermée – Aucun rapport en attente
       CR:
         en: Closed – Report Available
         fr: Fermée – Rapport disponible
 
   # 3.17
-  - datastore_id: further_information_en
+  - datastore_id: profile_page_en
     label:
-      en: Further Information Link (English)
-      fr: Lien – renseignements supplémentaires (en anglais)
+      en: Link to Consultations Profile Page (English)
+      fr: Lien vers la page du profil des consultations (en anglais)
     description:
       en: This field provides the link to the English engagement information page on the Consulting with Canadians website.
       fr: Cette zone contient le lien vers la page anglaise du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
@@ -376,10 +262,10 @@ resources:
     excel_column_width: 20
 
   # 3.18
-  - datastore_id: further_information_fr
+  - datastore_id: profile_page_fr
     label:
-      en: Further Information Link (French)
-      fr: Lien – renseignements supplémentaires (en français)
+      en: Link to Consultations Profile Page (French)
+      fr: Lien vers la page du profil des consultations (en français)
     description:
       en: This field provides the link to the French engagement information page on the Consulting with Canadians website.
       fr: Cette zone contient le lien vers la page française du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
@@ -538,6 +424,9 @@ resources:
       B18:
         en: Budget 2018
         fr: Budget 2018
+      IN:
+        en: International Commitment
+        fr: Engagement international
       LC:
         en: Legal duty to Consult
         fr: Obligation légale de consulter
@@ -547,9 +436,6 @@ resources:
       MP:
         en: Minister and/or Parliamentary Secretary Involvement and/or announcement
         fr: Implication ou annonce du ministre ou du secrétaire parlementaire
-      NH:
-        en: No longer considered High Profile
-        fr: N’est plus considéré comme consultation de premier plan
       PC:
         en: Parliament Committee
         fr: Comité parlementaire
