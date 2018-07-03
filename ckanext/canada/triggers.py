@@ -154,24 +154,14 @@ def update_triggers():
                 PERFORM choice_one_of(NEW.publishable, {publishable}, 'publishable');
                 NEW.partner_departments := choices_from(
                     NEW.partner_departments, {partner_departments}, 'partner_departments');
-                PERFORM choice_one_of(NEW.sector, {sectors}, 'sector');
                 PERFORM not_empty(NEW.subjects, 'subjects');
                 NEW.subjects := choices_from(
                     NEW.subjects, {subjects}, 'subjects');
                 PERFORM not_empty(NEW.title_en, 'title_en');
                 PERFORM not_empty(NEW.title_fr, 'title_fr');
                 PERFORM not_empty(NEW.goals, 'goals');
-                NEW.goals := choices_from(NEW.goals, {goals}, 'goals');
                 PERFORM not_empty(NEW.description_en, 'description_en');
                 PERFORM not_empty(NEW.description_fr, 'description_fr');
-                PERFORM choice_one_of(
-                    NEW.public_opinion_research,
-                    {public_opinion_research},
-                    'public_opinion_research');
-                PERFORM choice_one_of(
-                    NEW.public_opinion_research_standing_offer,
-                    {public_opinion_research_standing_offer},
-                    'public_opinion_research_standing_offer');
                 PERFORM not_empty(
                     NEW.target_participants_and_audience,
                     'target_participants_and_audience');
@@ -179,11 +169,11 @@ def update_triggers():
                     NEW.target_participants_and_audience,
                     {target_participants_and_audience},
                     'target_participants_and_audience');
-                PERFORM not_empty(NEW.planned_start_date, 'planned_start_date');
-                PERFORM not_empty(NEW.planned_end_date, 'planned_end_date');
+                PERFORM not_empty(NEW.start_date, 'start_date');
+                PERFORM not_empty(NEW.end_date, 'end_date');
                 PERFORM choice_one_of(NEW.status, {status}, 'status');
-                PERFORM not_empty(NEW.further_information_en, 'further_information_en');
-                PERFORM not_empty(NEW.further_information_fr, 'further_information_fr');
+                PERFORM not_empty(NEW.profile_page_en, 'profile_page_en');
+                PERFORM not_empty(NEW.profile_page_fr, 'profile_page_fr');
                 PERFORM choice_one_of(
                     NEW.report_available_online,
                     {report_available_online},
@@ -195,18 +185,12 @@ def update_triggers():
                 RETURN NEW;
             END;
             '''.format(
-                sectors=pg_array(consultations_choices['sector']),
                 publishable=pg_array(consultations_choices['publishable']),
                 partner_departments=pg_array(
                     consultations_choices['partner_departments']),
                 subjects=pg_array(consultations_choices['subjects']),
-                goals=pg_array(consultations_choices['goals']),
                 target_participants_and_audience=pg_array(
                     consultations_choices['target_participants_and_audience']),
-                public_opinion_research=pg_array(
-                    consultations_choices['public_opinion_research']),
-                public_opinion_research_standing_offer=pg_array(
-                    consultations_choices['public_opinion_research_standing_offer']),
                 status=pg_array(consultations_choices['status']),
                 report_available_online=pg_array(
                     consultations_choices['report_available_online']),
