@@ -23,4 +23,9 @@ for line in in_csv:
     line['profile_page_fr'] = line.pop('further_information_fr')
     line['partner_departments'] = ','.join(
         'D' + d for d in line['partner_departments'].split(',') if d)
+    line['rationale'] = ','.join(
+        r for r in line['rationale'].split(',') if r != 'NH')
+    if not line['rationale']:
+        sys.stderr.write('skipping %r\n' % line)
+        continue
     out_csv.writerow(line)
