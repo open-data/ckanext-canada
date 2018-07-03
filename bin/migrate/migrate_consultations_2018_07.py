@@ -3,6 +3,7 @@
 import unicodecsv
 import sys
 import codecs
+import json
 
 FIELDNAMES = 'registration_number,publishable,partner_departments,subjects,title_en,title_fr,description_en,description_fr,target_participants_and_audience,start_date,end_date,status,profile_page_en,profile_page_fr,report_available_online,report_link_en,report_link_fr,contact_email,policy_program_lead_email,remarks_en,remarks_fr,rationale,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
@@ -26,6 +27,6 @@ for line in in_csv:
     line['rationale'] = ','.join(
         r for r in line['rationale'].split(',') if r != 'NH')
     if not line['rationale']:
-        sys.stderr.write('skipping %r\n' % line)
+        sys.stderr.write(json.dumps(line) + '\n')
         continue
     out_csv.writerow(line)
