@@ -159,7 +159,6 @@ def update_triggers():
                     NEW.subjects, {subjects}, 'subjects');
                 PERFORM not_empty(NEW.title_en, 'title_en');
                 PERFORM not_empty(NEW.title_fr, 'title_fr');
-                PERFORM not_empty(NEW.goals, 'goals');
                 PERFORM not_empty(NEW.description_en, 'description_en');
                 PERFORM not_empty(NEW.description_fr, 'description_fr');
                 PERFORM not_empty(
