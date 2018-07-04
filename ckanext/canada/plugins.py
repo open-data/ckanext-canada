@@ -13,7 +13,6 @@ from ckantoolkit import h, chained_action, side_effect_free
 import ckanapi
 from ckan.lib.base import c
 
-from ckanext.canada.metadata_schema import schema_description
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
@@ -266,6 +265,7 @@ ckanext.canada:schemas/info.yaml
             'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
+            'jurisdiction': _('Jurisdiction'),
             })
 
         return facets_dict
@@ -300,6 +300,8 @@ ckanext.canada:schemas/info.yaml
             'catalogue_last_update_date',
             'dataset_rating',
             'dataset_comments',
+            'get_translated_t',
+            'language_text_t',
             ])
 
     def before_map(self, map):
@@ -351,15 +353,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
-    p.implements(p.IConfigurable)
     p.implements(p.IActions)
     p.implements(p.IValidators, inherit=True)
-
-    # IConfigurable
-
-    def configure(self, config):
-        jinja_globals = config['pylons.app_globals'].jinja_env.globals
-        jinja_globals['schema_description'] = schema_description
 
     # IActions
 
@@ -373,7 +368,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'revision_list',
             'package_revision_list',
             'user_list',
-            'resource_search',
             'user_activity_list',
             'member_list',
             'group_revision_list',
@@ -463,7 +457,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def before_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr', [])
+        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
         data_dict['catalog_type'] = data_dict.get('type', '')
 
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
@@ -644,14 +638,12 @@ ckanext.canada:schemas/doc.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
+        return dict(((h, getattr(helpers, h)) for h in [
             'user_organizations',
-            'dataset_comments',
             'openness_score',
             'remove_duplicates',
             'get_license',
             'normalize_strip_accents',
-            'dataset_rating',
             'portal_url',
             'googleanalytics_id',
             'loop11_key',
@@ -664,8 +656,13 @@ ckanext.canada:schemas/doc.yaml
             'linked_gravatar',
             'linked_user',
             'json_loads',
-            'catalogue_last_update_date'
-            ])
+            'catalogue_last_update_date',
+            'get_translated_t',
+            'language_text_t',
+            ]),
+            dataset_comments=helpers.dataset_comments_obd,
+            dataset_rating=helpers.dataset_rating_obd,
+            )
 
     def before_map(self, map):
         map.connect(

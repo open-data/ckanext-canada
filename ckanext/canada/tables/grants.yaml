@@ -504,6 +504,7 @@ resources:
     excel_column_width: 30
     extract_date_year: true
     extract_date_month: true
+    extract_date_clean: true
 
   # 3.47 Projected Agreement End Date (New Field)
   - datastore_id: agreement_end_date

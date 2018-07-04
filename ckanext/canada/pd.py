@@ -243,14 +243,6 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     for r in records:
         unique, friendly, partial = unique_id(r)
 
-        shortform = None
-        shortform_fr = None
-        for e in org_detail['extras']:
-            if e['key'] == 'shortform':
-                shortform = e['value']
-            elif e['key'] == 'shortform_fr':
-                shortform_fr = e['value']
-
         solrrec = {
             'id': unique,
             'unique_id': friendly,
@@ -259,6 +251,12 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
             }
+
+        org_fields = chromo.get('solr_org_fields')
+        if org_fields:
+            for e in org_detail['extras']:
+                if e['key'] in org_fields:
+                    solrrec[e['key']] = e['value']
 
         for f in chromo['fields']:
             key = f['datastore_id']
@@ -297,6 +295,12 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             elif f.get('datastore_type') == 'year':
                 if f.get('extract_date_year'):
                     solrrec['date_year'] = value
+            if f.get('extract_double_sortable'):
+                try:
+                    solrrec['doubl_' + key] = float(value)
+                except ValueError:
+                    pass
+
             solrrec[key] = value
 
             choices = choice_fields.get(f['datastore_id'])
@@ -395,7 +399,10 @@ def dollar_range_facet(key, facet_range, float_value):
     given by facet_range, in English and French
 
     E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
-    "$0 - $999.99", "$1,000 - $4,999.99", "$5,000 +" in English
+        "A: $5,000 +"
+        "B: $1,000 - $4,999.99"
+        "C: $0 - $999.99"
+    in English
     """
     last_fac = None
     for i, fac in enumerate(facet_range):
@@ -405,16 +412,17 @@ def dollar_range_facet(key, facet_range, float_value):
     else:
         return {
             key + u'_range': unicode(i),
-            key + u'_en': en_dollars(fac) + u'+',
-            key + u'_fr': fr_dollars(fac) + u' +'}
+            key + u'_en': u'A: ' + en_dollars(fac) + u'+',
+            key + u'_fr': u'A: ' + fr_dollars(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
+    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
     return {
         key + u'_range': unicode(i - 1),
-        key + u'_en': en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
-        key + u'_fr': fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+        key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
+        key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
 
 
 def sum_to_field(solrrec, key, value):

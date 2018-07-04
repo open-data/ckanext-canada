@@ -36,7 +36,7 @@ def never_ever_fail(default=None):
 
 
 @never_ever_fail(default=0)
-def dataset_rating(package_id):
+def dataset_rating(package_id, entity_prefix='ckan-'):
     """
     Retrieve the average of the user's 5 star ratings of the dataset
     """
@@ -49,7 +49,7 @@ def dataset_rating(package_id):
         params={
             '_format': 'api_json',
             'filter[ckan][condition][path]': 'entity_id',
-            'filter[ckan][condition][value]': 'ckan-' + package_id,
+            'filter[ckan][condition][value]': entity_prefix + package_id,
             'filter[group][group][conjunction]': 'OR',
             'filter[avg][condition][path]': 'function',
             'filter[avg][condition][value]': 'vote_average',
@@ -75,6 +75,8 @@ def dataset_rating(package_id):
         return 0
 
 
+def dataset_rating_obd(package_id):
+    return dataset_rating(package_id, 'ckan_obd-')
 
 
 def search_url(params, package_id):

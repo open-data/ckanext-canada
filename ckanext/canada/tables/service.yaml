@@ -2,7 +2,7 @@ dataset_type: service
 target_dataset: service
 
 title: Service Inventory
-notes: ''
+notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 portal_type: dataset
 collection: service
@@ -410,7 +410,7 @@ resources:
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Multiple
-    datastore_type: text
+    datastore_type: _text
     excel_column_width: 21
     choices:
       PP:
