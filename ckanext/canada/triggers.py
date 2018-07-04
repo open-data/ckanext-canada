@@ -500,7 +500,7 @@ def update_triggers():
         rettype=u'trigger',
         definition=u'''
             BEGIN
-                PERFORM not_empty(NEW.project_identifier, 'project_identifier');
+                PERFORM not_empty(NEW.ref_number, 'ref_number');
 
                 PERFORM not_empty(NEW.amendment_number, 'amendment_number');
                 IF NEW.amendment_number <> 0 THEN
