@@ -555,7 +555,7 @@ def update_triggers():
         rettype=u'trigger',
         definition=u'''
             BEGIN
-                PERFORM not_empty(NEW.project_identifier, 'project_identifier');
+                PERFORM not_empty(NEW.ref_number, 'ref_number');
 
                 PERFORM not_empty(NEW.amendment_number, 'amendment_number');
                 IF NEW.amendment_number <> 0 THEN
@@ -576,13 +576,11 @@ def update_triggers():
 
                 PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
                 IF NEW.agreement_start_date >= '2018-04-01'::date THEN
-                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
                     PERFORM not_empty(NEW.agreement_type, 'agreement_type');
                     PERFORM choice_one_of(
                         NEW.agreement_type,
                         {agreement_type},
                         'agreement_type');
-                    PERFORM not_empty(NEW.recipient_type, 'recipient_type');
                     PERFORM choice_one_of(
                         NEW.recipient_type,
                         {recipient_type},
@@ -599,9 +597,12 @@ def update_triggers():
                         NEW.recipient_province,
                         {recipient_province},
                         'recipient_province');
+                    PERFORM not_empty(
+                        NEW.recipient_operating_name_en, 'recipient_operating_name_en');
+                    PERFORM not_empty(
+                        NEW.recipient_operating_name_fr, 'recipient_operating_name_fr');
                     PERFORM not_empty(NEW.recipient_city_en, 'recipient_city_en');
                     PERFORM not_empty(NEW.recipient_city_fr, 'recipient_city_fr');
-                    PERFORM not_empty(NEW.agreement_end_date, 'agreement_end_date');
                     PERFORM not_empty(NEW.description_en, 'description_en');
                     PERFORM not_empty(NEW.description_fr, 'description_fr');
                     PERFORM not_empty(NEW.expected_results_en, 'expected_results_en');
