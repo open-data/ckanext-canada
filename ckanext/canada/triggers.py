@@ -177,7 +177,14 @@ def update_triggers():
                     NEW.report_available_online,
                     {report_available_online},
                     'report_available_online');
-                PERFORM not_empty(NEW.rationale, 'rationale');
+                PERFORM not_empty(NEW.high_profile, 'high_profile');
+                PERFORM choice_one_of(
+                    NEW.high_profile,
+                    {high_profile},
+                    'high_profile');
+                IF NEW.high_profile = 'Y' THEN
+                    PERFORM not_empty(NEW.rationale, 'rationale');
+                END IF;
                 NEW.rationale := choices_from(
                     NEW.rationale, {rationale}, 'rationale');
 
@@ -193,6 +200,7 @@ def update_triggers():
                 status=pg_array(consultations_choices['status']),
                 report_available_online=pg_array(
                     consultations_choices['report_available_online']),
+                high_profile=pg_array(consultations_choices['high_profile']),
                 rationale=pg_array(consultations_choices['rationale']),
             )
         )

@@ -73,7 +73,7 @@ resources:
     excel_column_width: 20
     choices_file: choices/consultation_org.yaml
 
-  # 3.5
+  # 3.4
   - datastore_id: subjects
     label:
       en: Subjects
@@ -91,7 +91,7 @@ resources:
     excel_column_width: 30
     choices_file: choices/consultation_subject.yaml
 
-  # 3.6
+  # 3.5
   - datastore_id: title_en
     label:
       en: Consultation Title (English)
@@ -108,7 +108,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.7
+  # 3.6
   - datastore_id: title_fr
     label:
       en: Consultation Title (French)
@@ -125,7 +125,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.9
+  # 3.7
   - datastore_id: description_en
     label:
       en: Description of the Approach (English)
@@ -142,7 +142,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.10
+  # 3.8
   - datastore_id: description_fr
     label:
       en: Description of the Approach (French)
@@ -159,7 +159,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.13
+  # 3.9
   - datastore_id: target_participants_and_audience
     label:
       en: Target Participants and Audience
@@ -177,7 +177,7 @@ resources:
     excel_column_width: 20
     choices_file: choices/consultation_audience.yaml
 
-  # 3.14
+  # 3.10
   - datastore_id: start_date
     label:
       en: Start Date
@@ -194,7 +194,7 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  # 3.15
+  # 3.11
   - datastore_id: end_date
     label:
       en: End Date
@@ -211,7 +211,7 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  # 3.16
+  # 3.12
   - datastore_id: status
     label:
       en: Status
@@ -244,7 +244,7 @@ resources:
         en: Closed – Report Available
         fr: Fermée – Rapport disponible
 
-  # 3.17
+  # 3.13
   - datastore_id: profile_page_en
     label:
       en: Link to Consultations Profile Page (English)
@@ -261,7 +261,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.18
+  # 3.14
   - datastore_id: profile_page_fr
     label:
       en: Link to Consultations Profile Page (French)
@@ -278,7 +278,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.19
+  # 3.15
   - datastore_id: report_available_online
     label:
       en: Report Available online
@@ -302,7 +302,7 @@ resources:
         en: "No"
         fr: Non
 
-  # 3.20
+  # 3.16
   - datastore_id: report_link_en
     label:
       en: Link to the “What we Heard” Report in English
@@ -318,7 +318,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.21
+  # 3.17
   - datastore_id: report_link_fr
     label:
       en: Link to the “What we Heard” Report in French
@@ -334,7 +334,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.22
+  # 3.18
   - datastore_id: contact_email
     label:
       en: Departmental Consultation Contact
@@ -350,7 +350,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.23
+  # 3.19
   - datastore_id: policy_program_lead_email
     label:
       en: Policy/Program Lead for the Consultation
@@ -366,7 +366,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.24
+  # 3.20
   - datastore_id: remarks_en
     label:
       en: Remarks (English)
@@ -382,7 +382,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.25
+  # 3.21
   - datastore_id: remarks_fr
     label:
       en: Remarks (French)
@@ -398,14 +398,38 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 2.26
+  # 3.22
+  - datastore_id: high_profile
+    label:
+      en: High Profile
+      fr: Haute visibilité
+    description:
+      en: This field indicates whether the consultation or public engagement initiative is considered high profile. The consultation is considered high profile if it meets one or more of the criteria in the ‘Rationale’ field.
+      fr: "Cette zone indique si la consultation ou initiative de mobilisation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 2.23
   - datastore_id: rationale
     label:
       en: Rationale
       fr: Raison
     description:
-      en: The field indicates the rationale behind the public engagement initiative. This field include only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une initiative importante de participation du public.
+      en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -415,21 +439,15 @@ resources:
     datastore_type: _text
     excel_column_width: 20
     choices:
-      B16:
-        en: Budget 2016
-        fr: Budget 2016
-      B17:
-        en: Budget 2017
-        fr: Budget 2017
-      B18:
-        en: Budget 2018
-        fr: Budget 2018
+      BG:
+        en: Budget
+        fr: Budget
       IN:
         en: International Commitment
         fr: Engagement international
       LC:
-        en: Legal duty to Consult
-        fr: Obligation légale de consulter
+        en: Duty to Consult
+        fr: Obligation de consulter
       ML:
         en: Mandate Letter
         fr: Lettre de mandat
