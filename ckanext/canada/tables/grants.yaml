@@ -147,17 +147,17 @@ resources:
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
   - datastore_id: recipient_legal_name
     label:
-      en: Recipient Legal Name (English/French)
-      fr: Nom légal du bénéficiaire (anglais/français)
+      en: Recipient Legal Name (English|French)
+      fr: Nom légal du bénéficiaire (anglais|français)
     description:
       en: |
         The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
 
-        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English/name French.
+        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
       fr: |
         Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
         
-        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais/nom français.
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Optional
     format_type: Free text
     datastore_type: text
@@ -166,17 +166,17 @@ resources:
   # 3.8 Recipient Operating Name (New Field)
   - datastore_id: recipient_operating_name
     label:
-      en: Recipient Operating Name (English/French)
-      fr: Nom commercial du bénéficiaire (anglais/français)
+      en: Recipient Operating Name (English|French)
+      fr: Nom commercial du bénéficiaire (anglais|français)
     description:
       en: |
         The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
 
-        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English/Legal name French.
+        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English|Legal name French.
       fr: |
         Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
 
-        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais/nom français.
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -186,17 +186,17 @@ resources:
   # 3.9 Research Organization (New Field)
   - datastore_id: research_organization_name
     label:
-      en: Research Organization (English/French)
-      fr: Organisme de recherche (anglais/français)
+      en: Research Organization (English|French)
+      fr: Organisme de recherche (anglais|français)
     description:
       en: |
         The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
 
-        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English/name French.
+        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English|name French.
       fr: |
         Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
 
-        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais/nom français.
+        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Optional
     format_type: Free text
     datastore_type: text
@@ -274,17 +274,17 @@ resources:
   # 3.12 Recipient City (English) (previously recipient_region_en, recipient_region_fr)
   - datastore_id: recipient_city_en
     label:
-      en: Recipient City (English/French)
-      fr: Ville du bénéficiaire (anglais/français)
+      en: Recipient City (English|French)
+      fr: Ville du bénéficiaire (anglais|français)
     description:
       en: |
         The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
 
-        Official city names should be provided, including both official languages (where applicable in the following format: name English/name French
+        Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
       fr: |
         La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
 
-        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais/nom français
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -522,8 +522,8 @@ resources:
   # 3.29 Coverage (New Field)
   - datastore_id: coverage
     label:
-      en: Coverage (English/French; ...)
-      fr: Portée (anglais/français; ...)
+      en: Coverage (English|French; ...)
+      fr: Portée (anglais|français; ...)
     description:
       en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
       fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
@@ -701,12 +701,12 @@ resources:
       agreement_type: "G"
       recipient_type: "G"
       recipient_business_number: "1245810604"
-      recipient_legal_name: "Bombardier Aerospace Services Limited/Services Bombardier Aéronautique Limitée"
+      recipient_legal_name: "Bombardier Aerospace Services Limited|Services Bombardier Aéronautique Limitée"
       recipient_operating_name: "Bombardier Inc."
-      research_organization_name: "York University/Université York"
+      research_organization_name: "York University|Université York"
       recipient_country: "CA"
       recipient_province: "ON"
-      recipient_city: "Grand Falls/Grand-Sault"
+      recipient_city: "Grand Falls|Grand-Sault"
       recipient_postal_code: "A1A 1A1"
       federal_riding_name_en: "Winnipeg South Centre"
       federal_riding_name_fr: "Winnipeg-Centre-Sud"
@@ -723,7 +723,7 @@ resources:
       foreign_currency_value: "450000"
       agreement_start_date: "2020-04-01"
       agreement_end_date: "2020-04-31"
-      coverage: "Canada; Mexico/Mexique; United States/États-Unis"
+      coverage: "Canada; Mexico|Mexique; United States|États-Unis"
       description_en: "Developing computer models and other tools to predict the fire safety performance of buildings."
       description_fr: "Met au point des modèles informatiques et d'autres outils pour prévoir la sécurité incendie des bâtiments."
       naics_identifier: "611710"
