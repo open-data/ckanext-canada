@@ -21,8 +21,8 @@ resources:
       en: Registration Number
       fr: Numéro d’enregistrement
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer.
+      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete. he Registration Number should respect the following format: C-XXXXXXX.
+      fr: Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -97,7 +97,7 @@ resources:
       en: Consultation Title (English)
       fr: Titre de la consultation (en anglais)
     description:
-      en: This field contains the complete name of the consultation in English.
+      en: This field identifies the complete name of the consultation in English.
       fr: Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
     excel_required: true
