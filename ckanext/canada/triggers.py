@@ -553,6 +553,7 @@ def update_triggers():
                         NEW.recipient_type,
                         {recipient_type},
                         'recipient_type');
+                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
                     PERFORM not_empty(NEW.recipient_country, 'recipient_country');
                     PERFORM choice_one_of(
                         NEW.recipient_country,
@@ -565,26 +566,13 @@ def update_triggers():
                         NEW.recipient_province,
                         {recipient_province},
                         'recipient_province');
-                    PERFORM not_empty(
-                        NEW.recipient_operating_name_en, 'recipient_operating_name_en');
-                    PERFORM not_empty(
-                        NEW.recipient_operating_name_fr, 'recipient_operating_name_fr');
-                    PERFORM not_empty(NEW.recipient_city_en, 'recipient_city_en');
-                    PERFORM not_empty(NEW.recipient_city_fr, 'recipient_city_fr');
-                    PERFORM not_empty(NEW.description_en, 'description_en');
-                    PERFORM not_empty(NEW.description_fr, 'description_fr');
-                    PERFORM not_empty(NEW.expected_results_en, 'expected_results_en');
-                    PERFORM not_empty(NEW.expected_results_fr, 'expected_results_fr');
-                    PERFORM not_empty(NEW.agreement_title_en, 'agreement_title_en');
-                    PERFORM not_empty(NEW.agreement_title_fr, 'agreement_title_fr');
+                    PERFORM not_empty(NEW.recipient_city, 'recipient_city');
                     PERFORM not_empty(NEW.prog_name_en, 'prog_name_en');
                     PERFORM not_empty(NEW.prog_name_fr, 'prog_name_fr');
                     PERFORM not_empty(NEW.prog_purpose_en, 'prog_purpose_en');
                     PERFORM not_empty(NEW.prog_purpose_fr, 'prog_purpose_fr');
-                    IF NEW.recipient_country = 'CA' THEN
-                        PERFORM not_empty(NEW.recipient_postal_code,
-                            'recipient_postal_code');
-                    END IF;
+                    PERFORM not_empty(NEW.description_en, 'description_en');
+                    PERFORM not_empty(NEW.description_fr, 'description_fr');
                 END IF;
                 RETURN NEW;
             END;

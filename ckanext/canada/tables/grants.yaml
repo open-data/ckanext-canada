@@ -158,7 +158,8 @@ resources:
         Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
         
         Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 50
@@ -177,8 +178,6 @@ resources:
         Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
 
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
-    obligation: Mandatory
-    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -299,7 +298,7 @@ resources:
     description:
       en: 'The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.'
       fr: Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
-    obligation: Mandatory for Canada only
+    obligation: Optional
     format_type: "Text format locked to (X#X #X#)"
     datastore_type: text
     excel_column_width: 30
@@ -407,8 +406,7 @@ resources:
     description:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -421,8 +419,7 @@ resources:
     description:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -435,8 +432,7 @@ resources:
     description:
       en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system. This field may be the same as the departmental project identifier if the department has only one number for the project.
       fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère. Ce champ peut être identique au champ Identificateur de projet ministériel si c'est le seul numéro que possède le ministère.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
@@ -581,8 +577,7 @@ resources:
     description:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 45
@@ -595,8 +590,7 @@ resources:
     description:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 45
@@ -718,9 +712,9 @@ resources:
       amendment_date: "2018-04-01"
       agreement_type: "G"
       recipient_type: "G"
-      recipient_business_number: "1245810604"
-      recipient_legal_name: "Bombardier Aerospace Services Limited|Services Bombardier Aéronautique Limitée"
-      recipient_operating_name: "Bombardier Inc."
+      recipient_business_number: "123456789"
+      recipient_legal_name: "ACME Services Limited|Services ACME Limitée"
+      recipient_operating_name: "ACME"
       research_organization_name: "York University|Université York"
       recipient_country: "CA"
       recipient_province: "ON"
@@ -729,24 +723,24 @@ resources:
       federal_riding_name_en: "Winnipeg South Centre"
       federal_riding_name_fr: "Winnipeg-Centre-Sud"
       federal_riding_number: "46014"
-      prog_name_en: "Canada History Fund (CHF)"
-      prog_name_fr: "Fonds pour l’histoire du Canada (FHC)"
-      prog_purpose_en: "The Canada History Fund (CHF) encourages Canadians to learn about Canada’s history, civic life, and public policy.  The Program supports the development and/or enhancement of learning materials, the organization of learning and developmental experiences, and the establishment and maintenance of networks that give Canadians opportunities to enhance their understanding of Canada, thus building an informed and engaged citizenry."
-      prog_purpose_fr: "Le Fonds pour l’histoire du Canada (FHC) incite les Canadiens à se renseigner sur l’histoire du Canada, ainsi que sur la vie civique et la politique publique nationales. Il soutient la production ou l’amélioration de matériel didactique, l’organisation d’activités d’apprentissage ou de perfectionnement et la création et le maintien de réseaux offrant aux Canadiens la possibilité d’améliorer leur compréhension du Canada, de manière à avoir une population informée et engagée."
-      agreement_title_en: "International Seabed Authority"
-      agreement_title_fr: "Autorité internationale des fonds marins"
+      prog_name_en: "Canada Granting Program"
+      prog_name_fr: "Le programme de subvention du Canada"
+      prog_purpose_en: "The Canada Granting Program encourage Canadians to learn about Canada’s geography, history, and economy. The Program provides networking opportunities to enhance recipients’ understanding of Canada."
+      prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
+      agreement_title_en: "Building better buildings"
+      agreement_title_fr: "Construire des meilleurs bâtiments"
       agreement_number: "F1580-140737"
       agreement_value: "500000"
       foreign_currency_type: "USD"
       foreign_currency_value: "450000"
-      agreement_start_date: "2020-04-01"
+      agreement_start_date: "2019-04-01"
       agreement_end_date: "2020-04-31"
       coverage: "Canada; Mexico|Mexique; United States|États-Unis"
-      description_en: "Developing computer models and other tools to predict the fire safety performance of buildings."
-      description_fr: "Met au point des modèles informatiques et d'autres outils pour prévoir la sécurité incendie des bâtiments."
+      description_en: "Developing models and other tools to predict the safety performance of buildings."
+      description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
       naics_identifier: "611710"
-      expected_results_en: "Develop highly qualified personnel, expert in research, available to pursue various knowledge-intensive careers within industry, academia, government and other sectors of the economy."
-      expected_results_fr: "Développé un personnel hautement qualifié, spécialisé dans la recherche, prêt à mener une carrière variée axée sur le savoir au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
+      expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
+      expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
 
     filters:
       recipient_province: "ON"
