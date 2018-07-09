@@ -350,8 +350,7 @@ resources:
     description:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -364,8 +363,7 @@ resources:
     description:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40

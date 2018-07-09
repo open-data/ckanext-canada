@@ -630,8 +630,6 @@ def update_triggers():
                         {recipient_province},
                         'recipient_province');
                     PERFORM not_empty(NEW.recipient_city, 'recipient_city');
-                    PERFORM not_empty(NEW.prog_name_en, 'prog_name_en');
-                    PERFORM not_empty(NEW.prog_name_fr, 'prog_name_fr');
                     PERFORM not_empty(NEW.prog_purpose_en, 'prog_purpose_en');
                     PERFORM not_empty(NEW.prog_purpose_fr, 'prog_purpose_fr');
                     PERFORM not_empty(NEW.description_en, 'description_en');
