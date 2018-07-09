@@ -217,6 +217,13 @@ def update_triggers():
                 rationale=pg_array(consultations_choices['rationale']),
             )
         )
+
+    # A: When sysadmin passes '*' as user_modified, replace with '' and
+    #    set created+modified values to NULL. This is used when restoring
+    #    earlier migrated data that had no record of the
+    #    user/created/modified values
+    # B: Otherwise update created+modified dates and replace user with
+    #    current user
     lc.action.datastore_function_create(
         name=u'update_record_modified_created_trigger',
         or_replace=True,
@@ -229,18 +236,34 @@ def update_triggers():
                 sysadmin boolean NOT NULL := (SELECT sysadmin
                     FROM datastore_user);
             BEGIN
-                IF NOT sysadmin OR (req_user_modified = '') IS NOT FALSE THEN
+                IF NOT sysadmin THEN
                     req_user_modified := NULL;
                 END IF;
                 IF TG_OP = 'INSERT' THEN
+                    IF req_user_modified = '*' THEN
+                        NEW.user_modified := '';
+                        NEW.record_created := NULL;
+                        NEW.record_modified := NULL;
+                        RETURN NEW;
+                    END IF;
                     IF NEW.record_created IS NULL THEN
                         NEW.record_created := now() at time zone 'utc';
                     END IF;
                     IF NEW.record_modified IS NULL THEN
                         NEW.record_modified := NEW.record_created;
                     END IF;
-                    IF req_user_modified IS NULL THEN
+                    IF (req_user_modified = '') IS NOT FALSE THEN
                         NEW.user_modified := username;
+                    END IF;
+                    RETURN NEW;
+                END IF;
+
+                IF req_user_modified = '*' THEN
+                    NEW.user_modified := '';
+                    NEW.record_created := NULL;
+                    NEW.record_modified := NULL;
+                    IF OLD = NEW THEN
+                        RETURN NULL;
                     END IF;
                     RETURN NEW;
                 END IF;
@@ -251,14 +274,14 @@ def update_triggers():
                 IF NEW.record_modified IS NULL THEN
                     NEW.record_modified := OLD.record_modified;
                 END IF;
-                IF req_user_modified IS NULL THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := OLD.user_modified;
                 END IF;
                 IF OLD = NEW THEN
                     RETURN NULL;
                 END IF;
                 NEW.record_modified := now() at time zone 'utc';
-                IF req_user_modified IS NULL THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := username;
                 ELSE
                     NEW.user_modified := req_user_modified;

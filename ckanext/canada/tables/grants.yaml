@@ -121,8 +121,24 @@ resources:
       en: Recipient Business Number
       fr: Numéro d'entreprise du bénéficiaire
     description:
-      en: The recipient business number is the 9-digit business number assigned by the Canada Revenue Agency (CRA). This information can be accessed through the CRA database and serves to provide a consistent identifier for entities that are not individual or sole proprietorships but that are entitled to grant and/or contribution funding.
-      fr: Le numéro d'entreprise du bénéficiaire est le numéro d'entreprise à 9 chiffres attribué par l'Agence du revenu du Canada. Ce renseignement est accessible par l'intermédiaire de la base de données de l'Agence du revenu du Canada, et sert d'identificateur constant pour les entités qui ne sont pas des particuliers ou des entreprises à propriétaire unique mais qui sont admissibles au financement sous forme de subvention et/ou de contribution.
+      en: |
+        The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
+
+        The business number should be populated for an organization or charity.  
+
+        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca. 
+
+        To validate a Business Number associated with a charity, departments can access the List of Charities basic search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity name of the search result to find additional information about the charity (e.g., Charity Program number, charity status, effective date of status, designation, etc.) Legal name and operating name cannot be validated using this basic search.
+
+        A business number is issued when an organization is registered federally, provincially or municipally. It does not change and will allow for consistent identification even if the legal name, the operation name or the organization changes over the life cycle of the grant or contribution.
+      fr: |
+        Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations associées à une subvention ou à un financement de contribution.
+
+        Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
+
+        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca. 
+
+        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
     obligation: Optional
     format_type: Free text
     datastore_type: text
@@ -131,71 +147,62 @@ resources:
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
   - datastore_id: recipient_legal_name
     label:
-      en: Recipient Legal Name
-      fr: Nom légal du bénéficiaire
+      en: Recipient Legal Name (English|French)
+      fr: Nom légal du bénéficiaire (anglais|français)
     description:
-      en: The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
-      fr: Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
+      en: |
+        The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
+
+        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
+      fr: |
+        Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
+        
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 50
 
-  # 3.9 Recipient Operating Name (English) (New Field)
-  - datastore_id: recipient_operating_name_en
+  # 3.8 Recipient Operating Name (New Field)
+  - datastore_id: recipient_operating_name
     label:
-      en: Recipient Operating Name (English)
-      fr: Nom commercial du bénéficiaire (anglais)
+      en: Recipient Operating Name (English|French)
+      fr: Nom commercial du bénéficiaire (anglais|français)
     description:
-      en: The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
-      fr: Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
+      en: |
+        The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
+
+        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English|Legal name French.
+      fr: |
+        Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
+
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
 
-  # 3.10 Recipient Operating Name (French) (New Field)
-  - datastore_id: recipient_operating_name_fr
+  # 3.9 Research Organization (New Field)
+  - datastore_id: research_organization_name
     label:
-      en: Recipient Operating Name (French)
-      fr: Nom commercial du bénéficiaire (français)
+      en: Research Organization (English|French)
+      fr: Organisme de recherche (anglais|français)
     description:
-      en: The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
-      fr: Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 35
+      en: |
+        The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
 
-  # 3.11 Research Organization (English) (New Field)
-  - datastore_id: research_organization_name_en
-    label:
-      en: Research Organization (English)
-      fr: Organisme de recherche (anglais)
-    description:
-      en: The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
-      fr: Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
+        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English|name French.
+      fr: |
+        Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
+
+        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
 
-  # 3.12 Research Organization (French) (New Field)
-  - datastore_id: research_organization_name_fr
-    label:
-      en: Research Organization (French)
-      fr: Organisme de recherche (français)
-    description:
-      en: The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
-      fr: Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 30
-
-  # 3.13 Recipient Country
+  # 3.10 Recipient Country
   - datastore_id: recipient_country
     label:
       en: Recipient Country
@@ -210,7 +217,7 @@ resources:
     excel_column_width: 20
     choices_file: choices/country.json
 
-  # 3.14 Recipient Province or Territory (New Field)
+  # 3.11 Recipient Province or Territory (New Field)
   - datastore_id: recipient_province
     label:
       en: Recipient Province or Territory
@@ -264,35 +271,27 @@ resources:
         en: Nova Scotia
         fr: Nouvelle-Écosse
 
-  # 3.15 Recipient City (English) (previously recipient_region_en)
-  - datastore_id: recipient_city_en
+  # 3.12 Recipient City (previously recipient_region_en, recipient_region_fr)
+  - datastore_id: recipient_city
     label:
-      en: Recipient City (English)
-      fr: Ville du bénéficiaire (anglais)
+      en: Recipient City (English|French)
+      fr: Ville du bénéficiaire (anglais|français)
     description:
-      en: 'The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.'
-      fr: La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+      en: |
+        The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
+
+        Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
+      fr: |
+        La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
     obligation: Mandatory
     excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
 
-  # 3.16 Recipient City (French) (previously recipient_region_fr)
-  - datastore_id: recipient_city_fr
-    label:
-      en: Recipient City (French)
-      fr: Ville du bénéficiaire (français)
-    description:
-      en: 'The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.'
-      fr: La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 40
-
-  # 3.17 Recipient Postal Code (New Field)
+  # 3.13 Recipient Postal Code (New Field)
   - datastore_id: recipient_postal_code
     label:
       en: Recipient Postal Code
@@ -305,7 +304,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.18 Federal Riding Name (English) (New Field)
+  # 3.14 Federal Riding Name (English) (New Field)
   - datastore_id: federal_riding_name_en
     label:
       en: Federal Riding Name (English)
@@ -318,7 +317,7 @@ resources:
     datastore_type: text
     excel_column_width: 45
 
-  # 3.19 Federal Riding Name (French) (New Field)
+  # 3.15 Federal Riding Name (French) (New Field)
   - datastore_id: federal_riding_name_fr
     label:
       en: Federal Riding Name (French)
@@ -331,7 +330,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.20 Federal Riding Number (New Field)
+  # 3.16 Federal Riding Number (New Field)
   - datastore_id: federal_riding_number
     label:
       en: Federal Riding Number
@@ -344,7 +343,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.21 Program Name (English)
+  # 3.17 Program Name (English)
   - datastore_id: prog_name_en
     label:
       en: Program Name (English)
@@ -358,7 +357,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.22 Program Name (French)
+  # 3.18 Program Name (French)
   - datastore_id: prog_name_fr
     label:
       en: Program Name (French)
@@ -372,7 +371,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.23 Program Purpose (English) (formerly purpose_en)
+  # 3.19 Program Purpose (English) (formerly purpose_en)
   - datastore_id: prog_purpose_en
     label:
       en: Program Purpose (English)
@@ -386,7 +385,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.24 Program Purpose (French) (formerly purpose_fr)
+  # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
     label:
       en: Program Purpose (French)
@@ -400,7 +399,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.25 Agreement Title (English) (formerly proj_name_en)
+  # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
     label:
       en: Agreement Title (English)
@@ -414,7 +413,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.26 Agreement Title (French) (formerly proj_name_fr)
+  # 3.22 Agreement Title (French) (formerly proj_name_fr)
   - datastore_id: agreement_title_fr
     label:
       en: Agreement Title (French)
@@ -428,7 +427,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.27 Agreement Number (formerly prog_number, proj_number)
+  # 3.23 Agreement Number (formerly prog_number, proj_number)
   - datastore_id: agreement_number
     label:
       en: Agreement Number
@@ -442,7 +441,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.28 Agreement Value in CAD (Formerly Field 3.15 - Value)
+  # 3.24 Agreement Value in CAD (Formerly Field 3.15 - Value)
   - datastore_id: agreement_value
     label:
       en: Agreement Value in CAD
@@ -462,7 +461,7 @@ resources:
      - 1000000
      - 5000000
 
-  # 3.29 Foreign Currency Type (New field)
+  # 3.25 Foreign Currency Type (New field)
   - datastore_id: foreign_currency_type
     label:
       en: Foreign Currency Type
@@ -477,7 +476,7 @@ resources:
     excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
     choices_file: choices/currency.json
 
-  # 3.30 Foreign Currency Value (New field)
+  # 3.26 Foreign Currency Value (New field)
   - datastore_id: foreign_currency_value
     label:
       en: Foreign Currency Value
@@ -490,7 +489,7 @@ resources:
     excel_column_width: 30
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
 
-  # 3.31 Agreement Start Date (Formerly 3.14 "date")
+  # 3.27 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date
     label:
       en: Agreement Start Date
@@ -507,7 +506,7 @@ resources:
     extract_date_month: true
     extract_date_clean: true
 
-  # 3.32 Projected Agreement End Date (New Field)
+  # 3.28 Projected Agreement End Date (New Field)
   - datastore_id: agreement_end_date
     label:
       en: Projected Agreement End Date
@@ -520,11 +519,11 @@ resources:
     datastore_type: date
     excel_column_width: 30
 
-  # 3.34 Coverage (English) (New Field)
-  - datastore_id: coverage_en
+  # 3.29 Coverage (New Field)
+  - datastore_id: coverage
     label:
-      en: Coverage (English)
-      fr: Portée (anglais)
+      en: Coverage (English|French; ...)
+      fr: Portée (anglais|français; ...)
     description:
       en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
       fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
@@ -533,20 +532,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.34 Coverage (French) (New Field)
-  - datastore_id: coverage_fr
-    label:
-      en: Coverage (French)
-      fr: Portée (français)
-    description:
-      en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
-      fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
-    obligation: Optional
-    format_type: Free text; separate entries with a “;”
-    datastore_type: text
-    excel_column_width: 30
-
-  # 3.51 Description (English) (New Field)
+  # 3.30 Description (English) (New Field)
   - datastore_id: description_en
     label:
       en: Description (English)
@@ -560,7 +546,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.36 Description (French) (New Field)
+  # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
     label:
       en: Description (French)
@@ -574,7 +560,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.37 NAICS Identifier (New Field)
+  # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
     label:
       en: NAICS Identifier
@@ -587,7 +573,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.38 Expected Results or Intended Outcome (English) (New Field)
+  # 3.33 Expected Results or Intended Outcome (English) (New Field)
   - datastore_id: expected_results_en
     label:
       en: Expected Results or Intended Outcome (English)
@@ -601,7 +587,7 @@ resources:
     datastore_type: text
     excel_column_width: 45
 
-  # 3.39 Expected Results or Intended Outcome (French) (New Field)
+  # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
     label:
       en: Expected Results or Intended Outcome (French)
@@ -615,7 +601,7 @@ resources:
     datastore_type: text
     excel_column_width: 45
 
-  # 3.40 Additional Information (English) (Formerly comments_en, additional_info_en)
+  # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
     label:
       en: Additional Information (English)
@@ -652,7 +638,7 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
-  # 3.41 Additional Information (French) (Formerly comments_fr, additional_info_fr)
+  # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
     label:
       en: Additional Information (French)
@@ -689,6 +675,23 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
 
   datastore_primary_key: [ref_number, amendment_number]
   datastore_indexes: ""
@@ -706,31 +709,45 @@ resources:
 
   triggers:
   - grants_trigger
+  - update_record_modified_created_trigger
 
   examples:
     record:
       ref_number: "001-2018-2019-Q2-00045"
-      amendment_number: "0"
+      amendment_number: "3"
+      amendment_date: "2018-04-01"
       agreement_type: "G"
       recipient_type: "G"
-      research_organization_name_en: "University of Canada"
-      research_organization_name_fr: "Université du Canada"
+      recipient_business_number: "1245810604"
+      recipient_legal_name: "Bombardier Aerospace Services Limited|Services Bombardier Aéronautique Limitée"
+      recipient_operating_name: "Bombardier Inc."
+      research_organization_name: "York University|Université York"
       recipient_country: "CA"
       recipient_province: "ON"
-      recipient_city_en: "Ottawa"
-      recipient_city_fr: "Ottawa"
+      recipient_city: "Grand Falls|Grand-Sault"
       recipient_postal_code: "A1A 1A1"
-      federal_riding_name_en: "Avalon"
-      federal_riding_name_fr: "Avalon"
-      federal_riding_number: "10001"
+      federal_riding_name_en: "Winnipeg South Centre"
+      federal_riding_name_fr: "Winnipeg-Centre-Sud"
+      federal_riding_number: "46014"
+      prog_name_en: "Canada History Fund (CHF)"
+      prog_name_fr: "Fonds pour l’histoire du Canada (FHC)"
+      prog_purpose_en: "The Canada History Fund (CHF) encourages Canadians to learn about Canada’s history, civic life, and public policy.  The Program supports the development and/or enhancement of learning materials, the organization of learning and developmental experiences, and the establishment and maintenance of networks that give Canadians opportunities to enhance their understanding of Canada, thus building an informed and engaged citizenry."
+      prog_purpose_fr: "Le Fonds pour l’histoire du Canada (FHC) incite les Canadiens à se renseigner sur l’histoire du Canada, ainsi que sur la vie civique et la politique publique nationales. Il soutient la production ou l’amélioration de matériel didactique, l’organisation d’activités d’apprentissage ou de perfectionnement et la création et le maintien de réseaux offrant aux Canadiens la possibilité d’améliorer leur compréhension du Canada, de manière à avoir une population informée et engagée."
+      agreement_title_en: "International Seabed Authority"
+      agreement_title_fr: "Autorité internationale des fonds marins"
+      agreement_number: "F1580-140737"
       agreement_value: "500000"
       foreign_currency_type: "USD"
-      foreign_currency_value: "400000"
+      foreign_currency_value: "450000"
       agreement_start_date: "2020-04-01"
       agreement_end_date: "2020-04-31"
-      coverage_en: "Montreal; Quebec; Trois-Rivieres"
-      coverage_fr: "Montréal; Québec; Trois-Rivières"
+      coverage: "Canada; Mexico|Mexique; United States|États-Unis"
+      description_en: "Developing computer models and other tools to predict the fire safety performance of buildings."
+      description_fr: "Met au point des modèles informatiques et d'autres outils pour prévoir la sécurité incendie des bâtiments."
       naics_identifier: "611710"
+      expected_results_en: "Develop highly qualified personnel, expert in research, available to pursue various knowledge-intensive careers within industry, academia, government and other sectors of the economy."
+      expected_results_fr: "Développé un personnel hautement qualifié, spécialisé dans la recherche, prêt à mener une carrière variée axée sur le savoir au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
+
     filters:
       recipient_province: "ON"
     filter_one:
