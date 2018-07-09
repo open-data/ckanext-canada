@@ -33,4 +33,6 @@ for line in in_csv:
     line['high_profile'] = 'N' if 'NH' in line['rationale'].split(',') else 'Y'
     line['rationale'] = ','.join(
         RATIONALE.get(r, r) for r in line['rationale'].split(',') if r != 'NH')
+    line['subjects'] = ','.join(
+        s for s in line['subjects'].split(',') if s != 'FP')
     out_csv.writerow(line)
