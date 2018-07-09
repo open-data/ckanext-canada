@@ -271,8 +271,8 @@ resources:
         en: Nova Scotia
         fr: Nouvelle-Écosse
 
-  # 3.12 Recipient City (English) (previously recipient_region_en, recipient_region_fr)
-  - datastore_id: recipient_city_en
+  # 3.12 Recipient City (previously recipient_region_en, recipient_region_fr)
+  - datastore_id: recipient_city
     label:
       en: Recipient City (English|French)
       fr: Ville du bénéficiaire (anglais|français)
