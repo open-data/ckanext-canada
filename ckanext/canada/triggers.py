@@ -581,6 +581,27 @@ def update_triggers():
             )
         )
 
+    grants_nil_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('grants-nil'))
+    lc.action.datastore_function_create(
+        name=u'grants_nil_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.fiscal_year, 'fiscal_year');
+                PERFORM choice_one_of(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
+                PERFORM not_empty(NEW.quarter, 'quarter');
+                PERFORM choice_one_of(NEW.quarter, {quarter}, 'quarter');
+                RETURN NEW;
+            END;
+            '''.format(
+                fiscal_year=pg_array(grants_nil_choices['fiscal_year']),
+                quarter=pg_array(grants_nil_choices['quarter']),
+            )
+        )
+
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
     return u'ARRAY[' + u','.join(
