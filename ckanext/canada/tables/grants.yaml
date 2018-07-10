@@ -376,8 +376,7 @@ resources:
     description:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
@@ -390,8 +389,7 @@ resources:
     description:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
-    obligation: Mandatory
-    excel_required: true
+    obligation: Optional
     format_type: Free text
     datastore_type: text
     excel_column_width: 40
