@@ -237,6 +237,7 @@ resources:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
     datastore_type: money
+    extract_double_sortable: true
     excel_column_width: 20
 
     solr_dollar_range_facet:
