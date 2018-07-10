@@ -630,8 +630,6 @@ def update_triggers():
                         {recipient_province},
                         'recipient_province');
                     PERFORM not_empty(NEW.recipient_city, 'recipient_city');
-                    PERFORM not_empty(NEW.prog_purpose_en, 'prog_purpose_en');
-                    PERFORM not_empty(NEW.prog_purpose_fr, 'prog_purpose_fr');
                     PERFORM not_empty(NEW.description_en, 'description_en');
                     PERFORM not_empty(NEW.description_fr, 'description_fr');
                 END IF;
@@ -643,6 +641,27 @@ def update_triggers():
                 recipient_country=pg_array(grants_choices['recipient_country']),
                 recipient_province=pg_array(grants_choices['recipient_province']),
                 foreign_currency_type=pg_array(grants_choices['foreign_currency_type']),
+            )
+        )
+
+    grants_nil_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('grants-nil'))
+    lc.action.datastore_function_create(
+        name=u'grants_nil_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.fiscal_year, 'fiscal_year');
+                PERFORM choice_one_of(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
+                PERFORM not_empty(NEW.quarter, 'quarter');
+                PERFORM choice_one_of(NEW.quarter, {quarter}, 'quarter');
+                RETURN NEW;
+            END;
+            '''.format(
+                fiscal_year=pg_array(grants_nil_choices['fiscal_year']),
+                quarter=pg_array(grants_nil_choices['quarter']),
             )
         )
 
