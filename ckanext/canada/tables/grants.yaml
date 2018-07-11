@@ -7,174 +7,444 @@ upload_warn: 'Please be advised that we have experienced publishing issues with 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
 resources:
 - title: Proactive Disclosure - Grants and Contributions
   resource_name: grants
   fields:
 
+  # 3.1 Reference Number
   - datastore_id: ref_number
     label: Reference Number
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
-    obligation: Mandatory
-    format_type:
-      en: "GC-2015-Q1-00001 – this sequence will continue for each line item (i.e.: GC-2015-Q1-00001, GC-2015-Q1-00002, GC-2015-Q1-00001….)"
-      fr: GC-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. GC-2016-Q1-00001, GC-2016-Q1-00002, |GC-2016-Q1-00003….)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: prog_number
-    label: Program Number
-    description:
-      en: This field should be self-populated.  It identifies (by number or other tracking ID) the internal department program number.
-      fr: Cette zone renferme l’identificateur de la subvention.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: prog_name_en
-    label: Program Name (English)
-    description:
-      en: This field identifies the name of the program for the grant or contribution awarded, in English. Each organization has its own programs.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: prog_name_fr
-    label: Program Name (French)
-    description:
-      en: This field identifies the name, in French, of the program for the grant or contribution awarded. Each organization has its own programs.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: proj_number
-    label: Project Number
-    description:
-      en: This field identifies the internal project number of the Grant / Contribution awarded.
-      fr: Cette zone indique le Numéro du projet pour les subventions ou les contributions accordées.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: proj_name_en
-    label: Project Name (English)
-    description:
-      en: This field identifies the name of the grant or contribution awarded, in English. Each organization has its own projects.
-      fr: Cette zone renferme le nom du bénéficiaire, en anglais, de la subvention ou contribution.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: proj_name_fr
-    label: Project Name (French)
-    description:
-      en: This field identifies the name of the program, in French, for the grant or contribution awarded. Each organization has its own programs.
-      fr: Si disponible, cette zone renferme le nom du bénéficiaire, en francais, de la subvention ou contribution.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: recipient_name_en
-    label: Recipient Name (English)
-    description:
-      en: This field describes the name of the individual, company or organization to which the award is paid, in English. Typically it is the name indicated on the funding agreement.
-      fr: Cette zone indique, en anglais, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
+      en: The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
+      fr: Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
     obligation: Mandatory
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
-  - datastore_id: recipient_name_fr
-    label: Recipient Name (French)
+  # 3.2 Amendment Number (New Field)
+  - datastore_id: amendment_number
+    label:
+      en: Amendment Number
+      fr: Numéro de modification
     description:
-      en: This field describes the name of the individual, company or organization, in French, to which the award is paid. Typically it is the name indicated on the funding agreement.
-      fr: Cette zone indique, en français, le nom du programme pour les subventions ou les contributions accordées. Chaque organisation a ses propres programmes.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: recipient_business_number
-    label: Recipient Business Number
-    description:
-      en: This field describes the business number applied to the recipient. Not all departments capture this information.
-      fr: Ce champ décrit le numéro d'entreprise appliquée au destinataire. Tous les départements saisissent cette information.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: recipient_country
-    label: Country
-    description:
-      en: This field identified the country of the Country of residence of the  place of business / headquarters of the Recipient
-      fr: Cette zone indique le pays de résidence de l’établissement ou du siège du bénéficiaire
+      en: This field is populated by departments and identifies that an amendment is occurring to original information. Use 0 for original records.
+      fr: Ce champ est rempli par les ministères et indique qu'une modification est apportée aux renseignements originaux. Utiliser 0 pour les enregistrements originaux.
     obligation: Mandatory
-    format_type: Controlled List
-    datastore_type: text
-    excel_column_width: 10
-    choices_file: choices/country.json
+    excel_required: true
+    format_type: Numeric only
+    datastore_type: int
+    excel_column_width: 25
 
-  - datastore_id: recipient_region_en
-    label: Region (English)
+  # 3.3 Amendment Date (New Field)
+  - datastore_id: amendment_date
+    label:
+      en: Amendment Date
+      fr: Date de modification
     description:
-      en: This field identifies the municipality, Province or Territory of the place of business / headquarters of the Recipient, in English. Typically as indicated on the face of the cheque(s) issued as payment(s) of the award.
-      fr: Cette zone indique en anglais la ville, la province ou le territoire de l’établissement ou du siège du bénéficiaire. Correspond habituellement à ce qui est indiqué au recto des chèques émis comme paiement de la subvention ou de la contribution.
-    obligation: Mandatory
-    format_type:
-      en: "Free text – please use full city/region, province/state where possible (i.e.: Ottawa, Ontario,  New York City, New York)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l'État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: recipient_region_fr
-    label: Region (French)
-    description:
-      en: This field identifies the municipality, Province or Territory of place of business / headquarters of the Recipient, in French. Typically as indicated on the face of the cheque(s) issued as payment(s) of the award.
-      fr: Cette zone indique, en français, la ville, la province ou le territoire de l’établissement ou du siège du bénéficiaire. Correspond habituellement à ce qui est indiqué au recto des chèques émis comme paiement de la subvention ou de la contribution.
-    obligation: Mandatory
-    format_type:
-      en: "Free text – please use full city/region, province/state where possible (i.e.: Ottawa, Ontario,  New York City, New York)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l'État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: date
-    label: Date
-    description:
-      en: This field is the date at which the awarding of a grant or contribution has been officially authorized and, by extension, results in a commitment in favour of a recipient.
-      fr: Cette zone montre la date (trimestre) à la laquelle le fournisseur a reçu la subvention ou contribution.
-    obligation: Mandatory
+      en: This field is populated by departments and indicates the date on which an amendment (or amendments) took place.
+      fr: Ce champ est rempli par les ministères et indique la date à laquelle une modification (ou des modifications) a été apportée.
+    obligation:
+      en: Mandatory if amendment number set
+      fr: Obligatoire si le numéro de modification est défini
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
-    extract_date_year: true
-    extract_date_month: true
-    extract_date_clean: true
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
 
-  - datastore_id: value
-    label: Value
+  # 3.4 Agreement Type (Formerly “Type”- 3.16)
+  - datastore_id: agreement_type
+    label:
+      en: Agreement Type
+      fr: Type d’entente
     description:
-      en: This field is populated by the dollar value of the award. In the case where a good or service is awarded as a grant or contribution, the fair market value at the time of the award should be reported. In those instances where a grant or contribution as awarded applies to more than one fiscal year, the total amount of the award is to be posted. In such instances, departments and agencies are to include a notation to this effect in the Comments information field.
-      fr: Cette zone renferme la valeur de la subvention ou contribution accordée au fournisseur.
+      en: This field is populated by departments and indicates whether the agreement signed is a grant, contribution or other transfer payment.
+      fr: Ce champ est rempli par les ministères et indique si l'entente signée vise une subvention, une contribution ou un autre paiement de transfert.
     obligation: Mandatory
-    format_type:
-      en: Free text – Note, please do not include a dollar sign, numeric value only ($)
-      fr: Texte libre
-    datastore_type: money
+    excel_required: true
+    format_type: Controlled List
+    datastore_type: text
     excel_column_width: 20
+    choices:
+      G:
+        en: Grant
+        fr: subvention
+      C:
+        en: Contribution
+        fr: contribution
+      O:
+        en: Other transfer payment
+        fr: autre
+
+  # 3.5 Recipient Type (New field)
+  - datastore_id: recipient_type
+    label:
+      en: Recipient Type
+      fr: Type de bénéficiaire
+    description:
+      en: The recipient type helps identify who is receiving the money.
+      fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
+    obligation: Optional
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      F:
+        en: For-profit organizations
+        fr: organisme à but lucratif
+      N:
+        en: Not-for-profit organizations and charities
+        fr: organisme à but non lucratif et organisme de bienfaisance
+      S:
+        en: Academia
+        fr: établissement universitaire et institution publique
+      A:
+        en: Aboriginal recipients
+        fr: bénéficiaire autochtone
+      G:
+        en: Government
+        fr: gouvernement
+      I:
+        en: International (non-government)
+        fr: organisation internationale (non gouvernementale)
+      P:
+        en: Individual or sole proprietorships
+        fr: particulier ou entreprise à propriétaire unique
+      O:
+        en: Other
+        fr: autre
+
+  # 3.6 Recipient Business Number
+  - datastore_id: recipient_business_number
+    label:
+      en: Recipient Business Number
+      fr: Numéro d'entreprise du bénéficiaire
+    description:
+      en: |
+        The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
+
+        The business number should be populated for an organization or charity.  
+
+        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca. 
+
+        To validate a Business Number associated with a charity, departments can access the List of Charities basic search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity name of the search result to find additional information about the charity (e.g., Charity Program number, charity status, effective date of status, designation, etc.) Legal name and operating name cannot be validated using this basic search.
+
+        A business number is issued when an organization is registered federally, provincially or municipally. It does not change and will allow for consistent identification even if the legal name, the operation name or the organization changes over the life cycle of the grant or contribution.
+      fr: |
+        Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations associées à une subvention ou à un financement de contribution.
+
+        Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
+
+        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca. 
+
+        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
+  - datastore_id: recipient_legal_name
+    label:
+      en: Recipient Legal Name (English|French)
+      fr: Nom légal du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
+
+        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
+      fr: |
+        Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
+        
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 50
+
+  # 3.8 Recipient Operating Name (New Field)
+  - datastore_id: recipient_operating_name
+    label:
+      en: Recipient Operating Name (English|French)
+      fr: Nom commercial du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
+
+        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English|Legal name French.
+      fr: |
+        Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
+
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.9 Research Organization (New Field)
+  - datastore_id: research_organization_name
+    label:
+      en: Research Organization (English|French)
+      fr: Organisme de recherche (anglais|français)
+    description:
+      en: |
+        The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
+
+        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English|name French.
+      fr: |
+        Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
+
+        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.10 Recipient Country
+  - datastore_id: recipient_country
+    label:
+      en: Recipient Country
+      fr: Pays du bénéficiaire
+    description:
+      en: The “Recipient country” is a mandatory field. It is the country in which the recipient resides.
+      fr: Le « Pays du bénéficiaire » est un champ obligatoire qui indique le pays de résidence du bénéficiaire.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 20
+    choices_file: choices/country.json
+
+  # 3.11 Recipient Province or Territory (New Field)
+  - datastore_id: recipient_province
+    label:
+      en: Recipient Province or Territory
+      fr: Province ou territoire du bénéficiaire
+    description:
+      en: The "Recipient province or territory" is a mandatory field that identifies where, within Canada, the recipient resides.
+      fr: Le champ « province ou territoire du bénéficiaire » est un champ obligatoire qui indique le lieu de résidence du bénéficiaire au Canada.
+    obligation: Optional
+    format_type: Controlled List
+    datastore_type: text
+    excel_column_width: 35
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
+    choices:
+      "ON":
+        en: Ontario
+        fr: Ontario
+      QC:
+        en: Quebec
+        fr: Québec
+      NB:
+        en: New Brunswick
+        fr: Nouveau-Brunswick
+      NL:
+        en: Newfoundland & Labrador
+        fr: Terre-Neuve-et-Labrador
+      PE:
+        en: Prince Edward Island
+        fr: Île-du-Prince-Édouard
+      SK:
+        en: Saskatchewan
+        fr: Saskatchewan
+      YT:
+        en: Yukon
+        fr: Yukon
+      AB:
+        en: Alberta
+        fr: Alberta
+      BC:
+        en: British Columbia
+        fr: Colombie-Britannique
+      MB:
+        en: Manitoba
+        fr: Manitoba
+      NT:
+        en: Northwest Territories
+        fr: Territoires du Nord-Ouest
+      NU:
+        en: Nunavut
+        fr: Nunavut
+      NS:
+        en: Nova Scotia
+        fr: Nouvelle-Écosse
+
+  # 3.12 Recipient City (previously recipient_region_en, recipient_region_fr)
+  - datastore_id: recipient_city
+    label:
+      en: Recipient City (English|French)
+      fr: Ville du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
+
+        Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
+      fr: |
+        La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.13 Recipient Postal Code (New Field)
+  - datastore_id: recipient_postal_code
+    label:
+      en: Recipient Postal Code
+      fr: Code postal du bénéficiaire
+    description:
+      en: 'The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.'
+      fr: Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
+    obligation: Optional
+    format_type: "Text format locked to (X#X #X#)"
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.14 Federal Riding Name (English) (New Field)
+  - datastore_id: federal_riding_name_en
+    label:
+      en: Federal Riding Name (English)
+      fr: Nom de la circonscription fédérale (anglais)
+    description:
+      en: The federal riding name is the name of the riding in which the recipient resides.
+      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 45
+
+  # 3.15 Federal Riding Name (French) (New Field)
+  - datastore_id: federal_riding_name_fr
+    label:
+      en: Federal Riding Name (French)
+      fr: Nom de la circonscription fédérale (français)
+    description:
+      en: The federal riding name is the name of the riding in which the recipient resides.
+      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.16 Federal Riding Number (New Field)
+  - datastore_id: federal_riding_number
+    label:
+      en: Federal Riding Number
+      fr: Numéro de la circonscription fédérale
+    description:
+      en: The federal riding number is based on the riding in which the recipient resides.  Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
+      fr: Numéro de la circonscription fédérale où réside le bénéficiaire.  Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.17 Program Name (English)
+  - datastore_id: prog_name_en
+    label:
+      en: Program Name (English)
+      fr: Nom du programme (anglais)
+    description:
+      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
+      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.18 Program Name (French)
+  - datastore_id: prog_name_fr
+    label:
+      en: Program Name (French)
+      fr: Nom du programme (français)
+    description:
+      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
+      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.19 Program Purpose (English) (formerly purpose_en)
+  - datastore_id: prog_purpose_en
+    label:
+      en: Program Purpose (English)
+      fr: But du programme (anglais)
+    description:
+      en: The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.20 Program Purpose (French) (formerly purpose_fr)
+  - datastore_id: prog_purpose_fr
+    label:
+      en: Program Purpose (French)
+      fr: But du programme (français)
+    description:
+      en: The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.21 Agreement Title (English) (formerly proj_name_en)
+  - datastore_id: agreement_title_en
+    label:
+      en: Agreement Title (English)
+      fr: Titre de l’entente (anglais)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.22 Agreement Title (French) (formerly proj_name_fr)
+  - datastore_id: agreement_title_fr
+    label:
+      en: Agreement Title (French)
+      fr: Titre de l’entente (français)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 40
+
+  # 3.23 Agreement Number (formerly prog_number, proj_number)
+  - datastore_id: agreement_number
+    label:
+      en: Agreement Number
+      fr: Numéro de l’entente
+    description:
+      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system. This field may be the same as the departmental project identifier if the department has only one number for the project.
+      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère. Ce champ peut être identique au champ Identificateur de projet ministériel si c'est le seul numéro que possède le ministère.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.24 Agreement Value in CAD (Formerly Field 3.15 - Value)
+  - datastore_id: agreement_value
+    label:
+      en: Agreement Value in CAD
+      fr: Valeur de l’entente en dollars canadiens
+    description:
+      en: The agreement value is the dollar amount stated in the grant or contribution agreement. This field should be populated with a monetary value in Canadian dollars.
+      fr: La valeur de l'entente est le montant en dollars indiqué dans l'entente de subvention ou de contribution. Ce champ doit indiquer une valeur monétaire en dollars canadiens.
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: money
+    excel_column_width: 40
 
     solr_dollar_range_facet:
      - 10000
@@ -183,94 +453,237 @@ resources:
      - 1000000
      - 5000000
 
-  - datastore_id: type
-    label: Type
+  # 3.25 Foreign Currency Type (New field)
+  - datastore_id: foreign_currency_type
+    label:
+      en: Foreign Currency Type
+      fr: Type de monnaie étrangère
     description:
-      en: This field describes the type of award (i.e., Grant or Contribution)
-      fr: Cette zone décrit le type de subvention ou contribution.
-    obligation: Mandatory
+      en: This field is populated by the user. It will display the type of foreign currency that a transfer payment was funded in, if applicable.
+      fr: Le champ Type de monnaie étrangère doit être rempli si le bénéficiaire est payé dans une devise autre que le dollar canadien. Il faut sélectionner le type de monnaie étrangère; par exemple, dollar américain (USD), dollar australien (AUD), livre sterling (GBP). Ce champ est obligatoire si l'entente est en devise étrangère.
+    obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 20
-    choices:
-      G:
-        en: Grant
-        fr: subventions
-      C:
-        en: Contribution
-        fr: contributions
+    excel_column_width: 30
+    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
+    choices_file: choices/currency.json
 
-  - datastore_id: purpose_en
-    label: Purpose English
+  # 3.26 Foreign Currency Value (New field)
+  - datastore_id: foreign_currency_value
+    label:
+      en: Foreign Currency Value
+      fr: Valeur de la monnaie étrangère
     description:
-      en: This field describes the purpose of the Grant / Contribution in English. Departments and agencies should endeavour to provide entries that are as descriptive as possible as to the purpose of the grant or contribution being awarded.
-      fr: Cette zone décrit le but de la subvention ou contribution en anglais.
+      en: The foreign currency value is the amount as signed in the grant or contribution agreement with the recipient. This field should be populated with a monetary value in the foreign currency. This field is mandatory if the agreement is awarded in a foreign currency.
+      fr: La valeur en monnaie étrangère est le montant convenu aux termes de l'entente de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si l'entente est en devise étrangère.
+    obligation: Mandatory if foreign currency type is selected
+    datastore_type: money
+    excel_column_width: 30
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
+
+  # 3.27 Agreement Start Date (Formerly 3.14 "date")
+  - datastore_id: agreement_start_date
+    label:
+      en: Agreement Start Date
+      fr: Date de début de l’entente
+    description:
+      en: The agreement start date is the assumed start of the agreement, or when the project is supposed to begin, as captured in the initial agreement.
+      fr: La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente ou la date à laquelle le projet est censé commencer, conformément à l'entente initiale.
     obligation: Mandatory
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 41
+    excel_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_column_width: 30
+    extract_date_year: true
+    extract_date_month: true
+    extract_date_clean: true
 
-  - datastore_id: purpose_fr
-    label: Purpose French
+  # 3.28 Projected Agreement End Date (New Field)
+  - datastore_id: agreement_end_date
+    label:
+      en: Projected Agreement End Date
+      fr: Date de fin prévue de l’entente
     description:
-      en: This field describes the purpose of the Grant/Contribution in French. Departments and agencies should endeavour to provide entries that are as descriptive as possible as to the purpose of the grant or contribution being awarded.
-      fr: Cette zone décrit le but de la subvention ou contribution en français.
+      en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
+      fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
+    obligation: Optional
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_column_width: 30
+
+  # 3.29 Coverage (New Field)
+  - datastore_id: coverage
+    label:
+      en: Coverage (English|French; ...)
+      fr: Portée (anglais|français; ...)
+    description:
+      en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
+      fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
+    obligation: Optional
+    format_type: Free text; separate entries with a “;”
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.30 Description (English) (New Field)
+  - datastore_id: description_en
+    label:
+      en: Description (English)
+      fr: Description (anglais)
+    description:
+      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
+      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 41
+    excel_column_width: 30
 
-  - datastore_id: comments_en
-    label: Comments English
+  # 3.31 Description (French) (New Field)
+  - datastore_id: description_fr
+    label:
+      en: Description (French)
+      fr: Description (français)
     description:
-      en: "It is expected that entries in this information field will be provided on an exceptional basis only. Departments and agencies must nonetheless provide information in this field in those instances where one or more of the following circumstances apply:
-(Notation that) recipient reallocates or otherwise redistributes grant or contribution award to third-party beneficiaries;
-(Advisory where) two or more departments or agencies are involved in the funding of and/or the awarding of a particular grant or contribution award;
-Restatement, due to a material error, of a previously-reported grant or contribution award together with appropriate cross-referencing;
-Belated reporting of a grant or contribution award; and
-Award provided and spanning more than one fiscal year."
-      fr: Cette zone accepte une brève description normalisée en anglais de la subvention ou contribution.
+      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
+      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.32 NAICS Identifier (New Field)
+  - datastore_id: naics_identifier
+    label:
+      en: NAICS Identifier
+      fr: Identificateur du SCIAN
+    description:
+      en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
+      fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
+    obligation: Optional
+    format_type: Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.33 Expected Results or Intended Outcome (English) (New Field)
+  - datastore_id: expected_results_en
+    label:
+      en: Expected Results or Intended Outcome (English)
+      fr: Résultats attendus ou visés (anglais)
+    description:
+      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
+      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 41
+    excel_column_width: 45
 
-  - datastore_id: comments_fr
-    label: Comments French
+  # 3.34 Expected Results or Intended Outcome (French) (New Field)
+  - datastore_id: expected_results_fr
+    label:
+      en: Expected Results or Intended Outcome (French)
+      fr: Résultats attendus ou visés (français)
     description:
-      en: "It is expected that entries in this information field will be provided on an exceptional basis only. Departments and agencies must nonetheless provide information in this field in those instances where one or more of the following circumstances apply:
-(Notation that) recipient reallocates or otherwise redistributes grant or contribution award to third-party beneficiaries;
-(Advisory where) two or more departments or agencies are involved in the funding of and/or the awarding of a particular grant or contribution award;
-Restatement, due to a material error, of a previously-reported grant or contribution award together with appropriate cross-referencing;
-Belated reporting of a grant or contribution award; and
-Award provided and spanning more than one fiscal year."
-      fr: Cette zone accepte une brève description normalisée en français de la subvention ou contribution.
+      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
+      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 41
+    excel_column_width: 45
 
-  - datastore_id: additional_info_en
-    label: Additional Information English
+  # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (anglais)
     description:
-      en: This field provide supplemental information to describe the program or project that will benefit from the grant or contribution, in English.
-      fr: Cette zone offre, en anglais, des renseignements supplémentaires et décrit le programme ou le projet qui bénéficiera de la subvention ou de la contribution.
+      en: |
+        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+        •additional funding departments
+        •funding through a third party
+        •ministerial announcements
+        •research fields
+        •joint funding
+        •collaborators and partners
+        •keywords
+        •belated reporting
+        •novation agreements
+        •terminations
+        •repayability
+      fr: |
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+        •autres ministères participent au financement;
+        •financement par l'intermédiaire d'un tiers;
+        •annonces ministérielles;
+        •domaines de recherche;
+        •financement conjoint;
+        •collaborateurs et partenaires;
+        •mots-clés;
+        •divulgation tardive;
+        •entente d'innovation;
+        •résiliations;
+        •remboursement. 
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 41
+    excel_column_width: 40
 
-  - datastore_id: additional_info_fr
-    label: Additional Information French
+  # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (français)
     description:
-      en: This field provide supplemental information to describe the program or project that will benefit from the grant or contribution, in French.
-      fr: Cette zone offre, en francais, des renseignements supplémentaires et décrit le programme ou le projet qui bénéficiera de la subvention ou de la contribution.
+      en: |
+        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+        •additional funding departments
+        •funding through a third party
+        •ministerial announcements
+        •research fields
+        •joint funding
+        •collaborators and partners
+        •keywords
+        •belated reporting
+        •novation agreements
+        •terminations
+        •repayability
+      fr: |
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+        •autres ministères participent au financement;
+        •financement par l'intermédiaire d'un tiers;
+        •annonces ministérielles;
+        •domaines de recherche;
+        •financement conjoint;
+        •collaborateurs et partenaires;
+        •mots-clés;
+        •divulgation tardive;
+        •entente d'innovation;
+        •résiliations;
+        •remboursement. 
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 41
+    excel_column_width: 40
 
-  datastore_primary_key: [ref_number]
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: [ref_number, amendment_number]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -284,56 +697,65 @@ Award provided and spanning more than one fiscal year."
       patternType: solid
       fgColor: FFc09a77
 
+  triggers:
+  - grants_trigger
+  - update_record_modified_created_trigger
+
   examples:
     record:
-      ref_number: "1980198"
-      proj_number: "19876198"
-      recipient_name: Jane Smith
-      date: "2016-01-01"
-      value: "50000.00"
+      ref_number: "001-2018-2019-Q2-00045"
+      amendment_number: "3"
+      amendment_date: "2018-04-01"
+      agreement_type: "G"
+      recipient_type: "G"
+      recipient_business_number: "123456789"
+      recipient_legal_name: "ACME Services Limited|Services ACME Limitée"
+      recipient_operating_name: "ACME"
+      research_organization_name: "York University|Université York"
+      recipient_country: "CA"
+      recipient_province: "ON"
+      recipient_city: "Grand Falls|Grand-Sault"
+      recipient_postal_code: "A1A 1A1"
+      federal_riding_name_en: "Winnipeg South Centre"
+      federal_riding_name_fr: "Winnipeg-Centre-Sud"
+      federal_riding_number: "46014"
+      prog_name_en: "Canada Granting Program"
+      prog_name_fr: "Le programme de subvention du Canada"
+      prog_purpose_en: "The Canada Granting Program encourage Canadians to learn about Canada’s geography, history, and economy. The Program provides networking opportunities to enhance recipients’ understanding of Canada."
+      prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
+      agreement_title_en: "Building better buildings"
+      agreement_title_fr: "Construire des meilleurs bâtiments"
+      agreement_number: "F1580-140737"
+      agreement_value: "500000"
+      foreign_currency_type: "USD"
+      foreign_currency_value: "450000"
+      agreement_start_date: "2019-04-01"
+      agreement_end_date: "2020-04-31"
+      coverage: "Canada; Mexico|Mexique; United States|États-Unis"
+      description_en: "Developing models and other tools to predict the safety performance of buildings."
+      description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
+      naics_identifier: "611710"
+      expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
+      expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
+
     filters:
-      proj_number: "19876198"
+      recipient_province: "ON"
     filter_one:
-      ref_number: "1980198"
-    sort: date desc
+      ref_number: "001-2018-2019-Q2-00045"
+      amendment_number: "0"
+    sort: agreement_date desc
 
 
 - title: Proactive Disclosure - Grants and Contributions Nothing to Report
   resource_name: grants-nil
   fields:
 
-  - datastore_id: year
+  - datastore_id: fiscal_year
     label: Year
-    datastore_type: year
-    excel_column_width: 5
+    datastore_type: text
+    excel_column_width: 15
     extract_date_year: true
-    choices:
-      2020: "2020"
-      2019: "2019"
-      2018: "2018"
-      2017: "2017"
-      2016: "2016"
-      2015: "2015"
-      2014: "2014"
-      2013: "2013"
-      2012: "2012"
-      2011: "2011"
-      2010: "2010"
-      2009: "2009"
-      2008: "2008"
-      2007: "2007"
-      2006: "2006"
-      2005: "2005"
-      2004: "2004"
-      2003: "2003"
-      2002: "2002"
-      2001: "2001"
-      2000: "2000"
-      1999: "1999"
-      1998: "1998"
-      1997: "1997"
-      1996: "1996"
-      1995: "1995"
+    choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
     label: Quarter
@@ -353,11 +775,29 @@ Award provided and spanning more than one fiscal year."
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
-  datastore_primary_key: [year, quarter]
+  datastore_primary_key: [fiscal_year, quarter]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -371,13 +811,17 @@ Award provided and spanning more than one fiscal year."
       patternType: solid
       fgColor: FFc09a77
 
+  triggers:
+  - grants_nil_trigger
+  - update_record_modified_created_trigger
+
   examples:
     record:
-      year: 2016
+      fiscal_year: 2016-2017
       quarter: Q2
     filters:
-      year: 2016
+      fiscal_year: 2016-2017
     filter_one:
-      year: 2016
+      fiscal_year: 2016-2017
       quarter: Q2
-    sort: year desc, quarter desc
+    sort: fiscal_year desc, quarter desc

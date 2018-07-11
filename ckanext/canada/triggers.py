@@ -63,6 +63,19 @@ def update_triggers():
             END;
         ''')
 
+    lc.action.datastore_function_create(
+        name=u'not_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'money'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
+                END IF;
+            END;
+        ''')
 
     lc.action.datastore_function_create(
         name=u'no_surrounding_whitespace',
@@ -213,6 +226,13 @@ def update_triggers():
                 rationale=pg_array(consultations_choices['rationale']),
             )
         )
+
+    # A: When sysadmin passes '*' as user_modified, replace with '' and
+    #    set created+modified values to NULL. This is used when restoring
+    #    earlier migrated data that had no record of the
+    #    user/created/modified values
+    # B: Otherwise update created+modified dates and replace user with
+    #    current user
     lc.action.datastore_function_create(
         name=u'update_record_modified_created_trigger',
         or_replace=True,
@@ -225,18 +245,34 @@ def update_triggers():
                 sysadmin boolean NOT NULL := (SELECT sysadmin
                     FROM datastore_user);
             BEGIN
-                IF NOT sysadmin OR (req_user_modified = '') IS NOT FALSE THEN
+                IF NOT sysadmin THEN
                     req_user_modified := NULL;
                 END IF;
                 IF TG_OP = 'INSERT' THEN
+                    IF req_user_modified = '*' THEN
+                        NEW.user_modified := '';
+                        NEW.record_created := NULL;
+                        NEW.record_modified := NULL;
+                        RETURN NEW;
+                    END IF;
                     IF NEW.record_created IS NULL THEN
                         NEW.record_created := now() at time zone 'utc';
                     END IF;
                     IF NEW.record_modified IS NULL THEN
                         NEW.record_modified := NEW.record_created;
                     END IF;
-                    IF req_user_modified IS NULL THEN
+                    IF (req_user_modified = '') IS NOT FALSE THEN
                         NEW.user_modified := username;
+                    END IF;
+                    RETURN NEW;
+                END IF;
+
+                IF req_user_modified = '*' THEN
+                    NEW.user_modified := '';
+                    NEW.record_created := NULL;
+                    NEW.record_modified := NULL;
+                    IF OLD = NEW THEN
+                        RETURN NULL;
                     END IF;
                     RETURN NEW;
                 END IF;
@@ -247,14 +283,14 @@ def update_triggers():
                 IF NEW.record_modified IS NULL THEN
                     NEW.record_modified := OLD.record_modified;
                 END IF;
-                IF req_user_modified IS NULL THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := OLD.user_modified;
                 END IF;
                 IF OLD = NEW THEN
                     RETURN NULL;
                 END IF;
                 NEW.record_modified := now() at time zone 'utc';
-                IF req_user_modified IS NULL THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := username;
                 ELSE
                     NEW.user_modified := req_user_modified;
@@ -475,6 +511,94 @@ def update_triggers():
                 e_feedback=pg_array(service_choices['e_feedback']),
                 interaction_points_online=pg_array(service_choices['interaction_points_online']),
                 interaction_points_total=pg_array(service_choices['interaction_points_total']),
+            )
+        )
+
+    grants_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('grants'))
+    lc.action.datastore_function_create(
+        name=u'grants_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.ref_number, 'ref_number');
+
+                PERFORM not_empty(NEW.amendment_number, 'amendment_number');
+                IF NEW.amendment_number <> 0 THEN
+                    PERFORM not_empty(NEW.amendment_date, 'amendment_date');
+                END IF;
+
+                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
+                        NEW.foreign_currency_value IS NOT NULL THEN
+                    PERFORM not_empty(NEW.foreign_currency_type, 'foreign_currency_type');
+                    PERFORM choice_one_of(
+                        NEW.foreign_currency_type,
+                        {foreign_currency_type},
+                        'foreign_currency_type');
+                    PERFORM not_empty(NEW.foreign_currency_value, 'foreign_currency_value');
+                END IF;
+
+                PERFORM not_empty(NEW.agreement_value, 'agreement_value');
+
+                PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
+                IF NEW.agreement_start_date >= '2018-04-01'::date THEN
+                    PERFORM not_empty(NEW.agreement_type, 'agreement_type');
+                    PERFORM choice_one_of(
+                        NEW.agreement_type,
+                        {agreement_type},
+                        'agreement_type');
+                    PERFORM choice_one_of(
+                        NEW.recipient_type,
+                        {recipient_type},
+                        'recipient_type');
+                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
+                    PERFORM not_empty(NEW.recipient_country, 'recipient_country');
+                    PERFORM choice_one_of(
+                        NEW.recipient_country,
+                        {recipient_country},
+                        'recipient_country');
+                    IF NEW.recipient_country = 'CA' THEN
+                        PERFORM not_empty(NEW.recipient_province, 'recipient_province');
+                    END IF;
+                    PERFORM choice_one_of(
+                        NEW.recipient_province,
+                        {recipient_province},
+                        'recipient_province');
+                    PERFORM not_empty(NEW.recipient_city, 'recipient_city');
+                    PERFORM not_empty(NEW.description_en, 'description_en');
+                    PERFORM not_empty(NEW.description_fr, 'description_fr');
+                END IF;
+                RETURN NEW;
+            END;
+            '''.format(
+                agreement_type=pg_array(grants_choices['agreement_type']),
+                recipient_type=pg_array(grants_choices['recipient_type']),
+                recipient_country=pg_array(grants_choices['recipient_country']),
+                recipient_province=pg_array(grants_choices['recipient_province']),
+                foreign_currency_type=pg_array(grants_choices['foreign_currency_type']),
+            )
+        )
+
+    grants_nil_choices = dict(
+        (f['datastore_id'], f['choices'])
+        for f in h.recombinant_choice_fields('grants-nil'))
+    lc.action.datastore_function_create(
+        name=u'grants_nil_trigger',
+        or_replace=True,
+        rettype=u'trigger',
+        definition=u'''
+            BEGIN
+                PERFORM not_empty(NEW.fiscal_year, 'fiscal_year');
+                PERFORM choice_one_of(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
+                PERFORM not_empty(NEW.quarter, 'quarter');
+                PERFORM choice_one_of(NEW.quarter, {quarter}, 'quarter');
+                RETURN NEW;
+            END;
+            '''.format(
+                fiscal_year=pg_array(grants_nil_choices['fiscal_year']),
+                quarter=pg_array(grants_nil_choices['quarter']),
             )
         )
 
