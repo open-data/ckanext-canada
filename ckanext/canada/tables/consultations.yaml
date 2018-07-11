@@ -21,7 +21,7 @@ resources:
       en: Registration Number
       fr: Numéro d’enregistrement
     description:
-      en: "This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete. he Registration Number should respect the following format: C-XXXXXXX."
+      en: "This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete. The Registration Number should respect the following format: C-XXXXXXX."
       fr: "Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX."
     obligation: Mandatory
     excel_required: true
@@ -35,8 +35,8 @@ resources:
   # 3.2
   - datastore_id: publishable
     label:
-      en: Publishable record
-      fr: Dossier publiable
+      en: Publish Record
+      fr: Prêt à publier?
     description:
       en: This field identifies whether this record can be published as a summary on the appropriate public facing website.
       fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
