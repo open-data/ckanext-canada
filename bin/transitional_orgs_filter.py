@@ -14,6 +14,7 @@ import json
 
 EXTRAS = set([
     'department_number',
+    'umd_number',
     'shortform',
     'shortform_fr',
     'ati_email',
