@@ -552,11 +552,11 @@ def update_triggers():
                         'recipient_country');
                     IF NEW.recipient_country = 'CA' THEN
                         PERFORM not_empty(NEW.recipient_province, 'recipient_province');
+                        PERFORM choice_one_of(
+                            NEW.recipient_province,
+                            {recipient_province},
+                            'recipient_province');
                     END IF;
-                    PERFORM choice_one_of(
-                        NEW.recipient_province,
-                        {recipient_province},
-                        'recipient_province');
                     PERFORM not_empty(NEW.recipient_city, 'recipient_city');
                     PERFORM not_empty(NEW.description_en, 'description_en');
                     PERFORM not_empty(NEW.description_fr, 'description_fr');
