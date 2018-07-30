@@ -426,8 +426,8 @@ resources:
       en: Agreement Number
       fr: Numéro de l’entente
     description:
-      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system. This field may be the same as the departmental project identifier if the department has only one number for the project.
-      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère. Ce champ peut être identique au champ Identificateur de projet ministériel si c'est le seul numéro que possède le ministère.
+      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
+      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère.
     obligation: Optional
     format_type: Free text
     datastore_type: text
