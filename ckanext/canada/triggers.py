@@ -540,10 +540,12 @@ def update_triggers():
                         NEW.agreement_type,
                         {agreement_type},
                         'agreement_type');
-                    PERFORM choice_one_of(
-                        NEW.recipient_type,
-                        {recipient_type},
-                        'recipient_type');
+                    IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
+                        PERFORM choice_one_of(
+                            NEW.recipient_type,
+                            {recipient_type},
+                            'recipient_type');
+                    END IF;
                     PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
                     PERFORM not_empty(NEW.recipient_country, 'recipient_country');
                     PERFORM choice_one_of(
