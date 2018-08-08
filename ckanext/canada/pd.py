@@ -164,7 +164,7 @@ def rebuild(command_name, csv_files=None, solr_url=None):
             chromo = get_chromo(resource_name)
             geno = get_geno(chromo['dataset_type'])
 
-            for org_id, records in csv_data_batch(csv_file, chromo):
+            for org_id, records in csv_data_batch(csv_file, chromo, strict=False):
                 records = [dict((k, safe_for_solr(v)) for k, v in
                             row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
@@ -260,7 +260,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
 
         for f in chromo['fields']:
             key = f['datastore_id']
-            value = r[key]
+            value = r.get(key, '')
 
             facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
