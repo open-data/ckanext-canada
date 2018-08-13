@@ -17,27 +17,47 @@ resources:
   fields:
 
   - datastore_id: reference_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: It is a unique identifier given to each line item in the spreadsheet. Having a unique identifier for each item will allow users to locate a specific item should they need to modify or delete.
+      fr: Un identificateur unique est attribué à chaque poste dans le gabarit de rapport.
     obligation: Mandatory
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: procurement_id
-    label: Procurement Identification Number
+    label:
+      en: Procurement Identification Number
+      fr: Numéro d’identification d’approvisionnement
+    description:
+      en: This field should be populated with the contract number.  Alternatively, this field may be the commitment number or requisition number if this is the standard practice in the department.
+      fr: Il est recommandé que le numéro d’identification d’approvisionnement corresponde au numéro de marché. Sinon, le numéro d’identification d’approvisionnement peut correspondre au numéro d’engagement ou au numéro de demande, s’il s’agit de la pratique courante au ministère.
     obligation: Mandatory
     excel_required: true
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: vendor_name
-    label: Vendor Name
+    label:
+      en: Vendor Name
+      fr: Nom du fournisseur
+    description:
+      en: This field should be populated with the legal name of the company, as indicated on the contract.  Alternatively, this field may be the name in the financial system if this is the standard practice in the department.
+      fr: Il est recommandé que le nom du fournisseur corresponde à la dénomination sociale de l’entrepreneur, telle qu’elle est indiquée dans le marché. Sinon, le nom du fournisseur peut correspondre au nom dans le système financier, s’il s’agit de la pratique courante au ministère.
     obligation: Mandatory
     excel_required: true
     datastore_type: text
     excel_column_width: 20
 
   - datastore_id: contract_date
-    label: Contract Date
+    label:
+      en: Contract Date
+      fr: Date du contrat
+    description:
+      en: This field should be populated with the date the contract is awarded.  Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department. For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date). If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date). For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date). For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
+      fr: Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement. Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme). S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
     obligation: Mandatory
     excel_required: true
     datastore_type: date
@@ -47,42 +67,72 @@ resources:
     extract_date_clean: true
 
   - datastore_id: economic_object_code
-    label: Economic Object Code
+    label:
+      en: Economic Object Code
+      fr: Code d’article économique
+    description:
+      en: This field should be populated with the Economic Object Code’s numeric digits listed in the Government-wide Chart of Accounts. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html
+      fr: Il est recommandé de saisir dans cette zone les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le Plan comptable à l’échelle de l’administration fédérale. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html
     obligation: Mandatory
     excel_required: true
     datastore_type: text
     excel_column_width: 30
 
   - datastore_id: description_en
-    label: Description of Work English
+    label:
+      en: Description of Work English
+      fr: Description du travail Anglais
+    description:
+      en: This field should be populated with the Economic Object Code’s text description listed in the Government-wide Chart of Accounts, in English.
+      fr: Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale dans cette zone.
     obligation: Mandatory
     excel_required: true
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: description_fr
-    label: Description of Work French
+    label:
+      en: Description of Work French
+      fr: Description du travail Français
+    description:
+      en: This field should be populated with the Economic Object Code’s text description listed in the Government-wide Chart of Accounts, in French.
+      fr: Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale dans cette zone.
     obligation: Mandatory
     excel_required: true
     datastore_type: text
     excel_column_width: 40
 
   - datastore_id: contract_period_start
-    label: Contract Period Start Date
+    label:
+      en: Contract Period Start Date
+      fr: Date de début du contrat
+    description:
+      en: For a Services or Construction Services contract, this field should be populated with the starting date for the period of time over which the services are provided.  For a standing or supply arrangement, this field should be populated with be the starting date for the period of time over which a call-up may be entered into.  For a contract with task authorizations, this field should be populated with be the starting date for the period of time over the entire Services or Construction Services contract. For a contract with task authorizations where the full value of a contract with task authorizations is likely not to be used, this field should be populated with the starting date for the contract period for each task authorization.
+      fr: Pour un marché de services ou de travaux de construction, il est recommandé que la date de début du marché corresponde à la date de début pour la période où les services sont fournis.  Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de début pour la période où l’on peut passer une commande subséquente.  Pour un marché incluant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de début pour la toute la durée du marché. Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
     obligation: Mandatory
     excel_required: true
     datastore_type: date
     excel_column_width: 30
 
   - datastore_id: delivery_date
-    label: Contract Period End Date or Delivery Date
+    label:
+      en: Contract Period End Date or Delivery Date
+      fr: Date de clôture du contrat ou Date de livraison
+    description:
+      en: For a Goods contract, this field should be populated with the date when the goods are to be delivered, which may be the contract period end date. The department may use the last delivery date if the contract involves multiple items on multiple dates.  For a Services or Construction Service contract, this field should be populated with the end date for the period of time over which the services are provided.  For a standing offer or supply arrangement, this field should be populated with the end date for the period of time over which a call-up may be entered into.  For a contract with task authorizations, this field should be populated with the end date for the period of time over the entire Services or Construction Services contract.  For a contact with task authorizations where the full value of a contract with task authorization is likely not to be used, this field should be populated with the end date for the contract period for each task authorization.
+      fr: Pour un marché de biens, il est recommandé de saisir dans cette zone la date à laquelle les biens seront livrés, ce qui peut correspondre à la date de fin de la période du marché. Le ministère peut utiliser la dernière date de livraison, si le marché prévoit différentes dates pour différents articles. Pour un marché de services ou de travaux de construction, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où les services sont fournis. Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où l’on peut passer une commande subséquente. Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de fin pour toute la durée du marché. Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, il est recommandé de saisir dans cette zone la date de fin de chaque autorisation de tâche.
     obligation: Mandatory
     excel_required: true
     datastore_type: date
     excel_column_width: 30
 
   - datastore_id: contract_value
-    label: Total Contract Value
+    label:
+      en: Total Contract Value
+      fr: Valeur totale du contrat
+    description:
+      en: This field should be populated with the full amount of the hard commitment recorded in the departmental financial system for all contracts and amendments regardless of dollar value. It is recommended that this field be in Canadian currency and include all applicable taxes.  For a multi-year contract, it is recommended to be the total amount of the contract for all years. When the contract is amended over $10K, it is recommended that this field be the amended contract value. A contract option, when exercised, may be disclosed as an amendment if the organization chose not to disclose the contract option at the time of contract award. For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
+      fr: Il est recommandé que la valeur totale du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel pour le marché et toutes les modifications subséquentes, peu importe la valeur en dollars. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables. Pour un marché pluriannuel, il est recommandé de fournir le montant total du marché pour toutes les années. Pour la modification d’un marché, il est recommandé de saisir dans cette zone la valeur modifiée du marché. Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
     obligation: Mandatory
     excel_required: true
     datastore_type: money
@@ -641,10 +691,19 @@ resources:
 
   examples:
     record:
-      reference_number: "1980198"
-      vendor_name: Jane Smith
-      contract_date: "2016-01-01"
-      contract_value: "50000.00"
+      reference_number: "C-2017-2018-Q1-00170"
+      procurement_id: "3000638243"
+      vendor_name: "Company XYZ inc"
+      contract_date: "2017-09-15"
+      economic_object_code: "460"
+      description_en: "Protection services"
+      description_fr: "Services de protection"
+      contract_period_start: "2017-08-15"
+      delivery_date: "2017-09-15"
+      contract_value: "10000"
+
+
+
       agreement_type_code: W
       commodity_type_code: S
       country_of_origin: US
