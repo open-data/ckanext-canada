@@ -4,7 +4,6 @@
 {% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
 {# Previous variables from Open Maps, delete if no issue #}
-{# set size_field = schema_description.resource_field_by_id['size'] #}
 
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
@@ -15,9 +14,11 @@
 {# FIXME: using tables for formatting #}
 <tr>
   <td class="">
-    {% snippet 'scheming/snippets/display_field.html',
-      field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}
-
+    {% set name, machine_translated = h.get_translated_t(res, 'name') %}
+    {{ name }}
+    {% if machine_translated %}
+       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+    {% endif %}
   </td>
   <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',

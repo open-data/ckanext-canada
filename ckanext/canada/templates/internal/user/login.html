@@ -6,9 +6,12 @@
 
   <div class="panel panel-info">
     <div class="panel-heading panel-title">
-    {{ _('Request an account') }}</div>
+    {{ _('Need an account') }}</div>
     <div class="panel-body">
-      <p>{{ _('If you would like to request an account for the Open Government Registry, please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with your name, department and email') | safe }}.</p>
+      <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
+      <p class="action">
+        <a class="btn btn-primary btn-xs" href="{{ h.url_for(controller='user', action='register') }}" role="button">{{ _('Request an Account') }}</a>
+      </p>
     </div>
   </div>
 
@@ -27,18 +30,6 @@
 {% block primary_content %}
   <div class="panel">
     {% trans %}login welcome text{% endtrans %}
-
-    <section class="alert alert-info">
-      <p>
-        {% trans %}
-          As part of moving open.canada.ca to new infrastructure we have implemented new password
-          standards for all accounts. You will need to use the
-          <a href="{{ reset_link }}">Reset password</a> link to regain access to
-          your account. If you no longer have access to the email associated with your account please
-          contact us at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>
-        {% endtrans %}
-      </p>
-    </section>
 
     {% block form %}
       {{ super() }}

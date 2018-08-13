@@ -47,6 +47,7 @@ resources:
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
+    extract_date_clean: true
 
   - datastore_id: case_description_en
     label: English Case Description

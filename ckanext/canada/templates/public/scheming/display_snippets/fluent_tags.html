@@ -1,6 +1,6 @@
 {# slight abuse of scheming_language_text for selecting the desired
    language version #}
-{%- set value = h.scheming_language_text(data[field.field_name]) -%}
+{%- set value, machine_translated = h.language_text_t(data[field.field_name]) -%}
 <ul class='list-inline'>
   {%- for tag in value -%}
     {% if h.lang() == 'fr' %}
@@ -13,4 +13,7 @@
         keywords=tag %}">{{ tag }}</a></li>
     {% endif %}
   {%- endfor -%}
+  {%- if machine_translated -%}
+    <li><i class="fa fa-language text-muted" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i></li>
+  {%- endif -%}
 </ul>

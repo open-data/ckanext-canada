@@ -107,6 +107,7 @@ resources:
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
+    extract_date_clean: true
 
   - datastore_id: end_date
     label: Travel End Date
@@ -236,6 +237,7 @@ resources:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
     datastore_type: money
+    extract_double_sortable: true
     excel_column_width: 20
 
     solr_dollar_range_facet:
@@ -298,6 +300,9 @@ resources:
       ref_number: "1980198"
     sort: date desc
 
+  solr_org_fields:
+  - ati_email
+
 
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
@@ -306,7 +311,7 @@ resources:
   - datastore_id: year
     label: Year
     datastore_type: year
-    excel_column_width: 10 
+    excel_column_width: 10
     extract_date_year: true
     choices:
       2020: "2020"

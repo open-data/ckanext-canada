@@ -51,13 +51,21 @@
     {% block package_item_title %}
     <section class="module-content indent-large">
 
-      <h1>{{ h.get_translated(pkg, 'title') or pkg.name }}
+      {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
+      <h1>{{ title or pkg.name }}
         {% if pkg.state.startswith('draft') %}
           [{{ _('Draft') }}]
         {% endif %}
+        {% if machine_translated %}
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+        {% endif %}
       </h1>
       <div>
-        {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+        {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
+        {% if machine_translated %}
+          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+        {% endif %}
+        {{ h.render_markdown(notes) }}
       </div>
 
       {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
@@ -66,6 +74,20 @@
 
     </section>
     {%- endblock -%}
+
+    {% if pkg.organization.name == 'ab' %}
+    <section>
+      <details class="alert alert-info" id="alberta-content" open="open">
+        <summary class="h4">
+	  <h4>{{ _('Made available by the Government of Alberta') }}</h4>
+	</summary>
+        {% trans %}<p>These resources are not under the control of the Government of Canada and the link is provided solely for the convenience of our website visitors. We are not responsible for the accuracy, currency or reliability of the content of this website. The Government of Canada does not offer any guarantee in that regard and is not responsible for the information found through this link.</p>
+
+<p>Visitors should also be aware that information offered by this non-Government of Canada site is not subject to the <a href="http://laws-lois.justice.gc.ca/eng/acts/P-21/index.html">Privacy Act</a> or the <a href="http://laws-lois.justice.gc.ca/eng/acts/O-3.01/">Official Languages Act</a> and may not be accessible to persons with disabilities. The information offered may be available only in the language used by the site. With respect to privacy, visitors should research the privacy policies of this non-government website before providing personal information.</p>{% endtrans %}
+	</details>
+    </section>
+    {% endif %}
+
 
     {# Display some publisher-specific details on this dataset inline with the
     dataset notes. #}
@@ -98,6 +120,10 @@
             {% if field_value %}
               {# FIXME: This special case needs to go; Ideally convince client of futility #}
               {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
+              {# FIXME: more special cases, embrace the futility! #}
+              {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
+              {% set field_title = _('Issued by') %}
+              {% endif %}
               <li class="list-group-item">
                 <strong>{{ field_title }}:</strong>
                 {% snippet 'scheming/snippets/display_field.html',
@@ -234,6 +260,7 @@
 {%- block custom_styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ h.url_for_static('/static/opendata_blog.css') }}" />
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 {% endblock %}
 
 

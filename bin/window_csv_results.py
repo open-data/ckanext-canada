@@ -19,7 +19,10 @@ def main():
     reader = csv.reader(sys.stdin)
     writer.writerow(next(reader))  # header
     for row in reader:
-        if (int(row[0]), int(row[1])) >= start_year_month:
-            writer.writerow(row)
+        try:
+            if (int(row[0]), int(row[1])) >= start_year_month:
+                writer.writerow(row)
+        except ValueError:
+            pass
 
 main()

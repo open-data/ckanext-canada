@@ -14,6 +14,12 @@
   scheming_choices=h.scheming_get_preset('canada_collection').choices,
   extras=extras %}
 
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['jurisdiction'],
+  name='jurisdiction',
+  scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
+  extras=extras %}
+
 {{ organization_facet }}
 
 {% if h.lang() == 'en' %}
