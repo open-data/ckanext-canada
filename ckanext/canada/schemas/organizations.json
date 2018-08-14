@@ -56,6 +56,12 @@
             "validators": "not_empty int"
         },
         {
+            "field_name": "umd_number",
+            "label": {"en": "UMD Number"},
+            "form_snippet": "text.html",
+            "validators": "not_empty int"
+        },
+        {
             "field_name": "homepage",
             "label": {"en": "English Homepage"},
             "form_snippet": "text.html",

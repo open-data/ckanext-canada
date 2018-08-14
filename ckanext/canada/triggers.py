@@ -442,6 +442,14 @@ def update_triggers():
                     PERFORM choice_one_of(NEW.reporting_period,
                         {reporting_period},
                         'reporting_period');
+                    IF NEW.intellectual_property_code <> 'B'
+                            AND NEW.intellectual_property_code <> 'NA' THEN
+                        PERFORM not_empty(NEW.potential_commercial_exploitation,
+                            'potential_commercial_exploitation');
+                    END IF;
+                    IF NEW.standing_offer = 'PWSOSA' OR NEW.standing_offer = 'SSCSOSA' THEN
+                        PERFORM not_empty(NEW.standing_offer_number, 'standing_offer_number');
+                    END IF;
                 END IF;
 
                 RETURN NEW;
@@ -612,10 +620,12 @@ def update_triggers():
                         NEW.agreement_type,
                         {agreement_type},
                         'agreement_type');
-                    PERFORM choice_one_of(
-                        NEW.recipient_type,
-                        {recipient_type},
-                        'recipient_type');
+                    IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
+                        PERFORM choice_one_of(
+                            NEW.recipient_type,
+                            {recipient_type},
+                            'recipient_type');
+                    END IF;
                     PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
                     PERFORM not_empty(NEW.recipient_country, 'recipient_country');
                     PERFORM choice_one_of(
@@ -624,11 +634,11 @@ def update_triggers():
                         'recipient_country');
                     IF NEW.recipient_country = 'CA' THEN
                         PERFORM not_empty(NEW.recipient_province, 'recipient_province');
+                        PERFORM choice_one_of(
+                            NEW.recipient_province,
+                            {recipient_province},
+                            'recipient_province');
                     END IF;
-                    PERFORM choice_one_of(
-                        NEW.recipient_province,
-                        {recipient_province},
-                        'recipient_province');
                     PERFORM not_empty(NEW.recipient_city, 'recipient_city');
                     PERFORM not_empty(NEW.description_en, 'description_en');
                     PERFORM not_empty(NEW.description_fr, 'description_fr');
