@@ -442,6 +442,14 @@ def update_triggers():
                     PERFORM choice_one_of(NEW.reporting_period,
                         {reporting_period},
                         'reporting_period');
+                    IF NEW.intellectual_property_code <> 'B'
+                            AND NEW.intellectual_property_code <> 'NA' THEN
+                        PERFORM not_empty(NEW.potential_commercial_exploitation,
+                            'potential_commercial_exploitation');
+                    END IF;
+                    IF NEW.standing_offer = 'PWSOSA' OR NEW.standing_offer = 'SSCSOSA' THEN
+                        PERFORM not_empty(NEW.standing_offer_number, 'standing_offer_number');
+                    END IF;
                 END IF;
 
                 RETURN NEW;
