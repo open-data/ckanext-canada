@@ -681,7 +681,7 @@ resources:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
     excel_column_width: 30
-    excel_required_formula: 'and({column}{row}="",not(or({column_before}{row}="B",{column_before}{row}="NA")))'
+    excel_cell_required_formula: 'and({column}{row}="",not(or({column_before}{row}="B",{column_before}{row}="NA",{column_before}{row}="")))'
     choices:
       Y:
         en: "Yes"
@@ -741,7 +741,7 @@ resources:
       en: This element is mandatory for contracts (which includes call-ups) against a standing offer or supply arrangement number regardless of dollar value (excluding acquisition card procurements from -$10K to $10K). Otherwise, this field may be left empty.
     datastore_type: text
     excel_column_width: 30
-    excel_required_formula: 'and({column}{row}="",or({column_before}{row}="PWSOSA",{column_before}{row}="SSCSOSA"))'
+    excel_cell_required_formula: 'and({column}{row}="",or({column_before}{row}="PWSOSA",{column_before}{row}="SSCSOSA"))'
 
   - datastore_id: document_type_code
     label:
