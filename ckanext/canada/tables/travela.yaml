@@ -15,10 +15,13 @@ resources:
   fields:
 
   - datastore_id: year
-    label: Fiscal Year Ending
+    label:
+      en: Fiscal Year Ending
+      fr: Dépenses pour l’exercice financier se terminant
+    description:
+      en: This fields shows the current fiscal reporting period’s ending (March 31, YYYY).
+      fr: Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
     datastore_type: year
-    form_required: true
-    form_placeholder: 20XX
     excel_column_width: 20
 
   - datastore_id: mandate_description_en
@@ -27,13 +30,12 @@ resources:
       fr: Description du mandat du ministère (anglais)
     description:
       en: "Provide a brief explanation, in English, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
-      fr: "Expliquez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère, incluant les changements importants apportés à la structure ou aux programmes."
+        fr: "Décrivez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
-    form_required: true
-    form_attrs: {'size': 60}
+    excel_required: true
     excel_column_width: 50
 
   - datastore_id: mandate_description_fr
@@ -41,47 +43,109 @@ resources:
       en: Description of departmental mandate (French)
       fr: Description du mandat du ministère (français)
     description:
-      en: "Provide a brief explanation, in English, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
-      fr: "Expliquez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère, incluant les changements importants apportés à la structure ou aux programmes."
+      en: "Provide a brief explanation, in French, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
+      fr: "Décrivez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
-    form_required: true
-    form_attrs: {'size': 60}
+    excel_required: true
     excel_column_width: 50
 
-  - datastore_id: public_servants
-    label: Travel - Public Servants ($ thousands)
-    datastore_type: money
-    form_required: true
-    form_placeholder: '0'
+  - datastore_id: operational_activities
+    label:
+      en: Expenditure category – Operational activities ($ thousands)
+      fr: Catégorie de dépenses – activités opérationnelles (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Operational activities for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses activités opérationnelles pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
-      previous_year: public_servants_previous_year
-      change: public_servants_change
-      sum_previous_year: [total_travel_previous_year, total_previous_year]
-      sum_change: [total_travel_change, total_change]
+      previous_year: operational_activities_previous_year
+      change: operational_activities_change
+      sum_previous_year: [operational_activities_previous_year, total_previous_year]
+      sum_change: [operational_activities_change, total_change]
 
-  - datastore_id: non_public_servants
-    label: Travel - Non-Public Servants ($ thousands)
-    datastore_type: money
-    form_required: true
-    form_placeholder: '0'
+  - datastore_id: key_stakeholders
+    label:
+      en: Expenditure category – Key stakeholders ($ thousands)
+      fr: Catégorie de dépenses – Principaux intervenants (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – key stakeholders for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de -fonctionnaires et non-fonctionnaires pour la catégorie de dépenses principaux intervenants,  pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
     excel_column_width: 20
     solr_sum_to_field: [total_travel, total]
     solr_compare_previous_year:
-      previous_year: non_public_servants_previous_year
-      change: non_public_servants_change
-      sum_previous_year: [total_travel_previous_year, total_previous_year]
-      sum_change: [total_travel_change, total_change]
+      previous_year: key_stakeholders_previous_year
+      change: key_stakeholders_change
+      sum_previous_year: [key_stakeholders_previous_year, total_previous_year]
+      sum_change: [key_stakeholders_change, total_change]
+
+  - datastore_id: training
+    label:
+      en: Expenditure category – Training ($ thousands)
+      fr: Catégorie de dépenses – Formation (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Training for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses formation, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: training_previous_year
+      change: training_change
+      sum_previous_year: [training_previous_year, total_previous_year]
+      sum_change: [training_change, total_change]
+
+  - datastore_id: other
+    label:
+      en: Expenditure category – Other ($ thousands)
+      fr: Catégorie de dépenses – Autre (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Other for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses autre, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: other_previous_year
+      change: other_change
+      sum_previous_year: [other_previous_year, total_previous_year]
+      sum_change: [other_change, total_change]
+
+  - datastore_id: internal_governance
+    label:
+      en: Expenditure category – Internal governance ($ thousands)
+      fr: Catégorie de dépenses – Gouvernance interne (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Internal governance for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses gouvernance interne, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel, total]
+    solr_compare_previous_year:
+      previous_year: key_stakeholders_previous_year
+      change: key_stakeholders_change
+      sum_previous_year: [key_stakeholders_previous_year, total_previous_year]
+      sum_change: [key_stakeholders_change, total_change]
 
   - datastore_id: hospitality
-    label: Hospitality ($ thousands)
-    datastore_type: money
-    form_required: true
-    form_placeholder: '0'
+    label:
+      en: Hospitality ($ thousands)
+      fr: Accueil (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for hospitality for the previous reporting fiscal year (Year Ending March 31, YYYY-1) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles d’accueil pour l’exercice financier précédent (année se terminant le 31 mars AAAA-1), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -91,10 +155,14 @@ resources:
       sum_change: total_change
 
   - datastore_id: conference_fees
-    label: Conference Fees ($ thousands)
-    datastore_type: money
-    form_required: true
-    form_placeholder: '0'
+    label:
+      en: Conference Fees ($ thousands)
+      fr: Frais de participation aux conférences (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for conference fees for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de conférences pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    excel_required: true
     excel_column_width: 20
     solr_sum_to_field: total
     solr_compare_previous_year:
@@ -189,12 +257,16 @@ resources:
 
   examples:
     record:
-      year: "2016"
-      public_servants: "500"
-      non_public_servants: "60"
-      minister: "1000"
-      hospitality: "700"
+      year: "2018"
+      mandate_description_en: "Expenditures on travel, hospitality and conference fees incurred by federal departments and agencies are related to activities that support a departmental or agency mandate and the government’s priorities. In particular, for Fisheries and Oceans Canada, this includes playing the lead role in managing Canada’s fisheries and safeguarding its waters, ensuring safe, healthy, and productive waters and aquatic ecosystems for the benefit of present and future generations."
+      mandate_description_fr: "Les dépenses de voyage, d'accueil et de conférence engagées par les ministères et organismes fédéraux sont liées à des activités qui appuient le mandat d'un ministère ou d'un organisme et les priorités du gouvernement. En particulier, pour Pêches et Océans Canada, cela comprend le rôle de chef de file dans la gestion des pêches du Canada et la protection de ses eaux, en assurant la sécurité, la santé et la productivité des eaux et des écosystèmes aquatiques pour le bénéfice des générations actuelles et futures."
+      key_stakeholders: "1200"
+      internal_governance: "5800"
+      training: "3400"
+      other: "900"
+      hospitality: "12960"
       conference_fees: "50"
+      minister: "1000"
     filters:
       hospitality: "0"
     filter_one:
