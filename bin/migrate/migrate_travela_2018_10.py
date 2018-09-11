@@ -27,6 +27,9 @@ def next_line(line):
 for oy in sorted(org_year):
     line = org_year[oy]
 
+    if int(line['year']) >= 2018:
+        sys.stderr.write('discarding {0}\n'.format(repr(oy)))
+        continue
     try:
         if not line['mandate_description_en']:
             line['mandate_description_en'] = next_line(line)['mandate_description_en']
