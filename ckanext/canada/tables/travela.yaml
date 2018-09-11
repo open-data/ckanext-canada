@@ -307,9 +307,9 @@ resources:
   - travela_trigger: |
       BEGIN
         PERFORM not_empty(NEW.year, 'year');
-        PERFORM not_empty(NEW.mandate_description_en, 'mandate_description_en');
-        PERFORM not_empty(NEW.mandate_description_fr, 'mandate_description_fr');
         IF NEW.year >= 2018 THEN
+          PERFORM not_empty(NEW.mandate_description_en, 'mandate_description_en');
+          PERFORM not_empty(NEW.mandate_description_fr, 'mandate_description_fr');
           PERFORM not_empty(NEW.operational_activities_kdollars, 'operational_activities_kdollars');
           PERFORM not_empty(NEW.key_stakeholders_kdollars, 'key_stakeholders_kdollars');
           PERFORM not_empty(NEW.training_kdollars, 'training_kdollars');
