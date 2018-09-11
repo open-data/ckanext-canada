@@ -41,12 +41,13 @@ for oy in sorted(org_year):
     line['key_stakeholders_kdollars'] = ''
     line['training_kdollars'] = ''
     line['internal_governance_kdollars'] = ''
+    ps = line.pop('public_servants')
     try:
-        ps = Decimal(line.pop('public_servants'))
+        ps = Decimal(ps.replace(',', ''))
     except InvalidOperation:
-        sys.stderr.write('discarding {0}\n'.format(repr(line)))
+        sys.stderr.write('discarding {0} {1}\n'.format(repr(oy), repr(ps)))
         continue
-    nps = Decimal(line.pop('non_public_servants'))
+    nps = Decimal(line.pop('non_public_servants').replace(',', ''))
     line['other_kdollars'] = str(ps + nps)
     line['travel_compared_fiscal_year_en'] = \
         u'Public Servants: {0} {1};\nNon-Public Servants: {2} {3}'.format(
@@ -60,10 +61,10 @@ for oy in sorted(org_year):
             line.pop('public_servant_compared_fiscal_year_fr'),
             str(nps),
             line.pop('non_public_servant_compared_fiscal_year_fr'))
-    line['hospitality_kdollars'] = line.pop('hospitality')
-    line['conference_fees_kdollars'] = line.pop('conference_fees')
+    line['hospitality_kdollars'] = line.pop('hospitality').replace(',', '')
+    line['conference_fees_kdollars'] = line.pop('conference_fees').replace(',', '')
     try:
-        m = Decimal(line.pop('minister'))
+        m = Decimal(line.pop('minister').replace(',', ''))
     except InvalidOperation:
         m = 0
     line['minister_kdollars'] = str(m)
