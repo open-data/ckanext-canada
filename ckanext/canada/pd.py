@@ -37,7 +37,7 @@ class PDCommand(CkanCommand):
     Usage::
 
         paster <pd-type> clear
-                         rebuild [-f <file>] [-s <solr-url>]
+                         rebuild [--lenient] [-f <file>] [-s <solr-url>]
 
     Options::
 
@@ -45,6 +45,8 @@ class PDCommand(CkanCommand):
                                    instead of the (default) CKAN database
         -s/--solr-url <url>        use specified solr URL as output,
                                    instead of default from ini file.
+        --lenient                  allow rebuild from csv files without checking
+                                   that columns match expected columns
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -62,6 +64,11 @@ class PDCommand(CkanCommand):
         '--solr-url',
         dest='solr_url',
         help='Solr URL for output')
+    parser.add_option(
+        '--lenient',
+        action='store_false',
+        dest='strict',
+        default=True)
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -77,7 +84,9 @@ class PDCommand(CkanCommand):
             return rebuild(
                 self.command_name,
                 [self.options.csv_file] if self.options.csv_file else None,
-                self.options.solr_url)
+                self.options.solr_url,
+                self.options.strict,
+                )
 
 
 class PDNilCommand(CkanCommand):
@@ -96,6 +105,8 @@ class PDNilCommand(CkanCommand):
                                         (default) CKAN database
         -s/--solr-url <url>             use specified solr URL as output,
                                         instead of default from ini file.
+        --lenient                  allow rebuild from csv files without checking
+                                   that columns match expected columns
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -114,6 +125,11 @@ class PDNilCommand(CkanCommand):
         '--solr-url',
         dest='solr_url',
         help='Solr URL for output')
+    parser.add_option(
+        '--lenient',
+        action='store_false',
+        dest='strict',
+        default=True)
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -129,7 +145,9 @@ class PDNilCommand(CkanCommand):
             return rebuild(
                 self.command_name,
                 self.options.csv_files,
-                self.options.solr_url)
+                self.options.solr_url,
+                self.options.strict,
+                )
 
 
 def clear_index(command_name, solr_url=None, commit=True):
@@ -138,7 +156,7 @@ def clear_index(command_name, solr_url=None, commit=True):
 
 
 
-def rebuild(command_name, csv_files=None, solr_url=None):
+def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
     """
     Implement rebuild command
 
@@ -164,7 +182,7 @@ def rebuild(command_name, csv_files=None, solr_url=None):
             chromo = get_chromo(resource_name)
             geno = get_geno(chromo['dataset_type'])
 
-            for org_id, records in csv_data_batch(csv_file, chromo, strict=False):
+            for org_id, records in csv_data_batch(csv_file, chromo, strict=strict):
                 records = [dict((k, safe_for_solr(v)) for k, v in
                             row_dict.items()) for row_dict in records]
                 if org_id != prev_org:

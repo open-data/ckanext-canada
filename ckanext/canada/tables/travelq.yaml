@@ -155,14 +155,6 @@ resources:
     datastore_type: money
     excel_column_width: 20
 
-    solr_dollar_range_facet:
-     - 0
-     - 250
-     - 500
-     - 1000
-     - 5000
-     - 25000
-
   - datastore_id: other_transport
     label: Other transportation
     description:
@@ -187,14 +179,6 @@ resources:
     datastore_type: money
     excel_column_width: 20
 
-    solr_dollar_range_facet:
-     - 0
-     - 250
-     - 500
-     - 1000
-     - 5000
-     - 25000
-
   - datastore_id: meals
     label: Meals and incidentals
     description:
@@ -218,14 +202,6 @@ resources:
       fr: Texte libre
     datastore_type: money
     excel_column_width: 20
-
-    solr_dollar_range_facet:
-     - 0
-     - 250
-     - 500
-     - 1000
-     - 5000
-     - 25000
 
   - datastore_id: total
     label: Total Amount
