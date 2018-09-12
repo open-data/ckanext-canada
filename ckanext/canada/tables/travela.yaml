@@ -151,7 +151,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     excel_column_width: 20
-    solr_sum_to_field: total
+    solr_sum_to_field: total_kdollars
     solr_compare_previous_year:
       previous_year: hospitality_kdollars_previous_year
       change: hospitality_kdollars_change
@@ -169,7 +169,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     excel_column_width: 20
-    solr_sum_to_field: total
+    solr_sum_to_field: total_kdollars
     solr_compare_previous_year:
       previous_year: conference_fees_kdollars_previous_year
       change: conference_fees_kdollars_change
