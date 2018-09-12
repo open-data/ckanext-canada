@@ -1,5 +1,11 @@
 {% set chromo = h.recombinant_get_chromo(res.name) %}
 
+{% set geno = h.recombinant_get_geno(res.name) %}
+{% if 'upload_warn' in geno %}
+  <div class="alert alert-danger" style="font-weight:bold;">
+    <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
+  </div>
+{% endif %}
 <form action="{{ h.url_for(
   controller='ckanext.canada.controller:PDUpdateController',
   action='create_travela',

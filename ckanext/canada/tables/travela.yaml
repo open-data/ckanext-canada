@@ -3,6 +3,9 @@ target_dataset: travela
 title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
 notes: This dataset includes all of the annual reports on travel expenses
        incurred within your organization.
+upload_warn:
+  en: 'Please note that we are in the process of updating the Annual Travel, Hospitality, and Conferences form in order to meet the new requirements of the <a href="https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=32553">Guide to Travel, Hospitality, Conference and Event Expenditures</a>. These updates should be completed shortly.'
+  fr: 'Veuillez prendre note que nous sommes actuellement en train de procéder à la mise à jour du formulaire annuel sur les voyages, l’accueil et les conférences afin de respecter les nouvelles exigences du <a href="https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=32553">Guide sur les dépenses de voyages, d’accueil, de conférences et d’événements</a>. Ces mises à jour devraient être complétées sous peu.'
 
 portal_type: info
 collection: pd
