@@ -71,4 +71,5 @@ for oy in sorted(org_year):
     except InvalidOperation:
         m = 0
     line['minister_kdollars'] = str(m)
+    line['user_modified'] = '*'  # special "we don't know" value
     out_csv.writerow(line)
