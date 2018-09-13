@@ -65,8 +65,14 @@ resources:
     solr_compare_previous_year:
       previous_year: operational_activities_kdollars_previous_year
       change: operational_activities_kdollars_change
-      sum_previous_year: [operational_activities_kdollars_previous_year, total_kdollars_previous_year]
-      sum_change: [operational_activities_kdollars_change, total_kdollars_change]
+      sum_previous_year:
+      - operational_activities_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - operational_activities_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
 
   - datastore_id: key_stakeholders_kdollars
     label:
@@ -83,8 +89,14 @@ resources:
     solr_compare_previous_year:
       previous_year: key_stakeholders_kdollars_previous_year
       change: key_stakeholders_kdollars_change
-      sum_previous_year: [key_stakeholders_kdollars_previous_year, total_kdollars_previous_year]
-      sum_change: [key_stakeholders_kdollars_change, total_kdollars_change]
+      sum_previous_year:
+      - key_stakeholders_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - key_stakeholders_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
 
   - datastore_id: training_kdollars
     label:
@@ -101,8 +113,14 @@ resources:
     solr_compare_previous_year:
       previous_year: training_kdollars_previous_year
       change: training_kdollars_change
-      sum_previous_year: [training_kdollars_previous_year, total_kdollars_previous_year]
-      sum_change: [training_kdollars_change, total_kdollars_change]
+      sum_previous_year:
+      - training_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - training_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
 
   - datastore_id: other_kdollars
     label:
@@ -119,8 +137,14 @@ resources:
     solr_compare_previous_year:
       previous_year: other_kdollars_previous_year
       change: other_kdollars_change
-      sum_previous_year: [other_kdollars_previous_year, total_kdollars_previous_year]
-      sum_change: [other_kdollars_change, total_kdollars_change]
+      sum_previous_year:
+      - other_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - other_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
 
   - datastore_id: internal_governance_kdollars
     label:
@@ -135,10 +159,16 @@ resources:
     excel_column_width: 20
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
-      previous_year: key_stakeholders_kdollars_previous_year
-      change: key_stakeholders_kdollars_change
-      sum_previous_year: [key_stakeholders_kdollars_previous_year, total_kdollars_previous_year]
-      sum_change: [key_stakeholders_kdollars_change, total_kdollars_change]
+      previous_year: internal_governance_kdollars_previous_year
+      change: internal_governance_kdollars_change
+      sum_previous_year:
+      - internal_governance_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - internal_governance_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
 
   - datastore_id: hospitality_kdollars
     label:
