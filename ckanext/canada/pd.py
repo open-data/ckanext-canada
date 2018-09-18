@@ -458,7 +458,6 @@ def sum_to_field(solrrec, key, value):
         else:
             float_value = float(value)
     except (ValueError, TypeError):
-        solrrec[key] = None # failed to find sum
         return
     try:
         solrrec[key] = float_value + solrrec.get(key, 0)
