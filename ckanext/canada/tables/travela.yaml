@@ -52,8 +52,8 @@ resources:
 
   - datastore_id: operational_activities_kdollars
     label:
-      en: Expenditure category – Operational activities ($ thousands)
-      fr: Catégorie de dépenses – activités opérationnelles (Milliers de dollars)
+      en: Travel ≥2018 – Operational activities ($ thousands)
+      fr: Voyage ≥2018 – activités opérationnelles (Milliers de dollars)
     description:
       en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Operational activities for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
       fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses activités opérationnelles pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
@@ -76,8 +76,8 @@ resources:
 
   - datastore_id: key_stakeholders_kdollars
     label:
-      en: Expenditure category – Key stakeholders ($ thousands)
-      fr: Catégorie de dépenses – Principaux intervenants (Milliers de dollars)
+      en: Travel ≥2018 – Key stakeholders ($ thousands)
+      fr: Voyage ≥2018 – Principaux intervenants (Milliers de dollars)
     description:
       en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – key stakeholders for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
       fr: Ce champ montre les dépenses annuelles de voyage de -fonctionnaires et non-fonctionnaires pour la catégorie de dépenses principaux intervenants,  pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
@@ -100,8 +100,8 @@ resources:
 
   - datastore_id: training_kdollars
     label:
-      en: Expenditure category – Training ($ thousands)
-      fr: Catégorie de dépenses – Formation (Milliers de dollars)
+      en: Travel ≥2018 – Training ($ thousands)
+      fr: Voyage ≥2018 – Formation (Milliers de dollars)
     description:
       en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Training for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
       fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses formation, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
@@ -124,8 +124,8 @@ resources:
 
   - datastore_id: other_kdollars
     label:
-      en: Expenditure category – Other ($ thousands)
-      fr: Catégorie de dépenses – Autre (Milliers de dollars)
+      en: Travel ≥2018 – Other ($ thousands)
+      fr: Voyage ≥2018 – Autre (Milliers de dollars)
     description:
       en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Other for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
       fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses autre, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
@@ -148,8 +148,8 @@ resources:
 
   - datastore_id: internal_governance_kdollars
     label:
-      en: Expenditure category – Internal governance ($ thousands)
-      fr: Catégorie de dépenses – Gouvernance interne (Milliers de dollars)
+      en: Travel ≥2018 – Internal governance ($ thousands)
+      fr: Voyage ≥2018 – Gouvernance interne (Milliers de dollars)
     description:
       en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Internal governance for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
       fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses gouvernance interne, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
@@ -167,6 +167,54 @@ resources:
       - total_kdollars_previous_year
       sum_change:
       - internal_governance_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
+
+  - datastore_id: non_public_servants_kdollars
+    label:
+      en: Travel <2018 – Non-Public Servants ($ thousands)
+      fr: Voyage <2018 – non-fonctionnaires (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of non-public servants for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de non-fonctionnaires pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    obligation: Mandatory
+    excel_required: true
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel_kdollars, total_kdollars]
+    solr_compare_previous_year:
+      previous_year: non_public_servants_kdollars_previous_year
+      change: non_public_servants_kdollars_change
+      sum_previous_year:
+      - non_public_servants_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - non_public_servants_kdollars_change
+      - total_travel_kdollars_change
+      - total_kdollars_change
+
+  - datastore_id: public_servants_kdollars
+    label:
+      en: Travel <2018 – Public Servants ($ thousands)
+      fr: Voyage <2018 – fonctionnaires (Milliers de dollars)
+    description:
+      en: This field shows annual expenditures for travel of public servants for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+    datastore_type: numeric
+    obligation: Mandatory
+    excel_required: true
+    excel_column_width: 20
+    solr_sum_to_field: [total_travel_kdollars, total_kdollars]
+    solr_compare_previous_year:
+      previous_year: public_servants_kdollars_previous_year
+      change: public_servants_kdollars_change
+      sum_previous_year:
+      - public_servants_kdollars_previous_year
+      - total_travel_kdollars_previous_year
+      - total_kdollars_previous_year
+      sum_change:
+      - public_servants_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
