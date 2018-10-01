@@ -222,6 +222,7 @@ ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
+ckanext.canada:tables/dac.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
