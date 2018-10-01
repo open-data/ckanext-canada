@@ -205,6 +205,24 @@ resources:
     datastore_type: text
     excel_column_width: 50
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   datastore_primary_key: [reporting_period, line_number]
   datastore_indexes: ""
@@ -222,19 +240,17 @@ resources:
   triggers:
   - dac_trigger: |
       BEGIN
-        PERFORM not_empty(NEW.year, 'year');
-        IF NEW.year >= 2018 THEN
-          PERFORM not_empty(NEW.mandate_description_en, 'mandate_description_en');
-          PERFORM not_empty(NEW.mandate_description_fr, 'mandate_description_fr');
-          PERFORM not_empty(NEW.operational_activities_kdollars, 'operational_activities_kdollars');
-          PERFORM not_empty(NEW.key_stakeholders_kdollars, 'key_stakeholders_kdollars');
-          PERFORM not_empty(NEW.training_kdollars, 'training_kdollars');
-          PERFORM not_empty(NEW.internal_governance_kdollars, 'internal_governance_kdollars');
-        END IF;
-        PERFORM not_empty(NEW.other_kdollars, 'other_kdollars');
-        PERFORM not_empty(NEW.hospitality_kdollars, 'hospitality_kdollars');
-        PERFORM not_empty(NEW.conference_fees_kdollars, 'conference_fees_kdollars');
-        PERFORM not_empty(NEW.minister_kdollars, 'minister_kdollars');
+        PERFORM not_empty(NEW.reporting_period, 'reporting_period');
+        PERFORM choice_one_of(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        PERFORM not_empty(NEW.line_number, 'line_number');
+        PERFORM not_empty(NEW.member_name, 'member_name');
+        PERFORM not_empty(NEW.province, 'province');
+        PERFORM choice_one_of(NEW.province, {province}, 'province');
+        PERFORM not_empty(NEW.meeting_hours, 'meeting_hours');
+        PERFORM not_empty(NEW.travel_hours, 'travel_hours');
+        PERFORM not_empty(NEW.remuneration, 'remuneration');
+        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
+        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
         RETURN NEW;
       END;
   - update_record_modified_created_trigger
