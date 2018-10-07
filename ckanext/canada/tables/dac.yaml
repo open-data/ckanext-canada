@@ -152,9 +152,9 @@ resources:
       fr: "Le nombre d’heures où le membre a rencontré le comité en personne ou par téléconférence au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
-    format_type: numeric
+    format_type: Decimal
     validation: This field must not be empty
-    datastore_type: text
+    datastore_type: numeric
 
   - datastore_id: travel_hours
     label:
@@ -172,9 +172,9 @@ resources:
       fr: "Le nombre d’heures que le membre a consacré à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
-    format_type: numeric
+    format_type: Decimal
     validation: This field must not be empty
-    datastore_type: text
+    datastore_type: numeric
 
   - datastore_id: remuneration
     label:
@@ -261,14 +261,14 @@ resources:
   examples:
     record:
       reporting_period: "2018-2019-Q3"
-      line_number: "2"
+      line_number: 2
       member_name: "John Smith"
       province: "AB"
       role: "M-M"
-      meeting_hours: "7.5"
-      travel_hours: "4"
-      remuneration: "2300.00"
-      travel_expenses: "500.00"
+      meeting_hours: 7.5
+      travel_hours: 4
+      remuneration: 2300.00
+      travel_expenses: 500.00
       notes_en: "The total remuneration includes time spent at meetings, preparation time and travel time."
       notes_fr: "La rémunération totale comprend le temps passé en réunions, le temps de préparation et le temps de déplacement."
 
