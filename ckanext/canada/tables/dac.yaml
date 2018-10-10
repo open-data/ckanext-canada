@@ -3,6 +3,7 @@ target_dataset: dac
 title: Proactive Disclosure - Departmental Audit Committee
 notes: " "
 
+template_version: 3
 
 portal_type: info
 collection: pd
@@ -21,7 +22,6 @@ resources:
       fr: La période de déclaration et l’exercice financier en cours.
     obligation: Mandatory
     datastore_type: text
-    excel_column_width: 40
     choices:
       2018-2019-Q1: 2018-2019-Q1
       2018-2019-Q2: 2018-2019-Q2
@@ -41,7 +41,6 @@ resources:
       fr: Le numéro de ligne de la divulgation.
     obligation: Mandatory
     datastore_type: int
-    excel_column_width: 20
 
   - datastore_id: member_name
     label:
@@ -55,20 +54,26 @@ resources:
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
-    excel_column_width: 50
 
   - datastore_id: province
     label:
       en: Province or Territory of Primary Residence
       fr: Province ou territoire de résidence primaire
+    excel_heading:
+      en: |
+        Province or Territory
+        of Primary Residence
+      fr: |
+        Province ou territoire
+        de résidence primaire
     description:
       en: The province or territory of the member’s main residence at the time the remuneration and/or expenses were incurred.
       fr: La province ou le territoire de la résidence principale du membre au moment où la rémunération et/ou les frais ont été engagés.
     obligation: Mandatory
     excel_required: true
+    excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 35
     choices:
       "ON":
         en: Ontario
@@ -122,9 +127,9 @@ resources:
       fr: Le rôle du membre au moment où la rémunération et/ou les frais ont été engagés (c’est-à-dire, « C-P » est pour président(e) et « M-M » est pour membre).
     obligation: Mandatory
     excel_required: true
+    excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 35
     choices:
       "C-P":
         en: Chair
@@ -137,29 +142,41 @@ resources:
     label:
       en: Number of Hours Spent at Meeting(s)
       fr: Nombre d'heures consacrées à la rencontre (ou aux rencontres)
+    excel_heading:
+      en: |
+        Number of Hours
+        Spent at Meeting(s)
+      fr: |
+        Nombre d'heures consacrées à la
+        rencontre (ou aux rencontres)
     description:
       en: "The number of hours when the member met with the committee in person or via teleconference during the reporting period."
       fr: "Le nombre d’heures où le membre a rencontré le comité en personne ou par téléconférence au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
-    format_type: numeric
+    format_type: Decimal
     validation: This field must not be empty
-    datastore_type: text
-    excel_column_width: 30
+    datastore_type: numeric
 
   - datastore_id: travel_hours
     label:
       en: Number of hours spent on preparation, travel and/or training or orientation
       fr: Nombre d'heures consacrées à la préparation, le déplacement et/ou à la formation ou à l'orientation
+    excel_heading:
+      en: |
+        Number of hours spent on preparation,
+        travel and/or training or orientation
+      fr: |
+        Nombre d'heures consacrées à la préparation, le
+        déplacement et/ou à la formation ou à l'orientation
     description:
       en: "The number of hours the member spent on preparation, travel and/or training or orientation during the reporting period."
       fr: "Le nombre d’heures que le membre a consacré à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
-    format_type: numeric
+    format_type: Decimal
     validation: This field must not be empty
-    datastore_type: text
-    excel_column_width: 30
+    datastore_type: numeric
 
   - datastore_id: remuneration
     label:
@@ -171,7 +188,6 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: money
-    excel_column_width: 40
 
   - datastore_id: travel_expenses
     label:
@@ -183,7 +199,6 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: money
-    excel_column_width: 40
 
   - datastore_id: notes_en
     label:
@@ -192,8 +207,8 @@ resources:
     description:
       en: Any other relevant information (e.g. description of the activities included in the total remuneration, point of origin of a member’s travel, etc.)
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
-    datastore_type: text
     excel_column_width: 50
+    datastore_type: text
 
   - datastore_id: notes_fr
     label:
@@ -202,8 +217,8 @@ resources:
     description:
       en: Any other relevant information (e.g. description of the activities included in the total remuneration, point of origin of a member’s travel, etc.)
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
-    datastore_type: text
     excel_column_width: 50
+    datastore_type: text
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -226,16 +241,6 @@ resources:
 
   datastore_primary_key: [reporting_period, line_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFC8E1EA
-    Font:
-      bold: true
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF90C3D4
 
   triggers:
   - dac_trigger: |
@@ -258,14 +263,14 @@ resources:
   examples:
     record:
       reporting_period: "2018-2019-Q3"
-      line_number: "2"
+      line_number: 2
       member_name: "John Smith"
       province: "AB"
       role: "M-M"
-      meeting_hours: "7.5"
-      travel_hours: "4"
-      remuneration: "2300.00"
-      travel_expenses: "500.00"
+      meeting_hours: 7.5
+      travel_hours: 4
+      remuneration: 2300.00
+      travel_expenses: 500.00
       notes_en: "The total remuneration includes time spent at meetings, preparation time and travel time."
       notes_fr: "La rémunération totale comprend le temps passé en réunions, le temps de préparation et le temps de déplacement."
 
