@@ -31,6 +31,13 @@
           {{ h.recombinant_language_text(
             h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
             or datastore_id }}
+        {% elif error_message.startswith("This field must be empty:") %}
+          {% set datastore_id = error.split(': ')[-1] %}
+          {{ error.split(':')[0] }}:
+          {{ _("This field must be empty") }}:
+          {{ h.recombinant_language_text(
+            h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
+            or datastore_id }}
         {% elif error_message.startswith("Invalid choice for") %}
           {% set datastore_id = error_message.split(':')[0][19:] %}
           {{ error.split(':')[0] }}:

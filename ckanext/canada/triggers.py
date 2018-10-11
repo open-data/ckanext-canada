@@ -92,6 +92,20 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
+        name=u'only_empty',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        definition=u'''
+            BEGIN
+                IF value IS NOT NULL THEN
+                    RAISE EXCEPTION 'This field must be empty: %', field_name;
+                END IF;
+            END;
+        ''')
+
+    lc.action.datastore_function_create(
         name=u'no_surrounding_whitespace',
         or_replace=True,
         arguments=[
