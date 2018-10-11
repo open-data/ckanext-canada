@@ -89,7 +89,7 @@ resources:
     datastore_type: numeric
     obligation: Mandatory
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
-    excel_error_formula: 'OR({default_formula},{year}<2018)'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: operational_activities_kdollars_previous_year
@@ -122,7 +122,7 @@ resources:
     datastore_type: numeric
     obligation: Mandatory
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
-    excel_error_formula: 'OR({default_formula},{year}<2018)'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: key_stakeholders_kdollars_previous_year
@@ -155,7 +155,7 @@ resources:
     datastore_type: numeric
     obligation: Mandatory
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
-    excel_error_formula: 'OR({default_formula},{year}<2018)'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: training_kdollars_previous_year
@@ -188,7 +188,7 @@ resources:
     datastore_type: numeric
     obligation: Mandatory
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
-    excel_error_formula: 'OR({default_formula},{year}<2018)'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: other_kdollars_previous_year
@@ -221,7 +221,7 @@ resources:
     datastore_type: numeric
     obligation: Mandatory
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
-    excel_error_formula: 'OR({default_formula},{year}<2018)'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: internal_governance_kdollars_previous_year
