@@ -6,7 +6,7 @@ import codecs
 import json
 from decimal import Decimal, InvalidOperation
 
-FIELDNAMES = ['year', 'mandate_description_en', 'mandate_description_fr', 'operational_activities_kdollars', 'key_stakeholders_kdollars', 'training_kdollars', 'other_kdollars', 'internal_governance_kdollars', 'hospitality_kdollars', 'conference_fees_kdollars', 'minister_kdollars', 'travel_compared_fiscal_year_en', 'travel_compared_fiscal_year_fr', 'hospitality_compared_fiscal_year_en', 'hospitality_compared_fiscal_year_fr', 'conference_fees_compared_fiscal_year_en', 'conference_fees_compared_fiscal_year_fr', 'minister_compared_fiscal_year_en', 'minister_compared_fiscal_year_fr', 'record_created', 'record_modified', 'user_modified', 'owner_org', 'owner_org_title']
+FIELDNAMES = ['year', 'mandate_description_en', 'mandate_description_fr', 'operational_activities_kdollars', 'key_stakeholders_kdollars', 'training_kdollars', 'other_kdollars', 'internal_governance_kdollars', 'non_public_servants_kdollars', 'public_servants_kdollars', 'hospitality_kdollars', 'conference_fees_kdollars', 'minister_kdollars', 'travel_compared_fiscal_year_en', 'travel_compared_fiscal_year_fr', 'hospitality_compared_fiscal_year_en', 'hospitality_compared_fiscal_year_fr', 'conference_fees_compared_fiscal_year_en', 'conference_fees_compared_fiscal_year_fr', 'minister_compared_fiscal_year_en', 'minister_compared_fiscal_year_fr', 'record_created', 'record_modified', 'user_modified', 'owner_org', 'owner_org_title']
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
 
@@ -51,7 +51,8 @@ for oy in sorted(org_year):
         sys.stderr.write('discarding {0} {1}\n'.format(repr(oy), repr(ps)))
         continue
     nps = Decimal(line.pop('non_public_servants').replace(',', ''))
-    line['other_kdollars'] = str(ps + nps)
+    line['public_servants_kdollars'] = str(ps)
+    line['non_public_servants_kdollars'] = str(nps)
     line['travel_compared_fiscal_year_en'] = \
         u'Public Servants: {0} {1};\nNon-Public Servants: {2} {3}'.format(
             str(ps),
