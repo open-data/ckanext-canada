@@ -558,6 +558,15 @@ resources:
   excel_data_height: 110
   excel_data_num_rows: 20
 
+  solr_sum_range_facet:
+    sum_field: total_kdollars
+    facet_values:
+      - 0
+      - 100
+      - 1000
+      - 10000
+      - 100000
+
   triggers:
   - travela_trigger: |
       BEGIN
