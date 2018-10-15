@@ -8,7 +8,7 @@ import json
 from datetime import date
 from unicodecsv import DictReader
 from _csv import Error as _csvError
-from babel.numbers import format_currency
+from babel.numbers import format_currency, format_decimal
 
 import paste.script
 from pylons import config
@@ -338,6 +338,15 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         if 'solr_static_fields' in chromo:
             solrrec.update(chromo['solr_static_fields'])
 
+        ssrf = chromo.get('solr_sum_range_facet')
+        if ssrf:
+            key = ssrf['sum_field']
+            float_value = float(solrrec[key])
+            solrrec.update(numeric_range_facet(
+                key,
+                ssrf['facet_values'],
+                float_value))
+
         if unmatched:
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
@@ -446,6 +455,46 @@ def dollar_range_facet(key, facet_range, float_value):
         key + u'_range': unicode(i - 1),
         key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
         key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+
+
+def en_numeric(v):
+    return format_decimal(v, locale='en_CA')
+
+
+def fr_numeric(v):
+    return format_decimal(v, locale='fr_CA')
+
+
+def numeric_range_facet(key, facet_range, float_value):
+    """
+    return solr range fields for numeric float_value in ranges
+    given by facet_range, in English and French
+
+    E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
+        "A: 5,000"
+        "B: 1,000 - 4,999"
+        "C: 0 - 999"
+    in English
+    """
+    last_fac = None
+    for i, fac in enumerate(facet_range):
+        if float_value < fac:
+            break
+        last_fac = fac
+    else:
+        return {
+            key + u'_range': unicode(i),
+            key + u'_en': u'A: ' + en_numeric(fac) + u'+',
+            key + u'_fr': u'A: ' + fr_numeric(fac) + u' +'}
+
+    if last_fac is None:
+        return {}
+
+    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    return {
+        key + u'_range': unicode(i - 1),
+        key + u'_en': prefix + en_numeric(last_fac) + u' - ' + en_numeric(fac-1),
+        key + u'_fr': prefix + fr_numeric(last_fac) + u' - ' + fr_numeric(fac-1)}
 
 
 def sum_to_field(solrrec, key, value):
