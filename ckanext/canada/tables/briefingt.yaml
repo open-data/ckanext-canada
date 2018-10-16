@@ -107,6 +107,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       M:
         en: Minister
@@ -146,8 +147,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
+    excel_full_text_choices: true
     choices:
-
       I:
         en: For Information
         fr: Aux fins de renseignements
