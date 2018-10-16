@@ -226,16 +226,8 @@ resources:
 
   datastore_primary_key: [reporting_period, line_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFC8E1EA
-    Font:
-      bold: true
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF90C3D4
+
+  excel_data_num_rows: 20
 
   triggers:
   - dac_trigger: |
