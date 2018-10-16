@@ -4,9 +4,10 @@ target_dataset: briefingt
 title: Briefing Note Titles
 notes: Briefing Note Titles
 
+template_version: 3
+
 portal_type: info
 collection: briefingt
-
 
 resources:
 - title: Briefing Note Titles
@@ -213,21 +214,10 @@ resources:
 
   datastore_primary_key: tracking_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      fgColor: FF3d4647
-      patternType: solid
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF84acb6
-  excel_error_background_color: "CD7213"
-  excel_required_border_color: "CD7213"
 
   default_preview_sort: tracking_number
+
+  excel_data_num_rows: 500
 
   triggers:
 #  - briefingt_trigger
@@ -250,3 +240,16 @@ resources:
     filter_one:
       tracking_number: 1089-4266
     sort: tracking_number asc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF3d4647
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF84acb6
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF84acb6
