@@ -173,7 +173,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 28
+    excel_column_width: 35
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -189,7 +189,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 28
+    excel_column_width: 35
 
 
   - datastore_id: record_created
