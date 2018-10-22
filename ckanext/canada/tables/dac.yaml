@@ -160,7 +160,7 @@ resources:
     validation: This field must not be empty
     datastore_type: numeric
 
-  - datastore_id: travel_hours
+  - datastore_id: other_hours
     label:
       en: Number of hours spent on preparation, travel and/or training or orientation
       fr: Nombre d'heures consacrées à la préparation, le déplacement et/ou à la formation ou à l'orientation
@@ -256,7 +256,7 @@ resources:
         PERFORM not_empty(NEW.province, 'province');
         PERFORM choice_one_of(NEW.province, {province}, 'province');
         PERFORM not_empty(NEW.meeting_hours, 'meeting_hours');
-        PERFORM not_empty(NEW.travel_hours, 'travel_hours');
+        PERFORM not_empty(NEW.other_hours, 'other_hours');
         PERFORM not_empty(NEW.remuneration, 'remuneration');
         PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
         PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
@@ -272,7 +272,7 @@ resources:
       province: "AB"
       role: "M-M"
       meeting_hours: 7.5
-      travel_hours: 4
+      other_hours: 4
       remuneration: 2300.00
       travel_expenses: 500.00
       notes_en: "The total remuneration includes time spent at meetings, preparation time and travel time."

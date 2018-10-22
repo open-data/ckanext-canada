@@ -173,7 +173,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 28
+    excel_column_width: 35
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -189,7 +189,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 28
+    excel_column_width: 35
 
 
   - datastore_id: record_created
@@ -223,7 +223,20 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-#  - briefingt_trigger
+  - briefingt_trigger: |
+      BEGIN
+        PERFORM not_empty(NEW.tracking_number, 'tracking_number');
+        PERFORM not_empty(NEW.title_en, 'title_en');
+        PERFORM not_empty(NEW.title_fr, 'title_fr');
+        PERFORM not_empty(NEW.originating_sector_en, 'originating_sector_en');
+        PERFORM not_empty(NEW.originating_sector_fr, 'originating_sector_fr');
+        PERFORM not_empty(NEW.addressee, 'addressee');
+        PERFORM choice_one_of(NEW.addressee, {addressee}, 'addressee');
+        PERFORM not_empty(NEW.date_received, 'date_received');
+        PERFORM not_empty(NEW.action_required, 'action_required');
+        PERFORM choice_one_of(NEW.action_required, {action_required}, 'action_required');
+        RETURN NEW;
+      END;
   - update_record_modified_created_trigger
 
   examples:
