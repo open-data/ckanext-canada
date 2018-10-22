@@ -35,6 +35,7 @@ resources:
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
+    extract_date_clean: true
 
   - datastore_id: pos_title_en
     label: Position Title (English)

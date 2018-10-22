@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+"filter for dac.csv"
 
 import csv
 import sys
 
 REMOVE_COLUMNS = [
-    'special_designations',
     'record_created',
     'record_modified',
     'user_modified',

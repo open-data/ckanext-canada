@@ -223,6 +223,7 @@ ckanext.canada:tables/wrongdoing.yaml
 ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
+ckanext.canada:tables/dac.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -266,6 +267,7 @@ ckanext.canada:schemas/info.yaml
             'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
+            'jurisdiction': _('Jurisdiction'),
             })
 
         return facets_dict
@@ -300,6 +302,8 @@ ckanext.canada:schemas/info.yaml
             'catalogue_last_update_date',
             'dataset_rating',
             'dataset_comments',
+            'get_translated_t',
+            'language_text_t',
             ])
 
     def before_map(self, map):
@@ -455,7 +459,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
     def before_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr', [])
+        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
         data_dict['catalog_type'] = data_dict.get('type', '')
 
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
@@ -654,7 +658,9 @@ ckanext.canada:schemas/doc.yaml
             'linked_gravatar',
             'linked_user',
             'json_loads',
-            'catalogue_last_update_date'
+            'catalogue_last_update_date',
+            'get_translated_t',
+            'language_text_t',
             ]),
             dataset_comments=helpers.dataset_comments_obd,
             dataset_rating=helpers.dataset_rating_obd,

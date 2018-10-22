@@ -21,8 +21,8 @@ resources:
       en: Registration Number
       fr: Numéro d’enregistrement
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer.
+      en: "This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete. The Registration Number should respect the following format: C-XXXXXXX."
+      fr: "Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX."
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -35,8 +35,8 @@ resources:
   # 3.2
   - datastore_id: publishable
     label:
-      en: Publishable record
-      fr: Dossier publiable
+      en: Publish Record
+      fr: Prêt à publier?
     description:
       en: This field identifies whether this record can be published as a summary on the appropriate public facing website.
       fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
@@ -74,36 +74,6 @@ resources:
     choices_file: choices/consultation_org.yaml
 
   # 3.4
-  - datastore_id: sector
-    label:
-      en: Sector
-      fr: Secteur
-    description:
-      en: This field indicates the sector of the engagement process.
-      fr: Cette zone indique le secteur visé par le processus de mobilisation.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 15
-    choices:
-      ER:
-        en: Economic and Regional Development Policy
-        fr: Politiques de développement économique et régional
-      FD:
-        en: Foreign and Defence Policy
-        fr: Politiques étrangère et de défense
-      G:
-        en: Governance
-        fr: Gouvernance
-      SD:
-        en: Social Development Policy
-        fr: Politiques de développement social
-
-  # 3.5
   - datastore_id: subjects
     label:
       en: Subjects
@@ -121,13 +91,13 @@ resources:
     excel_column_width: 30
     choices_file: choices/consultation_subject.yaml
 
-  # 3.6
+  # 3.5
   - datastore_id: title_en
     label:
       en: Consultation Title (English)
       fr: Titre de la consultation (en anglais)
     description:
-      en: This field contains the complete name of the consultation in English.
+      en: This field identifies the complete name of the consultation in English.
       fr: Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
     excel_required: true
@@ -138,7 +108,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.7
+  # 3.6
   - datastore_id: title_fr
     label:
       en: Consultation Title (French)
@@ -155,40 +125,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.8
-  - datastore_id: goals
-    label:
-      en: Goal(s)
-      fr: Objectif(s)
-    description:
-      en: This field intend to capture the main goals of consulting and/or engaging the public or stakeholders.
-      fr: Cette zone indique les principaux objectifs de la consultation ou de la mobilisation du public ou des parties concernées.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text (comma separated list of codes from reference table)
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Repeatable
-    datastore_type: _text
-    excel_column_width: 30
-    choices:
-      CB:
-        en: Collaborate
-        fr: Collaborer
-      CS:
-        en: Consult
-        fr: Consulter
-      PA:
-        en: Partner
-        fr: Associer
-      IF:
-        en: Inform
-        fr: Informer
-      IV:
-        en: Involve
-        fr: Impliquer
-
-  # 3.9
+  # 3.7
   - datastore_id: description_en
     label:
       en: Description of the Approach (English)
@@ -205,7 +142,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.10
+  # 3.8
   - datastore_id: description_fr
     label:
       en: Description of the Approach (French)
@@ -222,61 +159,7 @@ resources:
     datastore_type: text
     excel_column_width: 30
 
-  # 3.11
-  - datastore_id: public_opinion_research
-    label:
-      en: Public Opinion Research
-      fr: Recherche sur l’opinion publique
-    description:
-      en: This field indicates if public opinion research is conducted to design and/or inform the engagement process.
-      fr: Cette zone indique si une recherche sur l’opinion publique sera menée pour concevoir ou orienter le processus de mobilisation.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 20
-    choices:
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-      TBD:
-        en: To be determined
-        fr: A déterminer
-
-  # 3.12
-  - datastore_id: public_opinion_research_standing_offer
-    label:
-      en: Standing Offer Public Opinion Research
-      fr: Recherche sur l’opinion publique – offre à commandes
-    description:
-      en: This field indicates if PCO’s public opinion research standing offer was used if POR was conducted in the identified engagement process.
-      fr: Si une recherche sur l’opinion publique a été menée dans le cadre du processus de mobilisation, Cette zone indique si celle-ci était visée par une offre à commandes du BCP.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: No
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 20
-    choices:
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-      NA:
-        en: N/A
-        fr: S/O
-
-  # 3.13
+  # 3.9
   - datastore_id: target_participants_and_audience
     label:
       en: Target Participants and Audience
@@ -294,14 +177,14 @@ resources:
     excel_column_width: 20
     choices_file: choices/consultation_audience.yaml
 
-  # 3.14
-  - datastore_id: planned_start_date
+  # 3.10
+  - datastore_id: start_date
     label:
-      en: Planned Start Date
-      fr: Date de début prévue
+      en: Start Date
+      fr: Date de début
     description:
-      en: This field indicates the planned consultation starting date. A consultation is considered open when engagement activities are under way/or when a department is accepting input form participants.
-      fr: Cette zone indique la date de début prévue de la consultation. Une consultation est considérée comme commencée lorsque les activités de mobilisation sont en cours ou lorsqu’un ministère accepte les avis des participants.
+      en: This field indicates when a planned consultation will begin to accept input from participants.
+      fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
@@ -311,14 +194,14 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  # 3.15
-  - datastore_id: planned_end_date
+  # 3.11
+  - datastore_id: end_date
     label:
-      en: Planned End Date
-      fr: Date de fin prévue
+      en: End Date
+      fr: Date de fin
     description:
       en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
-      fr: Cette zone indique la date de fin prévue de la consultation. Une consultation est considérée comme terminée lorsqu’il n’y a plus d’activités de mobilisation ou lorsqu’un ministère commence à analyser les données recueillies durant le processus de mobilisation.
+      fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de mobilisation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
@@ -328,7 +211,7 @@ resources:
     datastore_type: date
     excel_column_width: 20
 
-  # 3.16
+  # 3.12
   - datastore_id: status
     label:
       en: Status
@@ -349,20 +232,23 @@ resources:
         en: Planned
         fr: Prévue
       O:
-        en: Open – Accepting input
+        en: Open – Accepting Input
         fr: Ouverte – Avis acceptés
       CA:
-        en: Closed – Analyzing input
+        en: Closed – Analyzing Input
         fr: Fermée – Analyse en cours
+      CN:
+        en: Closed – No Report Expected
+        fr: Fermée – Aucun rapport en attente
       CR:
         en: Closed – Report Available
         fr: Fermée – Rapport disponible
 
-  # 3.17
-  - datastore_id: further_information_en
+  # 3.13
+  - datastore_id: profile_page_en
     label:
-      en: Further Information Link (English)
-      fr: Lien – renseignements supplémentaires (en anglais)
+      en: Link to Consultations Profile Page (English)
+      fr: Lien vers la page du profil des consultations (en anglais)
     description:
       en: This field provides the link to the English engagement information page on the Consulting with Canadians website.
       fr: Cette zone contient le lien vers la page anglaise du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
@@ -375,11 +261,11 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.18
-  - datastore_id: further_information_fr
+  # 3.14
+  - datastore_id: profile_page_fr
     label:
-      en: Further Information Link (French)
-      fr: Lien – renseignements supplémentaires (en français)
+      en: Link to Consultations Profile Page (French)
+      fr: Lien vers la page du profil des consultations (en français)
     description:
       en: This field provides the link to the French engagement information page on the Consulting with Canadians website.
       fr: Cette zone contient le lien vers la page française du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
@@ -392,7 +278,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.19
+  # 3.15
   - datastore_id: report_available_online
     label:
       en: Report Available online
@@ -416,7 +302,7 @@ resources:
         en: "No"
         fr: Non
 
-  # 3.20
+  # 3.16
   - datastore_id: report_link_en
     label:
       en: Link to the “What we Heard” Report in English
@@ -432,7 +318,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.21
+  # 3.17
   - datastore_id: report_link_fr
     label:
       en: Link to the “What we Heard” Report in French
@@ -448,7 +334,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.22
+  # 3.18
   - datastore_id: contact_email
     label:
       en: Departmental Consultation Contact
@@ -464,7 +350,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.23
+  # 3.19
   - datastore_id: policy_program_lead_email
     label:
       en: Policy/Program Lead for the Consultation
@@ -480,7 +366,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.24
+  # 3.20
   - datastore_id: remarks_en
     label:
       en: Remarks (English)
@@ -496,7 +382,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 3.25
+  # 3.21
   - datastore_id: remarks_fr
     label:
       en: Remarks (French)
@@ -512,16 +398,40 @@ resources:
     datastore_type: text
     excel_column_width: 20
 
-  # 2.26
+  # 3.22
+  - datastore_id: high_profile
+    label:
+      en: High Profile
+      fr: Haute visibilité
+    description:
+      en: This field indicates whether the consultation or public engagement initiative is considered high profile. The consultation is considered high profile if it meets one or more of the criteria in the ‘Rationale’ field.
+      fr: "Cette zone indique si la consultation ou initiative de mobilisation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 20
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 2.23
   - datastore_id: rationale
     label:
       en: Rationale
       fr: Raison
     description:
-      en: The field indicates the rationale behind the public engagement initiative. This field include only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une initiative importante de participation du public.
+      en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
     obligation: Mandatory
-    excel_required: true
+    excel_cell_required_formula: 'and(isblank({column}{row}),{column_before}{row}="Y")'
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
@@ -529,27 +439,21 @@ resources:
     datastore_type: _text
     excel_column_width: 20
     choices:
-      B16:
-        en: Budget 2016
-        fr: Budget 2016
-      B17:
-        en: Budget 2017
-        fr: Budget 2017
-      B18:
-        en: Budget 2018
-        fr: Budget 2018
+      BG:
+        en: Budget
+        fr: Budget
+      IN:
+        en: International Commitment
+        fr: Engagement international
       LC:
-        en: Legal duty to Consult
-        fr: Obligation légale de consulter
+        en: Duty to Consult
+        fr: Obligation de consulter
       ML:
         en: Mandate Letter
         fr: Lettre de mandat
       MP:
         en: Minister and/or Parliamentary Secretary Involvement and/or announcement
         fr: Implication ou annonce du ministre ou du secrétaire parlementaire
-      NH:
-        en: No longer considered High Profile
-        fr: N’est plus considéré comme consultation de premier plan
       PC:
         en: Parliament Committee
         fr: Comité parlementaire

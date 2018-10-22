@@ -70,7 +70,7 @@ presets:
       value: publication
     - label:
         en: Ministerial Transition Binders
-        fr: Classeurs ministériels de transition
+        fr: Cahiers de transition ministériels
       value: transition
     - label:
         en: Reports Tabled in Parliament
@@ -84,6 +84,10 @@ presets:
         en: Parliamentary Committee Binders
         fr: Dossiers des comités parlementaires
       value: parliament_committee
+    - label:
+        en: Federated Open Data
+        fr: Fédérée de données
+      value: federated
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -1928,23 +1932,35 @@ presets:
       replaces: [daily]
       value: P1D
     - label:
+        en: Three times per week
+        fr: Trois fois par semaine
+      value: P0.33W
+    - label:
+        en: Two times per week
+        fr: Deux fois par semaine
+      value: P0.5W
+    - label:
         en: Weekly
         fr: Hebdomadaire
       replaces: [weekly]
       value: P1W
     - label:
-        en: Fortnightly
+        en: Every two weeks
         fr: Quinzomadaire
       replaces: [fortnightly]
       value: P2W
+    - label:
+        en: Twice monthly
+        fr: Bimensuel
+      value: P0.5M
     - label:
         en: Monthly
         fr: Mensuel
       replaces: [monthly]
       value: P1M
     - label:
-        en: Semimonthly
-        fr: Bimensuel
+        en: Every two months
+        fr: Bimestriel
       replaces: [semimonthly]
       value: P2M
     - label:
@@ -1952,6 +1968,10 @@ presets:
         fr: Trimestriel
       replaces: [quarterly]
       value: P3M
+    - label:
+        en: Every four months
+        fr: Trois fois par année
+      value: P4M
     - label:
         en: Biannually
         fr: Semestriel
@@ -1962,6 +1982,18 @@ presets:
         fr: Annuel
       replaces: [annually]
       value: P1Y
+    - label:
+        en: Every two years
+        fr: Biennal
+      value: P2Y
+    - label:
+        en: Every three years
+        fr: Triennal
+      value: P3Y
+    - label:
+        en: Every five years
+        fr: Quinquennal
+      value: P4Y
     - label:
         en: Irregular
         fr: Irrégulier
@@ -2101,6 +2133,8 @@ presets:
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
+    display_attributes:
+      style: "word-wrap: break-word"
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
@@ -2199,11 +2233,11 @@ presets:
     choices:
     - label:
         en: Federal
-        fr: Fédéral
+        fr: Fédérale
       value: federal
     - label:
         en: Provincial
-        fr: Provincial
+        fr: Provinciale
       value: provincial
     - label:
         en: Municipal
@@ -3207,6 +3241,8 @@ presets:
       replaces: [iati]
     - label: IOS Application
       value: IPA
+    - value: JAR
+      mimetype: application/java-archive
     - value: JFIF
       mimetype: image/jpeg
     - value: JP2
@@ -3322,6 +3358,8 @@ presets:
     - value: VPF
     - value: WAV
       mimetype: audio/wav
+    - value: WCS
+      mimetype: application/xml
     - value: WFS
       mimetype: text/xml
       openness_score: 3
@@ -3534,9 +3572,13 @@ presets:
         fr: Cheyenne
       value: chy
     - label:
-        en: Chinese
-        fr: Chinois
-      value: zh
+        en: Chinese (Simplified)
+        fr: Chinois (simplifié)
+      value: zh-cn
+    - label:
+        en: Chinese (Traditional)
+        fr: Chinois (traditionnel)
+      value: zh-hk
     - label:
         en: Chipewyan
         fr: Chipewyan
@@ -3634,6 +3676,10 @@ presets:
         fr: Coréen
       value: ko
     - label:
+        en: Kurdish
+        fr: Kurde
+      value: ku
+    - label:
         en: Latin
         fr: Latin
       value: la
@@ -3685,6 +3731,10 @@ presets:
         en: Philippine (Other)
         fr: Philippines, autres langues
       value: phi
+    - label:
+        en: Plains Cree
+        fr: Cris des plaines
+      value: crk
     - label:
         en: Polish
         fr: Polonais
@@ -3754,9 +3804,17 @@ presets:
         fr: thaï
       value: th
     - label:
+        en: Tigrinya
+        fr: Tigrigna
+      value: ti
+    - label:
         en: Turkish
         fr: Turc
       value: tr
+    - label:
+        en: Ukrainian
+        fr: Ukrainien
+      value: uk
     - label:
         en: Undetermined
         fr: Indéterminée
@@ -3793,7 +3851,7 @@ presets:
     field_name: url
     label:
       en: Download URL
-      fr: URL de téléchargement
+      fr: Télécharger un URL
     upload_label:
       en: "File Upload"
       fr: "Téléchargement du fichier"
@@ -3817,7 +3875,6 @@ presets:
     help_text:
       en: The URL for online access to the related record
     required: true
-    form_snippet: url_only.html
 
 # Field = Data Includes URI.
 # Default Value = Unchecked.

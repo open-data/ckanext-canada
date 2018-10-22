@@ -157,7 +157,7 @@ msgid "Edit Resources"
 msgstr "Modifier ressources"
 
 msgid "Next: Add Data"
-msgstr "Suivant : ajouter données"
+msgstr "Suivant : Ajouter une ressource ou un connexe"
 
 msgid "Last Modified"
 msgstr "Date de modification"
@@ -493,7 +493,7 @@ msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
 msgid "Save And Add another Resource or Related Item"
-msgstr "Sauvegarder et Ajouter une autre ressource ou article connexe"
+msgstr "Sauvegarder et Ajouter une autre ressource ou objet connexe"
 
 msgid "Dataset Resources"
 msgstr "Ressources de l'ensemble de données"
@@ -1201,6 +1201,9 @@ msgstr "Divulgation proactive - Reclassifications de postes"
 msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
 msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
 
+msgid "Proactive Disclosure - Departmental Audit Committee"
+msgstr "Divulgation proactive - Comités ministériels d’audit"
+
 msgid "Access, upload and modify the Grants and Contributions reports for your organization"
 msgstr "Accès, téléversement et modifications des rapports sur les contributions et les subventions pour votre organisation"
 
@@ -1510,13 +1513,13 @@ msgid "Add Asset Metadata"
 msgstr "Ajouter les métadonnées du produit"
 
 msgid "Add Resource or Related Item"
-msgstr "Ajouter une ressource ou un article connexe"
+msgstr "Ajouter une ressource ou un objet connexe"
 
 msgid "* indicates a mandatory field"
 msgstr "* Indique un champ obligatoire "
 
 msgid "Next: Add Resource or Related Item"
-msgstr "Suivant: Ajouter une ressource ou un article connexe"
+msgstr "Suivant: Ajouter une ressource ou un objet connexe"
 
 msgid "Errors in form"
 msgstr "Erreurs dans le formulaire"
@@ -1587,6 +1590,9 @@ msgstr "Type de portail"
 
 msgid "Collection Type"
 msgstr "Type de collection"
+
+msgid "Jurisdiction"
+msgstr "Juridiction"
 
 msgid "Organization"
 msgstr "Organisation"
@@ -1713,7 +1719,7 @@ msgid "Add Dataset Metadata"
 msgstr "Ajouter les métadonnées du jeu de données"
 
 msgid "You can add either a Resource or a Related Item per session, i.e. not both:"
-msgstr "Vous pouvez ajouter soit une ressource ou un article connexe par session, pas les deux:"
+msgstr "Vous pouvez ajouter soit une ressource ou un article connexe par séance, mais pas les deux:"
 
 msgid "Metadata Fields for Resources Only (Not for Related Items)"
 msgstr "Champs de métadonnées pour les ressources seulement (non pour les éléments connexes)"
@@ -2081,7 +2087,7 @@ msgid "If you would like to request an account for the Open Government Registry,
 msgstr "Si vous souhaitez demander un compte pour le Répertoire du gouvernement ouvert, veuillez envoyer un courriel à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> avec votre nom, ministère et adresse courriel."
 
 msgid "Request an account"
-msgstr "Demander un compte"
+msgstr "Demande d'un compte"
 
 msgid "We encountered an error and are unable to serve your request. Please try again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists."
 msgstr "Nous rencontrons une erreur et nous ne pouvons pas répondre à votre demande. Veuillez réessayer plus tard ou communiquer avec <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> si votre demande est urgente ou si ce problème persiste."
@@ -2091,6 +2097,10 @@ msgstr "Nous rencontrons une erreur"
 
 msgid "Note: Only records belonging to your organizations are now visible on the Registry. Please use the portal to access published records from all organizations. If you need to see draft records or create or update records for other organizations, please send a request and justification to <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr "Nota : Seuls les enregistrements appartenant à vos organisations sont désormais visibles dans le Répertoire. Veuillez vous servir du portail pour accéder aux documents publiés par toutes les organisations. Si vous avez besoin de consulter des ébauches d’enregistrements ou de créer des enregistrements pour d’autres organisations ou en effectuer la mise à jour, veuillez envoyer une demande et une justification à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
+
+
+msgid "Numeric only"
+msgstr "Valeur numérique seulement"
 
 msgid "\n"
 "    <h2>Terms and Conditions for the Open Government Registry</h2>\n"
@@ -2182,3 +2192,39 @@ msgstr "J’accepte"
 
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
+
+msgid "Made available by the Government of Alberta"
+msgstr "Rendus disponibles par l’entremise du gouvernement de l’Alberta"
+
+msgid ""
+"<p>These resources are not under the control of the Government of Canada and the link is provided solely for the convenience of our website visitors. We are not responsible for the accuracy, currency or reliability of the content of this website. The Government of Canada does not offer any guarantee in that regard and is not responsible for the information found through this link.</p>\n"
+"\n"
+"<p>Visitors should also be aware that information offered by this non-Government of Canada site is not subject to the <a href=\"http://laws-lois.justice.gc.ca/eng/acts/P-21/index.html\">Privacy Act</a> or the <a href=\"http://laws-lois.justice.gc.ca/eng/acts/O-3.01/\">Official Languages Act</a> and may not be accessible to persons with disabilities. The information offered may be available only in the language used by the site. With respect to privacy, visitors should research the privacy policies of this non-government website before providing personal information.</p>"
+msgstr ""
+"<p>Ces ressources ne sont pas contrôlées par le gouvernement du Canada, et l’hyperlien est fourni uniquement pour la facilité d’utilisation des visiteurs de notre site Web. Nous ne sommes pas responsables de l’exactitude, l’actualité et la fiabilité du contenu. Le gouvernement du Canada n’offre aucune garantie à cet égard et n’est pas responsable des renseignements trouvés par l’entremise de ce lien.</p>\n"
+"\n"
+"<p>Les visiteurs devraient également savoir que les renseignements offerts par l’entremise de ce site Web ne sont pas gérés par le gouvernement du Canada et ne relèvent pas de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/P-21/index.html\">Loi sur la protection des renseignements personnels</a> ni de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/O-3.01/\">Loi sur les langues officielles</a>, et qu’ils pourraient ne pas être accessibles aux personnes handicapées. Les renseignements offerts pourraient être uniquement disponibles dans la langue utilisée dans le site en question. En ce qui concerne la protection des renseignements personnels, les visiteurs devraient vérifier les politiques de confidentialité de ce site Web non gouvernemental avant de fournir leurs renseignements personnels.</p>"
+
+msgid "This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca"
+msgstr "Cet élément de métadonnée est traduit automatiquement par DeepL.com. Veuillez communiquer avec open-ouvert@tbs-sct.gc.ca si vous avez des questions."
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Edit metadata"
+msgstr "Modifier les métadonnées"
+
+msgid "Finish"
+msgstr "Soumettre"
+
+msgid "This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca"
+msgstr "Cet élément de métadonnées provenant d’une tierce partie a été traduit à l'aide d'un outil de traduction automatisée (DeepL). Pour signaler toute anomalie, veuillez communiquer avec nous à open-ouvert@tbs-sct.gc.ca"
+
+msgid "Issued by"
+msgstr "Publiée par"
+
+msgid "Provincial"
+msgstr "Provinciale"
+
+msgid "Federal"
+msgstr "Fédérale"

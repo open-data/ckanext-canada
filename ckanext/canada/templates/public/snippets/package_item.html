@@ -2,10 +2,16 @@
 {% import 'macros/canada_read.html' as cr %}
 {% block package_item %}
 <li>
-  <article class="panel panel-default mrgn-bttm-sm">
-    <header class="panel-heading"><h3 class="panel-title">
+  <article class="panel panel-default mrgn-bttm-sm relative">
+    <header class="panel-heading">
+    {% if package.jurisdiction == 'provincial' %}
+      <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
+    {% elif package.jurisdiction == 'federal' %}
+      <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
+    {% endif %}
+    <h3 class="panel-title">
       {% block heading %}
-        {% set my_title = h.get_translated(package, 'title') %}
+        {% set my_title, machine_translated = h.get_translated_t(package, 'title') %}
         {% if 'title_translated' not in package %}
           {% set my_title = _(my_title) %}
         {% endif %}
@@ -16,6 +22,9 @@
         {% block heading_meta %}
           {{ super() }}
         {% endblock %}
+        {% if machine_translated %}
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+        {% endif %}
       {% endblock %}
     </h3></header>
 
@@ -24,9 +33,13 @@
         {{ super() }}
       {% endblock %}
       {% block notes %}
-        {% set notes = h.get_translated(package, 'notes') %}
+        {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
         {% if notes %}
-          <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}</div>
+          <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
+            {% if machine_translated %}
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+            {% endif %}
+          </div>
         {% else %}
           <p class="empty">{{ _("This dataset has no description") }}</p>
         {% endif %}
@@ -34,12 +47,28 @@
     {% block publisher_info %}
     <div class="row mrgn-tp-sm">
       <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
-      <div class="cold-md-9">{{ cr.org_field(package, client_lang) }}</div>
+      <div class="col-md-9">{{ cr.org_field(package, client_lang) }}</div>
     </div>
+    {% set issuing_org = h.scheming_language_text(package.get('org_title_at_publication')) %}
+    {% if issuing_org and package.jurisdiction != 'federal' %}
+    <div class="row">
+      <div class="col-md-3"><em>{{ _('Issued by') }}: </em></div>
+      <div class="col-md-9">{{ issuing_org }}</div>
+    </div>
+    {% endif %}
     {% endblock %}
 
     {% block resources_outer %}
-      {{ super() }}
+      <div class="row">
+        <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+        <div class="col-md-9">
+          <ul class="list-inline list-unstyled">
+            {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+              <li><span class="badge">{{ _(resource) }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
       {% if 'fgp_viewer' in package.get('display_flags', []) %}
         <div>
         <hr>

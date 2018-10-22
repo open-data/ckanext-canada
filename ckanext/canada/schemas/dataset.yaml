@@ -11,6 +11,12 @@ catalog_type_label:
 form_languages:
 - en
 - fr
+# machine translated metadata:
+alternate_languages:
+  en:
+    - en-t-fr
+  fr:
+    - fr-t-en
 
 
 #
@@ -428,7 +434,6 @@ resource_fields:
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url
-  form_snippet: url_only.html
 - preset: canada_resource_data_quality
 
 

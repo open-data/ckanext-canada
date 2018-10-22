@@ -22,6 +22,68 @@ FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
 
 
+
+def get_translated_t(data_dict, field):
+    '''
+    customized version of core get_translated helper that also looks
+    for machine translated values (e.g. en-t-fr and fr-t-en)
+
+    Returns translated_text, is_machine_translated (True/False)
+    '''
+
+    language = h.lang()
+    try:
+        return data_dict[field+'_translated'][language], False
+    except KeyError:
+        if field+'_translated' in data_dict:
+            for l in data_dict[field+'_translated']:
+                if l.startswith(language + '-t-'):
+                    return data_dict[field+'_translated'][l], True
+        val = data_dict.get(field, '')
+        return (_(val) if val and isinstance(val, basestring) else val), False
+
+
+def language_text_t(text, prefer_lang=None):
+    '''
+    customized version of scheming_language_text helper that also looks
+    for machine translated values (e.g. en-t-fr and fr-t-en)
+
+    Returns translated_text, is_machine_translated (True/False)
+    '''
+    if not text:
+        return u'', False
+
+    assert text != {}
+    if hasattr(text, 'get'):
+        try:
+            if prefer_lang is None:
+                prefer_lang = h.lang()
+        except TypeError:
+            pass  # lang() call will fail when no user language available
+        else:
+            try:
+                return text[prefer_lang], False
+            except KeyError:
+                for l in text:
+                    if l.startswith(prefer_lang + '-t-'):
+                        return text[l], True
+                pass
+
+        default_locale = config.get('ckan.locale_default', 'en')
+        try:
+            return text[default_locale], False
+        except KeyError:
+            pass
+
+        l, v = sorted(text.items())[0]
+        return v, False
+
+    t = gettext(text)
+    if isinstance(t, str):
+        return t.decode('utf-8'), False
+    return t, False
+
+
 def may_publish_datasets(userobj=None):
     if not userobj:
         userobj = c.userobj

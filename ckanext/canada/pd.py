@@ -164,7 +164,7 @@ def rebuild(command_name, csv_files=None, solr_url=None):
             chromo = get_chromo(resource_name)
             geno = get_geno(chromo['dataset_type'])
 
-            for org_id, records in csv_data_batch(csv_file, chromo):
+            for org_id, records in csv_data_batch(csv_file, chromo, strict=False):
                 records = [dict((k, safe_for_solr(v)) for k, v in
                             row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
@@ -212,16 +212,20 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     orghash = hashlib.md5(org).hexdigest()
 
     def unique_id(r):
-        "return hash, friendly id"
+        "return hash, friendly id, partial id"
         s = orghash
         f = org
+        p = org
         if not pk:
             s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
             f += u'|' + unicode(r['_id'])
+            p += u'|' + unicode(r['_id'])
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
             f += u'|' + unicode(r[k])
-        return s, f
+            if u'|' not in p:
+                p += u'|' + unicode(r[k])
+        return s, f, p
 
     out = []
 
@@ -237,11 +241,12 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         unmatched = None
 
     for r in records:
-        unique, friendly = unique_id(r)
+        unique, friendly, partial = unique_id(r)
 
         solrrec = {
             'id': unique,
             'unique_id': friendly,
+            'partial_id': partial,
             'org_name_code': org_detail['name'],
             'org_name_en': org_detail['title'].split(' | ', 1)[0],
             'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
@@ -255,7 +260,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
 
         for f in chromo['fields']:
             key = f['datastore_id']
-            value = r[key]
+            value = r.get(key, '')
 
             facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
@@ -287,9 +292,20 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         solrrec['date_clean'] = value
                 except ValueError:
                     pass
-            elif f.get('datastore_type') == 'year':
-                if f.get('extract_date_year'):
+            elif f.get('extract_date_year'):
+                if f.get('datastore_type') == 'year':
                     solrrec['date_year'] = value
+                else:
+                    try:
+                        solrrec['date_year'] = int(value.split('-', 1)[0])
+                    except ValueError:
+                        pass
+            if f.get('extract_double_sortable'):
+                try:
+                    solrrec['doubl_' + key] = float(value)
+                except ValueError:
+                    pass
+
             solrrec[key] = value
 
             choices = choice_fields.get(f['datastore_id'])

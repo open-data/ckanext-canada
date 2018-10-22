@@ -70,6 +70,7 @@ resources:
     label: Total Contract Value
     datastore_type: money
     excel_column_width: 20
+    extract_double_sortable: true
 
     solr_dollar_range_facet:
      - 0

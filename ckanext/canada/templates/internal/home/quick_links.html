@@ -11,7 +11,7 @@
     <h2 class="h5"><a href="{{
       h.url_for('recombinant_type', resource_name=r_type) }}">{{
         _(geno.title) }}</a></h2>
-    <p>{{ _(geno.notes) }}</p>
+    <p>{{ h.recombinant_language_text(geno.notes) }}</p>
   </section>
 {% endmacro %}
 
@@ -20,12 +20,6 @@
   <div class="col-md-12">
     <section>
       <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
-    </section>
-    <section>
-    <div class="alert alert-danger" style="font-weight:bold"><p>{{ _('Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p></div>
-    </section>
-    <section>
-    <div class="alert alert-info" style="font-weight:bold"><p>{{ _('Note: Only records belonging to your organizations are now visible on the Registry. Please use the portal to access published records from all organizations. If you need to see draft records or create or update records for other organizations, please send a request and justification to <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>') | safe }}</p></div>
     </section>
   </div>
   {% set orgs = h.organizations_available('read') %}
@@ -55,6 +49,7 @@
       {{ quick_link('consultations') }}
       {{ quick_link('inventory') }}
       {{ quick_link('service') }}
+      {{ quick_link('dac') }}
       {% set org = orgs[0] %}
       <section>
         <h2 class="h5"><a href="{{
