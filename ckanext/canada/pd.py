@@ -548,11 +548,15 @@ def compare_output(prev_solrrec, solrrec, chromo):
         out[comp['previous_year']] = prev_value
         try:
             float_prev = float(prev_value)
-            float_cur = float(solrrec[f['datastore_id']])
-            change = float_cur - float_prev
         except ValueError:
             float_prev = None
+        try:
+            float_cur = float(solrrec[f['datastore_id']])
+        except ValueError:
             float_cur = None
+        if float_prev is not None and float_cur is not None:
+            change = float_cur - float_prev
+        else:
             change = None
 
         out[comp['change']] = change
