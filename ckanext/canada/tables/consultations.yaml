@@ -5,6 +5,8 @@ title: Open Dialogue - Consultations
 notes: Access, upload and modify consultation reports for your organization
 upload_warn: Description and guidance are being developed. If you have questions, please email consultation@pco-bcp.gc.ca.
 
+template_version: 3
+
 portal_type: dialogue
 collection: consultations
 
@@ -30,7 +32,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.2
   - datastore_id: publishable
@@ -47,7 +48,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -70,7 +71,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices_file: choices/consultation_org.yaml
 
   # 3.4
@@ -89,6 +90,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 30
+    excel_full_text_choices: true
     choices_file: choices/consultation_subject.yaml
 
   # 3.5
@@ -140,7 +142,6 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
 
   # 3.8
   - datastore_id: description_fr
@@ -157,7 +158,6 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -174,7 +174,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices_file: choices/consultation_audience.yaml
 
   # 3.10
@@ -192,7 +192,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 20
 
   # 3.11
   - datastore_id: end_date
@@ -209,7 +208,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 20
 
   # 3.12
   - datastore_id: status
@@ -226,7 +224,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       P:
         en: Planned
@@ -259,7 +257,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.14
   - datastore_id: profile_page_fr
@@ -276,7 +273,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.15
   - datastore_id: report_available_online
@@ -293,7 +289,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -316,7 +312,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.17
   - datastore_id: report_link_fr
@@ -332,7 +327,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.18
   - datastore_id: contact_email
@@ -348,7 +342,6 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.19
   - datastore_id: policy_program_lead_email
@@ -364,7 +357,6 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.20
   - datastore_id: remarks_en
@@ -380,7 +372,6 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 20
 
   # 3.21
   - datastore_id: remarks_fr
@@ -396,7 +387,6 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 20
 
   # 3.22
   - datastore_id: high_profile
@@ -413,7 +403,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -437,7 +427,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       BG:
         en: Budget
@@ -481,21 +471,11 @@ resources:
 
   datastore_primary_key: registration_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      fgColor: FF336B87
-      patternType: solid
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF90AFC5
-  excel_error_background_color: "763626"
-  excel_required_border_color: "763626"
 
   default_preview_sort: registration_number
+
+  excel_example_height: 32
+  excel_data_num_rows: 500
 
   triggers:
   - consultations_trigger
@@ -511,7 +491,7 @@ resources:
       further_information_en: ""
       further_information_fr: ""
       goals: ["CB", "CS"]
-      partner_departments: ["271", "141"]
+      partner_departments: ["D271", "D141"]
       planned_end_date: "2017-05-30"
       planned_start_date: "2017-05-15"
       policy_program_lead_email: program.lead@example.gc.ca
@@ -530,9 +510,22 @@ resources:
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
-      rationale: ["B17"]
+      rationale: ["BG", "PC"]
     filters:
       sector: SE
     filter_one:
       registration_number: CCC0249
     sort: planned_start_date desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF336B87
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
