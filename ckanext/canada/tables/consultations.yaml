@@ -142,7 +142,6 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
 
   # 3.8
   - datastore_id: description_fr
@@ -159,7 +158,6 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -473,21 +471,11 @@ resources:
 
   datastore_primary_key: registration_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      fgColor: FF336B87
-      patternType: solid
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF90AFC5
-  excel_error_background_color: "763626"
-  excel_required_border_color: "763626"
 
   default_preview_sort: registration_number
+
+  excel_example_height: 32
+  excel_data_num_rows: 500
 
   triggers:
   - consultations_trigger
@@ -503,7 +491,7 @@ resources:
       further_information_en: ""
       further_information_fr: ""
       goals: ["CB", "CS"]
-      partner_departments: ["271", "141"]
+      partner_departments: ["D271", "D141"]
       planned_end_date: "2017-05-30"
       planned_start_date: "2017-05-15"
       policy_program_lead_email: program.lead@example.gc.ca
@@ -522,9 +510,22 @@ resources:
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
-      rationale: ["B17"]
+      rationale: ["BG", "PC"]
     filters:
       sector: SE
     filter_one:
       registration_number: CCC0249
     sort: planned_start_date desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF336B87
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
