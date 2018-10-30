@@ -90,54 +90,6 @@ msgstr "Confirmer la suppression"
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
-msgid "Create new record"
-msgstr "Créer un nouveau dossier"
-
-msgid "Travel - Public Servants ($ thousands)"
-msgstr "Voyages des fonctionnaires (Milliers de dollars)"
-
-msgid "Travel - Non-Public Servants ($ thousands)"
-msgstr "Voyages des non-fonctionnaires (Milliers de dollars)"
-
-msgid "Hospitality ($ thousands)"
-msgstr "Accueil (Milliers de dollars)"
-
-msgid "Conference Fees ($ thousands)"
-msgstr "Frais de participation aux conférence (Milliers de dollars)"
-
-msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) ($ thousands)"
-msgstr "Voyages internationaux du ministre et du personnel du ministre (aussi inclus dans les voyages des non-fonctionnaires) (Milliers de dollars)"
-
-msgid "Travel Public Servants - Explanation of Significant Variance (English)"
-msgstr "Voyages des fonctionnaires - Explication d’un écart important (anglais)"
-
-msgid "Travel Public Servants - Explanation of Significant Variance (French)"
-msgstr "Voyages des fonctionnaires - Explication d’un écart important (français)"
-
-msgid "Travel Non-Public Servants - Explanation of Significant Variance (English)"
-msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (anglais)"
-
-msgid "Travel Non-Public Servants - Explanation of Significant Variance (French)"
-msgstr "Voyages des non-fonctionnaires - Explication d’un écart important (français)"
-
-msgid "Hospitality - Explanation of Significant Variance (English)"
-msgstr "Accueil - Explication d’un écart important (anglais)"
-
-msgid "Hospitality - Explanation of Significant Variance (French)"
-msgstr "Accueil - Explication d’un écart important (français)"
-
-msgid "Conference Fees - Explanation of Significant Variance (English)"
-msgstr "Frais de participation aux conférence - Explication d’un écart important (anglais)"
-
-msgid "Conference Fees - Explanation of Significant Variance (French)"
-msgstr "Frais de participation aux conférence - Explication d’un écart important (français)"
-
-msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (English)"
-msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (anglais)"
-
-msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance (French)"
-msgstr "Voyages internationaux du ministre et du personnel du ministre - Explication d’un écart important (français)"
-
 msgid "What are datasets?"
 msgstr "Qu’est-ce qu’un ensemble de données?"
 
@@ -1021,71 +973,11 @@ msgstr "Divulgation proactive – Dépenses annuelles de voyages, d’accueil, d
 msgid "This dataset includes all of the annual reports on travel expenses incurred within your organization."
 msgstr "Ce jeu de données comprend tous les rapports annuels sur les dépenses de voyage engagées au sein de votre organisation."
 
-msgid "Travel Public Servants - Explanation of Significant Variance"
-msgstr "Voyages des fonctionnaires : Comparaison avec l’exercice financier précédent"
+msgid "Mandatory if year ≥ 2018"
+msgstr "Obligatoire si année ≥ 2018"
 
-msgid "Travel Non-Public Servants - Explanation of Significant Variance"
-msgstr "Voyages des non-fonctionnaires : Comparaison avec l’exercice financier précédent"
-
-msgid "Travel - Public Servants (Change)"
-msgstr "Voyages - fonctionnaires (modification)"
-
-msgid "Travel - Non-Public Servants (Current Year)"
-msgstr "Voyages - non-fonctionnaires (exercice en cours)"
-
-msgid "Travel - Non-Public Servants (Previous Year)"
-msgstr "Voyages - non-fonctionnaires (exercice précédent)"
-
-msgid "Travel - Non-Public Servants (Change)"
-msgstr "Voyages - non-fonctionnaires (modification)"
-
-msgid "Total Travel - Current Year"
-msgstr "Total des dépenses de voyage - exercice en cours"
-
-msgid "Total Travel - Previous Year"
-msgstr "Total des dépenses de voyage - exercice précédent"
-
-msgid "Total Travel - Change"
-msgstr "Total des dépenses de voyage - modification"
-
-msgid "Hospitality - Explanation of Significant Variance"
-msgstr "Voyages des fonctionnaires : Comparaison avec l’exercice financier précédent"
-
-msgid "Hospitality - Previous Year"
-msgstr "Accueil - exercice précédent"
-
-msgid "Hospitality - Change"
-msgstr "Accueil - modification"
-
-msgid "Conference Fees - Explanation of Significant Variance"
-msgstr "Frais de conférence : Comparaison avec l’exercice financier précédent"
-
-msgid "Conference Fees - Previous Year"
-msgstr "Frais de conférence - exercice précédent"
-
-msgid "Conference Fees - Change"
-msgstr "Frais de conférence - modification"
-
-msgid "Total - Current Year"
-msgstr "Total - exercice en cours"
-
-msgid "Total - Previous Year"
-msgstr "Total - exercice précédent"
-
-msgid "Total - Change"
-msgstr "Total - modification"
-
-msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Current Year"
-msgstr "Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice en cours"
-
-msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Previous Year"
-msgstr "Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - exercice précédent"
-
-msgid "International Travel by Minister and Minister's Staff (also included in Non-Public Servant Travel) - Change"
-msgstr "Voyages à l’étranger du ministre et de son personnel (aussi inclus dans les voyages des non-fonctionnaires) - modification"
-
-msgid "International Travel by Minister and Minister’s Staff - Explanation of Significant Variance"
-msgstr "Dépenses du ministre et de son personnel : Comparaison avec l’exercice financier précédent"
+msgid "Mandatory if year < 2018"
+msgstr "Obligatoire si année < 2018"
 
 msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
 msgstr "Divulgation proactive – Dossiers sur les actes répréhensibles fondés"
@@ -1764,12 +1656,6 @@ msgstr "Créer"
 msgid "Go back"
 msgstr "Retourner"
 
-msgid "Record for %d added."
-msgstr "Record pour %d ajoutée."
-
-msgid "Previous Year"
-msgstr "Année précédente"
-
 msgid "Record Status"
 msgstr "État du dossier"
 
@@ -1886,6 +1772,9 @@ msgstr "Adresse Web"
 
 msgid "This field must not be empty"
 msgstr "Cette zone ne doit pas être vide"
+
+msgid "This field must be empty"
+msgstr "Cette zone doit être vide"
 
 msgid "Controlled List"
 msgstr "Liste contrôlée"

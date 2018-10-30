@@ -5,7 +5,7 @@
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_info' in geno %}
     <div class="alert alert-info" role="alert">
-      <p>{{ _(geno.upload_info) | safe }}</p>
+      <p>{{ h.recombinant_language_text(geno.upload_info) | safe }}</p>
     </div>
   {% endif %}
 {% endblock %}
@@ -15,7 +15,7 @@
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_warn' in geno %}
     <div class="alert alert-danger" style="font-weight:bold;">
-      <p>{{ _(geno.upload_warn) | safe }}</p>
+      <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
     </div>
   {% endif %}
 {% endblock %}
@@ -28,6 +28,13 @@
           {% set datastore_id = error.split(': ')[-1] %}
           {{ error.split(':')[0] }}:
           {{ _("This field must not be empty") }}:
+          {{ h.recombinant_language_text(
+            h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
+            or datastore_id }}
+        {% elif error_message.startswith("This field must be empty:") %}
+          {% set datastore_id = error.split(': ')[-1] %}
+          {{ error.split(':')[0] }}:
+          {{ _("This field must be empty") }}:
           {{ h.recombinant_language_text(
             h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
             or datastore_id }}

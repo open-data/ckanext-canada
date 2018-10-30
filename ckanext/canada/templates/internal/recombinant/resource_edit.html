@@ -33,26 +33,6 @@
   {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
 {% endblock %}
 
-
-{% block update_panel %}
-  {# XXX: For now only Travel Annual gets a custom form #}
-  {% if dataset.resources.0.name == 'travela' %}
-    <details id="update-one">
-      <summary><span class="glyphicon glyphicon-plus"></span>
-        {{ _("Create") }}
-      </summary>
-      {% snippet "snippets/travel_annual_form.html",
-        pkg=dataset,
-        res=resource,
-        data=create_data or {},
-        errors=create_errors or {} %}
-    </details>
-  {% else %}
-    {{ super() }}
-  {% endif %}
-{% endblock %}
-
-
 {% block scripts %}
   {{ super() }}
   <script>
