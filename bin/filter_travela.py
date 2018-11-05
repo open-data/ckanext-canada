@@ -10,6 +10,16 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+# these fields need some kind of value
+# or drupal search won't work at all
+DRUPAL_SEARCH_HACK = [
+    'operational_activities_kdollars',
+    'key_stakeholders_kdollars',
+    'training_kdollars',
+    'other_kdollars',
+    'internal_governance_kdollars',
+]
+
 def main():
     reader = csv.DictReader(sys.stdin)
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
@@ -19,6 +29,9 @@ def main():
         try:
             for rem in REMOVE_COLUMNS:
                 del row[rem]
+            for hack in DRUPAL_SEARCH_HACK:
+                if not row[hack]:
+                    row[hack] = '.'
             writer.writerow(row)
         except ValueError:
             pass
