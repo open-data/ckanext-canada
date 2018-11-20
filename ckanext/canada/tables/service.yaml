@@ -4,11 +4,12 @@ target_dataset: service
 title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
+template_version: 3
+
 portal_type: dataset
 collection: service
 
 gcpedia_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
-
 
 resources:
 - title: Service Inventory
@@ -16,13 +17,28 @@ resources:
   fields:
 
   # 3.1
+  - datastore_id: fiscal_year
+    label:
+      en: Fiscal Year
+      fr: Année financière
+    description:
+      en: Identifies the fiscal year for which service data is reported
+    obligation: Mandatory
+    excel_required: true
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    choices_file: choices/fiscal_year.yaml
+
+  # 3.2
   - datastore_id: service_id_number
     label:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
-      en: This field is populated by the user. Identifies the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
-      fr: Cette zone doit être remplie par l’utilisateur. Identifie le numéro unique attribué à un service dans le répertoire par un ministère pour faciliter la consultation de données sur les services particuliers.
+      en: Departmental acronym and the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
+      fr: Il s’agit d’un numéro de référence unique avec le sigle du ministère ou de l’organisme, l’exercice en cours et le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire. Avoir un identificateur unique permet aux utilisateurs de localiser un élément particulier dans le répertoire.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -30,33 +46,15 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 18
 
-  # 3.2
+  # 3.3
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
       fr: Nom du service (en anglais)
     description:
-      en: This field is populated by the user.  Identifies the official name of the service.
-      fr: Cette zone doit être remplie par l’utilisateur. Identifie le nom officiel du service.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 28
-
-  # 3.3
-  - datastore_id: service_name_fr
-    label:
-      en: Service Name (French)
-      fr: Nom du service (en français)
-    description:
-      en: This field is populated by the user.  Identifies the official name of the service.
-      fr: Cette zone doit être remplie par l’utilisateur. Identifie le nom officiel du service.
+      en: Identifies the official name of the service.
+      fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -67,6 +65,22 @@ resources:
     excel_column_width: 28
 
   # 3.4
+  - datastore_id: service_name_fr
+    label:
+      en: Service Name (French)
+      fr: Nom du service (en français)
+    description:
+      en: Identifies the official name of the service.
+      fr: Indique le nom officiel du service.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.5
   - datastore_id: external_internal
     label:
       en: External Service or Internal Enterprise Service
@@ -81,7 +95,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 42
+    excel_full_text_choices: true
     choices:
       EX:
         en: External Service
@@ -93,14 +107,14 @@ resources:
         en: External/Internal Enterprise Service
         fr: Services externes/internes intégrés
 
-  # 3.5
+  # 3.6
   - datastore_id: service_type
     label:
       en: Service Type
       fr: Type de service
     description:
-      en: Identifies the external or internal service type.
-      fr: Identifie le type de service parmi les service externes ou services internes intégrés.
+      en: Identifies the external or internal service type as outlined in the Guideline on Service Management.
+      fr: Indique le type de service externe ou interne.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -108,9 +122,8 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 12
+    excel_full_text_choices: true
     choices:
-
       RES:
         en: Resources
         fr: Ressources
@@ -157,7 +170,7 @@ resources:
         en: Real Property Services
         fr: Services immobiliers
 
-  # 3.6
+  # 3.7
   - datastore_id: special_designations
     label:
       en: Special Designations
@@ -172,7 +185,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 19
+    excel_full_text_choices: true
     choices:
       1:
         en: Priority Service
@@ -199,31 +212,12 @@ resources:
         en: None of the above
         fr: Aucun des éléments ci-dessus
 
-  # 3.7
+  # 3.8
   - datastore_id: service_description_en
     label:
       en: Service Description (English)
       fr: Description du service (en anglais)
     description:
-      en: This field is populated by the user.  Provides a brief description of the service
-      fr: Cette zone doit être remplie par l’utilisateur.  Fournit une brève description du service.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 71
-
-  # 3.8
-  - datastore_id: service_description_fr
-    label:
-      en: Service Description (French)
-      fr: Description du service (en français)
-    description:
-      en: This field is populated by the user.  Provides a brief description of the service
-      fr: Cette zone doit être remplie par l’utilisateur.  Fournit une brève description du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -234,13 +228,13 @@ resources:
     excel_column_width: 71
 
   # 3.9
-  - datastore_id: responsibility_area_en
+  - datastore_id: service_description_fr
     label:
-      en: Responsibility Area (English)
-      fr: Secteur de responsabilité (en anglais)
+      en: Service Description (French)
+      fr: Description du service (en français)
     description:
-      en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
+      en: Provides a brief description of the service, in plain language.
+      fr: Offre une brève description du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -249,32 +243,49 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 71
+
+#  # 3.9 (removed)
+#  - datastore_id: responsibility_area_en
+#    label:
+#      en: Responsibility Area (English)
+#      fr: Secteur de responsabilité (en anglais)
+#    description:
+#      en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
+#      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
+#    obligation: Mandatory
+#    excel_required: true
+#    format_type: Free text
+#    validation: This field must not be empty
+#    visible_to_public: Yes
+#    occurrence: Single
+#    datastore_type: text
+#    excel_column_width: 71
+#
+#  # 3.10 (removed)
+#  - datastore_id: responsibility_area_fr
+#    label:
+#      en: Responsibility Area (French)
+#      fr: Secteur de responsabilité (en français)
+#    description:
+#      en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
+#      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
+#    obligation: Mandatory
+#    excel_required: true
+#    format_type: Free text
+#    validation: This field must not be empty
+#    visible_to_public: Yes
+#    occurrence: Single
+#    datastore_type: text
+#    excel_column_width: 71
 
   # 3.10
-  - datastore_id: responsibility_area_fr
-    label:
-      en: Responsibility Area (French)
-      fr: Secteur de responsabilité (en français)
-    description:
-      en: This field is populated by the user.  Identifies the name of the group within the organization that is responsible and accountable for the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du groupe au sein de l'organisation qui est responsable du service et qui rend des comptes à son sujet.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 71
-
-  # 3.11
   - datastore_id: authority_en
     label:
       en: Authority (English)
       fr: Instruments habilitants (en anglais)
     description:
-      en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie une liste de lois, réglements et/ou de politiques qui confèrent le pouvoir d’établir le service.
+      en: Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
+      fr: Indique le nom du groupe au sein de l’organisation qui est responsable du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -284,14 +295,14 @@ resources:
     datastore_type: text
     excel_column_width: 51
 
-  # 3.12
+  # 3.11
   - datastore_id: authority_fr
     label:
       en: Authority (French)
       fr: Instruments habilitants (en français)
     description:
-      en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie une liste de lois, réglements et/ou de politiques qui confèrent le pouvoir d’établir le service.
+      en: Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
+      fr: Indique le nom du groupe au sein de l’organisation qui est responsable du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -301,31 +312,42 @@ resources:
     datastore_type: text
     excel_column_width: 51
 
+  # 3.12 (new field)
+  - datastore_id: service_url_en
+    label:
+      en: URL to Service (English)
+    description:
+      en: Identifies the departmental webpage where the service is described and/or accessed.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
   # 3.13
+  - datastore_id: service_url_fr
+    label:
+      en: URL to Service (French)
+    description:
+      en: Identifies the departmental webpage where the service is described and/or accessed.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.14
   - datastore_id: program_name_en
     label:
       en: Program Name (English)
       fr: Désignation du programme (en anglais)
     description:
-      en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du programme en vertu duquel le service est offert.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Free text
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 51
-
-  # 3.14
-  - datastore_id: program_name_fr
-    label:
-      en: Program Name (French)
-      fr: Désignation du programme (en français)
-    description:
-      en: This field is populated by the user.  Identifies the relevant legislation and policies that grant the authority for the establishment of the service.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le nom du programme en vertu duquel le service est offert.
+      en: Identifies the name of the program under which the service is delivered.
+      fr: Indique le nom du programme sous lequel le service est offert.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -336,13 +358,30 @@ resources:
     excel_column_width: 51
 
   # 3.15
-  - datastore_id: program_id_number
+  - datastore_id: program_name_fr
     label:
-      en: Program ID Number
+      en: Program Name (French)
+      fr: Désignation du programme (en français)
+    description:
+      en: Identifies the name of the program under which the service is delivered.
+      fr: Indique le nom du programme sous lequel le service est offert.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 51
+
+  # 3.16 (was program_id_number)
+  - datastore_id: program_id_code
+    label:
+      en: Program ID 
       fr: Code d'identification du programme
     description:
-      en: This field is populated by the user.  Identifies the unique program number associated with program elements for all strategic outcomes, programs, sub-programs, and sub-sub-programs. Corporate planners in the department who are responsible for the Policy on Results can assist in identifying the program ID Number, if needed.
-      fr: Cette zone doit être remplie par l’utilisateur.  Identifie le numéro unique associé aux éléments de programme pour l’ensemble des résultats stratégiques, programmes, sous-programmes et sous sous programmes. Au besoin, les planificateurs ministériels responsables de la Politique sur les résultats du ministère peuvent aider à trouver le code d'identification du programme.
+      en: Identifies the unique program code associated with program elements for all strategic outcomes, programs, sub-programs, and sub-sub-programs. For departments/agencies that have moved to the Departmental Results Framework (DRF), the Program codes in the government-wide Chart of Accounts can be used. Corporate planners in the department/agency who are responsible for the Policy on Results can assist in identifying this, if needed.
+      fr: Indique le code de programme unique associé aux éléments de programme pour tous les résultats stratégiques, les programmes, les sous-programmes et les sous-sous-programmes. Les planificateurs ministériels du ministère ou de l’organisme responsables de la Politique sur les résultats peuvent aider à déterminer le code d’identification du programme, au besoin.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -352,52 +391,52 @@ resources:
     datastore_type: text
     excel_column_width: 21
 
-  # 3.16
-  - datastore_id: service_owner
-    label:
-      en: Service Owner
-      fr: Propriétaire du service
-    description:
-      en: This field is populated by the user.  Identifies the owner of the service, the organization that is responsible for it based on established authorities. If the owner is another organization, provide that name.    Organizations are encouraged to use applied titles, in accordance with the Federal Identity Program. For a list of applied titles, consult the Registry of Applied Titles.
-      fr: Identifie le propriétaire du service, l’organisation qui en est responsable, selon les instruments habilitants. Si le propriétaire est un autre ministère, il faut en préciser le nom. Les ministères sont encouragés à utiliser le titre d’usage approuvé du ministère, en conformité avec le Programme fédéral de coordination de l’image de marque. Pour obtenir une liste des titres, veuillez consulter le Registre des titres d’usage.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 21
-    choices_file: choices/consultation_org.yaml
+#  # 3.16 (removed)
+#  - datastore_id: service_owner
+#    label:
+#      en: Service Owner
+#      fr: Propriétaire du service
+#    description:
+#      en: This field is populated by the user.  Identifies the owner of the service, the organization that is responsible for it based on established authorities. If the owner is another organization, provide that name.    Organizations are encouraged to use applied titles, in accordance with the Federal Identity Program. For a list of applied titles, consult the Registry of Applied Titles.
+#      fr: Identifie le propriétaire du service, l’organisation qui en est responsable, selon les instruments habilitants. Si le propriétaire est un autre ministère, il faut en préciser le nom. Les ministères sont encouragés à utiliser le titre d’usage approuvé du ministère, en conformité avec le Programme fédéral de coordination de l’image de marque. Pour obtenir une liste des titres, veuillez consulter le Registre des titres d’usage.
+#    obligation: Mandatory
+#    excel_required: true
+#    format_type: Controlled List
+#    validation: This field must not be empty
+#    visible_to_public: Yes
+#    occurrence: Single
+#    datastore_type: text
+#    excel_column_width: 21
+#    choices_file: choices/consultation_org.yaml
+#
+#  # 3.17 (removed)
+#  - datastore_id: service_agreements
+#    label:
+#      en: Service Agreements
+#      fr: Ententes de service
+#    description:
+#      en: Identifies whether service agreements are in place to support the delivery of the service.
+#      fr: Identifie si des ententes de service ont été conclues pour appuyer la prestation du service.
+#    obligation: Mandatory
+#    excel_required: true
+#    format_type: Controlled List
+#    validation: This field must not be empty
+#    visible_to_public: Yes
+#    occurrence: Single
+#    datastore_type: text
+#    excel_column_width: 21
+#    choices:
+#      NA:
+#        en: N/A
+#        fr: S/O
+#      Y:
+#        en: "Yes"
+#        fr: Oui
+#      N:
+#        en: "No"
+#        fr: Non
 
   # 3.17
-  - datastore_id: service_agreements
-    label:
-      en: Service Agreements
-      fr: Ententes de service
-    description:
-      en: Identifies whether service agreements are in place to support the delivery of the service.
-      fr: Identifie si des ententes de service ont été conclues pour appuyer la prestation du service.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 21
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.18
   - datastore_id: client_target_groups
     label:
       en: Client/Target Groups
@@ -437,6 +476,29 @@ resources:
         en: Environmental
         fr: Environnement
 
+  # 3.18 (was user_fee)
+  - datastore_id: service_fees
+    label:
+      en: Service Fees
+      fr: Frais de service
+    description:
+      en: Identifies whether a service fee is collected for the provision of the service.
+      fr: Indique si des frais de service sont perçus pour la prestation du service.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
   # 3.19
   - datastore_id: cra_business_number
     label:
@@ -452,7 +514,30 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 27
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.20 (new field)
+  - datastore_id: social_insurance_number
+    label:
+      en: Use of Social Insurance Number
+    description:
+      en: Identifies whether the Social Insurance Number (SIN) is used in the delivery of the service.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
     choices:
       NA:
         en: N/A
@@ -553,30 +638,6 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 46
-
-  # 3.24
-  - datastore_id: user_fee
-    label:
-      en: User Fee
-      fr: Frais d’utilisation
-    description:
-      en: Identifies whether a user fee is collected for the provision of the service.
-      fr: Indique si un frais d'utilisation est  perçu pour le service.
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 9
-    choices:
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
 
   # 3.25
   - datastore_id: targets_published_en
@@ -960,13 +1021,13 @@ resources:
       special_designations: "8"
       service_description_en: Family Services Program Reform
       service_description_fr: Réforme du programme des services à l'enfance
-      responsibility_area_en: Family Services
-      responsibility_area_fr: Services à l'enfance
-      authority_en: Program Reform
-      authority_fr: Réforme du programme
+      authority_en: Farm Income Protection Act
+      authority_fr: Loi sur la protection du revenu agricole
+      service_url_en: http://www.agr.gc.ca/eng/?id=1291828779399
+      service_url_fr: http://www.agr.gc.ca/fra/?id=1291828779399
       program_name_en: Partner views
       program_name_fr: Opinions des partenaires
-      program_id_number: P0124
+      program_id_code: 03-001-BWP02
       service_owner: "271"
       service_agreements: NA
       client_target_groups: [PP, IO]
