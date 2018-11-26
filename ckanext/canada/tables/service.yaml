@@ -549,95 +549,155 @@ resources:
         en: "No"
         fr: Non
 
-  # 3.20
-  - datastore_id: volumes_per_channel_online
+  # 3.21 (was volumes_per_channel_online)
+  - datastore_id: applications_online
     label:
-      en: "Volumes per Channel (Applications): Online"
-      fr: "Mode de prestation du service en ligne (volume des demandes)"
+      en: Number of Applications Submitted Online
     description:
-      en: "This field is populated by the user.
-      Identifies the number of applications received in a fiscal year for each of the following channels
-      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please indicate that there is no data (N/D)."
-      fr: "Cette zone doit être remplie par l’utilisateur.
-      Identifie le nombre de demandes reçues en ligne au cours d’un exercice financier. Remarque : Si un service n’est pas offert en ligne, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
+      en: "Identifies the number of applications submitted in a fiscal year for the online channel.
+
+Notes:
+    • If the service is not offered online, please indicate that this field is not applicable (NA).
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
     obligation: Mandatory
     excel_required: true
-    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber(value({cells}))),--{cells}<>"NA",--{cells}<>"ND")'
-    format_type: Free text; numeric
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 46
-
-  # 3.21
-  - datastore_id: volumes_per_channel_telephone
-    label:
-      en: "Volumes per Channel (Applications): Telephone"
-      fr: "Mode de prestation du service par téléphone (volume des demandes)"
-    description:
-      en: "This field is populated by the user.
-      Identifies the number of applications received in a fiscal year for each of the following channels
-      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please indicate that there is no data (N/D)."
-      fr: "Cette zone doit être remplie par l’utilisateur.
-      Identifie le nombre de demandes reçues par téléphone au cours d’un exercice financier.
-
-      Remarque : Si un service n’est pas offert par téléphone, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
-    obligation: Mandatory
-    excel_required: true
-    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber(value({cells}))),--{cells}<>"NA",--{cells}<>"ND")'
-    format_type: Free text; numeric
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 46
 
   # 3.22
-  - datastore_id: volumes_per_channel_in_person
+  - datastore_id: website_visits
     label:
-      en: "Volumes per Channel (Applications): In-Person"
-      fr: "Mode de prestation du service en personne (volume des demandes)"
+      en: Number of Website Visits
+      fr: Sur ligne
     description:
-      en: "This field is populated by the user.
-      Identifies the number of applications received in a fiscal year for each of the following channels
-      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please indicate that there is no data (N/D)."
-      fr: "Cette zone doit être remplie par l’utilisateur.
-      Identifie le nombre de demandes reçues en personne au cours d’un exercice financier. Remarque : Si un service n’est pas offert en personne, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide."
-    obligation: Mandatory
-    excel_required: true
-    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber(value({cells}))),--{cells}<>"NA",--{cells}<>"ND")'
-    format_type: Free text; numeric
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 46
+      en: "Identifies the number of website visits in a fiscal year for obtaining information-based services.
 
-  # 3.23
-  - datastore_id: volumes_per_channel_mail
-    label:
-      en: "Volumes per Channel (Applications): Mail"
-      fr: "Mode de prestation du service par la poste (volume des demandes)"
-    description:
-      en: "This field is populated by the user.
-      Identifies the number of applications received in a fiscal year for each of the following channels
-      Note: If a service is not offered via a channel, please indicate that this question is not applicable (N/A). If data is not available, please indicate that there is no data (N/D)."
-      fr: "Cette zone doit être remplie par l’utilisateur.
-      Identifie le nombre de demandes reçues par la poste au cours d’un exercice financier. Remarque : Si un service n’est pas offert par la poste, veuillez indiquer que cette question est sans objet (S/O). S’il n’y a aucune donnée disponible, veuillez laisser la case vide"
+Notes: 
+    • If the service is not offered online, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
     obligation: Mandatory
     excel_required: true
-    excel_cell_error_formula: 'and(not(isblank({cell})),not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    excel_header_error_formula: 'sumproduct(--not(isblank({cells})),--not(isnumber(value({cells}))),--{cells}<>"NA",--{cells}<>"ND")'
-    format_type: Free text; numeric
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 46
+
+  # 3.23 (was volumes_per_channel_telephone)
+  - datastore_id: telephone_calls
+    label:
+      en: "Number of Telephone Calls Received"
+      fr: "Mode de prestation du service par téléphone"
+    description:
+      en: "Identifies the number of telephone calls received for the service in a fiscal year.
+
+Notes: 
+    • If the service is not offered via telephone, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+    obligation: Mandatory
+    excel_required: true
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.24 (was volumes_per_channel_in_person)
+  - datastore_id: in_person_applications
+    label:
+      en: "Number of Applications Submitted In-Person"
+      fr: "Mode de prestation du service en personne"
+    description:
+      en: "Identifies the number of applications received in-person in a fiscal year for the service.
+ 
+Notes: 
+    • If the service is not offered in-person, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+    obligation: Mandatory
+    excel_required: true
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.25 (new field)
+  - datastore_id: email_applications
+    label:
+      en: "Number of Applications Submitted via Email"
+    description:
+      en: "Identifies the number of applications received through Email in a fiscal year for the service.
+ 
+Notes: 
+    • If the service cannot be applied for via Email, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+    obligation: Mandatory
+    excel_required: true
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.26 (new field)
+  - datastore_id: fax_applications
+    label:
+      en: "Number of Applications via Fax"
+    description:
+      en: "Identifies the number of applications received through fax in a fiscal year for the service.
+ 
+Notes: 
+    • If the service cannot be applied for via fax, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (S.O.). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (A.D.)."
+    obligation: Mandatory
+    excel_required: true
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.27 (was volumes_per_channel_mail)
+  - datastore_id: postal_mail_applications
+    label:
+      en: "Number of Applications Submitted via Postal Mail"
+    description:
+      en: "Identifies the number of applications received through postal mail in a fiscal year for each service.
+ 
+Notes: 
+    • If the service cannot be applied for via postal mail, please indicate that this field is not applicable (NA). 
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+    obligation: Mandatory
+    excel_required: true
+    excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
+    format_type: numeric, NA or ND
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
 
   # 3.25
   - datastore_id: targets_published_en
@@ -1032,9 +1092,11 @@ resources:
       service_agreements: NA
       client_target_groups: [PP, IO]
       cra_business_number: Y
-      volumes_per_channel_online: 20
-      volumes_per_channel_telephone: NA
-      volumes_per_channel_in_person: NA
+      social_insurance_number: "NA"
+      applications_online: "108429"
+      website_visits: "51800"
+      telephone_calls: "701"
+      in_person_applications: NA
       volumes_per_channel_mail: NA
       user_fee: Y
       targets_published_en: Service Standards
