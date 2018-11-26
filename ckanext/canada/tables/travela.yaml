@@ -95,11 +95,9 @@ resources:
       previous_year: operational_activities_kdollars_previous_year
       change: operational_activities_kdollars_change
       sum_previous_year:
-      - operational_activities_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - operational_activities_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -128,11 +126,9 @@ resources:
       previous_year: key_stakeholders_kdollars_previous_year
       change: key_stakeholders_kdollars_change
       sum_previous_year:
-      - key_stakeholders_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - key_stakeholders_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -161,11 +157,9 @@ resources:
       previous_year: training_kdollars_previous_year
       change: training_kdollars_change
       sum_previous_year:
-      - training_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - training_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -194,11 +188,9 @@ resources:
       previous_year: other_kdollars_previous_year
       change: other_kdollars_change
       sum_previous_year:
-      - other_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - other_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -227,11 +219,9 @@ resources:
       previous_year: internal_governance_kdollars_previous_year
       change: internal_governance_kdollars_change
       sum_previous_year:
-      - internal_governance_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - internal_governance_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -264,11 +254,9 @@ resources:
       previous_year: non_public_servants_kdollars_previous_year
       change: non_public_servants_kdollars_change
       sum_previous_year:
-      - non_public_servants_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - non_public_servants_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -301,11 +289,9 @@ resources:
       previous_year: public_servants_kdollars_previous_year
       change: public_servants_kdollars_change
       sum_previous_year:
-      - public_servants_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - public_servants_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
