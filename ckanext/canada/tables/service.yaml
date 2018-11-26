@@ -668,7 +668,7 @@ Notes:
     • If the service cannot be applied for via fax, please indicate that this field is not applicable (NA). 
     • If data is not available, please indicate that there is no data (ND)."
       fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (S.O.). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (A.D.)."
+Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -698,6 +698,225 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+
+  # 3.28
+  - datastore_id: e_registration
+    label:
+      en: "E-enabled Services: Account Registration/Enrollment"
+      fr: "Services électroniques : Enregistrement/ inscription du compte"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. Note: For more information on each interaction point, consult the Guideline on Service Management.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent s’enregistrer / s'inscrire à un compte personnalisé.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.29
+  - datastore_id: e_authentication
+    label:
+      en: "E-enabled Services: Authentication"
+      fr: "Services électroniques : Authentification"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent établir des justificatifs d'identité et s'authentifier à l'aide du service de courtier de justificatifs d'identité ou la Clé GC.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.30
+  - datastore_id: e_application
+    label:
+      en: "E-enabled Services: Application"
+      fr: "Services électroniques : Demande"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent:
+      -  Compléter et envoyer une demande;
+      -  Recevoir la confirmation de la réception / l'état de la demande;
+      -  Effectuer un paiement.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.31
+  - datastore_id: e_decision
+    label:
+      en: "E-enabled Services: Decision"
+      fr: "Services électroniques : Décision"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent être informés d'une décision / état de la demande. S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.32
+  - datastore_id: e_issuance
+    label:
+      en: "E-enabled Services: Issuance"
+      fr: "Services électroniques : Délivrance"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent recevoir un(e):
+         - paiement;
+         - autorisation;
+         - permis;
+         - licence;
+         - certification; ou
+         - consultation.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
+  # 3.33
+  - datastore_id: e_feedback
+    label:
+      en: "E-enabled Services: Issue Resolution and Feedback"
+      fr: "Services électroniques : Solution de problème et rétroaction"
+    description:
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+
+      N/A:  This interaction point is not applicable to the service.
+      Yes: This interaction point is applicable to the service and is e-enabled.
+      No:  This interaction point is applicable to the service but is not currently e-enabled."
+      fr: "Identifie si les clients peuvent:
+      - Demander une assistance en ligne et compléter les points d'interaction;
+      - Fournir une rétroaction.
+
+      S/O: Le point d'interaction n'est pas applicable au service.
+      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
+      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NA:
+        en: N/A
+        fr: S/O
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
 
   # 3.25
   - datastore_id: targets_published_en
@@ -740,225 +959,6 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     occurrence: Single
     datastore_type: text
     excel_column_width: 71
-
-  # 3.27
-  - datastore_id: e_registration
-    label:
-      en: "E-enabled Services: Account Registration/Enrollment"
-      fr: "Services électroniques : Enregistrement/ inscription du compte"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. Note: For more information on each interaction point, consult the Guideline on Service Management.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent s’enregistrer / s'inscrire à un compte personnalisé.
-
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 49
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.28
-  - datastore_id: e_authentication
-    label:
-      en: "E-enabled Services: Authentication"
-      fr: "Services électroniques : Authentification"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent établir des justificatifs d'identité et s'authentifier à l'aide du service de courtier de justificatifs d'identité ou la Clé GC.
-
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 33
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.29
-  - datastore_id: e_application
-    label:
-      en: "E-enabled Services: Application"
-      fr: "Services électroniques : Demande"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent:
-      -  Compléter et envoyer une demande;
-      -  Recevoir la confirmation de la réception / l'état de la demande;
-      -  Effectuer un paiement.
-
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 29
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.30
-  - datastore_id: e_decision
-    label:
-      en: "E-enabled Services: Decision"
-      fr: "Services électroniques : Décision"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent être informés d'une décision / état de la demande. S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 29
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.31
-  - datastore_id: e_issuance
-    label:
-      en: "E-enabled Services: Issuance"
-      fr: "Services électroniques : Délivrance"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent recevoir un(e):
-         - paiement;
-         - autorisation;
-         - permis;
-         - licence;
-         - certification; ou
-         - consultation.
-
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 29
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
-
-  # 3.32
-  - datastore_id: e_feedback
-    label:
-      en: "E-enabled Services: Issue Resolution and Feedback"
-      fr: "Services électroniques : Solution de problème et rétroaction"
-    description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
-
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent:
-      - Demander une assistance en ligne et compléter les points d'interaction;
-      - Fournir une rétroaction.
-
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
-    obligation: Mandatory
-    excel_required: true
-    format_type: Controlled List
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_column_width: 47
-    choices:
-      NA:
-        en: N/A
-        fr: S/O
-      Y:
-        en: "Yes"
-        fr: Oui
-      N:
-        en: "No"
-        fr: Non
 
   # 3.33
   - datastore_id: interaction_points_online
@@ -1097,7 +1097,9 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       website_visits: "51800"
       telephone_calls: "701"
       in_person_applications: NA
-      volumes_per_channel_mail: NA
+      email_applications: ND
+      fax_applications: ND
+      postal_mail_applications: "15277"
       user_fee: Y
       targets_published_en: Service Standards
       targets_published_fr: Normes de service
