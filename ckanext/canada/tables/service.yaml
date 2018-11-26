@@ -918,6 +918,30 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
         en: "No"
         fr: Non
 
+  # 3.34
+  - datastore_id: feedback_channels
+    label:
+      en: "Client Given Opportunity to Provide Feedback on Level of Satisfaction with this Service by Channel"
+    description:
+      en: "Identifies which channels, if any, provide users of a service an opportunity to provide feedback on their level of satisfaction with the service. Select all that apply."
+    format_type: Controlled List
+    visible_to_public: Yes
+    occurrence: Multiple
+    datastore_type: _text
+    choices:
+      ONL:
+        en: Online
+      TEL:
+        en: Telephone
+      IP:
+        en: In-Person
+      EML:
+        en: Email
+      POST:
+        en: Postal Mail
+      NONE:
+        en: None
+
   # 3.25
   - datastore_id: targets_published_en
     label:
