@@ -908,23 +908,10 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: service_id_number
+  datastore_primary_key: year, service_id_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      fgColor: FF002C54
-      patternType: solid
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFEFBD09
-  excel_error_background_color: "CD7213"
-  excel_required_border_color: "CD7213"
 
-  default_preview_sort: service_id_number
+  default_preview_sort: year, service_id_number
 
   triggers:
   - service_trigger
@@ -974,5 +961,58 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     filters:
       external_internal: EX
     filter_one:
+      year: 2018-2019
       service_id_number: S0123
-    sort: service_id_number asc
+    sort: year, service_id_number
+
+
+- title: Service Standards & Performance Results
+  resource_name: service-standards
+  fields:
+
+  - datastore_id: fiscal_year
+    label:
+      en: Fiscal Year
+      fr: Année financière
+    description:
+      en: Identifies the fiscal year for which service data is reported
+    obligation: Mandatory
+    excel_required: true
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    choices_file: choices/fiscal_year.yaml
+
+  # 4.1
+  - datastore_id: service_id_number
+    label:
+      en: Service ID Number
+      fr: Numéro d'identification du service
+    description:
+      en: Departmental acronym and the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
+      fr: Il s’agit d’un numéro de référence unique avec le sigle du ministère ou de l’organisme, l’exercice en cours et le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire. Avoir un identificateur unique permet aux utilisateurs de localiser un élément particulier dans le répertoire.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 4.4
+
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF002C54
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEFBD09
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEFBD09
+
