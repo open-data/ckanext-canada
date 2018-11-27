@@ -437,6 +437,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -445,15 +446,17 @@ resources:
         en: "No"
         fr: Non
       NA:
-        en: N/A
-        fr: S/O
+        en: N/A (not a service to businesses)
+        fr: S.O. (N’est pas un service aux entreprises)
 
   # 3.20 (new field)
-  - datastore_id: social_insurance_number
+  - datastore_id: use_of_sin
     label:
       en: Use of Social Insurance Number
+      fr: Utilisation du numéro d’assurance sociale (NAS)
     description:
       en: Identifies whether the Social Insurance Number (SIN) is used in the delivery of the service.
+      fr: Indique si le numéro d’assurance sociale (NAS) est utilisé dans la prestation du service.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -461,21 +464,23 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
         en: "Yes"
         fr: Oui
       N:
         en: "No"
         fr: Non
+      NA:
+        en: N/A (not a service to individuals)
+        fr: S.O. (n’est pas un service aux particuliers)
 
   # 3.21 (was volumes_per_channel_online)
-  - datastore_id: applications_online
+  - datastore_id: online_applications
     label:
       en: Number of Applications Submitted Online
+      fr: Nombre de demandes soumises en ligne
     description:
       en: "Identifies the number of applications submitted in a fiscal year for the online channel.
 
@@ -493,11 +498,11 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     occurrence: Single
     datastore_type: text
 
-  # 3.22
-  - datastore_id: website_visits
+  # 3.22 (new field)
+  - datastore_id: web_visits_info_service
     label:
-      en: Number of Website Visits
-      fr: Sur ligne
+      en: Number of Website Visits (Information-Based Services)
+      fr: Nombre de visites sur le site Web (services d’information)
     description:
       en: "Identifies the number of website visits in a fiscal year for obtaining information-based services.
 
@@ -516,10 +521,10 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
 
   # 3.23 (was volumes_per_channel_telephone)
-  - datastore_id: telephone_calls
+  - datastore_id: calls_received
     label:
-      en: "Number of Telephone Calls Received"
-      fr: "Mode de prestation du service par téléphone"
+      en: Number of Telephone Calls Received
+      fr: Nombre d’appels téléphoniques reçus
     description:
       en: "Identifies the number of telephone calls received for the service in a fiscal year.
 
@@ -540,8 +545,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   # 3.24 (was volumes_per_channel_in_person)
   - datastore_id: in_person_applications
     label:
-      en: "Number of Applications Submitted In-Person"
-      fr: "Mode de prestation du service en personne"
+      en: Number of Applications Submitted In-Person
+      fr: Nombre de demandes soumises en personne
     description:
       en: "Identifies the number of applications received in-person in a fiscal year for the service.
  
@@ -562,7 +567,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   # 3.25 (new field)
   - datastore_id: email_applications
     label:
-      en: "Number of Applications Submitted via Email"
+      en: Number of Applications Submitted via Email
+      fr: Nombre de demandes soumises par courriel
     description:
       en: "Identifies the number of applications received through Email in a fiscal year for the service.
  
@@ -583,7 +589,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   # 3.26 (new field)
   - datastore_id: fax_applications
     label:
-      en: "Number of Applications via Fax"
+      en: Number of Applications via Fax
+      fr: Nombre de demandes soumises par télécopieur
     description:
       en: "Identifies the number of applications received through fax in a fiscal year for the service.
  
@@ -604,7 +611,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   # 3.27 (was volumes_per_channel_mail)
   - datastore_id: postal_mail_applications
     label:
-      en: "Number of Applications Submitted via Postal Mail"
+      en: Number of Applications Submitted via Postal Mail
+      fr: Nombre de demandes soumises par la poste
     description:
       en: "Identifies the number of applications received through postal mail in a fiscal year for each service.
  
@@ -628,16 +636,12 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: "E-enabled Services: Account Registration/Enrollment"
       fr: "Services électroniques : Enregistrement/ inscription du compte"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. Note: For more information on each interaction point, consult the Guideline on Service Management.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent s’enregistrer / s'inscrire à un compte personnalisé.
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
 
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Remarque : Pour plus de renseignements sur chaque point d’interaction, veuillez consulter la Ligne directrice sur la gestion de service."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -647,15 +651,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.29
   - datastore_id: e_authentication
@@ -663,16 +667,12 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: "E-enabled Services: Authentication"
       fr: "Services électroniques : Authentification"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent établir des justificatifs d'identité et s'authentifier à l'aide du service de courtier de justificatifs d'identité ou la Clé GC.
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
 
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -682,35 +682,28 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.30
   - datastore_id: e_application
     label:
       en: "E-enabled Services: Application"
-      fr: "Services électroniques : Demande"
+      fr: "Services offerts par voie électronique : Demande"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent:
-      -  Compléter et envoyer une demande;
-      -  Recevoir la confirmation de la réception / l'état de la demande;
-      -  Effectuer un paiement.
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
 
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -720,30 +713,28 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.31
   - datastore_id: e_decision
     label:
       en: "E-enabled Services: Decision"
-      fr: "Services électroniques : Décision"
+      fr: "Services offerts par voie électronique : Décision"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent être informés d'une décision / état de la demande. S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+
+Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -753,15 +744,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.32
   - datastore_id: e_issuance
@@ -769,22 +760,12 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: "E-enabled Services: Issuance"
       fr: "Services électroniques : Délivrance"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent recevoir un(e):
-         - paiement;
-         - autorisation;
-         - permis;
-         - licence;
-         - certification; ou
-         - consultation.
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
 
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -794,15 +775,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.33
   - datastore_id: e_feedback
@@ -810,18 +791,12 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: "E-enabled Services: Issue Resolution and Feedback"
       fr: "Services électroniques : Solution de problème et rétroaction"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service.
+      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band. 
 
-      N/A:  This interaction point is not applicable to the service.
-      Yes: This interaction point is applicable to the service and is e-enabled.
-      No:  This interaction point is applicable to the service but is not currently e-enabled."
-      fr: "Identifie si les clients peuvent:
-      - Demander une assistance en ligne et compléter les points d'interaction;
-      - Fournir une rétroaction.
+Note: For more information on client interaction points, consult the Guideline on Service Management."
+      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
 
-      S/O: Le point d'interaction n'est pas applicable au service.
-      Oui: Le point d'interaction est applicable au service, et est disponible en ligne.
-      Non: Le point d'interaction s'applique au service mais n'est pas actuellement disponible en ligne."
+Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -831,22 +806,24 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
-        en: "Yes"
-        fr: Oui
+        en: "Yes (This interaction point is applicable to the service and is e-enabled)"
+        fr: "Oui (Ce point d’interaction s’applique au service et est de nature électronique)"
       N:
-        en: "No"
-        fr: Non
+        en: "No (This interaction point is applicable to the service but is not currently e-enabled)"
+        fr: "Non (Ce point d’interaction s’applique au service, mais il n’est pas de nature électronique présentement)"
+      NA:
+        en: "N/A (This interaction point is not applicable to the service)"
+        fr: "S.O. (Ce point d’interaction s’applique au service et est de nature électronique)"
 
   # 3.34
-  - datastore_id: feedback_channels
+  - datastore_id: client_feedback
     label:
       en: "Client Given Opportunity to Provide Feedback on Level of Satisfaction with this Service by Channel"
+      fr: "Les clients ont l’occasion de donner une rétroaction sur le niveau de satisfaction de ce service, par canal"
     description:
       en: "Identifies which channels, if any, provide users of a service an opportunity to provide feedback on their level of satisfaction with the service. Select all that apply."
+      fr: "Détermine quels canaux, s’il y a lieu, offrent aux utilisateurs d’un service l’occasion de donner une rétroaction sur leur niveau de satisfaction à l’égard du service."
     format_type: Controlled List
     visible_to_public: Yes
     occurrence: Multiple
@@ -854,23 +831,34 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     choices:
       ONL:
         en: Online
+        fr: En ligne
       TEL:
         en: Telephone
+        fr: Téléphone
       IP:
         en: In-Person
+        fr: En personne
       EML:
         en: Email
+        fr: Courriel
+      FAX:
+        en: Fax
+        fr: Télécopieur
       POST:
         en: Postal Mail
+        fr: Courrier postal
       NONE:
         en: None
+        fr: Aucune des réponses
 
   # 3.35 (new field)
   - datastore_id: special_remarks_en
     label:
       en: Special Remarks (English)
+      fr: Remarques spéciales (anglais)
     description:
-      en: "Allows departments/agencies to provide comments on volumes, rationale for N/A for e-enablement, etc"
+      en: "Provides additional space for comments related to volumetrics information. Please refer to associated Field ID, where applicable. For comments related to other fields, departments can create and publish an explanatory note on their website with a link to the GC Service Inventory dataset."
+      fr: "Fournit de l’espace supplémentaire pour les commentaires relatifs aux renseignements sur les volumes. Veuillez vous reporter au code d’identification de la zone, s’il y a lieu. Pour les commentaires relatifs à d’autres zones, les ministères peuvent publier une note explicative sur leur site Web suivi d’un lien vers l’ensemble de données du Répertoire des services du GC."
     obligation: Optional
     format_type: Free text
     visible_to_public: Yes
@@ -881,8 +869,10 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   - datastore_id: special_remarks_fr
     label:
       en: Special Remarks (French)
+      fr: Remarques spéciales (français)
     description:
-      en: "Allows departments/agencies to provide comments on volumes, rationale for N/A for e-enablement, etc"
+      en: "Provides additional space for comments related to volumetrics information. Please refer to associated Field ID, where applicable. For comments related to other fields, departments can create and publish an explanatory note on their website with a link to the GC Service Inventory dataset."
+      fr: "Fournit de l’espace supplémentaire pour les commentaires relatifs aux renseignements sur les volumes. Veuillez vous reporter au code d’identification de la zone, s’il y a lieu. Pour les commentaires relatifs à d’autres zones, les ministères peuvent publier une note explicative sur leur site Web suivi d’un lien vers l’ensemble de données du Répertoire des services du GC."
     obligation: Optional
     format_type: Free text
     visible_to_public: Yes
@@ -940,9 +930,9 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       client_target_groups: [PP, IO]
       cra_business_number: Y
       social_insurance_number: "NA"
-      applications_online: "108429"
-      website_visits: "51800"
-      telephone_calls: "701"
+      online_applications: "108429"
+      web_visits_info_service: "51800"
+      calls_received: "701"
       in_person_applications: NA
       email_applications: ND
       fax_applications: ND
@@ -952,13 +942,13 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       targets_published_fr: Normes de service
       e_registration: Y
       e_authentication: Y
-      e_application: NA
+      e_application: Y
       e_decision: N
-      e_issuance: NA
+      e_issuance: Y
       e_feedback: Y
       feedback_channels: [ONL, POST]
       special_remarks_en: 'The value for in-person applications is "NA" as applications are not submitted in-person. The values for some channels are listed as “ND” as the department does not have data available. '
-      special_remarks_fr: 'Aucune donnée n’est disponible pour applications_en_personne'
+      special_remarks_fr: 'Les application_en_personne est sans object ("NA") parce que le service n’est pas offert en personne. Aucune donnée n’est disponible pour plusieurs canals'
     filters:
       external_internal: EX
     filter_one:
