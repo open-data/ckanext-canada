@@ -16,13 +16,14 @@ resources:
   resource_name: service
   fields:
 
-  # 3.1
-  - datastore_id: fiscal_year
+  # 3.1 (was fiscal_year)
+  - datastore_id: fiscal_yr
     label:
       en: Fiscal Year
       fr: Année financière
     description:
       en: Identifies the fiscal year for which service data is reported
+      fr: Indique l’exercice pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
     validation: This field must not be empty
@@ -31,14 +32,14 @@ resources:
     datastore_type: text
     choices_file: choices/fiscal_year.yaml
 
-  # 3.2
-  - datastore_id: service_id_number
+  # 3.2 (was service_id_number)
+  - datastore_id: service_id
     label:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
       en: Departmental acronym and the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
-      fr: Il s’agit d’un numéro de référence unique avec le sigle du ministère ou de l’organisme, l’exercice en cours et le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire. Avoir un identificateur unique permet aux utilisateurs de localiser un élément particulier dans le répertoire.
+      fr: Le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire afin de faciliter le référencement à des services précis. (p. ex. 1, 2, etc.)
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -97,15 +98,15 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     choices:
+      EI:
+        en: External/Internal Enterprise Service
+        fr: Services externes/internes intégrés
       EX:
         en: External Service
         fr: Services externes
       IN:
         en: Internal Enterprise Service
         fr: Services internes intégrés
-      EI:
-        en: External/Internal Enterprise Service
-        fr: Services externes/internes intégrés
 
   # 3.6
   - datastore_id: service_type
@@ -124,33 +125,27 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      RES:
-        en: Resources
-        fr: Ressources
-      AD:
-        en: Advisory Services
-        fr: Services consultatifs
-      ED:
-        en: Educational, Recreational and Cultural Encounters
-        fr: Rencontres axées sur des activités éducatives, récréatives et culturelles
-      REG:
-        en: Regulatory Compliance and Enforcement
-        fr: Conformité aux règlements et application des règlements
-      RU:
-        en: Rule Making
-        fr: Établissement de règles
       AC:
         en: Acquisition Services
         fr: Services d’acquisition
+      AD:
+        en: Advisory Services
+        fr: Services consultatifs
       COM:
         en: Communications Services
         fr: Services de communication
+      ED:
+        en: Educational, Recreational and Cultural Encounters
+        fr: Rencontres axées sur des activités éducatives, récréatives et culturelles
       FIN:
         en: Financial Management Services
         fr: Services de gestion financière
       HR:
         en: Human Resources Management Services
         fr: Services de gestion des ressources humaines
+      HVRT:
+        en: High Volume Regulatory Transaction
+        fr: Opérations réglementaires à demande élevée
       IM:
         en: Information Management Services
         fr: Services de gestion de l’information
@@ -166,9 +161,18 @@ resources:
       MAT:
         en: Materiel Services
         fr: Services de gestion du matériel
+      REG:
+        en: Regulatory Compliance and Enforcement
+        fr: Conformité aux règlements et application des règlements
+      RES:
+        en: Resources
+        fr: Ressources
       RP:
         en: Real Property Services
         fr: Services immobiliers
+      RU:
+        en: Rule Making
+        fr: Établissement de règles
 
   # 3.7
   - datastore_id: special_designations
@@ -218,6 +222,8 @@ resources:
       en: Service Description (English)
       fr: Description du service (en anglais)
     description:
+      en: Provides a brief description of the service, in plain language.
+      fr: Offre une brève description du service.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -225,7 +231,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 71
 
   # 3.9
   - datastore_id: service_description_fr
@@ -242,7 +247,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 71
 
   # 3.10
   - datastore_id: authority_en
@@ -282,8 +286,10 @@ resources:
   - datastore_id: service_url_en
     label:
       en: URL to Service (English)
+      fr: URL du service (anglais)
     description:
       en: Identifies the departmental webpage where the service is described and/or accessed.
+      fr: Indique la page Web du ministère où le service est décrit et/ou peut être lancé.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -296,8 +302,10 @@ resources:
   - datastore_id: service_url_fr
     label:
       en: URL to Service (French)
+      fr: URL du service (français)
     description:
       en: Identifies the departmental webpage where the service is described and/or accessed.
+      fr: Indique la page Web du ministère où le service est décrit et/ou peut être lancé.
     obligation: Mandatory
     excel_required: true
     format_type: Free text
@@ -321,7 +329,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 51
 
   # 3.15
   - datastore_id: program_name_fr
@@ -338,12 +345,11 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 51
 
   # 3.16 (was program_id_number)
   - datastore_id: program_id_code
     label:
-      en: Program ID 
+      en: Program ID Code
       fr: Code d'identification du programme
     description:
       en: Identifies the unique program code associated with program elements for all strategic outcomes, programs, sub-programs, and sub-sub-programs. For departments/agencies that have moved to the Departmental Results Framework (DRF), the Program codes in the government-wide Chart of Accounts can be used. Corporate planners in the department/agency who are responsible for the Policy on Results can assist in identifying this, if needed.
@@ -355,7 +361,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 21
 
   # 3.17
   - datastore_id: client_target_groups
@@ -393,12 +398,9 @@ resources:
       IG:
         en: Internal to Government
         fr: Interne au gouvernement
-      EN:
-        en: Environmental
-        fr: Environnement
 
   # 3.18 (was user_fee)
-  - datastore_id: service_fees
+  - datastore_id: service_fee
     label:
       en: Service Fees
       fr: Frais de service
@@ -436,15 +438,15 @@ resources:
     occurrence: Single
     datastore_type: text
     choices:
-      NA:
-        en: N/A
-        fr: S/O
       Y:
         en: "Yes"
         fr: Oui
       N:
         en: "No"
         fr: Non
+      NA:
+        en: N/A
+        fr: S/O
 
   # 3.20 (new field)
   - datastore_id: social_insurance_number
@@ -908,10 +910,10 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: year, service_id_number
+  datastore_primary_key: fiscal_yr, service_id
   datastore_indexes: ""
 
-  default_preview_sort: year, service_id_number
+  default_preview_sort: fiscal_yr, service_id
 
   triggers:
   - service_trigger
@@ -919,23 +921,22 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
 
   examples:
     record:
-      service_id_number: S0123
+      fiscal_yr: 2017-2018
+      service_id: "4"
       service_name_en: Partner views
       service_name_fr: Opinions des partenaires
       external_internal: EX
       service_type: RES
-      special_designations: "8"
-      service_description_en: Family Services Program Reform
-      service_description_fr: Réforme du programme des services à l'enfance
+      special_designations: "1"
+      service_description_en: Provides matching contributions to producers who make annual deposits to an AgriInvest account, to help manage income declines or make investments to mitigate risks or improve market income.
+      service_description_fr: Offre des contributions de contrepartie aux producteurs qui font des dépôts annuels dans un compte Agri-investissement, afin de gérer les baisses de revenus ou de faire des investissements dans le but d'atténuer les risques ou d'améliorer les revenus tirés du marché.
       authority_en: Farm Income Protection Act
       authority_fr: Loi sur la protection du revenu agricole
       service_url_en: http://www.agr.gc.ca/eng/?id=1291828779399
       service_url_fr: http://www.agr.gc.ca/fra/?id=1291828779399
-      program_name_en: Partner views
-      program_name_fr: Opinions des partenaires
+      program_name_en: AgriInvest
+      program_name_fr: Agri-investissement
       program_id_code: 03-001-BWP02
-      service_owner: "271"
-      service_agreements: NA
       client_target_groups: [PP, IO]
       cra_business_number: Y
       social_insurance_number: "NA"
@@ -961,8 +962,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     filters:
       external_internal: EX
     filter_one:
-      year: 2018-2019
-      service_id_number: S0123
+      fiscal_yr: 2018-2019
+      service_id: S0123
     sort: year, service_id_number
 
 
@@ -970,7 +971,7 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
   resource_name: service-standards
   fields:
 
-  - datastore_id: fiscal_year
+  - datastore_id: fiscal_yr
     label:
       en: Fiscal Year
       fr: Année financière
@@ -984,7 +985,6 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     datastore_type: text
     choices_file: choices/fiscal_year.yaml
 
-  # 4.1
   - datastore_id: service_id_number
     label:
       en: Service ID Number
@@ -1000,6 +1000,7 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     occurrence: Single
     datastore_type: text
 
+  # 4.1
   # 4.4
 
 
