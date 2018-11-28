@@ -27,10 +27,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    choices_file: choices/fiscal_year.yaml
+    choices_file: choices/service_fiscal_yr.yaml
 
   # 3.2 (was service_id_number)
   - datastore_id: service_id
@@ -38,13 +37,12 @@ resources:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
-      en: Departmental acronym and the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
+      en: The unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
       fr: Le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire afin de faciliter le référencement à des services précis. (p. ex. 1, 2, etc.)
     obligation: Mandatory
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -60,7 +58,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
@@ -77,7 +74,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -93,7 +89,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: No
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -120,7 +115,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: No
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -186,7 +180,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -228,7 +221,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -244,7 +236,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -260,7 +251,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 51
@@ -277,7 +267,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 51
@@ -294,7 +283,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -310,7 +298,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -326,7 +313,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -342,7 +328,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -358,7 +343,6 @@ resources:
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -375,7 +359,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Multiple
     datastore_type: _text
     excel_column_width: 21
@@ -411,7 +394,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     choices:
@@ -434,7 +416,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -461,7 +442,6 @@ resources:
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -492,9 +472,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -514,9 +493,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -536,9 +514,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -558,9 +535,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -580,9 +556,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -602,9 +577,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -624,9 +598,8 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
-    format_type: numeric, NA or ND
+    format_type: Numeric, NA or ND
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -646,7 +619,6 @@ Remarque : Pour plus de renseignements sur chaque point d’interaction, veuille
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -677,7 +649,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -708,7 +679,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -739,7 +709,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -770,7 +739,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -801,7 +769,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     excel_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
@@ -825,7 +792,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       en: "Identifies which channels, if any, provide users of a service an opportunity to provide feedback on their level of satisfaction with the service. Select all that apply."
       fr: "Détermine quels canaux, s’il y a lieu, offrent aux utilisateurs d’un service l’occasion de donner une rétroaction sur leur niveau de satisfaction à l’égard du service."
     format_type: Controlled List
-    visible_to_public: Yes
     occurrence: Multiple
     datastore_type: _text
     choices:
@@ -861,7 +827,6 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       fr: "Fournit de l’espace supplémentaire pour les commentaires relatifs aux renseignements sur les volumes. Veuillez vous reporter au code d’identification de la zone, s’il y a lieu. Pour les commentaires relatifs à d’autres zones, les ministères peuvent publier une note explicative sur leur site Web suivi d’un lien vers l’ensemble de données du Répertoire des services du GC."
     obligation: Optional
     format_type: Free text
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
@@ -875,38 +840,95 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       fr: "Fournit de l’espace supplémentaire pour les commentaires relatifs aux renseignements sur les volumes. Veuillez vous reporter au code d’identification de la zone, s’il y a lieu. Pour les commentaires relatifs à d’autres zones, les ministères peuvent publier une note explicative sur leur site Web suivi d’un lien vers l’ensemble de données du Répertoire des services du GC."
     obligation: Optional
     format_type: Free text
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
-    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
-    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
-    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: fiscal_yr, service_id
+  datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
 
   default_preview_sort: fiscal_yr, service_id
 
   triggers:
-  - service_trigger
+  - service_trigger: |
+      BEGIN
+        PERFORM not_empty(NEW.service_id_number, 'service_id_number');
+        PERFORM no_surrounding_whitespace(NEW.service_id_number, 'service_id_number');
+        PERFORM not_empty(NEW.service_name_en, 'service_name_en');
+        PERFORM not_empty(NEW.service_name_fr, 'service_name_fr');
+        PERFORM not_empty(NEW.external_internal, 'external_internal');
+        PERFORM choice_one_of(NEW.external_internal, {external_internal}, 'external_internal');
+        PERFORM not_empty(NEW.service_type, 'service_type');
+        PERFORM choice_one_of(NEW.service_type, {service_type}, 'service_type');
+        PERFORM not_empty(NEW.special_designations, 'special_designations');
+        PERFORM choice_one_of(NEW.special_designations, {special_designations}, 'special_designations');
+        PERFORM not_empty(NEW.service_description_en, 'service_description_en');
+        PERFORM not_empty(NEW.service_description_fr, 'service_description_fr');
+        PERFORM not_empty(NEW.responsibility_area_en, 'responsibility_area_en');
+        PERFORM not_empty(NEW.responsibility_area_fr, 'responsibility_area_fr');
+        PERFORM not_empty(NEW.authority_en, 'authority_en');
+        PERFORM not_empty(NEW.authority_fr, 'authority_fr');
+        PERFORM not_empty(NEW.program_name_en, 'program_name_en');
+        PERFORM not_empty(NEW.program_name_fr, 'program_name_fr');
+        PERFORM not_empty(NEW.program_id_number, 'program_id_number');
+        PERFORM not_empty(NEW.service_owner, 'service_owner');
+        PERFORM choice_one_of(NEW.service_owner, {service_owner}, 'service_owner');
+        PERFORM not_empty(NEW.service_agreements, 'service_agreements');
+        PERFORM choice_one_of(NEW.service_agreements, {service_agreements}, 'service_agreements');
+        PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
+        NEW.client_target_groups := choices_from(
+          NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
+        PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
+        PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
+        PERFORM not_empty(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
+        PERFORM integer_or_na_nd(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
+        PERFORM not_empty(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
+        PERFORM integer_or_na_nd(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
+        PERFORM not_empty(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
+        PERFORM integer_or_na_nd(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
+        PERFORM not_empty(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
+        PERFORM integer_or_na_nd(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
+        PERFORM not_empty(NEW.user_fee, 'user_fee');
+        PERFORM choice_one_of(NEW.user_fee, {user_fee}, 'user_fee');
+        PERFORM not_empty(NEW.targets_published_en, 'targets_published_en');
+        PERFORM not_empty(NEW.targets_published_fr, 'targets_published_fr');
+        PERFORM not_empty(NEW.e_registration, 'e_registration');
+        PERFORM choice_one_of(NEW.e_registration, {e_registration}, 'e_registration');
+        PERFORM not_empty(NEW.e_authentication, 'e_authentication');
+        PERFORM choice_one_of(NEW.e_authentication, {e_authentication}, 'e_authentication');
+        PERFORM not_empty(NEW.e_application, 'e_application');
+        PERFORM choice_one_of(NEW.e_application, {e_application}, 'e_application');
+        PERFORM not_empty(NEW.e_decision, 'e_decision');
+        PERFORM choice_one_of(NEW.e_decision, {e_decision}, 'e_decision');
+        PERFORM not_empty(NEW.e_issuance, 'e_issuance');
+        PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
+        PERFORM not_empty(NEW.e_feedback, 'e_feedback');
+        PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
+        PERFORM not_empty(NEW.interaction_points_online, 'interaction_points_online');
+        PERFORM choice_one_of(NEW.interaction_points_online, {interaction_points_online}, 'interaction_points_online');
+        PERFORM not_empty(NEW.interaction_points_total, 'interaction_points_total');
+        PERFORM choice_one_of(NEW.interaction_points_total, {interaction_points_total}, 'interaction_points_total');
+        PERFORM not_empty(NEW.percentage_online, 'percentage_online');
+        PERFORM valid_percentage(NEW.percentage_online, 'percentage_online');
+        RETURN NEW;
+      END;
   - update_record_modified_created_trigger
 
   examples:
@@ -958,7 +980,7 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
 
 
 - title: Service Standards & Performance Results
-  resource_name: service-standards
+  resource_name: service-std
   fields:
 
   - datastore_id: fiscal_yr
@@ -970,28 +992,361 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     obligation: Mandatory
     excel_required: true
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    choices_file: choices/fiscal_year.yaml
+    choices_file: choices/service_fiscal_yr.yaml
 
-  - datastore_id: service_id_number
+  - datastore_id: service_id
     label:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
-      en: Departmental acronym and the unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
-      fr: Il s’agit d’un numéro de référence unique avec le sigle du ministère ou de l’organisme, l’exercice en cours et le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire. Avoir un identificateur unique permet aux utilisateurs de localiser un élément particulier dans le répertoire.
+      en: The unique number assigned by the department to a service in the inventory to make it easier to refer to specific services.
+      fr: Le numéro unique attribué par le ministère ou l’organisme à un service dans le répertoire afin de faciliter le référencement à des services précis. (p. ex. 1, 2, etc.)
     obligation: Mandatory
     excel_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
 
   # 4.1
+  - datastore_id: service_std_id
+    label:
+      en: Service Standard ID
+      fr: Code d’identification de la norme relative aux services
+    description:
+      en: Identifies the unique number assigned by the department to each service standard for that service. Makes it easier for reference purposes as one service may have multiple standards.
+      fr: Indique le numéro unique attribué par le ministère à chaque norme relative aux services pour ce service. Facilite le référencement, car un service peut avoir de multiples normes.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.2
+  - datastore_id: service_std_en
+    label:
+      en: Service Standard (English)
+      fr: Norme relative aux services (anglais)
+    description:
+      en: Identifies the service standard related to a particular service. See Guideline on Service Management for format to be used when defining service standards.
+      fr: Indique la norme relative aux services ayant trait à un service en particulier. Voir la Ligne directrice sur la gestion des services afin de connaître le format à utiliser pour définir les normes relatives aux services.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.3
+  - datastore_id: service_std_fr
+    label:
+      en: Service Standard (French)
+      fr: Norme relative aux services (français)
+    description:
+      en: Identifies the service standard related to a particular service. See Guideline on Service Management for format to be used when defining service standards.
+      fr: Indique la norme relative aux services ayant trait à un service en particulier. Voir la Ligne directrice sur la gestion des services afin de connaître le format à utiliser pour définir les normes relatives aux services.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
   # 4.4
+  - datastore_id: service_std_url_en
+    label:
+      en: URL to Service Standards and Targets (English)
+      fr: URL vers les normes relatives aux services et les cibles (anglais)
+    description:
+      en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
+      fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.5
+  - datastore_id: service_std_url_fr
+    label:
+      en: URL to Service Standards and Targets (French)
+      fr: URL vers les normes relatives aux services et les cibles (français)
+    description:
+      en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
+      fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.6
+  - datastore_id: service_std_type
+    label:
+      en: Service Standard Type
+      fr: Type de norme relative aux services
+    description:
+      en: Identifies the type of service standard as defined in the Guideline on Service Management.
+      fr: Indique le type de norme relative aux services défini dans la Ligne directrice sur la gestion des services.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    occurrence: Multiple
+    datastore_type: _text
+    choices:
+      TML:
+        en: Timeliness
+        fr: Accès à l’information
+      ACY:
+        en: Accuracy
+        fr: Temps opportun
+      ACS:
+        en: Access
+        fr: Exactitude
+      OTH:
+        en: Other
+        fr: Autre
+
+  # 4.7
+  - datastore_id: service_std_target
+    label:
+      en: Service Standard Target
+      fr: Cible de la norme relative aux services
+    description:
+      en: Identifies the percentage value of the service standard target.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Percentage
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: int4
+
+  # 4.8
+  - datastore_id: gcss_tool_fiscal_yr
+    label:
+      en: Last Service Standard Review Using GC Service Standard Assessment Tool
+      fr: Dernier examen de la norme relative aux services à l’aide de l’outil d’évaluation des normes relatives aux services du GC
+    description:
+      en: "Identifies the fiscal year in which the service standard was last reviewed using the GC Service Standard Assessment Tool available on the GC Service Policy GCPedia page. ( http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance )"
+      fr: "Indique l’exercice au cours duquel la norme relative aux services a été examinée 
+pour la dernière fois à l’aide de l’outil d’évaluation des normes relatives aux 
+services du GC accessible sur la page GCpédia de la Politique sur les services du 
+GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
+    obligation: Mandatory
+    excel_required: true
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+    choices_file: choices/service_fiscal_yr.yaml
+
+  # 4.9
+  - datastore_id: realtime_result_url_en
+    label:
+      en: URL to Real-Time Performance Results (English)
+      fr: URL aux résultats de rendement en temps réel (anglais)
+    description:
+      en: "Identifies the departmental webpage where the real-time performance results for a service are published. 
+    • If data is not available, please indicate that there is no data (“ND”)."
+      fr: "Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.10
+  - datastore_id: realtime_result_url_fr
+    label:
+      en: URL to Real-Time Performance Results (French)
+      fr: URL aux résultats de rendement en temps réel (français)
+    description:
+      en: "Identifies the departmental webpage where the real-time performance results for a service are published. 
+    • If data is not available, please indicate that there is no data (“ND”)."
+      fr: "Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.11
+  - datastore_id: q1_performance_result
+    label:
+      en: Q1 Business Volume That Met Service Standard Target
+      fr: Q1 Volume d’activités qui respectent la cible de la norme relative aux services
+    description:
+      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year that met a particular service standard target for a service. (Q1: April 1- June 30)
+    • If data is not available, please indicate that there is no data (“ND”)."
+      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q1 : du 1er avril au 30 juin)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.12
+  - datastore_id: q1_business_volume
+    label:
+      en: Q1 Total Business Volume
+      fr: Q1 Volumes des activités totaux
+    description:
+      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year. (Q1: April 1- June 30)
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du premier trimestre de l’exercice. (Q1 : du 1er avril au 30 juin)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.13
+  - datastore_id: q2_performance_result
+    label:
+      en: Q2 Business Volume That Met Service Standard Target
+      fr: Q2 Volume d’activités qui respectent la cible de la norme relative aux services
+    description:
+      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) processed during the second quarter of the fiscal year that met a particular service standard target for a service. (Q2: July 1 – September 30)
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q2 : 1er juillet au 30 septembre)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.14
+  - datastore_id: q2_business_volume
+    label:
+      en: Q2 Total Business Volume
+      fr: Q2 Volumes des activités totaux
+    description:
+      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the second quarter of the fiscal year. (Q2: July 1 – September 30)
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du deuxième trimestre de l’exercice. (Q2 : 1er juillet au 30 septembre)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.15
+  - datastore_id: q3_performance_result
+    label:
+      en: Q3 Business Volume That Met Service Standard Target
+      fr: Q3 Volume d’activités qui respectent la cible de la norme relative aux services
+    description:
+      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year that met a particular service standard target for a service. (Q3: October 1 – December 31)
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du troisième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q3 : du 1er octobre au 31 décembre)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.16
+  - datastore_id: q3_business_volume
+    label:
+      en: Q3 Total Business Volume
+      fr: Q3 Volumes des activités totaux
+    description:
+      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year. (Q3: October 1 – December 31)
+    • If data is not available, please indicate that there is no data (“ND”)."
+      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du troisième trimestre de l’exercice. (Q3: du 1er octobre au 31 décembre)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.17
+  - datastore_id: q4_performance_result
+    label:
+      en: Q4 Business Volume That Met Service Standard Target
+      fr: Q4 Volume d’activités qui respectent la cible de la norme relative aux services
+    description:
+      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year that met a particular service standard target for a service. (Q4: January 1 – March 31)
+    • If data is not available, please indicate that there is no data (“ND”)."
+      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du quatrième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q4: du 1er janvier au 31 mars)
+    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« AD »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+  # 4.18
+  - datastore_id: q4_business_volume
+    label:
+      en: Q4 Total Business Volume
+      fr: Q4 Volumes des activités totaux
+    description:
+      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year. (Q4: du 1er janvier au 31 mars)
+    • If data is not available, please indicate that there is no data (ND)."
+      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du quatrième trimestre de l’exercice. (Q4: du 1er janvier au 31 mars)
+Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+    obligation: Mandatory
+    excel_required: true
+    format_type: Numeric or ND
+    validation: This field must not be empty
+    occurrence: Single
+    datastore_type: text
+
+
+  datastore_primary_key: [fiscal_yr, service_id, service_std_id]
+  datastore_indexes: ""
+
+  default_preview_sort: fiscal_yr, service_id, service_std_id
+
+  triggers:
+  - service_std_trigger: |
+      BEGIN
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      fiscal_yr: 2017-2018
+      service_id: "4"
+      service_std_id: "7"
+      service_std_en: Process applications and notify participants of results within 45 days.
+      service_std_fr: Traiter les demandes et communiquer les résultats aux participants dans un délai de 45 jours.
+      service_std_url_en: http://www.agr.gc.ca/eng/about-us/planning-and-reporting/service-standards-at-agriculture-and-agri-food-canada/agriculture-and-agri-food-canada-service-standards-quarterly-results-fiscal-year-2017-2018/?id=1481057048109
+      service_std_url_fr: http://www.agr.gc.ca/fra/a-propos-de-nous/planification-et-rapports/normes-de-service-d-agriculture-et-agroalimentaire-canada/normes-de-service-d-agriculture-et-agroalimentaire-canada-resultats-trimestriels-exercice-2017-2018/?id=1481057048109
+      service_std_type: TML,ACS
+      service_std_target: 80
+      gcss_tool_fiscal_yr: 2016-2017
+      realtime_result_url_en: ND
+      realtime_result_url_fr: ND
+      q1_performance_result: ND
+      q1_business_volume: ND
+      q2_performance_result: 865
+      q2_business_volume: 1000
+      q3_performance_result: 808
+      q3_business_volume: 1200
+      q4_performance_result: 865
+      q4_business_volume: 1100
 
 
 excel_edge_style:
