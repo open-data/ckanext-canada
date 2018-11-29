@@ -1149,6 +1149,7 @@ resources:
       en: Identifies the percentage value of the service standard target.
     obligation: Mandatory
     excel_required: true
+    excel_error_formula: or({default_formula},left(cell("format",{cell}),1)="P",{cell}<0,{cell}>100)
     format_type: Percentage
     validation: This field must not be empty
     occurrence: Single
