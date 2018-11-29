@@ -184,28 +184,28 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      1:
+      '1':
         en: Priority Service
         fr: Service prioritaire
-      2:
+      '2':
         en: Critical Service
         fr: Service critique
-      3:
+      '3':
         en: Essential Service
         fr: Service essentiel
-      4:
+      '4':
         en: Priority Service & Mission Critical Service
         fr: Service prioritaire et Service critique
-      5:
+      '5':
         en: Priority Service & Essential Service
         fr: Service prioritaire et Service essentiel
-      6:
+      '6':
         en: Critical Service & Essential Service
         fr: Service critique et Service essentiel
-      7:
+      '7':
         en: Priority Service, Critical Service & Essential Service
         fr: Service prioritaire, service critique et Service essentiel
-      8:
+      '8':
         en: None of the above
         fr: Aucun des éléments ci-dessus
 
