@@ -396,6 +396,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
