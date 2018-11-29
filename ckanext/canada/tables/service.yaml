@@ -463,13 +463,15 @@ resources:
       en: Number of Applications Submitted Online
       fr: Nombre de demandes soumises en ligne
     description:
-      en: "Identifies the number of applications submitted in a fiscal year for the online channel.
+      en: |
+        Identifies the number of applications submitted in a fiscal year for the online channel.
 
-Notes:
-    • If the service is not offered online, please indicate that this field is not applicable (NA).
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+        Notes:
+        • If the service is not offered online, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -484,13 +486,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Website Visits (Information-Based Services)
       fr: Nombre de visites sur le site Web (services d’information)
     description:
-      en: "Identifies the number of website visits in a fiscal year for obtaining information-based services.
+      en: |
+        Identifies the number of website visits in a fiscal year for obtaining information-based services.
 
-Notes: 
-    • If the service is not offered online, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+        Notes:
+        • If the service is not offered online, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -505,13 +509,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Telephone Calls Received
       fr: Nombre d’appels téléphoniques reçus
     description:
-      en: "Identifies the number of telephone calls received for the service in a fiscal year.
+      en: |
+        Identifies the number of telephone calls received for the service in a fiscal year.
 
-Notes: 
-    • If the service is not offered via telephone, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+        Notes:
+        • If the service is not offered via telephone, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -526,13 +532,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Applications Submitted In-Person
       fr: Nombre de demandes soumises en personne
     description:
-      en: "Identifies the number of applications received in-person in a fiscal year for the service.
- 
-Notes: 
-    • If the service is not offered in-person, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+      en: |
+        Identifies the number of applications received in-person in a fiscal year for the service.
+
+        Notes:
+        • If the service is not offered in-person, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -547,13 +555,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Applications Submitted via Email
       fr: Nombre de demandes soumises par courriel
     description:
-      en: "Identifies the number of applications received through Email in a fiscal year for the service.
- 
-Notes: 
-    • If the service cannot be applied for via Email, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+      en: |
+        Identifies the number of applications received through Email in a fiscal year for the service.
+
+        Notes:
+        • If the service cannot be applied for via Email, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -568,13 +578,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Applications via Fax
       fr: Nombre de demandes soumises par télécopieur
     description:
-      en: "Identifies the number of applications received through fax in a fiscal year for the service.
- 
-Notes: 
-    • If the service cannot be applied for via fax, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+      en: |
+        Identifies the number of applications received through fax in a fiscal year for the service.
+
+        Notes:
+        • If the service cannot be applied for via fax, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -589,13 +601,15 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: Number of Applications Submitted via Postal Mail
       fr: Nombre de demandes soumises par la poste
     description:
-      en: "Identifies the number of applications received through postal mail in a fiscal year for each service.
- 
-Notes: 
-    • If the service cannot be applied for via postal mail, please indicate that this field is not applicable (NA). 
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
-Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND)."
+      en: |
+        Identifies the number of applications received through postal mail in a fiscal year for each service.
+
+        Notes:
+        • If the service cannot be applied for via postal mail, please indicate that this field is not applicable (NA).
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre de demandes reçues au cours d’un exercice pour chacun des modes de prestation suivants.
+        Remarque : Si un service n’est pas offert au moyen d’un mode de prestation, veuillez indiquer que cette question est sans objet (NA). Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (ND).
     obligation: Mandatory
     excel_required: true
     excel_error_formula: 'and(not(isnumber(value({cell}))),{cell}<>"NA",{cell}<>"ND")'
@@ -610,12 +624,14 @@ Remarque : Si un service n’est pas offert au moyen d’un mode de prestation,
       en: "E-enabled Services: Account Registration/Enrollment"
       fr: "Services électroniques : Enregistrement/ inscription du compte"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour plus de renseignements sur chaque point d’interaction, veuillez consulter la Ligne directrice sur la gestion de service."
+        Remarque : Pour plus de renseignements sur chaque point d’interaction, veuillez consulter la Ligne directrice sur la gestion de service.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -640,12 +656,14 @@ Remarque : Pour plus de renseignements sur chaque point d’interaction, veuille
       en: "E-enabled Services: Authentication"
       fr: "Services électroniques : Authentification"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
+        Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -670,12 +688,14 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       en: "E-enabled Services: Application"
       fr: "Services offerts par voie électronique : Demande"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
+        Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -700,12 +720,14 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       en: "E-enabled Services: Decision"
       fr: "Services offerts par voie électronique : Décision"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
+        Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -730,12 +752,14 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       en: "E-enabled Services: Issuance"
       fr: "Services électroniques : Délivrance"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
+        Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -760,12 +784,14 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
       en: "E-enabled Services: Issue Resolution and Feedback"
       fr: "Services électroniques : Solution de problème et rétroaction"
     description:
-      en: "Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band. 
+      en: |
+        Identifies whether a service is e-enabled based on key client interaction points, as applicable to the specific service. In the spirit of the Policy on Service’s principle of client centricity, an interaction point is e-enabled (“online”) if the user is able to pass through the interaction point without having to go out-of-band.
 
-Note: For more information on client interaction points, consult the Guideline on Service Management."
-      fr: "Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier. 
+        Note: For more information on client interaction points, consult the Guideline on Service Management.
+      fr: |
+        Indique si un service est de nature électronique selon les principaux points d’interaction avec les clients et leur application à ce service en particulier.
 
-Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services."
+        Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la Ligne directrice sur la gestion des services.
     obligation: Mandatory
     excel_required: true
     format_type: Controlled List
@@ -1126,7 +1152,7 @@ Remarque : Pour en savoir plus sur chaque point d’interaction, consultez la L
     format_type: Percentage
     validation: This field must not be empty
     occurrence: Single
-    datastore_type: int4
+    datastore_type: int
 
   # 4.8
   - datastore_id: gcss_tool_fiscal_yr
@@ -1168,8 +1194,9 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: URL to Real-Time Performance Results (French)
       fr: URL aux résultats de rendement en temps réel (français)
     description:
-      en: "Identifies the departmental webpage where the real-time performance results for a service are published. 
-    • If data is not available, please indicate that there is no data (“ND”)."
+      en: |
+        Identifies the departmental webpage where the real-time performance results for a service are published.
+        • If data is not available, please indicate that there is no data (“ND”).
       fr: "Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
     obligation: Mandatory
     excel_required: true
@@ -1184,10 +1211,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q1 Business Volume That Met Service Standard Target
       fr: Q1 Volume d’activités qui respectent la cible de la norme relative aux services
     description:
-      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year that met a particular service standard target for a service. (Q1: April 1- June 30)
-    • If data is not available, please indicate that there is no data (“ND”)."
-      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q1 : du 1er avril au 30 juin)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year that met a particular service standard target for a service. (Q1: April 1- June 30)
+        • If data is not available, please indicate that there is no data (“ND”).
+      fr: |
+        Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q1 : du 1er avril au 30 juin)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1201,10 +1230,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q1 Total Business Volume
       fr: Q1 Volumes des activités totaux
     description:
-      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year. (Q1: April 1- June 30)
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du premier trimestre de l’exercice. (Q1 : du 1er avril au 30 juin)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the first quarter of the fiscal year. (Q1: April 1- June 30)
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du premier trimestre de l’exercice. (Q1 : du 1er avril au 30 juin)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1218,10 +1249,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q2 Business Volume That Met Service Standard Target
       fr: Q2 Volume d’activités qui respectent la cible de la norme relative aux services
     description:
-      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) processed during the second quarter of the fiscal year that met a particular service standard target for a service. (Q2: July 1 – September 30)
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q2 : 1er juillet au 30 septembre)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) processed during the second quarter of the fiscal year that met a particular service standard target for a service. (Q2: July 1 – September 30)
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du premier trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q2 : 1er juillet au 30 septembre)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1235,10 +1268,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q2 Total Business Volume
       fr: Q2 Volumes des activités totaux
     description:
-      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the second quarter of the fiscal year. (Q2: July 1 – September 30)
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du deuxième trimestre de l’exercice. (Q2 : 1er juillet au 30 septembre)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the second quarter of the fiscal year. (Q2: July 1 – September 30)
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du deuxième trimestre de l’exercice. (Q2 : 1er juillet au 30 septembre)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1252,10 +1287,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q3 Business Volume That Met Service Standard Target
       fr: Q3 Volume d’activités qui respectent la cible de la norme relative aux services
     description:
-      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year that met a particular service standard target for a service. (Q3: October 1 – December 31)
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du troisième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q3 : du 1er octobre au 31 décembre)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year that met a particular service standard target for a service. (Q3: October 1 – December 31)
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du troisième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q3 : du 1er octobre au 31 décembre)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1269,10 +1306,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q3 Total Business Volume
       fr: Q3 Volumes des activités totaux
     description:
-      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year. (Q3: October 1 – December 31)
-    • If data is not available, please indicate that there is no data (“ND”)."
-      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du troisième trimestre de l’exercice. (Q3: du 1er octobre au 31 décembre)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the third quarter of the fiscal year. (Q3: October 1 – December 31)
+        • If data is not available, please indicate that there is no data (“ND”).
+      fr: |
+        Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du troisième trimestre de l’exercice. (Q3: du 1er octobre au 31 décembre)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1286,10 +1325,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q4 Business Volume That Met Service Standard Target
       fr: Q4 Volume d’activités qui respectent la cible de la norme relative aux services
     description:
-      en: "Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year that met a particular service standard target for a service. (Q4: January 1 – March 31)
-    • If data is not available, please indicate that there is no data (“ND”)."
-      fr: "Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du quatrième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q4: du 1er janvier au 31 mars)
-    • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« AD »)."
+      en: |
+        Identifies the number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year that met a particular service standard target for a service. (Q4: January 1 – March 31)
+        • If data is not available, please indicate that there is no data (“ND”).
+      fr: |
+        Indique le nombre d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées, etc.) au cours du quatrième trimestre de l’exercice qui ont respecté une norme relative aux services particulière à un service. (Q4: du 1er janvier au 31 mars)
+        • Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« AD »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
@@ -1303,10 +1344,12 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: Q4 Total Business Volume
       fr: Q4 Volumes des activités totaux
     description:
-      en: "Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year. (Q4: du 1er janvier au 31 mars)
-    • If data is not available, please indicate that there is no data (ND)."
-      fr: "Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du quatrième trimestre de l’exercice. (Q4: du 1er janvier au 31 mars)
-Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
+      en: |
+        Identifies the total number of final outputs issued appropriate to the service (eg. payments issued, requests completed, etc) during the fourth quarter of the fiscal year. (Q4: du 1er janvier au 31 mars)
+        • If data is not available, please indicate that there is no data (ND).
+      fr: |
+        Indique le nombre total d’opérations de service effectuées (p. ex. les appels auxquels on a répondu, les paiements émis, les demandes traitées) relativement à un service au cours du quatrième trimestre de l’exercice. (Q4: du 1er janvier au 31 mars)
+        Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »).
     obligation: Mandatory
     excel_required: true
     format_type: Numeric or ND
