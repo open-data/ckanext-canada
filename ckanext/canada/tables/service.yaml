@@ -16,7 +16,7 @@ resources:
   resource_name: service
   fields:
 
-  # 3.1 (was fiscal_year)
+  # 3.1
   - datastore_id: fiscal_yr
     label:
       en: Fiscal Year
@@ -896,8 +896,10 @@ resources:
   triggers:
   - service_trigger: |
       BEGIN
-        PERFORM not_empty(NEW.service_id_number, 'service_id_number');
-        PERFORM no_surrounding_whitespace(NEW.service_id_number, 'service_id_number');
+        PERFORM not_empty(NEW.fiscal_yr, 'fiscal_yr');
+        PERFORM choice_one_of(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        PERFORM not_empty(NEW.service_id, 'service_id');
+        PERFORM no_surrounding_whitespace(NEW.service_id, 'service_id');
         PERFORM not_empty(NEW.service_name_en, 'service_name_en');
         PERFORM not_empty(NEW.service_name_fr, 'service_name_fr');
         PERFORM not_empty(NEW.external_internal, 'external_internal');
@@ -908,34 +910,36 @@ resources:
         PERFORM choice_one_of(NEW.special_designations, {special_designations}, 'special_designations');
         PERFORM not_empty(NEW.service_description_en, 'service_description_en');
         PERFORM not_empty(NEW.service_description_fr, 'service_description_fr');
-        PERFORM not_empty(NEW.responsibility_area_en, 'responsibility_area_en');
-        PERFORM not_empty(NEW.responsibility_area_fr, 'responsibility_area_fr');
         PERFORM not_empty(NEW.authority_en, 'authority_en');
         PERFORM not_empty(NEW.authority_fr, 'authority_fr');
+        PERFORM not_empty(NEW.service_url_en, 'service_url_en');
+        PERFORM not_empty(NEW.service_url_fr, 'service_url_fr');
         PERFORM not_empty(NEW.program_name_en, 'program_name_en');
         PERFORM not_empty(NEW.program_name_fr, 'program_name_fr');
-        PERFORM not_empty(NEW.program_id_number, 'program_id_number');
-        PERFORM not_empty(NEW.service_owner, 'service_owner');
-        PERFORM choice_one_of(NEW.service_owner, {service_owner}, 'service_owner');
-        PERFORM not_empty(NEW.service_agreements, 'service_agreements');
-        PERFORM choice_one_of(NEW.service_agreements, {service_agreements}, 'service_agreements');
+        PERFORM not_empty(NEW.program_id_code, 'program_id_code');
         PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
         NEW.client_target_groups := choices_from(
           NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
         PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
+        PERFORM not_empty(NEW.service_fee, 'service_fee');
+        PERFORM choice_one_of(NEW.service_fee, {service_fee}, 'service_fee');
         PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
-        PERFORM not_empty(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
-        PERFORM integer_or_na_nd(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
-        PERFORM not_empty(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
-        PERFORM integer_or_na_nd(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
-        PERFORM not_empty(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
-        PERFORM integer_or_na_nd(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
-        PERFORM not_empty(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
-        PERFORM integer_or_na_nd(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
-        PERFORM not_empty(NEW.user_fee, 'user_fee');
-        PERFORM choice_one_of(NEW.user_fee, {user_fee}, 'user_fee');
-        PERFORM not_empty(NEW.targets_published_en, 'targets_published_en');
-        PERFORM not_empty(NEW.targets_published_fr, 'targets_published_fr');
+        PERFORM not_empty(NEW.use_of_sin, 'use_of_sin');
+        PERFORM choice_one_of(NEW.use_of_sin, {use_of_sin}, 'use_of_sin');
+        PERFORM not_empty(NEW.online_applications, 'online_applications');
+        PERFORM integer_or_na_nd(NEW.online_applications, 'online_applications');
+        PERFORM not_empty(NEW.web_visits_info_service, 'web_visits_info_service');
+        PERFORM integer_or_na_nd(NEW.web_visits_info_service, 'web_visits_info_service');
+        PERFORM not_empty(NEW.calls_received, 'calls_received');
+        PERFORM integer_or_na_nd(NEW.calls_received, 'calls_received');
+        PERFORM not_empty(NEW.in_person_applications, 'in_person_applications');
+        PERFORM integer_or_na_nd(NEW.in_person_applications, 'in_person_applications');
+        PERFORM not_empty(NEW.email_applications, 'email_applications');
+        PERFORM integer_or_na_nd(NEW.email_applications, 'email_applications');
+        PERFORM not_empty(NEW.fax_applications, 'fax_applications');
+        PERFORM integer_or_na_nd(NEW.fax_applications, 'fax_applications');
+        PERFORM not_empty(NEW.postal_mail_applications, 'postal_mail_applications');
+        PERFORM integer_or_na_nd(NEW.postal_mail_applications, 'postal_mail_applications');
         PERFORM not_empty(NEW.e_registration, 'e_registration');
         PERFORM choice_one_of(NEW.e_registration, {e_registration}, 'e_registration');
         PERFORM not_empty(NEW.e_authentication, 'e_authentication');
@@ -948,12 +952,9 @@ resources:
         PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
         PERFORM not_empty(NEW.e_feedback, 'e_feedback');
         PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
-        PERFORM not_empty(NEW.interaction_points_online, 'interaction_points_online');
-        PERFORM choice_one_of(NEW.interaction_points_online, {interaction_points_online}, 'interaction_points_online');
-        PERFORM not_empty(NEW.interaction_points_total, 'interaction_points_total');
-        PERFORM choice_one_of(NEW.interaction_points_total, {interaction_points_total}, 'interaction_points_total');
-        PERFORM not_empty(NEW.percentage_online, 'percentage_online');
-        PERFORM valid_percentage(NEW.percentage_online, 'percentage_online');
+        PERFORM not_empty(NEW.client_feedback, 'client_feedback');
+        PERFORM choice_one_of(NEW.client_feedback, {client_feedback}, 'client_feedback');
+
         RETURN NEW;
       END;
   - update_record_modified_created_trigger
@@ -1016,6 +1017,7 @@ resources:
       fr: Année financière
     description:
       en: Identifies the fiscal year for which service data is reported
+      fr: Indique l’exercice pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
     validation: This field must not be empty
@@ -1367,6 +1369,10 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
   triggers:
   - service_std_trigger: |
       BEGIN
+        PERFORM not_empty(NEW.fiscal_yr, 'fiscal_yr');
+        PERFORM choice_one_of(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+
+        RETURN NEW;
       END;
   - update_record_modified_created_trigger
 
@@ -1379,7 +1385,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       service_std_fr: Traiter les demandes et communiquer les résultats aux participants dans un délai de 45 jours.
       service_std_url_en: http://www.agr.gc.ca/eng/about-us/planning-and-reporting/service-standards-at-agriculture-and-agri-food-canada/agriculture-and-agri-food-canada-service-standards-quarterly-results-fiscal-year-2017-2018/?id=1481057048109
       service_std_url_fr: http://www.agr.gc.ca/fra/a-propos-de-nous/planification-et-rapports/normes-de-service-d-agriculture-et-agroalimentaire-canada/normes-de-service-d-agriculture-et-agroalimentaire-canada-resultats-trimestriels-exercice-2017-2018/?id=1481057048109
-      service_std_type: TML,ACS
+      service_std_type: [TML, ACS]
       service_std_target: 80
       gcss_tool_fiscal_yr: 2016-2017
       realtime_result_url_en: ND
