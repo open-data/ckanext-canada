@@ -912,8 +912,6 @@ resources:
         PERFORM not_empty(NEW.service_description_fr, 'service_description_fr');
         PERFORM not_empty(NEW.authority_en, 'authority_en');
         PERFORM not_empty(NEW.authority_fr, 'authority_fr');
-        PERFORM not_empty(NEW.service_url_en, 'service_url_en');
-        PERFORM not_empty(NEW.service_url_fr, 'service_url_fr');
         PERFORM not_empty(NEW.program_name_en, 'program_name_en');
         PERFORM not_empty(NEW.program_name_fr, 'program_name_fr');
         PERFORM not_empty(NEW.program_id_code, 'program_id_code');
@@ -924,20 +922,12 @@ resources:
         PERFORM not_empty(NEW.service_fee, 'service_fee');
         PERFORM choice_one_of(NEW.service_fee, {service_fee}, 'service_fee');
         PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
-        PERFORM not_empty(NEW.use_of_sin, 'use_of_sin');
-        PERFORM choice_one_of(NEW.use_of_sin, {use_of_sin}, 'use_of_sin');
         PERFORM not_empty(NEW.online_applications, 'online_applications');
         PERFORM integer_or_na_nd(NEW.online_applications, 'online_applications');
-        PERFORM not_empty(NEW.web_visits_info_service, 'web_visits_info_service');
-        PERFORM integer_or_na_nd(NEW.web_visits_info_service, 'web_visits_info_service');
         PERFORM not_empty(NEW.calls_received, 'calls_received');
         PERFORM integer_or_na_nd(NEW.calls_received, 'calls_received');
         PERFORM not_empty(NEW.in_person_applications, 'in_person_applications');
         PERFORM integer_or_na_nd(NEW.in_person_applications, 'in_person_applications');
-        PERFORM not_empty(NEW.email_applications, 'email_applications');
-        PERFORM integer_or_na_nd(NEW.email_applications, 'email_applications');
-        PERFORM not_empty(NEW.fax_applications, 'fax_applications');
-        PERFORM integer_or_na_nd(NEW.fax_applications, 'fax_applications');
         PERFORM not_empty(NEW.postal_mail_applications, 'postal_mail_applications');
         PERFORM integer_or_na_nd(NEW.postal_mail_applications, 'postal_mail_applications');
         PERFORM not_empty(NEW.e_registration, 'e_registration');
@@ -952,9 +942,21 @@ resources:
         PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
         PERFORM not_empty(NEW.e_feedback, 'e_feedback');
         PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
-        PERFORM not_empty(NEW.client_feedback, 'client_feedback');
-        PERFORM choice_one_of(NEW.client_feedback, {client_feedback}, 'client_feedback');
 
+        IF NEW.fiscal_yr <> '2016-2017' THEN
+          PERFORM not_empty(NEW.service_url_en, 'service_url_en');
+          PERFORM not_empty(NEW.service_url_fr, 'service_url_fr');
+          PERFORM not_empty(NEW.use_of_sin, 'use_of_sin');
+          PERFORM choice_one_of(NEW.use_of_sin, {use_of_sin}, 'use_of_sin');
+          PERFORM not_empty(NEW.web_visits_info_service, 'web_visits_info_service');
+          PERFORM integer_or_na_nd(NEW.web_visits_info_service, 'web_visits_info_service');
+          PERFORM not_empty(NEW.email_applications, 'email_applications');
+          PERFORM integer_or_na_nd(NEW.email_applications, 'email_applications');
+          PERFORM not_empty(NEW.fax_applications, 'fax_applications');
+          PERFORM integer_or_na_nd(NEW.fax_applications, 'fax_applications');
+          PERFORM not_empty(NEW.client_feedback, 'client_feedback');
+          PERFORM choice_one_of(NEW.client_feedback, {client_feedback}, 'client_feedback');
+        END IF;
         RETURN NEW;
       END;
   - update_record_modified_created_trigger

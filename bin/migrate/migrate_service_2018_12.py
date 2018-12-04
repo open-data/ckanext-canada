@@ -33,8 +33,8 @@ for line in in_csv:
     del line['service_agreements']
     del line['targets_published_en']
     del line['targets_published_fr']
-    del line['integration_points_online']
-    del line['integration_points_total']
+    del line['interaction_points_online']
+    del line['interaction_points_total']
     del line['percentage_online']
 
     line['service_url_en'] = ''
