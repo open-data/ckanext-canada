@@ -485,7 +485,6 @@ resources:
     obligation: Mandatory for contracts after 2018-04-01
     excel_required_formula: '{contract_date}>=DATE(2018,4,1)'
     datastore_type: text
-    choices_file: choices/commodity_code.json
 
   - datastore_id: country_of_origin
     label:
