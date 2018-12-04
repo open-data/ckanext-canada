@@ -3,9 +3,9 @@ target_dataset: travela
 title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
 notes: This dataset includes all of the annual reports on travel expenses
        incurred within your organization.
-upload_warn:
-  en: 'Please note that we are in the process of updating the Annual Travel, Hospitality, and Conferences form in order to meet the new requirements of the <a href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=27228">Guide to Travel, Hospitality, Conference and Event Expenditures</a>. These updates should be completed shortly.'
-  fr: 'Veuillez prendre note que nous sommes actuellement en train de procéder à la mise à jour du formulaire annuel sur les voyages, l’accueil et les conférences afin de respecter les nouvelles exigences du <a href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=27228">Directive sur les dépenses de voyages, d’accueil, de conférences et d’événements</a>. Ces mises à jour devraient être complétées sous peu.'
+upload_info:
+  en: When publishing for the first time on the Open Government Portal, please ensure to add data for the previous year for comparison purposes - for example, if publishing the Annual Report on Travel, Hospitality and Conference expenditures for 2018, the 2017 expenditures amount must also be entered.
+  fr: Lorsque vous publiez pour la première fois sur le registre du gouvernement ouvert, assurez-vous d'ajouter les données de l'année précédente pour fins de comparaison - par exemple, si vous publiez le rapport annuel sur les dépenses de voyages, d'accueil et de conférences pour 2018, le montant des dépenses de 2017 doit également être saisi.
 
 template_version: 3
 
@@ -98,11 +98,9 @@ resources:
       previous_year: operational_activities_kdollars_previous_year
       change: operational_activities_kdollars_change
       sum_previous_year:
-      - operational_activities_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - operational_activities_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -131,11 +129,9 @@ resources:
       previous_year: key_stakeholders_kdollars_previous_year
       change: key_stakeholders_kdollars_change
       sum_previous_year:
-      - key_stakeholders_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - key_stakeholders_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -164,11 +160,9 @@ resources:
       previous_year: training_kdollars_previous_year
       change: training_kdollars_change
       sum_previous_year:
-      - training_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - training_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -197,11 +191,9 @@ resources:
       previous_year: other_kdollars_previous_year
       change: other_kdollars_change
       sum_previous_year:
-      - other_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - other_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -230,11 +222,9 @@ resources:
       previous_year: internal_governance_kdollars_previous_year
       change: internal_governance_kdollars_change
       sum_previous_year:
-      - internal_governance_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - internal_governance_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -267,11 +257,9 @@ resources:
       previous_year: non_public_servants_kdollars_previous_year
       change: non_public_servants_kdollars_change
       sum_previous_year:
-      - non_public_servants_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - non_public_servants_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -304,11 +292,9 @@ resources:
       previous_year: public_servants_kdollars_previous_year
       change: public_servants_kdollars_change
       sum_previous_year:
-      - public_servants_kdollars_previous_year
       - total_travel_kdollars_previous_year
       - total_kdollars_previous_year
       sum_change:
-      - public_servants_kdollars_change
       - total_travel_kdollars_change
       - total_kdollars_change
 
@@ -557,7 +543,7 @@ resources:
 
   datastore_primary_key: [year]
   datastore_indexes: ""
-  excel_example_height: 150
+  excel_example_height: 75
   excel_data_height: 110
   excel_data_num_rows: 20
 

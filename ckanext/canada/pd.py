@@ -565,7 +565,8 @@ def compare_output(prev_solrrec, solrrec, chromo):
             for sp in list_or_none(comp['sum_previous_year']):
                 sum_to_field(out, sp, float_prev)
         if 'sum_change' in comp:
+            sum_change = (float_cur or 0) - (float_prev or 0)
             for sc in list_or_none(comp['sum_change']):
-                sum_to_field(out, sc, change)
+                sum_to_field(out, sc, sum_change)
 
     return out
