@@ -1371,6 +1371,38 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       BEGIN
         PERFORM not_empty(NEW.fiscal_yr, 'fiscal_yr');
         PERFORM choice_one_of(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        PERFORM not_empty(NEW.service_id, 'service_id');
+        PERFORM no_surrounding_whitespace(NEW.service_id, 'service_id');
+        PERFORM not_empty(NEW.service_std_id, 'service_std_id');
+        PERFORM no_surrounding_whitespace(NEW.service_std_id, 'service_std_id');
+        PERFORM not_empty(NEW.service_std_en, 'service_std_en');
+        PERFORM not_empty(NEW.service_std_fr, 'service_std_fr');
+        PERFORM not_empty(NEW.service_std_url_en, 'service_std_url_en');
+        PERFORM not_empty(NEW.service_std_url_fr, 'service_std_url_fr');
+        NEW.service_std_type := choices_from(
+          NEW.service_std_type, {service_std_type}, 'service_std_type');
+        PERFORM not_empty(NEW.service_std_target, 'service_std_target');
+        PERFORM valid_percentage(NEW.service_std_target, 'service_std_target');
+        PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
+        PERFORM choice_one_of(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
+        PERFORM not_empty(NEW.realtime_result_url_en, 'realtime_result_url_en');
+        PERFORM not_empty(NEW.realtime_result_url_fr, 'realtime_result_url_fr');
+        PERFORM not_empty(NEW.q1_performance_result, 'q1_performance_result');
+        PERFORM integer_or_na_nd(NEW.q1_performance_result, 'q1_performance_result');
+        PERFORM not_empty(NEW.q1_business_volume, 'q1_business_volume');
+        PERFORM integer_or_na_nd(NEW.q1_business_volume, 'q1_business_volume');
+        PERFORM not_empty(NEW.q2_performance_result, 'q2_performance_result');
+        PERFORM integer_or_na_nd(NEW.q2_performance_result, 'q2_performance_result');
+        PERFORM not_empty(NEW.q2_business_volume, 'q2_business_volume');
+        PERFORM integer_or_na_nd(NEW.q2_business_volume, 'q2_business_volume');
+        PERFORM not_empty(NEW.q3_performance_result, 'q3_performance_result');
+        PERFORM integer_or_na_nd(NEW.q3_performance_result, 'q3_performance_result');
+        PERFORM not_empty(NEW.q3_business_volume, 'q3_business_volume');
+        PERFORM integer_or_na_nd(NEW.q3_business_volume, 'q3_business_volume');
+        PERFORM not_empty(NEW.q4_performance_result, 'q4_performance_result');
+        PERFORM integer_or_na_nd(NEW.q4_performance_result, 'q4_performance_result');
+        PERFORM not_empty(NEW.q4_business_volume, 'q4_business_volume');
+        PERFORM integer_or_na_nd(NEW.q4_business_volume, 'q4_business_volume');
 
         RETURN NEW;
       END;
