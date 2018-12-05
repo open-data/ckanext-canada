@@ -531,6 +531,8 @@ resources:
       en: This field should be populated with the reason for a given contract not being awarded through a competitive solicitation.
       fr: Il est recommandé de saisir dans cette zone l’une des raisons justifiant le recours à l’appel d’offres limité.
     obligation: Mandatory for contracts after 2018-04-01
+    # accept "0" and "5" in place of the proper "00" and "05" codes below
+    excel_error_formula: 'AND({default_formula},{cell}<>0,{cell}<>"0",{cell}<>5,{cell}<>"5")'
     excel_required_formula: '{contract_date}>=DATE(2018,4,1)'
     datastore_type: text
     excel_full_text_choices: true
@@ -838,9 +840,6 @@ resources:
             {commodity_type_code},
             'commodity_type_code');
           PERFORM not_empty(NEW.commodity_code, 'commodity_code');
-          PERFORM choice_one_of(NEW.commodity_code,
-            {commodity_code},
-            'commodity_code');
           PERFORM not_empty(NEW.country_of_origin, 'country_of_origin');
           PERFORM choice_one_of(NEW.country_of_origin,
             {country_of_origin},
@@ -849,6 +848,10 @@ resources:
           PERFORM choice_one_of(NEW.solicitation_procedure_code,
             {solicitation_procedure_code},
             'solicitation_procedure_code');
+          -- accept "0" and "5" in place of the proper "00" and "05" codes
+          IF NEW.limited_tendering_reason_code = '0' OR NEW.limited_tendering_reason_code = '5' THEN
+            NEW.limited_tendering_reason_code = '0' || NEW.limited_tendering_reason_code;
+          END IF;
           PERFORM not_empty(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
           PERFORM choice_one_of(NEW.limited_tendering_reason_code,
             {limited_tendering_reason_code},
@@ -863,9 +866,11 @@ resources:
             {intellectual_property_code},
             'intellectual_property_code');
           PERFORM not_empty(NEW.former_public_servant, 'former_public_servant');
-          PERFORM choice_one_of(NEW.standing_offer,
-            {standing_offer},
-            'standing_offer');
+          IF NEW.standing_offer <> '' THEN
+            PERFORM choice_one_of(NEW.standing_offer,
+              {standing_offer},
+              'standing_offer');
+          END IF;
           PERFORM not_empty(NEW.document_type_code, 'document_type_code');
           PERFORM choice_one_of(NEW.document_type_code,
             {document_type_code},
