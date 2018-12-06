@@ -1,8 +1,12 @@
 dataset_type: service
 target_dataset: service
 
-title: Service Inventory
-notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
+title:
+  en: Service Inventory
+  fr: Répertoire de services
+notes:
+  en: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
+  fr: Accèder, téléverser et modifier le catalogue des service internes intégrés et externes pour votre organisation
 
 template_version: 3
 
@@ -12,7 +16,9 @@ collection: service
 gcpedia_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
 
 resources:
-- title: Service Identification Information
+- title:
+    en: Service Identification Information & Metrics
+    fr: Renseignements sur l’identification des services, données volumétrique
   resource_name: service
   fields:
 
@@ -1009,7 +1015,9 @@ resources:
     sort: year, service_id_number
 
 
-- title: Service Standards & Performance Results
+- title:
+    en: Service Standards & Performance Results
+    fr: Normes relatives aux services et résultats de rendement
   resource_name: service-std
   fields:
 
