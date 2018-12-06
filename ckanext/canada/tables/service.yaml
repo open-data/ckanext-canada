@@ -981,7 +981,7 @@ resources:
       program_id_code: 03-001-BWP02
       client_target_groups: [PP, IO]
       cra_business_number: Y
-      social_insurance_number: "NA"
+      use_of_sin: "NA"
       online_applications: "108429"
       web_visits_info_service: "51800"
       calls_received: "701"
@@ -998,7 +998,7 @@ resources:
       e_decision: N
       e_issuance: Y
       e_feedback: Y
-      feedback_channels: [ONL, POST]
+      client_feedback: [ONL, POST]
       special_remarks_en: 'The value for in-person applications is "NA" as applications are not submitted in-person. The values for some channels are listed as “ND” as the department does not have data available. '
       special_remarks_fr: 'Les application_en_personne est sans object ("NA") parce que le service n’est pas offert en personne. Aucune donnée n’est disponible pour plusieurs canals'
     filters:
