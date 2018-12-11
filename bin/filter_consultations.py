@@ -13,13 +13,15 @@ import sys
 FILTER_COLUMN = "publishable"
 REMOVE_COLUMNS = [
     'publishable',
-    'public_opinion_research',
     'contact_email',
+    'high_profile',
     'policy_program_lead_email',
+    'rationale',
     'remarks_en',
     'remarks_fr',
     'record_created',
     'record_modified',
+    'target_participants_and_audience',
     'user_modified',
 ]
 
