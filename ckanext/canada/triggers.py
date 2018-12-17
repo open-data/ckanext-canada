@@ -7,6 +7,108 @@ def update_triggers():
 
     lc = LocalCKAN()
 
+    # *_error functions take "errors" inout parameter and return success/failure
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
+        rettype=u'bool',
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN false;
+                END IF;
+                RETURN true;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
+        rettype=u'bool',
+        definition=u'''
+            BEGIN
+                IF value = '{}' THEN
+                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN false;
+                END IF;
+                RETURN true;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
+        rettype=u'bool',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN false;
+                END IF;
+                RETURN true;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'choice_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
+        rettype=u'bool',
+        definition=ur'''
+            BEGIN
+                IF NOT (value = ANY (choices)) THEN
+                    -- \t is used when converting errors to string
+                    errors := errors || ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(value, E'\t', ' ') || '"']];
+                    RETURN false;
+                END IF;
+                RETURN true;
+            END;
+        ''')
+    # error-collecting form takes "value" and "errors" inout parameter and return
+    # success/failure
+    lc.action.datastore_function_create(
+        name=u'choices_clean_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text', u'argmode': u'inout'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
+        rettype=u'bool',
+        definition=ur'''
+            DECLARE
+                bad_choices text := array_to_string(ARRAY(
+                    SELECT unnest(value)
+                    EXCEPT SELECT unnest(choices)), ', ');
+            BEGIN
+                IF bad_choices <> '' THEN
+                    -- \t is used when converting errors to string
+                    errors := errors || ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(bad_choices, E'\t', ' ') || '"']];
+                    RETURN false;
+                END IF;
+                value := ARRAY(
+                    SELECT c FROM(SELECT unnest(choices) as c) u
+                    WHERE c in (SELECT unnest(value)));
+                RETURN true;
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'not_empty',
         or_replace=True,

@@ -479,46 +479,42 @@ resources:
 
   triggers:
   - consultations_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
       BEGIN
-        PERFORM not_empty(NEW.registration_number, 'registration_number');
-        PERFORM choice_one_of(NEW.publishable, {publishable}, 'publishable');
-        NEW.partner_departments := choices_from(
-          NEW.partner_departments, {partner_departments}, 'partner_departments');
-        PERFORM not_empty(NEW.subjects, 'subjects');
-        NEW.subjects := choices_from(
-          NEW.subjects, {subjects}, 'subjects');
-        PERFORM not_empty(NEW.title_en, 'title_en');
-        PERFORM not_empty(NEW.title_fr, 'title_fr');
-        PERFORM not_empty(NEW.description_en, 'description_en');
-        PERFORM not_empty(NEW.description_fr, 'description_fr');
-        PERFORM not_empty(
-          NEW.target_participants_and_audience,
-          'target_participants_and_audience');
-        NEW.target_participants_and_audience := choices_from(
-          NEW.target_participants_and_audience,
-          {target_participants_and_audience},
-          'target_participants_and_audience');
-        PERFORM not_empty(NEW.start_date, 'start_date');
-        PERFORM not_empty(NEW.end_date, 'end_date');
-        PERFORM choice_one_of(NEW.status, {status}, 'status');
-        PERFORM not_empty(NEW.profile_page_en, 'profile_page_en');
-        PERFORM not_empty(NEW.profile_page_fr, 'profile_page_fr');
-        PERFORM choice_one_of(
-          NEW.report_available_online,
-          {report_available_online},
-          'report_available_online');
-        PERFORM not_empty(NEW.high_profile, 'high_profile');
-        PERFORM choice_one_of(
-          NEW.high_profile,
-          {high_profile},
-          'high_profile');
+        PERFORM required_error(NEW.registration_number, 'registration_number', errors);
+        PERFORM required_error(NEW.publishable, 'publishable', errors);
+        PERFORM choice_error(NEW.publishable, {publishable}, 'publishable', errors);
+        PERFORM choices_clean_error(NEW.partner_departments, {partner_departments},
+          'partner_departments', errors);
+        PERFORM required_error(NEW.subjects, 'subjects', errors);
+        PERFORM choices_clean_error(NEW.subjects, {subjects}, 'subjects', errors);
+        PERFORM required_error(NEW.title_en, 'title_en', errors);
+        PERFORM required_error(NEW.title_fr, 'title_fr', errors);
+        PERFORM required_error(NEW.description_en, 'description_en', errors);
+        PERFORM required_error(NEW.description_fr, 'description_fr', errors);
+        PERFORM required_error(NEW.target_participants_and_audience,
+          'target_participants_and_audience', errors);
+        PERFORM choices_clean_error(NEW.target_participants_and_audience,
+          {target_participants_and_audience}, 'target_participants_and_audience', errors);
+        PERFORM required_error(NEW.start_date, 'start_date', errors);
+        PERFORM required_error(NEW.end_date, 'end_date', errors);
+        PERFORM choice_error(NEW.status, {status}, 'status', errors);
+        PERFORM required_error(NEW.profile_page_en, 'profile_page_en', errors);
+        PERFORM required_error(NEW.profile_page_fr, 'profile_page_fr', errors);
+        PERFORM choice_error(NEW.report_available_online, {report_available_online},
+          'report_available_online', errors);
+        PERFORM required_error(NEW.high_profile, 'high_profile', errors);
+        PERFORM choice_error(NEW.high_profile, {high_profile}, 'high_profile', errors);
         IF NEW.high_profile = 'Y' THEN
-          PERFORM not_empty(NEW.rationale, 'rationale');
+          PERFORM required_error(NEW.rationale, 'rationale', errors);
         END IF;
-        NEW.rationale := choices_from(
-          NEW.rationale, {rationale}, 'rationale');
+        PERFORM choices_clean_error(NEW.rationale, {rationale}, 'rationale', errors);
 
-        RETURN NEW;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION 'TAB-DELIMITED: %', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
