@@ -7,22 +7,20 @@ def update_triggers():
 
     lc = LocalCKAN()
 
-    # *_error functions take "errors" inout parameter and return success/failure
+    # *_error functions return NULL or ARRAY[[field_name, error_message]]
     lc.action.datastore_function_create(
         name=u'required_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'field_name', u'argtype': u'text'},
-            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
-        rettype=u'bool',
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF (value = '') IS NOT FALSE THEN
-                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
-                    RETURN false;
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
                 END IF;
-                RETURN true;
+                RETURN NULL;
             END;
         ''')
     lc.action.datastore_function_create(
@@ -30,16 +28,14 @@ def update_triggers():
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'},
-            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
-        rettype=u'bool',
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF value = '{}' THEN
-                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
-                    RETURN false;
+                    return ARRAY[[field_name, 'This field must not be empty']];
                 END IF;
-                RETURN true;
+                RETURN NULL;
             END;
         ''')
     lc.action.datastore_function_create(
@@ -47,16 +43,14 @@ def update_triggers():
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'date'},
-            {u'argname': u'field_name', u'argtype': u'text'},
-            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
-        rettype=u'bool',
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF value IS NULL THEN
-                    errors := errors || ARRAY[[field_name, 'This field must not be empty']];
-                    RETURN false;
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
                 END IF;
-                RETURN true;
+                RETURN NULL;
             END;
         ''')
     lc.action.datastore_function_create(
@@ -65,31 +59,30 @@ def update_triggers():
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'choices', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'},
-            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
-        rettype=u'bool',
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=ur'''
             BEGIN
                 IF NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
-                    errors := errors || ARRAY[[field_name, 'Invalid choice: "'
+                    RETURN ARRAY[[field_name, 'Invalid choice: "'
                         || replace(value, E'\t', ' ') || '"']];
-                    RETURN false;
                 END IF;
-                RETURN true;
+                RETURN NULL;
             END;
         ''')
-    # error-collecting form takes "value" and "errors" inout parameter and return
-    # success/failure
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
     lc.action.datastore_function_create(
         name=u'choices_clean_error',
         or_replace=True,
         arguments=[
-            {u'argname': u'value', u'argtype': u'_text', u'argmode': u'inout'},
+            {u'argname': u'value', u'argtype': u'_text'},
             {u'argname': u'choices', u'argtype': u'_text'},
             {u'argname': u'field_name', u'argtype': u'text'},
-            {u'argname': u'errors', u'argtype': u'_text', u'argmode': u'inout'}],
-        rettype=u'bool',
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
         definition=ur'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
@@ -98,14 +91,12 @@ def update_triggers():
             BEGIN
                 IF bad_choices <> '' THEN
                     -- \t is used when converting errors to string
-                    errors := errors || ARRAY[[field_name, 'Invalid choice: "'
+                    error := ARRAY[[field_name, 'Invalid choice: "'
                         || replace(bad_choices, E'\t', ' ') || '"']];
-                    RETURN false;
                 END IF;
-                value := ARRAY(
+                clean := ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
                     WHERE c in (SELECT unnest(value)));
-                RETURN true;
             END;
         ''')
 
