@@ -546,10 +546,13 @@ resources:
       report_link_en: ""
       report_link_fr: ""
       status: P
+      profile_page_en: http://example.gc.ca/en
+      profile_page_fr: http://example.gc.ca/fr
       subjects: ["AP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
+      high_profile: "Y"
       rationale: ["BG", "PC"]
     filters:
       publishable: "Y"
