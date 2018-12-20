@@ -955,7 +955,8 @@ resources:
           PERFORM not_empty(NEW.fax_applications, 'fax_applications');
           PERFORM integer_or_na_nd(NEW.fax_applications, 'fax_applications');
           PERFORM not_empty(NEW.client_feedback, 'client_feedback');
-          PERFORM choice_one_of(NEW.client_feedback, {client_feedback}, 'client_feedback');
+          NEW.client_feedback := choices_from(
+            NEW.client_feedback, {client_feedback}, 'client_feedback');
         END IF;
         RETURN NEW;
       END;
