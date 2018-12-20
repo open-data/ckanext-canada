@@ -39,4 +39,24 @@ def main():
         except ValueError:
             pass
 
+def replace():
+    replacements = (
+        ("CN", "C"),
+        ("CR", "C"),
+        ("CA", "C"),
+        )
+    # I was able to make it run locally as below- 
+    # with open("consultations.csv",'rb') as f, open("consultations_filtered.csv", "w") as outputfile:
+    #   for line in f:
+    #       for pair in replacements:
+    #           line = line.replace(*pair)
+    #       outputfile.write(line)                            
+    # For our environment it would be more like below? (which I don't think works)  
+    with sys.stdin as f, sys.stdout as outputfile:
+        for line in f:
+            for pair in replacements:
+                line = line.replace(*pair)
+            outputfile.write(line)
+
 main()
+replace()
