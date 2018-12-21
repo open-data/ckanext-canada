@@ -297,20 +297,6 @@ def show_fgp_facets():
     return False
 
 
-def show_oinfo_facets():
-    '''
-    Return True when the fgp facets and map cart should be visible
-    '''
-    for group in [
-            'publications', 'transition']:
-        if any(f['active'] for f in h.get_facet_items_dict(group)):
-            return True
-    for f in h.get_facet_items_dict('portal_type'):
-        if f['name'] == 'info':
-            return f['active']
-    return False
-
-
 def json_loads(value):
     return json.loads(value)
 
