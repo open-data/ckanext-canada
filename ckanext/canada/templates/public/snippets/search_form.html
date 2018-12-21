@@ -18,6 +18,16 @@
   </div>
 {% endif %}
 
+{% if h.show_oinfo_facets() %}
+  <div class="row mrgn-bttm-sm mrgn-rght-sm">
+    <div class="col-md-12">
+      <section class="alert alert-info" >
+        <p>{{ _('As we launch this enhanced integrated Open Government Portal search, you may notice that there has been a reduction in the number of open information records.  Please note that you can still access the publications that no longer appear here by visiting: <a href="http://publications.gc.ca/">Government of Canada Publications</a> and <a href="http://www.bac-lac.gc.ca/">Library and Archives Canada</a>. If you have any comments or questions <a href="http://open.canada.ca/en/forms/contact-us">contact us</a>!')|safe }}</p>
+      </section>
+    </div>
+  </div>
+{% endif %}
+
 <div class="row mrgn-bttm-md mrgn-tp-md">
   <div class="col-md-12">
     <h2 class="mrgn-tp-0 mrgn-bttm-0">
