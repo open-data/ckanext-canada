@@ -14,18 +14,27 @@ class TestService(FunctionalTestBase):
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
-        self.resource_id = rval['resources'][0]['id']
+        self.service_id = rval['resources'][0]['id']
+        self.service_std_id = rval['resources'][1]['id']
 
     def test_example(self):
         lc = LocalCKAN()
         record = get_chromo('service')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=self.resource_id,
+            resource_id=self.service_id,
+            records=[record])
+        record = get_chromo('service-std')['examples']['record']
+        lc.action.datastore_upsert(
+            resource_id=self.service_std_id,
             records=[record])
 
     def test_blank(self):
         lc = LocalCKAN()
         assert_raises(ValidationError,
             lc.action.datastore_upsert,
-            resource_id=self.resource_id,
+            resource_id=self.service_id,
+            records=[{}])
+        assert_raises(ValidationError,
+            lc.action.datastore_upsert,
+            resource_id=self.service_std_id,
             records=[{}])
