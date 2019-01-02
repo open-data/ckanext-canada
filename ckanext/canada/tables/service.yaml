@@ -1401,7 +1401,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
         PERFORM not_empty(NEW.service_std_target, 'service_std_target');
-        PERFORM valid_percentage(NEW.service_std_target, 'service_std_target');
+        --PERFORM valid_percentage(NEW.service_std_target, 'service_std_target');
         PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
         PERFORM choice_one_of(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
         PERFORM not_empty(NEW.realtime_result_url_en, 'realtime_result_url_en');
