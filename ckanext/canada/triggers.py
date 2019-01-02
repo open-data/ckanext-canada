@@ -446,20 +446,6 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'valid_percentage',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value < 0 OR value > 100 THEN
-                    RAISE EXCEPTION 'This field must be a valid percentage: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
         name=u'integer_or_na_nd',
         or_replace=True,
         arguments=[

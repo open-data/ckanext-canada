@@ -297,6 +297,19 @@ def show_fgp_facets():
     return False
 
 
+def show_openinfo_facets():
+    '''
+    Return True when the open information facets are active
+    '''
+    for f in h.get_facet_items_dict('collection'):
+        if f['name'] == 'publication' and f['active']:
+            return True
+    for f in h.get_facet_items_dict('portal_type'):
+        if f['name'] == 'info':
+            return f['active']
+    return False
+
+
 def json_loads(value):
     return json.loads(value)
 

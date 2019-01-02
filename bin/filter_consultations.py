@@ -35,6 +35,8 @@ def main():
             if row[FILTER_COLUMN] == 'Y':
                 for rem in REMOVE_COLUMNS:
                     del row[rem]
+                # truncate status to remove "closed" reason
+                row['status'] = row['status'][:1]
                 writer.writerow(row)
         except ValueError:
             pass
