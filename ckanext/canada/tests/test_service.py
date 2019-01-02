@@ -38,3 +38,34 @@ class TestService(FunctionalTestBase):
             lc.action.datastore_upsert,
             resource_id=self.service_std_id,
             records=[{}])
+
+    def test_service_std_target(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('service-std')['examples']['record'],
+            service_std_target='0.99999')
+        lc.action.datastore_upsert(
+            resource_id=self.service_std_id,
+            records=[record])
+        assert_equal(
+            lc.action.datastore_search(resource_id=self.service_std_id)
+                ['records'][0]['service_std_target'],
+            u'0.99999')
+        record['service_std_target'] = 0.5
+        lc.action.datastore_upsert(
+            resource_id=self.service_std_id,
+            records=[record])
+        assert_equal(
+            lc.action.datastore_search(resource_id=self.service_std_id)
+                ['records'][0]['service_std_target'],
+            u'0.5')
+        record['service_std_target'] = 0
+        assert_raises(ValidationError,
+            lc.action.datastore_upsert,
+            resource_id=self.service_std_id,
+            records=[record])
+        record['service_std_target'] = 1
+        assert_raises(ValidationError,
+            lc.action.datastore_upsert,
+            resource_id=self.service_std_id,
+            records=[record])

@@ -1149,14 +1149,15 @@ resources:
       en: Service Standard Target
       fr: Cible de la norme relative aux services
     description:
-      en: Identifies the percentage value of the service standard target.
+      en: Identifies the decimal value between zero and one of the service standard target.
+      fr: Indique la valeur en décimal entre zéro et un de la cible de la norme de service.
     obligation: Mandatory
     excel_required: true
-    excel_error_formula: or({default_formula},left(cell("format",{cell}),1)="P",{cell}<0,{cell}>100)
-    format_type: Percentage
+    excel_error_formula: or({default_formula},{cell}<=0,{cell}>=1)
+    format_type: Decimal
     validation: This field must not be empty
     occurrence: Single
-    datastore_type: int
+    datastore_type: numeric
 
   # 4.8
   - datastore_id: gcss_tool_fiscal_yr
@@ -1401,7 +1402,9 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
         PERFORM not_empty(NEW.service_std_target, 'service_std_target');
-        --PERFORM valid_percentage(NEW.service_std_target, 'service_std_target');
+        IF NEW.service_std_target <= 0 OR NEW.service_std_target >= 1 THEN
+          RAISE EXCEPTION 'Please enter a decimal value between zero and one: %', 'service_std_target';
+        END IF;
         PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
         PERFORM choice_one_of(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
         PERFORM not_empty(NEW.realtime_result_url_en, 'realtime_result_url_en');
@@ -1437,7 +1440,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       service_std_url_en: http://www.agr.gc.ca/eng/about-us/planning-and-reporting/service-standards-at-agriculture-and-agri-food-canada/agriculture-and-agri-food-canada-service-standards-quarterly-results-fiscal-year-2017-2018/?id=1481057048109
       service_std_url_fr: http://www.agr.gc.ca/fra/a-propos-de-nous/planification-et-rapports/normes-de-service-d-agriculture-et-agroalimentaire-canada/normes-de-service-d-agriculture-et-agroalimentaire-canada-resultats-trimestriels-exercice-2017-2018/?id=1481057048109
       service_std_type: [TML, ACS]
-      service_std_target: 80
+      service_std_target: "0.95"
       gcss_tool_fiscal_yr: 2016-2017
       realtime_result_url_en: ND
       realtime_result_url_fr: ND
