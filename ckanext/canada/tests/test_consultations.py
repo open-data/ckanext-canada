@@ -29,3 +29,38 @@ class TestConsultations(FunctionalTestBase):
             lc.action.datastore_upsert,
             resource_id=self.resource_id,
             records=[{}])
+
+    def test_multiple_errors(self):
+        lc = LocalCKAN()
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{
+                    'registration_number': 'CCC0249',
+                    'publishable': 'Q',
+                    'subjects': ["AP", "CD", "HS", "GEO", "SE", "MATH"],
+                    'title_fr': u'seulment français',
+                    'description_en': 'only english',
+                    'target_participants_and_audience': ["ZOMBIES", "IP", "IG", "PT"],
+                    'start_date': "2017-05-15",
+                    'status': 'P',
+                    'profile_page_en': 'http://example.gc.ca/en',
+                    'profile_page_fr': 'http://example.gc.ca/fr',
+                    'partner_departments': ["D271", "DARN", "D141"],
+                    'policy_program_lead_email': 'program.lead@example.gc.ca',
+                    'high_profile': "Y",
+                    'report_available_online': "N",
+                    }])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'publishable': ['Invalid choice: "Q"'],
+            'subject': ['Invalid choice: "MATH, GEO"'],
+            'title_en': ['This field must not be empty'],
+            'description_fr': ['This field must not be empty'],
+            'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
+            'end_date': ['This field must not be empty'],
+            'partner_departments': ['Invalid choice: "DARN"'],
+            'rationale': ['This field must not be empty'],
+            }
+        for k in set(err) | set(expected):
+            assert_equal((k, err.get(k)), (k, expected.get(k)))
