@@ -54,7 +54,7 @@ class TestConsultations(FunctionalTestBase):
         err = ve.exception.error_dict['records'][0]
         expected = {
             'publishable': ['Invalid choice: "Q"'],
-            'subject': ['Invalid choice: "MATH, GEO"'],
+            'subjects': ['Invalid choice: "MATH, GEO"'],
             'title_en': ['This field must not be empty'],
             'description_fr': ['This field must not be empty'],
             'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
@@ -63,4 +63,4 @@ class TestConsultations(FunctionalTestBase):
             'rationale': ['This field must not be empty'],
             }
         for k in set(err) | set(expected):
-            assert_equal((k, err.get(k)), (k, expected.get(k)))
+            assert_equal(err.get(k), expected.get(k), (k, err))

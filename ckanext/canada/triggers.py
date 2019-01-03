@@ -32,7 +32,7 @@ def update_triggers():
         rettype=u'_text',
         definition=u'''
             BEGIN
-                IF value = '{}' THEN
+                IF value IS NULL OR value = '{}' THEN
                     return ARRAY[[field_name, 'This field must not be empty']];
                 END IF;
                 RETURN NULL;
@@ -136,7 +136,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF value = '{}' THEN
+                IF value IS NULL OR value = '{}' THEN
                     RAISE EXCEPTION 'This field must not be empty: %', field_name;
                 END IF;
             END;
