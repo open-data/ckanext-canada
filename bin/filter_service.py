@@ -12,7 +12,8 @@ REMOVE_COLUMNS = [
 
 def main():
     reader = csv.DictReader(sys.stdin)
-    outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
+    outnames = ['owner_org'] + [f for f in reader.fieldnames
+        if f not in REMOVE_COLUMNS and f != 'owner_org']
     writer = csv.DictWriter(sys.stdout, outnames)
     writer.writeheader()
     for row in reader:
