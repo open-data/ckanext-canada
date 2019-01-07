@@ -1399,7 +1399,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         PERFORM not_empty(NEW.service_std_url_fr, 'service_std_url_fr');
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
-        IF NEW.service_std_target < 0 OR NEW.service_std_target > 1 THE
+        IF NEW.service_std_target < 0 OR NEW.service_std_target > 1 THEN
           RAISE EXCEPTION 'Please enter a decimal value between zero and one: %', 'service_std_target';
         END IF;
         PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
