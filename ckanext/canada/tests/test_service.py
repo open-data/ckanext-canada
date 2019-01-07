@@ -59,12 +59,12 @@ class TestService(FunctionalTestBase):
             lc.action.datastore_search(resource_id=self.service_std_id)
                 ['records'][0]['service_std_target'],
             u'0.5')
-        record['service_std_target'] = 0
+        record['service_std_target'] = -0.01
         assert_raises(ValidationError,
             lc.action.datastore_upsert,
             resource_id=self.service_std_id,
             records=[record])
-        record['service_std_target'] = 1
+        record['service_std_target'] = 1.01
         assert_raises(ValidationError,
             lc.action.datastore_upsert,
             resource_id=self.service_std_id,

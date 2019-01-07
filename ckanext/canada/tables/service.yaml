@@ -1151,11 +1151,9 @@ resources:
     description:
       en: Identifies the decimal value between zero and one of the service standard target.
       fr: Indique la valeur en décimal entre zéro et un de la cible de la norme de service.
-    obligation: Mandatory
-    excel_required: true
-    excel_error_formula: or({default_formula},{cell}<=0,{cell}>=1)
+    obligation: Optional
+    excel_error_formula: or({default_formula},{cell}<0,{cell}>1)
     format_type: Decimal
-    validation: This field must not be empty
     occurrence: Single
     datastore_type: numeric
 
@@ -1401,8 +1399,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         PERFORM not_empty(NEW.service_std_url_fr, 'service_std_url_fr');
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
-        PERFORM not_empty(NEW.service_std_target, 'service_std_target');
-        IF NEW.service_std_target <= 0 OR NEW.service_std_target >= 1 THEN
+        IF NEW.service_std_target < 0 OR NEW.service_std_target > 1 THE
           RAISE EXCEPTION 'Please enter a decimal value between zero and one: %', 'service_std_target';
         END IF;
         PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
