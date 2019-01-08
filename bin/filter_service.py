@@ -11,6 +11,10 @@ REMOVE_COLUMNS = [
 ]
 
 def main():
+    bom = sys.stdin.read(3)
+    assert bom == codecs.BOM_UTF8
+    sys.stdout.write(codecs.BOM_UTF8)
+
     reader = csv.DictReader(sys.stdin)
     outnames = ['owner_org'] + [f for f in reader.fieldnames
         if f not in REMOVE_COLUMNS and f != 'owner_org']
