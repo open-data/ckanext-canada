@@ -2,6 +2,7 @@
 
 import csv
 import sys
+import codecs
 
 REMOVE_COLUMNS = [
     'record_created',
