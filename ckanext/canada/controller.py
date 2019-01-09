@@ -28,6 +28,7 @@ from ckan.controllers.feed import (
 from ckan.lib import i18n
 import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
+from ckan.logic import parse_params
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
@@ -45,6 +46,7 @@ from ckantoolkit import (
     check_access,
     get_validator,
     Invalid,
+    aslist,
     )
 
 
@@ -607,3 +609,84 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket.error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+
+class PDUpdateController(BaseController):
+
+    def update_pd_record(self, resource_id, pk):
+        try:
+            check_access('datastore_upsert', None, {'resource_id': resource_id})
+        except NotAuthorized:
+            abort(403, _('Unauthorized'))
+
+        pk = list(reversed(pk.split(',')))
+
+        lc = LocalCKAN(username=c.user)
+        res = lc.action.resource_show(id=resource_id)
+
+        chromo = h.recombinant_get_chromo(res['name'])
+        choice_fields = h.recombinant_choice_fields(res['name'])
+        pk_fields = aslist(chromo['datastore_primary_key'])
+        pk_filter = {f: v for zip(pk_fields, pk)}
+
+        records = lc.action.datastore_search(
+            resource_id=resource_id,
+            filter=pk_filter)['records']
+        if len(records) == 0:
+            abort(404, _('Not found'))
+        if len(records) > 1:
+            abort(400, _('Multiple records found'))
+        record = records[0]
+
+        if request.method == 'POST':
+            post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
+            for f in chromo['fields']:
+                f_id = f['datastore_id']
+                if not f.get('import_template_include', False):
+                    continue
+                if f_id in pk_fields:
+                    data[f_id] = record[f_id]
+                else:
+                    data[f['datastore_id']] = canonicalize(
+                        post_data[f['datastore_id']],
+                        f['datastore_type'],
+                        primary_key=False,
+                        choice_field=f_id in choice_fields)
+            try:
+                lc.action.datastore_upsert(
+                    resource_id=resource_id,
+                    method='update',
+            except ValidationError as ve:
+                err = error_dict['records'][0]
+                return render('internal/recombinant/update_pd_record.html',
+                    extra_vars={
+                        'data': data,
+                        'chromo': chromo,
+                        'choice_fields': choice_fields,
+                        'pk_fields': pk_fields,
+                        'errors': err,
+                        })
+
+            h.flash_notice(_('Record Updated'))
+
+            pkg = lc.action.package_show(id=res['package_id'])
+            redirect(h.url_for(
+                controller='ckanext.recombinant.controller:UploadController',
+                action='preview_table',
+                resource_name=res['name'],
+                owner_org=pkg['owner_org'],
+                ))
+
+        data = {}
+        for f in chromo['fields']:
+            if not f.get('import_template_include', False):
+                continue
+            data[f['datastore_id']] = record[f['datastore_id']]
+
+        return render('internal/recombinant/update_pd_record.html',
+            extra_vars={
+                'data': data,
+                'chromo': chromo,
+                'choice_fields': choice_fields,
+                'pk_fields': pk_fields,
+                })
