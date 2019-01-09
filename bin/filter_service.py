@@ -5,7 +5,6 @@ import sys
 import codecs
 
 REMOVE_COLUMNS = [
-    'special_designations',
     'record_created',
     'record_modified',
     'user_modified',
