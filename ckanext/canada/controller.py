@@ -202,14 +202,26 @@ class CanadaController(BaseController):
             sort=sort_str
         )
 
+        aadata = [
+            [datatablify(row.get(colname, u''), colname) for colname in cols]
+            for row in response['records']]
+
+        # XXX custom business logic hack
+        if resource_name == 'consultations':
+            for row in aadata:
+                row[0] = u'<a href="{0}">{1}</a>'.format(
+                    h.url_for(
+                        controller='ckanext.canada.controller:PDUpdateController',
+                        action='update_pd_record',
+                        resource_id=resource_id,
+                        pk=row[0]),
+                    row[0])
+
         return json.dumps({
             'draw': draw,
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
-            'aaData': [
-                [datatablify(row.get(colname, u''), colname) for colname in cols]
-                for row in response['records']
-            ],
+            'aaData': aadata,
         })
 
     def package_delete(self, pkg_id):
