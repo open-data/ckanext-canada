@@ -116,10 +116,10 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='delete'
         )
         map.connect(
-            '/update_pd_record/{resource_id}/{pk}',
+            'update_pd_record',
+            '/update-pd-record/{resource_id}/{pk}',
             controller='ckanext.canada.controller:PDUpdateController',
             action='update_pd_record',
-            conditions=dict(method=['GET', 'POST']),
         )
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')

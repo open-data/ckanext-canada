@@ -50,7 +50,7 @@ from ckantoolkit import (
     )
 
 
-from ckanapi import LocalCKAN, NotAuthorized
+from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
@@ -615,7 +615,10 @@ class PDUpdateController(BaseController):
 
     def update_pd_record(self, resource_id, pk):
         try:
-            check_access('datastore_upsert', None, {'resource_id': resource_id})
+            check_access(
+                'datastore_upsert',
+                {'user': c.user, 'auth_user_obj': c.userobj},
+                {'resource_id': resource_id})
         except NotAuthorized:
             abort(403, _('Unauthorized'))
 
@@ -623,15 +626,16 @@ class PDUpdateController(BaseController):
 
         lc = LocalCKAN(username=c.user)
         res = lc.action.resource_show(id=resource_id)
+        pkg = lc.action.package_show(id=res['package_id'])
 
         chromo = h.recombinant_get_chromo(res['name'])
         choice_fields = h.recombinant_choice_fields(res['name'])
         pk_fields = aslist(chromo['datastore_primary_key'])
-        pk_filter = {f: v for zip(pk_fields, pk)}
+        pk_filter = dict(zip(pk_fields, pk))
 
         records = lc.action.datastore_search(
             resource_id=resource_id,
-            filter=pk_filter)['records']
+            filters=pk_filter)['records']
         if len(records) == 0:
             abort(404, _('Not found'))
         if len(records) > 1:
@@ -640,53 +644,66 @@ class PDUpdateController(BaseController):
 
         if request.method == 'POST':
             post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
+            data = {}
             for f in chromo['fields']:
                 f_id = f['datastore_id']
-                if not f.get('import_template_include', False):
+                if not f.get('import_template_include', True):
                     continue
                 if f_id in pk_fields:
                     data[f_id] = record[f_id]
                 else:
-                    data[f['datastore_id']] = canonicalize(
+                    val = canonicalize(
                         post_data[f['datastore_id']],
                         f['datastore_type'],
                         primary_key=False,
                         choice_field=f_id in choice_fields)
+                    data[f['datastore_id']] = val
             try:
                 lc.action.datastore_upsert(
                     resource_id=resource_id,
-                    method='update',
+                    #method='update',    FIXME not raising ValidationErrors
+                    records=[data])
             except ValidationError as ve:
-                err = error_dict['records'][0]
-                return render('internal/recombinant/update_pd_record.html',
+                err = ve.error_dict['records'][0]
+                data = {
+                    k: u','.join(v) if isinstance(v, list) else v
+                    for (k,v) in data.items()}
+                return render('recombinant/update_pd_record.html',
                     extra_vars={
                         'data': data,
-                        'chromo': chromo,
+                        'resource_name': res['name'],
+                        'chromo_title': chromo['title'],
                         'choice_fields': choice_fields,
                         'pk_fields': pk_fields,
+                        'owner_org': pkg['owner_org'],
                         'errors': err,
                         })
 
             h.flash_notice(_('Record Updated'))
 
-            pkg = lc.action.package_show(id=res['package_id'])
             redirect(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
                 resource_name=res['name'],
-                owner_org=pkg['owner_org'],
+                owner_org=pkg['organization']['name'],
                 ))
 
         data = {}
         for f in chromo['fields']:
-            if not f.get('import_template_include', False):
+            if not f.get('import_template_include', True):
                 continue
-            data[f['datastore_id']] = record[f['datastore_id']]
+            val = record[f['datastore_id']]
+            if isinstance(val, list):
+                val = u','.join(val)
+            data[f['datastore_id']] = val
 
-        return render('internal/recombinant/update_pd_record.html',
+        return render('recombinant/update_pd_record.html',
             extra_vars={
                 'data': data,
-                'chromo': chromo,
+                'resource_name': res['name'],
+                'chromo_title': chromo['title'],
                 'choice_fields': choice_fields,
                 'pk_fields': pk_fields,
+                'owner_org': pkg['owner_org'],
+                'errors': {},
                 })
