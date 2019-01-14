@@ -41,10 +41,11 @@
           {%- set required = f.get('form_required', False) %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
+          {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
           {%- if f.datastore_id in pk_fields %}
             {%- do form_attrs.update(readonly='') %}
           {%- endif %}
-          {% snippet 'scheming/form_snippets/text.html',
+          {% snippet form_snippet,
             field={
               'field_name': f.datastore_id,
               'label': f.label,
