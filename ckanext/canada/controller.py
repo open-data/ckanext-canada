@@ -641,7 +641,10 @@ class PDUpdateController(BaseController):
         pkg = lc.action.package_show(id=res['package_id'])
 
         chromo = h.recombinant_get_chromo(res['name'])
-        choice_fields = h.recombinant_choice_fields(res['name'])
+        choice_fields = {
+            f['datastore_id']: [
+                {'value': k, 'label': v} for (k, v) in f['choices']]
+            for f in h.recombinant_choice_fields(res['name'])}
         pk_fields = aslist(chromo['datastore_primary_key'])
         pk_filter = dict(zip(pk_fields, pk))
 
@@ -664,8 +667,11 @@ class PDUpdateController(BaseController):
                 if f_id in pk_fields:
                     data[f_id] = record[f_id]
                 else:
+                    val = post_data[f['datastore_id']]
+                    if isinstance(val, list):
+                        val = u','.join(val)
                     val = canonicalize(
-                        post_data[f['datastore_id']],
+                        val,
                         f['datastore_type'],
                         primary_key=False,
                         choice_field=f_id in choice_fields)
@@ -677,9 +683,6 @@ class PDUpdateController(BaseController):
                     records=[data])
             except ValidationError as ve:
                 err = ve.error_dict['records'][0]
-                data = {
-                    k: u','.join(v) if isinstance(v, list) else v
-                    for (k,v) in data.items()}
                 return render('recombinant/update_pd_record.html',
                     extra_vars={
                         'data': data,
@@ -705,8 +708,6 @@ class PDUpdateController(BaseController):
             if not f.get('import_template_include', True):
                 continue
             val = record[f['datastore_id']]
-            if isinstance(val, list):
-                val = u','.join(val)
             data[f['datastore_id']] = val
 
         return render('recombinant/update_pd_record.html',
