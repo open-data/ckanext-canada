@@ -192,6 +192,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.11
   - datastore_id: end_date
@@ -208,6 +209,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.12
   - datastore_id: status
