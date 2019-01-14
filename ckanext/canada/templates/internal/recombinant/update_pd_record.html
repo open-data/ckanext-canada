@@ -1,0 +1,63 @@
+{% extends "package/base_form_page.html" %}
+
+{% block page_title %}{{ _("Update Record") }}{% endblock %}
+{% block subtitle %}{{ _("Update Record") }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for h.recombinant_language_text(chromo_title), named_route='recombinant_type',
+    resource_name=resource_name %}</li>
+  <li>{{ _("Update Record") }}</li>
+{% endblock %}
+
+{% block form %}
+  <form method="POST" id="update_pd_record">
+
+    {% block errors %}
+      {%- if errors -%}
+        {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+        <div class="error-explanation alert alert-error">
+          <p>{{ _('The form contains invalid entries:') }}</p>
+          <ul>
+            {% for field in chromo.fields -%}
+              {%- if field.datastore_id in errors %}
+                <li data-field-label="{{ key }}">{{
+                  h.recombinant_language_text(field.label) }}:
+                  {{ errors[field.datastore_id][0] }}</li>
+              {%- endif -%}
+            {%- endfor %}
+          </ul>
+        </div>
+      {%- endif -%}
+    {% endblock %}
+
+    {% block basic_fields %}
+    {% endblock %}
+
+    {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+    <div class='container-fluid'>
+    <h3>{{ _('Update record') }}</h3>
+      {%- for f in chromo.fields %}
+        {%- if f.get('import_template_include', True) %}
+          {%- set required = f.get('form_required', False) %}
+          {%- set form_placeholder = f.get('form_placeholder', '') %}
+          {%- set form_attrs = f.get('form_attrs', {}) %}
+          {%- if f.datastore_id in pk_fields %}
+            {%- do form_attrs.update(readonly='') %}
+          {%- endif %}
+          {% snippet 'scheming/form_snippets/text.html',
+            field={
+              'field_name': f.datastore_id,
+              'label': f.label,
+              'form_placeholder': form_placeholder,
+              'form_attrs': form_attrs,
+              'required': required,
+              'help_text': f.description,
+            }, data=data, errors=errors %}
+        {% endif %}
+      {% endfor %}
+      <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
+    </div>
+
+
+  </form>
+{% endblock %}

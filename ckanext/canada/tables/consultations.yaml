@@ -478,7 +478,53 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-  - consultations_trigger
+  - consultations_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.registration_number, 'registration_number');
+        errors := errors || required_error(NEW.publishable, 'publishable');
+        errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable');
+        crval := choices_clean_error(NEW.partner_departments, {partner_departments},
+          'partner_departments');
+        errors := errors || crval.error;
+        NEW.partner_departments := crval.clean;
+        errors := errors || required_error(NEW.subjects, 'subjects');
+        crval := choices_clean_error(NEW.subjects, {subjects}, 'subjects');
+        errors := errors || crval.error;
+        NEW.subjects = crval.clean;
+        errors := errors || required_error(NEW.title_en, 'title_en');
+        errors := errors || required_error(NEW.title_fr, 'title_fr');
+        errors := errors || required_error(NEW.description_en, 'description_en');
+        errors := errors || required_error(NEW.description_fr, 'description_fr');
+        errors := errors || required_error(NEW.target_participants_and_audience,
+          'target_participants_and_audience');
+        crval := choices_clean_error(NEW.target_participants_and_audience,
+          {target_participants_and_audience}, 'target_participants_and_audience');
+        errors := errors || crval.error;
+        NEW.target_participants_and_audience := crval.clean;
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        errors := errors || required_error(NEW.end_date, 'end_date');
+        errors := errors || choice_error(NEW.status, {status}, 'status');
+        errors := errors || required_error(NEW.profile_page_en, 'profile_page_en');
+        errors := errors || required_error(NEW.profile_page_fr, 'profile_page_fr');
+        errors := errors || choice_error(NEW.report_available_online, {report_available_online},
+          'report_available_online');
+        errors := errors || required_error(NEW.high_profile, 'high_profile');
+        errors := errors || choice_error(NEW.high_profile, {high_profile}, 'high_profile');
+        IF NEW.high_profile = 'Y' THEN
+          errors := errors || required_error(NEW.rationale, 'rationale');
+        END IF;
+        crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
+        errors := errors || crval.error;
+        NEW.rationale = crval.clean;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
   - update_record_modified_created_trigger
 
   examples:
@@ -488,15 +534,10 @@ resources:
         To engage and obtain Provincial and Territorial partner views
       description_fr:
         Obtenir les opinions des partenaires provinciaux et territoriaux
-      further_information_en: ""
-      further_information_fr: ""
-      goals: ["CB", "CS"]
       partner_departments: ["D271", "D141"]
-      planned_end_date: "2017-05-30"
-      planned_start_date: "2017-05-15"
+      end_date: "2017-05-30"
+      start_date: "2017-05-15"
       policy_program_lead_email: program.lead@example.gc.ca
-      public_opinion_research: N
-      public_opinion_research_standing_offer: NA
       publishable: "N"
       registration_number: CCC0249
       remarks_en: ""
@@ -504,18 +545,20 @@ resources:
       report_available_online: "N"
       report_link_en: ""
       report_link_fr: ""
-      sector: ER
       status: P
+      profile_page_en: http://example.gc.ca/en
+      profile_page_fr: http://example.gc.ca/fr
       subjects: ["AP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
+      high_profile: "Y"
       rationale: ["BG", "PC"]
     filters:
-      sector: SE
+      publishable: "Y"
     filter_one:
       registration_number: CCC0249
-    sort: planned_start_date desc
+    sort: start_date desc
 
 excel_edge_style:
   PatternFill:

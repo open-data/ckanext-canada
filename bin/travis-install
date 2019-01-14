@@ -52,3 +52,5 @@ paster db init -c test-core.ini
 paster datastore set-permissions -c test-core.ini | sudo -u postgres psql
 
 cd -
+bin/download_country.py
+paster canada update-triggers -c test-core.ini
