@@ -1,6 +1,6 @@
 {% extends "package/base_form_page.html" %}
 
-{% block page_title %}{{ _("Update Record") }}{% endblock %}
+{% block page_title %}<h3>{{ _("Update Record") }}</h3>{% endblock %}
 {% block subtitle %}{{ _("Update Record") }}{% endblock %}
 
 {% block breadcrumb_content %}
@@ -35,7 +35,6 @@
 
     {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
     <div class='container-fluid'>
-    <h3>{{ _('Update record') }}</h3>
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
@@ -45,20 +44,35 @@
           {%- if f.datastore_id in pk_fields %}
             {%- do form_attrs.update(readonly='') %}
           {%- endif %}
-          {% snippet form_snippet,
-            field={
-              'field_name': f.datastore_id,
-              'label': f.label,
-              'form_placeholder': form_placeholder,
-              'form_attrs': form_attrs,
-              'required': required,
-              'help_text': f.description,
-            }, data=data, errors=errors %}
-        {% endif %}
-      {% endfor %}
+          {%- if f.datastore_id in choice_fields %}
+            {%- set form_snippet = 'scheming/form_snippets/multiple_select.html'
+              if f.get('datastore_type') == '_text'
+              else 'scheming/form_snippets/select.html' %}
+            {% snippet form_snippet,
+              field={
+                'field_name': f.datastore_id,
+                'label': f.label,
+                'form_placeholder': form_placeholder,
+                'form_attrs': form_attrs,
+                'required': required,
+                'help_text': f.description,
+                'choices': choice_fields[f.datastore_id],
+              }, data=data, errors=errors %}
+          {%- else %}
+            {% snippet form_snippet,
+              field={
+                'field_name': f.datastore_id,
+                'label': f.label,
+                'form_placeholder': form_placeholder,
+                'form_attrs': form_attrs,
+                'required': required,
+                'help_text': f.description,
+              }, data=data, errors=errors %}
+          {%- endif %}
+        {%- endif %}
+      {%- endfor %}
       <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
     </div>
-
 
   </form>
 {% endblock %}
