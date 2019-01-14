@@ -667,7 +667,7 @@ class PDUpdateController(BaseController):
                 if f_id in pk_fields:
                     data[f_id] = record[f_id]
                 else:
-                    val = post_data[f['datastore_id']]
+                    val = post_data.get(f['datastore_id'], '')
                     if isinstance(val, list):
                         val = u','.join(val)
                     val = canonicalize(
