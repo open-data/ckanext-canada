@@ -43,6 +43,7 @@ resources:
       fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -84,6 +85,7 @@ resources:
       fr: Cette zone indique les différents sujets sur lesquels porte le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -103,6 +105,7 @@ resources:
       fr: Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
@@ -141,6 +144,7 @@ resources:
       fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -158,6 +162,7 @@ resources:
       fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -175,6 +180,7 @@ resources:
       fr: Cette zone précise les participants visés et le public cible du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -193,6 +199,7 @@ resources:
       fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -210,6 +217,7 @@ resources:
       fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de mobilisation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -227,6 +235,7 @@ resources:
       fr: Cette zone indique l’état d’avancement du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
@@ -260,6 +269,7 @@ resources:
       fr: Cette zone contient le lien vers la page anglaise du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
@@ -278,6 +288,7 @@ resources:
       fr: Cette zone contient le lien vers la page française du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
@@ -296,6 +307,7 @@ resources:
       fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
@@ -420,6 +432,7 @@ resources:
       fr: "Cette zone indique si la consultation ou initiative de mobilisation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
