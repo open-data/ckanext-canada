@@ -125,6 +125,7 @@ resources:
       fr: Cette zone indique le titre, en français, de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text
     validation: This field must not be empty
     visible_to_public: Yes
