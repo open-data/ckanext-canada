@@ -4,8 +4,11 @@
 {% block subtitle %}{{ _("Update Record") }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for h.recombinant_language_text(chromo_title), named_route='recombinant_type',
-    resource_name=resource_name %}</li>
+  <li>{% link_for h.recombinant_language_text(chromo_title),
+    controller='ckanext.recombinant.controller:UploadController',
+    action='preview_table',
+    resource_name=resource_name,
+    owner_org=owner_org %}</li>
   <li>{{ _("Update Record") }}</li>
 {% endblock %}
 
@@ -34,7 +37,7 @@
     {% endblock %}
 
     {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
-    <div class='container-fluid'>
+    <div class='container-fluid mrgn-bttm-lg'>
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
@@ -72,6 +75,7 @@
           {%- endif %}
         {%- endif %}
       {%- endfor %}
+      <input class='btn' name='cancel' type='submit' value='{{ _('Cancel') }}' />
       <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
     </div>
 

@@ -659,6 +659,15 @@ class PDUpdateController(BaseController):
 
         if request.method == 'POST':
             post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
+
+            if 'cancel' in post_data:
+                return redirect(h.url_for(
+                    controller='ckanext.recombinant.controller:UploadController',
+                    action='preview_table',
+                    resource_name=res['name'],
+                    owner_org=pkg['organization']['name'],
+                    ))
+
             data = {}
             for f in chromo['fields']:
                 f_id = f['datastore_id']
@@ -690,13 +699,13 @@ class PDUpdateController(BaseController):
                         'chromo_title': chromo['title'],
                         'choice_fields': choice_fields,
                         'pk_fields': pk_fields,
-                        'owner_org': pkg['owner_org'],
+                        'owner_org': pkg['organization']['name'],
                         'errors': err,
                         })
 
             h.flash_notice(_('Record Updated'))
 
-            redirect(h.url_for(
+            return redirect(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
                 resource_name=res['name'],
@@ -717,6 +726,6 @@ class PDUpdateController(BaseController):
                 'chromo_title': chromo['title'],
                 'choice_fields': choice_fields,
                 'pk_fields': pk_fields,
-                'owner_org': pkg['owner_org'],
+                'owner_org': pkg['organization']['name'],
                 'errors': {},
                 })
