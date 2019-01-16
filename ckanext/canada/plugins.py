@@ -47,7 +47,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         p.toolkit.add_public_directory(config, 'internal/static')
 
         config.update({
-            "ckan.user_list_limit": 2000
+            "ckan.user_list_limit": 4000
         })
 
     def before_map(self, map):
