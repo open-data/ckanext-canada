@@ -117,7 +117,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         )
         map.connect(
             'update_pd_record',
-            '/update-pd-record/{resource_id}/{pk}',
+            '/update-pd-record/{owner_org}/{resource_name}/{pk}',
             controller='ckanext.canada.controller:PDUpdateController',
             action='update_pd_record',
         )
