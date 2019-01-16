@@ -4,13 +4,16 @@
 {% block subtitle %}{{ _("Update Record") }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for h.recombinant_language_text(chromo_title), named_route='recombinant_type',
-    resource_name=resource_name %}</li>
+  <li>{% link_for h.recombinant_language_text(chromo_title),
+    controller='ckanext.recombinant.controller:UploadController',
+    action='preview_table',
+    resource_name=resource_name,
+    owner_org=owner_org %}</li>
   <li>{{ _("Update Record") }}</li>
 {% endblock %}
 
 {% block form %}
-  <form method="POST" id="update_pd_record">
+  <form method="POST" id="update_pd_record" novalidate>
 
     {% block errors %}
       {%- if errors -%}
@@ -34,20 +37,25 @@
     {% endblock %}
 
     {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
-    <div class='container-fluid'>
+    <div class='container-fluid mrgn-bttm-lg'>
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
+          {%- set description = f.get('description', '') %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
           {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
           {%- if f.datastore_id in pk_fields %}
-            {%- do form_attrs.update(readonly='') %}
+            {%- set form_attrs = dict(form_attrs, readonly='') %}
           {%- endif %}
           {%- if f.datastore_id in choice_fields %}
-            {%- set form_snippet = 'scheming/form_snippets/multiple_select.html'
-              if f.get('datastore_type') == '_text'
-              else 'scheming/form_snippets/select.html' %}
+            {%- if f.get('datastore_type') == '_text' %}
+              {%- set form_snippet = 'scheming/form_snippets/multiple_select.html' %}
+              {%- set description = _('You may select multiple entries (Ctrl+Click).') +
+                ' ' + h.recombinant_language_text(description) %}
+            {%- else %}
+              {%- set form_snippet = 'scheming/form_snippets/select.html' %}
+            {%- endif %}
             {% snippet form_snippet,
               field={
                 'field_name': f.datastore_id,
@@ -55,8 +63,9 @@
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
                 'required': required,
-                'help_text': f.description,
+                'help_text': description,
                 'choices': choice_fields[f.datastore_id],
+                'sorted_choices': True,
               }, data=data, errors=errors %}
           {%- else %}
             {% snippet form_snippet,
@@ -66,11 +75,12 @@
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
                 'required': required,
-                'help_text': f.description,
+                'help_text': description,
               }, data=data, errors=errors %}
           {%- endif %}
         {%- endif %}
       {%- endfor %}
+      <input class='btn' name='cancel' type='submit' value='{{ _('Cancel') }}' />
       <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
     </div>
 

@@ -208,12 +208,15 @@ class CanadaController(BaseController):
 
         # XXX custom business logic hack
         if resource_name == 'consultations':
+            res = lc.action.resource_show(id=resource_id)
+            pkg = lc.action.package_show(id=res['package_id'])
             for row in aadata:
                 row[0] = u'<a href="{0}">{1}</a>'.format(
                     h.url_for(
                         controller='ckanext.canada.controller:PDUpdateController',
                         action='update_pd_record',
-                        resource_id=resource_id,
+                        owner_org=pkg['organization']['name'],
+                        resource_name=resource_name,
                         pk=row[0]),
                     row[0])
 
@@ -625,31 +628,34 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 class PDUpdateController(BaseController):
 
-    def update_pd_record(self, resource_id, pk):
+    def update_pd_record(self, owner_org, resource_name, pk):
+        pk = list(pk.split(','))
+
+        lc = LocalCKAN(username=c.user)
+
         try:
+            chromo = h.recombinant_get_chromo(resource_name)
+            rcomb = lc.action.recombinant_show(
+                owner_org=owner_org,
+                dataset_type=chromo['dataset_type'])
+            [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
+
             check_access(
                 'datastore_upsert',
                 {'user': c.user, 'auth_user_obj': c.userobj},
-                {'resource_id': resource_id})
+                {'resource_id': res['id']})
         except NotAuthorized:
             abort(403, _('Unauthorized'))
 
-        pk = list(reversed(pk.split(',')))
-
-        lc = LocalCKAN(username=c.user)
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-
-        chromo = h.recombinant_get_chromo(res['name'])
         choice_fields = {
             f['datastore_id']: [
                 {'value': k, 'label': v} for (k, v) in f['choices']]
-            for f in h.recombinant_choice_fields(res['name'])}
+            for f in h.recombinant_choice_fields(resource_name)}
         pk_fields = aslist(chromo['datastore_primary_key'])
         pk_filter = dict(zip(pk_fields, pk))
 
         records = lc.action.datastore_search(
-            resource_id=resource_id,
+            resource_id=res['id'],
             filters=pk_filter)['records']
         if len(records) == 0:
             abort(404, _('Not found'))
@@ -659,6 +665,15 @@ class PDUpdateController(BaseController):
 
         if request.method == 'POST':
             post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
+
+            if 'cancel' in post_data:
+                return redirect(h.url_for(
+                    controller='ckanext.recombinant.controller:UploadController',
+                    action='preview_table',
+                    resource_name=resource_name,
+                    owner_org=rcomb['owner_org'],
+                    ))
+
             data = {}
             for f in chromo['fields']:
                 f_id = f['datastore_id']
@@ -678,7 +693,7 @@ class PDUpdateController(BaseController):
                     data[f['datastore_id']] = val
             try:
                 lc.action.datastore_upsert(
-                    resource_id=resource_id,
+                    resource_id=res['id'],
                     #method='update',    FIXME not raising ValidationErrors
                     records=[data])
             except ValidationError as ve:
@@ -686,21 +701,21 @@ class PDUpdateController(BaseController):
                 return render('recombinant/update_pd_record.html',
                     extra_vars={
                         'data': data,
-                        'resource_name': res['name'],
+                        'resource_name': resource_name,
                         'chromo_title': chromo['title'],
                         'choice_fields': choice_fields,
                         'pk_fields': pk_fields,
-                        'owner_org': pkg['owner_org'],
+                        'owner_org': rcomb['owner_org'],
                         'errors': err,
                         })
 
-            h.flash_notice(_('Record Updated'))
+            h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
-            redirect(h.url_for(
+            return redirect(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
-                resource_name=res['name'],
-                owner_org=pkg['organization']['name'],
+                resource_name=resource_name,
+                owner_org=rcomb['owner_org'],
                 ))
 
         data = {}
@@ -713,10 +728,10 @@ class PDUpdateController(BaseController):
         return render('recombinant/update_pd_record.html',
             extra_vars={
                 'data': data,
-                'resource_name': res['name'],
+                'resource_name': resource_name,
                 'chromo_title': chromo['title'],
                 'choice_fields': choice_fields,
                 'pk_fields': pk_fields,
-                'owner_org': pkg['owner_org'],
+                'owner_org': rcomb['owner_org'],
                 'errors': {},
                 })
