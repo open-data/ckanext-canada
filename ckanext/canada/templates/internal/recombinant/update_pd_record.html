@@ -41,16 +41,21 @@
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
+          {%- set description = f.get('description', '') %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
           {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
           {%- if f.datastore_id in pk_fields %}
-            {%- do form_attrs.update(readonly='') %}
+            {%- set form_attrs = dict(form_attrs, readonly='') %}
           {%- endif %}
           {%- if f.datastore_id in choice_fields %}
-            {%- set form_snippet = 'scheming/form_snippets/multiple_select.html'
-              if f.get('datastore_type') == '_text'
-              else 'scheming/form_snippets/select.html' %}
+            {%- if f.get('datastore_type') == '_text' %}
+              {%- set form_snippet = 'scheming/form_snippets/multiple_select.html' %}
+              {%- set description = _('You may select multiple entries (Ctrl+Click).') +
+                ' ' + h.recombinant_language_text(description) %}
+            {%- else %}
+              {%- set form_snippet = 'scheming/form_snippets/select.html' %}
+            {%- endif %}
             {% snippet form_snippet,
               field={
                 'field_name': f.datastore_id,
@@ -58,7 +63,7 @@
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
                 'required': required,
-                'help_text': f.description,
+                'help_text': description,
                 'choices': choice_fields[f.datastore_id],
                 'sorted_choices': True,
               }, data=data, errors=errors %}
@@ -70,7 +75,7 @@
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
                 'required': required,
-                'help_text': f.description,
+                'help_text': description,
               }, data=data, errors=errors %}
           {%- endif %}
         {%- endif %}
