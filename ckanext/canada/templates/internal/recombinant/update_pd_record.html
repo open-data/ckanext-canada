@@ -57,6 +57,7 @@
                 'required': required,
                 'help_text': f.description,
                 'choices': choice_fields[f.datastore_id],
+                'sorted_choices': True,
               }, data=data, errors=errors %}
           {%- else %}
             {% snippet form_snippet,
