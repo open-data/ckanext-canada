@@ -709,7 +709,7 @@ class PDUpdateController(BaseController):
                         'errors': err,
                         })
 
-            h.flash_notice(_('Record Updated'))
+            h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
             return redirect(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
