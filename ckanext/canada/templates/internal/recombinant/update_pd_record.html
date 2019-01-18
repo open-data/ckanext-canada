@@ -66,6 +66,7 @@
                 'help_text': description,
                 'choices': choice_fields[f.datastore_id],
                 'sorted_choices': True,
+                'form_select_attrs': {'class': 'form-control'},
               }, data=data, errors=errors %}
           {%- else %}
             {% snippet form_snippet,
