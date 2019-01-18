@@ -697,7 +697,9 @@ class PDUpdateController(BaseController):
                     #method='update',    FIXME not raising ValidationErrors
                     records=[data])
             except ValidationError as ve:
-                err = ve.error_dict['records'][0]
+                err = {
+                    k: [_(e) for e in v]
+                    for (k, v) in ve.error_dict['records'][0].items()}
                 return render('recombinant/update_pd_record.html',
                     extra_vars={
                         'data': data,
