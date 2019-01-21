@@ -152,6 +152,8 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.8
   - datastore_id: description_fr
@@ -170,6 +172,8 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -406,6 +410,8 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.21
   - datastore_id: remarks_fr
@@ -422,6 +428,8 @@ resources:
     occurrence: Repeatable
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.22
   - datastore_id: high_profile
@@ -455,7 +463,7 @@ resources:
       fr: Raison
     description:
       en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
     format_type: Controlled List
