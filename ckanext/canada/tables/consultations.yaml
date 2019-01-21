@@ -455,7 +455,7 @@ resources:
       fr: Raison
     description:
       en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
     format_type: Controlled List
