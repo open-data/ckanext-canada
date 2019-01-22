@@ -5,6 +5,8 @@ title: Open Dialogue - Consultations
 notes: Access, upload and modify consultation reports for your organization
 upload_warn: Description and guidance are being developed. If you have questions, please email consultation@pco-bcp.gc.ca.
 
+template_version: 3
+
 portal_type: dialogue
 collection: consultations
 
@@ -30,7 +32,6 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
 
   # 3.2
   - datastore_id: publishable
@@ -42,12 +43,13 @@ resources:
       fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -70,7 +72,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices_file: choices/consultation_org.yaml
 
   # 3.4
@@ -83,12 +85,14 @@ resources:
       fr: Cette zone indique les différents sujets sur lesquels porte le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 30
+    excel_full_text_choices: true
     choices_file: choices/consultation_subject.yaml
 
   # 3.5
@@ -101,12 +105,15 @@ resources:
       fr: Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    form_attrs:
+      size: 60
 
   # 3.6
   - datastore_id: title_fr
@@ -118,12 +125,15 @@ resources:
       fr: Cette zone indique le titre, en français, de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    form_attrs:
+      size: 60
 
   # 3.7
   - datastore_id: description_en
@@ -135,12 +145,15 @@ resources:
       fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.8
   - datastore_id: description_fr
@@ -152,12 +165,15 @@ resources:
       fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 30
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -169,12 +185,13 @@ resources:
       fr: Cette zone précise les participants visés et le public cible du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices_file: choices/consultation_audience.yaml
 
   # 3.10
@@ -187,12 +204,13 @@ resources:
       fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.11
   - datastore_id: end_date
@@ -204,12 +222,13 @@ resources:
       fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de mobilisation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.12
   - datastore_id: status
@@ -221,12 +240,13 @@ resources:
       fr: Cette zone indique l’état d’avancement du processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       P:
         en: Planned
@@ -250,16 +270,18 @@ resources:
       en: Link to Consultations Profile Page (English)
       fr: Lien vers la page du profil des consultations (en anglais)
     description:
-      en: This field provides the link to the English engagement information page on the Consulting with Canadians website.
-      fr: Cette zone contient le lien vers la page anglaise du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
+      en: This field provides the link to the English engagement information profile page.
+      fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
   # 3.14
   - datastore_id: profile_page_fr
@@ -267,16 +289,18 @@ resources:
       en: Link to Consultations Profile Page (French)
       fr: Lien vers la page du profil des consultations (en français)
     description:
-      en: This field provides the link to the French engagement information page on the Consulting with Canadians website.
-      fr: Cette zone contient le lien vers la page française du site Web « Consultations auprès des Canadiens » qui contient des renseignements sur le processus de mobilisation.
+      en: This field provides the link to the French engagement information profile page.
+      fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de mobilisation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
   # 3.15
   - datastore_id: report_available_online
@@ -288,12 +312,13 @@ resources:
       fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -316,7 +341,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
   # 3.17
   - datastore_id: report_link_fr
@@ -332,7 +358,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
   # 3.18
   - datastore_id: contact_email
@@ -348,7 +375,8 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 40
 
   # 3.19
   - datastore_id: policy_program_lead_email
@@ -364,7 +392,8 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 40
 
   # 3.20
   - datastore_id: remarks_en
@@ -380,7 +409,9 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.21
   - datastore_id: remarks_fr
@@ -396,7 +427,9 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.22
   - datastore_id: high_profile
@@ -408,12 +441,13 @@ resources:
       fr: "Cette zone indique si la consultation ou initiative de mobilisation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -429,15 +463,15 @@ resources:
       fr: Raison
     description:
       en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclus uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
     obligation: Mandatory
-    excel_cell_required_formula: 'and(isblank({column}{row}),{column_before}{row}="Y")'
+    excel_required_formula: 'LEFT({high_profile},1)="Y"'
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
-    excel_column_width: 20
+    excel_full_text_choices: true
     choices:
       BG:
         en: Budget
@@ -481,24 +515,60 @@ resources:
 
   datastore_primary_key: registration_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      fgColor: FF336B87
-      patternType: solid
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF90AFC5
-  excel_error_background_color: "763626"
-  excel_required_border_color: "763626"
 
   default_preview_sort: registration_number
 
+  excel_example_height: 32
+  excel_data_num_rows: 500
+
   triggers:
-  - consultations_trigger
+  - consultations_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.registration_number, 'registration_number');
+        errors := errors || required_error(NEW.publishable, 'publishable');
+        errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable');
+        crval := choices_clean_error(NEW.partner_departments, {partner_departments},
+          'partner_departments');
+        errors := errors || crval.error;
+        NEW.partner_departments := crval.clean;
+        errors := errors || required_error(NEW.subjects, 'subjects');
+        crval := choices_clean_error(NEW.subjects, {subjects}, 'subjects');
+        errors := errors || crval.error;
+        NEW.subjects = crval.clean;
+        errors := errors || required_error(NEW.title_en, 'title_en');
+        errors := errors || required_error(NEW.title_fr, 'title_fr');
+        errors := errors || required_error(NEW.description_en, 'description_en');
+        errors := errors || required_error(NEW.description_fr, 'description_fr');
+        errors := errors || required_error(NEW.target_participants_and_audience,
+          'target_participants_and_audience');
+        crval := choices_clean_error(NEW.target_participants_and_audience,
+          {target_participants_and_audience}, 'target_participants_and_audience');
+        errors := errors || crval.error;
+        NEW.target_participants_and_audience := crval.clean;
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        errors := errors || required_error(NEW.end_date, 'end_date');
+        errors := errors || choice_error(NEW.status, {status}, 'status');
+        errors := errors || required_error(NEW.profile_page_en, 'profile_page_en');
+        errors := errors || required_error(NEW.profile_page_fr, 'profile_page_fr');
+        errors := errors || choice_error(NEW.report_available_online, {report_available_online},
+          'report_available_online');
+        errors := errors || required_error(NEW.high_profile, 'high_profile');
+        errors := errors || choice_error(NEW.high_profile, {high_profile}, 'high_profile');
+        IF NEW.high_profile = 'Y' THEN
+          errors := errors || required_error(NEW.rationale, 'rationale');
+        END IF;
+        crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
+        errors := errors || crval.error;
+        NEW.rationale = crval.clean;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
   - update_record_modified_created_trigger
 
   examples:
@@ -508,15 +578,10 @@ resources:
         To engage and obtain Provincial and Territorial partner views
       description_fr:
         Obtenir les opinions des partenaires provinciaux et territoriaux
-      further_information_en: ""
-      further_information_fr: ""
-      goals: ["CB", "CS"]
-      partner_departments: ["271", "141"]
-      planned_end_date: "2017-05-30"
-      planned_start_date: "2017-05-15"
+      partner_departments: ["D271", "D141"]
+      end_date: "2017-05-30"
+      start_date: "2017-05-15"
       policy_program_lead_email: program.lead@example.gc.ca
-      public_opinion_research: N
-      public_opinion_research_standing_offer: NA
       publishable: "N"
       registration_number: CCC0249
       remarks_en: ""
@@ -524,15 +589,30 @@ resources:
       report_available_online: "N"
       report_link_en: ""
       report_link_fr: ""
-      sector: ER
       status: P
+      profile_page_en: http://example.gc.ca/en
+      profile_page_fr: http://example.gc.ca/fr
       subjects: ["AP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
-      rationale: ["B17"]
+      high_profile: "Y"
+      rationale: ["BG", "PC"]
     filters:
-      sector: SE
+      publishable: "Y"
     filter_one:
       registration_number: CCC0249
-    sort: planned_start_date desc
+    sort: start_date desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF336B87
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5

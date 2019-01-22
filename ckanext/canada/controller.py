@@ -28,6 +28,7 @@ from ckan.controllers.feed import (
 from ckan.lib import i18n
 import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
+from ckan.logic import parse_params
 
 from ckanext.canada.helpers import normalize_strip_accents
 from pylons.i18n import _
@@ -45,10 +46,11 @@ from ckantoolkit import (
     check_access,
     get_validator,
     Invalid,
+    aslist,
     )
 
 
-from ckanapi import LocalCKAN, NotAuthorized
+from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from ckanext.recombinant.datatypes import canonicalize
 
 int_validator = get_validator('int_validator')
@@ -200,14 +202,29 @@ class CanadaController(BaseController):
             sort=sort_str
         )
 
+        aadata = [
+            [datatablify(row.get(colname, u''), colname) for colname in cols]
+            for row in response['records']]
+
+        # XXX custom business logic hack
+        if resource_name == 'consultations':
+            res = lc.action.resource_show(id=resource_id)
+            pkg = lc.action.package_show(id=res['package_id'])
+            for row in aadata:
+                row[0] = u'<a href="{0}">{1}</a>'.format(
+                    h.url_for(
+                        controller='ckanext.canada.controller:PDUpdateController',
+                        action='update_pd_record',
+                        owner_org=pkg['organization']['name'],
+                        resource_name=resource_name,
+                        pk=row[0]),
+                    row[0])
+
         return json.dumps({
             'draw': draw,
             'iTotalRecords': unfiltered_response.get('total', 0),
             'iTotalDisplayRecords': response.get('total', 0),
-            'aaData': [
-                [datatablify(row.get(colname, u''), colname) for colname in cols]
-                for row in response['records']
-            ],
+            'aaData': aadata,
         })
 
     def package_delete(self, pkg_id):
@@ -607,3 +624,116 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket.error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+
+class PDUpdateController(BaseController):
+
+    def update_pd_record(self, owner_org, resource_name, pk):
+        pk = list(pk.split(','))
+
+        lc = LocalCKAN(username=c.user)
+
+        try:
+            chromo = h.recombinant_get_chromo(resource_name)
+            rcomb = lc.action.recombinant_show(
+                owner_org=owner_org,
+                dataset_type=chromo['dataset_type'])
+            [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
+
+            check_access(
+                'datastore_upsert',
+                {'user': c.user, 'auth_user_obj': c.userobj},
+                {'resource_id': res['id']})
+        except NotAuthorized:
+            abort(403, _('Unauthorized'))
+
+        choice_fields = {
+            f['datastore_id']: [
+                {'value': k, 'label': v} for (k, v) in f['choices']]
+            for f in h.recombinant_choice_fields(resource_name)}
+        pk_fields = aslist(chromo['datastore_primary_key'])
+        pk_filter = dict(zip(pk_fields, pk))
+
+        records = lc.action.datastore_search(
+            resource_id=res['id'],
+            filters=pk_filter)['records']
+        if len(records) == 0:
+            abort(404, _('Not found'))
+        if len(records) > 1:
+            abort(400, _('Multiple records found'))
+        record = records[0]
+
+        if request.method == 'POST':
+            post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
+
+            if 'cancel' in post_data:
+                return redirect(h.url_for(
+                    controller='ckanext.recombinant.controller:UploadController',
+                    action='preview_table',
+                    resource_name=resource_name,
+                    owner_org=rcomb['owner_org'],
+                    ))
+
+            data = {}
+            for f in chromo['fields']:
+                f_id = f['datastore_id']
+                if not f.get('import_template_include', True):
+                    continue
+                if f_id in pk_fields:
+                    data[f_id] = record[f_id]
+                else:
+                    val = post_data.get(f['datastore_id'], '')
+                    if isinstance(val, list):
+                        val = u','.join(val)
+                    val = canonicalize(
+                        val,
+                        f['datastore_type'],
+                        primary_key=False,
+                        choice_field=f_id in choice_fields)
+                    data[f['datastore_id']] = val
+            try:
+                lc.action.datastore_upsert(
+                    resource_id=res['id'],
+                    #method='update',    FIXME not raising ValidationErrors
+                    records=[data])
+            except ValidationError as ve:
+                err = {
+                    k: [_(e) for e in v]
+                    for (k, v) in ve.error_dict['records'][0].items()}
+                return render('recombinant/update_pd_record.html',
+                    extra_vars={
+                        'data': data,
+                        'resource_name': resource_name,
+                        'chromo_title': chromo['title'],
+                        'choice_fields': choice_fields,
+                        'pk_fields': pk_fields,
+                        'owner_org': rcomb['owner_org'],
+                        'errors': err,
+                        })
+
+            h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
+
+            return redirect(h.url_for(
+                controller='ckanext.recombinant.controller:UploadController',
+                action='preview_table',
+                resource_name=resource_name,
+                owner_org=rcomb['owner_org'],
+                ))
+
+        data = {}
+        for f in chromo['fields']:
+            if not f.get('import_template_include', True):
+                continue
+            val = record[f['datastore_id']]
+            data[f['datastore_id']] = val
+
+        return render('recombinant/update_pd_record.html',
+            extra_vars={
+                'data': data,
+                'resource_name': resource_name,
+                'chromo_title': chromo['title'],
+                'choice_fields': choice_fields,
+                'pk_fields': pk_fields,
+                'owner_org': rcomb['owner_org'],
+                'errors': {},
+                })

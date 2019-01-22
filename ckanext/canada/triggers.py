@@ -7,6 +7,99 @@ def update_triggers():
 
     lc = LocalCKAN()
 
+    # *_error functions return NULL or ARRAY[[field_name, error_message]]
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL OR value = '{}' THEN
+                    return ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'choice_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=ur'''
+            BEGIN
+                IF NOT (value = ANY (choices)) THEN
+                    -- \t is used when converting errors to string
+                    RETURN ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(value, E'\t', ' ') || '"']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    lc.action.datastore_function_create(
+        name=u'choices_clean_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
+        definition=ur'''
+            DECLARE
+                bad_choices text := array_to_string(ARRAY(
+                    SELECT unnest(value)
+                    EXCEPT SELECT unnest(choices)), ', ');
+            BEGIN
+                IF bad_choices <> '' THEN
+                    -- \t is used when converting errors to string
+                    error := ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(bad_choices, E'\t', ' ') || '"']];
+                END IF;
+                clean := ARRAY(
+                    SELECT c FROM(SELECT unnest(choices) as c) u
+                    WHERE c in (SELECT unnest(value)));
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'not_empty',
         or_replace=True,
@@ -43,7 +136,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF value = '{}' THEN
+                IF value IS NULL OR value = '{}' THEN
                     RAISE EXCEPTION 'This field must not be empty: %', field_name;
                 END IF;
             END;
@@ -181,70 +274,6 @@ def update_triggers():
                     WHERE c in (SELECT unnest(value)));
             END;
         ''')
-
-    consultations_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('consultations'))
-    lc.action.datastore_function_create(
-        name=u'consultations_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.registration_number, 'registration_number');
-                PERFORM choice_one_of(NEW.publishable, {publishable}, 'publishable');
-                NEW.partner_departments := choices_from(
-                    NEW.partner_departments, {partner_departments}, 'partner_departments');
-                PERFORM not_empty(NEW.subjects, 'subjects');
-                NEW.subjects := choices_from(
-                    NEW.subjects, {subjects}, 'subjects');
-                PERFORM not_empty(NEW.title_en, 'title_en');
-                PERFORM not_empty(NEW.title_fr, 'title_fr');
-                PERFORM not_empty(NEW.description_en, 'description_en');
-                PERFORM not_empty(NEW.description_fr, 'description_fr');
-                PERFORM not_empty(
-                    NEW.target_participants_and_audience,
-                    'target_participants_and_audience');
-                NEW.target_participants_and_audience := choices_from(
-                    NEW.target_participants_and_audience,
-                    {target_participants_and_audience},
-                    'target_participants_and_audience');
-                PERFORM not_empty(NEW.start_date, 'start_date');
-                PERFORM not_empty(NEW.end_date, 'end_date');
-                PERFORM choice_one_of(NEW.status, {status}, 'status');
-                PERFORM not_empty(NEW.profile_page_en, 'profile_page_en');
-                PERFORM not_empty(NEW.profile_page_fr, 'profile_page_fr');
-                PERFORM choice_one_of(
-                    NEW.report_available_online,
-                    {report_available_online},
-                    'report_available_online');
-                PERFORM not_empty(NEW.high_profile, 'high_profile');
-                PERFORM choice_one_of(
-                    NEW.high_profile,
-                    {high_profile},
-                    'high_profile');
-                IF NEW.high_profile = 'Y' THEN
-                    PERFORM not_empty(NEW.rationale, 'rationale');
-                END IF;
-                NEW.rationale := choices_from(
-                    NEW.rationale, {rationale}, 'rationale');
-
-                RETURN NEW;
-            END;
-            '''.format(
-                publishable=pg_array(consultations_choices['publishable']),
-                partner_departments=pg_array(
-                    consultations_choices['partner_departments']),
-                subjects=pg_array(consultations_choices['subjects']),
-                target_participants_and_audience=pg_array(
-                    consultations_choices['target_participants_and_audience']),
-                status=pg_array(consultations_choices['status']),
-                report_available_online=pg_array(
-                    consultations_choices['report_available_online']),
-                high_profile=pg_array(consultations_choices['high_profile']),
-                rationale=pg_array(consultations_choices['rationale']),
-            )
-        )
 
     # A: When sysadmin passes '*' as user_modified, replace with '' and
     #    set created+modified values to NULL. This is used when restoring
