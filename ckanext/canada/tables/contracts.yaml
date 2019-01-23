@@ -597,6 +597,8 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2018,4,1)'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
+    # why? why zero-prefixed numeric codes?
+    excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
     choices:
       "00":
         en: None
@@ -856,6 +858,10 @@ resources:
           PERFORM choice_one_of(NEW.limited_tendering_reason_code,
             {limited_tendering_reason_code},
             'limited_tendering_reason_code');
+          IF length(NEW.exemption_code) = 1 THEN
+            -- zero-pad numbers to match controlled list
+            NEW.exemption_code = '0' || NEW.exemption_code;
+          END IF;
           PERFORM not_empty(NEW.exemption_code, 'exemption_code');
           PERFORM choice_one_of(NEW.exemption_code,
             {exemption_code},
