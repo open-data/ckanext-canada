@@ -596,11 +596,12 @@ resources:
       en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
       fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
     obligation: Optional
-    format_type: |'Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
+    format_type: |
+      Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
     
-      The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.'
+      The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
     
-      'For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:'
+      For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
       * sector: 61 (educational services)
       * subsector: 1 (educational services)
       * industry group: 7 (educational support services)
