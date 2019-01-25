@@ -408,6 +408,74 @@ resources:
         lookup: [CFTA, NAFTA, CKFTA]
         en: CFTA / NAFTA / CKFTA
         fr: ALEC / ALENA / ALECCS
+      AK:
+        lookup: [CPTPP]
+        en: CPTPP
+        fr: PTPGP
+      AL:
+        lookup: [CFTA, CPTPP]
+        en: CFTA / CPTPP
+        fr: ALEC / PTPGP
+      AM:
+        lookup: [CFTA, CETA, CPTPP]
+        en: CFTA / CETA / CPTPP
+        fr: ALEC / AECG / PTPGP
+      AN:
+        lookup: [CFTA, CHFTA, CETA, CPTPP]
+        en: CFTA / CHFTA / CETA / CPTPP
+        fr: ALEC / ALECH / AECG / PTPGP
+      AO:
+        lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CPTPP]
+        en: CFTA / CCFTA / CKFTA / WTO-AGP / CPTPP
+        fr: ALEC / ALECC / ALECCS / AMP-OMC / PTPGP
+      AP:
+        lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        en: CFTA / NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / CPTPP
+        fr: ALEC / ALENA / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / AECG / PTPGP
+      AQ:
+        lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / CPTPP
+        fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / AECG / PTPGP
+      AR:
+        lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CPTPP]
+        en: CFTA / NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CPTPP
+        fr: ALEC / ALENA / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / PTPGP
+      AS:
+        lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CPTPP]
+        en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CPTPP
+        fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / PTPGP
+      AT:
+        lookup: [CFTA, CCFTA, CKFTA]
+        en: CFTA / CCFTA / CKFTA
+        fr: ALEC / ALECC / ALECCS
+      AU:
+        lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        en: CFTA / CCFTA / CKFTA / WTO-AGP / CETA / CPTPP
+        fr: ALEC / ALECC / ALECCS / AMP-OMC / AECG / PTPGP
+      AV:
+        lookup: [CFTA, CCFTA]
+        en: CFTA / CCFTA
+        fr: ALEC / ALECC
+      AW:
+        lookup: [CFTA, CCFTA, CPTPP]
+        en: CFTA / CCFTA / CPTPP
+        fr: ALEC / ALECC / PTPGP
+      AX:
+        lookup: [CFTA, CKFTA, WTO-AGP, CETA]
+        en: CFTA / CKFTA / WTO-AGP / CETA
+        fr: ALEC / ALECCS / AMP-OMC / AECG
+      AY:
+        lookup: [CFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        en: CFTA / CKFTA / WTO-AGP / CETA / CPTPP
+        fr: ALEC / ALECCS / AMP-OMC / AECG / PTPGP
+      AZ:
+        lookup: [CFTA, CKFTA, WTO-AGP, CPTPP]
+        en: CFTA / CKFTA / WTO-AGP / CPTPP
+        fr: ALEC / ALECCS / AMP-OMC / PTPGP
+      BA:
+        lookup: [ABSA, LCSA]
+        en: ABSA / LCSA
+        fr: MREA / MRERT
 
     choices_lookup:
       NONE:
@@ -440,6 +508,9 @@ resources:
       CPFTA:
         en: Canada-Peru Free Trade Agreement (CPFTA)
         fr: Accord de libre-échange Canada-Pérou (ALECP)
+      CPTPP:
+        en: Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
+        fr: Accord de Partenariat transpacifique global et progressiste (PTPGP)
       CKFTA:
         en: Canada-South Korea Free Trade Agreement (CKFTA)
         fr: Accord de libre-échange Canada-Corée du Sud (ALECCS)
