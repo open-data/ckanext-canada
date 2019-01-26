@@ -65,7 +65,7 @@ resources:
       fr: Ministère(s) partenaire(s)
     description:
       en: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
-      fr: Cette zone indique le ministère ou les ministères qui collaborent au processus de mobilisation en question. Il faut indiquer le nom complet des ministères (aucun acronyme).
+      fr: Cette zone indique le ministère ou les ministères qui collaborent au processus de participation en question. Il faut indiquer le nom complet des ministères (aucun acronyme).
     obligation: Optional
     format_type: Free text (comma separated list of codes from reference table)
     validation: None
@@ -82,7 +82,7 @@ resources:
       fr: Sujets
     description:
       en: This field indicates the different subjects related to the engagement process.
-      fr: Cette zone indique les différents sujets sur lesquels porte le processus de mobilisation.
+      fr: Cette zone indique les différents sujets sur lesquels porte le processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -142,7 +142,7 @@ resources:
       fr: Description de l’approche (en anglais)
     description:
       en: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
-      fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
+      fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -162,7 +162,7 @@ resources:
       fr: Description de l’approche (en français)
     description:
       en: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
-      fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de mobilisation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de mobilisation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
+      fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -182,7 +182,7 @@ resources:
       fr: Participants visés et public cible
     description:
       en: This field provides information regarding the target participants and audience of the engagement process.
-      fr: Cette zone précise les participants visés et le public cible du processus de mobilisation.
+      fr: Cette zone précise les participants visés et le public cible du processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -219,7 +219,7 @@ resources:
       fr: Date de fin
     description:
       en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
-      fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de mobilisation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de mobilisation.
+      fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de participation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -237,7 +237,7 @@ resources:
       fr: État
     description:
       en: The field indicates the current status of the engagement process.
-      fr: Cette zone indique l’état d’avancement du processus de mobilisation.
+      fr: Cette zone indique l’état d’avancement du processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -271,7 +271,7 @@ resources:
       fr: Lien vers la page du profil des consultations (en anglais)
     description:
       en: This field provides the link to the English engagement information profile page.
-      fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de mobilisation.
+      fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -290,7 +290,7 @@ resources:
       fr: Lien vers la page du profil des consultations (en français)
     description:
       en: This field provides the link to the French engagement information profile page.
-      fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de mobilisation.
+      fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -368,7 +368,7 @@ resources:
       fr: Responsable de la consultation au ministère
     description:
       en: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
-      fr: Cette zone indique l’adresse courriel de la personne du ministère responsable de la consultation et de la mobilisation du public (s’il y a lieu). Le responsable de la consultation au ministère est le principal responsable des consultations du ministère.
+      fr: Cette zone indique l’adresse courriel de la personne du ministère responsable de la consultation et de la participation du public (s’il y a lieu). Le responsable de la consultation au ministère est le principal responsable des consultations du ministère.
     obligation: Optional
     format_type: Email
     validation: None
@@ -385,7 +385,7 @@ resources:
       fr: Responsable des politiques ou des programmes pour la consultation
     description:
       en: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
-      fr: Cette zone indique l’adresse courriel du responsable des politiques ou des programmes pour la consultation. Il s’agit de la personne qui dirige la consultation en question et qui doit rendre des comptes sur les activités de mobilisation.
+      fr: Cette zone indique l’adresse courriel du responsable des politiques ou des programmes pour la consultation. Il s’agit de la personne qui dirige la consultation en question et qui doit rendre des comptes sur les activités de participation.
     obligation: Optional
     format_type: Email
     validation: None
@@ -438,7 +438,7 @@ resources:
       fr: Haute visibilité
     description:
       en: This field indicates whether the consultation or public engagement initiative is considered high profile. The consultation is considered high profile if it meets one or more of the criteria in the ‘Rationale’ field.
-      fr: "Cette zone indique si la consultation ou initiative de mobilisation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
+      fr: "Cette zone indique si la consultation ou initiative de participation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -463,7 +463,7 @@ resources:
       fr: Raison
     description:
       en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou mobilisation public de profil élevé.
+      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou participation public de profil élevé.
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
     format_type: Controlled List
