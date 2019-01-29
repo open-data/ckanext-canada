@@ -22,6 +22,7 @@ resources:
       en: It is a unique identifier given to each line item in the spreadsheet. Having a unique identifier for each item will allow users to locate a specific item should they need to modify or delete.
       fr: Un identificateur unique est attribué à chaque poste dans le gabarit de rapport.
     obligation: Mandatory
+    excel_required: true
     datastore_type: text
 
   - datastore_id: procurement_id
@@ -188,7 +189,9 @@ resources:
     description:
       en: For all contracts and amendments regardless of dollar value (excluding acquisition card procurements from -$10K to $10K), this field should be populated with the value of the amendment. Amendment(s) to a contract that take place in the same fiscal quarter may be reported either individually or combined. An amendment should be disclosed in only one template being either the Quarterly Contracts template or the Annual Contracts template. Disclosing an amendment in both templates would result in double counting of the amendment value when calculating the total contracting activity of an organization. It is recommended that this field be in Canadian currency and include all applicable taxes. For a contract with task authorizations when the full value is likely not to be used, the value of any subsequent task authorization may be reported as an amendment with its value reported in this field. When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed with the value at contract entry in the ‘Original Contract Value’ field and should not include the value of the contract amendment in the ‘Contract Amendment Value’ field. The contract amendment should be disclosed with the value of the amendment in the ‘Contract Amendment Value’ field and the value at contract entry in the ‘Original Contract Value’ field. Negative amendments should use a minus sign in front of the value. A ‘0’ should be included if there are no amendments associated with the contract.
       fr: Pour une modification, il est recommandé que l’élément de données « valeur de modification » corresponde à la valeur de la modification. Les modifications négatives doivent inclure un signe négatif devant la valeur. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’inclure toutes les taxes applicables. Les modifications multiples à un marché apportées au cours du même trimestre de l’exercice financier peuvent être divulguées individuellement ou ensemble. Les modifications positives ou négatives de plus de 10 000 $ doivent être divulguées tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins doivent être déclarées une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être divulguées une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification devrait être divulguée tous les trois mois ou une fois par an. La divulgation d’une modification de façon trimestrielle et annuelle engendrerait un double dénombrement de la valeur de la modification lorsqu’il s’agit de calculer le total de l’activité contractuelle d’une organisation. Lorsqu’un marché a été conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être divulguées séparément. La signature du marché devrait être divulguée séparément, et la valeur au moment de la signature du marché devrait être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également divulguée dans une entrée distincte qui comprend la valeur de la modification dans la zone « valeur de modification », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ». Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, on peut déclarer la valeur des autorisations de tâches ultérieures dans la zone « valeur de modification ». Un « 0 » doit être saisi s’il n’y a pas de modification associée au marché.
-    obligation: Optional
+    obligation:
+      en: Must be included for amendments to contracts
+    excel_required_formula: '{document_type_code}="A"'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -822,7 +825,9 @@ resources:
     description:
       en: This field should be populated to identify whether the procurement is a call-up or contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
       fr: Il est recommandé pour cette zone d’indiquer si l’approvisionnement est une commande subséquente ou un marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC, Services partagés Canada (SPC) ou le ministère.
-    obligation: Optional
+    obligation:
+      en: This field must be populated if a standing offer or supply arrangement number was disclosed
+      excel_required_formula: 'NOT(ISBLANK({standing_offer_number}))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choices:
@@ -844,7 +849,7 @@ resources:
       en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
       fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
     obligation:
-      en: This element is mandatory for contracts (which includes call-ups) against a standing offer or supply arrangement number regardless of dollar value (excluding acquisition card procurements from -$10K to $10K). Otherwise, this field may be left empty.
+      en: This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
     datastore_type: text
     excel_required_formula: 'OR({standing_offer}="PWSOSA",{standing_offer}="SSCSOSA")'
 
@@ -906,6 +911,9 @@ resources:
           PERFORM not_empty(NEW.contract_period_start, 'contract_period_start');
           PERFORM not_empty(NEW.delivery_date, 'delivery_date');
           PERFORM not_empty(NEW.contract_value, 'contract_value');
+          IF NEW.document_type_code = 'A' THEN
+            PERFORM not_empty(NEW.amendment_value, 'amendment_value');
+          END IF
           PERFORM not_empty(NEW.original_value, 'original_value');
           PERFORM not_empty(NEW.agreement_type_code, 'agreement_type_code');
           PERFORM not_empty(NEW.commodity_type_code, 'commodity_type_code');
@@ -943,6 +951,9 @@ resources:
             {intellectual_property_code},
             'intellectual_property_code');
           PERFORM not_empty(NEW.former_public_servant, 'former_public_servant');
+          IF NEW.standing_offer_number <> '' THEN
+            PERFORM not_empty(NEW.standing_offer, 'standing_offer');
+          END IF;
           IF NEW.standing_offer <> '' THEN
             PERFORM choice_one_of(NEW.standing_offer,
               {standing_offer},
