@@ -18,6 +18,16 @@
   </div>
 {% endif %}
 
+{% if h.show_openinfo_facets() %}
+  <div class="row mrgn-bttm-sm mrgn-rght-sm">
+    <div class="col-md-12">
+      <section class="alert alert-info" >
+        <p>{{ _('Please note that the Open Information Portal contains a sample of government of Canada publications and information resources. For more resources, please visit <a href="http://publications.gc.ca/">Government of Canada Publications</a> and <a href="http://www.bac-lac.gc.ca/">Library and Archives Canada</a>.')|safe }}</p>
+      </section>
+    </div>
+  </div>
+{% endif %}
+
 <div class="row mrgn-bttm-md mrgn-tp-md">
   <div class="col-md-12">
     <h2 class="mrgn-tp-0 mrgn-bttm-0">

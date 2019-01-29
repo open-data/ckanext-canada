@@ -9,7 +9,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action, side_effect_free
+from ckantoolkit import h, chained_action, side_effect_free, ValidationError
 import ckanapi
 from ckan.lib.base import c
 
@@ -47,7 +47,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         p.toolkit.add_public_directory(config, 'internal/static')
 
         config.update({
-            "ckan.user_list_limit": 2000
+            "ckan.user_list_limit": 4000
         })
 
     def before_map(self, map):
@@ -115,6 +115,12 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='package',
             action='delete'
         )
+        map.connect(
+            'update_pd_record',
+            '/update-pd-record/{owner_org}/{resource_name}/{pk}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='update_pd_record',
+        )
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
@@ -151,7 +157,18 @@ class DataGCCAInternal(p.SingletonPlugin):
         original_upsert_data = db.upsert_data
         def patched_upsert_data(context, data_dict):
             logic.datastore_create_temp_user_table(context)
-            return original_upsert_data(context, data_dict)
+            try:
+                return original_upsert_data(context, data_dict)
+            except ValidationError as e:
+                # reformat tab-delimited error as dict
+                head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                if head == 'TAB-DELIMITED' and sep:
+                    out = {}
+                    it = iter(rerr.split('\t'))
+                    for key, error in zip(it, it):
+                        out.setdefault(key, []).append(error)
+                    e.error_dict['records'] = [out]
+                raise e
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
 
@@ -288,6 +305,7 @@ ckanext.canada:schemas/info.yaml
             'contact_information',
             'show_subject_facet',
             'show_fgp_facets',
+            'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',
             'linked_user',
@@ -518,7 +536,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
 @chained_action
 def datastore_upsert(up_func, context, data_dict):
-    lc = ckanapi.LocalCKAN(username=c.user)
+    lc = ckanapi.LocalCKAN(username=context['user'])
     res_data = lc.action.datastore_search(
         resource_id=data_dict['resource_id'],
         filters={},
@@ -647,6 +665,7 @@ ckanext.canada:schemas/doc.yaml
             'contact_information',
             'show_subject_facet',
             'show_fgp_facets',
+            'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',
             'linked_user',

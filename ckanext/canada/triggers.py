@@ -7,6 +7,99 @@ def update_triggers():
 
     lc = LocalCKAN()
 
+    # *_error functions return NULL or ARRAY[[field_name, error_message]]
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL OR value = '{}' THEN
+                    return ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'choice_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=ur'''
+            BEGIN
+                IF NOT (value = ANY (choices)) THEN
+                    -- \t is used when converting errors to string
+                    RETURN ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(value, E'\t', ' ') || '"']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    lc.action.datastore_function_create(
+        name=u'choices_clean_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'choices', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
+        definition=ur'''
+            DECLARE
+                bad_choices text := array_to_string(ARRAY(
+                    SELECT unnest(value)
+                    EXCEPT SELECT unnest(choices)), ', ');
+            BEGIN
+                IF bad_choices <> '' THEN
+                    -- \t is used when converting errors to string
+                    error := ARRAY[[field_name, 'Invalid choice: "'
+                        || replace(bad_choices, E'\t', ' ') || '"']];
+                END IF;
+                clean := ARRAY(
+                    SELECT c FROM(SELECT unnest(choices) as c) u
+                    WHERE c in (SELECT unnest(value)));
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'not_empty',
         or_replace=True,
@@ -43,7 +136,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF value = '{}' THEN
+                IF value IS NULL OR value = '{}' THEN
                     RAISE EXCEPTION 'This field must not be empty: %', field_name;
                 END IF;
             END;
@@ -181,70 +274,6 @@ def update_triggers():
                     WHERE c in (SELECT unnest(value)));
             END;
         ''')
-
-    consultations_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('consultations'))
-    lc.action.datastore_function_create(
-        name=u'consultations_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.registration_number, 'registration_number');
-                PERFORM choice_one_of(NEW.publishable, {publishable}, 'publishable');
-                NEW.partner_departments := choices_from(
-                    NEW.partner_departments, {partner_departments}, 'partner_departments');
-                PERFORM not_empty(NEW.subjects, 'subjects');
-                NEW.subjects := choices_from(
-                    NEW.subjects, {subjects}, 'subjects');
-                PERFORM not_empty(NEW.title_en, 'title_en');
-                PERFORM not_empty(NEW.title_fr, 'title_fr');
-                PERFORM not_empty(NEW.description_en, 'description_en');
-                PERFORM not_empty(NEW.description_fr, 'description_fr');
-                PERFORM not_empty(
-                    NEW.target_participants_and_audience,
-                    'target_participants_and_audience');
-                NEW.target_participants_and_audience := choices_from(
-                    NEW.target_participants_and_audience,
-                    {target_participants_and_audience},
-                    'target_participants_and_audience');
-                PERFORM not_empty(NEW.start_date, 'start_date');
-                PERFORM not_empty(NEW.end_date, 'end_date');
-                PERFORM choice_one_of(NEW.status, {status}, 'status');
-                PERFORM not_empty(NEW.profile_page_en, 'profile_page_en');
-                PERFORM not_empty(NEW.profile_page_fr, 'profile_page_fr');
-                PERFORM choice_one_of(
-                    NEW.report_available_online,
-                    {report_available_online},
-                    'report_available_online');
-                PERFORM not_empty(NEW.high_profile, 'high_profile');
-                PERFORM choice_one_of(
-                    NEW.high_profile,
-                    {high_profile},
-                    'high_profile');
-                IF NEW.high_profile = 'Y' THEN
-                    PERFORM not_empty(NEW.rationale, 'rationale');
-                END IF;
-                NEW.rationale := choices_from(
-                    NEW.rationale, {rationale}, 'rationale');
-
-                RETURN NEW;
-            END;
-            '''.format(
-                publishable=pg_array(consultations_choices['publishable']),
-                partner_departments=pg_array(
-                    consultations_choices['partner_departments']),
-                subjects=pg_array(consultations_choices['subjects']),
-                target_participants_and_audience=pg_array(
-                    consultations_choices['target_participants_and_audience']),
-                status=pg_array(consultations_choices['status']),
-                report_available_online=pg_array(
-                    consultations_choices['report_available_online']),
-                high_profile=pg_array(consultations_choices['high_profile']),
-                rationale=pg_array(consultations_choices['rationale']),
-            )
-        )
 
     # A: When sysadmin passes '*' as user_modified, replace with '' and
     #    set created+modified values to NULL. This is used when restoring
@@ -403,20 +432,6 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'valid_percentage',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value < 0 OR value > 100 THEN
-                    RAISE EXCEPTION 'This field must be a valid percentage: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
         name=u'integer_or_na_nd',
         or_replace=True,
         arguments=[
@@ -429,95 +444,6 @@ def update_triggers():
                 END IF;
             END;
         ''')
-
-    service_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('service'))
-    lc.action.datastore_function_create(
-        name=u'service_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.service_id_number, 'service_id_number');
-                PERFORM no_surrounding_whitespace(NEW.service_id_number, 'service_id_number');
-                PERFORM not_empty(NEW.service_name_en, 'service_name_en');
-                PERFORM not_empty(NEW.service_name_fr, 'service_name_fr');
-                PERFORM not_empty(NEW.external_internal, 'external_internal');
-                PERFORM choice_one_of(NEW.external_internal, {external_internal}, 'external_internal');
-                PERFORM not_empty(NEW.service_type, 'service_type');
-                PERFORM choice_one_of(NEW.service_type, {service_type}, 'service_type');
-                PERFORM not_empty(NEW.special_designations, 'special_designations');
-                PERFORM choice_one_of(NEW.special_designations, {special_designations}, 'special_designations');
-                PERFORM not_empty(NEW.service_description_en, 'service_description_en');
-                PERFORM not_empty(NEW.service_description_fr, 'service_description_fr');
-                PERFORM not_empty(NEW.responsibility_area_en, 'responsibility_area_en');
-                PERFORM not_empty(NEW.responsibility_area_fr, 'responsibility_area_fr');
-                PERFORM not_empty(NEW.authority_en, 'authority_en');
-                PERFORM not_empty(NEW.authority_fr, 'authority_fr');
-                PERFORM not_empty(NEW.program_name_en, 'program_name_en');
-                PERFORM not_empty(NEW.program_name_fr, 'program_name_fr');
-                PERFORM not_empty(NEW.program_id_number, 'program_id_number');
-                PERFORM not_empty(NEW.service_owner, 'service_owner');
-                PERFORM choice_one_of(NEW.service_owner, {service_owner}, 'service_owner');
-                PERFORM not_empty(NEW.service_agreements, 'service_agreements');
-                PERFORM choice_one_of(NEW.service_agreements, {service_agreements}, 'service_agreements');
-                PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
-                NEW.client_target_groups := choices_from(
-                    NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
-                PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
-                PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
-                PERFORM not_empty(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
-                PERFORM integer_or_na_nd(NEW.volumes_per_channel_online, 'volumes_per_channel_online');
-                PERFORM not_empty(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
-                PERFORM integer_or_na_nd(NEW.volumes_per_channel_telephone, 'volumes_per_channel_telephone');
-                PERFORM not_empty(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
-                PERFORM integer_or_na_nd(NEW.volumes_per_channel_in_person, 'volumes_per_channel_in_person');
-                PERFORM not_empty(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
-                PERFORM integer_or_na_nd(NEW.volumes_per_channel_mail, 'volumes_per_channel_mail');
-                PERFORM not_empty(NEW.user_fee, 'user_fee');
-                PERFORM choice_one_of(NEW.user_fee, {user_fee}, 'user_fee');
-                PERFORM not_empty(NEW.targets_published_en, 'targets_published_en');
-                PERFORM not_empty(NEW.targets_published_fr, 'targets_published_fr');
-                PERFORM not_empty(NEW.e_registration, 'e_registration');
-                PERFORM choice_one_of(NEW.e_registration, {e_registration}, 'e_registration');
-                PERFORM not_empty(NEW.e_authentication, 'e_authentication');
-                PERFORM choice_one_of(NEW.e_authentication, {e_authentication}, 'e_authentication');
-                PERFORM not_empty(NEW.e_application, 'e_application');
-                PERFORM choice_one_of(NEW.e_application, {e_application}, 'e_application');
-                PERFORM not_empty(NEW.e_decision, 'e_decision');
-                PERFORM choice_one_of(NEW.e_decision, {e_decision}, 'e_decision');
-                PERFORM not_empty(NEW.e_issuance, 'e_issuance');
-                PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
-                PERFORM not_empty(NEW.e_feedback, 'e_feedback');
-                PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
-                PERFORM not_empty(NEW.interaction_points_online, 'interaction_points_online');
-                PERFORM choice_one_of(NEW.interaction_points_online, {interaction_points_online}, 'interaction_points_online');
-                PERFORM not_empty(NEW.interaction_points_total, 'interaction_points_total');
-                PERFORM choice_one_of(NEW.interaction_points_total, {interaction_points_total}, 'interaction_points_total');
-                PERFORM not_empty(NEW.percentage_online, 'percentage_online');
-                PERFORM valid_percentage(NEW.percentage_online, 'percentage_online');
-                RETURN NEW;
-            END;
-            '''.format(
-                external_internal=pg_array(service_choices['external_internal']),
-                service_type=pg_array(service_choices['service_type']),
-                special_designations=pg_array(service_choices['special_designations']),
-                service_owner=pg_array(service_choices['service_owner']),
-                service_agreements=pg_array(service_choices['service_agreements']),
-                client_target_groups=pg_array(service_choices['client_target_groups']),
-                cra_business_number=pg_array(service_choices['cra_business_number']),
-                user_fee=pg_array(service_choices['user_fee']),
-                e_registration=pg_array(service_choices['e_registration']),
-                e_authentication=pg_array(service_choices['e_authentication']),
-                e_application=pg_array(service_choices['e_application']),
-                e_decision=pg_array(service_choices['e_decision']),
-                e_issuance=pg_array(service_choices['e_issuance']),
-                e_feedback=pg_array(service_choices['e_feedback']),
-                interaction_points_online=pg_array(service_choices['interaction_points_online']),
-                interaction_points_total=pg_array(service_choices['interaction_points_total']),
-            )
-        )
 
     grants_choices = dict(
         (f['datastore_id'], f['choices'])
