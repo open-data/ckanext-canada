@@ -913,7 +913,7 @@ resources:
           PERFORM not_empty(NEW.contract_value, 'contract_value');
           IF NEW.document_type_code = 'A' THEN
             PERFORM not_empty(NEW.amendment_value, 'amendment_value');
-          END IF
+          END IF;
           PERFORM not_empty(NEW.original_value, 'original_value');
           PERFORM not_empty(NEW.agreement_type_code, 'agreement_type_code');
           PERFORM not_empty(NEW.commodity_type_code, 'commodity_type_code');
