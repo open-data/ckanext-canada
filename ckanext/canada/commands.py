@@ -300,7 +300,10 @@ class CanadaCommand(CkanCommand):
         packages = []
         for result in data:
             package_id = result['data']['package']['id']
-            packages.append(json.dumps(registry.action.package_show(id=package_id)))
+            try:
+                packages.append(json.dumps(registry.action.package_show(id=package_id)))
+            except NotFound:
+                pass
 
         if data:
             since_time = isodate(data[-1]['timestamp'], None)
