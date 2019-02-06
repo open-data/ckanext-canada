@@ -291,7 +291,6 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
 
   # 3.19
   - datastore_id: additional_comments_fr
@@ -302,7 +301,6 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
 
 
   datastore_primary_key: [ref_number]
