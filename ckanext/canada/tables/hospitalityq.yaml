@@ -75,7 +75,8 @@ resources:
     description:
       en: This field will display, in French, the position title of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
       fr: Cette zone indique, en français, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
@@ -166,7 +167,8 @@ resources:
     description:
       en: Must include the Municipality where hospitality was provided, in English
       fr: Comprend la municipalité où les services d’accueil ont été fournis, en anglais
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
 
@@ -185,7 +187,8 @@ resources:
     description:
       en: Must include the Municipality where hospitality was provided, in French.
       fr: Comprend la municipalité où les services d’accueil ont été fournis, en français.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
 
@@ -204,7 +207,8 @@ resources:
     description:
       en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
 
@@ -213,10 +217,18 @@ resources:
     label:
       en: Name of commercial establishment or vendor involved in the hospitality activity  (French)
       fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    excel_heading:
+      en: |
+        Name of commercial establishment or vendor
+        involved in the hospitality activity (French)
+      fr: |
+        Nom des établissements commerciaux ou
+        des fournisseurs concernés (français)
     description:
       en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
 
@@ -248,7 +260,8 @@ resources:
     description:
       en: The total number of attendees (Guests)
       fr: Nombre total de participants (invités)
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
     format_type: Controlled List
     datastore_type: int
 
@@ -342,6 +355,9 @@ resources:
 
   - datastore_id: year
     label: Year
+    description:
+      en: ""
+      fr: ""
     datastore_type: year
     excel_column_width: 10
     extract_date_year: true
@@ -375,6 +391,9 @@ resources:
 
   - datastore_id: quarter
     label: Quarter
+    description:
+      en: ""
+      fr: ""
     datastore_type: text
     excel_column_width: 10
     choices:
