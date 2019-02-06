@@ -5,6 +5,8 @@ title: Proactive Disclosure - Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
 upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
 
+template_version: 3
+
 portal_type: info
 collection: pd
 
@@ -17,91 +19,117 @@ resources:
   resource_name: hospitalityq
   fields:
 
+  # 3.1
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      en: This field is populated by the organization. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
       fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
+    excel_required: true
     format_type:
-      en: "H-2015-Q1-00001 – this sequence will continue for each line item (i.e.: H-2015-Q1-00001, H-2015-Q1-00002, H-2015-Q1-00001….)"
+      en: "H-2019-P1-00001 – this sequence will continue for each line item (i.e.: H-2019-P1-00001, H-2019-P1-00002, H-2019-P1-00003, etc.)"
       fr: H-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-Q1-00002, H -2016-Q1-00003….)
     datastore_type: text
-    excel_column_width: 20
 
+  # 3.2
   - datastore_id: disclosure_group
-    label: Disclosure Group
+    label:
+      en: Disclosure Group
+      fr: Groupe de divulgation
     description:
-      en: This field will display the Group of the claimant.
-      fr: Ce champ indique le groupe du demandeur.
+      en: This field will display the group to which the individual belongs.
+      fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 15
     choices:
       MPSES:
-        en: Minister/Parliamentary Secretaries/Exempt Staff
-        fr: Ministres/Secrétaires parlementaires/Personnel exonéré
+        en: Minister/Ministerial advisor / Ministerial Staff / Parliamentary Secretary/Exempt Staff
+        fr: Ministre / Conseiller ministériel / Personnel ministériel / Secrétaire parlementaire / Personnel exonéré
       SLE:
-        en: Senior Level Employees
-        fr: Employés de niveau supérieur
+        en: Senior officer or employees
+        fr: Cadre supérieur ou employé
 
-  - datastore_id: name
-    label: Name
-    description:
-      en: This field will display the name of the claimant.
-      fr: Ce champ affiche le nom du demandeur.
-    obligation: Mandatory
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
+  #
   - datastore_id: title_en
-    label: Title (English)
+    label:
+      en: Title (English)
+      fr: Titre (anglais)
     description:
-      en: This field will display the title of the claimant, in English
-      fr: Cette zone indique le titre du demandeur, en anglais.
+      en: This field will display, in English, the position title of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: Cette zone indique, en anglais, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
+  # 3.4
   - datastore_id: title_fr
-    label: Title (French)
+    label:
+      en: Title (French)
+      fr: Titre (français)
     description:
-      en: This field will display the title of the claimant, in French.
-      fr: Cette zone indique le titre du demandeur, en français.
+      en: This field will display, in French, the position title of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: Cette zone indique, en français, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+    excel_column_width: 30
 
+  # 3.5
+  - datastore_id: name
+    label:
+      en: Name
+      fr: Nom
+    description:
+      en: This field will display the name of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: Ce champ affiche le nom de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité.
+    obligation: Mandatory
+    excel_required: true
+    format_type: Free text
+    datastore_type: text
+    excel_column_width: 30
+
+  # 3.6
   - datastore_id: description_en
-    label: Description (English)
+    label:
+      en: Purpose of hospitality activity (English)
+      fr: But de l’activité d’accueil (anglais)
     description:
-      en: This will cover both the form (e.g. breakfast, lunch, dinner, reception, refreshments, coffee and muffins, theatre tickets) and circumstances (i.e. the purpose) of the hospitality, in English.
-      fr: Cette zone comprend le genre d’activité (p. ex., déjeuner, dîner, souper, réception, rafraîchissements, cafés et muffins, billet de pièce de théâtre) et les circonstances (c.‑à‑d. le but) de l’accueil, en anglais.
+      en: This will cover both the forms (for example, breakfast, refreshment, lunch, reception, dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in English.
+      fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en anglais.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
 
+  # 3.7
   - datastore_id: description_fr
-    label: Description (French)
+    label:
+      en: Purpose of hospitality activity (French)
+      fr: But de l’activité d’accueil (français)
     description:
-      en: This will cover both the form (e.g. breakfast, lunch, dinner, reception, refreshments, coffee and muffins, theatre tickets) and circumstances (i.e. the purpose) of the hospitality, in French.
-      fr: Cette zone comprend le genre d’activité (p. ex., déjeuner, dîner, souper, réception, rafraîchissements, cafés et muffins, billet de pièce de théâtre) et les circonstances (c.‑à‑d. le but) de l’accueil, en français.
+      en: This will cover both the forms (for example, breakfast, refreshment, lunch, reception, dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in French.
+      fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en français.
     obligation: Mandatory
+    excel_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
 
+  # 3.8
   - datastore_id: start_date
-    label: Start Date
+    label:
+      en: Start Date
+      fr: Date du début
     description:
       en: The start date on which the hospitality was provided.
       fr: La date du début auxquelles les activités d’accueil ont eu lieu.
     obligation: Mandatory
+    excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
@@ -109,65 +137,106 @@ resources:
     extract_date_month: true
     extract_date_clean: true
 
+  # 3.9
   - datastore_id: end_date
-    label: End Date
+    label:
+      en: End Date
+      fr: Date de fin
     description:
       en: The end date on which the hospitality was provided. (can be the same as start date)
       fr: La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
     obligation: Mandatory
+    excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
 
-  - datastore_id: employee_attendees
-    label: Attendees (Government of Canada Employees)
+  # 3.10
+  - datastore_id: location_en
+    label:
+      en: Municipality where the hospitality activity took place (English)
+      fr: Municipalité où l’activité d’accueil a eu lieu (anglais)
     description:
-      en: The total number of attendees (Government of Canada employees)
-      fr: Nombre total de participants et leur ventilation en fonction du nombre de fonctionnaires fédéraux et d’invités
+      en: Must include the Municipality where hospitality was provided, in English
+      fr: Comprend la municipalité où les services d’accueil ont été fournis, en anglais
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+
+  # 3.11
+  - datastore_id: location_fr
+    label:
+      en: Municipality where the hospitality activity took place (French)
+      fr: Municipalité où l’activité d’accueil a eu lieu (français)
+    description:
+      en: Must include the Municipality where hospitality was provided, in French.
+      fr: Comprend la municipalité où les services d’accueil ont été fournis, en français.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+
+  # 3.12
+  - datastore_id: vendor_en
+    label:
+      en: Name of commercial establishment or vendor involved in the hospitality activity  (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    description:
+      en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+
+  # 3.13
+  - datastore_id: vendor_fr
+    label:
+      en: Name of commercial establishment or vendor involved in the hospitality activity  (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    description:
+      en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
+
+  # 3.14
+  - datastore_id: employee_attendees
+    label:
+      en: Attendees (Government of Canada Officials)
+      fr: Participants (Nombre de représentants du gouvernement du Canada)
+    description:
+      en: The total number of attendees (Government of Canada Officials)
+      fr: Nombre total de participants (représentants du gouvernement du Canada).
     obligation: Mandatory
+    excel_required: true
     format_type: Controlled List
     datastore_type: int
-    excel_column_width: 20
 
+  # 3.15
   - datastore_id: guest_attendees
-    label: Attendees (Guests)
+    label:
+      en: Attendees (Guests)
+      fr: Participants (Nombre d’invités)
     description:
       en: The total number of attendees (Guests)
       fr: Nombre total de participants (invités)
     obligation: Optional
     format_type: Controlled List
     datastore_type: int
-    excel_column_width: 20
 
-  - datastore_id: location_en
-    label: Location and Hospitality Provider (English)
-    description:
-      en: Must include the city where hospitality was provided and the name of the commercial establishment (i.e. restaurant or other location) and/or caterer (for in-house hospitality) that provided it, in English
-      fr: Comprend la ville où l’activité d’accueil a eu lieu et le nom de l’établissement commercial (c.-à-d. restaurant ou autre endroit) ou du traiteur (accueil interne) qui a fourni le service, en anglais.
-    obligation: Mandatory
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
-  - datastore_id: location_fr
-    label: Location and Hospitality Provider (French)
-    description:
-      en: Must include the city where hospitality was provided and the name of the commercial establishment (i.e. restaurant or other location) and/or caterer (for in-house hospitality) that provided it, in French.
-      fr: Comprend la ville où l’activité d’accueil a eu lieu et le nom de l’établissement commercial (c.-à-d. restaurant ou autre endroit) ou du traiteur (accueil interne) qui a fourni le service, en français.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
-
+  # 3.16
   - datastore_id: total
+    label:
+      en: Total cost
+      fr: Total des coûts
     description:
-      en: The total cost incurred for the hospitality in question.
-      fr: Total des frais engagés au titre de l’accueil
+      en: Total Amount of the expenses for the hospitality activity
+      fr: Montant total des dépenses pour l’activité d’accueil
     obligation: Mandatory
+    excel_required: true
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    label: Total Amount
     datastore_type: money
     extract_double_sortable: true
     excel_column_width: 20
@@ -180,50 +249,55 @@ resources:
      - 5000
      - 25000
 
+  # 3.17
   - datastore_id: additional_comments_en
-    label: Additional Comments English
+    label:
+      en: Additional comments (English)
+      fr: Commentaires additionnels (anglais)
     description:
-      en: This field may be populated with additional comments in English.
-      fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
+      en: This field may be populated with additional explanatory comments, in English.
+      fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
 
-  - datastore_id: additional_comments_fr
-    label: Additional Comments French
-    description:
-      en: This field may be populated with additional comments in French.
-      fr: Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
+
+  # 3.18
+  - datastore_id: additional_comments_fr
+    label:
+      en: Additional comments (French)
+      fr: Commentaires additionnels (français)
+    description:
+      en: This field may be populated with additional explanatory comments, in French.
+      fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
+    obligation: Optional
+    format_type: Free text
+    datastore_type: text
 
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF5d535e
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF9a9eab
 
   examples:
     record:
-      ref_number: "1980198"
+      ref_number: H-2019-Q3-001
       disclosure_group: SLE
-      name: Jane Smith
-      date: "2016-01-01"
-      location: Halifax
-      attendees: 4
-      total: "500.00"
+      title_en: Vice-Chairperson, Deputy Minister, Parliamentary Secretary, Assistant Deputy Minister, Programs Branch
+      title_fr: Vice-président, sous-ministre, secrétaire parlementaire, sous-ministre adjoint, Direction générale des programmes
+      name: Smith, John
+      description_en: "Refreshments: information management and policies committee meeting; reception: Maltese delegation, etc"
+      description_fr: "Rafraîchissements : Réunion du Comité de gestion de l’information et des politiques, Réception : Délégation maltaise, etc"
+      start_date: "2019-05-25"
+      end_date: "2019-05-25"
+      location_en: Montreal, Quebec, Canada
+      location_fr: Montréal, Québec, Canada
+      vendor_en: Le Centre Sheraton
+      vendor_fr: Le Centre Sheraton
+      employee_attendees: 150
+      guest_attendees: 4
+      total: "7710.55"
+      additional_comments_en: "Provide additional explanatory comments as required."
+      additional_comments_fr: "Fournir des commentaires explicatifs additionnels au besoin."
     filters:
       name: Jane Smith
     filter_one:
@@ -295,17 +369,6 @@ resources:
 
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF5d535e
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF9a9eab
 
   examples:
     record:
@@ -317,3 +380,16 @@ resources:
       year: 2016
       quarter: Q2
     sort: year desc, quarter desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF5d535e
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF9a9eab
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF9a9eab

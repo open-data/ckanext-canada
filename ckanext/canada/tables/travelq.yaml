@@ -30,8 +30,8 @@ resources:
     obligation: Mandatory
     excel_required: true
     format_type:
-      en: "T-2015-Q1-00001 – this sequence will continue for each line item (i.e.: T-2015-Q1-00001, T-2015-Q1-00002, T-2015-Q1-00003….)"
-      fr: T-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2016-Q1-00001, T-2016-Q1-00002, T-2016-Q1-00003….)
+      en: "T-2019-P1-00001 – this sequence will continue for each line item (i.e.: T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003, etc.)"
+      fr: T-2019-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003….)
     datastore_type: text
 
   # 3.2
