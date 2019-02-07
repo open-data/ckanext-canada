@@ -8,7 +8,7 @@ import json
 from datetime import date
 from unicodecsv import DictReader
 from _csv import Error as _csvError
-from babel.numbers import format_currency
+from babel.numbers import format_currency, format_decimal
 
 import paste.script
 from pylons import config
@@ -37,7 +37,7 @@ class PDCommand(CkanCommand):
     Usage::
 
         paster <pd-type> clear
-                         rebuild [-f <file>] [-s <solr-url>]
+                         rebuild [--lenient] [-f <file>] [-s <solr-url>]
 
     Options::
 
@@ -45,6 +45,8 @@ class PDCommand(CkanCommand):
                                    instead of the (default) CKAN database
         -s/--solr-url <url>        use specified solr URL as output,
                                    instead of default from ini file.
+        --lenient                  allow rebuild from csv files without checking
+                                   that columns match expected columns
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -62,6 +64,11 @@ class PDCommand(CkanCommand):
         '--solr-url',
         dest='solr_url',
         help='Solr URL for output')
+    parser.add_option(
+        '--lenient',
+        action='store_false',
+        dest='strict',
+        default=True)
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -77,7 +84,9 @@ class PDCommand(CkanCommand):
             return rebuild(
                 self.command_name,
                 [self.options.csv_file] if self.options.csv_file else None,
-                self.options.solr_url)
+                self.options.solr_url,
+                self.options.strict,
+                )
 
 
 class PDNilCommand(CkanCommand):
@@ -96,6 +105,8 @@ class PDNilCommand(CkanCommand):
                                         (default) CKAN database
         -s/--solr-url <url>             use specified solr URL as output,
                                         instead of default from ini file.
+        --lenient                  allow rebuild from csv files without checking
+                                   that columns match expected columns
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -114,6 +125,11 @@ class PDNilCommand(CkanCommand):
         '--solr-url',
         dest='solr_url',
         help='Solr URL for output')
+    parser.add_option(
+        '--lenient',
+        action='store_false',
+        dest='strict',
+        default=True)
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -129,7 +145,9 @@ class PDNilCommand(CkanCommand):
             return rebuild(
                 self.command_name,
                 self.options.csv_files,
-                self.options.solr_url)
+                self.options.solr_url,
+                self.options.strict,
+                )
 
 
 def clear_index(command_name, solr_url=None, commit=True):
@@ -138,7 +156,7 @@ def clear_index(command_name, solr_url=None, commit=True):
 
 
 
-def rebuild(command_name, csv_files=None, solr_url=None):
+def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
     """
     Implement rebuild command
 
@@ -164,7 +182,7 @@ def rebuild(command_name, csv_files=None, solr_url=None):
             chromo = get_chromo(resource_name)
             geno = get_geno(chromo['dataset_type'])
 
-            for org_id, records in csv_data_batch(csv_file, chromo, strict=False):
+            for org_id, records in csv_data_batch(csv_file, chromo, strict=strict):
                 records = [dict((k, safe_for_solr(v)) for k, v in
                             row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
@@ -320,6 +338,15 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         if 'solr_static_fields' in chromo:
             solrrec.update(chromo['solr_static_fields'])
 
+        ssrf = chromo.get('solr_sum_range_facet')
+        if ssrf:
+            key = ssrf['sum_field']
+            float_value = float(solrrec[key])
+            solrrec.update(numeric_range_facet(
+                key,
+                ssrf['facet_values'],
+                float_value))
+
         if unmatched:
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
@@ -430,6 +457,46 @@ def dollar_range_facet(key, facet_range, float_value):
         key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
 
 
+def en_numeric(v):
+    return format_decimal(v, locale='en_CA')
+
+
+def fr_numeric(v):
+    return format_decimal(v, locale='fr_CA')
+
+
+def numeric_range_facet(key, facet_range, float_value):
+    """
+    return solr range fields for numeric float_value in ranges
+    given by facet_range, in English and French
+
+    E.g. if facet_range is: [0, 1000, 5000] then resulting facets will be
+        "A: 5,000"
+        "B: 1,000 - 4,999"
+        "C: 0 - 999"
+    in English
+    """
+    last_fac = None
+    for i, fac in enumerate(facet_range):
+        if float_value < fac:
+            break
+        last_fac = fac
+    else:
+        return {
+            key + u'_range': unicode(i),
+            key + u'_en': u'A: ' + en_numeric(fac) + u'+',
+            key + u'_fr': u'A: ' + fr_numeric(fac) + u' +'}
+
+    if last_fac is None:
+        return {}
+
+    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    return {
+        key + u'_range': unicode(i - 1),
+        key + u'_en': prefix + en_numeric(last_fac) + u' - ' + en_numeric(fac-1),
+        key + u'_fr': prefix + fr_numeric(last_fac) + u' - ' + fr_numeric(fac-1)}
+
+
 def sum_to_field(solrrec, key, value):
     """
     modify solrrec dict in-place to add this value to solrrec[key]
@@ -440,7 +507,6 @@ def sum_to_field(solrrec, key, value):
         else:
             float_value = float(value)
     except (ValueError, TypeError):
-        solrrec[key] = None # failed to find sum
         return
     try:
         solrrec[key] = float_value + solrrec.get(key, 0)
@@ -482,11 +548,15 @@ def compare_output(prev_solrrec, solrrec, chromo):
         out[comp['previous_year']] = prev_value
         try:
             float_prev = float(prev_value)
-            float_cur = float(solrrec[f['datastore_id']])
-            change = float_cur - float_prev
         except ValueError:
             float_prev = None
+        try:
+            float_cur = float(solrrec[f['datastore_id']])
+        except ValueError:
             float_cur = None
+        if float_prev is not None and float_cur is not None:
+            change = float_cur - float_prev
+        else:
             change = None
 
         out[comp['change']] = change
@@ -495,7 +565,8 @@ def compare_output(prev_solrrec, solrrec, chromo):
             for sp in list_or_none(comp['sum_previous_year']):
                 sum_to_field(out, sp, float_prev)
         if 'sum_change' in comp:
+            sum_change = (float_cur or 0) - (float_prev or 0)
             for sc in list_or_none(comp['sum_change']):
-                sum_to_field(out, sc, change)
+                sum_to_field(out, sc, sum_change)
 
     return out

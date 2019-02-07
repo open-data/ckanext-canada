@@ -6,7 +6,12 @@
         "serverSide": true,
         "processing": true,
         "ajax": {
-          "url": "/datatable/{{ resource_name }}/{{ resource_id }}",
+          "url": "{{ h.url_for(
+            controller='ckanext.canada.controller:CanadaController',
+            action='datatable',
+            resource_name=resource_name,
+            resource_id=resource_id,
+            ) }}",
           "type": "POST"
         },
         "columns": [

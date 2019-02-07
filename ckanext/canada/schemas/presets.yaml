@@ -25,6 +25,7 @@ presets:
     field_name: name
     form_snippet: null
     validators: if_empty_same_as(id)
+      unicode not_empty canada_validate_generate_uuid
 
 # Field = Collection Type.
 # Display the English or the French Description from the Collection Type code table (refer to Data Migration), depending on the selected language.

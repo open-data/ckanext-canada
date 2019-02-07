@@ -102,10 +102,10 @@ class TestNAVLSchema(FunctionalTestBase):
     def test_basic_package(self):
         assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='basic_package', **self.incomplete_pkg)
+            name='12345678-9abc-def0-1234-56789abcdef0', **self.incomplete_pkg)
 
         resp = self.normal_action.package_create(
-            name='basic_package', **self.complete_pkg)
+            name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
         assert resp['title_translated']['fr'] == u'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])
@@ -114,24 +114,20 @@ class TestNAVLSchema(FunctionalTestBase):
     def test_keyword_validation(self):
         assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['test'], 'fr':['not  ok']}))
 
         assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['test'], 'fr':['one too short', 'q']}))
 
         assert_raises(ValidationError,
             self.normal_action.package_create,
-            name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['this is much too long' * 50], 'fr':['test']}))
 
         self.normal_action.package_create(
-            name='keyword_validation',
             **dict(self.complete_pkg,
                 keywords={'en':['these', 'ones', 'are', 'a-ok'], 'fr':['test']}))
 
@@ -139,19 +135,19 @@ class TestNAVLSchema(FunctionalTestBase):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
         norm_uuid = '30569200-43b9-43f1-a1fb-9e7974cbb997'
         self.normal_action.package_create(
-            name='custom_dataset_id', id=my_uuid, **self.complete_pkg)
+            name='02345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
 
-        resp = self.action.package_show(id='custom_dataset_id')
+        resp = self.action.package_show(id='02345678-9abc-def0-1234-56789abcdef0')
         assert resp['id'] == norm_uuid
-        assert resp['name'] == 'custom_dataset_id'
+        assert resp['name'] == '02345678-9abc-def0-1234-56789abcdef0'
 
         assert_raises(ValidationError,
             self.sysadmin_action.package_create,
-            name='repeated_dataset_id', id=my_uuid, **self.complete_pkg)
+            name='12345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
 
         assert_raises(ValidationError,
             self.sysadmin_action.package_create,
-            name='invalid_dataset_id', id='my-custom-id', **self.complete_pkg)
+            id='my-custom-id', **self.complete_pkg)
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
