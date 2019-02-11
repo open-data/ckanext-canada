@@ -14,6 +14,7 @@ def main():
 
     reader = csv.DictReader(sys.stdin)
     writer = csv.DictWriter(sys.stdout, reader.fieldnames)
+    writer.writeheader()
     for row in reader:
         if datetime.strptime(row['end_date'], '%Y-%m-%d') > current:
             writer.writerow(row)
