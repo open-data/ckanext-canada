@@ -35,13 +35,15 @@ def main():
         titles = org['title'].encode('utf-8').split(' | ')
         row = {
             'uuid': org['id'].lower(),
-            'name_en': titles[0].strip(),
-            'name_fr': titles[-1].strip(),
+            'title_en': titles[0].strip(),
+            'title_fr': titles[-1].strip(),
             'open_canada_id': org['name'],
         }
         for e in org['extras']:
             if e['key'] == 'shortform':
-                row['shortform_en'] = e['value'].strip()
+                row['short_form_en'] = e['value'].strip()
+            if e['key'] == 'shortform_fr':
+                row['short_form_fr'] = e['value'].strip()
             elif e['key'] in COLS:
                 row[e['key']] = e['value'].strip()
 
