@@ -15,10 +15,10 @@ import codecs
 
 COLS = [
     'uuid',
-    'name_en',
-    'name_fr',
-    'shortform_en',
-    'shortform_fr',
+    'title_en',
+    'title_fr',
+    'short_form_en',
+    'short_form_fr',
     'department_number',
     'umd_number',
     'open_canada_id',
