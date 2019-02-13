@@ -121,10 +121,7 @@ def dt(legacy_date):
 def main():
     in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 
-    sys.stdout.write(codecs.BOM_UTF8)
-    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
-    out_csv.writeheader()
-
+    orgs = {}
     for line in in_csv:
         try:
             row = {
@@ -148,8 +145,18 @@ def main():
                 'high_profile': 'N',
                 'status': 'CN',
             }
-            out_csv.writerow(row)
+            if not row['title_fr']:
+                sys.stderr.write(line['ID'] + ': missing title_fr\n')
+            else:
+                orgs.setdefault(row['owner_org'], []).append(row)
         except KeyError as err:
             sys.stderr.write(line['ID'] + ': ' + str(err) + '\n')
+
+    sys.stdout.write(codecs.BOM_UTF8)
+    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
+    out_csv.writeheader()
+    for o in sorted(orgs):
+        for row in orgs[o]:
+            out_csv.writerow(row)
 
 main()

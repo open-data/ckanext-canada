@@ -144,7 +144,7 @@ resources:
       en: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
       fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
@@ -164,7 +164,7 @@ resources:
       en: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
       fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
@@ -542,9 +542,9 @@ resources:
         NEW.subjects = crval.clean;
         errors := errors || required_error(NEW.title_en, 'title_en');
         errors := errors || required_error(NEW.title_fr, 'title_fr');
-        errors := errors || required_error(NEW.description_en, 'description_en');
-        errors := errors || required_error(NEW.description_fr, 'description_fr');
         IF NEW.end_date > '2018-01-01'::date THEN
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
           errors := errors || required_error(NEW.target_participants_and_audience,
             'target_participants_and_audience');
         END IF;
