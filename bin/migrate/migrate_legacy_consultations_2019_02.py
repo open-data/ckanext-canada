@@ -114,7 +114,9 @@ SUBJ_MAP = {
 }
 
 def dt(legacy_date):
-    return datetime.strptime(legacy_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    d = datetime.strptime(legacy_date, '%d-%m-%Y')
+    assert d < datetime(2018,1,1), d
+    return d.strftime('%Y-%m-%d')
 
 def main():
     in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
@@ -133,13 +135,18 @@ def main():
                 'description_fr': line['description_fr'],
                 'start_date': dt(line['startdate']),
                 'end_date': dt(line['enddate']),
-                'report_link_en': line['urladdress_en'],
-                'report_link_fr': line['urladdress_fr'],
+                'profile_page_en': line['urladdress_en'],
+                'profile_page_fr': line['urladdress_fr'],
                 'owner_org': ORG_MAP[line['department_en']],
                 'owner_org_title': '',
                 'subjects':
                     ','.join(SUBJ_MAP[s] for s in line['subjects_en'].split(' | '))
                     if line['subjects_en'] else '',
+                'user_modified': '*',  # special "we don't know" value
+                'publishable': 'Y',
+                'report_available_online': 'N',
+                'high_profile': 'N',
+                'status': 'CN',
             }
             out_csv.writerow(row)
         except KeyError as err:

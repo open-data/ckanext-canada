@@ -84,7 +84,7 @@ resources:
       en: This field indicates the different subjects related to the engagement process.
       fr: Cette zone indique les différents sujets sur lesquels porte le processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
@@ -184,7 +184,7 @@ resources:
       en: This field provides information regarding the target participants and audience of the engagement process.
       fr: Cette zone précise les participants visés et le public cible du processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
@@ -273,7 +273,7 @@ resources:
       en: This field provides the link to the English engagement information profile page.
       fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
@@ -292,7 +292,7 @@ resources:
       en: This field provides the link to the French engagement information profile page.
       fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
@@ -534,7 +534,9 @@ resources:
           'partner_departments');
         errors := errors || crval.error;
         NEW.partner_departments := crval.clean;
-        errors := errors || required_error(NEW.subjects, 'subjects');
+        IF NEW.end_date > '2018-01-01'::date THEN
+          errors := errors || required_error(NEW.subjects, 'subjects');
+        END IF;
         crval := choices_clean_error(NEW.subjects, {subjects}, 'subjects');
         errors := errors || crval.error;
         NEW.subjects = crval.clean;
@@ -542,8 +544,10 @@ resources:
         errors := errors || required_error(NEW.title_fr, 'title_fr');
         errors := errors || required_error(NEW.description_en, 'description_en');
         errors := errors || required_error(NEW.description_fr, 'description_fr');
-        errors := errors || required_error(NEW.target_participants_and_audience,
-          'target_participants_and_audience');
+        IF NEW.end_date > '2018-01-01'::date THEN
+          errors := errors || required_error(NEW.target_participants_and_audience,
+            'target_participants_and_audience');
+        END IF;
         crval := choices_clean_error(NEW.target_participants_and_audience,
           {target_participants_and_audience}, 'target_participants_and_audience');
         errors := errors || crval.error;
