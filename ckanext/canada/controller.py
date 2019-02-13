@@ -31,6 +31,7 @@ from ckan.controllers.package import PackageController
 from ckan.logic import parse_params
 
 from ckanext.canada.helpers import normalize_strip_accents
+from ckanext.canada.urlsafe import url_part_escape, url_part_unescape
 from pylons.i18n import _
 from pylons import config, session
 
@@ -217,7 +218,7 @@ class CanadaController(BaseController):
                         action='update_pd_record',
                         owner_org=pkg['organization']['name'],
                         resource_name=resource_name,
-                        pk=row[0]),
+                        pk=url_part_escape(row[0])),
                     row[0])
 
         return json.dumps({
@@ -629,7 +630,7 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 class PDUpdateController(BaseController):
 
     def update_pd_record(self, owner_org, resource_name, pk):
-        pk = list(pk.split(','))
+        pk = [url_part_unescape(p) for p in pk.split(',')]
 
         lc = LocalCKAN(username=c.user)
 
