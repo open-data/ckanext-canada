@@ -42,7 +42,7 @@ class TestConsultations(FunctionalTestBase):
                     'title_fr': u'seulment français',
                     'description_en': 'only english',
                     'target_participants_and_audience': ["ZOMBIES", "IP", "IG", "PT"],
-                    'start_date': "2017-05-15",
+                    'start_date': "2018-05-15",
                     'status': 'P',
                     'profile_page_en': 'http://example.gc.ca/en',
                     'profile_page_fr': 'http://example.gc.ca/fr',
