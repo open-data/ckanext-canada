@@ -42,7 +42,7 @@ class TestConsultations(FunctionalTestBase):
                     'title_fr': u'seulment français',
                     'description_en': 'only english',
                     'target_participants_and_audience': ["ZOMBIES", "IP", "IG", "PT"],
-                    'start_date': "2018-05-15",
+                    'end_date': "2018-05-15",
                     'status': 'P',
                     'profile_page_en': 'http://example.gc.ca/en',
                     'profile_page_fr': 'http://example.gc.ca/fr',
@@ -58,7 +58,7 @@ class TestConsultations(FunctionalTestBase):
             'title_en': ['This field must not be empty'],
             'description_fr': ['This field must not be empty'],
             'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
-            'end_date': ['This field must not be empty'],
+            'start_date': ['This field must not be empty'],
             'partner_departments': ['Invalid choice: "DARN"'],
             'rationale': ['This field must not be empty'],
             }
