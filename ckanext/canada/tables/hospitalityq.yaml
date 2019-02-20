@@ -31,7 +31,7 @@ resources:
     excel_required: true
     format_type:
       en: "H-2019-P1-00001 – this sequence will continue for each line item (i.e.: H-2019-P1-00001, H-2019-P1-00002, H-2019-P1-00003, etc.)"
-      fr: H-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-Q1-00002, H -2016-Q1-00003….)
+      fr: H-2016-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-P1-00002, H -2016-P1-00003….)
     datastore_type: text
 
   # 3.2
@@ -321,7 +321,7 @@ resources:
 
   examples:
     record:
-      ref_number: H-2019-Q3-001
+      ref_number: H-2019-P3-001
       disclosure_group: SLE
       title_en: Vice-Chairperson, Deputy Minister, Parliamentary Secretary, Assistant Deputy Minister, Programs Branch
       title_fr: Vice-président, sous-ministre, secrétaire parlementaire, sous-ministre adjoint, Direction générale des programmes
