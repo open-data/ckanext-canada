@@ -75,7 +75,7 @@ resources:
     description:
       en: This field will display the position title of the person who travelled, in French.
       fr: Cette zone indique le titre du poste de la personne qui a voyagé, en français.
-    obligation: Optional
+    obligation: Mandatory
     format_type: Free text
     datastore_type: text
     excel_column_width: 30
