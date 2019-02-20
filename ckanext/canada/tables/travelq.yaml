@@ -129,6 +129,7 @@ resources:
       en: To cover the date the travel started
       fr: Date du début du voyage
     obligation: Mandatory
+    excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_column_width: 20
