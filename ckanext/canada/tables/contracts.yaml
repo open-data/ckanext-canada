@@ -12,6 +12,9 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
   resource_name: contracts
+
+  excel_data_num_rows: 5000
+
   fields:
 
   - datastore_id: reference_number
@@ -204,7 +207,8 @@ resources:
     obligation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
-    excel_required_formula: '{document_type_code}="A"'
+    excel_required_formula: 'TRIM(LEFT({document_type_code},1))="A"'
+    excel_error_formula: 'AND(TRIM(LEFT({document_type_code},1))="A",VALUE({cell})=0)'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -861,7 +865,7 @@ resources:
     obligation:
       en: This field must be populated if a standing offer or supply arrangement number was disclosed
       fr: Ce champ doit être rempli si un numéro d’offre à commandes ou d’un arrangement en matière d’approvisionnement a été divulgué
-    excel_required_formula: 'NOT(ISBLANK({standing_offer_number}))'
+    excel_required_formula: '{standing_offer_number}<>""'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choices:
