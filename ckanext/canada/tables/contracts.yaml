@@ -208,7 +208,6 @@ resources:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
     excel_required_formula: 'TRIM(LEFT({document_type_code},1))="A"'
-    excel_error_formula: 'AND(TRIM(LEFT({document_type_code},1))="A",VALUE({cell})=0)'
     datastore_type: money
 
   - datastore_id: comments_en
