@@ -279,7 +279,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     excel_column_width: 40
     choices:
       "0":
@@ -558,7 +558,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       G:
         en: Good
@@ -609,7 +609,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       AC:
         en: Advance Contract Award Notice
@@ -638,7 +638,7 @@ resources:
     excel_error_formula: 'AND({default_formula},{cell}<>0,{cell}<>"0",{cell}<>5,{cell}<>"5")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       "00":
         en: None
@@ -752,7 +752,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       Y:
         en: "Yes"
@@ -825,7 +825,7 @@ resources:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property_code}="C",{intellectual_property_code}="NA",{intellectual_property_code}=""))'
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       Y:
         en: "Yes"
@@ -846,7 +846,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       Y:
         en: "Yes"
@@ -904,7 +904,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       C:
         en: Contract
