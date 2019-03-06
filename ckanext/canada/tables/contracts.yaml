@@ -10,8 +10,8 @@ portal_type: info
 collection: pd
 
 upload_info:
-  en: To ensure the validation rules within the template are maintained, please paste your data using the “Paste Values” function. This can be done by right-clicking, selecting Paste Special and then clicking Values
-  fr: Pour garantir que les règles de validation à l’intérieur du gabarit soient conservées, veuillez coller vos données en utilisant la fonction « Coller valeurs ». Cela peut se faire en cliquant sur le bouton droit de la souris, en sélectionnant Collage spécial et ensuite, en cliquant sur Valeurs.
+  en: To ensure the validation rules within the template are maintained, please paste your data using the “Paste Values” function. This can be done by right-clicking, selecting “Paste Special” and then clicking “Values”.
+  fr: Pour garantir que les règles de validation à l’intérieur du gabarit soient conservées, veuillez coller vos données en utilisant la fonction « Coller valeurs ». Cela peut se faire en cliquant sur le bouton droit de la souris, en sélectionnant « Collage spécial » et ensuite, en cliquant sur « Valeurs ».
 
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
@@ -1044,7 +1044,7 @@ resources:
       comments_fr: "Ce marché a été omis dans une divulgation publique précédente."
       additional_comments_en: "10-Months subscription to Altmetric Explorer for Institutions"
       additional_comments_fr: "Abonnement de 10 mois à Altmetric Explorer for Institutions"
-      agreement_type_code: "N"
+      agreement_type_code: "Y"
       commodity_type_code: "S"
       commodity_code: "K105"
       country_of_origin: "CA"
