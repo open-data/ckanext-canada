@@ -18,6 +18,7 @@ import urllib2
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
+from ckanext.canada import search_integration
 from ckanext.canada.metadata_xform import metadata_xform
 from ckanext.canada.triggers import update_triggers
 
@@ -56,6 +57,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
+                      rebuild-external-search
                       update-triggers
                       update-inventory-votes <votes.json>
 
@@ -148,6 +150,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'update-inventory-votes':
             update_inventory_votes(*self.args[1:])
+
+        elif cmd == 'rebuild-external-search':
+            self.rebuild_external_search(self)
 
         else:
             print self.__doc__
@@ -424,6 +429,9 @@ class CanadaCommand(CkanCommand):
             if not self.options.brief:
                 print "# {0}".format(since_date.isoformat())
 
+    @staticmethod
+    def rebuild_external_search(self):
+        search_integration.rebuild_search_index(LocalCKAN())
 
 
 def _trim_package(pkg):

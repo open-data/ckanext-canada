@@ -523,10 +523,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
-        search_integration.add_to_search_index(data_dict)
+        search_integration.add_to_search_index(data_dict, in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):
+        search_integration.delete_from_search_index(data_dict['id'])
         return data_dict
 
     def after_show(self, context, data_dict):
