@@ -41,13 +41,14 @@ def add_to_search_index(data_dict, in_bulk=False):
         frequency_codes = scheming_choices_label_by_value(scheming_get_preset('canada_frequency')['choices'])
 
         org_title_at_publication = json.loads(data_dict['org_title_at_publication']) if \
-            data_dict['org_title_at_publication'] is str else data_dict['org_title_at_publication']
+            isinstance(data_dict['org_title_at_publication'], str) else data_dict['org_title_at_publication']
         owner_org_title_en = org_title_at_publication['en']
         owner_org_title_fr = org_title_at_publication['fr']
 
         subjects_en = []
         subjects_fr = []
-        subjects = json.loads(data_dict['subject']) if data_dict['subject'] is str else data_dict['subject']
+        subjects = json.loads(data_dict['subject']) if \
+            isinstance(data_dict['subject'], str) else data_dict['subject']
         for s in subjects:
             subjects_en.append(subject_codes['en'][s].replace(",", ""))
             subjects_fr.append(subject_codes['fr'][s].replace(",", ""))
@@ -66,7 +67,8 @@ def add_to_search_index(data_dict, in_bulk=False):
                 if r['resource_type'] in resource_type_codes['fr'] else '')
             resource_fmt.append(r['format'])
 
-            resource_name = json.loads(r['name_translated']) if r['name_translated'] is str else r['name_translated']
+            resource_name = json.loads(r['name_translated']) if \
+                isinstance(r['name_translated'], str) else r['name_translated']
             if 'en' in resource_name:
                 resource_title_en.append(resource_name['en'])
             elif 'fr-t-en' in resource_name:
@@ -76,10 +78,10 @@ def add_to_search_index(data_dict, in_bulk=False):
             elif 'en-t-fr' in resource_name:
                 resource_title_fr.append(resource_name['en-t-fr'].strip())
 
-        notes_translated = json.loads(data_dict['notes_translated']) if data_dict['notes_translated'] is str \
-            else data_dict['notes_translated']
-        title_translated = json.loads(data_dict['title_translated']) if data_dict['title_translated'] is str \
-            else data_dict['title_translated']
+        notes_translated = json.loads(data_dict['notes_translated']) if \
+            isinstance(data_dict['notes_translated'], str) else data_dict['notes_translated']
+        title_translated = json.loads(data_dict['title_translated']) if \
+            isinstance(data_dict['title_translated'], str) else data_dict['title_translated']
         od_obj = {
             'portal_type_en_s': type_codes['en'][data_dict['type']],
             'portal_type_fr_s': type_codes['fr'][data_dict['type']],
@@ -115,7 +117,8 @@ def add_to_search_index(data_dict, in_bulk=False):
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
         }
 
-        keywords = json.loads(data_dict['keywords']) if data_dict['keywords'] is str else data_dict['keywords']
+        keywords = json.loads(data_dict['keywords']) if \
+            isinstance(data_dict['keywords'], str) else data_dict['keywords']
         if 'en' in keywords:
             od_obj['keywords_en_s'] = keywords['en']
         elif 'fr-t-en' in keywords:
