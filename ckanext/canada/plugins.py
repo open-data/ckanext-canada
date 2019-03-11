@@ -512,6 +512,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return pkg_dict
 
     def after_create(self, context, data_dict):
+        search_integration.add_to_search_index(data_dict, in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
