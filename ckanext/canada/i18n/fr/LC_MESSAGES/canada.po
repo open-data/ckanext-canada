@@ -780,34 +780,6 @@ msgstr "Divulgation proactive – Dépenses de voyage"
 msgid "Access, upload and modify the quarterly travel expense reports for your organization"
 msgstr "Accès, téléversement et modification des rapports trimestriels sur les frais de déplacement pour votre organisation"
 
-msgid "Reference Number"
-msgstr "Numéro de demande"
-
-# this might be too broad (CKAN translates to "Titre")
-msgid "Name"
-msgstr "Nom"
-
-msgid "Purpose of Travel"
-msgstr "But du voyage"
-
-msgid "Airfare"
-msgstr "Frais aériens"
-
-msgid "Other transportation"
-msgstr "Autres frais de transport"
-
-msgid "Accommodation"
-msgstr "Hébergement"
-
-msgid "Meals and incidentals"
-msgstr "Frais de repas et frais accessoires"
-
-msgid "Other expenses"
-msgstr "Autres dépenses"
-
-msgid "Total Amount"
-msgstr "Montant total"
-
 msgid "Quarter"
 msgstr "trimestre"
 
@@ -822,18 +794,6 @@ msgstr "Divulgation proactive – Dépenses d'accueil (Rien à signaler)"
 
 msgid "Access, upload and modify the quarterly hospitality expenses for your organization"
 msgstr "Accès, téléversement et modification des dépenses trimestrielles liées à l’accueil pour votre organisation"
-
-msgid "Disclosure Group"
-msgstr "Groupe de divulgation"
-
-msgid "Attendees (Government of Canada Employees)"
-msgstr "Participants (Nombre d’employés du gouvernement du Canada)"
-
-msgid "Attendees (Guests)"
-msgstr "Participants (Nombre d’invités)"
-
-msgid "Location"
-msgstr "Lieu"
 
 msgid "Proactive Disclosure - Contracts over 10K (Quarterly)"
 msgstr "Divulgation proactive – Contrats attribués de plus de 10 000 $ (trimestriels)"
@@ -916,89 +876,11 @@ msgstr "Divulgation proactive"
 msgid "This dataset includes all of the reports on contracts issued by or on behalf of your organization."
 msgstr "Ce jeu de données comprend tous les rapports sur les contrats qui ont été émis par ou pour le compte de votre organisation."
 
-msgid "Vendor Name"
-msgstr "Nom du fournisseur"
-
-msgid "Contract Date"
-msgstr "Date du contrat"
-
-msgid "Economic Object Code"
-msgstr "Code d’article économique"
-
-msgid "Description of Work English"
-msgstr "Description du travail en anglais"
-
-msgid "Description of Work French"
-msgstr "Description du travail en français"
-
-msgid "Contract Period Start Date"
-msgstr "Date de début du contrat"
-
-msgid "Contract Period End Date or Delivery Date"
-msgstr "Date de clôture du contrat ou Date de livraison"
-
-msgid "Total Contract Value"
-msgstr "Valeur totale du contrat"
-
-msgid "Original Contract Value"
-msgstr "Valeur du contrat à l’origine"
-
-msgid "Contract Amendment Value"
-msgstr "Valeur de modification"
-
-msgid "Comments English"
-msgstr "Commentaires en anglais"
-
-msgid "Comments French"
-msgstr "Commentaires en français"
-
 msgid "Additional Comments English"
 msgstr "Commentaires additionnels en anglais"
 
 msgid "Additional Comments French"
 msgstr "Commentaires additionnels en français"
-
-msgid "Agreement Type"
-msgstr "Type d'accord"
-
-msgid "Commodity Type"
-msgstr "Type de produit"
-
-msgid "Commodity Code"
-msgstr "Code de produit"
-
-msgid "Country of Origin"
-msgstr "Pays d'origine"
-
-msgid "Solicitation Procedure"
-msgstr "Méthode d'invitation à soumissionner"
-
-msgid "Limited Tendering Reason"
-msgstr "Raisons justifiant le recours à l'appel d'offres limité"
-
-msgid "Derogation"
-msgstr "Dérogation"
-
-msgid "Procurement Strategy for Aboriginal Business Incidental Indicator"
-msgstr "Indicateur de la stratégie d’approvisionnement auprès des entreprises autochtones"
-
-msgid "Intellectual Property Indicator"
-msgstr "Indicateur de propriété intellectuelle"
-
-msgid "Potential for Commercial Exploitation"
-msgstr "Potentiel d'exploitation commerciale"
-
-msgid "Former Public Servant in receipt of a PSSA pension"
-msgstr "Ancien fonctionnaire recevant une pension en vertu de la LPFP"
-
-msgid "Call-up or Contract against a Standing Offer or Supply Arrangement Agreement"
-msgstr "Commande subséquente à une l'offre à commandes ou arrangements en matière d'approvisionnement"
-
-msgid "Standing Offer or Supply Arrangement Number"
-msgstr "Numéro de l’offre à commandes ou de l’accord en matière d’approvisionnement"
-
-msgid "Document Type"
-msgstr "Type d’instrument"
 
 msgid "Proactive Disclosure - Grants and Contributions"
 msgstr "Divulgation proactive - Subventions et les contributions"
@@ -1101,9 +983,6 @@ msgstr "Accès, téléversement et modifications des rapports sur les contributi
 
 msgid "Access, upload and modify the position reclassification reports for your organization"
 msgstr "Accès, téléversement et modifications des rapports sur les contributions et les subventions pour votre organisation"
-
-msgid "Procurement Identification Number"
-msgstr "Numéro d’identification d’approvisionnement"
 
 msgid "Position Number"
 msgstr "Numéro du poste"
@@ -2102,9 +1981,6 @@ msgstr ""
 "<p>Ces ressources ne sont pas contrôlées par le gouvernement du Canada, et l’hyperlien est fourni uniquement pour la facilité d’utilisation des visiteurs de notre site Web. Nous ne sommes pas responsables de l’exactitude, l’actualité et la fiabilité du contenu. Le gouvernement du Canada n’offre aucune garantie à cet égard et n’est pas responsable des renseignements trouvés par l’entremise de ce lien.</p>\n"
 "\n"
 "<p>Les visiteurs devraient également savoir que les renseignements offerts par l’entremise de ce site Web ne sont pas gérés par le gouvernement du Canada et ne relèvent pas de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/P-21/index.html\">Loi sur la protection des renseignements personnels</a> ni de la <a href=\"http://laws-lois.justice.gc.ca/fra/lois/O-3.01/\">Loi sur les langues officielles</a>, et qu’ils pourraient ne pas être accessibles aux personnes handicapées. Les renseignements offerts pourraient être uniquement disponibles dans la langue utilisée dans le site en question. En ce qui concerne la protection des renseignements personnels, les visiteurs devraient vérifier les politiques de confidentialité de ce site Web non gouvernemental avant de fournir leurs renseignements personnels.</p>"
-
-msgid "This metadata element is machine translated by DeepL.com. If you have questions, contact open-ouvert@tbs-sct.gc.ca"
-msgstr "Cet élément de métadonnée est traduit automatiquement par DeepL.com. Veuillez communiquer avec open-ouvert@tbs-sct.gc.ca si vous avez des questions."
 
 msgid "Edit"
 msgstr "Modifier"

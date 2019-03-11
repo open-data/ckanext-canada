@@ -222,6 +222,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_resource('public/static/js', 'js')
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
+ckanext.canada:tables/briefingt.yaml
 ckanext.canada:tables/contracts.yaml
 ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
