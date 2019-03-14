@@ -57,7 +57,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
-                      rebuild-external-search
+                      rebuild-external-search [-r]
                       update-triggers
                       update-inventory-votes <votes.json>
 
@@ -82,6 +82,9 @@ class CanadaCommand(CkanCommand):
                                     failures, default: 1
         -u/--ckan-user <username>   sets the owner of packages created,
                                     default: ckan system user
+        -r/--rebuild-unindexed-only When rebuilding teh advanced search Solr core
+                                    only index datasets not already present in the
+                                    second Solr core
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -120,6 +123,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
     parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
     parser.add_option('--portal', dest='portal', action='store_true')
+    parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
 
     def command(self):
         '''
@@ -152,7 +156,7 @@ class CanadaCommand(CkanCommand):
             update_inventory_votes(*self.args[1:])
 
         elif cmd == 'rebuild-external-search':
-            self.rebuild_external_search(self)
+            self.rebuild_external_search()
 
         else:
             print self.__doc__
@@ -429,9 +433,8 @@ class CanadaCommand(CkanCommand):
             if not self.options.brief:
                 print "# {0}".format(since_date.isoformat())
 
-    @staticmethod
     def rebuild_external_search(self):
-        search_integration.rebuild_search_index(LocalCKAN())
+        search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only)
 
 
 def _trim_package(pkg):
