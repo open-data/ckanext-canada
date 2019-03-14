@@ -42,10 +42,10 @@ resources:
       en: This field identifies whether this record can be published as a summary on the appropriate public facing website.
       fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
     obligation: Mandatory
-    excel_required: true
+    excel_required0: true 
     form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation: This field must not be empty ### new requirement - if status="NF" then publishable = "N" 
     visible_to_public: No
     occurrence: Single
     datastore_type: text
@@ -263,6 +263,10 @@ resources:
       CR:
         en: Closed – Report Available
         fr: Fermée – Rapport disponible
+      NF:
+        en: Not going forward
+        fr: ne pas aller de l'avant ### waiting on confirmation of translation
+        
 
   # 3.13
   - datastore_id: profile_page_en
@@ -563,6 +567,9 @@ resources:
         errors := errors || choice_error(NEW.high_profile, {high_profile}, 'high_profile');
         IF NEW.high_profile = 'Y' THEN
           errors := errors || required_error(NEW.rationale, 'rationale');
+        END IF;
+        IF NEW.status = 'NF' AND NEW.publishable 'Y' THEN
+          RAISE EXCEPTION 'If the consultation status is Not Going Forward, publishable must be set to no', 'status';
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
