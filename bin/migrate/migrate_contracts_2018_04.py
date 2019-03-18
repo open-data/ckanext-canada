@@ -23,6 +23,7 @@ DATE_FORMATS = [
     '%b-%d-%Y',
     '%m-%d-%Y',
     '%y-%m-%d',
+    '%d-%b-%y',
     '%Y/%m/%d',
     '%m/%d/%Y', # ambiguous 1
     '%d/%m/%Y', # ambiguous 2
