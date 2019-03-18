@@ -432,20 +432,6 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'contracts_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.reference_number, 'reference_number');
-                NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
-                NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
-                NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
-                RETURN NEW;
-            END;
-            ''')
-
-    lc.action.datastore_function_create(
         name=u'integer_or_na_nd',
         or_replace=True,
         arguments=[
