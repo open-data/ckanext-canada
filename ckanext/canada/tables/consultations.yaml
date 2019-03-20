@@ -45,7 +45,7 @@ resources:
     excel_required: true
     form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation: This field must not be empty (if status is set to Not Going Forward, publishable must be no)
     visible_to_public: No
     occurrence: Single
     datastore_type: text
@@ -566,6 +566,9 @@ resources:
         errors := errors || choice_error(NEW.high_profile, {high_profile}, 'high_profile');
         IF NEW.high_profile = 'Y' THEN
           errors := errors || required_error(NEW.rationale, 'rationale');
+        END IF;
+        IF NEW.status = 'NF' THEN
+          errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable'); #To work on
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
