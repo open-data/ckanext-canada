@@ -43,6 +43,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
+    excel_full_text_choices: true
     choices:
       C01:
         en: User-friendly open government
@@ -85,6 +86,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # show choices based on commitments value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
+
     choices:
       C01.1:
         en: Make improvements to open.canada.ca (TBS)
@@ -265,6 +271,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # show choices based on commitments value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
+
     choices:
       C01.1.1:
         en: Pilot launched for users
@@ -679,6 +690,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     datastore_type: text
+    excel_full_text_choices: true
     choices:
       NS:
         en: Not started
@@ -778,7 +790,6 @@ resources:
       evidence_fr: Le matériel est toujours en cours de rédaction et n'est pas encore disponible publiquement
       challenges_en: What sorts of open government learning materials would you like to see? Which formats are most useful for learning purposes?
       challenges_fr: Quels types de matériels d'apprentissage du gouvernement ouvert aimeriez-vous voir? Quels formats sont les plus utiles à des fins d'apprentissage?
-    select
     filters:
       commitments: C01
     filter_one:
