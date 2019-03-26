@@ -713,8 +713,8 @@ resources:
       en: Progress during previous quarter (English)
       fr: Progrès au cours du trimestre précédent (anglais)
     description:
-      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "No progress made in previous quarter"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "No progress made in previous quarter"
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NIL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
     obligation: Mandatory
     excel_required: true
     datastore_type: text
@@ -724,8 +724,8 @@ resources:
       en: Progress during previous quarter (French)
       fr: Progrès au cours du trimestre précédent (français)
     description:
-      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "Aucun progrès réalisé au cours du trimestre précédent"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "Aucun progrès réalisé au cours du trimestre précédent"'
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NUL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
     obligation: Mandatory
     excel_required: true
     datastore_type: text
