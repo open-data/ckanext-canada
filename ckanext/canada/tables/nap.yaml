@@ -88,8 +88,9 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     excel_column_width: 80
-    # show choices based on commitments value
+    # choices based on commitments value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
 
     choices:
       C01.1:
@@ -273,8 +274,9 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     excel_column_width: 80
-    # show choices based on commitments value
+    # choices based on milestones value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
 
     choices:
       C01.1.1:
