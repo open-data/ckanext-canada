@@ -246,6 +246,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    excel_error_formula: ''
     excel_full_text_choices: true
     choices:
       P:
@@ -265,7 +266,7 @@ resources:
         fr: Fermée – Rapport disponible
       NF:
         en: Not Going Forward
-        fr: Ne va pas de l'avant  
+        fr: Ne va pas de l'avant
 
   # 3.13
   - datastore_id: profile_page_en
@@ -567,8 +568,8 @@ resources:
         IF NEW.high_profile = 'Y' THEN
           errors := errors || required_error(NEW.rationale, 'rationale');
         END IF;
-        IF NEW.status = 'NF' THEN
-          errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable'); #To work on
+        IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
+          errors := errors || ARRAY[['status', 'If Status is set to: Not Going Forward, Publish Record must be set to No']];
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
@@ -602,7 +603,7 @@ resources:
       status: P
       profile_page_en: http://example.gc.ca/en
       profile_page_fr: http://example.gc.ca/fr
-      subjects: ["AP", "CD", "HS", "SE"]
+      subjects: ["IP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
