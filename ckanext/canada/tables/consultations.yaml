@@ -49,6 +49,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       Y:
@@ -246,7 +247,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_error_formula: ''
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       P:
