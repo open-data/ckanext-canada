@@ -38,7 +38,7 @@ class TestConsultations(FunctionalTestBase):
                 records=[{
                     'registration_number': 'CCC0249',
                     'publishable': 'Q',
-                    'subjects': ["AP", "CD", "HS", "GEO", "SE", "MATH"],
+                    'subjects': ["IP", "CD", "HS", "GEO", "SE", "MATH"],
                     'title_fr': u'seulment français',
                     'description_en': 'only english',
                     'target_participants_and_audience': ["ZOMBIES", "IP", "IG", "PT"],
@@ -64,3 +64,16 @@ class TestConsultations(FunctionalTestBase):
             }
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_not_going_forward_unpublished(self):
+        lc = LocalCKAN()
+        record = get_chromo('consultations')['examples']['record']
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[dict(record, publishable='Y', status='NF')])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
+            }
+        assert_equal(err, expected)
