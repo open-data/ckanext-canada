@@ -272,7 +272,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
                 try:
-                    float_value = float(value)
+                    float_value = float(value.replace('$','').replace(',',''))
                 except ValueError:
                     pass
                 else:
