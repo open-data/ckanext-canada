@@ -1,17 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import hashlib
-import calendar
 import time
-import logging
-import json
-from datetime import date
-from unicodecsv import DictReader
-from _csv import Error as _csvError
 from babel.numbers import format_currency, format_decimal
 
 import paste.script
-from pylons import config
 from ckan.lib.cli import CkanCommand
 
 from ckanapi import LocalCKAN, NotFound
@@ -234,10 +227,6 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         s = orghash
         f = org
         p = org
-        if not pk:
-            s = hashlib.md5(s + recombinant_type + "-%d" % r['_id']).hexdigest()
-            f += u'|' + unicode(r['_id'])
-            p += u'|' + unicode(r['_id'])
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
             f += u'|' + unicode(r[k])
