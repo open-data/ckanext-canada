@@ -40,10 +40,9 @@ def add_to_search_index(data_dict, in_bulk=False):
         resource_type_codes = scheming_choices_label_by_value(scheming_get_preset('canada_resource_type')['choices'])
         frequency_codes = scheming_choices_label_by_value(scheming_get_preset('canada_frequency')['choices'])
 
-        org_title_at_publication = json.loads(data_dict['org_title_at_publication']) if \
-            isinstance(data_dict['org_title_at_publication'], str) else data_dict['org_title_at_publication']
-        owner_org_title_en = org_title_at_publication['en']
-        owner_org_title_fr = org_title_at_publication['fr']
+        org_title = data_dict['organization']['title'].split('|')
+        owner_org_title_en = org_title[0].strip()
+        owner_org_title_fr = org_title[1].strip()
 
         subjects_en = []
         subjects_fr = []
