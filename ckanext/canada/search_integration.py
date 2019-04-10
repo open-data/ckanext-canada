@@ -104,8 +104,8 @@ def add_to_search_index(data_dict, in_bulk=False):
             'description_txt_fr': notes_translated['fr'] if 'fr' in data_dict['notes_translated'] else '',
             'description_xlt_txt_fr': notes_translated['fr-t-en'] if 'fr-t-en' in notes_translated else '',
             'description_xlt_txt_en': notes_translated['en-t-fr'] if 'en-t-f-r' in notes_translated else '',
-            'title_en_s': title_translated['en'].encode('utf-8').strip() if 'en' in title_translated else '',
-            'title_fr_s': title_translated['fr'].encode('utf-8').strip() if 'fr' in title_translated else '',
+            'title_en_s': title_translated['en'] if 'en' in title_translated else '',
+            'title_fr_s': title_translated['fr'] if 'fr' in title_translated else '',
             'title_xlt_fr_s': title_translated['fr-t-en'] if 'fr-t-en' in title_translated else '',
             'title_xlt_en_s': title_translated['en-t-fr'] if 'en-t-fr' in title_translated else '',
             'resource_format_s': list(set(resource_fmt)),
@@ -155,7 +155,7 @@ def delete_from_search_index(id):
         log.error(x.message)
 
 
-def rebuild_search_index(portal):
+def rebuild_search_index(portal, unidexed_only=False):
 
     log = logging.getLogger('ckan.logic')
     data_sets = portal.action.package_list()
@@ -163,10 +163,14 @@ def rebuild_search_index(portal):
 
     try:
         search_solr = pysolr.Solr(od_search_solr_url)
-
-        search_solr.delete(q='*:*')
+        if not unidexed_only:
+            search_solr.delete(q='*:*')
         row_counter = 0
         for dsid in data_sets:
+            if unidexed_only:
+                sr = search_solr.search(q='id:{0}'.format(dsid))
+                if len(sr.docs) > 0:
+                    continue
             dataset = portal.action.package_show(id=dsid)
             add_to_search_index(dataset, in_bulk=True)
             row_counter += 1
