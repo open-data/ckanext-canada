@@ -271,7 +271,7 @@ resources:
       fr: Lien vers la page du profil des consultations (en anglais)
     description:
       en: This field provides the link to the English engagement information profile page.
-      fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de participation.
+      fr: Cette zone contient le lien vers la page de profil (en anglais) qui donne des renseignements sur le processus de participation du public.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
