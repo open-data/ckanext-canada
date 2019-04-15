@@ -45,10 +45,11 @@ resources:
     excel_required: true
     form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation: This field must not be empty (if status is set to Not Going Forward, publishable must be no)
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       Y:
@@ -246,6 +247,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       P:
@@ -567,6 +569,9 @@ resources:
         IF NEW.high_profile = 'Y' THEN
           errors := errors || required_error(NEW.rationale, 'rationale');
         END IF;
+        IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
+          errors := errors || ARRAY[['status', 'If Status is set to: Not Going Forward, Publish Record must be set to No']];
+        END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
         NEW.rationale = crval.clean;
@@ -599,7 +604,7 @@ resources:
       status: P
       profile_page_en: http://example.gc.ca/en
       profile_page_fr: http://example.gc.ca/fr
-      subjects: ["AP", "CD", "HS", "SE"]
+      subjects: ["IP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance
