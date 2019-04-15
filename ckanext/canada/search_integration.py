@@ -1,4 +1,4 @@
-import datetime
+from dateutil import parser
 import logging
 import pysolr
 import simplejson as json
@@ -111,7 +111,7 @@ def add_to_search_index(data_dict, in_bulk=False):
             'resource_format_s': list(set(resource_fmt)),
             'resource_title_en_s': resource_title_en,
             'resource_title_fr_s': resource_title_fr,
-            'last_modified_tdt': datetime.datetime.now().replace(microsecond=0).isoformat() + 'Z',
+            'last_modified_tdt': parser.parse(data_dict['metadata_modified']).replace(microsecond=0).isoformat() + 'Z',
             'ogp_link_en_s': '{0}{1}'.format(od_search_od_url_en, data_dict['name']),
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
         }
