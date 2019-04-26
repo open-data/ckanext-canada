@@ -155,7 +155,7 @@ def delete_from_search_index(id):
         log.error(x.message)
 
 
-def rebuild_search_index(portal, unidexed_only=False):
+def rebuild_search_index(portal, unindexed_only=False, refresh_index=False):
 
     log = logging.getLogger('ckan.logic')
     data_sets = portal.action.package_list()
@@ -163,11 +163,11 @@ def rebuild_search_index(portal, unidexed_only=False):
 
     try:
         search_solr = pysolr.Solr(od_search_solr_url)
-        if not unidexed_only:
+        if not unindexed_only and not refresh_index:
             search_solr.delete(q='*:*')
         row_counter = 0
         for dsid in data_sets:
-            if unidexed_only:
+            if unindexed_only:
                 sr = search_solr.search(q='id:{0}'.format(dsid))
                 if len(sr.docs) > 0:
                     continue

@@ -57,7 +57,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
-                      rebuild-external-search [-r]
+                      rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
 
@@ -82,9 +82,11 @@ class CanadaCommand(CkanCommand):
                                     failures, default: 1
         -u/--ckan-user <username>   sets the owner of packages created,
                                     default: ckan system user
-        -r/--rebuild-unindexed-only When rebuilding teh advanced search Solr core
+        -r/--rebuild-unindexed-only When rebuilding the advanced search Solr core
                                     only index datasets not already present in the
                                     second Solr core
+        -f/--freshen                When rebuilding the advanced search Solr core
+                                    re-index all datasets, but do not purge the Solr core
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -124,6 +126,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
     parser.add_option('--portal', dest='portal', action='store_true')
     parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
+    parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
 
     def command(self):
         '''
@@ -434,7 +437,7 @@ class CanadaCommand(CkanCommand):
                 print "# {0}".format(since_date.isoformat())
 
     def rebuild_external_search(self):
-        search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only)
+        search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
 
 def _trim_package(pkg):
