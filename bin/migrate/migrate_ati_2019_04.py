@@ -19,18 +19,26 @@ def error(s):
 
 for line in in_csv:
     try:
-        if not (2011 <= int(line['year']) <= 2019):
+        if not (2007 <= int(line['year']) <= 2019):
             raise ValueError
     except ValueError:
-        error('invalid year ' + line['year'] )
-        continue
+        try:
+            line['year'] = line['request_number'].split('-')[1]
+            if not (2007 <= int(line['year']) <= 2019):
+                raise ValueError
+        except (IndexError, ValueError):
+            error('invalid year ' + line['year'] )
+            continue
 
     try:
+        if int(line['month']) == 0 or not line['month']:
+            line['month'] = '1'
         if not (1 <= int(line['month']) <= 12):
             raise ValueError
     except ValueError:
         error('invalid month ' + line['month'] )
         continue
+    line['month'] = '%02f' % int(line['month'])
 
     if not (
             line['request_number'].strip() or
@@ -42,6 +50,8 @@ for line in in_csv:
     line['request_number'] = line['request_number'].strip()
 
     try:
+        if not line['pages']:
+            line['pages'] = '0'
         if not (0 <= int(line['pages'])):
             raise ValueError
     except ValueError:
