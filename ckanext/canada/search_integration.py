@@ -1,3 +1,4 @@
+from ckanapi import LocalCKAN
 from dateutil import parser
 import logging
 import pysolr
@@ -22,13 +23,19 @@ def scheming_choices_label_by_value(choices):
     return {'en': choices_en, 'fr': choices_fr}
 
 
-def add_to_search_index(data_dict, in_bulk=False):
+def add_to_search_index(data_dict_id, in_bulk=False):
 
-    log = logging.getLogger('ckan.logic')
+    log = logging.getLogger('ckan')
     od_search_solr_url = config.get(SEARCH_INTEGRATION_URL_OPTION, "")
     od_search_enabled = config.get(SEARCH_INTEGRATION_ENABLED_OPTION, False)
     od_search_od_url_en = config.get(SEARCH_INTEGRATION_OD_URL_EN_OPTION, "https://open.canada.ca/data/en/dataset/")
     od_search_od_url_fr = config.get(SEARCH_INTEGRATION_OD_URL_FR_OPTION, "https://ouvert.canada.ca/data/fr/dataset/")
+
+    # Retrieve the full record - it has additional information including organization title and metadata modified date
+    # that are not available in the regular data dict
+
+    portal = LocalCKAN()
+    data_dict = portal.action.package_show(id=data_dict_id)
 
     if not od_search_enabled:
         return
@@ -171,8 +178,7 @@ def rebuild_search_index(portal, unindexed_only=False, refresh_index=False):
                 sr = search_solr.search(q='id:{0}'.format(dsid))
                 if len(sr.docs) > 0:
                     continue
-            dataset = portal.action.package_show(id=dsid)
-            add_to_search_index(dataset, in_bulk=True)
+            add_to_search_index(dsid, in_bulk=True)
             row_counter += 1
             if row_counter % SEARCH_INTEGRATION_LOADING_PAGESIZE == 0:
                 print("{0} Records Indexed".format(row_counter))
