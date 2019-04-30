@@ -11,6 +11,24 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
 out_csv.writeheader()
 
+DISP_MATCH = [
+    ('DA', ['all disclos', 'in full', 'disclosed entirely', 'fully disclosed',
+            'disclosed all', 'communication totale', 'full disclosure',
+            'complete', 'publicly available', 'public information', 'all released',
+            'disclosed / publi', 'full release', 'disclosed / divulgu',
+            'entirely disclosed', 'all dislcose', 'all disclso', 'all diclos',
+            'full/complet']),
+    ('DP', ['in part', 'partial', 'partly', 'partielle']),
+    ('EX', ['exempt', 'exemption', 'exempted']),
+    ('EC', ['excluded', 'exclusion', 'excluted']),
+    ('NE', ['no record', 'not exist', 'not exsist', 'aucun document',
+            'no such record', 'no record exist', 'no information',
+            'no record located', 'non record exist']),
+    ('RT', ['transferred']),
+    ('RA', ['abandoned', 'abandonned']),
+    ('NC', ['neither confirmed nor den', 'neither confirm nor den']),
+]
+
 def error(s):
     sys.stderr.write(
         line['owner_org'] + ' ' +
@@ -58,24 +76,13 @@ for line in in_csv:
         error('invalid pages ' + line['pages'] )
         continue
 
-    disp = line['disposition'].lower()
-    if 'all disclosed' in disp or 'disclosed in full' in disp:
-        disp = 'DA'
-    elif 'in part' in disp:
-        disp = 'DP'
-    elif 'all exempt' in disp or 'exempted' in disp:
-        disp = 'EX'
-    elif 'all excluded' in disp:
-        disp = 'EC'
-    elif 'no records' in disp or 'does not exist':
-        disp = 'NE'
-    elif 'transferred' in disp:
-        disp = 'RT'
-    elif 'abandoned' in disp:
-        disp = 'RA'
-    elif 'neither confirmed nor denied' in disp:
-        disp = 'NC'
+    disp = ' '.join(line['disposition'].lower().split())
+    for d, search in DISP_MATCH:
+        if any(s in disp for s in search):
+            disp = d
+            break
     else:
+
         error('invalid disposition ' + line['disposition'])
         continue
     line['disposition'] = disp
