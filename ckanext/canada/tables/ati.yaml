@@ -4,12 +4,12 @@ target_dataset: ati
 title: ATI Summaries
 notes: Access, upload and modify the monthly ATI Summaries and ATI Nothing to Report for your organization
 
+template_version: 3
+template_updated: TBD
+
 portal_type: info
 collection: ati
 
-datastore_text_types: true
-
-upload_info: ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with any questions.
 
 resources:
 - title: ATI Summaries
@@ -46,6 +46,32 @@ resources:
     label: Disposition
     datastore_type: text
     excel_column_width: 39
+    excel_full_text_choices: true
+    choices:
+      DA:
+        en: All disclosed
+        fr: Communication totale
+      DP:
+        en: Disclosed in part
+        fr: Communication partielle
+      EX:
+        en: All exempted
+        fr: Exception totale
+      EC:
+        en: All excluded
+        fr: Exclusion totale
+      NE:
+        en: No records exist
+        fr: Aucun document n’existe
+      RT:
+        en: Request transferred
+        fr: Demande transmise
+      RA:
+        en: Request abandoned
+        fr: Demande abandonnée
+      NC:
+        en: Neither confirmed nor denied
+        fr: Ni confirmée ni infirmée
 
   - datastore_id: pages
     label: Number of Pages
