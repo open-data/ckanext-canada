@@ -17,25 +17,26 @@ DISP_MATCH = [
             'complete', 'publicly available', 'public information', 'all released',
             'disclosed / publi', 'full release', 'disclosed / divulgu',
             'entirely disclosed', 'all dislcose', 'all disclso', 'all diclos',
-            'full/complet']),
+            'full/complet', 'full /plein', 'all records disclosed',
+            'all material public', 'all dislosed', 'documents in public']),
     ('DP', ['in part', 'partial', 'partly', 'partielle']),
     ('EX', ['exempt', 'exemption', 'exempted']),
-    ('EC', ['excluded', 'exclusion', 'excluted']),
+    ('EC', ['excluded', 'exclusion', 'excluted', 'exclued']),
     ('NE', ['no record', 'not exist', 'not exsist', 'aucun document',
             'no such record', 'no record exist', 'no information',
-            'no record located', 'non record exist']),
-    ('RT', ['transferred']),
+            'no record located', 'non record exist', 'no related record',
+            'no responsive record']),
+    ('RT', ['transferred', 'transfered', 'other institution']),
     ('RA', ['abandoned', 'abandonned']),
-    ('NC', ['neither confirmed nor den', 'neither confirm nor den']),
+    ('NC', ['neither confirmed nor den', 'confirm nor den']),
 ]
 
-def error(s):
-    sys.stderr.write(
-        line['owner_org'] + ' ' +
-        json.dumps((line['year'], line['month'], line['request_number'])) + ' ' +
-        json.dumps(s) + '\n')
+skipped = 0
+written = 0
+skipped_new = 0
 
 for line in in_csv:
+    errors = []
     try:
         if not (2007 <= int(line['year']) <= 2019):
             raise ValueError
@@ -45,26 +46,22 @@ for line in in_csv:
             if not (2007 <= int(line['year']) <= 2019):
                 raise ValueError
         except (IndexError, ValueError):
-            error('invalid year ' + line['year'] )
-            continue
+            errors.append('invalid year ' + line['year'])
 
     try:
-        if int(line['month']) == 0 or not line['month']:
-            line['month'] = '1'
-        if not (1 <= int(line['month']) <= 12):
+        if not (1 <= int(float(line['month'])) <= 12):
             raise ValueError
     except ValueError:
-        error('invalid month ' + line['month'] )
-        continue
-    line['month'] = '%02f' % int(line['month'])
+        errors.append('invalid month ' + line['month'])
+    else:
+        line['month'] = '%02f' % int(line['month'])
 
     if not (
             line['request_number'].strip() or
             len(line['request_number']) > 40 or
             '\r' in line['request_number'] or
             '\n' in line['request_number']):
-        error('invalid request_number')
-        continue
+        errors.append('invalid request_number')
     line['request_number'] = line['request_number'].strip()
 
     try:
@@ -73,8 +70,7 @@ for line in in_csv:
         if not (0 <= int(line['pages'])):
             raise ValueError
     except ValueError:
-        error('invalid pages ' + line['pages'] )
-        continue
+        errors.append('invalid pages ' + line['pages'] )
 
     disp = ' '.join(line['disposition'].lower().split())
     for d, search in DISP_MATCH:
@@ -83,8 +79,24 @@ for line in in_csv:
             break
     else:
 
-        error('invalid disposition ' + line['disposition'])
-        continue
+        errors.append('invalid disposition ' + line['disposition'])
     line['disposition'] = disp
 
-    out_csv.writerow(line)
+    if errors:
+        for e in errors:
+            sys.stderr.write(
+                line['owner_org'] + ' ' +
+                json.dumps((line['year'], line['month'], line['request_number'])) +
+                '    ' + json.dumps(e) + '\n')
+        skipped += 1
+        try:
+            if int(line['year']) >= 2017:
+                skipped_new +=1
+        except ValueError:
+            pass
+
+    else:
+        out_csv.writerow(line)
+        written += 1
+
+sys.stderr.write('skipped: {0} written: {1} skipped_new: {2}'.format(skipped, written, skipped_new))
