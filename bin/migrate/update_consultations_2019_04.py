@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+"""
+This is an "update" script not a migrate script because it only
+outputs records to be updated in-place, not a complete migrated
+copy of the data
+"""
 
 import unicodecsv
 import sys
