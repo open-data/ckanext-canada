@@ -5,13 +5,14 @@ title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
 template_version: 3
+template_updated: 2019-03-18
 
 portal_type: info
 collection: pd
 
-gcpedia_link:
-  en: 'http://www.gcpedia.gc.ca/wiki/Politique_des_acquisitions,_Secr%C3%A9tariat_du_Conseil_du_Tr%C3%A9sor/Donn%C3%A9es_sur_les_march%C3%A9s#Donn.C3.A9es_sur_les_march.C3.A9s_pour_la_divulgation_proactive'
-  fr: 'http://www.gcpedia.gc.ca/wiki/Procurement_Policy_Division,_Treasury_Board_of_Canada_Secretariat/Contracting_Data'
+sidebar_extra_content:
+  en: 'For information on the Proactive Disclosure of Contracts, refer to the [Guidelines on Proactive Disclosure of Contracts](https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676) as well as the [FAQ for Proactive Disclosure of Contracts](http://www.gcpedia.gc.ca/wiki/Procurement_Policy_Division,_Treasury_Board_of_Canada_Secretariat/Contracting_Data).'
+  fr: 'Pour de l’information sur la Divulgation proactive des marchés, consultez les [Lignes directrices sur la divulgation des marchés](https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676) ainsi que la [Foire aux questions sur la divulgation proactive des marchés](http://www.gcpedia.gc.ca/wiki/Politique_des_acquisitions,_Secr%C3%A9tariat_du_Conseil_du_Tr%C3%A9sor/Donn%C3%A9es_sur_les_march%C3%A9s).'
 
 upload_info:
   en: To ensure the validation rules within the template are maintained, please paste your data using the “Paste Values” function. This can be done by right-clicking, selecting “Paste Special” and then clicking “Values”.
@@ -395,7 +396,7 @@ resources:
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       F:
         lookup: [CETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
-        en: ETA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
+        en: CETA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AA:
         lookup: [CCFTA, CCoFTA, CHFTA, CPaFTA]

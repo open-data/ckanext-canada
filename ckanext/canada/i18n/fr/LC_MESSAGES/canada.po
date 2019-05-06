@@ -741,9 +741,6 @@ msgstr "Accès à l’information rien à signaler"
 msgid "IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval."
 msgstr "IMPORTANT : De nouvelles rangées/répertoires seront créé(e)s ou mis(es) à jour chaque jour au site ouvert.canada.ca. Il est important d’obtenir l’approbation d’un CSGI et d’envoyer celle-ci à l’adresse <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> avant de procéder au téléversement de vos données de répertoire. En cliquant sur le bouton « Soumettre », vous confirmez que vous avez obtenu l’approbation du CSGI."
 
-msgid "Description and guidance are being developed. If you have questions, please email consultation@pco-bcp.gc.ca."
-msgstr "La description et les directives sont en développement. Si vous avez des questions, veuillez écrire à consultation@pco-bcp.gc.ca."
-
 msgid "Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href=\"https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676\" target=\"_blank\">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines"
 msgstr "Veuillez vous assurer que les opérations téléchargées dans le registre respectent les exigences en matière de divulgation publique énoncées dans les <a href=\"https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676\" target=\"_blank\">Lignes directrices sur la divulgation proactive des marchés</a>. Le registre divulguera publiquement toutes les opérations saisies dans le gabarit, sans retirer les opérations qui ne devraient pas être divulguées. À titre d’exemple, les opérations devraient être conformes aux montants précisés à la section 4.1.1 des lignes directives."
 
@@ -1700,8 +1697,8 @@ msgstr "Consultations"
 msgid "Open Dialogue - Consultations"
 msgstr "Dialogue ouvert - Consultations"
 
-msgid "Access, upload and modify consultation reports for your organization"
-msgstr "Accès, téléversement et modifications des rapports sur les consultations pour votre organisation"
+msgid "Access, upload and modify consultation reports for your organization\n\n- [Consultations master dataset](/static/data/consultations.csv)\n  This dataset consolidates all the consultations reports submitted by federal institutions.\n"
+msgstr "Accès, téléversement et modifications des rapports sur les consultations pour votre organisation\n\n- [Données de consultations principales](/static/data/consultations.csv)\n  Cette base de données regroupe tous les rapports de consultations soumis par les institutions fédérales\n"
 
 msgid "Service Inventory"
 msgstr "Répertoire de services"
@@ -2014,3 +2011,9 @@ msgstr "Vous pouvez sélectionner de multiples entrées."
 
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
+
+msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
+msgstr "Divulgation proactive - titres et numéros des notes d’information"
+
+msgid "Access, upload and modify the Briefing Note Titles and Numbers reports for your organization"
+msgstr "Accès, téléversement et modifications des rapports sur les titres at numéros des notes d’information pour votre organisation"

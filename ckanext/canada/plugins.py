@@ -236,6 +236,7 @@ ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
+ckanext.canada:tables/nap.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -513,7 +514,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return pkg_dict
 
     def after_create(self, context, data_dict):
-        search_integration.add_to_search_index(data_dict, in_bulk=False)
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
@@ -525,7 +526,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
-        search_integration.add_to_search_index(data_dict, in_bulk=False)
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):

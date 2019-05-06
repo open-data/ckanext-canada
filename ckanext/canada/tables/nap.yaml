@@ -1,0 +1,803 @@
+dataset_type: nap
+
+title: National Action Plan on Open Government Tracker
+notes: .
+
+template_version: 3
+
+portal_type: info
+collection: pd
+
+resources:
+- title: National Action Plan on Open Government Tracker
+  resource_name: nap
+
+  fields:
+  - datastore_id: reporting_period
+    label:
+      en: Reporting Period
+      fr: Période de déclaration
+    description:
+      en: .
+      fr: .
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    choices:
+      2019-03: 2019-03
+      2019-06: 2019-06
+      2019-09: 2019-09
+      2019-12: 2019-12
+      2020-03: 2020-03
+      2020-06: 2020-06
+      2020-09: 2020-09
+      2020-12: 2020-12
+
+  - datastore_id: commitments
+    label:
+      en: Commitments
+      fr: Engagements
+    description:
+      en: The 10 commitments in the 2018-2020 National Action Plan on Open Government
+      fr: Les 10 engagements dans le Plan d’action national du Canada pour un gouvernement ouvert de 2018-2020
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      C01:
+        en: User-friendly open government
+        fr: Gouvernement ouvert facile à comprendre
+      C02:
+        en: Financial transparency and accountability
+        fr: Transparence financière et reddition de comptes
+      C03:
+        en: Corporate transparency
+        fr: Transparence des entreprises
+      C04:
+        en: Digital government and services
+        fr: Gouvernement numérique et services
+      C05:
+        en: Open science
+        fr: Science ouverte
+      C06:
+        en: Healthy democracy
+        fr: Démocratie saine
+      C07:
+        en: Access to information
+        fr: Accès à l’information
+      C08:
+        en: Feminist and inclusive dialogue
+        fr: Dialogue féministe et inclusif
+      C09:
+        en: Reconciliation and open government
+        fr: Réconciliation et gouvernement ouvert
+      C10:
+        en: Open government community
+        fr: Collectivité du gouvernement ouvert
+
+  - datastore_id: milestones
+    label:
+      en: Milestones
+      fr: Jalons
+    description:
+      en: This list contains milestones that correspond to the chosen commitment
+      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # choices based on commitments value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
+
+    choices:
+      C01.1:
+        en: Make improvements to open.canada.ca (TBS)
+        fr: Apporter des améliorations au site ouvert.canada.ca (SCT)
+      C01.2:
+        en: Help Canadians learn about Canada’s work on open government (CSPS/TBS)
+        fr: Aider les Canadiens à en apprendre davantage au sujet du travail du Canada sur le gouvernement ouvert (ÉFPC/SCT)
+      C01.3:
+        en: Improve the quality of open data available on open.canada.ca (NRCan/StatCan/TBS)
+        fr: Améliorer la qualité des données ouvertes du site ouvert.canada.ca. (RNCan/StatCan/SCT)
+      C01.4:
+        en: Expand the Open by Default pilot (TBS)
+        fr: Étendre le projet-pilote Ouvert par défaut (SCT)
+      C01.5:
+        en: Co‑create a public, digital collaboration space (TBS)
+        fr: Cocréer un espace public numérique de collaboration (SCT)
+      C01.6:
+        en: Develop open data guidelines to protect the privacy of citizens, businesses, and institutions (StatCan)
+        fr: Élaborer des lignes directrices sur les données ouvertes afin de protéger les renseignements personnels des citoyens, des entreprises et des institutions. (StatCan)
+      C01.7:
+        en: Help Canadians understand the data and models used to design and study government programs (ESDC)
+        fr: Aider les Canadiens à mieux comprendre les données et les modèles utilisés pour la conception et l’étude des programmes gouvernementaux (ESDC)
+      C02.1:
+        en: Make government budget and spending information easier to find and understand (FIN/TBS)
+        fr: Rendre l’information sur les budgets et les dépenses gouvernementales plus facile à trouver et à comprendre (FIN/SCT)
+      C02.2:
+        en: Publish the GBA+ for all new announced budget expenditure and tax measures in future budgets (FIN)
+        fr: Publier l’ACS+ pour toutes les nouvelles dépenses annoncées dans le Budget et les mesures fiscales dans les budgets à venir (FIN)
+      C02.3:
+        en: Ensure Canadians have access to open data on GC procurement (PSPC/TBS)
+        fr: Veiller à ce que les Canadiens aient accès aux données sur l’approvisionnement au GC (SPAC/SCT)
+      C02.4:
+        en: Explore adoption of common contracting data standards across Canada (PSPC)
+        fr: Étudier l’adoption des normes communes liées aux données de passation de marchés au Canada (SPAC)
+      C03.1:
+        en: Implement legislative amendments (FIN/ISED)
+        fr: Mettre en œuvre des modifications législatives (FIN/ISDE)
+      C03.2:
+        en: Work with provincial and territorial governments and key stakeholders to improve timely access to beneficial ownership information (FIN/ISED)
+        fr: Travailler avec les gouvernements provinciaux et territoriaux et les principaux intervenants afin d’améliorer l’accès rapide aux renseignements sur la propriété effective (FIN/ISDE)
+      C03.3:
+        en: Continue to work with provincial and territorial governments to support coordinated implementation of the Agreement to Strengthen Beneficial Ownership Transparency (FIN/ISED)
+        fr: Continuer à travailler avec les gouvernements provinciaux et territoriaux pour appuyer la mise en œuvre coordonnée de l’Entente en vue de renforcer la transparence de la propriété effective. (FIN/ISDE)
+      C04.1:
+        en: Create a digital policy for the GC (TBS)
+        fr: Mettre au point une Politique sur le numérique pour le GC (SCT)
+      C04.2:
+        en: Develop a data strategy roadmap for the federal public service (PCO/StatCan/TBS)
+        fr: Élaborer une feuille de route de la Stratégie relative aux données pour la fonction publique fédérale. (BCP/StatCan/SCT)
+      C04.3:
+        en: Engage with Canadians on what digital and data transformation means for business, civil society, and Canadians (ISED)
+        fr: Engager avec les Canadiens sur ce que signifie la transformation numérique et de données pour les entreprises, la société civile et les Canadiens. (ISDE)
+      C04.4:
+        en: Create a performance dashboard to track service to Canadians (TBS)
+        fr: Créer un tableau de bord sur le rendement pour suivre le service aux Canadiens. (SCT)
+      C04.5:
+        en: Publish analytics on Canada.ca website traffic in a timely manner (ESDC)
+        fr: Publier des analyses sur l’achalandage du site canada.ca en temps opportun (EDSC)
+      C04.6:
+        en: Prioritize open source code in development and procurement of digital solutions (LAC/TBS)
+        fr: Prioriser le code source ouvert dans l’élaboration et l’approvisionnement des solutions numériques (BAC/SCT)
+      C04.7:
+        en: Improve transparency and awareness of AI supported public services (CSPS/ISED/TBS)
+        fr: Améliorer la transparence et la sensibilisation à l’IA appuyant les services publics (SPAC/ISDE/SCT)
+      C05.1:
+        en: Develop an Open Science Roadmap for the GC (Office of the Chief Science Advisor, with support from SBDAs)
+        fr: Élaborer une feuille de route pour la science ouverte pour le GC (Bureau du conseiller scientifique principal/avec l’appui des MOVS.)
+      C05.2:
+        en: Pilot an open science portal (NRC, Office of the Chief Science Advisor; and TBS, with support from SBDAs)
+        fr: Piloter un portail des sciences ouvertes (CNRC/Bureau du conseiller scientifique principal/SCT, avec l’appui des MOVS.)
+      C05.3:
+        en: Launch a platform to find NRC science professionals and their work (NRC)
+        fr: Lancer une plateforme pour trouver des scientifiques du CNRC et leur travail  (CNRC)
+      C05.4:
+        en: Promote open science and actively solicit feedback from stakeholders and federal scientists (ECCC)
+        fr: Promouvoir la science ouverte et solliciter activement les commentaires des intervenants et des scientifiques fédéraux (ECCC)
+      C05.5:
+        en: Measure the GC’s progress in implementing open science (ECCC, with support from SBDAs)
+        fr: Évaluer les progrès du GC dans la mise en œuvre des sciences ouvertes (ECCC, avec l’appui des MOVS.)
+      C06.1:
+        en: Strengthen democracy and democratic institutions in Canada (PCO)
+        fr: Renforcer la démocratie et les institutions démocratiques au Canada (BCP)
+      C06.2:
+        en: Leverage the G7 Rapid Response Mechanism (RRM) (GAC)
+        fr: Miser sur le mécanisme d’intervention rapide du G7 (MIR) (AMC)
+      C06.3:
+        en: Leverage existing Canadian Heritage programs, including Youth Take Charge and Canada History Fund, to support a healthy democracy (PCH)
+        fr: Miser sur les programmes actuels du ministère du Patrimoine canadien, y compris Les jeunes s’engagent et le Fonds pour l’histoire du Canada, à l’appui d’une saine démocratie (PCH)
+      C06.4:
+        en: Support a healthy and reliable news ecosystem (PCH)
+        fr: Appuyer un écosystème de nouvelles sain et fiable (PCH)
+      C06.5:
+        en: Champion international norms to support diversity of content, and quality and transparency of information online (PCH)
+        fr: Se faire champion des normes internationales, à l’appui de la diversité du contenu et de la qualité et la transparence de l’information en ligne (PCH)
+      C07.1:
+        en: Undertake a broad review of the Access to Information Act (TBS)
+        fr: Entreprendre un vaste examen de la Loi sur l’accès à l’information (SCT)
+      C07.2:
+        en: Issue a plain language guide offering clear explanations of exemptions and exclusions under the Access to Information Act and the Privacy Act (TBS)
+        fr: Publier un guide en langage simple offrant des explications claires des exemptions et des exclusions en vertu de la Loi sur l’accès à l’information et de la Loi sur la protection des renseignements personnels (SCT)
+      C07.3:
+        en: Increase the number of summaries of previously released ATI requests posted to open.canada.ca (TBS)
+        fr: Augmenter le nombre de sommaires de demandes d’accès à l’information précédemment communiquées par l’entremise du site ouvert.canada.ca (SCT)
+      C07.4:
+        en: Improve the ATIP Online Request Service (TBS)
+        fr: Améliorer le Service de demande d’accès à l’information et de protection des renseignements personnels (AIPRP) en ligne. (SCT)
+      C07.5:
+        en: Enable government institutions to provide requesters with responses to access to information requests electronically (TBS)
+        fr: Permettre aux institutions fédérales de fournir aux demandeurs les réponses aux demandes d’accès à l’information par voie électronique (SCT)
+      C07.6:
+        en: Improve online information about how to make an access to information or personal information request (TBS)
+        fr: Améliorer l’information en ligne sur la façon de faire une demande d’accès à l’information ou à des renseignements personnels (SCT)
+      C07.7:
+        en: Improve transparency about the personal information held by government (TBS)
+        fr: Améliorer la transparence au sujet des renseignements personnels détenus par le gouvernement (SCT)
+      C08.1:
+        en: Test best practices for inclusive dialogue and engagement (TBS)
+        fr: Tester les pratiques exemplaires liées au dialogue inclusif et à la mobilisation (SCT)
+      C08.2:
+        en: Promote development of skills and competencies required to design, facilitate, and support open and inclusive dialogue in policy development (CSPS/TBS)
+        fr: Promouvoir le perfectionnement des habiletés et des compétences nécessaires pour concevoir, faciliter et appuyer le dialogue ouvert et inclusif dans l’élaboration des politiques (SPAC/SCT)
+      C08.3:
+        en: Implement GBA+ in public engagement and consultations (SWC)
+        fr: Mettre en œuvre l’ACS+ dans la mobilisation du public et les consultations (CFC)
+      C08.4:
+        en: Engage Canadians on gender equality by hosting a national roundtable on GBA+ (SWC)
+        fr: Sensibiliser les Canadiens sur l’égalité des sexes en tenant une table ronde nationale sur l’ACS+ (CFC)
+      C08.5:
+        en: Support initiatives that build the capacity and longer‑term viability of women’s organizations (SWC)
+        fr: Appuyer les initiatives qui renforcent la capacité et la viabilité à long terme des organisations pour femmes (CFC)
+      C08.6:
+        en: Increase access to relevant and timely gender and inclusion data (StatCan/SWC)
+        fr: Accroître l’accès aux renseignements pertinents et en temps opportun sur les sexes et l’inclusion (StatCan/CFC)
+      C08.7:
+        en: Put people with lived experiences of the consequences of public policy at the centre of GC policy design processes (ESDC)
+        fr: S’assurer que les gens ayant vécus certaines expériences sont au centre du processus de conception de la politique du gouvernement du Canada (ESDC)
+      C08.8:
+        en: Conduct GBA+ for all commitments in Canada’s fourth National Action Plan on Open Government (TBS)
+        fr: Mener un processus ACS+ pour tous les engagements du Plan d’action national du Canada pour un gouvernement ouvert de 2018-2020 (SCT)
+      C09.1:
+        en: Work with Indigenous peoples to advance open government (TBS)
+        fr: Travailler avec les Autochtones afin de promouvoir le gouvernement ouvert (SCT)
+      C09.2:
+        en: Build capacity for Indigenous communities and organizations to use data and research (StatCan)
+        fr: Renforcer la capacité des collectivités autochtones et les organisations afin d’utiliser les données et la recherche (StatCan)
+      C09.3:
+        en: Work with Indigenous peoples to identify ways in which transparency around consultation and engagement activities can be enhanced (CIRNA)
+        fr: Travailler avec les Autochtones afin de trouver des façons d’améliorer la transparence dans les activités de consultation et de mobilisation (RCAAN)
+      C10.1:
+        en: Demonstrate global leadership during Canada’s term as lead government co‑chair of the OGP Steering Committee (TBS)
+        fr: Faire preuve d’un leadership mondial au cours du mandat du Canada comme coprésident gouvernemental principal du Comité directeur du PGO (SCT)
+      C10.2:
+        en: Support the OGP Thematic Partnership on Open Data (IDRC)
+        fr: Appuyer le partenariat thématique du PGO sur les données ouvertes (CRDI)
+      C10.3:
+        en: Support international events to drive peer learning and measure open government and open data impact internationally (IDRC/TBS)
+        fr: Appuyer les événements internationaux pour favoriser l’apprentissage par les pairs et pour évaluer l’impact du gouvernement ouvert et des données ouvertes à l’échelle internationale (CRDI/SCT)
+      C10.4:
+        en: Build capacity for more feminist open government initiatives worldwide (IDRC)
+        fr: Renforcer la capacité mondiale de développer et de mener des initiatives du gouvernement ouvert plus féministes (CRDI)
+      C10.5:
+        en: Extend federated open data search pilot (TBS)
+        fr: élargir le projet-pilote fédéré de recherche de données ouvertes (SCT)
+      C10.6:
+        en: Implement a pilot project to move toward cross‑jurisdictional common data standards (TBS)
+        fr: Mettre en œuvre un projet-pilote pour adopter des normes communes relatives aux données (SCT)
+      C10.7:
+        en: Promote data literacy and management for public servants within all levels of government (CSPS/TBS)
+        fr: Promouvoir l’alphabétisation liée aux données et la gestion des données pour les fonctionnaires de tous les ordres de gouvernements (SPAC/SCT)
+
+  - datastore_id: indicators
+    label:
+      en: Indicators
+      fr: Indicateurs
+    description:
+      en: The indicators related to the chosen milestone
+      fr: Les indicateurs liés au jalon choisi
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # choices based on milestones value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
+
+    choices:
+      C01.1.1:
+        en: Pilot launched for users
+        fr: Un projet-pilote est lancé
+      C01.1.2:
+        en: Space provided on open.canada.ca for stories of open data impact
+        fr: De l’espace est fourni à partir du site ouvert.canada.ca pour des récits racontant l’impact des données ouvertes
+      C01.1.3:
+        en: Quarterly reporting on progress on releasing datasets submitted via the Suggest a Dataset form on open.canada.ca
+        fr: Rapports trimestriels sur les progrès de la publication des jeux de données présentés au moyen du formulaire Proposez un jeu de données à partir du site ouvert.canada.ca
+      C01.1.4:
+        en: Regular public reporting on improvements, user research and feedback on open.canada.ca
+        fr: Rapports publics réguliers sur les améliorations, la recherche sur les utilisateurs et la rétroaction par l’entremise du site ouvert.canada.ca
+      C01.2.1:
+        en: Materials for teachers and educators drafted and published
+        fr: Du matériel pédagogique pour les enseignants et les éducateurs est rédigé et publié
+      C01.2.2:
+        en: Outreach to at least 50 teachers or educators
+        fr: Sensibilisation à au moins 50 enseignants et éducateurs
+      C01.2.3:
+        en: 70% of teachers using the material are satisfied with it
+        fr: 70 % des enseignants qui utilisent les documents en sont satisfaits
+      C01.2.4:
+        en: At least 300 public servants from at least 15 GC departments or agencies indicate a better understanding of open government following the learning activity
+        fr: Au moins 300 fonctionnaires provenant d’au moins 15 ministères ou organismes du GC disent mieux comprendre la transparence du gouvernement, à la suite de l’activité d’apprentissage
+      C01.2.5:
+        en: A GC Digital Academy is established, at least 40 nominated participants complete its premium course curriculum
+        fr: Le GC établit l’Académie numérique et au moins 40 participants complètent son programme de cours principal
+      C01.2.6:
+        en: 3 workshop events are held on employing administrative data in decision‑making
+        fr: 3 ateliers ont lieu pour former les fonctionnaires fédéraux sur l’emploi des données administratives dans la prise de décisions
+      C01.2.7:
+        en: Public open government and open data webinars are held at least every 2 months
+        fr: Des webinaires publics sur le gouvernement ouvert et les données ouvertes ont lieu au moins une fois tous les 2 mois
+      C01.2.8:
+        en: Participants are happy with webinar content and format
+        fr: Les participants sont satisfaits du contenu et du format des webinaires
+      C01.3.1:
+        en: Data quality criteria developed and published, and workshops are held
+        fr: Les critères de qualité des données sont élaborés et publiés, et des ateliers ont lieu
+      C01.3.2:
+        en: A new data quality rating system to supplement current “Rate this dataset” function is developed
+        fr: Un nouveau système d’évaluation de la qualité des données pour étoffer la fonctionnalité « coter ce jeu de données » est mis au point
+      C01.3.3:
+        en: 200 frequently downloaded datasets are reviewed
+        fr: 200 jeux de données fréquemment téléchargés sont examinés
+      C01.3.4:
+        en: An additional 500 geospatial datasets reviewed
+        fr: Examen de 500 autres jeux de données géospatiales
+      C01.4.1:
+        en: Open by Default pilot is expanded
+        fr: Le projet-pilote « Ouvert par défaut » est étendu
+      C01.4.2:
+        en: New innovative technologies are implemented to improve accessibility and availability of documents
+        fr: De nouvelles technologies novatrices sont mises à l’essai afin d’améliorer l’accessibilité et la disponibilité des documents
+      C01.4.3:
+        en: A subset of working documents produced by at least 3 government departments is available through the Open by Default portal
+        fr: Un sous-ensemble de documents de travail produits par au moins 3 ministères fédéraux, en plus de l’Équipe du gouvernement ouvert au SCT, est disponible dans le Portail
+      C01.5.1:
+        en: A public, digital collaboration space is launched
+        fr: Un espace public numérique de collaboration est lancé
+      C01.6.1:
+        en: A series of workshops is delivered on the application of guidelines for the anonymization of datasets
+        fr: Une série d’ateliers est offerte sur l’application des lignes directrices pour l’anonymisation des jeux de données
+      C01.7.1:
+        en: Microsimulation model are made publicly available
+        fr: Des modèles de microsimulation sont rendus publics
+      C02.1.1:
+        en: Parliamentarians and Canadians engaged in reviewing progress in improving the timeliness, completeness, and transparency of the Budget and Main Estimates
+        fr: Les parlementaires et la population canadienne sont appelés à participer à l’examen des progrès du gouvernement en améliorant la rapidité, l’exhaustivité et la transparence du Budget et du Budget principal des dépenses
+      C02.1.2:
+        en: Based on feedback received recommendations are published
+        fr: En fonction des commentaires reçus des recommandations sont publiées
+      C02.1.3:
+        en: The description and detail of budget spending plans is improved
+        fr: La description et les détails des plans de dépenses du Budget sont améliorés
+      C02.1.4:
+        en: GC InfoBase is expanded
+        fr: L’InfoBase du GC est élargie
+      C02.1.5:
+        en: Guidelines on the Reporting of Grants and Contributions Awards are updated
+        fr: Les Lignes directrices sur la divulgation des octrois de subventions et de contributions du Canada sont mises à jour
+      C02.2.1:
+        en: Canadians and Parliamentarians have access to information on the gender and diversity impacts of budget measures
+        fr: Les Canadiens et les parlementaires ont accès à de l’information sur les impacts des mesures budgétaires liées au sexe et à la diversité
+      C02.3.1:
+        en: Pilot data that tests the implementation of the OCDS is undertaken
+        fr: Un projet-pilote d’essai de mise en œuvre de la NDPMO est entrepris
+      C02.3.2:
+        en: 3 to 5 public workshops on open contracting are held
+        fr: De 3 à 5 ateliers publics sont organisés
+      C02.3.3:
+        en: Tender, award, and contract data aligned with the OCDS is published
+        fr: Les données sur les soumissions, l’octroi et le contrat harmonisées avec la NDPMO sont publiées
+      C02.3.4:
+        en: EPS is designed to increase the release of open contracting data for all PSPC contracting records
+        fr: SPE est conçu pour accroître la publication des données ouvertes sur la passation des marchés pour tous les dossiers de passation de marchés de SPAC
+      C02.3.5:
+        en: Guidelines on Proactive Disclosure of Contracts are updated
+        fr: Les Lignes directrices sur la divulgation proactive des marchés sont mises à jour
+      C02.4.1:
+        en: FPT governments have met to discuss potential adoption of common contracting data standard
+        fr: FPT se sont réunis pour discuter de l’adoption possible de la norme commune liée aux données sur la passation des marchés
+      C02.4.2:
+        en: Government officials have further explored adoption of common contracting data standards across the broader procurement cycle
+        fr: Les représentants du gouvernement ont aussi étudié l’adoption de normes communes de données de passation de marchés dans l’ensemble du plus vaste cycle d’approvisionnement
+      C03.1.1:
+        en: Amendments made to the Canada Business Corporations Act
+        fr: Modifications apportées à la Loi canadienne sur les sociétés par actions
+      C03.2.1:
+        en: Consultations with stakeholders are held to discuss issues relating to beneficial ownership information
+        fr: Des consultations avec les intervenants ont lieu pour discuter de questions relatives aux renseignements sur la propriété bénéficiaire
+      C03.2.2:
+        en: Federal recommendations are provided to provincial and territorial governments on improving timely access to beneficial ownership information
+        fr: Des recommandations fédérales sont offertes aux gouvernements provinciaux et territoriaux sur l’amélioration de l’accès rapide aux renseignements sur la propriété bénéficiaire
+      C03.3.1:
+        en: All elements of the Agreement are implemented by the federal government
+        fr: Tous les éléments de l’Entente sont mis en œuvre par le gouvernement fédéral
+      C04.1.1:
+        en: Canadians are engaged on the development of a Treasury Board digital policy
+        fr: Les Canadiens sont engagés dans l’élaboration d’une Politique sur le numérique du Conseil du Trésor
+      C04.1.2:
+        en: Input received is included in a summary report to be released publicly
+        fr: Les commentaires reçus sont inclus dans un rapport sommaire à être publié
+      C04.1.3:
+        en: A Treasury Board digital policy is published
+        fr: Une Politique sur le numérique du Conseil du Trésor sera publiée
+      C04.2.1:
+        en: A data strategy roadmap is developed for the federal public service
+        fr: Une feuille de route de la Stratégie relative aux données a été élaborée pour la fonction publique fédérale
+      C04.3.1:
+        en: Canadians are informed and engaged through online forums and at least 25 in‑person events
+        fr: Les Canadiens sont informés et mobilisés grâce à des forums en ligne et au moins 25 activités en personne
+      C04.3.2:
+        en: Feedback from diverse stakeholders helps to inform future policy work
+        fr: La rétroaction de divers intervenants aide à informer les futurs travaux politiques
+      C04.4.1:
+        en: Data on service delivery performance for all major service departments is collected and published
+        fr: Les données sur le rendement de la prestation de services pour tous les principaux ministères de service sont recueillies et publiées
+      C04.4.2:
+        en: The dashboard indicates which services are available online, and specifies service standards, fees, volumetric data, and performance results
+        fr: Le tableau de bord indique les services disponibles en ligne et précise les normes relatives aux services, les frais, les données volumétriques et les résultats de rendement
+      C04.5.1:
+        en: Analytics are understandable and available and for public review
+        fr: Les analyses sont compréhensibles et disponibles et pour examen public
+      C04.6.1:
+        en: Code for all new projects presented to the EARB is publicly released
+        fr: Code pour tous les nouveaux projets présentés au CEAI est publié
+      C04.6.2:
+        en: Guidance is provided to departments on how to remove barriers for developers by publishing source code under open licenses
+        fr: Conseils aux ministères sur la façon d’éliminer les obstacles pour les développeurs en publiant le code source en vertu de licences ouvertes.
+      C04.6.3:
+        en: Guidance is provided to departments on the use of open standards
+        fr: Conseils aux ministères sur l’utilisation de normes ouvertes
+      C04.6.4:
+        en: A business case for Open Source is published
+        fr: Une étude de cas pour des sources ouvertes est publiée
+      C04.6.5:
+        en: A registry of open source code and open source software is established
+        fr: Un registre de code source ouvert et de logiciel source ouvert est établi
+      C04.6.6:
+        en: Source code used in LAC’s Co‑Lab crowdsourcing tool is opened up and available publicly
+        fr: Le code source utilisé dans l’outil d’externalisation ouvert Co-Lab de BAC est ouvert et accessible au public
+      C04.6.7:
+        en: An open source day event is organized
+        fr: Une journée thématique sur les codes sources ouverts est organisée
+      C04.7.1:
+        en: AI supply arrangements and other procurement vehicles are available
+        fr: Des dispositions en matière d’approvisionnement de l’IA et d’autres moyens d’approvisionnement sont élaborées
+      C04.7.2:
+        en: A Treasury Board directive on decision support systems is developed
+        fr: Une directive du Conseil du Trésor sur les systèmes d’aide à la prise de décisions est élaborée
+      C04.7.3:
+        en: An algorithmic impact assessment tool is available
+        fr: Un outil d’évaluation de l’impact algorithmique est élaboré
+      C04.7.4:
+        en: An international conference on AI is hosted
+        fr: Une conférence internationale sur l’IA est organisée
+      C04.7.5:
+        en: An AI curriculum is established at the Canada School of Public Service
+        fr: Un programme d’études de l’IA est établi à l’École de la fonction publique du Canada
+      C04.7.6:
+        en: Workshops, conferences, and AI days are organized
+        fr: Des ateliers, des conférences et des journées d’IA sont organisés
+      C05.1.1:
+        en: A Canada open science roadmap is developed
+        fr: Une feuille de route canadienne pour la science ouverte a été élaborée
+      C05.1.2:
+        en: SBDAs have released their action plans in keeping with the Canada open science roadmap
+        fr: MOVS ont publié leurs plans d’action conformément à la feuille de route canadienne pour la science ouverte
+      C05.2.1:
+        en: A roadmap for the future of the Canadian Federal Science Repository prototype is published
+        fr: Publication d’une feuille de route pour l’avenir du prototype du Dépôt scientifique fédéral canadien
+      C05.2.2:
+        en: A pilot portal for open access federal science publications is launched
+        fr: Lancement d’un projet-pilote de portail d’accès ouvert aux publications scientifiques fédérales
+      C05.2.3:
+        en: Report on options for integrating federally funded open science into the pilot portal
+        fr: Rapport sur les options pour l’intégration de la science ouverte financée par le gouvernement fédéral dans le portail-pilote
+      C05.3.1:
+        en: An online, searchable directory of NRC scientists that other departments can join is in operation
+        fr: Un répertoire accessible en ligne de scientifiques du CNRC est en place et d’autres ministères peuvent y participer
+      C05.3.2:
+        en: The platform leverages existing digital identification systems
+        fr: La plateforme tire parti des systèmes d’identification numérique
+      C05.3.3:
+        en: Options are explored to link the NRC directory to the existing Government of Canada directory
+        fr: Les options sont étudiées pour relier le répertoire du CNRC au Répertoire du gouvernement du Canada actuel
+      C05.4.1:
+        en: 10 open science engagement sessions held
+        fr: 10 séances d’engagement en matière de science ouverte tenues
+      C05.4.2:
+        en: A report on identified user needs is published
+        fr: Un rapport sur les besoins des utilisateurs identifiés est publié
+      C05.5.1:
+        en: Indicators for measuring the benefits of open science for Canadians are developed and published
+        fr: Élaboration et publication des indicateurs permettant de mesurer les avantages de la science ouverte pour les Canadiens
+      C05.5.2:
+        en: Indicators report on the benefits of open science
+        fr: Publication du rapport sur les indicateurs relatifs aux avantages de la science ouverte
+      C05.5.3:
+        en: Yearly reporting on progress against existing metrics measuring implementation of open science by SBDAs
+        fr: Rapports annuels sur les progrès réalisés par rapport aux paramètres de mesure de la mise en œuvre de la science ouverte par les MOVS
+      C06.1.1:
+        en: Election laws are modernised to be more secure, transparent and accessible
+        fr: Les lois électorales sont modernisées pour être plus sûres, plus transparentes et plus accessibles
+      C06.1.2:
+        en: GC delivers on Budget 2018 commitment to support a new process that would ensure that federal leaders’ debates are organized in the public interest
+        fr: Le GC donne suite à l’engagement du Budget de 2018 pour appuyer un nouveau processus qui ferait en sorte que les débats des chefs fédéraux soient organisés dans l’intérêt public
+      C06.2.1:
+        en: The RRM is fully operationalized and the coordination unit is established
+        fr: Le MIR est entièrement opérationnalisé et l’unité a été établie
+      C06.2.2:
+        en: The RRM Focal Points convene on a regular basis
+        fr: Les points de convergence du MIR se réunissent sur une base régulière
+      C06.2.3:
+        en: The RRM will be tried and tested during its first year of operation
+        fr: Le MIR sera essayé et mis à l’essai au cours de sa première année d’exploitation
+      C06.3.1:
+        en: Projects and initiatives are supported with a focus on digital, news and civic literacy
+        fr: Appui de projets et d’initiatives avec un accent sur les services numériques, les nouvelles et les compétences civiques
+      C06.4.1:
+        en: GC delivers on Budget 2018 commitment to provide $50 million to support local journalism in underserved communities
+        fr: Le GC donne suite à l’engagement du Budget de 2018 de fournir 50 millions de dollars pour appuyer le journalisme dans les collectivités mal desservies
+      C06.4.2:
+        en: Work has been completed to better align the Canada Periodical Fund
+        fr: Les travaux visant à mieux harmoniser le Fonds du Canada
+      C06.4.3:
+        en: New models are explored that enable private giving and philanthropic support for trusted, professional, non‑profit journalism and local news
+        fr: Exploration de nouveaux modèles facilitant les dons personnels et le soutien philanthropique du journalisme et des nouvelles locales de confiance, professionnelles, sans but lucratif
+      C06.4.4:
+        en: Media organizations are consulted to consider how the government can further support the transition to digital media
+        fr: Les médias sont consultés pour tenir compte de la façon dont le gouvernement peut appuyer davantage la transition vers les médias numériques
+      C06.5.1:
+        en: GC hosts a working session for experts on diversity of content in the digital age
+        fr: Le gouvernement du Canada organise une séance de travail d’experts sur la diversité du contenu à l’ère numérique
+      C07.1.1:
+        en: The full review begins within one year of royal assent of Bill C‑58
+        fr: L’examen complet commence dans un délai d’un an suivant la sanction royale du projet de loi C-58
+      C07.2.1:
+        en: A plain language guide is issued
+        fr: Publication d’un guide en langage simple
+      C07.3.1:
+        en: 50% of institutions publishing summaries by June 2019
+        fr: 50 % des institutions publieront des sommaires d’ici juin 2019
+      C07.3.2:
+        en: 75% of institutions publishing summaries by June 2020
+        fr: 75 % des institutions publieront des sommaires d’ici juin 2020
+      C07.4.1:
+        en: The number of participating government institutions is expanded by 50 institutions in each year of the Action Plan
+        fr: Le nombre d’institutions fédérales qui participent a augmenté de 50 institutions pour chaque année du Plan d’action
+      C07.4.2:
+        en: Canadians are engaged to improve the ATIP Online Request Service
+        fr: Les Canadiens travaillent à améliorer le Service de demande en ligne d’AIPRP
+      C07.5.1:
+        en: Requesters can receive their requests through a digital means
+        fr: Les demandeurs peuvent recevoir leurs demandes par voie numérique
+      C07.6.1:
+        en: User testing demonstrates that users find the online information about how to make an access to information or personal information request helpful
+        fr: Les essais par les utilisateurs démontrent que ceux-ci considèrent que l’information en ligne sur la façon de faire une demande d’accès à l’information ou à des renseignements personnels est utile
+      C07.7.1:
+        en: PIBs from 60 government institutions are available via open.canada.ca
+        fr: Les FRP de 60 institutions fédérales sont accessibles à partir du site ouvert.canada.ca
+      C08.1.1:
+        en: 10 public engagement or awareness‑raising sessions organized
+        fr: 10 séances de mobilisation ou de sensibilisation du public organisées
+      C08.1.2:
+        en: At least 4 best practices tested as part of in‑person events
+        fr: Au moins 4 pratiques exemplaires mises à l’essai dans le cadre d’activités en personne
+      C08.1.3:
+        en: Report on inclusive engagement practices and guidance for government departments published
+        fr: Publication d’un rapport et d’un guide pour les ministères portant sur les pratiques de mobilisation inclusive
+      C08.2.1:
+        en: Competencies for supporting open and inclusive dialogue are part of a policy competency framework
+        fr: Les compétences pour appuyer le dialogue ouvert et inclusif font partie d’un cadre stratégique de compétences
+      C08.2.2:
+        en: Capacity‑building activities are developed and offered to public servants
+        fr: Les activités de renforcement des capacités sont élaborées et offertes aux fonctionnaires
+      C08.2.3:
+        en: Open and inclusive dialogue case studies and supporting materials are published and shared with the public
+        fr: Publication et communication d’études de cas et documents à l’appui de dialogue ouvert et inclusif
+      C08.3.1:
+        en: A guide to integrate GBA+ in public consultations and engagement has been developed and implemented
+        fr: Élaboration et mise en œuvre d’un guide pour intégrer l’ACS+ aux consultations et à la mobilisation publiques, dans le cadre du Guide de mobilisation du public.
+      C08.4.1:
+        en: In‑person or online engagement sessions
+        fr: Organisation de séances de mobilisation en personne ou en ligne 
+      C08.4.2:
+        en: Engagement sessions include participation from youth, Indigenous people, officials from different levels of government, academics, civil society representatives, and industry representatives
+        fr: Les séances de mobilisation comprennent la participation des jeunes, des Autochtones, des fonctionnaires de différents ordres de gouvernements, des universitaires, des représentants de la société civile, et des représentants de l’industrie
+      C08.4.3:
+        en: Information discussed during engagement sessions are shared in public reports
+        fr: Les renseignements abordés pendant les séances de mobilisation seront communiqués dans les rapports publics
+      C08.5.1:
+        en: Capacity supports are generated by funded projects
+        fr: Soutien de la capacité généré par des projets financés
+      C08.6.1:
+        en: More than 50 indicators are released to improve access to sex‑disaggregated and gender data
+        fr: Plus de 50 nouveaux indicateurs sont publiés pour améliorer l’accès aux données ventilées selon le sexe et le genre
+      C08.6.2:
+        en: Data strategies are developed to address gaps as they relate to the concerns of LGBTQ2 communities
+        fr: Les stratégies relatives aux données sont élaborées pour combler les lacunes liées aux préoccupations des collectivités LGBTQ2+
+      C08.6.3:
+        en: A gender‑based violence (GBV) knowledge centre is established
+        fr: Un centre du savoir sur la violence fondée sur le sexe (VFS) est établi
+      C08.6.4:
+        en: Annual reports to Canadians on the GBV Strategy’s results are released
+        fr: Publication des rapports annuels aux Canadiens sur les résultats de la Stratégie sur la VFS
+      C08.6.5:
+        en: Data and research in priority areas related to gender‑based violence are released
+        fr: Publication de données et de recherches dans des domaines prioritaires liés à la violence fondée sur le sexe
+      C08.7.1:
+        en: A Federal Housing Advocate and National Housing Council are appointed and are starting to consult and collaborate
+        fr: Un poste de défenseur fédéral du logement et un Conseil national du logement sont créés et commencent à  consulter et à collaborer
+      C08.7.2:
+        en: An independent National Advisory Council on Poverty is established
+        fr: Un Conseil consultatif national indépendant sur la pauvreté est établi
+      C08.8.1:
+        en: A feminist and inclusive peer review of National Action Plan commitments has been conducted
+        fr: Réalisation d’un examen féministe et inclusif par les pairs des engagements du Plan d’action national
+      C08.8.2:
+        en: A GBA+ review of National Action Plan commitments has been completed
+        fr: Réalisation d’une ACS+ des engagements du Plan d’action national
+      C09.1.1:
+        en: Scope is assessed for stronger collaboration with Indigenous peoples on open government and data governance
+        fr: La portée est évaluée pour renforcer la collaboration avec les peuples autochtones sur le gouvernement ouvert et la gouvernance des données
+      C09.1.2:
+        en: All members of the Open Government team in TBS receive OCAP training
+        fr: Tous les membres de l’Équipe du gouvernement ouvert au SCT reçoivent la formation PCAP
+      C09.1.3:
+        en: Options are explored for supporting officials in departments across government to receive OCAP training
+        fr: Les options permettant aux fonctionnaires de soutien des ministères et de l’ensemble du gouvernement de recevoir la formation PCAP
+      C09.2.1:
+        en: 15 workshops are delivered in Indigenous communities on the use of open government data
+        fr: En élaboration conjointe avec les organisations autochtones nationales, 15 ateliers sont offerts dans les collectivités autochtones sur l’utilisation des données du gouvernement ouvert
+      C09.3.1:
+        en: Systems supporting consultation and engagement are updated to enhance transparency
+        fr: Mise à jour des systèmes de soutien aux consultations et à la mobilisation afin d’améliorer la transparence
+      C10.1.1:
+        en: A co‑chair strategy is published and assessed quarterly
+        fr: Publication trimestrielle et évaluation d’une stratégie de coprésident
+      C10.1.2:
+        en: Canada hosts an OGP summit in spring 2019
+        fr: Un Sommet du PGO est organisé au printemps 2019
+      C10.2.1:
+        en: The Open Data for Development Network will provide technical support and support research and innovative initiatives
+        fr: Le Réseau Données ouvertes pour le développement s’engage à fournir du soutien technique et appuyer la recherche ou des initiatives novatrices
+      C10.2.2:
+        en: Support research and innovative initiatives on the availability and use of open data for better service delivery, gender equality, inclusion, progress on the Sustainable Development Goals, or transparency and accountability in 10 countries (June 2020)
+        fr: Appuyer la recherche ou des initiatives novatrices sur la disponibilité et l’utilisation de données ouvertes pour améliorer la prestation des services, l’égalité entre les sexes, l’inclusion, les progrès sur les objectifs de développement durable, ou la transparence et la reddition de comptes dans 10 pays. (Juin 2020)
+      C10.3.1:
+        en: Co‑hosted the International Open Data Conference 2018
+        fr: Organisation conjointe de la Conférence internationale sur les données ouvertes de 2018
+      C10.3.2:
+        en: Independent global assessments on the status of open data are supported around the world in a State of Open Data report and through the next edition of the Open Data Barometer
+        fr: Évaluations globales indépendantes sur la situation des données appuyées partout dans le monde dans le cadre d’un rapport sur l’état des données ouvertes, et par l’entremise de la prochaine édition du Baromètre des données ouvertes
+      C10.3.3:
+        en: Canada has participated in at least 2 bilateral peer learning events and at least 3 international forums, and included language on open government in at least 3 international declarations
+        fr: Le Canada a participé à au moins 2 activités bilatérales d’apprentissage par les pairs et au moins 3 forums internationaux, et comprenait un libellé sur le gouvernement ouvert dans au moins 3 déclarations internationales
+      C10.4.1:
+        en: An international coalition has been established that will work to make open government processes more inclusive
+        fr: Une coalition internationale a été établie dans le but de rendre les processus de gouvernement ouvert plus inclusifs
+      C10.4.2:
+        en: Research is funded in various regions to contribute to an evidence base for the impact of gender equality in open government on public service delivery
+        fr: La recherche est financée dans diverses régions afin de contribuer à une base de données probantes décrivant l’impact de l’égalité entre les sexes dans le gouvernement ouvert sur la prestation des services publics
+      C10.4.3:
+        en: A synthesis publication is released and shared, with future actions and recommendations outlined
+        fr: Une publication de synthèse est diffusée, avec des mesures et des recommandations futures soulignées
+      C10.5.1:
+        en: GC has federated open data with at least 2 additional provinces and 2 municipalities
+        fr: Le GC a fédéré les données ouvertes avec au moins 2 autres provinces et 2 municipalités
+      C10.6.1:
+        en: Cross‑jurisdictional metadata mapping is completed with a common set of core elements
+        fr: La cartographie des métadonnées intergouvernementales est complétée avec l’établissement d’un ensemble commun d’éléments de base
+      C10.6.2:
+        en: A pilot project to standardize 5 high‑value datasets across jurisdictions is completed
+        fr: Un projet-pilote visant à normaliser les 5 jeux de données de grande valeur dans toutes les administrations est réalisé
+      C10.6.3:
+        en: At least 5 more subnational governments in Canada have adopted the Open Data Charter
+        fr: Au moins 5 autres gouvernements infranationaux au Canada ont adopté la charte des données ouvertes
+      C10.7.1:
+        en: Data literacy and management resources have been identified and are made available to government employees
+        fr: Les ressources d’alphabétisation et de gestion des données ont été déterminées et sont mises à la disposition des employés du gouvernement
+      C10.7.2:
+        en: 10 data literacy events are held to promote employees skills in open data
+        fr: 10 activités d’alphabétisation sur les données sont organisées pour promouvoir les compétences des employés en données ouvertes
+
+  - datastore_id: status
+    label:
+      en: Status
+      fr: État
+    description:
+      en: Indicate the current status of the commitment
+      fr: Indiquer l’état actuel de l'engagement
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NS:
+        en: Not started
+        fr: Non commencé
+      LP:
+        en: Limited progress
+        fr: Progrès limité
+      SP:
+        en: Substantial progress
+        fr: Progrès important
+      C:
+        en: Complete
+        fr: Réalisé
+
+
+  - datastore_id: progress_en
+    label:
+      en: Progress during previous quarter (English)
+      fr: Progrès au cours du trimestre précédent (anglais)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NIL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+
+  - datastore_id: progress_fr
+    label:
+      en: Progress during previous quarter (French)
+      fr: Progrès au cours du trimestre précédent (français)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NUL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+
+  - datastore_id: evidence_en
+    label:
+      en: Evidence of progress (English)
+      fr: Preuve de progrès (anglais)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: evidence_fr
+    label:
+      en: Evidence of progress (French)
+      fr: Preuve de progrès (français)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: challenges_en
+    label:
+      en: Challenges (English)
+      fr: Défis (anglais)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: challenges_fr
+    label:
+      en: Challenges (French)
+      fr: Défis (français)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+
+  datastore_primary_key: [reporting_period, indicators]
+  datastore_indexes: ""
+
+  default_preview_sort: reporting_period desc, indicators
+
+  examples:
+    record:
+      reporting_period: "2019-03"
+      commitments: C01
+      milestones: C01.1
+      indicators: C01.1.1
+      status: SP
+      progress_en: |
+        - Open government learning materials for teachers have been drafted
+        - Initiating call for proposals to find contractor who can ensure materials are presented in a useful format for teachers and educators
+      progress_fr: |
+        - Des matériels d'apprentissage sur le gouvernement ouvert pour les enseignants ont été rédigés
+        - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
+      evidence_en: Materials are still being drafted and not yet available publicly
+      evidence_fr: Le matériel est toujours en cours de rédaction et n'est pas encore disponible publiquement
+      challenges_en: What sorts of open government learning materials would you like to see? Which formats are most useful for learning purposes?
+      challenges_fr: Quels types de matériels d'apprentissage du gouvernement ouvert aimeriez-vous voir? Quels formats sont les plus utiles à des fins d'apprentissage?
+    filters:
+      commitments: C01
+    filter_one:
+      reporting_period: "2019-03"
+      indicators: C01.1.1
+    sort: reporting_period desc, indicators
