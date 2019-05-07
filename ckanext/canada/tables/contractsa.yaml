@@ -3,12 +3,12 @@ target_dataset: contractsa
 
 title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
 notes: Access, upload and modify the aggregated Contracts from -$10K to $10K reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+
+template_version: 3
+template_updated: 2019-TBD
 
 portal_type: info
 collection: pd
-
-datastore_text_types: true
 
 resources:
 - title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
@@ -22,10 +22,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated in the standard format described below. For example if the template is being disclosed for the 2017 calendar year, the entry will be populated as: 2017."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: YYYY
     datastore_type: int
-    excel_column_width: 30
+    choices_file: choices/year.yaml
 
   # 2.
   - datastore_id: contract_goods_number_of
@@ -34,10 +35,10 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
-    excel_column_width: 40
     solr_sum_to_field: contract_total_number_of
 
   # 3.
@@ -47,13 +48,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all goods contracts with a value of $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 50
-    solr_sum_to_field: contracts_goods_total_value
-    solr_sum_to_field: contracts_total_original_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_goods_total_value, contracts_total_original_value, contracts_total_total_value]
 
   # 4.
   - datastore_id: contracts_goods_amendment_value
@@ -62,13 +61,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all goods contracts’ net amendments (i.e. all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 50
-    solr_sum_to_field: contracts_goods_total_value
-    solr_sum_to_field: contracts_total_amendment_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_goods_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
   # 5.
   - datastore_id: contract_service_number_of
@@ -77,10 +74,10 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the total number of services contracts entered into with a value of $10,000 and under. This includes services contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
-    excel_column_width: 40
     solr_sum_to_field: contract_total_number_of
 
   # 6.
@@ -90,13 +87,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all service contracts with a value $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 50
-    solr_sum_to_field: contracts_service_total_value
-    solr_sum_to_field: contracts_total_original_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_service_total_value, contracts_total_original_value, contracts_total_total_value]
 
   # 7.
   - datastore_id: contracts_service_amendment_value
@@ -105,13 +100,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all service contracts’ net amendments (i.e. all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 60
-    solr_sum_to_field: contracts_service_total_value
-    solr_sum_to_field: contracts_total_amendment_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_service_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
   # 8.
   - datastore_id: contract_construction_number_of
@@ -120,10 +113,10 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
-    excel_column_width: 50
     solr_sum_to_field: contract_total_number_of
 
   # 9.
@@ -133,13 +126,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all construction contracts with a value $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 50
-    solr_sum_to_field: contracts_construction_total_value
-    solr_sum_to_field: contracts_total_original_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_construction_total_value, contracts_total_original_value, contracts_total_total_value]
 
   # 10.
   - datastore_id: contracts_construction_amendment_value
@@ -148,13 +139,11 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the value of all net amendments (i.e. all positive and negative amendments) with a value from -$10K to $10K. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 50
-    solr_sum_to_field: contracts_construction_total_value
-    solr_sum_to_field: contracts_total_amendment_value
-    solr_sum_to_field: contracts_total_total_value
+    solr_sum_to_field: [contracts_construction_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
   # 11.
   - datastore_id: acquisition_card_transactions_number_of
@@ -163,10 +152,10 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the total number of all acquisition card transactions for all dollar values."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
-    excel_column_width: 60
 
   # 12.
   - datastore_id: acquisition_card_transactions_total_value
@@ -175,25 +164,13 @@ resources:
     description:
       en: "It is recommended for this field to be populated with the sum of all dollar values for all acquisition card transactions. This value should be in Canadian currency and include all applicable taxes."
     obligation: Mandatory
+    form_required: true
     excel_required: true
     format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
     datastore_type: money
-    excel_column_width: 60
 
   datastore_primary_key: [year]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFddbc95
-    Font:
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFe5e2ca
-  excel_error_background_color: "e7472e"
-  excel_required_border_color: "e7472e"
 
   default_preview_sort: reporting_period desc, contracts_total_total_value desc
 
@@ -225,3 +202,15 @@ resources:
       reporting_period: "2016"
     sort: reporting_period desc
 
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFddbc95
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFe5e2ca
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFe5e2ca
