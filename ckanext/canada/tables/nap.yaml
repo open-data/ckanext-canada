@@ -48,33 +48,63 @@ resources:
       C01:
         en: User-friendly open government
         fr: Gouvernement ouvert facile à comprendre
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4
       C02:
         en: Financial transparency and accountability
         fr: Transparence financière et reddition de comptes
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc5
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc5
       C03:
         en: Corporate transparency
         fr: Transparence des entreprises
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc6
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc6
       C04:
         en: Digital government and services
         fr: Gouvernement numérique et services
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7
       C05:
         en: Open science
         fr: Science ouverte
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc8
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc8
       C06:
         en: Healthy democracy
         fr: Démocratie saine
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc9
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc9
       C07:
         en: Access to information
         fr: Accès à l’information
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc10
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc10
       C08:
         en: Feminist and inclusive dialogue
         fr: Dialogue féministe et inclusif
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc11
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc11
       C09:
         en: Reconciliation and open government
         fr: Réconciliation et gouvernement ouvert
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc12
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc12
       C10:
         en: Open government community
         fr: Collectivité du gouvernement ouvert
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc13
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc13
 
   - datastore_id: milestones
     label:
@@ -96,78 +126,233 @@ resources:
       C01.1:
         en: Make improvements to open.canada.ca (TBS)
         fr: Apporter des améliorations au site ouvert.canada.ca (SCT)
+        full_text:
+          en: Make improvements to open.canada.ca to make it easier for users to find what they’re looking for and contribute to the open government community
+          fr: Apporter des améliorations au site ouvert.canada.capour permettre aux utilisateurs de trouver plus facilement ce qu’ils cherchent et de contribuer à la collectivité du gouvernement ouvert
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.2:
         en: Help Canadians learn about Canada’s work on open government (CSPS/TBS)
         fr: Aider les Canadiens à en apprendre davantage au sujet du travail du Canada sur le gouvernement ouvert (ÉFPC/SCT)
+        full_text: 
+          en: Help Canadians learn about Canada’s work on open government through learning materials, information sessions, and enhanced training for public servants (CSPS/TBS)
+          fr: Aier les Canadiens à en apprendre davantage au sujet du travail du Canada sur le gouvernement ouvert à partir de documents d’apprentissage, de séances d’information et de la formation avancée pour les fonctionnaires. (ÉFPC/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.3:
         en: Improve the quality of open data available on open.canada.ca (NRCan/StatCan/TBS)
         fr: Améliorer la qualité des données ouvertes du site ouvert.canada.ca. (RNCan/StatCan/SCT)
+        full_text: 
+          en: Improve the quality of open data available on open.canada.ca (NRCan / StatCan / TBS)
+          fr: Améliorer la qualité des données ouvertes du site ouvert.canada.ca. (RNCan/StatCan/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.4:
         en: Expand the Open by Default pilot (TBS)
         fr: Étendre le projet-pilote Ouvert par défaut (SCT)
+        full_text: 
+          en: Expand the Open by Default pilot to make working documents from government officials open by default, subject to applicable restrictions associated with privacy, confidentiality, and security (TBS)
+          fr: Étendre le projet-pilote Ouvert par défaut afin de rendre les documents de travail des fonctionnaires ouverts par défaut et assujettis aux restrictions pertinentes liées à la protection des renseignements personnels, à la confidentialité et à la sécurité. (SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.5:
         en: Co‑create a public, digital collaboration space (TBS)
         fr: Cocréer un espace public numérique de collaboration (SCT)
+        full_text: 
+          en: Co-create a public, digital collaboration space where citizens and government employees can work together (TBS)
+          fr: Cocréer un espace public numérique de collaboration où les citoyens et les employés du gouvernement peuvent travailler ensemble. (SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.6:
         en: Develop open data guidelines to protect the privacy of citizens, businesses, and institutions (StatCan)
         fr: Élaborer des lignes directrices sur les données ouvertes afin de protéger les renseignements personnels des citoyens, des entreprises et des institutions. (StatCan)
+        full_text:
+          en: Develop open data guidelines to protect the privacy of citizens, businesses, and institutions (STATCAN)
+          fr: Élaborer des lignes directrices sur les données ouvertes afin de protéger les renseignements personnels des citoyens, des entreprises et des institutions. (StatCan)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C01.7:
         en: Help Canadians understand the data and models used to design and study government programs (ESDC)
         fr: Aider les Canadiens à mieux comprendre les données et les modèles utilisés pour la conception et l’étude des programmes gouvernementaux (ESDC)
+        full_text:
+          en: Help Canadians understand the data and models used to design and study government programs (ESDC)
+          fr: Aider les Canadiens à mieux comprendre les données et les modèles utilisés pour la conception et l'étude des programmes gouvernementaux (ESDC)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc4-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc4-4
       C02.1:
         en: Make government budget and spending information easier to find and understand (FIN/TBS)
         fr: Rendre l’information sur les budgets et les dépenses gouvernementales plus facile à trouver et à comprendre (FIN/SCT)
+        full_text:
+          en: Make government budget and spending information easier for Canadians to find and understand  (FIN/TBS)
+          fr: Rendre l’information sur les budgets et les dépenses gouvernementales plus facile à trouver et à comprendre pour les Canadiens. (FIN/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc5-4 
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc5-4
       C02.2:
         en: Publish the GBA+ for all new announced budget expenditure and tax measures in future budgets (FIN)
         fr: Publier l’ACS+ pour toutes les nouvelles dépenses annoncées dans le Budget et les mesures fiscales dans les budgets à venir (FIN)
+        full_text:
+          en: Publish the Gender-based Analysis Plus (GBA+) for all new announced budget expenditure and tax measures in future budgets (FIN)
+          fr: Publier l’analyse comparative entre les sexes plus (ACS+) pour toutes les nouvelles dépenses annoncées dans le Budget et les mesures fiscales dans les budgets à venir. (FIN)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc5-4 
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc5-4
       C02.3:
         en: Ensure Canadians have access to open data on GC procurement (PSPC/TBS)
         fr: Veiller à ce que les Canadiens aient accès aux données sur l’approvisionnement au GC (SPAC/SCT)
+        full_text:
+          en: Ensure Canadians have access to open data on Government of Canada procurement (PSPC/TBS)
+          fr: Veiller à ce que les Canadiens aient accès aux données sur l’approvisionnement au gouvernement du Canada. (SPAC/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc5-4 
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc5-4
       C02.4:
         en: Explore adoption of common contracting data standards across Canada (PSPC)
         fr: Étudier l’adoption des normes communes liées aux données de passation de marchés au Canada (SPAC)
+        full_text: 
+          en: Explore adoption of common contracting data standards across Canada (PSPC)
+          fr: Étudier l’adoption des normes communes liées aux données de passation de marchés au Canada. (SPAC)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc5-4 
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc5-4
       C03.1:
         en: Implement legislative amendments (FIN/ISED)
         fr: Mettre en œuvre des modifications législatives (FIN/ISDE)
+        full_text:
+          en: Implement legislative amendments to require federal corporations to hold accurate and up to date beneficial ownership information, and eliminate use of bearer shares (FIN/ISED)
+          fr: Mettre en œuvre des modifications législatives visant à exiger des sociétés fédérales qu’elles détiennent des renseignements exacts et à jour sur la propriété effective, et à éliminer l’utilisation des actions au porteur. (FIN/ISDE)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc6-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc6-4
       C03.2:
         en: Work with provincial and territorial governments and key stakeholders to improve timely access to beneficial ownership information (FIN/ISED)
         fr: Travailler avec les gouvernements provinciaux et territoriaux et les principaux intervenants afin d’améliorer l’accès rapide aux renseignements sur la propriété effective (FIN/ISDE)
+        full_text: 
+          en: Work with provincial and territorial governments and key stakeholders representing various perspectives on possible options to improve timely access to beneficial ownership information, including retention and disclosure obligations relating to such information and the exploration of a public registry option (FIN/ISED)
+          fr: Traviller avec les gouvernements provinciaux et territoriaux et les principaux intervenants représentant divers points de vue sur les options possibles afin d’améliorer l’accès rapide aux renseignements sur la propriété effective. Cela comprend des obligations relatives à la conservation et à la divulgation de ces renseignements, et l’étude de l’option d’un registre public. (FIN/ISDE)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc6-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc6-4
       C03.3:
         en: Continue to work with provincial and territorial governments to support coordinated implementation of the Agreement to Strengthen Beneficial Ownership Transparency (FIN/ISED)
         fr: Continuer à travailler avec les gouvernements provinciaux et territoriaux pour appuyer la mise en œuvre coordonnée de l’Entente en vue de renforcer la transparence de la propriété effective. (FIN/ISDE)
+        full_text:
+          en: Continue to work with provincial and territorial governments to support coordinated implementation of the Agreement to Strengthen Beneficial Ownership Transparency (FIN/ISED)
+          fr: Continuer à travailler avec les gouvernements provinciaux et territoriaux pour appuyer la mise en œuvre coordonnée de l’Entente en vue de renforcer la transparence de la propriété effective. (FIN/ISDE)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc6-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc6-4
       C04.1:
         en: Create a digital policy for the GC (TBS)
         fr: Mettre au point une Politique sur le numérique pour le GC (SCT)
+        full_text:
+          en: Create a digital policy for the Government of Canada (TBS)
+          fr: Mettre au point une Politique sur le numérique pour le gouvernement du Canada. (SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.2:
         en: Develop a data strategy roadmap for the federal public service (PCO/StatCan/TBS)
         fr: Élaborer une feuille de route de la Stratégie relative aux données pour la fonction publique fédérale. (BCP/StatCan/SCT)
+        full_text:
+          en: Develop a data strategy roadmap for the federal public service (PCO/StatCan/TBS)
+          fr: Élaborer une feuille de route de la Stratégie relative aux données pour la fonction publique fédérale. (BCP/StatCan/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.3:
         en: Engage with Canadians on what digital and data transformation means for business, civil society, and Canadians (ISED)
         fr: Engager avec les Canadiens sur ce que signifie la transformation numérique et de données pour les entreprises, la société civile et les Canadiens. (ISDE)
+        full_text:
+          en: Engage with Canadians on what digital and data transformation means for business, civil society, and Canadians (ISED)
+          fr: Engager avec les Canadiens sur ce que signifie la transformation numérique et de données pour les entreprises, la société civile et les Canadiens. (ISDE)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.4:
         en: Create a performance dashboard to track service to Canadians (TBS)
         fr: Créer un tableau de bord sur le rendement pour suivre le service aux Canadiens. (SCT)
+        full_text:
+          en: Create a performance dashboard to track service to Canadians (TBS)
+          fr: Créer un tableau de bord sur le rendement pour suivre le service aux Canadiens. (SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.5:
         en: Publish analytics on Canada.ca website traffic in a timely manner (ESDC)
         fr: Publier des analyses sur l’achalandage du site canada.ca en temps opportun (EDSC)
+        full_text:
+          en: Publish analytics on Canada.ca website traffic in a timely manner, in the spirit of sites like http://analytics.usa.gov (ESDC)
+          fr: Publier des analyses sur l’achalandage du site canada.ca en temps opportun, dans l’esprit de sites comme http://analytics.usa.gov. (EDSC)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.6:
         en: Prioritize open source code in development and procurement of digital solutions (LAC/TBS)
         fr: Prioriser le code source ouvert dans l’élaboration et l’approvisionnement des solutions numériques (BAC/SCT)
+        full_text:
+          en: Prioritize open source code in development and procurement of digital solutions (LAC/TBS)
+          fr: Prioriser le code source ouvert dans l’élaboration et l’approvisionnement des solutions numériques (BAC/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C04.7:
         en: Improve transparency and awareness of AI supported public services (CSPS/ISED/TBS)
         fr: Améliorer la transparence et la sensibilisation à l’IA appuyant les services publics (SPAC/ISDE/SCT)
+        full_text:
+          en: Improve transparency and awareness of artificial intelligence (AI) supported public services (CSPS/ISED/TBS)
+          fr: Améliorer la transparence et la sensibilisation à l’intelligence artificielle (IA) appuyant les services publics. (SPAC/ISDE/SCT)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc7-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc7-4
       C05.1:
         en: Develop an Open Science Roadmap for the GC (Office of the Chief Science Advisor, with support from SBDAs)
         fr: Élaborer une feuille de route pour la science ouverte pour le GC (Bureau du conseiller scientifique principal/avec l’appui des MOVS.)
+        full_text:
+          en: Develop an Open Science Roadmap for the Government of Canada (Office of the Chief Science Advisor, with support from SBDAs)
+          fr: Élaborer une feuille de route pour la science ouverte pour le gouvernement du Canada. (Bureau du conseiller scientifique principal/avec l’appui des MOVS.)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc8-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc8-4
       C05.2:
         en: Pilot an open science portal (NRC, Office of the Chief Science Advisor; and TBS, with support from SBDAs)
         fr: Piloter un portail des sciences ouvertes (CNRC/Bureau du conseiller scientifique principal/SCT, avec l’appui des MOVS.)
+        full_text:
+          en: Pilot an open science portal to provide access to open access publications from federal scientists (NRC, Office of the Chief Science Advisor, and TBS, with support from SBDAs)
+          fr: Piloter un portail des sciences ouvertes pour donner un accès libre aux publications des scientifiques fédéraux. (CNRC/Bureau du conseiller scientifique principal/SCT, avec l’appui des MOVS.)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc8-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc8-4
       C05.3:
         en: Launch a platform to find NRC science professionals and their work (NRC)
         fr: Lancer une plateforme pour trouver des scientifiques du CNRC et leur travail  (CNRC)
+        full_text:
+          en: "Launch a platform allowing Canadians to more easily: find National Research Council science professionals; find and access publications and pre-prints they have published; understand what they are working on; connect with them via social media networks (NRC)"
+          fr: "Lancer une plateforme permettant aux Canadiens de faire ce qui suit plus facilement :
+-Trouver des scientifiques du Conseil national de recherches du Canada.
+-Trouver et accéder aux publications et préimpressions publiées.
+-Comprendre leurs travaux en cours.
+-Communiquer avec eux au moyen des réseaux sociaux.
+(CNRC)"
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc8-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc8-4
       C05.4:
         en: Promote open science and actively solicit feedback from stakeholders and federal scientists (ECCC)
         fr: Promouvoir la science ouverte et solliciter activement les commentaires des intervenants et des scientifiques fédéraux (ECCC)
+        full_text:
+          en: Promote open science and actively solicit feedback from stakeholders and federal scientists on their needs with respect to open data and open science (ECCC)
+          fr: Promouvoir la science ouverte et solliciter activement les commentaires des intervenants et des scientifiques fédéraux sur leurs besoins en matière de données ouvertes et de science ouverte. (ECCC)
+        NAP_url:
+          en: /en/content/canadas-2018-2020-national-action-plan-open-government#toc8-4
+          fr: /fr/contenu/plan-daction-national-du-canada-pour-un-gouvernement-ouvert-de-2018-2020#toc8-4
       C05.5:
         en: Measure the GC’s progress in implementing open science (ECCC, with support from SBDAs)
         fr: Évaluer les progrès du GC dans la mise en œuvre des sciences ouvertes (ECCC, avec l’appui des MOVS.)
