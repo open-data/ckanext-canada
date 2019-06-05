@@ -3221,8 +3221,10 @@ presets:
       replaces: [geotif]
     - value: GEOJSON
       mimetype: application/geo+json
-    - label: GeoPackage
-      value: GPKG
+    - value: GPKG
+      label: GeoPackage
+      mimetype: application/geopackage+vnd.sqlite3
+      openness_score: 3
     - value: GIF
       mimetype: image/gif
       replaces: [gif]
