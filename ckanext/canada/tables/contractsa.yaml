@@ -209,9 +209,8 @@ resources:
       errors := errors || required_error(NEW.contract_construction_number_of, 'contract_construction_number_of');
       errors := errors || required_error(NEW.contracts_construction_original_value, 'contracts_construction_original_value');
       errors := errors || required_error(NEW.contracts_construction_amendment_value, 'contracts_construction_amendment_value');
-      errors := errors || required_error(NEW.acquisition_card_number_of, 'acquisition_card_number_of');
-      errors := errors || required_error(NEW.acquisition_card_total_value, 'acquisition_card_total_value');
-      errors := errors || required_error(NEW.acquisition_card_amendment_value, 'acquisition_card_amendment_value');
+      errors := errors || required_error(NEW.acquisition_card_transactions_number_of, 'acquisition_card_transactions_number_of');
+      errors := errors || required_error(NEW.acquisition_card_transactions_total_value, 'acquisition_card_transactions_total_value');
 
       IF errors = '{{}}' THEN
       RETURN NEW;
