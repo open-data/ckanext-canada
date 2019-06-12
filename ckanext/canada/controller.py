@@ -629,6 +629,100 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 class PDUpdateController(BaseController):
 
+    def create_pd_record(self, owner_org, resource_name):
+        lc = LocalCKAN(username=c.user)
+
+        try:
+            chromo = h.recombinant_get_chromo(resource_name)
+            rcomb = lc.action.recombinant_show(
+                owner_org=owner_org,
+                dataset_type=chromo['dataset_type'])
+            [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
+
+            check_access(
+                'datastore_upsert',
+                {'user': c.user, 'auth_user_obj': c.userobj},
+                {'resource_id': res['id']})
+        except NotAuthorized:
+            return abort(403, _('Unauthorized'))
+
+        choice_fields = {
+            f['datastore_id']: [
+                {'value': k, 'label': v} for (k, v) in f['choices']]
+            for f in h.recombinant_choice_fields(resource_name)}
+
+        if request.method == 'POST':
+            post_data = parse_params(request.POST, ignore_keys=['save'])
+
+            if 'cancel' in post_data:
+                return redirect(h.url_for(
+                    controller='ckanext.recombinant.controller:UploadController',
+                    action='preview_table',
+                    resource_name=resource_name,
+                    owner_org=rcomb['owner_org'],
+                    ))
+
+            pk_fields = aslist(chromo['datastore_primary_key'])
+            data = {}
+            for f in chromo['fields']:
+                f_id = f['datastore_id']
+                if not f.get('import_template_include', True):
+                    continue
+                else:
+                    val = post_data.get(f['datastore_id'], '')
+                    if isinstance(val, list):
+                        val = u','.join(val)
+                    val = canonicalize(
+                        val,
+                        f['datastore_type'],
+                        primary_key=f['datastore_id'] in pk_fields,
+                        choice_field=f_id in choice_fields)
+                    data[f['datastore_id']] = val
+            try:
+                lc.action.datastore_upsert(
+                    resource_id=res['id'],
+                    method='insert',
+                    records=[data])
+            except ValidationError as ve:
+                if 'records' in ve.error_dict:
+                    err = {
+                        k: [_(e) for e in v]
+                        for (k, v) in ve.error_dict['records'][0].items()}
+                elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
+                    err = {
+                        k: [_("This record already exists")]
+                        for k in pk_fields
+                    }
+
+                return render('recombinant/create_pd_record.html',
+                              extra_vars={
+                                  'data': data,
+                                  'resource_name': resource_name,
+                                  'chromo_title': chromo['title'],
+                                  'choice_fields': choice_fields,
+                                  'owner_org': rcomb['owner_org'],
+                                  'errors': err,
+                              })
+
+            h.flash_notice(_(u'Record Created'))
+
+            return redirect(h.url_for(
+                controller='ckanext.recombinant.controller:UploadController',
+                action='preview_table',
+                resource_name=resource_name,
+                owner_org=rcomb['owner_org'],
+            ))
+
+        return render('recombinant/create_pd_record.html',
+                      extra_vars={
+                          'data': {},
+                          'resource_name': resource_name,
+                          'chromo_title': chromo['title'],
+                          'choice_fields': choice_fields,
+                          'owner_org': rcomb['owner_org'],
+                          'errors': {},
+                      })
+
     def update_pd_record(self, owner_org, resource_name, pk):
         pk = [url_part_unescape(p) for p in pk.split(',')]
 

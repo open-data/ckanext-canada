@@ -117,6 +117,12 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='delete'
         )
         map.connect(
+            'create_pd_record',
+            '/create-pd-record/{owner_org}/{resource_name}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='create_pd_record',
+        )
+        map.connect(
             'update_pd_record',
             '/update-pd-record/{owner_org}/{resource_name}/{pk}',
             controller='ckanext.canada.controller:PDUpdateController',
