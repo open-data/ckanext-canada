@@ -207,8 +207,7 @@ class CanadaController(BaseController):
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
-        # XXX custom business logic hack
-        if resource_name == 'consultations':
+        if chromo.get('edit_form', False):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
             for row in aadata:

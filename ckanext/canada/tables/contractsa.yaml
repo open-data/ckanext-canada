@@ -13,6 +13,8 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Aggregated Contracts from -$10K to $10K
   resource_name: contractsa
+  create_form: true
+  edit_form: true
   fields:
 
   # 1.

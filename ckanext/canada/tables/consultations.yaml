@@ -23,6 +23,8 @@ gcpedia_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canad
 resources:
 - title: Open Dialogue - Consultations
   resource_name: consultations
+  create_form: false
+  edit_form: true
   fields:
 
   # 3.1
