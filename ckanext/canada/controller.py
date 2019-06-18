@@ -2,6 +2,8 @@
 import json
 import socket
 from logging import getLogger
+import decimal
+
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
 from pytz import timezone, utc
@@ -649,6 +651,7 @@ class PDUpdateController(BaseController):
             f['datastore_id']: [
                 {'value': k, 'label': v} for (k, v) in f['choices']]
             for f in h.recombinant_choice_fields(resource_name)}
+        pk_fields = aslist(chromo['datastore_primary_key'])
 
         if request.method == 'POST':
             post_data = parse_params(request.POST, ignore_keys=['save'])
@@ -661,38 +664,30 @@ class PDUpdateController(BaseController):
                     owner_org=rcomb['owner_org'],
                     ))
 
-            pk_fields = aslist(chromo['datastore_primary_key'])
-            data = {}
-            for f in chromo['fields']:
-                f_id = f['datastore_id']
-                if not f.get('import_template_include', True):
-                    continue
-                else:
-                    val = post_data.get(f['datastore_id'], '')
-                    if isinstance(val, list):
-                        val = u','.join(val)
-                    val = canonicalize(
-                        val,
-                        f['datastore_type'],
-                        primary_key=f['datastore_id'] in pk_fields,
-                        choice_field=f_id in choice_fields)
-                    data[f['datastore_id']] = val
+            data, err = clean_check_type_errors(
+                post_data,
+                chromo['fields'],
+                pk_fields,
+                choice_fields)
             try:
                 lc.action.datastore_upsert(
                     resource_id=res['id'],
                     method='insert',
-                    records=[data])
+                    records=[{k: None if k in err else v for (k, v) in data.items()}],
+                    dry_run=bool(err))
             except ValidationError as ve:
                 if 'records' in ve.error_dict:
-                    err = {
+                    err = dict({
                         k: [_(e) for e in v]
-                        for (k, v) in ve.error_dict['records'][0].items()}
+                        for (k, v) in ve.error_dict['records'][0].items()
+                    }, **err)
                 elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
-                    err = {
+                    err = dict({
                         k: [_("This record already exists")]
                         for k in pk_fields
-                    }
+                    }, **err)
 
+            if err:
                 return render('recombinant/create_pd_record.html',
                               extra_vars={
                                   'data': data,
@@ -831,3 +826,47 @@ class PDUpdateController(BaseController):
                 'owner_org': rcomb['owner_org'],
                 'errors': {},
                 })
+
+def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
+    """
+    clean posted data and check type errors, add type error messages
+    to errors dict returned. This is required because type errors on any
+    field prevent triggers from running so we don't get any other errors
+    from the datastore_upsert call.
+
+    :param post_data: form data
+    :param fields: recombinant fields
+    :param pk_fields: list of primary key field ids
+    :param choice_fields: {field id: choices, ...}
+    :return: cleaned data, errors
+    """
+    data = {}
+    err = {}
+
+    for f in fields:
+        f_id = f['datastore_id']
+        if not f.get('import_template_include', True):
+            continue
+        else:
+            val = post_data.get(f['datastore_id'], '')
+            if isinstance(val, list):
+                val = u','.join(val)
+            val = canonicalize(
+                val,
+                f['datastore_type'],
+                primary_key=f['datastore_id'] in pk_fields,
+                choice_field=f_id in choice_fields)
+            if val:
+                if f['datastore_type'] in ('money', 'numeric'):
+                    try:
+                        decimal.Decimal(val)
+                    except decimal.InvalidOperation:
+                        err[f['datastore_id']] = [_(u'Number required')]
+                elif f['datastore_type'] == 'int':
+                    try:
+                        int(val)
+                    except ValueError:
+                        err[f['datastore_id']] = [_(u'Integer required')]
+            data[f['datastore_id']] = val
+
+    return data, err
