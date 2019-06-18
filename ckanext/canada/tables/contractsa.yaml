@@ -38,6 +38,8 @@ resources:
       en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
     form_required: true
+    form_attrs:
+      size: 10
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
@@ -77,6 +79,8 @@ resources:
       en: "It is recommended for this field to be populated with the total number of services contracts entered into with a value of $10,000 and under. This includes services contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
     form_required: true
+    form_attrs:
+      size: 10
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
@@ -116,6 +120,8 @@ resources:
       en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
     obligation: Mandatory
     form_required: true
+    form_attrs:
+      size: 10
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int
@@ -155,6 +161,8 @@ resources:
       en: "It is recommended for this field to be populated with the total number of all acquisition card transactions for all dollar values."
     obligation: Mandatory
     form_required: true
+    form_attrs:
+      size: 10
     excel_required: true
     format_type: Numeric and excluding spaces and commas.
     datastore_type: int

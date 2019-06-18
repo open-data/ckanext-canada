@@ -62,7 +62,8 @@
                 'required': required,
                 'help_text': description,
                 'choices': choice_fields[f.datastore_id],
-                'sorted_choices': True,
+                'sorted_choices': true,
+                'form_include_blank_choice': true,
               }, data=data, errors=errors %}
           {%- else %}
             {% snippet form_snippet,
@@ -77,8 +78,8 @@
           {%- endif %}
         {%- endif %}
       {%- endfor %}
-      <input class='btn' name='cancel' type='submit' value='{{ _('Cancel') }}' />
-      <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
+      <input class='btn' name='cancel' type='submit' value='{{ _("Cancel") }}' />
+      <input class='btn btn-primary' name='save' type='submit' value='{{ _("Save") }}' />
     </div>
 
   </form>
