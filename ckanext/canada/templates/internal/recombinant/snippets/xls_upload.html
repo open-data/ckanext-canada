@@ -1,5 +1,19 @@
 {% ckan_extends %}
 
+{% block form %}
+{% set chromo = h.recombinant_get_chromo(resource.name) %}
+{% if chromo.create_form %}
+  <a class="btn btn-default"
+     href="{% url_for controller='ckanext.canada.controller:PDUpdateController',
+     action='create_pd_record',
+     owner_org=pkg.owner_org,
+     resource_name=resource.name %}"><i class="glyphicon glyphicon-plus-sign"></i>
+    {{ _("Create Single Record") }}</a>
+  <h4>{{ _("Create and update multiple records") }}</h4>
+{% endif %}
+{{ super() }}
+{% endblock %}
+
 {% block upload_submit %}
   {{ super() }}
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
