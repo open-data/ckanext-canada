@@ -3488,295 +3488,99 @@ presets:
       replaces: [ebcdic]
 
 
-# Field = Language.
-# List box Source: Language code table (refer to Data Migration).
-# Order: Blank, English and French first, followed by all other language options in alphabetic order. 
-# {The language of the resource}
-
-# NOTE: we've adopted BCP47 for language values
-- preset_name: canada_resource_language
-  values:
-    field_name: language
-    label:
-      en: Language
-      fr: Langue
-    help_text:
-      en: The language of the resource. You may select multiple languages (Ctrl+Click).
-      fr: Langue de la ressource. Vous pouvez sélectionner de multiples langues (Ctrl+Clic).
-    required: true
-    display_snippet: br_multiple_choice.html
-    choices:
-    - label:
-        en: English
-        fr: Anglais
-      value: en
-    - label:
-        en: French
-        fr: Français
-      value: fr
-    - label:
-        en: Albanian
-        fr: Albanais
-      value: sq
-    - label:
-        en: Algonquian languages
-        fr: Algonquines, langues
-      value: alg
-    - label:
-        en: Amharic
-        fr: amharique
-      value: am
-    - label:
-        en: Apache languages
-        fr: Apache
-      value: apa
-    - label:
-        en: Arabic
-        fr: Arabe
-      value: ar
-    - label:
-        en: Armenian
-        fr: Arménien
-      value: hy
-    - label:
-        en: Artificial (Other)
-        fr: Artificielles, autres langues
-      value: art
-    - label:
-        en: Baltic (Other)
-        fr: Baltiques, autres langues
-      value: bat
-    - label:
-        en: Belarusian
-        fr: Biélorusse
-      value: be
-    - label:
-        en: Bengali
-        fr: bengali
-      value: bn
-    - label:
-        en: Bosnian
-        fr: Bosniaque
-      value: bs
-    - label:
-        en: Bulgarian
-        fr: Bulgare
-      value: bg
-    - label:
-        en: Catalan
-        fr: catalan
-      value: ca
-    - label:
-        en: Cherokee
-        fr: Cherokee
-      value: chr
-    - label:
-        en: Cheyenne
-        fr: Cheyenne
-      value: chy
-    - label:
-        en: Chinese (Simplified)
-        fr: Chinois (simplifié)
-      value: zh-cn
-    - label:
-        en: Chinese (Traditional)
-        fr: Chinois (traditionnel)
-      value: zh-hk
-    - label:
-        en: Chipewyan
-        fr: Chipewyan
-      value: chp
-    - label:
-        en: Cree
-        fr: Cree
-      value: cr
-    - label:
-        en: Creoles and pidgins
-        fr: créoles et pidgins
-      value: crp
-    - label:
-        en: Croatian
-        fr: Croate
-      value: hr
-    - label:
-        en: Czech
-        fr: Tchèque
-      value: cs
-    - label:
-        en: Danish
-        fr: Danois
-      value: da
-    - label:
-        en: Dogrib
-        fr: dogrib
-      value: dgr
-    - label:
-        en: Dutch
-        fr: Néerlandais
-      value: nl
-    - label:
-        en: Finnish
-        fr: Finnois
-      value: fi
-    - label:
-        en: Galician
-        fr: galicien
-      value: gl
-    - label:
-        en: German
-        fr: Allemand
-      value: de
-    - label:
-        en: Greek, Modern (1453-)
-        fr: Grec moderne (après 1453)
-      value: el
-    - label:
-        en: Gujarati
-        fr: goudjrati
-      value: gu
-    - label:
-        en: Hebrew
-        fr: Hébreu
-      value: he
-    - label:
-        en: Hindi
-        fr: Hindi
-      value: hi
-    - label:
-        en: Hungarian
-        fr: Hongrois
-      value: hu
-    - label:
-        en: Indonesian
-        fr: Indonésien
-      value: id
-    - label:
-        en: Inuinnaqtun
-        fr: Innuinaqtun
-      value: inuinnaqtun
-    - label:
-        en: Inuktitut
-        fr: Inuktitut
-      value: iu
-    - label:
-        en: Inuvialuqtun
-        fr: Inuvialuqtun
-      value: inuvialuqtun
-    - label:
-        en: Iroquoian languages
-        fr: Iroquoises, langues (famille)
-      value: iro
-    - label:
-        en: Italian
-        fr: Italien
-      value: it
-    - label:
-        en: Japanese
-        fr: Japonais
-      value: ja
-    - label:
-        en: Korean
-        fr: Coréen
-      value: ko
-    - label:
-        en: Kurdish
-        fr: Kurde
-      value: ku
-    - label:
-        en: Latin
-        fr: Latin
+        fr: latin
       value: la
     - label:
         en: Micmac
-        fr: Micmac
+        fr: micmac
       value: mic
     - label:
         en: Miscellaneous languages
-        fr: Diverses, langues
+        fr: diverses, langues
       value: mis
     - label:
         en: Mohawk
-        fr: Mohawk
+        fr: mohawk
       value: moh
     - label:
         en: Multiple languages
-        fr: Multilingue
+        fr: multilingue
       value: mul
     - label:
         en: Navajo
-        fr: Navaho
+        fr: navaho
       value: nv
     - label:
         en: Nootkan
-        fr: Nootkan
+        fr: nootkan
       value: wak
     - label:
         en: North American Indian
-        fr: Indiennes d'Amérique du Nord
+        fr: indiennes d'Amérique du Nord
       value: nai
     - label:
         en: Norwegian
-        fr: Norvégien
+        fr: norvégien
       value: 'no'
     - label:
         en: Nunatsiavummiutut
-        fr: Nunatsiavummiutut
+        fr: nunatsiavummiutut
       value: nunatsiavummiutut
     - label:
         en: Ojibwa
-        fr: Ojibwa
+        fr: ojibwa
       value: oj
     - label:
         en: Persian
-        fr: Persan
+        fr: persan
       value: fa
     - label:
         en: Philippine (Other)
-        fr: Philippines, autres langues
+        fr: philippines, autres langues
       value: phi
     - label:
         en: Plains Cree
-        fr: Cris des plaines
+        fr: cris des plaines
       value: crk
     - label:
         en: Polish
-        fr: Polonais
+        fr: polonais
       value: pl
     - label:
         en: Portuguese
-        fr: Portugais
+        fr: portugais
       value: pt
     - label:
         en: Punjabi
-        fr: Pendjabi
+        fr: pendjabi
       value: pa
     - label:
         en: Romanian
-        fr: Roumain
+        fr: roumain
       value: ro
     - label:
         en: Russian
-        fr: Russe
+        fr: russe
       value: ru
     - label:
         en: Salishan
-        fr: Salishan
+        fr: salishan
       value: sal
     - label:
         en: Serbian
-        fr: Serbe
+        fr: serbe
       value: sr
     - label:
         en: Sign Languages
-        fr: Langage gestuel
+        fr: langage gestuel
       value: sgn
     - label:
         en: Siouan languages
-        fr: Sioux, langues
+        fr: sioux, langues
       value: sio
     - label:
         en: Slovak
-        fr: Slovaque
+        fr: slovaque
       value: sk
     - label:
         en: Somali
@@ -3784,7 +3588,7 @@ presets:
       value: so
     - label:
         en: Spanish; Castilian
-        fr: Espagnol; castillan
+        fr: espagnol; castillan
       value: es
     - label:
         en: Swahili
@@ -3792,7 +3596,7 @@ presets:
       value: ss
     - label:
         en: Swedish
-        fr: Suédois
+        fr: suédois
       value: sv
     - label:
         en: Tagalog
@@ -3808,35 +3612,35 @@ presets:
       value: th
     - label:
         en: Tigrinya
-        fr: Tigrigna
+        fr: tigrigna
       value: ti
     - label:
         en: Turkish
-        fr: Turc
+        fr: turc
       value: tr
     - label:
         en: Ukrainian
-        fr: Ukrainien
+        fr: ukrainien
       value: uk
     - label:
         en: Undetermined
-        fr: Indéterminée
+        fr: indéterminée
       value: und
     - label:
         en: Urdu
-        fr: Ourdou
+        fr: ourdou
       value: ur
     - label:
         en: Vietnamese
-        fr: Vietnamien
+        fr: vietnamien
       value: vi
     - label:
         en: Welsh
-        fr: Gallois
+        fr: gallois
       value: cy
     - label:
         en: Yiddish
-        fr: Yiddish
+        fr: yiddish
       value: yi
     - label:
         en: No linguistic content; Not applicable
@@ -3846,6 +3650,7 @@ presets:
     form_snippet: multiple_select.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+
 
 # Field = Download URL.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
