@@ -920,6 +920,27 @@ resources:
         en: Standing Offer/Supply Arrangement Agreement
         fr: Offre à commandes / Arrangement en matière d’approvisionnement
 
+  - datastore_id: ministers_office
+    label:
+      en: Minister's Office Contracts
+      fr: Marchés du cabinet du ministre
+    description:
+      en: It is recommended for this field to indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contract for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Minister’s Offices, such contracts should be charged to either a Minister’s other operating budget; or to the Parliamentary Assistant operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective 2019-06-21 or alternatively, for the contracts and amendments awarded within the month of this effective date.
+      fr: Dans cette zone, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets des ministres sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint parlementaire. Consultez les Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets du cabinet d’un ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications entrés en vigueur le 2019-06-21 ou dans le cas des marchés et des modifications adjugés dans le mois de cette date d’entrée en vigueur.
+    obligation:
+      en: Mandatory for contracts after 2019-06-21
+      fr: Obligatoire pour les marchés conclus après le 2019-06-21
+    excel_required_formula: '{contract_date}>=DATE(2019,6,21)'
+    datastore_type: text
+    excel_full_text_choices: false
+    choices:
+      Y:
+        en: "Yes"
+        fr: Oui
+      N:
+        en: "No"
+        fr: Non
+
   - datastore_id: reporting_period
     label:
       en: Reporting Period
@@ -1010,6 +1031,12 @@ resources:
           PERFORM choice_one_of(NEW.document_type_code,
             {document_type_code},
             'document_type_code');
+          IF NEW.contract_date >= '2019-06-21'::date THEN
+            PERFORM not_empty(NEW.ministers_office, 'ministers_office');
+          END IF;
+          PERFORM choice_one_of(NEW.ministers_office,
+            {ministers_office},
+            'ministers_office');
           PERFORM not_empty(NEW.reporting_period, 'reporting_period');
           PERFORM choice_one_of(NEW.reporting_period,
             {reporting_period},
