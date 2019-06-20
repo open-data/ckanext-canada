@@ -14,7 +14,7 @@
 {{ super() }}
 {% endblock %}
 
-{% block upload_submit %}
+{% block messages %}
   {{ super() }}
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_info' in geno %}

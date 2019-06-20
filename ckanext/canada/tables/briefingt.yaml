@@ -113,8 +113,11 @@ resources:
         en: Minister
         fr: Ministre
       D:
-        en: deputy head (including a person appointed to a position of an equivalent rank)
-        fr: Administrateurs Généraux (y compris une personne nommée à un poste de rang équivalent)
+        en: Deputy head (including a person appointed to a position of an equivalent rank)
+        fr: Administrateurs généraux (y compris une personne nommée à un poste de rang équivalent)
+        shortform:
+          en: Deputy head or equivalent
+          fr: Administrateurs généraux ou équivalent 
 
   # 3.5 (again)
   - datastore_id: date_received

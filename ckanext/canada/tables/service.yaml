@@ -5,6 +5,7 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
+template_updated: 2019-06-11
 
 portal_type: dataset
 collection: service
@@ -870,6 +871,45 @@ resources:
     occurrence: Single
     datastore_type: text
 
+# 3.37 (new field)
+  - datastore_id: harmonized_service_id 
+    label:
+      en: Harmonized Service ID
+      fr: Désignation du service harmonisé
+    description:
+      en: "This service ID was created to match up unique services over multiple years, and create a standard format amoung all services in the inventory. This links services to their service standards."
+      fr: "Celle désignation du service a été créé pour faire correspondre dues services uniques sur plusieurs années et créer un format standard pour tous les services de l'inventaire. Cela relie les services à leurs norms relatives aux services."
+    obligation: Optional
+    format_type: Free text
+    occurrence: Single
+    datastore_type: text
+
+# 3.38 (new field)
+  - datastore_id: harmonized_service_name_en
+    label:
+      en: Harmonized Service Name (english)
+      fr: nom_du_service_harmonisé (anglais)
+    description:
+      en: "A new column with an edited service name was created to provide consistent service names over both years; by default using their newest name. This was necessary because a minority of services changed names slightly year over year."
+      fr: "Une nouvelle colonne avec un nom de service édité a été créée pour fournir des noms de service cohérents pour les deux années; par défaut en utilisant leur nom le plus récent. Cela était nécessaire car une minorité de services a changeé de nom légèrement d'une année à l'autre."
+    obligation: Optional
+    format_type: Free text
+    occurrence: Single
+    datastore_type: text
+
+# 3.39 (new field)
+  - datastore_id: harmonized_service_name_fr
+    label:
+      en: Harmonized Service Name (french)
+      fr: nom_du_service_harmonisé (français)
+    description:
+      en: "A new column with an edited service name was created to provide consistent service names over both years; by default using their newest name. This was necessary because a minority of services changed names slightly year over year."
+      fr: "Une nouvelle colonne avec un nom de service édité a été créée pour fournir des noms de service cohérents pour les deux années; par défaut en utilisant leur nom le plus récent. Cela était nécessaire car une minorité de services a changeé de nom légèrement d'une année à l'autre."
+    obligation: Optional
+    format_type: Free text
+    occurrence: Single
+    datastore_type: text
+
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
@@ -1000,6 +1040,9 @@ resources:
       client_feedback: [ONL, POST]
       special_remarks_en: 'The value for in-person applications is "NA" as applications are not submitted in-person. The values for some channels are listed as “ND” as the department does not have data available. '
       special_remarks_fr: 'Les application_en_personne est sans object ("NA") parce que le service n’est pas offert en personne. Aucune donnée n’est disponible pour plusieurs canals'
+      harmonized_service_id: 'aafc-aac-01'
+      harmonized_service_name_en: 'Farm Debt Mediation Service'
+      harmonized_service_name_fr: "Service de médiation en matière d'endettement agricole"
     filters:
       external_internal: EX
     filter_one:
@@ -1360,6 +1403,19 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
     occurrence: Single
     datastore_type: text
 
+  # 4.19 (new field)
+  - datastore_id: harmonized_service_id 
+    label:
+      en: Harmonized Service ID
+      fr: Désignation du service harmonisé
+    description:
+      en: "This service ID was created to match up unique services over multiple years, and create a standard format amoung all services in the inventory. This links services to their service standards."
+      fr: "Celle désignation du service a été créé pour faire correspondre dues services uniques sur plusieurs années et créer un format standard pour tous les services de l'inventaire. Cela relie les services à leurs norms relatives aux services."
+    obligation: Optional
+    format_type: Free text
+    occurrence: Single
+    datastore_type: text
+
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
@@ -1449,7 +1505,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       q3_business_volume: 1200
       q4_performance_result: 865
       q4_business_volume: 1100
-
+      harmonized_service_id: 'aafc-aac-01'
 
 excel_edge_style:
   PatternFill:
