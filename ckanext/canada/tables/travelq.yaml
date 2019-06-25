@@ -218,7 +218,7 @@ resources:
       fr: Hébergement
     description:
       en: Total cost of accommodation
-      fr: Frais de repas et frais accessoires
+      fr: Coût total de l’hébergement
     obligation: Mandatory
     excel_required: true
     format_type:
@@ -231,7 +231,7 @@ resources:
   - datastore_id: meals
     label:
       en: Meals and incidentals
-      fr: Total cost of accommodation.
+      fr: Frais de repas et frais accessoires
     description:
       en: Total cost of meals and incidentals expenses.
       fr: Total des frais de repas et accessoires
