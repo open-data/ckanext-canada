@@ -124,10 +124,10 @@ resources:
   - datastore_id: start_date
     label:
       en: Travel Start Date
-      fr: Date du début du voyage
+      fr: Date de début du voyage
     description:
       en: To cover the date the travel started
-      fr: Date du début du voyage
+      fr: Date de début du voyage
     obligation: Mandatory
     excel_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
@@ -217,8 +217,8 @@ resources:
       en: Lodging
       fr: Hébergement
     description:
-      en: Total cost of accommodation.
-      fr: Coût total de l’hébergement
+      en: Total cost of accommodation
+      fr: Frais de repas et frais accessoires
     obligation: Mandatory
     excel_required: true
     format_type:
