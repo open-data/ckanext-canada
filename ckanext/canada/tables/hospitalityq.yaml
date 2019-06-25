@@ -3,7 +3,6 @@ target_dataset: hospitalityq
 
 title: Proactive Disclosure - Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
 
 template_version: 3
 
@@ -11,8 +10,6 @@ portal_type: info
 collection: pd
 
 datastore_text_types: true
-
-upload_info: Please note – if you have downloaded a template before DECEMBER 19, 2016, please download the updated version before submitting your information.
 
 resources:
 - title: Proactive Disclosure - Hospitality Expenses
