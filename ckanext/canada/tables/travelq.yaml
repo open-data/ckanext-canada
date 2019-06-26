@@ -5,11 +5,11 @@ title: Proactive Disclosure - Travel Expenses
 notes: Access, upload and modify the quarterly travel expense reports for your organization
 
 template_version: 3
+template_updated: 2019-07-TBD
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
 
 resources:
 - title: Proactive Disclosure - Travel Expenses
@@ -209,7 +209,7 @@ resources:
     excel_column_width: 20
 
   # 3.14
-  - datastore_id: accomodation
+  - datastore_id: lodging
     label:
       en: Lodging
       fr: Hébergement
@@ -330,7 +330,7 @@ resources:
       destination_fr: "Ottawa (Ontario) Canada"
       airfare: "1000.00"
       other_transport: "50.00"
-      accomodation: "300.00"
+      lodging: "300.00"
       meals: "150.00"
       other_expenses: "0.00"
       total: "1500.00"
