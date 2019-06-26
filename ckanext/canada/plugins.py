@@ -18,6 +18,7 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
+from ckanext.canada import search_integration
 from ckanext.extendedactivity.plugins import IActivity
 
 import json
@@ -114,6 +115,12 @@ class DataGCCAInternal(p.SingletonPlugin):
             '/dataset/delete/{id}',
             controller='package',
             action='delete'
+        )
+        map.connect(
+            'create_pd_record',
+            '/create-pd-record/{owner_org}/{resource_name}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='create_pd_record',
         )
         map.connect(
             'update_pd_record',
@@ -222,6 +229,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         p.toolkit.add_resource('public/static/js', 'js')
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
+ckanext.canada:tables/briefingt.yaml
 ckanext.canada:tables/contracts.yaml
 ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
@@ -234,6 +242,7 @@ ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
+ckanext.canada:tables/nap.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -511,6 +520,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return pkg_dict
 
     def after_create(self, context, data_dict):
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
@@ -522,9 +532,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):
+        search_integration.delete_from_search_index(data_dict['id'])
         return data_dict
 
     def after_show(self, context, data_dict):

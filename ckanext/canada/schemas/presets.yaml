@@ -3221,8 +3221,10 @@ presets:
       replaces: [geotif]
     - value: GEOJSON
       mimetype: application/geo+json
-    - label: GeoPackage
-      value: GPKG
+    - value: GPKG
+      label: GeoPackage
+      mimetype: application/geopackage+vnd.sqlite3
+      openness_score: 3
     - value: GIF
       mimetype: image/gif
       replaces: [gif]
@@ -3506,19 +3508,19 @@ presets:
     choices:
     - label:
         en: English
-        fr: Anglais
+        fr: anglais
       value: en
     - label:
         en: French
-        fr: Français
+        fr: français
       value: fr
     - label:
         en: Albanian
-        fr: Albanais
+        fr: albanais
       value: sq
     - label:
         en: Algonquian languages
-        fr: Algonquines, langues
+        fr: algonquines, langues
       value: alg
     - label:
         en: Amharic
@@ -3526,27 +3528,27 @@ presets:
       value: am
     - label:
         en: Apache languages
-        fr: Apache
+        fr: apache
       value: apa
     - label:
         en: Arabic
-        fr: Arabe
+        fr: arabe
       value: ar
     - label:
         en: Armenian
-        fr: Arménien
+        fr: arménien
       value: hy
     - label:
         en: Artificial (Other)
-        fr: Artificielles, autres langues
+        fr: artificielles, autres langues
       value: art
     - label:
         en: Baltic (Other)
-        fr: Baltiques, autres langues
+        fr: baltiques, autres langues
       value: bat
     - label:
         en: Belarusian
-        fr: Biélorusse
+        fr: biélorusse
       value: be
     - label:
         en: Bengali
@@ -3554,11 +3556,11 @@ presets:
       value: bn
     - label:
         en: Bosnian
-        fr: Bosniaque
+        fr: bosniaque
       value: bs
     - label:
         en: Bulgarian
-        fr: Bulgare
+        fr: bulgare
       value: bg
     - label:
         en: Catalan
@@ -3566,27 +3568,27 @@ presets:
       value: ca
     - label:
         en: Cherokee
-        fr: Cherokee
+        fr: cherokee
       value: chr
     - label:
         en: Cheyenne
-        fr: Cheyenne
+        fr: cheyenne
       value: chy
     - label:
         en: Chinese (Simplified)
-        fr: Chinois (simplifié)
+        fr: chinois (simplifié)
       value: zh-cn
     - label:
         en: Chinese (Traditional)
-        fr: Chinois (traditionnel)
+        fr: chinois (traditionnel)
       value: zh-hk
     - label:
         en: Chipewyan
-        fr: Chipewyan
+        fr: chipewyan
       value: chp
     - label:
         en: Cree
-        fr: Cree
+        fr: cree
       value: cr
     - label:
         en: Creoles and pidgins
@@ -3594,15 +3596,15 @@ presets:
       value: crp
     - label:
         en: Croatian
-        fr: Croate
+        fr: croate
       value: hr
     - label:
         en: Czech
-        fr: Tchèque
+        fr: tchèque
       value: cs
     - label:
         en: Danish
-        fr: Danois
+        fr: danois
       value: da
     - label:
         en: Dogrib
@@ -3610,11 +3612,11 @@ presets:
       value: dgr
     - label:
         en: Dutch
-        fr: Néerlandais
+        fr: néerlandais
       value: nl
     - label:
         en: Finnish
-        fr: Finnois
+        fr: finnois
       value: fi
     - label:
         en: Galician
@@ -3622,11 +3624,11 @@ presets:
       value: gl
     - label:
         en: German
-        fr: Allemand
+        fr: allemand
       value: de
     - label:
         en: Greek, Modern (1453-)
-        fr: Grec moderne (après 1453)
+        fr: grec moderne (après 1453)
       value: el
     - label:
         en: Gujarati
@@ -3634,147 +3636,147 @@ presets:
       value: gu
     - label:
         en: Hebrew
-        fr: Hébreu
+        fr: hébreu
       value: he
     - label:
         en: Hindi
-        fr: Hindi
+        fr: hindi
       value: hi
     - label:
         en: Hungarian
-        fr: Hongrois
+        fr: hongrois
       value: hu
     - label:
         en: Indonesian
-        fr: Indonésien
+        fr: indonésien
       value: id
     - label:
         en: Inuinnaqtun
-        fr: Innuinaqtun
+        fr: innuinaqtun
       value: inuinnaqtun
     - label:
         en: Inuktitut
-        fr: Inuktitut
+        fr: inuktitut
       value: iu
     - label:
         en: Inuvialuqtun
-        fr: Inuvialuqtun
+        fr: inuvialuqtun
       value: inuvialuqtun
     - label:
         en: Iroquoian languages
-        fr: Iroquoises, langues (famille)
+        fr: iroquoises, langues (famille)
       value: iro
     - label:
         en: Italian
-        fr: Italien
+        fr: italien
       value: it
     - label:
         en: Japanese
-        fr: Japonais
+        fr: japonais
       value: ja
     - label:
         en: Korean
-        fr: Coréen
+        fr: coréen
       value: ko
     - label:
         en: Kurdish
-        fr: Kurde
+        fr: kurde
       value: ku
     - label:
         en: Latin
-        fr: Latin
+        fr: latin
       value: la
     - label:
         en: Micmac
-        fr: Micmac
+        fr: micmac
       value: mic
     - label:
         en: Miscellaneous languages
-        fr: Diverses, langues
+        fr: diverses, langues
       value: mis
     - label:
         en: Mohawk
-        fr: Mohawk
+        fr: mohawk
       value: moh
     - label:
         en: Multiple languages
-        fr: Multilingue
+        fr: multilingue
       value: mul
     - label:
         en: Navajo
-        fr: Navaho
+        fr: navaho
       value: nv
     - label:
         en: Nootkan
-        fr: Nootkan
+        fr: nootkan
       value: wak
     - label:
         en: North American Indian
-        fr: Indiennes d'Amérique du Nord
+        fr: indiennes d'Amérique du Nord
       value: nai
     - label:
         en: Norwegian
-        fr: Norvégien
+        fr: norvégien
       value: 'no'
     - label:
         en: Nunatsiavummiutut
-        fr: Nunatsiavummiutut
+        fr: nunatsiavummiutut
       value: nunatsiavummiutut
     - label:
         en: Ojibwa
-        fr: Ojibwa
+        fr: ojibwa
       value: oj
     - label:
         en: Persian
-        fr: Persan
+        fr: persan
       value: fa
     - label:
         en: Philippine (Other)
-        fr: Philippines, autres langues
+        fr: philippines, autres langues
       value: phi
     - label:
         en: Plains Cree
-        fr: Cris des plaines
+        fr: cris des plaines
       value: crk
     - label:
         en: Polish
-        fr: Polonais
+        fr: polonais
       value: pl
     - label:
         en: Portuguese
-        fr: Portugais
+        fr: portugais
       value: pt
     - label:
         en: Punjabi
-        fr: Pendjabi
+        fr: pendjabi
       value: pa
     - label:
         en: Romanian
-        fr: Roumain
+        fr: roumain
       value: ro
     - label:
         en: Russian
-        fr: Russe
+        fr: russe
       value: ru
     - label:
         en: Salishan
-        fr: Salishan
+        fr: salishan
       value: sal
     - label:
         en: Serbian
-        fr: Serbe
+        fr: serbe
       value: sr
     - label:
         en: Sign Languages
-        fr: Langage gestuel
+        fr: langage gestuel
       value: sgn
     - label:
         en: Siouan languages
-        fr: Sioux, langues
+        fr: sioux, langues
       value: sio
     - label:
         en: Slovak
-        fr: Slovaque
+        fr: slovaque
       value: sk
     - label:
         en: Somali
@@ -3782,7 +3784,7 @@ presets:
       value: so
     - label:
         en: Spanish; Castilian
-        fr: Espagnol; castillan
+        fr: espagnol; castillan
       value: es
     - label:
         en: Swahili
@@ -3790,7 +3792,7 @@ presets:
       value: ss
     - label:
         en: Swedish
-        fr: Suédois
+        fr: suédois
       value: sv
     - label:
         en: Tagalog
@@ -3806,40 +3808,41 @@ presets:
       value: th
     - label:
         en: Tigrinya
-        fr: Tigrigna
+        fr: tigrigna
       value: ti
     - label:
         en: Turkish
-        fr: Turc
+        fr: turc
       value: tr
     - label:
         en: Ukrainian
-        fr: Ukrainien
+        fr: ukrainien
       value: uk
     - label:
         en: Undetermined
-        fr: Indéterminée
+        fr: indéterminée
       value: und
     - label:
         en: Urdu
-        fr: Ourdou
+        fr: ourdou
       value: ur
     - label:
         en: Vietnamese
-        fr: Vietnamien
+        fr: vietnamien
       value: vi
     - label:
         en: Welsh
-        fr: Gallois
+        fr: gallois
       value: cy
     - label:
         en: Yiddish
-        fr: Yiddish
+        fr: yiddish
       value: yi
     - label:
         en: No linguistic content; Not applicable
         fr: pas de contenu linguistique; non applicable
       value: zxx
+
     # copied from multiple_select preset
     form_snippet: multiple_select.html
     validators: scheming_multiple_choice

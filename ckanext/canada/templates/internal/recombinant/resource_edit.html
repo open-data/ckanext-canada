@@ -18,10 +18,12 @@
     <div class="panel panel-primary">
       <div class="panel-heading">{{ _("Guide") }}</div>
       <div class="panel-body">
-        {% set gcpedialink = _( h.recombinant_get_geno(dataset.dataset_type).get(
+        {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
              'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
         %}
         <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
+        {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
+          'sidebar_extra_content', ''))) }}
       </div>
     </div>
   </aside>

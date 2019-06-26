@@ -2,19 +2,29 @@ dataset_type: consultations
 target_dataset: consultations
 
 title: Open Dialogue - Consultations
-notes: Access, upload and modify consultation reports for your organization
-upload_warn: Description and guidance are being developed. If you have questions, please email consultation@pco-bcp.gc.ca.
+notes: |
+  Access, upload and modify consultation reports for your organization
+
+  - [Consultations master dataset](/static/data/consultations.csv)
+    This dataset consolidates all the consultations reports submitted by federal institutions.
 
 template_version: 3
+template_updated: 2019-04-15
 
 portal_type: dialogue
 collection: consultations
+
+sidebar_extra_content:
+  en: 'Description and guidance are being developed. If you have questions, please email [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
+  fr: 'La description et les directives sont en développement. Si vous avez des questions, veuillez écrire à [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
 
 gcpedia_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.ca
 
 resources:
 - title: Open Dialogue - Consultations
   resource_name: consultations
+  create_form: false
+  edit_form: true
   fields:
 
   # 3.1
@@ -45,10 +55,11 @@ resources:
     excel_required: true
     form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation: This field must not be empty (if status is set to Not Going Forward, publishable must be no)
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       Y:
@@ -84,7 +95,7 @@ resources:
       en: This field indicates the different subjects related to the engagement process.
       fr: Cette zone indique les différents sujets sur lesquels porte le processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
@@ -144,7 +155,7 @@ resources:
       en: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
       fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
@@ -164,7 +175,7 @@ resources:
       en: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
       fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
@@ -184,7 +195,7 @@ resources:
       en: This field provides information regarding the target participants and audience of the engagement process.
       fr: Cette zone précise les participants visés et le public cible du processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
@@ -246,6 +257,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
     choices:
       P:
@@ -263,6 +275,9 @@ resources:
       CR:
         en: Closed – Report Available
         fr: Fermée – Rapport disponible
+      NF:
+        en: Not Going Forward
+        fr: Ne va pas de l'avant
 
   # 3.13
   - datastore_id: profile_page_en
@@ -271,9 +286,9 @@ resources:
       fr: Lien vers la page du profil des consultations (en anglais)
     description:
       en: This field provides the link to the English engagement information profile page.
-      fr: Cette zone contient le lien vers la page profil anglaise qui contient des renseignements sur le processus de participation.
+      fr: Cette zone contient le lien vers la page de profil (en anglais) qui donne des renseignements sur le processus de participation du public.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
@@ -292,7 +307,7 @@ resources:
       en: This field provides the link to the French engagement information profile page.
       fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
-    excel_required: true
+    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
@@ -534,16 +549,20 @@ resources:
           'partner_departments');
         errors := errors || crval.error;
         NEW.partner_departments := crval.clean;
-        errors := errors || required_error(NEW.subjects, 'subjects');
+        IF NEW.end_date > '2018-01-01'::date THEN
+          errors := errors || required_error(NEW.subjects, 'subjects');
+        END IF;
         crval := choices_clean_error(NEW.subjects, {subjects}, 'subjects');
         errors := errors || crval.error;
         NEW.subjects = crval.clean;
         errors := errors || required_error(NEW.title_en, 'title_en');
         errors := errors || required_error(NEW.title_fr, 'title_fr');
-        errors := errors || required_error(NEW.description_en, 'description_en');
-        errors := errors || required_error(NEW.description_fr, 'description_fr');
-        errors := errors || required_error(NEW.target_participants_and_audience,
-          'target_participants_and_audience');
+        IF NEW.end_date > '2018-01-01'::date THEN
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+          errors := errors || required_error(NEW.target_participants_and_audience,
+            'target_participants_and_audience');
+        END IF;
         crval := choices_clean_error(NEW.target_participants_and_audience,
           {target_participants_and_audience}, 'target_participants_and_audience');
         errors := errors || crval.error;
@@ -559,6 +578,9 @@ resources:
         errors := errors || choice_error(NEW.high_profile, {high_profile}, 'high_profile');
         IF NEW.high_profile = 'Y' THEN
           errors := errors || required_error(NEW.rationale, 'rationale');
+        END IF;
+        IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
+          errors := errors || ARRAY[['status', 'If Status is set to: Not Going Forward, Publish Record must be set to No']];
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
@@ -579,8 +601,8 @@ resources:
       description_fr:
         Obtenir les opinions des partenaires provinciaux et territoriaux
       partner_departments: ["D271", "D141"]
-      end_date: "2017-05-30"
-      start_date: "2017-05-15"
+      end_date: "2018-05-30"
+      start_date: "2018-05-15"
       policy_program_lead_email: program.lead@example.gc.ca
       publishable: "N"
       registration_number: CCC0249
@@ -592,7 +614,7 @@ resources:
       status: P
       profile_page_en: http://example.gc.ca/en
       profile_page_fr: http://example.gc.ca/fr
-      subjects: ["AP", "CD", "HS", "SE"]
+      subjects: ["IP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
       title_fr: Réforme du programme des services à l'enfance

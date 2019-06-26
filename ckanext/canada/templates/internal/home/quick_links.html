@@ -11,7 +11,7 @@
     <h2 class="h5"><a href="{{
       h.url_for('recombinant_type', resource_name=r_type) }}">{{
         _(geno.title) }}</a></h2>
-    <p>{{ h.recombinant_language_text(geno.notes) }}</p>
+    <p>{{ h.render_markdown(h.recombinant_language_text(geno.notes)) }}</p>
   </section>
 {% endmacro %}
 
@@ -44,6 +44,7 @@
     <div class="col-md-6">
       {{ quick_link('reclassification') }}
       {{ quick_link('wrongdoing') }}
+      {{ quick_link('briefingt') }}
       {{ quick_link('consultations') }}
       {{ quick_link('inventory') }}
       {{ quick_link('service') }}
