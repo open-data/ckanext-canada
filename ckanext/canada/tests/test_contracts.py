@@ -34,11 +34,12 @@ class TestContracts(FunctionalTestBase):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
-            contract_date='2019-06-21')
+            contract_date='2019-06-21',
+            ministers_office=None)
         assert_raises(ValidationError,
             lc.action.datastore_upsert,
             resource_id=self.resource_id,
-            records=[{}])
+            records=[record])
 
     def test_ministers_office(self):
         lc = LocalCKAN()
