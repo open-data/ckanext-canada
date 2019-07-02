@@ -53,13 +53,18 @@ out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf
 out_csv.writeheader()
 
 for line in in_csv:
+    if not line['ref_number'].strip():
+        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' ref_number\n')
+        continue
+
     try:
-        if line['start_date']:
-            line['start_date'] = norm_date(
-                line['start_date'],
-                ORG_PREFER_FORMAT.get(line['owner_org']))
+        line['start_date'] = norm_date(
+            line['start_date'],
+            ORG_PREFER_FORMAT.get(line['owner_org']))
+        if line['start_date'] >= datetime(2019, 6, 21):
+            raise ValueError
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + line['start_date'] + '\n')
+        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + str(line['start_date']) + '\n')
         continue
     try:
         if line['end_date']:
