@@ -15,6 +15,7 @@ ORG_PREFER_FORMAT = {
     'jus': '%m/%d/%Y',
     'ndcfo-odnfc': '%d/%m/%Y',
     'swc-cfc': '%d/%m/%Y',
+    'cic': '%d/%m/%Y',
 }
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
