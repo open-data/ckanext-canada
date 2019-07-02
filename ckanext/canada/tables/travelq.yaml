@@ -332,6 +332,35 @@ resources:
       patternType: solid
       fgColor: FFb19c7d
 
+  triggers:
+  - travelq_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        IF NEW.start_date >= '2019-06-21'::date THEN
+          errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
+          errors := errors || required_error(NEW.title_en, 'title_en');
+          errors := errors || required_error(NEW.title_fr, 'title_fr');
+          errors := errors || required_error(NEW.name, 'name');
+          errors := errors || required_error(NEW.purpose_en, 'purpose_en');
+          errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
+          errors := errors || required_error(NEW.end_date, 'end_date');
+          errors := errors || required_error(NEW.destination_en, 'destination_en');
+          errors := errors || required_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || required_error(NEW.lodging, 'lodging');
+          errors := errors || required_error(NEW.meals, 'meals');
+          errors := errors || required_error(NEW.total, 'total');
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
   examples:
     record:
       ref_number: "T-2019-P3-0001"
@@ -341,8 +370,8 @@ resources:
       name: "Smith, John"
       purpose_en: "Attend North American Free Trade Agreement trade mission, give presentation at the Ontario Chamber of Commerce, etc"
       purpose_fr: "Participer à une mission commerciale dans le cadre de l’Accord de libre-échange nord-américain, donner une présentation à la chambre de commerce de l’Ontario, etc"
-      start_date: "2018-06-22"
-      end_date: "2019-06-23"
+      start_date: "2019-06-22"
+      end_date: "2020-06-23"
       destination_en: "Ottawa (Ontario) Canada"
       destination_fr: "Ottawa (Ontario) Canada"
       airfare: "1000.00"

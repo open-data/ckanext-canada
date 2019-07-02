@@ -343,6 +343,7 @@ resources:
         errors := errors || required_error(NEW.ref_number, 'ref_number');
         errors := errors || required_error(NEW.start_date, 'start_date');
         IF NEW.start_date >= '2019-06-21'::date THEN
+          errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
           errors := errors || required_error(NEW.title_en, 'title_en');
           errors := errors || required_error(NEW.title_fr, 'title_fr');
           errors := errors || required_error(NEW.name, 'name');
