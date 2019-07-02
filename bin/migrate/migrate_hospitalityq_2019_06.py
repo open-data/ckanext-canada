@@ -9,7 +9,7 @@ from decimal import Decimal
 from openpyxl.utils.datetime import from_excel
 
 
-FIELDNAMES = 'ref_number,disclosure_group,title_en,title_fr,name,description_en,description_fr,start_date,end_date,location_en,location_fr,vendor_en,vendor_fr,employee_attendees,guest_attendees,total,additional_comments_en,additional_comments_fr,owner_org,owner_org_title'.split(',')
+FIELDNAMES = 'ref_number,disclosure_group,title_en,title_fr,name,description_en,description_fr,start_date,end_date,location_en,location_fr,vendor_en,vendor_fr,employee_attendees,guest_attendees,total,additional_comments_en,additional_comments_fr,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 ORG_PREFER_FORMAT = {
     'jus': '%m/%d/%Y',
@@ -75,4 +75,5 @@ for line in in_csv:
         sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'total ' + line['total'] + '\n')
         continue
 
+    line['user_modified'] = '*'  # special "we don't know" value
     out_csv.writerow(line)

@@ -9,7 +9,7 @@ from decimal import Decimal, InvalidOperation
 from openpyxl.utils.datetime import from_excel
 
 
-FIELDNAMES = 'ref_number,disclosure_group,title_en,title_fr,name,purpose_en,purpose_fr,start_date,end_date,destination_en,destination_fr,airfare,other_transport,lodging,meals,other_expenses,total,additional_comments_en,additional_comments_fr,owner_org,owner_org_title'.split(',')
+FIELDNAMES = 'ref_number,disclosure_group,title_en,title_fr,name,purpose_en,purpose_fr,start_date,end_date,destination_en,destination_fr,airfare,other_transport,lodging,meals,other_expenses,total,additional_comments_en,additional_comments_fr,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 ORG_PREFER_FORMAT = {
     'cic': '%d/%m/%Y',
@@ -119,4 +119,5 @@ for line in in_csv:
                 pass
             break
     else:
+        line['user_modified'] = '*'  # special "we don't know" value
         out_csv.writerow(line)

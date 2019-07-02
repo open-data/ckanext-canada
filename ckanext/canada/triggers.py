@@ -54,6 +54,36 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[

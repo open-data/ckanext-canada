@@ -312,9 +312,57 @@ resources:
     format_type: Free text
     datastore_type: text
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
+
+  triggers:
+  - hospitalityq_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        IF NEW.start_date >= '2019-06-21'::date THEN
+          errors := errors || required_error(NEW.title_en, 'title_en');
+          errors := errors || required_error(NEW.title_fr, 'title_fr');
+          errors := errors || required_error(NEW.name, 'name');
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+          errors := errors || required_error(NEW.end_date, 'end_date');
+          errors := errors || required_error(NEW.location_en, 'location_en');
+          errors := errors || required_error(NEW.location_fr, 'location_fr');
+          errors := errors || required_error(NEW.vendor_en, 'vendor_en');
+          errors := errors || required_error(NEW.vendor_fr, 'vendor_fr');
+          errors := errors || required_error(NEW.employee_attendees, 'employee_attendees');
+          errors := errors || required_error(NEW.guest_attendees, 'guest_attendees');
+          errors := errors || required_error(NEW.total, 'total');
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -325,8 +373,8 @@ resources:
       name: Smith, John
       description_en: "Refreshments: information management and policies committee meeting; reception: Maltese delegation, etc"
       description_fr: "Rafraîchissements : Réunion du Comité de gestion de l’information et des politiques, Réception : Délégation maltaise, etc"
-      start_date: "2019-05-25"
-      end_date: "2019-05-25"
+      start_date: "2019-06-25"
+      end_date: "2019-06-25"
       location_en: Montreal, Quebec, Canada
       location_fr: Montréal, Québec, Canada
       vendor_en: Le Centre Sheraton
