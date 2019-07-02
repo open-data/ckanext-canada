@@ -53,12 +53,13 @@ for line in in_csv:
     line['vendor_en'] = ''
     line['vendor_fr'] = ''
     try:
-        if line['start_date']:
-            line['start_date'] = norm_date(
-                line['start_date'],
-                ORG_PREFER_FORMAT.get(line['owner_org']))
+        line['start_date'] = norm_date(
+            line['start_date'],
+            ORG_PREFER_FORMAT.get(line['owner_org']))
+        if line['start_date'] >= datetime(2019, 6, 21):
+            raise ValueError
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + line['start_date'] + '\n')
+        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + str(line['start_date']) + '\n')
         continue
     try:
         if line['end_date']:
@@ -67,6 +68,14 @@ for line in in_csv:
                 ORG_PREFER_FORMAT.get(line['owner_org']))
     except ValueError:
         sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'end_date ' + line['end_date'] + '\n')
+        continue
+    try:
+        if line['guest_attendees']:
+            line['guest_attendees'] = str(Decimal(line['guest_attendees']))
+            if Decimal(line['guest_attendees']) > 2**31:
+                raise ValueError
+    except ValueError:
+        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'guest_attendees ' + line['guest_attendees'] + '\n')
         continue
     try:
         if line['total']:
