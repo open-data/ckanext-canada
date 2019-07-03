@@ -3,16 +3,13 @@ target_dataset: travelq
 
 title: Proactive Disclosure - Travel Expenses
 notes: Access, upload and modify the quarterly travel expense reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
 
 template_version: 3
+template_updated: 2019-07-TBD
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
-upload_info: Please note – if you have downloaded a template before DECEMBER 19, 2016, please download the updated version before submitting your information.
 
 resources:
 - title: Proactive Disclosure - Travel Expenses
@@ -212,7 +209,7 @@ resources:
     excel_column_width: 20
 
   # 3.14
-  - datastore_id: accomodation
+  - datastore_id: lodging
     label:
       en: Lodging
       fr: Hébergement
@@ -303,6 +300,23 @@ resources:
     format_type: Free text
     datastore_type: text
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
@@ -318,6 +332,35 @@ resources:
       patternType: solid
       fgColor: FFb19c7d
 
+  triggers:
+  - travelq_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        IF NEW.start_date >= '2019-06-21'::date THEN
+          errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
+          errors := errors || required_error(NEW.title_en, 'title_en');
+          errors := errors || required_error(NEW.title_fr, 'title_fr');
+          errors := errors || required_error(NEW.name, 'name');
+          errors := errors || required_error(NEW.purpose_en, 'purpose_en');
+          errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
+          errors := errors || required_error(NEW.end_date, 'end_date');
+          errors := errors || required_error(NEW.destination_en, 'destination_en');
+          errors := errors || required_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || required_error(NEW.lodging, 'lodging');
+          errors := errors || required_error(NEW.meals, 'meals');
+          errors := errors || required_error(NEW.total, 'total');
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
   examples:
     record:
       ref_number: "T-2019-P3-0001"
@@ -327,13 +370,13 @@ resources:
       name: "Smith, John"
       purpose_en: "Attend North American Free Trade Agreement trade mission, give presentation at the Ontario Chamber of Commerce, etc"
       purpose_fr: "Participer à une mission commerciale dans le cadre de l’Accord de libre-échange nord-américain, donner une présentation à la chambre de commerce de l’Ontario, etc"
-      start_date: "2018-06-22"
-      end_date: "2019-06-23"
+      start_date: "2019-06-22"
+      end_date: "2020-06-23"
       destination_en: "Ottawa (Ontario) Canada"
       destination_fr: "Ottawa (Ontario) Canada"
       airfare: "1000.00"
       other_transport: "50.00"
-      accomodation: "300.00"
+      lodging: "300.00"
       meals: "150.00"
       other_expenses: "0.00"
       total: "1500.00"
