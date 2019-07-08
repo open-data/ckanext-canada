@@ -155,10 +155,17 @@ def remove_duplicates(a_list):
             
     return s
 
-
 def dataset_comments(pkg_id):
     if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/external-entity/ckan-' + pkg_id + '?_wrapper_format=ajax'
+	return '/' + h.lang() + '/external-comment/dataset/' + pkg_id
+
+def dataset_rate(pkg_id):
+    if config.get('ckanext.canada.drupal_url'):
+        return '/' + h.lang() + '/vote'
+
+def dataset_rate_result(pkg_id):
+    if config.get('ckanext.canada.drupal_url'):
+        return '/' + h.lang() + '/vote-result/' + pkg_id
 
 def dataset_comments_obd(pkg_id):
     if config.get('ckanext.canada.drupal_url'):

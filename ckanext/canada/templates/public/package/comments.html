@@ -1,21 +1,3 @@
-{%- macro display_comment(comment_list) -%}
-  {%- if comment_list|length > 0 -%}
-    {%- if comment_list[0][1] -%}
-      {%- set indent = comment_list[0][1]['thread'].split('.')|length  -%}
-      {%- if indent >  1 -%}<div class="indented">{% endif %}
-      {% for item in comment_list %}
-        {% set sub_comments, comment = item[0], item[1] %}
-        <article class="comment ">
-          <header><p class="author-datetime"><span class="comment-author">{{ comment['user']}}</span> - <span class="comment-datetime">{{ comment['date'] }}</span></p></header>
-          <p>{{ comment['comment_body']|striptags }}</p>
-        </article>
-        {{ display_comment(sub_comments) }}
-      {% endfor %}
-      {%- if indent >  1 -%}</div>{% endif %}
-    {%- endif -%}
-  {% endif %}
-{%- endmacro -%}
-
 {%- set comments_url = h.dataset_comments(c.pkg_dict.id) -%}
 {%- if comments_url -%}
   <a name="comments"></a>
