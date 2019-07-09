@@ -45,12 +45,30 @@ def norm_date(d, prefer_format):
             pass
     return from_excel(int(d))
 
-
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
+err_csv = None
+original = None
+line = None
+if sys.argv[1:]:
+    err_csv = unicodecsv.DictWriter(
+        open(sys.argv[1], 'wb'),
+        fieldnames=in_csv.fieldnames,
+        encoding='utf-8')
+    err_csv.writeheader()
+
+def error(msg, value=''):
+    sys.stderr.write(
+        line['owner_org'] + ' ' + line['ref_number'] + ' ' + msg
+        + ' ' + unicode(value) + '\n')
+    if err_csv:
+        err_csv.writerow(original)
+
 for line in in_csv:
+    original = dict(line)
+
     line['vendor_en'] = ''
     line['vendor_fr'] = ''
     try:
@@ -58,9 +76,10 @@ for line in in_csv:
             line['start_date'],
             ORG_PREFER_FORMAT.get(line['owner_org']))
         if line['start_date'] >= datetime(2019, 6, 21):
-            raise ValueError
+            error('start_date in the future', line['start_date'])
+            continue
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + str(line['start_date']) + '\n')
+        error('invalid start_date', line['start_date'])
         continue
     try:
         if line['end_date']:
@@ -68,21 +87,22 @@ for line in in_csv:
                 line['end_date'],
                 ORG_PREFER_FORMAT.get(line['owner_org']))
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'end_date ' + line['end_date'] + '\n')
+        error('invalid end_date', line['end_date'])
         continue
     try:
         if line['guest_attendees']:
             line['guest_attendees'] = str(Decimal(line['guest_attendees']))
             if Decimal(line['guest_attendees']) > 2**31:
-                raise ValueError
+                error('guest_attendees too large', line['guest_attendees'])
+                continue
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'guest_attendees ' + line['guest_attendees'] + '\n')
+        error('invalid guest_attendees', line['guest_attendees'])
         continue
     try:
         if line['total']:
             line['total'] = str(Decimal(line['total']))
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + 'total ' + line['total'] + '\n')
+        error('invalid total', line['total'])
         continue
 
     line['user_modified'] = '*'  # special "we don't know" value
