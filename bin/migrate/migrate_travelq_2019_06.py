@@ -52,9 +52,29 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
+err_csv = None
+original = None
+line = None
+if sys.argv[1:]:
+    err_csv = unicodecsv.DictWriter(
+        open(sys.argv[1], 'wb'),
+        fieldnames=in_csv.fieldnames,
+        encoding='utf-8')
+    err_csv.writeheader()
+
+def error(msg, value=None):
+    sys.stderr.write(
+        line['owner_org'] + ' ' + line['ref_number'] + ' ' + msg
+        + ' ' + unicode(value) + '\n')
+    if err_csv:
+        err_csv.writerow(original)
+
+
 for line in in_csv:
+    original = dict(line)
+
     if not line['ref_number'].strip():
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' ref_number\n')
+        error('missing ref_number')
         continue
 
     try:
@@ -62,9 +82,10 @@ for line in in_csv:
             line['start_date'],
             ORG_PREFER_FORMAT.get(line['owner_org']))
         if line['start_date'] >= datetime(2019, 6, 21):
-            raise ValueError
+            error('start_date in the future', line['start_date'])
+            continue
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' start_date ' + str(line['start_date']) + '\n')
+        error('invalid start_date', line['start_date'])
         continue
     try:
         if line['end_date']:
@@ -72,7 +93,7 @@ for line in in_csv:
                 line['end_date'],
                 ORG_PREFER_FORMAT.get(line['owner_org']))
     except ValueError:
-        sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' end_date ' + line['end_date'] + '\n')
+        error('invalid end_date', line['end_date'])
         continue
 
     # fix cic shifted columns
@@ -119,9 +140,7 @@ for line in in_csv:
             if line[f]:
                 line[f] = str(Decimal(line[f]))
         except (ValueError, InvalidOperation):
-            sys.stderr.write(line['owner_org'] + ' ' + line['ref_number'] + ' ' + f + ' ' + line[f] + '\n')
-            if len(line[f]) > 20:
-                pass
+            error(f, line[f])
             break
     else:
         line['user_modified'] = '*'  # special "we don't know" value

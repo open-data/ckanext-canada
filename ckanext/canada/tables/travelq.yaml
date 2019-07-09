@@ -2,10 +2,10 @@ dataset_type: travelq
 target_dataset: travelq
 
 title: Proactive Disclosure - Travel Expenses
-notes: Access, upload and modify the quarterly travel expense reports for your organization
+notes: Access, upload and modify the monthly travel expense reports for your organization
 
 template_version: 3
-template_updated: 2019-07-TBD
+template_updated: 2019-07-09
 
 portal_type: info
 collection: pd
@@ -320,17 +320,6 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF323232
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFb19c7d
 
   triggers:
   - travelq_trigger: |
@@ -399,10 +388,19 @@ resources:
 
   - datastore_id: year
     label: Year
+    description:
+      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
+
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
     datastore_type: year
     excel_column_width: 10
     extract_date_year: true
     choices:
+      2025: "2025"
+      2024: "2024"
+      2023: "2023"
+      2022: "2022"
+      2021: "2021"
       2020: "2020"
       2019: "2019"
       2018: "2018"
@@ -430,49 +428,115 @@ resources:
       1996: "1996"
       1995: "1995"
 
-  - datastore_id: quarter
-    label: Quarter
+  - datastore_id: month
+    label:
+      en: Month
+      fr: mois
+    description:
+      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
     datastore_type: text
-    excel_column_width: 10
+    excel_full_text_choices: true
     choices:
-      Q1:
-        en: March 2 - June 1
-        fr: 2 mars - 1 juin
-      Q2:
-        en: June 2 - September 1
-        fr: 2 juin - 1 septembre
-      Q3:
-        en: September 2 - December 1
-        fr: 2 septembre - 1 décembre
-      Q4:
-        en: December 2 - March 1
-        fr: 2 décembre - 1 mars
+      P1:
+        en: January
+        fr: janvier
+      P2:
+        en: February
+        fr: février
+      P3:
+        en: March
+        fr: mars
+      P4:
+        en: April
+        fr: avril
+      P5:
+        en: May
+        fr: mai
+      P6:
+        en: June
+        fr: juin
+      P7:
+        en: July
+        fr: juillet
+      P8:
+        en: August
+        fr: août
+      P9:
+        en: September
+        fr: septembre
+      P10:
+        en: October
+        fr: octobre
+      P11:
+        en: November
+        fr: novembre
+      P12:
+        en: December
+        fr: décembre
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
-  datastore_primary_key: [year, quarter]
+  datastore_primary_key: [year, month]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF323232
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFb19c7d
+
+  triggers:
+    - travelq_nil_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.year, 'year');
+          errors := errors || required_error(NEW.month, 'month');
+          errors := errors || choice_error(NEW.month, {month}, 'month');
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:
-      year: 2016
-      quarter: Q2
+      year: 2019
+      month: P1
     filters:
-      year: 2016
+      year: 2019
     filter_one:
-      year: 2016
-      quarter: Q2
-    sort: year desc, quarter desc
+      year: 2019
+      month: P1
+    sort: year desc, month desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF323232
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFb19c7d
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFb19c7d
