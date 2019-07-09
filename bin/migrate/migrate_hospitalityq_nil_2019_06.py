@@ -17,21 +17,21 @@ for line in in_csv:
     q = line.pop('quarter')
     line['user_modified'] = '*'  # special "we don't know" value
     if q == 'Q1':
-        line['month'] = 'P3'
+        line['month'] = 'P03'
         out_csv.writerow(line)
-        line['month'] = 'P4'
+        line['month'] = 'P04'
         out_csv.writerow(line)
-        line['month'] = 'P5'
+        line['month'] = 'P05'
         out_csv.writerow(line)
     elif q == 'Q2':
-        line['month'] = 'P6'
+        line['month'] = 'P06'
         out_csv.writerow(line)
-        line['month'] = 'P7'
+        line['month'] = 'P07'
         out_csv.writerow(line)
-        line['month'] = 'P8'
+        line['month'] = 'P08'
         out_csv.writerow(line)
     elif q == 'Q3':
-        line['month'] = 'P9'
+        line['month'] = 'P09'
         out_csv.writerow(line)
         line['month'] = 'P10'
         out_csv.writerow(line)
@@ -41,7 +41,7 @@ for line in in_csv:
         line['month'] = 'P12'
         out_csv.writerow(line)
         line['year'] = int(line['year']) + 1
-        line['month'] = 'P1'
+        line['month'] = 'P01'
         out_csv.writerow(line)
-        line['month'] = 'P2'
+        line['month'] = 'P02'
         out_csv.writerow(line)

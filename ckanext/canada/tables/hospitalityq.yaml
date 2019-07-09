@@ -5,7 +5,7 @@ title: Proactive Disclosure - Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
 
 template_version: 3
-template_updated: 2019-07-TBD
+template_updated: 2019-07-09
 
 portal_type: info
 collection: pd
@@ -450,31 +450,31 @@ resources:
     datastore_type: text
     excel_full_text_choices: true
     choices:
-      P1:
+      P01:
         en: January
         fr: janvier
-      P2:
+      P02:
         en: February
         fr: février
-      P3:
+      P03:
         en: March
         fr: mars
-      P4:
+      P04:
         en: April
         fr: avril
-      P5:
+      P05:
         en: May
         fr: mai
-      P6:
+      P06:
         en: June
         fr: juin
-      P7:
+      P07:
         en: July
         fr: juillet
-      P8:
+      P08:
         en: August
         fr: août
-      P9:
+      P09:
         en: September
         fr: septembre
       P10:
@@ -531,12 +531,12 @@ resources:
   examples:
     record:
       year: 2019
-      month: P1
+      month: P01
     filters:
       year: 2019
     filter_one:
       year: 2019
-      month: P1
+      month: P01
     sort: year desc, month desc
 
 excel_edge_style:
