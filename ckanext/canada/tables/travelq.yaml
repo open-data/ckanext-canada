@@ -5,7 +5,7 @@ title: Proactive Disclosure - Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
 template_version: 3
-template_updated: 2019-07-09
+template_updated: 2019-07-10
 
 portal_type: info
 collection: pd
@@ -407,41 +407,41 @@ resources:
     excel_full_text_choices: true
     choices:
       P01:
-        en: January
-        fr: janvier
-      P02:
-        en: February
-        fr: février
-      P03:
-        en: March
-        fr: mars
-      P04:
         en: April
         fr: avril
-      P05:
+      P02:
         en: May
         fr: mai
-      P06:
+      P03:
         en: June
         fr: juin
-      P07:
+      P04:
         en: July
         fr: juillet
-      P08:
+      P05:
         en: August
         fr: août
-      P09:
+      P06:
         en: September
         fr: septembre
-      P10:
+      P07:
         en: October
         fr: octobre
-      P11:
+      P08:
         en: November
         fr: novembre
-      P12:
+      P09:
         en: December
         fr: décembre
+      P10:
+        en: January
+        fr: janvier
+      P11:
+        en: February
+        fr: février
+      P12:
+        en: March
+        fr: mars
 
   - datastore_id: record_created
     label: Record Creation Time
