@@ -2226,7 +2226,6 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    display_snippet: null
     form_restrict_choices_to: [federal]
     form_attrs:
       readonly: ''
@@ -3421,7 +3420,6 @@ presets:
     help_text:
       en: This is the character set of the resource
       fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
-    form_panel: resource
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
