@@ -173,3 +173,21 @@ updated translations by running::
 This script overwrites the ckan French translations by combining it with
 ours.
 
+Integrating with OGC Django Search App
+--------------------------------------
+
+Optionally the extension can integrate with the OGC Search application by updating the
+custom Solr core used by the search application in addition to the regular CKAN Solr core.
+When enabled, the extension will update the second Solr core after a package update or delete.
+The hooks for this are set in the DataGCCAPackageController. For this to happen, two configuration values
+need to be set::
+
+   ckanext.canada.adv_search_enabled = True
+   ckanext.canada.adv_search_solr_core = http://127.0.0.1:8983/solr/core_od_search
+
+The first setting must to set to true to enable the integration, and the second setting provides the URL to the
+custom OGC Search core.
+
+If not integrating, these settings may be omitted or ``ckanext.canada.adv_search_enabled`` may be set to ``False``.
+
+

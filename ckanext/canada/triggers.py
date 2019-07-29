@@ -54,6 +54,36 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -428,20 +458,6 @@ def update_triggers():
                 ELSE
                     RETURN NULL;
                 END IF;
-            END;
-            ''')
-
-    lc.action.datastore_function_create(
-        name=u'contracts_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.reference_number, 'reference_number');
-                NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
-                NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
-                NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
-                RETURN NEW;
             END;
             ''')
 
