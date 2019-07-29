@@ -93,7 +93,7 @@ def update_triggers():
         rettype=u'_text',
         definition=ur'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
                     RETURN ARRAY[[field_name, 'Invalid choice: "'
                         || replace(value, E'\t', ' ') || '"']];
