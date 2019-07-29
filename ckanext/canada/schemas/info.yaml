@@ -26,9 +26,11 @@ dataset_fields:
   form_restrict_choices_to:
     - publication
     - transition
+    - transition_deputy
     - parliament_report
     - question_period
     - parliament_committee
+    - parliament_committee_deputy
   help_text:
     en: "The collection (domain specific) to which the metadata record belongs, Example: Publications"
     fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : Publication"
