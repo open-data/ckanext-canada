@@ -276,7 +276,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
                 END IF;
             END;
