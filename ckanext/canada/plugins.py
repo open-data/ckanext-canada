@@ -320,8 +320,8 @@ ckanext.canada:schemas/info.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date',
-            'dataset_rating',
-            'dataset_comments',
+            #'dataset_rating',
+            #'dataset_comments',
             'get_translated_t',
             'language_text_t',
             ])
@@ -686,8 +686,6 @@ ckanext.canada:schemas/doc.yaml
             'get_translated_t',
             'language_text_t',
             ]),
-            dataset_comments=helpers.dataset_comments_obd,
-            dataset_rating=helpers.dataset_rating_obd,
             )
 
     def before_map(self, map):

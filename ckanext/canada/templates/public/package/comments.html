@@ -1,7 +1,0 @@
-{%- set comments_url = h.dataset_comments(c.pkg_dict.id) -%}
-{%- if comments_url -%}
-  <a name="comments"></a>
-  <section class="indent-large">
-    <div data-ajax-replace="{{ comments_url }}"></div>
-  </section>
-{%- endif -%}

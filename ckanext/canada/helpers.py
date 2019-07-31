@@ -155,23 +155,6 @@ def remove_duplicates(a_list):
             
     return s
 
-def dataset_comments(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-	return '/' + h.lang() + '/external-comment/dataset/' + pkg_id
-
-def dataset_rate(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/vote'
-
-def dataset_rate_result(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/vote-result/' + pkg_id
-
-def dataset_comments_obd(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/external-entity/ckan_obd-' + pkg_id + '?_wrapper_format=ajax'
-
-
 def get_license(license_id):
     return Package.get_license_register().get(license_id)
 
@@ -186,14 +169,6 @@ def normalize_strip_accents(s):
         s = u''
     s = unicodedata.normalize('NFD', s)
     return s.encode('ascii', 'ignore').decode('ascii').lower()
-
-
-def dataset_rating(package_id):
-    return wcms.dataset_rating(package_id)
-
-def dataset_rating_obd(package_id):
-    return wcms.dataset_rating_obd(package_id)
-
 
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
