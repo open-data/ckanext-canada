@@ -240,11 +240,14 @@
 
 
 {% block package_rate %}
-{% include "package/rate.html" %}
+  <div data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
 {% endblock %}
 
 {% block package_comments %}
-{% include "package/comments.html" %}
+  <a name="comments"></a>
+  <section class="indent-large">
+    <div data-ajax-replace="/{{ h.lang() }}/external-comment/dataset/{{ c.pkg_dict.id }}"></div>
+  </section>
 {% endblock %}
 
   </div>
