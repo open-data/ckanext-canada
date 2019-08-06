@@ -188,6 +188,12 @@ need to be set::
 The first setting must to set to true to enable the integration, and the second setting provides the URL to the
 custom OGC Search core.
 
+The Django search code uses the NLTK toolkit (http://www.nltk.org/) to extract a summarized description. To install
+the NLTK parsers, run the following python commands after activating the virtual environment::
+
+   import nltk
+   nltk.download('punkt')
+
 If not integrating, these settings may be omitted or ``ckanext.canada.adv_search_enabled`` may be set to ``False``.
 
 

@@ -1,6 +1,7 @@
 from ckanapi import LocalCKAN
 from dateutil import parser
 import logging
+import nltk
 import pysolr
 import simplejson as json
 from pylons import config
@@ -12,6 +13,22 @@ SEARCH_INTEGRATION_OD_URL_EN_OPTION = "ckanext.canada.adv_search_od_base_url_en"
 SEARCH_INTEGRATION_OD_URL_FR_OPTION = "ckanext.canada.adv_search_od_base_url_fr"
 SEARCH_INTEGRATION_ENABLED = False
 SEARCH_INTEGRATION_LOADING_PAGESIZE = 100
+
+
+def get_summary(original_text, lang, max_sentences=4):
+    if lang == 'fr':
+        sent_tokenizer_fr = nltk.data.load('tokenizers/punkt/french.pickle')
+        sentences = sent_tokenizer_fr.tokenize(original_text)
+    else:
+        sent_tokenizer_en = nltk.data.load('tokenizers/punkt/english.pickle')
+        sentences = sent_tokenizer_en.tokenize(original_text)
+    sentence_total = max_sentences if len(sentences) >= max_sentences else len(sentences)
+    if len(sentences) > sentence_total:
+        summary_text = " ".join(sentences[0:sentence_total])
+    else:
+        summary_text = original_text
+    return summary_text
+
 
 def scheming_choices_label_by_value(choices):
     choices_en = {}
@@ -122,6 +139,15 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'ogp_link_en_s': '{0}{1}'.format(od_search_od_url_en, data_dict['name']),
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
         }
+
+        if 'en' in notes_translated:
+            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['en'].strip(), 'en')
+        elif 'fr-t-en' in notes_translated:
+            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['fr-t-en'].strip(), 'en')
+        if 'fr' in notes_translated:
+            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['fr'].strip(), 'fr')
+        elif 'en-t-fr' in notes_translated:
+            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['en-t-fr'].strip(), 'fr')
 
         keywords = json.loads(data_dict['keywords']) if \
             isinstance(data_dict['keywords'], str) else data_dict['keywords']
