@@ -2121,17 +2121,21 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.reporting_period, 'reporting_period');
-        errors := errors || choice_error(NEN.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
         errors := errors || required_error(NEW.commitments, 'commitments');
-        errors := errors || choice_error(NEN.commitments, {commitments}, 'commitments');
+        errors := errors || choice_error(NEW.commitments, {commitments}, 'commitments');
         errors := errors || required_error(NEW.milestones, 'milestones');
-        errors := errors || choice_error(NEN.milestones,
+        errors := errors || choice_error(NEW.milestones,
           array(SELECT unnest from unnest({milestones}) where left(unnest, length(NEW.commitments)) = NEW.commitments),
           'milestones');
         errors := errors || required_error(NEW.indicators, 'indicators');
-        errors := errors || choice_error(NEN.indicators,
+        errors := errors || choice_error(NEW.indicators,
           array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
           'indicators');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
