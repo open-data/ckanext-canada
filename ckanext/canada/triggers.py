@@ -54,6 +54,36 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -63,7 +93,7 @@ def update_triggers():
         rettype=u'_text',
         definition=ur'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
                     RETURN ARRAY[[field_name, 'Invalid choice: "'
                         || replace(value, E'\t', ' ') || '"']];
@@ -246,7 +276,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
                 END IF;
             END;

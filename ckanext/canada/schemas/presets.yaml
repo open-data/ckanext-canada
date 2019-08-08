@@ -70,9 +70,13 @@ presets:
         fr: Publication
       value: publication
     - label:
-        en: Ministerial Transition Binders
-        fr: Cahiers de transition ministériels
+        en: Briefing packages for new or incoming ministers
+        fr: Documents d'information pour les nouveaux ministres
       value: transition
+    - label:
+        en: Briefing packages for new or incoming deputy heads
+        fr: Documents d'information pour les nouveaux administrateurs généraux
+      value: transition_deputy
     - label:
         en: Reports Tabled in Parliament
         fr: Rapports déposés au Parlement
@@ -82,9 +86,13 @@ presets:
         fr: Notes pour la période des questions
       value: question_period
     - label:
-        en: Parliamentary Committee Binders
-        fr: Dossiers des comités parlementaires
+        en: Briefing packages for Parliamentary Committee appearances for ministers
+        fr: Documents d'information à l'intention des ministres pour les comparutions devant un comité parlementaire
       value: parliament_committee
+    - label:
+        en: Briefing packages for Parliamentary Committee appearances for deputy heads
+        fr: Documents d'information à l'intention des administrateurs généraux pour les comparutions devant un comité parlementaire
+      value: parliament_committee_deputy
     - label:
         en: Federated Open Data
         fr: Fédérée de données
@@ -2226,7 +2234,6 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    display_snippet: null
     form_restrict_choices_to: [federal]
     form_attrs:
       readonly: ''
@@ -3421,7 +3428,6 @@ presets:
     help_text:
       en: This is the character set of the resource
       fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
-    form_panel: resource
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
