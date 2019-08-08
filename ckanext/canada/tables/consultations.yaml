@@ -23,7 +23,7 @@ gcpedia_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canad
 resources:
 - title: Open Dialogue - Consultations
   resource_name: consultations
-  create_form: false
+  create_form: true
   edit_form: true
   fields:
 
@@ -37,6 +37,7 @@ resources:
       fr: "Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
