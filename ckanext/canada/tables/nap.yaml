@@ -2091,10 +2091,53 @@ resources:
     obligation: Optional
     datastore_type: text
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [reporting_period, indicators]
   datastore_indexes: ""
 
   default_preview_sort: reporting_period desc, indicators
+
+  triggers:
+  - nap_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || required_error(NEW.commitments, 'commitments');
+        errors := errors || choice_error(NEW.commitments, {commitments}, 'commitments');
+        errors := errors || required_error(NEW.milestones, 'milestones');
+        errors := errors || choice_error(NEW.milestones,
+          array(SELECT unnest from unnest({milestones}) where left(unnest, length(NEW.commitments)) = NEW.commitments),
+          'milestones');
+        errors := errors || required_error(NEW.indicators, 'indicators');
+        errors := errors || choice_error(NEW.indicators,
+          array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
+          'indicators');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
 
   examples:
     record:

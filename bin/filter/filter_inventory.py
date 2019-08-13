@@ -7,7 +7,6 @@ and outputs the header row and all rows eligible_for_release
 
 import csv
 import sys
-from paste.deploy.converters import asbool
 
 FILTER_COLUMN = "eligible_for_release"
 
@@ -22,5 +21,26 @@ def main():
                 writer.writerow(row)
         except ValueError:
             pass
+
+
+# (c) 2005 Ian Bicking and contributors; written for Paste (http://pythonpaste.org)
+# Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+
+
+truthy = frozenset(['true', 'yes', 'on', 'y', 't', '1'])
+falsy = frozenset(['false', 'no', 'off', 'n', 'f', '0'])
+
+
+def asbool(obj):
+    if isinstance(obj, basestring):
+        obj = obj.strip().lower()
+        if obj in truthy:
+            return True
+        elif obj in falsy:
+            return False
+        else:
+            raise ValueError("String is not true/false: %r" % obj)
+    return bool(obj)
+
 
 main()
