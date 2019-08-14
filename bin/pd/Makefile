@@ -35,28 +35,6 @@ ifneq ($(backupsuffix),)
 _backupsuffix := -$(backupsuffix)
 endif
 
-ifeq ($(fdir),)
-$(error PD_FILTER_SCRIPT_DIRECTORY is undefined)
-else ifeq ($(paster),)
-$(error REGISTRY_PASTER_COMMAND is undefined)
-else ifeq ($(registry_ini),)
-$(error REGISTRY_INI is undefined)
-else ifeq ($(portal_ini),)
-$(error PORTAL_INI is undefined)
-else ifeq ($(ckanapi),)
-$(error REGISTRY_CKANAPI_COMMAND is undefined)
-else ifeq ($(ogc_search),)
-$(error OGC_SEARCH_COMMAND is undefined)
-else ifeq ($(backup_dir),)
-$(error PD_BACKUP_DIRECTORY is undefined)
-else ifeq ($(registry_static),)
-$(error REGISTRY_STATIC_SMB_DIRECTORY is undefined)
-else ifeq ($(portal_static),)
-$(error PORTAL_STATIC_SMB_DIRECTORY is undefined)
-	
-else ifeq ($(workdir),)
-location = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
-self := $(location)
 .PHONY: help
 help:
 	@echo Usage:
@@ -75,6 +53,29 @@ help:
 		printf '    %-24s upload and rebuild search\n' "$$t"; \
 	done
 
+ifeq ($(fdir),)
+$(error PD_FILTER_SCRIPT_DIRECTORY is undefined)
+else ifeq ($(paster),)
+$(error REGISTRY_PASTER_COMMAND is undefined)
+else ifeq ($(registry_ini),)
+$(error REGISTRY_INI is undefined)
+else ifeq ($(portal_ini),)
+$(error PORTAL_INI is undefined)
+else ifeq ($(ckanapi),)
+$(error REGISTRY_CKANAPI_COMMAND is undefined)
+else ifeq ($(ogc_search),)
+$(error OGC_SEARCH_COMMAND is undefined)
+else ifeq ($(backup_dir),)
+$(error PD_BACKUP_DIRECTORY is undefined)
+else ifeq ($(registry_static),)
+$(error REGISTRY_STATIC_SMB_DIRECTORY is undefined)
+else ifeq ($(portal_static),)
+$(error PORTAL_STATIC_SMB_DIRECTORY is undefined)
+
+else ifeq ($(workdir),)
+location = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+self := $(location)
+
 # Create and clean up working directory workdir=... not passed
 # by calling the Makefile recursively
 %:
@@ -83,11 +84,11 @@ help:
 	$(MAKE) -f $(self) --no-print-directory workdir=$$workdir $@
 
 else
-ifeq ($(wildcard $(workdir)/filtered),)
-$(shell mkdir $(workdir)/filtered)
-endif
 
-# for filter scripts that > $@ their output below
+# needed by multiple filter rules, always create
+$(shell mkdir -p $(workdir)/filtered)
+
+# for filter scripts that > $@ their output so errors can be retried
 .DELETE_ON_ERROR:
 
 .PHONY: nightly
