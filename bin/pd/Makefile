@@ -32,7 +32,7 @@ yyyy := $(word 1,$(yyyy_mmdd))
 yyyymmdd := $(word 1,$(yyyy_mmdd))$(word 2,$(yyyy_mmdd))
 
 ifneq ($(backupsuffix),)
-backupsuffix := -$(backupsuffix)
+_backupsuffix := -$(backupsuffix)
 endif
 
 ifeq ($(fdir),)
@@ -95,21 +95,25 @@ nightly: dump-all filter-all backup-all $(targets)
 
 .PHONY: dump-all
 dump-all:
+# don't generate all at once when running in parallel
+ifeq ($(findstring j,$(MAKEFLAGS)),)
 	$(paster) $(combine) -a -d $(workdir) -c $(registry_ini)
+endif
 
 .PHONY: filter-all
 filter-all: $(csv_files:%=$(workdir)/filtered/%)
 
 .PHONY: backup-all
-backup-all: $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(backupsuffix).tar.gz
+backup-all: $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
 
-$(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(backupsuffix).tar.gz: \
+$(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
 		$(csv_files:%=$(workdir)/%)
-	tar czvf $@ $+
+	mkdir -p "$(backup_dir)/$(yyyy)"
+	cd "$(workdir)" && tar czvf $@ $(csv_files)
 
 .PHONY: restore-all
 restore-all:
-	cd $(workdir); tar xzvf $(lastword $(sort $(wildcard $(backup_dir)/$(yyyy)/pd-*.tar.gz)))
+	cd "$(workdir)" && tar xzvf $(lastword $(sort $(wildcard $(backup_dir)/$(yyyy)/pd-*.tar.gz)))
 
 ###
 ###  ATI Summaries
