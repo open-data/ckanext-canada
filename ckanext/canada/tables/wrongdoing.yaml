@@ -76,7 +76,9 @@ resources:
       fr: Cette zone renferme les constatations et conclusions avec un texte déroulant renvoyant à la législation.
     obligation: Mandatory
     format_type: Controlled List
-    datastore_type: text
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_full_text_choices: false
     excel_column_width: 40
     choices:
       a:
