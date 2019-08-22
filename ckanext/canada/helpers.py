@@ -20,6 +20,7 @@ PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
+WET_URL = config.get('wet_boew.url', '')
 
 
 
@@ -347,3 +348,22 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
+
+
+def url_for_wet_theme(*args):
+    file = args[0] or ''
+    return h.url_for_wet(file, theme=True)
+
+def url_for_wet(*args, **kw):
+    file = args[0] or ''
+    theme = kw.get('theme', False)
+
+    if not WET_URL:
+        return h.url_for_static_or_external(
+            (h.wet_theme() if theme else 'wet-boew') + file
+        )
+
+    return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
+
+def wet_theme():
+    return 'theme-wet-boew'

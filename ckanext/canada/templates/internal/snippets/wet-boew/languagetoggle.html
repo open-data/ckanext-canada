@@ -1,0 +1,10 @@
+<section id="wb-lng">
+  <h2>{{ _('Language selection') }}</h2>
+  <ul class="list-inline">
+      {% if h.lang() == 'fr' %}
+      <li><a lang="en" hreflang="en" href="{% url_for h.current_url(), locale='en' %}">English</a></li>
+      {% else %}
+      <li><a lang="fr" hreflang="fr" href="{% url_for h.current_url(), locale='fr' %}">Français</a></li>
+      {% endif %}
+  </ul>
+</section>

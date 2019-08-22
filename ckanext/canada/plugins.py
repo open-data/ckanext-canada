@@ -156,6 +156,9 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_recombinant',
+            'url_for_wet_theme',
+            'url_for_wet',
+            'wet_theme',
             ])
 
     def configure(self, config):
