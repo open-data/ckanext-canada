@@ -3,3 +3,10 @@
 {% block pre_primary %}
             <div class="span-8"><div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div></div>
 {% endblock %}
+
+{%- block header %}
+    {% macro  breadcrumb_content() %}
+        {% block breadcrumb_content %}{% endblock %}
+    {% endmacro %}
+    {% include "header.html" with context %}
+{% endblock -%}
