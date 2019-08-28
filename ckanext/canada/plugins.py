@@ -156,9 +156,16 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_recombinant',
+            'link_to_user',
+            'gravatar_show',
+            'get_datapreview',
+            'iso_to_goctime',
+            'geojson_to_wkt',
             'url_for_wet_theme',
             'url_for_wet',
             'wet_theme',
+            'wet_jquery_offline',
+            'get_map_type'
             ])
 
     def configure(self, config):

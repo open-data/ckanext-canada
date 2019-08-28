@@ -10,6 +10,7 @@ import unicodedata
 import ckanapi
 
 from ckantoolkit import h
+import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
 
@@ -20,7 +21,13 @@ PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
+GRAVATAR_SHOW_OPTION = 'ckan.gravatar_show'
+GRAVATAR_SHOW_DEFAULT = True
 WET_URL = config.get('wet_boew.url', '')
+WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
+WET_JQUERY_OFFLINE_DEFAULT = False
+GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
+GEO_MAP_TYPE_DEFAULT = 'static'
 
 
 
@@ -367,3 +374,65 @@ def url_for_wet(*args, **kw):
 
 def wet_theme():
     return 'theme-wet-boew'
+
+def wet_jquery_offline():
+    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+
+
+def get_map_type():
+    return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
+
+def link_to_user(user, maxlength=0):
+    """ Return the HTML snippet that returns a link to a user.  """
+
+    # Do not link to pseudo accounts
+    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
+        return user
+    if not isinstance(user, model.User):
+        user_name = unicode(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+
+    if user:
+        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
+        displayname = user.display_name
+        if maxlength and len(user.display_name) > maxlength:
+            displayname = displayname[:maxlength] + '...'
+        return html.tags.link_to(displayname,
+                       h.url_for(controller='user', action='read', id=_name))
+
+def gravatar_show():
+    return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
+
+def get_datapreview(res_id):
+
+    #import pdb; pdb.set_trace()
+    dsq_results = ckan.logic.get_action('datastore_search')({}, {'resource_id': res_id, 'limit' : 100})
+    return h.snippet('package/wet_datatable.html', ds_fields=dsq_results['fields'], ds_records=dsq_results['records'])
+
+def iso_to_goctime(isodatestr):
+    dateobj = dateutil.parser.parse(isodatestr)
+    return dateobj.strftime('%Y-%m-%d')
+
+def geojson_to_wkt(gjson_str):
+    ## Ths GeoJSON string should look something like:
+    ##  u'{"type": "Polygon", "coordinates": [[[-54, 46], [-54, 47], [-52, 47], [-52, 46], [-54, 46]]]}']
+    ## Convert this JSON into an object, and load it into a Shapely object. The Shapely library can
+    ## then output the geometry in Well-Known-Text format
+
+    try:
+        gjson = json.loads(gjson_str)
+        try:
+            gjson = _add_extra_longitude_points(gjson)
+        except:
+            # this is bad, but all we're trying to do is improve
+            # certain shapes and if that fails showing the original
+            # is good enough
+            pass
+        shape = gjson
+    except ValueError:
+        return None # avoid 500 error on bad geojson in DB
+
+    wkt_str = wkt.dumps(shape)
+    return wkt_str
