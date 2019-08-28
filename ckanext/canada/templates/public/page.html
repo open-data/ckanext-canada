@@ -1,10 +1,51 @@
 {% ckan_extends %}
 
-{% block pre_primary %}
-            <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
-{% endblock %}
-
 {% block scripts %}
 {{ super() }}
 <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
+{% endblock %}
+
+
+{%- block custom_styles -%}
+  {{ super() }}
+  {# Temporary styles until the panels styles are resolved in GCWeb #}
+  <style>
+    .panel.panel-primary, .panel.panel-primary .panel-heading {border-color: #335075;}
+    .panel.panel-primary .panel-heading {background: #335075;}
+    .panel.panel-primary .panel-heading a {color: #fff}
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% block flash %}
+        {{ super() }}
+      {% endblock %}
+      {% block secondary %}
+        {% if self.secondary_content()|trim != '' %}
+          <aside class="col-md-3 col-md-push-9">
+            {% block secondary_content %}{% endblock %}
+          </aside>
+        {% endif %}
+      {% endblock %}
+      <main property="mainContentOfPage" class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-pull-3{% else %}col-md-12{% endif %}" role="main">
+      {% block pre_primary %}
+          <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
+      {% endblock %}
+      {% block page_title %}
+        <h1 property="name" id="wb-cont">
+          {%- block page_heading -%}
+            {% set subtitle_2 = self.subtitle_2()|trim %}
+            {%- block subtitle %}{{ _('About') }}{% endblock -%}
+            {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
+          {%- endblock -%}
+        </h1>
+      {% endblock %}
+      {% block primary_content %}
+        {{ super() }}
+      {% endblock %}
+      </main>
+    </div>
+  </div>
 {% endblock %}

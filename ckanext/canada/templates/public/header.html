@@ -1,3 +1,75 @@
 {% ckan_extends %}
-{% block signed_on_off %}
+{% set lang = h.lang() %}
+{% block header_wrapper %}
+<header role="banner">
+ <div id="wb-bnr" class="container">
+    {%- block languagetoggle -%}
+      {% snippet 'snippets/wet-boew/languagetoggle.html' %}
+    {%- endblock -%}
+    <div class="row">
+      {% block brand %}
+        {% snippet 'snippets/wet-boew/brand.html' %}
+      {% endblock %}
+      {%- block mobimenu -%}
+      <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
+       <h2>{{ _('Search and menus') }}</h2>
+       <ul class="list-inline text-right chvrn">
+         <li><a href="#mb-pnl" title="{{ _('Search and menus') }}" aria-controls="mb-pnl" class="overlay-lnk" role="button"><span class="glyphicon glyphicon-search"><span class="glyphicon glyphicon-th-list"><span class="wb-inv">{{ _('Search and menus') }}</span></span></span></a></li>
+       </ul>
+       <div id="mb-pnl"></div>
+      </section>
+      {% endblock %}
+      {% block sitesearch %}
+      <section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
+       <h2>{{ _("Search") }}</h2>
+        <form action="https://www.canada.ca/{{ h.lang() }}/sr/srb.html" method="get" name="cse-search-box" role="search" class="form-inline">
+          <div class="form-group">
+            <label for="wb-srch-q" class="wb-inv">{{ _('Search website') }}</label>
+
+            <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" value="" size="27"
+                   maxlength="150" placeholder="{{ _('Search Canada.ca') }}" type="search">
+            <datalist id="wb-srch-q-ac">
+              <!--[if lte IE 9]><select><![endif]-->
+              <!--[if lte IE 9]></select><![endif]-->
+            </datalist>
+          </div>
+          <div class="form-group submit">
+            <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span
+              class="glyphicon-search glyphicon"></span><span class="wb-inv">{{ _('Search') }}</span></button>
+
+          </div>
+        </form>
+      </section>
+      {% endblock %}
+    </div>
+  </div>
+
+  {% block sitemenu %}
+    <nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="//cdn.canada.ca/gcweb-cdn-live/sitemenu/sitemenu-{{lang}}.html">
+      <div class="container nvbar">
+        <h2>{{ _("Site menu") }}</h2>
+        <div class="row">
+          <ul class="list-inline menu">
+            {% block header_site_navigation_tabs %}
+              <li><a href="{{ _("http://www.esdc.gc.ca/en/jobs/index.page") }}">{{ _("Jobs") }}</a></li>
+              <li><a href="{{ _("http://www.cic.gc.ca/english/index.asp") }}">{{ _("Immigration") }}</a></li>
+              <li><a href="{{ _("http://travel.gc.ca") }}">{{ _("Travel") }}</a></li>
+              <li><a href="{{ _("http://www.canada.ca/en/services/business/index.html") }}">{{ _("Business") }}</a></li>
+              <li><a href="{{ _("http://www.canada.ca/en/services/benefits/index.html") }}">{{ _("Benefits") }}</a></li>
+              <li><a href="{{ _("http://healthycanadians.gc.ca/index-eng.php") }}">{{ _("Health") }}</a></li>
+              <li><a href="{{ _("http://www.canada.ca/en/services/taxes/index.html") }}">{{ _("Taxes") }}</a></li>
+              <li><a href="{{ _("http://www.canada.ca/en/services/index.html") }}">{{ _("More services") }}</a></li>
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  {% endblock %}
+
+  {% block breadcrumb %}
+    {{ super() }}
+  {% endblock %}
+
+  {% block signed_on_off %}{% endblock %}
+</header>
 {% endblock %}
