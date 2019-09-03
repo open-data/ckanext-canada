@@ -13,6 +13,11 @@ from ckantoolkit import h
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
+import webhelpers.html as html
+from webhelpers.html.tags import link_to
+import dateutil.parser
+import geomet.wkt as wkt
+import json as json
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -438,3 +443,28 @@ def wet_jquery_offline():
 def get_map_type():
     return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
 
+
+def _add_extra_longitude_points(gjson):
+    """
+    Assume that sides of a polygon with the same latitude should
+    be rendered as curves following that latitude instead of
+    straight lines on the final map projection
+    """
+    import math
+    fuzz = 0.00001
+    if gjson[u'type'] != u'Polygon':
+        return gjson
+    coords = gjson[u'coordinates'][0]
+    plng, plat = coords[0]
+    out = [[plng, plat]]
+    for lng, lat in coords[1:]:
+        if plat - fuzz < lat < plat + fuzz:
+            parts = int(abs(lng-plng))
+            if parts > 300:
+                # something wrong with the data, give up
+                return gjson
+            for i in range(parts)[1:]:
+                out.append([(i*lng + (parts-i)*plng)/parts, lat])
+        out.append([lng, lat])
+        plng, plat = lng, lat
+    return {u'coordinates': [out], u'type': u'Polygon'}

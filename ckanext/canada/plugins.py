@@ -23,6 +23,10 @@ from ckanext.extendedactivity.plugins import IActivity
 
 import json
 
+import ckan.lib.formatters as formatters
+from webhelpers.html import literal
+from pylons.i18n import gettext
+
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
     import libcloud.common.azure
@@ -155,17 +159,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'date_format',
             'parse_release_date_facet',
             'is_ready_to_publish',
-            'get_datapreview_recombinant',
-            'link_to_user',
-            'gravatar_show',
-            'get_datapreview',
-            'iso_to_goctime',
-            'geojson_to_wkt',
-            'url_for_wet_theme',
-            'url_for_wet',
-            'wet_theme',
-            'wet_jquery_offline',
-            'get_map_type'
+            'get_datapreview_recombinant'
             ])
 
     def configure(self, config):
@@ -278,6 +272,12 @@ ckanext.canada:schemas/info.yaml
                     for filename in files:
                         watch_file(os.path.join(folder, filename))
 
+        # monkey patch helpers.py pagination method
+        h.Page.pager = _wet_pager
+        h.SI_number_span = _SI_number_span_close
+
+        h.build_nav_main = build_nav_main
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
@@ -334,6 +334,16 @@ ckanext.canada:schemas/info.yaml
             'dataset_comments',
             'get_translated_t',
             'language_text_t',
+            'link_to_user',
+            'gravatar_show',
+            'get_datapreview',
+            'iso_to_goctime',
+            'geojson_to_wkt',
+            'url_for_wet_theme',
+            'url_for_wet',
+            'wet_theme',
+            'wet_jquery_offline',
+            'get_map_type'
             ])
 
     def before_map(self, map):
@@ -717,3 +727,42 @@ ckanext.canada:schemas/doc.yaml
             controller='ckanext.canada.controller:CanadaController',
         )
         return map
+
+
+def _wet_pager(self, *args, **kwargs):
+    ## a custom pagination method, because CKAN doesn't expose the pagination to the templates,
+    ## and instead hardcodes the pagination html in helpers.py
+
+    kwargs.update(
+        format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
+        symbol_previous=gettext('Previous').decode('utf-8'), symbol_next=gettext('Next').decode('utf-8'),
+        curpage_attr={'class': 'active'}
+    )
+
+    return super(h.Page, self).pager(*args, **kwargs)
+
+def _SI_number_span_close(number):
+    ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
+    number = int(number)
+    if number < 1000:
+        output = literal('<span>')
+    else:
+        output = literal('<span title="' + formatters.localised_number(number) + '">')
+    return output + formatters.localised_SI_number(number) + literal('</span>')
+
+
+# Monkey Patched to inlude the 'list-group-item' class
+# TODO: Clean up and convert to proper HTML templates
+def build_nav_main(*args):
+    ''' build a set of menu items.
+
+    args: tuples of (menu type, title) eg ('login', _('Login'))
+    outputs <li><a href="...">title</a></li>
+    '''
+    output = ''
+    for item in args:
+        menu_item, title = item[:2]
+        if len(item) == 3 and not h.check_access(item[2]):
+            continue
+        output += h._make_menu_item(menu_item, title, class_='list-group-item')
+    return output
