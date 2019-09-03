@@ -177,6 +177,9 @@ rebuild-briefingt: $(workdir)/filtered/briefingt.csv
 	@echo Rebuilding Briefing Note Titles...
 	@$(ogc_search)/load_bn_to_solr.py "$(workdir)/filtered/briefingt.csv"
 
+$(workdir)/briefingt.csv:
+	$(paster) $(combine) briefingt -d $(workdir) -c $(registry_ini)
+
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 	$(fdir)/filter_briefingt.py < $< > $@
 
