@@ -357,31 +357,6 @@ def linked_user(user, maxlength=0, avatar=20):
 h.linked_user = linked_user
 
 
-def url_for_wet_theme(*args):
-    file = args[0] or ''
-    return h.url_for_wet(file, theme=True)
-
-def url_for_wet(*args, **kw):
-    file = args[0] or ''
-    theme = kw.get('theme', False)
-
-    if not WET_URL:
-        return h.url_for_static_or_external(
-            (h.wet_theme() if theme else 'wet-boew') + file
-        )
-
-    return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
-
-def wet_theme():
-    return 'theme-wet-boew'
-
-def wet_jquery_offline():
-    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
-
-
-def get_map_type():
-    return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
-
 def link_to_user(user, maxlength=0):
     """ Return the HTML snippet that returns a link to a user.  """
 
@@ -436,3 +411,30 @@ def geojson_to_wkt(gjson_str):
 
     wkt_str = wkt.dumps(shape)
     return wkt_str
+
+
+def url_for_wet_theme(*args):
+    file = args[0] or ''
+    return h.url_for_wet(file, theme=True)
+
+def url_for_wet(*args, **kw):
+    file = args[0] or ''
+    theme = kw.get('theme', False)
+
+    if not WET_URL:
+        return h.url_for_static_or_external(
+            (h.wet_theme() if theme else 'wet-boew') + file
+        )
+
+    return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
+
+def wet_theme():
+    return 'theme-wet-boew'
+
+def wet_jquery_offline():
+    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+
+
+def get_map_type():
+    return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
+
