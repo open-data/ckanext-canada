@@ -203,6 +203,12 @@ rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contrac
 	@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
 	-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
+$(workdir)/contracts.csv:
+	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
+
+$(workdir)/contracts-nil.csv:
+	$(paster) $(combine) contracts-nil -d $(workdir) -c $(registry_ini)
+
 # XXX: no tracking data on contracts records yet
 $(workdir)/filtered/contracts.csv: $(workdir)/contracts.csv
 	cp $< $@
@@ -222,6 +228,9 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 	id=2e9a82e2-bb18-4bff-a61e-59af3b429672 upload@"$(workdir)/filtered/contractsa.csv"
 .PHONY: rebuild-contractsa
 	# no search for aggregated contracts
+
+$(workdir)/contractsa.csv:
+	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
 # XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
