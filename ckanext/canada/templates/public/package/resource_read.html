@@ -5,6 +5,9 @@
 {% set pkg = c.pkg_dict %}
 {% set res = c.resource %}
 
+{% block pre_primary %}
+{% endblock %}
+
 {% block breadcrumb_content %}
   {{ super() }}
   {% set resource = res.name[client_lang] %}

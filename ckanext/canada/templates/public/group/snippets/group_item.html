@@ -1,0 +1,32 @@
+{% ckan_extends %}
+
+{% set first = position % 3 == 1 %}
+{% set last = position % 3 == 3 %}
+
+{% block item %}
+  <div class="span-2 module{% if first %} row-start{% endif %}{% if last %} row-end{% endif %}">
+    {{ self.item_inner() }}
+  </div>
+{% endblock %}
+
+{% block title %}
+  <h4>
+    <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}">
+      {{ group.display_name }}
+    </a>
+  </h4>
+{% endblock %}
+
+{% block datasets %}
+  <p>
+    {% if group.packages %}
+      <a class="button" href="{{ url }}">
+        {{ ungettext('{num} Dataset', '{num} Datasets', group.packages).format(num=group.packages) }}
+      </a>
+    {% else %}
+      <button class="button disabled">{{ _('0 Datasets') }}</button>
+    {% endif %}
+  </p>
+{% endblock %}
+
+{% block link %}{% endblock %}

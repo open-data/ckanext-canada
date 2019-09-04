@@ -39,6 +39,31 @@ ga('send', 'pageview');
 {%- endblock -%}
 
 {%- block custom_styles %}
-  {{ super() }}
+  {% snippet 'snippets/wet-boew/headresources.html' %}
   <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css') }}" type="text/css" />
 {%- endblock -%}
+
+
+{%- block htmltag -%}
+{% set lang = h.lang() %}
+<!--[if lt IE 9]>
+<html class="no-js lt-ie9" lang="{{ lang }}" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
+<html class="no-js" lang="{{ lang }}" dir="ltr"> <!--<![endif]-->
+{%- endblock -%}
+
+
+{%- block styles %}{% endblock %}
+
+{%- block custom_styles %}
+  {% snippet 'snippets/wet-boew/headresources.html' %}
+{%- endblock -%}
+
+{%- block title -%}
+  {%- block subtitle_2 %}{% endblock -%}
+  {%- if self.subtitle_2()|trim %} {{ g.template_title_deliminater }} {% endif -%}
+  {%- block subtitle %}{% endblock -%}
+  {%- if self.subtitle()|trim %} {{ g.template_title_deliminater }} {% endif -%}
+  {{ _(g.site_title) }}
+{%- endblock -%}
+
+{% block bodytag %}{{super()}} vocab="http://schema.org/" typeof="WebPage"{% endblock %}

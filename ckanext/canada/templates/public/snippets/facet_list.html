@@ -60,3 +60,19 @@
 
 {% endwith %}
 {% endblock %}
+
+
+{% block facet_list_heading %}
+  <div class="panel-heading"><span class="glyphicon glyphicon-filter"></span> {{ title or h.get_facet_title(name) }}</div>
+{% endblock %}
+
+{% block facet_list_item %}
+<div class="panel panel-primary">
+  {{ self.facet_list_heading() }}
+  <div class="panel-body">
+    {% block facet_list_item_panel_body %}
+    {{ self.facet_list_items() }}
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}

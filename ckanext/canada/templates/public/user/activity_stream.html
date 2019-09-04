@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {{ user.display_name }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ super.super() }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="wb-inv">{{ _('Activity Stream') }}</h2>
+  {% snippet 'snippets/activity_stream.html', activity_stream=activity_stream %}
+{% endblock %}

@@ -67,7 +67,19 @@
   {% endblock %}
 
   {% block breadcrumb %}
-    {{ super() }}
+    {% if breadcrumb_content() | trim %}
+      <nav role="navigation" id="wb-bc" property="breadcrumb">
+        <h2>{{ _('You are here:') }}</h2>
+        <div class="container">
+          <div class="row">
+            <ol class="breadcrumb">
+              {% snippet 'snippets/home_breadcrumb_item.html' %}
+              {{ breadcrumb_content() }}
+            </ol>
+          </div>
+        </div>
+      </nav>
+    {% endif %}
   {% endblock %}
 
   {% block signed_on_off %}{% endblock %}

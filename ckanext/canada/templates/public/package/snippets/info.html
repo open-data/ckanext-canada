@@ -1,0 +1,15 @@
+{% ckan_extends %}
+{% block package_info %}
+  {% if pkg %}
+    <section class="module module-narrow">
+      <div class="module context-info">
+        <div class="module-content">
+          {% block package_info_inner %}
+            {% block nums %}{{ super()}}{% endblock %}
+            {% block follow_button %}{% endblock %}
+          {% endblock %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
