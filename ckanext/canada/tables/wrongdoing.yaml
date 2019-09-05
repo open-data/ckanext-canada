@@ -71,8 +71,8 @@ resources:
   - datastore_id: findings_conclusions
     label: Findings and Conclusions
     description:
-      en: The field will contain the Findings and Conclusions with a dropdown text refer to the legislation for the dropdown text.
-      fr: Cette zone renferme les constatations et conclusions avec un texte déroulant renvoyant à la législation.
+      en: The field will contain value(s) a – f, separated by commas if more than one value.
+      fr: Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
     obligation: Mandatory
     format_type: Controlled List
     occurrence: Repeatable
