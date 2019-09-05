@@ -5,6 +5,7 @@ import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
@@ -273,10 +274,10 @@ ckanext.canada:schemas/info.yaml
                         watch_file(os.path.join(folder, filename))
 
         # monkey patch helpers.py pagination method
-        h.Page.pager = _wet_pager
-        h.SI_number_span = _SI_number_span_close
+        hlp.Page.pager = _wet_pager
+        hlp.SI_number_span = _SI_number_span_close
 
-        h.build_nav_main = build_nav_main
+        hlp.build_nav_main = build_nav_main
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -739,7 +740,7 @@ def _wet_pager(self, *args, **kwargs):
         curpage_attr={'class': 'active'}
     )
 
-    return super(h.Page, self).pager(*args, **kwargs)
+    return super(hlp.Page, self).pager(*args, **kwargs)
 
 def _SI_number_span_close(number):
     ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
@@ -762,7 +763,7 @@ def build_nav_main(*args):
     output = ''
     for item in args:
         menu_item, title = item[:2]
-        if len(item) == 3 and not h.check_access(item[2]):
+        if len(item) == 3 and not hlp.check_access(item[2]):
             continue
-        output += h._make_menu_item(menu_item, title, class_='list-group-item')
+        output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
     return output

@@ -11,37 +11,7 @@
 {% endblock %}
 
 {% block primary %}
-  {% block page_title %}
-    <div class="row mrgn-tp-lg">
-      <div class="col-xs-3 col-sm-2 col-md-1 text-center mrgn-tp-md">
-        <span class="glyphicon glyphicon-warning-sign glyphicon-error"></span>
-      </div>
-      <div class="col-xs-9 col-sm-10 col-md-11">
-        <h1 class="mrgn-tp-md" property="name" id="wb-cont">
-          {% block page_heading %}
-            {% if c.code[0] == '404' %}
-              {% block subtitle %}{{ _('We couldn\'t find that Web page') }}{% endblock %}
-            {% endif %}
-          {% endblock %}
-        </h1>
-        <p class="pagetag"><b>{{ _('Error') }} {{ c.code[0] }}</b></p>
-      </div>
-    </div>
-    <div class="row mrgn-bttm-lg">
-      <div class="col-md-12">
-        {% if c.code[0] == '404' %}
-       <p>{% trans %}We're sorry you ended up here. Sometimes a page gets moved or deleted, but hopefully we can help
-         you find what you're looking for. What next?{% endtrans %}</p>
-       <ul>
-         <li>{{ _('Return to the <a href="https://www.canada.ca/en.html">home page</a>;') | safe }}</li>
-         <li>{{ _('Consult the <a href="/en/sitemap.html">site map</a>;') | safe }}</li>
-         <li>{{ _('Check out the <a href="http://www.collectionscanada.gc.ca/012/012-412.01-e.html" rel="external">Government of Canada Web Archive</a> to view an older version; or') | safe }}</li>
-         <li>{{ _('<a href="/en/contact.html">Contact us</a> and we\'ll help you out.') | safe }}</li>
-       </ul>
-        {% endif %}
-     </div>
-    </div>
-  {% endblock %}
+  {% block page_title %}{{ super() }}{% endblock %}
   <div class="row">
     <div class="col-md-12">
       {% if c.code[0] == '500' %}

@@ -10,6 +10,7 @@ import unicodedata
 import ckanapi
 
 from ckantoolkit import h
+import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
