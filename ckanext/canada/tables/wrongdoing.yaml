@@ -52,11 +52,14 @@ resources:
       en: This field will provide the date that the file was created/received.
       fr: Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: case_description_en
     label:
@@ -70,6 +73,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   - datastore_id: case_description_fr
     label:
@@ -83,6 +88,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   - datastore_id: findings_conclusions
     label:
@@ -98,6 +105,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_checkbox.html
     choices:
       a:
         en: a contravention of any Act of Parliament or of the legislature
@@ -152,6 +160,9 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: recommendations_corrective_measures_fr
     label:
@@ -172,6 +183,9 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
