@@ -41,7 +41,7 @@
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
-          {%- set description = f.get('description', '') %}
+          {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
           {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
