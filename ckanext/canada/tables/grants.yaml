@@ -907,16 +907,16 @@ resources:
       quarter: Q2
     sort: fiscal_year desc, quarter desc
 
-# https://design.gccollab.ca/component/colour "Thunder and Lightning" colours 2, 5
+# https://design.gccollab.ca/component/colour "Triad" colours 2, 5
 excel_edge_style:
   PatternFill:
     patternType: solid
-    fgColor: FF4D5D6C
+    fgColor: FF024571
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FFFEC04F
+    fgColor: FFEDDB7C
 excel_column_heading_style:
   PatternFill:
     patternType: solid
-    fgColor: FFFEC04F
+    fgColor: FFEDDB7C

@@ -9,7 +9,7 @@ from ckanext.recombinant.tables import get_chromo
 
 class TestGrants(FunctionalTestBase):
     def setup(self):
-        super(TestConsultations, self).setup()
+        super(TestGrants, self).setup()
         org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='grants', owner_org=org['name'])
