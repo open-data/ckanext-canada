@@ -7,7 +7,7 @@ from ckan.tests.factories import Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestConsultations(FunctionalTestBase):
+class TestGrants(FunctionalTestBase):
     def setup(self):
         super(TestConsultations, self).setup()
         org = Organization()

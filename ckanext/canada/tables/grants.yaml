@@ -754,7 +754,7 @@ resources:
           END IF;
           errors := errors || required_error(NEW.recipient_legal_name, 'recipient_legal_name');
           errors := errors || required_error(NEW.recipient_country, 'recipient_country');
-          errors := errors || required_error(NEW.recipient_country, {recipient_country}, 'recipient_country');
+          errors := errors || choice_error(NEW.recipient_country, {recipient_country}, 'recipient_country');
           IF NEW.recipient_country = 'CA' THEN
             errors := errors || required_error(NEW.recipient_province, 'recipient_province');
             errors := errors || choice_error(NEW.recipient_province, {recipient_province}, 'recipient_province');
