@@ -218,12 +218,6 @@ def get_datapreview_recombinant(resource_name, res_id):
     chromo = get_chromo(resource_name)
     default_preview_args = {}
 
-    lc = ckanapi.LocalCKAN(username=c.user)
-    results = lc.action.datastore_search(
-        resource_id=res_id,
-        limit=0,
-        )
-
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
     fields = []

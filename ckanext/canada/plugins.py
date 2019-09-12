@@ -128,6 +128,10 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:PDUpdateController',
             action='update_pd_record',
         )
+        map.connect('recombinant_type',
+                    '/recombinant/{resource_name}',
+                    action='type_redirect',
+                    controller='ckanext.canada.controller:PDUpdateController')
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 

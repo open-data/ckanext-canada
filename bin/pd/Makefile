@@ -148,8 +148,11 @@ rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(paster) --plugin=ckanext-canada ati rebuild -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
 
-$(workdir)/ati.csv $(workdir)/ati-nil.csv:
+$(workdir)/ati.csv:
 	$(paster) $(combine) ati -d $(workdir) -c $(registry_ini)
+
+$(workdir)/ati-nil.csv:
+	$(paster) $(combine) ati-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/ati.csv: $(workdir)/ati.csv
 	$(fdir)/filter_ati.py < $< > $@
@@ -174,6 +177,9 @@ rebuild-briefingt: $(workdir)/filtered/briefingt.csv
 	@echo Rebuilding Briefing Note Titles...
 	@$(ogc_search)/load_bn_to_solr.py "$(workdir)/filtered/briefingt.csv"
 
+$(workdir)/briefingt.csv:
+	$(paster) $(combine) briefingt -d $(workdir) -c $(registry_ini)
+
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 	$(fdir)/filter_briefingt.py < $< > $@
 
@@ -197,6 +203,12 @@ rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contrac
 	@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
 	-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
+$(workdir)/contracts.csv:
+	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
+
+$(workdir)/contracts-nil.csv:
+	$(paster) $(combine) contracts-nil -d $(workdir) -c $(registry_ini)
+
 # XXX: no tracking data on contracts records yet
 $(workdir)/filtered/contracts.csv: $(workdir)/contracts.csv
 	cp $< $@
@@ -215,7 +227,10 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=2e9a82e2-bb18-4bff-a61e-59af3b429672 upload@"$(workdir)/filtered/contractsa.csv"
 .PHONY: rebuild-contractsa
-	# no search for aggregated contracts		
+	# no search for aggregated contracts
+
+$(workdir)/contractsa.csv:
+	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
 # XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
@@ -302,8 +317,11 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	$(paster) --plugin=ckanext-canada grants rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/amendments/grants.csv" "$(workdir)/filtered/grants-nil.csv"
 
-$(workdir)/grants.csv $(workdir)/grants-nil.csv:
+$(workdir)/grants.csv:
 	$(paster) $(combine) grants -d $(workdir) -c $(registry_ini)
+
+$(workdir)/grants-nil.csv:
+	$(paster) $(combine) grants-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
 	$(fdir)/filter_grants.py < $< > $@
@@ -331,8 +349,11 @@ rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/h
 	$(paster) --plugin=ckanext-canada hospitalityq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/hospitalityq.csv" "$(workdir)/filtered/hospitalityq-nil.csv"
 
-$(workdir)/hospitalityq.csv $(workdir)/hospitalityq-nil.csv:
+$(workdir)/hospitalityq.csv:
 	$(paster) $(combine) hospitalityq -d $(workdir) -c $(registry_ini)
+
+$(workdir)/hospitalityq-nil.csv:
+	$(paster) $(combine) hospitalityq-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/hospitalityq.csv: $(workdir)/hospitalityq.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -360,8 +381,11 @@ rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil
 	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
 
-$(workdir)/travelq.csv $(workdir)/travelq-nil.csv:
+$(workdir)/travelq.csv:
 	$(paster) $(combine) travelq -d $(workdir) -c $(registry_ini)
+
+$(workdir)/travelq-nil.csv:
+	$(paster) $(combine) travelq-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/travelq.csv: $(workdir)/travelq.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -436,8 +460,11 @@ rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fi
 	$(paster) --plugin=ckanext-canada reclassification rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/reclassification.csv" "$(workdir)/filtered/reclassification-nil.csv"
 
-$(workdir)/reclassification.csv $(workdir)/reclassification-nil.csv:
+$(workdir)/reclassification.csv:
 	$(paster) $(combine) reclassification -d $(workdir) -c $(registry_ini)
+
+$(workdir)/reclassification-nil.csv:
+	$(paster) $(combine) reclassification-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
 	cp $< $@
@@ -464,8 +491,11 @@ rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std
 	# disabled search rebuild like in update_search_cores.sh
 	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
-$(workdir)/service.csv $(workdir)/service-std.csv:
+$(workdir)/service.csv:
 	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
+
+$(workdir)/service-std.csv:
+	$(paster) $(combine) service-std -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/service.csv: $(workdir)/service.csv
 	$(fdir)/filter_service.py < $< > $@

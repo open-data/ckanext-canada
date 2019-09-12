@@ -55,6 +55,8 @@ from ckantoolkit import (
 
 from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from ckanext.recombinant.datatypes import canonicalize
+from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.errors import RecombinantException
 
 int_validator = get_validator('int_validator')
 
@@ -822,6 +824,23 @@ class PDUpdateController(BaseController):
                 'owner_org': rcomb['owner_org'],
                 'errors': {},
                 })
+
+    def type_redirect(self, resource_name):
+        orgs = h.organizations_available('read')
+
+        if not orgs:
+            abort(404, _('No organizations found'))
+        try:
+            chromo = get_chromo(resource_name)
+        except RecombinantException:
+            abort(404, _('Recombinant resource_name not found'))
+
+        # custom business logic
+        if is_sysadmin(c.user):
+            return redirect(h.url_for('recombinant_resource',
+                                      resource_name=resource_name, owner_org='tbs-sct'))
+        return redirect(h.url_for('recombinant_resource',
+                                  resource_name=resource_name, owner_org=orgs[0]['name']))
 
 def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
     """
