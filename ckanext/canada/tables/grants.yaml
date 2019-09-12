@@ -185,6 +185,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.8 Recipient Operating Name (New Field)
   - datastore_id: recipient_operating_name
@@ -202,6 +204,8 @@ resources:
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.9 Research Organization (New Field)
   - datastore_id: research_organization_name
@@ -220,6 +224,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.10 Recipient Country
   - datastore_id: recipient_country
@@ -312,6 +318,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.13 Recipient Postal Code (New Field)
   - datastore_id: recipient_postal_code
@@ -342,6 +350,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.15 Federal Riding Name (French) (New Field)
   - datastore_id: federal_riding_name_fr
@@ -354,6 +364,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.16 Federal Riding Number (New Field)
   - datastore_id: federal_riding_number
@@ -378,6 +390,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.18 Program Name (French)
   - datastore_id: prog_name_fr
@@ -390,6 +404,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.19 Program Purpose (English) (formerly purpose_en)
   - datastore_id: prog_purpose_en
@@ -402,6 +418,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
@@ -414,6 +433,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
@@ -426,6 +448,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.22 Agreement Title (French) (formerly proj_name_fr)
   - datastore_id: agreement_title_fr
@@ -438,6 +462,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.23 Agreement Number (formerly prog_number, proj_number)
   - datastore_id: agreement_number
@@ -544,6 +570,8 @@ resources:
     obligation: Optional
     format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
+    form_attrs:
+      size: 60
 
   # 3.30 Description (English) (New Field)
   - datastore_id: description_en
@@ -558,6 +586,9 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
@@ -572,6 +603,9 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
@@ -606,6 +640,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -618,6 +655,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
@@ -654,6 +694,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -690,6 +733,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
