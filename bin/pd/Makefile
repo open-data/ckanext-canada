@@ -401,14 +401,16 @@ nap: upload-nap rebuild-nap
 
 .PHONY: upload-nap
 upload-nap: $(workdir)/filtered/nap.csv
-	@echo Uploading National Action Plan..
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
+	# disabled for now, see OGP-776
+	#@echo Uploading National Action Plan..
+	#$(ckanapi) action resource_patch -c $(registry_ini) \
+	#id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
 
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
-	@echo Rebuilding National Action Plan...
-	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+	# disabled for now, see OGP-776
+	#@echo Rebuilding National Action Plan...
+	#$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
