@@ -435,7 +435,7 @@ def url_for_wet(*args, **kw):
     return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
 
 def wet_theme():
-    return 'theme-wet-boew'
+    return 'theme-gc-intranet'
 
 def wet_jquery_offline():
     return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
