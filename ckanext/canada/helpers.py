@@ -6,6 +6,7 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
+import ckan as ckan
 
 import ckanapi
 
@@ -434,8 +435,13 @@ def url_for_wet(*args, **kw):
 
     return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
 
+# def wet_theme():
+#     if ckan.wet_theme == 'portal':
+#         return 'GCWeb'
+#     if ckan.wet_theme == 'registry':
+#         return 'theme-gc-intranet'
 def wet_theme():
-    return 'theme-gc-intranet'
+        return 'GCWeb'
 
 def wet_jquery_offline():
     return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))

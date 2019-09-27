@@ -205,6 +205,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             ]}
 
 
+
 @chained_action
 def disabled_anon_action(up_func, context, data_dict):
     if context.get('user', 'visitor') in ('', 'visitor'):
@@ -390,6 +391,8 @@ ckanext.canada:schemas/info.yaml
 
     def get_auth_functions(self):
         return {'inventory_votes_show': auth.inventory_votes_show}
+
+
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
