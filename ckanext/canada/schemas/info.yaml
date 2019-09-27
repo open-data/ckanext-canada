@@ -159,19 +159,19 @@ dataset_fields:
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
-# {The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click).}
+# {The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click).}
 - preset: canada_subject
   help_text:
-    en: "The topic of the content of the information asset. You may select multiple subjects (Ctrl+Click)"
-    fr: "Le sujet du contenu de la ressource d’information. Vous pouvez sélectionner de multiples sujets (Ctrl+Clic)"
+    en: "The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click)"
+    fr: "Le sujet du contenu de la ressource d’information. Vous pouvez sélectionner ou désélectionner de multiples sujets (Ctrl+Clic)"
 
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
-# {A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click).}
+# {A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
 - preset: canada_audience
   help_text:
-    en: "A description of the audience or group of people for whom the described asset is intended or useful. You may select multiple options (Ctrl+Click)"
-    fr: "Description de l’audience ou du groupe de personnes pour lequel de la ressource d’information décrit est destiné ou utile. Vous pouvez sélectionner de multiples options (Ctrl+Clic)"
+    en: "A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click)"
+    fr: "Description de l’audience ou du groupe de personnes pour lequel de la ressource d’information décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
 
 # Field = Place pf Publication.
 # List box Source: Geographic Region Name code table (refer to Data Migration).
@@ -181,8 +181,8 @@ dataset_fields:
     en: Place of Publication
     fr: Endroit de publication
   help_text:
-    en: The region where the asset was originally published. You may select multiple options (Ctrl+Click)
-    fr: La région où le produit a été publié initialement. Vous pouvez sélectionner de multiples options (Ctrl+Clic)
+    en: The region where the asset was originally published. You may select or deselect multiple options (Ctrl+Click)
+    fr: La région où le produit a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)
   preset: canada_geographic_region # use same multi-select controlled list
 
 # Field = Spatial.
@@ -192,11 +192,11 @@ dataset_fields:
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
-# {The geographic region of an asset. You may select multiple regions (Ctrl+Click).}
+# {The geographic region of an asset. You may or deselect multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
   help_text:
-    en: The geographic region of the asset. You may select multiple regions (Ctrl+Click)
-    fr: Région géographique d’un produit. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
+    en: The geographic region of the asset. You may select or deselect multiple regions (Ctrl+Click)
+    fr: Région géographique d’un produit. Vous pouvez sélectionner ou désélectionner de multiples régions (Ctrl+Clic)
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
