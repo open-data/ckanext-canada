@@ -215,14 +215,18 @@ class CanadaController(BaseController):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
             for row in aadata:
-                row[0] = u'<a href="{0}">{1}</a>'.format(
-                    h.url_for(
-                        controller='ckanext.canada.controller:PDUpdateController',
-                        action='update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=url_part_escape(row[0])),
-                    row[0])
+                row[0] = (
+                    u'<a href="{0}" aria-label"edit">'
+                    u'<i class="fa fa-edit" aria-hidden="true"></i></a> {1}'.format(
+                        h.url_for(
+                            controller='ckanext.canada.controller:PDUpdateController',
+                            action='update_pd_record',
+                            owner_org=pkg['organization']['name'],
+                            resource_name=resource_name,
+                            pk=url_part_escape(row[0])),
+                        row[0]
+                    )
+                )
 
         return json.dumps({
             'draw': draw,
