@@ -25,6 +25,7 @@ resources:
       en: The current reporting period and fiscal year
       fr: La période de déclaration et l’exercice financier en cours.
     obligation: Mandatory
+    form_required: true
     datastore_type: text
     choices:
       2018-2019-Q1: 2018-2019-Q1
@@ -44,6 +45,7 @@ resources:
       en: The line number of the disclosure.
       fr: Le numéro de ligne de la divulgation.
     obligation: Mandatory
+    form_required: true
     datastore_type: int
 
   - datastore_id: member_name
