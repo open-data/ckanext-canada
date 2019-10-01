@@ -44,6 +44,7 @@ resources:
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    excel_column_width: 15
 
   - datastore_id: pos_title_en
     label:
