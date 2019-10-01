@@ -2,110 +2,115 @@ dataset_type: reclassification
 target_dataset: reclassification
 title: Proactive Disclosure - Position Reclassification
 notes: Access, upload and modify the position reclassification reports for your organization
-upload_warn:
-  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
-  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
+
+template_version: 3
+template_updated: 2019-TBD
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
 resources:
 - title: Proactive Disclosure - Position Reclassification
   resource_name: reclassification
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     datastore_type: text
-    excel_column_width: 20
+    excel_required: true
+    form_required: true
 
   - datastore_id: job_number
-    label: Job Number
+    label:
+      en: Job Number
+      fr: Numéro d'emploi
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: pos_number
-    label: Position Number
+    label:
+      en: Position Number
+      fr: Numéro du poste
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: date
-    label: Date
+    label:
+      en: Date
+      fr: Date
     datastore_type: date
-    excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
 
   - datastore_id: pos_title_en
-    label: Position Title (English)
+    label:
+      en: Position Title (English)
+      fr: Titre du poste (anglais)
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: pos_title_fr
-    label: Position Title (French)
+    label:
+      en: Position Title (French)
+      fr: Titre du poste (français)
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: old_class_group_code
-    label: Previous Position Classification Group
+    label:
+      en: Previous Position Classification Group
+      fr: Groupe de classification du poste antérieur
     datastore_type: text
-    excel_column_width: 10
     choices_file: choices/classification_group.yaml
 
   - datastore_id: old_class_level
-    label: Previous Position Classification Level Number
+    label:
+      en: Previous Position Classification Level Number
+      fr: Numéro de niveau de la classification du poste antérieur
     datastore_type: text
-    excel_column_width: 10
     choices_file: choices/level_number.yaml
 
   - datastore_id: new_class_group_code
-    label: Reclassified Position Classification Group
+    label:
+      en: Reclassified Position Classification Group
+      fr: Groupe de classification du poste reclassifié
     datastore_type: text
-    excel_column_width: 10
     choices_file: choices/classification_group.yaml
 
   - datastore_id: new_class_level
-    label: Reclassified Position Classification Level Number
+    label:
+      en: Reclassified Position Classification Level Number
+      fr: Numéro de niveau de la classification du poste reclassifié
     datastore_type: text
-    excel_column_width: 10
     choices_file: choices/level_number.yaml
 
   - datastore_id: old_differential
-    label: Previous Supervisory Differential
+    label:
+      en: Previous Supervisory Differential
+      fr: Ancienne prime de surveillance
     datastore_type: text
-    excel_column_width: 5
 
   - datastore_id: new_differential
-    label: Reclassified Supervisory Differential
+    label:
+      en: Reclassified Supervisory Differential
+      fr: Prime de surveillance précédente
     datastore_type: text
-    excel_column_width: 5
 
   - datastore_id: reason_en
-    label: Reason for Reclassification (English)
+    label:
+      en: Reason for Reclassification (English)
+      fr: Raison de la decision en anglais
     datastore_type: text
-    excel_column_width: 41
 
   - datastore_id: reason_fr
-    label: Reason for Reclassification (French)
+    label:
+      en: Reason for Reclassification (French)
+      fr: Raison de la decision en français
     datastore_type: text
-    excel_column_width: 41
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f1e26
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFd0e1f9
 
   examples:
     record:
@@ -180,17 +185,6 @@ resources:
 
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f1e26
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFd0e1f9
 
   examples:
     record:
@@ -202,3 +196,20 @@ resources:
       year: 2016
       quarter: Q2
     sort: year desc, quarter desc
+
+# https://design.gccollab.ca/component/colour "Green and Blue" colours 2, 3
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF4e4741
+  Font:
+    color: FFFFFF
+    size: 14
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF83c3f2
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF83c3f2
