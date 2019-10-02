@@ -29,3 +29,27 @@ class TestReclassification(FunctionalTestBase):
             lc.action.datastore_upsert,
             resource_id=self.resource_id,
             records=[{}])
+
+
+class TestReclassificationNil(FunctionalTestBase):
+    def setup(self):
+        super(TestReclassificationNil, self).setup()
+        org = Organization()
+        lc = LocalCKAN()
+        lc.action.recombinant_create(dataset_type='reclassification', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='reclassification', owner_org=org['name'])
+        self.resource_id = rval['resources'][1]['id']
+
+    def test_example(self):
+        lc = LocalCKAN()
+        record = get_chromo('reclassification-nil')['examples']['record']
+        lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
+    def test_blank(self):
+        lc = LocalCKAN()
+        assert_raises(ValidationError,
+                      lc.action.datastore_upsert,
+                      resource_id=self.resource_id,
+                      records=[{}])

@@ -285,7 +285,6 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.year, 'year');
-        errors := errors || choice_error(NEW.year, {year}, 'year');
         errors := errors || required_error(NEW.quarter, 'quarter');
         errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
         IF errors = '{{}}' THEN
