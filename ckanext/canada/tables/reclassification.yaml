@@ -29,18 +29,24 @@ resources:
       en: Job Number
       fr: Numéro d'emploi
     datastore_type: text
+    excel_required: true
+    form_required: true
 
   - datastore_id: pos_number
     label:
       en: Position Number
       fr: Numéro du poste
     datastore_type: text
+    excel_required: true
+    form_required: true
 
   - datastore_id: date
     label:
       en: Date
       fr: Date
     datastore_type: date
+    excel_required: true
+    form_required: true
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
@@ -51,18 +57,24 @@ resources:
       en: Position Title (English)
       fr: Titre du poste (anglais)
     datastore_type: text
+    excel_required: true
+    form_required: true
 
   - datastore_id: pos_title_fr
     label:
       en: Position Title (French)
       fr: Titre du poste (français)
     datastore_type: text
+    excel_required: true
+    form_required: true
 
   - datastore_id: old_class_group_code
     label:
       en: Previous Position Classification Group
       fr: Groupe de classification du poste antérieur
     datastore_type: text
+    excel_required: true
+    form_required: true
     choices_file: choices/classification_group.yaml
 
   - datastore_id: old_class_level
@@ -70,6 +82,8 @@ resources:
       en: Previous Position Classification Level Number
       fr: Numéro de niveau de la classification du poste antérieur
     datastore_type: text
+    excel_required: true
+    form_required: true
     choices_file: choices/level_number.yaml
 
   - datastore_id: new_class_group_code
@@ -77,6 +91,8 @@ resources:
       en: Reclassified Position Classification Group
       fr: Groupe de classification du poste reclassifié
     datastore_type: text
+    excel_required: true
+    form_required: true
     choices_file: choices/classification_group.yaml
 
   - datastore_id: new_class_level
@@ -84,6 +100,8 @@ resources:
       en: Reclassified Position Classification Level Number
       fr: Numéro de niveau de la classification du poste reclassifié
     datastore_type: text
+    excel_required: true
+    form_required: true
     choices_file: choices/level_number.yaml
 
   - datastore_id: old_differential
@@ -103,15 +121,65 @@ resources:
       en: Reason for Reclassification (English)
       fr: Raison de la decision en anglais
     datastore_type: text
+    excel_required: true
+    form_required: true
 
   - datastore_id: reason_fr
     label:
       en: Reason for Reclassification (French)
       fr: Raison de la decision en français
     datastore_type: text
+    excel_required: true
+    form_required: true
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
+
+  triggers:
+    - reclassification_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.ref_number, 'ref_number');
+          errors := errors || required_error(NEW.job_number, 'job_number');
+          errors := errors || required_error(NEW.pos_number, 'pos_number');
+          errors := errors || required_error(NEW.date, 'date');
+          errors := errors || required_error(NEW.pos_title_en, 'pos_title_en');
+          errors := errors || required_error(NEW.pos_title_fr, 'pos_title_fr');
+          errors := errors || required_error(NEW.old_class_group_code, 'old_class_group_code');
+          errors := errors || choice_error(NEW.old_class_group_code, {old_class_group_code}, 'old_class_group_code');
+          errors := errors || required_error(NEW.old_class_level, 'old_class_level');
+          errors := errors || choice_error(NEW.old_class_level, {old_class_level}, 'old_class_level');
+          errors := errors || required_error(NEW.new_class_group_code, 'new_class_group_code');
+          errors := errors || choice_error(NEW.new_class_group_code, {new_class_group_code}, 'new_class_group_code');
+          errors := errors || required_error(NEW.new_class_level, 'new_class_level');
+          errors := errors || choice_error(NEW.new_class_level, {new_class_level}, 'new_class_level');
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:
@@ -180,12 +248,48 @@ resources:
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
+
+  triggers:
+  - reclassification_nil_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        errors := errors || choice_error(NEW.year, {year}, 'year');
+        errors := errors || required_error(NEW.quarter, 'quarter');
+        errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
 
   examples:
     record:
