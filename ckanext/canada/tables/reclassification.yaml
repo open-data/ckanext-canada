@@ -29,8 +29,6 @@ resources:
       en: Job Number
       fr: Numéro d'emploi
     datastore_type: text
-    excel_required: true
-    form_required: true
 
   - datastore_id: pos_number
     label:
@@ -161,7 +159,6 @@ resources:
           crval RECORD;
         BEGIN
           errors := errors || required_error(NEW.ref_number, 'ref_number');
-          errors := errors || required_error(NEW.job_number, 'job_number');
           errors := errors || required_error(NEW.pos_number, 'pos_number');
           errors := errors || required_error(NEW.date, 'date');
           errors := errors || required_error(NEW.pos_title_en, 'pos_title_en');
@@ -183,13 +180,21 @@ resources:
 
   examples:
     record:
-      ref_number: "1980198"
-      pos_number: "846763"
-      date: "2016-01-01"
+      ref_number: "PR-2019-Q1-00005"
+      pos_number: "14999"
+      date: "2019-03-01"
+      pos_title_en: "Chief, Facilities Services Management"
+      pos_title_fr: "Chef, Gestion des services aux immeubles"
+      old_class_group_code: "AS"
+      old_class_level: "03"
+      new_class_group_code: "AS"
+      new_class_level: "04"
+      reason_en: "Change of Duties"
+      reason_fr: "Changements des les fonctions de travail"
     filters:
-      pos_number: "846763"
+      pos_number: "14999"
     filter_one:
-      ref_number: "1980198"
+      ref_number: "PR-2019-Q1-00005"
     sort: date desc
 
 
