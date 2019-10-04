@@ -1,5 +1,16 @@
 {% ckan_extends %}
 
+{%- block custom_styles -%}
+  {{ super() }}
+  {# Temporary styles until the panels styles are resolved in GCWeb #}
+  <style>
+    .panel.panel-primary, .panel.panel-primary .panel-heading {border-color: #335075;}
+    .panel.panel-primary .panel-heading {background: #335075;}
+    .panel.panel-primary .panel-heading a {color: #fff}
+  </style>
+{% endblock %}
+
+
 {% block page %}
 
   {% block skip %}
@@ -30,7 +41,7 @@
             </div>
           {% endfor %}
           </aside>
-        {% endblock %}
+        {% endblock flash %}
         {% block secondary %}
           {% if self.secondary_content()|trim != '' %}
             <aside class="col-md-3 col-md-push-9">
@@ -40,7 +51,7 @@
         {% endblock %}
         <main property="mainContentOfPage" class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-pull-3{% else %}col-md-12{% endif %}" role="main">
         {% block pre_primary %}
-            <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
+              <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
         {% endblock %}
         {% block page_title %}
           <h1 property="name" id="wb-cont">
@@ -69,31 +80,22 @@
                   {% block primary_content_inner %}{% endblock %}
               </div>
           </div>
-        {% endblock %}
+        {% endblock primary_content %}
         </main>
       </div>
     </div>
   {% endblock %}
 
-{% endblock %}
-
   {%- block footer %}
     {{ super() }}
   {% endblock -%}
+
+{% endblock %}
+
+
+
 
 {% block scripts %}
 {% snippet 'snippets/wet-boew/footerresources.html' %}
 <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
 {% endblock %}
-
-
-{%- block custom_styles -%}
-  {{ super() }}
-  {# Temporary styles until the panels styles are resolved in GCWeb #}
-  <style>
-    .panel.panel-primary, .panel.panel-primary .panel-heading {border-color: #335075;}
-    .panel.panel-primary .panel-heading {background: #335075;}
-    .panel.panel-primary .panel-heading a {color: #fff}
-  </style>
-{% endblock %}
-

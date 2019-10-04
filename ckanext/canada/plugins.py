@@ -56,6 +56,9 @@ class DataGCCAInternal(p.SingletonPlugin):
             "ckan.user_list_limit": 4000
         })
 
+    def wet_theme(self):
+        return 'theme-gc-intranet'
+
     def before_map(self, map):
         map.connect(
             '/',
@@ -154,7 +157,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         return map
 
     def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
+        helperfunctions = dict((h, getattr(helpers, h)) for h in [
             'may_publish_datasets',
             'today',
             'date_format',
@@ -162,6 +165,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant'
             ])
+        helperfunctions['wet_theme'] = self.wet_theme
+        return helperfunctions
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
@@ -312,7 +317,7 @@ ckanext.canada:schemas/info.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
+        helperfunctions =  dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
             'openness_score',
             'remove_duplicates',
@@ -343,10 +348,14 @@ ckanext.canada:schemas/info.yaml
             'geojson_to_wkt',
             'url_for_wet_theme',
             'url_for_wet',
-            'wet_theme',
             'wet_jquery_offline',
             'get_map_type'
             ])
+        helperfunctions['wet_theme'] = self.wet_theme
+        return helperfunctions
+
+    def wet_theme(self):
+        return 'GCWeb'
 
     def before_map(self, map):
         map.connect(
