@@ -2,12 +2,11 @@ dataset_type: wrongdoing
 target_dataset: wrongdoing
 title: Proactive Disclosure - Acts of Founded Wrongdoing
 notes: Access, upload and modify the Acts of Founded Wrongdoing reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
+template_updated: 2019-08-20
 
 resources:
 - title: Proactive Disclosure - Founded Wrongdoing
@@ -72,11 +71,13 @@ resources:
   - datastore_id: findings_conclusions
     label: Findings and Conclusions
     description:
-      en: The field will contain the Findings and Conclusions with a dropdown text refer to the legislation for the dropdown text.
-      fr: Cette zone renferme les constatations et conclusions avec un texte déroulant renvoyant à la législation.
+      en: The field will contain value(s) a – f, separated by commas if more than one value.
+      fr: Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
     obligation: Mandatory
     format_type: Controlled List
-    datastore_type: text
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_full_text_choices: false
     excel_column_width: 40
     choices:
       a:

@@ -70,9 +70,13 @@ presets:
         fr: Publication
       value: publication
     - label:
-        en: Ministerial Transition Binders
-        fr: Cahiers de transition ministériels
+        en: Briefing packages for new or incoming ministers
+        fr: Documents d'information pour les nouveaux ministres
       value: transition
+    - label:
+        en: Briefing packages for new or incoming deputy heads
+        fr: Documents d'information pour les nouveaux administrateurs généraux
+      value: transition_deputy
     - label:
         en: Reports Tabled in Parliament
         fr: Rapports déposés au Parlement
@@ -82,9 +86,13 @@ presets:
         fr: Notes pour la période des questions
       value: question_period
     - label:
-        en: Parliamentary Committee Binders
-        fr: Dossiers des comités parlementaires
+        en: Briefing packages for Parliamentary Committee appearances for ministers
+        fr: Documents d'information à l'intention des ministres pour les comparutions devant un comité parlementaire
       value: parliament_committee
+    - label:
+        en: Briefing packages for Parliamentary Committee appearances for deputy heads
+        fr: Documents d'information à l'intention des administrateurs généraux pour les comparutions devant un comité parlementaire
+      value: parliament_committee_deputy
     - label:
         en: Federated Open Data
         fr: Fédérée de données
@@ -359,7 +367,7 @@ presets:
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
-# {The topic of the content of the dataset. You may select multiple subjects (Ctrl+Click).}
+# {The topic of the content of the dataset. You may select or deselect multiple subjects (Ctrl+Click).}
 - preset_name: canada_subject
   values:
     field_name: subject
@@ -367,8 +375,8 @@ presets:
       en: "Subject"
       fr: "Sujet"
     help_text:
-      en: "The topic of the content of the dataset. You may select multiple subjects (Ctrl+Click)"
-      fr: "Le sujet du contenu du jeu de données. Vous pouvez sélectionner de multiples sujets (Ctrl+Clic)"
+      en: "The topic of the content of the dataset. You may select or deselect multiple subjects (Ctrl+Click)"
+      fr: "Le sujet du contenu du jeu de données. Vous pouvez sélectionner ou désélectionner de multiples sujets (Ctrl+Clic)"
     required: true
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
@@ -473,7 +481,7 @@ presets:
 
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
-# {A description of the audience or group of people for whom the described dataset is intended or useful. You may select multiple options (Ctrl+Click).}
+# {A description of the audience or group of people for whom the described dataset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
 - preset_name: canada_audience
   values:
     field_name: audience
@@ -481,8 +489,8 @@ presets:
       en: Audience
       fr: Audience
     help_text:
-      en: "A description of the audience or group of people for whom the described dataset is intended or useful. You may select multiple options (Ctrl+Click)"
-      fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner de multiples options (Ctrl+Clic)"
+      en: "A description of the audience or group of people for whom the described dataset is intended or useful. You may select or deselect multiple options (Ctrl+Click)"
+      fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
@@ -611,7 +619,7 @@ presets:
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
-# {The geographic region of a dataset. You may select multiple regions (Ctrl+Click).}
+# {The geographic region of a dataset. You may select or deselect multiple regions (Ctrl+Click).}
 
 # NOTE: we're using the same STATCAN codes we used with ckan 2.1 at the moment
 # FIXME: a snake_case version of the english names would be more in line with
@@ -623,8 +631,8 @@ presets:
       en: Geographic Region Name
       fr: Nom de la région géographique
     help_text:
-      en: The geographic region of the dataset. You may select multiple regions (Ctrl+Click)
-      fr: Région géographique d’un jeu de données. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
+      en: The geographic region of the dataset. You may select or deselect multiple regions (Ctrl+Click)
+      fr: Région géographique d’un jeu de données. Vous pouvez sélectionner ou désélectionner de multiples régions (Ctrl+Clic)
     choices:
     - label:
         en: Canada
@@ -2226,7 +2234,6 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    display_snippet: null
     form_restrict_choices_to: [federal]
     form_attrs:
       readonly: ''
@@ -3421,7 +3428,6 @@ presets:
     help_text:
       en: This is the character set of the resource
       fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
-    form_panel: resource
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
@@ -3501,8 +3507,8 @@ presets:
       en: Language
       fr: Langue
     help_text:
-      en: The language of the resource. You may select multiple languages (Ctrl+Click).
-      fr: Langue de la ressource. Vous pouvez sélectionner de multiples langues (Ctrl+Clic).
+      en: The language of the resource. You may select or deselect multiple languages (Ctrl+Click).
+      fr: Langue de la ressource. Vous pouvez sélectionner ou désélectionner de multiples langues (Ctrl+Clic).
     required: true
     display_snippet: br_multiple_choice.html
     choices:

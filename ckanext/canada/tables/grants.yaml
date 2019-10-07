@@ -2,7 +2,9 @@ dataset_type: grants
 target_dataset: grants
 title: Proactive Disclosure - Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+upload_warn:
+  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
 
 portal_type: info
 collection: pd
@@ -775,7 +777,7 @@ resources:
       foreign_currency_type: "USD"
       foreign_currency_value: "450000"
       agreement_start_date: "2019-04-01"
-      agreement_end_date: "2020-04-31"
+      agreement_end_date: "2020-04-30"
       coverage: "Canada; Mexico|Mexique; United States|États-Unis"
       description_en: "Developing models and other tools to predict the safety performance of buildings."
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
@@ -843,6 +845,7 @@ resources:
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
+    amendment_number: current
 
   datastore_primary_key: [fiscal_year, quarter]
   datastore_indexes: ""

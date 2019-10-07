@@ -136,6 +136,10 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:PDUpdateController',
             action='update_pd_record',
         )
+        map.connect('recombinant_type',
+                    '/recombinant/{resource_name}',
+                    action='type_redirect',
+                    controller='ckanext.canada.controller:PDUpdateController')
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
@@ -337,8 +341,6 @@ ckanext.canada:schemas/info.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date',
-            'dataset_rating',
-            'dataset_comments',
             'get_translated_t',
             'language_text_t',
             'link_to_user',
@@ -719,8 +721,6 @@ ckanext.canada:schemas/doc.yaml
             'get_translated_t',
             'language_text_t',
             ]),
-            dataset_comments=helpers.dataset_comments_obd,
-            dataset_rating=helpers.dataset_rating_obd,
             )
 
     def before_map(self, map):

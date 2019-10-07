@@ -801,6 +801,15 @@ msgstr "Accès, téléversement et modification des rapports sur les Contrats ag
 msgid "Access, upload and modify the quarterly Contracts over 10K reports for your organization"
 msgstr "Accès, téléversement et modification des rapports trimestriels sur les contrats attribués de plus de 10 000 $ pour votre organisation"
 
+msgid "Import"
+msgstr "Importer"
+
+msgid "Create and update multiple records"
+msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
+
+msgid "Create Single Record"
+msgstr "Créer un seul dossier"
+
 msgid "Reporting Period"
 msgstr "Période de déclaration"
 
@@ -1828,9 +1837,6 @@ msgstr ""
 "Les lettres accentuées ne sont pas acceptées. "
 "Tous les mots de passe doivent compter au moins {} caractères."
 
-msgid "Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the \"Preview\" section after it has been uploaded. For any questions, please contact the Open Government team at <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>. <br>Please ensure that transactions uploaded into the Registry meet the requirements for public disclosure set out in the <a href=\"https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676\" target=\"_blank\">Guidelines on the Proactive Disclosure of Contracts</a>. The Registry will publicly disclose all transactions populated in the template, and will not remove any transactions that should not be disclosed. For example, transactions should be consistent with the dollar thresholds for public disclosure set out in section 4.1.1 of the Guidelines" 
-msgstr "Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>. </br>Veuillez vous assurer que les opérations téléchargées dans le registre respectent les exigences en matière de divulgation publique énoncées dans les <a href=\"https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676\" target=\"_blank\">Lignes directrices sur la divulgation proactive des marchés</a>. Le registre divulguera publiquement toutes les opérations saisies dans le gabarit, sans retirer les opérations qui ne devraient pas être div"
-
 msgid ""
 "1. Passwords must contain characters from at least 3 of the following 4 classes:\n"
 "    * Upper Case Letters: A, B, C, … Z\n"
@@ -2003,8 +2009,8 @@ msgstr "Mettre à jour les données"
 msgid "Please note that the Open Information Portal contains a sample of government of Canada publications and information resources. For more resources, please visit <a href=\"http://publications.gc.ca/\">Government of Canada Publications</a> and <a href=\"http://www.bac-lac.gc.ca/\">Library and Archives Canada</a>."
 msgstr "Veuillez noter que le Portail d’information ouverte contient un échantillon de publications et de ressources d’information du gouvernement du Canada. Pour consulter d’autres ressources, veuillez visiter <a href=\"http://publications.gc.ca/\">Publications du gouvernement du Canada</a> et <a href=\"http://www.bac-lac.gc.ca/Pages/default.aspx\">Bibliothèque et Archives Canada</a>."
 
-msgid "You may select multiple entries (Ctrl+Click)."
-msgstr "Vous pouvez sélectionner de multiples entrées."
+msgid "You may select or deselect multiple entries (Ctrl+Click)."
+msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"

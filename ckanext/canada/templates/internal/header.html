@@ -1,5 +1,7 @@
 {% ckan_extends %}
-
+{# set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') #}
+{# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
+{% set menu = '/wet_no_menu_loader' %}
 {% set lang = h.lang() %}
 {% block header_wrapper %}
 <header role="banner">
@@ -14,7 +16,7 @@
             {%- endblock -%}
           {%- endblock -%}
           {%- block mobimenu -%}
-           <section class="wb-mb-links col-xs-12 visible-sm visible-xs" id="wb-glb-mn">
+            <section class="wb-mb-links col-xs-12 visible-sm visible-xs" id="wb-glb-mn">
               <h2>{{ _('Search and menus') }}</h2>
               <ul class="pnl-btn list-inline text-right">
                   <li><a href="#mb-pnl" title="{{ _('Search and menus') }}" aria-controls="mb-pnl" class="overlay-lnk btn btn-xs btn-default" role="button">
@@ -37,11 +39,11 @@
             <h2>{{ _("Search") }}</h2>
             {% block sitesearchform %}
               <form method="get" action="{% url_for controller='package', action='search' %}" role="search" class="form-inline">
-                <div class="form-group">
-                  <label for="wb-srch-q">{{ _("Search Your Data") }}</label>
-                  <input id="wb-srch-q" class="form-control" name="q" type="search" value="" size="27" maxlength="150"/>
-                </div>
-                <button type="submit" id="wb-srch-sub" class="btn btn-default">{{ _("Search") }}</button>
+                  <div class="form-group">
+                    <label for="wb-srch-q">{{ _("Search Your Data") }}</label>
+                    <input id="wb-srch-q" class="form-control" name="q" type="search" value="" size="27" maxlength="150"/>
+                  </div>
+                  <button type="submit" id="wb-srch-sub" class="btn btn-default">{{ _("Search") }}</button>
               </form>
             {% endblock %}
           </section>
@@ -49,67 +51,63 @@
       </div>
     </div>
     {% block header_debug %}
-      {{ super() }}
+      <div style="position: absolute">{{ super() }}</div>
     {%- endblock -%}
   </div>
 
-
-   {% block sitemenu %}
-      <nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="{{ menu }}">
-        <div class="container nvbar">
-          <h2>{{ _("Site menu") }}</h2>
-          <div class="row">
-            <ul class="list-inline menu">
-              {% block header_site_navigation_tabs %}
-                  <li><a href="{{ _('http://open.canada.ca') }}" class="item">{{ _('Open.Canada.ca') }}</a></li>
-                  {% if h.check_access('package_create') %}
-                  <li><a href="#addportal-ajoutportail" class="item">{{ _('Add to Portal') }}</a>
-                    <ul class=" sm list-unstyled" id="addportal-ajoutportail" role="menu">
-                      <li><a href="{{ h.url_for('dataset_new') }}"
-                        >{{ _('Open Data') }}</a></li>
-                      <li><a href="{{ h.url_for('info_new') }}"
-                        >{{ _('Open Information') }}</a></li>
-                      {%- for r_type in [
-                        'ati',
-                        'contracts',
-                        'contractsa',
-                        'hospitalityq',
-                        'travelq',
-                        'travela',
-                        'grants',
-                        'reclassification',
-                        'wrongdoing',
-                        'briefingt',
-                        'consultations',
-                        'inventory',
-                        'service',
-                        'dac',
-                        'nap',
-                        ] -%}
-                        {# XXX bit of a hack: we "know" that our dataset types have
-                           resource names with the same values #}
-                        <li><a href="{{ h.url_for('recombinant_type', resource_name=r_type)
-                          }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a></li>
-                      {%- endfor -%}
-                    </ul>
-                  </li>
-                  {% endif %}
-                  <li><a href="{{ h.url_for(controller='package', action='search') }}" class="item">{{ _('Search') }}</a></li>
-                  <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}" class="item">{{ _('Organizations') }}</a></li>
-                  <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}" class="item">{{ _('FAQ') }}</a></li>
-                  {% if c.userobj %}
-                  <li><a href="{{ h.url_for(controller='user', action='logout') }}" class="item">{{ _('Log out') }}</a></li>
-                  {% else %}
-                  <li><a href="{% url_for controller='user', action='login' %}" class="item">{{ _('Log in') }}</a></li>
-                  {% endif %}
-              {% endblock %}
-            </ul>
-          </div>
+  {% block sitemenu %}
+    <nav role="navigation" id="wb-sm" data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement" data-ajax-replace="{{ menu }}">
+      <div class="container nvbar">
+        <h2>{{ _("Site menu") }}</h2>
+        <div class="row">
+          <ul class="list-inline menu">
+            {% block header_site_navigation_tabs %}
+                <li><a href="{{ _('http://open.canada.ca') }}" class="item">{{ _('Open.Canada.ca') }}</a></li>
+                {% if h.check_access('package_create') %}
+                <li><a href="#addportal-ajoutportail" class="item">{{ _('Add to Portal') }}</a>
+                  <ul class="sm list-unstyled" id="addportal-ajoutportail" role="menu">
+                    <li><a href="{{ h.url_for('dataset_new') }}"
+                      >{{ _('Open Data') }}</a></li>
+                    <li><a href="{{ h.url_for('info_new') }}"
+                      >{{ _('Open Information') }}</a></li>
+                    {%- for r_type in [
+                      'ati',
+                      'contracts',
+                      'contractsa',
+                      'hospitalityq',
+                      'travelq',
+                      'travela',
+                      'grants',
+                      'reclassification',
+                      'wrongdoing',
+                      'briefingt',
+                      'consultations',
+                      'inventory',
+                      'dac',
+                      'nap',
+                      ] -%}
+                      {# XXX bit of a hack: we "know" that our dataset types have
+                         resource names with the same values #}
+                      <li><a href="{{ h.url_for('recombinant_type', resource_name=r_type)
+                        }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </li>
+                {% endif %}
+                <li><a href="{{ h.url_for(controller='package', action='search') }}" class="item">{{ _('Search') }}</a></li>
+                <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}" class="item">{{ _('Organizations') }}</a></li>
+                <li><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}" class="item">{{ _('FAQ') }}</a></li>
+                {% if c.userobj %}
+                <li><a href="{{ h.url_for(controller='user', action='logout') }}" class="item">{{ _('Log out') }}</a></li>
+                {% else %}
+                <li><a href="{% url_for controller='user', action='login' %}" class="item">{{ _('Log in') }}</a></li>
+                {% endif %}
+            {% endblock %}
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
   {% endblock %}
-
-
 
   {% block breadcrumb %}
     {% if breadcrumb_content() | trim %}
@@ -128,24 +126,18 @@
   {% endblock %}
 
   {% block signed_on_off %}
-  {%- if c.userobj -%}
-    <div class="container">
-      <div class="row">
-        {% block header_account_logged %}
-          {% snippet 'snippets/user.html' %}
-        {% endblock %}
+    {%- if c.userobj -%}
+      <div class="container">
+          <div class="row">
+            {% block header_account_logged %}
+              {% snippet 'snippets/user.html' %}
+            {% endblock %}
+          </div>
       </div>
-    </div>
-  {%- endif -%}
+    {%- endif -%}
   {% endblock %}
-
-
 </header>
 {% endblock %}
 
-
-{# set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') #}
-{# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
-{% set menu = '/wet_no_menu_loader' %}
 
 
