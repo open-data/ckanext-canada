@@ -202,7 +202,6 @@ rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contrac
 	@echo Rebuilding Contracts Quarterly...
 	@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
 	-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
-	@$(ogc_search)/load_gc_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
@@ -317,6 +316,7 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
 	$(paster) --plugin=ckanext-canada grants rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/amendments/grants.csv" "$(workdir)/filtered/grants-nil.csv"
+	$(ogc_search)/load_gc_to_solr.py "$(workdir)/filtered/grants.csv" "$(workdir)/filtered/grants-nil.csv"
 
 $(workdir)/grants.csv:
 	$(paster) $(combine) grants -d $(workdir) -c $(registry_ini)
