@@ -49,7 +49,7 @@
             </aside>
           {% endif %}
         {% endblock %}
-        <main property="mainContentOfPage" class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-pull-3{% else %}col-md-12{% endif %}" role="main">
+        <main property="mainContentOfPage" class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-pull-3{% else %}col-md-12{% endif %}">
         {% block pre_primary %}
               <div class="span-8"><div data-ajax-replace="{{ h.url_for_static('/static/_site_messaging/header_od_ckan.'+h.lang()) }}"></div></div>
         {% endblock %}
