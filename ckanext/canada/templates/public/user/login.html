@@ -1,0 +1,33 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <div class="row">
+      <div class="col-md-12">
+          {{ self.form() }}
+      </div>
+  </div>
+{% endblock %}
+
+{% block help_register %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_register_inner() }}</div>
+  </div>
+{% endblock %}
+
+{% block help_register_button %}
+  <a class="btn btn-default" href="{{ h.url_for(controller='user', action='register') }}">{{ _(' Create an Account') }}</a>
+{% endblock %}
+
+{% block help_forgotten %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_forgotten_inner() }}</div>
+  </div>
+{% endblock %}
+
+{% block help_forgotten_button %}
+  <a class="btn btn-default" href="{{ h.url_for(controller='user', action='request_reset') }}">{{ _('Forgot your password?') }}</a>
+{% endblock %}
+
+{% block form %}
+  {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=errors %}
+{% endblock %}

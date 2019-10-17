@@ -1,0 +1,17 @@
+{% ckan_extends %}
+
+{% block page_heading %}{% endblock %}
+
+{% block primary_content %}
+  <div class="row">
+    <div class="panel panel-default">
+    {{ self.primary_content_inner() }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block help %}
+  <section class="panel panel-default">
+    {{ self.help_inner() }}
+  </section>
+{% endblock %}

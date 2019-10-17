@@ -1,0 +1,30 @@
+{% set config_js = h.url_for_static('/data/config-en.js') %}
+
+<div>
+  <div id="dataset_map" class="wb-geomap position scaleline"
+       data-wb-geomap='{ "layersFile": "{{config_js}}", "tables": [{ "id": "spatialfeature", "zoom": true, "tab": false, "popups": false}]}'>
+    <div>
+      <div class="wb-geomap-map col-md-9"></div>
+    </div>
+
+    <div class="wb-geomap-layers row">
+      <div class="col-md-9">
+        <h5>{{_('Spatial Feature')}}</h5>
+        <table id="spatialfeature" class="table wb-tables wb-tables-inited dataTable no-footer"
+               aria-label="{{_('Spatial Feature')}}">
+          <caption class="wb-inv">{{_('Spatial Feature')}}</caption>
+          <thead>
+          <tr>
+            <th>{{_('Name')}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr data-geometry="{{ wkt }}" data-type="wkt">
+            <td>{{gid}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block license_wrapper %}
+  <p>
+    <div class="module-related">
+      {{ self.license_title() }}
+      {% block license_content %}
+        <ul>
+          <li>{{ self.license_content_inner() }}</li>
+        </ul>
+      {% endblock %}
+    </div>
+  </p>
+{% endblock %}

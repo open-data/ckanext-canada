@@ -1,0 +1,27 @@
+
+{% set config_js = h.url_for_static('/data/config-en.js') %}
+
+<div id="dataset_map" class="wb-geomap static"
+     data-wb-geomap='{ "tables": [{ "id": "spatialfeature", "popups": false, "zoom": true }] }'>
+  <div class="row">
+    <div class="col-md-12"><h5>{{_('Spatial Feature')}}</h5>
+
+      <div class="wb-geomap-map col-md-6"></div>
+      <div class="wb-geomap-layers col-md-6">
+        <table id="spatialfeature" aria-label="{{_('Spatial Feature')}}" class="table">
+          <caption class="wb-inv">Natural Resources Canada Ottawa office address</caption>
+          <thead>
+          <tr>
+            <th>{{_('Name')}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr data-geometry="{{wkt}}" data-type="wkt">
+            <td>{{gid}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
