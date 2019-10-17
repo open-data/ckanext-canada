@@ -57,7 +57,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         })
 
     def wet_theme(self):
-        return 'theme-gc-intranet'
+        return 'GCWeb'
 
     def before_map(self, map):
         map.connect(
