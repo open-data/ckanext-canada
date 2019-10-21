@@ -52,6 +52,9 @@ resources:
     datastore_type: int
     excel_column_width: 34
 
+  solr_static_fields:
+    report_type: record
+
   datastore_primary_key: request_number
   datastore_indexes: ""
   excel_organization_style:
@@ -104,6 +107,9 @@ resources:
     label: Month
     datastore_type: month
     excel_column_width: 4
+
+  solr_static_fields:
+    report_type: nil
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
