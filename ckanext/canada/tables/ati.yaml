@@ -53,7 +53,8 @@ resources:
     excel_column_width: 34
 
   solr_static_fields:
-    report_type: record
+    report_type_en: ATI Summaries
+    report_type_fr: Accès à l’information sommaires complétés
 
   datastore_primary_key: request_number
   datastore_indexes: ""
@@ -109,7 +110,8 @@ resources:
     excel_column_width: 4
 
   solr_static_fields:
-    report_type: nil
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
