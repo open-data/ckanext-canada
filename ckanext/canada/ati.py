@@ -188,6 +188,8 @@ def _update_records(records, org_detail, conn):
             'disposition_fr': r.get('disposition', '').split(' / ', 1)[-1],
             'number_of_pages': r.get('pages', ''),
             'e_mail_ati_recipient': ati_email,
+            'report_type_en': ('ATI Summaries' if 'request_number' in r else 'Nothing to report'),
+            'report_type_fr': (u'Accès à l’information sommaires complétés' if 'request_number' in r else u'Rien à signaler'),
             'nothing_to_report_en': ('' if 'request_number' in r else
                 'Nothing to report this month'),
             'nothing_to_report_fr': ('' if 'request_number' in r else
