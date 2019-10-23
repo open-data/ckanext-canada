@@ -58,7 +58,7 @@ Generate report to stdout by comparing PREVIOUS_DIR and CURRENT_DIR data
 Each directory is expected to have filtered/*.csv data files and a single
 metadata.jsonl.gz file at the base level
 ''')
-@click.option('--header', '-h', is_flag=True, help='output header row')
+@click.option('--header/--no-header', default=False, help='output header row')
 @click.argument('period_label')
 @click.argument('previous_dir')
 @click.argument('current_dir')
