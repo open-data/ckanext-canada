@@ -137,8 +137,9 @@ Internally Hosted:
    1. Extract the WET 4.0.x core CDN and desired themes cdn package to a folder::
    
          export WET_VERSION=v4.0.31
+         export GCWEB_VERSION=v5.1
          mkdir wet-boew && curl -L https://github.com/wet-boew/wet-boew-cdn/archive/$WET_VERSION.tar.gz | tar -zx --strip-components 1 - -directory=wet-boew
-         mkdir GCWeb && curl -L https://github.com/wet-boew/themes-cdn/archive/$WET_VERSION-gcweb.tar.gz | tar -zx --strip-components 1 --directory=GCWeb
+         mkdir GCWeb && curl -L https://github.com/wet-boew/themes-cdn/archive/$GCWEB_VERSION-gcweb.tar.gz | tar -zx --strip-components 1 --directory=GCWeb
    2. Set the ``extra_public_paths`` settings to that path where the files are extracted:
    
       *Example*::
