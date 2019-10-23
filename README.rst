@@ -121,6 +121,37 @@ Both servers need::
    loop11.key = bca42f834d21755c050b437dcc881bcde963b08e
 
 
+OD Configuration: Adding WET Resource files
+-------------------------------------------
+For the use of the Portal or Registry sites, the installation of the WET-BOEW theme extension isn't required anymore, because the templates it provides are now included in the ``canada_public`` an ``canada_internal`` plugins. All what's needed is to add the resource files:
+  
+Externally hosted:
+   Set ``wet_boew.url`` (in your .ini file) to the root URL where the WET resources are hosted:
+   
+   *Example*::
+
+      wet_boew.url = http://domain.com/wet-boew/v4.0.31
+
+
+Internally Hosted:
+   1. Extract the WET 4.0.x core CDN and desired themes cdn package to a folder::
+   
+         export WET_VERSION=v4.0.31
+         mkdir wet-boew && curl -L https://github.com/wet-boew/wet-boew-cdn/archive/$WET_VERSION.tar.gz | tar -zx --strip-components 1 - -directory=wet-boew
+         mkdir GCWeb && curl -L https://github.com/wet-boew/themes-cdn/archive/$WET_VERSION-gcweb.tar.gz | tar -zx --strip-components 1 --directory=GCWeb
+   2. Set the ``extra_public_paths`` settings to that path where the files are extracted:
+   
+      *Example*::
+      
+         extra_public_paths = /home/user/wet-boew/v4.0.31
+ 
+Additional Configuration:
+   Set ``wet_theme.geo_map_type`` to indicate what style of `WET Geomap widget <http://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html>`_ to use. Set this to either 'static' or 'dynamic'::
+ 
+      wet_theme.geo_map_type = static
+
+
+
 OBD Configuration
 -----------------
 
