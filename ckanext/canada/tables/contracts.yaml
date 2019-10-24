@@ -1006,6 +1006,24 @@ resources:
     datastore_type: text
     choices_file: choices/quarter.yaml
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [reference_number]
   datastore_indexes: ""
   default_preview_sort: contract_period_start desc, delivery_date desc
@@ -1104,6 +1122,7 @@ resources:
 
         RETURN NEW;
       END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -1158,23 +1177,33 @@ resources:
     datastore_type: text
     choices_file: choices/quarter.yaml
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
   datastore_primary_key: [reporting_period]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f497d
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFdfdce3
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
