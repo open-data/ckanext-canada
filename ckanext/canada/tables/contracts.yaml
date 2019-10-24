@@ -5,10 +5,7 @@ title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
 template_version: 3
-template_updated: 2019-06-25
-upload_warn:
-  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
-  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
+template_updated: 2019-TBD
 
 portal_type: info
 collection: pd
@@ -69,13 +66,59 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
+  - datastore_id: vendor_postal_prefix
+    label:
+      en: Vendor Postal Code Prefix
+      fr: ???
+    description:
+      en: This field should be populated with the first three digits of the postal code or the vendor identified in the contract. This field is to be left blank if the vendor is located outside of Canada.
+      fr: ???
+    obligation:
+      en: Mandatory for contracts after 2021-01-01
+      fr: Obligatoire pour les marchés conclus après le 2019-21-21
+    excel_required_formula: '{contract_date}>=DATE(2021,1,1)'
+    datastore_type: text
+
+  - datastore_id: buyer_name
+    label:
+      en: Buyer Name
+      fr: ???
+    description:
+      en: |
+        i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract, or alternatively the individual responsible for the procurement at the client department.
+        ii. For the establishment of a standing offer or supply arrangement agreement, it is recommended that this field be populated with the name of the buyer that issued the original standing offer or supply arrangement agreement.
+        iii. For a call-up contract against a standing offer or supply arrangement, this field should be the name of the buyer identified in the original call-up contract.
+        iv. For a contract with task authorizations, this field may be populated with the name of the buyer indicated in the original contract or in the individual task authorization.
+        v. For amendments, it is recommended that this field be populated with the value “NA”. The value “NA” for this field indicates not applicable.
+        vi. For contracts awarded by PSPC, SSC or another department on behalf of the client department, the buyer may be the name of the buyer indicated in the contract or individual responsible for the procurement at the client department.
+      fr: ???
+    obligation:
+      en: Mandatory for contracts after 2021-01-01
+      fr: Obligatoire pour les marchés conclus après le 2019-21-21
+    excel_required_formula: '{contract_date}>=DATE(2021,1,1)'
+    datastore_type: text
+
   - datastore_id: contract_date
     label:
       en: Contract Date
       fr: Date du contrat
     description:
-      en: This field should be populated with the date the contract is awarded.  Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department. For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date). If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date). For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date). For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
-      fr: Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement. Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme). S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
+      en: |
+        This field should be populated with the date the contract is awarded. Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department.
+
+        For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date). If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date).
+
+        For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date).
+
+        For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
+      fr: |
+        Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement. Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.
+
+        Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme). S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).
+
+        Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme).
+
+        Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
     obligation: Mandatory
     excel_required: true
     datastore_type: date
