@@ -20,8 +20,8 @@ METADATA_COLLECTION_COLUMNS = {
     'publication': 'meta:publication',
     'transition': 'meta:briefing_pkg',
     'transition_deputy': 'meta:briefing_pkg',
-    'parliament_committee': 'meta:briefing_pkg',
-    'parliament_committee_deputy': 'meta:briefing_pkg',
+    'parliament_committee': 'meta:parliament_pkg',
+    'parliament_committee_deputy': 'meta:parliament_pkg',
     'parliament_report': 'meta:parliament_report',
     'question_period': 'meta:question_period',
 }
