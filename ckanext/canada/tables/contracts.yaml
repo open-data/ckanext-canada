@@ -134,6 +134,7 @@ resources:
       en: This field should be populated with the Economic Object Code’s numeric digits listed in the Government-wide Chart of Accounts. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html
       fr: Il est recommandé de saisir dans cette zone les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le Plan comptable à l’échelle de l’administration fédérale. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html
     obligation: Mandatory for contracts after 2019-01-01
+    excel_error_code: 'AND(TRIM({cell})="NA",{document_type_code}<>"SOSA")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -1030,97 +1031,105 @@ resources:
 
   triggers:
   - contracts_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.reference_number, 'reference_number');
-        PERFORM no_surrounding_whitespace(NEW.reference_number, 'reference_number');
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
         NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
         NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
 
-        PERFORM not_empty(NEW.contract_date, 'contract_date');
+        errors := errors || required_error(NEW.contract_date, 'contract_date');
         IF NEW.contract_date >= '2019-01-01'::date THEN
-          PERFORM not_empty(NEW.procurement_id, 'procurement_id');
-          PERFORM not_empty(NEW.vendor_name, 'vendor_name');
-          PERFORM not_empty(NEW.economic_object_code, 'economic_object_code');
-          PERFORM not_empty(NEW.description_en, 'description_en');
-          PERFORM not_empty(NEW.description_fr, 'description_fr');
-          PERFORM not_empty(NEW.contract_period_start, 'contract_period_start');
-          PERFORM not_empty(NEW.delivery_date, 'delivery_date');
-          PERFORM not_empty(NEW.contract_value, 'contract_value');
-          IF NEW.document_type_code = 'A' THEN
-            PERFORM not_empty(NEW.amendment_value, 'amendment_value');
+          errors := errors || required_error(NEW.procurement_id, 'procurement_id');
+          errors := errors || required_error(NEW.vendor_name, 'vendor_name');
+          errors := errors || required_error(NEW.economic_object_code, 'economic_object_code');
+          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.document_type_code <> 'SOSA' THEN
+            errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
           END IF;
-          PERFORM not_empty(NEW.original_value, 'original_value');
-          PERFORM not_empty(NEW.agreement_type_code, 'agreement_type_code');
-          PERFORM not_empty(NEW.commodity_type_code, 'commodity_type_code');
-          PERFORM choice_one_of(NEW.commodity_type_code,
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+          errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
+          errors := errors || required_error(NEW.delivery_date, 'delivery_date');
+          errors := errors || required_error(NEW.contract_value, 'contract_value');
+          IF NEW.document_type_code = 'A' THEN
+            errors := errors || required_error(NEW.amendment_value, 'amendment_value');
+          END IF;
+          errors := errors || required_error(NEW.original_value, 'original_value');
+          errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
+          errors := errors || required_error(NEW.commodity_type_code, 'commodity_type_code');
+          errors := errors || choice_error(NEW.commodity_type_code,
             {commodity_type_code},
             'commodity_type_code');
-          PERFORM not_empty(NEW.commodity_code, 'commodity_code');
-          PERFORM not_empty(NEW.country_of_origin, 'country_of_origin');
-          PERFORM choice_one_of(NEW.country_of_origin,
+          errors := errors || required_error(NEW.commodity_code, 'commodity_code');
+          errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
+          errors := errors || choice_error(NEW.country_of_origin,
             {country_of_origin},
             'country_of_origin');
-          PERFORM not_empty(NEW.solicitation_procedure_code, 'solicitation_procedure_code');
-          PERFORM choice_one_of(NEW.solicitation_procedure_code,
+          errors := errors || required_error(NEW.solicitation_procedure_code, 'solicitation_procedure_code');
+          errors := errors || choice_error(NEW.solicitation_procedure_code,
             {solicitation_procedure_code},
             'solicitation_procedure_code');
           -- accept "0" and "5" in place of the proper "00" and "05" codes
           IF NEW.limited_tendering_reason_code = '0' OR NEW.limited_tendering_reason_code = '5' THEN
             NEW.limited_tendering_reason_code = '0' || NEW.limited_tendering_reason_code;
           END IF;
-          PERFORM not_empty(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
-          PERFORM choice_one_of(NEW.limited_tendering_reason_code,
+          errors := errors || required_error(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
+          errors := errors || choice_error(NEW.limited_tendering_reason_code,
             {limited_tendering_reason_code},
             'limited_tendering_reason_code');
           IF length(NEW.exemption_code) = 1 THEN
             -- zero-pad numbers to match controlled list
             NEW.exemption_code = '0' || NEW.exemption_code;
           END IF;
-          PERFORM not_empty(NEW.exemption_code, 'exemption_code');
-          PERFORM choice_one_of(NEW.exemption_code,
+          errors := errors || required_error(NEW.exemption_code, 'exemption_code');
+          errors := errors || choice_error(NEW.exemption_code,
             {exemption_code},
             'exemption_code');
-          PERFORM not_empty(NEW.aboriginal_business, 'aboriginal_business');
-          PERFORM not_empty(NEW.intellectual_property_code, 'intellectual_property_code');
-          PERFORM choice_one_of(NEW.intellectual_property_code,
+          errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
+          errors := errors || required_error(NEW.intellectual_property_code, 'intellectual_property_code');
+          errors := errors || choice_error(NEW.intellectual_property_code,
             {intellectual_property_code},
             'intellectual_property_code');
-          PERFORM not_empty(NEW.former_public_servant, 'former_public_servant');
+          errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
           IF NEW.standing_offer_number <> '' THEN
-            PERFORM not_empty(NEW.standing_offer, 'standing_offer');
+            errors := errors || required_error(NEW.standing_offer, 'standing_offer');
           END IF;
           IF NEW.standing_offer <> '' THEN
-            PERFORM choice_one_of(NEW.standing_offer,
+            errors := errors || choice_error(NEW.standing_offer,
               {standing_offer},
               'standing_offer');
           END IF;
-          PERFORM not_empty(NEW.document_type_code, 'document_type_code');
-          PERFORM choice_one_of(NEW.document_type_code,
+          errors := errors || required_error(NEW.document_type_code, 'document_type_code');
+          errors := errors || choice_error(NEW.document_type_code,
             {document_type_code},
             'document_type_code');
           IF NEW.contract_date >= '2019-06-21'::date THEN
-            PERFORM not_empty(NEW.ministers_office, 'ministers_office');
+            errors := errors || required_error(NEW.ministers_office, 'ministers_office');
           END IF;
-          PERFORM choice_one_of(NEW.ministers_office,
+          errors := errors || choice_error(NEW.ministers_office,
             {ministers_office},
             'ministers_office');
-          PERFORM not_empty(NEW.reporting_period, 'reporting_period');
-          PERFORM choice_one_of(NEW.reporting_period,
+          errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+          errors := errors || choice_error(NEW.reporting_period,
             {reporting_period},
             'reporting_period');
           IF NEW.intellectual_property_code <> 'C'
               AND NEW.intellectual_property_code <> 'NA' THEN
-            PERFORM not_empty(NEW.potential_commercial_exploitation,
+            errors := errors || required_error(NEW.potential_commercial_exploitation,
               'potential_commercial_exploitation');
           END IF;
           IF NEW.standing_offer = 'PWSOSA' OR NEW.standing_offer = 'SSCSOSA' THEN
-            PERFORM not_empty(NEW.standing_offer_number, 'standing_offer_number');
+            errors := errors || required_error(NEW.standing_offer_number, 'standing_offer_number');
           END IF;
         END IF;
 
-        RETURN NEW;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
