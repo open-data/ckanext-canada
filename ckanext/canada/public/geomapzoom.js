@@ -1,17 +1,13 @@
-
-(function( $, wb ) {
-"use strict";
-
-wb.doc.on('geomap.ready', function(event, maps) {
-
-   var dsMap;
-
-   dsMap = maps.dataset_map;
-   if (dsMap) {
-    var layer = dsMap.getLayersByName('spatialfeature')[0];
-    dsMap.zoomToExtent(layer.getDataExtent().scale(3));
-   }
-
+wb.doc.on( "wb-ready.wb-geomap", "#dataset_map", function( event, map ) {
+    // Get the map to use in zoomFeature function
+    var myMap = map;
+    var layer;
+    myMap.getLayers().forEach(function (lyr) {
+        if (lyr.id == "spatialfeature") {
+            layer = lyr;
+        }
+    });
+    extent = layer.getSource().getExtent();
+    map.getView().fit(extent, map.getSize());
 });
 
-})( jQuery, wb );
