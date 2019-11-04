@@ -87,6 +87,9 @@ resources:
       fgColor: FFeeece1
   default_preview_sort: year desc, month desc
 
+  triggers:
+  - update_record_modified_created_trigger
+
   examples:
     record:
       disposition: Disclosed in part / Communication partielle
@@ -161,6 +164,9 @@ resources:
       patternType: solid
       fgColor: FFeeece1
   default_preview_sort: year desc, month desc
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
