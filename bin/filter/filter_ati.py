@@ -11,17 +11,28 @@ import sys
 
 WINDOW_YEARS = 2
 
+REMOVE_COLUMNS = [
+    'record_created',
+    'record_modified',
+    'user_modified',
+]
+
 def main():
     today = datetime.datetime.today()
     start_year_month = (today.year - WINDOW_YEARS, today.month)
 
-    writer = csv.writer(sys.stdout)
     reader = csv.reader(sys.stdin)
-    writer.writerow(next(reader))  # header
+    outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
+    writer = csv.DictWriter(sys.stdout, outnames)
+    writer.writeheader()
     for row in reader:
         try:
             if (int(row[0]), int(row[1])) >= start_year_month:
                 writer.writerow(row)
+
+            for rem in REMOVE_COLUMNS:
+                del row[rem]
+            writer.writerow(row)
         except ValueError:
             pass
 
