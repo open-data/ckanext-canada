@@ -14,21 +14,6 @@ out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf
 out_csv.writeheader()
 
 
-def error(msg, value=''):
-    sys.stderr.write(
-        line['owner_org'] + ' ' + line['ref_number'] + ' ' + msg
-        + ' ' + unicode(value) + '\n')
-    if err_csv:
-        err_csv.writerow(original)
-
-
 for line in in_csv:
-    try:
-        if line['pages']:
-            line['pages'] = str(int(line['pages']))
-    except ValueError:
-        error('invalid pages', line['pages'])
-        continue
-
     line['user_modified'] = '*'  # special "we don't know" value
     out_csv.writerow(line)
