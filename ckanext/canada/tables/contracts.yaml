@@ -146,7 +146,7 @@ ii. Dans le cas des offres à commandes et des arrangements en matière d’appr
 
 iii. Quand un contrat porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut utiliser une démarche différente si elle correspond à sa pratique courante."
     obligation: Mandatory for contracts after 2019-01-01
-    excel_error_formula: 'AND(TRIM({cell})="NA",{document_type_code}<>"SOSA")'
+    excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -365,7 +365,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     obligation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
-    excel_required_formula: 'TRIM(LEFT({document_type_code},1))="A"'
+    excel_required_formula: 'TRIM(LEFT({instrument_type},1))="A"'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -710,7 +710,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Comprehensive Economic and Trade Agreement (CETA)
         fr: Accord économique et commercial global (AEGC)
 
-  - datastore_id: trade_agreemenet
+  - datastore_id: trade_agreement
     label:
       en: Trade Agreement
       fr: Accord commercial
@@ -952,7 +952,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Extreme Urgency
         fr: Extrême urgence
 
-  - datastore_id: exemption
+  - datastore_id: trade_agreement_exceptions
     label:
       en: Trade Agreement Exceptions and Exclusions
       fr: Exceptions et exclusions applicables aux accords commerciaux
@@ -1161,7 +1161,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     obligation:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
-    excel_required_formula: 'NOT(OR({intellectual_property_code}="C",{intellectual_property_code}="NA",{intellectual_property_code}=""))'
+    excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
     choices:
@@ -1250,7 +1250,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: text
     excel_required_formula: 'OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA")'
 
-  - datastore_id: document_type_code
+  - datastore_id: instrument_type
     label:
       en: Instrument Type
       fr: Type d’instrument
@@ -1337,7 +1337,98 @@ This field may only be populated with a “0” if a Call-up against a standing 
         vi. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
     obligation: ???
     datastore_type: int
+    # This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
+    # This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
+    excel_error_formula: 'OR({default_formulat},AND({cell}=1,{solicitation_procedure}<>"TN"),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
 
+  - datastore_id: section_6_exceptions
+    label:
+      en: Section 6 Government Contracts Regulations Exceptions
+      fr: Article 6 – Exceptions au Règlement concernant les marches de l’État
+    excel_heading:
+      en: |
+        Section 6 Government Contracts
+        Regulations Exceptions
+      fr: |
+        Article 6 – Exceptions au Règlement
+        concernant les marches de l’État
+    description:
+      en: |
+        i. The Government Contracts Regulations requires the solicitation of bids unless one of the s.6 exceptions to the Government Contracts Regulations applies to the contract.
+        ii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
+        iii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
+        iv. For contracts whereby bids have been solicited or if the procurement is not a contract subject to the Government Contracts Regulations, the value of “0” should be entered. For this data value, the value of “0” represents not applicable.
+      fr: |
+        i. Le Règlement concernant les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 ne s’applique au marché.
+        ii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
+        iii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
+        iv. Dans le cas des marchés en vertu desquels un appel d’offres a été lancé, ou si l’approvisionnement ne constitue pas un marché assujetti au Règlement concernant les marchés de l’État, on doit saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet.
+    datastore_type: text
+    excel_full_text_choices: false
+    # This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
+    # This field may not be populated with 1,2,3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice.
+    excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="OB",{solicitation_procedure}="TC",{solicitation_procedure}="ST"))),AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
+    choices:
+      "0":
+        en: Not applicable
+      "1":
+        en: Pressing emergency in which delay would be injurious to the public interest
+      "2":
+        en: Does not exceed s.6 (b) Government Contracts Regulations prescribed dollar limits.
+      "3":
+        en: Not in the public interest to solicit bids
+      "4":
+        en: Only one person is capable of performing the contract
+
+  - datastore_id: award_criteria
+    label:
+      en: Award Criteria
+      fr: Critères d’attribution
+    description:
+      en: |
+        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract: .
+
+        i. If bids have not been solicited, the value of “0” is to be selected.
+        ii. For ACANs whereby it was determined that there were no statements of capabilities that met the ACAN requirements, the value of “0” should be entered.
+        iii. For amendments, the value of “0” is to be selected.
+        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+      fr: |
+        i. S’il n’y a pas eu d’appel d’offres, il faut sélectionner la valeur « 0 ».
+        ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
+        iii. En cas de modification, il faut sélectionner la valeur « 0 ».
+        iv. Pour un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+    datastore_type: text
+    excel_full_text_choices: false
+    # This field may only be populated with “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).
+    excel_error_formula: 'OR({default_formulat},AND({cell}="0",NOT(OR({solicitation_procedure}="TN",{contracting_entity}="AC"))))'
+    choices:
+      "0":
+        en: Not applicable
+      "1":
+        en: Lowest Price
+      "2":
+        en: Lowest Cost-per-Point
+      "3":
+        en: Highest Combined Rating of Technical Merit and Price
+      "4":
+        en: Highest Technical Merit within a Stipulated Maximum Budget
+      "5":
+        en: Variations or combinations of the above methods
+
+  - datastore_id: socioeconomic_indicator
+    label:
+      en: Socio-Economic Indicator
+      fr: Indicateur socioéconomique
+    description:
+      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s):
+      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
+    datastore_type: text
+    excel_full_text_choices: false
+    choices:
+      NA:
+        en: None
+      FP:
+        en: Federal Contractors Program for Employment Equity
 
   - datastore_id: reporting_period
     label:
@@ -1393,7 +1484,7 @@ This field may only be populated with a “0” if a Call-up against a standing 
           errors := errors || required_error(NEW.procurement_id, 'procurement_id');
           errors := errors || required_error(NEW.vendor_name, 'vendor_name');
           errors := errors || required_error(NEW.economic_object_code, 'economic_object_code');
-          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.document_type_code <> 'SOSA' THEN
+          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
             errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
           END IF;
           errors := errors || required_error(NEW.description_en, 'description_en');
@@ -1401,45 +1492,45 @@ This field may only be populated with a “0” if a Call-up against a standing 
           errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
           errors := errors || required_error(NEW.delivery_date, 'delivery_date');
           errors := errors || required_error(NEW.contract_value, 'contract_value');
-          IF NEW.document_type_code = 'A' THEN
+          IF NEW.instrument_type = 'A' THEN
             errors := errors || required_error(NEW.amendment_value, 'amendment_value');
           END IF;
           errors := errors || required_error(NEW.original_value, 'original_value');
           errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
-          errors := errors || required_error(NEW.commodity_type_code, 'commodity_type_code');
-          errors := errors || choice_error(NEW.commodity_type_code,
-            {commodity_type_code},
-            'commodity_type_code');
+          errors := errors || required_error(NEW.commodity_type, 'commodity_type');
+          errors := errors || choice_error(NEW.commodity_type,
+            {commodity_type},
+            'commodity_type');
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
           errors := errors || choice_error(NEW.country_of_origin,
             {country_of_origin},
             'country_of_origin');
-          errors := errors || required_error(NEW.solicitation_procedure_code, 'solicitation_procedure_code');
-          errors := errors || choice_error(NEW.solicitation_procedure_code,
-            {solicitation_procedure_code},
-            'solicitation_procedure_code');
+          errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
+          errors := errors || choice_error(NEW.solicitation_procedure,
+            {solicitation_procedure},
+            'solicitation_procedure');
           -- accept "0" and "5" in place of the proper "00" and "05" codes
-          IF NEW.limited_tendering_reason_code = '0' OR NEW.limited_tendering_reason_code = '5' THEN
-            NEW.limited_tendering_reason_code = '0' || NEW.limited_tendering_reason_code;
+          IF NEW.limited_tendering_reason = '0' OR NEW.limited_tendering_reason = '5' THEN
+            NEW.limited_tendering_reason = '0' || NEW.limited_tendering_reason;
           END IF;
-          errors := errors || required_error(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
-          errors := errors || choice_error(NEW.limited_tendering_reason_code,
-            {limited_tendering_reason_code},
-            'limited_tendering_reason_code');
-          IF length(NEW.exemption_code) = 1 THEN
+          errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
+          errors := errors || choice_error(NEW.limited_tendering_reason,
+            {limited_tendering_reason},
+            'limited_tendering_reason');
+          IF length(NEW.trade_agreement_exceptions) = 1 THEN
             -- zero-pad numbers to match controlled list
-            NEW.exemption_code = '0' || NEW.exemption_code;
+            NEW.trade_agreement_exceptions = '0' || NEW.trade_agreement_exceptions;
           END IF;
-          errors := errors || required_error(NEW.exemption_code, 'exemption_code');
-          errors := errors || choice_error(NEW.exemption_code,
-            {exemption_code},
-            'exemption_code');
+          errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
+          errors := errors || choice_error(NEW.trade_agreement_exceptions,
+            {trade_agreement_exceptions},
+            'trade_agreement_exceptions');
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
-          errors := errors || required_error(NEW.intellectual_property_code, 'intellectual_property_code');
-          errors := errors || choice_error(NEW.intellectual_property_code,
-            {intellectual_property_code},
-            'intellectual_property_code');
+          errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
+          errors := errors || choice_error(NEW.intellectual_property,
+            {intellectual_property},
+            'intellectual_property');
           errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
           IF NEW.standing_offer_number <> '' THEN
             errors := errors || required_error(NEW.standing_offer, 'standing_offer');
@@ -1449,10 +1540,10 @@ This field may only be populated with a “0” if a Call-up against a standing 
               {standing_offer},
               'standing_offer');
           END IF;
-          errors := errors || required_error(NEW.document_type_code, 'document_type_code');
-          errors := errors || choice_error(NEW.document_type_code,
-            {document_type_code},
-            'document_type_code');
+          errors := errors || required_error(NEW.instrument_type, 'instrument_type');
+          errors := errors || choice_error(NEW.instrument_type,
+            {instrument_type},
+            'instrument_type');
           IF NEW.contract_date >= '2019-06-21'::date THEN
             errors := errors || required_error(NEW.ministers_office, 'ministers_office');
           END IF;
@@ -1463,8 +1554,8 @@ This field may only be populated with a “0” if a Call-up against a standing 
           errors := errors || choice_error(NEW.reporting_period,
             {reporting_period},
             'reporting_period');
-          IF NEW.intellectual_property_code <> 'C'
-              AND NEW.intellectual_property_code <> 'NA' THEN
+          IF NEW.intellectual_property <> 'C'
+              AND NEW.intellectual_property <> 'NA' THEN
             errors := errors || required_error(NEW.potential_commercial_exploitation,
               'potential_commercial_exploitation');
           END IF;
@@ -1485,6 +1576,8 @@ This field may only be populated with a “0” if a Call-up against a standing 
       reference_number: "C-2017-2018-Q1-00170"
       procurement_id: "3000638243"
       vendor_name: "Company XYZ inc"
+      vendor_postal_code: "A1A"
+      buyer_name: "Mark Johnson"
       contract_date: "2017-09-15"
       economic_object_code: "460"
       description_en: "Protection services"
@@ -1493,29 +1586,35 @@ This field may only be populated with a “0” if a Call-up against a standing 
       delivery_date: "2017-09-15"
       contract_value: "10000"
       original_value: "10000"
-      amendment_value: "10000"
+      amendment_value: "100000"
       comments_en: "This contract was omitted from a previous public disclosure."
       comments_fr: "Ce marché a été omis dans une divulgation publique précédente."
       additional_comments_en: "10-Months subscription to Altmetric Explorer for Institutions"
       additional_comments_fr: "Abonnement de 10 mois à Altmetric Explorer for Institutions"
-      agreement_type_code: "Y"
-      commodity_type_code: "S"
+      trade_agreement: "CA,EU"
+      land_claims: "NA"
+      commodity_type: "S"
       commodity_code: "K105"
       country_of_origin: "CA"
-      solicitation_procedure_code: "OB"
-      limited_tendering_reason_code: "85"
-      exemption_code: "03"
-      aboriginal_business: "Y"
-      intellectual_property_code: "NA"
+      solicitation_procedure: "OB"
+      limited_tendering_reason: "22,71"
+      trade_agreement_exceptions: "03,05"
+      aboriginal_business: "MS"
+      aboriginal_business_incidental: "Y"
+      intellectual_property: "A2"
       potential_commercial_exploitation: "N"
       former_public_servant: "Y"
-      standing_offer: "PWSOSA"
+      contracting_entity: "PWSOSA"
       standing_offer_number: "EN578-160553/001/ZL"
-      document_type_code: "C"
+      instrument_type: "C"
       ministers_office: "Y"
+      number_of_bids: 2
+      section_6_exceptions: "2"
+      award_criteria: "0"
+      socioeconomic_indicator: "FP"
       reporting_period: "2016-2017-Q3"
     filters:
-      agreement_type_code: "N"
+      instrument_type: "N"
       country_of_origin: "CA"
     filter_one:
       reference_number: "C-2017-2018-Q1-00170"
