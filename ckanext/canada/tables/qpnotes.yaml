@@ -1,0 +1,357 @@
+dataset_type: qpnotes
+target_dataset: qpnotes
+
+title: Proactive Disclosure - Question Period Notes
+notes: Access, upload and modify Question Period notes for your organization
+
+template_version: 3
+template_updated: 2019-11-18
+
+portal_type: info
+collection: qpnotes
+
+resources:
+- title: Proactive Disclosure - Question Period Notes
+  resource_name: qpnotes
+  create_form: true
+  edit_form: true
+  fields:
+
+  # 3.1
+  - datastore_id: reference_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: This field is populated by the user with the reference number of the Question Period Note. This number is a mandatory system requirement when publishing a template.
+      fr: Ce champ est rempli par l’utilisateur avec le numéro de référence de la note pour la période de questions. Le numéro est une exigence de système obligatoire pour la publication d’un modèle.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  # 3.2
+  - datastore_id: title_en
+    label:
+      en: Title (English)
+      fr: Titre (anglais)
+    description:
+      en: This field is populated by the user with the official title of the Question Period Note, in English.
+      fr: L’utilisateur indique le titre officiel en anglais de la note pour la période de questions dans ce champ.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
+
+  # 3.3
+  - datastore_id: title_fr
+    label:
+      en: Title (French)
+      fr: Titre (français)
+    description:
+      en: This field is populated by the user with the official title of the Question Period Note, in French.
+      fr: L’utilisateur indique le titre officiel en français de la note pour la période de questions dans ce champ.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
+
+  # 3.4
+  - datastore_id: minister
+    label:
+      en: Name of Minister
+      fr: Nom du ministre
+    description:
+      en: This field will display the name of the Minister for whom the Question Period Note was created.
+      fr: Ce champ affichera le nom du ministre pour qui la note pour la période de questions a été créée.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choices_file: choices/qpnotes_minister.yaml
+    excel_error_formula: False
+
+  # 3.5
+  - datastore_id: question_en
+    label:
+      en: Issue/Question (English)
+      fr: Enjeu ou question (anglais)
+    description:
+      en: This section will display the issue or question the Minister is responding to, in English.
+      fr: Cette section affichera en anglais la question ou l’enjeu auquel répond le ministère.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.6
+  - datastore_id: question_fr
+    label:
+      en: Issue/Question (French)
+      fr: Enjeu ou question (français)
+    description:
+      en: This section will display the issue or question the Minister is responding to, in French.
+      fr: Cette section affichera en français la question ou l’enjeu auquel répond le ministère.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.7
+  - datastore_id: date_received
+    label:
+      en: Date Received
+      fr: Date fournie
+    description:
+      en: This field will display the date on which the Question Period Note was presented in the House of Commons.
+      fr: Ce champ affichera la date à laquelle la note pour la période de questions a été fournie au ministre aux fins d’utilisation au cours d’une période de questions.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.8
+  - datastore_id: background_en
+    label:
+      en: Background (English)
+      fr: Contexte (anglais)
+    description:
+      en: This field should display the background section of the Question Period note, In English.
+      fr: Ce champ devrait afficher en anglais la section du contexte de la note pour la période de questions.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.9
+  - datastore_id: background_fr
+    label:
+      en: Background (French)
+      fr: Contexte (français)
+    description:
+      en: This field should display the background section of the Question Period note, In French.
+      fr: Ce champ devrait afficher en français la section du contexte de la note pour la période de questions.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.10
+  - datastore_id: response_en
+    label:
+      en: Suggested Response (English)
+      fr: Réponse suggérée (anglais)
+    description:
+      en: This field will display the Suggested Response section of the Question Period Note, in English.
+      fr: Ce champ affichera la section de la réponse suggérée de la note pour la période de questions en anglais.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.11
+  - datastore_id: response_fr
+    label:
+      en: Suggested Response (French)
+      fr: Réponse suggérée (français)
+    description:
+      en: This field will display the Suggested Response section of the Question Period Note, in French.
+      fr: Ce champ affichera la section de la réponse suggérée de la note pour la période de questions en français.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.12
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (anglais)
+    description:
+      en: This field will display any additional information, as deemed necessary, in English.
+      fr: Ce champ affichera tout renseignement supplémentaire, en anglais, selon les besoins.
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.13
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (français)
+    description:
+      en: This field will display any additional information, as deemed necessary, in French.
+      fr: Ce champ affichera tout renseignement supplémentaire, en français, selon les besoins.
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # audit trail
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: reference_number
+  datastore_indexes: ""
+
+  default_preview_sort: reference_number
+
+  excel_example_height: 200
+  excel_data_num_rows: 500
+
+  triggers:
+  - qpnotes_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        errors := errors || required_error(NEW.title_en, 'title_en');
+        errors := errors || required_error(NEW.title_fr, 'title_fr');
+        errors := errors || required_error(NEW.minister, 'minister');
+        errors := errors || required_error(NEW.question_en, 'question_en');
+        errors := errors || required_error(NEW.question_fr, 'question_fr');
+        errors := errors || required_error(NEW.date_received, 'date_received');
+        errors := errors || required_error(NEW.background_en, 'background_en');
+        errors := errors || required_error(NEW.background_fr, 'background_fr');
+        errors := errors || required_error(NEW.response_en, 'response_en');
+        errors := errors || required_error(NEW.response_fr, 'response_fr');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      reference_number: "DND-2019-QP-00001"
+      title_en: "Bill C-58 (Access to Information Reform)"
+      title_fr: "Projet de loi C-58 (réforme de l'accès à l'information)"
+      minister: "Scott Brison"
+      question_en: "What is the Government doing to reform the Access to Information Act (Bill C-58)?"
+      question_fr: "Que fait le gouvernement pour réformer la Loi sur l'accès à l'information (projet de loi C-58)?"
+      date_received: "2018-02-15"
+      background_en: "Government of Canada institutions subject to the Access to Information Act <linkto:http://laws-lois.justice.gc.ca/eng/acts/a-1/> (ATIA) are required to post summaries of processed ATI requests."
+      background_fr: "Les institutions du gouvernement du Canada visées par la Loi sur l’accès à l’information <linkto : http://laws-lois.justice.gc.ca/fra/lois/a-1/> (LAI) sont tenues de publier les sommaires des demandes d’accès à l’information qu’elles ont traitées."
+      response_en: "• Bill C-58 contains the first significant amendments to the Access to Information Act since it was introduced over three decades ago.
+       \n• This Bill is the first phase of a two-step approach to update access to information. The targeted changes will be followed by a full review of the Act in Phase II, to begin within one year of royal assent.
+       \n• The Government thanks the members of the Senate Committee on Legal and Constitutional Affairs for their careful review of Bill C-58."
+      response_fr: "• Le projet de loi C-58 contient les premières modifications importantes touchant la Loi sur l’accès à l’information depuis l’adoption de celle-ci il y a plus de trente ans.
+       \n• Le projet de loi C-58 est la première phase d’une approche en deux étapes qui vise à mettre à jour l’accès à l’information. Les changements visés seront suivis d’un examen complet de la Loi au cours de la deuxième phase, qui commencera dans l’année suivant la sanction royale du projet de loi.
+       \n• Le gouvernement remercie les membres du Comité sénatorial permanent des affaires juridiques et constitutionnelles pour l’examen approfondi du projet de loi C-58 qu’ils ont effectué."
+      additional_information_en: "The Government will continue to work with the Information Commissioner, parliamentarians, and other stakeholders to further strengthen government openness and transparency."
+      additional_information_fr: "Le gouvernement continuera de travailler avec la commissaire à l’information, les parlementaires et d’autres intervenants afin d’être encore plus ouvert et transparent. "
+    filter_one:
+      reference_number: DND-2019-QP-00001
+    sort: date_received desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF336B87
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF90AFC5
