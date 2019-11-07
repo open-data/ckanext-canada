@@ -1010,7 +1010,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             Communications, et de Pêches et Océans dans les catégories
             FSC 70, 74, 36
       "07":
-        en: Any measures for Indigenous/Aboriginal people and /or set asides for Indigenous/Aboriginal businesses (applies to all agreements) (Note: Draft wording to be finalized)
+        en: "Any measures for Indigenous/Aboriginal people and /or set asides for Indigenous/Aboriginal businesses (applies to all agreements) (Note: Draft wording to be finalized)"
       "08":
         en: Set-asides for small businesses (other than indigenous/aboriginal businesses) (applies to all agreements except for CETA)
       "09":
@@ -1323,9 +1323,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         iv. For non-competitive contract, it is recommended that a value of “1” be entered for this field.
         v. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received.
         vi. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
-
-        This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
-This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
       fr: |
         Il est recommandé de saisir dans cette zone le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre de l’approvisionnement.
 
@@ -1420,7 +1417,7 @@ This field may only be populated with a “0” if a Call-up against a standing 
       en: Socio-Economic Indicator
       fr: Indicateur socioéconomique
     description:
-      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s):
+      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s)
       fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
     excel_full_text_choices: false
