@@ -5,7 +5,6 @@ title: Proactive Disclosure - Question Period Notes
 notes: Access, upload and modify Question Period notes for your organization
 
 template_version: 3
-template_updated: 2019-11-18
 
 portal_type: info
 collection: qpnotes
@@ -90,9 +89,9 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: False
     choices_file: choices/qpnotes_minister.yaml
-    excel_error_formula: False
+    excel_error_formula: 'FALSE'
 
   # 3.5
   - datastore_id: question_en
@@ -350,8 +349,8 @@ excel_edge_style:
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FF90AFC5
+    fgColor: FFF0C5EE
 excel_column_heading_style:
   PatternFill:
     patternType: solid
-    fgColor: FF90AFC5
+    fgColor: FFEFEFEF
