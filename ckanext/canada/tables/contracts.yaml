@@ -977,22 +977,34 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "00":
         en: None
-        fr: Aucune valeur
+        fr: Sans objet
       "05":
         en: No response to bid solicitation
         fr: Aucune réponse à une invitation à soumissionner
       "20":
         en: Goods Purchased on a Commodity Market
-        fr: Biens achetés conformément à un marché des produits de base
+        fr: Biens achetés dans un marché de produits de base
       "21":
         en: Purchases Made Under Exceptionally Advantageous Conditions
-        fr: Achats selon des conditions exceptionnellement avantageuses court terme
+        fr: Achats selon des conditions exceptionnellement avantageuses
       "22":
         en: Winner of an Architectural Design Contest
         fr: Lauréat d’un concours de conception architecturale
       "23":
         en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
-        fr: Services confidentiels d’experts-conseils
+        fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
+      "30"
+        en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
+        fr: Travaux exécutés sur un bien par un entrepreneur conformément à une garantie (pour les marchés qui sont visés par l’ALEC seulement)
+      "31"
+        en: Work on a leased building or related property performed only by the lessor (for contracts that are only covered by the CFTA)
+        fr: Travaux exécutés sur un édifice loué ou un bien connexe qui sont réalisés par le locateur seulement (pour les marchés qui sont visés par l’ALEC                                      seulement)
+      "32"
+        en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
+        fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
+      "33"
+        en: Substantial duplication of costs to the procuring entity (for contracts that are only covered by the CFTA)
+        fr: Multiplication importante des coûts pour l’entité acheteuse (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
         en: Exclusive Rights
         fr: Droits exclusifs
@@ -1001,7 +1013,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: Achat de prototype
       "74":
         en: Additional Deliveries (formerly Interchangeable Parts)
-        fr: Pièces interchangeables
+        fr: Livraisons supplémentaires (anciennement Pièces interchangeables)
       "81":
         en: Extreme Urgency
         fr: Extrême urgence
