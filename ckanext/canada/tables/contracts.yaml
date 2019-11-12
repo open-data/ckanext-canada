@@ -783,33 +783,87 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     datastore_type: _text
     choices:
-      NA: Not Applicable
-      JN: James Bay and Northern Quebec Agreement
-      NQ: Northeastern Quebec Agreement
-      NI: Nunavik Inuit Land Claims Agreement
-      EM: Eeyou Marine Region Land Claims Agreement
-      LI: Labrador Inuit Land Claim Agreement
-      NU: Agreement between the Inuit of the Nunavut Settlement Area and Her Majesty the Queen in right of Canada (Nunavut Agreement)
-      IF: Inuvialuit Final Agreement
-      GW: Gwich'in Comprehensive Land Claim Agreement
-      SD: Sahtu Dene and Metis Comprehensive Land Claim Agreement
-      TA: Tlicho Agreement
-      CH: Champagne and Aishihik First Nations Final Agreement
-      FN: First Nation of Nacho Nyak Dun Final Agreement
-      TT: Teslin Tlingit Council Final Agreement
-      VG: Vuntut Gwitchin First Nation Final Agreement
-      SF: Selkirk First Nation Final Agreement
-      LS: Little Salmon/Carmacks First Nation Final Agreement
-      TH: Tr'ondëk Hwëch'in Final Agreement
-      TK: Ta'an Kwach'an Council Final Agreement
-      KF: Kluane First Nation Final Agreement
-      KD: Kwanlin Dun First Nation Final Agreement
-      CT: Carcross/Tagish First Nation Final Agreement
-      NF: Nisga'a Final Agreement
-      TF: Tsawwassen First Nation Final Agreement
-      MF: Maa-nulth First Nations Final Agreement
-      TL: Tla'amin Final Agreement
-      YA: Yale First Nations Final Agreement
+      NA:
+        en: Not Applicable
+        fr: Sans objet
+      JN:
+        en: James Bay and Northern Quebec Agreement
+        fr: Convention de la Baie James et du Nord québécois
+      NQ:
+        en: Northeastern Quebec Agreement
+        fr: Convention du Nord-Est québécois
+      NI:
+        en: Nunavik Inuit Land Claims Agreement
+        fr: Accord sur les revendications territoriales des Inuit du Nunavik
+      EM:
+        en: Eeyou Marine Region Land Claims Agreement
+        fr: Accord sur les revendications territoriales concernant la région marine d’Eeyou
+      LI:
+        en: Labrador Inuit Land Claim Agreement
+        fr: Accord sur les revendications territoriales des Inuit du Labrador
+      NU:
+        en: Agreement between the Inuit of the Nunavut Settlement Area and Her Majesty the Queen in right of Canada (Nunavut Agreement)
+        fr: Accord entre les Inuit de la région du Nunavut et Sa Majesté la Reine du chef du Canada (Accord du Nunavut)
+      IF:
+        en: Inuvialuit Final Agreement
+        fr: Convention définitive des Inuvialuits
+      GW:
+        en: Gwich'in Comprehensive Land Claim Agreement
+        fr: Entente sur la revendication territoriale globale des Gwich’in
+      SD:
+        en: Sahtu Dene and Metis Comprehensive Land Claim Agreement
+        fr: Entente sur la revendication territoriale globale des Dénés et des Métis du Sahtu
+      TA:
+        en: Tlicho Agreement
+        fr: Accord tlicho
+      CH:
+        en: Champagne and Aishihik First Nations Final Agreement
+        fr Entente définitive des Premières Nations de Champagne et de Aishihik
+      FN:
+        en: First Nation of Nacho Nyak Dun Final Agreement
+        fr: Entente définitive de la Première nation des Nacho Nyak Dun
+      TT:
+        en: Teslin Tlingit Council Final Agreement
+        fr: Entente définitive du Conseil des Tlingits de Teslin
+      VG:
+        en: Vuntut Gwitchin First Nation Final Agreement
+        fr: Entente définitive de la Première nation des Gwitchin Vuntut
+      SF:
+        en: Selkirk First Nation Final Agreement
+        fr: Entente définitive de la Première nation de Selkirk
+      LS:
+        en: Little Salmon/Carmacks First Nation Final Agreement
+        fr: Entente définitive de la Première nation de Little Salmon/Carmacks
+      TH:
+        en: Tr'ondëk Hwëch'in Final Agreement
+        fr: Entente définitive des Tr’ondëk Hwëch’in
+      TK:
+        en: Ta'an Kwach'an Council Final Agreement
+        fr: Entente définitive du conseil des Ta’an Kwach’an
+      KF:
+        en: Kluane First Nation Final Agreement
+        fr: Entente définitive avec la Première nation de Kluane
+      KD:
+        en: Kwanlin Dun First Nation Final Agreement
+        fr: Entente définitive de la Première nation des Kwanlin Dun
+      CT:
+        en: Carcross/Tagish First Nation Final Agreement
+        fr: Entente définitive de la Première Nation de Carcross-Tagish
+      NF:
+        en: Nisga'a Final Agreement
+        fr: Accord définitif Nisga’a
+      TF:
+        en: Tsawwassen First Nation Final Agreement
+        fr: Accord définitif de la Première Nation de Tsawwassen
+      MF:
+        en: Maa-nulth First Nations Final Agreement
+        fr: Accord définitif des premières nations maa-nulthes
+      TL:
+        en: Tla'amin Final Agreement
+        fr: Accord définitif des Tla’amins
+      YA:
+        en: Yale First Nations Final Agreement
+        fr: Accord définitif de la Première Nation de Yale
 
   - datastore_id: commodity_type
     label:
