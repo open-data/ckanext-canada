@@ -945,19 +945,19 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       AC:
         en: Advance Contract Award Notice
-        fr: préavis d’adjudication de contrat
+        fr: Préavis d’attribution de contrat
       OB:
         en: Competitive – Open Bidding
-        fr: invitation ouverte à soumissionner
+        fr: Concurrentielle – Invitation ouverte à soumissionner
       ST:
         en: Competitive – Selective Tendering
-        fr: ???
+        fr: Concurrentielle – Appel d’offres sélectif
       TC:
         en: Competitive – Traditional
-        fr: concurrentielle traditionnelle
+        fr: Concurrentielle – Traditionnelle
       TN:
         en: Non-Competitive
-        fr: non-concurrentielle traditionnelle
+        fr: Non concurrentielle
 
   - datastore_id: limited_tendering_reason
     label:
