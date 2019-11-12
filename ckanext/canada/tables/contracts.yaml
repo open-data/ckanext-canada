@@ -1278,21 +1278,25 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       PWC:
         en: Contract awarded by PSPC on behalf of the client department.
+        fr: Marché attribué par SPAC au nom du ministère client.
       SSCC:
         en: Contract awarded by SSC on behalf of the client department.
+        fr: Marché attribué par SPC au nom du ministère client.
       OGDC:
         en: Contract awarded by another department on behalf of the client department.
+        fr: Marché attribué par un autre ministère au nom du ministère client.
       DC:
         en: Contract awarded by the department.
+        fr: Marché attribué par le ministère
       PWSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par Services publics et Approvisionnement Canada
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC.
       SSCSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Shared Services Canada
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par Services partagés Canada
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPC.
       DSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by the department
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par le ministère
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par le ministère.
 
   - datastore_id: standing_offer_number
     label:
@@ -1432,14 +1436,19 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "0":
         en: Not applicable
+        fr: Ne s’applique pas
       "1":
         en: Pressing emergency in which delay would be injurious to the public interest
+        fr: Extrême urgence où un retard serait préjudiciable à l’intérêt public.
       "2":
         en: Does not exceed s.6 (b) Government Contracts Regulations prescribed dollar limits.
+        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement concernant les     marchés de l’État.
       "3":
         en: Not in the public interest to solicit bids
+        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public
       "4":
         en: Only one person is capable of performing the contract
+        fr: Une seule personne est en mesure d’exécuter le marché. 
 
   - datastore_id: award_criteria
     label:
@@ -1465,16 +1474,22 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "0":
         en: Not applicable
+        fr: Ne s’applique pas
       "1":
         en: Lowest Price
+        fr: Prix le plus bas
       "2":
         en: Lowest Cost-per-Point
+        fr: Coût par point le plus bas
       "3":
         en: Highest Combined Rating of Technical Merit and Price
+        fr: Cote combinée la plus élevée pour les qualités techniques et le meilleur prix
       "4":
         en: Highest Technical Merit within a Stipulated Maximum Budget
+        fr: Cote la plus élevée pour les qualités techniques dans le cadre d’un budget maximal imparti
       "5":
         en: Variations or combinations of the above methods
+        fr: Variations ou combinaisons des méthodes ci-dessus
 
   - datastore_id: socioeconomic_indicator
     label:
@@ -1488,8 +1503,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       NA:
         en: None
+        fr: Sans objet
       FP:
         en: Federal Contractors Program for Employment Equity
+        fr: Programme de contrats fédéraux pour l’équité en matière d’emploi
 
   - datastore_id: reporting_period
     label:
