@@ -10,3 +10,20 @@
   {{ super() }}
   <link rel="stylesheet" href="/internal.css" type="text/css" />
 {%- endblock -%}
+
+{%- block google_analytics -%}
+    {% if 'registry.open.canada.ca' in h.full_current_url() %}
+        {% set id = '1' %}
+    {% elif 'registry-staging.open.canada.ca' in h.full_current_url() %}
+        {% set id = '2' %}
+    {% endif %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152046908-{{id}}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152046908-{{id}}');
+    </script>
+{%- endblock -%}
