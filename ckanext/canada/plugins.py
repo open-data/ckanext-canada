@@ -169,6 +169,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
+            'googleanalytics_id',
             ])
         helperfunctions['wet_theme'] = self.wet_theme
         return helperfunctions
