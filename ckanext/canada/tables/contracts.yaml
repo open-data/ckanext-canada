@@ -1276,7 +1276,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
       fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
-    obligation: Mandatory  # ? new field!
+    obligation:
+      en: Mandatory for contracts after 2020-01-01
+      fr: Obligatoire pour les marchés conclus après le 2020-01-01
+    excel_required_formula: 'OR({standing_offer_number}<>"",{contract_date}>=DATE(2020,1,1))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
