@@ -1618,12 +1618,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             'intellectual_property');
           errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
           IF NEW.standing_offer_number <> '' THEN
-            errors := errors || required_error(NEW.standing_offer, 'standing_offer');
+            errors := errors || required_error(NEW.contracting_entity, 'contracting_entity');
           END IF;
-          IF NEW.standing_offer <> '' THEN
-            errors := errors || choice_error(NEW.standing_offer,
-              {standing_offer},
-              'standing_offer');
+          IF NEW.contracting_entity <> '' THEN
+            errors := errors || choice_error(NEW.contracting_entity,
+              {contracting_entity},
+              'contracting_entity');
           END IF;
           errors := errors || required_error(NEW.instrument_type, 'instrument_type');
           errors := errors || choice_error(NEW.instrument_type,
@@ -1644,7 +1644,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             errors := errors || required_error(NEW.potential_commercial_exploitation,
               'potential_commercial_exploitation');
           END IF;
-          IF NEW.standing_offer = 'PWSOSA' OR NEW.standing_offer = 'SSCSOSA' THEN
+          IF NEW.contracting_entity = 'PWSOSA' OR NEW.contracting_entity = 'SSCSOSA' THEN
             errors := errors || required_error(NEW.standing_offer_number, 'standing_offer_number');
           END IF;
         END IF;
