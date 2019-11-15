@@ -1166,12 +1166,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="A1",{cell}="NA")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
+    choice_order_expression: 'value.get("deprecated", False), code'
     choices:
       A1:
-        en: Crown owned – exception 1
-        fr: Droits appartenant à l'État exception 1
+        en: Crown owned – exception 1 (only <2020-01-01)
+        fr: Droits appartenant à l'État exception 1 (seulement <2020-01-01)
+        deprecated: true
       A2:
         en: Crown owned – exception 2
         fr: Droits appartenant à l'État exception 2
@@ -1205,8 +1208,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
       NA:
-        en: Not Applicable
-        fr: Sans objet
+        en: Not Applicable (only <2020-01-01)
+        fr: Sans objet (seulement <2020-01-01)
+        deprecated: true
 
   - datastore_id: potential_commercial_exploitation
     label:
