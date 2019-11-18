@@ -353,6 +353,9 @@ ckanext.canada:schemas/info.yaml
             'url_for_wet',
             'wet_jquery_offline',
             'get_map_type'
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js'
             ])
         helperfunctions['wet_theme'] = self.wet_theme
         return helperfunctions

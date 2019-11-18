@@ -98,4 +98,11 @@
 {% block scripts %}
 {% snippet 'snippets/wet-boew/footerresources.html' %}
 <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
+<<<<<<< HEAD
 {% endblock %}
+=======
+ {% block adobe_analytics_footer %}
+    <script type="text/javascript">_satellite.pageBottom();</script>
+ {%- endblock -%}
+{% endblock %}
+>>>>>>> adobe-analytics-portal
