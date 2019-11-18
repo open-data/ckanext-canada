@@ -1,6 +1,10 @@
 {% extends "page.html" %}
 {% block subtitle %}{{ _("Open Maps Data Viewer") }}{% endblock %}
 
+{%- block adobe_analytics_title -%}
+    <meta property="dcterms:title" content="{{ _('Open Maps Data Viewer') }}" />
+{%- endblock -%}
+
 {% block breadcrumb_content %}
   <li><a href="{{'/data/{}/dataset?collection=fgp'.format(h.lang())}}">{{ _("Search Open Maps") }}</a></li>
   <li>{{ _("Open Maps Data Viewer") }}</li>

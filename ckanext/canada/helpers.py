@@ -175,6 +175,21 @@ def portal_url():
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
+
+def adobe_analytics_login_required():
+    return "2" #return 1 if page requires a login and 2 if page is public
+
+def adobe_analytics_lang():
+    if h.lang() == 'en':
+        return 'eng'
+    elif h.lang() == 'fr':
+        return 'fra'
+
+def adobe_analytics_js():
+    if config.get('ckan.site_url', '') == 'https://staging.open.canada.ca':
+        return '//assets.adobedtm.com/cAdobe Analyticscec67651710193d2331efef325107c23a0145/satelliteLib-92fcbbc24eeebb654a3dfbe688ed2dfe10a53e24-staging.js'
+    else:
+        return '//assets.adobedtm.com/cAdobe Analyticscec67651710193d2331efef325107c23a0145/satelliteLib-92fcbbc24eeebb654a3dfbe688ed2dfe10a53e24.js'
     
 def loop11_key():
     return str(config.get('loop11.key', ''))
