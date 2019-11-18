@@ -365,7 +365,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     obligation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
-    excel_required_formula: 'TRIM(LEFT({instrument_type},1))="A"'
+    excel_required_formula: '{instrument_type}="A"'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -1565,48 +1565,105 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
 
         errors := errors || required_error(NEW.contract_date, 'contract_date');
+
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.procurement_id, 'procurement_id');
           errors := errors || required_error(NEW.vendor_name, 'vendor_name');
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
+          errors := errors || required_error(NEW.buyer_name, 'buyer_name');
+        END IF;
+
+        IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
+          errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.economic_object_code, 'economic_object_code');
-          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
-            errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
-          END IF;
           errors := errors || required_error(NEW.description_en, 'description_en');
           errors := errors || required_error(NEW.description_fr, 'description_fr');
           errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
           errors := errors || required_error(NEW.delivery_date, 'delivery_date');
           errors := errors || required_error(NEW.contract_value, 'contract_value');
-          IF NEW.instrument_type = 'A' THEN
-            errors := errors || required_error(NEW.amendment_value, 'amendment_value');
-          END IF;
+        END IF;
+
+        IF NEW.instrument_type = 'A' THEN
+          errors := errors || required_error(NEW.amendment_value, 'amendment_value');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.original_value, 'original_value');
-          errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.trade_agreement, 'trade_agreement');
+        END IF;
+        crval := choice_clean_error(NEW.trade_agreement, {trade_agreement}, 'trade_agreement');
+        errors := errors || crval.error;
+        NEW.trade_agreement = crval.clean;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
+            errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
+          END IF;
+        ELSE IF (NEW.trade_agreement = '') IS NOT FALSE THEN
+          IF NEW.contract_date >= '2019-01-01'::date THEN
+            errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
+          END IF;
+        END IF;
+
+        IF NOT (NEW.trade_agreement = '') IS NOT FALSE
+            AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
+          errors := errors || ARRAY[['agreement_type_code',
+            'Must be left blank when trade agreements specified']];
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.land_claims, 'land_claims');
+        END IF;
+        crval := choice_clean_error(NEW.land_claims, {land_claims}, 'land_claims');
+        errors := errors || crval.error;
+        NEW.land_claims = crval.clean;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.commodity_type, 'commodity_type');
-          errors := errors || choice_error(NEW.commodity_type,
-            {commodity_type},
-            'commodity_type');
+        END IF;
+        errors := errors || choice_error(NEW.commodity_type,
+          {commodity_type},
+          'commodity_type');
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
-          errors := errors || choice_error(NEW.country_of_origin,
-            {country_of_origin},
-            'country_of_origin');
+        END IF;
+        errors := errors || choice_error(NEW.country_of_origin,
+          {country_of_origin},
+          'country_of_origin');
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
-          errors := errors || choice_error(NEW.solicitation_procedure,
-            {solicitation_procedure},
-            'solicitation_procedure');
-          -- accept "0" and "5" in place of the proper "00" and "05" codes
-          IF NEW.limited_tendering_reason = '0' OR NEW.limited_tendering_reason = '5' THEN
-            NEW.limited_tendering_reason = '0' || NEW.limited_tendering_reason;
-          END IF;
+        END IF;
+        crval := choice_clean_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
+        errors := errors || crval.error;
+        NEW.solicitation_procedure = crval.clean;
+
+        IF length(NEW.limited_tendering_reason) = 1 THEN
+          -- zero-pad numbers to match controlled list
+          NEW.limited_tendering_reason = '0' || NEW.limited_tendering_reason;
+        END IF;
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
-          errors := errors || choice_error(NEW.limited_tendering_reason,
-            {limited_tendering_reason},
-            'limited_tendering_reason');
-          IF length(NEW.trade_agreement_exceptions) = 1 THEN
-            -- zero-pad numbers to match controlled list
-            NEW.trade_agreement_exceptions = '0' || NEW.trade_agreement_exceptions;
-          END IF;
+        END IF;
+        crval := choice_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
+        errors := errors || crval.error;
+        NEW.limited_tendering_reason = crval.clean;
+
+        IF length(NEW.trade_agreement_exceptions) = 1 THEN
+          -- zero-pad numbers to match controlled list
+          NEW.trade_agreement_exceptions = '0' || NEW.trade_agreement_exceptions;
+        END IF;
           errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
           errors := errors || choice_error(NEW.trade_agreement_exceptions,
             {trade_agreement_exceptions},
