@@ -818,7 +818,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: Accord tlicho
       CH:
         en: Champagne and Aishihik First Nations Final Agreement
-        fr Entente définitive des Premières Nations de Champagne et de Aishihik
+        fr: Entente définitive des Premières Nations de Champagne et de Aishihik
       FN:
         en: First Nation of Nacho Nyak Dun Final Agreement
         fr: Entente définitive de la Première nation des Nacho Nyak Dun
@@ -993,16 +993,16 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "23":
         en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
         fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
-      "30"
+      "30":
         en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
         fr: Travaux exécutés sur un bien par un entrepreneur conformément à une garantie (pour les marchés qui sont visés par l’ALEC seulement)
-      "31"
+      "31":
         en: Work on a leased building or related property performed only by the lessor (for contracts that are only covered by the CFTA)
         fr: Travaux exécutés sur un édifice loué ou un bien connexe qui sont réalisés par le locateur seulement (pour les marchés qui sont visés par l’ALEC                                      seulement)
-      "32"
+      "32":
         en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
         fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
-      "33"
+      "33":
         en: Substantial duplication of costs to the procuring entity (for contracts that are only covered by the CFTA)
         fr: Multiplication importante des coûts pour l’entité acheteuse (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
@@ -1068,7 +1068,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (archivés à des fins historiques)
       "07":
         en: "Any measures for Indigenous/Aboriginal people and /or set asides for Indigenous/Aboriginal businesses (applies to all agreements) (Note: Draft wording to be finalized)"
-        fr: Toutes les mesures pour les peuples autochtones et/ou réservées aux entreprises autochtones (s’applique à tous les accords) (À noter : formulation à être finalisée)
+        fr: "Toutes les mesures pour les peuples autochtones et/ou réservées aux entreprises autochtones (s’applique à tous les accords) (À noter : formulation à être finalisée)"
       "08":
         en: Set-asides for small businesses (other than indigenous/aboriginal businesses) (applies to all agreements except for CETA)
         fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG)
@@ -1169,12 +1169,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="A1",{cell}="NA")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
-    choice_order_expression: 'value.get("deprecated", False), code'
+    choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
-        en: Crown owned – exception 1 (only <2020-01-01)
-        fr: Droits appartenant à l'État exception 1 (seulement <2020-01-01)
-        deprecated: true
+        en: Crown owned – exception 1 (discontinued as of 2020-01-01)
+        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2020-01-01)
+        discontinued: true
       A2:
         en: Crown owned – exception 2
         fr: Droits appartenant à l'État exception 2
@@ -1208,9 +1208,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
       NA:
-        en: Not Applicable (only <2020-01-01)
-        fr: Sans objet (seulement <2020-01-01)
-        deprecated: true
+        en: Not Applicable (discontinued as of 2020-01-01)
+        fr: Sans objet (discontinué à partir de 2020-01-01)
+        discontinued: true
 
   - datastore_id: potential_commercial_exploitation
     label:
