@@ -1,0 +1,396 @@
+
+collection: experiment
+dataset_type: experiment
+title: "Experimentation Inventory"
+notes: "Access, upload and modify the Experimentation Inventory for your organization\n"
+portal_type: info
+target_dataset: experiment
+template_version: 3
+
+resources:
+  - resource_name: experiment
+    title: "Experimentation Inventory"
+
+    datastore_indexes: ""
+    datastore_primary_key: reference_number
+    default_preview_sort: reference_number
+    create_form: true
+    edit_form: true
+
+    excel_data_height: 32
+    excel_data_num_rows: 500
+    excel_example_height: 32
+
+    fields:
+
+      - datastore_id: reference_number
+        datastore_type: text
+        description:
+          en: "This field is populated by the user with the reference number of the Experiment. This number is a mandatory system requirement when publishing a template."
+          fr: "Ce champ est rempli par l’utilisateur avec le numéro de référence de l'experiment. Le numéro est une exigence de système obligatoire pour la publication d’un modèle."
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Reference Number"
+          fr: "Numéro de référence"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+
+      - datastore_id: titre_du_projet_en
+        datastore_type: text
+        description:
+          en: "This field describes the project title, in English"
+          fr: "Ce champ décrira le titre du projet, en anglais"
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Project Title (English)"
+          fr: "Titre du projet (en anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: titre_du_projet_fr
+        datastore_type: text
+        description:
+          en: "This field describes the project title, in French"
+          fr: "Ce champ décrira le titre du projet, en français"
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Project Title (French)"
+          fr: "Titre du projet (en français)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: question_de_recherche_en
+        datastore_type: text
+        description:
+          en: "This field describes the research question informing the project, in English"
+          fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
+        excel_column_width: 28
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Research Question (English)"
+          fr: "Question de recherche (en anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: question_de_recherche_fr
+        datastore_type: text
+        description:
+          en: "This field describes the research question informing the project, in French"
+          fr: "Ce champ décrira la question de recherche guidant le projet, en français"
+        excel_column_width: 28
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Research Question (French)"
+          fr: "Question de recherche (en français)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: project_summary_en
+        datastore_type: text
+        description:
+          en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in English"
+          fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
+        excel_column_width: 35
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Project Summary (English)"
+          fr: "Résumé du projet (en anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: project_summary_fr
+        datastore_type: text
+        description:
+          en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in French"
+          fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
+        excel_column_width: 35
+        excel_required: true
+        format_type: "Free text"
+        label:
+          en: "Project Summary (French)"
+          fr: "Résumé du projet (en français)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: last_updated
+        datastore_type: date
+        description:
+          en: "This field will display the latest update provided for the project."
+          fr: "Ce champ décrira à quand remonte la dernière mise à jour."
+        excel_column_width: 28
+        excel_required: true
+        format_type: "Date (Please format the data as YYYY-MM-DD)"
+        label:
+          en: "Last Updated"
+          fr: "Dernière mise à jour"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: experimental_area
+        choices:
+          001:
+            en: Legislative
+            fr: Législatif
+          002:
+            en: Policy
+            fr: Politique
+          003:
+            en: Program
+            fr: Programme
+          004:
+            en: Regulatory
+            fr: Règlementation
+          005:
+            en: "Service Delivery"
+            fr: "Prestation de services"
+          006:
+            en: "Internal Services"
+            fr: "Services internes"
+          007:
+            en: Other
+            fr: autres
+        datastore_type: text
+        description:
+          en: "This field will display the area in which the experiment is taking place."
+          fr: "Ce champ décrira dans quel secteur l'expérience prend place."
+        excel_column_width: 20
+        excel_full_text_choices: true
+        excel_required: true
+        format_type: "Controlled List"
+        label:
+          en: "Experimental area"
+          fr: "Secteur d'expérimentation"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: research_method
+        choices:
+          001:
+            en: "Exploratory / Preexperimental"
+            fr: "Exploratoire / préexpérimentale"
+          002:
+            en: Quasi-experimental
+            fr: Quasi-expérimentale
+          003:
+            en: Randomized
+            fr: Randomisée
+          004:
+            en: "Structured pre-post"
+            fr: "Avant-après structuré"
+        datastore_type: text
+        description:
+          en: "This field will describe the research method used for the project."
+          fr: "Ce champ décrira quelle méthode de recherche est employée dans le projet."
+        excel_column_width: 20
+        excel_full_text_choices: true
+        excel_required: true
+        format_type: "Controlled List"
+        label:
+          en: "Research method"
+          fr: "Méthode de recherche"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: status
+        choices:
+          001:
+            en: Active
+            fr: Actif
+          002:
+            en: Inactive
+            fr: Inactif
+          003:
+            en: Completed
+            fr: Complété
+        datastore_type: text
+        description:
+          en: "This field will describe the status of the project."
+          fr: "Ce champ décrira le statut du projet."
+        excel_column_width: 20
+        excel_full_text_choices: true
+        excel_required: true
+        format_type: "Controlled List"
+        label:
+          en: Status
+          fr: Statut
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: report_to_en
+        datastore_type: text
+        description:
+          en: "This field describes the organizational structure tied to the project owner (if applicable), in English."
+        excel_column_width: 35
+        excel_required: false
+        format_type: "Free text"
+        label:
+          en: "Reporting to (English)"
+          fr: "Se rapporte à (en anglais)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
+        visible_to_public: true
+
+      - datastore_id: report_to_fr
+        datastore_type: text
+        description:
+          en: "This field describes the organizational structure tied to the project owner (if applicable), in french."
+          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français."
+        excel_column_width: 35
+        excel_required: false
+        format_type: "Free text"
+        label:
+          en: "Reporting to (French)"
+          fr: "Se rapporte à (en français)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
+        visible_to_public: true
+
+      - datastore_id: info_supplementaire_en
+        datastore_type: text
+        description:
+          en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in English."
+          fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
+        excel_column_width: 35
+        excel_required: false
+        format_type: "Free text"
+        label:
+          en: "Further Information / Links (English)"
+          fr: "Informations supplémentaires / liens (anglais)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
+        visible_to_public: true
+
+      - datastore_id: info_supplementaire_fr
+        datastore_type: text
+        description:
+          en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in Frencjh."
+          fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
+        excel_column_width: 35
+        excel_required: false
+        format_type: "Free text"
+        label:
+          en: "Further Information / Links (French)"
+          fr: "Informations supplémentaires / liens (en français)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
+        visible_to_public: true
+
+      - datastore_id: record_created
+        datastore_type: timestamp
+        import_template_include: false
+        label: "Record Creation Time"
+        preview_class: bg-info
+        visible_to_public: false
+
+      - datastore_id: record_modified
+        datastore_type: timestamp
+        import_template_include: false
+        label: "Last Record Modification Time"
+        preview_class: bg-info
+        visible_to_public: false
+
+      - datastore_id: user_modified
+        datastore_type: text
+        import_template_include: false
+        label: "User Last Modified Record"
+        preview_class: bg-info
+        visible_to_public: false
+
+    triggers:
+      - experiments_trigger: |
+            DECLARE
+              errors text[][] := '{{}}';
+              crval RECORD;
+            BEGIN
+              errors := errors || required_error(NEW.reference_number, 'reference_number');
+              errors := errors || required_error(NEW.titre_du_projet_en, 'titre_du_projet_en');
+              errors := errors || required_error(NEW.titre_du_projet_fr, 'titre_du_projet_fr');
+              errors := errors || required_error(NEW.question_de_recherche_en, 'question_de_recherche_en');
+              errors := errors || required_error(NEW.question_de_recherche_fr, 'question_de_recherche_fr');
+              errors := errors || required_error(NEW.project_summary_en, 'project_summary_en');
+              errors := errors || required_error(NEW.project_summary_fr, 'project_summary_fr');
+              errors := errors || required_error(NEW.last_updated, 'last_updated');
+              errors := errors || choice_error(NEW.experimental_area, {experimental_area}, 'experimental_area');
+              errors := errors || choice_error(NEW.research_method, {research_method}, 'research_method');
+              errors := errors || choice_error(NEW.status, {status}, 'status');
+              IF errors = '{{}}' THEN
+                RETURN NEW;
+              END IF;
+              RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+            END;
+      - update_record_modified_created_trigger
+
+    examples:
+      filter_one:
+        reference_number: HC-2019-EI-00001
+      filters:
+        experimental_area: "001"
+      record:
+        experimental_area: "001"
+        info_supplementaire_en: ""
+        info_supplementaire_fr: ""
+        last_updated: "2019-12-01"
+        project_summary_en: |
+            The experiment was a randomized A/B test that used:
+              the existing landing page for consumer incident reporting (Figure 1)
+              a modified landing page (Figure 2)
+            The intent of the experiment was to determine if changes in language and presentation could successfully encourage users to complete the cosmetic or consumer incident report form.
+        project_summary_fr: |
+            L’expérience était un essai A/B aléatoire qui utilisait les éléments suivants :
+             la page d’accueil existante pour signaler un incident concernant un produit de consommation (Figure 1);
+              une page d’accueil modifiée (Figure 2).
+            UNCLASSIFIED / NON CLASSIFIÉ Template Guide: Experimentation Inventory Le but de l’expérience était de déterminer si des changements dans le libellé et la présentation pourraient inciter les utilisateurs à remplir le rapport d’incident concernant un produit de consommation ou un produit cosmétique.
+        question_de_recherche_en: "Are enhancements to the landing page, compared to the existing one, resulting in more Canadians proceeding to the consumer incident report form?"
+        question_de_recherche_fr: "Les améliorations apportées à la page d’accueil, par rapport à la page existante, ont-elles pour effet d’augmenter le nombre de Canadiens qui utilisent le rapport d’incident pour les produits de consommation?"
+        reference_number: HC-2019-EI-00001
+        report_to_en: ""
+        report_to_fr: ""
+        research_method: "002"
+        status: "001"
+        titre_du_projet_en: "Experimenting with content design"
+        titre_du_projet_fr: "Expérimentation de la conception de contenu"
+      sort: "reference_number asc"
+
+excel_column_heading_style:
+  PatternFill:
+    fgColor: FFADC8FE
+    patternType: solid
+excel_edge_style:
+  PatternFill:
+    fgColor: FF1A41FE
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    fgColor: FF1A41FE
+    patternType: solid
