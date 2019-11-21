@@ -33,7 +33,11 @@ resources:
       2019-2020-Q2: 2019-2020-Q2
       2019-2020-Q3: 2019-2020-Q3
       2019-2020-Q4: 2019-2020-Q4
-
+      2020-2021-Q1: 2020-2021-Q1
+      2020-2021-Q2: 2020-2021-Q2
+      2020-2021-Q3: 2020-2021-Q3
+      2020-2021-Q4: 2020-2021-Q4
+      
   - datastore_id: line_number
     label:
       en: Line Number
@@ -244,7 +248,7 @@ resources:
   datastore_primary_key: [reporting_period, line_number]
   datastore_indexes: ""
 
-  excel_data_num_rows: 20
+  excel_data_num_rows: 100
 
   triggers:
   - dac_trigger: |
