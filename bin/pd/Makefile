@@ -1,4 +1,4 @@
-targets := ati briefingt contracts contractsa dac grants hospitalityq inventory \
+targets := ati briefingt contracts contractsa dac experiment grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -7,6 +7,7 @@ csv_files := \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
+	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
@@ -294,6 +295,28 @@ $(workdir)/dac.csv:
 $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 	$(fdir)/filter_dac.py < $< > $@
 
+###
+###  Experimental Inventory
+###
+.PHONY: experiment
+experiment: upload-experiment rebuild-experiment
+
+.PHONY: upload-experiment
+upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
+	@echo Uploading Experimental Inventory...
+	$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv"
+
+.PHONY: rebuild-experiment
+rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
+	# no search for experiment
+
+$(workdir)/experiment.csv:
+	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
+	$(fdir)/filter_experiment.py < $< > $@
+	
 ###
 ###  Grants and Contributions
 ###
