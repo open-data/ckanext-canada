@@ -149,25 +149,25 @@ resources:
 
       - datastore_id: experimental_area
         choices:
-          001:
+          LE:
             en: Legislative
             fr: Législatif
-          002:
+          PO:
             en: Policy
             fr: Politique
-          003:
+          PR:
             en: Program
             fr: Programme
-          004:
+          RE:
             en: Regulatory
             fr: Règlementation
-          005:
+          SE:
             en: "Service Delivery"
             fr: "Prestation de services"
-          006:
+          SI:
             en: "Internal Services"
             fr: "Services internes"
-          007:
+          OA:
             en: Other
             fr: autres
         datastore_type: text
@@ -188,16 +188,16 @@ resources:
 
       - datastore_id: research_method
         choices:
-          001:
+          PRE:
             en: "Exploratory / Preexperimental"
             fr: "Exploratoire / préexpérimentale"
-          002:
+          QEX:
             en: Quasi-experimental
             fr: Quasi-expérimentale
-          003:
+          RDM:
             en: Randomized
             fr: Randomisée
-          004:
+          STR:
             en: "Structured pre-post"
             fr: "Avant-après structuré"
         datastore_type: text
@@ -218,13 +218,13 @@ resources:
 
       - datastore_id: status
         choices:
-          001:
+          ACT:
             en: Active
             fr: Actif
-          002:
+          INA:
             en: Inactive
             fr: Inactif
-          003:
+          COM:
             en: Completed
             fr: Complété
         datastore_type: text
@@ -355,9 +355,9 @@ resources:
       filter_one:
         reference_number: HC-2019-EI-00001
       filters:
-        experimental_area: "001"
+        experimental_area: "PR"
       record:
-        experimental_area: "001"
+        experimental_area: "PR"
         info_supplementaire_en: ""
         info_supplementaire_fr: ""
         last_updated: "2019-12-01"
@@ -376,21 +376,20 @@ resources:
         reference_number: HC-2019-EI-00001
         report_to_en: ""
         report_to_fr: ""
-        research_method: "002"
-        status: "001"
+        research_method: "STR"
+        status: "COM"
         titre_du_projet_en: "Experimenting with content design"
         titre_du_projet_fr: "Expérimentation de la conception de contenu"
-      sort: "reference_number asc"
 
 excel_column_heading_style:
   PatternFill:
-    fgColor: FFADC8FE
+    fgColor: FFFF7733
     patternType: solid
 excel_edge_style:
   PatternFill:
-    fgColor: FF1A41FE
+    fgColor: FFFF5500
     patternType: solid
 excel_header_style:
   PatternFill:
-    fgColor: FF1A41FE
+    fgColor: FFFF5500
     patternType: solid
