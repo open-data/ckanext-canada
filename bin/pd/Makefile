@@ -1,4 +1,4 @@
-targets := ati briefingt contracts contractsa dac experiment grants hospitalityq inventory \
+targets := ati briefingt contracts contractsa dac grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -7,7 +7,6 @@ csv_files := \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
-	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
