@@ -11,7 +11,7 @@
     <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
     <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat') }}"/>
     <meta property="dcterms:service" content="OG-GO" />
-    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required() }}" />
+    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
   {%- endblock -%}
 {%- endblock -%}
 {%- block google_analytics -%}

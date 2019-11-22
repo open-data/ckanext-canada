@@ -176,8 +176,8 @@ def portal_url():
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
 
-def adobe_analytics_login_required():
-    return "2" #return 1 if page requires a login and 2 if page is public
+def adobe_analytics_login_required(current_url):
+    return current_url #return 1 if page requires a login and 2 if page is public
 
 def adobe_analytics_lang():
     if h.lang() == 'en':
