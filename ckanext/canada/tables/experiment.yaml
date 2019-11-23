@@ -44,6 +44,8 @@ resources:
           fr: "Ce champ décrira le titre du projet, en anglais"
         excel_required: true
         format_type: "Free text"
+        form_attrs:
+          size: 120
         label:
           en: "Project Title (English)"
           fr: "Titre du projet (en anglais)"
@@ -59,6 +61,8 @@ resources:
           fr: "Ce champ décrira le titre du projet, en français"
         excel_required: true
         format_type: "Free text"
+        form_attrs:
+          size: 120
         label:
           en: "Project Title (French)"
           fr: "Titre du projet (en français)"
@@ -72,9 +76,11 @@ resources:
         description:
           en: "This field describes the research question informing the project, in English"
           fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
-        excel_column_width: 28
+        excel_column_width: 50
         excel_required: true
         format_type: "Free text"
+        form_attrs:
+          size: 120
         label:
           en: "Research Question (English)"
           fr: "Question de recherche (en anglais)"
@@ -88,9 +94,11 @@ resources:
         description:
           en: "This field describes the research question informing the project, in French"
           fr: "Ce champ décrira la question de recherche guidant le projet, en français"
-        excel_column_width: 28
+        excel_column_width: 50
         excel_required: true
         format_type: "Free text"
+        form_attrs:
+          size: 120
         label:
           en: "Research Question (French)"
           fr: "Question de recherche (en français)"
@@ -104,9 +112,12 @@ resources:
         description:
           en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in English"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
-        excel_column_width: 35
+        excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
         label:
           en: "Project Summary (English)"
           fr: "Résumé du projet (en anglais)"
@@ -120,9 +131,12 @@ resources:
         description:
           en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in French"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
-        excel_column_width: 35
+        excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
         label:
           en: "Project Summary (French)"
           fr: "Résumé du projet (en français)"
@@ -139,6 +153,7 @@ resources:
         excel_column_width: 28
         excel_required: true
         format_type: "Date (Please format the data as YYYY-MM-DD)"
+        form_snippet: scheming/form_snippets/date.html
         label:
           en: "Last Updated"
           fr: "Dernière mise à jour"
@@ -279,9 +294,12 @@ resources:
         description:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in English."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
-        excel_column_width: 35
+        excel_column_width: 50
         excel_required: false
         format_type: "Free text"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+          style: "width: 100%; display: block"
         label:
           en: "Further Information / Links (English)"
           fr: "Informations supplémentaires / liens (anglais)"
@@ -295,9 +313,12 @@ resources:
         description:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in Frencjh."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
-        excel_column_width: 35
+        excel_column_width: 50
         excel_required: false
         format_type: "Free text"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+          style: "width: 100%; display: block"
         label:
           en: "Further Information / Links (French)"
           fr: "Informations supplémentaires / liens (en français)"
