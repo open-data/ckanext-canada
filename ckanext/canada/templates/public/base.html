@@ -31,7 +31,9 @@
 {%- endblock -%}
 
 {% block adobe_analytics %}
-  <script src="{{ h.adobe_analytics_id() }}"></script>
+{% if h.adobe_analytics_js() %}
+  <script src="{{ h.adobe_analytics_js() }}"></script>
+{% endif %}
 {%- endblock -%}
 
 {% set loop11_key = h.loop11_key() %}
