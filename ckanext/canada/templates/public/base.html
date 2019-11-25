@@ -2,6 +2,18 @@
 
 {%- block links -%}
 {{super()}}
+{%- block meta -%}
+  {{ super() }}
+  {% block adobe_analytics_meta %}
+    {%- block adobe_analytics_title -%}
+    <meta property="dcterms:title" content="{{ g.site_title }}" />
+    {%- endblock -%}
+    <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
+    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat') }}"/>
+    <meta property="dcterms:service" content="OG-GO" />
+    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+  {%- endblock -%}
+{%- endblock -%}
 {%- block google_analytics -%}
   <!-- Google Analytics -->
   <script>
@@ -17,6 +29,13 @@
   </script>
   <!-- End Google Analytics -->
 {%- endblock -%}
+
+{% block adobe_analytics %}
+{% if h.adobe_analytics_js() %}
+  <script src="{{ h.adobe_analytics_js() }}"></script>
+{% endif %}
+{%- endblock -%}
+
 {% set loop11_key = h.loop11_key() %}
 {% if loop11_key %}
   <script type="text/javascript">

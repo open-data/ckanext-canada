@@ -177,6 +177,18 @@ def portal_url():
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
+
+def adobe_analytics_login_required(current_url):
+    return "2" #return 1 if page requires a login and 2 if page is public
+
+def adobe_analytics_lang():
+    if h.lang() == 'en':
+        return 'eng'
+    elif h.lang() == 'fr':
+        return 'fra'
+
+def adobe_analytics_js():
+    return str(config.get('adobe_analytics.js', ''))
     
 def loop11_key():
     return str(config.get('loop11.key', ''))
