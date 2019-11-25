@@ -185,11 +185,8 @@ def adobe_analytics_lang():
     elif h.lang() == 'fr':
         return 'fra'
 
-def adobe_analytics_js():
-    if config.get('ckanext.site_environment', '') == 'staging':
-        return '//assets.adobedtm.com/cAdobe Analyticscec67651710193d2331efef325107c23a0145/satelliteLib-92fcbbc24eeebb654a3dfbe688ed2dfe10a53e24-staging.js'
-    else:
-        return '//assets.adobedtm.com/cAdobe Analyticscec67651710193d2331efef325107c23a0145/satelliteLib-92fcbbc24eeebb654a3dfbe688ed2dfe10a53e24.js'
+def adobe_analytics_id():
+    return str(config.get('adobe_analytics.id', ''))
     
 def loop11_key():
     return str(config.get('loop11.key', ''))

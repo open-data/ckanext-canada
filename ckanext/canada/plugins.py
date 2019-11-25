@@ -328,7 +328,7 @@ ckanext.canada:schemas/info.yaml
             'language_text_t',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
-            'adobe_analytics_js'
+            'adobe_analytics_id'
             ])
 
     def before_map(self, map):
