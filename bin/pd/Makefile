@@ -145,7 +145,7 @@ upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 .PHONY: rebuild-ati
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@echo Rebuilding ATI Summaries...
-	@$(paster) --plugin=ckanext-canada ati rebuild -c $(portal_ini) \
+	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
 
 $(workdir)/ati.csv:
