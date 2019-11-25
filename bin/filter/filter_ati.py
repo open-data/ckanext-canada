@@ -35,12 +35,11 @@ def main():
     writer.writeheader()
     for row in reader:
         try:
-            if (int(row['year']), int(row['month'])) >= start_year_month:
-                writer.writerow(row)
-
             for rem in REMOVE_COLUMNS:
                 del row[rem]
-            writer.writerow(row)
+
+            if (int(row['year']), int(row['month'])) >= start_year_month:
+                writer.writerow(row)
         except ValueError:
             pass
 
