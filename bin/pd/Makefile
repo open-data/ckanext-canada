@@ -1,8 +1,9 @@
-targets := ati briefingt contracts contractsa dac grants hospitalityq inventory \
+targets := ati briefingt qpnotes contracts contractsa dac grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv \
+	qpnotes.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
@@ -182,6 +183,30 @@ $(workdir)/briefingt.csv:
 
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 	$(fdir)/filter_briefingt.py < $< > $@
+
+###
+###  Question Period Notes
+###
+.PHONY: qpnotes
+qpnotes: upload-qpnotes rebuild-qpnotes
+
+.PHONY: upload-qpnotes
+upload-qpnotes: $(workdir)/filtered/qpnotes.csv
+	@echo Uploading Question Period Notes...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=ba1284e5-db5f-43e1-854f-2beb7fe8f04b upload@"$(workdir)/filtered/qpnotes.csv"
+
+.PHONY: rebuild-qpnotes
+rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
+	@echo Rebuilding Question Period Notes...
+	# uncomment when ready for a search interface
+	#@$(ogc_search)/load_qpnotes_to_solr.py "$(workdir)/filtered/qpnotes.csv"
+
+$(workdir)/qpnotes.csv:
+	$(paster) $(combine) qpnotes -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/qpnotes.csv: $(workdir)/qpnotes.csv
+	$(fdir)/filter_qpnotes.py < $< > $@
 
 ###
 ###  Contracts Quarterly
