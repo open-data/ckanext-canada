@@ -83,7 +83,7 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     datastore_type: text
 
-  - datastore_id: nom_acheteur
+  - datastore_id: buyer_name
     label:
       en: Buyer Name
       fr: Nom de l’acheteur
@@ -1111,10 +1111,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       NA:
         en: None
+        fr: Aucune valeur
       MS:
         en: Mandatory Set-Aside
+        fr: Contrat réservé obligatoire
       VS:
         en: Voluntary Set-Aside
+        fr: Contrat réservé facultatif
 
   - datastore_id: aboriginal_business_incidental
     label:
@@ -1559,8 +1562,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
-        NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
-
         errors := errors || required_error(NEW.contract_date, 'contract_date');
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1570,7 +1571,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
-          errors := errors || required_error(NEW.nom_acheteur, 'buyer_name');
+          errors := errors || required_error(NEW.buyer_name, 'buyer_name');
         END IF;
 
         IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
@@ -1605,13 +1606,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
             errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
           END IF;
-        ELSE IF (NEW.trade_agreement = '') IS NOT FALSE THEN
+        ELSIF NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}' THEN
           IF NEW.contract_date >= '2019-01-01'::date THEN
             errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
           END IF;
         END IF;
 
-        IF NOT (NEW.trade_agreement = '') IS NOT FALSE
+        IF NOT (NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}')
             AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
           errors := errors || ARRAY[['agreement_type_code',
             'Must be left blank when trade agreements specified']];
@@ -1644,9 +1645,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         END IF;
         errors := choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
 
-        IF length(NEW.limited_tendering_reason) = 1 THEN
+        IF length(array_to_string(NEW.limited_tendering_reason,'','')) = 1 THEN
           -- zero-pad numbers to match controlled list
-          NEW.limited_tendering_reason = '0' || NEW.limited_tendering_reason;
+          NEW.limited_tendering_reason = ARRAY['0' || array_to_string(NEW.limited_tendering_reason,'','')];
         END IF;
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
@@ -1655,9 +1656,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
 
-        IF length(NEW.trade_agreement_exceptions) = 1 THEN
+        IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
           -- zero-pad numbers to match controlled list
-          NEW.trade_agreement_exceptions = '0' || NEW.trade_agreement_exceptions;
+          NEW.trade_agreement_exceptions = ARRAY['0' || array_to_string(NEW.trade_agreement_exceptions,'','')];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1672,6 +1673,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
 
+        NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
           errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
@@ -1679,12 +1681,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         errors := errors || choice_error(NEW.intellectual_property,
             {intellectual_property},
             'intellectual_property');
+
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         IF NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
           errors := errors || required_error(NEW.potential_commercial_exploitation,
             'potential_commercial_exploitation');
         END IF;
-        
+
         NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
@@ -1717,15 +1720,16 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           'ministers_office');
 
         IF NEW.number_of_bids = 1 THEN
-          IF NOT (NEW.solicitation_procedure = ANY ARRAY['TN','ACAN']) THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN)']]
+          IF NOT (NEW.solicitation_procedure = ANY(ARRAY['TN','ACAN'])) THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN)']];
           END IF;
-        ELSE IF NEW.number_of_bids = 0 THEN
-          IF NOT (NEW.contracting_entity = ANY ARRAY['PWSOSA','SSCSOSA']) THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field']]
+        ELSIF NEW.number_of_bids = 0 THEN
+          IF NOT (NEW.contracting_entity = ANY(ARRAY['PWSOSA','SSCSOSA'])) THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 0 if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field']];
           END IF;
         END IF;
 
+        IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.reporting_period, 'reporting_period');
           errors := errors || choice_error(NEW.reporting_period,
             {reporting_period},
