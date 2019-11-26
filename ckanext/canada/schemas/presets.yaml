@@ -2238,9 +2238,7 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    form_restrict_choices_to: [federal]
-    form_attrs:
-      readonly: ''
+    form_restrict_choices_to: [federal, user]
     required: true
     choices:
     - label:
@@ -2255,6 +2253,10 @@ presets:
         en: Municipal
         fr: Municipal
       value: municipal
+    - label:
+        en: User
+        fr: Utilisateur
+      value: user
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
