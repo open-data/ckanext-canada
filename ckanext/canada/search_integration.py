@@ -94,12 +94,12 @@ def add_to_search_index(data_dict_id, in_bulk=False):
                 isinstance(r['name_translated'], str) else r['name_translated']
             if 'en' in resource_name:
                 resource_title_en.append(resource_name['en'])
-            elif 'fr-t-en' in resource_name:
-                resource_title_en.append(resource_name['fr-t-en'])
+            elif 'en-t-fr' in resource_name:
+                resource_title_en.append(resource_name['en-t-fr'])
             if 'fr' in resource_name:
                 resource_title_fr.append(resource_name['fr'].strip())
-            elif 'en-t-fr' in resource_name:
-                resource_title_fr.append(resource_name['en-t-fr'].strip())
+            elif 'fr-t-en' in resource_name:
+                resource_title_fr.append(resource_name['fr-t-en'].strip())
 
         notes_translated = json.loads(data_dict['notes_translated']) if \
             isinstance(data_dict['notes_translated'], str) else data_dict['notes_translated']
@@ -127,7 +127,7 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'description_txt_en': notes_translated['en'] if 'en' in data_dict['notes_translated'] else '',
             'description_txt_fr': notes_translated['fr'] if 'fr' in data_dict['notes_translated'] else '',
             'description_xlt_txt_fr': notes_translated['fr-t-en'] if 'fr-t-en' in notes_translated else '',
-            'description_xlt_txt_en': notes_translated['en-t-fr'] if 'en-t-f-r' in notes_translated else '',
+            'description_xlt_txt_en': notes_translated['en-t-fr'] if 'en-t-fr' in notes_translated else '',
             'title_en_s': title_translated['en'] if 'en' in title_translated else '',
             'title_fr_s': title_translated['fr'] if 'fr' in title_translated else '',
             'title_xlt_fr_s': title_translated['fr-t-en'] if 'fr-t-en' in title_translated else '',
@@ -142,23 +142,23 @@ def add_to_search_index(data_dict_id, in_bulk=False):
 
         if 'en' in notes_translated:
             od_obj['desc_summary_txt_en'] = get_summary(notes_translated['en'].strip(), 'en')
-        elif 'fr-t-en' in notes_translated:
-            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['fr-t-en'].strip(), 'en')
+        elif 'en-t-fr' in notes_translated:
+            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['en-t-fr'].strip(), 'en')
         if 'fr' in notes_translated:
             od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['fr'].strip(), 'fr')
         elif 'en-t-fr' in notes_translated:
-            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['en-t-fr'].strip(), 'fr')
+            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['fr-t-en'].strip(), 'fr')
 
         keywords = json.loads(data_dict['keywords']) if \
             isinstance(data_dict['keywords'], str) else data_dict['keywords']
         if 'en' in keywords:
             od_obj['keywords_en_s'] = keywords['en']
-        elif 'fr-t-en' in keywords:
-            od_obj['keywords_en_s'] = keywords['fr-t-en']
+        elif 'en-t-fr' in keywords:
+            od_obj['keywords_xlt_en_s'] = keywords['en-t-fr']
         if 'fr' in keywords:
             od_obj['keywords_fr_s'] = keywords['fr']
-        elif 'en-t-fr' in keywords:
-            od_obj['keywords_fr_s'] = keywords['en-t-fr']
+        elif 'fr-t-en' in keywords:
+            od_obj['keywords_xlt_fr_s'] = keywords['fr-t-en']
 
         solr = pysolr.Solr(od_search_solr_url)
         if in_bulk:
