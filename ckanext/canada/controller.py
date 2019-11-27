@@ -215,7 +215,7 @@ class CanadaController(BaseController):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
             fids = [f['datastore_id'] for f in chromo['fields']]
-            pkids = [fids.index(k) for k in chromo['datastore_primary_key']]
+            pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             for row in aadata:
                 row.insert(0, (
                         u'<a href="{0}" aria-label"' + _("Edit") + '">'
