@@ -1643,7 +1643,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
         END IF;
-        errors := choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
+        errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
 
         IF length(array_to_string(NEW.limited_tendering_reason,'','')) = 1 THEN
           -- zero-pad numbers to match controlled list
