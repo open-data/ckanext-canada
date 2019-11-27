@@ -1719,6 +1719,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           {ministers_office},
           'ministers_office');
 
+
         IF NEW.number_of_bids = 1 THEN
           IF NOT (NEW.solicitation_procedure = ANY(ARRAY['TN','ACAN'])) THEN
             errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN)']];
