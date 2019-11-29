@@ -5,10 +5,7 @@ title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
 template_version: 3
-template_updated: 2019-06-25
-upload_warn:
-  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
-  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
+template_updated: 2019-TBD
 
 portal_type: info
 collection: pd
@@ -69,13 +66,63 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
+  - datastore_id: vendor_postal_code
+    label:
+      en: Vendor Postal Code
+      fr: Code postal du fournisseur
+    description:
+      en: |
+        i. This field should be populated with the first 3 digits of the postal code for the vendor identified in the contract. Alternatively, the vendor postal code may be the postal code identified in the financial system if this is the standard practice in the department.
+        ii. This field is to be populated with “NA” if the vendor is located outside of Canada.
+      fr: |
+        i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
+        ii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
+    obligation:
+      en: Mandatory for contracts after 2022-01-01
+      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    datastore_type: text
+
+  - datastore_id: buyer_name
+    label:
+      en: Buyer Name
+      fr: Nom de l’acheteur
+    description:
+      en: |
+        i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract, or alternatively the individual responsible for the procurement at the client department.
+        ii. For the establishment of a standing offer or supply arrangement agreement, it is recommended that this field be populated with the name of the buyer that issued the original standing offer or supply arrangement agreement.
+        iii. For a call-up contract against a standing offer or supply arrangement, this field should be the name of the buyer identified in the original call-up contract.
+        iv. For a contract with task authorizations, this field may be populated with the name of the buyer indicated in the original contract or in the individual task authorization.
+        v. For amendments, it is recommended that this field be populated with the value “NA”. The value “NA” for this field indicates not applicable.
+        vi. For contracts awarded by PSPC, SSC or another department on behalf of the client department, the buyer may be the name of the buyer indicated in the contract or individual responsible for the procurement at the client department.
+      fr: |
+        i. Il est recommandé de saisir dans cette zone le nom de l’acheteur, qui est indiqué dans le contrat initial, ou, à titre subsidiaire, celui de la personne responsable de l’approvisionnement dans le ministère client.
+        ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement initial en matière d’approvisionnement.
+        iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, cette zone devrait indiquer le nom de l’acheteur désigné dans le contrat initial de travail sur convocation.
+        iv. Dans le cas d’un marché assorti d’autorisations de tâches, on peut inscrire dans cette zone le nom de l’acheteur indiqué dans le marché initial ou dans l’autorisation de tâche individuelle.
+        v. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
+        vi. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
+    obligation:
+      en: Mandatory for contracts after 2022-01-01
+      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    datastore_type: text
+
   - datastore_id: contract_date
     label:
       en: Contract Date
       fr: Date du contrat
     description:
-      en: This field should be populated with the date the contract is awarded.  Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department. For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date). If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date). For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date). For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
-      fr: Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement. Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme). S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
+      en: |
+        This field should be populated with the date the contract is awarded. Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department. For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date).
+
+        If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date). For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date). For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
+      fr: |
+        Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement.
+
+        Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme).
+
+        S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
     obligation: Mandatory
     excel_required: true
     datastore_type: date
@@ -88,9 +135,18 @@ resources:
       en: Economic Object Code
       fr: Code d’article économique
     description:
-      en: This field should be populated with the Economic Object Code’s numeric digits listed in the Government-wide Chart of Accounts. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html
-      fr: Il est recommandé de saisir dans cette zone les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le Plan comptable à l’échelle de l’administration fédérale. http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html
+      en: "i. It is recommended that this field be populated with the contract’s numeric economic object code. Economic object codes are listed in the Government-wide Chart of Accounts. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the Directive on Accounting Standards: GC 5000 Recording Financial Transactions in the Accounts of Canada.
+
+ii. For standing offers and supply arrangement agreements, this field may be populated with the data value “NA”. The value “NA” for this field means not applicable.
+
+iii. When a contract involves more than one economic object, it is recommended that the economic object associated with the largest dollar value be used. A department may use a different approach if this is the standard practice in the department."
+      fr: "i.    Il est recommandé de saisir dans cette zone le code d’article économique du contrat. Les codes d’article économique sont indiqués dans le Plan comptable à l’échelle de l’administration fédérale. Il est important d’utiliser les bons codes d’article économique pour préserver l’intégrité des Comptes publics du Canada. Les ministères doivent s’assurer que toutes les dépenses sont codées adéquatement, conformément à la Directive sur les normes comptables : GC 5000 Inscription des opérations financières dans les comptes du Canada.
+
+ii. Dans le cas des offres à commandes et des arrangements en matière d’approvisionnements, on peut saisir dans cette zone la valeur « NA ».  Pour cette zone, la valeur « NA » signifie sans objet.
+
+iii. Quand un contrat porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut utiliser une démarche différente si elle correspond à sa pratique courante."
     obligation: Mandatory for contracts after 2019-01-01
+    excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -106,8 +162,10 @@ resources:
         Description du travail
         Anglais
     description:
-      en: This field should be populated with the Economic Object Code’s text description listed in the Government-wide Chart of Accounts, in English.
-      fr: Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale dans cette zone.
+      en: |
+        It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
+      fr: |
+        Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -126,8 +184,10 @@ resources:
         Description du travail
         Français
     description:
-      en: This field should be populated with the Economic Object Code’s text description listed in the Government-wide Chart of Accounts, in French.
-      fr: Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale dans cette zone.
+      en: |
+        It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
+      fr: |
+        Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
     obligation: Mandatory for contracts after 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
@@ -144,8 +204,22 @@ resources:
         Date de début
         du contrat
     description:
-      en: For a Services or Construction Services contract, this field should be populated with the starting date for the period of time over which the services are provided.  For a standing or supply arrangement, this field should be populated with be the starting date for the period of time over which a call-up may be entered into.  For a contract with task authorizations, this field should be populated with be the starting date for the period of time over the entire Services or Construction Services contract. For a contract with task authorizations where the full value of a contract with task authorizations is likely not to be used, this field should be populated with the starting date for the contract period for each task authorization.
-      fr: Pour un marché de services ou de travaux de construction, il est recommandé que la date de début du marché corresponde à la date de début pour la période où les services sont fournis.  Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de début pour la période où l’on peut passer une commande subséquente.  Pour un marché incluant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de début pour la toute la durée du marché. Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
+      en: |
+        For a Services or Construction Services contract, this field should be populated with the starting date for the period of time over which the services are provided.
+
+        For a standing or supply arrangement, this field should be populated with be the starting date for the period of time over which a call-up may be entered into.
+
+        For a contract with task authorizations, this field should be populated with be the starting date for the period of time over the entire Services or Construction Services contract.
+
+        For a contract with task authorizations where the full value of a contract with task authorizations is likely not to be used, this field should be populated with the starting date for the contract period for each task authorization.
+      fr: |
+        Pour un marché de services ou de travaux de construction, il est recommandé que la date de début du marché corresponde à la date de début pour la période où les services sont fournis.
+
+        Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de début pour la période où l’on peut passer une commande subséquente.
+
+        Pour un marché incluant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de début pour la toute la durée du marché.
+
+        Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -164,8 +238,26 @@ resources:
         Date de clôture du contrat
         ou Date de livraison
     description:
-      en: For a Goods contract, this field should be populated with the date when the goods are to be delivered, which may be the contract period end date. The department may use the last delivery date if the contract involves multiple items on multiple dates.  For a Services or Construction Service contract, this field should be populated with the end date for the period of time over which the services are provided.  For a standing offer or supply arrangement, this field should be populated with the end date for the period of time over which a call-up may be entered into.  For a contract with task authorizations, this field should be populated with the end date for the period of time over the entire Services or Construction Services contract.  For a contact with task authorizations where the full value of a contract with task authorization is likely not to be used, this field should be populated with the end date for the contract period for each task authorization.
-      fr: Pour un marché de biens, il est recommandé de saisir dans cette zone la date à laquelle les biens seront livrés, ce qui peut correspondre à la date de fin de la période du marché. Le ministère peut utiliser la dernière date de livraison, si le marché prévoit différentes dates pour différents articles. Pour un marché de services ou de travaux de construction, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où les services sont fournis. Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où l’on peut passer une commande subséquente. Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de fin pour toute la durée du marché. Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, il est recommandé de saisir dans cette zone la date de fin de chaque autorisation de tâche.
+      en: |
+        For a Goods contract, this field should be populated with the date when the goods are to be delivered, which may be the contract period end date. The department may use the last delivery date if the contract involves multiple items on multiple dates.
+
+        For a Services or Construction Service contract, this field should be populated with the end date for the period of time over which the services are provided.
+
+        For a standing offer or supply arrangement, this field should be populated with the end date for the period of time over which a call-up may be entered into.
+
+        For a contract with task authorizations, this field should be populated with the end date for the period of time over the entire Services or Construction Services contract.
+
+        For a contact with task authorizations where the full value of a contract with task authorization is likely not to be used, this field should be populated with the end date for the contract period for each task authorization.
+      fr: |
+        Pour un marché de biens, il est recommandé de saisir dans cette zone la date à laquelle les biens seront livrés, ce qui peut correspondre à la date de fin de la période du marché. Le ministère peut utiliser la dernière date de livraison, si le marché prévoit différentes dates pour différents articles.
+
+        Pour un marché de services ou de travaux de construction, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où les services sont fournis.
+
+        Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où l’on peut passer une commande subséquente.
+
+        Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de fin pour toute la durée du marché.
+
+        Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, il est recommandé de saisir dans cette zone la date de fin de chaque autorisation de tâche.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -176,9 +268,26 @@ resources:
     label:
       en: Total Contract Value
       fr: Valeur totale du contrat
+    excel_heading:
+      en: |
+        Total Contract
+        Value
+      fr: |
+        Valeur totale
+        du contrat
     description:
-      en: This field should be populated with the full amount of the hard commitment recorded in the departmental financial system for all contracts and amendments regardless of dollar value. It is recommended that this field be in Canadian currency and include all applicable taxes.  For a multi-year contract, it is recommended to be the total amount of the contract for all years. When the contract is amended over $10K, it is recommended that this field be the amended contract value. A contract option, when exercised, may be disclosed as an amendment if the organization chose not to disclose the contract option at the time of contract award. For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
-      fr: Il est recommandé que la valeur totale du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel pour le marché et toutes les modifications subséquentes, peu importe la valeur en dollars. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables. Pour un marché pluriannuel, il est recommandé de fournir le montant total du marché pour toutes les années. Pour la modification d’un marché, il est recommandé de saisir dans cette zone la valeur modifiée du marché. Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
+      en: |
+        This field should be populated with the full amount of the hard commitment recorded in the departmental financial system for all contracts and amendments regardless of dollar value. It is recommended that this field be in Canadian currency and include all applicable taxes.
+
+        For a multi-year contract, it is recommended to be the total amount of the contract for all years. When the contract is amended over $10K, it is recommended that this field be the amended contract value. A contract option, when exercised, may be disclosed as an amendment if the organization chose not to disclose the contract option at the time of contract award.
+
+        For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
+      fr: |
+        Il est recommandé que la valeur totale du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel pour le marché et toutes les modifications subséquentes, peu importe la valeur en dollars. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables.
+
+        Pour un marché pluriannuel, il est recommandé de fournir le montant total du marché pour toutes les années. Pour la modification d’un marché, il est recommandé de saisir dans cette zone la valeur modifiée du marché.
+
+        Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
     obligation: Mandatory for contracts after 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: money
@@ -196,9 +305,31 @@ resources:
     label:
       en: Original Contract Value
       fr: Valeur d'origine du contrat
+    excel_heading:
+      en: |
+        Original Contract
+        Value
+      fr: |
+        Valeur d'origine
+        du contrat
     description:
-      en: This field should be populated with the amount of the hard commitment recorded in the departmental financial systems at the time of contract award for a contract or amended contract regardless of dollar value. It is recommended that this field be in Canadian currency and include all applicable taxes.  For a multi-year contract, it is recommended to be the total amount of the contract for all years. Contract option may be excluded from the original contract value and disclosed at a later date as an amendment when the contract option is exercised. Alternatively, the full value of a contract, including options, may be disclosed at the time of contract award. For a contract with task authorizations, it is recommended that this field be for the full amount of the contract rather than the amount specified within the minimum work guarantee clause. For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
-      fr: Il est recommandé que la valeur d’origine du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel au moment de l’attribution du marché pour un marché ou un marché modifié. Il est recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables. Pour un marché pluriannuel, il est recommandé qu’elle corresponde au montant au moment de l’attribution du marché pour une période de marché pluriannuelle. Pour une option contractuelle, il est recommandé de l’exclure de l’élément de données « valeur d’origine du marché » et de la divulguer à une date ultérieure à titre de modification lorsqu’elle est exercée. Sinon, la valeur totale du marché, y compris les options, peut être divulguée à la date d’adjudication du marché.  Dans le cas d’un marché comportant des autorisations de tâches, il est recommandé de déclarer dans cette zone la valeur d’origine du marché au lieu du montant précisé dans la clause de garantie des travaux minimum. La valeur totale potentielle du marché peut être divulguée dans l’élément de données « valeur d’origine du marché », à moins que l’on ne prévoie pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement devrait être de 0 $.
+      en: |
+        This field should be populated with the amount of the hard commitment recorded in the departmental financial systems at the time of contract award for a contract or amended contract regardless of dollar value.
+
+        It is recommended that this field be in Canadian currency and include all applicable taxes.  For a multi-year contract, it is recommended to be the total amount of the contract for all years.
+
+        Contract option may be excluded from the original contract value and disclosed at a later date as an amendment when the contract option is exercised. Alternatively, the full value of a contract, including options, may be disclosed at the time of contract award.
+
+        For a contract with task authorizations, it is recommended that this field be for the full amount of the contract rather than the amount specified within the minimum work guarantee clause. For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
+
+      fr: |
+        Il est recommandé que la valeur d’origine du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel au moment de l’attribution du marché pour un marché ou un marché modifié.
+
+        Il est recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables. Pour un marché pluriannuel, il est recommandé qu’elle corresponde au montant au moment de l’attribution du marché pour une période de marché pluriannuelle.
+
+        Pour une option contractuelle, il est recommandé de l’exclure de l’élément de données « valeur d’origine du marché » et de la divulguer à une date ultérieure à titre de modification lorsqu’elle est exercée. Sinon, la valeur totale du marché, y compris les options, peut être divulguée à la date d’adjudication du marché.
+
+        Dans le cas d’un marché comportant des autorisations de tâches, il est recommandé de déclarer dans cette zone la valeur d’origine du marché au lieu du montant précisé dans la clause de garantie des travaux minimum. La valeur totale potentielle du marché peut être divulguée dans l’élément de données « valeur d’origine du marché », à moins que l’on ne prévoie pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement devrait être de 0 $.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -209,13 +340,32 @@ resources:
     label:
       en: Contract Amendment Value
       fr: Valeur de modification
+    excel_header:
+      en: |
+        Contract
+        Amendment Value
+      fr: |
+        Valeur de
+        modification
     description:
-      en: For all contracts and amendments regardless of dollar value (excluding acquisition card procurements from -$10K to $10K), this field should be populated with the value of the amendment. Amendment(s) to a contract that take place in the same fiscal quarter may be reported either individually or combined. An amendment should be disclosed in only one template being either the Quarterly Contracts template or the Annual Contracts template. Disclosing an amendment in both templates would result in double counting of the amendment value when calculating the total contracting activity of an organization. It is recommended that this field be in Canadian currency and include all applicable taxes. For a contract with task authorizations when the full value is likely not to be used, the value of any subsequent task authorization may be reported as an amendment with its value reported in this field. When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed with the value at contract entry in the ‘Original Contract Value’ field and should not include the value of the contract amendment in the ‘Contract Amendment Value’ field. The contract amendment should be disclosed with the value of the amendment in the ‘Contract Amendment Value’ field and the value at contract entry in the ‘Original Contract Value’ field. Negative amendments should use a minus sign in front of the value. A ‘0’ should be included if there are no amendments associated with the contract.
-      fr: Pour une modification, il est recommandé que l’élément de données « valeur de modification » corresponde à la valeur de la modification. Les modifications négatives doivent inclure un signe négatif devant la valeur. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’inclure toutes les taxes applicables. Les modifications multiples à un marché apportées au cours du même trimestre de l’exercice financier peuvent être divulguées individuellement ou ensemble. Les modifications positives ou négatives de plus de 10 000 $ doivent être divulguées tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins doivent être déclarées une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être divulguées une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification devrait être divulguée tous les trois mois ou une fois par an. La divulgation d’une modification de façon trimestrielle et annuelle engendrerait un double dénombrement de la valeur de la modification lorsqu’il s’agit de calculer le total de l’activité contractuelle d’une organisation. Lorsqu’un marché a été conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être divulguées séparément. La signature du marché devrait être divulguée séparément, et la valeur au moment de la signature du marché devrait être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également divulguée dans une entrée distincte qui comprend la valeur de la modification dans la zone « valeur de modification », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ». Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, on peut déclarer la valeur des autorisations de tâches ultérieures dans la zone « valeur de modification ». Un « 0 » doit être saisi s’il n’y a pas de modification associée au marché.
+      en: |
+        For all contracts and amendments regardless of dollar value (excluding acquisition card procurements from -$10K to $10K), this field should be populated with the value of the amendment.
+
+        Amendment(s) to a contract that take place in the same fiscal quarter may be reported either individually or combined. An amendment should be disclosed in only one template being either the Quarterly Contracts template or the Annual Contracts template. Disclosingtemplate. Disclosing an amendment in both templates would result in double counting of the amendment value when calculating the total contracting activity of an organization.
+
+        It is recommended that this field be in Canadian currency and include all applicable taxes. For a contract with task authorizations when the full value is likely not to be used, the value of any subsequent task authorization may be reported as an amendment with its value reported in this field.
+
+        When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed with the value at contract entry in the ‘Original Contract Value’ field and should not include the value of the contract amendment in the ‘Contract Amendment Value’ field. The contract amendment should be disclosed with the value of the amendment in the ‘Contract Amendment Value’ field and the value at contract entry in the ‘Original Contract Value’ field. Negative amendments should use a minus sign in front of the value. A ‘0’ should be included if there are no amendments associated with the contract.
+      fr: |
+        Pour une modification, il est recommandé que l’élément de données « valeur de modification » corresponde à la valeur de la modification. Les modifications négatives doivent inclure un signe négatif devant la valeur. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’inclure toutes les taxes applicables.
+
+        Les modifications multiples à un marché apportées au cours du même trimestre de l’exercice financier peuvent être divulguées individuellement ou ensemble. Les modifications positives ou négatives de plus de 10 000 $ doivent être divulguées tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins doivent être déclarées une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être divulguées une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification devrait être divulguée tous les trois mois ou une fois par an. La divulgation d’une modification de façon trimestrielle et annuelle engendrerait un double dénombrement de la valeur de la modification lorsqu’il s’agit de calculer le total de l’activité contractuelle d’une organisation. Lorsqu’un marché a été conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être divulguées séparément. La signature du marché devrait être divulguée séparément, et la valeur au moment de la signature du marché devrait être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également divulguée dans une entrée distincte qui comprend la valeur de la modification dans la zone « valeur de modification », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ».
+
+        Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, on peut déclarer la valeur des autorisations de tâches ultérieures dans la zone « valeur de modification ». Un « 0 » doit être saisi s’il n’y a pas de modification associée au marché.
     obligation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
-    excel_required_formula: 'TRIM(LEFT({document_type_code},1))="A"'
+    excel_required_formula: '{instrument_type}="A"'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -279,12 +429,19 @@ resources:
       en: Agreement Type
       fr: Type d’accord
     description:
-      en: This field should be populated to specify which trade agreement(s) apply to the contract.
-      fr: Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
+      en: |
+        Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
+
+        Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
+      fr: |
+        Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
+
+        Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{contract_date}<DATE(2022,1,1),ISBLANK({trade_agreement}))'
+    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),{contract_date}>=DATE(2022,1,1))'
     datastore_type: text
     excel_full_text_choices: false
     excel_column_width: 40
@@ -553,7 +710,162 @@ resources:
         en: Comprehensive Economic and Trade Agreement (CETA)
         fr: Accord économique et commercial global (AEGC)
 
-  - datastore_id: commodity_type_code
+  - datastore_id: trade_agreement
+    label:
+      en: Trade Agreement
+      fr: Accord commercial
+    description:
+      en: This field should be populated with one or more of the following alphabetic characters (Disclose the alphabetic characters only, all text after the alphabetic characters and including the colon is for information purposes only). For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
+      fr: Il est recommandé de saisir dans cette zone au moins un des codes alphabétiques suivants (saisir le code alphabétique seulement; ne pas reproduire les deux points ni le texte, qui n’est là qu’à titre informatif). À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global est déclaré sous le code CA, EU.
+    obligation:
+      en: Mandatory for contracts after 2022-01-01
+      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    datastore_type: _text
+    choices:
+      XX:
+        en: None
+        fr: Aucune valeur
+      NA:
+        en: North American Free Trade Agreement
+        fr: Accord de libre-échange nord-américain
+      GP:
+        en: World Trade Organization – Agreement on Government Procurement
+        fr: Accord sur les marchés publics de l’Organisation mondiale du commerce
+      CL:
+        en: Canada-Chile Free Trade Agreement
+        fr: Accord de libre-échange Canada-Chili
+      PE:
+        en: Canada-Peru Free Trade Agreement
+        fr: Accord de libre-échange Canada-Pérou
+      CO:
+        en: Canada-Colombia Free Trade Agreement
+        fr: Accord de libre-échange Canada-Colombie
+      PA:
+        en: Canada-Panama Free Trade Agreement
+        fr: Accord de libre-échange Canada-Panama
+      HN:
+        en: Canada-Honduras Free Trade Agreement
+        fr: Accord de libre-échange Canada-Honduras
+      KR:
+        en: Canada-Korea Free Trade Agreement
+        fr: Accord de libre-échange Canada-Corée du Sud
+      CA:
+        en: Canadian Free Trade Agreement
+        fr: Accord de libre-échange Canadien
+      EU:
+        en: Comprehensive Economic Free Trade Agreement
+        fr: Accord économique et commercial global
+      TP:
+        en: Comprehensive and Progressive Agreement for Trans-Pacific Partnership
+        fr: Accord de Partenariat transpacifique global et progressiste
+      UA:
+        en: Canada-Ukraine Free Trade Agreement
+        fr: Accord de libre-échange Canada-Ukraine
+
+  - datastore_id: land_claims
+    label:
+      en: Comprehensive Land Claims Agreement
+      fr: Entente sur les revendications territoriales globales
+    excel_heading:
+      en: |
+        Comprehensive Land
+        Claims Agreement
+      fr: |
+        Entente sur les revendications
+        territoriales globales
+    description:
+      en: This field should be populated to indicate whether the procurement is for goods, services or construction services to be delivered to an area that is within one or more of the Comprehensive Land Claims Agreement(s).
+      fr: Il est recommandé pour cette zone d’indiquer si l’approvisionnement concerne des biens, des services ou des services de construction qui doivent être fournis dans une région visée par l’une des ententes sur les revendications territoriales globales.
+    obligation:
+      en: Mandatory for contracts after 2022-01-01
+      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    datastore_type: _text
+    choices:
+      NA:
+        en: Not Applicable
+        fr: Sans objet
+      JN:
+        en: James Bay and Northern Quebec Agreement
+        fr: Convention de la Baie James et du Nord québécois
+      NQ:
+        en: Northeastern Quebec Agreement
+        fr: Convention du Nord-Est québécois
+      NI:
+        en: Nunavik Inuit Land Claims Agreement
+        fr: Accord sur les revendications territoriales des Inuit du Nunavik
+      EM:
+        en: Eeyou Marine Region Land Claims Agreement
+        fr: Accord sur les revendications territoriales concernant la région marine d’Eeyou
+      LI:
+        en: Labrador Inuit Land Claim Agreement
+        fr: Accord sur les revendications territoriales des Inuit du Labrador
+      NU:
+        en: Agreement between the Inuit of the Nunavut Settlement Area and Her Majesty the Queen in right of Canada (Nunavut Agreement)
+        fr: Accord entre les Inuit de la région du Nunavut et Sa Majesté la Reine du chef du Canada (Accord du Nunavut)
+      IF:
+        en: Inuvialuit Final Agreement
+        fr: Convention définitive des Inuvialuits
+      GW:
+        en: Gwich'in Comprehensive Land Claim Agreement
+        fr: Entente sur la revendication territoriale globale des Gwich’in
+      SD:
+        en: Sahtu Dene and Metis Comprehensive Land Claim Agreement
+        fr: Entente sur la revendication territoriale globale des Dénés et des Métis du Sahtu
+      TA:
+        en: Tlicho Agreement
+        fr: Accord tlicho
+      CH:
+        en: Champagne and Aishihik First Nations Final Agreement
+        fr: Entente définitive des Premières Nations de Champagne et de Aishihik
+      FN:
+        en: First Nation of Nacho Nyak Dun Final Agreement
+        fr: Entente définitive de la Première nation des Nacho Nyak Dun
+      TT:
+        en: Teslin Tlingit Council Final Agreement
+        fr: Entente définitive du Conseil des Tlingits de Teslin
+      VG:
+        en: Vuntut Gwitchin First Nation Final Agreement
+        fr: Entente définitive de la Première nation des Gwitchin Vuntut
+      SF:
+        en: Selkirk First Nation Final Agreement
+        fr: Entente définitive de la Première nation de Selkirk
+      LS:
+        en: Little Salmon/Carmacks First Nation Final Agreement
+        fr: Entente définitive de la Première nation de Little Salmon/Carmacks
+      TH:
+        en: Tr'ondëk Hwëch'in Final Agreement
+        fr: Entente définitive des Tr’ondëk Hwëch’in
+      TK:
+        en: Ta'an Kwach'an Council Final Agreement
+        fr: Entente définitive du conseil des Ta’an Kwach’an
+      KF:
+        en: Kluane First Nation Final Agreement
+        fr: Entente définitive avec la Première nation de Kluane
+      KD:
+        en: Kwanlin Dun First Nation Final Agreement
+        fr: Entente définitive de la Première nation des Kwanlin Dun
+      CT:
+        en: Carcross/Tagish First Nation Final Agreement
+        fr: Entente définitive de la Première Nation de Carcross-Tagish
+      NF:
+        en: Nisga'a Final Agreement
+        fr: Accord définitif Nisga’a
+      TF:
+        en: Tsawwassen First Nation Final Agreement
+        fr: Accord définitif de la Première Nation de Tsawwassen
+      MF:
+        en: Maa-nulth First Nations Final Agreement
+        fr: Accord définitif des premières nations maa-nulthes
+      TL:
+        en: Tla'amin Final Agreement
+        fr: Accord définitif des Tla’amins
+      YA:
+        en: Yale First Nations Final Agreement
+        fr: Accord définitif de la Première Nation de Yale
+
+  - datastore_id: commodity_type
     label:
       en: Commodity Type
       fr: Type de produit
@@ -582,8 +894,14 @@ resources:
       en: Commodity Code
       fr: Code de produit
     description:
-      en: This field should be populated with the generic product descriptions used by the federal government for procurement activities. When using the Goods and Services Identification Number (GSIN), only those GSINs published by PSPC may be used. The Commodity Code for Goods must be four numeric characters. The Commodity Code for Services must be either one alphabetic character and three numeric characters or, two alphabetic characters and two numeric characters. The Commodity Code for Construction must be ‘51’ and one or two numeric characters. When a contract involves more than one commodity code, the commodity code associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
-      fr: Il est recommandé de saisir dans la zone « code de produit » les descriptions de produits génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement.  Lorsqu’il s’agit d’utiliser le numéro d’identification des biens et services (NIBS), seulement les NIBS publiés par SPAC peuvent être utilisés. Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
+      en: |
+        This field should be populated with the generic product descriptions used by the federal government for procurement activities. When using the Goods and Services Identification Number (GSIN), only those GSINs published by PSPC may be used.
+
+        The Commodity Code for Goods must be four numeric characters. The Commodity Code for Services must be either one alphabetic character and three numeric characters or, two alphabetic characters and two numeric characters. The Commodity Code for Construction must be ‘51’ and one or two numeric characters. When a contract involves more than one commodity code, the commodity code associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
+      fr: |
+        Il est recommandé de saisir dans la zone « code de produit » les descriptions de produits génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement.  Lorsqu’il s’agit d’utiliser le numéro d’identification des biens et services (NIBS), seulement les NIBS publiés par SPAC peuvent être utilisés.
+
+        Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -604,13 +922,20 @@ resources:
     datastore_type: text
     choices_file: choices/country.json
 
-  - datastore_id: solicitation_procedure_code
+  - datastore_id: solicitation_procedure
     label:
       en: Solicitation Procedure
       fr: Méthode d’invitation à soumissionner
+    excel_heading:
+      en: |
+        Solicitation
+        Procedure
+      fr: |
+        Méthode d’invitation
+        à soumissionner
     description:
-      en: This field should be populated with one of the four solicitation procedures listed below.
-      fr: Il est recommandé de saisir dans cette zone l’une des quatre méthodes d’invitation à soumissionner énumérées ci-dessous.
+      en: This field should be populated with one of the five solicitation procedures listed below.
+      fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -620,18 +945,21 @@ resources:
     choices:
       AC:
         en: Advance Contract Award Notice
-        fr: préavis d’adjudication de contrat
+        fr: Préavis d’attribution de contrat
       OB:
-        en: Open Bidding
-        fr: invitation ouverte à soumissionner
+        en: Competitive – Open Bidding
+        fr: Concurrentielle – Invitation ouverte à soumissionner
+      ST:
+        en: Competitive – Selective Tendering
+        fr: Concurrentielle – Appel d’offres sélectif
       TC:
-        en: Traditional Competitive
-        fr: concurrentielle traditionnelle
+        en: Competitive – Traditional
+        fr: Concurrentielle – Traditionnelle
       TN:
-        en: Traditional Non-Competitive
-        fr: non-concurrentielle traditionnelle
+        en: Non-Competitive
+        fr: Non concurrentielle
 
-  - datastore_id: limited_tendering_reason_code
+  - datastore_id: limited_tendering_reason
     label:
       en: Limited Tendering Reason
       fr: Raisons justifiant le recours à l’appel d’offres limité
@@ -641,36 +969,52 @@ resources:
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    # accept "0" and "5" in place of the proper "00" and "05" codes below
-    excel_error_formula: 'AND({default_formula},{cell}<>0,{cell}<>"0",{cell}<>5,{cell}<>"5")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    datastore_type: text
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")))'
+    datastore_type: _text
     excel_full_text_choices: false
+    # accept single digit for backwards compat
+    excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
+    choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       "00":
         en: None
-        fr: Aucune valeur
+        fr: Sans objet
       "05":
         en: No response to bid solicitation
         fr: Aucune réponse à une invitation à soumissionner
       "20":
         en: Goods Purchased on a Commodity Market
-        fr: Biens achetés conformément à un marché des produits de base
+        fr: Biens achetés dans un marché de produits de base
       "21":
         en: Purchases Made Under Exceptionally Advantageous Conditions
-        fr: Achats selon des conditions exceptionnellement avantageuses court terme
+        fr: Achats selon des conditions exceptionnellement avantageuses
       "22":
         en: Winner of an Architectural Design Contest
         fr: Lauréat d’un concours de conception architecturale
       "23":
-        en: Consulting Services Regarding Matters of a Confidential Nature
-        fr: Services confidentiels d’experts-conseils
+        en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
+        fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
       "24":
-        en: Additional Construction Services
-        fr: Services de construction supplémentaire
+        en: Additional Construction Services (discontinued as of 2020-01-01)
+        fr: Services de construction supplémentaire (discontinué à partir de 2020-01-01)
+        discontinued: true
       "25":
-        en: New Construction Services
-        fr: Nouveaux services de construction
+        en: New Construction Services (discontinued as of 2020-01-01)
+        fr: Nouveaux services de construction (discontinué à partir de 2020-01-01)
+        discontinued: true
+      "30":
+        en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
+        fr: Travaux exécutés sur un bien par un entrepreneur conformément à une garantie (pour les marchés qui sont visés par l’ALEC seulement)
+      "31":
+        en: Work on a leased building or related property performed only by the lessor (for contracts that are only covered by the CFTA)
+        fr: Travaux exécutés sur un édifice loué ou un bien connexe qui sont réalisés par le locateur seulement (pour les marchés qui sont visés par l’ALEC                                      seulement)
+      "32":
+        en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
+        fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
+      "33":
+        en: Substantial duplication of costs to the procuring entity (for contracts that are only covered by the CFTA)
+        fr: Multiplication importante des coûts pour l’entité acheteuse (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
         en: Exclusive Rights
         fr: Droits exclusifs
@@ -678,87 +1022,151 @@ resources:
         en: Prototype Purchase
         fr: Achat de prototype
       "74":
-        en: Interchangeable Parts
-        fr: Pièces interchangeables
+        en: Additional Deliveries (formerly Interchangeable Parts)
+        fr: Livraisons supplémentaires (anciennement Pièces interchangeables)
       "81":
         en: Extreme Urgency
         fr: Extrême urgence
       "85":
-        en: Low Dollar-value
-        fr: Faible valeur
+        en: Low Dollar-value (discontinued as of 2020-01-01)
+        fr: Faible valeur (discontinué à partir de 2020-01-01)
+        discontinued: true
       "86":
-        en: Prices and/or Sources Fixed by Government Regulations
-        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux
+        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2020-01-01)
+        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2020-01-01)
+        discontinued: true
       "87":
-        en: Government Objectives Representing Best Interests/Value
-        fr: Objectifs gouvernementaux représentant les meilleurs
+        en: Government Objectives Representing Best Interests/Value (discontinued as of 2020-01-01)
+        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2020-01-01)
+        discontinued: true
       "90":
-        en: Protection of Human, Animal, or Plant Life or Health
-        fr: Protection de la vie ou de la santé des personnes, animaux, plantes
+        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2020-01-01)
+        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2020-01-01)
+        discontinued: true
 
-  - datastore_id: exemption_code
+  - datastore_id: trade_agreement_exceptions
     label:
-      en: Exemption
-      fr: Exemption
+      en: Trade Agreement Exceptions and Exclusions
+      fr: Exceptions et exclusions applicables aux accords commerciaux
+    excel_header:
+      en: |
+        Trade Agreement
+        Exceptions and Exclusions
+      fr: |
+        Exceptions et exclusions
+        applicables aux accords commerciaux
     description:
-      en: Trade agreements require that procurements be reported on that derogate from the agreements. Each agreement specifies where this occurs. Exemptions indicate a reason that a contract was not covered by a specific trade agreement or combination of trade agreements. This field should be populated with the reason for a contract to derogate from a trade agreement.
-      fr: Certains accords exigent que certaines exemptions soient déclarées.  Chaque accord précis quand ça c’est acceptable.  Les exemptions indiquent une raison qu’un marché n’était pas sujet aux exigences d’un ou plusieurs accord d’échange libre. Il est recommandé de saisir dans cette zone l’une des exemptions.
+      en: It is recommended for this field to be populated with one or more of the exceptions/exclusions listed below. Certain trade agreements (for example, the North American Free Trade Agreement) require that certain exceptions/exclusions be reported.
+      fr: Il est recommandé de saisir dans cette zone au moins une des exceptions et/ou exclusions énumérées ci-dessous. Certains accords commerciaux (par exemple, l’Accord de libre-échange nord-américain) exigent la déclaration de certaines exceptions et/ou exclusions.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    datastore_type: text
+    datastore_type: _text
     excel_full_text_choices: false  # some of these are really long
-    # why? why zero-prefixed numeric codes?
+    # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
     choices:
       "00":
         en: None
-        fr: Aucune
+        fr: Sans objet
       "01":
-        en: Shipbuilding and repair
-        fr: Aux marchés de construction et de réparation des navires
+        en: Shipbuilding and repair (applies to all agreements except the CFTA)
+        fr: Construction et réparation de navires (s’applique à tous les accords sauf l’ALEC)
       "02":
         en: Urban rail and urban transportation equipment systems,
-            components and materials
-        fr: Aux marchés portant sur du matériel et des systèmes de
-            transport ferroviaire urbain et de transport en commun urbain,
-            les éléments et matériaux servant à leur fabrication, ainsi
-            que tous les matériaux de fer ou d’acier reliés à ces projets
+            components and materials (Archived for historical purpose)
+        fr: Marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets (archivés à des fins historiques)
       "03":
         en: Contracts respecting FSC 58 (communications, detection and
-            coherent radiation equipment)
-        fr: Aux marchés relevant de la catégorie FSC 58 (matériel de
-            communications de détection et de rayonnement cohérent)
+            coherent radiation equipment) (Archived for historical purpose)
+        fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (archivés à des fins historiques)
       "04":
-        en: Set-asides for small and minority businesses
-        fr: Aux marchés réservés aux petites entreprises et aux
-            entreprises minoritaires
+        en: Set-asides for small and minority businesses (Archived for historical purpose)
+        fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (archivés à des fins historiques)
       "05":
         en: Agricultural products made in furtherance of agricultural
-            support programs or human feeding programs
-        fr: Les achats de produits agricoles effectués dans le cadre de
-            programmes de soutien à l’agriculture ou de programme d’aide
-            alimentaire
+            support programs or human feeding programs (applies to all agreements except for CFTA)
+        fr: Achats de produits agricoles effectués dans le cadre de programmes de soutien à l’agriculture ou de programmes d’aide alimentaire (s’applique à tous les accords sauf l’ALEC)
       "06":
         en: The Depts. of Transport, Communications and Fisheries &
-            Oceans respecting FSC 70, 74, 36
-        fr: Les marchés de Transports Canada, du ministère des
-            Communications, et de Pêches et Océans dans les catégories
-            FSC 70, 74, 36
+            Oceans respecting FSC 70, 74, 36 (Archived for historical purpose)
+        fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (archivés à des fins historiques)
+      "07":
+        en: "Any measures for Indigenous/Aboriginal people and /or set asides for Indigenous/Aboriginal businesses (applies to all agreements) (Note: Draft wording to be finalized)"
+        fr: "Toutes les mesures pour les peuples autochtones et/ou réservées aux entreprises autochtones (s’applique à tous les accords) (À noter : formulation à être finalisée)"
+      "08":
+        en: Set-asides for small businesses (other than indigenous/aboriginal businesses) (applies to all agreements except for CETA)
+        fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG)
+      "09":
+        en: Measures necessary to protect public morals, order or safety (applies to all agreements)
+        fr: Mesures nécessaires à la protection de la moralité publique, de l’ordre public ou de la sécurité publique (s’applique à tous les accords)
+      "10":
+        en: Measures necessary to protect human, animal or plant life or health (applies to all agreements)
+        fr: Mesures nécessaires à la protection de vies humaines, animales ou végétales ou de leur santé (s’applique à tous les accords)
+      "11":
+        en: Measures necessary to protect intellectual property (applies to all agreements)
+        fr: Mesures nécessaires à la protection de la propriété intellectuelle (s’applique à tous les accords)
+      "12":
+        en: Measures relating to goods or services of persons with disabilities, philanthropic institutions or prison labour (applies to all agreements)
+        fr: Mesures concernant des biens ou des services fournis par des personnes handicapées ou des organismes philanthropiques, ou encore dans le cadre du travail en milieu carcéral (s’applique à tous les accords)
+      "13":
+        en: Services procured in support of military forces located overseas (applies to all agreements)
+        fr: Services obtenus à l’appui des forces militaires stationnées à l’étranger (s’applique à tous les accords)
 
   - datastore_id: aboriginal_business
     label:
+      en: Procurement Strategy for Aboriginal Business
+      fr: Stratégie d’approvisionnement auprès des entreprises autochtones
+    excel_heading:
+      en: |
+        Procurement Strategy
+        for Aboriginal Business
+      fr: |
+        Stratégie d’approvisionnement
+        auprès des entreprises autochtones
+    description:
+      en: It is recommended for this field to indicate whether the Procurement Strategy for Aboriginal Business mandatory or voluntary set-aside applies to the procurement transaction.
+      fr: Il est recommandé pour cette zone d’indiquer si le marché réservé aux entreprises autochtones, obligatoire ou facultatif dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones, s’applique à la transaction liée à l’approvisionnement
+    obligation:
+      en: Mandatory for contracts after 2022-01-01
+      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    datastore_type: text
+    excel_full_text_choices: false
+    choices:
+      NA:
+        en: None
+        fr: Aucune valeur
+      MS:
+        en: Mandatory Set-Aside
+        fr: Contrat réservé obligatoire
+      VS:
+        en: Voluntary Set-Aside
+        fr: Contrat réservé facultatif
+
+  - datastore_id: aboriginal_business_incidental
+    label:
       en: Procurement Strategy for Aboriginal Business Incidental Indicator
       fr: Stratégie d’approvisionnement auprès des entreprises autochtones
+    excel_heading:
+      en: |
+        Procurement Strategy for Aboriginal
+        Business Incidental Indicator
+      fr: |
+        Stratégie d’approvisionnement auprès
+        des entreprises autochtones
     description:
-      en: This field should be populated with a flag indicating whether an Aboriginal Business is awarded a contract on an incidental basis.
+      en: |
+        This field should be populated with a flag indicating whether an Aboriginal Business is awarded a contract on an incidental basis.
+
+        This field must be N, No or Non if the Procurement Strategy for Aboriginal Business field is MS or VS.
       fr: Il est recommandé pour cette zone d’indiquer si un marché est attribué comme adjudication incidente à une entreprise autochtone.
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
+    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND({aboriginal_business_incidental}="NA",NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -769,10 +1177,17 @@ resources:
         en: "No"
         fr: Non
 
-  - datastore_id: intellectual_property_code
+  - datastore_id: intellectual_property
     label:
       en: Intellectual Property Indicator
       fr: Indicateur de propriété intellectuelle
+    excel_heading:
+      en: |
+        Intellectual Property
+        Indicator
+      fr: |
+        Indicateur de propriété
+        intellectuelle
     description:
       en: This field should be populated to identify whether there are terms and conditions in the contract related to intellectual property and whether those terms would result in Crown or contractor ownership of the rights to the intellectual property.
       fr: Il est recommandé d’indiquer dans cette zone si le marché comporte des dispositions relatives à la propriété intellectuelle (PI) et si, selon ces dispositions, les droits de propriété intellectuelle appartiendront à l’État ou à l’entrepreneur.
@@ -780,12 +1195,15 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="A1",{cell}="NA")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
+    choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
-        en: Crown owned – exception 1
-        fr: Droits appartenant à l'État exception 1
+        en: Crown owned – exception 1 (discontinued as of 2020-01-01)
+        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2020-01-01)
+        discontinued: true
       A2:
         en: Crown owned – exception 2
         fr: Droits appartenant à l'État exception 2
@@ -819,20 +1237,28 @@ resources:
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
       NA:
-        en: Not Applicable
-        fr: Sans objet
+        en: Not Applicable (discontinued as of 2020-01-01)
+        fr: Sans objet (discontinué à partir de 2020-01-01)
+        discontinued: true
 
   - datastore_id: potential_commercial_exploitation
     label:
       en: Potential for Commercial Exploitation
       fr: Potentiel d'exploitation commerciale
+    excel_heading:
+      en: |
+        Potential for Commercial
+        Exploitation
+      fr: |
+        Potentiel d'exploitation
+        commerciale
     description:
       en: This field should be populated to identify whether intellectual property generated under the contract has the potential for commercial exploitation.
       fr: Il est recommandé d’indiquer dans cette zone si la propriété intellectuelle produite en vertu du marché présente un potentiel d’exploitation commerciale.
     obligation:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
-    excel_required_formula: 'NOT(OR({intellectual_property_code}="C",{intellectual_property_code}="NA",{intellectual_property_code}=""))'
+    excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
     choices:
@@ -847,6 +1273,13 @@ resources:
     label:
       en: Former Public Servant in receipt of a PSSA pension
       fr: Ancien fonctionnaire recevant une pension en vertu de la LPFP
+    excel_heading:
+      en: |
+        Former Public Servant in
+        receipt of a PSSA pension
+      fr: |
+        Ancien fonctionnaire recevant
+        une pension en vertu de la LPFP
     description:
       en: This field should be populated to identify whether the contractor is a former public servant in receipt of a pension under the Public Service Superannuation Act (PSSA).
       fr: Il est recommandé pour cette zone d’indiquer si l’entrepreneur est un ancien fonctionnaire touchant une pension en vertu de la Loi sur la pension de la fonction publique (LPFP).
@@ -865,34 +1298,53 @@ resources:
         en: "No"
         fr: Non
 
-  - datastore_id: standing_offer
+  - datastore_id: contracting_entity
     label:
-      en: Call-up or Contract against a Standing Offer or Supply Arrangement Agreement
-      fr: Commande subséquente à une l’offre à commandes ou arrangements en matière d’approvisionnement
+      en: Contracting Entity
+      fr: Entité contractante
     description:
-      en: This field should be populated to identify whether the procurement is a call-up or contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
-      fr: Il est recommandé pour cette zone d’indiquer si l’approvisionnement est une commande subséquente ou un marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC, Services partagés Canada (SPC) ou le ministère.
+      en: It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
+      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
     obligation:
-      en: This field must be populated if a standing offer or supply arrangement number was disclosed
-      fr: Ce champ doit être rempli si un numéro d’offre à commandes ou d’un arrangement en matière d’approvisionnement a été divulgué
-    excel_required_formula: '{standing_offer_number}<>""'
+      en: Mandatory for contracts after 2020-01-01
+      fr: Obligatoire pour les marchés conclus après le 2020-01-01
+    excel_required_formula: 'OR({standing_offer_number}<>"",{contract_date}>=DATE(2020,1,1))'
     datastore_type: text
-    excel_full_text_choices: false  # some of these are really long
+    excel_full_text_choices: false
     choices:
+      PWC:
+        en: Contract awarded by PSPC on behalf of the client department.
+        fr: Marché attribué par SPAC au nom du ministère client.
+      SSCC:
+        en: Contract awarded by SSC on behalf of the client department.
+        fr: Marché attribué par SPC au nom du ministère client.
+      OGDC:
+        en: Contract awarded by another department on behalf of the client department.
+        fr: Marché attribué par un autre ministère au nom du ministère client.
+      DC:
+        en: Contract awarded by the department.
+        fr: Marché attribué par le ministère
       PWSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par Services publics et Approvisionnement Canada
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC.
       SSCSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Shared Services Canada
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par Services partagés Canada
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPC.
       DSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by the department
-        fr: Commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement passée par le ministère
+        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par le ministère.
 
   - datastore_id: standing_offer_number
     label:
       en: Standing Offer or Supply Arrangement Number
       fr: Numéro de l’offre à commandes
+    excel_heading:
+      en: |
+        Standing Offer or Supply
+        Arrangement Number
+      fr: |
+        Numéro de l’offre
+        à commandes
     description:
       en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
       fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
@@ -900,15 +1352,21 @@ resources:
       en: This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
       fr: Ce champ doit être rempli si une commande subséquente à une offre à commandes ou un arrangement en matière d’approvisionnement a été identifié comme PWSOSA ou SSCSOSA
     datastore_type: text
-    excel_required_formula: 'OR({standing_offer}="PWSOSA",{standing_offer}="SSCSOSA")'
+    excel_required_formula: 'OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA")'
 
-  - datastore_id: document_type_code
+  - datastore_id: instrument_type
     label:
       en: Instrument Type
       fr: Type d’instrument
     description:
-      en: This field should be populated to identify whether the item being disclosed is a contract, contract amendment, or a standing offer/supply arrangement agreement (i.e. the agreement against which a call-up is issued should be disclosed as an ‘SOSA’. The call-up itself should be disclosed as a ‘C’ or ‘A’). When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed as one entry and should be identified as a contract by entering ‘C’. The contract amendment should be disclosed as a separate entry and be identified as an amendment by entering ‘A’. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an ‘SOSA’.
-      fr: Il est recommandé pour le type d’instrument d’indiquer si l’opération divulguée est un marché, une modification à un marché, une offre à commandes ou un arrangement en matière d’approvisionnement. Par exemple, une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »; l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »; et une modification à une commande subséquente est « A ». Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être divulguées séparément. La signature du marché sera divulguée comme une saisie, soit « C ». Une modification au marché sera divulguée comme saisie séparée, soit « A ». Lorsqu’une offre à commandes ou un arrangement en matière d’approvisionnement est modifié, il convient de saisir le code « SOSA ».
+      en: |
+        This field should be populated to identify whether the item being disclosed is a contract, contract amendment, or a standing offer/supply arrangement agreement (i.e. the agreement against which a call-up is issued should be disclosed as an ‘SOSA’. The call-up itself should be disclosed as a ‘C’ or ‘A’).
+
+        When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed as one entry and should be identified as a contract by entering ‘C’. The contract amendment should be disclosed as a separate entry and be identified as an amendment by entering ‘A’. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an ‘SOSA’.
+      fr: |
+        Il est recommandé pour le type d’instrument d’indiquer si l’opération divulguée est un marché, une modification à un marché, une offre à commandes ou un arrangement en matière d’approvisionnement. Par exemple, une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »; l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »; et une modification à une commande subséquente est « A ».
+
+        Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être divulguées séparément. La signature du marché sera divulguée comme une saisie, soit « C ». Une modification au marché sera divulguée comme saisie séparée, soit « A ». Lorsqu’une offre à commandes ou un arrangement en   matière d’approvisionnement est modifié, il convient de saisir le code « SOSA ».
     obligation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -930,6 +1388,13 @@ resources:
     label:
       en: Minister's Office Contracts
       fr: Marchés du cabinet du ministre
+    excel_heading:
+      en: |
+        Minister's Office
+        Contracts
+      fr: |
+        Marchés du cabinet
+        du ministre
     description:
       en: It is recommended for this field to indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contract for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Minister’s Offices, such contracts should be charged to either a Minister’s other operating budget; or to the Parliamentary Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective 2019-06-21 or alternatively, for the contracts and amendments awarded within the month of this effective date.
       fr: Dans cette zone, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets des ministres sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint parlementaire ou conseiller au secrétaire parlementaire. Consultez les Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets du cabinet d’un ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications entrés en vigueur le 2019-06-21 ou dans le cas des marchés et des modifications adjugés dans le mois de cette date d’entrée en vigueur.
@@ -948,6 +1413,137 @@ resources:
         en: "No"
         fr: Non
 
+  - datastore_id: number_of_bids
+    label:
+      en: Number of Bids
+      fr: Nombre do soumissions
+    description:
+      en: |
+        It is recommended that this field be populated with the total number of compliant and non-compliant bids received in the procurement.
+
+        i. For a competitive contract, it is recommended for this field to be the number of bids received pursuant to a bid solicitation.
+        ii. For a call-up contract against a standing offer agreement, it is recommended that a value of “0” be entered for this field. In this instance, the value of “0” represents not applicable.
+        iii. If the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements, it is recommended that a value of “1” be entered for this field.
+        iv. For non-competitive contract, it is recommended that a value of “1” be entered for this field.
+        v. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received.
+        vi. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+      fr: |
+        Il est recommandé de saisir dans cette zone le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre de l’approvisionnement.
+
+        i. Pour un marché concurrentiel, il est recommandé que cette zone indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
+        ii. Dans le cas d’un contrat de travail sur convocation subséquent à une offre à commandes, il est recommandé de saisir la valeur « 0 » dans cette zone. En pareil cas, la valeur « 0 » signifie sans objet.
+        iii. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans cette zone.
+        iv. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
+        v. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement.
+        vi. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+    obligation: ???
+    datastore_type: int
+    # This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
+    # This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
+    excel_error_formula: 'OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}=="TN",{solicitation_procedure}=="ACAN"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
+
+  - datastore_id: article_6_exceptions
+    label:
+      en: Section 6 Government Contracts Regulations Exceptions
+      fr: Article 6 – Exceptions au Règlement concernant les marches de l’État
+    excel_heading:
+      en: |
+        Section 6 Government Contracts
+        Regulations Exceptions
+      fr: |
+        Article 6 – Exceptions au Règlement
+        concernant les marches de l’État
+    description:
+      en: |
+        i. The Government Contracts Regulations requires the solicitation of bids unless one of the s.6 exceptions to the Government Contracts Regulations applies to the contract.
+        ii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
+        iii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
+        iv. For contracts whereby bids have been solicited or if the procurement is not a contract subject to the Government Contracts Regulations, the value of “0” should be entered. For this data value, the value of “0” represents not applicable.
+      fr: |
+        i. Le Règlement concernant les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 ne s’applique au marché.
+        ii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
+        iii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
+        iv. Dans le cas des marchés en vertu desquels un appel d’offres a été lancé, ou si l’approvisionnement ne constitue pas un marché assujetti au Règlement concernant les marchés de l’État, on doit saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet.
+    datastore_type: text
+    excel_full_text_choices: false
+    # This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
+    # This field may not be populated with 1,2,3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice.
+    excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="OB",{solicitation_procedure}="TC",{solicitation_procedure}="ST"))),AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
+    choices:
+      "0":
+        en: Not applicable
+        fr: Ne s’applique pas
+      "1":
+        en: Pressing emergency in which delay would be injurious to the public interest
+        fr: Extrême urgence où un retard serait préjudiciable à l’intérêt public.
+      "2":
+        en: Does not exceed s.6 (b) Government Contracts Regulations prescribed dollar limits.
+        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement concernant les     marchés de l’État.
+      "3":
+        en: Not in the public interest to solicit bids
+        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public
+      "4":
+        en: Only one person is capable of performing the contract
+        fr: Une seule personne est en mesure d’exécuter le marché. 
+
+  - datastore_id: award_criteria
+    label:
+      en: Award Criteria
+      fr: Critères d’attribution
+    description:
+      en: |
+        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract: .
+
+        i. If bids have not been solicited, the value of “0” is to be selected.
+        ii. For ACANs whereby it was determined that there were no statements of capabilities that met the ACAN requirements, the value of “0” should be entered.
+        iii. For amendments, the value of “0” is to be selected.
+        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+      fr: |
+        i. S’il n’y a pas eu d’appel d’offres, il faut sélectionner la valeur « 0 ».
+        ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
+        iii. En cas de modification, il faut sélectionner la valeur « 0 ».
+        iv. Pour un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+    datastore_type: text
+    excel_full_text_choices: false
+    # This field may only be populated with “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).
+    excel_error_formula: 'OR({default_formulat},AND({cell}="0",NOT(OR({solicitation_procedure}="TN",{contracting_entity}="AC"))))'
+    choices:
+      "0":
+        en: Not applicable
+        fr: Ne s’applique pas
+      "1":
+        en: Lowest Price
+        fr: Prix le plus bas
+      "2":
+        en: Lowest Cost-per-Point
+        fr: Coût par point le plus bas
+      "3":
+        en: Highest Combined Rating of Technical Merit and Price
+        fr: Cote combinée la plus élevée pour les qualités techniques et le meilleur prix
+      "4":
+        en: Highest Technical Merit within a Stipulated Maximum Budget
+        fr: Cote la plus élevée pour les qualités techniques dans le cadre d’un budget maximal imparti
+      "5":
+        en: Variations or combinations of the above methods
+        fr: Variations ou combinaisons des méthodes ci-dessus
+
+  - datastore_id: socioeconomic_indicator
+    label:
+      en: Socio-Economic Indicator
+      fr: Indicateur socioéconomique
+    description:
+      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s)
+      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
+    datastore_type: text
+    excel_full_text_choices: false
+    choices:
+      NA:
+        en: None
+        fr: Sans objet
+      FP:
+        en: Federal Contractors Program for Employment Equity
+        fr: Programme de contrats fédéraux pour l’équité en matière d’emploi
+
   - datastore_id: reporting_period
     label:
       en: Reporting Period
@@ -963,110 +1559,237 @@ resources:
     datastore_type: text
     choices_file: choices/quarter.yaml
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [reference_number]
   datastore_indexes: ""
   default_preview_sort: contract_period_start desc, delivery_date desc
 
   triggers:
   - contracts_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.reference_number, 'reference_number');
-        PERFORM no_surrounding_whitespace(NEW.reference_number, 'reference_number');
-        NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
-        NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
-        NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
-        NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        errors := errors || required_error(NEW.contract_date, 'contract_date');
 
-        PERFORM not_empty(NEW.contract_date, 'contract_date');
         IF NEW.contract_date >= '2019-01-01'::date THEN
-          PERFORM not_empty(NEW.procurement_id, 'procurement_id');
-          PERFORM not_empty(NEW.vendor_name, 'vendor_name');
-          PERFORM not_empty(NEW.economic_object_code, 'economic_object_code');
-          PERFORM not_empty(NEW.description_en, 'description_en');
-          PERFORM not_empty(NEW.description_fr, 'description_fr');
-          PERFORM not_empty(NEW.contract_period_start, 'contract_period_start');
-          PERFORM not_empty(NEW.delivery_date, 'delivery_date');
-          PERFORM not_empty(NEW.contract_value, 'contract_value');
-          IF NEW.document_type_code = 'A' THEN
-            PERFORM not_empty(NEW.amendment_value, 'amendment_value');
+          errors := errors || required_error(NEW.procurement_id, 'procurement_id');
+          errors := errors || required_error(NEW.vendor_name, 'vendor_name');
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
+          errors := errors || required_error(NEW.buyer_name, 'buyer_name');
+        END IF;
+
+        IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
+          errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.economic_object_code, 'economic_object_code');
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+          errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
+          errors := errors || required_error(NEW.delivery_date, 'delivery_date');
+          errors := errors || required_error(NEW.contract_value, 'contract_value');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.instrument_type = 'A' THEN
+          errors := errors || required_error(NEW.amendment_value, 'amendment_value');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.original_value, 'original_value');
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.trade_agreement, 'trade_agreement');
+        END IF;
+        crval := choices_clean_error(NEW.trade_agreement, {trade_agreement}, 'trade_agreement');
+        errors := errors || crval.error;
+        NEW.trade_agreement = crval.clean;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
+            errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
           END IF;
-          PERFORM not_empty(NEW.original_value, 'original_value');
-          PERFORM not_empty(NEW.agreement_type_code, 'agreement_type_code');
-          PERFORM not_empty(NEW.commodity_type_code, 'commodity_type_code');
-          PERFORM choice_one_of(NEW.commodity_type_code,
-            {commodity_type_code},
-            'commodity_type_code');
-          PERFORM not_empty(NEW.commodity_code, 'commodity_code');
-          PERFORM not_empty(NEW.country_of_origin, 'country_of_origin');
-          PERFORM choice_one_of(NEW.country_of_origin,
-            {country_of_origin},
-            'country_of_origin');
-          PERFORM not_empty(NEW.solicitation_procedure_code, 'solicitation_procedure_code');
-          PERFORM choice_one_of(NEW.solicitation_procedure_code,
-            {solicitation_procedure_code},
-            'solicitation_procedure_code');
-          -- accept "0" and "5" in place of the proper "00" and "05" codes
-          IF NEW.limited_tendering_reason_code = '0' OR NEW.limited_tendering_reason_code = '5' THEN
-            NEW.limited_tendering_reason_code = '0' || NEW.limited_tendering_reason_code;
-          END IF;
-          PERFORM not_empty(NEW.limited_tendering_reason_code, 'limited_tendering_reason_code');
-          PERFORM choice_one_of(NEW.limited_tendering_reason_code,
-            {limited_tendering_reason_code},
-            'limited_tendering_reason_code');
-          IF length(NEW.exemption_code) = 1 THEN
-            -- zero-pad numbers to match controlled list
-            NEW.exemption_code = '0' || NEW.exemption_code;
-          END IF;
-          PERFORM not_empty(NEW.exemption_code, 'exemption_code');
-          PERFORM choice_one_of(NEW.exemption_code,
-            {exemption_code},
-            'exemption_code');
-          PERFORM not_empty(NEW.aboriginal_business, 'aboriginal_business');
-          PERFORM not_empty(NEW.intellectual_property_code, 'intellectual_property_code');
-          PERFORM choice_one_of(NEW.intellectual_property_code,
-            {intellectual_property_code},
-            'intellectual_property_code');
-          PERFORM not_empty(NEW.former_public_servant, 'former_public_servant');
-          IF NEW.standing_offer_number <> '' THEN
-            PERFORM not_empty(NEW.standing_offer, 'standing_offer');
-          END IF;
-          IF NEW.standing_offer <> '' THEN
-            PERFORM choice_one_of(NEW.standing_offer,
-              {standing_offer},
-              'standing_offer');
-          END IF;
-          PERFORM not_empty(NEW.document_type_code, 'document_type_code');
-          PERFORM choice_one_of(NEW.document_type_code,
-            {document_type_code},
-            'document_type_code');
-          IF NEW.contract_date >= '2019-06-21'::date THEN
-            PERFORM not_empty(NEW.ministers_office, 'ministers_office');
-          END IF;
-          PERFORM choice_one_of(NEW.ministers_office,
-            {ministers_office},
-            'ministers_office');
-          PERFORM not_empty(NEW.reporting_period, 'reporting_period');
-          PERFORM choice_one_of(NEW.reporting_period,
-            {reporting_period},
-            'reporting_period');
-          IF NEW.intellectual_property_code <> 'C'
-              AND NEW.intellectual_property_code <> 'NA' THEN
-            PERFORM not_empty(NEW.potential_commercial_exploitation,
-              'potential_commercial_exploitation');
-          END IF;
-          IF NEW.standing_offer = 'PWSOSA' OR NEW.standing_offer = 'SSCSOSA' THEN
-            PERFORM not_empty(NEW.standing_offer_number, 'standing_offer_number');
+        ELSIF NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}' THEN
+          IF NEW.contract_date >= '2019-01-01'::date THEN
+            errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
           END IF;
         END IF;
 
-        RETURN NEW;
+        IF NOT (NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}')
+            AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
+          errors := errors || ARRAY[['agreement_type_code',
+            'Must be left blank when trade agreements specified']];
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.land_claims, 'land_claims');
+        END IF;
+        crval := choices_clean_error(NEW.land_claims, {land_claims}, 'land_claims');
+        errors := errors || crval.error;
+        NEW.land_claims = crval.clean;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.commodity_type, 'commodity_type');
+        END IF;
+        errors := errors || choice_error(NEW.commodity_type,
+          {commodity_type},
+          'commodity_type');
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.commodity_code, 'commodity_code');
+          errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
+        END IF;
+        errors := errors || choice_error(NEW.country_of_origin,
+          {country_of_origin},
+          'country_of_origin');
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
+        END IF;
+        errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
+
+        IF length(array_to_string(NEW.limited_tendering_reason,'','')) = 1 THEN
+          -- zero-pad numbers to match controlled list
+          NEW.limited_tendering_reason = ARRAY['0' || array_to_string(NEW.limited_tendering_reason,'','')];
+        END IF;
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
+        END IF;
+        IF NEW.contract_date >= '2020-01-01'::date THEN
+          crval := choices_clean_error(NEW.limited_tendering_reason,
+            array_remove(array_remove(array_remove(array_remove(array_remove(array_remove(
+            {limited_tendering_reason}, '24'), '25'), '85'), '86'), '87'), '90'),
+            'limited_tendering_reason');
+        ELSE
+          crval := choices_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
+        END IF;
+        errors := errors || crval.error;
+        NEW.limited_tendering_reason = crval.clean;
+
+        IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
+          -- zero-pad numbers to match controlled list
+          NEW.trade_agreement_exceptions = ARRAY['0' || array_to_string(NEW.trade_agreement_exceptions,'','')];
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
+        END IF;
+        crval := choices_clean_error(NEW.trade_agreement_exceptions, {trade_agreement_exceptions}, 'trade_agreement_exceptions');
+        errors := errors || crval.error;
+        NEW.trade_agreement_exceptions = crval.clean;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
+        END IF;
+        errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
+
+        NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
+          errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
+        END IF;
+        IF NEW.contract_date >= '2020-01-01'::date THEN
+          errors := errors || choice_error(NEW.intellectual_property,
+              array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
+              'intellectual_property');
+        ELSE
+          errors := errors || choice_error(NEW.intellectual_property,
+              {intellectual_property},
+              'intellectual_property');
+        END IF;
+
+        NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
+          errors := errors || required_error(NEW.potential_commercial_exploitation,
+            'potential_commercial_exploitation');
+        END IF;
+
+        NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.standing_offer_number <> '' THEN
+          errors := errors || required_error(NEW.contracting_entity, 'contracting_entity');
+        END IF;
+        errors := errors || choice_error(NEW.contracting_entity,
+          {contracting_entity},
+          'contracting_entity');
+
+        IF NEW.contract_date >= '2019-01-01'::date AND (NEW.contracting_entity = 'PWSOSA' OR NEW.contracting_entity = 'SSCSOSA') THEN
+          errors := errors || required_error(NEW.standing_offer_number, 'standing_offer_number');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.instrument_type, 'instrument_type');
+        END IF;
+        -- sadly lots of bad data in earlier records
+        errors := errors || choice_error(NEW.instrument_type,
+          {instrument_type},
+          'instrument_type');
+
+        NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
+        IF NEW.contract_date >= '2019-06-21'::date THEN
+          errors := errors || required_error(NEW.ministers_office, 'ministers_office');
+        END IF;
+        errors := errors || choice_error(NEW.ministers_office,
+          {ministers_office},
+          'ministers_office');
+
+        IF NEW.number_of_bids = 1 THEN
+          IF NOT (NEW.solicitation_procedure = ANY(ARRAY['TN','ACAN'])) THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN)']];
+          END IF;
+        ELSIF NEW.number_of_bids = 0 THEN
+          IF NOT (NEW.contracting_entity = ANY(ARRAY['PWSOSA','SSCSOSA'])) THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 0 if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field']];
+          END IF;
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01'::date THEN
+          errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+          errors := errors || choice_error(NEW.reporting_period,
+            {reporting_period},
+            'reporting_period');
+        END IF;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
       reference_number: "C-2017-2018-Q1-00170"
       procurement_id: "3000638243"
       vendor_name: "Company XYZ inc"
+      vendor_postal_code: "A1A"
+      buyer_name: "Mark Johnson"
       contract_date: "2017-09-15"
       economic_object_code: "460"
       description_en: "Protection services"
@@ -1075,29 +1798,35 @@ resources:
       delivery_date: "2017-09-15"
       contract_value: "10000"
       original_value: "10000"
-      amendment_value: "10000"
+      amendment_value: "100000"
       comments_en: "This contract was omitted from a previous public disclosure."
       comments_fr: "Ce marché a été omis dans une divulgation publique précédente."
       additional_comments_en: "10-Months subscription to Altmetric Explorer for Institutions"
       additional_comments_fr: "Abonnement de 10 mois à Altmetric Explorer for Institutions"
-      agreement_type_code: "Y"
-      commodity_type_code: "S"
+      trade_agreement: ["CA", "EU"]
+      land_claims: ["NA"]
+      commodity_type: "S"
       commodity_code: "K105"
       country_of_origin: "CA"
-      solicitation_procedure_code: "OB"
-      limited_tendering_reason_code: "85"
-      exemption_code: "03"
-      aboriginal_business: "Y"
-      intellectual_property_code: "NA"
+      solicitation_procedure: "OB"
+      limited_tendering_reason: ["22", "71"]
+      trade_agreement_exceptions: ["03", "05"]
+      aboriginal_business: "MS"
+      aboriginal_business_incidental: "Y"
+      intellectual_property: "A2"
       potential_commercial_exploitation: "N"
       former_public_servant: "Y"
-      standing_offer: "PWSOSA"
+      contracting_entity: "PWSOSA"
       standing_offer_number: "EN578-160553/001/ZL"
-      document_type_code: "C"
+      instrument_type: "C"
       ministers_office: "Y"
+      number_of_bids: 2
+      article_6_exceptions: "2"
+      award_criteria: "0"
+      socioeconomic_indicator: "FP"
       reporting_period: "2016-2017-Q3"
     filters:
-      agreement_type_code: "N"
+      instrument_type: "N"
       country_of_origin: "CA"
     filter_one:
       reference_number: "C-2017-2018-Q1-00170"
@@ -1115,23 +1844,33 @@ resources:
     datastore_type: text
     choices_file: choices/quarter.yaml
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
 
   datastore_primary_key: [reporting_period]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f497d
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFdfdce3
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:

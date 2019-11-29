@@ -36,10 +36,16 @@ class TestContracts(FunctionalTestBase):
             get_chromo('contracts')['examples']['record'],
             contract_date='2019-06-21',
             ministers_office=None)
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
-            records=[record])
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'ministers_office': ['This field must not be empty'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
 
     def test_ministers_office(self):
         lc = LocalCKAN()
@@ -50,3 +56,32 @@ class TestContracts(FunctionalTestBase):
         lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
+    def test_2022_fields(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            contract_date='2022-01-01',
+            vendor_postal_code=None,
+            buyer_name='',
+            trade_agreement='',
+            agreement_type_code='Z',
+            land_claims=None,
+            aboriginal_business='',
+            )
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'vendor_postal_code': ['This field must not be empty'],
+            'buyer_name': ['This field must not be empty'],
+            'trade_agreement': ['This field must not be empty'],
+            'agreement_type_code': ['Discontinued as of 2022-01-01'],
+            'land_claims': ['This field must not be empty'],
+            'aboriginal_business': ['This field must not be empty'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
+

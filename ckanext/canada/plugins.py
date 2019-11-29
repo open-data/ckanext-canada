@@ -184,6 +184,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             except ValidationError as e:
                 # reformat tab-delimited error as dict
                 head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                rerr = rerr.rstrip('\n')
                 if head == 'TAB-DELIMITED' and sep:
                     out = {}
                     it = iter(rerr.split('\t'))
