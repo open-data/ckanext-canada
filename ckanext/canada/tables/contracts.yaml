@@ -970,10 +970,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
+    choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       "00":
         en: None
@@ -993,6 +995,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "23":
         en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
         fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
+      "24":
+        en: Additional Construction Services (discontinued as of 2020-01-01)
+        fr: Services de construction supplémentaire (discontinué à partir de 2020-01-01)
+        discontinued: true
+      "25":
+        en: New Construction Services (discontinued as of 2020-01-01)
+        fr: Nouveaux services de construction (discontinué à partir de 2020-01-01)
+        discontinued: true
       "30":
         en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
         fr: Travaux exécutés sur un bien par un entrepreneur conformément à une garantie (pour les marchés qui sont visés par l’ALEC seulement)
@@ -1017,6 +1027,22 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "81":
         en: Extreme Urgency
         fr: Extrême urgence
+      "85":
+        en: Low Dollar-value (discontinued as of 2020-01-01)
+        fr: Faible valeur (discontinué à partir de 2020-01-01)
+        discontinued: true
+      "86":
+        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2020-01-01)
+        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2020-01-01)
+        discontinued: true
+      "87":
+        en: Government Objectives Representing Best Interests/Value (discontinued as of 2020-01-01)
+        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2020-01-01)
+        discontinued: true
+      "90":
+        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2020-01-01)
+        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2020-01-01)
+        discontinued: true
 
   - datastore_id: trade_agreement_exceptions
     label:
@@ -1587,7 +1613,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.contract_value, 'contract_value');
         END IF;
 
-        IF NEW.instrument_type = 'A' THEN
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.instrument_type = 'A' THEN
           errors := errors || required_error(NEW.amendment_value, 'amendment_value');
         END IF;
 
@@ -1652,7 +1678,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
         END IF;
-        crval := choices_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
+        IF NEW.contract_date >= '2020-01-01'::date THEN
+          crval := choices_clean_error(NEW.limited_tendering_reason,
+            array_remove(array_remove(array_remove(array_remove(array_remove(array_remove(
+            {limited_tendering_reason}, '24'), '25'), '85'), '86'), '87'), '90'),
+            'limited_tendering_reason');
+        ELSE
+          crval := choices_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
+        END IF;
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
 
@@ -1678,12 +1711,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
           errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
         END IF;
-        errors := errors || choice_error(NEW.intellectual_property,
-            {intellectual_property},
-            'intellectual_property');
+        IF NEW.contract_date >= '2020-01-01'::date THEN
+          errors := errors || choice_error(NEW.intellectual_property,
+              array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
+              'intellectual_property');
+        ELSE
+          errors := errors || choice_error(NEW.intellectual_property,
+              {intellectual_property},
+              'intellectual_property');
+        END IF;
 
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
-        IF NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
           errors := errors || required_error(NEW.potential_commercial_exploitation,
             'potential_commercial_exploitation');
         END IF;
@@ -1693,20 +1732,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.former_public_servant, 'former_public_servant');
         END IF;
 
-        IF NEW.standing_offer_number <> '' THEN
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.standing_offer_number <> '' THEN
           errors := errors || required_error(NEW.contracting_entity, 'contracting_entity');
         END IF;
         errors := errors || choice_error(NEW.contracting_entity,
           {contracting_entity},
           'contracting_entity');
 
-        IF NEW.contracting_entity = 'PWSOSA' OR NEW.contracting_entity = 'SSCSOSA' THEN
+        IF NEW.contract_date >= '2019-01-01'::date AND (NEW.contracting_entity = 'PWSOSA' OR NEW.contracting_entity = 'SSCSOSA') THEN
           errors := errors || required_error(NEW.standing_offer_number, 'standing_offer_number');
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.instrument_type, 'instrument_type');
         END IF;
+        -- sadly lots of bad data in earlier records
         errors := errors || choice_error(NEW.instrument_type,
           {instrument_type},
           'instrument_type');
@@ -1718,7 +1758,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         errors := errors || choice_error(NEW.ministers_office,
           {ministers_office},
           'ministers_office');
-
 
         IF NEW.number_of_bids = 1 THEN
           IF NOT (NEW.solicitation_procedure = ANY(ARRAY['TN','ACAN'])) THEN

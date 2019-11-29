@@ -42,4 +42,10 @@ for line in in_csv:
     line['socioeconomic_indicator'] = ''
     line['user_modified'] = '*'  # special "we don't know" value
 
+    if line['contracting_entity'] == 'PSPCSOSA':  # code changed in 2016!
+        line['contracting_entity'] = 'PWSOSA'
+    if line['contracting_entity'] in ('N/A', 'N'):
+        line['contracting_entity'] = ''
+    line['country_of_origin'] = line['country_of_origin'].upper()
+
     out_csv.writerow(line)
