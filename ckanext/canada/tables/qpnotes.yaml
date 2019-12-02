@@ -90,7 +90,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: False
-    choices_file: choices/qpnotes_minister.yaml
+    choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
   # 3.5
