@@ -42,10 +42,29 @@ for line in in_csv:
     line['socioeconomic_indicator'] = ''
     line['user_modified'] = '*'  # special "we don't know" value
 
+    # clean up some common mistakes
     if line['contracting_entity'] == 'PSPCSOSA':  # code changed in 2016!
         line['contracting_entity'] = 'PWSOSA'
-    if line['contracting_entity'] in ('N/A', 'N'):
+    if line['contracting_entity'] in ('N/A', 'N', 'NUL'):
         line['contracting_entity'] = ''
-    line['country_of_origin'] = line['country_of_origin'].upper()
+    line['country_of_origin'] = line['country_of_origin'].upper().strip()
+    if line['country_of_origin'].startswith('CAN'):
+        line['country_of_origin'] = 'CA'
+    if line['country_of_origin'].startswith('USA'):
+        line['country_of_origin'] = 'US'
+    line['instrument_type'] = line['instrument_type'].upper().strip()
+    line['intellectual_property'] = line['intellectual_property'].upper().strip()
+    if line['intellectual_property'] == 'N/A':
+        line['intellectual_property'] = 'NA'
+    line['commodity_type'] = line['commodity_type'].upper().strip()
+    if line['commodity_type'].startswith('GOOD'):
+        line['commodity_type'] = 'G'
+    if line['commodity_type'].startswith('SERVICE'):
+        line['commodity_type'] = 'S'
+    line['solicitation_procedure'] = line['solicitation_procedure'].upper().strip()
+    if ':' in line['solicitation_procedure']:
+        line['solicitation_procedure'] = line['solicitation_procedure'].split(':')[0]
+    if line['solicitation_procedure'].startswith('NON-COMPET'):
+        line['solicitation_procedure'] = 'TN'
 
     out_csv.writerow(line)
