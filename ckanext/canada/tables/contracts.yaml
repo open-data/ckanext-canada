@@ -1166,7 +1166,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND({aboriginal_business_incidental}="NA",NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))'
+    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND({aboriginal_business}="NA",NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1440,7 +1440,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: int
     # This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
     # This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
-    excel_error_formula: 'OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}=="TN",{solicitation_procedure}=="ACAN"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
+    excel_error_formula: ' OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="ACAN"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
 
   - datastore_id: article_6_exceptions
     label:
