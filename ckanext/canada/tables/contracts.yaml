@@ -1506,7 +1506,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: text
     excel_full_text_choices: false
     # This field may only be populated with “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).
-    excel_error_formula: 'OR({default_formulat},AND({cell}="0",NOT(OR({solicitation_procedure}="TN",{contracting_entity}="AC"))))'
+    excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="TN",{contracting_entity}="AC"))))'
     choices:
       "0":
         en: Not applicable
