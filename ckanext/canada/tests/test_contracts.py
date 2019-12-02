@@ -82,6 +82,7 @@ class TestContracts(FunctionalTestBase):
             'land_claims': ['This field must not be empty'],
             'aboriginal_business': ['This field must not be empty'],
         }
+        assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
