@@ -54,6 +54,8 @@ for line in in_csv:
         line['country_of_origin'] = 'US'
     line['instrument_type'] = line['instrument_type'].upper().strip()
     line['intellectual_property'] = line['intellectual_property'].upper().strip()
+    if ':' in line['intellectual_property']:
+        line['intellectual_property'] = line['intellectual_property'].split(':')[0]
     if line['intellectual_property'] == 'N/A':
         line['intellectual_property'] = 'NA'
     line['commodity_type'] = line['commodity_type'].upper().strip()
@@ -61,10 +63,14 @@ for line in in_csv:
         line['commodity_type'] = 'G'
     if line['commodity_type'].startswith('SERVICE'):
         line['commodity_type'] = 'S'
+    if ':' in line['commodity_type']:
+        line['commodity_type'] = line['commodity_type'].split(':')[0]
     line['solicitation_procedure'] = line['solicitation_procedure'].upper().strip()
     if ':' in line['solicitation_procedure']:
         line['solicitation_procedure'] = line['solicitation_procedure'].split(':')[0]
     if line['solicitation_procedure'].startswith('NON-COMPET'):
         line['solicitation_procedure'] = 'TN'
+    if ':' in line['limited_tendering_reason']:
+        line['limited_tendering_reason'] = line['limited_tendering_reason'].split(':')[0]
 
     out_csv.writerow(line)
