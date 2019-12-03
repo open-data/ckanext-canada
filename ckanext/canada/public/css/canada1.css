@@ -86,3 +86,19 @@ details.alert-error {
 .field--name-field-vote {
   display: none;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+    text-shadow: none;
+}
+
+#wb-sm li.dropdown-item a {
+    color: #284162;
+}
+
+#wb-sm .menu li.dropdown-item a:hover {
+    color: white;
+}

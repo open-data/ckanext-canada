@@ -7,18 +7,19 @@
 {% block sitesearch %}{% endblock %}
 
 {% block sitemenu %}
-    <nav class="gcweb-menu" typeof="SiteNavigationElement">
-      <div class="container">
-          <h2 class="wb-inv">Menu</h2>
-          <button type="button" aria-haspopup="true" aria-expanded="false"><span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
-          <ul role="menu" aria-orientation="vertical">
-            {% block header_site_navigation_tabs %}
+    <nav role="navigation" id="wb-sm" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement">
+        <div class="container navbar">
+            <h2>Topics menu</h2>
+            <div class="row">
+                <ul class="list-inline menu">
+                    {% block header_site_navigation_tabs %}
                 <li role="presentation"><a role="menuitem"  href="{{ _('http://open.canada.ca') }}">{{ _('Open.Canada.ca') }}</a></li>
                 {% if h.check_access('package_create') %}
-                <li role="presentation"><a id="addportal" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="expandable" aria-expanded="false" href="#">{{ _('Add to Portal') }}</a>
-                    <ul id="expandable" role="menu" class="sm list-unstyled" aria-orientation="vertical"><li></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ _('Add to Portal') }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a></li>
+                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
                         {%- for r_type in [
                           'ati',
                           'contracts',
@@ -37,65 +38,54 @@
                           ] -%}
                           {# XXX bit of a hack: we "know" that our dataset types have
                              resource names with the same values #}
-                          <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type)
+                          <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type)
                             }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a></li>
                         {%- endfor -%}
                     </ul>
                 </li>
                 {% endif %}
-                <li role="presentation"><a role="menuitem" href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a></li>
-                <li role="presentation"><a role="menuitem" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
-                <li role="presentation"><a role="menuitem" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
+                <li role="presentation"><a href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a></li>
+                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
+                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
                 {% if c.userobj %}
                 <li role="presentation"><a role="menuitem"  href="{{ h.url_for(controller='user', action='logout') }}">{{ _('Log out') }}</a></li>
                 {% else %}
                 <li role="presentation"><a role="menuitem"  href="{% url_for controller='user', action='login' %}">{{ _('Log in') }}</a></li>
                 {% endif %}
             {% endblock %}
-          </ul>
-      </div>
-    </nav>
-    {# script below is a work around the WET menu that can't hide sub-menu after hovering out #}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-          $("#addportal").mouseleave(function(){
-            $("#addportal").attr("aria-expanded", "false");
-          });
-          $("#expandable").mouseover(function(){
-            $("#addportal").attr("aria-expanded", "true");
-          });
-        });
-    </script>
-  {% endblock %}
-
-  {% block breadcrumb %}
-    {% if breadcrumb_content() | trim %}
-      <nav role="navigation" id="wb-bc" property="breadcrumb">
-        <h2>{{ _('You are here:') }}</h2>
-        <div class="container">
-          <div class="row">
-            <ol class="breadcrumb">
-              {% snippet 'snippets/home_breadcrumb_item.html' %}
-              {{ breadcrumb_content() }}
-            </ol>
-          </div>
+                </ul>
+            </div>
         </div>
-      </nav>
-    {% endif %}
-  {% endblock %}
+    </nav>
+{% endblock %}
 
-  {% block signed_on_off %}
-    {%- if c.userobj -%}
-      <div class="container">
-          <div class="row">
-            {% block header_account_logged %}
-              {% snippet 'snippets/user.html' %}
-            {% endblock %}
-          </div>
+{% block breadcrumb %}
+{% if breadcrumb_content() | trim %}
+  <nav role="navigation" id="wb-bc" property="breadcrumb">
+    <h2>{{ _('You are here:') }}</h2>
+    <div class="container">
+      <div class="row">
+        <ol class="breadcrumb">
+          {% snippet 'snippets/home_breadcrumb_item.html' %}
+          {{ breadcrumb_content() }}
+        </ol>
       </div>
-    {%- endif -%}
-  {% endblock %}
+    </div>
+  </nav>
+{% endif %}
+{% endblock %}
+
+{% block signed_on_off %}
+{%- if c.userobj -%}
+  <div class="container">
+      <div class="row">
+        {% block header_account_logged %}
+          {% snippet 'snippets/user.html' %}
+        {% endblock %}
+      </div>
+  </div>
+{%- endif -%}
+{% endblock %}
 
 
 
