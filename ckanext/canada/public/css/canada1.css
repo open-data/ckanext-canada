@@ -98,6 +98,7 @@ details.alert-error {
 #wb-sm li.dropdown-item a {
     color: #284162;
     text-align: left;
+    text-decoration: none;
 }
 
 #wb-sm .menu li.dropdown-item a:hover {
@@ -107,7 +108,7 @@ details.alert-error {
 #wb-sm .menu>li {
     padding:0;
 }
-#wb-sm .menu>li a {
+#wb-sm .menu>li>a {
     display: block;
     padding: 1em;
     text-align: center;
