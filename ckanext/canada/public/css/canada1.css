@@ -103,3 +103,15 @@ details.alert-error {
 #wb-sm .menu li.dropdown-item a:hover {
     color: white;
 }
+
+#wb-sm .menu>li {
+    padding:0;
+}
+#wb-sm .menu>li a {
+    display: block;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+}
+
+
