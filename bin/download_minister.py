@@ -45,7 +45,7 @@ def get_filter_output():
             if row in choices:
                 # case: minister found in both lists
                 # update minister if existing list is different from choices list
-                if cmp(existing_list[row], choices[row]):
+                if existing_list[row] != choices[row]:
                     existing_list[row]['precedence'] = choices[row]['precedence']
                     for langCode in lang_codes:
                         existing_list[row][langCode] = choices[row][langCode]
@@ -90,12 +90,9 @@ def download_xml_from_source():
 
     # collect responses for both languages
     for langCode in lang_codes:
-        # url = 'https://www.ourcommons.ca/Parliamentarians/' + langCode + '/ministries/Export?output=XML'
-        url = 'http://localhost/export-' + langCode + '.xml'
-        response = requests.get(url, stream=True)
-
-        # if valid response then save as xml tree
-        if response.status_code == 200:
+        try:
+            url = 'https://www.ourcommons.ca/Parliamentarians/' + langCode + '/ministries/Export?output=XML'
+            response = requests.get(url, stream=True)
             xml_tree[langCode] = etree.fromstring(response.content)
 
             for row in xml_tree[langCode].xpath('Minister'):
@@ -132,22 +129,25 @@ def download_xml_from_source():
                         'precedence': row.xpath('OrderOfPrecedence/text()')[0],
                         'positions_' + langCode: [position],
                     }
-        response.close()
+            response.close()
+        except requests.exceptions.RequestException:
+            return False
+
     return choices
 
 
-def set_status(list):
+def set_status(json_list):
     """
     Set status for list to determine if current vs former minister
     """
     status = 0
-    for row in list:
-        for position in list[row]['positions_en']:
+    for row in json_list:
+        for position in json_list[row]['positions_en']:
             if not position['end_date']:
                 status = 1
                 break
-        list[row]['status'] = status
-    return list
+        json_list[row]['status'] = status
+    return json_list
 
 
 # get list of choices and write to OUTPUT file as JSON
