@@ -90,7 +90,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: False
-    choices_file: choices/qpnotes_minister.yaml
+    choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
   # 3.5
@@ -101,11 +101,11 @@ resources:
     description:
       en: This section will display the issue or question the Minister is responding to, in English.
       fr: Cette section affichera en anglais la question ou l’enjeu auquel répond le ministère.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
+    obligation: Optional
+    excel_required: false
+    form_required: false
     format_type: Free Text (separate paragraphs with two blank lines)
-    validation: This field must not be empty
+    validation: None
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -121,11 +121,11 @@ resources:
     description:
       en: This section will display the issue or question the Minister is responding to, in French.
       fr: Cette section affichera en français la question ou l’enjeu auquel répond le ministère.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
+    obligation: Optional
+    excel_required: false
+    form_required: false
     format_type: Free Text (separate paragraphs with two blank lines)
-    validation: This field must not be empty
+    validation: None
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -150,46 +150,6 @@ resources:
     occurrence: Single
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
-
-  # 3.8
-  - datastore_id: background_en
-    label:
-      en: Background (English)
-      fr: Contexte (anglais)
-    description:
-      en: This field should display the background section of the Question Period note, In English.
-      fr: Ce champ devrait afficher en anglais la section du contexte de la note pour la période de questions.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    format_type: Free Text (separate paragraphs with two blank lines)
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Repeatable
-    datastore_type: text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
-
-  # 3.9
-  - datastore_id: background_fr
-    label:
-      en: Background (French)
-      fr: Contexte (français)
-    description:
-      en: This field should display the background section of the Question Period note, In French.
-      fr: Ce champ devrait afficher en français la section du contexte de la note pour la période de questions.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    format_type: Free Text (separate paragraphs with two blank lines)
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Repeatable
-    datastore_type: text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
 
   # 3.10
   - datastore_id: response_en
@@ -219,6 +179,46 @@ resources:
     description:
       en: This field will display the Suggested Response section of the Question Period Note, in French.
       fr: Ce champ affichera la section de la réponse suggérée de la note pour la période de questions en français.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.8
+  - datastore_id: background_en
+    label:
+      en: Background (English)
+      fr: Contexte (anglais)
+    description:
+      en: This field should display the background section of the Question Period note, In English.
+      fr: Ce champ devrait afficher en anglais la section du contexte de la note pour la période de questions.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.9
+  - datastore_id: background_fr
+    label:
+      en: Background (French)
+      fr: Contexte (français)
+    description:
+      en: This field should display the background section of the Question Period note, In French.
+      fr: Ce champ devrait afficher en français la section du contexte de la note pour la période de questions.
     obligation: Mandatory
     excel_required: true
     form_required: true
