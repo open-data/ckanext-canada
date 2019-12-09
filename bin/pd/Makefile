@@ -198,6 +198,8 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
+	@echo Downloading ministers list for Question Period Notes...
+	@$(CURDIR)/../download_minister.py
 	@echo Rebuilding Question Period Notes...
 	@$(ogc_search)/load_qp_to_solr.py "$(workdir)/filtered/qpnotes.csv"
 
