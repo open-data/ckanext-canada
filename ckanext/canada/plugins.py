@@ -160,6 +160,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_recombinant',
+            'recombinant_description_to_markup',
             ])
 
     def configure(self, config):
@@ -248,6 +249,7 @@ ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/experiment.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -327,6 +329,9 @@ ckanext.canada:schemas/info.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js'
             ])
 
     def before_map(self, map):

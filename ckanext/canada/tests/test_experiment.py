@@ -7,18 +7,19 @@ from ckan.tests.factories import Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestGrants(FunctionalTestBase):
+
+class TestExperiment(FunctionalTestBase):
     def setup(self):
-        super(TestGrants, self).setup()
+        super(TestExperiment, self).setup()
         org = Organization()
         lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='grants', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='grants', owner_org=org['name'])
+        lc.action.recombinant_create(dataset_type='experiment', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='experiment', owner_org=org['name'])
         self.resource_id = rval['resources'][0]['id']
 
     def test_example(self):
         lc = LocalCKAN()
-        record = get_chromo('grants')['examples']['record']
+        record = get_chromo('experiment')['examples']['record']
         lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
@@ -30,11 +31,3 @@ class TestGrants(FunctionalTestBase):
             resource_id=self.resource_id,
             records=[{}])
 
-    def test_empty_string_instead_of_null(self):
-        lc = LocalCKAN()
-        record = dict(get_chromo('grants')['examples']['record'])
-        record['foreign_currency_type'] = ''
-        record['foreign_currency_value'] = ''
-        lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])

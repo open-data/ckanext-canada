@@ -34,7 +34,7 @@ class ATICommand(CkanCommand):
     Usage::
 
         paster ati clear
-                   rebuild [-f <file> <file>] [-s <solr-url>]
+                   rebuild [--lenient] [-f <file> <file>] [-s <solr-url>]
 
     Options::
 
@@ -43,6 +43,8 @@ class ATICommand(CkanCommand):
                                        (default) CKAN database
         -s/--solr-url <url>            use specified solr URL as output,
                                        instead of default from ini file.
+        --lenient                  allow rebuild from csv files without checking
+                                   that columns match expected columns
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -65,6 +67,11 @@ class ATICommand(CkanCommand):
         '--solr-url',
         dest='solr_url',
         help='Solr URL for output')
+    parser.add_option(
+        '--lenient',
+        action='store_false',
+        dest='strict',
+        default=True)
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
@@ -77,13 +84,17 @@ class ATICommand(CkanCommand):
         if cmd == 'clear':
             return self._clear_index()
         elif cmd == 'rebuild':
-            return self._rebuild(self.options.csv_files, self.options.solr_url)
+            return self._rebuild(
+                self.options.csv_files,
+                self.options.solr_url,
+                self.options.strict,
+                )
 
     def _clear_index(self, solr_url=None, commit=True):
         conn = solr_connection('ati')
         conn.delete(q="*:*", commit=commit)
 
-    def _rebuild(self, csv_files=None, solr_url=None):
+    def _rebuild(self, csv_files=None, solr_url=None, strict=True):
         """
         Implement rebuild command
 
@@ -108,7 +119,7 @@ class ATICommand(CkanCommand):
                 geno = get_geno(chromo['dataset_type'])
                 assert geno.get('target_dataset') == TARGET_DATASET
 
-                for org_id, records in csv_data_batch(csv_file, chromo):
+                for org_id, records in csv_data_batch(csv_file, chromo, strict=strict):
                     records = [dict((k, safe_for_solr(v)) for k, v in
                             row_dict.items()) for row_dict in records]
                     try:

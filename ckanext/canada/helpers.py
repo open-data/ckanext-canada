@@ -1,4 +1,5 @@
 import json
+import re
 from pylons import c, config
 from pylons.i18n import _
 from ckan.model import User, Package, Activity
@@ -6,6 +7,7 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
+import jinja2
 
 import ckanapi
 
@@ -175,6 +177,18 @@ def portal_url():
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
+
+def adobe_analytics_login_required(current_url):
+    return "2" #return 1 if page requires a login and 2 if page is public
+
+def adobe_analytics_lang():
+    if h.lang() == 'en':
+        return 'eng'
+    elif h.lang() == 'fr':
+        return 'fra'
+
+def adobe_analytics_js():
+    return str(config.get('adobe_analytics.js', ''))
     
 def loop11_key():
     return str(config.get('loop11.key', ''))
@@ -323,3 +337,22 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
+
+
+def recombinant_description_to_markup(text):
+    """
+    Return text as HTML escaped strings joined with '<br/>, links enabled'
+    """
+    # very lax, this is trusted text defined in a schema not user-provided
+    url_pattern = r'(https?:[^)\s"]{20,})'
+    markup = []
+    for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
+        if i % 2:
+            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
+        else:
+            markup.extend(jinja2.Markup('<br/>'.join(
+               jinja2.escape(t) for t in part.split('\n')
+            )))
+    # extra dict because language text expected and language text helper
+    # will cause plain markup to be escaped
+    return {'en': jinja2.Markup(''.join(markup))}
