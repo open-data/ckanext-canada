@@ -353,7 +353,7 @@ ckanext.canada:schemas/info.yaml
             'url_for_wet_theme',
             'url_for_wet',
             'wet_jquery_offline',
-            'get_map_type'
+            'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
             'adobe_analytics_js'
