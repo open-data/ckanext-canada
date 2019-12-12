@@ -420,10 +420,10 @@ def url_for_wet(*args, **kw):
 
     if not WET_URL:
         return h.url_for_static_or_external(
-            (h.wet_theme() if theme else 'wet-boew') + file
+            ('GCWeb' if theme else 'wet-boew') + file
         )
 
-    return WET_URL + '/' + (h.wet_theme() if theme else 'wet-boew') + file
+    return WET_URL + '/' + ('GCWeb' if theme else 'wet-boew') + file
 
 
 def wet_jquery_offline():
