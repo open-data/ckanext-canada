@@ -7,8 +7,6 @@ notes: Access, upload and modify the monthly ATI Summaries and ATI Nothing to Re
 portal_type: info
 collection: ati
 
-datastore_text_types: true
-
 upload_info: ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with any questions.
 
 resources:
@@ -52,6 +50,28 @@ resources:
     datastore_type: int
     excel_column_width: 34
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: ATI Summaries
+    report_type_fr: Accès à l’information sommaires complétés
+
   datastore_primary_key: request_number
   datastore_indexes: ""
   excel_organization_style:
@@ -66,6 +86,9 @@ resources:
       patternType: solid
       fgColor: FFeeece1
   default_preview_sort: year desc, month desc
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -105,6 +128,28 @@ resources:
     datastore_type: month
     excel_column_width: 4
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
+
   datastore_primary_key: [year, month]
   datastore_indexes: ""
   excel_organization_style:
@@ -119,6 +164,9 @@ resources:
       patternType: solid
       fgColor: FFeeece1
   default_preview_sort: year desc, month desc
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:

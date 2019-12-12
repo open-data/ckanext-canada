@@ -19,6 +19,10 @@ Remove the markdown_extract call because our notes is a dict not a string:
 {% set page_title  = _('{record_title} - Open Data Portal - Open Data') %}
 {% block title %}{% set title, mt = h.get_translated_t(pkg, 'title') %}{{ title or pkg.name }} - {{ super() }}{% endblock %}
 
+{% block adobe_analytics_title %}
+      <meta property="dcterms:title" content="{% set title, mt = h.get_translated_t(pkg, 'title') %}{{ title or pkg.name }} - {{ g.site_title }}" />
+{% endblock %}
+
 {% block secondary_content %}
 
   {% block ds_socialmedia %} 

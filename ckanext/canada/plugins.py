@@ -167,7 +167,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'date_format',
             'parse_release_date_facet',
             'is_ready_to_publish',
-            'get_datapreview_recombinant'
+            'get_datapreview_recombinant',
+            'recombinant_description_to_markup',
             ])
         helperfunctions['wet_theme'] = self.wet_theme
         return helperfunctions
@@ -258,6 +259,7 @@ ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/experiment.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -352,6 +354,9 @@ ckanext.canada:schemas/info.yaml
             'url_for_wet',
             'wet_jquery_offline',
             'get_map_type'
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js'
             ])
         helperfunctions['wet_theme'] = self.wet_theme
         return helperfunctions

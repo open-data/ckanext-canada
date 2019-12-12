@@ -103,6 +103,8 @@ For the public server use only::
         canada_public canada_package scheming_datasets fluent
 
    canada.portal_url = http://myserver.com
+   
+   adobe_analytics.js = //path to the js file needed to trigger Adobe Analytics
 
 Both servers need::
 

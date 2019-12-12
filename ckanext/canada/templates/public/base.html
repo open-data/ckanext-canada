@@ -2,19 +2,40 @@
 
 {%- block links -%}
 {{super()}}
-<!-- Google Analytics -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', '{{ h.googleanalytics_id() }}', 'auto');
-if (location.hostname == 'localhost') {
-  ga('set', 'sendHitTask', null);
-}
-ga('send', 'pageview');
-</script>
-<!-- End Google Analytics -->
+{%- block meta -%}
+  {{ super() }}
+  {% block adobe_analytics_meta %}
+    {%- block adobe_analytics_title -%}
+    <meta property="dcterms:title" content="{{ g.site_title }}" />
+    {%- endblock -%}
+    <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
+    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat') }}"/>
+    <meta property="dcterms:service" content="OG-GO" />
+    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+  {%- endblock -%}
+{%- endblock -%}
+{%- block google_analytics -%}
+  <!-- Google Analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '{{ h.googleanalytics_id() }}', 'auto');
+  if (location.hostname == 'localhost') {
+    ga('set', 'sendHitTask', null);
+  }
+  ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+{%- endblock -%}
+
+{% block adobe_analytics %}
+{% if h.adobe_analytics_js() %}
+  <script src="{{ h.adobe_analytics_js() }}"></script>
+{% endif %}
+{%- endblock -%}
+
 {% set loop11_key = h.loop11_key() %}
 {% if loop11_key %}
   <script type="text/javascript">
