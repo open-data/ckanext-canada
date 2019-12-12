@@ -28,8 +28,7 @@ Plugins in this extension
 
 ``canada_public``
   base and public facing Open Canada templates (requires
-  ``canada_forms`` and ``wet_theme`` from
-  `ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_ )
+  ``canada_forms``)
 
 ``canada_internal``
   templates for internal site and registration (requires
@@ -95,14 +94,13 @@ OD Configuration: development.ini or production.ini
 The CKAN ini file needs the following settings for the registry server::
 
    ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public canada_package canada_activity wet_boew_theme_gc_intranet datastore recombinant
+        canada_public canada_package canada_activity datastore recombinant
         scheming_datasets fluent extendedactivity
 
 For the public server use only::
 
    ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_public canada_package wet_boew_gcweb
-        scheming_datasets fluent
+        canada_public canada_package scheming_datasets fluent
 
    canada.portal_url = http://myserver.com
    
@@ -123,6 +121,38 @@ Both servers need::
    googleanalytics.id = UA-1010101-1 (your analytics account id)
    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
    loop11.key = bca42f834d21755c050b437dcc881bcde963b08e
+
+
+OD Configuration: Adding WET Resource files
+-------------------------------------------
+For the use of the Portal or Registry sites, the installation of the WET-BOEW theme extension isn't required anymore, because the templates it provides are now included in the ``canada_public`` an ``canada_internal`` plugins. All what's needed is to add the resource files:
+  
+Externally hosted:
+   Set ``wet_boew.url`` (in your .ini file) to the root URL where the WET resources are hosted:
+   
+   *Example*::
+
+      wet_boew.url = http://domain.com/wet-boew/v4.0.31
+
+
+Internally Hosted:
+   1. Extract the WET 4.0.x core CDN and desired themes cdn package to a folder::
+   
+         export WET_VERSION=v4.0.31
+         export GCWEB_VERSION=v5.1
+         mkdir wet-boew && curl -L https://github.com/wet-boew/wet-boew-cdn/archive/$WET_VERSION.tar.gz | tar -zx --strip-components 1 - -directory=wet-boew
+         mkdir GCWeb && curl -L https://github.com/wet-boew/themes-cdn/archive/$GCWEB_VERSION-gcweb.tar.gz | tar -zx --strip-components 1 --directory=GCWeb
+   2. Set the ``extra_public_paths`` settings to that path where the files are extracted:
+   
+      *Example*::
+      
+         extra_public_paths = /home/user/wet-boew/v4.0.31
+ 
+Additional Configuration:
+   Set ``wet_theme.geo_map_type`` to indicate what style of `WET Geomap widget <http://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html>`_ to use. Set this to either 'static' or 'dynamic'::
+ 
+      wet_theme.geo_map_type = static
+
 
 
 OBD Configuration

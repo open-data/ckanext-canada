@@ -1,5 +1,22 @@
 {% ckan_extends %}
 
+{% block subtitle %}
+  {{ user.display_name }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ super.super() }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="wb-inv">{{ _('Datasets') }}</h2>
+
+  {% block package_list %}
+    {{ super() }}
+  {% endblock %}
+{% endblock %}
+
+
 {% import 'macros/canada_read.html' as cr %}
 
 {%- block other_info -%}

@@ -86,3 +86,33 @@ details.alert-error {
 .field--name-field-vote {
   display: none;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+    text-shadow: none;
+}
+
+#wb-sm li.dropdown-item a {
+    color: #284162;
+    text-align: left;
+    text-decoration: none;
+}
+
+#wb-sm .menu li.dropdown-item a:hover {
+    color: white;
+}
+
+#wb-sm .menu>li {
+    padding:0;
+}
+#wb-sm .menu>li>a {
+    display: block;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+}
+
+

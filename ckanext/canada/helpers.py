@@ -7,13 +7,21 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
+import ckan as ckan
 import jinja2
 
 import ckanapi
 
 from ckantoolkit import h
+import ckan.lib.helpers as hlp
+import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
+import webhelpers.html as html
+from webhelpers.html.tags import link_to
+import dateutil.parser
+import geomet.wkt as wkt
+import json as json
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -22,6 +30,13 @@ PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
+GRAVATAR_SHOW_OPTION = 'ckan.gravatar_show'
+GRAVATAR_SHOW_DEFAULT = True
+WET_URL = config.get('wet_boew.url', '')
+WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
+WET_JQUERY_OFFLINE_DEFAULT = False
+GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
+GEO_MAP_TYPE_DEFAULT = 'static'
 
 
 
@@ -337,6 +352,112 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
+
+
+def link_to_user(user, maxlength=0):
+    """ Return the HTML snippet that returns a link to a user.  """
+
+    # Do not link to pseudo accounts
+    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
+        return user
+    if not isinstance(user, model.User):
+        user_name = unicode(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+
+    if user:
+        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
+        displayname = user.display_name
+        if maxlength and len(user.display_name) > maxlength:
+            displayname = displayname[:maxlength] + '...'
+        return html.tags.link_to(displayname,
+                       h.url_for(controller='user', action='read', id=_name))
+
+def gravatar_show():
+    return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
+
+def get_datapreview(res_id):
+
+    #import pdb; pdb.set_trace()
+    dsq_results = ckan.logic.get_action('datastore_search')({}, {'resource_id': res_id, 'limit' : 100})
+    return h.snippet('package/wet_datatable.html', ds_fields=dsq_results['fields'], ds_records=dsq_results['records'])
+
+def iso_to_goctime(isodatestr):
+    dateobj = dateutil.parser.parse(isodatestr)
+    return dateobj.strftime('%Y-%m-%d')
+
+def geojson_to_wkt(gjson_str):
+    ## Ths GeoJSON string should look something like:
+    ##  u'{"type": "Polygon", "coordinates": [[[-54, 46], [-54, 47], [-52, 47], [-52, 46], [-54, 46]]]}']
+    ## Convert this JSON into an object, and load it into a Shapely object. The Shapely library can
+    ## then output the geometry in Well-Known-Text format
+
+    try:
+        gjson = json.loads(gjson_str)
+        try:
+            gjson = _add_extra_longitude_points(gjson)
+        except:
+            # this is bad, but all we're trying to do is improve
+            # certain shapes and if that fails showing the original
+            # is good enough
+            pass
+        shape = gjson
+    except ValueError:
+        return None # avoid 500 error on bad geojson in DB
+
+    wkt_str = wkt.dumps(shape)
+    return wkt_str
+
+
+def url_for_wet_theme(*args):
+    file = args[0] or ''
+    return h.url_for_wet(file, theme=True)
+
+def url_for_wet(*args, **kw):
+    file = args[0] or ''
+    theme = kw.get('theme', False)
+
+    if not WET_URL:
+        return h.url_for_static_or_external(
+            ('GCWeb' if theme else 'wet-boew') + file
+        )
+
+    return WET_URL + '/' + ('GCWeb' if theme else 'wet-boew') + file
+
+
+def wet_jquery_offline():
+    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+
+
+def get_map_type():
+    return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
+
+
+def _add_extra_longitude_points(gjson):
+    """
+    Assume that sides of a polygon with the same latitude should
+    be rendered as curves following that latitude instead of
+    straight lines on the final map projection
+    """
+    import math
+    fuzz = 0.00001
+    if gjson[u'type'] != u'Polygon':
+        return gjson
+    coords = gjson[u'coordinates'][0]
+    plng, plat = coords[0]
+    out = [[plng, plat]]
+    for lng, lat in coords[1:]:
+        if plat - fuzz < lat < plat + fuzz:
+            parts = int(abs(lng-plng))
+            if parts > 300:
+                # something wrong with the data, give up
+                return gjson
+            for i in range(parts)[1:]:
+                out.append([(i*lng + (parts-i)*plng)/parts, lat])
+        out.append([lng, lat])
+        plng, plat = lng, lat
+    return {u'coordinates': [out], u'type': u'Polygon'}
 
 
 def recombinant_description_to_markup(text):
