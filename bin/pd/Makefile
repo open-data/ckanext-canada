@@ -376,7 +376,7 @@ $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
 	$(fdir)/filter_grants.py < $< > $@
 
 $(workdir)/filtered/grants-nil.csv: $(workdir)/grants-nil.csv
-	cp $< $@
+	$(fdir)/filter_grants.py < $< > $@
 
 ###
 ###  Hospitality Expenses

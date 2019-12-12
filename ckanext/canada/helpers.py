@@ -7,6 +7,10 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
+<<<<<<< HEAD
+=======
+import ckan as ckan
+>>>>>>> update-wet-theme
 import jinja2
 
 import ckanapi
@@ -353,24 +357,6 @@ def linked_user(user, maxlength=0, avatar=20):
 h.linked_user = linked_user
 
 
-def recombinant_description_to_markup(text):
-    """
-    Return text as HTML escaped strings joined with '<br/>, links enabled'
-    """
-    # very lax, this is trusted text defined in a schema not user-provided
-    url_pattern = r'(https?:[^)\s"]{20,})'
-    markup = []
-    for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
-        if i % 2:
-            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
-        else:
-            markup.extend(jinja2.Markup('<br/>'.join(
-               jinja2.escape(t) for t in part.split('\n')
-            )))
-    # extra dict because language text expected and language text helper
-    # will cause plain markup to be escaped
-    return {'en': jinja2.Markup(''.join(markup))}
-
 def link_to_user(user, maxlength=0):
     """ Return the HTML snippet that returns a link to a user.  """
 
@@ -477,3 +463,21 @@ def _add_extra_longitude_points(gjson):
     return {u'coordinates': [out], u'type': u'Polygon'}
 
 
+
+def recombinant_description_to_markup(text):
+    """
+    Return text as HTML escaped strings joined with '<br/>, links enabled'
+    """
+    # very lax, this is trusted text defined in a schema not user-provided
+    url_pattern = r'(https?:[^)\s"]{20,})'
+    markup = []
+    for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
+        if i % 2:
+            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
+        else:
+            markup.extend(jinja2.Markup('<br/>'.join(
+               jinja2.escape(t) for t in part.split('\n')
+            )))
+    # extra dict because language text expected and language text helper
+    # will cause plain markup to be escaped
+    return {'en': jinja2.Markup(''.join(markup))}
