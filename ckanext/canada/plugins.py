@@ -56,8 +56,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             "ckan.user_list_limit": 4000
         })
 
-    def wet_theme(self):
-        return 'GCWeb'
 
     def before_map(self, map):
         map.connect(
@@ -161,7 +159,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         return map
 
     def get_helpers(self):
-        helperfunctions = dict((h, getattr(helpers, h)) for h in [
+        return dict((h, getattr(helpers, h)) for h in [
             'may_publish_datasets',
             'today',
             'date_format',
@@ -169,9 +167,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
-            ])
-        helperfunctions['wet_theme'] = self.wet_theme
-        return helperfunctions
+        ])
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
@@ -323,7 +319,7 @@ ckanext.canada:schemas/info.yaml
         return self.dataset_facets(facets_dict, package_type)
 
     def get_helpers(self):
-        helperfunctions =  dict((h, getattr(helpers, h)) for h in [
+        return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
             'openness_score',
             'remove_duplicates',
@@ -357,12 +353,8 @@ ckanext.canada:schemas/info.yaml
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
             'adobe_analytics_js'
-            ])
-        helperfunctions['wet_theme'] = self.wet_theme
-        return helperfunctions
+        ])
 
-    def wet_theme(self):
-        return 'GCWeb'
 
     def before_map(self, map):
         map.connect(
