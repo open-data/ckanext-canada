@@ -354,7 +354,6 @@ def linked_user(user, maxlength=0, avatar=20):
 h.linked_user = linked_user
 
 
-<<<<<<< HEAD
 def link_to_user(user, maxlength=0):
     """ Return the HTML snippet that returns a link to a user.  """
 
@@ -461,7 +460,6 @@ def _add_extra_longitude_points(gjson):
     return {u'coordinates': [out], u'type': u'Polygon'}
 
 
-=======
 def recombinant_description_to_markup(text):
     """
     Return text as HTML escaped strings joined with '<br/>, links enabled'
@@ -479,4 +477,3 @@ def recombinant_description_to_markup(text):
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': jinja2.Markup(''.join(markup))}
->>>>>>> master
