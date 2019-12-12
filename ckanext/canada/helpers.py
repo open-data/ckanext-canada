@@ -7,10 +7,7 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
-<<<<<<< HEAD
-=======
 import ckan as ckan
->>>>>>> update-wet-theme
 import jinja2
 
 import ckanapi
