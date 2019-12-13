@@ -1,0 +1,14 @@
+<link rel="stylesheet" type="text/css" href="{{ h.url_for_static('base/vendor/font-awesome/css/font-awesome.css') }}" />
+<!--[if ie 7]><link rel="stylesheet" type="text/css" href="{{ h.url_for_static('/fanstatic/vendor/:version:2015-09-01T11:37:20.20/font-awesome/css/font-awesome-ie7.css') }}" /><![endif]-->
+<!--[if gte IE 9 | !IE ]><!-->
+<link href="{{ h.url_for_wet_theme('/assets/favicon.ico') }}" rel="icon" type="image/x-icon" />
+<link rel="stylesheet" href="{{ h.url_for_wet_theme('/css/theme.min.css') }}" />
+<!--<![endif]-->
+<!--[if lt IE 9]>
+<link href="{{ h.url_for_wet_theme('/assets/favicon.ico') }}" rel="shortcut icon" />
+<link rel="stylesheet" href="{{ h.url_for_wet_theme('/css/ie8-theme.min.css') }}" />
+<script src="{% if h.wet_jquery_offline() == false %}http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js{% else %}{{ h.url_for_wet('/js/jquery/1.11.1/jquery.min.js') }}{% endif %}"></script>
+<script src="{{ h.url_for_wet('/js/ie8-wet-boew.min.js') }}"></script>
+<![endif]-->
+
+<noscript><link rel="stylesheet" href="{{ h.url_for_wet('/css/noscript.min.css') }}" /></noscript>

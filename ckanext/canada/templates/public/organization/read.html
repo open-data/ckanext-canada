@@ -5,3 +5,10 @@
 {% block organization_facets %}
   {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name} %}
 {% endblock %}
+
+{% block page_primary_action %}
+  {{ super() }}
+  {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
+    {% link_for _('Edit Organization'), controller='organization', action='edit', id=c.group_dict.id, class_='btn btn-default', icon='wrench' %}
+  {% endif %}
+{% endblock %}

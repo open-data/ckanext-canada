@@ -5,6 +5,7 @@ import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
@@ -22,6 +23,10 @@ from ckanext.canada import search_integration
 from ckanext.extendedactivity.plugins import IActivity
 
 import json
+
+import ckan.lib.formatters as formatters
+from webhelpers.html import literal
+from pylons.i18n import gettext
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -50,6 +55,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         config.update({
             "ckan.user_list_limit": 4000
         })
+
 
     def before_map(self, map):
         map.connect(
@@ -160,7 +166,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_recombinant',
-            ])
+            'recombinant_description_to_markup',
+        ])
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
@@ -202,6 +209,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'dashboard_activity_list',
             'changed_packages_activity_list_since',
             ]}
+
 
 
 @chained_action
@@ -248,6 +256,7 @@ ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/experiment.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -272,6 +281,12 @@ ckanext.canada:schemas/info.yaml
                 for folder, subs, files in os.walk(translations_dir):
                     for filename in files:
                         watch_file(os.path.join(folder, filename))
+
+        # monkey patch helpers.py pagination method
+        hlp.Page.pager = _wet_pager
+        hlp.SI_number_span = _SI_number_span_close
+
+        hlp.build_nav_main = build_nav_main
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -327,7 +342,20 @@ ckanext.canada:schemas/info.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
-            ])
+            'link_to_user',
+            'gravatar_show',
+            'get_datapreview',
+            'iso_to_goctime',
+            'geojson_to_wkt',
+            'url_for_wet_theme',
+            'url_for_wet',
+            'wet_jquery_offline',
+            'get_map_type',
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js'
+        ])
+
 
     def before_map(self, map):
         map.connect(
@@ -372,6 +400,8 @@ ckanext.canada:schemas/info.yaml
 
     def get_auth_functions(self):
         return {'inventory_votes_show': auth.inventory_votes_show}
+
+
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
@@ -708,3 +738,42 @@ ckanext.canada:schemas/doc.yaml
             controller='ckanext.canada.controller:CanadaController',
         )
         return map
+
+
+def _wet_pager(self, *args, **kwargs):
+    ## a custom pagination method, because CKAN doesn't expose the pagination to the templates,
+    ## and instead hardcodes the pagination html in helpers.py
+
+    kwargs.update(
+        format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
+        symbol_previous=gettext('Previous').decode('utf-8'), symbol_next=gettext('Next').decode('utf-8'),
+        curpage_attr={'class': 'active'}
+    )
+
+    return super(hlp.Page, self).pager(*args, **kwargs)
+
+def _SI_number_span_close(number):
+    ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
+    number = int(number)
+    if number < 1000:
+        output = literal('<span>')
+    else:
+        output = literal('<span title="' + formatters.localised_number(number) + '">')
+    return output + formatters.localised_SI_number(number) + literal('</span>')
+
+
+# Monkey Patched to inlude the 'list-group-item' class
+# TODO: Clean up and convert to proper HTML templates
+def build_nav_main(*args):
+    ''' build a set of menu items.
+
+    args: tuples of (menu type, title) eg ('login', _('Login'))
+    outputs <li><a href="...">title</a></li>
+    '''
+    output = ''
+    for item in args:
+        menu_item, title = item[:2]
+        if len(item) == 3 and not hlp.check_access(item[2]):
+            continue
+        output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
+    return output

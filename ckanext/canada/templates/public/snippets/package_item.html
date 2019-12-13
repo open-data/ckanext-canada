@@ -1,5 +1,8 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
+
+{% set client_lang = h.lang() %}
+
 {% block package_item %}
 <li>
   <article class="panel panel-default mrgn-bttm-sm relative">

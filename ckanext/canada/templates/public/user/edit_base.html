@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% set user = c.userobj %}
+
+{% block subtitle %}{{ _('My Profile') }}{% endblock %}
+
+{% block primary_content %}
+      {% block primary_content_inner %}{% endblock %}
+{% endblock %}

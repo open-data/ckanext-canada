@@ -1,0 +1,41 @@
+{% import 'macros/form.html' as form %}
+
+
+<form class="form" method="post" action="{{ action }}">
+  {{ form.errors(error_summary) }}
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ _('Change your details') }}</div>
+  <div class="panel-body">
+    {{ form.input('name', label=_('Username'), id='field-username', value=data.name, error=errors.name, classes=['control-medium'], attrs={'readonly': ''}) }}
+
+    {{ form.input('fullname', label=_('Full name'), id='field-fullname', value=data.fullname, error=errors.fullname, placeholder=_('eg. Joe Bloggs'), classes=['control-medium']) }}
+
+    {{ form.input('email', label=_('Email'), id='field-email', type='email', value=data.email, error=errors.email, placeholder=_('eg. joe@example.com'), classes=['control-medium']) }}
+
+    {{ form.markdown('about', label=_('About'), id='field-about', value=data.about, error=errors.about, placeholder=_('A little information about yourself')) }}
+
+    {% if c.show_email_notifications %}
+      {% call form.checkbox('activity_streams_email_notifications', label=_('Subscribe to notification emails'), id='field-activity-streams-email-notifications', value=True, checked=c.userobj.activity_streams_email_notifications) %}
+      {{ form.info(_("You will receive notification emails from {site_title}, e.g. when you have new activities on your dashboard.".format(site_title=g.site_title)), classes=['info-help-tight']) }}
+      {% endcall %}
+    {% endif %}
+    </div>
+    </div>
+
+    <div class="panel panel-default">
+    <div class="panel-heading">{{ _('Change your password') }}</div>
+    <div class="panel-body">
+    {% if not is_sysadmin %}
+    {{ form.input('old_password', type='password', label=_('Old Password'), id='field-password', value=data.oldpassword, error=errors.oldpassword, classes=['control-medium'], attrs={'autocomplete': 'off'} ) }}
+    {% endif %}
+
+    {{ form.input('password1', type='password', label=_('Password'), id='field-password', value=data.password1, error=errors.password1, classes=['control-medium'], attrs={'autocomplete': 'off'} ) }}
+
+    {{ form.input('password2', type='password', label=_('Confirm Password'), id='field-password-confirm', value=data.password2, error=errors.password2, classes=['control-medium'], attrs={'autocomplete': 'off'}) }}
+    </div>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit" name="save">{{ _('Update Profile') }}</button>
+  </div>
+</form>
+</div>
