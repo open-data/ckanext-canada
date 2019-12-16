@@ -17,66 +17,62 @@ lang_codes = ["en", "fr"]
 
 def get_filter_output():
     """
-    Create a consolidated list of choices for ministers
+    Create consolidated choices for ministries
     """
-    existing_list = {}
+    existing_choices = {}
 
-    # fetch existing list, if it exists
+    # fetch existing choices file, if it exists
     if os.path.isfile(OUTPUT_FILE):
         with open(OUTPUT_FILE) as json_file:
             try:
-                existing_list = json.load(json_file)
-            except ValueError as e:
+                existing_choices = json.load(json_file)
+            except ValueError:
                 return False
         json_file.close()
 
-    # generate a list of choices from external source
+    # generate choices from external source
     choices = download_xml_from_source()
 
-    # if existing list does not exist
-    if not existing_list and choices:
-        return set_status(choices)
-    # if crawled choices list does not exist
-    elif existing_list and not choices:
-        return set_status(existing_list)
-    # if both exist, compare both lists for changes
-    elif existing_list and choices:
-        for row in existing_list:
+    # if existing choices file does not exist
+    if not existing_choices and choices:
+        return choices
+    # if crawled choices do not exist
+    elif existing_choices and not choices:
+        return existing_choices
+    # if both exist, compare choices for changes
+    elif existing_choices and choices:
+        for row in existing_choices.keys():
             if row in choices:
-                # case: minister found in both lists
-                # update minister if existing list is different from choices list
-                if existing_list[row] != choices[row]:
-                    existing_list[row]['precedence'] = choices[row]['precedence']
-                    for langCode in lang_codes:
-                        existing_list[row][langCode] = choices[row][langCode]
-                        existing_list[row]['honorific_title_' + langCode] = choices[row]['honorific_title_' + langCode]
-                        # case: same minister with new position in choices, then append new position to existing list
-                        for position in choices[row]['positions_' + langCode]:
-                            if not [d for d in existing_list[row]['positions_' + langCode]
-                                    if d['title_' + langCode] == position['title_' + langCode]]:
-                                existing_list[row]['positions_' + langCode].append(position)
-                            else:
-                                # case: same minister with same position title but other details changed, then update
-                                idx = next((index for (index, d) in enumerate(existing_list[row]['positions_' + langCode]) if d['title_' + langCode] == position['title_' + langCode]), None)
-                                existing_list[row]['positions_' + langCode][idx].update(position)
-                        # case: same minister with existing position not in choices then update end date as today
-                        for position in existing_list[row]['positions_' + langCode]:
-                            if not [d for d in choices[row]['positions_' + langCode]
-                                    if d['title_' + langCode] == position['title_' + langCode]]:
-                                position['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                # make sure same position title for the position code
+                if existing_choices[row]['en'] == choices[row]['en']:
+                    # position found in both
+                    if existing_choices[row] != choices[row]:
+                        # case: same position with new minister in choices, then add new minister to existing position
+                        # and update end date as today for existing ministers
+                        for minister in existing_choices[row]['ministers']:
+                            if minister['name'] != choices[row]['ministers'][0]['name']:
+                                minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                        else:
+                            existing_choices[row]['ministers'].insert(0, choices[row]['ministers'][0])
             else:
-                # case: minister found in existing list but now in new list, update end date as today
-                for langCode in lang_codes:
-                    for position in existing_list[row]['positions_' + langCode]:
-                        position['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                # case: position found in existing choices but now in choices,
+                # update end date as today for all ministers
+                for minister in existing_choices[row]['ministers']:
+                    minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
 
         for row in choices:
-            if row not in existing_list:
-                # case: new minister in choices, add new minister to existing list
-                existing_list[row] = choices[row]
+            if not [d for d in existing_choices if existing_choices[d]['en'] == choices[row]['en']]:
+                # case: new position in choices, add new position to existing choices
+                # and resolve duplicate codes, if required
+                position_code = row
+                i = 0
+                while position_code in existing_choices:
+                    i += 1
+                    position_code = row + str(i)
+                existing_choices[position_code] = choices[row]
 
-        return set_status(existing_list)
-    # both lists do not exist
+        return existing_choices
+    # both choices and existing choices do not exist
     else:
         return False
 
@@ -94,72 +90,59 @@ def download_xml_from_source():
             url = 'https://www.ourcommons.ca/Parliamentarians/' + langCode + '/ministries/Export?output=XML'
             response = requests.get(url, stream=True)
             xml_tree[langCode] = etree.fromstring(response.content)
-
-            for row in xml_tree[langCode].xpath('Minister'):
-                # gather name and position
-                name = row.xpath('PersonOfficialFirstName/text()')[0] + ' ' + \
-                       row.xpath('PersonOfficialLastName/text()')[0]
-                position = {
-                    'title_' + langCode: row.xpath('Title/text()')[0],
-                    'start_date': row.xpath('FromDateTime/text()')[0],
-                    'end_date': ''.join(row.xpath('ToDateTime/text()'))
-                }
-                # if name already exist in json
-                if name in choices:
-                    # add translation
-                    if langCode not in choices[name]:
-                        choices[name].update([
-                            (langCode, row.xpath('PersonOfficialLastName/text()')[0] + ', '
-                             + row.xpath('PersonOfficialFirstName/text()')[0]
-                             + ' (' + row.xpath('PersonShortHonorific/text()')[0] + ')'),
-                            ('honorific_title_' + langCode, row.xpath('PersonShortHonorific/text()')[0]),
-                            ('positions_' + langCode, [position]),
-                            ])
-                    else:
-                        # append position
-                        choices[name]['positions_' + langCode].append(position)
-
-                # new name in json
-                else:
-                    choices[name] = {
-                        langCode: row.xpath('PersonOfficialLastName/text()')[0] + ', '
-                        + row.xpath('PersonOfficialFirstName/text()')[0]
-                        + ' (' + row.xpath('PersonShortHonorific/text()')[0] + ')',
-                        'honorific_title_' + langCode: row.xpath('PersonShortHonorific/text()')[0],
-                        'precedence': row.xpath('OrderOfPrecedence/text()')[0],
-                        'positions_' + langCode: [position],
-                    }
             response.close()
         except requests.exceptions.RequestException:
             return False
 
+    iter_fr = iter(xml_tree['fr'].xpath('Minister'))
+
+    for row_en in xml_tree['en'].xpath('Minister'):
+        row_fr = next(iter_fr)
+        # set name
+        name = row_en.xpath('PersonOfficialFirstName/text()')[0] + ' ' + \
+               row_en.xpath('PersonOfficialLastName/text()')[0]
+        # set position code with position initials
+        position_code = (''.join([x[0].upper() for x in row_en.xpath('Title/text()')[0].split(' ')]))
+        # set minister
+        minister = {
+            'name': name,
+            'name_en': row_en.xpath('PersonOfficialLastName/text()')[0] + ', '
+                       + row_en.xpath('PersonOfficialFirstName/text()')[0]
+                       + ' (' + row_en.xpath('PersonShortHonorific/text()')[0] + ')',
+            'name_fr': row_fr.xpath('PersonOfficialLastName/text()')[0] + ', '
+                       + row_fr.xpath('PersonOfficialFirstName/text()')[0]
+                       + ' (' + row_fr.xpath('PersonShortHonorific/text()')[0] + ')',
+            'start_date': row_en.xpath('FromDateTime/text()')[0],
+            'end_date': ''.join(row_en.xpath('ToDateTime/text()')),
+            'precedence': row_en.xpath('OrderOfPrecedence/text()')[0],
+        }
+
+        # resolve duplicate position codes
+        i = 0
+        while position_code in choices:
+            i += 1
+            position_code = position_code + str(i)
+
+        # add position to dict
+        choices[position_code] = {
+            'en': row_en.xpath('Title/text()')[0],
+            'fr': row_fr.xpath('Title/text()')[0],
+            'ministers': [minister],
+        }
+
     return choices
 
 
-def set_status(json_list):
-    """
-    Set status for list to determine if current vs former minister
-    """
-    status = 0
-    for row in json_list:
-        for position in json_list[row]['positions_en']:
-            if not position['end_date']:
-                status = 1
-                break
-        json_list[row]['status'] = status
-    return json_list
-
-
-# get list of choices and write to OUTPUT file as JSON
-minister_list = get_filter_output()
-if minister_list:
+# get choices and write to OUTPUT file as JSON
+minister_choices = get_filter_output()
+if minister_choices:
     open(OUTPUT_FILE, 'wb').write(json.dumps(
-        minister_list,
+        minister_choices,
         indent=2,
         separators=(',', ':'),
         sort_keys=True,
         ensure_ascii=False,
     ).encode('utf-8'))
-    sys.stderr.write('wrote %d items\n' % len(minister_list))
+    sys.stderr.write('wrote %d items\n' % len(minister_choices))
 else:
-    sys.stderr.write('Unable to create ministers list\n')
+    sys.stderr.write('Unable to create ministers choices\n')
