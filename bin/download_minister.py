@@ -28,7 +28,6 @@ def get_filter_output():
                 existing_choices = json.load(json_file)
             except ValueError:
                 return False
-        json_file.close()
 
     # generate choices from external source
     choices = download_xml_from_source()
