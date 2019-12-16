@@ -57,7 +57,6 @@ resources:
     description:
       en: It is a unique identifier given to each line item in the spreadsheet. Having a unique identifier for each item will allow users to locate a specific item should they need to modify or delete.
       fr: Un identificateur unique est attribué à chaque poste dans le gabarit de rapport.
-    obligation: Mandatory
     excel_required: true
     datastore_type: text
 
@@ -75,7 +74,7 @@ resources:
     description:
       en: This field should be populated with the contract number.  Alternatively, this field may be the commitment number or requisition number if this is the standard practice in the department.
       fr: Il est recommandé que le numéro d’identification d’approvisionnement corresponde au numéro de marché. Sinon, le numéro d’identification d’approvisionnement peut correspondre au numéro d’engagement ou au numéro de demande, s’il s’agit de la pratique courante au ministère.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -88,7 +87,7 @@ resources:
     description:
       en: This field should be populated with the legal name of the company, as indicated on the contract.  Alternatively, this field may be the name in the financial system if this is the standard practice in the department.
       fr: Il est recommandé que le nom du fournisseur corresponde à la dénomination sociale de l’entrepreneur, telle qu’elle est indiquée dans le marché. Sinon, le nom du fournisseur peut correspondre au nom dans le système financier, s’il s’agit de la pratique courante au ministère.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -105,7 +104,7 @@ resources:
       fr: |
         i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
         ii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
@@ -130,7 +129,7 @@ resources:
         iv. Dans le cas d’un marché assorti d’autorisations de tâches, on peut inscrire dans cette zone le nom de l’acheteur indiqué dans le marché initial ou dans l’autorisation de tâche individuelle.
         v. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
         vi. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
@@ -151,7 +150,6 @@ resources:
         Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme).
 
         S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
-    obligation: Mandatory
     excel_required: true
     datastore_type: date
     extract_date_year: true
@@ -173,7 +171,7 @@ iii. When a contract involves more than one economic object, it is recommended t
 ii. Dans le cas des offres à commandes et des arrangements en matière d’approvisionnements, on peut saisir dans cette zone la valeur « NA ».  Pour cette zone, la valeur « NA » signifie sans objet.
 
 iii. Quand un contrat porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut utiliser une démarche différente si elle correspond à sa pratique courante."
-    obligation: Mandatory for contracts after 2019-01-01
+    validation: Mandatory for contracts after 2019-01-01
     excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
@@ -194,7 +192,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
       fr: |
         Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -216,7 +214,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
       fr: |
         Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
-    obligation: Mandatory for contracts after 2019-01-01
+    validation:
+      en: Mandatory for contracts after 2019-01-01
+      fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -248,7 +248,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Pour un marché incluant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de début pour la toute la durée du marché.
 
         Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -286,7 +286,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de fin pour toute la durée du marché.
 
         Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, il est recommandé de saisir dans cette zone la date de fin de chaque autorisation de tâche.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -316,7 +316,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Pour un marché pluriannuel, il est recommandé de fournir le montant total du marché pour toutes les années. Pour la modification d’un marché, il est recommandé de saisir dans cette zone la valeur modifiée du marché.
 
         Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
-    obligation: Mandatory for contracts after 2019-01-01
+    validation: Mandatory for contracts after 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: money
     extract_double_sortable: true
@@ -358,7 +358,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Pour une option contractuelle, il est recommandé de l’exclure de l’élément de données « valeur d’origine du marché » et de la divulguer à une date ultérieure à titre de modification lorsqu’elle est exercée. Sinon, la valeur totale du marché, y compris les options, peut être divulguée à la date d’adjudication du marché.
 
         Dans le cas d’un marché comportant des autorisations de tâches, il est recommandé de déclarer dans cette zone la valeur d’origine du marché au lieu du montant précisé dans la clause de garantie des travaux minimum. La valeur totale potentielle du marché peut être divulguée dans l’élément de données « valeur d’origine du marché », à moins que l’on ne prévoie pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement devrait être de 0 $.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -390,7 +390,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Les modifications multiples à un marché apportées au cours du même trimestre de l’exercice financier peuvent être divulguées individuellement ou ensemble. Les modifications positives ou négatives de plus de 10 000 $ doivent être divulguées tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins doivent être déclarées une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être divulguées une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification devrait être divulguée tous les trois mois ou une fois par an. La divulgation d’une modification de façon trimestrielle et annuelle engendrerait un double dénombrement de la valeur de la modification lorsqu’il s’agit de calculer le total de l’activité contractuelle d’une organisation. Lorsqu’un marché a été conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être divulguées séparément. La signature du marché devrait être divulguée séparément, et la valeur au moment de la signature du marché devrait être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également divulguée dans une entrée distincte qui comprend la valeur de la modification dans la zone « valeur de modification », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ».
 
         Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, on peut déclarer la valeur des autorisations de tâches ultérieures dans la zone « valeur de modification ». Un « 0 » doit être saisi s’il n’y a pas de modification associée au marché.
-    obligation:
+    validation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
     excel_required_formula: '{instrument_type}="A"'
@@ -403,7 +403,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: For this field, standardized comments are recommended to be used (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts). Departments are encouraged to provide a brief description of each contract. When a contract involves an economic code specified in Appendix C of the Guidelines, departments are to provide a brief description of the contract so that the public may benefit from additional context.  For example, for a management consulting contract the comments could state ¨Feasibility study of a green building standard for departmental projects. Avoid the use of acronyms within the comments data element.
       fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
-    obligation: Optional
     excel_column_width: 40
     datastore_type: text
 
@@ -414,7 +413,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: For this field, standardized comments are recommended to be used (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts). Departments are encouraged to provide a brief description of each contract. When a contract involves an economic code specified in Appendix C of the Guidelines, departments are to provide a brief description of the contract so that the public may benefit from additional context.  For example, for a management consulting contract the comments could state ¨Feasibility study of a green building standard for departmental projects. Avoid the use of acronyms within the comments data element.
       fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
-    obligation: Optional
     excel_column_width: 40
     datastore_type: text
 
@@ -432,7 +430,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field may be populated with additional comments in English.
       fr: On peut saisir dans la zone « commentaires additionnels » en anglais tout commentaire additionnel.
-    obligation: Optional
     datastore_type: text
 
   - datastore_id: additional_comments_fr
@@ -449,7 +446,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field may be populated with additional comments in French.
       fr: On peut saisir dans la zone « commentaires additionnels » en français tout commentaire additionnel.
-    obligation: Optional
     datastore_type: text
 
   - datastore_id: agreement_type_code
