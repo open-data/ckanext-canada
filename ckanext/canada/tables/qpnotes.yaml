@@ -76,11 +76,11 @@ resources:
   # 3.4
   - datastore_id: minister
     label:
-      en: Name of Minister
-      fr: Nom du ministre
+      en: Title of Minister
+      fr: Titre du ministre
     description:
-      en: This field will display the name of the Minister for whom the Question Period Note was created.
-      fr: Ce champ affichera le nom du ministre pour qui la note pour la période de questions a été créée.
+      en: This field will display the title of the Minister for whom the Question Period Note was created.
+      fr: Ce champ affichera le titre du ministre pour qui la note pour la période de questions a été créée.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -89,7 +89,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: False
+    excel_full_text_choices: True
     choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
@@ -136,8 +136,8 @@ resources:
   # 3.7
   - datastore_id: date_received
     label:
-      en: Date Received
-      fr: Date fournie
+      en: Date Provided to the Minister's Office
+      fr: Date de fourniture au bureau du minister
     description:
       en: This field will display the date on which the Question Period Note was presented in the House of Commons.
       fr: Ce champ affichera la date à laquelle la note pour la période de questions a été fournie au ministre aux fins d’utilisation au cours d’une période de questions.
@@ -291,7 +291,7 @@ resources:
 
   default_preview_sort: reference_number
 
-  excel_example_height: 200
+  excel_example_height: 100
   excel_data_num_rows: 500
 
   triggers:
@@ -304,8 +304,6 @@ resources:
         errors := errors || required_error(NEW.title_en, 'title_en');
         errors := errors || required_error(NEW.title_fr, 'title_fr');
         errors := errors || required_error(NEW.minister, 'minister');
-        errors := errors || required_error(NEW.question_en, 'question_en');
-        errors := errors || required_error(NEW.question_fr, 'question_fr');
         errors := errors || required_error(NEW.date_received, 'date_received');
         errors := errors || required_error(NEW.background_en, 'background_en');
         errors := errors || required_error(NEW.background_fr, 'background_fr');
@@ -324,12 +322,12 @@ resources:
       reference_number: "DND-2019-QP-00001"
       title_en: "Bill C-58 (Access to Information Reform)"
       title_fr: "Projet de loi C-58 (réforme de l'accès à l'information)"
-      minister: "Scott Brison"
+      minister: "PM"
       question_en: "What is the Government doing to reform the Access to Information Act (Bill C-58)?"
       question_fr: "Que fait le gouvernement pour réformer la Loi sur l'accès à l'information (projet de loi C-58)?"
-      date_received: "2018-02-15"
-      background_en: "Government of Canada institutions subject to the Access to Information Act <linkto:http://laws-lois.justice.gc.ca/eng/acts/a-1/> (ATIA) are required to post summaries of processed ATI requests."
-      background_fr: "Les institutions du gouvernement du Canada visées par la Loi sur l’accès à l’information <linkto : http://laws-lois.justice.gc.ca/fra/lois/a-1/> (LAI) sont tenues de publier les sommaires des demandes d’accès à l’information qu’elles ont traitées."
+      date_received: "2019-11-25"
+      background_en: "Government of Canada institutions subject to the Access to Information Act http://laws-lois.justice.gc.ca/eng/acts/a-1/ (ATIA) are required to post summaries of processed ATI requests."
+      background_fr: "Les institutions du gouvernement du Canada visées par la Loi sur l’accès à l’information http://laws-lois.justice.gc.ca/fra/lois/a-1/ (LAI) sont tenues de publier les sommaires des demandes d’accès à l’information qu’elles ont traitées."
       response_en: "• Bill C-58 contains the first significant amendments to the Access to Information Act since it was introduced over three decades ago.
        \n• This Bill is the first phase of a two-step approach to update access to information. The targeted changes will be followed by a full review of the Act in Phase II, to begin within one year of royal assent.
        \n• The Government thanks the members of the Senate Committee on Legal and Constitutional Affairs for their careful review of Bill C-58."
