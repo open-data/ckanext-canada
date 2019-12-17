@@ -194,12 +194,13 @@ qpnotes: upload-qpnotes rebuild-qpnotes
 upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 	@echo Uploading Question Period Notes...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=ba1284e5-db5f-43e1-854f-2beb7fe8f04b upload@"$(workdir)/filtered/qpnotes.csv"
+	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv"
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
-	@echo Downloading ministers list for Question Period Notes...
-	@$(CURDIR)/../download_minister.py
+    # uncomment once we have whitelisting completed on server
+	# @echo Downloading ministers list for Question Period Notes...
+	# @$(CURDIR)/../download_minister.py
 	@echo Rebuilding Question Period Notes...
 	@$(ogc_search)/load_qp_to_solr.py "$(workdir)/filtered/qpnotes.csv"
 
