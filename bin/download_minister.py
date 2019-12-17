@@ -145,28 +145,32 @@ def download_xml_from_source():
                row_en.xpath('PersonOfficialLastName/text()')[0]
 
         # find position code in ministries dict
-        position_code = ministries_dict.keys()[ministries_dict.values().index(row_en.xpath('Title/text()')[0])]
+        position_code = ''
+        for key, value in ministries_dict.items():
+            if value == row_en.xpath('Title/text()')[0]:
+                position_code = key
 
-        # set minister
-        minister = {
-            'name': name,
-            'name_en': row_en.xpath('PersonOfficialLastName/text()')[0] + ', '
-                       + row_en.xpath('PersonOfficialFirstName/text()')[0]
-                       + ' (' + row_en.xpath('PersonShortHonorific/text()')[0] + ')',
-            'name_fr': row_fr.xpath('PersonOfficialLastName/text()')[0] + ', '
-                       + row_fr.xpath('PersonOfficialFirstName/text()')[0]
-                       + ' (' + row_fr.xpath('PersonShortHonorific/text()')[0] + ')',
-            'start_date': row_en.xpath('FromDateTime/text()')[0],
-            'end_date': ''.join(row_en.xpath('ToDateTime/text()')),
-            'precedence': row_en.xpath('OrderOfPrecedence/text()')[0],
-        }
+        if position_code:
+            # set minister
+            minister = {
+                'name': name,
+                'name_en': row_en.xpath('PersonOfficialLastName/text()')[0] + ', '
+                           + row_en.xpath('PersonOfficialFirstName/text()')[0]
+                           + ' (' + row_en.xpath('PersonShortHonorific/text()')[0] + ')',
+                'name_fr': row_fr.xpath('PersonOfficialLastName/text()')[0] + ', '
+                           + row_fr.xpath('PersonOfficialFirstName/text()')[0]
+                           + ' (' + row_fr.xpath('PersonShortHonorific/text()')[0] + ')',
+                'start_date': row_en.xpath('FromDateTime/text()')[0],
+                'end_date': ''.join(row_en.xpath('ToDateTime/text()')),
+                'precedence': row_en.xpath('OrderOfPrecedence/text()')[0],
+            }
 
-        # add position to dict
-        choices[position_code] = {
-            'en': row_en.xpath('Title/text()')[0],
-            'fr': row_fr.xpath('Title/text()')[0],
-            'ministers': [minister],
-        }
+            # add position to dict
+            choices[position_code] = {
+                'en': row_en.xpath('Title/text()')[0],
+                'fr': row_fr.xpath('Title/text()')[0],
+                'ministers': [minister],
+            }
 
     return choices
 
