@@ -151,3 +151,4 @@ if minister_choices:
     sys.stderr.write('wrote %d items\n' % len(minister_choices))
 else:
     sys.stderr.write('Unable to create ministers choices\n')
+    sys.exit(1)
