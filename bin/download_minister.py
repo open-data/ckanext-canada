@@ -15,54 +15,6 @@ OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
 lang_codes = ["en", "fr"]
 
 
-ministries_dict = {
-    "AGC": "Attorney General of Canada",
-    "AMF": "Associate Minister of Finance",
-    "AMND": "Associate Minister of National Defence",
-    "DPM": "Deputy Prime Minister",
-    "LHC": "Leader of the Government in the House of Commons",
-    "MWGE": "Minister for Women and Gender Equality",
-    "MAA": "Minister of Agriculture and Agri-Food",
-    "MCH": "Minister of Canadian Heritage",
-    "MCR": "Minister of Crown-Indigenous Relations",
-    "MDIY": "Minister of Diversity and Inclusion and Youth",
-    "MDG": "Minister of Digital Government",
-    "MECC": "Minister of Environment and Climate Change",
-    "MED": "Minister of Economic Development",
-    "MEWD": "Minister of Employment, Workforce Development and Disability Inclusion",
-    "MF": "Minister of Finance",
-    "MFA": "Minister of Foreign Affairs",
-    "MFCSD": "Minister of Families, Children and Social Development",
-    "MFOC": "Minister of Fisheries, Oceans and the Canadian Coast Guard",
-    "MH": "Minister of Health",
-    "MIA": "Minister of Intergovernmental Affairs",
-    "MIC": "Minister of Infrastructure and Communities",
-    "MID": "Minister of International Development",
-    "MIRC": "Minister of Immigration, Refugees and Citizenship",
-    "MIS": "Minister of Indigenous Services",
-    "MISI": "Minister of Innovation, Science and Industry",
-    "MIT": "Minister of International Trade",
-    "MJ": "Minister of Justice",
-    "ML": "Minister of Labour",
-    "MMCP": "Minister of Middle Class Prosperity",
-    "MNA": "Minister of Northern Affairs",
-    "MND": "Minister of National Defence",
-    "MNV": "Minister of National Revenue",
-    "MNR": "Minister of Natural Resources",
-    "MOL": "Minister of Official Languages",
-    "MPSE": "Minister of Public Safety and Emergency Preparedness",
-    "MPSP": "Minister of Public Services and Procurement",
-    "MRED": "Minister of Rural Economic Development",
-    "MS": "Minister of Seniors",
-    "MSBEP": "Minister of Small Business and Export Promotion",
-    "MT": "Minister of Transport",
-    "MVA": "Minister of Veterans Affairs",
-    "PM": "Prime Minister",
-    "PPC": "President of the Queen's Privy Council for Canada",
-    "PTB": "President of the Treasury Board",
-}
-
-
 def get_filter_output():
     """
     Create consolidated choices for ministries
@@ -110,7 +62,13 @@ def get_filter_output():
         for row in choices:
             if not [d for d in existing_choices if existing_choices[d]['en'] == choices[row]['en']]:
                 # case: new position in choices, add new position to existing choices
-                existing_choices[row] = choices[row]
+                # and resolve duplicate codes, if required
+                position_code = row
+                i = 0
+                while position_code in existing_choices:
+                    i += 1
+                    position_code = row + str(i)
+                existing_choices[position_code] = choices[row]
 
         return existing_choices
     # both choices and existing choices do not exist
@@ -139,13 +97,22 @@ def download_xml_from_source():
 
     for row_en in xml_tree['en'].xpath('Minister'):
         row_fr = next(iter_fr)
-
         # set name
         name = row_en.xpath('PersonOfficialFirstName/text()')[0] + ' ' + \
                row_en.xpath('PersonOfficialLastName/text()')[0]
 
-        # find position code in ministries dict
-        position_code = ministries_dict.keys()[ministries_dict.values().index(row_en.xpath('Title/text()')[0])]
+        # set position code with position initials
+        min_title = row_en.xpath('Title/text()')[0].split(' ')
+        position_code = ''
+        for initial in min_title:
+            if initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
+                position_code += initial[0].upper()
+
+        # resolve duplicate position codes
+        i = 0
+        while position_code in choices:
+            i += 1
+            position_code = position_code + str(i)
 
         # set minister
         minister = {
@@ -184,3 +151,4 @@ if minister_choices:
     sys.stderr.write('wrote %d items\n' % len(minister_choices))
 else:
     sys.stderr.write('Unable to create ministers choices\n')
+    sys.exit(1)
