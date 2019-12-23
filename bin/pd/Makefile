@@ -189,6 +189,7 @@ $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 ###
 .PHONY: download-ministers
 download-ministers:
+	@echo Downloading ministers list for Question Period Notes...
 	@$(registry_python) $(CURDIR)/../download_minister.py
 
 .PHONY: qpnotes
@@ -202,8 +203,6 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
-	@echo Downloading ministers list for Question Period Notes...
-	@$(CURDIR)/../download_minister.py
 	@echo Rebuilding Question Period Notes...
 	@$(ogc_search)/load_qp_to_solr.py "$(workdir)/filtered/qpnotes.csv"
 
