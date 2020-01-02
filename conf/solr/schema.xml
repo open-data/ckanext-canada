@@ -16,7 +16,7 @@
  limitations under the License.
 -->
 
-<schema name="ckan" version="2.3">
+<schema name="ckan" version="2.8">
 
 <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
@@ -96,6 +96,7 @@
     <field name="groups" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="capacity" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="permission_labels" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <field name="res_name" type="textgen" indexed="true" stored="true" multiValued="true" />
     <field name="res_description" type="textgen" indexed="true" stored="true" multiValued="true"/>

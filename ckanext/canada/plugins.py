@@ -171,7 +171,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
-        from ckanext.datastore import db
+        from ckanext.datastore.backend import postgres as db
         original_upsert_data = db.upsert_data
         def patched_upsert_data(context, data_dict):
             logic.datastore_create_temp_user_table(context)
