@@ -197,7 +197,6 @@ class CanadaController(BaseController):
 
         cols = [f['datastore_id'] for f in chromo['fields']]
         sort_str = cols[sort_by_num] + ' ' + sort_order
-        sort_str += ' NULLS LAST'
 
         response = lc.action.datastore_search(
             q=search_text,
