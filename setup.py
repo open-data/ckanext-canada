@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-version = '0.3.0'
+version = '0.4.0'
 
 setup(
     name='ckanext-canada',
@@ -11,7 +11,7 @@ setup(
     classifiers=[],
     keywords='',
     author='Government of Canada',
-    author_email='Michel.Gendron@statcan.gc.ca',
+    author_email='Ross.Thompson@tbs-sct.gc.ca',
     url='',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
@@ -46,5 +46,15 @@ setup(
 
     [ckan.rdf.profiles]
     canada_dcat=ckanext.canada.dcat:CanadaDCATProfile
+
+    [babel.extractors]
+    ckan = ckan.lib.extract:extract_ckan
     """,
+    message_extractors={
+        'ckanext': [
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates/**.html', 'ckan', None),
+        ],
+    }
 )
