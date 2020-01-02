@@ -4,7 +4,7 @@ import os
 import os.path
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.plugins import DefaultDatasetForm
+from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
@@ -222,7 +222,7 @@ disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
 
 
 
-class DataGCCAPublic(p.SingletonPlugin):
+class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     """
     Plugin for public-facing version of Open Government site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
@@ -233,6 +233,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
+    p.implements(p.ITranslation)
 
     def update_config(self, config):
         # add our templates
