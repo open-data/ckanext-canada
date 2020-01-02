@@ -156,7 +156,7 @@ def datastore_create_temp_user_table(context):
     Create a table to pass the current username and sysadmin
     state to our triggers for marking modified rows
     '''
-    from ckanext.datastore.helpers import literal_string
+    from ckanext.datastore.backend.postgres import literal_string
     connection = context['connection']
     username = context['user']
     connection.execute(u'''
