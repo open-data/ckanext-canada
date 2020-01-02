@@ -235,6 +235,9 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation)
 
+    def i18n_domain(self):
+        return 'ckanext-canada'
+
     def update_config(self, config):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
