@@ -406,10 +406,7 @@ def update_triggers():
                 -- PERFORM year_optional_month_day(NEW.date_released, 'date_released');
                 RETURN NEW;
             END;
-            '''.format(
-                language=pg_array(inventory_choices['language']),
-                eligible_for_release=pg_array(inventory_choices['eligible_for_release']),
-            )
+            ''',
         )
 
     lc.action.datastore_function_create(
@@ -474,9 +471,3 @@ def update_triggers():
                 END IF;
             END;
         ''')
-
-
-def pg_array(choices):
-    from ckanext.datastore.helpers import literal_string
-    return u'ARRAY[' + u','.join(
-        literal_string(unicode(c[0])) for c in choices) + u']'
