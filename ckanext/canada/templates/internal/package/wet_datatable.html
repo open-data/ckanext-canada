@@ -1,3 +1,4 @@
+{% set chromo = h.recombinant_get_chromo(resource_name) %}
 <section>
   <h2 id="prtable">{{_("Preview")}}</h2>
     <table id="dtprv" class="wb-tables table table-striped"
@@ -14,8 +15,12 @@
             ) }}",
           "type": "POST"
         },
+        "order": [[1, "asc"]],
         "columns": [
-          {% for f in h.recombinant_get_chromo(resource_name).fields %}
+          {% if chromo.edit_form %}
+            {"className": "bg-info", "orderable": false, "targets": "no-sort"},
+          {% endif %}
+          {% for f in chromo.fields %}
             {{- "null" if 'preview_class' not in f else
               '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
             {%- if not loop.last %},{% endif %}
@@ -24,6 +29,9 @@
       data-mode="columntoggle" >
     <thead>
       <tr class="font-small">
+        {% if chromo.edit_form %}
+          <th scope="col" data-priority="dtprv-999">{{ _('Edit') }}</th>
+        {% endif %}
         {% set magic_priority_no_field_should_be_below = 2 %}
         {% for field in ds_fields %}
           <th scope="col" data-priority="dtprv-{{
