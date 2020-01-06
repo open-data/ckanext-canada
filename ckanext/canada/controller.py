@@ -213,15 +213,21 @@ class CanadaController(BaseController):
         if chromo.get('edit_form', False):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
+            fids = [f['datastore_id'] for f in chromo['fields']]
+            pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             for row in aadata:
-                row[0] = u'<a href="{0}">{1}</a>'.format(
-                    h.url_for(
-                        controller='ckanext.canada.controller:PDUpdateController',
-                        action='update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=url_part_escape(row[0])),
-                    row[0])
+                row.insert(0, (
+                        u'<a href="{0}" aria-label"' + _("Edit") + '">'
+                        u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                        h.url_for(
+                            controller='ckanext.canada.controller:PDUpdateController',
+                            action='update_pd_record',
+                            owner_org=pkg['organization']['name'],
+                            resource_name=resource_name,
+                            pk=','.join(url_part_escape(row[i]) for i in pkids)
+                        )
+                    )
+                )
 
         return json.dumps({
             'draw': draw,

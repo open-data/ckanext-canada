@@ -62,10 +62,6 @@ Requirements
      * canada_internal
      * canada_public
      * canada_package
- * - WET-BOEW theme
-   - `open-data/ckanext-wet-boew <https://github.com/open-data/ckanext-wet-boew>`_
-   - master
-   - * wet_theme
  * - Scheming extension
    - `open-data/ckanext-scheming <https://github.com/open-data/ckanext-scheming>`_
    - master

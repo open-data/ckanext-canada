@@ -76,6 +76,7 @@ resources:
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.4 Agreement Type (Formerly “Type”- 3.16)
   - datastore_id: agreement_type
@@ -541,6 +542,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    form_snippet: scheming/form_snippets/date.html
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     extract_date_year: true
@@ -558,6 +560,7 @@ resources:
     obligation: Optional
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.29 Coverage (New Field)
   - datastore_id: coverage
