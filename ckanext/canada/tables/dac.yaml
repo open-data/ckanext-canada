@@ -13,6 +13,8 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Departmental Audit Committee
   resource_name: dac
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: reporting_period
@@ -23,6 +25,7 @@ resources:
       en: The current reporting period and fiscal year
       fr: La période de déclaration et l’exercice financier en cours.
     obligation: Mandatory
+    form_required: true
     datastore_type: text
     choices:
       2018-2019-Q1: 2018-2019-Q1
@@ -46,6 +49,7 @@ resources:
       en: The line number of the disclosure.
       fr: Le numéro de ligne de la divulgation.
     obligation: Mandatory
+    form_required: true
     datastore_type: int
 
   - datastore_id: member_name
@@ -57,9 +61,12 @@ resources:
       fr: Le nom complet du membre.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
+    form_attrs:
+      size: 60
 
   - datastore_id: province
     label:
@@ -77,6 +84,7 @@ resources:
       fr: La province ou le territoire de la résidence principale du membre au moment où la rémunération et/ou les frais ont été engagés.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
@@ -133,6 +141,7 @@ resources:
       fr: Le rôle du membre au moment où la rémunération et/ou les frais ont été engagés (c’est-à-dire, « C-P » est pour président(e) et « M-M » est pour membre).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
@@ -160,6 +169,7 @@ resources:
       fr: "Le nombre d’heures où le membre a rencontré le comité en personne ou par téléconférence au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Decimal
     validation: This field must not be empty
     datastore_type: numeric
@@ -180,6 +190,7 @@ resources:
       fr: "Le nombre d’heures que le membre a consacré à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Decimal
     validation: This field must not be empty
     datastore_type: numeric
@@ -193,6 +204,7 @@ resources:
       fr: Le montant total payé au membre pour le temps consacré aux réunions, à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration (c’est-à-dire, taux journalier ÷ 7,5 heures x nombre d’heures travaillées).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     datastore_type: money
 
   - datastore_id: travel_expenses
@@ -204,6 +216,7 @@ resources:
       fr: Les frais de voyage totaux engagés par le membre au cours de la période de déclaration, y compris le transport, les repas, faux frais, etc.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     datastore_type: money
 
   - datastore_id: notes_en
@@ -215,6 +228,9 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: notes_fr
     label:
@@ -225,6 +241,9 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
