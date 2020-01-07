@@ -224,4 +224,7 @@ the NLTK parsers, run the following python commands after activating the virtual
 
 If not integrating, these settings may be omitted or ``ckanext.canada.adv_search_enabled`` may be set to ``False``.
 
+Proactive Disclosure Data Flow
+------------------------------
 
+![data flow diagram](pd-data-flow.svg)
