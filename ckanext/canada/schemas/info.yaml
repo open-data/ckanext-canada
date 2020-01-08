@@ -30,6 +30,7 @@ dataset_fields:
     - parliament_report
     - parliament_committee
     - parliament_committee_deputy
+    - aia
   help_text:
     en: "The collection (domain specific) to which the metadata record belongs, Example: Publications"
     fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : Publication"
