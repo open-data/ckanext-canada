@@ -219,3 +219,40 @@ If not integrating, these settings may be omitted or `ckanext.canada.adv_search_
 ## Proactive Disclosure Data Flow
 
 ![data flow diagram](pd-data-flow.svg)
+
+1. ckanext-canada (this repository)
+   - [PD yaml files](ckanext/canada/tables) are read by ckanext-recombinant and used to
+     generate most of the pages, tables, triggers and metadata shown.
+   - [add+edit forms](ckanext/canada/templates/internal/recombinant) use form snippets
+     from ckanext-scheming and validation enforced by datastore triggers. They are
+     currently part of the ckanext-canada extension but should be moved into
+     ckanext-recombinant or another reusable extension once the trigger-validation
+     pattern becomes standardized
+   - [datatable preview](ckanext/canada/templates/internal/package/wet_datatable.html)
+     is part of ckanext-canada because this code predates the datatables view feature
+     that is now part of ckan. It should be removed from here so we can use the ckan
+     datatable view instead
+   - [filter scripts](bin/filter) cover all the business logic required to "clean" PD data
+     before it is released to the public. a [Makefile](bin/pd/Makefile) is used to
+     extract raw CSV data, make backups, run these filters and publish CSV data
+2. [ckanext-recombinant](https://github.com/open-data/ckanext-recombinant)
+   - XLSX data dictionary
+   - reference lists
+   - API docs
+   - schema json
+   - delete form
+   - XLSX template UL/DL
+   - combine command
+3. [ckan](https://github.com/ckan/ckan)
+   - datastore API
+   - datastore triggers
+   - datastore tables
+   - dataset metadata
+4. CSV files
+   - raw CSV data
+   - nightly backups
+   - published CSV data
+5. [deplane](https://github.com/open-data/deplane)
+   - data element profile
+6. [ogc_search](https://github.com/open-data/ogc_search)
+   - advanced search
