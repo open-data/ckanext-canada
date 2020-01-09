@@ -309,6 +309,7 @@ resources:
         errors := errors || required_error(NEW.background_fr, 'background_fr');
         errors := errors || required_error(NEW.response_en, 'response_en');
         errors := errors || required_error(NEW.response_fr, 'response_fr');
+        errors := errors || choice_error(NEW.minister, {minister}, 'minister');
 
         IF errors = '{{}}' THEN
           RETURN NEW;
