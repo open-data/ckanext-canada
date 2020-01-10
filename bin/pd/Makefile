@@ -98,7 +98,7 @@ $(shell mkdir -p $(workdir)/filtered)
 .DELETE_ON_ERROR:
 
 .PHONY: nightly
-nightly: dump-all filter-all backup-all upload-all download-ministers rebuild-all
+nightly: dump-all filter-all backup-all upload-all rebuild-all
 
 
 .PHONY: dump-all
@@ -190,11 +190,6 @@ $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 ###
 ###  Question Period Notes
 ###
-.PHONY: download-ministers
-download-ministers:
-	@echo Downloading ministers list for Question Period Notes...
-	@$(registry_python) $(CURDIR)/../download_minister.py
-
 .PHONY: qpnotes
 qpnotes: upload-qpnotes rebuild-qpnotes
 
