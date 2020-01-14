@@ -100,7 +100,10 @@ def add_to_search_index(data_dict_id, in_bulk=False):
                 resource_title_fr.append(resource_name['fr'].strip())
             elif 'fr-t-en' in resource_name:
                 resource_title_fr.append(resource_name['fr-t-en'].strip())
-
+        display_options = []
+        if 'display_flags' in data_dict:
+            for d in data_dict['display_flags']:
+                display_options.append(d)
         notes_translated = json.loads(data_dict['notes_translated']) if \
             isinstance(data_dict['notes_translated'], str) else data_dict['notes_translated']
         title_translated = json.loads(data_dict['title_translated']) if \
@@ -138,6 +141,7 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'last_modified_tdt': parser.parse(data_dict['metadata_modified']).replace(microsecond=0).isoformat() + 'Z',
             'ogp_link_en_s': '{0}{1}'.format(od_search_od_url_en, data_dict['name']),
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
+            'display_options_s': display_options
         }
 
         if 'en' in notes_translated:
