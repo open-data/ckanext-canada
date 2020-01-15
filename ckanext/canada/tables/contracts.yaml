@@ -1656,10 +1656,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         crval := choices_clean_error(NEW.trade_agreement, {trade_agreement}, 'trade_agreement');
         errors := errors || crval.error;
         NEW.trade_agreement = crval.clean;
-        IF 'XX' = ANY NEW.trade_agreement AND NEW.trade_agreement <> '{XX}' THEN
+        IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can entered in this field.']];
         END IF;
-        IF 'XX' = ANY NEW.trade_agreement AND (
+        IF 'XX' = ANY(NEW.trade_agreement) AND (
             NEW.land_claims <> 'NA' OR
             NEW.aboriginal_business <> 'NA' OR
             NEW.aboriginal_business_incidental <> 'N' ) THEN
@@ -1688,12 +1688,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         crval := choices_clean_error(NEW.land_claims, {land_claims}, 'land_claims');
         errors := errors || crval.error;
         NEW.land_claims = crval.clean;
-        IF 'NA' = ANY NEW.land_claims AND NEW.land_claims <> '{NA}' THEN
+        IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can entered in this field.']];
         END IF;
-        IF NEW.land_claims <> '{}' AND (
+        IF NEW.land_claims <> '{{}}' AND (
             ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{XX}')) THEN
+            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
           errors := errors || ARRAY[['land_claims', 'This field must be blank if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
@@ -1727,14 +1727,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2020-01-01'::date THEN
           crval := choices_clean_error(NEW.limited_tendering_reason,
             array(SELECT c FROM(SELECT unnest({limited_tendering_reason}) as c) u
-              WHERE NOT c = ANY '{24,25,85,86,87,90}'),
+              WHERE NOT c = ANY('{{24,25,85,86,87,90}}')),
             'limited_tendering_reason');
         ELSE
           crval := choices_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
         END IF;
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
-        IF '00' = ANY NEW.limited_tendering_reason AND NEW.limited_tendering_reason <> '{00}' THEN
+        IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
 
