@@ -134,6 +134,7 @@ resources:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
 
   - datastore_id: contract_date
@@ -1623,10 +1624,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
+          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
+            errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
+          END IF;
         END IF;
 
         IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
-          errors := errors || ARRAY[['economic_object_code', 'Instrument Type must be SO/SA']];
+          errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1652,6 +1656,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         crval := choices_clean_error(NEW.trade_agreement, {trade_agreement}, 'trade_agreement');
         errors := errors || crval.error;
         NEW.trade_agreement = crval.clean;
+        IF 'XX' = ANY NEW.trade_agreement AND NEW.trade_agreement <> '{XX}' THEN
+          errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can entered in this field.']];
+        END IF;
+        IF 'XX' = ANY NEW.trade_agreement AND (
+            NEW.land_claims <> 'NA' OR
+            NEW.aboriginal_business <> 'NA' OR
+            NEW.aboriginal_business_incidental <> 'N' ) THEN
+          errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, Procurement Strategy for Aboriginal Business Incidental Indicator']];
+        END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
@@ -1675,6 +1688,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         crval := choices_clean_error(NEW.land_claims, {land_claims}, 'land_claims');
         errors := errors || crval.error;
         NEW.land_claims = crval.clean;
+        IF 'NA' = ANY NEW.land_claims AND NEW.land_claims <> '{NA}' THEN
+          errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can entered in this field.']];
+        END IF;
+        IF NEW.land_claims <> '{}' AND (
+            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
+            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{XX}')) THEN
+          errors := errors || ARRAY[['land_claims', 'This field must be blank if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+        END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.commodity_type, 'commodity_type');
@@ -1705,14 +1726,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         END IF;
         IF NEW.contract_date >= '2020-01-01'::date THEN
           crval := choices_clean_error(NEW.limited_tendering_reason,
-            array_remove(array_remove(array_remove(array_remove(array_remove(array_remove(
-            {limited_tendering_reason}, '24'), '25'), '85'), '86'), '87'), '90'),
+            array(SELECT c FROM(SELECT unnest({limited_tendering_reason}) as c) u
+              WHERE NOT c = ANY '{24,25,85,86,87,90}'),
             'limited_tendering_reason');
         ELSE
           crval := choices_clean_error(NEW.limited_tendering_reason, {limited_tendering_reason}, 'limited_tendering_reason');
         END IF;
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
+        IF '00' = ANY NEW.limited_tendering_reason AND NEW.limited_tendering_reason <> '{00}' THEN
+          errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+        END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
           -- zero-pad numbers to match controlled list

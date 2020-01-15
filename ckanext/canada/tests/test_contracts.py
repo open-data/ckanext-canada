@@ -68,7 +68,7 @@ class TestContracts(FunctionalTestBase):
             agreement_type_code='Z',
             land_claims=None,
             aboriginal_business='',
-            )
+        )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -86,3 +86,40 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+    def test_inter_field_errors(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            instrument_type='A',
+            buyer_name='Smith',
+            economic_object_code='NA',
+            trade_agreement=['XX', 'NA'],
+            land_claims=['JA', 'NA'],
+        )
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'buyer_name': [
+                'This field must be populated with an NA '
+                'if an amendment is disclosed under Instrument Type'],
+            'economic_object_code': [
+                'If N/A, then Instrument Type must be identified '
+                'as a standing offer/supply arrangement (SOSA)'],
+            'trade_agreement': [
+                'If the value XX (none) is entered, then no other value '
+                'can entered in this field.',
+                'If N/A, then Instrument Type must be identified as a '
+                'standing offer/supply arrangement (SOSA)'],
+            'land_claims': [
+                'If the value NA (not applicable) is entered, then no ',
+                'other value can entered in this field.',
+                'This field must be blank if the Agreement Type or '
+                'Trade Agreement field is not 0 (none) or XX (none), as '
+                'applicable.'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
