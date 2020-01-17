@@ -90,11 +90,12 @@ class TestContracts(FunctionalTestBase):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
+            contract_date='2022-01-01',
             instrument_type='A',
             buyer_name='Smith',
             economic_object_code='NA',
             trade_agreement=['XX', 'NA'],
-            land_claims=['JA', 'NA'],
+            land_claims=['JN', 'NA'],
         )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
@@ -111,14 +112,17 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement': [
                 'If the value XX (none) is entered, then no other value '
                 'can entered in this field.',
-                'If N/A, then Instrument Type must be identified as a '
-                'standing offer/supply arrangement (SOSA)'],
+                'If the value XX (none) is entered here, then the following '
+                'three fields must be identified as NA or N, as applicable: '
+                'Comprehensive Land Claim Agreement, Procurement Strategy '
+                'for Aboriginal Business, Procurement Strategy for '
+                'Aboriginal Business Incidental Indicator'],
             'land_claims': [
-                'If the value NA (not applicable) is entered, then no ',
-                'other value can entered in this field.',
-                'This field must be blank if the Agreement Type or '
-                'Trade Agreement field is not 0 (none) or XX (none), as '
-                'applicable.'],
+                'If the value NA (not applicable) is entered, then no other '
+                'value can entered in this field.',
+                'This field must be NA (not applicable) if the Agreement '
+                'Type or Trade Agreement field is not 0 (none) or XX (none), '
+                'as applicable.'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):

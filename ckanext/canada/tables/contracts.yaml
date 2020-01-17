@@ -1660,7 +1660,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can entered in this field.']];
         END IF;
         IF 'XX' = ANY(NEW.trade_agreement) AND (
-            NEW.land_claims <> 'NA' OR
+            NEW.land_claims <> '{{NA}}' OR
             NEW.aboriginal_business <> 'NA' OR
             NEW.aboriginal_business_incidental <> 'N' ) THEN
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, Procurement Strategy for Aboriginal Business Incidental Indicator']];
@@ -1691,10 +1691,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can entered in this field.']];
         END IF;
-        IF NEW.land_claims <> '{{}}' AND (
+        IF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND (
             ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
             (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['land_claims', 'This field must be blank if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+          errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
