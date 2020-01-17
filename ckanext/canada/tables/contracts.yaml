@@ -100,7 +100,7 @@ resources:
       fr: Code postal du fournisseur
     description:
       en: |
-        i. This field should be populated with the first 3 digits of the postal code for the vendor identified in the contract. Alternatively, the vendor postal code may be the postal code identified in the financial system if this is the standard practice in the department.
+        i. This field should be populated with the first 3 digits of the postal code for the vendor identified in the contract.
         ii. This field is to be populated with “NA” if the vendor is located outside of Canada.
       fr: |
         i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
@@ -1623,6 +1623,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
+        END IF;
+        IF NEW.vendor_postal_code <> 'NA' AND NEW.vendor_postal_code !~ '^[A-Z][0-9][A-Z]$' THEN
+          errors := errors || ARRAY[['vendor_postal_code', 'This field must contain the first three digits of a postal code in A1A format or the value “NA”']];
+        END IF;
+
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
           IF trim(both E'\t\n\x0b\x0c\r ' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
             errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
@@ -1742,6 +1748,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           -- zero-pad numbers to match controlled list
           NEW.trade_agreement_exceptions = ARRAY['0' || array_to_string(NEW.trade_agreement_exceptions,'','')];
         END IF;
+        IF '00' = ANY(NEW.trade_agreement_exceptions) AND NEW.trade_agreement_exceptions <> '{{00}}' THEN
+          errors := errors || ARRAY[['trade_agreement_exceptions', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+        END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
@@ -1754,12 +1763,27 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
+        IF NEW.aboriginal_business IS NOT NULL AND NEW.aboriginal_business <> 'NA' AND (
+            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
+            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
+          errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+        END IF;
 
         NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
           errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
         END IF;
+        IF NEW.aboriginal_business_incidental IS NOT NULL AND NEW.aboriginal_business_incidental <> 'N' AND (
+            NEW.aboriginal_business = 'MS' OR NEW.aboriginal_business = 'VS') THEN
+          errors := errors || ARRAY[['aboriginal_business', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
+        END IF;
+        IF NEW.aboriginal_business_incidental IS NOT NULL AND NEW.aboriginal_business_incidental <> 'N' AND (
+            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
+            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
+          errors := errors || ARRAY[['aboriginal_business', 'This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+        END IF;
+
         IF NEW.contract_date >= '2020-01-01'::date THEN
           errors := errors || choice_error(NEW.intellectual_property,
               array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
