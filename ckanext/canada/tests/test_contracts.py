@@ -159,3 +159,21 @@ class TestContracts(FunctionalTestBase):
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_postal_code(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            vendor_postal_code='1A1')
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'vendor_postal_code': [
+                'This field must contain the first three digits of a postal code '
+                'in A1A format or the value "NA"'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
