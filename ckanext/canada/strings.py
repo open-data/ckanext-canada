@@ -17,8 +17,10 @@ _("This field must be N, No or Non, if the Agreement Type or Trade Agreement fie
   "(none), as applicable.")
 _("This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.")
 _("This field may only be populated with a 1 if the solicitation procedure is identified as "
-  "non-competitive (TN) or Advance Contract Award Notice (ACAN)")
+  "non-competitive (TN) or Advance Contract Award Notice (AC)")
 _("This field may only be populated with a 0 if a Call-up against a standing offer or supply arrangement "
   "was identified in the Contracting Entity data field")
 _('This field may only be populated with "0" if the procurement was identified as non-competitive (TN) or '
-  "advance contract award notice (ACAN).")
+  "advance contract award notice (AC).")
+_("This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive "
+  "or Advance Contract Award Notice.")

@@ -1466,7 +1466,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: int
     # This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
     # This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
-    excel_error_formula: ' OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="ACAN"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
+    excel_error_formula: ' OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
 
   - datastore_id: article_6_exceptions
     label:
@@ -1832,8 +1832,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           'ministers_office');
 
         IF NEW.number_of_bids = 1 THEN
-          IF NOT (NEW.solicitation_procedure = ANY('{{TN,ACAN}}')) THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN)']];
+          IF NOT (NEW.solicitation_procedure = ANY('{{TN,AC}}')) THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC)']];
           END IF;
         ELSIF NEW.number_of_bids = 0 THEN
           IF NOT (NEW.contracting_entity = ANY('{{PWSOSA,SSCSOSA}}')) THEN
