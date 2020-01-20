@@ -1841,8 +1841,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           END IF;
         END IF;
 
-        IF NEW.award_criteria = '0' AND NOT(NEW.solicitation_procedure = ANY('{{TN,ACAN}}')) THEN
-          errors := errors || ARRAY[['award_criteria', 'This field may only be populated with "0" if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).']];
+        IF NEW.award_criteria = '0' AND NOT(NEW.solicitation_procedure = ANY('{{TN,AC}}')) THEN
+          errors := errors || ARRAY[['award_criteria', 'This field may only be populated with "0" if the procurement was identified as non-competitive (TN) or advance contract award notice (AC).']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
