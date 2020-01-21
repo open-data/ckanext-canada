@@ -154,7 +154,7 @@ class TestContracts(FunctionalTestBase):
             'award_criteria': [
                 'This field may only be populated with "0" if the procurement '
                 'was identified as non-competitive (TN) or advance contract '
-                'award notice (ACAN).'],
+                'award notice (AC).'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
