@@ -232,3 +232,15 @@ Remove the markdown_extract call because our notes is a dict not a string:
   {% endfor %}
 
 {% endblock %}
+
+
+{% block package_groups %}
+  {% if pkg.groups %}
+    <p>
+      <div class="module-related">
+        {{ self.package_groups_title() }}
+        {{ self.package_groups_nav() }}
+      </div>
+    </p>
+  {% endif %}
+{% endblock %}
