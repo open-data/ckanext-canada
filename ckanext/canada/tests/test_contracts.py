@@ -177,3 +177,25 @@ class TestContracts(FunctionalTestBase):
         }
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_goods_start_date(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            contract_date='2020-01-01',
+            commodity_type='G',
+            contract_period_start='2020-01-01')
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'contract_period_start': [
+                'Commodity Type of G for Goods which requires a Delivery Date and '
+                'not a Contract Period Start Date. Please either change the '
+                'Commodity Type to S or remove the date from the Contract Period '
+                'Start Date field'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))

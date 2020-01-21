@@ -5,7 +5,7 @@ title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
 template_version: 3
-template_updated: 2019-TBD
+template_updated: 2020-TBD
 
 portal_type: info
 collection: pd
@@ -106,9 +106,14 @@ resources:
         i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
         ii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
     validation:
-      en: Mandatory for contracts after 2022-01-01
-      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+      en: |
+        Mandatory for contracts after 2022-01-01
+        This field must contain the first three digits of a postal code in A1A format or the value “NA”
+      fr: |
+        Obligatoire pour les marchés conclus après le 2022-01-01
+        Ce champ doit contenir les trois premiers chiffres d’un code postal dans le format A1A ou la valeur « NA »
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'AND({cell}<>"NA",OR(CODE(LEFT({cell}&" ",1))<65,CODE(LEFT({cell}&" ",1))>90,NOT(ISNUMBER(MID({cell}&"  ",2,1))),CODE(MID({cell}&"   ",3,1))<65,CODE(MID({cell}&"   ",3,1))>90))'
     datastore_type: text
 
   - datastore_id: buyer_name
@@ -131,8 +136,12 @@ resources:
         v. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
         vi. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
     validation:
-      en: Mandatory for contracts after 2022-01-01
-      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+      en: |
+        Mandatory for contracts after 2022-01-01
+        This field must be populated with an NA if an amendment is disclosed under Instrument Type.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2022-01-01
+        Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
@@ -173,7 +182,13 @@ iii. When a contract involves more than one economic object, it is recommended t
 ii. Dans le cas des offres à commandes et des arrangements en matière d’approvisionnements, on peut saisir dans cette zone la valeur « NA ».  Pour cette zone, la valeur « NA » signifie sans objet.
 
 iii. Quand un contrat porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut utiliser une démarche différente si elle correspond à sa pratique courante."
-    validation: Mandatory for contracts after 2019-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2019-01-01
+        If NA, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA).
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+        Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
     excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
@@ -251,9 +266,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
     validation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+      en: |
+        Mandatory for contracts after 2019-01-01
+        If Commodity Type is a Service (S) or Construction (C) this field must not be empty and must be a valid date. 
+        Non-empty cell for Goods (Commodity Type = G) contracts: Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field.
+
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+        Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.  
+        Cellule non-vide pour les marché de biens (Type de produit = G) : Type de produit G pour les biens, ce qui requière une Date de livraison et non une Date de début du marché. Prière de changer le Type de produit pour S ou de retirer la date du champ Date de début du marché.
+    excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{commodity_type}<>"G")'
+    excel_error_formula: 'AND({commodity_type}="G",NOT(ISBLANK({cell})))'
     datastore_type: date
 
   - datastore_id: delivery_date
@@ -1643,9 +1666,16 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.economic_object_code, 'economic_object_code');
           errors := errors || required_error(NEW.description_en, 'description_en');
           errors := errors || required_error(NEW.description_fr, 'description_fr');
-          errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
           errors := errors || required_error(NEW.delivery_date, 'delivery_date');
           errors := errors || required_error(NEW.contract_value, 'contract_value');
+        END IF;
+
+        IF NEW.contract_date >= '2019-01-01' THEN
+          IF NEW.commodity_type <> 'G' THEN
+            errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
+          ELSIF NEW.contract_period_start IS NOT NULL THEN
+            errors := errors || ARRAY[['contract_period_start', 'Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field']];
+          END IF;
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.instrument_type = 'A' THEN

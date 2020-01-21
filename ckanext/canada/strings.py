@@ -24,3 +24,6 @@ _('This field may only be populated with "0" if the procurement was identified a
   "advance contract award notice (AC).")
 _("This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive "
   "or Advance Contract Award Notice.")
+_("Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. "
+  "Please either change the Commodity Type to S or remove the date from the Contract Period Start Date "
+  "field")
