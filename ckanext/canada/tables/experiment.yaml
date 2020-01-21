@@ -329,8 +329,8 @@ resources:
       - datastore_id: mesure_des_resultats_fr
         datastore_type: text
         description:
-          en: "This field will describe the intervention tested in the project."
-          fr: "Ce champ décrira l’intervention testée dans le projet."
+          en: "This field will describe the outcomes measured in the project."
+          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
@@ -348,8 +348,8 @@ resources:
       - datastore_id: resultats_en
         datastore_type: text
         description:
-          en: "This field will describe the findings of the project."
-          fr: "Ce champ décrira les résultats observés dans le projet."
+          en: "This field will describe the outcomes measured in the project."
+          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
