@@ -189,6 +189,7 @@ class CanadaController(BaseController):
                       )
 
         chromo = h.recombinant_get_chromo(resource_name)
+
         lc = LocalCKAN(username=c.user)
         unfiltered_response = lc.action.datastore_search(
             resource_id=resource_id,
@@ -229,6 +230,9 @@ class CanadaController(BaseController):
                         )
                     )
                 )
+        # Add empty column for checkboxes #
+        for row in aadata:
+            row.insert(0,u'')
 
         return json.dumps({
             'draw': draw,

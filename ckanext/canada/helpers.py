@@ -242,7 +242,7 @@ def is_ready_to_publish(package):
     else:
         return False
 
-def get_datapreview_recombinant(resource_name, res_id):
+def get_datapreview_recombinant(resource_name, resource_id, owner_org):
     from ckanext.recombinant.tables import get_chromo
     chromo = get_chromo(resource_name)
     default_preview_args = {}
@@ -265,7 +265,8 @@ def get_datapreview_recombinant(resource_name, res_id):
 
     return h.snippet('package/wet_datatable.html',
         resource_name=resource_name,
-        resource_id=res_id,
+        resource_id=resource_id,
+        owner_org=owner_org,
         ds_fields=fields)
 
 def fgp_url():
