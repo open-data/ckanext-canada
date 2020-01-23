@@ -134,6 +134,24 @@ resources:
     datastore_type: text
     excel_column_width: 40
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   excel_organization_style:
@@ -147,14 +165,21 @@ resources:
       patternType: solid
       fgColor: FFe2dfa2
 
+  triggers:
+  - update_record_modified_created_trigger
+
   examples:
     record:
       ref_number: "1980198"
       file_id_number: "15677"
       file_id_date: "2016-01-01"
-      findings_conclusion: b
+      case_description_en: 'Description'
+      case_description_fr: 'Description'
+      findings_conclusions: [b]
+      recommendations_corrective_measures_en: 'Recommendations and Corrective Measures'
+      recommendations_corrective_measures_fr: 'Recommandations et mesures correctives'
     filters:
-      findings_conclusion: a
+      findings_conclusions: b
     filter_one:
       ref_number: "1980198"
     sort: file_id_date desc
