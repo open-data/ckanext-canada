@@ -619,7 +619,7 @@ $(workdir)/wrongdoing.csv:
 	$(paster) $(combine) wrongdoing -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
-	cp $< $@
+	$(fdir)/filter_wrongdoing.py < $< > $@
 
 
 endif
