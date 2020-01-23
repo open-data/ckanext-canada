@@ -139,9 +139,11 @@ ati: upload-ati rebuild-ati
 upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@echo Uploading ATI Summaries...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati.csv"
+	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati.csv" \
+	> /dev/null
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=5a1386a5-ba69-4725-8338-2f26004d7382 upload@"$(workdir)/filtered/ati-nil.csv"
+	id=5a1386a5-ba69-4725-8338-2f26004d7382 upload@"$(workdir)/filtered/ati-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-ati
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
@@ -171,7 +173,8 @@ briefingt: upload-briefingt rebuild-briefingt
 upload-briefingt: $(workdir)/filtered/briefingt.csv
 	@echo Uploading Briefing Note Titles...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv"
+	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
+	> /dev/null
 
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv
@@ -194,12 +197,11 @@ qpnotes: upload-qpnotes rebuild-qpnotes
 upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 	@echo Uploading Question Period Notes...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv"
+	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
+	> /dev/null
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
-	@echo Downloading ministers list for Question Period Notes...
-	@$(CURDIR)/../download_minister.py
 	@echo Rebuilding Question Period Notes...
 	@$(ogc_search)/load_qp_to_solr.py "$(workdir)/filtered/qpnotes.csv"
 
@@ -219,9 +221,11 @@ contracts: upload-contracts rebuild-contracts
 upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@echo Uploading Contracts Quarterly...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=fac950c0-00d5-4ec1-a4d3-9cbebf98a305 upload@"$(workdir)/filtered/contracts.csv"
+	id=fac950c0-00d5-4ec1-a4d3-9cbebf98a305 upload@"$(workdir)/filtered/contracts.csv" \
+	> /dev/null
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=fa4ff6c4-e9af-4491-9d4e-2b468e415a68 upload@"$(workdir)/filtered/contracts-nil.csv"
+	id=fa4ff6c4-e9af-4491-9d4e-2b468e415a68 upload@"$(workdir)/filtered/contracts-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
@@ -251,7 +255,8 @@ contractsa: upload-contractsa rebuild-contractsa
 upload-contractsa: $(workdir)/filtered/contractsa.csv
 	@echo Uploading Aggregated Contracts...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=2e9a82e2-bb18-4bff-a61e-59af3b429672 upload@"$(workdir)/filtered/contractsa.csv"
+	id=2e9a82e2-bb18-4bff-a61e-59af3b429672 upload@"$(workdir)/filtered/contractsa.csv" \
+	> /dev/null
 .PHONY: rebuild-contractsa
 	# no search for aggregated contracts
 
@@ -307,8 +312,9 @@ dac: upload-dac rebuild-dac
 .PHONY: upload-dac
 upload-dac: $(workdir)/filtered/dac.csv $(workdir)/dac.csv
 	@echo Uploading Departmental Audit Committee...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=499383b6-cd2a-466a-9fcf-910d3e427700 upload@"$(workdir)/filtered/dac.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=499383b6-cd2a-466a-9fcf-910d3e427700 upload@"$(workdir)/filtered/dac.csv" \
+	> /dev/null
 
 .PHONY: rebuild-dac
 rebuild-dac: $(workdir)/filtered/dac.csv $(workdir)/dac.csv
@@ -329,8 +335,9 @@ experiment: upload-experiment rebuild-experiment
 .PHONY: upload-experiment
 upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	@echo Uploading Experimental Inventory...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv" \
+	> /dev/null
 
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
@@ -351,10 +358,12 @@ grants: upload-grants rebuild-grants
 .PHONY: upload-grants
 upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
 	@echo Uploading Grants and Contributions...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=1d15a62f-5656-49ad-8c88-f40ce689d831 upload@"$(workdir)/filtered/grants.csv"
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=4e4db232-f5e8-43c7-b8b2-439eb7d55475 upload@"$(workdir)/filtered/grants-nil.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=1d15a62f-5656-49ad-8c88-f40ce689d831 upload@"$(workdir)/filtered/grants.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=4e4db232-f5e8-43c7-b8b2-439eb7d55475 upload@"$(workdir)/filtered/grants-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-grants
 rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
@@ -387,10 +396,12 @@ hospitalityq: upload-hospitalityq rebuild-hospitalityq
 .PHONY: upload-hospitalityq
 upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@echo Uploading Hospitality Expenses..
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed upload@"$(workdir)/filtered/hospitalityq.csv"
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=36a3b6cc-4f45-4081-8dbd-2340ca487041 upload@"$(workdir)/filtered/hospitalityq-nil.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed upload@"$(workdir)/filtered/hospitalityq.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=36a3b6cc-4f45-4081-8dbd-2340ca487041 upload@"$(workdir)/filtered/hospitalityq-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
@@ -419,10 +430,12 @@ travelq: upload-travelq rebuild-travelq
 .PHONY: upload-travelq
 upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
 	@echo Uploading Travel Expenses..
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=8282db2a-878f-475c-af10-ad56aa8fa72c upload@"$(workdir)/filtered/travelq.csv"
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=d3f883ce-4133-48da-bc76-c6b063d257a2 upload@"$(workdir)/filtered/travelq-nil.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=8282db2a-878f-475c-af10-ad56aa8fa72c upload@"$(workdir)/filtered/travelq.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=d3f883ce-4133-48da-bc76-c6b063d257a2 upload@"$(workdir)/filtered/travelq-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
@@ -451,16 +464,14 @@ nap: upload-nap rebuild-nap
 .PHONY: upload-nap
 upload-nap: $(workdir)/filtered/nap.csv
 	@echo Uploading National Action Plan..
-	# disabled for now, see OGP-776
-	#$(ckanapi) action resource_patch -c $(registry_ini) \
-	#id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
 	cp $(workdir)/filtered/nap.csv $(registry_static)/nap.csv
 
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
-	# disabled for now, see OGP-776
-	#@echo Rebuilding National Action Plan...
-	#$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+	@echo Rebuilding National Action Plan...
+	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
@@ -477,8 +488,9 @@ inventory: upload-inventory rebuild-inventory
 .PHONY: upload-inventory
 upload-inventory: $(workdir)/filtered/inventory.csv
 	@echo Uploading Open Data Inventory...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=d0df95a8-31a9-46c9-853b-6952819ec7b4 upload@"$(workdir)/filtered/inventory.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=d0df95a8-31a9-46c9-853b-6952819ec7b4 upload@"$(workdir)/filtered/inventory.csv" \
+	> /dev/null
 
 .PHONY: rebuild-inventory
 rebuild-inventory: $(workdir)/filtered/inventory.csv
@@ -501,10 +513,12 @@ reclassification: upload-reclassification rebuild-reclassification
 .PHONY: upload-reclassification
 upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@echo Uploading Position Reclassification...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=bdaa5515-3782-4e5c-9d44-c25e032addb7 upload@"$(workdir)/filtered/reclassification.csv"
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=1e955e4d-df35-4441-bf38-b7086192ece2 upload@"$(workdir)/filtered/reclassification-nil.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=bdaa5515-3782-4e5c-9d44-c25e032addb7 upload@"$(workdir)/filtered/reclassification.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=1e955e4d-df35-4441-bf38-b7086192ece2 upload@"$(workdir)/filtered/reclassification-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
@@ -533,10 +547,12 @@ service: upload-service rebuild-service
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
 	@echo Uploading Service Inventory...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv"
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
+	> /dev/null
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
@@ -564,8 +580,9 @@ travela: upload-travela rebuild-travela
 .PHONY: upload-travela
 upload-travela: $(workdir)/filtered/travela.csv
 	@echo Uploading Annual Travel, Hospitality and Conferences...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=a811cac0-2a2a-4440-8a81-2994fc753171 upload@"$(workdir)/filtered/travela.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=a811cac0-2a2a-4440-8a81-2994fc753171 upload@"$(workdir)/filtered/travela.csv" \
+	> /dev/null
 
 .PHONY: rebuild-travela
 rebuild-travela: $(workdir)/filtered/travela.csv
@@ -588,8 +605,9 @@ wrongdoing: upload-wrongdoing rebuild-wrongdoing
 .PHONY: upload-wrongdoing
 upload-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 	@echo Uploading Acts of Founded Wrongdoing...
-	$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=84a77a58-6bce-4bfb-ad67-bbe452523b14 upload@"$(workdir)/filtered/wrongdoing.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=84a77a58-6bce-4bfb-ad67-bbe452523b14 upload@"$(workdir)/filtered/wrongdoing.csv" \
+	> /dev/null
 
 .PHONY: rebuild-wrongdoing
 rebuild-wrongdoing: $(workdir)/filtered/wrongdoing.csv
