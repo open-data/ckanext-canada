@@ -238,9 +238,13 @@ resources:
       ref_number: "1980198"
       file_id_number: "15677"
       file_id_date: "2016-01-01"
-      findings_conclusion: b
+      case_description_en: 'Description'
+      case_description_fr: 'Description'
+      findings_conclusions: [b]
+      recommendations_corrective_measures_en: 'Recommendations and Corrective Measures'
+      recommendations_corrective_measures_fr: 'Recommandations et mesures correctives'
     filters:
-      findings_conclusion: a
+      findings_conclusions: b
     filter_one:
       ref_number: "1980198"
     sort: file_id_date desc

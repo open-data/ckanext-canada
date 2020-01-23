@@ -1,7 +1,0 @@
-{% ckan_extends %}
-
-{% block comment_link %}
-      <a href="/{% if h.lang() == 'fr' %}fr{% else %}en{% endif %}/external-entity/ckan-{{ pkg.id }}"
-          class="btn btn-default btn-lg">{{_('Comment')}}
-      </a>
-{% endblock %}

@@ -330,6 +330,9 @@ resources:
     datastore_type: text
     preview_class: bg-info
 
+  solr_static_fields:
+    report_type_en: Hospitality Expenses
+    report_type_fr: Dépenses d'accueil
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
@@ -476,6 +479,8 @@ resources:
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""

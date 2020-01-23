@@ -2,7 +2,9 @@ dataset_type: grants
 target_dataset: grants
 title: Proactive Disclosure - Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+
+template_version: 3
+template_updated: 2019-11-15
 
 portal_type: info
 collection: pd
@@ -10,11 +12,15 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Grants and Contributions
   resource_name: grants
+  create_form: true
+  edit_form: true
   fields:
 
   # 3.1 Reference Number
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
       en: |
         The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
@@ -37,9 +43,10 @@ resources:
       
         Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
 
   # 3.2 Amendment Number (New Field)
   - datastore_id: amendment_number
@@ -51,9 +58,9 @@ resources:
       fr: Ce champ est rempli par les ministères et indique qu'une modification est apportée aux renseignements originaux. Utiliser 0 pour les enregistrements originaux.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Numeric only
     datastore_type: int
-    excel_column_width: 25
 
   # 3.3 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -68,8 +75,8 @@ resources:
       fr: Obligatoire si le numéro de modification est défini
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 20
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.4 Agreement Type (Formerly “Type”- 3.16)
   - datastore_id: agreement_type
@@ -81,9 +88,9 @@ resources:
       fr: Ce champ est rempli par les ministères et indique si l'entente signée vise une subvention, une contribution ou un autre paiement de transfert.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 20
     choices:
       G:
         en: Grant
@@ -106,7 +113,6 @@ resources:
     obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 20
     choices:
       F:
         en: For-profit organizations
@@ -142,7 +148,7 @@ resources:
       en: |
         The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
 
-        The business number should be populated for an organization or charity.  
+        The business number should be populated for an organization or charity.
 
         Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca. 
 
@@ -160,7 +166,6 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
 
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
   - datastore_id: recipient_legal_name
@@ -178,9 +183,11 @@ resources:
         Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 50
+    form_attrs:
+      size: 60
 
   # 3.8 Recipient Operating Name (New Field)
   - datastore_id: recipient_operating_name
@@ -198,7 +205,8 @@ resources:
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.9 Research Organization (New Field)
   - datastore_id: research_organization_name
@@ -217,7 +225,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   # 3.10 Recipient Country
   - datastore_id: recipient_country
@@ -229,9 +238,9 @@ resources:
       fr: Le « Pays du bénéficiaire » est un champ obligatoire qui indique le pays de résidence du bénéficiaire.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 20
     choices_file: choices/country.json
 
   # 3.11 Recipient Province or Territory (New Field)
@@ -245,7 +254,6 @@ resources:
     obligation: Optional
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 35
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
     choices:
       "ON":
@@ -308,9 +316,11 @@ resources:
         Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.13 Recipient Postal Code (New Field)
   - datastore_id: recipient_postal_code
@@ -329,7 +339,6 @@ resources:
     obligation: Optional
     format_type: "Text format locked to (X#X #X#)"
     datastore_type: text
-    excel_column_width: 30
 
   # 3.14 Federal Riding Name (English) (New Field)
   - datastore_id: federal_riding_name_en
@@ -342,7 +351,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 45
+    form_attrs:
+      size: 60
 
   # 3.15 Federal Riding Name (French) (New Field)
   - datastore_id: federal_riding_name_fr
@@ -355,7 +365,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.16 Federal Riding Number (New Field)
   - datastore_id: federal_riding_number
@@ -368,7 +379,6 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
 
   # 3.17 Program Name (English)
   - datastore_id: prog_name_en
@@ -381,7 +391,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.18 Program Name (French)
   - datastore_id: prog_name_fr
@@ -394,7 +405,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.19 Program Purpose (English) (formerly purpose_en)
   - datastore_id: prog_purpose_en
@@ -407,7 +419,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
@@ -420,7 +434,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
@@ -433,7 +449,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.22 Agreement Title (French) (formerly proj_name_fr)
   - datastore_id: agreement_title_fr
@@ -446,7 +463,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   # 3.23 Agreement Number (formerly prog_number, proj_number)
   - datastore_id: agreement_number
@@ -459,7 +477,6 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
 
   # 3.24 Agreement Value in CAD (Formerly Field 3.15 - Value)
   - datastore_id: agreement_value
@@ -471,8 +488,8 @@ resources:
       fr: La valeur de l'entente est le montant en dollars indiqué dans l'entente de subvention ou de contribution. Ce champ doit indiquer une valeur monétaire en dollars canadiens.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     datastore_type: money
-    excel_column_width: 40
 
     solr_dollar_range_facet:
      - 10000
@@ -499,7 +516,6 @@ resources:
     obligation: Optional (Mandatory when funding provided in foreign currency)
     format_type: Controlled List
     datastore_type: text
-    excel_column_width: 30
     excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
     choices_file: choices/currency.json
 
@@ -513,7 +529,6 @@ resources:
       fr: La valeur en monnaie étrangère est le montant convenu aux termes de l'entente de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si l'entente est en devise étrangère.
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
-    excel_column_width: 30
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
 
   # 3.27 Agreement Start Date (Formerly 3.14 "date")
@@ -526,9 +541,10 @@ resources:
       fr: La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente ou la date à laquelle le projet est censé commencer, conformément à l'entente initiale.
     obligation: Mandatory
     excel_required: true
+    form_required: true
+    form_snippet: scheming/form_snippets/date.html
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 30
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
@@ -544,7 +560,7 @@ resources:
     obligation: Optional
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 30
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.29 Coverage (New Field)
   - datastore_id: coverage
@@ -557,7 +573,8 @@ resources:
     obligation: Optional
     format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
-    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   # 3.30 Description (English) (New Field)
   - datastore_id: description_en
@@ -569,9 +586,12 @@ resources:
       fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
@@ -583,9 +603,12 @@ resources:
       fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
@@ -608,7 +631,6 @@ resources:
       * industry: 10 (educational support services) 
 
     datastore_type: text
-    excel_column_width: 30
 
   # 3.33 Expected Results or Intended Outcome (English) (New Field)
   - datastore_id: expected_results_en
@@ -621,7 +643,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 45
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -634,7 +658,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 45
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
@@ -671,7 +697,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -708,7 +736,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -743,7 +773,51 @@ resources:
       fgColor: FFc09a77
 
   triggers:
-  - grants_trigger
+  - grants_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+
+        errors := errors || required_error(NEW.amendment_number, 'amendment_number');
+        IF NEW.amendment_number <> 0 THEN
+          errors := errors || required_error(NEW.amendment_date, 'amendment_date');
+        END IF;
+
+        IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
+                NEW.foreign_currency_value IS NOT NULL THEN
+          errors := errors || required_error(NEW.foreign_currency_type, 'foreign_currency_type');
+          errors := errors || choice_error(NEW.foreign_currency_type, {foreign_currency_type}, 'foreign_currency_type');
+          errors := errors || required_error(NEW.foreign_currency_value, 'foreign_currency_value');
+        END IF;
+
+        errors := errors || required_error(NEW.agreement_value, 'agreement_value');
+
+        errors := errors || required_error(NEW.agreement_start_date, 'agreement_start_date');
+        IF NEW.agreement_start_date >= '2018-04-01'::date THEN
+          errors := errors || required_error(NEW.agreement_type, 'agreement_type');
+          errors := errors || choice_error(NEW.agreement_type, {agreement_type}, 'agreement_type');
+          IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
+            errors := errors || choice_error(NEW.recipient_type, {recipient_type}, 'recipient_type');
+          END IF;
+          errors := errors || required_error(NEW.recipient_legal_name, 'recipient_legal_name');
+          errors := errors || required_error(NEW.recipient_country, 'recipient_country');
+          errors := errors || choice_error(NEW.recipient_country, {recipient_country}, 'recipient_country');
+          IF NEW.recipient_country = 'CA' THEN
+            errors := errors || required_error(NEW.recipient_province, 'recipient_province');
+            errors := errors || choice_error(NEW.recipient_province, {recipient_province}, 'recipient_province');
+          END IF;
+          errors := errors || required_error(NEW.recipient_city, 'recipient_city');
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+
   - update_record_modified_created_trigger
 
   examples:
@@ -795,19 +869,25 @@ resources:
 
 - title: Proactive Disclosure - Grants and Contributions Nothing to Report
   resource_name: grants-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: fiscal_year
     label: Year
     datastore_type: text
-    excel_column_width: 15
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
     extract_date_year: true
     choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
     label: Quarter
     datastore_type: text
-    excel_column_width: 10
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
     choices:
       Q1:
         en: April 1 - June 30
@@ -847,20 +927,22 @@ resources:
 
   datastore_primary_key: [fiscal_year, quarter]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFd35c37
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFc09a77
 
   triggers:
-  - grants_nil_trigger
+  - grants_nil_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.fiscal_year, 'fiscal_year');
+        errors := errors || choice_error(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
+        errors := errors || required_error(NEW.quarter, 'quarter');
+        errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
   - update_record_modified_created_trigger
 
   examples:
@@ -873,3 +955,17 @@ resources:
       fiscal_year: 2016-2017
       quarter: Q2
     sort: fiscal_year desc, quarter desc
+
+# https://design.gccollab.ca/component/colour "Triad" colours 2, 5
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF024571
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C

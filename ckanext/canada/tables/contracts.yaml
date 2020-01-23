@@ -6,6 +6,9 @@ notes: Access, upload and modify the quarterly Contracts over 10K reports for yo
 
 template_version: 3
 template_updated: 2019-06-25
+upload_warn:
+  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
 
 portal_type: info
 collection: pd
@@ -755,6 +758,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -829,6 +833,7 @@ resources:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property_code}="C",{intellectual_property_code}="NA",{intellectual_property_code}=""))'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
     choices:
       Y:
@@ -849,6 +854,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -931,6 +937,7 @@ resources:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
     excel_required_formula: '{contract_date}>=DATE(2019,6,21)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -968,6 +975,7 @@ resources:
         NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+        NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
 
         PERFORM not_empty(NEW.contract_date, 'contract_date');
         IF NEW.contract_date >= '2019-01-01'::date THEN

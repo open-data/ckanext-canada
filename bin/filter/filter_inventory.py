@@ -32,7 +32,7 @@ falsy = frozenset(['false', 'no', 'off', 'n', 'f', '0'])
 
 
 def asbool(obj):
-    if isinstance(obj, basestring):
+    if isinstance(obj, str):
         obj = obj.strip().lower()
         if obj in truthy:
             return True
