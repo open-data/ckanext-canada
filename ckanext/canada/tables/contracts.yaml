@@ -486,9 +486,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
 
         Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
-    obligation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2019-01-01, unless Trade Agreement specified
+
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{contract_date}<DATE(2022,1,1),ISBLANK({trade_agreement}))'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),{contract_date}>=DATE(2022,1,1))'
     datastore_type: text
@@ -770,6 +773,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
     datastore_type: _text
     choices:
       XX:
@@ -1695,7 +1699,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.trade_agreement = '{{XX}}' AND (
+        IF NEW.contract_date >= '2022-01-01'::date AND NEW.trade_agreement = '{{XX}}' AND (
             NEW.land_claims <> '{{NA}}' OR
             NEW.aboriginal_business <> 'NA' OR
             NEW.aboriginal_business_incidental <> 'N' ) THEN

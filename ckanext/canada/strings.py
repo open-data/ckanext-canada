@@ -27,3 +27,6 @@ _("This field may not be populated with 1, 2, 3 or 4 if the procurement was iden
 _("Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. "
   "Please either change the Commodity Type to S or remove the date from the Contract Period Start Date "
   "field")
+_("If the value XX (none) is entered here, then the following three fields must be identified as NA or N, "
+  "as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, "
+  "Procurement Strategy for Aboriginal Business Incidental Indicator")
