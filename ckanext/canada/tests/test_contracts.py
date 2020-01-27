@@ -68,7 +68,7 @@ class TestContracts(FunctionalTestBase):
             agreement_type_code='Z',
             land_claims=None,
             aboriginal_business='',
-            )
+        )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -80,9 +80,122 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement': ['This field must not be empty'],
             'agreement_type_code': ['Discontinued as of 2022-01-01'],
             'land_claims': ['This field must not be empty'],
-            'aboriginal_business': ['This field must not be empty'],
+            'aboriginal_business': [
+                'This field must not be empty',
+                'This field must be NA (not applicable) if the Agreement Type or '
+                'Trade Agreement field is not 0 (none) or XX (none), as applicable.'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+    def test_multi_field_errors(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            trade_agreement=['XX', 'NA'],
+            land_claims=['JN', 'NA'],
+            limited_tendering_reason=['00', '05'],
+            trade_agreement_exceptions=['00', '01'],
+        )
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'trade_agreement': [
+                'If the value XX (none) is entered, then no other value '
+                'can be entered in this field.'],
+            'land_claims': [
+                'If the value NA (not applicable) is entered, then no other '
+                'value can be entered in this field.'],
+            'limited_tendering_reason': [
+                'If the value 00 (none) is entered, then no other value can '
+                'be entered in this field.'],
+            'trade_agreement_exceptions': [
+                'If the value 00 (none) is entered, then no other value can '
+                'be entered in this field.'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_inter_field_errors(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            contract_date='2022-01-01',
+            instrument_type='A',
+            buyer_name='Smith',
+            economic_object_code='NA',
+            trade_agreement=['XX'],
+            land_claims=['JN'],
+            award_criteria='0',
+        )
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'buyer_name': [
+                'This field must be populated with an NA '
+                'if an amendment is disclosed under Instrument Type'],
+            'economic_object_code': [
+                'If N/A, then Instrument Type must be identified '
+                'as a standing offer/supply arrangement (SOSA)'],
+            'trade_agreement': [
+                'If the value XX (none) is entered here, then the following '
+                'three fields must be identified as NA or N, as applicable: '
+                'Comprehensive Land Claim Agreement, Procurement Strategy '
+                'for Aboriginal Business, Procurement Strategy for '
+                'Aboriginal Business Incidental Indicator'],
+            'award_criteria': [
+                'This field may only be populated with "0" if the procurement '
+                'was identified as non-competitive (TN) or advance contract '
+                'award notice (AC).'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_postal_code(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            vendor_postal_code='1A1')
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'vendor_postal_code': [
+                'This field must contain the first three digits of a postal code '
+                'in A1A format or the value "NA"'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_goods_start_date(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            contract_date='2020-01-01',
+            commodity_type='G',
+            contract_period_start='2020-01-01')
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'contract_period_start': [
+                'Commodity Type of G for Goods which requires a Delivery Date and '
+                'not a Contract Period Start Date. Please either change the '
+                'Commodity Type to S or remove the date from the Contract Period '
+                'Start Date field'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
