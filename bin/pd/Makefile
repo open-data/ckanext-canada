@@ -533,10 +533,10 @@ $(workdir)/reclassification-nil.csv:
 	$(paster) $(combine) reclassification-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
-	cp $< $@
+	$(fdir)/filter_reclassification.py < $< > $@
 
 $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.csv
-	cp $< $@
+	$(fdir)/filter_reclassification.py < $< > $@
 
 ###
 ###  Service Inventory
