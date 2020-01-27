@@ -1238,7 +1238,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Ce champ doit être NA (aucune) si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type_code}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1281,7 +1281,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND(OR({aboriginal_business}="NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
+    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND(OR({aboriginal_business}="NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type_code}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1371,8 +1371,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: This field should be populated to identify whether intellectual property generated under the contract has the potential for commercial exploitation.
       fr: Il est recommandé d’indiquer dans cette zone si la propriété intellectuelle produite en vertu du marché présente un potentiel d’exploitation commerciale.
     validation:
-      en: This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
-      fr: Cette zone ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Cette zone peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
+      en: |
+        This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
+      fr: |
+        Cette zone ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Cette zone peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
@@ -1680,7 +1682,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated in the standard format described below. When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was disclosed to the public. For example if a contract amendment is being disclosed on May 3, 2015, the entry should be 2015-2016-Q1.
       fr: "Il est recommandé de saisir les données dans cette zone selon le format normalisé décrit ci-dessous.  Lorsqu’il est publié sur le portail du Gouvernement Ouvert, cette zone contiendra le quartier fiscal dont cette donné était divulguée.  Par exemple, si un marché est modifié le 3 mai 2015, et la modification est divulguée au cours du premier trimestre de l’exercice 2015-2016, il convient d’indiquer : 2015 à 2016-Q1)."
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
