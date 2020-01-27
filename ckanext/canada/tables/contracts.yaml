@@ -488,10 +488,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
     validation:
       en: |
-        Mandatory for contracts after 2019-01-01, unless Trade Agreement specified
+        Mandatory for contracts after 2019-01-01, unless Trade Agreement specified.
 
+        This field must be blank if the Trade Agreement field Type is not blank.
       fr: |
-        Obligatoire pour les marchés conclus après le 2019-01-01
+        Obligatoire pour les marchés conclus après le 2019-01-01, sauf si on précise un accord commercial.
+
+        Ce champ doit être vide si le champ Accord commercial n’est pas vide.
     excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{contract_date}<DATE(2022,1,1),ISBLANK({trade_agreement}))'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),{contract_date}>=DATE(2022,1,1))'
     datastore_type: text
@@ -769,11 +772,31 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with one or more of the following alphabetic characters (Disclose the alphabetic characters only, all text after the alphabetic characters and including the colon is for information purposes only). For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
       fr: Il est recommandé de saisir dans cette zone au moins un des codes alphabétiques suivants (saisir le code alphabétique seulement; ne pas reproduire les deux points ni le texte, qui n’est là qu’à titre informatif). À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global est déclaré sous le code CA, EU.
-    obligation:
-      en: Mandatory for contracts after 2022-01-01
-      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2022-01-01
+
+        If the value XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable:
+        - Comprehensive Land Claim Agreement
+        - Procurement Strategy for Aboriginal Business
+        - Procurement Strategy for Aboriginal Business Incidental Indicator
+
+        If the value XX (none) is entered, then no other value can be entered in this field.
+
+        This field must be blank if the Agreement Type field is not blank. 
+      fr: |
+        Obligatoire pour les marchés conclus après le 2022-01-01
+
+        Si la valeur XX (aucun) est inscrite ici, alors les champs suivants doivent être identifiés comme étant NA ou N, le cas échéant:
+        - Entente sur les revendications territoriales globales
+        - Stratégie d’approvisionnement auprès des entreprises autochtones
+        - Stratégie d’approvisionnement auprès des entreprises autochtones, indicateur d’incidence
+
+        Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
+
+        Ce champ doit être vide si le champ Type d’accord n’est pas vide.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
+    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"),AND({cell}="XX",OR({land_claims}<>"NA",{aboriginal_business}<>"NA",{aboriginal_business_incidental}<>"N")))'
     datastore_type: _text
     choices:
       XX:
@@ -830,10 +853,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated to indicate whether the procurement is for goods, services or construction services to be delivered to an area that is within one or more of the Comprehensive Land Claims Agreement(s).
       fr: Il est recommandé pour cette zone d’indiquer si l’approvisionnement concerne des biens, des services ou des services de construction qui doivent être fournis dans une région visée par l’une des ententes sur les revendications territoriales globales.
-    obligation:
-      en: Mandatory for contracts after 2022-01-01
-      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2022-01-01.
+
+        If the value NA (not applicable) is entered, then no other value can be entered in this field.
+
+        This field must be blank if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable. 
+      fr: |
+        Obligatoire pour les marchés conclus après le 2022-01-01.
+
+        Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
+
+        Ce champ doit être vide si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"),{trade_agreement}<>"0")'
     datastore_type: _text
     choices:
       NA:
@@ -925,7 +959,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with the one of the three commodity types (Good, Service or Construction). When a contract involves more than one commodity type, the commodity type associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
       fr: Il est recommandé de saisir dans la zone « type de produit » l’un des trois types de produits (bien, service ou construction). Lorsqu’un marché comprend plus qu’un type de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -955,7 +989,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Il est recommandé de saisir dans la zone « code de produit » les descriptions de produits génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement.  Lorsqu’il s’agit d’utiliser le numéro d’identification des biens et services (NIBS), seulement les NIBS publiés par SPAC peuvent être utilisés.
 
         Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -968,7 +1002,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with the International Organization for Standardization (ISO) Standard 3166-1-alphas-2, Codes for the representation of Names of Countries, to designate the country of origin applicable to the contract. Refer to the applicable trade agreement(s) rules of origin to determine the country of origin.
       fr: Pour le pays d’origine, il est recommandé de saisir les Codes de représentation du nom des pays 3166-1-alphas-2 de l’Organisation internationale de normalisation (ISO) afin de désigner le pays d’origine qui s’applique au marché.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -989,7 +1023,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with one of the five solicitation procedures listed below.
       fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -1019,11 +1053,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with the reason for a given contract not being awarded through a competitive solicitation.
       fr: Il est recommandé de saisir dans cette zone l’une des raisons justifiant le recours à l’appel d’offres limité.
-    obligation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2019-01-01.
+
+        If the value 00 (none) is entered, then no other value can be entered in this field.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01.
+
+        Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1111,10 +1151,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to be populated with one or more of the exceptions/exclusions listed below. Certain trade agreements (for example, the North American Free Trade Agreement) require that certain exceptions/exclusions be reported.
       fr: Il est recommandé de saisir dans cette zone au moins une des exceptions et/ou exclusions énumérées ci-dessous. Certains accords commerciaux (par exemple, l’Accord de libre-échange nord-américain) exigent la déclaration de certaines exceptions et/ou exclusions.
-    obligation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2019-01-01
+
+        If the value 00 (none) is entered, then no other value can be entered in this field.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+
+        Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"))'
     datastore_type: _text
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
@@ -1181,10 +1228,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to indicate whether the Procurement Strategy for Aboriginal Business mandatory or voluntary set-aside applies to the procurement transaction.
       fr: Il est recommandé pour cette zone d’indiquer si le marché réservé aux entreprises autochtones, obligatoire ou facultatif dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones, s’applique à la transaction liée à l’approvisionnement
-    obligation:
-      en: Mandatory for contracts after 2022-01-01
-      fr: Obligatoire pour les marchés conclus après le 2022-01-01
+    validation:
+      en: |
+        Mandatory for contracts after 2022-01-01
+
+        This field must be NA (none) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2022-01-01
+
+        Ce champ doit être NA (aucune) si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1212,14 +1266,22 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: |
         This field should be populated with a flag indicating whether an Aboriginal Business is awarded a contract on an incidental basis.
+      fr: Il est recommandé pour cette zone d’indiquer si un marché est attribué comme adjudication incidente à une entreprise autochtone.
+    validation:
+      en: |
+        Mandatory for contracts after 2019-01-01
 
         This field must be N, No or Non if the Procurement Strategy for Aboriginal Business field is MS or VS.
-      fr: Il est recommandé pour cette zone d’indiquer si un marché est attribué comme adjudication incidente à une entreprise autochtone.
-    obligation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+
+        This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+
+        Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
+
+        Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND({aboriginal_business}="NA",NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
+    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND(OR({aboriginal_business}="NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1244,7 +1306,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated to identify whether there are terms and conditions in the contract related to intellectual property and whether those terms would result in Crown or contractor ownership of the rights to the intellectual property.
       fr: Il est recommandé d’indiquer dans cette zone si le marché comporte des dispositions relatives à la propriété intellectuelle (PI) et si, selon ces dispositions, les droits de propriété intellectuelle appartiendront à l’État ou à l’entrepreneur.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -1308,8 +1370,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated to identify whether intellectual property generated under the contract has the potential for commercial exploitation.
       fr: Il est recommandé d’indiquer dans cette zone si la propriété intellectuelle produite en vertu du marché présente un potentiel d’exploitation commerciale.
-    obligation:
-      en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
+    validation:
+      en: This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
+      fr: Cette zone ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Cette zone peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
@@ -1336,7 +1399,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated to identify whether the contractor is a former public servant in receipt of a pension under the Public Service Superannuation Act (PSSA).
       fr: Il est recommandé pour cette zone d’indiquer si l’entrepreneur est un ancien fonctionnaire touchant une pension en vertu de la Loi sur la pension de la fonction publique (LPFP).
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -1358,7 +1421,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
       fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2020-01-01
       fr: Obligatoire pour les marchés conclus après le 2020-01-01
     excel_required_formula: 'OR({standing_offer_number}<>"",{contract_date}>=DATE(2020,1,1))'
@@ -1401,7 +1464,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
       fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
-    obligation:
+    validation:
       en: This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
       fr: Ce champ doit être rempli si une commande subséquente à une offre à commandes ou un arrangement en matière d’approvisionnement a été identifié comme PWSOSA ou SSCSOSA
     datastore_type: text
@@ -1420,7 +1483,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Il est recommandé pour le type d’instrument d’indiquer si l’opération divulguée est un marché, une modification à un marché, une offre à commandes ou un arrangement en matière d’approvisionnement. Par exemple, une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »; l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »; et une modification à une commande subséquente est « A ».
 
         Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être divulguées séparément. La signature du marché sera divulguée comme une saisie, soit « C ». Une modification au marché sera divulguée comme saisie séparée, soit « A ». Lorsqu’une offre à commandes ou un arrangement en   matière d’approvisionnement est modifié, il convient de saisir le code « SOSA ».
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -1451,7 +1514,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contract for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Minister’s Offices, such contracts should be charged to either a Minister’s other operating budget; or to the Parliamentary Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective 2019-06-21 or alternatively, for the contracts and amendments awarded within the month of this effective date.
       fr: Dans cette zone, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets des ministres sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint parlementaire ou conseiller au secrétaire parlementaire. Consultez les Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets du cabinet d’un ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications entrés en vigueur le 2019-06-21 ou dans le cas des marchés et des modifications adjugés dans le mois de cette date d’entrée en vigueur.
-    obligation:
+    validation:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
     excel_required_formula: '{contract_date}>=DATE(2019,6,21)'
@@ -1489,10 +1552,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         iv. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
         v. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement.
         vi. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
-    obligation: ???
+    validation:
+      en: |
+        This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
+        This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field. 
+      fr: |
+        Cette zone peut uniquement contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
+        Cette zone peut uniquement contenir un « 0 » si une commande subséquente à une offre à commande ou un arrangement en matière d’approvisionnement a été identifiée dans le champ Entité contractante. 
     datastore_type: int
-    # This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
-    # This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity Data field.
     excel_error_formula: ' OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
 
   - datastore_id: article_6_exceptions
@@ -1517,10 +1584,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         ii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
         iii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
         iv. Dans le cas des marchés en vertu desquels un appel d’offres a été lancé, ou si l’approvisionnement ne constitue pas un marché assujetti au Règlement concernant les marchés de l’État, on doit saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet.
+    validation:
+      en: |
+        This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
+
+        This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice. 
+      fr: |
+        Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
+
+        e  zone peut seulement contenir 1, 2, 3 ou 4 si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: text
     excel_full_text_choices: false
-    # This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
-    # This field may not be populated with 1,2,3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice.
     excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="OB",{solicitation_procedure}="TC",{solicitation_procedure}="ST"))),AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
     choices:
       "0":
@@ -1545,7 +1619,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Critères d’attribution
     description:
       en: |
-        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract: .
+        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract:
 
         i. If bids have not been solicited, the value of “0” is to be selected.
         ii. For ACANs whereby it was determined that there were no statements of capabilities that met the ACAN requirements, the value of “0” should be entered.
@@ -1556,9 +1630,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
         iii. En cas de modification, il faut sélectionner la valeur « 0 ».
         iv. Pour un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+    validation:
+      en: This field may only be populated with “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).
+      fr: Cette zone peut seulement contenir un « 0 » si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: text
     excel_full_text_choices: false
-    # This field may only be populated with “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (ACAN).
     excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="TN",{contracting_entity}="AC"))))'
     choices:
       "0":
