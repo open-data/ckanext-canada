@@ -1763,10 +1763,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.contract_value, 'contract_value');
         END IF;
 
-        IF NEW.contract_date >= '2019-01-01' AND NEW.commodity_type <> 'G' THEN
+        IF NEW.contract_date >= '2019-01-01'::date AND NEW.commodity_type <> 'G' THEN
           errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
         END IF;
-        IF NEW.contract_date >= '2022-01-01' AND NEW.commodity_type = 'G' AND NEW.contract_period_start IS NOT NULL THEN
+        IF NEW.contract_date >= '2022-01-01'::date AND NEW.commodity_type = 'G' AND NEW.contract_period_start IS NOT NULL THEN
           errors := errors || ARRAY[['contract_period_start', 'Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field']];
         END IF;
 

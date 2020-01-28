@@ -80,10 +80,7 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement': ['This field must not be empty'],
             'agreement_type_code': ['Discontinued as of 2022-01-01'],
             'land_claims': ['This field must not be empty'],
-            'aboriginal_business': [
-                'This field must not be empty',
-                'This field must be NA (not applicable) if the Agreement Type or '
-                'Trade Agreement field is not 0 (none) or XX (none), as applicable.'],
+            'aboriginal_business': ['This field must not be empty'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
@@ -182,7 +179,7 @@ class TestContracts(FunctionalTestBase):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
-            contract_date='2020-01-01',
+            contract_date='2022-01-01',
             commodity_type='G',
             contract_period_start='2020-01-01')
         with assert_raises(ValidationError) as ve:
