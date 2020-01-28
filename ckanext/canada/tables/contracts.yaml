@@ -720,39 +720,50 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
     choices_lookup:
       NONE:
+        trade_agreement: XX
         en: None
         fr: Aucun
       WTO-AGP:
+        trade_agreement: GP
         en: World Trade Organization – Agreement on Government Procurement (WTO-AGP)
         fr: Accord sur les marchés publics de l’Organisation mondiale du commerce (AMP-OMC)
       NAFTA:
+        trade_agreement: NA
         en: North American Free Trade Agreement (NAFTA)
         fr: Accord de libre-échange nord-américain (ALENA)
       AIT:
         en: Agreement on Internal Trade (AIT)
         fr: Accord sur le commerce intérieur (ACI)
       CFTA:
+        trade_agreement: CA
         en: Canadian Free Trade Agreement (CFTA)
         fr: Accord de libre-échange Canadien (ALEC)
       CCFTA:
+        trade_agreement: CL
         en: Canada-Chile Free Trade Agreement (CCFTA)
         fr: Accord de libre-échange Canada-Chili (ALECC)
       CCoFTA:
+        trade_agreement: CO
         en: Canada-Colombia Free Trade Agreement (CCoFTA)
         fr: Accord de libre-échange Canada-Colombie (ALECCo)
       CHFTA:
+        trade_agreement: HN
         en: Canada-Honduras Free Trade Agreement (CHFTA)
         fr: Accord de libre-échange Canada-Honduras (ALECH)
       CPaFTA:
+        trade_agreement: PA
         en: Canada-Panama Free Trade Agreement (CPaFTA)
         fr: Accord de libre-échange Canada-Panama (ALECPa)
       CPFTA:
+        trade_agreement: PE
         en: Canada-Peru Free Trade Agreement (CPFTA)
         fr: Accord de libre-échange Canada-Pérou (ALECP)
       CPTPP:
+        trade_agreement: TP
         en: Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
         fr: Accord de Partenariat transpacifique global et progressiste (PTPGP)
       CKFTA:
+        trade_agreement: KR
         en: Canada-South Korea Free Trade Agreement (CKFTA)
         fr: Accord de libre-échange Canada-Corée du Sud (ALECCS)
       ABSA:
@@ -1729,7 +1740,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
         END IF;
-        IF NEW.vendor_postal_code <> 'NA' AND NEW.vendor_postal_code !~ '^[A-Z][0-9][A-Z]$' THEN
+        IF NOT((NEW.vendor_postal_code = '') IS NOT FALSE) AND NEW.vendor_postal_code <> 'NA' AND NEW.vendor_postal_code !~ '^[A-Z][0-9][A-Z]$' THEN
           errors := errors || ARRAY[['vendor_postal_code', 'This field must contain the first three digits of a postal code in A1A format or the value "NA"']];
         END IF;
 
@@ -1752,12 +1763,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.contract_value, 'contract_value');
         END IF;
 
-        IF NEW.contract_date >= '2019-01-01' THEN
-          IF NEW.commodity_type <> 'G' THEN
-            errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
-          ELSIF NEW.contract_period_start IS NOT NULL THEN
-            errors := errors || ARRAY[['contract_period_start', 'Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field']];
-          END IF;
+        IF NEW.contract_date >= '2019-01-01' AND NEW.commodity_type <> 'G' THEN
+          errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
+        END IF;
+        IF NEW.contract_date >= '2022-01-01' AND NEW.commodity_type = 'G' AND NEW.contract_period_start IS NOT NULL THEN
+          errors := errors || ARRAY[['contract_period_start', 'Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.instrument_type = 'A' THEN
@@ -1788,14 +1798,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
             errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
           END IF;
-        ELSIF NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}' THEN
+        ELSIF NEW.trade_agreement = '{{}}' THEN
           IF NEW.contract_date >= '2019-01-01'::date THEN
             errors := errors || required_error(NEW.agreement_type_code, 'agreement_type_code');
           END IF;
         END IF;
 
-        IF NOT (NEW.trade_agreement IS NULL OR NEW.trade_agreement = '{{}}')
-            AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
+        IF NEW.trade_agreement <> '{{}}' AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
           errors := errors || ARRAY[['agreement_type_code',
             'Must be left blank when trade agreements specified']];
         END IF;
@@ -1810,7 +1819,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
         ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND (
             ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
+            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
           errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
@@ -1874,9 +1883,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
-        IF NEW.aboriginal_business IS NOT NULL AND NEW.aboriginal_business <> 'NA' AND (
-            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
+        IF NEW.aboriginal_business <> '' AND NEW.aboriginal_business <> 'NA' AND (
+            (NEW.agreement_type_code <> '' AND NEW.agreement_type_code <> '0') OR
+            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
           errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
@@ -1885,14 +1894,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
           errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
         END IF;
-        IF NEW.aboriginal_business_incidental IS NOT NULL AND NEW.aboriginal_business_incidental <> 'N' AND (
+        IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
             NEW.aboriginal_business = 'MS' OR NEW.aboriginal_business = 'VS') THEN
-          errors := errors || ARRAY[['aboriginal_business', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
+          errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
-        IF NEW.aboriginal_business_incidental IS NOT NULL AND NEW.aboriginal_business_incidental <> 'N' AND (
+        IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
             ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement IS NOT NULL AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['aboriginal_business', 'This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
+          errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
         IF NEW.contract_date >= '2020-01-01'::date THEN
