@@ -720,39 +720,50 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
     choices_lookup:
       NONE:
+        trade_agreement: XX
         en: None
         fr: Aucun
       WTO-AGP:
+        trade_agreement: GP
         en: World Trade Organization – Agreement on Government Procurement (WTO-AGP)
         fr: Accord sur les marchés publics de l’Organisation mondiale du commerce (AMP-OMC)
       NAFTA:
+        trade_agreement: NA
         en: North American Free Trade Agreement (NAFTA)
         fr: Accord de libre-échange nord-américain (ALENA)
       AIT:
         en: Agreement on Internal Trade (AIT)
         fr: Accord sur le commerce intérieur (ACI)
       CFTA:
+        trade_agreement: CA
         en: Canadian Free Trade Agreement (CFTA)
         fr: Accord de libre-échange Canadien (ALEC)
       CCFTA:
+        trade_agreement: CL
         en: Canada-Chile Free Trade Agreement (CCFTA)
         fr: Accord de libre-échange Canada-Chili (ALECC)
       CCoFTA:
+        trade_agreement: CO
         en: Canada-Colombia Free Trade Agreement (CCoFTA)
         fr: Accord de libre-échange Canada-Colombie (ALECCo)
       CHFTA:
+        trade_agreement: HN
         en: Canada-Honduras Free Trade Agreement (CHFTA)
         fr: Accord de libre-échange Canada-Honduras (ALECH)
       CPaFTA:
+        trade_agreement: PA
         en: Canada-Panama Free Trade Agreement (CPaFTA)
         fr: Accord de libre-échange Canada-Panama (ALECPa)
       CPFTA:
+        trade_agreement: PE
         en: Canada-Peru Free Trade Agreement (CPFTA)
         fr: Accord de libre-échange Canada-Pérou (ALECP)
       CPTPP:
+        trade_agreement: TP
         en: Comprehensive and Progressive Agreement for Trans-Pacific Partnership (CPTPP)
         fr: Accord de Partenariat transpacifique global et progressiste (PTPGP)
       CKFTA:
+        trade_agreement: KR
         en: Canada-South Korea Free Trade Agreement (CKFTA)
         fr: Accord de libre-échange Canada-Corée du Sud (ALECCS)
       ABSA:
