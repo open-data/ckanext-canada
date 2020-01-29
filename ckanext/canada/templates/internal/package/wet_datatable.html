@@ -1,4 +1,12 @@
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
+{% if chromo.edit_form %}
+  {% set offset = 2 %}
+{% else %}
+  {% set offset = 1 %}
+{% endif %}
+
+
+
 <section>
   <h2 id="prtable">{{_("Preview")}}</h2>
     <table id="dtprv" class="table table-striped"
@@ -62,19 +70,32 @@
   dom: "Blfrtip",
           buttons: [
     'colvis',
-    {extend:"selected",text:"Edit in template",action: function ( e, dt, button, config ){
-        var row_data = JSON.stringify(dt.rows({selected:true}).data().toArray());
+    {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
 
         var form = $('<form>',{
-          action : "{% url_for 'recombinant_template', dataset_type=resource_name, lang=h.lang(),owner_org=owner_org %}",
+          action : "{% url_for 'recombinant_template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
           method : "post"
         });
         form.append($('<input>').attr({
           type: 'hidden',
-          id: 'foo',
-          value: row_data,
-          name: 'bulk-template'
+          value: "{{resource_name}}",
+          name: 'resource_name'
         }));
+
+        form.append($('<input>').attr({
+          type: 'hidden',
+          value: {{primary_keys}},
+          name: 'key_indices'
+        }));
+
+
+        {% for ind in primary_keys %}
+          form.append($('<input>').attr({
+            type: 'hidden',
+            value: dt.columns({{ind + offset}},'.selected').data().toArray(),
+            name: "{{ind}}"
+          }));
+        {% endfor %}
 
         form.appendTo('body').submit();
 

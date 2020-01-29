@@ -12,7 +12,7 @@ import jinja2
 
 import ckanapi
 
-from ckantoolkit import h
+from ckantoolkit import h, aslist
 import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
@@ -242,10 +242,13 @@ def is_ready_to_publish(package):
     else:
         return False
 
-def get_datapreview_recombinant(resource_name, resource_id, owner_org):
+def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_type):
     from ckanext.recombinant.tables import get_chromo
     chromo = get_chromo(resource_name)
+
+
     default_preview_args = {}
+
 
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
@@ -262,11 +265,14 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org):
             out['priority'] = priority
             priority += 1
         fields.append(out)
-
+    fids = [f['datastore_id'] for f in chromo['fields']]
+    pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
     return h.snippet('package/wet_datatable.html',
         resource_name=resource_name,
         resource_id=resource_id,
         owner_org=owner_org,
+        primary_keys=pkids,
+        dataset_type=dataset_type,
         ds_fields=fields)
 
 def fgp_url():

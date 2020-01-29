@@ -184,6 +184,7 @@ class CanadaController(BaseController):
         offset = int(request.params['start'])
         limit = int(request.params['length'])
 
+
         chromo = h.recombinant_get_chromo(resource_name)
 
         lc = LocalCKAN(username=c.user)
@@ -215,7 +216,7 @@ class CanadaController(BaseController):
             sort=u', '.join(sort_list),
         )
 
-        aadata = [
+        aadata = [[u'']+
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
@@ -224,22 +225,21 @@ class CanadaController(BaseController):
             pkg = lc.action.package_show(id=res['package_id'])
             fids = [f['datastore_id'] for f in chromo['fields']]
             pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
+            log = getLogger(__name__)
+            log.debug(chromo['datastore_primary_key'])
             for row in aadata:
-                row.insert(0, (
-                        u'<a href="{0}" aria-label"' + _("Edit") + '">'
+                row.insert(1, (
+                        u'<a href="{0}" aria-label="' + _("Edit") + '">'
                         u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
                         h.url_for(
                             controller='ckanext.canada.controller:PDUpdateController',
                             action='update_pd_record',
                             owner_org=pkg['organization']['name'],
                             resource_name=resource_name,
-                            pk=','.join(url_part_escape(row[i]) for i in pkids)
+                            pk=','.join(url_part_escape(row[i+1]) for i in pkids)
                         )
                     )
                 )
-        # Add empty column for checkboxes #
-        for row in aadata:
-            row.insert(0,u'')
 
         return json.dumps({
             'draw': draw,

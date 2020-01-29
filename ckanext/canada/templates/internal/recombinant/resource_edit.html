@@ -32,15 +32,5 @@
 
 {% block primary %}
   {{ super() }}
-  {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name) }}
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-
-{% endblock %}
-
-{%- block styles %}
-  {{ super() }}
-
+  {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
 {% endblock %}
