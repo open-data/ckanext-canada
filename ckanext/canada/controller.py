@@ -183,10 +183,6 @@ class CanadaController(BaseController):
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
         limit = int(request.params['length'])
-        sort_by_num = int(request.params['order[0][column]'])
-        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
-                      else 'asc'
-                      )
 
         chromo = h.recombinant_get_chromo(resource_name)
 
@@ -197,15 +193,26 @@ class CanadaController(BaseController):
         )
 
         cols = [f['datastore_id'] for f in chromo['fields']]
-        sort_str = cols[sort_by_num] + ' ' + sort_order
-        sort_str += ' NULLS LAST'
+        prefix_cols = 1 if chromo.get('edit_form', False) else 0
+
+        sort_list = []
+        i = 0
+        while True:
+            if u'order[%d][column]' % i not in request.params:
+                break
+            sort_by_num = int(request.params[u'order[%d][column]' % i])
+            sort_order = (
+                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc NULLS LAST')
+            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
+            i += 1
 
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
             offset=offset,
             limit=limit,
-            sort=sort_str
+            sort=u', '.join(sort_list),
         )
 
         aadata = [
