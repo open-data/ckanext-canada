@@ -228,18 +228,14 @@ class CanadaController(BaseController):
             pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             log.debug(chromo['datastore_primary_key'])
             for row in aadata:
-                row.insert(1, (
-                        u'<a href="{0}" aria-label="' + _("Edit") + '">'
-                                                                    u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                row[0] = u'<a href="{0}">{1}</a>'.format(
                     h.url_for(
                         controller='ckanext.canada.controller:PDUpdateController',
                         action='update_pd_record',
                         owner_org=pkg['organization']['name'],
                         resource_name=resource_name,
-                        pk=','.join(url_part_escape(row[i + 1]) for i in pkids)
-                    )
-                )
-                           )
+                        pk=url_part_escape(row[0])),
+                    row[0])
 
         return json.dumps({
             'draw': draw,
@@ -483,9 +479,9 @@ class CanadaFeedController(FeedController):
     def output_feed(self, results, feed_title, feed_description,
                     feed_link, feed_url, navigation_urls, feed_guid):
         author_name = config.get('ckan.feeds.author_name', '').strip() or \
-                      config.get('ckan.site_id', '').strip()
+            config.get('ckan.site_id', '').strip()
         author_link = config.get('ckan.feeds.author_link', '').strip() or \
-                      config.get('ckan.site_url', '').strip()
+            config.get('ckan.site_url', '').strip()
 
         feed = _FixedAtom1Feed(
             title=feed_title,
@@ -504,9 +500,9 @@ class CanadaFeedController(FeedController):
 
         for pkg in results:
             feed.add_item(
-                title=h.get_translated(pkg, 'title'),
+                title= h.get_translated(pkg, 'title'),
                 link=h.url_for(controller='package', action='read', id=pkg['id']),
-                description=h.get_translated(pkg, 'notes'),
+                description= h.get_translated(pkg, 'notes'),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
                 unique_id=_create_atom_id(u'/dataset/%s' % pkg['id']),
@@ -518,7 +514,7 @@ class CanadaFeedController(FeedController):
                 enclosure=webhelpers.feedgenerator.Enclosure(
                     self.base_url + url(str(
                         '/api/action/package_show?id=%s' % pkg['name'])),
-                    unicode(len(json.dumps(pkg))),  # TODO fix this
+                    unicode(len(json.dumps(pkg))),   # TODO fix this
                     u'application/json')
             )
         response.content_type = feed.mime_type
@@ -680,7 +676,7 @@ class PDUpdateController(BaseController):
                     action='preview_table',
                     resource_name=resource_name,
                     owner_org=rcomb['owner_org'],
-                ))
+                    ))
 
             data, err = clean_check_type_errors(
                 post_data,
@@ -779,7 +775,7 @@ class PDUpdateController(BaseController):
                     action='preview_table',
                     resource_name=resource_name,
                     owner_org=rcomb['owner_org'],
-                ))
+                    ))
 
             data, err = clean_check_type_errors(
                 post_data,
@@ -793,7 +789,7 @@ class PDUpdateController(BaseController):
             try:
                 lc.action.datastore_upsert(
                     resource_id=res['id'],
-                    # method='update',    FIXME not raising ValidationErrors
+                    #method='update',    FIXME not raising ValidationErrors
                     records=[{k: None if k in err else v for (k, v) in data.items()}],
                     dry_run=bool(err))
             except ValidationError as ve:
@@ -804,24 +800,24 @@ class PDUpdateController(BaseController):
 
             if err:
                 return render('recombinant/update_pd_record.html',
-                              extra_vars={
-                                  'data': data,
-                                  'resource_name': resource_name,
-                                  'chromo_title': chromo['title'],
-                                  'choice_fields': choice_fields,
-                                  'pk_fields': pk_fields,
-                                  'owner_org': rcomb['owner_org'],
-                                  'errors': err,
-                              })
+                    extra_vars={
+                        'data': data,
+                        'resource_name': resource_name,
+                        'chromo_title': chromo['title'],
+                        'choice_fields': choice_fields,
+                        'pk_fields': pk_fields,
+                        'owner_org': rcomb['owner_org'],
+                        'errors': err,
+                        })
 
-            h.flash_notice(_(u'Record %s Updated') % u','.join(pk))
+            h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
             return redirect(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
                 resource_name=resource_name,
                 owner_org=rcomb['owner_org'],
-            ))
+                ))
 
         data = {}
         for f in chromo['fields']:
@@ -831,15 +827,15 @@ class PDUpdateController(BaseController):
             data[f['datastore_id']] = val
 
         return render('recombinant/update_pd_record.html',
-                      extra_vars={
-                          'data': data,
-                          'resource_name': resource_name,
-                          'chromo_title': chromo['title'],
-                          'choice_fields': choice_fields,
-                          'pk_fields': pk_fields,
-                          'owner_org': rcomb['owner_org'],
-                          'errors': {},
-                      })
+            extra_vars={
+                'data': data,
+                'resource_name': resource_name,
+                'chromo_title': chromo['title'],
+                'choice_fields': choice_fields,
+                'pk_fields': pk_fields,
+                'owner_org': rcomb['owner_org'],
+                'errors': {},
+                })
 
     def type_redirect(self, resource_name):
         orgs = h.organizations_available('read')
@@ -857,7 +853,6 @@ class PDUpdateController(BaseController):
                                       resource_name=resource_name, owner_org='tbs-sct'))
         return redirect(h.url_for('recombinant_resource',
                                   resource_name=resource_name, owner_org=orgs[0]['name']))
-
 
 def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
     """
