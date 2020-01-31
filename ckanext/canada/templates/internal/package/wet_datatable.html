@@ -68,7 +68,10 @@
   {%- if not loop.last %},{% endif %}
   {% endfor %}],
   dom: "Blfrtip",
-          buttons: [
+  language:{
+    search: "Filter:"
+  },
+  buttons: [
     'colvis',
     {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
 
@@ -76,6 +79,7 @@
           action : "{% url_for 'recombinant_template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
           method : "post"
         });
+
         form.append($('<input>').attr({
           type: 'hidden',
           value: "{{resource_name}}",
@@ -88,14 +92,20 @@
           name: 'key_indices'
         }));
 
+        var pk_cols = {{primary_keys}}.map( function(value) {
+          return value + {{offset}};
+        } );
 
-        {% for ind in primary_keys %}
+        let rows = dt.rows( { selected: true } );
+
+        rows.eq(0).each( function ( index ) {
+
           form.append($('<input>').attr({
             type: 'hidden',
-            value: dt.columns({{ind + offset}},'.selected').data().toArray(),
-            name: "{{ind}}"
+            value: dt.cells( index, pk_cols ).data().toArray(),
+            name: 'bulk-template'
           }));
-        {% endfor %}
+        } );
 
         form.appendTo('body').submit();
 
