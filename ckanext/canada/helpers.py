@@ -12,7 +12,7 @@ import jinja2
 
 import ckanapi
 
-from ckantoolkit import h, aslist
+from ckantoolkit import h
 import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
@@ -39,6 +39,7 @@ GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 
 
+
 def get_translated_t(data_dict, field):
     '''
     customized version of core get_translated helper that also looks
@@ -49,12 +50,12 @@ def get_translated_t(data_dict, field):
 
     language = h.lang()
     try:
-        return data_dict[field + '_translated'][language], False
+        return data_dict[field+'_translated'][language], False
     except KeyError:
-        if field + '_translated' in data_dict:
-            for l in data_dict[field + '_translated']:
+        if field+'_translated' in data_dict:
+            for l in data_dict[field+'_translated']:
                 if l.startswith(language + '-t-'):
-                    return data_dict[field + '_translated'][l], True
+                    return data_dict[field+'_translated'][l], True
         val = data_dict.get(field, '')
         return (_(val) if val and isinstance(val, basestring) else val), False
 
@@ -114,7 +115,6 @@ def may_publish_datasets(userobj=None):
             return True
     return False
 
-
 def openness_score(pkg):
     score = 1
     fmt_choices = scheming_get_preset('canada_resource_format')['choices']
@@ -136,47 +136,41 @@ def openness_score(pkg):
 
 def user_organizations(user):
     u = User.get(user['name'])
-    return u.get_groups(group_type="organization")
-
+    return u.get_groups(group_type = "organization")
 
 def catalogue_last_update_date():
-    return ''  # FIXME: cache this value or add an index to the DB for query below
+    return '' # FIXME: cache this value or add an index to the DB for query below
     q = model.Session.query(Activity.timestamp).filter(
         Activity.activity_type.endswith('package')).order_by(
         Activity.timestamp.desc()).first()
     return q[0].replace(microsecond=0).isoformat() if q else ''
 
-
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
-
-
+    
 # Return the Date format that the WET datepicker requires to function properly
 def date_format(date_string):
     if not date_string:
         return None
     try:
         return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S"
-                                          ).strftime("%Y-%m-%d")
+            ).strftime("%Y-%m-%d")
     except ValueError:
         return date_string
 
-
 class EST(datetime.tzinfo):
     def utcoffset(self, dt):
-        return datetime.timedelta(hours=-5)
+      return datetime.timedelta(hours=-5)
 
     def dst(self, dt):
         return datetime.timedelta(0)
-
-
+        
 def remove_duplicates(a_list):
     s = set()
     for i in a_list:
         s.add(i)
-
+            
     return s
-
 
 def get_license(license_id):
     return Package.get_license_register().get(license_id)
@@ -193,18 +187,14 @@ def normalize_strip_accents(s):
     s = unicodedata.normalize('NFD', s)
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
-
 def portal_url():
     return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
-
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
 
-
 def adobe_analytics_login_required(current_url):
-    return "2"  # return 1 if page requires a login and 2 if page is public
-
+    return "2" #return 1 if page requires a login and 2 if page is public
 
 def adobe_analytics_lang():
     if h.lang() == 'en':
@@ -212,44 +202,36 @@ def adobe_analytics_lang():
     elif h.lang() == 'fr':
         return 'fra'
 
-
 def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
-
-
+    
 def loop11_key():
     return str(config.get('loop11.key', ''))
-
 
 def drupal_session_present(request):
     for name in request.cookies.keys():
         if name.startswith("SESS"):
             return True
-
+    
     return False
-
-
+    
 def parse_release_date_facet(facet_results):
     counts = facet_results['counts'][1::2]
     ranges = facet_results['counts'][0::2]
     facet_dict = dict()
-
+    
     if len(counts) == 0:
         return dict()
     elif len(counts) == 1:
         if ranges[0] == facet_results['start']:
-            facet_dict = {
-                'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'}}
+            facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
         else:
-            facet_dict = {
-                'scheduled': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'}}
+            facet_dict = {'scheduled': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
     else:
-        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'},
-                      'scheduled': {'count': counts[1],
-                                    'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'}}
-
+        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
+                      'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
+    
     return facet_dict
-
 
 def is_ready_to_publish(package):
     portal_release_date = package.get('portal_release_date')
@@ -259,7 +241,6 @@ def is_ready_to_publish(package):
         return True
     else:
         return False
-
 
 def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_type):
     from ckanext.recombinant.tables import get_chromo
@@ -280,20 +261,19 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_t
             out['priority'] = priority
             priority += 1
         fields.append(out)
+
     fids = [f['datastore_id'] for f in chromo['fields']]
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
     return h.snippet('package/wet_datatable.html',
-                     resource_name=resource_name,
-                     resource_id=resource_id,
-                     owner_org=owner_org,
-                     primary_keys=pkids,
-                     dataset_type=dataset_type,
-                     ds_fields=fields)
-
+        resource_name=resource_name,
+        resource_id=resource_id,
+        owner_org=owner_org,
+        primary_keys=pkids,
+        dataset_type=dataset_type,
+        ds_fields=fields)
 
 def fgp_url():
     return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
-
 
 def contact_information(info):
     """
@@ -304,7 +284,6 @@ def contact_information(info):
     except Exception:
         return {}
 
-
 def show_subject_facet():
     '''
     Return True when the subject facet should be visible
@@ -313,13 +292,12 @@ def show_subject_facet():
         return True
     return not show_fgp_facets()
 
-
 def show_fgp_facets():
     '''
     Return True when the fgp facets and map cart should be visible
     '''
     for group in [
-        'topic_category', 'spatial_representation_type', 'fgp_viewer']:
+            'topic_category', 'spatial_representation_type', 'fgp_viewer']:
         if any(f['active'] for f in h.get_facet_items_dict(group)):
             return True
     for f in h.get_facet_items_dict('collection'):
@@ -349,12 +327,9 @@ def json_loads(value):
 def gravatar(*args, **kwargs):
     '''Brute force disable gravatar'''
     return ''
-
-
 def linked_gravatar(*args, **kwargs):
     '''Brute force disable gravatar'''
     return ''
-
 
 # FIXME: terrible, terrible hacks
 def linked_user(user, maxlength=0, avatar=20):
@@ -368,19 +343,17 @@ def linked_user(user, maxlength=0, avatar=20):
     if user:
         name = user.name if model.User.VALID_NAME.match(user.name) else user.id
         displayname = user.display_name
-        if displayname == config.get('ckan.site_id', '').strip():
+        if displayname==config.get('ckan.site_id', '').strip():
             displayname = _('A system administrator')
 
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
 
         return h.literal(h.link_to(
-            displayname,
-            h.url_for(controller='user', action='read', id=name)
+                displayname,
+                h.url_for(controller='user', action='read', id=name)
+            )
         )
-        )
-
-
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
 
@@ -403,23 +376,20 @@ def link_to_user(user, maxlength=0):
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
         return html.tags.link_to(displayname,
-                                 h.url_for(controller='user', action='read', id=_name))
-
+                       h.url_for(controller='user', action='read', id=_name))
 
 def gravatar_show():
     return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
 
-
 def get_datapreview(res_id):
-    # import pdb; pdb.set_trace()
-    dsq_results = ckan.logic.get_action('datastore_search')({}, {'resource_id': res_id, 'limit': 100})
-    return h.snippet('package/wet_datatable.html', ds_fields=dsq_results['fields'], ds_records=dsq_results['records'])
 
+    #import pdb; pdb.set_trace()
+    dsq_results = ckan.logic.get_action('datastore_search')({}, {'resource_id': res_id, 'limit' : 100})
+    return h.snippet('package/wet_datatable.html', ds_fields=dsq_results['fields'], ds_records=dsq_results['records'])
 
 def iso_to_goctime(isodatestr):
     dateobj = dateutil.parser.parse(isodatestr)
     return dateobj.strftime('%Y-%m-%d')
-
 
 def geojson_to_wkt(gjson_str):
     ## Ths GeoJSON string should look something like:
@@ -438,7 +408,7 @@ def geojson_to_wkt(gjson_str):
             pass
         shape = gjson
     except ValueError:
-        return None  # avoid 500 error on bad geojson in DB
+        return None # avoid 500 error on bad geojson in DB
 
     wkt_str = wkt.dumps(shape)
     return wkt_str
@@ -447,7 +417,6 @@ def geojson_to_wkt(gjson_str):
 def url_for_wet_theme(*args):
     file = args[0] or ''
     return h.url_for_wet(file, theme=True)
-
 
 def url_for_wet(*args, **kw):
     file = args[0] or ''
@@ -484,12 +453,12 @@ def _add_extra_longitude_points(gjson):
     out = [[plng, plat]]
     for lng, lat in coords[1:]:
         if plat - fuzz < lat < plat + fuzz:
-            parts = int(abs(lng - plng))
+            parts = int(abs(lng-plng))
             if parts > 300:
                 # something wrong with the data, give up
                 return gjson
             for i in range(parts)[1:]:
-                out.append([(i * lng + (parts - i) * plng) / parts, lat])
+                out.append([(i*lng + (parts-i)*plng)/parts, lat])
         out.append([lng, lat])
         plng, plat = lng, lat
     return {u'coordinates': [out], u'type': u'Polygon'}
@@ -507,7 +476,7 @@ def recombinant_description_to_markup(text):
             markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
         else:
             markup.extend(jinja2.Markup('<br/>'.join(
-                jinja2.escape(t) for t in part.split('\n')
+               jinja2.escape(t) for t in part.split('\n')
             )))
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
