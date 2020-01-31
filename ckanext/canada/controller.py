@@ -50,7 +50,8 @@ from ckantoolkit import (
     get_validator,
     Invalid,
     aslist,
-)
+    )
+
 
 from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from ckanext.recombinant.datatypes import canonicalize
@@ -62,7 +63,6 @@ int_validator = get_validator('int_validator')
 ottawa_tz = timezone('America/Montreal')
 
 log = getLogger(__name__)
-
 
 class IntentionalServerError(Exception):
     pass
@@ -185,8 +185,8 @@ class CanadaController(BaseController):
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
         limit = int(request.params['length'])
-        chromo = h.recombinant_get_chromo(resource_name)
 
+        chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
         unfiltered_response = lc.action.datastore_search(
             resource_id=resource_id,
@@ -226,16 +226,19 @@ class CanadaController(BaseController):
             pkg = lc.action.package_show(id=res['package_id'])
             fids = [f['datastore_id'] for f in chromo['fields']]
             pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-            log.debug(chromo['datastore_primary_key'])
             for row in aadata:
-                row[0] = u'<a href="{0}">{1}</a>'.format(
-                    h.url_for(
-                        controller='ckanext.canada.controller:PDUpdateController',
-                        action='update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=url_part_escape(row[0])),
-                    row[0])
+                row.insert(1, (
+                        u'<a href="{0}" aria-label="' + _("Edit") + '">'
+                        u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                        h.url_for(
+                            controller='ckanext.canada.controller:PDUpdateController',
+                            action='update_pd_record',
+                            owner_org=pkg['organization']['name'],
+                            resource_name=resource_name,
+                            pk=','.join(url_part_escape(row[i+1]) for i in pkids)
+                        )
+                    )
+                )
 
         return json.dumps({
             'draw': draw,
@@ -251,7 +254,7 @@ class CanadaController(BaseController):
             ' if it is re-harvested or updated. Please ensure that the'
             ' record is deleted and purged from the source catalogue in'
             ' order to prevent it from reappearing.'
-        ),
+            ),
             allow_html=True
         )
         lc = LocalCKAN(username=c.user)
@@ -387,7 +390,6 @@ class CanadaUserController(UserController):
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
            or POST the form data to actually do the user registration.
-
            The bulk of this code is pulled directly from
            ckan/controlllers/user.py
         '''
@@ -478,6 +480,7 @@ class CanadaFeedController(FeedController):
 
     def output_feed(self, results, feed_title, feed_description,
                     feed_link, feed_url, navigation_urls, feed_guid):
+
         author_name = config.get('ckan.feeds.author_name', '').strip() or \
             config.get('ckan.site_id', '').strip()
         author_link = config.get('ckan.feeds.author_link', '').strip() or \
@@ -860,7 +863,6 @@ def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
     to errors dict returned. This is required because type errors on any
     field prevent triggers from running so we don't get any other errors
     from the datastore_upsert call.
-
     :param post_data: form data
     :param fields: recombinant fields
     :param pk_fields: list of primary key field ids
