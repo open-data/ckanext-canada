@@ -1,19 +1,47 @@
 {% ckan_extends %}
 
-{% block subtitle %}{{ _('Edit') }} -
-  {{ h.get_translated(res, 'name') }} -
-  {{ h.get_translated(pkg, 'title') }}
+{% import 'macros/canada_read.html' as cr %}
+
+{% block organization_display %}
+  {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
 {% endblock %}
 
-{% block secondary_content %}
+{# we want a wide display for the table #}
+{% block secondary_content %}{% endblock %}
+
+{% block primary_content %}
+<div class="row">
+  <div class="col-md-9">
+    {{ super() }}
+  </div>
+  <aside class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("Guide") }}</div>
+      <div class="panel-body">
+        {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
+             'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
+        %}
+        <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
+        {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
+          'sidebar_extra_content', ''))) }}
+      </div>
+    </div>
+  </aside>
+</div>
 {% endblock %}
 
-{% block primary_content_inner %}
-  <p>
-  <script>
-    document.write('<a class="btn btn-primary" href=\'' + document.referrer + '\';">'+
-        '<i class="fa fa-arrow-left" aria-hidden="true">'+'{{ _("Go back") }}'+'</i></a>');
-  </script>
-  </p>
-  {% block form %}{{ super() }}{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
 {% endblock %}
+
+{% block primary %}
+  {{ super() }}
+  {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+{% endblock %}
+
+

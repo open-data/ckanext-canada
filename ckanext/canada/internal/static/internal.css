@@ -137,8 +137,7 @@ div.dt-button-collection a.dt-button {display: inline-block}
     border-radius: 100px;
     -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-    padding-left: 0px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2)
 }
 
 .activity .item .gravatar {
@@ -334,6 +333,8 @@ div.dt-button-collection a.dt-button {display: inline-block}
     background-color: #8ba669
 }
 
-footer {
-    margin-top: 15px;
+table#dtprv thead .sorting,
+table#dtprv thead .sorting_asc,
+table#dtprv thead .sorting_desc {
+    background-image: none;
 }
