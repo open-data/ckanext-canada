@@ -3,8 +3,8 @@ img.openness-rating-stars {
 }
 
 .facet-item {
-    padding-bottom: 3px;
-    padding-top: 3px;
+      padding-bottom: 3px;
+      padding-top: 3px;
 }
 
 .pkg-rss-feed-text {
@@ -17,7 +17,7 @@ img.openness-rating-stars {
 .table>tfoot>tr>th,
 .table>thead>tr>td,
 .table>thead>tr>th {
-    border: 1px solid #ddd;
+border: 1px solid #ddd;
 }
 .table>caption+thead>tr:first-child>td,
 .table>caption+thead>tr:first-child>th,
@@ -25,16 +25,16 @@ img.openness-rating-stars {
 .table>colgroup+thead>tr:first-child>th,
 .table>thead:first-child>tr:first-child>td,
 .table>thead:first-child>tr:first-child>th {
-    border: 1px solid #ddd;
+border: 1px solid #ddd;
 }
 .td-center {
-    text-align: center;
+text-align: center;
 }
 .td-full {
-    width: 100%;
+width: 100%;
 }
 .resource-list td {
-    vertical-align: middle !important;
+vertical-align: middle !important;
 }
 .alert-error,
 .label-error,
@@ -60,57 +60,29 @@ details.alert-error {
 }
 
 .breadcrumb li:last-child a {
-    background: transparent !important;
-    color: black;
-    pointer-events: none;
-    cursor: default;
-    text-decoration: none;
+  background: transparent !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
 }
 
 .fgpv {
-    height: 700px;
-    border: 1px solid black;
-    margin: 1em 0;
-    position: relative;
+  height: 700px;
+  border: 1px solid black;
+  margin: 1em 0;
+  position: relative;
 }
 .wrapall {
-    word-wrap: break-word;
-    word-break: break-all;
-    white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
 }
 .btn .icon {
-    padding-left: 0;
-    min-height: 0;
-    min-width: 0;
+  padding-left: 0;
+  min-height: 0;
+  min-width: 0;
 }
 .field--name-field-vote {
-    display: none;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-item {
-    text-shadow: none;
-}
-
-#wb-sm li.dropdown-item a {
-    color: #284162;
-    text-align: left;
-    text-decoration: none;
-}
-
-#wb-sm .menu li.dropdown-item a:hover {
-    color: white;
-}
-
-#wb-sm .menu>li {
-    padding:0;
-}
-#wb-sm .menu>li>a {
-    display: block;
-    padding: 1em;
-    text-align: center;
-    text-decoration: none;
+  display: none;
 }
