@@ -390,6 +390,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Arts, Music, Literature
@@ -503,6 +504,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Aboriginal peoples
@@ -1887,6 +1889,7 @@ presets:
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
