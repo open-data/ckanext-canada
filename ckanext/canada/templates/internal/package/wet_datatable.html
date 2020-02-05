@@ -44,7 +44,7 @@
 
   function previewdatatable(){
 
-    $( '#dtprv' ).DataTable({
+    var table = $( '#dtprv' ).DataTable({
       "paging": true,
       "serverSide": true,
       "processing": true,
@@ -112,6 +112,18 @@
 
         }}]
     });
+
+    table
+        .on( 'select', function ( e, dt, type, indexes ) {
+          var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
+          checkbox[0].checked = true;
+
+        } )
+        .on( 'deselect', function ( e, dt, type, indexes ) {
+          var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
+          checkbox[0].checked = false;
+
+        } );
   };
 
 </script>
