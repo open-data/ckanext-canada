@@ -3230,6 +3230,9 @@ presets:
       mimetype: application/x-filegdb
     - value: Flat raster binary
       replaces: [flat raster binary]
+    - value: GDB
+      mimetype: application/x-filegdb
+      label: GeoSoftDatabases
     - value: GeoPDF
       mimetype: application/pdf
       replaces: [geopdf]
@@ -3252,6 +3255,9 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GRD
+      mimetype: application/x-filegrd
+      label: GeoSoftGrids
     - value: GRIB1
     - value: GRIB2
     - value: HDF
