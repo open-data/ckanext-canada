@@ -1,116 +1,129 @@
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
 {% if chromo.edit_form %}
-  {% set offset = 2 %}
+{% set offset = 2 %}
 {% else %}
-  {% set offset = 1 %}
+{% set offset = 1 %}
 {% endif %}
 
-
-
 <section>
+
   <h2 id="prtable">{{_("Preview")}}</h2>
-    <table id="dtprv" class="table table-striped"
-      data-role="table"
-      data-mode="columntoggle" >
+  <table id="dtprv" class="table table-striped"
+         data-role="table"
+         data-mode="columntoggle" >
     <thead>
-      <tr class="font-small">
-        <th scope="col" data-priority="dtprv-1000"></th>
-        {% if chromo.edit_form %}
-          <th scope="col" data-priority="dtprv-999">{{ _('Edit') }}</th>
-        {% endif %}
-        {% set magic_priority_no_field_should_be_below = 2 %}
-        {% for field in ds_fields %}
-          <th scope="col" data-priority="dtprv-{{
+    <tr class="font-small">
+      <th scope="col" data-priority="dtprv-1000"></th>
+      {% if chromo.edit_form %}
+      <th scope="col" data-priority="dtprv-999">{{ _('Edit') }}</th>
+      {% endif %}
+      {% set magic_priority_no_field_should_be_below = 2 %}
+      {% for field in ds_fields %}
+      <th scope="col" data-priority="dtprv-{{
               field.priority + magic_priority_no_field_should_be_below
-              }}">{{field.label}}</th>
-        {% endfor %}
-      </tr>
+              }}">{{field.label}}<span class="sorting-cnt"><span class="sorting-icons"></span></span></th>
+      {% endfor %}
+    </tr>
     </thead>
     <tbody>
     </tbody>
   </table>
 </section>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" defer></script>
 <script type="text/javascript">
+  window.onload = function() {
+    window.document.body.onload = previewdatatable();
+  };
 
+  function previewdatatable(){
 
-  $( '#dtprv' ).DataTable({
-    "paging": true,
-    "serverSide": true,
-    "processing": true,
-    "ajax": {
-      "url": "{{ h.url_for(
-      controller='ckanext.canada.controller:CanadaController',
-      action='datatable',
-      resource_name=resource_name,
-      resource_id=resource_id,
-  ) }}",
-  "type": "POST"
-  },
-  select:{style: 'multi'},
-  "order": [[1, "asc"]],
-          columns: [
-    {"className":"select-checkbox","orderable":false,"targets":0},
-    {% if chromo.edit_form %}
-  {"className": "bg-info", "orderable": false, "targets": "no-sort"},
-  {% endif %}
-  {% for f in chromo.fields %}
-  {{- "null" if 'preview_class' not in f else
-    '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
-  {%- if not loop.last %},{% endif %}
-  {% endfor %}],
-  dom: "Blfrtip",
-  language:{
-    search: "Filter:"
-  },
-  buttons: [
-    'colvis',
-    {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
+    var table = $( '#dtprv' ).DataTable({
+      "paging": true,
+      "serverSide": true,
+      "processing": true,
+      "ajax": {
+        "url": "{{ h.url_for(
+        controller='ckanext.canada.controller:CanadaController',
+        action='datatable',
+        resource_name=resource_name,
+        resource_id=resource_id,
+    ) }}",
+    "type": "POST"
+    },
+    select:{style: 'multi'},
+    "order": [[1, "asc"]],
+    columns: [
+      {"className":"checkboxes","orderable":false,"targets":0},
+      {% if chromo.edit_form %}
+      {"className": "bg-info", "orderable": false, "targets": "no-sort"},
+      {% endif %}
+      {% for f in chromo.fields %}
+      {{- "null" if 'preview_class' not in f else
+        '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
+      {%- if not loop.last %},{% endif %}
+      {% endfor %}],
+    dom: "Blfrtip",
+    language:{
+      search: "Filter:"
+    },
+    buttons: [
+      'colvis',
+      {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
 
-        var form = $('<form>',{
-          action : "{% url_for 'recombinant_template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
-          method : "post"
-        });
-
-        form.append($('<input>').attr({
-          type: 'hidden',
-          value: "{{resource_name}}",
-          name: 'resource_name'
-        }));
-
-        form.append($('<input>').attr({
-          type: 'hidden',
-          value: {{primary_keys}},
-          name: 'key_indices'
-        }));
-
-        var pk_cols = {{primary_keys}}.map( function(value) {
-          return value + {{offset}};
-        } );
-
-        let rows = dt.rows( { selected: true } );
-
-        rows.eq(0).each( function ( index ) {
+          var form = $('<form>',{
+            action : "{% url_for 'recombinant_template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
+            method : "post"
+          });
 
           form.append($('<input>').attr({
             type: 'hidden',
-            value: dt.cells( index, pk_cols ).data().toArray(),
-            name: 'bulk-template'
+            value: "{{resource_name}}",
+            name: 'resource_name'
           }));
+
+          form.append($('<input>').attr({
+            type: 'hidden',
+            value: {{primary_keys}},
+          name: 'key_indices'
+        }));
+
+          var pk_cols = {{primary_keys}}.map( function(value) {
+            return value + {{offset}};
+          } );
+
+          let rows = dt.rows( { selected: true } );
+          rows.eq(0).each( function ( index ) {
+
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: dt.cells( index, pk_cols ).data().toArray(),
+              name: 'bulk-template'
+            }));
+          } );
+
+          form.appendTo('body').submit();
+
+        }}]
+    });
+
+    table
+        .on( 'select', function ( e, dt, type, indexes ) {
+          var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
+          checkbox[0].checked = true;
+
+        } )
+        .on( 'deselect', function ( e, dt, type, indexes ) {
+          var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
+          checkbox[0].checked = false;
+
         } );
-
-        form.appendTo('body').submit();
-
-      }}]
-  });
+  };
 
 </script>
-
