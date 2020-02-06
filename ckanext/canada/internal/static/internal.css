@@ -337,3 +337,10 @@ div.dt-button-collection a.dt-button {display: inline-block}
 footer {
     margin-top: 15px;
 }
+
+/* The styling below hides the native sort buttons provided by Datatables */
+table#dtprv thead .sorting,
+table#dtprv thead .sorting_asc,
+table#dtprv thead .sorting_desc {
+    background-image: none;
+}
