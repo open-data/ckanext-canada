@@ -113,7 +113,7 @@ resources:
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir les trois premiers chiffres d’un code postal dans le format A1A ou la valeur « NA »
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'AND({cell}<>"NA",OR(CODE(LEFT({cell}&" ",1))<65,CODE(LEFT({cell}&" ",1))>90,NOT(ISNUMBER(MID({cell}&"  ",2,1))),CODE(MID({cell}&"   ",3,1))<65,CODE(MID({cell}&"   ",3,1))>90))'
+    excel_error_formula: 'AND({cell}<>"NA",OR(CODE(LEFT({cell}&" ",1))<65,CODE(LEFT({cell}&" ",1))>90,NOT(ISNUMBER(VALUE(MID({cell}&"  ",2,1)))),CODE(MID({cell}&"   ",3,1))<65,CODE(MID({cell}&"   ",3,1))>90))'
     datastore_type: text
 
   - datastore_id: buyer_name
