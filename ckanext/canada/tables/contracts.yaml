@@ -500,6 +500,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: text
     excel_full_text_choices: false
     excel_column_width: 40
+    choice_order_expression: 'len(code), code'
     choices:
       "0":
         lookup: [NONE]
