@@ -268,15 +268,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
-        If Commodity Type is a Service (S) or Construction (C) this field must not be empty and must be a valid date. 
-        Non-empty cell for Goods (Commodity Type = G) contracts: Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field.
+        If Commodity Type is a Service (S) or Construction (C) this field must not be empty and must be a valid date.
 
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
-        Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.  
-        Cellule non-vide pour les marché de biens (Type de produit = G) : Type de produit G pour les biens, ce qui requière une Date de livraison et non une Date de début du marché. Prière de changer le Type de produit pour S ou de retirer la date du champ Date de début du marché.
+        Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.
     excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{commodity_type}<>"G")'
-    excel_error_formula: 'AND({commodity_type}="G",NOT(ISBLANK({cell})))'
     datastore_type: date
 
   - datastore_id: delivery_date
@@ -788,18 +785,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: |
         Mandatory for contracts after 2022-01-01
 
-        If the value XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable:
+        If any value besides XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable:
         - Comprehensive Land Claim Agreement
         - Procurement Strategy for Aboriginal Business
         - Procurement Strategy for Aboriginal Business Incidental Indicator
 
         If the value XX (none) is entered, then no other value can be entered in this field.
 
-        This field must be blank if the Agreement Type field is not blank. 
+        This field must be blank if the Agreement Type field is not blank.
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
 
-        Si la valeur XX (aucun) est inscrite ici, alors les champs suivants doivent être identifiés comme étant NA ou N, le cas échéant:
+        Si une valeur autre que XX (aucun) est inscrite ici, alors les champs suivants doivent être identifiés comme étant NA ou N, le cas échéant:
         - Entente sur les revendications territoriales globales
         - Stratégie d’approvisionnement auprès des entreprises autochtones
         - Stratégie d’approvisionnement auprès des entreprises autochtones, indicateur d’incidence
@@ -808,7 +805,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Ce champ doit être vide si le champ Type d’accord n’est pas vide.
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"),AND({cell}="XX",OR({land_claims}<>"NA",{aboriginal_business}<>"NA",{aboriginal_business_incidental}<>"N")))'
+    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"),AND({cell}<>"XX",OR({land_claims}<>"NA",{aboriginal_business}<>"NA",{aboriginal_business_incidental}<>"N")))'
     datastore_type: _text
     choices:
       XX:
@@ -871,15 +868,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         If the value NA (not applicable) is entered, then no other value can be entered in this field.
 
-        This field must be blank if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable. 
+        This field must be NA if the Trade Agreement field is not XX (none).
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01.
 
         Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Ce champ doit être vide si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
+        Ce champ doit être NA si le Accord commercial ne contiennent pas la valeur XX (aucun).
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"),{trade_agreement}<>"0")'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"),AND({cell}<>"NA",{trade_agreement}<>"XX"))'
     datastore_type: _text
     choices:
       NA:
@@ -1070,12 +1067,16 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Mandatory for contracts after 2019-01-01.
 
         If the value 00 (none) is entered, then no other value can be entered in this field.
+
+        If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01.
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
+
+        Si TC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({solicitation_procedure}="TC",{trade_agreement}<>"XX",{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1113,7 +1114,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: Travaux exécutés sur un bien par un entrepreneur conformément à une garantie (pour les marchés qui sont visés par l’ALEC seulement)
       "31":
         en: Work on a leased building or related property performed only by the lessor (for contracts that are only covered by the CFTA)
-        fr: Travaux exécutés sur un édifice loué ou un bien connexe qui sont réalisés par le locateur seulement (pour les marchés qui sont visés par l’ALEC                                      seulement)
+        fr: Travaux exécutés sur un édifice loué ou un bien connexe qui sont réalisés par le locateur seulement (pour les marchés qui sont visés par l’ALEC seulement)
       "32":
         en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
         fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
@@ -1244,13 +1245,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: |
         Mandatory for contracts after 2022-01-01
 
-        This field must be NA (none) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.
+        This field must be NA (none) if the Trade Agreement field is not XX (none).
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
 
-        Ce champ doit être NA (aucune) si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
+        Ce champ doit être NA (aucune) si les champs Accord commercial ne contiennent pas la valeur XX (aucun).
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",OR(AND(NOT(ISEMPTY({agreement_type_code})),{agreement_type_code}<>"0"),AND(NOT(ISEMPTY({trade_agreement})),{trade_agreement}<>"XX"))))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",{trade_agreement}<>"XX"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1568,14 +1569,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         vi. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
     validation:
       en: |
-        This field may only be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
-        This field may only be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field. 
+        This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
+        This field must be populated with a “0” if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field as well as a value other than TN was identified in the Solicitation Procedure data field.
       fr: |
-        Cette zone peut uniquement contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
-        Cette zone peut uniquement contenir un « 0 » si une commande subséquente à une offre à commande ou un arrangement en matière d’approvisionnement a été identifiée dans le champ Entité contractante. 
+        Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
+        Cette zone doit contenir un « 0 » si une commande subséquente à une offre à commande ou un arrangement en matière d’approvisionnement a été identifiée dans le champ Entité contractante.
     datastore_type: int
-    excel_error_formula: ' OR({default_formula},AND({cell}=1,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))),AND({cell}=0,NOT(OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"))))'
-
+    excel_error_formula: 'OR({default_formula},AND({cell}<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")),AND({cell}<>0,OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA"),{solicitation_procedure}<>"TN"))'
   - datastore_id: article_6_exceptions
     label:
       en: Section 6 Government Contracts Regulations Exceptions
@@ -1767,9 +1767,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.commodity_type <> 'G' THEN
           errors := errors || required_error(NEW.contract_period_start, 'contract_period_start');
         END IF;
-        IF NEW.contract_date >= '2022-01-01'::date AND NEW.commodity_type = 'G' AND NEW.contract_period_start IS NOT NULL THEN
-          errors := errors || ARRAY[['contract_period_start', 'Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field']];
-        END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.instrument_type = 'A' THEN
           errors := errors || required_error(NEW.amendment_value, 'amendment_value');
@@ -1788,11 +1785,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.contract_date >= '2022-01-01'::date AND NEW.trade_agreement = '{{XX}}' AND (
+        IF NEW.contract_date >= '2022-01-01'::date AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND (
             NEW.land_claims <> '{{NA}}' OR
             NEW.aboriginal_business <> 'NA' OR
             NEW.aboriginal_business_incidental <> 'N' ) THEN
-          errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, Procurement Strategy for Aboriginal Business Incidental Indicator']];
+          errors := errors || ARRAY[['trade_agreement', 'If any value besides XX (none) is entered here, then the following three fields must be identified as NA or N, as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, Procurement Strategy for Aboriginal Business Incidental Indicator']];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
@@ -1818,10 +1815,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         NEW.land_claims = crval.clean;
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
-        ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND (
-            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+        ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND NEW.trade_agreement <> '{{XX}}' THEN
+          errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1864,6 +1859,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
+        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+          errors := errors || ARRAY[['limited_tendering_reason', 'If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
+        END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
           -- zero-pad numbers to match controlled list
@@ -1884,10 +1882,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
-        IF NEW.aboriginal_business <> '' AND NEW.aboriginal_business <> 'NA' AND (
-            (NEW.agreement_type_code <> '' AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
+        IF NEW.aboriginal_business <> '' AND NEW.aboriginal_business <> 'NA' AND NEW.trade_agreement <> '{{XX}}' THEN
+          errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
         END IF;
 
         NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
@@ -1953,13 +1949,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           {ministers_office},
           'ministers_office');
 
-        IF NEW.number_of_bids = 1 THEN
-          IF NOT (NEW.solicitation_procedure = ANY('{{TN,AC}}')) THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC)']];
+        IF NEW.number_of_bids IS NOT NULL THEN
+          IF NEW.solicitation_procedure = ANY('{{TN,AC}}') AND NEW.number_of_bids <> 1 THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).']];
           END IF;
-        ELSIF NEW.number_of_bids = 0 THEN
-          IF NOT (NEW.contracting_entity = ANY('{{PWSOSA,SSCSOSA}}')) THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field may only be populated with a 0 if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field']];
+          IF NEW.contracting_entity = ANY('{{PWSOSA,SSCSOSA}}') AND NEW.solicitation_procedure <> 'TN' AND NEW.number_of_bids <> 0 THEN
+            errors := errors || ARRAY[['number_of_bids', 'This field must be populated with a 0 if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field as well as a value other than TN was identified in the Solicitation Procedure data field.']];
           END IF;
         END IF;
 
@@ -2014,7 +2009,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       intellectual_property: "A2"
       potential_commercial_exploitation: "N"
       former_public_servant: "Y"
-      contracting_entity: "PWSOSA"
+      contracting_entity: "DC"
       standing_offer_number: "EN578-160553/001/ZL"
       instrument_type: "C"
       ministers_office: "Y"
