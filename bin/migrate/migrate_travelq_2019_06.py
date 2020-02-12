@@ -143,7 +143,10 @@ try:
                 error(f, line[f])
                 break
         else:
-            line['user_modified'] = '*'  # special "we don't know" value
+            if 'warehouse' in sys.argv[1:]:
+                line['user_modified'] = ''  # special "we don't know" value
+            else:
+                raise KeyError("Invalid value")
             out_csv.writerow(line)
 
 except KeyError:

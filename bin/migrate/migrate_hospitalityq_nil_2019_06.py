@@ -16,7 +16,10 @@ try:
     for line in in_csv:
 
         q = line.pop('quarter')
-        line['user_modified'] = '*'  # special "we don't know" value
+        if 'warehouse' in sys.argv[1:]:
+            line['user_modified'] = ''  # special "we don't know" value
+        else:
+            raise KeyError("Invalid value")
         if q == 'Q1':
             line['month'] = 'P01'
             out_csv.writerow(line)

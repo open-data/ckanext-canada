@@ -67,7 +67,10 @@ try:
         line['additional_information_fr'] = (
             line.pop('comments_fr') + '\t' + line.pop('additional_info_fr')).strip()
         line['amendment_number'] = '0'
-        line['user_modified'] = '*'  # special "we don't know" value
+        if 'warehouse' in sys.argv[1:]:
+            line['user_modified'] = ''  # special "we don't know" value
+        else:
+            raise KeyError("Invalid value")
         out_csv.writerow(line)
 
 except KeyError:
