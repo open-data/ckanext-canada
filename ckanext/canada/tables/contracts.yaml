@@ -1815,7 +1815,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         NEW.land_claims = crval.clean;
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
-        ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND NEW.trade_agreement <> '{{XX}}' THEN
+        ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND NEW.trade_agreement <> '{{}}' AND 'NEW.trade_agreement' <> '{{XX}}' THEN
           errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
         END IF;
 
@@ -1859,7 +1859,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
         END IF;
 
