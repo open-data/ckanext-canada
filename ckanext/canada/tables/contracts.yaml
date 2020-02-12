@@ -1785,7 +1785,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
           errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.contract_date >= '2022-01-01'::date AND NEW.trade_agreement <> '{{XX}}' AND (
+        IF NEW.contract_date >= '2022-01-01'::date AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND (
             NEW.land_claims <> '{{NA}}' OR
             NEW.aboriginal_business <> 'NA' OR
             NEW.aboriginal_business_incidental <> 'N' ) THEN
@@ -1859,7 +1859,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> 'XX' AND NEW.limited_tendering_reason = '{{00}}' THEN
+        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
         END IF;
 
@@ -2009,7 +2009,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       intellectual_property: "A2"
       potential_commercial_exploitation: "N"
       former_public_servant: "Y"
-      contracting_entity: "PWSOSA"
+      contracting_entity: "DC"
       standing_offer_number: "EN578-160553/001/ZL"
       instrument_type: "C"
       ministers_office: "Y"

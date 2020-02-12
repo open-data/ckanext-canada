@@ -126,7 +126,7 @@ class TestContracts(FunctionalTestBase):
             instrument_type='A',
             buyer_name='Smith',
             economic_object_code='NA',
-            trade_agreement=['XX'],
+            trade_agreement=['CA'],
             land_claims=['JN'],
             award_criteria='0',
         )
@@ -143,11 +143,14 @@ class TestContracts(FunctionalTestBase):
                 'If N/A, then Instrument Type must be identified '
                 'as a standing offer/supply arrangement (SOSA)'],
             'trade_agreement': [
-                'If the value XX (none) is entered here, then the following '
+                'If any value besides XX (none) is entered here, then the following '
                 'three fields must be identified as NA or N, as applicable: '
                 'Comprehensive Land Claim Agreement, Procurement Strategy '
                 'for Aboriginal Business, Procurement Strategy for '
                 'Aboriginal Business Incidental Indicator'],
+            'land_claims': [
+                'This field must be NA (not applicable) if the Trade Agreement field '
+                'is not XX (none).'],
             'award_criteria': [
                 'This field may only be populated with "0" if the procurement '
                 'was identified as non-competitive (TN) or advance contract '
@@ -171,28 +174,6 @@ class TestContracts(FunctionalTestBase):
             'vendor_postal_code': [
                 'This field must contain the first three digits of a postal code '
                 'in A1A format or the value "NA"'],
-        }
-        for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
-
-    def test_goods_start_date(self):
-        lc = LocalCKAN()
-        record = dict(
-            get_chromo('contracts')['examples']['record'],
-            contract_date='2022-01-01',
-            commodity_type='G',
-            contract_period_start='2020-01-01')
-        with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[record])
-        err = ve.exception.error_dict['records'][0]
-        expected = {
-            'contract_period_start': [
-                'Commodity Type of G for Goods which requires a Delivery Date and '
-                'not a Contract Period Start Date. Please either change the '
-                'Commodity Type to S or remove the date from the Contract Period '
-                'Start Date field'],
         }
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
