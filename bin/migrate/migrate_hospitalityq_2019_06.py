@@ -66,44 +66,48 @@ def error(msg, value=''):
     if err_csv:
         err_csv.writerow(original)
 
-for line in in_csv:
-    original = dict(line)
+try:
+    for line in in_csv:
+        original = dict(line)
 
-    line['vendor_en'] = ''
-    line['vendor_fr'] = ''
-    try:
-        line['start_date'] = norm_date(
-            line['start_date'],
-            ORG_PREFER_FORMAT.get(line['owner_org']))
-        if line['start_date'] >= datetime(2019, 6, 21):
-            error('start_date in the future', line['start_date'])
-            continue
-    except ValueError:
-        error('invalid start_date', line['start_date'])
-        continue
-    try:
-        if line['end_date']:
-            line['end_date'] = norm_date(
-                line['end_date'],
+        line['vendor_en'] = ''
+        line['vendor_fr'] = ''
+        try:
+            line['start_date'] = norm_date(
+                line['start_date'],
                 ORG_PREFER_FORMAT.get(line['owner_org']))
-    except ValueError:
-        error('invalid end_date', line['end_date'])
-        continue
-    try:
-        if line['guest_attendees']:
-            line['guest_attendees'] = str(Decimal(line['guest_attendees']))
-            if Decimal(line['guest_attendees']) > 2**31:
-                error('guest_attendees too large', line['guest_attendees'])
+            if line['start_date'] >= datetime(2019, 6, 21):
+                error('start_date in the future', line['start_date'])
                 continue
-    except ValueError:
-        error('invalid guest_attendees', line['guest_attendees'])
-        continue
-    try:
-        if line['total']:
-            line['total'] = str(Decimal(line['total']))
-    except ValueError:
-        error('invalid total', line['total'])
-        continue
+        except ValueError:
+            error('invalid start_date', line['start_date'])
+            continue
+        try:
+            if line['end_date']:
+                line['end_date'] = norm_date(
+                    line['end_date'],
+                    ORG_PREFER_FORMAT.get(line['owner_org']))
+        except ValueError:
+            error('invalid end_date', line['end_date'])
+            continue
+        try:
+            if line['guest_attendees']:
+                line['guest_attendees'] = str(Decimal(line['guest_attendees']))
+                if Decimal(line['guest_attendees']) > 2**31:
+                    error('guest_attendees too large', line['guest_attendees'])
+                    continue
+        except ValueError:
+            error('invalid guest_attendees', line['guest_attendees'])
+            continue
+        try:
+            if line['total']:
+                line['total'] = str(Decimal(line['total']))
+        except ValueError:
+            error('invalid total', line['total'])
+            continue
 
-    line['user_modified'] = '*'  # special "we don't know" value
-    out_csv.writerow(line)
+        line['user_modified'] = '*'  # special "we don't know" value
+        out_csv.writerow(line)
+
+except KeyError:
+    sys.exit(85)

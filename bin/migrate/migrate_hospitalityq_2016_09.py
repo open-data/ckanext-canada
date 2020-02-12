@@ -9,10 +9,14 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
-for line in in_csv:
-    try:
-        line['employee_attendees'] = str(int(line.pop('attendees')))
-    except ValueError:
-        line['employee_attendees'] = '0'
-    line['guest_attendees'] = '0'
-    out_csv.writerow(line)
+try:
+    for line in in_csv:
+        try:
+            line['employee_attendees'] = str(int(line.pop('attendees')))
+        except ValueError:
+            line['employee_attendees'] = '0'
+        line['guest_attendees'] = '0'
+        out_csv.writerow(line)
+
+except KeyError:
+    sys.exit(85)

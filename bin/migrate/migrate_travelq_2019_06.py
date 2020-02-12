@@ -69,79 +69,82 @@ def error(msg, value=None):
     if err_csv:
         err_csv.writerow(original)
 
+try:
+    for line in in_csv:
+        original = dict(line)
 
-for line in in_csv:
-    original = dict(line)
-
-    if not line['ref_number'].strip():
-        error('missing ref_number')
-        continue
-
-    try:
-        line['start_date'] = norm_date(
-            line['start_date'],
-            ORG_PREFER_FORMAT.get(line['owner_org']))
-        if line['start_date'] >= datetime(2019, 6, 21):
-            error('start_date in the future', line['start_date'])
+        if not line['ref_number'].strip():
+            error('missing ref_number')
             continue
-    except ValueError:
-        error('invalid start_date', line['start_date'])
-        continue
-    try:
-        if line['end_date']:
-            line['end_date'] = norm_date(
-                line['end_date'],
+
+        try:
+            line['start_date'] = norm_date(
+                line['start_date'],
                 ORG_PREFER_FORMAT.get(line['owner_org']))
-    except ValueError:
-        error('invalid end_date', line['end_date'])
-        continue
-
-    # fix cic shifted columns
-    if line['owner_org'] == 'cic':
+            if line['start_date'] >= datetime(2019, 6, 21):
+                error('start_date in the future', line['start_date'])
+                continue
+        except ValueError:
+            error('invalid start_date', line['start_date'])
+            continue
         try:
-            Decimal(line['additional_comments_en'])
-            Decimal(line['additional_comments_fr'])
+            if line['end_date']:
+                line['end_date'] = norm_date(
+                    line['end_date'],
+                    ORG_PREFER_FORMAT.get(line['owner_org']))
+        except ValueError:
+            error('invalid end_date', line['end_date'])
+            continue
+
+        # fix cic shifted columns
+        if line['owner_org'] == 'cic':
             try:
-                Decimal(line['airfare'])
+                Decimal(line['additional_comments_en'])
+                Decimal(line['additional_comments_fr'])
+                try:
+                    Decimal(line['airfare'])
+                except (ValueError, InvalidOperation):
+                    pass
+                else:
+                    raise ValueError
+                try:
+                    Decimal(line['other_transport'])
+                except (ValueError, InvalidOperation):
+                    pass
+                else:
+                    raise ValueError
             except (ValueError, InvalidOperation):
                 pass
             else:
-                raise ValueError
+                c1 = line['airfare']
+                c2 = line['other_transport']
+                c3 = line['accomodation']
+                c4 = line['meals']
+                c5 = line['other_expenses']
+                c6 = line['total']
+                c7 = line['additional_comments_en']
+                c8 = line['additional_comments_fr']
+                line['airfare'] = c3
+                line['other_transport'] = c4
+                line['accomodation'] = c5
+                line['meals'] = c6
+                line['other_expenses'] = c7
+                line['total'] = c8
+                line['additional_comments_en'] = c1
+                line['additional_comments_fr'] = c2
+
+        line['lodging'] = line.pop('accomodation')
+
+        for f in 'airfare', 'other_transport', 'lodging', 'meals', 'other_expenses', 'total':
             try:
-                Decimal(line['other_transport'])
+                if line[f]:
+                    line[f] = str(Decimal(line[f]))
             except (ValueError, InvalidOperation):
-                pass
-            else:
-                raise ValueError
-        except (ValueError, InvalidOperation):
-            pass
+                error(f, line[f])
+                break
         else:
-            c1 = line['airfare']
-            c2 = line['other_transport']
-            c3 = line['accomodation']
-            c4 = line['meals']
-            c5 = line['other_expenses']
-            c6 = line['total']
-            c7 = line['additional_comments_en']
-            c8 = line['additional_comments_fr']
-            line['airfare'] = c3
-            line['other_transport'] = c4
-            line['accomodation'] = c5
-            line['meals'] = c6
-            line['other_expenses'] = c7
-            line['total'] = c8
-            line['additional_comments_en'] = c1
-            line['additional_comments_fr'] = c2
+            line['user_modified'] = '*'  # special "we don't know" value
+            out_csv.writerow(line)
 
-    line['lodging'] = line.pop('accomodation')
-
-    for f in 'airfare', 'other_transport', 'lodging', 'meals', 'other_expenses', 'total':
-        try:
-            if line[f]:
-                line[f] = str(Decimal(line[f]))
-        except (ValueError, InvalidOperation):
-            error(f, line[f])
-            break
-    else:
-        line['user_modified'] = '*'  # special "we don't know" value
-        out_csv.writerow(line)
+except KeyError:
+    sys.exit(85)

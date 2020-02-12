@@ -11,7 +11,11 @@ reader = csv.DictReader(sys.stdin)
 writer = csv.DictWriter(sys.stdout, fieldnames=reader.fieldnames)
 writer.writeheader()
 
-for row in reader:
-    row['foreign_currency_value'] = row['foreign_currency_value'].replace('$', '').replace(',','')
-    row['agreement_value'] = row['agreement_value'].replace('$', '').replace(',','')
-    writer.writerow(row)
+try:
+    for row in reader:
+        row['foreign_currency_value'] = row['foreign_currency_value'].replace('$', '').replace(',','')
+        row['agreement_value'] = row['agreement_value'].replace('$', '').replace(',','')
+        writer.writerow(row)
+
+except KeyError:
+    sys.exit(85)

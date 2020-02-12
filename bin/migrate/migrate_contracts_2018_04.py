@@ -55,52 +55,55 @@ def norm_money(m):
         m = m.replace(',', '.')
     return unicode(Decimal(m))
 
+try:
+    for line in in_csv:
+        try:
+            bad_field, bad_date = 'contract_date', line['contract_date']
+            line['contract_date'] = norm_date(line['contract_date'])
+            bad_field, bad_date = 'contract_period_start', line['contract_period_start']
+            if bad_date:
+                line['contract_period_start'] = norm_date(line['contract_period_start'])
+            bad_field, bad_date = 'delivery_date', line['delivery_date']
+            if bad_date:
+                line['delivery_date'] = norm_date(line['delivery_date'])
+        except ValueError:
+            sys.stderr.write(u'{org} {pid} {field} "{date}"\n'.format(
+                field=bad_field,
+                date=bad_date,
+                pid=line['reference_number'],
+                org=line['owner_org']).encode('utf-8'))
+            continue
 
-for line in in_csv:
-    try:
-        bad_field, bad_date = 'contract_date', line['contract_date']
-        line['contract_date'] = norm_date(line['contract_date'])
-        bad_field, bad_date = 'contract_period_start', line['contract_period_start']
-        if bad_date:
-            line['contract_period_start'] = norm_date(line['contract_period_start'])
-        bad_field, bad_date = 'delivery_date', line['delivery_date']
-        if bad_date:
-            line['delivery_date'] = norm_date(line['delivery_date'])
-    except ValueError:
-        sys.stderr.write(u'{org} {pid} {field} "{date}"\n'.format(
-            field=bad_field,
-            date=bad_date,
-            pid=line['reference_number'],
-            org=line['owner_org']).encode('utf-8'))
-        continue
+        try:
+            bad_field = 'contract_value'
+            bad_value = line[bad_field]
+            if bad_value:
+                line[bad_field] = norm_money(bad_value)
+            bad_field = 'original_value'
+            bad_value = line[bad_field]
+            if bad_value:
+                line[bad_field] = norm_money(bad_value)
+            bad_field = 'amendment_value'
+            bad_value = line[bad_field]
+            if bad_value:
+                line[bad_field] = norm_money(bad_value)
+        except InvalidOperation:
+            sys.stderr.write(u'{org} {pid} {field} "{value}"\n'.format(
+                field=bad_field,
+                value=bad_value,
+                pid=line['reference_number'],
+                org=line['owner_org']).encode('utf-8'))
+            continue
 
-    try:
-        bad_field = 'contract_value'
-        bad_value = line[bad_field]
-        if bad_value:
-            line[bad_field] = norm_money(bad_value)
-        bad_field = 'original_value'
-        bad_value = line[bad_field]
-        if bad_value:
-            line[bad_field] = norm_money(bad_value)
-        bad_field = 'amendment_value'
-        bad_value = line[bad_field]
-        if bad_value:
-            line[bad_field] = norm_money(bad_value)
-    except InvalidOperation:
-        sys.stderr.write(u'{org} {pid} {field} "{value}"\n'.format(
-            field=bad_field,
-            value=bad_value,
-            pid=line['reference_number'],
-            org=line['owner_org']).encode('utf-8'))
-        continue
+        line['reference_number'] = line['reference_number'].strip()
+        if not line['reference_number']:
+            sys.stderr.write(u'{org} {pid} reference_number ""\n'.format(
+                pid=line['reference_number'],
+                org=line['owner_org']).encode('utf-8'))
+            continue
 
-    line['reference_number'] = line['reference_number'].strip()
-    if not line['reference_number']:
-        sys.stderr.write(u'{org} {pid} reference_number ""\n'.format(
-            pid=line['reference_number'],
-            org=line['owner_org']).encode('utf-8'))
-        continue
+        line['exemption_code'] = line.pop('derogation_code')
+        out_csv.writerow(line)
 
-    line['exemption_code'] = line.pop('derogation_code')
-    out_csv.writerow(line)
+except KeyError:
+    sys.exit(85)

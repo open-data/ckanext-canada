@@ -119,44 +119,48 @@ def dt(legacy_date):
     return d.strftime('%Y-%m-%d')
 
 def main():
-    in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
+    try:
+        in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 
-    orgs = {}
-    for line in in_csv:
-        try:
-            row = {
-                'registration_number': 'A-%06d' % int(line['ID']),
-                'title_en': line['title_en'],
-                'title_fr': line['title_fr'],
-                'description_en': line['description_en'],
-                'description_fr': line['description_fr'],
-                'start_date': dt(line['startdate']),
-                'end_date': dt(line['enddate']),
-                'profile_page_en': line['urladdress_en'],
-                'profile_page_fr': line['urladdress_fr'],
-                'owner_org': ORG_MAP[line['department_en']],
-                'owner_org_title': '',
-                'subjects':
-                    ','.join(SUBJ_MAP[s] for s in line['subjects_en'].split(' | '))
-                    if line['subjects_en'] else '',
-                'user_modified': '*',  # special "we don't know" value
-                'publishable': 'Y',
-                'report_available_online': 'N',
-                'high_profile': 'N',
-                'status': 'CN',
-            }
-            if not row['title_fr']:
-                sys.stderr.write(line['ID'] + ': missing title_fr\n')
-            else:
-                orgs.setdefault(row['owner_org'], []).append(row)
-        except KeyError as err:
-            sys.stderr.write(line['ID'] + ': ' + str(err) + '\n')
+        orgs = {}
+        for line in in_csv:
+            try:
+                row = {
+                    'registration_number': 'A-%06d' % int(line['ID']),
+                    'title_en': line['title_en'],
+                    'title_fr': line['title_fr'],
+                    'description_en': line['description_en'],
+                    'description_fr': line['description_fr'],
+                    'start_date': dt(line['startdate']),
+                    'end_date': dt(line['enddate']),
+                    'profile_page_en': line['urladdress_en'],
+                    'profile_page_fr': line['urladdress_fr'],
+                    'owner_org': ORG_MAP[line['department_en']],
+                    'owner_org_title': '',
+                    'subjects':
+                        ','.join(SUBJ_MAP[s] for s in line['subjects_en'].split(' | '))
+                        if line['subjects_en'] else '',
+                    'user_modified': '*',  # special "we don't know" value
+                    'publishable': 'Y',
+                    'report_available_online': 'N',
+                    'high_profile': 'N',
+                    'status': 'CN',
+                }
+                if not row['title_fr']:
+                    sys.stderr.write(line['ID'] + ': missing title_fr\n')
+                else:
+                    orgs.setdefault(row['owner_org'], []).append(row)
+            except KeyError as err:
+                sys.stderr.write(line['ID'] + ': ' + str(err) + '\n')
 
-    sys.stdout.write(codecs.BOM_UTF8)
-    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
-    out_csv.writeheader()
-    for o in sorted(orgs):
-        for row in orgs[o]:
-            out_csv.writerow(row)
+        sys.stdout.write(codecs.BOM_UTF8)
+        out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
+        out_csv.writeheader()
+        for o in sorted(orgs):
+            for row in orgs[o]:
+                out_csv.writerow(row)
+
+    except KeyError:
+        sys.exit(85)
 
 main()

@@ -9,7 +9,11 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
 out_csv.writeheader()
 
-for line in in_csv:
-    if not line.get('unique_identifier') or line['unique_identifier'] == 'None':
-        line['unique_identifier'] = line['ref_number']
-    out_csv.writerow(line)
+try:
+    for line in in_csv:
+        if not line.get('unique_identifier') or line['unique_identifier'] == 'None':
+            line['unique_identifier'] = line['ref_number']
+        out_csv.writerow(line)
+
+except KeyError:
+    sys.exit(85)
