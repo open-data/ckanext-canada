@@ -3,82 +3,109 @@ target_dataset: wrongdoing
 title: Proactive Disclosure - Acts of Founded Wrongdoing
 notes: Access, upload and modify the Acts of Founded Wrongdoing reports for your organization
 
+template_version: 3
+template_updated: 2019-08-20
+
 portal_type: info
 collection: pd
-
-template_updated: 2019-08-20
 
 resources:
 - title: Proactive Disclosure - Founded Wrongdoing
   resource_name: wrongdoing
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
       en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
       fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type:
       en: "FW-2015-Q1-00001 – this sequence will continue for each line item (i.e.: FW-2015-Q1-00001, FW-2015-Q1-00002, FW-2015-Q1-00001….)"
       fr: FW-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. FW-2016-Q1-00001, FW-2016-Q1-00002, FW-2016-Q1-00003….)
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: file_id_number
-    label: File Identification Number
+    label:
+      en: File Identification Number
+      fr: Numéro d’identification du fichier
     description:
       en: This field will contain the file identification number of the founded wrongdoing file.
       fr: Cette zone renferme le numéro d’identification du dossier de l’acte répréhensible constaté.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 20
 
   - datastore_id: file_id_date
-    label: File Identification date
+    label:
+      en: File Identification date
+      fr: Date d’identification du ficher
     description:
       en: This field will provide the date that the file was created/received.
       fr: Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: case_description_en
-    label: English Case Description
+    label:
+      en: English Case Description
+      fr: Description anglaise
     description:
       en: The field will contain the case description, in English.
       fr: Cette zone renferme la description du cas en anglais.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   - datastore_id: case_description_fr
-    label: French Case Description
+    label:
+      en: French Case Description
+      fr: Description française
     description:
       en: This field will contain the case description, in French.
       fr: Cette zone renferme la description du cas en français.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_attrs:
+      size: 60
 
   - datastore_id: findings_conclusions
-    label: Findings and Conclusions
+    label:
+      en: Findings and Conclusions
+      fr: Constatations et Conclusions
     description:
       en: The field will contain value(s) a – f, separated by commas if more than one value.
       fr: Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Controlled List
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/multiple_checkbox.html
     choices:
       a:
         en: a contravention of any Act of Parliament or of the legislature
@@ -115,24 +142,50 @@ resources:
             a) à e)
 
   - datastore_id: recommendations_corrective_measures_en
-    label: English Recommendations and Corrective Measures
+    label:
+      en: English Recommendations and Corrective Measures
+      fr: Recommendations et mesures Correctives anglaises
+    excel_heading:
+      en: |
+        English Recommendations and
+        Corrective Measures
+      fr: |
+        Recommendations et mesures
+        Correctives anglaises
     description:
       en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in English.
       fr: Cette zone renferme les recommandations et mesures correctives en anglais, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: recommendations_corrective_measures_fr
-    label: Recommendations and Corrective Measures
+    label:
+      en: French Recommendations and Corrective Measures
+      fr: Recommendations et mesures Correctives françaises
+    excel_heading:
+      en: |
+        French Recommendations and
+        Corrective Measures
+      fr: |
+        Recommendations et mesures
+        Correctives françaises
     description:
       en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in French.
       fr: Cette zone renferme les recommandations et mesures correctives en français, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free text
     datastore_type: text
-    excel_column_width: 40
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -154,18 +207,30 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFa1be95
-    Font:
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFe2dfa2
 
   triggers:
+  - wrongdoing_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        errors := errors || required_error(NEW.file_id_number, 'file_id_number');
+        errors := errors || required_error(NEW.case_description_en, 'case_description_en');
+        errors := errors || required_error(NEW.case_description_fr, 'case_description_fr');
+        crval := choices_clean_error(NEW.findings_conclusions, {findings_conclusions}, 'findings_conclusions');
+        errors := errors || crval.error;
+        NEW.findings_conclusions := crval.clean;
+        errors := errors || required_error(NEW.recommendations_corrective_measures_en, 'recommendations_corrective_measures_en');
+        errors := errors || required_error(NEW.recommendations_corrective_measures_fr, 'recommendations_corrective_measures_fr');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+
+
   - update_record_modified_created_trigger
 
   examples:
@@ -183,3 +248,16 @@ resources:
     filter_one:
       ref_number: "1980198"
     sort: file_id_date desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF4E4741
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFC1D699
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFC1D699
