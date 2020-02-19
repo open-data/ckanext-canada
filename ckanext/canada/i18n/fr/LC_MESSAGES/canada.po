@@ -2562,24 +2562,14 @@ msgstr "Ce champ doit être N, No ou Non, si le champ Stratégie d’approvision
 msgid "This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
 msgstr "Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC)."
 
-msgid "This field must be populated with a 0 if a Call-up against a standing offer or supply arrangement was identified in the Contracting Entity data field as well as a value other than TN was identified in the Solicitation Procedure data field."
-msgstr "Cette zone doit contenir un « 0 » si une commande subséquente à une offre à commande ou un arrangement en matière d’approvisionnement a été identifiée dans le champ Entité contractante ainsi qu'une valeur autre que TN a été identifiée dans le champ de données Méthode d’invitation à soumissioner."
+msgid "If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field."
+msgstr "Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le champ Type d’instrument."
 
-msgid "This field may only be populated with \"0\" if the procurement was identified as non-competitive (TN) or advance contract award notice (AC)."
-msgstr "Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST))."
-
-msgid "This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice."
-msgstr "Cette  zone peut seulement contenir 1, 2, 3 ou 4 si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC)."
+msgid "If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was identified as Open Bidding (OB), Selective Tendering (ST) or Traditional Competitive (TC)."
+msgstr "Si Cette zone est remplie, il doit contenir un 1, 2, 3, 4 ou 5 si l’acquisition a été identifiée comme étant OB : Concurrentielle – Invitation ouverte à soumissionner (SEAOG), ST : Concurrentielle – Appel d’offres sélectif ou TC : Concurrentielle – Traditionnelle."
 
 msgid "Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field"
 msgstr "Type de produit G pour les biens, ce qui requière une Date de livraison et non une Date de début du marché. Prière de changer le Type de produit pour S ou de retirer la date du champ Date de début du marché"
-
-msgid ""
-"If any value besides XX (none) is entered here, then the following three fields must be identified as NA or N, "
-"as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, "
-"Procurement Strategy for Aboriginal Business Incidental Indicator"
-msgstr ""
-"Si une valeur autre que XX (aucun) est inscrite ici, alors les champs suivants doivent être identifiés comme étant NA ou N, le cas échéant: Entente sur les revendications territoriales globales, Stratégie d’approvisionnement auprès des entreprises autochtones, Stratégie d’approvisionnement auprès des entreprises autochtones, indicateur d’incidence"
 
 msgid ""
 "If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered."
