@@ -142,19 +142,13 @@ class TestContracts(FunctionalTestBase):
             'economic_object_code': [
                 'If N/A, then Instrument Type must be identified '
                 'as a standing offer/supply arrangement (SOSA)'],
-            'trade_agreement': [
-                'If any value besides XX (none) is entered here, then the following '
-                'three fields must be identified as NA or N, as applicable: '
-                'Comprehensive Land Claim Agreement, Procurement Strategy '
-                'for Aboriginal Business, Procurement Strategy for '
-                'Aboriginal Business Incidental Indicator'],
             'land_claims': [
                 'This field must be NA (not applicable) if the Trade Agreement field '
                 'is not XX (none).'],
             'award_criteria': [
-                'This field may only be populated with "0" if the procurement '
-                'was identified as non-competitive (TN) or advance contract '
-                'award notice (AC).'],
+                'If this field is populated, it must be with a 1,2,3,4 or 5 if the '
+                'procurement was identified as Open Bidding (OB), Selective Tendering '
+                '(ST) or Traditional Competitive (TC).'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
