@@ -476,9 +476,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Type d’accord
     description:
       en: |
-        Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
+        Departments are to continue to report under this data field on an interim basis until they are able to report under the new Appendix A Trade Agreement, Comprehensive Land Claims Agreement and Procurement Strategy for Aboriginal Business data fields.
 
-        Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
+This field should be populated to specify which trade agreement(s) apply to the contract.
       fr: |
         Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
 
@@ -1653,7 +1653,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Concurrentielle – Traditionnelle.
     datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure="AC",{instrument_type}="A")),AND({cell}="0",OR({solicitation_procedure}="OB",{soliciation_procedure}="ST",{solicitation_procedure}="TC")))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")),AND({cell}="0",OR({solicitation_procedure}="OB",{solicitation_procedure}="ST",{solicitation_procedure}="TC")))'
     choices:
       "0":
         en: Not applicable
