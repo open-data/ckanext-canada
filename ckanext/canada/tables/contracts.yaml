@@ -1958,7 +1958,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
         END IF;
         IF NEW.award_criteria = '0' AND (
-            NEW.solicitation_procedure = 'OB' OR NEW.soliciation_procedure = 'ST' OR NEW.solicitation_procedure = 'TC') THEN
+            NEW.solicitation_procedure = 'OB' OR NEW.solicitation_procedure = 'ST' OR NEW.solicitation_procedure = 'TC') THEN
           errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was identified as Open Bidding (OB), Selective Tendering (ST) or Traditional Competitive (TC).']];
         END IF;
 
