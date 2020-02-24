@@ -17,6 +17,7 @@ python setup.py develop
 cd -
 
 ln -s ../dl/ckan links/ckan
+pip install psycopg2==2.8.2
 pip install html5lib==0.999
 pip install -r links/ckan/requirements.txt --allow-all-external
 pip install -r links/ckan/dev-requirements.txt --allow-all-external
