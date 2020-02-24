@@ -1,0 +1,83 @@
+
+scheming_version: 2
+dataset_type: prop
+
+about: 'open.canada.ca: Suggested Dataset metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+
+form_languages:
+- en
+- fr
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+
+- preset: canada_title
+- preset: canada_owner_org
+- preset: canada_notes
+
+- field_name: comments
+  label:
+    en: Additional Comments and Feedback
+    fr: Autres commentaires
+  fluent_form_label:
+    en:
+      en: "Additional Comments and Feedback (English)"
+      fr: "Autres commentaires (anglais)"
+    fr:
+      en: "Additional Comments and Feedback (French)"
+      fr: "Autres commentaires (français)"
+  preset: fluent_markdown
+
+- preset: canada_keywords
+
+- field_name: reason
+  label:
+    en: Reason for requesting dataset
+    fr: Raison de la demande d'un jeu de données
+  preset: select_multiple
+  choices:
+  - label:
+      en: Academic
+      fr: Pédagogique
+    value: academic
+  - label:
+      en: Scientific
+      fr: Scientifique
+    value: scientific
+  - label:
+      en: Personal Interest
+      fr: Personnelle
+    value: personal_interest
+  - label:
+      en: Business
+      fr: Opérationnelle
+    value: business
+
+- preset: canada_subject
+
+- preset: canada_resource_format
+
+- field_name: date_submitted
+  help_text:
+    en: The date the submission form was submitted to open-ouvert@tbs-sct.gc.ca. This value will be automatically populated
+    fr: ''
+  label:
+    en: Date suggestion was submitted
+    fr: ''
+  form_snippet: date.html
+  display_snippet: date.html
+  validators: scheming_required isodate
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields: []
