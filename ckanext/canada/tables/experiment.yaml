@@ -110,7 +110,7 @@ resources:
       - datastore_id: project_summary_en
         datastore_type: text
         description:
-          en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in English"
+          en: "This field summarizes the key information about the project, including any findings once the initiative is completed, in English"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
         excel_column_width: 50
         excel_required: true
@@ -164,9 +164,6 @@ resources:
 
       - datastore_id: experimental_area
         choices:
-          LE:
-            en: Legislative
-            fr: Législatif
           PO:
             en: Policy
             fr: Politique
@@ -182,6 +179,9 @@ resources:
           SI:
             en: "Internal Services"
             fr: "Services internes"
+          GC:
+            en: "Grants and Contributions"
+            fr: "Subventions et contributions"
           OA:
             en: Other
             fr: autres
@@ -201,34 +201,186 @@ resources:
         validation: "This field must not be empty"
         visible_to_public: true
 
-      - datastore_id: research_method
+      - datastore_id: research_design
         choices:
-          PRE:
-            en: "Exploratory / Preexperimental"
-            fr: "Exploratoire / préexpérimentale"
           QEX:
             en: Quasi-experimental
-            fr: Quasi-expérimentale
+            fr: Quasi-expérimental
           RDM:
             en: Randomized
-            fr: Randomisée
+            fr: Randomisé
           STR:
             en: "Structured pre-post"
             fr: "Avant-après structuré"
+          OTH:
+            en: Other
+            fr: Autre
         datastore_type: text
         description:
-          en: "This field will describe the research method used for the project."
-          fr: "Ce champ décrira quelle méthode de recherche est employée dans le projet."
+          en: "This field will describe the research design used for the project."
+          fr: "Ce champ décrira le devis de recherche employé dans le projet."
         excel_column_width: 20
         excel_full_text_choices: true
         excel_required: true
         format_type: "Controlled List"
         label:
-          en: "Research method"
-          fr: "Méthode de recherche"
+          en: "Design"
+          fr: "Devis"
         obligation: Mandatory
         occurrence: Single
         validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: design_details_en
+        datastore_type: text
+        description:
+          en: "This field will describe the details of the research design used for the project."
+          fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Design Details (English)"
+          fr: "Devis details (anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: design_details_fr
+        datastore_type: text
+        description:
+          en: "This field will describe the details of the research design used for the project."
+          fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Design Details (French)"
+          fr: "Devis details (français)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: intervention_en
+        datastore_type: text
+        description:
+          en: "This field will describe the intervention tested in the project."
+          fr: "Ce champ décrira l’intervention testée dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Intervention (English)"
+          fr: "Intervention (anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: intervention_fr
+        datastore_type: text
+        description:
+          en: "This field will describe the intervention tested in the project."
+          fr: "Ce champ décrira l’intervention testée dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Intervention (French)"
+          fr: "Intervention (français)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: mesure_des_resultats_en
+        datastore_type: text
+        description:
+          en: "This field will describe the intervention tested in the project."
+          fr: "Ce champ décrira l’intervention testée dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Outcomes (English)"
+          fr: "Mesure des résultats (anglais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: mesure_des_resultats_fr
+        datastore_type: text
+        description:
+          en: "This field will describe the outcomes measured in the project."
+          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Outcomes (French)"
+          fr: "Mesure des résultats (françcais)"
+        obligation: Mandatory
+        occurrence: Single
+        validation: "This field must not be empty"
+        visible_to_public: true
+
+      - datastore_id: resultats_en
+        datastore_type: text
+        description:
+          en: "This field will describe the outcomes measured in the project."
+          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Findings (English)"
+          fr: "Résultats (anglais)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
+        visible_to_public: true
+
+      - datastore_id: resultats_fr
+        datastore_type: text
+        description:
+          en: "This field will describe the findings of the project."
+          fr: "Ce champ décrira les résultats observés dans le projet."
+        excel_column_width: 50
+        excel_required: true
+        format_type: "Free Text (separate paragraphs with two blank lines)"
+        form_snippet: scheming/form_snippets/textarea.html
+        form_attrs:
+            style: "width: 100%; display: block"
+        label:
+          en: "Findings (French)"
+          fr: "Résultats (françcais)"
+        obligation: Optional
+        occurrence: Single
+        validation: None
         visible_to_public: true
 
       - datastore_id: status
@@ -258,32 +410,33 @@ resources:
         validation: "This field must not be empty"
         visible_to_public: true
 
-      - datastore_id: report_to_en
+      - datastore_id: lead_branch_en
         datastore_type: text
         description:
-          en: "This field describes the organizational structure tied to the project owner (if applicable), in English."
+          en: "This field describes the organizational structure tied to the project owner (if applicable), in English"
+          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en anglais"
         excel_column_width: 35
         excel_required: false
         format_type: "Free text"
         label:
-          en: "Reporting to (English)"
-          fr: "Se rapporte à (en anglais)"
+          en: "Lead Branch and/or Unit (English)"
+          fr: "Direction et/ou unité responsable (en anglais)"
         obligation: Optional
         occurrence: Single
         validation: None
         visible_to_public: true
 
-      - datastore_id: report_to_fr
+      - datastore_id: lead_branch_fr
         datastore_type: text
         description:
-          en: "This field describes the organizational structure tied to the project owner (if applicable), in french."
-          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français."
+          en: "This field describes the organizational structure tied to the project owner (if applicable), in French."
+          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français"
         excel_column_width: 35
         excel_required: false
         format_type: "Free text"
         label:
-          en: "Reporting to (French)"
-          fr: "Se rapporte à (en français)"
+          en: "Lead Branch and/or Unit (French)"
+          fr: "Direction et/ou unité responsable (en français))"
         obligation: Optional
         occurrence: Single
         validation: None
@@ -363,7 +516,13 @@ resources:
               errors := errors || required_error(NEW.project_summary_fr, 'project_summary_fr');
               errors := errors || required_error(NEW.last_updated, 'last_updated');
               errors := errors || choice_error(NEW.experimental_area, {experimental_area}, 'experimental_area');
-              errors := errors || choice_error(NEW.research_method, {research_method}, 'research_method');
+              errors := errors || choice_error(NEW.research_design, {research_design}, 'research_design');
+              errors := errors || required_error(NEW.design_details_en, 'design_details_en');
+              errors := errors || required_error(NEW.design_details_fr, 'design_details_fr');
+              errors := errors || required_error(NEW.intervention_en, 'intervention_en');
+              errors := errors || required_error(NEW.intervention_fr, 'intervention_fr');
+              errors := errors || required_error(NEW.mesure_des_resultats_en, 'mesure_des_resultats_en');
+              errors := errors || required_error(NEW.mesure_des_resultats_fr, 'mesure_des_resultats_fr');
               errors := errors || choice_error(NEW.status, {status}, 'status');
               IF errors = '{{}}' THEN
                 RETURN NEW;
@@ -382,23 +541,23 @@ resources:
         info_supplementaire_en: ""
         info_supplementaire_fr: ""
         last_updated: "2019-12-01"
-        project_summary_en: |
-            The experiment was a randomized A/B test that used:
-              the existing landing page for consumer incident reporting (Figure 1)
-              a modified landing page (Figure 2)
-            The intent of the experiment was to determine if changes in language and presentation could successfully encourage users to complete the cosmetic or consumer incident report form.
-        project_summary_fr: |
-            L’expérience était un essai A/B aléatoire qui utilisait les éléments suivants :
-             la page d’accueil existante pour signaler un incident concernant un produit de consommation (Figure 1);
-              une page d’accueil modifiée (Figure 2).
-            UNCLASSIFIED / NON CLASSIFIÉ Template Guide: Experimentation Inventory Le but de l’expérience était de déterminer si des changements dans le libellé et la présentation pourraient inciter les utilisateurs à remplir le rapport d’incident concernant un produit de consommation ou un produit cosmétique.
+        project_summary_en: "This experiment entailed a live, randomized A/B test using the existing consumer incident reporting landing page as well as a modified ‘intervention’ landing page. The intent was to determine if changes in language and presentation could successfully drive online users to continue through to the consumer incident reporting form. That experiment ran between December 12, 2018 and March 11, 2019. During the experimental period, there were 1,999 visits to the intervention landing page and 2,592 to the existing one. After reaching the landing page, visitors would click on a link to enter the consumer incident reporting form. A greater number of visitors from the intervention page entered the consumer incident reporting form (61%), compared to the existing page (27%). This difference in proportions (34%) is statistically significant (p<0. 01). This is an indication that optimizing the landing page content with consumer-focused changes played an important role in retaining consumers within the incident reporting pathway"
+        project_summary_fr: "Cette expérience comportait un test A/B en direct et aléatoire touchant la page de renvoi existante pour la déclaration des incidents concernant un produit de consommation, ainsi que la page de renvoi « intervention » modifiée. L’objectif était de déterminer si le fait d’apporter des changements dans la langue et la présentation pouvait amener les utilisateurs en ligne à naviguer vers le formulaire de déclaration des incidents concernant un produit de consommation. Cette expérience s’est déroulée entre le 12 décembre 2018 et le 11 mars 2019. Au cours de la durée du processus expérimental, il y a eu 1 999 visites à la page de renvoi d’intervention et 2 592 à la page de renvoi existante. Après avoir atteint la page de renvoi, les visiteurs doivent cliquer sur un lien pour entrer dans le formulaire de déclaration d’incident concernant un produit de consommation. Un plus grand nombre de visiteurs provenant de la page d’intervention ont rempli le formulaire de déclaration d’incident concernant un produit de consommation (61 %), comparativement à ceux provenant de la page existante (27 %). Cette différence de pourcentage (34 %) est statistiquement significative (p<0. 01). Cela indique que l’optimisation du contenu de la page de renvoi grâce à des changements axés sur les consommateurs a joué un rôle important dans le maintien des visiteurs dans le processus de déclaration des incidents"
         question_de_recherche_en: "Are enhancements to the landing page, compared to the existing one, resulting in more Canadians proceeding to the consumer incident report form?"
         question_de_recherche_fr: "Les améliorations apportées à la page d’accueil, par rapport à la page existante, ont-elles pour effet d’augmenter le nombre de Canadiens qui utilisent le rapport d’incident pour les produits de consommation?"
         reference_number: HC-2019-EI-00001
-        report_to_en: ""
-        report_to_fr: ""
-        research_method: "STR"
+        research_design: "STR"
+        design_details_en: "The experiment was a randomized A/B test that used the existing landing page for consumer incident reporting and a modified landing page. The intent of the experiment was to determine if changes in language and presentation could successfully encourage users to complete the cosmetic or consumer incident report form. For the experiment, users were sent to either the existing landing page (that is, the control group) or the modified landing page (that is, the experimental group)."
+        design_details_fr: "L’expérience était un essai A/B aléatoire qui utilisait les éléments suivants : la page d’accueil existante pour signaler un incident concernant un produit de consommation; une page d’accueil modifiée. Le but de l’expérience était de déterminer si des changements dans le libellé et la présentation pourraient inciter les utilisateurs à remplir le rapport d’incident concernant un produit de consommation ou un produit cosmétique. En ce qui concerne l’expérience, les utilisateurs ont été dirigés soit vers la page d’accueil existante (c’est‑à-dire le groupe témoin), soit vers la page d’accueil modifiée (c’est-à-dire le groupe expérimental)."
+        intervention_en: "The modified landing page improved the user interface by providing: a button that makes it easier to submit a report form and a plain language instructions on how to fill out the report form. The modified landing page provided clearer direction to users about: which incidents should be reported to the Consumer Product Safety Program, why incidents should be reported to the program, and how to report such incidents."
+        intervention_fr: "La page d’accueil modifiée a amélioré l’interface utilisateur grâce aux éléments suivants : un bouton qui facilite la soumission d’un rapport d’incident; des instructions en langage clair et simple sur la façon de remplir le rapport d’incident. La page d’accueil modifiée fournissait des instructions plus claires aux utilisateurs sur les éléments suivants : les incidents qui devraient être signalés au Programme de la sécurité des produits de consommation; la raison pour laquelle les incidents devraient être signalés au programme; la façon de signaler ces incidents."
+        mesure_des_resultats_en: "There were two main outcomes for this project: the number of unique page visits for each webpage used; the number of visitors accessing the cosmetic or consumer incident report form."
+        mesure_des_resultats_fr: "Il y avait deux mesures principales dans ce projet: le nombre de visites uniques aux pages web employées; le nombre de visiteurs accédant au rapport d’incident concernant un produit de consommation ou un produit cosmétique."
+        resultats_en: "The experiment ran for 3 months, from December 12, 2018, to March 11, 2019. During this time, there were 2,592 page visits to the existing landing page and 1,999 page visits to the modified landing page. After reaching the landing page, visitors would click on a link to access the consumer incident report form. A greater number of visitors of the modified page accessed the cosmetic or consumer incident report form (61%), compared to visitors of the existing page (27%). The difference (34.0%) in the percentage of visitors who accessed the report form is statistically significant. This difference indicates that making the landing page more user-focused played an important role in encouraging users to access the incident report form."
+        resultats_fr: "L’expérience a duré trois mois, du 12 décembre 2018 au 11 mars 2019. Au cours de cette période, la page d’accueil existante a été consultée 2 592 fois et la page d’accueil modifiée, 1 999 fois. Après avoir accédé à la page d’accueil, les visiteurs cliquaient sur un lien pour accéder au rapport d’incident concernant un produit de consommation. Un plus grand nombre de visiteurs de la page modifiée ont accédé au rapport d’incident concernant un produit de consommation ou un produit cosmétique (61 %), comparativement aux visiteurs de la page existante (27 %). La différence (34 %) dans le pourcentage de visiteurs qui ont accédé au rapport d’incident est statistiquement significative. Cette différence indique que le fait de rendre la page d’accueil plus axée sur l’utilisateur a joué un rôle important pour inciter les utilisateurs à accéder au rapport d’incident."
         status: "COM"
+        lead_branch_en: "Consumer Product Safety Program"
+        lead_branch_fr: "Programme de la sécurité des produits de consommation"
         titre_du_projet_en: "Experimenting with content design"
         titre_du_projet_fr: "Expérimentation de la conception de contenu"
 
