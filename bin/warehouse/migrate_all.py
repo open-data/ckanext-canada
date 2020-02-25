@@ -21,7 +21,7 @@ def run_scripts(infile, outfile, matching_files):
 
     # Covers the case where there is only one migration script for the given type
     if len(matching_files) == 1:
-        proc_array.append(subprocess.Popen(["python", matching_files[0]], stdin=subprocess.PIPE, stdout=outfile))
+        proc_array.append(subprocess.Popen(["python", matching_files[0], 'warehouse'], stdin=subprocess.PIPE, stdout=outfile))
 
     else:
         for matching_file in matching_files:
@@ -47,9 +47,8 @@ def run_scripts(infile, outfile, matching_files):
         pass
 
 
-path_to_folder = "./"
-inpath = path_to_folder + sys.argv[1]
-outpath = path_to_folder + sys.argv[2]
+inpath = sys.argv[1]
+outpath = sys.argv[2]
 infile = io.open(inpath, mode='rb')
 outfile = io.open(outpath, mode='wb')
 base = os.path.basename(inpath)
@@ -59,12 +58,12 @@ proc_array = []
 # Check if the input csv file is a *-nil data type, and retrieve only the nil migration scripts
 if "nil" not in pd_type:
     search_pd = '*_{0}_*'.format(pd_type)
-    matching_files = sorted([mf for mf in glob.glob(path_to_folder+search_pd) if "nil" not in mf])
+    matching_files = sorted([mf for mf in glob.glob('../migrate/'+search_pd) if "nil" not in mf])
 
 else:
     pd_type = pd_type.replace("-", "_")
     search_pd = '*_{0}_*'.format(pd_type)
-    matching_files = sorted(glob.glob(path_to_folder + search_pd))
+    matching_files = sorted(glob.glob('../migrate/' + search_pd))
 
 # if there are no migration scripts to run, write the csv file to output file
 if not matching_files:
