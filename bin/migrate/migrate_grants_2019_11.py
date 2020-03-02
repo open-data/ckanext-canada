@@ -18,4 +18,7 @@ try:
         writer.writerow(row)
 
 except KeyError:
-    sys.exit(85)
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise

@@ -125,6 +125,8 @@ def main():
             print >> sys.stderr, 'Error while reading line.'
 
     except KeyError:
-        sys.exit(85)
-
+        if 'warehouse' in sys.argv:
+            sys.exit(85)
+        else:
+            raise
 main()

@@ -14,6 +14,7 @@ assert sys.stdin.read(3) == codecs.BOM_UTF8
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
+sys.stdout.write(codecs.BOM_UTF8)
 out_csv.writeheader()
 
 def norm_date(d):
@@ -70,8 +71,11 @@ try:
         if 'warehouse' in sys.argv[1:]:
             line['user_modified'] = ''  # special "we don't know" value
         else:
-            raise KeyError("Invalid value")
+            line['user_modified'] = '*'
         out_csv.writerow(line)
 
 except KeyError:
-    sys.exit(85)
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise

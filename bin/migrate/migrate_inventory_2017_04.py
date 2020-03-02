@@ -16,4 +16,7 @@ try:
     for line in in_csv:
         out_csv.writerow(line)
 except KeyError:
-    sys.exit(85)
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise

@@ -7,6 +7,8 @@ import glob
 import io
 import os
 import subprocess
+import shutil
+
 
 
 """
@@ -65,42 +67,21 @@ else:
     search_pd = '*_{0}_*'.format(pd_type)
     matching_files = sorted(glob.glob('../migrate/' + search_pd))
 
+while matching_files:
+    try:
+        run_scripts(infile, outfile, matching_files)
+        break
+
+    except IOError as e:
+        print(proc_array[0].poll())
+        if proc_array[0].poll() != 85:
+            raise
+        infile.seek(0)
+        outfile.seek(0)
+        matching_files = matching_files[1:]
 # if there are no migration scripts to run, write the csv file to output file
-if not matching_files:
-    outfile.write(infile.read())
-
 else:
-    while matching_files:
-        try:
-            run_scripts(infile, outfile, matching_files)
-            break
-
-        except IOError:
-            infile.seek(0)
-            outfile.seek(0)
-            if len(matching_files[1:]) == 0:
-                outfile.write(infile.read())
-                matching_files[:] = []
-            else:
-                matching_files = matching_files[1:]
+    shutil.copyfile(inpath, outpath)
 
 infile.close()
 outfile.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

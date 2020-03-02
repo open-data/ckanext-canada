@@ -18,7 +18,7 @@ try:
         if 'warehouse' in sys.argv[1:]:
             line['user_modified'] = ''  # special "we don't know" value
         else:
-            raise KeyError("Invalid value")
+            line['user_modified'] = '*'
         if q == 'Q1':
             line['month'] = 'P01'
             out_csv.writerow(line)
@@ -50,4 +50,7 @@ try:
             out_csv.writerow(line)
 
 except KeyError:
-    sys.exit(85)
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise
