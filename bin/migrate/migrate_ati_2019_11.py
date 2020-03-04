@@ -15,10 +15,9 @@ out_csv.writeheader()
 
 try:
     for line in in_csv:
-        if 'warehouse' in sys.argv[1:]:
-            line['user_modified'] = ''  # special "we don't know" value
-        else:
-            line['user_modified'] = '*'
+        if 'warehouse' not in sys.argv[1:]:
+            line['user_modified'] = '*'  # special "we don't know" value
+
         out_csv.writerow(line)
 
 except KeyError:

@@ -10,10 +10,10 @@ import subprocess
 import shutil
 
 
-
 """
 This script takes proactive disclosure data in the form of a csv file and runs it against the corresponding migration scripts
 """
+
 
 def run_scripts(infile, outfile, matching_files):
 
@@ -72,8 +72,7 @@ while matching_files:
         run_scripts(infile, outfile, matching_files)
         break
 
-    except IOError as e:
-        print(proc_array[0].poll())
+    except IOError:
         if proc_array[0].poll() != 85:
             raise
         infile.seek(0)

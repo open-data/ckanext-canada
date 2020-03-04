@@ -14,11 +14,10 @@ out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf
 out_csv.writeheader()
 
 try:
-    if 'warehouse' in sys.argv[1:]:
-        line['user_modified'] = ''  # special "we don't know" value
-    else:
-        line['user_modified'] = '*'
-    out_csv.writerow(line)
+    for line in in_csv:
+        if 'warehouse' not in sys.argv[1:]:
+            line['user_modified'] = '*'  # special "we don't know" value
+        out_csv.writerow(line)
 
 except KeyError:
     if 'warehouse' in sys.argv:

@@ -15,10 +15,8 @@ out_csv.writeheader()
 try:
     for line in in_csv:
         q = line.pop('quarter')
-        if 'warehouse' in sys.argv[1:]:
-            line['user_modified'] = ''  # special "we don't know" value
-        else:
-            line['user_modified'] = '*'
+        if 'warehouse' not in sys.argv[1:]:
+            line['user_modified'] = '*'  # special "we don't know" value
         if q == 'Q1':
             line['month'] = 'P01'
             out_csv.writerow(line)
