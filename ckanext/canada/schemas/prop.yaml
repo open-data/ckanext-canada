@@ -20,8 +20,11 @@ dataset_fields:
 - preset: canada_dataset_name
 
 - preset: canada_title
+  form_snippet: ro_fluent_title.html
 - preset: canada_owner_org
+  form_snippet: ro_org.html
 - preset: canada_notes
+  form_snippet: ro_fluent_markdown.html
 
 - field_name: comments
   label:
@@ -34,14 +37,17 @@ dataset_fields:
     fr:
       en: "Additional Comments and Feedback (French)"
       fr: "Autres commentaires (français)"
+  form_snippet: ro_fluent_markdown.html
   preset: fluent_markdown
 
 - preset: canada_keywords
+  form_snippet: ro_fluent_tags.html
 
 - field_name: reason
   label:
     en: Reason for requesting dataset
     fr: Raison de la demande d'un jeu de données
+  form_snippet: ro_select.html
   preset: select
   choices:
   - label:
@@ -62,8 +68,10 @@ dataset_fields:
     value: business
 
 - preset: canada_subject
+  form_snippet: ro_multiple_choice.html
 
 - preset: canada_resource_format
+  form_snippet: ro_select.html
 
 - field_name: date_submitted
   help_text:
@@ -72,6 +80,7 @@ dataset_fields:
   label:
     en: Date suggestion was submitted
     fr: ''
+  form_snippet: ro_date.html
   preset: date
 
 - field_name: status

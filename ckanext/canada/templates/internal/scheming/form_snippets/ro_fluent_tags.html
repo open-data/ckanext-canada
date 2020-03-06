@@ -1,0 +1,19 @@
+{# slight abuse of scheming_language_text for selecting the desired
+   language version #}
+{%- set value = h.scheming_language_text(data[field.field_name]) -%}
+<div class="form-group control-medium">
+<label>{{ h.scheming_language_text(field.label) }}</label>
+<section class="tags">
+{% block tag_list %}
+  <ul class="tag-list">
+    {% for tag in value %}
+      <li>
+        <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{%
+          url_for controller='package', action='search', tags=tag %}">{{
+            h.truncate(tag, 22) }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+<section class="tags">
+</div>
