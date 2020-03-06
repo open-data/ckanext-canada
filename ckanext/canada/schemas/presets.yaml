@@ -133,9 +133,6 @@ presets:
       fr:
         en: The French name by which the dataset is known
         fr: Nom français désignant le jeu de données
-    form_placeholder:
-      en: Canada Border Wait Times
-      fr: Temps d’attente à la frontière
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -315,12 +312,6 @@ presets:
       fr:
         en: "Description (French)"
         fr: "Description (français)"
-    form_placeholder:
-      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-        of pollutant releases (to air, water and land), disposals and transfers for
-        recycling. The NPRI includes...
-      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-        des rejets de polluants du Canada…
     fluent_help_text:
       en:
         en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
