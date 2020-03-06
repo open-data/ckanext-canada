@@ -42,7 +42,7 @@ dataset_fields:
   label:
     en: Reason for requesting dataset
     fr: Raison de la demande d'un jeu de données
-  preset: select_multiple
+  preset: select
   choices:
   - label:
       en: Academic
@@ -72,9 +72,67 @@ dataset_fields:
   label:
     en: Date suggestion was submitted
     fr: ''
-  form_snippet: date.html
-  display_snippet: date.html
-  validators: scheming_required isodate
+  preset: date
+
+- field_name: status
+  label:
+    en: Status
+    fr: État
+
+  repeating_subfields:
+
+  - field_name: date
+    label:
+      en: Date related to the status reason
+      fr: Date liée à la raison de l’état
+    help_text:
+      en: The date related to the update to the status, for example the date that the suggestion was sent to the data holder.
+      fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
+    preset: date
+    required: true
+
+  - field_name: reason
+    label:
+      en: Status Reason
+      fr: Raison de l’état
+    help_text:
+      en: This field should be populated with a value that indicates why the status is marked as ‘open’ or ‘closed’
+      fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
+
+    preset: select
+    choices:
+    - label:
+        en: Referred to data-holder - Awaiting Response
+      value: await_response
+    - label:
+        en: Response received – data-holder investigating
+      value: investigating
+    - label:
+        en: Dataset Published
+      value: published
+    - label:
+        en: Dataset not held
+      value: not_held
+
+  - field_name: comments
+    label:
+      en: Status Comments
+      fr: Commentaires sur l’état
+    fluent_form_label:
+      en:
+        en: Status Comments (in English)
+        fr: Commentaires sur l’état (en anglais)
+      fr:
+        en: Status Comments (in French)
+        fr: Commentaires sur l’état (en français)
+    fluent_help_text:
+      en:
+        en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
+        fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
+      fr:
+        en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
+        fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
+    preset: fluent_markdown
 
 
 #
