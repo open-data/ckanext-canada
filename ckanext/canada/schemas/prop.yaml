@@ -108,20 +108,29 @@ dataset_fields:
       en: This field should be populated with a value that indicates why the status is marked as ‘open’ or ‘closed’
       fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
 
+    required: true
     preset: select
     choices:
     - label:
         en: Referred to data-holder - Awaiting Response
-      value: await_response
+        fr: Envoyée au détenteur des données – En attente d’une réponse
+      value: department_contacted
     - label:
         en: Response received – data-holder investigating
-      value: investigating
+        fr: Réponse reçue – Le détenteur des données enquête.
+      value: under_review
+    - label:
+        en: Referred to data-holder - Awaiting Response
+        fr: Envoyée au détenteur des données – En attente d’une réponse
+      value: in_progress
     - label:
         en: Dataset Published
-      value: published
+        fr: Jeu de données publié
+      value: released
     - label:
         en: Dataset not held
-      value: not_held
+        fr: Jeu de données non détenu
+      value: not_collected
 
   - field_name: comments
     label:
