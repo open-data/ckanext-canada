@@ -12,13 +12,20 @@ REMOVE_COLUMNS = [
 
 def main():
     reader = csv.DictReader(sys.stdin)
+    if not reader.fieldnames:
+        # empty file -> empty file for filtering files that did not exist
+        return
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
     writer = csv.DictWriter(sys.stdout, outnames)
     writer.writeheader()
     for row in reader:
         try:
             for rem in REMOVE_COLUMNS:
-                del row[rem]
+                try:
+                    del row[rem]
+                except KeyError:
+                    # may be filtering old records that were missing these cols
+                    pass
             writer.writerow(row)
         except ValueError:
             pass

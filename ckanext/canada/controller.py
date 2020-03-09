@@ -183,10 +183,6 @@ class CanadaController(BaseController):
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
         limit = int(request.params['length'])
-        sort_by_num = int(request.params['order[0][column]'])
-        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
-                      else 'asc'
-                      )
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
@@ -196,15 +192,26 @@ class CanadaController(BaseController):
         )
 
         cols = [f['datastore_id'] for f in chromo['fields']]
-        sort_str = cols[sort_by_num] + ' ' + sort_order
-        sort_str += ' NULLS LAST'
+        prefix_cols = 1 if chromo.get('edit_form', False) else 0
+
+        sort_list = []
+        i = 0
+        while True:
+            if u'order[%d][column]' % i not in request.params:
+                break
+            sort_by_num = int(request.params[u'order[%d][column]' % i])
+            sort_order = (
+                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc NULLS LAST')
+            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
+            i += 1
 
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
             offset=offset,
             limit=limit,
-            sort=sort_str
+            sort=u', '.join(sort_list),
         )
 
         aadata = [
@@ -214,15 +221,21 @@ class CanadaController(BaseController):
         if chromo.get('edit_form', False):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
+            fids = [f['datastore_id'] for f in chromo['fields']]
+            pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             for row in aadata:
-                row[0] = u'<a href="{0}">{1}</a>'.format(
-                    h.url_for(
-                        controller='ckanext.canada.controller:PDUpdateController',
-                        action='update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=url_part_escape(row[0])),
-                    row[0])
+                row.insert(0, (
+                        u'<a href="{0}" aria-label"' + _("Edit") + '">'
+                        u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                        h.url_for(
+                            controller='ckanext.canada.controller:PDUpdateController',
+                            action='update_pd_record',
+                            owner_org=pkg['organization']['name'],
+                            resource_name=resource_name,
+                            pk=','.join(url_part_escape(row[i]) for i in pkids)
+                        )
+                    )
+                )
 
         return json.dumps({
             'draw': draw,

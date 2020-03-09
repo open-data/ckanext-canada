@@ -351,6 +351,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         else:
             out.append(solrrec)
 
+    if unmatched:
+        out.extend(unmatched[1].values())
+
     import pysolr
     for a in reversed(range(10)):
         try:

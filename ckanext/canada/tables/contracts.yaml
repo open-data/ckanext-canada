@@ -14,8 +14,8 @@ portal_type: info
 collection: pd
 
 sidebar_extra_content:
-  en: 'For information on the Proactive Disclosure of Contracts, refer to the [Guidelines on Proactive Disclosure of Contracts](https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676) as well as the [FAQ for Proactive Disclosure of Contracts](http://www.gcpedia.gc.ca/wiki/Procurement_Policy_Division,_Treasury_Board_of_Canada_Secretariat/Contracting_Data).'
-  fr: 'Pour de l’information sur la Divulgation proactive des marchés, consultez les [Lignes directrices sur la divulgation des marchés](https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676) ainsi que la [Foire aux questions sur la divulgation proactive des marchés](http://www.gcpedia.gc.ca/wiki/Politique_des_acquisitions,_Secr%C3%A9tariat_du_Conseil_du_Tr%C3%A9sor/Donn%C3%A9es_sur_les_march%C3%A9s).'
+  en: 'For information on the Proactive Disclosure of Contracts, refer to the [Guidelines on Proactive Disclosure of Contracts](https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=14676) as well as the [FAQ for Proactive Disclosure of Contracts](https://www.gcpedia.gc.ca/wiki/ATI/PP/QR#ppqa-10k-head).'
+  fr: 'Pour de l’information sur la Divulgation proactive des marchés, consultez les [Lignes directrices sur la divulgation des marchés](https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=14676) ainsi que la [Foire aux questions sur la divulgation proactive des marchés](https://www.gcpedia.gc.ca/wiki/AI/PP/QR#ppqa-10k-head).'
 
 resources:
 - title: Proactive Disclosure - Contracts over 10K (Quarterly)
@@ -758,6 +758,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -832,6 +833,7 @@ resources:
       en: Only mandatory when the Intellectual Property data field is one of the following values (A1, A2, A3, A41, A42, A43, A5, A8 or B).
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property_code}="C",{intellectual_property_code}="NA",{intellectual_property_code}=""))'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
     choices:
       Y:
@@ -852,6 +854,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -934,6 +937,7 @@ resources:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
     excel_required_formula: '{contract_date}>=DATE(2019,6,21)'
+    excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -971,6 +975,7 @@ resources:
         NEW.aboriginal_business := truthy_to_yn(NEW.aboriginal_business);
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         NEW.former_public_servant := truthy_to_yn(NEW.former_public_servant);
+        NEW.ministers_office := truthy_to_yn(NEW.ministers_office);
 
         PERFORM not_empty(NEW.contract_date, 'contract_date');
         IF NEW.contract_date >= '2019-01-01'::date THEN

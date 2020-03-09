@@ -10,3 +10,19 @@
   {{ super() }}
   <link rel="stylesheet" href="/internal.css" type="text/css" />
 {%- endblock -%}
+
+{%- block google_analytics -%}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ h.googleanalytics_id() }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ h.googleanalytics_id() }}');
+    </script>
+{%- endblock -%}
+
+{%- block adobe_analytics -%}{%- endblock -%}
+
+{%- block adobe_analytics_meta -%}{%- endblock -%}

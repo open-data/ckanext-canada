@@ -33,6 +33,7 @@ dataset_fields:
     - primary
     - code
     - api
+    - app
 
 # FGP fields (hidden from form)
 - field_name: metadata_contact
@@ -186,6 +187,7 @@ dataset_fields:
     en: "The region where the dataset was originally published. You may select or deselect multiple options (Ctrl+Click) "
     fr: "La région où le jeu de données a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
   preset: canada_geographic_region # use same multi-select controlled list
+  select_size: 10
 
 - preset: canada_spatial
 - preset: canada_geographic_region

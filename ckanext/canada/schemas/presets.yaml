@@ -58,6 +58,10 @@ presets:
         fr: API
       value: api
     - label:
+        en: Application
+        fr: Application
+      value: app
+    - label:
         en: Geospatial
         fr: Géospatiales
       value: geogratis
@@ -94,6 +98,10 @@ presets:
         fr: Documents d'information à l'intention des administrateurs généraux pour les comparutions devant un comité parlementaire
       value: parliament_committee_deputy
     - label:
+        en: Algorithmic Impact Assessment
+        fr: Evaluation d'incidence algorithmique
+      value: aia
+    - label:
         en: Federated Open Data
         fr: Fédérée de données
       value: federated
@@ -125,9 +133,6 @@ presets:
       fr:
         en: The French name by which the dataset is known
         fr: Nom français désignant le jeu de données
-    form_placeholder:
-      en: Canada Border Wait Times
-      fr: Temps d’attente à la frontière
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -307,12 +312,6 @@ presets:
       fr:
         en: "Description (French)"
         fr: "Description (français)"
-    form_placeholder:
-      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-        of pollutant releases (to air, water and land), disposals and transfers for
-        recycling. The NPRI includes...
-      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-        des rejets de polluants du Canada…
     fluent_help_text:
       en:
         en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
@@ -382,6 +381,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Arts, Music, Literature
@@ -495,6 +495,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Aboriginal peoples
@@ -1879,6 +1880,7 @@ presets:
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
@@ -2234,9 +2236,7 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    form_restrict_choices_to: [federal]
-    form_attrs:
-      readonly: ''
+    form_restrict_choices_to: [federal, user]
     required: true
     choices:
     - label:
@@ -2251,6 +2251,10 @@ presets:
         en: Municipal
         fr: Municipal
       value: municipal
+    - label:
+        en: User
+        fr: Utilisateur
+      value: user
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -3217,6 +3221,9 @@ presets:
       mimetype: application/x-filegdb
     - value: Flat raster binary
       replaces: [flat raster binary]
+    - value: GDB
+      mimetype: application/x-filegdb
+      label: GeoSoftDatabases
     - value: GeoPDF
       mimetype: application/pdf
       replaces: [geopdf]
@@ -3239,6 +3246,9 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GRD
+      mimetype: application/x-filegrd
+      label: GeoSoftGrids
     - value: GRIB1
     - value: GRIB2
     - value: HDF
@@ -3848,6 +3858,7 @@ presets:
         en: No linguistic content; Not applicable
         fr: pas de contenu linguistique; non applicable
       value: zxx
+    select_size: 10
 
     # copied from multiple_select preset
     form_snippet: multiple_select.html

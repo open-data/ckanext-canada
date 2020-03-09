@@ -21,7 +21,7 @@
     {%- if (not data.related_type) or c.action=='new_resource' -%}
     <details class="acc-group" open="open">
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}{{ c.action }}
+        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
       </summary>
       <div class="tgl-panel">
         {%- for field in schema.resource_fields -%}

@@ -149,6 +149,24 @@ resources:
     preview_class: bg-info
 
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
 
@@ -177,6 +195,9 @@ resources:
           RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
         END;
     - update_record_modified_created_trigger
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -294,6 +315,9 @@ resources:
       END;
   - update_record_modified_created_trigger
 
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:

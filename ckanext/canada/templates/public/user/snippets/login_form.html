@@ -1,0 +1,27 @@
+
+{% import 'macros/form.html' as form %}
+{% set username_error = true if error_summary %}
+{% set password_error = true if error_summary %}
+
+
+<form action="{{ action }}" method="post" role="form">
+
+  {{ errors }}
+
+  {{ form.errors(errors=error_summary, type='danger') }}
+
+  {{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error) }}
+
+  {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error) }}
+
+  {{ form.checkbox('remember', label=_("Remember me"), id='field-remember', checked=true, value="63072000") }}
+
+  <div class="form-actions">
+    {% block login_button %}
+      <div class="clear"></div>
+      <button class="btn btn-default" type="submit">{{ _('Log in') }}</button>
+    {% endblock %}
+  </div>
+</form>
+
+
