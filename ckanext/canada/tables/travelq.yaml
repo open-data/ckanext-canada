@@ -4,7 +4,7 @@ target_dataset: travelq
 title: Proactive Disclosure - Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
-template_version: 4
+template_version: 3
 template_updated: 2020-03-09
 
 portal_type: info
@@ -386,6 +386,8 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
+
+  excel_example_height: 50
 
   triggers:
   - travelq_trigger: |
