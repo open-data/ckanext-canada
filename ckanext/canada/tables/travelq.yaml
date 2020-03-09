@@ -452,6 +452,8 @@ resources:
 
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: year
@@ -460,6 +462,10 @@ resources:
     description:
       en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
     form_attrs:
@@ -473,6 +479,10 @@ resources:
     description:
       en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     excel_full_text_choices: true
     choices:
       P01:
