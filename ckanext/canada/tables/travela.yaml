@@ -55,7 +55,7 @@ resources:
     datastore_type: text
     excel_column_width: 50
     form_required: true
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -80,7 +80,7 @@ resources:
     datastore_type: text
     excel_column_width: 50
     form_required: true
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -402,7 +402,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -424,7 +424,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -446,7 +446,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -468,7 +468,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -490,7 +490,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -512,7 +512,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -534,7 +534,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -556,7 +556,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     excel_column_width: 50
-    form_snippet: scheming/form_snippets/textarea.html
+    form_snippet: scheming/form_snippets/markdown.html
     form_attrs:
       style: "width: 100%; display: block"
 
