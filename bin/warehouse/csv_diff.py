@@ -94,7 +94,7 @@ def get_fieldnames(fields):
     return fieldnames
 
 
-prev_csv, current_csv, endpoint, datestamp = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+prev_csv, current_csv, endpoint, datestamp, outfile = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 field_info = requests.get(endpoint).json()
 
 # Grab the primary key fields from the datatype reference endpoint
@@ -111,7 +111,7 @@ created_rows, modified_rows, deleted_rows = compare(current_csv, existing_rows)
 results = add_metadata_fields(created_rows, modified_rows, deleted_rows, prev_csv, datestamp)
 
 if results:
-    with open('warehouse.csv', 'w') as f:
+    with open(outfile, 'w') as f:
         warehouse = csv.DictWriter(f, fieldnames=fieldnames, delimiter=',', restval='')
         warehouse.writeheader()
         for result_row in results:
