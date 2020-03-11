@@ -70,9 +70,6 @@ dataset_fields:
 - preset: canada_subject
   form_snippet: ro_multiple_choice.html
 
-- preset: canada_resource_format
-  form_snippet: ro_select.html
-
 - field_name: date_submitted
   help_text:
     en: The date the submission form was submitted to open-ouvert@tbs-sct.gc.ca. This value will be automatically populated
