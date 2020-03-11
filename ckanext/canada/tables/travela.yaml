@@ -15,6 +15,8 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
   resource_name: travela
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: year
@@ -30,6 +32,7 @@ resources:
       en: This fields shows the current fiscal reporting period’s ending (March 31, YYYY).
       fr: Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
     datastore_type: year
+    form_required: true
 
   - datastore_id: mandate_description_en
     label:
@@ -51,6 +54,10 @@ resources:
     validation: This field must not be empty
     datastore_type: text
     excel_column_width: 50
+    form_required: true
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: mandate_description_fr
     label:
@@ -72,6 +79,10 @@ resources:
     validation: This field must not be empty
     datastore_type: text
     excel_column_width: 50
+    form_required: true
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: operational_activities_kdollars
     label:
@@ -321,6 +332,7 @@ resources:
       change: hospitality_kdollars_change
       sum_previous_year: total_kdollars_previous_year
       sum_change: total_kdollars_change
+    form_required: true
 
   - datastore_id: conference_fees_kdollars
     label:
@@ -346,6 +358,7 @@ resources:
       change: conference_fees_kdollars_change
       sum_previous_year: total_kdollars_previous_year
       sum_change: total_kdollars_change
+    form_required: true
 
   - datastore_id: minister_kdollars
     label:
@@ -369,6 +382,7 @@ resources:
     solr_compare_previous_year:
       previous_year: minister_kdollars_previous_year
       change: minister_kdollars_change
+    form_required: true
 
   - datastore_id: travel_compared_fiscal_year_en
     label:
@@ -388,6 +402,9 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: travel_compared_fiscal_year_fr
     label:
@@ -407,6 +424,9 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: hospitality_compared_fiscal_year_en
     label:
@@ -426,6 +446,9 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: hospitality_compared_fiscal_year_fr
     label:
@@ -441,10 +464,13 @@ resources:
         Explication d’un écart important
         (français)
     description:
-      en: rovide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
+      en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: conference_fees_compared_fiscal_year_en
     label:
@@ -464,6 +490,9 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: conference_fees_compared_fiscal_year_fr
     label:
@@ -483,6 +512,9 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: minister_compared_fiscal_year_en
     label:
@@ -502,6 +534,9 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: minister_compared_fiscal_year_fr
     label:
@@ -521,6 +556,9 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     excel_column_width: 50
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
