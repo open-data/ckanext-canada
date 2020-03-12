@@ -96,7 +96,8 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    form_attrs: 60
+    form_attrs:
+      size: 60
 
   - datastore_id: vendor_postal_code
     label:
