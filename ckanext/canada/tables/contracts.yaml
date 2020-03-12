@@ -48,6 +48,8 @@ resources:
   resource_name: contracts
 
   excel_data_num_rows: 5000
+  create_form: true
+  edit_form: true
 
   fields:
 
@@ -60,6 +62,7 @@ resources:
       fr: Un identificateur unique est attribué à chaque poste dans le gabarit de rapport.
     excel_required: true
     datastore_type: text
+    form_required: true
 
   - datastore_id: procurement_id
     label:
@@ -93,6 +96,8 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_attrs:
+      size: 60
 
   - datastore_id: vendor_postal_code
     label:
@@ -145,6 +150,9 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
+    form_attrs:
+      size: 60
+
 
   - datastore_id: contract_date
     label:
@@ -166,6 +174,8 @@ resources:
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    form_required: true
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: economic_object_code
     label:
@@ -214,6 +224,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: description_fr
     label:
@@ -236,6 +249,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: contract_period_start
     label:
@@ -275,6 +291,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.
     excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{commodity_type}<>"G")'
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: delivery_date
     label:
@@ -313,6 +330,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: contract_value
     label:
@@ -427,6 +445,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
     excel_column_width: 40
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: comments_fr
     label:
@@ -437,6 +458,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
     excel_column_width: 40
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: additional_comments_en
     label:
@@ -453,6 +477,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: This field may be populated with additional comments in English.
       fr: On peut saisir dans la zone « commentaires additionnels » en anglais tout commentaire additionnel.
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: additional_comments_fr
     label:
@@ -469,6 +496,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: This field may be populated with additional comments in French.
       fr: On peut saisir dans la zone « commentaires additionnels » en français tout commentaire additionnel.
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: agreement_type_code
     label:
@@ -1590,7 +1620,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
 
-        This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice. 
+        This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice.
       fr: |
         Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
 
@@ -2028,6 +2058,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
 - title: Proactive Disclosure - Contracts Nothing to Report
   resource_name: contracts-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: reporting_period
@@ -2036,6 +2068,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     format_type: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
+    form_required: true
 
   - datastore_id: record_created
     label: Record Creation Time
