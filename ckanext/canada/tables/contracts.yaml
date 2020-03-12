@@ -149,6 +149,8 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
+    form_attrs:
+      size: 60
 
 
   - datastore_id: contract_date
