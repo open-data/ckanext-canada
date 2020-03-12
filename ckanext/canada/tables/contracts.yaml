@@ -96,6 +96,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_attrs: 60
 
   - datastore_id: vendor_postal_code
     label:
@@ -148,9 +149,7 @@ resources:
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+
 
   - datastore_id: contract_date
     label:
@@ -173,6 +172,7 @@ resources:
     extract_date_month: true
     extract_date_clean: true
     form_required: true
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: economic_object_code
     label:
@@ -221,6 +221,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: description_fr
     label:
@@ -243,6 +246,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: contract_period_start
     label:
@@ -282,6 +288,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.
     excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{commodity_type}<>"G")'
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: delivery_date
     label:
@@ -320,6 +327,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: contract_value
     label:
@@ -2047,6 +2055,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
 - title: Proactive Disclosure - Contracts Nothing to Report
   resource_name: contracts-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: reporting_period
