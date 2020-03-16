@@ -1,12 +1,9 @@
-import gzip
 import json
 import hashlib
-import subprocess
 import requests
 import sys
 import csv
 from sys import stderr, stdout, argv
-from collections import Counter
 
 
 def get_row_tuple(row):
