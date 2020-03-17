@@ -12,6 +12,8 @@ collection: briefingt
 resources:
 - title: Proactive Disclosure - Briefing Note Titles and Numbers
   resource_name: briefingt
+  create_form: true
+  edit_form: true
   fields:
 
   # 3.3
@@ -23,6 +25,7 @@ resources:
       en: This field will display the internal tracking number of the Briefing Note.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
@@ -37,6 +40,7 @@ resources:
       en: This field is populated by the user with the official title of the Briefing Note, in English. (Will need guidance here for redactions/exceptions).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
@@ -53,6 +57,7 @@ resources:
       en: This field is populated by the user with the official title of the Briefing Note, in French. (Will need guidance here for redactions/exceptions).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
@@ -69,6 +74,7 @@ resources:
       en: The Sector, Branch, or Division where the Briefing Note originated in English. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
@@ -85,6 +91,7 @@ resources:
       en: The Sector, Branch, or Division where the Briefing Note originated in French. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
@@ -101,6 +108,7 @@ resources:
       en: This field will display the person to whom the briefing note is addressed.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -128,6 +136,7 @@ resources:
       en: This field will display the date on which the Briefing Note was received in the addressee's office.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -144,6 +153,7 @@ resources:
       en: "The Action Required is the purpose of the briefing note; For Information: If the item is being routed solely for the information of the addressee; For Approval/Signature: If the item is for approval or signature only of the addressee; For Decision: If the item requests the addressee make a decisive decision"
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -171,6 +181,7 @@ resources:
       en: This field will display any additional information/comments for the Briefing Note, in English.
     obligation: Optional
     excel_required: false
+    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
@@ -187,6 +198,7 @@ resources:
       en: This field will display any additional information/comments for the Briefing Note, in English.
     obligation: Optional
     excel_required: false
+    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
