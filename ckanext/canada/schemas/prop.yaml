@@ -22,6 +22,9 @@ dataset_fields:
 - preset: canada_title
   form_snippet: ro_fluent_title.html
 - preset: canada_owner_org
+  label:
+    en: Organization Name
+    fr: Nom de l’organisation
   form_snippet: ro_org.html
 - preset: canada_notes
   form_snippet: ro_fluent_markdown.html

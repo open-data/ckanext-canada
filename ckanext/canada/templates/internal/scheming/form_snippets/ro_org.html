@@ -1,7 +1,11 @@
-<div class="form-group control-medium">
-<label>{{ h.scheming_language_text(field.label) }}</label>
-{% if data[field.name] %}
-{% set org = h.get_organization(data[field.name]) %}
-{% snippet "snippets/organization.html", organization=org, has_context_title=true %}
+{% import "macros/canada_read.html" as cr %}
+
+<div class="row">
+<div class="col-md-4"><label>{{ h.scheming_language_text(field.label) }}</label></div>
+<div class="col-md-8">
+{% if data[field.field_name] %}
+{% set org = h.get_organization(data[field.field_name]) %}
+{{cr.split_bilingual_field(org.title or org.name, h.lang())}}
 {% endif %}
+</div>
 </div>

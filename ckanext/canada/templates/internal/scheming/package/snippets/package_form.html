@@ -58,3 +58,14 @@
   </ul>
   {{ super() }}
 {% endblock %}
+
+{% block form_actions %}
+{# custom hack for suggested datasets #}
+{% if dataset_type == 'prop' %}
+  <div class="form-actions">
+  <button class="btn btn-primary" type="submit" name="save">{{ _('Save') }}</button>
+  </div>
+{% else %}
+  {{ super() }}
+{% endif %}
+{% endblock %}
