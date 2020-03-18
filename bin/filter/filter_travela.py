@@ -28,9 +28,13 @@ def main():
     for row in reader:
         try:
             for rem in REMOVE_COLUMNS:
-                del row[rem]
+                try:
+                    del row[rem]
+                except KeyError:
+                    # may be filtering old records that were missing these cols
+                    pass
             for hack in DRUPAL_SEARCH_HACK:
-                if not row[hack]:
+                if hack in row and not row[hack]:
                     row[hack] = '.'
             writer.writerow(row)
         except ValueError:

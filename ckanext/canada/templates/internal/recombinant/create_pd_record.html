@@ -41,16 +41,16 @@
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) %}
           {%- set required = f.get('form_required', False) %}
-          {%- set description = f.get('description', '') %}
+          {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
           {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
           {%- if f.datastore_id in choice_fields %}
-            {%- if f.get('datastore_type') == '_text' %}
+            {%- if f.get('datastore_type') == '_text' and form_snippet == 'scheming/form_snippets/text.html' %}
               {%- set form_snippet = 'scheming/form_snippets/multiple_select.html' %}
-              {%- set description = _('You may select multiple entries (Ctrl+Click).') +
+              {%- set description = _('You may select or deselect multiple entries (Ctrl+Click).') +
                 ' ' + h.recombinant_language_text(description) %}
-            {%- else %}
+            {%- elif form_snippet == 'scheming/form_snippets/text.html' %}
               {%- set form_snippet = 'scheming/form_snippets/select.html' %}
             {%- endif %}
             {% snippet form_snippet,

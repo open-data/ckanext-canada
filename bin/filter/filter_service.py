@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import csv
 import sys
@@ -12,6 +12,9 @@ REMOVE_COLUMNS = [
 
 def main():
     bom = sys.stdin.read(3)
+    if not bom:
+        # empty file -> empty file
+        return
     assert bom == codecs.BOM_UTF8
     sys.stdout.write(codecs.BOM_UTF8)
 

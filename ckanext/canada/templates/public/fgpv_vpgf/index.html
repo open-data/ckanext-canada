@@ -1,6 +1,10 @@
 {% extends "page.html" %}
 {% block subtitle %}{{ _("Open Maps Data Viewer") }}{% endblock %}
 
+{%- block adobe_analytics_title -%}
+    <meta property="dcterms:title" content="{{ _('Open Maps Data Viewer') }}" />
+{%- endblock -%}
+
 {% block breadcrumb_content %}
   <li><a href="{{'/data/{}/dataset?collection=fgp'.format(h.lang())}}">{{ _("Search Open Maps") }}</a></li>
   <li>{{ _("Open Maps Data Viewer") }}</li>
@@ -125,10 +129,11 @@ $( document ).ready(function() {
   if (OGSMapsShoppingCart_cookie != null) {
     OGSMapsChecked_ids = OGSMapsShoppingCart_cookie.split(',') 
     solr_query = '/data/'+wb.lang+'/dataset?q=name%3A%22'+OGSMapsChecked_ids.join("%22+OR+name%3A%22")+'%22+&sort=metadata_modified+desc'
+    $('.ogscartlistbtn').attr("href", solr_query)
   } else {
-    solr_query = '/data/'+wb.lang+'/dataset';
+    $('.ogscartwrapper').hide()
   }
-  $('.ogscartlistbtn').attr("href", solr_query)
+
 
 });
 </script>

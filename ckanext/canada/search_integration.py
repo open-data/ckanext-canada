@@ -1,6 +1,7 @@
 from ckanapi import LocalCKAN
 from dateutil import parser
 import logging
+import nltk
 import pysolr
 import simplejson as json
 from pylons import config
@@ -12,6 +13,22 @@ SEARCH_INTEGRATION_OD_URL_EN_OPTION = "ckanext.canada.adv_search_od_base_url_en"
 SEARCH_INTEGRATION_OD_URL_FR_OPTION = "ckanext.canada.adv_search_od_base_url_fr"
 SEARCH_INTEGRATION_ENABLED = False
 SEARCH_INTEGRATION_LOADING_PAGESIZE = 100
+
+
+def get_summary(original_text, lang, max_sentences=4):
+    if lang == 'fr':
+        sent_tokenizer_fr = nltk.data.load('tokenizers/punkt/french.pickle')
+        sentences = sent_tokenizer_fr.tokenize(original_text)
+    else:
+        sent_tokenizer_en = nltk.data.load('tokenizers/punkt/english.pickle')
+        sentences = sent_tokenizer_en.tokenize(original_text)
+    sentence_total = max_sentences if len(sentences) >= max_sentences else len(sentences)
+    if len(sentences) > sentence_total:
+        summary_text = " ".join(sentences[0:sentence_total])
+    else:
+        summary_text = original_text
+    return summary_text
+
 
 def scheming_choices_label_by_value(choices):
     choices_en = {}
@@ -77,13 +94,16 @@ def add_to_search_index(data_dict_id, in_bulk=False):
                 isinstance(r['name_translated'], str) else r['name_translated']
             if 'en' in resource_name:
                 resource_title_en.append(resource_name['en'])
-            elif 'fr-t-en' in resource_name:
-                resource_title_en.append(resource_name['fr-t-en'])
+            elif 'en-t-fr' in resource_name:
+                resource_title_en.append(resource_name['en-t-fr'])
             if 'fr' in resource_name:
                 resource_title_fr.append(resource_name['fr'].strip())
-            elif 'en-t-fr' in resource_name:
-                resource_title_fr.append(resource_name['en-t-fr'].strip())
-
+            elif 'fr-t-en' in resource_name:
+                resource_title_fr.append(resource_name['fr-t-en'].strip())
+        display_options = []
+        if 'display_flags' in data_dict:
+            for d in data_dict['display_flags']:
+                display_options.append(d)
         notes_translated = json.loads(data_dict['notes_translated']) if \
             isinstance(data_dict['notes_translated'], str) else data_dict['notes_translated']
         title_translated = json.loads(data_dict['title_translated']) if \
@@ -110,7 +130,7 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'description_txt_en': notes_translated['en'] if 'en' in data_dict['notes_translated'] else '',
             'description_txt_fr': notes_translated['fr'] if 'fr' in data_dict['notes_translated'] else '',
             'description_xlt_txt_fr': notes_translated['fr-t-en'] if 'fr-t-en' in notes_translated else '',
-            'description_xlt_txt_en': notes_translated['en-t-fr'] if 'en-t-f-r' in notes_translated else '',
+            'description_xlt_txt_en': notes_translated['en-t-fr'] if 'en-t-fr' in notes_translated else '',
             'title_en_s': title_translated['en'] if 'en' in title_translated else '',
             'title_fr_s': title_translated['fr'] if 'fr' in title_translated else '',
             'title_xlt_fr_s': title_translated['fr-t-en'] if 'fr-t-en' in title_translated else '',
@@ -121,18 +141,28 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'last_modified_tdt': parser.parse(data_dict['metadata_modified']).replace(microsecond=0).isoformat() + 'Z',
             'ogp_link_en_s': '{0}{1}'.format(od_search_od_url_en, data_dict['name']),
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
+            'display_options_s': display_options
         }
+
+        if 'en' in notes_translated:
+            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['en'].strip(), 'en')
+        elif 'en-t-fr' in notes_translated:
+            od_obj['desc_summary_txt_en'] = get_summary(notes_translated['en-t-fr'].strip(), 'en')
+        if 'fr' in notes_translated:
+            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['fr'].strip(), 'fr')
+        elif 'en-t-fr' in notes_translated:
+            od_obj['desc_summary_txt_fr'] = get_summary(notes_translated['fr-t-en'].strip(), 'fr')
 
         keywords = json.loads(data_dict['keywords']) if \
             isinstance(data_dict['keywords'], str) else data_dict['keywords']
         if 'en' in keywords:
             od_obj['keywords_en_s'] = keywords['en']
-        elif 'fr-t-en' in keywords:
-            od_obj['keywords_en_s'] = keywords['fr-t-en']
+        elif 'en-t-fr' in keywords:
+            od_obj['keywords_xlt_en_s'] = keywords['en-t-fr']
         if 'fr' in keywords:
             od_obj['keywords_fr_s'] = keywords['fr']
-        elif 'en-t-fr' in keywords:
-            od_obj['keywords_fr_s'] = keywords['en-t-fr']
+        elif 'fr-t-en' in keywords:
+            od_obj['keywords_xlt_fr_s'] = keywords['fr-t-en']
 
         solr = pysolr.Solr(od_search_solr_url)
         if in_bulk:

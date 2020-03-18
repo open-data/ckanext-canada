@@ -1,0 +1,6 @@
+{% set lang = h.lang() %}
+<div class="brand col-xs-8 col-sm-9 col-md-6">
+  <a href="http://www.canada.ca/{{language}}/index.html"><img src="{{ h.url_for_wet_theme('/assets/sig-blk-' + lang + '.svg') }}"/>
+    <span class="wb-inv"> {{ _('Government of Canada') }}</span>
+  </a>
+</div>

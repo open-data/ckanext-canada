@@ -319,8 +319,18 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             if choices:
                 if key.endswith('_code'):
                     key = key[:-5]
-                choice = choices.get(value, {})
-                _add_choice(solrrec, key, r, choice, f)
+                if f.get('datastore_type') == '_text':
+                    solrrec[key + '_en'] = '; '.join(
+                        recombinant_language_text(choices[v], 'en')
+                        for v in value.split(',')
+                        if v in choices)
+                    solrrec[key + '_fr'] = '; '.join(
+                        recombinant_language_text(choices[v], 'fr')
+                        for v in value.split(',')
+                        if v in choices)
+                else:
+                    choice = choices.get(value, {})
+                    _add_choice(solrrec, key, r, choice, f)
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
 
@@ -340,6 +350,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
             out.append(solrrec)
+
+    if unmatched:
+        out.extend(unmatched[1].values())
 
     import pysolr
     for a in reversed(range(10)):

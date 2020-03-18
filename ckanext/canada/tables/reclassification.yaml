@@ -2,7 +2,9 @@ dataset_type: reclassification
 target_dataset: reclassification
 title: Proactive Disclosure - Position Reclassification
 notes: Access, upload and modify the position reclassification reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+upload_warn:
+  en: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+  fr: 'Nous tenons à vous informer que nous avons eu certains problèmes de publication avec les modèles de divulgation proactive qui contiennent des données ayant été copiées dans une feuille de calcul Excel, en se servant des formules ci-jointes. Veillez à ce que toutes les données soient consignées dans le modèle sans formule, et que toutes les données soient validées dans la section de prévisualisation, une fois qu’elles auront été téléversées. Pour toute question, veuillez communiquer avec l’équipe du Gouvernement ouvert, à <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>.'
 
 portal_type: info
 collection: pd
@@ -91,6 +93,24 @@ resources:
     datastore_type: text
     excel_column_width: 41
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
   excel_organization_style:
@@ -104,6 +124,9 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FFd0e1f9
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -172,6 +195,24 @@ resources:
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
@@ -189,6 +230,9 @@ resources:
     PatternFill:
       patternType: solid
       fgColor: FFd0e1f9
+
+  triggers:
+  - update_record_modified_created_trigger
 
   examples:
     record:

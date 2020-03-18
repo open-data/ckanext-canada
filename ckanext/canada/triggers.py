@@ -57,7 +57,7 @@ def update_triggers():
         name=u'required_error',
         or_replace=True,
         arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'value', u'argtype': u'numeric'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
         definition=u'''
@@ -72,7 +72,7 @@ def update_triggers():
         name=u'required_error',
         or_replace=True,
         arguments=[
-            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'value', u'argtype': u'int4'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
         definition=u'''
@@ -93,7 +93,7 @@ def update_triggers():
         rettype=u'_text',
         definition=ur'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
                     RETURN ARRAY[[field_name, 'Invalid choice: "'
                         || replace(value, E'\t', ' ') || '"']];
@@ -276,7 +276,7 @@ def update_triggers():
             {u'argname': u'field_name', u'argtype': u'text'}],
         definition=u'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
                     RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
                 END IF;
             END;
@@ -475,95 +475,6 @@ def update_triggers():
             END;
         ''')
 
-    grants_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('grants'))
-    lc.action.datastore_function_create(
-        name=u'grants_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.ref_number, 'ref_number');
-
-                PERFORM not_empty(NEW.amendment_number, 'amendment_number');
-                IF NEW.amendment_number <> 0 THEN
-                    PERFORM not_empty(NEW.amendment_date, 'amendment_date');
-                END IF;
-
-                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
-                        NEW.foreign_currency_value IS NOT NULL THEN
-                    PERFORM not_empty(NEW.foreign_currency_type, 'foreign_currency_type');
-                    PERFORM choice_one_of(
-                        NEW.foreign_currency_type,
-                        {foreign_currency_type},
-                        'foreign_currency_type');
-                    PERFORM not_empty(NEW.foreign_currency_value, 'foreign_currency_value');
-                END IF;
-
-                PERFORM not_empty(NEW.agreement_value, 'agreement_value');
-
-                PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
-                IF NEW.agreement_start_date >= '2018-04-01'::date THEN
-                    PERFORM not_empty(NEW.agreement_type, 'agreement_type');
-                    PERFORM choice_one_of(
-                        NEW.agreement_type,
-                        {agreement_type},
-                        'agreement_type');
-                    IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
-                        PERFORM choice_one_of(
-                            NEW.recipient_type,
-                            {recipient_type},
-                            'recipient_type');
-                    END IF;
-                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
-                    PERFORM not_empty(NEW.recipient_country, 'recipient_country');
-                    PERFORM choice_one_of(
-                        NEW.recipient_country,
-                        {recipient_country},
-                        'recipient_country');
-                    IF NEW.recipient_country = 'CA' THEN
-                        PERFORM not_empty(NEW.recipient_province, 'recipient_province');
-                        PERFORM choice_one_of(
-                            NEW.recipient_province,
-                            {recipient_province},
-                            'recipient_province');
-                    END IF;
-                    PERFORM not_empty(NEW.recipient_city, 'recipient_city');
-                    PERFORM not_empty(NEW.description_en, 'description_en');
-                    PERFORM not_empty(NEW.description_fr, 'description_fr');
-                END IF;
-                RETURN NEW;
-            END;
-            '''.format(
-                agreement_type=pg_array(grants_choices['agreement_type']),
-                recipient_type=pg_array(grants_choices['recipient_type']),
-                recipient_country=pg_array(grants_choices['recipient_country']),
-                recipient_province=pg_array(grants_choices['recipient_province']),
-                foreign_currency_type=pg_array(grants_choices['foreign_currency_type']),
-            )
-        )
-
-    grants_nil_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('grants-nil'))
-    lc.action.datastore_function_create(
-        name=u'grants_nil_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.fiscal_year, 'fiscal_year');
-                PERFORM choice_one_of(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
-                PERFORM not_empty(NEW.quarter, 'quarter');
-                PERFORM choice_one_of(NEW.quarter, {quarter}, 'quarter');
-                RETURN NEW;
-            END;
-            '''.format(
-                fiscal_year=pg_array(grants_nil_choices['fiscal_year']),
-                quarter=pg_array(grants_nil_choices['quarter']),
-            )
-        )
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string

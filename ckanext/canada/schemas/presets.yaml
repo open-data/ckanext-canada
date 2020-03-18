@@ -58,6 +58,10 @@ presets:
         fr: API
       value: api
     - label:
+        en: Application
+        fr: Application
+      value: app
+    - label:
         en: Geospatial
         fr: Géospatiales
       value: geogratis
@@ -70,9 +74,13 @@ presets:
         fr: Publication
       value: publication
     - label:
-        en: Ministerial Transition Binders
-        fr: Cahiers de transition ministériels
+        en: Briefing packages for new or incoming ministers
+        fr: Documents d'information pour les nouveaux ministres
       value: transition
+    - label:
+        en: Briefing packages for new or incoming deputy heads
+        fr: Documents d'information pour les nouveaux administrateurs généraux
+      value: transition_deputy
     - label:
         en: Reports Tabled in Parliament
         fr: Rapports déposés au Parlement
@@ -82,9 +90,17 @@ presets:
         fr: Notes pour la période des questions
       value: question_period
     - label:
-        en: Parliamentary Committee Binders
-        fr: Dossiers des comités parlementaires
+        en: Briefing packages for Parliamentary Committee appearances for ministers
+        fr: Documents d'information à l'intention des ministres pour les comparutions devant un comité parlementaire
       value: parliament_committee
+    - label:
+        en: Briefing packages for Parliamentary Committee appearances for deputy heads
+        fr: Documents d'information à l'intention des administrateurs généraux pour les comparutions devant un comité parlementaire
+      value: parliament_committee_deputy
+    - label:
+        en: Algorithmic Impact Assessment
+        fr: Evaluation d'incidence algorithmique
+      value: aia
     - label:
         en: Federated Open Data
         fr: Fédérée de données
@@ -117,9 +133,6 @@ presets:
       fr:
         en: The French name by which the dataset is known
         fr: Nom français désignant le jeu de données
-    form_placeholder:
-      en: Canada Border Wait Times
-      fr: Temps d’attente à la frontière
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -299,12 +312,6 @@ presets:
       fr:
         en: "Description (French)"
         fr: "Description (français)"
-    form_placeholder:
-      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-        of pollutant releases (to air, water and land), disposals and transfers for
-        recycling. The NPRI includes...
-      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-        des rejets de polluants du Canada…
     fluent_help_text:
       en:
         en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
@@ -359,7 +366,7 @@ presets:
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
-# {The topic of the content of the dataset. You may select multiple subjects (Ctrl+Click).}
+# {The topic of the content of the dataset. You may select or deselect multiple subjects (Ctrl+Click).}
 - preset_name: canada_subject
   values:
     field_name: subject
@@ -367,13 +374,14 @@ presets:
       en: "Subject"
       fr: "Sujet"
     help_text:
-      en: "The topic of the content of the dataset. You may select multiple subjects (Ctrl+Click)"
-      fr: "Le sujet du contenu du jeu de données. Vous pouvez sélectionner de multiples sujets (Ctrl+Clic)"
+      en: "The topic of the content of the dataset. You may select or deselect multiple subjects (Ctrl+Click)"
+      fr: "Le sujet du contenu du jeu de données. Vous pouvez sélectionner ou désélectionner de multiples sujets (Ctrl+Clic)"
     required: true
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Arts, Music, Literature
@@ -473,7 +481,7 @@ presets:
 
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
-# {A description of the audience or group of people for whom the described dataset is intended or useful. You may select multiple options (Ctrl+Click).}
+# {A description of the audience or group of people for whom the described dataset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
 - preset_name: canada_audience
   values:
     field_name: audience
@@ -481,12 +489,13 @@ presets:
       en: Audience
       fr: Audience
     help_text:
-      en: "A description of the audience or group of people for whom the described dataset is intended or useful. You may select multiple options (Ctrl+Click)"
-      fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner de multiples options (Ctrl+Clic)"
+      en: "A description of the audience or group of people for whom the described dataset is intended or useful. You may select or deselect multiple options (Ctrl+Click)"
+      fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Aboriginal peoples
@@ -611,7 +620,7 @@ presets:
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
-# {The geographic region of a dataset. You may select multiple regions (Ctrl+Click).}
+# {The geographic region of a dataset. You may select or deselect multiple regions (Ctrl+Click).}
 
 # NOTE: we're using the same STATCAN codes we used with ckan 2.1 at the moment
 # FIXME: a snake_case version of the english names would be more in line with
@@ -623,8 +632,8 @@ presets:
       en: Geographic Region Name
       fr: Nom de la région géographique
     help_text:
-      en: The geographic region of the dataset. You may select multiple regions (Ctrl+Click)
-      fr: Région géographique d’un jeu de données. Vous pouvez sélectionner de multiples régions (Ctrl+Clic)
+      en: The geographic region of the dataset. You may select or deselect multiple regions (Ctrl+Click)
+      fr: Région géographique d’un jeu de données. Vous pouvez sélectionner ou désélectionner de multiples régions (Ctrl+Clic)
     choices:
     - label:
         en: Canada
@@ -1871,6 +1880,7 @@ presets:
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
@@ -2226,10 +2236,7 @@ presets:
     help_text:
       en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the dataset."
       fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données."
-    display_snippet: null
-    form_restrict_choices_to: [federal]
-    form_attrs:
-      readonly: ''
+    form_restrict_choices_to: [federal, user]
     required: true
     choices:
     - label:
@@ -2244,6 +2251,10 @@ presets:
         en: Municipal
         fr: Municipal
       value: municipal
+    - label:
+        en: User
+        fr: Utilisateur
+      value: user
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
@@ -3210,6 +3221,9 @@ presets:
       mimetype: application/x-filegdb
     - value: Flat raster binary
       replaces: [flat raster binary]
+    - value: GDB
+      mimetype: application/x-filegdb
+      label: GeoSoftDatabases
     - value: GeoPDF
       mimetype: application/pdf
       replaces: [geopdf]
@@ -3221,8 +3235,10 @@ presets:
       replaces: [geotif]
     - value: GEOJSON
       mimetype: application/geo+json
-    - label: GeoPackage
-      value: GPKG
+    - value: GPKG
+      label: GeoPackage
+      mimetype: application/geopackage+vnd.sqlite3
+      openness_score: 3
     - value: GIF
       mimetype: image/gif
       replaces: [gif]
@@ -3230,6 +3246,9 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GRD
+      mimetype: application/x-filegrd
+      label: GeoSoftGrids
     - value: GRIB1
     - value: GRIB2
     - value: HDF
@@ -3419,7 +3438,6 @@ presets:
     help_text:
       en: This is the character set of the resource
       fr: Nom complet de la norme de codage des caractères utilisée pour le ressource
-    form_panel: resource
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
@@ -3499,26 +3517,26 @@ presets:
       en: Language
       fr: Langue
     help_text:
-      en: The language of the resource. You may select multiple languages (Ctrl+Click).
-      fr: Langue de la ressource. Vous pouvez sélectionner de multiples langues (Ctrl+Clic).
+      en: The language of the resource. You may select or deselect multiple languages (Ctrl+Click).
+      fr: Langue de la ressource. Vous pouvez sélectionner ou désélectionner de multiples langues (Ctrl+Clic).
     required: true
     display_snippet: br_multiple_choice.html
     choices:
     - label:
         en: English
-        fr: Anglais
+        fr: anglais
       value: en
     - label:
         en: French
-        fr: Français
+        fr: français
       value: fr
     - label:
         en: Albanian
-        fr: Albanais
+        fr: albanais
       value: sq
     - label:
         en: Algonquian languages
-        fr: Algonquines, langues
+        fr: algonquines, langues
       value: alg
     - label:
         en: Amharic
@@ -3526,27 +3544,27 @@ presets:
       value: am
     - label:
         en: Apache languages
-        fr: Apache
+        fr: apache
       value: apa
     - label:
         en: Arabic
-        fr: Arabe
+        fr: arabe
       value: ar
     - label:
         en: Armenian
-        fr: Arménien
+        fr: arménien
       value: hy
     - label:
         en: Artificial (Other)
-        fr: Artificielles, autres langues
+        fr: artificielles, autres langues
       value: art
     - label:
         en: Baltic (Other)
-        fr: Baltiques, autres langues
+        fr: baltiques, autres langues
       value: bat
     - label:
         en: Belarusian
-        fr: Biélorusse
+        fr: biélorusse
       value: be
     - label:
         en: Bengali
@@ -3554,11 +3572,11 @@ presets:
       value: bn
     - label:
         en: Bosnian
-        fr: Bosniaque
+        fr: bosniaque
       value: bs
     - label:
         en: Bulgarian
-        fr: Bulgare
+        fr: bulgare
       value: bg
     - label:
         en: Catalan
@@ -3566,27 +3584,27 @@ presets:
       value: ca
     - label:
         en: Cherokee
-        fr: Cherokee
+        fr: cherokee
       value: chr
     - label:
         en: Cheyenne
-        fr: Cheyenne
+        fr: cheyenne
       value: chy
     - label:
         en: Chinese (Simplified)
-        fr: Chinois (simplifié)
+        fr: chinois (simplifié)
       value: zh-cn
     - label:
         en: Chinese (Traditional)
-        fr: Chinois (traditionnel)
+        fr: chinois (traditionnel)
       value: zh-hk
     - label:
         en: Chipewyan
-        fr: Chipewyan
+        fr: chipewyan
       value: chp
     - label:
         en: Cree
-        fr: Cree
+        fr: cree
       value: cr
     - label:
         en: Creoles and pidgins
@@ -3594,15 +3612,15 @@ presets:
       value: crp
     - label:
         en: Croatian
-        fr: Croate
+        fr: croate
       value: hr
     - label:
         en: Czech
-        fr: Tchèque
+        fr: tchèque
       value: cs
     - label:
         en: Danish
-        fr: Danois
+        fr: danois
       value: da
     - label:
         en: Dogrib
@@ -3610,11 +3628,11 @@ presets:
       value: dgr
     - label:
         en: Dutch
-        fr: Néerlandais
+        fr: néerlandais
       value: nl
     - label:
         en: Finnish
-        fr: Finnois
+        fr: finnois
       value: fi
     - label:
         en: Galician
@@ -3622,11 +3640,11 @@ presets:
       value: gl
     - label:
         en: German
-        fr: Allemand
+        fr: allemand
       value: de
     - label:
         en: Greek, Modern (1453-)
-        fr: Grec moderne (après 1453)
+        fr: grec moderne (après 1453)
       value: el
     - label:
         en: Gujarati
@@ -3634,147 +3652,147 @@ presets:
       value: gu
     - label:
         en: Hebrew
-        fr: Hébreu
+        fr: hébreu
       value: he
     - label:
         en: Hindi
-        fr: Hindi
+        fr: hindi
       value: hi
     - label:
         en: Hungarian
-        fr: Hongrois
+        fr: hongrois
       value: hu
     - label:
         en: Indonesian
-        fr: Indonésien
+        fr: indonésien
       value: id
     - label:
         en: Inuinnaqtun
-        fr: Innuinaqtun
+        fr: innuinaqtun
       value: inuinnaqtun
     - label:
         en: Inuktitut
-        fr: Inuktitut
+        fr: inuktitut
       value: iu
     - label:
         en: Inuvialuqtun
-        fr: Inuvialuqtun
+        fr: inuvialuqtun
       value: inuvialuqtun
     - label:
         en: Iroquoian languages
-        fr: Iroquoises, langues (famille)
+        fr: iroquoises, langues (famille)
       value: iro
     - label:
         en: Italian
-        fr: Italien
+        fr: italien
       value: it
     - label:
         en: Japanese
-        fr: Japonais
+        fr: japonais
       value: ja
     - label:
         en: Korean
-        fr: Coréen
+        fr: coréen
       value: ko
     - label:
         en: Kurdish
-        fr: Kurde
+        fr: kurde
       value: ku
     - label:
         en: Latin
-        fr: Latin
+        fr: latin
       value: la
     - label:
         en: Micmac
-        fr: Micmac
+        fr: micmac
       value: mic
     - label:
         en: Miscellaneous languages
-        fr: Diverses, langues
+        fr: diverses, langues
       value: mis
     - label:
         en: Mohawk
-        fr: Mohawk
+        fr: mohawk
       value: moh
     - label:
         en: Multiple languages
-        fr: Multilingue
+        fr: multilingue
       value: mul
     - label:
         en: Navajo
-        fr: Navaho
+        fr: navaho
       value: nv
     - label:
         en: Nootkan
-        fr: Nootkan
+        fr: nootkan
       value: wak
     - label:
         en: North American Indian
-        fr: Indiennes d'Amérique du Nord
+        fr: indiennes d'Amérique du Nord
       value: nai
     - label:
         en: Norwegian
-        fr: Norvégien
+        fr: norvégien
       value: 'no'
     - label:
         en: Nunatsiavummiutut
-        fr: Nunatsiavummiutut
+        fr: nunatsiavummiutut
       value: nunatsiavummiutut
     - label:
         en: Ojibwa
-        fr: Ojibwa
+        fr: ojibwa
       value: oj
     - label:
         en: Persian
-        fr: Persan
+        fr: persan
       value: fa
     - label:
         en: Philippine (Other)
-        fr: Philippines, autres langues
+        fr: philippines, autres langues
       value: phi
     - label:
         en: Plains Cree
-        fr: Cris des plaines
+        fr: cris des plaines
       value: crk
     - label:
         en: Polish
-        fr: Polonais
+        fr: polonais
       value: pl
     - label:
         en: Portuguese
-        fr: Portugais
+        fr: portugais
       value: pt
     - label:
         en: Punjabi
-        fr: Pendjabi
+        fr: pendjabi
       value: pa
     - label:
         en: Romanian
-        fr: Roumain
+        fr: roumain
       value: ro
     - label:
         en: Russian
-        fr: Russe
+        fr: russe
       value: ru
     - label:
         en: Salishan
-        fr: Salishan
+        fr: salishan
       value: sal
     - label:
         en: Serbian
-        fr: Serbe
+        fr: serbe
       value: sr
     - label:
         en: Sign Languages
-        fr: Langage gestuel
+        fr: langage gestuel
       value: sgn
     - label:
         en: Siouan languages
-        fr: Sioux, langues
+        fr: sioux, langues
       value: sio
     - label:
         en: Slovak
-        fr: Slovaque
+        fr: slovaque
       value: sk
     - label:
         en: Somali
@@ -3782,7 +3800,7 @@ presets:
       value: so
     - label:
         en: Spanish; Castilian
-        fr: Espagnol; castillan
+        fr: espagnol; castillan
       value: es
     - label:
         en: Swahili
@@ -3790,7 +3808,7 @@ presets:
       value: ss
     - label:
         en: Swedish
-        fr: Suédois
+        fr: suédois
       value: sv
     - label:
         en: Tagalog
@@ -3806,40 +3824,42 @@ presets:
       value: th
     - label:
         en: Tigrinya
-        fr: Tigrigna
+        fr: tigrigna
       value: ti
     - label:
         en: Turkish
-        fr: Turc
+        fr: turc
       value: tr
     - label:
         en: Ukrainian
-        fr: Ukrainien
+        fr: ukrainien
       value: uk
     - label:
         en: Undetermined
-        fr: Indéterminée
+        fr: indéterminée
       value: und
     - label:
         en: Urdu
-        fr: Ourdou
+        fr: ourdou
       value: ur
     - label:
         en: Vietnamese
-        fr: Vietnamien
+        fr: vietnamien
       value: vi
     - label:
         en: Welsh
-        fr: Gallois
+        fr: gallois
       value: cy
     - label:
         en: Yiddish
-        fr: Yiddish
+        fr: yiddish
       value: yi
     - label:
         en: No linguistic content; Not applicable
         fr: pas de contenu linguistique; non applicable
       value: zxx
+    select_size: 10
+
     # copied from multiple_select preset
     form_snippet: multiple_select.html
     validators: scheming_multiple_choice
