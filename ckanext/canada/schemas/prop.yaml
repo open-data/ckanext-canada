@@ -117,11 +117,11 @@ dataset_fields:
       value: department_contacted
     - label:
         en: Response received – data-holder investigating
-        fr: Réponse reçue – Le détenteur des données enquête.
+        fr: Réponse reçue – Le détenteur des données enquête
       value: under_review
     - label:
-        en: Referred to data-holder - Awaiting Response
-        fr: Envoyée au détenteur des données – En attente d’une réponse
+        en: Data-holder working on releasing dataset
+        fr: Le détenteur des données s’affaire à la publication du jeu de données
       value: in_progress
     - label:
         en: Dataset Published

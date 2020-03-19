@@ -9,6 +9,8 @@ from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 import ckan.lib.uploader as uploader
 
+import csv
+import io
 import re
 import os
 import json
@@ -41,7 +43,7 @@ PAST_RE = (
     r'$'
 )
 
-DATASET_TYPES = 'info', 'dataset'
+DATASET_TYPES = 'info', 'dataset', 'prop'
 
 
 class CanadaCommand(CkanCommand):
@@ -57,6 +59,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
+                      load-suggested <suggested-datasets.csv>
                       rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
@@ -160,6 +163,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'rebuild-external-search':
             self.rebuild_external_search()
+
+        elif cmd == 'load-suggested':
+            self.load_suggested(*self.args[1:])
 
         else:
             print self.__doc__
@@ -438,6 +444,72 @@ class CanadaCommand(CkanCommand):
 
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
+
+    def load_suggested(self, filename):
+        """
+        a process that loads suggested datasets from Drupal into CKAN
+        """
+        registry = LocalCKAN()
+
+        # load packages as dict
+        results = True
+        counter = 0
+        batch_size = 100
+        existing_suggestions = {}
+        while results:
+            packages = registry.action.package_search(q='type:prop', start=counter, rows=batch_size, include_private=True)['results']
+            if packages:
+                for package in packages:
+                    existing_suggestions[package['id']] = package
+                counter += batch_size
+            else:
+                results = False
+
+        # load data from csv
+        csv_file = io.open(filename, "r", encoding='utf-8-sig')
+        csv_reader = csv.DictReader((l.encode('utf-8') for l in csv_file))
+        for row in csv_reader:
+            id = row['uuid']
+            if id not in existing_suggestions:
+                # add record
+                record = {
+                        "type": "prop",
+                        "id": id,
+                        "title_translated": {
+                            "en": row['title_en'],
+                            "fr": row['title_fr']
+                        },
+                        "owner_org": row['organization'],
+                        "notes_translated": {
+                            "en": row['description_en'] if row['description_en'] else '-',
+                            "fr": row['description_fr'] if row['description_fr'] else '-'
+                        },
+                        "comments": {
+                            "en": row['additional_comments_and_feedback_en'],
+                            "fr": row['additional_comments_and_feedback_fr']
+                        },
+                        "reason": row['reason'],
+                        "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
+                        "keywords": {
+                            "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
+                            "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
+                        },
+                        "date_submitted": row['date_created'],
+                        "status": [
+                            {
+                                "reason": row['dataset_suggestion_status'] if row['dataset_suggestion_status'] else 'department_contacted',
+                                "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
+                                "comments": {
+                                    "en": row['dataset_suggestion_status_link'],
+                                    "fr": row['dataset_suggestion_status_link']
+                                }
+                            }
+                        ]
+                    }
+
+                registry.action.package_create(**record)
+                print id + ' suggested dataset created'
+        csv_file.close()
 
 
 def _trim_package(pkg):
