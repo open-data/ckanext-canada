@@ -461,7 +461,7 @@ class CanadaCommand(CkanCommand):
             if packages:
                 for package in packages:
                     existing_suggestions[package['id']] = package
-                counter += batch_size
+                counter += len(packages)
             else:
                 results = False
 
@@ -473,39 +473,39 @@ class CanadaCommand(CkanCommand):
             if id not in existing_suggestions:
                 # add record
                 record = {
-                        "type": "prop",
-                        "id": id,
-                        "title_translated": {
-                            "en": row['title_en'],
-                            "fr": row['title_fr']
-                        },
-                        "owner_org": row['organization'],
-                        "notes_translated": {
-                            "en": row['description_en'] if row['description_en'] else '-',
-                            "fr": row['description_fr'] if row['description_fr'] else '-'
-                        },
-                        "comments": {
-                            "en": row['additional_comments_and_feedback_en'],
-                            "fr": row['additional_comments_and_feedback_fr']
-                        },
-                        "reason": row['reason'],
-                        "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
-                        "keywords": {
-                            "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
-                            "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
-                        },
-                        "date_submitted": row['date_created'],
-                        "status": [
-                            {
-                                "reason": row['dataset_suggestion_status'] if row['dataset_suggestion_status'] else 'department_contacted',
-                                "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
-                                "comments": {
-                                    "en": row['dataset_suggestion_status_link'],
-                                    "fr": row['dataset_suggestion_status_link']
-                                }
+                    "type": "prop",
+                    "id": id,
+                    "title_translated": {
+                        "en": row['title_en'],
+                        "fr": row['title_fr']
+                    },
+                    "owner_org": row['organization'],
+                    "notes_translated": {
+                        "en": row['description_en'] if row['description_en'] else '-',
+                        "fr": row['description_fr'] if row['description_fr'] else '-'
+                    },
+                    "comments": {
+                        "en": row['additional_comments_and_feedback_en'],
+                        "fr": row['additional_comments_and_feedback_fr']
+                    },
+                    "reason": row['reason'],
+                    "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
+                    "keywords": {
+                        "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
+                        "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
+                    },
+                    "date_submitted": row['date_created'],
+                    "status": [
+                        {
+                            "reason": row['dataset_suggestion_status'] if row['dataset_suggestion_status'] else 'department_contacted',
+                            "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
+                            "comments": {
+                                "en": row['dataset_suggestion_status_link'],
+                                "fr": row['dataset_suggestion_status_link']
                             }
-                        ]
-                    }
+                        }
+                    ]
+                }
 
                 registry.action.package_create(**record)
                 print id + ' suggested dataset created'
