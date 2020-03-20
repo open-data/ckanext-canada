@@ -26,10 +26,12 @@
             <label>{{_('Portal Type')}}</label>
             <input class="form-control" readonly
               value="
-                {%- if dataset_type=='dataset' -%}
+                {%- if dataset_type == 'dataset' -%}
                   {{- _('Open Data') -}}
-                {%- elif dataset_type=='info' -%}
+                {%- elif dataset_type == 'info' -%}
                   {{- _('Open Information') -}}
+                {%- elif dataset_type == 'prop' -%}
+                  {{- _('Suggested Dataset') -}}
                 {%- endif -%}
               " />
             <small class="text-info">{{_('The portal to which the metadata record belongs (Open Data or Open Information)')}}</small>
