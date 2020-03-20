@@ -47,6 +47,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.2
   - datastore_id: title_fr
@@ -64,6 +66,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.4
   - datastore_id: originating_sector_en
@@ -81,6 +85,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.5
   - datastore_id: originating_sector_fr
@@ -98,6 +104,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.4 (again)
   - datastore_id: addressee
@@ -109,6 +117,8 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    form_attrs:
+      style: 'width:559.87px;'
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -143,6 +153,9 @@ resources:
     occurrence: Single
     datastore_type: date
     excel_column_width: 28
+    form_snippet: scheming/form_snippets/date.html
+    form_attrs:
+      style: 'width:155.97px'
 
   # 3.6
   - datastore_id: action_required
@@ -188,6 +201,9 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -205,6 +221,10 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
 
 
   - datastore_id: record_created
