@@ -51,7 +51,7 @@ dataset_fields:
 
 - preset: canada_keywords
   form_snippet: ro_fluent_tags.html
-  validators: user_read_only fluent_tags
+  validators: user_read_only_json fluent_tags
 
 - field_name: reason
   label:
@@ -80,7 +80,7 @@ dataset_fields:
 
 - preset: canada_subject
   form_snippet: ro_multiple_choice.html
-  validators: user_read_only scheming_multiple_choice
+  validators: user_read_only_json scheming_multiple_choice
 
 - field_name: date_submitted
   help_text:

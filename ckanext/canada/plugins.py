@@ -457,6 +457,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.if_empty_set_to,
             'user_read_only':
                 validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
             }
 
 
