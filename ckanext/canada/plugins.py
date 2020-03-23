@@ -455,6 +455,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
             }
 
 

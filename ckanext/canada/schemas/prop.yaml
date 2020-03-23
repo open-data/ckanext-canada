@@ -21,13 +21,18 @@ dataset_fields:
 
 - preset: canada_title
   form_snippet: ro_fluent_title.html
+  validators: user_read_only fluent_text
+
 - preset: canada_owner_org
   label:
     en: Organization Name
     fr: Nom de l’organisation
   form_snippet: ro_org.html
+  validators: user_read_only owner_org_validator unicode
+
 - preset: canada_notes
   form_snippet: ro_fluent_markdown.html
+  validators: user_read_only fluent_text
 
 - field_name: comments
   label:
@@ -42,9 +47,11 @@ dataset_fields:
       fr: "Autres commentaires (français)"
   form_snippet: ro_fluent_markdown.html
   preset: fluent_markdown
+  validators: user_read_only fluent_text
 
 - preset: canada_keywords
   form_snippet: ro_fluent_tags.html
+  validators: user_read_only fluent_tags
 
 - field_name: reason
   label:
@@ -52,6 +59,7 @@ dataset_fields:
     fr: Raison de la demande d'un jeu de données
   form_snippet: ro_select.html
   preset: select
+  validators: user_read_only scheming_required scheming_choices
   choices:
   - label:
       en: Academic
@@ -72,6 +80,7 @@ dataset_fields:
 
 - preset: canada_subject
   form_snippet: ro_multiple_choice.html
+  validators: user_read_only scheming_multiple_choice
 
 - field_name: date_submitted
   help_text:
@@ -80,8 +89,9 @@ dataset_fields:
   label:
     en: Date suggestion was submitted
     fr: ''
-  form_snippet: ro_date.html
   preset: date
+  form_snippet: ro_date.html
+  validators: user_read_only scheming_required isodate convert_to_json_if_date
 
 - field_name: status
   label:
