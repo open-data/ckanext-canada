@@ -12,6 +12,8 @@ collection: briefingt
 resources:
 - title: Proactive Disclosure - Briefing Note Titles and Numbers
   resource_name: briefingt
+  create_form: true
+  edit_form: true
   fields:
 
   # 3.3
@@ -21,8 +23,10 @@ resources:
       fr: Numéro de suivi
     description:
       en: This field will display the internal tracking number of the Briefing Note.
+      fr: Ce champ affichera le numéro de suivi interne de la note de breffage. 
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
@@ -34,15 +38,19 @@ resources:
       en: Title (English)
       fr: Titre (en anglais)
     description:
-      en: This field is populated by the user with the official title of the Briefing Note, in English. (Will need guidance here for redactions/exceptions).
+      en: This field is populated by the user with the official title of the Briefing Note, in English.
+      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en anglais.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.2
   - datastore_id: title_fr
@@ -50,15 +58,19 @@ resources:
       en: Title (French)
       fr: Titre (en français)
     description:
-      en: This field is populated by the user with the official title of the Briefing Note, in French. (Will need guidance here for redactions/exceptions).
+      en: This field is populated by the user with the official title of the Briefing Note, in French.
+      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en français.    
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.4
   - datastore_id: originating_sector_en
@@ -67,14 +79,18 @@ resources:
       fr: Secteur d’origine (en anglais)
     description:
       en: The Sector, Branch, or Division where the Briefing Note originated in English. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
+      fr: Le secteur, la direction ou la division d'où provient la note de breffage en anglais. S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.5
   - datastore_id: originating_sector_fr
@@ -83,14 +99,18 @@ resources:
       fr: Secteur d’origine (en français)
     description:
       en: The Sector, Branch, or Division where the Briefing Note originated in French. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
+      fr: Le secteur, la direction ou la division d'où provient la note de breffage en français S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.4 (again)
   - datastore_id: addressee
@@ -99,8 +119,10 @@ resources:
       fr: Destinataire
     description:
       en: This field will display the person to whom the briefing note is addressed.
+      fr: Ce champ affichera le nom de la personne à qui la note de breffage est adressée.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -126,14 +148,17 @@ resources:
       fr: Date de réception
     description:
       en: This field will display the date on which the Briefing Note was received in the addressee's office.
+      fr: Ce champ affichera la date à laquelle la note de breffage a été reçue par le bureau du destinataire.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
     excel_column_width: 28
+    form_snippet: scheming/form_snippets/date.html
 
   # 3.6
   - datastore_id: action_required
@@ -142,8 +167,10 @@ resources:
       fr: Mesure requise
     description:
       en: "The Action Required is the purpose of the briefing note; For Information: If the item is being routed solely for the information of the addressee; For Approval/Signature: If the item is for approval or signature only of the addressee; For Decision: If the item requests the addressee make a decisive decision"
+      fr: "La mesure requise représente le but de la note de breffage; À titre d'information : Si l'élément n'est envoyé que pour informer le destinataire; Pour approbation/signature; Si l'élément est envoyé à des fins d'approbation ou de signature seulement par le destinataire; Pour décision : Si l'élément demande au destinataire de prendre une décision décisive."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: No
@@ -169,14 +196,19 @@ resources:
       fr: Renseignements supplémentaires (en anglais)
     description:
       en: This field will display any additional information/comments for the Briefing Note, in English.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
+    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -184,15 +216,21 @@ resources:
       en: Additional Information (French)
       fr: Renseignements supplémentaires (en français)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in English.
+      en: This field will display any additional information/comments for the Briefing Note, in French.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
+    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
 
 
   - datastore_id: record_created
@@ -272,3 +310,4 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+
