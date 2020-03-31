@@ -281,7 +281,7 @@ resources:
           RETURN NEW;
         END IF;
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
-     END;
+      END;
   - update_record_modified_created_trigger
 
   examples:
