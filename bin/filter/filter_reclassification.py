@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"filter for wrongdoing.csv"
+"filter for reclassification.csv and reclassification-nil.csv"
 
 import csv
 import sys

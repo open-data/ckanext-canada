@@ -116,8 +116,8 @@ def update_triggers():
         definition=ur'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
-                    SELECT unnest(value)
-                    EXCEPT SELECT unnest(choices)), ', ');
+                    SELECT c FROM(SELECT unnest(value) as c) u
+                    WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
                     -- \t is used when converting errors to string
@@ -126,7 +126,7 @@ def update_triggers():
                 END IF;
                 clean := ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
-                    WHERE c in (SELECT unnest(value)));
+                    WHERE c = ANY(value));
             END;
         ''')
 
@@ -293,15 +293,15 @@ def update_triggers():
         definition=u'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
-                    SELECT unnest(value)
-                    EXCEPT SELECT unnest(choices)), ', ');
+                    SELECT c FROM(SELECT unnest(value) as c) u
+                    WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
                     RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, bad_choices;
                 END IF;
                 RETURN ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
-                    WHERE c in (SELECT unnest(value)));
+                    WHERE c = ANY(value));
             END;
         ''')
 
