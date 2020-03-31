@@ -133,9 +133,6 @@ presets:
       fr:
         en: The French name by which the dataset is known
         fr: Nom français désignant le jeu de données
-    form_placeholder:
-      en: Canada Border Wait Times
-      fr: Temps d’attente à la frontière
     required: true
     # copied from fluent_text preset
     form_snippet: fluent_text.html
@@ -315,12 +312,6 @@ presets:
       fr:
         en: "Description (French)"
         fr: "Description (français)"
-    form_placeholder:
-      en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-        of pollutant releases (to air, water and land), disposals and transfers for
-        recycling. The NPRI includes...
-      fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-        des rejets de polluants du Canada…
     fluent_help_text:
       en:
         en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
@@ -390,6 +381,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Arts, Music, Literature
@@ -503,6 +495,7 @@ presets:
     display_snippet: list_inline.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
     choices:
     - label:
         en: Aboriginal peoples
@@ -1887,6 +1880,7 @@ presets:
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+    select_size: 10
 
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
@@ -3227,6 +3221,9 @@ presets:
       mimetype: application/x-filegdb
     - value: Flat raster binary
       replaces: [flat raster binary]
+    - value: GDB
+      mimetype: application/x-filegdb
+      label: GeoSoftDatabases
     - value: GeoPDF
       mimetype: application/pdf
       replaces: [geopdf]
@@ -3249,6 +3246,9 @@ presets:
       mimetype: application/gml+xml
       openness_score: 3
       replaces: [gml]
+    - value: GRD
+      mimetype: application/x-filegrd
+      label: GeoSoftGrids
     - value: GRIB1
     - value: GRIB2
     - value: HDF
@@ -3858,6 +3858,7 @@ presets:
         en: No linguistic content; Not applicable
         fr: pas de contenu linguistique; non applicable
       value: zxx
+    select_size: 10
 
     # copied from multiple_select preset
     form_snippet: multiple_select.html
