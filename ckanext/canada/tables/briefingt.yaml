@@ -199,7 +199,6 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
-    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
@@ -220,7 +219,6 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
-    form_required: true
     format_type: Free text
     validation: None
     visible_to_public: Yes
@@ -265,18 +263,24 @@ resources:
 
   triggers:
   - briefingt_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.tracking_number, 'tracking_number');
-        PERFORM not_empty(NEW.title_en, 'title_en');
-        PERFORM not_empty(NEW.title_fr, 'title_fr');
-        PERFORM not_empty(NEW.originating_sector_en, 'originating_sector_en');
-        PERFORM not_empty(NEW.originating_sector_fr, 'originating_sector_fr');
-        PERFORM not_empty(NEW.addressee, 'addressee');
-        PERFORM choice_one_of(NEW.addressee, {addressee}, 'addressee');
-        PERFORM not_empty(NEW.date_received, 'date_received');
-        PERFORM not_empty(NEW.action_required, 'action_required');
-        PERFORM choice_one_of(NEW.action_required, {action_required}, 'action_required');
-        RETURN NEW;
+        errors := errors || required_error(NEW.tracking_number, 'tracking_number');
+        errors := errors || required_error(NEW.title_en, 'title_en');
+        errors := errors || required_error(NEW.title_fr, 'title_fr');
+        errors := errors || required_error(NEW.originating_sector_en, 'originating_sector_en');
+        errors := errors || required_error(NEW.originating_sector_fr, 'originating_sector_fr');
+        errors := errors || required_error(NEW.addressee, 'addressee');
+        errors := errors || choice_error(NEW.addressee, {addressee}, 'addressee');
+        errors := errors || required_error(NEW.date_received, 'date_received');
+        errors := errors || required_error(NEW.action_required, 'action_required');
+        errors := errors || choice_error(NEW.action_required, {action_required}, 'action_required');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
