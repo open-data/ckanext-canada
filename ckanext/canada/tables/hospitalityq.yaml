@@ -14,13 +14,10 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Hospitality Expenses
   resource_name: hospitalityq
-  create_form: true
-  edit_form: true
   fields:
 
   # 3.1
   - datastore_id: ref_number
-    datastore_type: text
     label:
       en: Reference Number
       fr: Numéro de référence
@@ -29,15 +26,13 @@ resources:
       fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: "H-2019-P1-00001 – this sequence will continue for each line item (i.e.: H-2019-P1-00001, H-2019-P1-00002, H-2019-P1-00003, etc.)"
       fr: H-2016-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-P1-00002, H -2016-P1-00003….)
+    datastore_type: text
 
   # 3.2
   - datastore_id: disclosure_group
-    datastore_type: text
     label:
       en: Disclosure Group
       fr: Groupe de divulgation
@@ -46,6 +41,7 @@ resources:
       fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation: Optional
     format_type: Controlled List
+    datastore_type: text
     choices:
       MPSES:
         en: Minister/Ministerial advisor / Ministerial Staff / Parliamentary Secretary/Exempt Staff
@@ -54,9 +50,8 @@ resources:
         en: Senior officer or employees
         fr: Cadre supérieur ou employé
 
-  # 3.3
+  #
   - datastore_id: title_en
-    datastore_type: text
     label:
       en: Title (English)
       fr: Titre (anglais)
@@ -65,16 +60,12 @@ resources:
       fr: Cette zone indique, en anglais, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.4
   - datastore_id: title_fr
-    datastore_type: text
     label:
       en: Title (French)
       fr: Titre (français)
@@ -83,16 +74,12 @@ resources:
       fr: Cette zone indique, en français, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.5
   - datastore_id: name
-    datastore_type: text
     label:
       en: Name
       fr: Nom
@@ -101,16 +88,12 @@ resources:
       fr: Ce champ affiche le nom de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.6
   - datastore_id: description_en
-    datastore_type: text
     label:
       en: Purpose of hospitality activity (English)
       fr: But de l’activité d’accueil (anglais)
@@ -119,16 +102,11 @@ resources:
       fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en anglais.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+    datastore_type: text
 
   # 3.7
   - datastore_id: description_fr
-    datastore_type: text
     label:
       en: Purpose of hospitality activity (French)
       fr: But de l’activité d’accueil (français)
@@ -137,16 +115,11 @@ resources:
       fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en français.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+    datastore_type: text
 
   # 3.8
   - datastore_id: start_date
-    datastore_type: date
     label:
       en: Start Date
       fr: Date de début
@@ -155,18 +128,15 @@ resources:
       fr: La date du début auxquelles les activités d’accueil ont eu lieu.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
-    form_snippet: scheming/form_snippets/date.html
 
   # 3.9
   - datastore_id: end_date
-    datastore_type: date
     label:
       en: End Date
       fr: Date de fin
@@ -175,15 +145,12 @@ resources:
       fr: La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
     excel_column_width: 20
-    form_snippet: scheming/form_snippets/date.html
 
   # 3.10
   - datastore_id: location_en
-    datastore_type: text
     label:
       en: Municipality where the hospitality activity took place (English)
       fr: Municipalité où l’activité d’accueil a eu lieu (anglais)
@@ -199,15 +166,11 @@ resources:
       fr: Comprend la municipalité où les services d’accueil ont été fournis, en anglais
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.11
   - datastore_id: location_fr
-    datastore_type: text
     label:
       en: Municipality where the hospitality activity took place (French)
       fr: Municipalité où l’activité d’accueil a eu lieu (français)
@@ -223,15 +186,11 @@ resources:
       fr: Comprend la municipalité où les services d’accueil ont été fournis, en français.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.12
   - datastore_id: vendor_en
-    datastore_type: text
     label:
       en: Name of commercial establishment or vendor involved in the hospitality activity  (English)
       fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
@@ -247,15 +206,11 @@ resources:
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.13
   - datastore_id: vendor_fr
-    datastore_type: text
     label:
       en: Name of commercial establishment or vendor involved in the hospitality activity  (French)
       fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
@@ -271,15 +226,11 @@ resources:
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.14
   - datastore_id: employee_attendees
-    datastore_type: int
     label:
       en: Attendees (Government of Canada Officials)
       fr: Participants (Nombre de représentants du gouvernement du Canada)
@@ -295,15 +246,11 @@ resources:
       fr: Nombre total de participants (représentants du gouvernement du Canada).
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
-    format_type: Free text
-    form_attrs:
-      size: 40
+    format_type: Controlled List
+    datastore_type: int
 
   # 3.15
   - datastore_id: guest_attendees
-    datastore_type: int
     label:
       en: Attendees (Guests)
       fr: Participants (Nombre d’invités)
@@ -312,15 +259,11 @@ resources:
       fr: Nombre total de participants (invités)
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
-    format_type: Free text
-    form_attrs:
-      size: 40
+    format_type: Controlled List
+    datastore_type: int
 
   # 3.16
   - datastore_id: total
-    datastore_type: money
     label:
       en: Total cost
       fr: Total des coûts
@@ -329,15 +272,13 @@ resources:
       fr: Montant total des dépenses pour l’activité d’accueil
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     extract_double_sortable: true
     excel_column_width: 20
-    form_attrs:
-      size: 40
+
     solr_dollar_range_facet:
      - 0
      - 250
@@ -348,22 +289,19 @@ resources:
 
   # 3.17
   - datastore_id: additional_comments_en
-    datastore_type: text
     label:
       en: Additional comments (English)
       fr: Commentaires additionnels (anglais)
     description:
       en: This field may be populated with additional explanatory comments, in English.
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
+
     obligation: Optional
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
-
-    # 3.18
-  - datastore_id: additional_comments_fr
     datastore_type: text
+
+  # 3.18
+  - datastore_id: additional_comments_fr
     label:
       en: Additional comments (French)
       fr: Commentaires additionnels (français)
@@ -372,9 +310,7 @@ resources:
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
     obligation: Optional
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+    datastore_type: text
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -400,8 +336,6 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-
-  excel_example_height: 50
 
   triggers:
   - hospitalityq_trigger: |
@@ -466,35 +400,25 @@ resources:
 
 - title: Proactive Disclosure - Hospitality Nothing to Report
   resource_name: hospitalityq-nil
-  create_form: true
-  edit_form: true
   fields:
 
   - datastore_id: year
-    datastore_type: year
     label: Year
     description:
       en: "This tab / field in the template is only populated if there are no hospitality expenses for the reporting period. This field should be populated with the year of the reporting period."
       fr: "Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports."
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
+    datastore_type: year
     excel_column_width: 10
     extract_date_year: true
 
   - datastore_id: month
-    datastore_type: text
     label:
       en: Month
       fr: mois
     description:
       en: "This tab / field in the template is only populated if there are no hospitality expenses for the reporting period. This field should be populated with the month of the reporting period."
       fr: "Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports."
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
+    datastore_type: text
     excel_full_text_choices: true
     choices:
       P01:

@@ -14,7 +14,6 @@ assert sys.stdin.read(3) == codecs.BOM_UTF8
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
-sys.stdout.write(codecs.BOM_UTF8)
 out_csv.writeheader()
 
 def norm_date(d):
@@ -34,46 +33,39 @@ def en_bar_fr(en, fr):
         return en
     return en + '|' + fr
 
-try:
-    for line in in_csv:
-        try:
-            if norm_date(line['date']) >= datetime(2018, 4, 1):
-                raise ValueError
-            if not line['value'].strip():
-                raise ValueError
-        except ValueError:
-            sys.stderr.write('{org} {pid} "{date}"\n'.format(
-                date=line['date'],
-                pid=line['ref_number'],
-                org=line['owner_org']))
-            continue
 
-        line['agreement_type'] = line.pop('type').upper()
-        line['recipient_legal_name'] = en_bar_fr(
-            line.pop('recipient_name_en'),
-            line.pop('recipient_name_fr'))
-        line['recipient_city'] = en_bar_fr(
-            line.pop('recipient_region_en'),
-            line.pop('recipient_region_fr'))
-        line['prog_purpose_en'] = line.pop('purpose_en')
-        line['prog_purpose_fr'] = line.pop('purpose_fr')
-        line['agreement_title_en'] = line.pop('proj_name_en')
-        line['agreement_title_fr'] = line.pop('proj_name_fr')
-        line['agreement_number'] = (
-            line.pop('prog_number') + '\t' + line.pop('proj_number')).strip()
-        line['agreement_value'] = line.pop('value')
-        line['agreement_start_date'] = norm_date(line.pop('date')).strftime('%Y-%m-%d')
-        line['additional_information_en'] = (
-            line.pop('comments_en') + '\t' + line.pop('additional_info_en')).strip()
-        line['additional_information_fr'] = (
-            line.pop('comments_fr') + '\t' + line.pop('additional_info_fr')).strip()
-        line['amendment_number'] = '0'
-        if 'warehouse' not in sys.argv[1:]:
-            line['user_modified'] = '*'  # special "we don't know" value
-        out_csv.writerow(line)
+for line in in_csv:
+    try:
+        if norm_date(line['date']) >= datetime(2018, 4, 1):
+            raise ValueError
+        if not line['value'].strip():
+            raise ValueError
+    except ValueError:
+        sys.stderr.write('{org} {pid} "{date}"\n'.format(
+            date=line['date'],
+            pid=line['ref_number'],
+            org=line['owner_org']))
+        continue
 
-except KeyError:
-    if 'warehouse' in sys.argv:
-        sys.exit(85)
-    else:
-        raise
+    line['agreement_type'] = line.pop('type').upper()
+    line['recipient_legal_name'] = en_bar_fr(
+        line.pop('recipient_name_en'),
+        line.pop('recipient_name_fr'))
+    line['recipient_city'] = en_bar_fr(
+        line.pop('recipient_region_en'),
+        line.pop('recipient_region_fr'))
+    line['prog_purpose_en'] = line.pop('purpose_en')
+    line['prog_purpose_fr'] = line.pop('purpose_fr')
+    line['agreement_title_en'] = line.pop('proj_name_en')
+    line['agreement_title_fr'] = line.pop('proj_name_fr')
+    line['agreement_number'] = (
+        line.pop('prog_number') + '\t' + line.pop('proj_number')).strip()
+    line['agreement_value'] = line.pop('value')
+    line['agreement_start_date'] = norm_date(line.pop('date')).strftime('%Y-%m-%d')
+    line['additional_information_en'] = (
+        line.pop('comments_en') + '\t' + line.pop('additional_info_en')).strip()
+    line['additional_information_fr'] = (
+        line.pop('comments_fr') + '\t' + line.pop('additional_info_fr')).strip()
+    line['amendment_number'] = '0'
+    line['user_modified'] = '*'  # special "we don't know" value
+    out_csv.writerow(line)

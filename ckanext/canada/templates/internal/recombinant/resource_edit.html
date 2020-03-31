@@ -18,11 +18,11 @@
     <div class="panel panel-primary">
       <div class="panel-heading">{{ _("Guide") }}</div>
       <div class="panel-body">
-        {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
+        {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
              'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
         %}
         <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
-        {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
+        {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset.dataset_type).get(
           'sidebar_extra_content', ''))) }}
       </div>
     </div>
@@ -32,7 +32,40 @@
 
 {% block primary %}
   {{ super() }}
-  {% if resource %}
-    {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
-  {% endif %}
+  {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    wb.doc.on("wb-ready.wb-tables", function() {
+      Modernizr.load( {
+        load: [
+          "https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons" + wb.getMode() + ".js",
+          "https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis" + wb.getMode() + ".js",
+        ],
+        complete: function() {
+          var selector = "#dtprv", table;
+          if ($.fn.DataTable.isDataTable( selector ) ) {
+            table = $( selector ).DataTable()
+            new $.fn.dataTable.Buttons( table, {
+              buttons: [ {
+                extend: 'colvis',
+                text: '{{ _("Column visibility") }}'
+              }  ]
+            });
+
+            table.buttons().container()
+              .appendTo( $( table.table().container() ).find( ".top" ) );
+
+          }
+        }
+      });
+     });
+  </script>
+{% endblock %}
+
+{%- block styles %}
+  {{ super() }}
+  <link rel="stylesheet"  href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
 {% endblock %}

@@ -14,13 +14,10 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Travel Expenses
   resource_name: travelq
-  create_form: true
-  edit_form: true
   fields:
 
   # 3.1
   - datastore_id: ref_number
-    datastore_type: text
     label:
       en: Reference Number
       fr: Numéro de référence
@@ -29,15 +26,13 @@ resources:
       fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: "T-2019-P1-00001 – this sequence will continue for each line item (i.e.: T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003, etc.)"
       fr: T-2019-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003….)
+    datastore_type: text
 
   # 3.2
   - datastore_id: disclosure_group
-    datastore_type: text
     label:
       en: Disclosure Group
       fr: Groupe de divulgation
@@ -46,6 +41,7 @@ resources:
       fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation: Optional
     format_type: Controlled List
+    datastore_type: text
     choices:
       MPSES:
         en: Minister/Ministerial adviser/Ministerial staff/Parliamentary Secretary/Exempt Staff
@@ -56,7 +52,6 @@ resources:
 
   # 3.3
   - datastore_id: title_en
-    datastore_type: text
     label:
       en: Title (English)
       fr: Titre (anglais)
@@ -65,16 +60,12 @@ resources:
       fr: Cette zone indique le titre du poste de la personne qui a voyagé, en anglais.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.4
   - datastore_id: title_fr
-    datastore_type: text
     label:
       en: Title (French)
       fr: Titre (français)
@@ -82,17 +73,12 @@ resources:
       en: This field will display the position title of the person who travelled, in French.
       fr: Cette zone indique le titre du poste de la personne qui a voyagé, en français.
     obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.5
   - datastore_id: name
-    datastore_type: text
     label:
       en: Name
       fr: Nom
@@ -101,16 +87,12 @@ resources:
       fr: Ce champ affiche le nom de la personne qui a voyagé
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
+    datastore_type: text
     excel_column_width: 30
-    form_attrs:
-      size: 60
 
   # 3.6
   - datastore_id: purpose_en
-    datastore_type: text
     label:
       en: Purpose of Travel (English)
       fr: But du déplacement (anglais)
@@ -119,15 +101,11 @@ resources:
       fr: Brève description de la raison du voyage, en anglais. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.7
   - datastore_id: purpose_fr
-    datastore_type: text
     label:
       en: Purpose of Travel (French)
       fr: But du déplacement (français)
@@ -136,15 +114,11 @@ resources:
       fr: Brève description de la raison du voyage, en français. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Free text
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.8
   - datastore_id: start_date
-    datastore_type: date
     label:
       en: Travel Start Date
       fr: Date de début du voyage
@@ -153,18 +127,15 @@ resources:
       fr: Date de début du voyage
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
-    form_snippet: scheming/form_snippets/date.html
 
   # 3.9
   - datastore_id: end_date
-    datastore_type: date
     label:
       en: Travel End Date
       fr: Date de fin du voyage
@@ -173,15 +144,12 @@ resources:
       fr: Date de fin du voyage (peut être la même date que la date du début du voyage)
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
     excel_column_width: 20
-    form_snippet: scheming/form_snippets/date.html
 
   # 3.10
   - datastore_id: destination_en
-    datastore_type: text
     label:
       en: Places visited (English)
       fr: Endroits visités (anglais)
@@ -190,17 +158,13 @@ resources:
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
       fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.11
   - datastore_id: destination_fr
-    datastore_type: text
     label:
       en: Places visited (French)
       fr: Endroits visités (français) 
@@ -209,17 +173,13 @@ resources:
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
       fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    form_attrs:
-      size: 60
+    datastore_type: text
 
   # 3.12
   - datastore_id: airfare
-    datastore_type: money
     label:
       en: Airfare
       fr: Tarif aérien
@@ -230,13 +190,11 @@ resources:
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     excel_column_width: 20
-    form_attrs:
-      size: 40
 
   # 3.13
   - datastore_id: other_transport
-    datastore_type: money
     label:
       en: Other transportation
       fr: Autres moyens de transport
@@ -247,13 +205,11 @@ resources:
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     excel_column_width: 20
-    form_attrs:
-      size: 40
 
   # 3.14
   - datastore_id: lodging
-    datastore_type: money
     label:
       en: Lodging
       fr: Hébergement
@@ -262,18 +218,14 @@ resources:
       fr: Coût total de l’hébergement
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     excel_column_width: 20
-    form_attrs:
-      size: 40
 
   # 3.15
   - datastore_id: meals
-    datastore_type: money
     label:
       en: Meals and incidentals
       fr: Frais de repas et frais accessoires
@@ -282,18 +234,14 @@ resources:
       fr: Total des frais de repas et accessoires
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     excel_column_width: 20
-    form_attrs:
-      size: 40
 
   # 3.16
   - datastore_id: other_expenses
-    datastore_type: money
     label:
       en: Other expenses
       fr: Autres dépenses
@@ -304,13 +252,11 @@ resources:
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     excel_column_width: 20
-    form_attrs:
-      size: 40
 
   # 3.17
   - datastore_id: total
-    datastore_type: money
     label:
       en: Total Amount
       fr: Montant total
@@ -319,15 +265,13 @@ resources:
       fr: Le total des montants énumérés ci-dessus
     obligation: Mandatory
     excel_required: true
-    form_required: true
-    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
+    datastore_type: money
     extract_double_sortable: true
     excel_column_width: 20
-    form_attrs:
-      size: 40
+
     solr_dollar_range_facet:
      - 0
      - 250
@@ -338,29 +282,23 @@ resources:
 
   # 3.18
   - datastore_id: additional_comments_en
-    datastore_type: text
     label: Additional Comments English
     description:
       en: This field may be populated with additional comments in English.
       fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
     obligation: Optional
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+    datastore_type: text
 
   # 3.19
   - datastore_id: additional_comments_fr
-    datastore_type: text
     label: Additional Comments French
     description:
       en: This field may be populated with additional comments in French.
       fr: Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     format_type: Free text
-    form_snippet: scheming/form_snippets/textarea.html
-    form_attrs:
-      style: "width: 100%; display: block"
+    datastore_type: text
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -386,8 +324,6 @@ resources:
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-
-  excel_example_height: 50
 
   triggers:
   - travelq_trigger: |
@@ -452,37 +388,26 @@ resources:
 
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
-  create_form: true
-  edit_form: true
   fields:
 
   - datastore_id: year
-    datastore_type: year
     label: Year
     description:
       en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
+
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
+    datastore_type: year
     excel_column_width: 10
     extract_date_year: true
-    form_attrs:
-      size: 20
 
   - datastore_id: month
-    datastore_type: text
     label:
       en: Month
       fr: mois
     description:
       en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
+    datastore_type: text
     excel_full_text_choices: true
     choices:
       P01:

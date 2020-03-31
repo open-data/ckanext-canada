@@ -533,10 +533,10 @@ $(workdir)/reclassification-nil.csv:
 	$(paster) $(combine) reclassification-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	cp $< $@
 
 $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	cp $< $@
 
 ###
 ###  Service Inventory
@@ -619,7 +619,7 @@ $(workdir)/wrongdoing.csv:
 	$(paster) $(combine) wrongdoing -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
-	$(fdir)/filter_wrongdoing.py < $< > $@
+	cp $< $@
 
 
 endif

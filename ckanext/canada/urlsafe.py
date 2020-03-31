@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import codecs
 import re
 
 def url_part_escape(orig):
@@ -12,17 +11,14 @@ def url_part_escape(orig):
     all returned characters will be in [a-zA-Z0-9_-]
     """
     return '_'.join(
-        codecs.encode(s.encode('utf-8'), 'hex').decode('ascii') if i % 2 else s
+        s.encode('hex') if i % 2 else s
         for i, s in enumerate(
-            re.split(u'([^-a-zA-Z0-9]+)', orig)
-        )
-    )
+            re.split('([^-a-zA-Z0-9]+)', orig.encode('utf-8'))))
 
 def url_part_unescape(urlpart):
     """
     reverse url_part_escape
     """
-    return ''.join(
-        codecs.decode(s, 'hex').decode('utf-8') if i % 2 else s
-        for i, s in enumerate(urlpart.split('_'))
-    )
+    return u''.join(
+        s.decode('hex').decode('utf-8') if i % 2 else s.decode('utf-8')
+        for i, s in enumerate(urlpart.split('_')))

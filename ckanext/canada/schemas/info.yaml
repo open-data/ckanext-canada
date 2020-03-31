@@ -31,19 +31,32 @@ dataset_fields:
     - parliament_committee
     - parliament_committee_deputy
     - aia
+  help_text:
+    en: "The collection (domain specific) to which the metadata record belongs, Example: Publications"
+    fr: "Collection (propre au domaine) à laquelle appartient le dossier de métadonnées, par exemple : Publication"
 
 # Field = Title English.
 # {The English name by which the asset is known}
 # Field = Title French.
 # {The French name by which the asset is known}
 - preset: canada_title
- 
+  fluent_help_text:
+    en:
+      en: The English name by which the asset is known
+      fr: Nom anglais désignant la ressource d’information
+    fr:
+      en: The French name by which the asset is known
+      fr: Nom français désignant la ressource d’information
+
 # Field = Publisher - Current Organization Name.
 # List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
 # Populate the list box with the Titles of all the organizations the currently logged-in user is linked to.
 # {The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset}
 - preset: canada_owner_org
-  
+  help_text:
+    en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset
+    fr: Entité (organisme ou ministère du gouvernement) principalement responsable de publier la ressource d’information
+
 # Field = Publisher - Organization Name at Publication (English).
 # {The organization Title at publication Time}
 # Field = Publisher - Organization Name at Publication (French).
@@ -55,21 +68,39 @@ dataset_fields:
 # Field = Publisher - Organization Section Name French.
 # {The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
 - preset: canada_org_section_name
-  
+  fluent_help_text:
+    en:
+      en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+      fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le produit (séparer les multiples noms par des virgules).
+    fr:
+      en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas)
+      fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le produit (séparer les multiples noms par des virgules).
+
 # Field = Creator.
 # { Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas).}
 - preset: canada_creator
- 
+  help_text:
+    en: Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas)
+    fr: Entité [individuelle] principalement responsable de produire la ressource d’information
+
 # Field = Contributor English.
 # {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 # Field = Contributor English.
 # {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 - preset: canada_contributor
-  
+  fluent_help_text:
+    en:
+      en: The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas)
+    fr:
+      en: The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas)
+
 # Field = Contact Email.
 # {The contact person's email for the information asset}
 - preset: canada_maintainer_email
- 
+  help_text:
+    en: The contact person's email for the information asset
+    fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de la ressource d’information
+
 # Field = Description English
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in English. A description may include abstract, table of contents or a free-text.}
@@ -77,7 +108,14 @@ dataset_fields:
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in French. A description may include abstract, table of contents or a free-text.}
 - preset: canada_notes
-  
+  fluent_help_text:
+    en:
+      en: "An account of the information asset, in English. A description may include abstract, table of contents or a free-text"
+      fr: "Description de la ressource d’information, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+    fr:
+      en: "An account of the information asset, in French. A description may include abstract, table of contents or a free-text"
+      fr: "Description de la ressource d’information, en français. La description peut comprendre un résumé, une table des matières ou un texte libre."
+
 # Field = Note English.
 # { General information relating to an asset, in English }
 # Field = Note English.
@@ -111,17 +149,30 @@ dataset_fields:
 # Field = Keywords French.
 # {Commonly used words or phrases which describe the asset, in French}
 - preset: canada_keywords
-  
+  fluent_help_text:
+    en:
+      en: Commonly used words or phrases which describe the asset, in English.(Separate multiple entries by commas)
+      fr: Mots ou phrases couramment utilisés qui décrivent le produit, en anglais. (Séparer les mots ou phrases par une virgule)
+    fr:
+      en: Commonly used words or phrases which describe the asset, in French. (Separate multiple entries by commas)
+      fr: Mots ou phrases couramment utilisés qui décrivent le produit, en français. (Séparer les mots ou phrases par une virgule)
+
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
 # {The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click).}
 - preset: canada_subject
- 
+  help_text:
+    en: "The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click)"
+    fr: "Le sujet du contenu de la ressource d’information. Vous pouvez sélectionner ou désélectionner de multiples sujets (Ctrl+Clic)"
+
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
 # {A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
 - preset: canada_audience
- 
+  help_text:
+    en: "A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click)"
+    fr: "Description de l’audience ou du groupe de personnes pour lequel de la ressource d’information décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
+
 # Field = Place pf Publication.
 # List box Source: Geographic Region Name code table (refer to Data Migration).
 # {The region where the asset was originally published}
@@ -143,17 +194,26 @@ dataset_fields:
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
 # {The geographic region of an asset. You may or deselect multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
-  
+  help_text:
+    en: The geographic region of the asset. You may select or deselect multiple regions (Ctrl+Click)
+    fr: Région géographique d’un produit. Vous pouvez sélectionner ou désélectionner de multiples régions (Ctrl+Clic)
+
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
 # {The start date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_start
-  
+  help_text:
+    en: The start date of the period covered by the asset (YYYY-MM-DD)
+    fr: La date de début couvertes par les données (AAAA-MM-JJ)
+
 # Field = Time Period Coverage End Date.
 # Add a Calendar control to select a Date.
 # {The end date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_end
-  
+  help_text:
+    en: The end date of the period covered by the asset (YYYY-MM-DD)
+    fr: La date de fin par les données (AAAA-MM-JJ)
+
 # Field = Issuance.
 # List box Source: Issuance code table (refer to Data Migration).
 # { A term that designates how the resource is issued }
@@ -280,17 +340,25 @@ dataset_fields:
 # List box Source: Maintenance and Update Frequency code table (refer to Data Migration).
 # {The frequency with which changes and additions are made to the initial asset}
 - preset: canada_frequency
-
+  help_text:
+    en: The frequency with which changes and additions are made to the information asset after the initial resource is completed
+    fr: Fréquence à laquelle les changements et les ajouts sont apportés au ressource d’informations une fois la ressource initiale complétée
 # Field = Date Published.
 # Add a Calendar control to select a Date.
 # {The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)}
 - preset: canada_date_published
- 
+  help_text:
+    en: The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)
+    fr: Date de publication du produit d’information (AAAA-MM-JJ)
+
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
 # {The date on which the information asset was updated (YYYY-MM-DD)}
 - preset: canada_date_modified
- 
+  help_text:
+    en: The date on which the information asset was updated (YYYY-MM-DD)
+    fr: Date à laquelle le produit a été mis à jour (AAAA-MM-JJ)
+
 # Field = Date Created.
 # Add a Calendar control to select a Date.
 # {The date of creation of the asset (YYYY-MM-DD)}
@@ -352,19 +420,43 @@ dataset_fields:
 # Field = Homepage French.
 # {A program or homepage that can benavigated to gain additional or contextual information about the asset.}
 - preset: canada_program_page_url
-  
+  fluent_form_label:
+    en:
+      en: Homepage URL (English)
+      fr: URL de la page d’accueil (anglais)
+    fr:
+      en: Homepage URL (French)
+      fr: URL de la page d’accueil (français)
+  fluent_help_text:
+    en:
+      en: A program or homepage that can be navigated to gain additional or contextual information about the asset, in English
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en anglais.
+    fr:
+      en: A program or homepage that can be navigated to gain additional or contextual information about the asset, in French
+      fr: Programme ou page d’accueil pouvant être consulté pour obtenir de l’information supplémentaire ou contextuelle au sujet du produit, en français.
+
 # Field = Series Title English.
 # {The English name of the series, or aggregate asset, of which the asset is a part}
 # Field = Series Title French.
 # {The French name of the series, or aggregate asset, of which the asset is a part}
 - preset: canada_data_series_name
-  
+  fluent_help_text:
+    en:
+      en: The English name of the series, or aggregate asset, of which the asset is a part
+    fr:
+      en: The French name of the series, or aggregate asset, of which the asset is a part
+
 # Field = Series Issue ID English.
 # {English identification of the series’ issue information}
 # Field = Series Issue ID French.
 # {French identification of the series’ issue information}
 - preset: canada_data_series_issue_identification
-  
+  fluent_help_text:
+    en:
+      en: English identification of the series’ issue information
+    fr:
+      en: French identification of the series’ issue information
+
 # Field = ISBN.
 # {The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency.}
 - field_name: isbn
@@ -415,38 +507,59 @@ dataset_fields:
 # Field = Digital Object Identifier DOI.
 # {The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
 - preset: canada_digital_object_identifier
-  
+  help_text:
+    en: "The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html"
+    fr: "L'identificateur d'objet numérique assigné au jeu de données. Pour obtenir de plus amples renseignements, veuillez consulter le site http://cisti-icist.nrc-cnrc.gc.ca/fra/services/icist/datacite-canada/index.html"
+
 # Field = Jurisdiction.
 # {The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset.}
 - preset: canada_jurisdiction
-  
+  help_text:
+    en: "The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset"
+    fr: "Étendue de l’autorité judiciaire, de l’autorité d’application de la loi ou d’un autre type d’autorité. Par exemple, l'ordre de gouvernement ayant fourni le jeu de données"
+
 # Field = Licence.
 # Populate the list box with the licence options from the Registry.
 # {The licence applied to the information asset}
 - preset: canada_license_id
-  
+  help_text:
+    en: The licence applied to the information asset
+    fr: Licence s’appliquant au produit d'information
+
 # Field = Access Restrictions.
 # Default Value = Unrestricted.
 # {These are the access restrictions of the asset}
 - preset: canada_restrictions
-  
+  help_text:
+    en: These are the access restrictions of the asset
+    fr: Restrictions d’accès du jeu des données
+
 # Field = IMSO Approval.
 # List box options are Yes and No.
 # {Has IMSO approval been obtained for this asset? By selecting yes, you agree to release this asset under the Open Government Licence - Canada}
 # http://open.canada.ca/en/open-government-licence-canada
 - preset: canada_imso_approval
-  
+  help_text:
+    en: Has IMSO approval been obtained for this asset? By selecting yes, you agree to release this asset under the Open Government Licence - Canada
+    fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+
 # Field = Ready to Publish.
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
-  
+  help_text:
+    en: Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will save it as a ‘draft’. If the asset is already published on the portal, selecting “No” will unpublish it.
+    fr: La sélection de l’option « Oui » désigne le produit comme prêt à être publié par l'entremise du Portail du gouvernement ouvert. Si l’option « Non » est sélectionnée, il sera sauvegardé comme une « ébauche ». Si le produit a déjà été publié dans le portail, le fait de sélectionner « Non » fera en sorte qu’il ne le sera plus.
+
 # Field = Date Released.
 # Available only for an Admin user.
 # Add a Calendar control to select a Date.
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
-  
+  help_text:
+    en: The date the asset may be published on the Portal (YYYY-MM-DD)
+    fr: La date que le jeu de données peut être publier sur le portail information ouvertes (AAAA-MM-JJ)
+
 
 #
 #   RESOURCE FIELDS
