@@ -57,7 +57,7 @@ def update_triggers():
         name=u'required_error',
         or_replace=True,
         arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'value', u'argtype': u'numeric'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
         definition=u'''
@@ -72,7 +72,7 @@ def update_triggers():
         name=u'required_error',
         or_replace=True,
         arguments=[
-            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'value', u'argtype': u'int4'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
         definition=u'''

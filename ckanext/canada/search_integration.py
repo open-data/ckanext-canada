@@ -139,6 +139,7 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             'resource_title_en_s': resource_title_en,
             'resource_title_fr_s': resource_title_fr,
             'last_modified_tdt': parser.parse(data_dict['metadata_modified']).replace(microsecond=0).isoformat() + 'Z',
+            'published_tdt': parser.parse(data_dict['date_published']).replace(microsecond=0).isoformat() + 'Z',
             'ogp_link_en_s': '{0}{1}'.format(od_search_od_url_en, data_dict['name']),
             'ogp_link_fr_s': '{0}{1}'.format(od_search_od_url_fr, data_dict['name']),
             'display_options_s': display_options
