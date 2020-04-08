@@ -353,8 +353,7 @@ ckanext.canada:schemas/info.yaml
             'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
-            'adobe_analytics_js',
-            'get_site_id'
+            'adobe_analytics_js'
         ])
 
 

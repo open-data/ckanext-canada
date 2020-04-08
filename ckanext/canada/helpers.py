@@ -477,6 +477,3 @@ def recombinant_description_to_markup(text):
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': jinja2.Markup(''.join(markup))}
-
-def get_site_id():
-    return str(config.get('ckan.site_id'))
