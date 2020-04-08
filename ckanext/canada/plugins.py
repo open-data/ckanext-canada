@@ -167,7 +167,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
-            'get_site_id'
         ])
 
     def configure(self, config):
