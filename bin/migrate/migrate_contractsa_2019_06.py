@@ -20,17 +20,25 @@ def norm_money(m):
     return unicode(Decimal(m))
 
 
-for line in in_csv:
-    line['contract_goods_number_of'] = int(line['contract_goods_number_of'])
-    line['contracts_goods_original_value'] = norm_money(line['contracts_goods_original_value'])
-    line['contracts_goods_amendment_value'] = norm_money(line['contracts_goods_amendment_value'])
-    line['contract_service_number_of'] = int(line['contract_service_number_of'])
-    line['contracts_service_original_value'] = norm_money(line['contracts_service_original_value'])
-    line['contracts_service_amendment_value'] = norm_money(line['contracts_service_amendment_value'])
-    line['contract_construction_number_of'] = int(line['contract_construction_number_of'])
-    line['contracts_construction_original_value'] = norm_money(line['contracts_construction_original_value'])
-    line['contracts_construction_amendment_value'] = norm_money(line['contracts_construction_amendment_value'])
-    line['acquisition_card_transactions_number_of'] = int(line['acquisition_card_transactions_number_of'])
-    line['acquisition_card_transactions_total_value'] = norm_money(line['acquisition_card_transactions_total_value'])
-    line['user_modified'] = '*'  # special "we don't know" value
-    out_csv.writerow(line)
+try:
+    for line in in_csv:
+        line['contract_goods_number_of'] = int(line['contract_goods_number_of'])
+        line['contracts_goods_original_value'] = norm_money(line['contracts_goods_original_value'])
+        line['contracts_goods_amendment_value'] = norm_money(line['contracts_goods_amendment_value'])
+        line['contract_service_number_of'] = int(line['contract_service_number_of'])
+        line['contracts_service_original_value'] = norm_money(line['contracts_service_original_value'])
+        line['contracts_service_amendment_value'] = norm_money(line['contracts_service_amendment_value'])
+        line['contract_construction_number_of'] = int(line['contract_construction_number_of'])
+        line['contracts_construction_original_value'] = norm_money(line['contracts_construction_original_value'])
+        line['contracts_construction_amendment_value'] = norm_money(line['contracts_construction_amendment_value'])
+        line['acquisition_card_transactions_number_of'] = int(line['acquisition_card_transactions_number_of'])
+        line['acquisition_card_transactions_total_value'] = norm_money(line['acquisition_card_transactions_total_value'])
+        if 'warehouse' not in sys.argv[1:]:
+            line['user_modified'] = '*'  # special "we don't know" value
+        out_csv.writerow(line)
+
+except KeyError:
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise
