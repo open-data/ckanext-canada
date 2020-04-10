@@ -179,6 +179,7 @@ Search Facet Formatters
       {% set preset_choices = [
           {'value': 'dataset', 'label': _('Open Data')},
           {'value': 'info', 'label': _('Open Information')},
+          {'value': 'prop', 'label': _('Suggested Datasets')},
           ] %}
       {% for t in h.recombinant_get_types() %}
         {% do preset_choices.append({

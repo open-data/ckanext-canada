@@ -238,6 +238,22 @@
   {% endif %}
 {% endblock contact_information %}
 
+{% block detail_fields %}
+  {% set show_fields = schema.get('detail_show_fields', []) %}
+  {% if show_fields %}
+    {% for field in schema.dataset_fields %}
+      {% if field.field_name in show_fields %}
+        {% snippet 'scheming/snippets/display_field.html',
+          field=field,
+          data=pkg,
+          entity_type='dataset',
+          object_type=pkg.type
+        %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
 
 {% block package_rate %}
   <a name="rate"></a>

@@ -1,0 +1,177 @@
+
+scheming_version: 2
+dataset_type: prop
+
+about: 'open.canada.ca: Suggested Dataset metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+
+form_languages:
+- en
+- fr
+
+sidebar_show_fields:
+- creator
+- keywords
+- subject
+
+detail_show_fields:
+- status
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- preset: canada_dataset_id
+- preset: canada_dataset_name
+
+- preset: canada_title
+  form_snippet: ro_fluent_title.html
+  validators: user_read_only fluent_text
+
+- preset: canada_owner_org
+  label:
+    en: Organization Name
+    fr: Nom de l’organisation
+  form_snippet: ro_org.html
+  validators: user_read_only owner_org_validator unicode
+
+- preset: canada_notes
+  form_snippet: ro_fluent_markdown.html
+  validators: user_read_only fluent_text
+
+- field_name: comments
+  label:
+    en: Additional Comments and Feedback
+    fr: Autres commentaires
+  fluent_form_label:
+    en:
+      en: "Additional Comments and Feedback (English)"
+      fr: "Autres commentaires (anglais)"
+    fr:
+      en: "Additional Comments and Feedback (French)"
+      fr: "Autres commentaires (français)"
+  form_snippet: ro_fluent_markdown.html
+  preset: fluent_markdown
+  validators: user_read_only fluent_text
+
+- preset: canada_keywords
+  form_snippet: ro_fluent_tags.html
+  validators: user_read_only_json fluent_tags
+
+- field_name: reason
+  label:
+    en: Reason for requesting dataset
+    fr: Raison de la demande d'un jeu de données
+  form_snippet: ro_select.html
+  preset: select
+  validators: user_read_only scheming_required scheming_choices
+  choices:
+  - label:
+      en: Academic
+      fr: Pédagogique
+    value: academic
+  - label:
+      en: Scientific
+      fr: Scientifique
+    value: scientific
+  - label:
+      en: Personal Interest
+      fr: Personnelle
+    value: personal_interest
+  - label:
+      en: Business
+      fr: Opérationnelle
+    value: business
+
+- preset: canada_subject
+  form_snippet: ro_multiple_choice.html
+  validators: user_read_only_json scheming_multiple_choice
+
+- field_name: date_submitted
+  help_text:
+    en: The date the submission form was submitted to open-ouvert@tbs-sct.gc.ca. This value will be automatically populated
+    fr: ''
+  label:
+    en: Date suggestion was submitted
+    fr: ''
+  preset: date
+  form_snippet: ro_date.html
+  validators: user_read_only scheming_required isodate convert_to_json_if_date
+
+- field_name: status
+  label:
+    en: Status
+    fr: État
+
+  repeating_subfields:
+
+  - field_name: date
+    label:
+      en: Date related to the status reason
+      fr: Date liée à la raison de l’état
+    help_text:
+      en: The date related to the update to the status, for example the date that the suggestion was sent to the data holder.
+      fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
+    preset: date
+    required: true
+
+  - field_name: reason
+    label:
+      en: Status Reason
+      fr: Raison de l’état
+    help_text:
+      en: This field should be populated with a value that indicates why the status is marked as ‘open’ or ‘closed’
+      fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
+
+    required: true
+    preset: select
+    choices:
+    - label:
+        en: Referred to data-holder - Awaiting Response
+        fr: Envoyée au détenteur des données – En attente d’une réponse
+      value: department_contacted
+    - label:
+        en: Response received – data-holder investigating
+        fr: Réponse reçue – Le détenteur des données enquête
+      value: under_review
+    - label:
+        en: Data-holder working on releasing dataset
+        fr: Le détenteur des données s’affaire à la publication du jeu de données
+      value: in_progress
+    - label:
+        en: Dataset Published
+        fr: Jeu de données publié
+      value: released
+    - label:
+        en: Dataset not held
+        fr: Jeu de données non détenu
+      value: not_collected
+
+  - field_name: comments
+    label:
+      en: Status Comments
+      fr: Commentaires sur l’état
+    fluent_form_label:
+      en:
+        en: Status Comments (in English)
+        fr: Commentaires sur l’état (en anglais)
+      fr:
+        en: Status Comments (in French)
+        fr: Commentaires sur l’état (en français)
+    fluent_help_text:
+      en:
+        en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
+        fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
+      fr:
+        en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
+        fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
+    preset: fluent_markdown
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields: []

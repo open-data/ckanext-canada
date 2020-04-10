@@ -54,6 +54,44 @@ def protect_portal_release_date(key, data, errors, context):
     raise StopOnError
 
 
+def user_read_only(key, data, errors, context):
+    # sysadmins are free to change fields as they like
+    if is_sysadmin(context['user']) and data[key] is not missing:
+        return
+
+    assert len(key) == 1, 'only package fields supported user_read_only (not %r)' % key
+
+    original = ''
+    package = context.get('package')
+    if not package and data[key] is not missing:
+        errors[key].append("Only sysadmin may set this value")
+        raise StopOnError
+
+    if hasattr(package, key[0]):
+        data[key] = getattr(package, key[0])
+    else:
+        data[key] = package.extras.get(key[0], '')
+
+
+def user_read_only_json(key, data, errors, context):
+    # sysadmins are free to change fields as they like
+    if is_sysadmin(context['user']) and data[key] is not missing:
+        return
+
+    assert len(key) == 1, 'only package fields supported user_read_only (not %r)' % key
+
+    original = ''
+    package = context.get('package')
+    if not package and data[key] is not missing:
+        errors[key].append("Only sysadmin may set this value")
+        raise StopOnError
+
+    if hasattr(package, key[0]):
+        data[key] = json.loads(getattr(package, key[0]))
+    else:
+        data[key] = json.loads(package.extras.get(key[0], 'None'))
+
+
 def canada_tags(value, context):
     """
     Accept

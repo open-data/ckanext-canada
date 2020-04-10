@@ -269,6 +269,7 @@ ckanext.canada:schemas/presets.yaml
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
+ckanext.canada:schemas/prop.yaml
 """
 
         # Enable our custom DCAT profile.
@@ -455,6 +456,10 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
             }
 
 
@@ -548,6 +553,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
+        data_dict.pop('status', None)  # FIXME suggested datasets has list here
         return data_dict
 
     def before_view(self, pkg_dict):
