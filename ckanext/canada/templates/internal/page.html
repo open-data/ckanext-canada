@@ -1,7 +1,5 @@
 {% ckan_extends %}
 
-
-
 {% block content %}
     <div class="container"><div class="row">
       {% block flash %}
@@ -34,4 +32,8 @@
     </div></div>
   {% endblock content %}
 
-{%- block adobe_analytics_footer -%}{%- endblock -%}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
+  {%- block adobe_analytics_footer -%}{%- endblock -%}
+{% endblock %}

@@ -378,10 +378,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
+            error_summary = 'Login failed. Bad username or password.'
             return h.redirect_to(
                 controller='user',
-                action='login', locale=lang
+                action='login', locale=lang,
+                error=error_summary,
             )
 
     def register(self, data=None, errors=None, error_summary=None):
