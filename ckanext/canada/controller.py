@@ -381,11 +381,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(
-                controller='user',
-                action='login', locale=lang
-            )
+            error_summary = _('Login failed. Bad username or password.')
+            # replace redirect with a direct call to login controller
+            # pass error_summary to controller as error
+            # so that it can be captured for GA events in our overridden templates
+            return UserController.login(self, error_summary)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.

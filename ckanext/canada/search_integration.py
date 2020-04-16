@@ -165,6 +165,19 @@ def add_to_search_index(data_dict_id, in_bulk=False):
         elif 'fr-t-en' in keywords:
             od_obj['keywords_xlt_fr_s'] = keywords['fr-t-en']
 
+        if 'data_series_issue_identification' in data_dict:
+            if 'en' in data_dict['data_series_issue_identification']:
+                od_obj['data_series_issue_identification_en'] = data_dict['data_series_issue_identification']['en']
+            else:
+                od_obj['data_series_issue_ident_en'] = '-'
+            if 'fr' in data_dict['data_series_issue_identification']:
+                od_obj['data_series_issue_identification_fr'] = data_dict['data_series_issue_identification']['fr']
+            else:
+                od_obj['data_series_issue_ident_fr'] = '-'
+        else:
+            od_obj['data_series_issue_ident_en'] = '-'
+            od_obj['data_series_issue_ident_fr'] = '-'
+            
         solr = pysolr.Solr(od_search_solr_url)
         if in_bulk:
             solr.add([od_obj])
