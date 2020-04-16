@@ -378,7 +378,7 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            error_summary = 'Login failed. Bad username or password.'
+            error_summary = _('Login failed. Bad username or password.')
             return h.redirect_to(
                 controller='user',
                 action='login', locale=lang,
