@@ -200,7 +200,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
         Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
-    excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
+    excel_error_formula: 'OR(LEN(TRIM({cell}))>4,AND(TRIM({cell})="NA",{instrument_type}<>"SOSA"))'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -895,7 +895,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"),AND({cell}<>"NA",{trade_agreement}<>"XX"))'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"))'
     datastore_type: _text
     choices:
       NA:
@@ -1023,6 +1023,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         The field is limited to eight alpha-numeric digits or less.
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
 
   - datastore_id: country_of_origin
@@ -1065,6 +1066,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    excel_error_formula: 'OR(AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00")),AND({award_criteria}<>"0",OR({cell}="TN",{cell}="AC")),AND({article_6_exceptions}<>"0",NOT(OR({cell}="TN",{cell}="AC"))))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1102,9 +1104,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Si TC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
+        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({solicitation_procedure}="TC",{trade_agreement}<>"XX",{cell}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1277,7 +1279,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Obligatoire pour les marchés conclus après le 2022-01-01
 
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",{trade_agreement}<>"XX"))'
+    excel_error_formula: '{default_formula}'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1625,7 +1627,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="OB",{solicitation_procedure}="TC",{solicitation_procedure}="ST"))),AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
     choices:
       "0":
         en: Not applicable
@@ -1672,7 +1674,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         champ Type d’instrument.
     datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")),AND({cell}="0",OR({solicitation_procedure}="OB",{solicitation_procedure}="ST",{solicitation_procedure}="TC")))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")))'
     choices:
       "0":
         en: Not applicable
@@ -1703,8 +1705,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: If the value NA (None) is entered, then no other value can be entered in this field.
       fr:
-    datastore_type: text array
+    datastore_type: _text
     excel_full_text_choices: false
+    excel_error_formula: 'AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA")'
     choices:
       NA:
         en: None
