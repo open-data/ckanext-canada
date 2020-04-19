@@ -1781,6 +1781,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           END IF;
         END IF;
 
+        IF length(trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code)) > 4 THEN
+          errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
+        END IF;
         IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
           errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
         END IF;
@@ -1853,12 +1856,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
         END IF;
+        IF length(trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code)) > 8 THEN
+          errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
+        END IF;
         errors := errors || choice_error(NEW.country_of_origin,
           {country_of_origin},
           'country_of_origin');
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
+        END IF;
+        IF (NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.award_criteria <> '' AND NEW.award_criteria <> '0' THEN
+          errors := errors || ARRAY[['solicitation_procedure', 'If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).']];
+        END IF;
+        IF NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' THEN
+          errors := errors || ARRAY[['solicitation_procedure', 'If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.']];
         END IF;
         errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
 
@@ -1882,8 +1894,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
+        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+          errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
+          errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
         END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
@@ -1905,9 +1918,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
-        IF NEW.aboriginal_business <> '' AND NEW.aboriginal_business <> 'NA' AND NEW.trade_agreement <> '{{XX}}' THEN
-          errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
-        END IF;
 
         NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1917,11 +1927,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
             NEW.aboriginal_business = 'MS' OR NEW.aboriginal_business = 'VS') THEN
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
-        END IF;
-        IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
-            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
         IF NEW.contract_date >= '2020-01-01'::date THEN
@@ -1982,10 +1987,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC' OR NEW.instrument_type = 'A') THEN
           errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
         END IF;
-        IF NEW.award_criteria = '0' AND (
-            NEW.solicitation_procedure = 'OB' OR NEW.solicitation_procedure = 'ST' OR NEW.solicitation_procedure = 'TC') THEN
-          errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was identified as Open Bidding (OB), Selective Tendering (ST) or Traditional Competitive (TC).']];
-        END IF;
+
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.reporting_period, 'reporting_period');
