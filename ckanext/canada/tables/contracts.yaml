@@ -1289,7 +1289,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Obligatoire pour les marchés conclus après le 2022-01-01
 
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: '{default_formula}'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1712,12 +1711,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s)
       fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
-    validation:
-      en: If the value NA (None) is entered, then no other value can be entered in this field.
-      fr: Si la valeur NA (nulle) est entrée, aucune autre valeur ne peut être entrée dans ce champ.
-    datastore_type: _text
+    datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA")'
     choices:
       NA:
         en: None
@@ -1791,10 +1786,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           END IF;
         END IF;
 
-        IF length(trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code)) > 4 THEN
+        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code)
+        IF length(NEW.economic_object_code) > 4 THEN
           errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
         END IF;
-        IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
+        IF NEW.economic_object_code = 'NA' and NEW.instrument_type <> 'SOSA' THEN
           errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
         END IF;
 
@@ -1866,7 +1862,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
         END IF;
-        IF length(trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code)) > 8 THEN
+        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code)
+        IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
         errors := errors || choice_error(NEW.country_of_origin,
