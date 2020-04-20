@@ -94,6 +94,7 @@ class TestContracts(FunctionalTestBase):
             land_claims=['JN', 'NA'],
             limited_tendering_reason=['00', '05'],
             trade_agreement_exceptions=['00', '01'],
+            socioeconomic_indicator=['FP', 'NA'],
         )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
@@ -113,6 +114,9 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement_exceptions': [
                 'If the value 00 (none) is entered, then no other value can '
                 'be entered in this field.'],
+            'socioeconomic_indicator': [
+                'If the value NA (None) is entered, then no other value can '
+                'be entered in this field'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
@@ -142,13 +146,6 @@ class TestContracts(FunctionalTestBase):
             'economic_object_code': [
                 'If N/A, then Instrument Type must be identified '
                 'as a standing offer/supply arrangement (SOSA)'],
-            'land_claims': [
-                'This field must be NA (not applicable) if the Trade Agreement field '
-                'is not XX (none).'],
-            'award_criteria': [
-                'If this field is populated, it must be with a 1,2,3,4 or 5 if the '
-                'procurement was identified as Open Bidding (OB), Selective Tendering '
-                '(ST) or Traditional Competitive (TC).'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):

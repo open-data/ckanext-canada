@@ -36,7 +36,7 @@ front_matter:
     8. A contract or amendment not reported in the reporting period in which it was awarded should be included for that reporting period, as soon as practicable. Any contract or amendment included in a reporting period after its publication should be clearly indicated within the comments data field (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts).
     9. Information posted in one reporting period can be modified for that reporting period only when a material error was made in the data originally reported. This should be clearly indicated as such within the comments data field (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts).
     10. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the [Directive on Recording Financial Transactions in the Accounts of Canada](http://tbs-sct.gc.ca/pol/doc-eng.aspx?id=15793). A list of economic object codes and their descriptions can be found on the PSPC [Government-wide Chart of Accounts website](http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html).
-    11. When PSPC, SSC or another department or Crown corporation issues a contract on a department’s behalf, the client department should report the contract. PSPC will assist client departments by providing any information it has on such contracts through the Open Government Portal. SSC and any other contracting department will assist the client department in meeting its reporting obligations by providing any information it has on such contracts, as appropriate.
+    11. When PSPC, SSC or another department or Crown corporation issues a contract on a department’s behalf, the client department should report the contract. PSPC will assist client departments by providing any information it has on such contracts through the Open Government Portal. SSC and any other contracting department will assist the client department in meeting its reporting obligations by providing any information it has on such contracts, as appropriate. In addition, the PSPC and SSC contracting authority is to provide a copy of each contract or amendment to the client department at time of award.
     12. When more than one department is funding the contract, each department may disclose its portion of the contract. For a standing offer agreement or supply arrangement agreement, it is recommended that the agreement be reported by the department that authorizes the agreement.
     13. When the above posting dates fall on a weekend or statutory holiday, departments may post information by the last business day before the weekend or holiday in question.
     14. Departments are to provide a nil report for any quarter in which no contract or amendment is disclosed.  Departments are to populate the ‘Reporting Period’ and ‘Nil Report’ data elements within the Nil Reporting template.
@@ -195,11 +195,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
+        This field is limited to only 3 or 4 digits.
         If NA, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA).
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
+        Ce champ est limité à 3 ou 4 caractères.
         Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
-    excel_error_formula: 'AND(TRIM({cell})="NA",{instrument_type}<>"SOSA")'
+    excel_error_formula: 'OR(LEN(TRIM({cell}))>4,AND(TRIM({cell})="NA",{instrument_type}<>"SOSA"))'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
 
@@ -888,15 +890,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         If the value NA (not applicable) is entered, then no other value can be entered in this field.
 
-        This field must be NA if the Trade Agreement field is not XX (none).
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01.
 
         Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Ce champ doit être NA si le Accord commercial ne contiennent pas la valeur XX (aucun).
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"),AND({cell}<>"NA",{trade_agreement}<>"XX"))'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"))'
     datastore_type: _text
     choices:
       NA:
@@ -918,8 +918,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Labrador Inuit Land Claim Agreement
         fr: Accord sur les revendications territoriales des Inuit du Labrador
       NU:
-        en: Agreement between the Inuit of the Nunavut Settlement Area and Her Majesty the Queen in right of Canada (Nunavut Agreement)
-        fr: Accord entre les Inuit de la région du Nunavut et Sa Majesté la Reine du chef du Canada (Accord du Nunavut)
+        en: Nunavut Agreement (Agreement between the Inuit of the Nunavut Settlement Area and Her Majesty the Queen in right of Canada)
+        fr: Accord du Nunavut (Accord entre les Inuit de la région du Nunavut et Sa Majesté la Reine du chef du Canada)
       IF:
         en: Inuvialuit Final Agreement
         fr: Convention définitive des Inuvialuits
@@ -1019,9 +1019,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
     validation:
-      en: Mandatory for contracts after 2019-01-01
+      en: |
+        Mandatory for contracts after 2019-01-01
+        The field is limited to eight alpha-numeric digits or less.
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
+          Ce champ est limité à 8 caractères alphanumériques.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
 
   - datastore_id: country_of_origin
@@ -1053,10 +1057,26 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: This field should be populated with one of the five solicitation procedures listed below.
       fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
     validation:
-      en: Mandatory for contracts after 2019-01-01
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+      en: |
+        Mandatory for contracts after 2019-01-01
+
+        If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+
+        If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).
+
+        If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+
+        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle).
+
+        Si les options « AC » (préavis d’attribution de contrat) ou « TN » (non concurrentielle) sont sélectionnées, le champ Critère de mérite doit avoir une valeur de « 0 » (sans objet).
+
+        Si les options « OB » (Concurrentielle – appel d’offres ouvert), « ST » (mise en concurrence) ou « TC » (Concurrentielle – Traditionnelle) sont sélectionnées, la section 6 des exceptions au Règlement sur les marchés de l’État doit avoir une valeur de « 0 ».
+
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
+    excel_error_formula: 'OR(AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00")),AND({award_criteria}<>"0",OR({cell}="TN",{cell}="AC")),AND({article_6_exceptions}<>"0",NOT(OR({cell}="TN",{cell}="AC"))))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1088,15 +1108,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         If the value 00 (none) is entered, then no other value can be entered in this field.
 
-        If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+        If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01.
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Si TC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
+        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({solicitation_procedure}="TC",{trade_agreement}<>"XX",{cell}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1138,9 +1158,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "32":
         en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
         fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
-      "33":
-        en: Substantial duplication of costs to the procuring entity (for contracts that are only covered by the CFTA)
-        fr: Multiplication importante des coûts pour l’entité acheteuse (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
         en: Exclusive Rights
         fr: Droits exclusifs
@@ -1202,18 +1219,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "00":
         en: None
-        fr: Sans objet
+        fr: Aucune
       "01":
         en: Shipbuilding and repair (applies to all agreements except the CFTA)
-        fr: Construction et réparation de navires (s’applique à tous les accords sauf l’ALEC)
+        fr: Contrats de construction et réparation de navires (s’applique à tous les accords sauf l’ALEC)
       "02":
         en: Urban rail and urban transportation equipment systems,
-            components and materials (Archived for historical purpose)
-        fr: Marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets (archivés à des fins historiques)
+            components and materials (applies to all agreements except CFTA, CETA and CPTPP)
+        fr: Marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
       "03":
         en: Contracts respecting FSC 58 (communications, detection and
-            coherent radiation equipment) (Archived for historical purpose)
-        fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (archivés à des fins historiques)
+            coherent radiation equipment) (applies to all agreements except CFTA, CETA and CPTPP)
+        fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
       "04":
         en: Set-asides for small and minority businesses (Archived for historical purpose)
         fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (archivés à des fins historiques)
@@ -1223,20 +1240,20 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: Achats de produits agricoles effectués dans le cadre de programmes de soutien à l’agriculture ou de programmes d’aide alimentaire (s’applique à tous les accords sauf l’ALEC)
       "06":
         en: The Depts. of Transport, Communications and Fisheries &
-            Oceans respecting FSC 70, 74, 36 (Archived for historical purpose)
-        fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (archivés à des fins historiques)
+            Oceans respecting FSC 70, 74, 36 (applies to all agreements except CFTA, CKFTA, WTO-AGP, CUFTA, CETA and CPTPP)
+        fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (s’applique à tous les accords sauf l’ALEC, l’ALECC, l’AMP-OMC, l’ALECU, l’AECG et le PTPGC)
       "07":
-        en: "Any measures for Indigenous/Aboriginal people and /or set asides for Indigenous/Aboriginal businesses (applies to all agreements) (Note: Draft wording to be finalized)"
-        fr: "Toutes les mesures pour les peuples autochtones et/ou réservées aux entreprises autochtones (s’applique à tous les accords) (À noter : formulation à être finalisée)"
+        en: "Any measures for Indigenous peoples and businesses, including set asides for Indigenous businesses (applies to all agreements)"
+        fr: "Toute mesure en faveur des peuples et des entreprises autochtones, y compris les marchés réservés aux entreprises autochtones (s’applique à tous les accords)"
       "08":
-        en: Set-asides for small businesses (other than indigenous/aboriginal businesses) (applies to all agreements except for CETA)
+        en: Set-asides for small businesses other than indigenous businesses (applies to all agreements except for CETA)
         fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG)
       "09":
         en: Measures necessary to protect public morals, order or safety (applies to all agreements)
         fr: Mesures nécessaires à la protection de la moralité publique, de l’ordre public ou de la sécurité publique (s’applique à tous les accords)
       "10":
         en: Measures necessary to protect human, animal or plant life or health (applies to all agreements)
-        fr: Mesures nécessaires à la protection de vies humaines, animales ou végétales ou de leur santé (s’applique à tous les accords)
+        fr: Mesures nécessaires à la protection de la santé et de la vie des personnes et des animaux ou à la préservation des végétaux (s’applique à tous les accords)
       "11":
         en: Measures necessary to protect intellectual property (applies to all agreements)
         fr: Mesures nécessaires à la protection de la propriété intellectuelle (s’applique à tous les accords)
@@ -1246,6 +1263,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "13":
         en: Services procured in support of military forces located overseas (applies to all agreements)
         fr: Services obtenus à l’appui des forces militaires stationnées à l’étranger (s’applique à tous les accords)
+      "14":
+        en: Research and development services (applies to all trade agreements except for CFTA)
+        fr: Services de recherche et de développement (s’applique à tous les accords commerciaux autres que l’ALEC)
 
   - datastore_id: aboriginal_business
     label:
@@ -1265,13 +1285,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: |
         Mandatory for contracts after 2022-01-01
 
-        This field must be NA (none) if the Trade Agreement field is not XX (none).
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
 
-        Ce champ doit être NA (aucune) si les champs Accord commercial ne contiennent pas la valeur XX (aucun).
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"NA",{trade_agreement}<>"XX"))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1305,14 +1322,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Mandatory for contracts after 2019-01-01
 
         This field must be N, No or Non if the Procurement Strategy for Aboriginal Business field is MS or VS.
-
-        This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
 
         Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
-
-        Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND(OR({aboriginal_business}="NA",OR(AND(NOT(ISBLANK({agreement_type_code})),{agreement_type_code}<>"0"),AND(NOT(ISBLANK({trade_agreement})),{trade_agreement}<>"XX"))),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
     datastore_type: text
@@ -1619,15 +1632,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
-
-        This field may not be populated with 1, 2, 3 or 4 if the procurement was identified as non-competitive or Advance Contract Award Notice.
       fr: |
         Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
-
-        e  zone peut seulement contenir 1, 2, 3 ou 4 si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'OR({default_formula},AND({cell}="0",NOT(OR({solicitation_procedure}="OB",{solicitation_procedure}="TC",{solicitation_procedure}="ST"))),AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
     choices:
       "0":
         en: Not applicable
@@ -1667,23 +1676,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         If this field is populated, it must be with a “0” if the procurement was identified
         as non-competitive (TN) or advance contract award notice (AC) or was
         identified as an Amendment (A) in the Instrument type data field.
-
-        If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was
-        identified as Open Bidding (OB), Selective Tendering (ST) or Traditional
-        Competitive (TC).
       fr: |
         Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée
         comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat
         (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le
         champ Type d’instrument.
-
-        Si Cette zone est remplie, il doit contenir un 1, 2, 3, 4 ou 5 si l’acquisition a été
-        identifiée comme étant OB : Concurrentielle – Invitation ouverte à
-        soumissionner (SEAOG), ST : Concurrentielle – Appel d’offres sélectif ou TC :
-        Concurrentielle – Traditionnelle.
     datastore_type: text
     excel_full_text_choices: false
-    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")),AND({cell}="0",OR({solicitation_procedure}="OB",{solicitation_procedure}="ST",{solicitation_procedure}="TC")))'
+    excel_error_formula: 'OR({default_formula},AND({cell}<>"0",OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")))'
     choices:
       "0":
         en: Not applicable
@@ -1786,7 +1786,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           END IF;
         END IF;
 
-        IF trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code) = 'NA' and NEW.instrument_type <> 'SOSA' THEN
+        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code)
+        IF length(NEW.economic_object_code) > 4 THEN
+          errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
+        END IF;
+        IF NEW.economic_object_code = 'NA' and NEW.instrument_type <> 'SOSA' THEN
           errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
         END IF;
 
@@ -1858,12 +1862,22 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
         END IF;
+        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code)
+        IF length(NEW.commodity_code) > 8 THEN
+          errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
+        END IF;
         errors := errors || choice_error(NEW.country_of_origin,
           {country_of_origin},
           'country_of_origin');
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
+        END IF;
+        IF (NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.award_criteria <> '' AND NEW.award_criteria <> '0' THEN
+          errors := errors || ARRAY[['solicitation_procedure', 'If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).']];
+        END IF;
+        IF NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' THEN
+          errors := errors || ARRAY[['solicitation_procedure', 'If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.']];
         END IF;
         errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
 
@@ -1887,8 +1901,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF NEW.solicitation_procedure = 'TC' AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
+        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+          errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
+          errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
         END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
@@ -1910,9 +1925,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
         END IF;
         errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
-        IF NEW.aboriginal_business <> '' AND NEW.aboriginal_business <> 'NA' AND NEW.trade_agreement <> '{{XX}}' THEN
-          errors := errors || ARRAY[['aboriginal_business', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
-        END IF;
 
         NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1922,11 +1934,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
             NEW.aboriginal_business = 'MS' OR NEW.aboriginal_business = 'VS') THEN
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
-        END IF;
-        IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
-            ((NEW.agreement_type_code = '') IS NOT FALSE AND NEW.agreement_type_code <> '0') OR
-            (NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}')) THEN
-          errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable.']];
         END IF;
 
         IF NEW.contract_date >= '2020-01-01'::date THEN
@@ -1987,10 +1994,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC' OR NEW.instrument_type = 'A') THEN
           errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
         END IF;
-        IF NEW.award_criteria = '0' AND (
-            NEW.solicitation_procedure = 'OB' OR NEW.solicitation_procedure = 'ST' OR NEW.solicitation_procedure = 'TC') THEN
-          errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was identified as Open Bidding (OB), Selective Tendering (ST) or Traditional Competitive (TC).']];
-        END IF;
+
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.reporting_period, 'reporting_period');
@@ -2012,7 +2016,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       procurement_id: "3000638243"
       vendor_name: "Company XYZ inc"
       vendor_postal_code: "A1A"
-      buyer_name: "Mark Johnson"
+      buyer_name: "John Doe"
       contract_date: "2017-09-15"
       economic_object_code: "460"
       description_en: "Protection services"

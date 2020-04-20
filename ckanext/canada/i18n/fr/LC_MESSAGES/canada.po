@@ -2557,16 +2557,31 @@ msgstr "Si Cette zone est remplie, il doit contenir un 1, 2, 3, 4 ou 5 si l’ac
 msgid "Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field"
 msgstr "Type de produit G pour les biens, ce qui requière une Date de livraison et non une Date de début du marché. Prière de changer le Type de produit pour S ou de retirer la date du champ Date de début du marché"
 
+msgid "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None)."
+msgstr "Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle)."
+
+msgid "If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable)."
+msgstr "Si les options « AC » (préavis d’attribution de contrat) ou « TN » (non concurrentielle) sont sélectionnées, le champ Critère de mérite doit avoir une valeur de « 0 » (sans objet)."
+
+msgid "If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”."
+msgstr "Si les options « OB » (Concurrentielle – appel d’offres ouvert), « ST » (mise en concurrence) ou « TC » (Concurrentielle – Traditionnelle) sont sélectionnées, la section 6 des exceptions au Règlement sur les marchés de l’État doit avoir une valeur de « 0 »."
+
 msgid ""
-"If TC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered."
+"If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered."
 msgstr ""
-"Si TC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée."
+"Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée."
 
 msgid ""
 "Access, upload and modify the Experimentation Inventory for your organization"
 msgstr ""
 "Accès, téléversement et modifier le répertoire d'expérimentation pour votre "
 "organisation"
+
+msgid "This field is limited to only 3 or 4 digits."
+msgstr "Ce champ est limité à 3 ou 4 caractères."
+
+msgid "The field is limited to eight alpha-numeric digits or less."
+msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #: ckanext/GCWeb/templates/error_document_template.html:11
 #: ckanext/wet_boew/templates/error_document_template.html:6
