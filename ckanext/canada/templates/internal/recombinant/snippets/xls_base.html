@@ -1,0 +1,30 @@
+<h3>{% block title %}{% endblock %}</h3>
+{% block form %}
+<form>
+{% endblock %}
+  <div class="col-md-6">
+    <div class="col-md-12">
+      <div class="form-group control-medium">
+        <label for="xls_download">{{ _('Download') }}</label>
+        <div class="form-control">
+          <a id="xls_download" class="button" href="{% url_for 'recombinant_template',
+            dataset_type=pkg.dataset_type,
+            lang=h.lang(),
+            owner_org=pkg.owner_org %}"
+          onclick="ga('send', 'event', document.getElementsByTagName('H1')[0].innerText, 'Template Downloaded', this.href);"
+          ><span class="glyphicon glyphicon-download-alt"></span>
+            {{ _('Template Excel spreadsheet') }}</a>
+        </div>
+        {% if pkg.template_updated %}
+        <p class='text-info'>{{ _('Last Updated') }}: {{ pkg.template_updated }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% block upload_submit %}
+  {% endblock %}
+  <div class="col-md-12">
+    {% block messages %}
+    {% endblock %}
+  </div>
+</form>
