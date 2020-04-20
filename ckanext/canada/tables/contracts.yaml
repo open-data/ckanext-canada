@@ -199,6 +199,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         If NA, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA).
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
+        Ce champ est limité à 3 ou 4 caractères.
         Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
     excel_error_formula: 'OR(LEN(TRIM({cell}))>4,AND(TRIM({cell})="NA",{instrument_type}<>"SOSA"))'
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
@@ -1022,6 +1023,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Mandatory for contracts after 2019-01-01
         The field is limited to eight alpha-numeric digits or less.
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
+          Ce champ est limité à 8 caractères alphanumériques.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
@@ -1063,7 +1065,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).
 
         If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.
-      fr: Obligatoire pour les marchés conclus après le 2019-01-01
+      fr: |
+        Obligatoire pour les marchés conclus après le 2019-01-01
+
+        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle).
+
+        Si les options « AC » (préavis d’attribution de contrat) ou « TN » (non concurrentielle) sont sélectionnées, le champ Critère de mérite doit avoir une valeur de « 0 » (sans objet).
+
+        Si les options « OB » (Concurrentielle – appel d’offres ouvert), « ST » (mise en concurrence) ou « TC » (Concurrentielle – Traditionnelle) sont sélectionnées, la section 6 des exceptions au Règlement sur les marchés de l’État doit avoir une valeur de « 0 ».
+
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
     excel_error_formula: 'OR(AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00")),AND({award_criteria}<>"0",OR({cell}="TN",{cell}="AC")),AND({article_6_exceptions}<>"0",NOT(OR({cell}="TN",{cell}="AC"))))'
@@ -1704,7 +1714,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
     validation:
       en: If the value NA (None) is entered, then no other value can be entered in this field.
-      fr:
+      fr: Si la valeur NA (nulle) est entrée, aucune autre valeur ne peut être entrée dans ce champ.
     datastore_type: _text
     excel_full_text_choices: false
     excel_error_formula: 'AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA")'
