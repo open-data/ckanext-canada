@@ -52,7 +52,7 @@ def compare(current_csv, existing_rows):
                     break
                 elif row_tuple[0] == t[0] and row_tuple[1] == t[1]:
                     modified_rows.append(row)
-                    deleted_rows.remove(t)
+
                     break
             else:
                 created_rows.append(row)
