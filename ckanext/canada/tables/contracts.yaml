@@ -1786,7 +1786,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           END IF;
         END IF;
 
-        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code)
+        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code);
         IF length(NEW.economic_object_code) > 4 THEN
           errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
         END IF;
@@ -1847,8 +1847,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         NEW.land_claims = crval.clean;
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
           errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
-        ELSIF NEW.land_claims <> '{{}}' AND NEW.land_claims <> '{{NA}}' AND NEW.trade_agreement <> '{{}}' AND 'NEW.trade_agreement' <> '{{XX}}' THEN
-          errors := errors || ARRAY[['land_claims', 'This field must be NA (not applicable) if the Trade Agreement field is not XX (none).']];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1862,7 +1860,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
         END IF;
-        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code)
+        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
