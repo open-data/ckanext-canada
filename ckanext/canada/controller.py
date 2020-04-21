@@ -549,12 +549,17 @@ class CanadaAdminController(PackageController):
         ).strftime("%Y-%m-%d %H:%M:%S")
 
         # get a list of package id's from the for POST data
+        count = 0
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
                 )
+                count += 1
+
+        # flash notice that records are published
+        h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))

@@ -39,7 +39,7 @@ window.onload = function() {
       ga('send', 'event', title, 'Spreadsheet uploaded' + user, document.location.href);
 
     // track records deleted for recombinant type
-    if (msg.match(/^[0-9]* deleted./))
+    if (msg.match(/^[0-9]* deleted.$/))
       ga('send', 'event', title, msg + user, document.referrer);
 
     // track dataset created
@@ -50,6 +50,10 @@ window.onload = function() {
     // track dataset updated
     // no status message provided by controller
     // update when controller provides status message
+
+    // track dataset records published by admin
+    if (msg.match(/^[0-9]* record\(s\) published.$/))
+      ga('send', 'event', 'Dataset', msg + user, document.referrer);
 
     // track dataset deleted
     if (msg == 'Record has been deleted.' || msg == 'L\'ensemble de données a été supprimé.')
