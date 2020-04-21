@@ -1,5 +1,0 @@
-{% ckan_extends %}
-
-{%- block xls_event -%}
-  onclick="ga('send', 'event', '{{ resource.description }}', 'Template Downloaded by {{ c.userobj.display_name }}', this.href);"
-{%- endblock -%}

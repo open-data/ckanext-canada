@@ -84,4 +84,12 @@ window.onload = function() {
           'Spreadsheet upload errored ' + msg + ' by ' + document.getElementsByClassName('username')[0].innerText,
           document.location.href);
   }
+
+  // track Excel template download for recombinant type
+  if (document.getElementById('xls_download')) {
+    document.getElementById("xls_download").onclick = function() {
+      ga('send', 'event', document.getElementsByTagName('H1')[0].innerText,
+          'Template Downloaded by ' + document.getElementsByClassName('username')[0].innerText, this.href);
+    };
+  }
 };
