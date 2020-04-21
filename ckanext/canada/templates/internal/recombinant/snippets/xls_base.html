@@ -11,7 +11,7 @@
             dataset_type=pkg.dataset_type,
             lang=h.lang(),
             owner_org=pkg.owner_org %}"
-          onclick="ga('send', 'event', '{{ resource.description }}', 'Template Downloaded by ' + document.getElementsByClassName('username')[0].innerText, this.href);"
+          onclick="ga('send', 'event', '{{ resource.description }}', 'Template Downloaded by {{ c.userobj.display_name }}', this.href);"
           ><span class="glyphicon glyphicon-download-alt"></span>
             {{ _('Template Excel spreadsheet') }}</a>
         </div>
