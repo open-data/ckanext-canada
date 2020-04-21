@@ -1,16 +1,16 @@
 /*
  Add Google Analytics Event Tracking to actions on the Registry
  */
-window.onload = function() {
-  let flashes = document.getElementsByTagName('aside');
-  if (flashes && flashes[0].innerText) {
-    let msg = flashes[0].innerText;
-    let user, title;
+$(document).ready(function() {
+  let user, title;
+  if ($( '.username' ).length)
+    user = ' by ' + $( '.username' )[0].innerText;
+  if ($( 'h1' ).length)
+    title = $( 'h1' )[0].innerText;
 
-    if (document.getElementsByClassName('username'))
-      user = ' by ' + document.getElementsByClassName('username')[0].innerText;
-    if (document.getElementsByTagName('H1'))
-      title = document.getElementsByTagName('H1')[0].innerText;
+  let flashes = $( 'aside' );
+  if (flashes.length && flashes[0].innerText) {
+    let msg = flashes[0].innerText;
 
     // track successful login
     if (msg.match(/.*now logged in$/) || msg.match(/.*est maintenant connecté$/))
@@ -73,23 +73,15 @@ window.onload = function() {
   }
 
   // track invalid login
-  if (document.getElementById('login-invalid'))
+  if ($( '#login-invalid' ).length)
     ga('send', 'event', 'Login', 'Invalid login', document.location.href);
 
   // track Excel spreadsheet uploaded errors for recombinant type
-  if (document.getElementById('upload-errors')) {
-    let msg = document.getElementById('upload-errors').innerText;
-    if (msg)
-      ga('send', 'event', document.getElementsByTagName('H1')[0].innerText,
-          'Spreadsheet upload errored ' + msg + ' by ' + document.getElementsByClassName('username')[0].innerText,
-          document.location.href);
-  }
+  if ($( '#upload-errors' ).length && $( '#upload-errors' )[0].innerText)
+      ga('send', 'event', title, 'Spreadsheet upload errored ' + $( '#upload-errors' )[0].innerText + user, document.location.href);
 
   // track Excel template download for recombinant type
-  if (document.getElementById('xls_download')) {
-    document.getElementById("xls_download").onclick = function() {
-      ga('send', 'event', document.getElementsByTagName('H1')[0].innerText,
-          'Template Downloaded by ' + document.getElementsByClassName('username')[0].innerText, this.href);
-    };
-  }
-};
+  $( '#xls_download' ).click(function() {
+    ga('send', 'event', title, 'Template Downloaded by ' + user, this.href);
+  });
+});
