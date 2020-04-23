@@ -94,7 +94,6 @@ class TestContracts(FunctionalTestBase):
             land_claims=['JN', 'NA'],
             limited_tendering_reason=['00', '05'],
             trade_agreement_exceptions=['00', '01'],
-            socioeconomic_indicator=['FP', 'NA'],
         )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
@@ -114,9 +113,6 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement_exceptions': [
                 'If the value 00 (none) is entered, then no other value can '
                 'be entered in this field.'],
-            'socioeconomic_indicator': [
-                'If the value NA (None) is entered, then no other value can '
-                'be entered in this field'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
@@ -133,6 +129,7 @@ class TestContracts(FunctionalTestBase):
             trade_agreement=['CA'],
             land_claims=['JN'],
             award_criteria='0',
+            solicitation_procedure='TN',
         )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
@@ -146,6 +143,29 @@ class TestContracts(FunctionalTestBase):
             'economic_object_code': [
                 'If N/A, then Instrument Type must be identified '
                 'as a standing offer/supply arrangement (SOSA)'],
+            'number_of_bids':[
+                'This field must be populated with a 1 if the solicitation procedure is '
+                'identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
+
+    def test_field_length_errors(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contracts')['examples']['record'],
+            economic_object_code='467782',
+            commodity_code='K23HG367BU',
+        )
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'economic_object_code': ['This field is limited to only 3 or 4 digits.'],
+            'commodity_code': ['The field is limited to eight alpha-numeric digits or less.'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
