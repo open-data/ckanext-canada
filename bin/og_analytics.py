@@ -288,8 +288,8 @@ class DatasetDownload():
             for [url, count] in data:
                 id = url.split('/')[-1]
                 id = id.split('&')[0]
-		# added by Rabia 2020-01-29 - removes querystring parameters
-		id = id.split('?')[0]
+                # added by Rabia 2020-01-29 - removes querystring parameters
+                id = id.split('?')[0]
                 id = id.strip()
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
@@ -973,7 +973,6 @@ class DatasetDownload():
         rows = []
         header = ['Department or Agency', 'Ministère ou organisme',
                      'Department or Agency datasets', 'Jeux de données du Ministère ou organisme' , 'Total']
-
         for org_id, count in org_stats.iteritems():
             [title_en, title_fr] = self.orgs.get(org_id, ['', ''])
             name = self.org_id2name[org_id][0]
@@ -1045,7 +1044,7 @@ class DatasetDownload():
             name = {
                 'ceaa-acee': 'iaac-aeic',
                 'neb-one': 'cer-rec',
-	    }.get(name, name)
+            }.get(name, name)
 
             org_id = self.org_name2id[name]
             exists[org_id] = True
@@ -1114,7 +1113,7 @@ def report(client_secret_path, view_id, og_config_file, start, end, va):
 
 def main():
     report(*sys.argv[1:])
-      
+
 if __name__ == '__main__':
   main()
 
