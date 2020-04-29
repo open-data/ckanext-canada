@@ -557,7 +557,8 @@ upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	$(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+	# disabled search rebuild like in update_search_cores.sh
+	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
 	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
