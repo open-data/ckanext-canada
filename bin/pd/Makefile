@@ -1,4 +1,4 @@
-targets := ati briefingt qpnotes contracts contractsa dac grants hospitalityq inventory \
+targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -8,6 +8,7 @@ csv_files := \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
+	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
@@ -98,7 +99,7 @@ $(shell mkdir -p $(workdir)/filtered)
 .DELETE_ON_ERROR:
 
 .PHONY: nightly
-nightly: dump-all filter-all backup-all upload-all download-ministers rebuild-all
+nightly: dump-all filter-all backup-all upload-all rebuild-all
 
 
 .PHONY: dump-all
@@ -190,11 +191,6 @@ $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 ###
 ###  Question Period Notes
 ###
-.PHONY: download-ministers
-download-ministers:
-	@echo Downloading ministers list for Question Period Notes...
-	@$(registry_python) $(CURDIR)/../download_minister.py
-
 .PHONY: qpnotes
 qpnotes: upload-qpnotes rebuild-qpnotes
 
@@ -346,7 +342,7 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	# no search for experiment
+	$(ogc_search)/load_ei_to_solr.py "$(workdir)/filtered/experiment.csv"
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -469,16 +465,14 @@ nap: upload-nap rebuild-nap
 .PHONY: upload-nap
 upload-nap: $(workdir)/filtered/nap.csv
 	@echo Uploading National Action Plan..
-	# disabled for now, see OGP-776
-	#$(ckanapi) action resource_patch -c $(registry_ini) \
-	#id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
 	cp $(workdir)/filtered/nap.csv $(registry_static)/nap.csv
 
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
-	# disabled for now, see OGP-776
-	#@echo Rebuilding National Action Plan...
-	#$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+	@echo Rebuilding National Action Plan...
+	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
@@ -540,10 +534,10 @@ $(workdir)/reclassification-nil.csv:
 	$(paster) $(combine) reclassification-nil -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
-	cp $< $@
+	$(fdir)/filter_reclassification.py < $< > $@
 
 $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.csv
-	cp $< $@
+	$(fdir)/filter_reclassification.py < $< > $@
 
 ###
 ###  Service Inventory
@@ -626,7 +620,7 @@ $(workdir)/wrongdoing.csv:
 	$(paster) $(combine) wrongdoing -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
-	cp $< $@
+	$(fdir)/filter_wrongdoing.py < $< > $@
 
 
 endif

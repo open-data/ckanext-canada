@@ -183,10 +183,6 @@ class CanadaController(BaseController):
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
         limit = int(request.params['length'])
-        sort_by_num = int(request.params['order[0][column]'])
-        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
-                      else 'asc'
-                      )
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
@@ -196,14 +192,26 @@ class CanadaController(BaseController):
         )
 
         cols = [f['datastore_id'] for f in chromo['fields']]
-        sort_str = cols[sort_by_num] + ' ' + sort_order
+        prefix_cols = 1 if chromo.get('edit_form', False) else 0
+
+        sort_list = []
+        i = 0
+        while True:
+            if u'order[%d][column]' % i not in request.params:
+                break
+            sort_by_num = int(request.params[u'order[%d][column]' % i])
+            sort_order = (
+                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc NULLS LAST')
+            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
+            i += 1
 
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
             offset=offset,
             limit=limit,
-            sort=sort_str
+            sort=u', '.join(sort_list),
         )
 
         aadata = [
@@ -370,11 +378,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(
-                controller='user',
-                action='login', locale=lang
-            )
+            error_summary = _('Login failed. Bad username or password.')
+            # replace redirect with a direct call to login controller
+            # pass error_summary to controller as error
+            # so that it can be captured for GA events in our overridden templates
+            return UserController.login(self, error_summary)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
@@ -541,12 +549,17 @@ class CanadaAdminController(PackageController):
         ).strftime("%Y-%m-%d %H:%M:%S")
 
         # get a list of package id's from the for POST data
+        count = 0
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
                 )
+                count += 1
+
+        # flash notice that records are published
+        h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
         return h.redirect_to(h.url_for('ckanadmin_publish'))

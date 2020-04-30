@@ -3,12 +3,9 @@
 import unicodecsv
 import sys
 import codecs
-import json
-from datetime import datetime, timedelta
 
-from openpyxl.utils.datetime import from_excel
 
-FIELDNAMES = 'fiscal_year,quarter,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
+FIELDNAMES = 'ref_number,file_id_number,file_id_date,case_description_en,case_description_fr,findings_conclusions,recommendations_corrective_measures_en,recommendations_corrective_measures_fr,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
 
@@ -18,8 +15,6 @@ out_csv.writeheader()
 
 try:
     for line in in_csv:
-        y = int(line.pop('year'))
-        line['fiscal_year'] = str(y) + '-' + str(y+1)
         if 'warehouse' not in sys.argv[1:]:
             line['user_modified'] = '*'  # special "we don't know" value
         out_csv.writerow(line)
