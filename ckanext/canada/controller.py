@@ -378,11 +378,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(
-                controller='user',
-                action='login', locale=lang
-            )
+            error_summary = _('Login failed. Bad username or password.')
+            # replace redirect with a direct call to login controller
+            # pass error_summary to controller as error
+            # so that it can be captured for GA events in our overridden templates
+            return UserController.login(self, error_summary)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
@@ -549,12 +549,17 @@ class CanadaAdminController(PackageController):
         ).strftime("%Y-%m-%d %H:%M:%S")
 
         # get a list of package id's from the for POST data
+        count = 0
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
                 )
+                count += 1
+
+        # flash notice that records are published
+        h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))

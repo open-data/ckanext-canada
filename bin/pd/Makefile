@@ -1,4 +1,4 @@
-targets := ati briefingt qpnotes contracts contractsa dac grants hospitalityq inventory \
+targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -8,6 +8,7 @@ csv_files := \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
+	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
@@ -341,7 +342,7 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	# no search for experiment
+	$(ogc_search)/load_ei_to_solr.py "$(workdir)/filtered/experiment.csv"
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -556,8 +557,7 @@ upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# disabled search rebuild like in update_search_cores.sh
-	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+	$(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
 	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
