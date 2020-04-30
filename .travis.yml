@@ -1,9 +1,11 @@
 dist: trusty
-group: deprecated-2017Q4
+
 language: python
 sudo: required
 python:
   - "2.7"
+services:
+  - postgresql
 env:
   global:
     - CKAN_POSTGRES_DB=ckan_test
@@ -13,7 +15,5 @@ env:
     - CKAN_DATASTORE_POSTGRES_WRITE_USER=ckan_default
     - CKAN_DATASTORE_POSTGRES_READ_USER=datastore_default
     - CKAN_DATASTORE_POSTGRES_READ_PWD=pass
-  matrix:
-    - PGVERSION=9.2
 install: ./bin/travis-install
 script: ./bin/travis-script
