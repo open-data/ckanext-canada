@@ -6,6 +6,7 @@
 #
 # GA_CLIENT_SECRET path to GA secrets file
 # GA_PORTAL_INI path to the CKAN portal ini file
+# GA_ARCHIVE_ROOT path to base archive driectory
 # GA_STATIC_DIR path to the directory where static files as stored for the web server
 # GA_VENV_SCRIPT path to script to activate the python virtual environment for this script
 # GA_OG_ANALYTICS path to the analytics scripts in the CKAN Canada extension
@@ -51,7 +52,7 @@ else
 fi
 
 # backup the file from previous month
-GA_ARCHIVE_DIR=$GA_STATIC_DIR/archive/analytics/$PRVYR-$PRVMTH-$LASTDY
+GA_ARCHIVE_DIR=$GA_ARCHIVE_ROOT/$PRVYR-$PRVMTH-$LASTDY
 mkdir -p $GA_ARCHIVE_DIR
 if [ -f $GA_STATIC_DIR/openDataPortal.siteAnalytics.top20Info.xls ]; then
   cp $GA_STATIC_DIR/openDataPortal.siteAnalytics.top20Info.xls $GA_ARCHIVE_DIR/openDataPortal.siteAnalytics.top20Info.xls
