@@ -7,7 +7,7 @@ python:
 services:
   - postgresql
 addons:
-  postgresql: "9.3"
+  postgresql: "9.5"
 env:
   global:
     - CKAN_POSTGRES_DB=ckan_test
