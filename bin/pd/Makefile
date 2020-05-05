@@ -264,9 +264,8 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 $(workdir)/contractsa.csv:
 	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
-# XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
-	cp $< $@
+	$(fdir)/filter_contractsa.py < $< > $@
 
 ###
 ###  Consultations
