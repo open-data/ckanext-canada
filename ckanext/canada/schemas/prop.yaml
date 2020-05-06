@@ -105,6 +105,16 @@ dataset_fields:
   label:
     en: Status
     fr: État
+  help_text:
+    en: |
+      If the status of this suggestion has changed click “Add” to add a status update. All
+      status updates are published to share the history of this suggestion. Do not modify existing
+      status updates unless a correction is required.
+    fr: |
+      Si l’état de la proposition a changé, cliquez sur le bouton “ajouter” pour ajouter une
+      mise à jour de l’état. Toutes les mises à jour de l’état sont publiées pour faire connaître
+      l’historique de la proposition. Ne modifiez pas les mises à jour déjà existantes de l’état, sauf
+      si une correction doit être apportée.
 
   repeating_subfields:
 
