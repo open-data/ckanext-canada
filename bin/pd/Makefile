@@ -342,7 +342,7 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	# no search for experiment
+	$(ogc_search)/load_ei_to_solr.py "$(workdir)/filtered/experiment.csv"
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
