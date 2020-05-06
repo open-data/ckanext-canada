@@ -44,7 +44,7 @@ def write_xls(filename, sheets):
         cols =  [col for col in ws.columns]
         widths = sheet.get('col_width', {})
         for k,v in widths.iteritems():
-            ws.column_dimensions[cols[k][0].column].width = v
+            ws.column_dimensions[cols[k][0].column_letter].width = v
     try:
         sheet1 = book.get_sheet_by_name("Sheet")
         book.remove_sheet(sheet1)
