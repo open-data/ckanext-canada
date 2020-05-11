@@ -3,4 +3,5 @@
 set -e
 
 HERE=`dirname $0`
-python "$HERE/../setup.py" compile_catalog
+cd "$HERE/.."
+python setup.py compile_catalog -d ckanext/canada/i18n --domain ckanext-canada
