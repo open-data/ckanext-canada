@@ -101,6 +101,10 @@ dataset_fields:
   form_snippet: ro_date.html
   validators: user_read_only scheming_required isodate convert_to_json_if_date
 
+- field_name: license_id
+  form_snippet: null
+  display_snippet: null
+
 - field_name: status
   label:
     en: Status
