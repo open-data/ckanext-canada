@@ -168,6 +168,7 @@ dataset_fields:
     label:
       en: Status Comments
       fr: Commentaires sur l’état
+    required: true
     fluent_form_label:
       en:
         en: Status Comments (in English)
