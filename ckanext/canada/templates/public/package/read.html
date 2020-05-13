@@ -108,44 +108,33 @@
           "org_title_at_publication",
           "org_section",
           "contributor",
-          "license",
+          "license_id",
         ] %}
-        {% for field in schema.dataset_fields if field.field_name in include_labels %}
+        {% for field in schema.dataset_fields if field.field_name in include_labels and field.display_snippet is not none %}
           {% set field_title = h.scheming_language_text(field.label) %}
           {% if field_title %}
             {% set field_value = pkg[field.field_name] %}
             {% if pkg[field.field_name] is mapping %}
-            {% set field_value = h.scheming_language_text(field_value) %}
+              {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
             {% if field_value %}
-              {# FIXME: This special case needs to go; Ideally convince client of futility #}
               {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
-              {# FIXME: more special cases, embrace the futility! #}
-              {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
-              {% set field_title = _('Issued by') %}
-              {% endif %}
-              <li class="list-group-item">
-                <strong>{{ field_title }}:</strong>
-                {% snippet 'scheming/snippets/display_field.html',
-                  field=field,
-                  data=pkg,
-                  entity_type='dataset',
-                  object_type=pkg.type
-                %}
-              </li>
+                {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
+                  {% set field_title = _('Issued by') %}
+                {% endif %}
+                <li class="list-group-item">
+                  <strong>{{ field_title }}:</strong>
+                  {% snippet 'scheming/snippets/display_field.html',
+                    field=field,
+                    data=pkg,
+                    entity_type='dataset',
+                    object_type=pkg.type
+                  %}
+                </li>
               {% endif %}
             {% endif %}
           {% endif %}
         {% endfor %}
-        {# Some core CKAN fields not part of the schema. #}
-        <li class="list-group-item">
-          <strong>{{ _('Licence') }}:</strong>
-          {% if client_lang == 'fr' %}
-            <a href="{{ c.pkg.license.url_fra }}">{{ c.pkg.license.title_fra }}</a>
-          {% else %}
-            <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
-          {% endif %}
-        </li>
       </ul>
     </section>
 
