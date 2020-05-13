@@ -134,8 +134,8 @@ dataset_fields:
 
   - field_name: reason
     label:
-      en: Status Reason
-      fr: Raison de l’état
+      en: Status
+      fr: État
     help_text:
       en: This field should be populated with a value that indicates why the status is marked as ‘open’ or ‘closed’
       fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
