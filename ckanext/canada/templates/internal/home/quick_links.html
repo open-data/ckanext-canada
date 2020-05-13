@@ -28,6 +28,12 @@
       <section>
         <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
         <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
+        <ul>
+          <li>
+            <a href="{{ h.url_for('prop_search') }}">{{ _('Suggested Datasets - Update Status') }}</a>
+            <p>{{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}</p>
+          </li>
+        </ul>
       </section>
       <section>
         <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>

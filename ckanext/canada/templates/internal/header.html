@@ -19,6 +19,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ _('Add to Portal') }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a></li>
+                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('prop_search') }}">{{ _('Suggested Datasets - Update Status') }}</a></li>
                         <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
                         {%- for r_type in [
                           'ati',
