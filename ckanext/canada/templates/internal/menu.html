@@ -12,6 +12,7 @@
         <ul class="sm list-unstyled" id="addportal-ajoutportail" role="menu">
           <li><a href="{{ h.url_for('dataset_new') }}"
             >{{ _('Open Data') }}</a></li>
+          <li><a href="{{ h.url_for('dataset_search', portal_type='prop') }}">{{ _('Suggested Datasets - Update Status') }}</a></li>
           <li><a href="{{ h.url_for('info_new') }}"
             >{{ _('Open Information') }}</a></li>
           {%- for r_type in [
