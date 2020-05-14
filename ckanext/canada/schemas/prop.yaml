@@ -124,8 +124,8 @@ dataset_fields:
 
   - field_name: date
     label:
-      en: Date related to the status reason
-      fr: Date liée à la raison de l’état
+      en: Date
+      fr: Date
     help_text:
       en: The date related to the update to the status, for example the date that the suggestion was sent to the data holder.
       fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
@@ -166,16 +166,16 @@ dataset_fields:
 
   - field_name: comments
     label:
-      en: Status Comments
-      fr: Commentaires sur l’état
+      en: Comments
+      fr: Commentaires
     required: true
     fluent_form_label:
       en:
-        en: Status Comments (in English)
-        fr: Commentaires sur l’état (en anglais)
+        en: Comments (in English)
+        fr: Commentaires (en anglais)
       fr:
-        en: Status Comments (in French)
-        fr: Commentaires sur l’état (en français)
+        en: Comments (in French)
+        fr: Commentaires (en français)
     fluent_help_text:
       en:
         en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
