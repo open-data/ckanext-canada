@@ -81,7 +81,9 @@ $(document).ready(function() {
       ga('send', 'event', title, 'Spreadsheet upload errored ' + $( '#upload-errors' )[0].innerText + user, document.location.href);
 
   // track Excel template download for recombinant type
-  $( '#xls_download' ).click(function() {
-    ga('send', 'event', title, 'Template Downloaded by ' + user, this.href);
-  });
+  if ($( '#xls_download' ).length) {
+    $("#xls_download").on("click", function () {
+      ga('send', 'event', title, 'Template Downloaded by ' + user, this.href);
+    });
+  }
 });

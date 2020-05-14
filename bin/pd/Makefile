@@ -264,9 +264,8 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 $(workdir)/contractsa.csv:
 	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
-# XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
-	cp $< $@
+	$(fdir)/filter_contractsa.py < $< > $@
 
 ###
 ###  Consultations
@@ -557,7 +556,8 @@ upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	$(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+	# disabled search rebuild like in update_search_cores.sh
+	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
 	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)

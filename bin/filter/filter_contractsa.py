@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"filter for experiment.csv"
+"filter for contractsa.csv"
 
 import csv
 import sys
