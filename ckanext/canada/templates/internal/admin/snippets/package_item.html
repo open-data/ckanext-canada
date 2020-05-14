@@ -1,7 +1,16 @@
 {% extends 'snippets/package_item.html' %}
 
 {% block resources_outer %}
-  {{ super.super() }}  {# strip map cart buttons #}
+  <div class="row">
+    <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+    <div class="col-md-9">
+      <ul class="list-inline list-unstyled">
+        {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+        <li><span class="badge">{{ _(resource) }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
   {% if h.is_ready_to_publish(package) %}
     <div class="col-md-3 pull-right">
       <label class="form-checkbox">
