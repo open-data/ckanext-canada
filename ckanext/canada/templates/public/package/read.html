@@ -57,13 +57,13 @@
           [{{ _('Draft') }}]
         {% endif %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       </h1>
       <div>
         {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
         {{ h.render_markdown(notes) }}
       </div>
