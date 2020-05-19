@@ -36,6 +36,10 @@
 {% endif %}
 {%- endblock -%}
 
+{% block feedback_survey %}
+  <script async defer type="text/javascript" src="{{ h.url_for_static('/static/js/foresee_survey.js') }}" ></script>
+{%- endblock -%}
+
 {% set loop11_key = h.loop11_key() %}
 {% if loop11_key %}
   <script type="text/javascript">
