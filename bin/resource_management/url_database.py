@@ -28,8 +28,6 @@ print("Starting...")
 print("Reading and testing URL's")
 
 for dataset in fileinput.input():
-    if i==100:
-        break;
     line = json.loads(dataset)
     resources = line["resources"]
     for l in range(len(resources)):
