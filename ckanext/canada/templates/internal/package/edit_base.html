@@ -6,3 +6,8 @@
     {{ h.build_nav_icon('dataset_resources', _('Resources'), id=pkg.name) }}
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="{{ h.url_for_static('/registry_package_edit.js') }}" ></script>
+{% endblock %}
