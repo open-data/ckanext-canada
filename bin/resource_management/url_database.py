@@ -73,7 +73,7 @@ for z in range(len(responses)):
         cl = r.headers.get("Content-Length")
         ct = r.headers.get("Content-Type")
         if cl is None:
-            cd = 'not-found'
+            cl = 'not-found'
         if ct is None:
             ct='not-found'
         content_lengths.append(cl)
