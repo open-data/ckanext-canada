@@ -477,3 +477,7 @@ def recombinant_description_to_markup(text):
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': jinja2.Markup(''.join(markup))}
+
+
+def survey_js_url():
+    return str(config.get('foresee.survey_js_url')) if config.get('foresee.survey_js_url') else None

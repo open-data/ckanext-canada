@@ -353,7 +353,8 @@ ckanext.canada:schemas/info.yaml
             'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
-            'adobe_analytics_js'
+            'adobe_analytics_js',
+            'survey_js_url',
         ])
 
 
@@ -718,6 +719,7 @@ ckanext.canada:schemas/doc.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'survey_js_url',
             ]),
             )
 
