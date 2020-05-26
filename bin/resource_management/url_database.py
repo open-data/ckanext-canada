@@ -31,7 +31,6 @@ for dataset in fileinput.input():
     line = json.loads(dataset)
     resources = line["resources"]
     for l in range(len(resources)):
-        print(resources[l]["id"])
         url = resources[l]["url"]
         if url in urls:
             continue;
