@@ -30,7 +30,10 @@ print("Reading and testing URL's")
 for dataset in fileinput.input():
     line = json.loads(dataset)
     resources = line["resources"]
+    if i==5:
+        break;
     for l in range(len(resources)):
+        print(resources[l]["id"])
         url = resources[l]["url"]
         if url in urls:
             continue;
@@ -48,7 +51,7 @@ for dataset in fileinput.input():
                 responses.append(grequests.map(rs))
                 batch_urls = []
     i+=1
-
+print(date[8000])
 #Check last urls not covered in loop
 sys.stderr.write("\r")
 sys.stderr.write("Testing Datasets {0} - {1}".format(prev_i, i))

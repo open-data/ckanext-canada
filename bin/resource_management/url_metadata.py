@@ -56,7 +56,8 @@ for dataset in fileinput.input():
         if file_url in broken_links:
             data = broken_links.pop(file_url)
             broken_links_data.append([file_url,data[0],data[1],
-                                line["organization"]["title"].encode('utf-8'),line["title"].encode('utf-8'),line["id"]])
+                                line["organization"]["title"].encode('utf-8'),line["title"].encode('utf-8'),
+                                      line["id"],resources[l]["id"]])
             if len(broken_links)==0:
                 broken_links_flag=1
             continue;
@@ -64,7 +65,7 @@ for dataset in fileinput.input():
             data = file_types.pop(file_url)
             if resources[l]["format"].lower() != data[1]:
                 file_type_data.append([file_url,data[0],line["organization"]["title"].encode('utf-8'),
-                                       line["title"].encode('utf-8'),line["id"],
+                                       line["title"].encode('utf-8'),line["id"],resources[l]["id"],
                                        data[1],resources[l]["format"].lower(),data[2]])
                 if len(file_types) == 0:
                     file_type_flag = 1
@@ -78,14 +79,14 @@ print("Exporting to csv...")
 #Export tp CSV
 with open('broken_links_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date","response","organization","title","uuid"))
+    writer.writerow(("url", "date","response","organization","title","uuid","resource_id"))
     for row in broken_links_data:
         writer.writerow(row)
 f.close()
 
 with open('incorrect_file_types_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date","organization","title","uuid",
+    writer.writerow(("url", "date","organization","title","uuid","resource_id",
                      "found_file_type","metadata_file_type","found_content_length"))
     for row in file_type_data:
         writer.writerow(row)
