@@ -11,6 +11,8 @@
       <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
     {% elif package.jurisdiction == 'federal' %}
       <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
+    {% elif package.type == 'prop' %}
+      <span class="label label-default" style="float:right; border-color: #f80; background: #fff">{{ _("Suggested Dataset") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
@@ -62,16 +64,32 @@
     {% endblock %}
 
     {% block resources_outer %}
-      <div class="row">
-        <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
-        <div class="col-md-9">
-          <ul class="list-inline list-unstyled">
-            {% for resource in h.dict_list_reduce(package.resources, 'format') %}
-              <li><span class="badge">{{ _(resource) }}</span></li>
-            {% endfor %}
-          </ul>
+      {% if package.type == 'prop' %}
+        {% set schema = h.scheming_get_dataset_schema('prop') %}
+        <div class="row">
+          <div class="col-md-3"><em>{{ _('Status') }}:</em></div>
+          <div class="col-md-9">{% snippet 'scheming/snippets/display_field.html',
+            field=schema.dataset_fields[-1].repeating_subfields[1],
+            data=package.status[-1],
+            entity_type='dataset',
+            object_type='prop' %}</div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-md-3"><em>{{ _('Date') }}:</em></div>
+          <div class="col-md-9">{{ package.status[-1].date }}</div>
+        </div>
+      {% else %}
+        <div class="row">
+          <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+          <div class="col-md-9">
+            <ul class="list-inline list-unstyled">
+              {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                <li><span class="badge">{{ _(resource) }}</span></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
       {% if 'fgp_viewer' in package.get('display_flags', []) %}
         <div>
         <hr>
