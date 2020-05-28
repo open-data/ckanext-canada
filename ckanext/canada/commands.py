@@ -28,6 +28,7 @@ from ckanapi import (
     RemoteCKAN,
     LocalCKAN,
     NotFound,
+    ValidationError,
     NotAuthorized,
     CKANAPIError
 )
@@ -500,15 +501,18 @@ class CanadaCommand(CkanCommand):
                             "reason": row['dataset_suggestion_status'] if row['dataset_suggestion_status'] else 'department_contacted',
                             "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
                             "comments": {
-                                "en": row['dataset_suggestion_status_link'],
-                                "fr": row['dataset_suggestion_status_link']
+                                "en": row['dataset_suggestion_status_link'] or '-',
+                                "fr": row['dataset_suggestion_status_link'] or '-',
                             }
                         }
                     ]
                 }
 
-                registry.action.package_create(**record)
-                print id + ' suggested dataset created'
+                try:
+                    registry.action.package_create(**record)
+                    print id + ' suggested dataset created'
+                except ValidationError as e:
+                    print id + ' ' + str(e)
         csv_file.close()
 
 
