@@ -144,19 +144,19 @@ dataset_fields:
     preset: select
     choices:
     - label:
-        en: Referred to data-holder - Awaiting Response
-        fr: Envoyée au détenteur des données – En attente d’une réponse
+        en: Request sent to data owner – awaiting response
+        fr: Demande envoyée au propriétaire des données, en attente de réponse
       value: department_contacted
     - label:
-        en: Response received – data-holder investigating
-        fr: Réponse reçue – Le détenteur des données enquête
+        en: Data owner is evaluating the request
+        fr: Le propriétaire des données évalue la demande
       value: under_review
     - label:
-        en: Data-holder working on releasing dataset
-        fr: Le détenteur des données s’affaire à la publication du jeu de données
+        en: Data owner is working on releasing the dataset
+        fr: Le propriétaire des données s’apprête à publier le jeu de données
       value: in_progress
     - label:
-        en: Dataset Published
+        en: Dataset published
         fr: Jeu de données publié
       value: released
     - label:
