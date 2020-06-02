@@ -452,6 +452,12 @@ class CanadaCommand(CkanCommand):
         """
         registry = LocalCKAN()
 
+        # XXX hack that only works as part of the cli: monkey-patch our suggested dataset schema
+        # to allow blank comment fields in status records imported
+        from ckanext.scheming.helpers import scheming_get_dataset_schema
+        prop = scheming_get_dataset_schema('prop')
+        prop['dataset_fields'][-1]['repeating_subfields'][-1]['required'] = False
+
         # load packages as dict
         results = True
         counter = 0
@@ -475,6 +481,7 @@ class CanadaCommand(CkanCommand):
                 # add record
                 record = {
                     "type": "prop",
+                    "state": "active",
                     "id": id,
                     "title_translated": {
                         "en": row['title_en'],
@@ -482,8 +489,8 @@ class CanadaCommand(CkanCommand):
                     },
                     "owner_org": row['organization'],
                     "notes_translated": {
-                        "en": row['description_en'] if row['description_en'] else '-',
-                        "fr": row['description_fr'] if row['description_fr'] else '-'
+                        "en": row['description_en'],
+                        "fr": row['description_fr'],
                     },
                     "comments": {
                         "en": row['additional_comments_and_feedback_en'],
@@ -501,8 +508,8 @@ class CanadaCommand(CkanCommand):
                             "reason": row['dataset_suggestion_status'] if row['dataset_suggestion_status'] else 'department_contacted',
                             "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
                             "comments": {
-                                "en": row['dataset_suggestion_status_link'] or '-',
-                                "fr": row['dataset_suggestion_status_link'] or '-',
+                                "en": row['dataset_suggestion_status_link'],
+                                "fr": row['dataset_suggestion_status_link'],
                             }
                         }
                     ]
@@ -512,7 +519,14 @@ class CanadaCommand(CkanCommand):
                     registry.action.package_create(**record)
                     print id + ' suggested dataset created'
                 except ValidationError as e:
-                    print id + ' ' + str(e)
+                    if 'id' in e.error_dict:
+                        try:
+                            registry.action.package_update(**record)
+                            print id + ' suggested dataset update deleted'
+                        except ValidationError as e:
+                            print id + ' (update deleted) ' + str(e)
+                    else:
+                        print id + ' ' + str(e)
         csv_file.close()
 
 
