@@ -4,15 +4,18 @@
 {% set client_lang = h.lang() %}
 
 {% block package_item %}
+{% set geno = h.recombinant_get_geno(package.type) %}
 <li>
   <article class="panel panel-default mrgn-bttm-sm relative">
     <header class="panel-heading">
-    {% if package.jurisdiction == 'provincial' %}
-      <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
-    {% elif package.jurisdiction == 'federal' %}
-      <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
+    {% if package.type == 'dataset' %}
+      <span class="label label-default" style="float:right; border-color: #088; background: #fff">{{ _("Open Data") }}</span>
     {% elif package.type == 'prop' %}
       <span class="label label-default" style="float:right; border-color: #f80; background: #fff">{{ _("Suggested Dataset") }}</span>
+    {% elif package.type == 'info' or geno.portal_type == 'info' %}
+      <span class="label label-default" style="float:right; border-color: #44f; background: #fff">{{ _("Open Info") }}</span>
+    {% elif geno.portal_type == 'dialogue' %}
+      <span class="label label-default" style="float:right; border-color: #80f; background: #fff">{{ _("Open Dialogue") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
@@ -65,7 +68,7 @@
 
     {% block resources_outer %}
       {% if package.type == 'prop' %}
-        {% set schema = h.scheming_get_dataset_schema('prop') %}
+        {% set schema = h.scheming_get_dataset_schema(package.type) %}
         <div class="row">
           <div class="col-md-3"><em>{{ _('Status') }}:</em></div>
           <div class="col-md-9">{% snippet 'scheming/snippets/display_field.html',
