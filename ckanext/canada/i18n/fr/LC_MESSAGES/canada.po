@@ -1430,12 +1430,8 @@ msgstr "Contactez-nous du gouvernement ouvert"
 msgid "Specialized enquiries"
 msgstr "Requêtes particulières"
 
-msgid "/en/forms/contact-us"
-msgstr "/fr/formulaire/faites-nous-part-de-vos-commentaires"
-
-msgid "http://open.canada.ca/en/forms/contact-us"
-msgstr ""
-"http://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
+msgid "https://open.canada.ca/en/forms/contact-us"
+msgstr "https://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
 
 msgid "Open Government Log In"
 msgstr "Ouverture de session Gouvernement ouvert"
@@ -3276,3 +3272,7 @@ msgstr "Veuillez accéder aux jeux de données proposés que votre organisation 
 
 msgid "Suggested Datasets - Update Status"
 msgstr "Le point sur les jeux de données proposés"
+
+#: ckanext/canada/templates/internal/snippets/user.html:49
+msgid "Get Help"
+msgstr "Obtenez de l’aide"
