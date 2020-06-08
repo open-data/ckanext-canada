@@ -26,7 +26,8 @@ import json as json
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
-PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
+PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
+PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
@@ -187,8 +188,11 @@ def normalize_strip_accents(s):
     s = unicodedata.normalize('NFD', s)
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
+
 def portal_url():
-    return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+    url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
+    return str(config.get(PORTAL_URL_OPTION, url))
+
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
