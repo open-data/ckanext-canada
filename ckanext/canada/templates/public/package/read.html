@@ -19,7 +19,7 @@
           {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
           {{ h.follow_button('dataset', pkg.name) }}
           {% if pkg.portal_release_date %}
-            <a href="{{ _('http://open.canada.ca') }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
+            <a href="{{ h.portal_url() }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
                title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
                 <span class="fa fa-arrow-circle-right"></span>
                 <span class="text">{{ _('View on Portal') }}</span>
