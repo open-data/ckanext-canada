@@ -109,7 +109,7 @@ dataset_fields:
   label:
     en: Status
     fr: État
-  help_text:
+  form_alert_warning:
     en: |
       If the status of this suggestion has changed click “Add” to add a status update. All
       status updates are published to share the history of this suggestion. Do not modify existing
@@ -142,6 +142,7 @@ dataset_fields:
 
     required: true
     preset: select
+    form_include_blank_choice: true
     choices:
     - label:
         en: Request sent to data owner – awaiting response
