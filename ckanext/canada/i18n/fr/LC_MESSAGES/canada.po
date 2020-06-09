@@ -1435,12 +1435,8 @@ msgstr "Contactez-nous du gouvernement ouvert"
 msgid "Specialized enquiries"
 msgstr "Requêtes particulières"
 
-msgid "/en/forms/contact-us"
-msgstr "/fr/formulaire/faites-nous-part-de-vos-commentaires"
-
-msgid "http://open.canada.ca/en/forms/contact-us"
-msgstr ""
-"http://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
+msgid "https://open.canada.ca/en/forms/contact-us"
+msgstr "https://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
 
 msgid "Open Government Log In"
 msgstr "Ouverture de session Gouvernement ouvert"
@@ -3210,3 +3206,14 @@ msgstr "Passer au contenu principal"
 #: ckanext/wet_boew/templates/snippets/wet-boew/skip.html:3
 msgid "Skip to site information"
 msgstr "Passer aux informations sur le site"
+
+#: ckanext/canada/templates/internal/snippets/user.html:49
+msgid "Get Help"
+msgstr "Obtenez de l’aide"
+
+#: ckanext/canada/templates/internal/snippets/user.html:49
+msgid "Help using the Open Government Registry"
+msgstr "Aide à l'utilisation du registre du gouvernement ouvert"
+
+msgid "View on Portal"
+msgstr "Consulter le Portail"
