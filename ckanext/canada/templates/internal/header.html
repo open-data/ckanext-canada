@@ -7,59 +7,95 @@
 {% block sitesearch %}{% endblock %}
 
 {% block sitemenu %}
-    <nav role="navigation" id="wb-sm" class="visible-md visible-lg" typeof="SiteNavigationElement">
-        <div class="container navbar">
-            <h2>Topics menu</h2>
-            <div class="row">
-                <ul class="list-inline menu">
-                    {% block header_site_navigation_tabs %}
-                <li role="presentation"><a role="menuitem"  href="{{ _('http://open.canada.ca') }}">{{ _('Open.Canada.ca') }}</a></li>
-                {% if h.check_access('package_create') %}
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ _('Add to Portal') }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a></li>
-                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search', portal_type='prop') }}">{{ _('Suggested Datasets - Update Status') }}</a></li>
-                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
-                        {%- for r_type in [
-                          'ati',
-                          'contracts',
-                          'contractsa',
-                          'hospitalityq',
-                          'travelq',
-                          'travela',
-                          'grants',
-                          'reclassification',
-                          'wrongdoing',
-                          'briefingt',
-                          'consultations',
-                          'inventory',
-                          'dac',
-                          'nap',
-                          'experiment',
-                          'qpnotes',
-                          ] -%}
-                          {# XXX bit of a hack: we "know" that our dataset types have
-                             resource names with the same values #}
-                          <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type)
-                            }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a></li>
-                        {%- endfor -%}
-                    </ul>
-                </li>
-                {% endif %}
-                <li role="presentation"><a href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a></li>
-                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
-                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
-                {% if c.userobj %}
-                <li role="presentation"><a role="menuitem"  href="{{ h.url_for(controller='user', action='logout') }}">{{ _('Log out') }}</a></li>
-                {% else %}
-                <li role="presentation"><a role="menuitem"  href="{% url_for controller='user', action='login' %}">{{ _('Log in') }}</a></li>
-                {% endif %}
-            {% endblock %}
-                </ul>
+<nav id="menu-bar">
+<div class="container">
+    <div class="topnav" id="myTopnav">
+        {% block header_site_navigation_tabs %}
+            <a href="{{ _('http://open.canada.ca') }}" onfocus="closeDropdown()">{{ _('Open.Canada.ca') }}</a>
+            {% if h.check_access('package_create') %}
+            <div class="dropdown-new" onfocus="openDropdown()" tabindex="0">
+                <button class="dropbtn" tabindex="-1">Add to Portal
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content" id="addprtl">
+                    <a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a>
+                    <a href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a>
+                    {%- for r_type in [
+                        'ati',
+                        'contracts',
+                        'contractsa',
+                        'hospitalityq',
+                        'travelq',
+                        'travela',
+                        'grants',
+                        'reclassification',
+                        'wrongdoing',
+                        'briefingt',
+                        'consultations',
+                        'inventory',
+                        'dac',
+                        'nap',
+                        'experiment',
+                        'qpnotes',
+                        ] -%}
+                        {# XXX bit of a hack: we "know" that our dataset types have
+                        resource names with the same values #}
+                        <a href="{{ h.url_for('recombinant_type', resource_name=r_type)
+                                    }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a>
+                    {%- endfor -%}
+                </div>
             </div>
-        </div>
-    </nav>
+            {% endif %}
+            <a onfocus="closeDropdown()" href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a>
+            <a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a>
+            <a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a>
+            {% if c.userobj %}
+            <a href="{{ h.url_for(controller='user', action='logout') }}">{{ _('Log out') }}</a>
+            {% else %}
+            <a href="{% url_for controller='user', action='login' %}">{{ _('Log in') }}</a>
+            {% endif %}
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+        {% endblock %}
+    </div>
+</div>
+</nav>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+
+    /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+    function openDropdown() {
+        document.getElementById("addprtl").classList.toggle("show");
+    }
+
+    function closeDropdown() {
+        var btn = document.getElementById("addprtl");
+        if (btn.classList.contains("show")) {
+            btn.classList.remove("show");
+        }
+    }
+
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
 {% endblock %}
 
 {% block breadcrumb %}
