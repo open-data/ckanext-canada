@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+"""
+This script takes proactive disclosure data in the form of a csv file and runs it against the corresponding migration scripts
+"""
 
 import sys
 import codecs
@@ -9,14 +11,7 @@ import os
 import subprocess
 import shutil
 
-
-"""
-This script takes proactive disclosure data in the form of a csv file and runs it against the corresponding migration scripts
-"""
-
-
 def run_scripts(infile, outfile, matching_files):
-
     # Remove any dead procedures from previous calls to this method
     if proc_array:
         proc_array[:] = []
@@ -27,7 +22,7 @@ def run_scripts(infile, outfile, matching_files):
 
     else:
         for matching_file in matching_files:
-            print("Starting process: {0} with {1}".format(matching_files.index(matching_file),matching_file))
+            print("Starting process: {0} with {1}".format(matching_files.index(matching_file), matching_file))
             if len(proc_array) == 0:
                 proc_array.append(subprocess.Popen(['python', matching_file, 'warehouse'], stdin=subprocess.PIPE, stdout=subprocess.PIPE))
             elif matching_file == matching_files[-1]:

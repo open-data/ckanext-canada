@@ -8,7 +8,7 @@ from sys import stderr, stdout, argv
 
 def get_row_tuple(row):
     org_tuple = (row['owner_org'], row['owner_org_title'])
-    #del row['owner_org']
+    # del row['owner_org']
     del row['owner_org_title']
     pk_tuple = tuple([row[key] for key in pk_fields[0]])
     h = hashlib.md5(repr(list(row.values())).encode('utf8')).digest()
@@ -118,9 +118,9 @@ if results:
                 if key not in fieldnames:
                     result_row.pop(key)
                 if key == 'record_created':
-                    result_row['record_created'] = (result_row['record_created'].split('T')[0]).replace('/','-')
+                    result_row['record_created'] = (result_row['record_created'].split('T')[0]).replace('/', '-')
                 if key == 'record_modified':
-                    result_row['record_modified'] = (result_row['record_modified'].split('T')[0]).replace('/','-')
+                    result_row['record_modified'] = (result_row['record_modified'].split('T')[0]).replace('/', '-')
                 print(result_row)
             warehouse.writerow(result_row)
 
