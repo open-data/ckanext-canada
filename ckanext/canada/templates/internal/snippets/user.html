@@ -43,6 +43,16 @@
                 </a>
             </li>
             {% endblock %}
+
+            {% block header_get_help %}
+            <li>
+                <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}" title="{{ _('Get Help') }}" class="btn btn-warning">
+                    <span class="fa fa-question"></span>
+                    <span class="text">{{ _('Get Help') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+
             {% block header_account_log_out_link %}
             <!-- This code is correct but we have to address a generic login not in the mega menu before we can re-enable
             <li>
