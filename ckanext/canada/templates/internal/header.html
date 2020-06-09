@@ -14,7 +14,7 @@
             <a href="{{ _('http://open.canada.ca') }}" onfocus="closeDropdown()">{{ _('Open.Canada.ca') }}</a>
             {% if h.check_access('package_create') %}
             <div class="dropdown-new" onfocus="openDropdown()" tabindex="0">
-                <button class="dropbtn" tabindex="-1">Add to Portal
+                <button class="dropbtn" tabindex="-1">{{ _('Add to Portal') }}
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content" id="addprtl">
