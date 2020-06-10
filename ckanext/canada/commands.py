@@ -461,10 +461,10 @@ class CanadaCommand(CkanCommand):
                                           {'id':resource_id, 'format':new_format})
         file.close()
 
-    def resource_size_update(self, format_report):
+    def resource_size_update(self, size_report):
         portal = LocalCKAN()
         #portal = RemoteCKAN()
-        file = open(format_report, "r")
+        file = open(size_report, "r")
         reader = csv.reader(file)
         for line in reader:
             uuid = line[4]
@@ -473,7 +473,7 @@ class CanadaCommand(CkanCommand):
 
             #portal.action.resource_patch(id=resource_id,format=new_format)
             resource = portal.call_action('resource_patch',
-                                          {'id':resource_id, 'format':new_format}
+                                          {'id':resource_id, 'size':size}
                                           )
         file.close()
 
