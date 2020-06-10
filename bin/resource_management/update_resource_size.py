@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-Updates Resources based on incorrect_file_types_report.csv
-Updates Content-type.
-'source.action.resource_patch(id=resource_id,format=new_format)'
+Updates Resources based on incorrect_file_size_report.csv
+'source.action.resource_patch(id=resource_id,size=new_size)'
 
 Input:
 argv[1]: site URL
 argv[2]: API Key
-argv[3]: CSV Report ('incorrect_file_types_report.csv')
+argv[3]: CSV Report ('incorrect_file_sizes_report.csv')
 
 """
 import sys
@@ -21,7 +20,6 @@ with open(file_report) as csvfile:
     for row in reader:
         uuid = row["uuid"]
         resource_id = row["resource_id"]
-        new_format = unicode(row["found_file_type"].upper())
-        old_format = row["metadata_file_type"]
-        source.action.resource_patch(id=resource_id, format=new_format)
+        new_size = unicode(row["found_file_size"])
+        source.action.resource_patch(id=resource_id, size=new_size)
 print("done")

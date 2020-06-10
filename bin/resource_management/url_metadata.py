@@ -1,11 +1,6 @@
-import sys
-import fileinput
-from datetime import datetime
-import json
-import csv
-
+#!/usr/bin/env python3
 """
-Gets broken links from url_database.csv and fetches corresponding metadata from 
+Gets broken links from url_database.csv and fetches corresponding metadata from
 od-do-canada.jsonl.
 Gets content-type of active links and compares to format of metadata.
 
@@ -17,79 +12,119 @@ Output:
 broken_links_report.csv
 incorrect_file_types_report.csv
 """
+import sys
+import fileinput
+import json
+import csv
 
-broken_links={}
-url_database=sys.argv[2]
-file_types={}
-#Read url_database and put broken links in dict with url as key
-file=open(url_database, "r")
-reader = csv.reader(file)
-#skip head
-next(reader)
-for line in reader:
-    url=line[0]
-    date=line[1]
-    response=line[2]
-    content_type=line[3].encode('utf-8')
-    content_length=line[4].encode('utf-8')
-    if response == 'not-found':
-        broken_links[url]=[date,response]
-    else:
-        if '/' in content_type:
-            content_type = (((content_type.split(';'))[0]).split('/'))[1]
-        if content_type != 'not-found':
-            file_types[url]=[date,content_type,content_length]
-file.close()
+metadata = sys.argv[1]
+url_database = sys.argv[2]
 
-#For each resource in each dataset, check if url is in broken links of url_database
-#Get metadata
+broken_links = {}
+file_types = {}
+file_sizes = {}
+
+with open(url_database) as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        url = row["url"]
+        date = row["date"]
+        response = row["response"]
+        content_type = row["content-type"].encode('utf-8')
+        content_length = row["content-length"].encode('utf-8')
+        if response == 'not-found' or '404' in response:
+            broken_links[url] = [date, response]
+        else:
+            if '/' in content_type:
+                content_type = (((content_type.split(';'))[0]).split('/'))[1]
+            if content_type != 'not-found':
+                file_types[url] = [date, content_type, content_length]
+                file_sizes[url] = [date, content_length]
+
+
+# For each resource in each dataset
+# check if url is in broken links of url_database
+# Get metadata
 print("Matching URLs with Metadata")
-broken_links_data=[]
-file_type_data=[]
-broken_links_flag=0
-file_type_flag=0
-for dataset in fileinput.input():
-    line = json.loads(dataset,'utf-8')
+broken_links_data = []
+file_type_data = []
+file_length_data = []
+broken_links_flag = 0
+file_type_flag = 0
+file_length_flag = 0
+correct_file_types = ['AAC', 'AIFF', 'ASCII Grid', 'APK', 'AVI', 'BAG', 'BMP', 'BWF', 'CCT', 'CDED ASCII', 'CDF', 'CDR',
+                   'COD', 'CSV', 'DBD', 'DBF', 'DICOM', 'DNG', 'DOC', 'DOCX', 'DXF', 'E00', 'ECW', 'EDI', 'EMF', 'EPUB3',
+                   'EPUB2', 'EPS', 'ESRI REST', 'EXE', 'FGDB/GDB', 'Flat raster binary', 'GDB', 'GeoPDF', 'GeoRSS',
+                   'GeoTIF', 'GEOJSON', 'GPKG', 'GIF', 'GML', 'GRD', 'GRIB1', 'GRIB2', 'HDF', 'HTML', 'IATI', 'IPA',
+                   'JAR', 'JFIF', 'JP2', 'JPG', 'JSON', 'JSONLD', 'JSONL', 'KML', 'KMZ', 'LAS', 'LYR', 'TAB', 'MFX',
+                   'MOV', 'MPEG', 'MPEG-1', 'MP3', 'MXD', 'NetCDF', 'ODP', 'ODS', 'ODT', 'PDF', 'PDF/A-1', 'PDF/A-2',
+                   'PDF/UA', 'PNG', 'PPT', 'PPTX', 'RDF', 'TTL', 'NT', 'RDFa', 'RSS', 'RTF', 'SAR', 'SAV', 'SEGY', 'SHP',
+                   'SQL', 'SQLITE3', 'SQLITE', 'SVG', 'TIFF', 'TRIG', 'TRIX', 'TFW', 'TXT', 'VPF', 'WAV', 'WCS', 'WFS',
+                   'WMS', 'WMTS', 'WMV', 'WPS', 'XML', 'XLS', 'XLSM', 'XLSX', 'ZIP', 'other']
+
+for dataset in open(metadata):
+    line = json.loads(dataset, 'utf-8')
     resources = line["resources"]
-    for l in range(len(resources)):
+    for l, x in enumerate(resources):
         file_url = resources[l]["url"].encode('utf-8')
         if file_url in broken_links:
             data = broken_links.pop(file_url)
-            broken_links_data.append([file_url,data[0],data[1],
-                                line["organization"]["title"].encode('utf-8'),line["title"].encode('utf-8'),
-                                      line["id"],resources[l]["id"]])
-            if len(broken_links)==0:
-                broken_links_flag=1
-            continue;
+            broken_links_data.append(
+                [file_url, data[0], data[1],
+                 line["organization"]["title"].encode('utf-8'),
+                 line["title"].encode('utf-8'), line["id"], resources[l]["id"]])
+            if len(broken_links) == 0:
+                broken_links_flag = 1
+            continue
         if file_url in file_types:
             data = file_types.pop(file_url)
-            if resources[l]["format"].lower() != data[1]:
-                file_type_data.append([file_url,data[0],line["organization"]["title"].encode('utf-8'),
-                                       line["title"].encode('utf-8'),line["id"],resources[l]["id"],
-                                       data[1],resources[l]["format"].lower(),data[2]])
+            if resources[l]["format"].lower() != data[1] and data[1].upper() in correct_file_types:
+                file_type_data.append(
+                    [file_url, data[0], line["organization"]["title"].encode('utf-8'),
+                     line["title"].encode('utf-8'), line["id"], resources[l]["id"], resources[l]["format"].lower(),
+                     data[1]])
                 if len(file_types) == 0:
                     file_type_flag = 1
-                continue;
-    if broken_links_flag==1 and file_type_flag==1:
-        #stop searching when all broken links and incorrect filetypes are found
-        break;
+                continue
+        if file_url in file_sizes:
+            data = file_sizes.pop(file_url)
+            if not resources[l].has_key("size") or resources[l]["size"] != data[1]:
+                if data[1] != '0' and data[1] != 'not-found':
+                    file_length_data.append(
+                        [file_url, data[0], line["organization"]["title"].encode('utf-8'),
+                         line["title"].encode('utf-8'), line["id"], resources[l]["id"],
+                         data[1]])
+                    if len(file_sizes) == 0:
+                        file_length_flag = 1
+                continue
+
+    if broken_links_flag == 1 and file_type_flag == 1 and file_length_flag == 1:
+        # stop searching when all broken links and incorrect filetypes are found
+        break
 
 
 print("Exporting to csv...")
-#Export tp CSV
+# Export tp CSV
 with open('broken_links_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date","response","organization","title","uuid","resource_id"))
+    writer.writerow(("url", "date", "response", "organization", "title", "uuid", "resource_id"))
     for row in broken_links_data:
         writer.writerow(row)
 f.close()
 
 with open('incorrect_file_types_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date","organization","title","uuid","resource_id",
-                     "found_file_type","metadata_file_type","found_content_length"))
+    writer.writerow(("url", "date", "organization", "title", "uuid", "resource_id",
+                     "metadata_file_type", "found_file_type"))
     for row in file_type_data:
         writer.writerow(row)
 f.close()
-print("Done.")
 
+with open('incorrect_file_size_report.csv', "w") as f:
+    writer = csv.writer(f)
+    writer.writerow(("url", "date", "organization", "title", "uuid", "resource_id",
+                     "found_file_size"))
+    for row in file_length_data:
+        writer.writerow(row)
+f.close()
+print("Done.")
