@@ -46,7 +46,9 @@
 
             {% block header_get_help %}
             <li>
-                <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}" title="{{ _('Get Help') }}" class="btn btn-warning">
+                <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}"
+                   title="{{ _('Get Help') }}" class="btn btn-warning"
+                   onclick="ga('send', 'event', 'Get Help', 'Help requested by {{ c.userobj.display_name }}', document.location.href);">
                     <span class="fa fa-question"></span>
                     <span class="text">{{ _('Get Help') }}</span>
                 </a>
