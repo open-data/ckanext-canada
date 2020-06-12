@@ -469,6 +469,7 @@ class CanadaCommand(CkanCommand):
         # load data from csv
         csv_file = io.open(filename, "r", encoding='utf-8-sig')
         csv_reader = csv.DictReader((l.encode('utf-8') for l in csv_file))
+        today = datetime.now().strftime('%Y-%m-%d')
         for row in csv_reader:
             id = row['uuid']
             if id not in existing_suggestions:
@@ -497,14 +498,14 @@ class CanadaCommand(CkanCommand):
                         "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
                     },
                     "date_submitted": row['date_created'],
-                    "date_forwarded": row['date_created'],
+                    "date_forwarded": today,
                     "status": [] if row['dataset_suggestion_status'] == 'department_contacted' else [
                         {
                             "reason": row['dataset_suggestion_status'],
-                            "date": row['dataset_released_date'] if row['dataset_released_date'] else row['date_created'],
+                            "date": row['dataset_released_date'] if row['dataset_released_date'] else today,
                             "comments": {
-                                "en": row['dataset_suggestion_status_link'],
-                                "fr": row['dataset_suggestion_status_link'],
+                                "en": row['dataset_suggestion_status_link'] or u'Status imported from previous ‘suggest a dataset’ system',
+                                "fr": row['dataset_suggestion_status_link'] or u'État importé du système précédent « Proposez un jeu de données »',
                             }
                         }
                     ]
