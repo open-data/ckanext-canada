@@ -93,10 +93,10 @@ dataset_fields:
 - field_name: date_submitted
   help_text:
     en: The date the submission form was submitted to open-ouvert@tbs-sct.gc.ca. This value will be automatically populated
-    fr: ''
+    fr: Date d’envoi du formulaire de demande à open-ouvert@tbs-sct.gc.ca. Cette information sera inscrite automatiquement.
   label:
     en: Date suggestion was submitted
-    fr: ''
+    fr: Date d’envoi de la suggestion
   preset: date
   form_snippet: ro_date.html
   validators: user_read_only scheming_required isodate convert_to_json_if_date
@@ -104,10 +104,10 @@ dataset_fields:
 - field_name: date_forwarded
   help_text:
     en: The date the submission form was sent to data owner. This value will be automatically populated
-    fr: ''
+    fr: Date d’envoi du formulaire de demande au propriétaire des données. Cette information sera inscrite automatiquement.
   label:
     en: Date suggestion was sent to data owner
-    fr: ''
+    fr: Date d’envoi de la suggestion au propriétaire des données
   preset: date
   form_snippet: ro_date.html
   validators: user_read_only scheming_required isodate convert_to_json_if_date
