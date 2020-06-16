@@ -2312,6 +2312,10 @@ presets:
     label:
       en: IMSO Approval
       fr: Approbation de la CSGI
+    help_text:
+      en: Has IMSO approval been obtained? By selecting yes, you agree to release this dataset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
+      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+
     required: true
     form_include_blank_choice: true
     choices:
@@ -2324,7 +2328,7 @@ presets:
         fr: Oui
       value: "true"
     # copied from select preset
-    form_snippet: imso_approval_select.html
+    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
