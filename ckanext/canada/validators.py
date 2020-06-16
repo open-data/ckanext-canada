@@ -13,6 +13,7 @@ import geojson
 from geomet import wkt
 import json
 import uuid
+from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckantoolkit import get_validator, Invalid, missing
@@ -218,3 +219,9 @@ def if_empty_set_to(default_value):
         return value
 
     return validator
+
+
+def no_future_date(value):
+    if value > datetime.today():
+        raise Invalid(_("Date may not be in the future"))
+    return value
