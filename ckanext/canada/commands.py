@@ -60,7 +60,7 @@ class CanadaCommand(CkanCommand):
                       copy-datasets [-m]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
-                      load-suggested <suggested-datasets.csv>
+                      load-suggested [--use-created-date] <suggested-datasets.csv>
                       rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
@@ -86,6 +86,8 @@ class CanadaCommand(CkanCommand):
                                     failures, default: 1
         -u/--ckan-user <username>   sets the owner of packages created,
                                     default: ckan system user
+        --use-created-date          use date_created field for date forwarded to data
+                                    owner and other statuses instead of today's date
         -r/--rebuild-unindexed-only When rebuilding the advanced search Solr core
                                     only index datasets not already present in the
                                     second Solr core
@@ -131,6 +133,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('--portal', dest='portal', action='store_true')
     parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
     parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
+    parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
 
     def command(self):
         '''
@@ -166,7 +169,7 @@ class CanadaCommand(CkanCommand):
             self.rebuild_external_search()
 
         elif cmd == 'load-suggested':
-            self.load_suggested(*self.args[1:])
+            self.load_suggested(self.options.use_created_date, *self.args[1:])
 
         else:
             print self.__doc__
@@ -446,7 +449,7 @@ class CanadaCommand(CkanCommand):
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
-    def load_suggested(self, filename):
+    def load_suggested(self, use_created_date, filename):
         """
         a process that loads suggested datasets from Drupal into CKAN
         """
@@ -470,59 +473,65 @@ class CanadaCommand(CkanCommand):
         csv_file = io.open(filename, "r", encoding='utf-8-sig')
         csv_reader = csv.DictReader((l.encode('utf-8') for l in csv_file))
         today = datetime.now().strftime('%Y-%m-%d')
-        for row in csv_reader:
-            id = row['uuid']
-            if id not in existing_suggestions:
-                # add record
-                record = {
-                    "type": "prop",
-                    "state": "active",
-                    "id": id,
-                    "title_translated": {
-                        "en": row['title_en'],
-                        "fr": row['title_fr']
-                    },
-                    "owner_org": row['organization'],
-                    "notes_translated": {
-                        "en": row['description_en'],
-                        "fr": row['description_fr'],
-                    },
-                    "comments": {
-                        "en": row['additional_comments_and_feedback_en'],
-                        "fr": row['additional_comments_and_feedback_fr']
-                    },
-                    "reason": row['reason'],
-                    "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
-                    "keywords": {
-                        "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
-                        "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
-                    },
-                    "date_submitted": row['date_created'],
-                    "date_forwarded": today,
-                    "status": [] if row['dataset_suggestion_status'] == 'department_contacted' else [
-                        {
-                            "reason": row['dataset_suggestion_status'],
-                            "date": row['dataset_released_date'] if row['dataset_released_date'] else today,
-                            "comments": {
-                                "en": row['dataset_suggestion_status_link'] or u'Status imported from previous ‘suggest a dataset’ system',
-                                "fr": row['dataset_suggestion_status_link'] or u'État importé du système précédent « Proposez un jeu de données »',
-                            }
-                        }
-                    ]
-                }
 
-                try:
-                    registry.action.package_create(**record)
-                    print id + ' suggested dataset created'
-                except ValidationError as e:
-                    if 'id' in e.error_dict:
-                        try:
-                            registry.action.package_update(**record)
-                            print id + ' suggested dataset update deleted'
-                        except ValidationError as e:
-                            print id + ' (update deleted) ' + str(e)
-                    else:
-                        print id + ' ' + str(e)
+        for row in csv_reader:
+            uuid = row['uuid']
+            if uuid in existing_suggestions:
+                continue
+
+            if use_created_date:
+                today = row['date_created']
+
+            # add record
+            record = {
+                "type": "prop",
+                "state": "active",
+                "id": uuid,
+                "title_translated": {
+                    "en": row['title_en'],
+                    "fr": row['title_fr']
+                },
+                "owner_org": row['organization'],
+                "notes_translated": {
+                    "en": row['description_en'],
+                    "fr": row['description_fr'],
+                },
+                "comments": {
+                    "en": row['additional_comments_and_feedback_en'],
+                    "fr": row['additional_comments_and_feedback_fr']
+                },
+                "reason": row['reason'],
+                "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
+                "keywords": {
+                    "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
+                    "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
+                },
+                "date_submitted": row['date_created'],
+                "date_forwarded": today,
+                "status": [] if row['dataset_suggestion_status'] == 'department_contacted' else [
+                    {
+                        "reason": row['dataset_suggestion_status'],
+                        "date": row['dataset_released_date'] if row['dataset_released_date'] else today,
+                        "comments": {
+                            "en": row['dataset_suggestion_status_link'] or u'Status imported from previous ‘suggest a dataset’ system',
+                            "fr": row['dataset_suggestion_status_link'] or u'État importé du système précédent « Proposez un jeu de données »',
+                        }
+                    }
+                ]
+            }
+
+            try:
+                registry.action.package_create(**record)
+                print uuid + ' suggested dataset created'
+            except ValidationError as e:
+                if 'id' in e.error_dict:
+                    try:
+                        registry.action.package_update(**record)
+                        print uuid + ' suggested dataset update deleted'
+                    except ValidationError as e:
+                        print uuid + ' (update deleted) ' + str(e)
+                else:
+                    print uuid + ' ' + str(e)
         csv_file.close()
 
 
