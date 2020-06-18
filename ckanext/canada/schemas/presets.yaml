@@ -2037,7 +2037,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
@@ -2054,7 +2054,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Expires.
 # Add a Calendar control to select a Date.
