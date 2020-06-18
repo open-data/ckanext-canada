@@ -337,3 +337,22 @@ div.dt-button-collection a.dt-button {display: inline-block}
 footer {
     margin-top: 15px;
 }
+
+#quick-links .col-md-6 section {
+    padding-left: 12px;
+}
+
+#ql-open-data { border-left: solid 3px #088; }
+#ql-sug-datasets { border-left: solid 3px #f80; }
+#ql-open-dialogue { border-left: solid 3px #f08; }
+#ql-open-info { border-left: solid 3px #80f; }
+#ql-search { border-left: solid 3px #888; }
+#ql-pd { border-left: solid 3px #44f; }
+
+#quick-links .fa-question-circle-o {
+    color: lightslategray;
+}
+
+.mfp-bg {
+    opacity: .50;
+}

@@ -5,13 +5,23 @@
 
 {% macro quick_link(r_type) %}
   {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
+  {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
           <li>
-            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-table mrgn-rght-sm"></i>{{ label }}</a>
+            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload mrgn-rght-sm"></i>{{ _(label) }}</a>
+            <a class="wb-lbx" href="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="{{ r_type }}" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ label }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ description }}
+              </div>
+            </section>
           </li>
 {% endmacro %}
 
 {% block primary_content %}
-<div class="row">
+<div class="row" id="quick-links">
   <div class="col-md-12">
     <section>
       <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
@@ -20,68 +30,103 @@
   {% set orgs = h.organizations_available('read') %}
   {% if orgs %}
     <div class="col-md-6">
-      <section style="border-left: solid 3px #088; padding-left: 12px;">
+      <section id="ql-open-data">
         <h2 class="h5">Open Data</h2>
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create Open Data Record') }}</a>
-        {#<p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>#}
+            <a class="wb-lbx" href="#new_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="new_od" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Create Open Data Record') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}
+              </div>
+            </section>
           </li>
           {{ quick_link('experiment') }}
           {{ quick_link('nap') }}
           {{ quick_link('inventory') }}
         </ul>
       </section>
-      <section style="border-left: solid 3px #f80; padding-left: 12px;">
-        <h2 class="h5">Suggested Datasets</h2>
+      <section id="ql-sug-datasets">
+        <h2 class="h5">{{ _('Suggested Datasets') }}</h2>
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment mrgn-rght-sm"></i>{{ _('Update Status') }}</a>
+            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}
+              </div>
+            </section>
           </li>
         </ul>
       </section>
-      <section style="border-left: solid 3px #f08; padding-left: 12px;">
+      <section id="ql-open-dialogue">
         <h2 class="h5">Open Dialogue</h2>
         <ul class="list-unstyled">
           {{ quick_link('consultations') }}
           <li>
-            <a href="/static/data/consultations.csv"><i class="fa fa-download mrgn-rght-sm"></i>Consultations master dataset</a>
+            <a href="/static/data/consultations.csv"><i class="fa fa-download mrgn-rght-sm"></i>{{ _('Consultations master dataset') }}</a>
           </li>
         </ul>
       </section>
-      <section style="border-left: solid 3px #80f; padding-left: 12px;">
+      <section id="ql-open-info">
         <h2 class="h5">Open Information</h2>
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create Information Asset') }}</a>
+            <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Create Information Asset') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add information about government programs, activities and publications.') }}
+              </div>
+            </section>
           </li>
         </ul>
       </section>
-      <section style="border-left: solid 3px #888; padding-left: 12px;">
+      <section id="ql-search">
         <h2 class="h5">Search</h2>
         <ul class="list-unstyled">
-          <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('All Open Data and Information records') }}</a>
+          <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search All Records') }}</a>
+          <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+          <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
+            <header class="modal-header">
+              <h2 class="modal-title">{{ _('Search All Records') }}</h2>
+            </header>
+            <div class="modal-body">
+              {{ _('Add all Open Data and Information records in the Registry.') }}
+            </div>
+          </section>
         </ul>
       </section>
     </div>
     <div class="col-md-6">
-      <section style="border-left: solid 3px #44f; padding-left: 12px;">
+      <section id="ql-pd">
         <h2 class="h5">Proactive Disclosure / Bill C-58</h2>
         <ul class="list-unstyled">
           <li>
             <i class="fa fa-folder-open mrgn-rght-sm"></i>Briefing packages
             <ul class="small" style="list-style-type: disc">
               <li>
-                <a href="{{ h.url_for('dataset_new') }}">{{ _('New or incoming ministers') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a></h2>
               </li>
               <li>
-                <a href="{{ h.url_for('dataset_new') }}">{{ _('New or incoming deputy heads') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a></h2>
               </li>
               <li>
-                <a href="{{ h.url_for('dataset_new') }}">{{ _('Parliamentary Committee appearances for ministers') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a></h2>
               </li>
               <li>
-                <a href="{{ h.url_for('dataset_new') }}">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></h2>
               </li>
             </ul>
           <li>
