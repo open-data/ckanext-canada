@@ -50,6 +50,23 @@
           {{ quick_link('inventory') }}
         </ul>
       </section>
+      <section id="ql-open-info">
+        <h2 class="h5">Open Information</h2>
+        <ul class="list-unstyled">
+          <li>
+            <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create Information Asset') }}</a>
+            <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Create Information Asset') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add information about government programs, activities and publications.') }}
+              </div>
+            </section>
+          </li>
+        </ul>
+      </section>
       <section id="ql-sug-datasets">
         <h2 class="h5">{{ _('Suggested Datasets') }}</h2>
         <ul class="list-unstyled">
@@ -76,23 +93,6 @@
           </li>
         </ul>
       </section>
-      <section id="ql-open-info">
-        <h2 class="h5">Open Information</h2>
-        <ul class="list-unstyled">
-          <li>
-            <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create Information Asset') }}</a>
-            <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Create Information Asset') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Add information about government programs, activities and publications.') }}
-              </div>
-            </section>
-          </li>
-        </ul>
-      </section>
       <section id="ql-search">
         <h2 class="h5">Search</h2>
         <ul class="list-unstyled">
@@ -111,7 +111,7 @@
     </div>
     <div class="col-md-6">
       <section id="ql-pd">
-        <h2 class="h5">Proactive Disclosure / Bill C-58</h2>
+        <h2 class="h5">{{ _('Proactive Disclosure') }}</h2>
         <ul class="list-unstyled">
           <li>
             <i class="fa fa-folder-open mrgn-rght-sm"></i>Briefing packages
