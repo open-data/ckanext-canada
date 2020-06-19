@@ -12,6 +12,7 @@ import ckan.lib.uploader as uploader
 import re
 import os
 import json
+import csv
 import time
 import sys
 import urllib2
@@ -160,6 +161,12 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'rebuild-external-search':
             self.rebuild_external_search()
+
+        elif cmd == 'resource-format-update':
+            self.resource_format_update(*self.args[1:])
+
+        elif cmd == 'resource-size-update':
+            self.resource_format_update(*self.args[1:])
 
         else:
             print self.__doc__
@@ -439,6 +446,36 @@ class CanadaCommand(CkanCommand):
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
+    def resource_format_update(self, format_report):
+        portal = LocalCKAN()
+        #portal = RemoteCKAN()
+        file = open(format_report, "r")
+        reader = csv.reader(file)
+        for line in reader:
+            uuid = line[4]
+            resource_id = unicode(line[5])
+            new_format = unicode(line[7].upper())
+
+            #portal.action.resource_patch(id=resource_id,format=new_format)
+            resource = portal.call_action('resource_patch',
+                                          {'id':resource_id, 'format':new_format})
+        file.close()
+
+    def resource_size_update(self, size_report):
+        portal = LocalCKAN()
+        #portal = RemoteCKAN()
+        file = open(size_report, "r")
+        reader = csv.reader(file)
+        for line in reader:
+            uuid = line[4]
+            resource_id = unicode(line[5])
+            size = unicode(line[6])
+
+            #portal.action.resource_patch(id=resource_id,format=new_format)
+            resource = portal.call_action('resource_patch',
+                                          {'id':resource_id, 'size':size}
+                                          )
+        file.close()
 
 def _trim_package(pkg):
     """
