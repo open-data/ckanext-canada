@@ -24,6 +24,8 @@ with open(file_report) as csvfile:
         resource_id = row["resource_id"]
         new_size = unicode(row["found_file_size"])
         try:
+            if (new_size == 'N/A'):
+                continue
             s = source.action.resource_show(id=resource_id)
             s = source.action.resource_patch(id=resource_id, size=new_size)
             print("Updated: ",[uuid, resource_id,s.get("size")])
