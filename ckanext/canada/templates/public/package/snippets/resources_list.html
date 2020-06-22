@@ -7,15 +7,17 @@
     <h4>{% block resource_list_title %}{{ _('Resources') }}{% endblock %}</h4>
     {% if pkg.resources %}
     {% block resource_list_inner %}
+      <div style="width:100%;">
       <table class="wb-tables table table-striped resource-list"
           data-wb-tables='{"searching":false, "info":false,
-                  "columnDefs": [ { "orderable": false, "targets": 4 }]}'>
+                  "columnDefs": [ { "orderable": false, "targets": [4,5] }]}'>
         <thead>
           <tr>
-            <th scope="col" nowrap class="td-full">{{ _('Resource Name') }}</th>
-            <th scope="col" nowrap class="td-center">{{ _('Resource Type') }}</th>
+            <th scope="col" nowrap class="td-full">{{ _('Name') }}</th>
+            <th scope="col" nowrap class="td-center">{{ _('Type') }}</th>
             <th scope="col" class="td-center">{{ _('Format') }}</th>
             <th scope="col" class="td-center">{{ _('Language') }}</th>
+            <th scope="col" class="td-center">{{ _('File Size') }}</th>
             <th scope="col" nowrap class="td-center">{{ _('Links') }}</th>
           </tr>
         </thead>
@@ -26,6 +28,7 @@
       {% endfor %}
 
       </table>
+      </div>
     {% endblock %}
     {% endif %}
 {% else %}
