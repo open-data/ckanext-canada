@@ -10,6 +10,7 @@
 {% set type_field = h.scheming_field_by_name(schema.resource_fields, 'resource_type') %}
 {% set format_field = h.scheming_field_by_name(schema.resource_fields, 'format') %}
 {% set lang_field = h.scheming_field_by_name(schema.resource_fields, 'language') %}
+{% set size_field = h.scheming_field_by_name(schema.resource_fields, 'size') %}
 
 {# FIXME: using tables for formatting #}
 <tr>
@@ -35,6 +36,10 @@
   <td class="td-center">
     {% snippet 'scheming/snippets/display_field.html',
       field=lang_field, data=res, entity_type='dataset', object_type=pkg.type %}
+  </td>
+  <td nowrap class="td-center">
+    {% snippet 'scheming/snippets/display_field.html',
+      field=size_field, data=res, entity_type='dataset', object_type=pkg.type %}
   </td>
   <td nowrap class="td-center">
     <a href="{{ res.url }}" title="{{_('Resource') ~ ' ' ~ res_num}}" class="resource-url-analytics btn btn-primary" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
