@@ -8,10 +8,12 @@ from paste.script.util.logging_config import fileConfig
 from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 import ckan.lib.uploader as uploader
+import ckan
 
 import re
 import os
 import json
+import csv
 import time
 import sys
 import urllib2
@@ -160,6 +162,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'rebuild-external-search':
             self.rebuild_external_search()
+
+        elif cmd == 'resource-size-update':
+            self.resource_size_update(*self.args[1:])
 
         else:
             print self.__doc__
@@ -439,6 +444,26 @@ class CanadaCommand(CkanCommand):
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
+    def resource_size_update(self, size_report):
+        registry = LocalCKAN()
+        file = open(size_report, "r")
+        reader = csv.DictReader(file)
+        for row in reader:
+            uuid = row["uuid"]
+            resource_id = row["resource_id"]
+            new_size = unicode(row["found_file_size"])
+
+            try:
+                if (new_size == 'N/A'):
+                    continue
+                # registry.action.resource_patch(id=resource_id,format=new_size)
+                resource = registry.call_action('resource_patch',
+                                                {'id': resource_id, 'size': new_size}
+                                                )
+                print("Updated: ", [uuid, resource_id, resource.get("size")])
+            except ckan.logic.NotFound as e:
+                print("{0} dataset not found".format(uuid))
+        file.close()
 
 def _trim_package(pkg):
     """
