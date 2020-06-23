@@ -222,6 +222,6 @@ def if_empty_set_to(default_value):
 
 
 def no_future_date(value):
-    if value > datetime.today():
+    if value and value > datetime.today():
         raise Invalid(_("Date may not be in the future"))
     return value
