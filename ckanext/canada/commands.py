@@ -556,7 +556,7 @@ class CanadaCommand(CkanCommand):
                 print("Updated: ", [uuid, resource_id, resource.get("size")])
             except NotFound as e:
                 print("{0} dataset not found".format(uuid))
-        file.close()
+        size_report.close()
 
 def _trim_package(pkg):
     """
