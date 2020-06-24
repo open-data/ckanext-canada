@@ -8,7 +8,6 @@ from paste.script.util.logging_config import fileConfig
 from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 import ckan.lib.uploader as uploader
-import ckan
 
 import re
 import os
@@ -446,22 +445,21 @@ class CanadaCommand(CkanCommand):
 
     def resource_size_update(self, size_report):
         registry = LocalCKAN()
-        file = open(size_report, "r")
-        reader = csv.DictReader(file)
+        size_report = open(size_report, "r")
+        reader = csv.DictReader(size_report)
         for row in reader:
             uuid = row["uuid"]
             resource_id = row["resource_id"]
             new_size = unicode(row["found_file_size"])
 
             try:
-                if (new_size == 'N/A'):
+                if new_size == 'N/A':
                     continue
-                # registry.action.resource_patch(id=resource_id,format=new_size)
                 resource = registry.call_action('resource_patch',
                                                 {'id': resource_id, 'size': new_size}
                                                 )
                 print("Updated: ", [uuid, resource_id, resource.get("size")])
-            except ckan.logic.NotFound as e:
+            except NotFound as e:
                 print("{0} dataset not found".format(uuid))
         file.close()
 
@@ -560,3 +558,4 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
+            
