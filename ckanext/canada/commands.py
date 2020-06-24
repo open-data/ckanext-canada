@@ -14,6 +14,7 @@ import io
 import re
 import os
 import json
+import csv
 import time
 import sys
 import urllib2
@@ -170,6 +171,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'load-suggested':
             self.load_suggested(self.options.use_created_date, *self.args[1:])
+
+        elif cmd == 'resource-size-update':
+            self.resource_size_update(*self.args[1:])
 
         else:
             print self.__doc__
@@ -534,6 +538,25 @@ class CanadaCommand(CkanCommand):
                     print uuid + ' ' + str(e)
         csv_file.close()
 
+    def resource_size_update(self, size_report):
+        registry = LocalCKAN()
+        size_report = open(size_report, "r")
+        reader = csv.DictReader(size_report)
+        for row in reader:
+            uuid = row["uuid"]
+            resource_id = row["resource_id"]
+            new_size = unicode(row["found_file_size"])
+
+            try:
+                if new_size == 'N/A':
+                    continue
+                resource = registry.call_action('resource_patch',
+                                                {'id': resource_id, 'size': new_size}
+                                                )
+                print("Updated: ", [uuid, resource_id, resource.get("size")])
+            except NotFound as e:
+                print("{0} dataset not found".format(uuid))
+        file.close()
 
 def _trim_package(pkg):
     """
@@ -630,3 +653,4 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
+            
