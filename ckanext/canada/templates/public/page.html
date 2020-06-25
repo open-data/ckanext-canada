@@ -63,14 +63,10 @@
           </h1>
         {% endblock %}
         {% block primary_content %}
+          {% block page_header %}
+            {{ super() }}
+          {% endblock %}
           <div class="row">
-              {% if self.content_primary_nav()|trim != '' %}
-              <div class="col-md-12">
-                <ul class="nav nav-pills" style="margin-bottom:1em">
-                    {% block content_primary_nav %}{% endblock %}
-                </ul>
-              </div>
-              {% endif %}
               <div class="col-md-12">
                   {% if self.page_primary_action() | trim %}
                     <div class="page_primary_action">
@@ -91,8 +87,6 @@
   {% endblock -%}
 
 {% endblock %}
-
-
 
 
 {% block scripts %}

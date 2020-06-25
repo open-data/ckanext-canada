@@ -15,7 +15,7 @@ Example:
 {% set s1 = stages[0] or 'active' %}
 {% set s2 = stages[1] or 'uncomplete' %}
 
-<ol class="nav nav-pills nav-justified stages stage-2">
+<ol class="stages stage-2">
   <li role="presentation" class="first {{ s1 }}">
     {% if dataset_type == 'info' %}
       {% set m1 = _('Add Asset Metadata') %}

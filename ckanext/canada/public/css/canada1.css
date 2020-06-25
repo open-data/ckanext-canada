@@ -115,4 +115,59 @@ details.alert-error {
     text-decoration: none;
 }
 
+[role="main"], .main {
+    background: none;
+}
 
+.stages li.active .highlight {
+    background: #284162;
+}
+
+.stages li.active::before {
+    color: #284162;
+}
+
+body {
+  background: none;
+}
+
+.js .image-upload #field-image-upload {
+    position: initial;
+    opacity: initial;
+}
+
+.js .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-item > a, .nav-aside li a {
+    font-size: inherit;
+}
+
+.nav-item.active > a, .nav-aside li.active a {
+    background-color: unset;
+    color: #335075;
+}
+
+.nav-item.active > a::before, .nav-aside li.active a::before {
+    border: none;
+}
+
+.nav-item.active > a:hover,
+.nav-aside li.active a:hover {
+  color: initial;
+  background-color: initial;
+}
+
+.module-content {
+  padding: 0;
+}
+
+.module-resource .actions {
+    top: unset;
+    right: unset;
+}
+
+.context-info .nums {
+    border: none;
+}

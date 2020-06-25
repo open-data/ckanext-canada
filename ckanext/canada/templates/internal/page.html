@@ -5,16 +5,20 @@
       {% block flash %}
         {{ super() }}
       {% endblock flash %}
-      {% block maintag %}<main role="main" property="mainContentOfPage" class="col-md-12">{% endblock %}
+      {% block maintag %}<main role="main" property="mainContentOfPage" class="container">{% endblock %}
+      {% block page_title %}
+        {{ super() }}
+      {% endblock %}
       {% block pre_primary %}
-        <div class="span-8"><div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
+          </div>
+        </div>
       {% endblock %}
       {% block primary %}
-        {% block page_title %}
-          {{ super() }}
-        {% endblock %}
         <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
-          <div class="{% if self.secondary_content()|trim != '' %}col-md-9{% endif %}">
+          <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
             {% block primary_content %}
               {{ super() }}
             {% endblock primary_content %}
@@ -22,7 +26,7 @@
         {% endblock primary %}
         {% block secondary %}
           {% if self.secondary_content()|trim != '' %}
-            <aside class="col-md-3">
+            <aside class="col-md-3 col-md-pull-9">
               {% block secondary_content %}{% endblock %}
             </aside>
           {% endif %}

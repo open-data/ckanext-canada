@@ -5,28 +5,22 @@
 {% set client_lang = h.lang() %}
 
 {% block subtitle %}{% endblock %}
-{% block page_title %}{% endblock %}
+{% block page_title %}
+  {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
+  <h1>{{ title or pkg.name }}
+    {% if pkg.state.startswith('draft') %}
+      [{{ _('Draft') }}]
+    {% endif %}
+    {% if machine_translated %}
+      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+    {% endif %}
+  </h1>
+{% endblock %}
 
 {% block primary_content_inner %}
   {% if not c.is_activity_archive %}
-  {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
+    {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
   {% endif %}
-  {% block actions_content %}
-    <ul class="nav nav-pills">
-        {% if h.check_access('package_update', {'id':pkg.id }) %}
-          {% block actions_content_inner %}
-          {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary', icon="pencil" %}
-          {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
-          {{ h.follow_button('dataset', pkg.name) }}
-          {% if pkg.state == "deleted" %}
-            {% if h.check_access('package_update', {'id': pkg.id}) %}
-              {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
-            {% endif %}
-          {% endif %}
-          {% endblock %}
-        {% endif %}
-    </ul>
-  {% endblock %}
   <div class="module">
     <section class="resources module-content indent-large">
       {% if pkg.state == "deleted" %}
@@ -51,15 +45,6 @@
     {% block package_item_title %}
     <section class="module-content indent-large">
 
-      {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
-      <h1>{{ title or pkg.name }}
-        {% if pkg.state.startswith('draft') %}
-          [{{ _('Draft') }}]
-        {% endif %}
-        {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
-        {% endif %}
-      </h1>
       <div>
         {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
         {% if machine_translated %}
@@ -149,7 +134,9 @@
       </ul>
     </section>
 
-    {% snippet 'package/snippets/all_resources_list.html', pkg=pkg %}
+  {% block package_resources %}
+    {{ super() }}
+  {% endblock %}
 
 {% block package_item_apps %}
   <div class="span-6 margin-top-medium">
@@ -265,10 +252,3 @@
 
 {% block package_license %}{% endblock %}
 {% block package_item_notes %}{% endblock %}
-
-{%- block custom_styles %}
-{{ super() }}
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-{% endblock %}
-
-

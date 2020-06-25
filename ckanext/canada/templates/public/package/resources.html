@@ -4,17 +4,6 @@
 {{ _('Resources') }} - {{ h.get_translated(pkg, 'title') }}
 {% endblock %}
 
-{% block primary_content_inner %}
-  {% if pkg.resources %}
-
-    {% snippet 'package/snippets/all_resources_list.html', pkg=pkg %}
-  {% else %}
-    {% trans url=h.url_for(controller='package', action='new_resource', id=pkg.name) %}
-      <p class="empty">This asset has no resources, <a href="{{ url }}">why not add some?</a></p>
-    {% endtrans %}
-  {% endif %}
-{% endblock %}
-
 {% block secondary_content %}
 {% endblock %}
 
