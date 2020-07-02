@@ -1,0 +1,5 @@
+{{ h.mail_to_with_params(email_address=data[field.field_name],
+   name=data[field.display_email_name_field] if field.display_email_name_field and data[field.display_email_name_field]
+   else data[field.field_name], 
+   title=h.get_translated(data,'title'),
+   message=_('The following is a question related to the record ') + request.url + _(' found on ') + h.portal_url()) }}

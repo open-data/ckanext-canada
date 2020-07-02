@@ -167,6 +167,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
+	    'mail_to_with_params',
         ])
 
     def configure(self, config):
@@ -353,7 +354,8 @@ ckanext.canada:schemas/info.yaml
             'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
-            'adobe_analytics_js'
+            'adobe_analytics_js',
+	    'mail_to_with_params',
         ])
 
 
@@ -720,6 +722,7 @@ ckanext.canada:schemas/doc.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'mail_to_with_params',
             ]),
             )
 

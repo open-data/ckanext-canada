@@ -22,6 +22,7 @@ from webhelpers.html.tags import link_to
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
+from markupsafe import Markup, escape
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -481,3 +482,14 @@ def recombinant_description_to_markup(text):
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': jinja2.Markup(''.join(markup))}
+
+
+def mail_to_with_params(email_address, name, title, message):
+    email = escape(email_address)
+    author = escape(name)
+    subject = escape(title)
+    body = escape(message)
+    html = Markup(u'<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(email, author, subject, body))
+    return html
+
+

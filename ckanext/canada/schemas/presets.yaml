@@ -290,7 +290,7 @@ presets:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
-    display_snippet: email.html
+    display_snippet: email_with_parameters.html
 
 
 # Field = Description (English).
