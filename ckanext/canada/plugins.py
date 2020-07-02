@@ -167,6 +167,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
+            'mail_to_with_params',
         ])
 
     def configure(self, config):
@@ -357,6 +358,7 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'survey_js_url',
+            'mail_to_with_params',
         ])
 
 
@@ -729,6 +731,7 @@ ckanext.canada:schemas/doc.yaml
             'get_translated_t',
             'language_text_t',
             'survey_js_url',
+            'mail_to_with_params',
             ]),
             )
 
