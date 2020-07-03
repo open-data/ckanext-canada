@@ -106,8 +106,8 @@ dataset_fields:
     en: The date the submission form was sent to data owner. This value will be automatically populated
     fr: Date d’envoi du formulaire de demande au propriétaire des données. Cette information sera inscrite automatiquement.
   label:
-    en: Date suggestion was sent to data owner
-    fr: Date d’envoi de la suggestion au propriétaire des données
+    en: Date sent to organization
+    fr: Date d'envoi à l'organisation
   preset: date
   form_snippet: ro_date.html
   validators: user_read_only scheming_required isodate convert_to_json_if_date
@@ -148,8 +148,8 @@ dataset_fields:
       en: Status
       fr: État
     help_text:
-      en: This field should be populated with a value that indicates why the status is marked as ‘open’ or ‘closed’
-      fr: La date de la mise à jour de l’état, par exemple la date à laquelle la proposition a été envoyée au détenteur des données.
+      en: This field should be populated with a value that indicates the status of the request.
+      fr: Ce champ doit être rempli avec une valeur qui indique l'état de la demande.
 
     required: true
     preset: select
