@@ -183,7 +183,11 @@ def if_empty_set_to(default_value):
     return validator
 
 
-def no_future_date(value):
+def no_future_date(key, data, errors, context):
+    ready = data.get(('ready_to_publish',))
+    if not ready or ready == 'false':
+        return
+    value = data.get(key)
     if value and value > datetime.today():
-        raise Invalid(_("Date may not be in the future"))
+        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
     return value
