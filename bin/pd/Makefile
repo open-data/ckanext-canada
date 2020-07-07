@@ -542,7 +542,7 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 ###  Service Inventory
 ###
 .PHONY: service
-service: upload-service rebuild-service
+# service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
