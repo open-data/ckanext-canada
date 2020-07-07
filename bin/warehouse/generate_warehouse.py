@@ -93,12 +93,16 @@ while tar_array:
     curr_array = [a for a in csv_array if curr_base in a]
 
     for i in range(len(prev_array)):
+        now = datetime.now()
+        dt_string = now.strftime("%H:%M:%s")
+        print(dt_string,'\n')
         pdtype = prev_array[i].split('_')[1].split('.')[0]
         schema = pdtype
         if 'nil' in pdtype:
             schema = schema.split('-')[0]
+
         csv_diff(prev_array[i], curr_array[i],
-                 'http://open.canada.ca/data/en/recombinant-schema/{0}.json'.format(schema),
-                 'warehouse_reports/{0}_warehouse.csv'.format(pdtype))
+            'http://open.canada.ca/data/en/recombinant-schema/{0}.json'.format(schema),
+            'warehouse_reports/{0}_warehouse_test.csv'.format(pdtype))
 
     shutil.rmtree('temp')

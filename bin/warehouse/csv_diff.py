@@ -3,15 +3,25 @@ import hashlib
 import requests
 import sys
 import csv
+import os
+import io
 from sys import stderr, stdout, argv
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def get_row_tuple(row):
-    org_tuple = (row['owner_org'], row['owner_org_title'])
+    new_row={}
+    for key, value in row.items():
+        new_key = key.decode("utf-8-sig").encode("utf-8")
+        n_value = value.decode("utf-8-sig").encode("utf-8")
+        new_row[new_key] = n_value
+    org_tuple = (new_row['owner_org'], new_row['owner_org_title'])
     # del row['owner_org']
-    del row['owner_org_title']
-    pk_tuple = tuple([row[key] for key in pk_fields[0]])
-    h = hashlib.md5(repr(list(row.values())).encode('utf8')).digest()
+    del new_row['owner_org_title']
+    pk_tuple = tuple([new_row[key] for key in pk_fields[0]])
+    h = hashlib.md5(repr(list(new_row.values())).encode('utf8')).digest()
     row_tuple = (pk_tuple, org_tuple, h)
     return row_tuple
 
@@ -42,9 +52,12 @@ def compare(current_csv, existing_rows):
     created_rows = []
     modified_rows = []
     deleted_rows = existing_rows
+    i=0
     with open(current_csv) as f:
         hashcsv = csv.DictReader(f)
         for row in hashcsv:
+            print(i, '\n')
+            i = i + 1
             row_tuple = get_row_tuple(row)
             for t in existing_rows:
                 if row_tuple[2] == t[2]:
@@ -91,7 +104,7 @@ def get_fieldnames(fields):
 
 
 prev_csv, current_csv, endpoint, datestamp, outfile = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
-field_info = requests.get(endpoint).json()
+field_info = requests.get(endpoint, timeout=100, verify=False).json()
 
 # Grab the primary key fields from the datatype reference endpoint
 if 'nil' in current_csv:
@@ -102,17 +115,20 @@ else:
     fields = [f['fields'] for f in field_info['resources'] if 'nil' not in f['resource_name']]
 
 fieldnames = get_fieldnames(fields[0]).split(",")
-print(fieldnames)
 existing_rows = collect_existing_rows(prev_csv)
 print("Comparing...")
 created_rows, modified_rows, deleted_rows = compare(current_csv, existing_rows)
 results = add_metadata_fields(created_rows, modified_rows, deleted_rows, prev_csv, datestamp)
 
 print("writing")
+exists_flag = 0
+if os.path.isfile(outfile):
+    exists_flag=1
 if results:
     with open(outfile, 'a') as f:
         warehouse = csv.DictWriter(f, fieldnames=fieldnames, delimiter=',', restval='')
-        warehouse.writeheader()
+        if exists_flag==0:
+            warehouse.writeheader()
         for result_row in results:
             for key in result_row.keys():
                 if key not in fieldnames:
@@ -121,7 +137,7 @@ if results:
                     result_row['record_created'] = (result_row['record_created'].split('T')[0]).replace('/', '-')
                 if key == 'record_modified':
                     result_row['record_modified'] = (result_row['record_modified'].split('T')[0]).replace('/', '-')
-                print(result_row)
+            print(result_row)
             warehouse.writerow(result_row)
 
 else:
