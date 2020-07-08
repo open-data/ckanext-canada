@@ -127,6 +127,11 @@ details.alert-error {
     color: #284162;
 }
 
+.stages li.active:after {
+  border-top-color: #c5e2c4;
+  border-bottom-color: #c5e2c4;
+}
+
 body {
   background: none;
 }
@@ -170,4 +175,24 @@ body {
 
 .context-info .nums {
     border: none;
+}
+
+.form-actions {
+    text-align: inherit;
+}
+
+.form-actions .action-info.small {
+    font-size: inherit;
+    line-height: inherit;
+}
+.form-actions .action-info {
+    float: inherit;
+    width: auto;
+    margin-right: inherit;
+}
+.form-actions .action-info {
+    line-height: 2;
+    text-align: inherit;
+    color: inherit;
+    margin: revert;
 }
