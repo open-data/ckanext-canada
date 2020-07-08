@@ -542,15 +542,16 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 ###  Service Inventory
 ###
 .PHONY: service
-# service: upload-service rebuild-service
+service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	@echo Uploading Service Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	# disable publishing service inventory as of 2020-06-08
+	# @echo Uploading Service Inventory...
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
 	> /dev/null
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
 	> /dev/null
 
