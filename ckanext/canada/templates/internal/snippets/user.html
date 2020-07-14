@@ -56,14 +56,12 @@
             {% endblock %}
 
             {% block header_account_log_out_link %}
-            <!-- This code is correct but we have to address a generic login not in the mega menu before we can re-enable
             <li>
                 <a href="{{ h.url_for(controller='user', action='logout') }}" title="{{ _('Log out') }}" class="btn btn-primary">
                     <span class="fa fa-sign-out"></span>
                     <span class="text">{{ _('Log out') }}</span>
                 </a>
             </li>
-            -->
             {% endblock %}
         {% endblock %}
     {% else %}
