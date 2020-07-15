@@ -2073,6 +2073,23 @@ presets:
     display_snippet: date.html
     validators: isodate
 
+# Field = Federated date modified.
+# Add a Calendar control to select a Date.
+# {The date on which the federated dataset was modified (YYYY-MM-DD)}
+- preset_name: canada_federated_date_modified
+  values:
+    field_name: federated_date_modified
+    label:
+      en: Federated Dateset Modified Date
+      fr: Date de modification de l'jeu de données fédérées
+    help_text:
+      en: The date on which the federated data partner's dataset was modified (YYYY-MM-DD)
+      fr: Date à laquelle le jeu de données du partenaire de données fédérées a été modifié (AAAA-MM-JJ)
+    # copied from date preset
+    form_snippet: date.html
+    display_snippet: date.html
+    validators: isodate
+
 # Field = Usage Condition Type - Organization Section Name English.
 # {The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
 # Field = Publisher - Organization Section Name French.
@@ -2276,7 +2293,6 @@ presets:
       en: The licence applied to the dataset
       fr: Licence s’appliquant au jeu de données
     required: true
-    display_snippet: canada_license.html
 
 #Field = Access Restrictions.
 #Default Value = Unrestricted.
@@ -2311,8 +2327,12 @@ presets:
   values:
     field_name: imso_approval
     label:
-      en: Approval
-      fr: Approbation
+      en: IMSO Approval
+      fr: Approbation de la CSGI
+    help_text:
+      en: Has IMSO approval been obtained? By selecting yes, you agree to release this dataset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
+      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
+
     required: true
     form_include_blank_choice: true
     choices:
@@ -2325,7 +2345,7 @@ presets:
         fr: Oui
       value: "true"
     # copied from select preset
-    form_snippet: imso_approval_select.html
+    form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
@@ -3432,7 +3452,6 @@ presets:
       fr: Taille [estimative] d’une distribution en octets
     form_panel: resource
     validators: ignore_missing int_validator
-    display_snippet: size.html
 
 # Field = Character Set.
 # {This is the character set of the dataset} 
