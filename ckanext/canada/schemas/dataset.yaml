@@ -226,7 +226,6 @@ dataset_fields:
 - preset: canada_frequency
 - preset: canada_date_published
 - preset: canada_date_modified
-- preset: canada_federated_date_modified
 - preset: canada_program_page_url
 - preset: canada_data_series_name
 - preset: canada_data_series_issue_identification
@@ -437,7 +436,8 @@ dataset_fields:
   - label:
       en: FGP viewer is supported
     value: fgp_viewer
-
+    
+- preset: canada_federated_date_modified
 
 
 #

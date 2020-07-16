@@ -2086,9 +2086,9 @@ presets:
       en: The date on which the federated data partner's dataset was modified (YYYY-MM-DD)
       fr: Date à laquelle le jeu de données du partenaire de données fédérées a été modifié (AAAA-MM-JJ)
     # copied from date preset
-    form_snippet: date.html
+    form_snippet: null
     display_snippet: date.html
-    validators: isodate
+    validators: scheming_required isodate convert_to_json_if_date
 
 # Field = Usage Condition Type - Organization Section Name English.
 # {The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
