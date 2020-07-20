@@ -526,3 +526,36 @@ table#dtprv thead .sorting_desc {
 .mfp-bg {
     opacity: .50;
 }
+
+.gcweb-menu [role=menu] [role=menu] {
+    background-color: #fff;
+    min-height: 488px;
+}
+
+.gcweb-menu [role=menu] {
+    background-color: #26374a;
+}
+
+.gcweb-menu [role=menuitem]:focus {
+    background-color: #fff;
+    color: #333;
+}
+
+
+.gcweb-menu button[aria-haspopup=true] {
+    background-color: #26374a;
+    border: 1px solid #26374a;
+}
+
+.gcweb-menu button[aria-haspopup=true]:hover, .gcweb-menu button[aria-haspopup=true][aria-expanded=true] {
+    background-color: #26374a;
+    color: #fff;
+}
+
+.gcweb-menu [role=menu] [role=menu] [role=menu] li [role=menuitem] {
+    font-weight: 400;
+}
+
+.gcweb-menu [aria-haspopup]:not(button)::before {
+    content: "\25BA\a0";
+}

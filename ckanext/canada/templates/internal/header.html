@@ -3,100 +3,82 @@
 {# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
 {% set lang = h.lang() %}
 
+{% macro menu_link(r_type) %}
+{% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
+<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type) }}">{{ _(label) }}</a></li>
+{% endmacro %}
 
 {% block sitesearch %}{% endblock %}
 
 {% block sitemenu %}
-<nav id="menu-bar">
-<div class="container">
-    <div class="topnav" id="myTopnav">
-        {% block header_site_navigation_tabs %}
-            <a href="{{ _('http://open.canada.ca') }}" onfocus="closeDropdown()">{{ _('Open.Canada.ca') }}</a>
-            {% if h.check_access('package_create') %}
-            <div class="dropdown-new" onfocus="openDropdown()" tabindex="0">
-                <button class="dropbtn" tabindex="-1">{{ _('Add to Portal') }}
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content" id="addprtl">
-                    <a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a>
-                    <a href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a>
-                    {%- for r_type in [
-                        'ati',
-                        'contracts',
-                        'contractsa',
-                        'hospitalityq',
-                        'travelq',
-                        'travela',
-                        'grants',
-                        'reclassification',
-                        'wrongdoing',
-                        'briefingt',
-                        'consultations',
-                        'inventory',
-                        'dac',
-                        'nap',
-                        'experiment',
-                        'qpnotes',
-                        ] -%}
-                        {# XXX bit of a hack: we "know" that our dataset types have
-                        resource names with the same values #}
-                        <a href="{{ h.url_for('recombinant_type', resource_name=r_type)
-                                    }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a>
-                    {%- endfor -%}
-                </div>
-            </div>
-            {% endif %}
-            <a onfocus="closeDropdown()" href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a>
-            <a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a>
-            <a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a>
-            {% if c.userobj %}
-            <a href="{{ h.url_for(controller='user', action='logout') }}">{{ _('Log out') }}</a>
-            {% else %}
-            <a href="{% url_for controller='user', action='login' %}">{{ _('Log in') }}</a>
-            {% endif %}
-            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-        {% endblock %}
+<nav class="gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2">
+    <div class="container">
+        <h2 class="wb-inv">Menu</h2>
+        <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it.">
+            <span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span>
+        </button>
+        <ul role="menu" aria-orientation="vertical">
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="/{{ h.lang() }}/">{{ _('Home') }}</a></li>
+            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-data" aria-expanded="false" href="#">{{ _('Open Data') }}</a>
+                <ul id="open-data" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Data') }}</li>
+                    <li role="separator"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Create an Open Data Record') }}</a></li>
+                    {{ menu_link('experiment') }}
+                    {{ menu_link('nap') }}
+                    {{ menu_link('inventory') }}
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation"></li>
+                </ul>
+            </li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
+            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="pd" aria-expanded="false" href="#">{{ _('Proactive Disclosure') }}</a>
+                <ul id="pd" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Proactive Disclosure') }}</li>
+                    <li role="separator"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Reports Tabled in Parliament') }}</a></li>
+                    {{ menu_link('wrongdoing') }}
+                    {{ menu_link('contractsa') }}
+                    {{ menu_link('ati') }}
+                    {{ menu_link('briefingt') }}
+                    {{ menu_link('contracts') }}
+                    {{ menu_link('dac') }}
+                    {{ menu_link('grants') }}
+                    {{ menu_link('hospitalityq') }}
+                    {{ menu_link('reclassification') }}
+                    {{ menu_link('qpnotes') }}
+                    {{ menu_link('travelq') }}
+                    {{ menu_link('travela') }}
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation"> <a data-keep-expanded="md-min" href="#" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="brf-pkg" aria-expanded="true">{{ _('Briefing packages') }}</a>
+                        <ul id="brf-pkg" role="menu" aria-orientation="vertical">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search', portal_type='prop') }}">{{ _('Suggested Datasets') }}</a></li>
+            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-dialogue" aria-expanded="false" href="#">{{ _('Open Dialogue') }}</a>
+                <ul id="open-dialogue" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Dialogue') }}</li>
+                    <li role="separator"></li>
+                    {{ menu_link('consultations') }}
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/static/data/consultations.csv">{{ _('Consultations master dataset') }}</a></li>
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation"></li>
+                </ul>
+            </li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}">{{ _('Search') }}</a></li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
+        </ul>
     </div>
-</div>
 </nav>
-
-<script>
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-
-    /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-    function openDropdown() {
-        document.getElementById("addprtl").classList.toggle("show");
-    }
-
-    function closeDropdown() {
-        var btn = document.getElementById("addprtl");
-        if (btn.classList.contains("show")) {
-            btn.classList.remove("show");
-        }
-    }
-
-    // Close the dropdown menu if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-</script>
 {% endblock %}
+
 
 {% block breadcrumb %}
 {% if breadcrumb_content() | trim %}
