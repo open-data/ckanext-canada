@@ -87,14 +87,6 @@ details.alert-error {
   display: none;
 }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.dropdown-item {
-    text-shadow: none;
-}
-
 #wb-sm li.dropdown-item a {
     color: #284162;
     text-align: left;
@@ -113,6 +105,10 @@ details.alert-error {
     padding: 1em;
     text-align: center;
     text-decoration: none;
+}
+
+#wb-sm .menu {
+    text-shadow: none;
 }
 
 [role="main"], .main {
@@ -139,10 +135,6 @@ body {
 .js .image-upload #field-image-upload {
     position: initial;
     opacity: initial;
-}
-
-.js .dropdown:hover .dropdown-menu {
-    display: block;
 }
 
 .nav-item > a, .nav-aside li a {
