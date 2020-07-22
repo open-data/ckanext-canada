@@ -77,12 +77,12 @@ details.alert-error {
 }
 
 .form-control.select2-container {
-    display: block;
+    display: contents;
 }
 .form-control.select2-offscreen,
 .form-control.select2-offscreen:focus {
     /* Keep original element in the same spot
-       So that HTML5 valiation message appear in the correct position */
+       So that HTML5 validation message appear in the correct position */
     left: auto !important;
     top: auto !important;
 }

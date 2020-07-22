@@ -124,17 +124,27 @@ details.alert-error {
 }
 
 .stages li.active:after {
-  border-top-color: #c5e2c4;
-  border-bottom-color: #c5e2c4;
+    border-top-color: #c5e2c4;
+    border-bottom-color: #c5e2c4;
+    border-right-color: #284162;
+    z-index: -1;
 }
 
 body {
   background: none;
 }
 
+.js .image-upload .btn-remove-url {
+    position: absolute;
+    top: auto;
+    right: 0;
+    padding: 5px;
+    border-radius: 0;
+    margin-top: 29px;
+}
+
 .js .image-upload #field-image-upload {
-    position: initial;
-    opacity: initial;
+    display: inline-block;
 }
 
 .nav-item > a, .nav-aside li a {
