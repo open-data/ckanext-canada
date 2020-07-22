@@ -198,3 +198,11 @@ body {
     color: inherit;
     margin: revert;
 }
+
+table {
+    table-layout: initial;
+}
+
+button.dt-button, div.dt-button, a.dt-button{
+    padding: 2px 10px;
+}
