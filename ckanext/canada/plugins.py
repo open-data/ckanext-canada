@@ -619,10 +619,8 @@ def datastore_delete(up_func, context, data_dict):
     )
     result = up_func(context, data_dict)
 
-    # no need to log activity for x-loader initiated deleting,
-    # details are recorded in resource's Upload Log
-    # Update Log is available under Data Store tab for resource
-    if len(context['user']) != 0 and 'resource_id' in data_dict.keys():
+    # no need to log activity for x-loader initiated deleting
+    if context.get('agent') != 'xloader':
         act.datastore_activity_create(context,
                                       {'count': res.get('total', 0),
                                        'activity_type': 'deleted datastore',
