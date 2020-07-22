@@ -201,8 +201,8 @@ class CanadaController(BaseController):
                 break
             sort_by_num = int(request.params[u'order[%d][column]' % i])
             sort_order = (
-                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
-                else u'asc NULLS LAST')
+                u'desc' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc')
             sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
             i += 1
 
