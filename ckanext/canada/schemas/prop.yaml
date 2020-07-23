@@ -14,6 +14,11 @@ sidebar_show_fields:
 - keywords
 - subject
 
+detail_include_fields:
+- reason
+- date_submitted
+- date_forwarded
+
 detail_show_fields:
 - status
 
