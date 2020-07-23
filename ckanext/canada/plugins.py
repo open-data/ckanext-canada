@@ -111,6 +111,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaAdminController'
         )
         map.connect(
+            '/dataset/edit/{id}',
+            action='edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
+        map.connect(
             '/dataset/{id}/resource_edit/{resource_id}',
             action='resource_edit',
             controller='ckanext.canada.controller:CanadaDatasetController'

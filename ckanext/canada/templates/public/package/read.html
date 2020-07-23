@@ -116,10 +116,7 @@
           "org_section",
           "contributor",
           "license_id",
-          "reason",
-          "date_submitted",
-          "date_forwarded",
-        ] %}
+        ] + schema.get('detail_include_fields', []) %}
         {% for field in schema.dataset_fields if field.field_name in include_labels and field.display_snippet is not none %}
           {% set field_title = h.scheming_language_text(field.label) %}
           {% if field_title %}

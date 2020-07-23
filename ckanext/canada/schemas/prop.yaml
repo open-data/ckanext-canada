@@ -14,6 +14,11 @@ sidebar_show_fields:
 - keywords
 - subject
 
+detail_include_fields:
+- reason
+- date_submitted
+- date_forwarded
+
 detail_show_fields:
 - status
 
@@ -171,6 +176,10 @@ dataset_fields:
         en: Dataset not held
         fr: Jeu de données non détenu
       value: not_collected
+    - label:
+        en: Data owner unable to publish dataset
+        fr:
+      value: unable
 
   - field_name: comments
     label:
