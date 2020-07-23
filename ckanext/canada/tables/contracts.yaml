@@ -1319,7 +1319,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|")),AND(OR({aboriginal_business}="NA",OR(AND(NOT(ISBLANK({agreement_type_code})),{agreement_type_code}<>"0"),AND(NOT(ISBLANK({trade_agreement})),{trade_agreement}<>"XX"))),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|")))))'
+    excel_error_formula: 'AND({aboriginal_business}<>"NA",NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
