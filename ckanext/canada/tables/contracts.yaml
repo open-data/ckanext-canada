@@ -1061,22 +1061,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Mandatory for contracts after 2019-01-01
 
         If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
-
-        If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).
-
-        If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
 
         Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle).
 
-        Si les options « AC » (préavis d’attribution de contrat) ou « TN » (non concurrentielle) sont sélectionnées, le champ Critère de mérite doit avoir une valeur de « 0 » (sans objet).
-
-        Si les options « OB » (Concurrentielle – appel d’offres ouvert), « ST » (mise en concurrence) ou « TC » (Concurrentielle – Traditionnelle) sont sélectionnées, la section 6 des exceptions au Règlement sur les marchés de l’État doit avoir une valeur de « 0 ».
-
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_error_formula: 'OR(AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00")),AND({award_criteria}<>"0",OR({cell}="TN",{cell}="AC")),AND({article_6_exceptions}<>"0",NOT(OR({cell}="TN",{cell}="AC"))))'
+    excel_error_formula: 'AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1674,7 +1666,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: |
         If this field is populated, it must be with a “0” if the procurement was identified
-        as non-competitive (TN) or advance contract award notice (AC) or was
+        as non-competitive (TN) or advance contract award notice (AC) in the solicitation procedure data field or was
         identified as an Amendment (A) in the Instrument type data field.
       fr: |
         Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée
@@ -1871,12 +1863,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
         END IF;
-        IF (NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.award_criteria <> '' AND NEW.award_criteria <> '0' THEN
-          errors := errors || ARRAY[['solicitation_procedure', 'If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable).']];
-        END IF;
-        IF NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' THEN
-          errors := errors || ARRAY[['solicitation_procedure', 'If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”.']];
-        END IF;
         errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
 
         IF length(array_to_string(NEW.limited_tendering_reason,'','')) = 1 THEN
@@ -1993,6 +1979,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
         END IF;
 
+        IF NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' AND NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') THEN
+          errors := errors || ARRAY[['article_6_exceptions', 'This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).']];
+        END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.reporting_period, 'reporting_period');
