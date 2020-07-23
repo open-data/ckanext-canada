@@ -5,24 +5,6 @@
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2-bootstrap.css') }}" />
 {% endblock %}
 
-{%- block scripts %}
-    {{ super() }}
-    <script src="{{ h.url_for_static('base/javascript/plugins/jquery.proxy-all.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/plugins/jquery.inherit.js') }}"></script>
-    <script src="{{ h.url_for_static('base/vendor/jed.min.js') }}"></script>
-    <script src="{{ h.url_for_static('base/vendor/select2/select2.min.js') }}"></script>
-
-    <script src="{{ h.url_for_static('base/javascript/sandbox.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/module.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/pubsub.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/client.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/notify.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/i18n.js') }}"></script>
-    <script src="{{ h.url_for_static('base/javascript/main.js') }}"></script>
-
-    <script src="{{ h.url_for_static('base/javascript/modules/autocomplete.js') }}"></script>
-{% endblock %}
-
 {% block form %}
   <form class="dataset-form add-member-form" method='post'>
     <div class="row-fluid">

@@ -38,7 +38,13 @@
 {% endblock %}
 
 {% block scripts %}
-  {{ super() }}
+  {% snippet 'snippets/wet-boew/footerresources.html' %}
+  <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
+  {%- block adobe_analytics_footer -%}{%- endblock -%}
+  {%- block google_analytics_footer -%}
+    <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
+  {%- endblock -%}
+
   <script>
     wb.doc.on("wb-ready.wb-tables", function() {
       Modernizr.load( {
@@ -70,4 +76,5 @@
 {%- block styles %}
   {{ super() }}
   <link rel="stylesheet"  href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ h.url_for_static('base/vendor/font-awesome/css/font-awesome.css') }}" />
 {% endblock %}
