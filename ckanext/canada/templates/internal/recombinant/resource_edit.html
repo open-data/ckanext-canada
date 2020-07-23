@@ -44,7 +44,7 @@
   {%- block google_analytics_footer -%}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
   {%- endblock -%}
-
+  <script type="text/javascript" src="{{ h.url_for_static('base/vendor/bootstrap/js/bootstrap.js') }}"></script>
   <script>
     wb.doc.on("wb-ready.wb-tables", function() {
       Modernizr.load( {
