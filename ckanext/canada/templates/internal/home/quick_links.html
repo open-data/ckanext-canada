@@ -1,5 +1,5 @@
 {% extends "page.html" %}
-{% block subtitle %}{{ _("Quick Links") }}{% endblock %}
+{% block subtitle %}{{ _("Home") }}{% endblock %}
 
 {% block toolbar %}{% endblock %}
 
@@ -105,16 +105,43 @@
       <section id="ql-search">
         <h2 class="h5">{{ _('Search') }}</h2>
         <ul class="list-unstyled">
-          <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search All Records') }}</a>
-          <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-          <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
-            <header class="modal-header">
-              <h2 class="modal-title">{{ _('Search All Records') }}</h2>
-            </header>
-            <div class="modal-body">
-              {{ _('Add all Open Data and Information records in the Registry.') }}
-            </div>
-          </section>
+          <li>
+            <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search All Records') }}</a>
+            <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Search All Records') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add all Open Data and Information records in the Registry.') }}
+              </div>
+            </section>
+          </li>
+          {% set org = orgs[0] %}
+          <li>
+            <a href="{{ h.url_for('organization_read', id=org.name) }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search your Organization Records') }}</a>
+            <a class="wb-lbx" href="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="search_org" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Search your Organization Records') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Search all records in the Registry, for your Organization.') }}
+              </div>
+            </section>
+          </li>
+          <li>
+            <a href="{{ h.url_for('organization_members', id=org.name) }}"><i class="fa fa-users mrgn-rght-sm"></i>{{ _('View Members of your Organization') }}</a>
+            <a class="wb-lbx" href="#view_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="view_org" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('View Members of your Organization') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('View the list of members linked to your organization.') }}
+              </div>
+            </section>
+          </li>
         </ul>
       </section>
     </div>
