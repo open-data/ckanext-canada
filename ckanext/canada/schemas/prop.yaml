@@ -202,6 +202,7 @@ dataset_fields:
         fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
     preset: fluent_markdown
 
+after_validators: canada_sort_prop_status
 
 #
 #   RESOURCE FIELDS

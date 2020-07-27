@@ -218,3 +218,29 @@ def if_empty_set_to(default_value):
         return value
 
     return validator
+
+def canada_sort_prop_status(key, data, errors, context):
+    """
+    sort the status composite values by date in ascending order
+    """
+    # this is complicated because data is flattened
+    original = []
+    n = 0
+    while True:
+        if ('status', n, 'date') not in data:
+            break
+        original.append((
+            data['status', n, 'date'],
+            # some extra fields to sort by to have stable sorting
+            data['status', n, 'reason'],
+            data['status', n, 'comments'],
+            n
+        ))
+        n += 1
+    newmap = {orig[3]: i for i, orig in enumerate(sorted(original))}
+    move = {}
+    for f in data:
+        if f[0] == 'status' and newmap[f[1]] != f[1]:
+            move[f] = data[f]
+    for f in move:
+        data[('status', newmap[f[1]]) + f[2:]] = move[f]
