@@ -37,7 +37,6 @@
                 <ul id="pd" role="menu" aria-orientation="vertical">
                     <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Proactive Disclosure') }}</li>
                     <li role="separator"></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report">{{ _('Reports Tabled in Parliament') }}</a></li>
                     {{ menu_link('wrongdoing') }}
                     {{ menu_link('contractsa') }}
                     {{ menu_link('ati') }}
@@ -48,6 +47,7 @@
                     {{ menu_link('hospitalityq') }}
                     {{ menu_link('reclassification') }}
                     {{ menu_link('qpnotes') }}
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report">{{ _('Reports Tabled in Parliament') }}</a></li>
                     {{ menu_link('travelq') }}
                     {{ menu_link('travela') }}
                     <li role="separator" aria-orientation="horizontal"></li>
