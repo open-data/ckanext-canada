@@ -165,9 +165,6 @@
                 <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></h2>
               </li>
             </ul>
-          <li>
-            <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a></h2>
-          </li>
           {{ quick_link('wrongdoing') }}
           {{ quick_link('contractsa') }}
           {{ quick_link('ati') }}
@@ -178,6 +175,9 @@
           {{ quick_link('hospitalityq') }}
           {{ quick_link('reclassification') }}
           {{ quick_link('qpnotes') }}
+          <li>
+            <a href="{{ h.url_for('info_new') }}?collection=parliament_report""><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a></h2>
+          </li>
           {{ quick_link('travelq') }}
           {{ quick_link('travela') }}
         </ul>
