@@ -67,23 +67,23 @@
           </li>
         </ul>
       </section>
-      <section id="ql-sug-datasets">
-        <h2 class="h5">{{ _('Suggested Datasets') }}</h2>
-        <ul class="list-unstyled">
-          <li>
-            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment mrgn-rght-sm"></i>{{ _('Update Status') }}</a>
-            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}
-              </div>
-            </section>
-          </li>
-        </ul>
-      </section>
+<!--      <section id="ql-sug-datasets">-->
+<!--        <h2 class="h5">{{ _('Suggested Datasets') }}</h2>-->
+<!--        <ul class="list-unstyled">-->
+<!--          <li>-->
+<!--            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment mrgn-rght-sm"></i>{{ _('Update Status') }}</a>-->
+<!--            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>-->
+<!--            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">-->
+<!--              <header class="modal-header">-->
+<!--                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>-->
+<!--              </header>-->
+<!--              <div class="modal-body">-->
+<!--                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}-->
+<!--              </div>-->
+<!--            </section>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </section>-->
       <section id="ql-open-dialogue">
         <h2 class="h5">{{ _('Open Dialogue') }}</h2>
         <ul class="list-unstyled">
@@ -153,16 +153,52 @@
             <i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Briefing packages') }}
             <ul class="small" style="list-style-type: disc">
               <li>
-                <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a>
+                <a class="wb-lbx" href="#new_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="new_min" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('New or incoming ministers') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing package information for your new or incoming minister.') }}
+                  </div>
+                </section>
               </li>
               <li>
-                <a href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a>
+                <a class="wb-lbx" href="#min_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="min_dep" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('New or incoming deputy heads') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing package information for your new or incoming deputy head.') }}
+                  </div>
+                </section>
               </li>
               <li>
-                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a>
+                <a class="wb-lbx" href="#par_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="par_min" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for ministers') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.') }}
+                  </div>
+                </section>
               </li>
               <li>
-                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></h2>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a>
+                <a class="wb-lbx" href="#par_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="par_dep" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for deputy heads') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.') }}
+                  </div>
+                </section>
               </li>
             </ul>
           {{ quick_link('wrongdoing') }}
@@ -176,7 +212,16 @@
           {{ quick_link('reclassification') }}
           {{ quick_link('qpnotes') }}
           <li>
-            <a href="{{ h.url_for('info_new') }}?collection=parliament_report""><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a></h2>
+            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a>
+            <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Reports Tabled in Parliament') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Access, add or modify your reports tabled in Parliament.') }}
+              </div>
+            </section>
           </li>
           {{ quick_link('travelq') }}
           {{ quick_link('travela') }}
