@@ -338,13 +338,6 @@ footer {
     margin-top: 15px;
 }
 
-/* The styling below hides the native sort buttons provided by Datatables */
-table#dtprv thead .sorting,
-table#dtprv thead .sorting_asc,
-table#dtprv thead .sorting_desc {
-    background-image: none;
-}
-
 #menu-bar {
     background-color: #256EB8;
     margin-bottom: 15px;
