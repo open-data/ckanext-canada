@@ -61,3 +61,13 @@
   name='frequency',
   scheming_choices=h.scheming_get_preset('canada_frequency').choices,
   extras=extras %}
+
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['status'],
+  name='status',
+  scheming_choices=h.scheming_field_by_name(
+    h.scheming_field_by_name(
+      h.scheming_get_dataset_schema('prop').dataset_fields,
+      'status').repeating_subfields,
+    'reason').choices,
+  extras=extras %}
