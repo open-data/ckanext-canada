@@ -315,6 +315,7 @@ ckanext.canada:schemas/prop.yaml
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
+            'status': _('Suggestion Status'),
             })
 
         return facets_dict
@@ -565,7 +566,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
-        data_dict.pop('status', None)  # FIXME suggested datasets has list here
+
+        status = data_dict.pop('status', None)  # suggested datasets
+        if status:
+            data_dict['status'] = status[-1]['reason']
+
         return data_dict
 
     def before_view(self, pkg_dict):
