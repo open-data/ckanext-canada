@@ -290,7 +290,7 @@ presets:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
-    display_snippet: email.html
+    display_snippet: email_with_parameters.html
 
 
 # Field = Description (English).
@@ -2037,7 +2037,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
@@ -2054,7 +2054,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Expires.
 # Add a Calendar control to select a Date.
@@ -2310,8 +2310,8 @@ presets:
   values:
     field_name: imso_approval
     label:
-      en: IMSO Approval
-      fr: Approbation de la CSGI
+      en: Approval
+      fr: Approbation
     required: true
     form_include_blank_choice: true
     choices:
@@ -3151,10 +3151,15 @@ presets:
     - value: AIFF
       mimetype: audio/aiff
     - value: ASCII Grid
+      label:
+        en: ASCII Grid
+        fr: Grille ASCII
       mimetype: application/x-ascii-grid
       replaces: [ascii grid]
-    - label: Android Application
-      value: APK
+    - value: APK
+      label:
+        en: Android Application
+        fr: Application Android
     - value: AVI
       mimetype: video/vnd.avi
     - value: BAG
@@ -3168,8 +3173,10 @@ presets:
     - value: CDF
     - value: CDR
       replaces: [cdr]
-    - label: Blackberry Application
-      value: COD
+    - value: COD
+      label:
+        en: Blackberry Application
+        fr: Application Blackberry
     - value: CSV
       mimetype: text/csv
       openness_score: 3
@@ -3216,6 +3223,9 @@ presets:
       replaces: ["FGDB / GDB", "fgdb / gdb"]
       mimetype: application/x-filegdb
     - value: Flat raster binary
+      label:
+        en: Flat raster binary
+        fr: Binaire raster plat
       replaces: [flat raster binary]
     - value: GDB
       mimetype: application/x-filegdb
@@ -3255,8 +3265,10 @@ presets:
     - value: IATI
       mimetype: application/xml
       replaces: [iati]
-    - label: IOS Application
-      value: IPA
+    - value: IPA
+      label:
+        en: iOS Application
+        fr: Application iOS
     - value: JAR
       mimetype: application/java-archive
     - value: JFIF
