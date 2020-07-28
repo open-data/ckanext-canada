@@ -67,23 +67,6 @@
           </li>
         </ul>
       </section>
-<!--      <section id="ql-sug-datasets">-->
-<!--        <h2 class="h5">{{ _('Suggested Datasets') }}</h2>-->
-<!--        <ul class="list-unstyled">-->
-<!--          <li>-->
-<!--            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment mrgn-rght-sm"></i>{{ _('Update Status') }}</a>-->
-<!--            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>-->
-<!--            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">-->
-<!--              <header class="modal-header">-->
-<!--                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>-->
-<!--              </header>-->
-<!--              <div class="modal-body">-->
-<!--                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}-->
-<!--              </div>-->
-<!--            </section>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </section>-->
       <section id="ql-open-dialogue">
         <h2 class="h5">{{ _('Open Dialogue') }}</h2>
         <ul class="list-unstyled">
@@ -227,21 +210,6 @@
           {{ quick_link('travela') }}
         </ul>
       </section>
-      {#<section>
-        <h2 class="h5"><a href="{{
-          h.url_for('organization_read', id=org.name) }}">{{
-            _('Search your Organization Records') }}</a></h2>
-        <p>{{ _('Search all records in the Registry, for your Organization.') }}</p>
-      </section>#}
-      {#<section>
-        <h2 class="h5"><a href="{{
-            h.url_for('organization_members', id=org.name) }}">{{ _('View Members of your Organization') }}</a></h2>
-        <p>{{ _('View the list of members linked to your organization.') }}</p>
-      </section>#}
-      {#<section>
-        <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
-        <p>{{ _('View and download the organizational reports.') }}</p>
-      </section>#}
     </div>
   {% endif %}
 </div>
