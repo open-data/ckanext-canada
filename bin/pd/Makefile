@@ -264,9 +264,8 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 $(workdir)/contractsa.csv:
 	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
-# XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
-	cp $< $@
+	$(fdir)/filter_contractsa.py < $< > $@
 
 ###
 ###  Consultations
@@ -547,17 +546,19 @@ service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	@echo Uploading Service Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
-	> /dev/null
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
-	> /dev/null
+	# disable publishing service inventory as of 2020-06-08
+	# @echo Uploading Service Inventory...
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
+	# > /dev/null
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
+	# > /dev/null
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	$(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+	# disabled search rebuild like in update_search_cores.sh
+	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
 	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)

@@ -101,7 +101,7 @@ class CanadaController(BaseController):
             # Try to load FAQ text for the user's language.
             faq_text = _get_help_text(c.language)
         except IOError:
-            # Fall back to using English if no local langauge could be found.
+            # Fall back to using English if no local language could be found.
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
@@ -131,9 +131,14 @@ class CanadaController(BaseController):
             # Move the summary tag to the top of the details tag.
             details.insert(0, summary)
 
-            # We don't actaully want the FAQ headers to be headings, so strip
+            # We don't actually want the FAQ headers to be headings, so strip
             # the tags and just leave the text.
             faq_section.drop_tag()
+
+        # Get FAQ group header and set it as heading 2 to comply with
+        # accessible heading ranks
+        for faq_group in h.xpath('//h1'):
+            faq_group.tag = 'h2'
 
         return render('help.html', extra_vars={
             'faq_html': html.tostring(h),

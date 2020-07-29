@@ -13,6 +13,7 @@ import geojson
 from geomet import wkt
 import json
 import uuid
+from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckantoolkit import get_validator, Invalid, missing
@@ -219,6 +220,7 @@ def if_empty_set_to(default_value):
 
     return validator
 
+
 def canada_sort_prop_status(key, data, errors, context):
     """
     sort the status composite values by date in ascending order
@@ -244,3 +246,13 @@ def canada_sort_prop_status(key, data, errors, context):
             move[f] = data[f]
     for f in move:
         data[('status', newmap[f[1]]) + f[2:]] = move[f]
+
+
+def no_future_date(key, data, errors, context):
+    ready = data.get(('ready_to_publish',))
+    if not ready or ready == 'false':
+        return
+    value = data.get(key)
+    if value and value > datetime.today():
+        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
+    return value
