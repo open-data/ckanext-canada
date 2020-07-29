@@ -473,6 +473,10 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.no_future_date,
             'canada_sort_prop_status':
                 validators.canada_sort_prop_status,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
+            'no_future_date':
+                validators.no_future_date,
             }
 
 
