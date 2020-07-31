@@ -1,4 +1,4 @@
-targets := ati briefingt qpnotes contracts contractsa dac grants hospitalityq inventory \
+targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -8,6 +8,7 @@ csv_files := \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
+	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
@@ -263,9 +264,8 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 $(workdir)/contractsa.csv:
 	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
 
-# XXX: no tracking data on contractsa yet (currently in staging)
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
-	cp $< $@
+	$(fdir)/filter_contractsa.py < $< > $@
 
 ###
 ###  Consultations
@@ -341,7 +341,7 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	# no search for experiment
+	$(ogc_search)/load_ei_to_solr.py "$(workdir)/filtered/experiment.csv"
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -546,13 +546,14 @@ service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	@echo Uploading Service Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
-	> /dev/null
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
-	> /dev/null
+	# disable publishing service inventory as of 2020-06-08
+	# @echo Uploading Service Inventory...
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
+	# > /dev/null
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
+	# > /dev/null
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv

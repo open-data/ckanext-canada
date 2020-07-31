@@ -898,15 +898,6 @@ msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
 msgid "Create Single Record"
 msgstr "Créer un seul dossier"
 
-msgid "Reporting Period"
-msgstr "Période de déclaration"
-
-msgid "Number of Goods Contracts $10K and under"
-msgstr "Nombre de marchés de biens de 10 000 $ et moins"
-
-msgid "Goods Contracts $10K and under – Original Value ($ 000)"
-msgstr "Marchés de biens de 10 000 $ et moins - Valeur initiale (000 $)"
-
 msgid ""
 "Goods Contracts Amendments from -$10K to $10K – Net Amendment Value ($ 000)"
 msgstr ""
@@ -1076,27 +1067,6 @@ msgid ""
 msgstr ""
 "Accès, téléversement et modifications des dossiers sur les actes "
 "répréhensibles fondés pour votre organisation"
-
-msgid "File Identification Number"
-msgstr "Numéro d’identification du fichier"
-
-msgid "File Identification date"
-msgstr "Date d’identification du ficher"
-
-msgid "English Case Description"
-msgstr "Description anglaise"
-
-msgid "French Case Description"
-msgstr "Description française"
-
-msgid "Findings and Conclusions"
-msgstr "Constatations et Conclusions"
-
-msgid "English Recommendations and Corrective Measures"
-msgstr "Recommendations et mesures Correctives anglaises"
-
-msgid "Recommendations and Corrective Measures"
-msgstr "Recommendations et mesures Correctives françaises"
 
 msgid "Proactive Disclosure - Position Reclassification"
 msgstr "Divulgation proactive - Reclassifications de postes"
@@ -1465,12 +1435,8 @@ msgstr "Contactez-nous du gouvernement ouvert"
 msgid "Specialized enquiries"
 msgstr "Requêtes particulières"
 
-msgid "/en/forms/contact-us"
-msgstr "/fr/formulaire/faites-nous-part-de-vos-commentaires"
-
-msgid "http://open.canada.ca/en/forms/contact-us"
-msgstr ""
-"http://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
+msgid "https://open.canada.ca/en/forms/contact-us"
+msgstr "https://ouvert.canada.ca/fr/formulaire/faites-nous-part-de-vos-commentaires"
 
 msgid "Open Government Log In"
 msgstr "Ouverture de session Gouvernement ouvert"
@@ -2460,6 +2426,92 @@ msgstr ""
 "</p>"
 
 msgid ""
+"<small class='text-info' style='margin-bottom: 15px; display: inline-block'>\n"
+"<p>Has approval been obtained? By selecting yes, you have ensured that the "
+"following statements are true:</p>\n"
+"<ol>\n"
+"<li><b>Confidentiality</b> -  The data or information resource is not "
+"subject to confidentiality restrictions, such as Cabinet confidences, "
+"solicitor-client privilege, classified or protected "
+"information, advice or recommendations, third party information, or information "
+"obtained in confidence.</li>\n"
+"<li><b>Authority to Release</b> - The institution has the mandate, legislative "
+"authority or permission from a third party provider to release the data or "
+"information resources under the <a href='https://open.canada.ca/en/open-government-licence-canada'>"
+"<u>Open Government Licence – Canada</u></a>.</li>\n"
+"<li><b>Formats</b> - The data or information resource is in an open and accessible "
+"format that complies with <a href='https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=23601'>"
+"<u>the Standard on Web Accessibility</u></a>.</li>\n"
+"<li><b>Privacy</b> - The data or information resource does not contain personal information, "
+"as defined in section 3 of the <a href='https://www.priv.gc.ca/en/privacy-topics/"
+"privacy-laws-in-canada/the-privacy-act/'><u>Privacy Act</u></a>, unless the individual "
+"to whom it relates has consented to its release or unless it meets criteria outlined "
+"in section 8(2) of the Privacy Act.</li>\n"
+"<li><b>Official Languages</b> - The data or information resource is available "
+"in both official languages and conforms to the requirements of the "
+"<a href='https://laws-lois.justice.gc.ca/eng/acts/O-3.01/'><u>Official Languages Act</u></a>.</li>\n"
+"<li><b>Security</b> - The data or information resource does not increase "
+"security risks to the institution, to other institutions, or to the government "
+"as a whole and conforms to the requirements of the "
+"<a href='https://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=16578'><u>Policy on Government Security</u></a> and its related instruments.</li>\n"
+"<li><b>Other - Legal / Regulatory / Policy / Contractual</b> - The release of "
+"data or other information resource complies with all other relevant legal, regulatory, "
+"contractual, and policy requirements (e.g., it is confirmed that there are no "
+"relevant legal, contractual, or third party, policy restrictions or limitations).</li>\n"
+"</ol>\n"
+"</small>"
+msgstr ""
+"<small class='text-info' style='margin-bottom: 15px; display: inline-block'>"
+"<p>A-t-on obtenu l’approbation? En sélectionnant << oui >>, vous avez fait"
+" certain que les énoncés suivants sont vrais:</p>"
+"<ol>"
+"<li><b>Confidentialité</b> -  Les ressources en données ou"
+" documentaires ne sont pas assujetties à aucune restriction"
+" liée à la confidentialité, comme les documents confidentiels du Cabinet,"
+" le secret professionnel de l’avocat, les renseignements"
+" , conseils ou recommandations classifiés ou protégés,"
+" les renseignements"
+" de tiers ou les renseignements obtenus à titre confidentiel.</li>"
+"<li><b>Autorisation de diffuser</b> - L’institution a le"
+" mandat, l’autorisation législative ou la permission d’un fournisseur tiers"
+" de publier les ressources en données ou documentaires en vertu de la"
+" <a href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada'>"
+"<u>Licence du gouvernement ouvert – Canada</u></a>.</li>"
+"<li><b>Formats</b> - Les ressources en données ou documentaires sont"
+" dans un format ouvert et accessible qui est conforme à la"
+" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=23601'><u>"
+"Norme sur l’accessibilité des sites Web</u></a>.</li>"
+"<li><b>Protection des renseignements personnels</b> - Les ressources en données"
+" ou documentaires ne contiennent pas des renseignements personnels, au"
+" sens de l’article 3 de la <a href='https://www.priv.gc.ca/fr/sujets-lies"
+"-a-la-protection-de-la-vie-privee/lois-sur-la-protection-des-renseignements"
+"-personnels-au-canada/la-loi-sur-la-protection-des-renseignements-personnels/'>"
+"<u>Loi sur la protection des renseignements personnels</u></a>, à moins que"
+" la personne concernée n’ait consenti à leur divulgation ou que les renseignements personnels ne"
+" répondent aux critères énoncés au paragraphe 8(2) de cette même Loi.</li>"
+"<li><b>Langues officielles</b> - Les ressources en"
+" données ou documentaires sont disponibles dans les deux"
+" langues officielles et sont conformes aux exigences de"
+" la <a href='https://laws-lois.justice.gc.ca/fra/lois/O-3.01/'>"
+"<u>Loi sur les langues officielles</u></a>.</li>"
+"<li><b>Sécurité</b> - Les ressources en données ou"
+" documentaires n’augmentent pas les risques à la sécurité"
+" de l’institution, des autres institutions ou du gouvernement"
+" dans son ensemble et sont conformes aux exigences de la"
+" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=16578'>"
+"<u>Politique sur la sécurité du gouvernement</u></a> et"
+" de ses instruments connexes.</li>"
+"<li><b>Autres – Aspects juridiques, réglementaires, stratégiques"
+" ou contractuelsl</b> - La diffusion des ressources en données ou d’autres"
+" ressources documentaires est conforme à toutes les autres"
+" exigences juridiques, réglementaires, contractuelles et"
+" stratégiques pertinentes (p. ex., il est confirmé qu’il n’y"
+" a pas de restrictions ou de limitations juridiques,"
+" contractuelles, de tiers ou de stratégiques pertinentes).</li>"
+"</ol>"
+"</small>"
+
+msgid ""
 "This metadata element is machine translated by DeepL.com. If you have "
 "questions, contact open-ouvert@tbs-sct.gc.ca"
 msgstr ""
@@ -2478,11 +2530,11 @@ msgstr "Soumettre"
 
 msgid ""
 "This third party metadata element has been translated using an automated "
-"translation tool (DeepL).  To report any discrepancies please contact open-"
+"translation tool.  To report any discrepancies please contact open-"
 "ouvert@tbs-sct.gc.ca"
 msgstr ""
 "Cet élément de métadonnées provenant d’une tierce partie a été traduit à "
-"l'aide d'un outil de traduction automatisée (DeepL). Pour signaler toute "
+"l'aide d'un outil de traduction automatisée. Pour signaler toute "
 "anomalie, veuillez communiquer avec nous à open-ouvert@tbs-sct.gc.ca"
 
 msgid "Issued by"
@@ -2764,7 +2816,7 @@ msgstr "Recherche et menus"
 #: ckanext/wet_boew/templates/user/snippets/followee_dropdown.html:20
 #: ckanext/wet_boew/templates/user/snippets/followee_dropdown.html:24
 msgid "Search"
-msgstr "Recherche"
+msgstr "Rechercher"
 
 #: ckanext/GCWeb/templates/header.html:27
 msgid "Search website"
@@ -3240,3 +3292,99 @@ msgstr "Passer au contenu principal"
 #: ckanext/wet_boew/templates/snippets/wet-boew/skip.html:3
 msgid "Skip to site information"
 msgstr "Passer aux informations sur le site"
+
+#: ckanext/canada/templates/internal/snippets/user.html:49
+msgid "Get Help"
+msgstr "Obtenez de l’aide"
+
+#: ckanext/canada/templates/internal/snippets/user.html:49
+msgid "Help using the Open Government Registry"
+msgstr "Aide à l'utilisation du registre du gouvernement ouvert"
+
+msgid "View on Portal"
+msgstr "Consulter le Portail"
+
+msgid "Create an Open Data Record"
+msgstr "Créer un enregistrement de données ouvert"
+
+msgid "Create Information Asset"
+msgstr "Créer un enregistrement d'informations ouvertes"
+
+msgid "Update Status"
+msgstr "Mettre à jour un statut"
+
+msgid "Consultations master dataset"
+msgstr "Données de consultations principals"
+
+msgid "Briefing packages"
+msgstr "Documents d’information"
+
+msgid "New or incoming ministers"
+msgstr "Documents d'information pour les nouveaux ministres"
+
+msgid "New or incoming deputy heads"
+msgstr "Documents d'information pour les nouveaux administrateurs généraux"
+
+msgid "Parliamentary Committee appearances for ministers"
+msgstr "Documents d'information à l'intention des ministres pour les comparutions devant un comité parlementaire"
+
+msgid "Parliamentary Committee appearances for deputy heads"
+msgstr "Documents d'information à l'intention des administrateurs généraux pour les comparutions devant un comité parlementaire"
+
+msgid "Reports Tabled in Parliament"
+msgstr "Rapports déposés au Parlement"
+
+msgid "Acts of Founded Wrongdoing"
+msgstr "Dossiers sur les actes répréhensibles fondés"
+
+msgid "Aggregated Contracts from -$10K to $10K"
+msgstr "Contrats agrégés de -10 000$ à 10 000$"
+
+msgid "Briefing Note Titles and Numbers"
+msgstr "Titres et numéros des notes d’information"
+
+msgid "Contracts over 10K (Quarterly)"
+msgstr "Contrats attribués de plus de 10 000 $ (trimestriels)"
+
+msgid "Departmental Audit Committee"
+msgstr "Comités ministériels d’audit"
+
+msgid "Grants and Contributions"
+msgstr "Subventions et les contributions"
+
+msgid "Hospitality Expenses"
+msgstr "Dépenses d'accueil"
+
+msgid "Position Reclassification"
+msgstr "Reclassifications de postes"
+
+msgid "Question Period Notes"
+msgstr "Notes pour la période des questions"
+
+msgid "Travel Expenses"
+msgstr "Dépenses de voyage"
+
+msgid "Annual Travel, Hospitality and Conferences"
+msgstr "Dépenses annuelles de voyages, d’accueil, de conférences et d’événements"
+
+msgid "Access, add or modify briefing package information for your new or incoming minister."
+msgstr "Consultez la trousse d’information pour le nouveau ministre, ajoutez-y du contenu ou modifiez-la."
+
+msgid "Access, add or modify briefing package information for your new or incoming deputy head."
+msgstr "Consultez la trousse d’information pour le nouvel administrateur général, ajoutez-y du contenu ou modifiez-la."
+
+msgid "Access, add or modify briefing packages for Parliamentary Committee appearance for your minister."
+msgstr "Consultez la trousse d’information pour la comparution de votre ministre devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
+
+msgid "Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head."
+msgstr "Consultez la trousse d’information pour la comparution de votre administrateur général devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
+
+msgid "Access, add or modify your reports tabled in Parliament."
+msgstr "Consultez vos rapports déposés au Parlement, ajoutez-y du contenu ou modifiez-les."
+
+msgid "Date may not be in the future when this record is marked ready to publish"
+msgstr "Une fois que ce document est marqué comme étant prêt à publier, la date ne peut pas être dans le futur"
+
+msgid "The following is a question related to the record {url} found on {site}"
+msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {site}"
+

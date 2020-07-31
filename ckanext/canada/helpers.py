@@ -22,11 +22,13 @@ from webhelpers.html.tags import link_to
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
+from markupsafe import Markup, escape
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
-PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
+PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
+PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
@@ -187,8 +189,11 @@ def normalize_strip_accents(s):
     s = unicodedata.normalize('NFD', s)
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
+
 def portal_url():
-    return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+    url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
+    return str(config.get(PORTAL_URL_OPTION, url))
+
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
@@ -481,3 +486,14 @@ def recombinant_description_to_markup(text):
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': jinja2.Markup(''.join(markup))}
+
+
+def mail_to_with_params(email_address, name, subject, body):
+    email = escape(email_address)
+    author = escape(name)
+    mail_subject = escape(subject)
+    mail_body = escape(body)
+    html = Markup(u'<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(email, author, mail_subject, mail_body))
+    return html
+
+

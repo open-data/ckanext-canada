@@ -18,6 +18,13 @@
           {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary', icon="pencil" %}
           {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
           {{ h.follow_button('dataset', pkg.name) }}
+          {% if pkg.portal_release_date %}
+            <a href="{{ h.portal_url() }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
+               title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+                <span class="fa fa-arrow-circle-right"></span>
+                <span class="text">{{ _('View on Portal') }}</span>
+            </a>
+          {% endif %}
           {% if pkg.state == "deleted" %}
             {% if h.check_access('package_update', {'id': pkg.id}) %}
               {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
@@ -57,13 +64,13 @@
           [{{ _('Draft') }}]
         {% endif %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       </h1>
       <div>
         {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
         {{ h.render_markdown(notes) }}
       </div>

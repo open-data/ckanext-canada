@@ -103,7 +103,7 @@ class CanadaController(BaseController):
             # Try to load FAQ text for the user's language.
             faq_text = _get_help_text(c.language)
         except IOError:
-            # Fall back to using English if no local langauge could be found.
+            # Fall back to using English if no local language could be found.
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
@@ -133,9 +133,14 @@ class CanadaController(BaseController):
             # Move the summary tag to the top of the details tag.
             details.insert(0, summary)
 
-            # We don't actaully want the FAQ headers to be headings, so strip
+            # We don't actually want the FAQ headers to be headings, so strip
             # the tags and just leave the text.
             faq_section.drop_tag()
+
+        # Get FAQ group header and set it as heading 2 to comply with
+        # accessible heading ranks
+        for faq_group in h.xpath('//h1'):
+            faq_group.tag = 'h2'
 
         return render('help.html', extra_vars={
             'faq_html': html.tostring(h),
@@ -381,11 +386,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(
-                controller='user',
-                action='login', locale=lang
-            )
+            error_summary = _('Login failed. Bad username or password.')
+            # replace redirect with a direct call to login controller
+            # pass error_summary to controller as error
+            # so that it can be captured for GA events in our overridden templates
+            return UserController.login(self, error_summary)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
@@ -551,12 +556,17 @@ class CanadaAdminController(PackageController):
         ).strftime("%Y-%m-%d %H:%M:%S")
 
         # get a list of package id's from the for POST data
+        count = 0
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
                 )
+                count += 1
+
+        # flash notice that records are published
+        h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))

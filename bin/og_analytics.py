@@ -6,6 +6,9 @@ import argparse
 
 from apiclient.discovery import build
 import httplib2
+#from oauth2client import client
+#from oauth2client import file
+#from oauth2client import tools
 from google.oauth2 import service_account
 
 import os
@@ -31,11 +34,7 @@ import traceback
 import openpyxl
 import heapq
 
-
-WORK_DIR=os.environ['WORK_DIR']
-
 def write_xls(filename, sheets):
-    #book = openpyxl.load_workbook('sheets.xlsx')
     book = openpyxl.Workbook()
 
     for sheet in sheets:
@@ -45,7 +44,7 @@ def write_xls(filename, sheets):
         cols =  [col for col in ws.columns]
         widths = sheet.get('col_width', {})
         for k,v in widths.iteritems():
-            ws.column_dimensions[cols[k][0].column].width = v
+            ws.column_dimensions[cols[k][0].column_letter].width = v
     try:
         sheet1 = book.get_sheet_by_name("Sheet")
         book.remove_sheet(sheet1)
@@ -74,33 +73,53 @@ def read_csv(filename):
             content.append(x)
     return content
 
-
+def simplify_lang(titles):
+    return {
+        'en': titles.get('en', titles.get('en-t-fr', '')),
+        'fr': titles.get('fr', titles.get('fr-t-en', '')),
+    }
 # https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/installed-py
 # https://developers.google.com/analytics/devguides/reporting/core/v4/basics
 #CLIENT_SECRETS_PATH = 'client_secrets.json' # Path to client_secrets.json file.
 #VIEW_ID = '<REPLACE_WITH_VIEW_ID>'
 
 
-def initialize_analyticsreporting(client_secrets_path, ca_certs):
-    """Initializes the analyticsreporting service object.
+def initialize_analyticsreporting(client_secrets_path):
+  """Initializes the analyticsreporting service object.
 
-    Returns:
-      analytics an authorized analyticsreporting service object.
-    """
-    SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-    DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
+  Returns:
+    analytics an authorized analyticsreporting service object.
+  """
+  SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
+  DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
 
-    credentials = service_account.Credentials.from_service_account_file(
-        client_secrets_path, scopes=SCOPES)
+  # Parse command-line arguments.
+#  parser = argparse.ArgumentParser(
+#      formatter_class=argparse.RawDescriptionHelpFormatter,
+#      parents=[tools.argparser])
+  # flags = parser.parse_args(['--noauth_local_webserver'])
+#  flags = parser.parse_args([])
 
-    if ca_certs:
-        http = httplib2.Http(ca_certs=ca_certs)
-        analytics = build('analytics', 'v4', credentials=credentials, http=http)
-    else:
-        analytics = build('analytics', 'v4', credentials=credentials)
-    #,discoveryServiceUrl=DISCOVERY_URI)
+  # Set up a Flow object to be used if we need to authenticate.
+  credentials = service_account.Credentials.from_service_account_file(
+      client_secrets_path, scopes=SCOPES)
+#      message=tools.message_if_missing(client_secrets_path))
 
-    return analytics
+  # Prepare credentials, and authorize HTTP object with them.
+  # If the credentials don't exist or are invalid run through the native client
+  # flow. The Storage object will ensure that if successful the good
+  # credentials will get written back to a file.
+#  storage = file.Storage('analyticsreporting.dat')
+#  credentials = storage.get()
+
+#  if credentials is None or credentials.invalid:
+#    credentials = tools.run_flow(flow, storage, flags, http=httplib2.Http())
+
+  # Build the service object.
+  analytics = build('analyticsreporting', 'v4', credentials=credentials)
+#http=http, discoveryServiceUrl=DISCOVERY_URI)
+
+  return analytics
 
 def parseReport(response, dimension_name, metric_name):
     data, nextPage = [], None
@@ -129,10 +148,12 @@ def parseReport(response, dimension_name, metric_name):
 
 class DatasetDownload():
     def __init__(self, ga, view_id, conf_file):
+        ga_tmp_dir = os.environ['GA_TMP_DIR']
+        ga_rmote_ckan = os.environ['GA_REMOTE_CKAN']
         self.ga = ga
         self.view_id = view_id
-        self.file = WORK_DIR + '/od-do-canada.jl.gz'
-        self.site = ckanapi.RemoteCKAN('https://open.canada.ca/data')
+        self.file = os.path.join(ga_tmp_dir, 'od-do-canada.jl.gz')
+        self.site = ckanapi.RemoteCKAN(ga_rmote_ckan)
 
         self.read_orgs()
 
@@ -267,6 +288,8 @@ class DatasetDownload():
             for [url, count] in data:
                 id = url.split('/')[-1]
                 id = id.split('&')[0]
+                # added by Rabia 2020-01-29 - removes querystring parameters
+                id = id.split('?')[0]
                 id = id.strip()
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
@@ -302,7 +325,7 @@ class DatasetDownload():
                 #deleted, skip it
                 continue
             else:
-                rec_title = rec['title_translated']
+                rec_title = simplify_lang(rec['title_translated'])
                 org_id = rec['owner_org']
             [_, org_title] = self.org_id2name.get(org_id)
             org_title = org_title.split('|')
@@ -316,7 +339,8 @@ class DatasetDownload():
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
         sheets.insert(0, sheet1)
-        write_xls(WORK_DIR + '/downloads_info.xls', sheets)
+        ga_tmp_dir = os.environ['GA_TMP_DIR']
+        write_xls(os.path.join(ga_tmp_dir, 'downloads_info.xls'), sheets)
 
     def dump(self, data, ignore_deleted=False):
         #further reduce to departments
@@ -397,10 +421,10 @@ class DatasetDownload():
             rec = self.ds.get(rec_id, None)
             if not rec:
                 rec_title = deleted_ds[rec_id]['title_translated']
-                rec_title = json.loads(rec_title)
+                rec_title = simplify_lang(json.loads(rec_title))
                 org_id = deleted_ds[rec_id]['org_id']
             else:
-                rec_title = rec['title_translated']
+                rec_title = simplify_lang(rec['title_translated'])
                 org_id = rec['owner_org']
             [_, org_title] = self.org_id2name.get(org_id)
             org_title = org_title.split('|')
@@ -411,7 +435,8 @@ class DatasetDownload():
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
                    }
-        write_csv(WORK_DIR + "/od_ga_top100.csv", rows)
+        ga_tmp_dir = os.environ['GA_TMP_DIR']
+        write_csv(os.path.join(ga_tmp_dir, "od_ga_top100.csv"), rows)
 
         for org_id, recs in org_recs.iteritems():
             rows = []
@@ -420,9 +445,9 @@ class DatasetDownload():
                 rec = self.ds.get(rec_id, None)
                 if not rec:
                     rec_title = deleted_ds[rec_id]['title_translated']
-                    rec_title = json.loads(rec_title)
+                    rec_title = simplify_lang(json.loads(rec_title))
                 else:
-                    rec_title = rec['title_translated']
+                    rec_title = simplify_lang(rec['title_translated'])
                 count = data.get(rec_id)
                 rows.append( [rec_id, rec_title['en'], rec_title['fr'], count])
             rows.sort(key=lambda x:-x[3])
@@ -441,8 +466,8 @@ class DatasetDownload():
         sheets.sort(key=lambda x: x['name'])
         sheets.insert(0, sheet2)
         sheets.insert(0, sheet1)
-        write_xls(WORK_DIR + '/od_ga_downloads.xls', sheets)
-
+        write_xls(os.path.join(ga_tmp_dir, 'od_ga_downloads.xls'), sheets)
+        
     def getRawReport(self, start='0', size = '1000'):
           return self.ga.reports().batchGet(
               body={
@@ -940,7 +965,8 @@ class DatasetDownload():
         write_csv(csv_file, data)
     def set_catalogue_file(self, end):
         y,m,d = end.split('-')
-        self.file = ''.join(['/var/www/html/data/od_catalogue/od-do-canada.',y,m,d,'.jl.gz'])
+        ga_static_dir = os.environ['GA_STATIC_DIR']
+        self.file = ''.join([ga_static_dir,'/od-do-canada.',y,m,d,'.jl.gz'])
         if not os.path.exists(self.file):
             raise Exception('not found ' + self.file)
     def by_org(self, org_stats, csv_file):
@@ -1014,6 +1040,12 @@ class DatasetDownload():
         for row in ds:
             #get org shortname
             name = row[1].split('=')[-1]
+            # some orgs got new shortforms
+            name = {
+                'ceaa-acee': 'iaac-aeic',
+                'neb-one': 'cer-rec',
+            }.get(name, name)
+
             org_id = self.org_name2id[name]
             exists[org_id] = True
             titles =  self.orgs.get(org_id, ['', ''])
@@ -1060,9 +1092,9 @@ class DatasetDownload():
         ds.append(total)
         write_csv(csv_month_file, ds, header)
 
-def report(client_secret_path, view_id, og_config_file, start, end, va, ca_certs=None):
+def report(client_secret_path, view_id, og_config_file, start, end, va):
       og_type = va
-      analytics = initialize_analyticsreporting(client_secret_path, ca_certs)
+      analytics = initialize_analyticsreporting(client_secret_path)
       ds = DatasetDownload(analytics, view_id, og_config_file)
       if og_type == 'info':
           return ds.getStats(start, end, og_type)
@@ -1071,11 +1103,13 @@ def report(client_secret_path, view_id, og_config_file, start, end, va, ca_certs
       elif og_type == 'download':
           return ds.getStats(start, end, og_type)
 
+      ga_tmp_dir = os.environ['GA_TMP_DIR']
       ds.getStats(start, end, og_type); time.sleep(2)
-      ds.monthly_usage(start, end, WORK_DIR + '/od_ga_month.csv'); time.sleep(2)
-      ds.by_country(end, WORK_DIR + '/od_ga_by_country.csv'); time.sleep(2)
-      ds.by_region(end, WORK_DIR + '/od_ga_by_region.csv')
-      ds.by_org_month(end, WORK_DIR + '/od_ga_by_org_month.csv', WORK_DIR + '/od_ga_by_org.csv')
+      ds.monthly_usage(start, end, os.path.join(ga_tmp_dir, 'od_ga_month.csv')); time.sleep(2)
+      ds.by_country(end, os.path.join(ga_tmp_dir, 'od_ga_by_country.csv')); time.sleep(2)
+      ds.by_region(end, os.path.join(ga_tmp_dir, 'od_ga_by_region.csv'))
+      ds.by_org_month(end, os.path.join(ga_tmp_dir, 'od_ga_by_org_month.csv'), 
+                      os.path.join(ga_tmp_dir, 'od_ga_by_org.csv'))
 
 def main():
     report(*sys.argv[1:])

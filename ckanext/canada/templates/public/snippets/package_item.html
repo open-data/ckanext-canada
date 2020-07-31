@@ -26,7 +26,7 @@
           {{ super() }}
         {% endblock %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       {% endblock %}
     </h3></header>
@@ -40,7 +40,7 @@
         {% if notes %}
           <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
             {% if machine_translated %}
-              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
             {% endif %}
           </div>
         {% else %}
@@ -72,17 +72,19 @@
           </ul>
         </div>
       </div>
-      {% if 'fgp_viewer' in package.get('display_flags', []) %}
-        <div>
-        <hr>
-        <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
-          class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
-          ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
-        <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
-          class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
-          ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
-        </div>
-      {% endif %}
+      {% block map_cart_buttons %}
+        {% if 'fgp_viewer' in package.get('display_flags', []) %}
+          <div>
+          <hr>
+          <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
+            class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
+            ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
+          <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
+            class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
+            ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
+          </div>
+        {% endif %}
+      {% endblock %}
     {% endblock %}
     </div>
   </article>
