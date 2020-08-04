@@ -1,5 +1,4 @@
 {% block header_user_snippet %}
-{%- if c.userobj -%}
     <section id="wb-so">
       <h2 class="wb-inv">Sign-on information</h2>
         <div class="container">
@@ -66,10 +65,12 @@
         {% endblock %}
     {% else %}
         {% block header_account_notlogged %}
-        {% if h.check_access('user_create') %}
-        <li><a href="{% url_for controller='user', action='register', class_='sub' %}" class="btn btn-default">{{ _('Register') }}</a></li>
-        {% endif %}
-        <li><a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">{{ _('Log in') }}</a></li>
+        <li>
+            <a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">
+                <span class="fa fa-sign-in"></span>
+                <span class="text">{{ _('Log in') }}</span>
+            </a>
+        </li>
         {% endblock %}
     {% endif %}
         </ul>
@@ -77,5 +78,4 @@
         </div>
       </div>
     </section>
-{%- endif -%}
 {% endblock %}
