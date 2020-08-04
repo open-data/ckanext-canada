@@ -132,6 +132,29 @@
       <section id="ql-pd">
         <h2 class="h5">{{ _('Proactive Disclosure') }}</h2>
         <ul class="list-unstyled">
+          {{ quick_link('wrongdoing') }}
+          {{ quick_link('contractsa') }}
+          {{ quick_link('ati') }}
+          {{ quick_link('briefingt') }}
+          {{ quick_link('contracts') }}
+          {{ quick_link('dac') }}
+          {{ quick_link('grants') }}
+          {{ quick_link('hospitalityq') }}
+          {{ quick_link('reclassification') }}
+          {{ quick_link('qpnotes') }}
+            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a>
+            <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Reports Tabled in Parliament') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Access, add or modify your reports tabled in Parliament.') }}
+              </div>
+            </section>
+          </li>
+          {{ quick_link('travelq') }}
+          {{ quick_link('travela') }}
           <li>
             <i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Briefing packages') }}
             <ul class="small" style="list-style-type: disc">
@@ -184,30 +207,7 @@
                 </section>
               </li>
             </ul>
-          {{ quick_link('wrongdoing') }}
-          {{ quick_link('contractsa') }}
-          {{ quick_link('ati') }}
-          {{ quick_link('briefingt') }}
-          {{ quick_link('contracts') }}
-          {{ quick_link('dac') }}
-          {{ quick_link('grants') }}
-          {{ quick_link('hospitalityq') }}
-          {{ quick_link('reclassification') }}
-          {{ quick_link('qpnotes') }}
           <li>
-            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a>
-            <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Reports Tabled in Parliament') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Access, add or modify your reports tabled in Parliament.') }}
-              </div>
-            </section>
-          </li>
-          {{ quick_link('travelq') }}
-          {{ quick_link('travela') }}
         </ul>
       </section>
     </div>
