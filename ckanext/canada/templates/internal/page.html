@@ -33,7 +33,31 @@
     </div></div>
   {% endblock content %}
 
-{%- block adobe_analytics_footer -%}{%- endblock -%}
-{%- block google_analytics_footer -%}
-  <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
+{%- block scripts -%}
+  {{ super() }}
+  {%- block adobe_analytics_footer -%}{%- endblock -%}
+  {%- block google_analytics_footer -%}
+    <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
+  {%- endblock -%}
+
+  {%- block session_timeout_footer -%}
+  {% if c.userobj %}
+    <section id="timeout" class="mfp-hide modal-dialog modal-content overlay-def">
+      <header class="modal-header">
+        <h2 class="modal-title">{{ _('Your user session has timed out due to inactivity') }}</h2>
+      </header>
+      <div class="modal-body">
+        {{ _('If you are currently entering data on this page, you may lose it when submitting. You can click on the log in button
+        below to log in again in a new tab, without losing your progress. You can then keep working on this page.') }}
+      </div>
+      <div class="modal-footer">
+        <a href="{% url_for controller='user', action='login' %}" target="_blank" class="btn btn-default btn-sm">
+          <span class="fa fa-sign-in"></span>
+          <span class="text">{{ _('Log in') }}</span>
+        </a>
+      </div>
+    </section>
+    <script type="text/javascript" src="{{ h.url_for_static('/session_timeout.js') }}" ></script>
+  {% endif %}
+  {%- endblock -%}
 {%- endblock -%}

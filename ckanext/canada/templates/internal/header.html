@@ -99,14 +99,6 @@
 {% endblock %}
 
 {% block signed_on_off %}
-{%- if c.userobj -%}
-  <div class="container">
-      <div class="row">
-        {% block header_account_logged %}
           {% snippet 'snippets/user.html' %}
-        {% endblock %}
-      </div>
-  </div>
-{%- endif -%}
 {% endblock %}
 
