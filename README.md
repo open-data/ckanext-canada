@@ -256,3 +256,40 @@ If not integrating, these settings may be omitted or `ckanext.canada.adv_search_
    - data element profile
 6. [ogc_search](https://github.com/open-data/ogc_search)
    - advanced search
+
+## Suggest a Dataset Data Flow
+
+![data flow diagram](docs/suggest-dataset-dfd.svg)
+
+The "Suggest a Dataset" feature integrates CKAN with both Drupal and Django Search.
+
+1. Submit Suggestion: The process begins with external public users submitting the
+[Suggest a Dataset](https://open.canada.ca/en/forms/suggest-dataset) form on Drupal. As a result of submission,
+a new node of content type `suggested_dataset` is created by the
+[webform handler](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_webform/src/Plugin/WebformHandler/SuggestedDatasetFormHandler.php#L21).
+
+2. Moderate Suggestion: A registered user with role `comment_moderator` on Drupal updates and/or adds translation
+to the suggested dataset. The user may also choose to delete the suggestion if it is not relevant or a duplicate.
+Once translation is added, the user publishes the suggestion.
+
+3. Nightly Cron: A number of cron jobs are responsible for cross-integration.
+    - Suggested datasets are exported from Drupal as a CSV using a
+    [cron hook](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_cron/src/Utils/CronFunctions.php#L107)
+    - The exported CSV is used to
+    [load suggested datasets](https://github.com/open-data/ckanext-canada/blob/f7375feb2ac265e2beca939fd7b62a0298a62bce/ckanext/canada/commands.py#L452)
+    in the Registry
+    - Next, the status updates for all suggested datasets is exported from the Registry in a JSON file using
+    `ckanapi search datasets q=type:prop include_private=true`
+    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py) 
+    in the Solr index and emails are sent out to external public users for any new status updates
+    - New status updates exported as JSON are
+    [loaded into to the Solr index](https://github.com/open-data/ogc_search/blob/master/ogc_search/load_sd_to_solr.py)
+
+4. Provide status updates: Registry users can view a list of suggested datasets for their organization and can provide
+an update on progress.
+
+5. Search suggested datasets: External public users can [search](https://search.open.canada.ca/en/sd)
+a list of suggested datasets. Each suggested dataset has a details page which shows all the status updates for a
+suggestion. Users can [vote](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/voting_webform/src/Controller/VotingWebformController.php#L89)
+on a suggestion or [add comments](https://github.com/open-data/og/blob/master/modules/custom/external_comment/src/Controller/ExternalCommentController.php).
+The votes and comments are stored in Drupal.
