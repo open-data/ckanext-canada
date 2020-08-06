@@ -500,3 +500,6 @@ def mail_to_with_params(email_address, name, subject, body):
     mail_body = escape(body)
     html = Markup(u'<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(email, author, mail_subject, mail_body))
     return html
+
+def get_timeout_length():
+    return config.get('who.timeout')
