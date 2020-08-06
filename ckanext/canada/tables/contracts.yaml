@@ -1028,13 +1028,23 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
 
-  - datastore_id: country_of_origin
+  - datastore_id: country_of_vendor
     label:
-      en: Country of Origin
-      fr: Pays d’origine
+      en: Country of Vendor
+      fr: Pays du fournisseur
     description:
-      en: This field should be populated with the International Organization for Standardization (ISO) Standard 3166-1-alphas-2, Codes for the representation of Names of Countries, to designate the country of origin applicable to the contract. Refer to the applicable trade agreement(s) rules of origin to determine the country of origin.
-      fr: Pour le pays d’origine, il est recommandé de saisir les Codes de représentation du nom des pays 3166-1-alphas-2 de l’Organisation internationale de normalisation (ISO) afin de désigner le pays d’origine qui s’applique au marché.
+      en: |
+        It is recommended that this data field be populated with the country of the vendor’s address identified in the contract.
+
+        Alternatively, the country of the vendor may be the country of the vendor’s address identified in the procurement/financial system if this is the standard practice in the department.
+
+        The country of vendor must be alphabetic characters listed in the International Organization for Standardization (ISO) Standard 3166-1-alphas-2, Codes for the representation of Names of Countries.
+      fr: |
+        Il est recommandé de remplir ce champ de données en indiquant le pays de l’adresse du fournisseur qui figure dans le contrat.
+
+        Par ailleurs, le pays du fournisseur peut être le pays de l’adresse du fournisseur qui figure dans le système d’approvisionnement ou le système financier si cela est la pratique courante au sein du ministère.
+
+        Le pays du fournisseur doit comprendre les caractères alphabétiques énumérés dans les Codes de représentation du nom des pays 3166-1-alphas-2 de l’Organisation internationale de normalisation (ISO).
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1191,8 +1201,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Exceptions et exclusions
         applicables aux accords commerciaux
     description:
-      en: It is recommended for this field to be populated with one or more of the exceptions/exclusions listed below. Certain trade agreements (for example, the North American Free Trade Agreement) require that certain exceptions/exclusions be reported.
-      fr: Il est recommandé de saisir dans cette zone au moins une des exceptions et/ou exclusions énumérées ci-dessous. Certains accords commerciaux (par exemple, l’Accord de libre-échange nord-américain) exigent la déclaration de certaines exceptions et/ou exclusions.
+      en: It is recommended for this field to be populated with one or more of the exceptions/exclusions listed below.
+      fr: Il est recommandé de saisir dans cette zone au moins une des exceptions et/ou exclusions énumérées ci-dessous.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
