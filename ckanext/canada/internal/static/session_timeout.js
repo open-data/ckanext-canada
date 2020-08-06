@@ -1,7 +1,7 @@
 /*
  Show popup when sesion times out
  */
-$(document).ready(function() {
+function timeoutPop(time) {
     setTimeout(function(){
         $( document ).trigger( "open.wb-lbx", [
             [
@@ -11,5 +11,5 @@ $(document).ready(function() {
                 }
             ]
         ]);
-    }, 5000);
-});
+    }, time*1000);
+}

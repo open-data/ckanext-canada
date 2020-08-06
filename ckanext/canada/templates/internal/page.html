@@ -57,6 +57,11 @@
       </div>
     </section>
     <script type="text/javascript" src="{{ h.url_for_static('/session_timeout.js') }}" ></script>
+    <script>
+      $(document).ready(function() {
+        timeoutPop({{ h.get_timeout_length() }});
+      });
+    </script>
   {% endif %}
   {%- endblock -%}
 {%- endblock -%}
