@@ -1860,15 +1860,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
-          errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
+          errors := errors || required_error(NEW.country_of_vendor, 'country_of_vendor');
         END IF;
         NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
-        errors := errors || choice_error(NEW.country_of_origin,
-          {country_of_origin},
-          'country_of_origin');
+        errors := errors || choice_error(NEW.country_of_vendor,
+          {country_of_vendor},
+          'country_of_vendor');
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
@@ -2031,7 +2031,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       land_claims: ["NA"]
       commodity_type: "S"
       commodity_code: "K105"
-      country_of_origin: "CA"
+      country_of_vendor: "CA"
       solicitation_procedure: "OB"
       limited_tendering_reason: ["22", "71"]
       trade_agreement_exceptions: ["03", "05"]
@@ -2051,7 +2051,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       reporting_period: "2016-2017-Q3"
     filters:
       instrument_type: "N"
-      country_of_origin: "CA"
+      country_of_vendor: "CA"
     filter_one:
       reference_number: "C-2017-2018-Q1-00170"
     sort: contract_date desc
