@@ -216,6 +216,58 @@ nltk.download('punkt')
 
 If not integrating, these settings may be omitted or `ckanext.canada.adv_search_enabled` may be set to `False`.
 
+## Migrating Proactive Disclosure (recombinant) data
+
+First extract the current version of the data from the registry for each table, e.g for contracts migrations
+we need contracts.csv and contracts-nil.csv:
+
+```bash
+mkdir migrate-contracts-2020-08-07  # a new working directory
+paster --plugin=ckanext-recombinant recombinant combine contracts contracts-nil -d migrate-contracts-2020-07-08 -c $REGISTRY_INI
+```
+
+Remove the old tables from the database so that tables with the new schema can be created when we load the migrated
+data, deleting contracts will delete both the contracts and contracts-nil tables:
+
+```bash
+paster --plugin=ckanext-recombinant recombinant delete contracts -c $REGISTRY_INI
+```
+
+Deploy the new version of the code, for our prod registry site that would be:
+
+```bash
+fab pull registry
+```
+
+Migrate the data with the script deployed as part of the changes. The output csv files need to have
+the same names as the input files for loading to work in the next step.
+
+```bash
+cd migrate-contracts-2020-08-07
+mkdir new err  # for migrated data and error logs
+.../ckanext-canada/bin/migrate/migrate_contracts_2019_11.py <contracts.csv >new/contracts.csv 2>err/contracts.err
+.../ckanext-canada/bin/migrate/migrate_contracts_nil_2019_11.py <contracts-nil.csv >new/contracts-nil.csv 2>err/contracts-nil.err
+ls -al err
+```
+
+Records removed in the data migration will appear in the error logs.
+Also check that the migrated data is comparable in size to the original
+data in just in case something interrupted the migration.
+
+Load the migrated data back into the registry, capturing any validation errors:
+
+```bash
+paster --plugin=ckanext-recombinant load-csv new/contracts.csv new/contracts-nil.csv -c $REGISTRY_INI 2>err/load-contracts.err
+ls -al err/load-contracts.err
+```
+
+If there are validation errors or records removed during migration, consider
+revising the migration script to allow more records to be migrated without manual intervention.
+
+Inform the business owner or source departments about all records that were removed as part of the
+final data migration or due to validation errors so that data can be corrected and re-imported.
+
+
 ## Proactive Disclosure Data Flow
 
 ![data flow diagram](docs/pd-data-flow.svg)
