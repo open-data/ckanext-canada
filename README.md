@@ -218,7 +218,7 @@ If not integrating, these settings may be omitted or `ckanext.canada.adv_search_
 
 ## Proactive Disclosure Data Flow
 
-![data flow diagram](pd-data-flow.svg)
+![data flow diagram](docs/pd-data-flow.svg)
 
 1. ckanext-canada (this repository)
    - [PD yaml files](ckanext/canada/tables) are read by ckanext-recombinant and used to
