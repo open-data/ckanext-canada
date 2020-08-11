@@ -552,3 +552,8 @@ footer {
 .gcweb-menu [aria-haspopup]:not(button)::before {
     content: "\25BA\a0";
 }
+
+#usr-logged ul{
+    text-align: right;
+    margin-top: 18px;
+}
