@@ -1213,7 +1213,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"))'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),{cell}="04"))'
     datastore_type: _text
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
@@ -1234,8 +1234,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             coherent radiation equipment) (applies to all agreements except CFTA, CETA and CPTPP)
         fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
       "04":
-        en: Set-asides for small and minority businesses (Archived for historical purpose)
-        fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (archivés à des fins historiques)
+        en: Set-asides for small and minority businesses (discontinued as of 2022-01-01)
+        fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (discontinué à partir de 2022-01-01)
       "05":
         en: Agricultural products made in furtherance of agricultural
             support programs or human feeding programs (applies to all agreements except for CFTA)
@@ -1911,7 +1911,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
         END IF;
-        crval := choices_clean_error(NEW.trade_agreement_exceptions, {trade_agreement_exceptions}, 'trade_agreement_exceptions');
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          crval := choices_clean_error(NEW.trade_agreement_exceptions,
+            array(SELECT c FROM(SELECT unnest({trade_agreement_exceptions}) as c) u
+              WHERE NOT c = ANY('{{04}}')),
+            'trade_agreement_exceptions');
+        ELSE
         errors := errors || crval.error;
         NEW.trade_agreement_exceptions = crval.clean;
 
