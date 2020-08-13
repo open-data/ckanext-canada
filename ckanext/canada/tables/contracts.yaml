@@ -1358,14 +1358,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="A1",{cell}="NA")))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
-        en: Crown owned – exception 1 (discontinued as of 2020-01-01)
-        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2020-01-01)
+        en: Crown owned – exception 1 (discontinued as of 2022-01-01)
+        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2022-01-01)
         discontinued: true
       A2:
         en: Crown owned – exception 2
@@ -1400,8 +1400,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
       NA:
-        en: Not Applicable (discontinued as of 2020-01-01)
-        fr: Sans objet (discontinué à partir de 2020-01-01)
+        en: Not Applicable (discontinued as of 2022-01-01)
+        fr: Sans objet (discontinué à partir de 2022-01-01)
         discontinued: true
 
   - datastore_id: potential_commercial_exploitation
@@ -1913,8 +1913,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         END IF;
         IF NEW.contract_date >= '2022-01-01'::date THEN
           crval := choices_clean_error(NEW.trade_agreement_exceptions,
-            array(SELECT c FROM(SELECT unnest({trade_agreement_exceptions}) as c) u
-              WHERE NOT c = ANY('{{04}}')),
+            array_remove({trade_agreement_exceptions}, '04'),
             'trade_agreement_exceptions');
         ELSE
         errors := errors || crval.error;
@@ -1935,7 +1934,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
 
-        IF NEW.contract_date >= '2020-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || choice_error(NEW.intellectual_property,
               array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
               'intellectual_property');
