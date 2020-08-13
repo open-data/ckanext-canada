@@ -1118,7 +1118,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1144,12 +1144,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
         fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
       "24":
-        en: Additional Construction Services (discontinued as of 2020-01-01)
-        fr: Services de construction supplémentaire (discontinué à partir de 2020-01-01)
+        en: Additional Construction Services (discontinued as of 2022-01-01)
+        fr: Services de construction supplémentaire (discontinué à partir de 2022-01-01)
         discontinued: true
       "25":
-        en: New Construction Services (discontinued as of 2020-01-01)
-        fr: Nouveaux services de construction (discontinué à partir de 2020-01-01)
+        en: New Construction Services (discontinued as of 2022-01-01)
+        fr: Nouveaux services de construction (discontinué à partir de 2022-01-01)
         discontinued: true
       "30":
         en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
@@ -1173,20 +1173,20 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Extreme Urgency
         fr: Extrême urgence
       "85":
-        en: Low Dollar-value (discontinued as of 2020-01-01)
-        fr: Faible valeur (discontinué à partir de 2020-01-01)
+        en: Low Dollar-value (discontinued as of 2022-01-01)
+        fr: Faible valeur (discontinué à partir de 2022-01-01)
         discontinued: true
       "86":
-        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2020-01-01)
-        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2020-01-01)
+        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2022-01-01)
+        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2022-01-01)
         discontinued: true
       "87":
-        en: Government Objectives Representing Best Interests/Value (discontinued as of 2020-01-01)
-        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2020-01-01)
+        en: Government Objectives Representing Best Interests/Value (discontinued as of 2022-01-01)
+        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2022-01-01)
         discontinued: true
       "90":
-        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2020-01-01)
-        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2020-01-01)
+        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2022-01-01)
+        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2022-01-01)
         discontinued: true
 
   - datastore_id: trade_agreement_exceptions
@@ -1882,7 +1882,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
         END IF;
-        IF NEW.contract_date >= '2020-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           crval := choices_clean_error(NEW.limited_tendering_reason,
             array(SELECT c FROM(SELECT unnest({limited_tendering_reason}) as c) u
               WHERE NOT c = ANY('{{24,25,85,86,87,90}}')),
