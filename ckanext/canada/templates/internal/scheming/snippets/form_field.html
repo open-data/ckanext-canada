@@ -1,0 +1,20 @@
+{% ckan_extends %}
+
+{% block removal_popup_button %}
+<a href="#mid-screen" id="remove{{ index }}" name="repeating-remove" class="btn btn-danger overlay-lnk"><i class="fa fa-minus" aria-hidden="true"></i> {{ _('Remove') }}</a>
+{% endblock %}
+
+{% block removal_popup %}
+  <section id="mid-screen" class="wb-overlay modal-content overlay-def wb-popup-mid" style="height: 210px;width:270px;overflow: hidden;">
+      <header class="modal-header">
+          <h2 class="modal-title">{{ _('Confirmation of Removal') }}</h2>
+      </header>
+      <div class="modal-body" style="text-align:center;">
+        <p id="statusText0">{{ _('Are you sure you want to remove') }} {{ h.scheming_language_text(field.label) }} </p><p id="statusText1"></p>
+      </div>
+    <div class="modal-footer">
+      <a href="javascript:;" class="btn btn-secondary overlay-close" style="display:inline;">{{ _('Cancel') }}</a>
+      <a href="javascript:;" id="confirmRemoval" class="btn overlay-close">{{ _('Confirm') }}</a>
+    </div>
+  </section>
+{% endblock %}
