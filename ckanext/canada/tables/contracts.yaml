@@ -1028,7 +1028,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
 
-  - datastore_id: country_of_origin
+  - datastore_id: country_of_vendor
     label:
       en: Country of Vendor
       fr: Pays du fournisseur
@@ -1118,7 +1118,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1144,12 +1144,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
         fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
       "24":
-        en: Additional Construction Services (discontinued as of 2020-01-01)
-        fr: Services de construction supplémentaire (discontinué à partir de 2020-01-01)
+        en: Additional Construction Services (discontinued as of 2022-01-01)
+        fr: Services de construction supplémentaire (discontinué à partir de 2022-01-01)
         discontinued: true
       "25":
-        en: New Construction Services (discontinued as of 2020-01-01)
-        fr: Nouveaux services de construction (discontinué à partir de 2020-01-01)
+        en: New Construction Services (discontinued as of 2022-01-01)
+        fr: Nouveaux services de construction (discontinué à partir de 2022-01-01)
         discontinued: true
       "30":
         en: Work on a property by a contractor according to a warranty or guarantee (for contracts that are only covered by the CFTA)
@@ -1173,20 +1173,20 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Extreme Urgency
         fr: Extrême urgence
       "85":
-        en: Low Dollar-value (discontinued as of 2020-01-01)
-        fr: Faible valeur (discontinué à partir de 2020-01-01)
+        en: Low Dollar-value (discontinued as of 2022-01-01)
+        fr: Faible valeur (discontinué à partir de 2022-01-01)
         discontinued: true
       "86":
-        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2020-01-01)
-        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2020-01-01)
+        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2022-01-01)
+        fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2022-01-01)
         discontinued: true
       "87":
-        en: Government Objectives Representing Best Interests/Value (discontinued as of 2020-01-01)
-        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2020-01-01)
+        en: Government Objectives Representing Best Interests/Value (discontinued as of 2022-01-01)
+        fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2022-01-01)
         discontinued: true
       "90":
-        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2020-01-01)
-        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2020-01-01)
+        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2022-01-01)
+        fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2022-01-01)
         discontinued: true
 
   - datastore_id: trade_agreement_exceptions
@@ -1213,7 +1213,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"))'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),{cell}="04"))'
     datastore_type: _text
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
@@ -1234,8 +1234,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
             coherent radiation equipment) (applies to all agreements except CFTA, CETA and CPTPP)
         fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
       "04":
-        en: Set-asides for small and minority businesses (Archived for historical purpose)
-        fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (archivés à des fins historiques)
+        en: Set-asides for small and minority businesses (discontinued as of 2022-01-01)
+        fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (discontinué à partir de 2022-01-01)
       "05":
         en: Agricultural products made in furtherance of agricultural
             support programs or human feeding programs (applies to all agreements except for CFTA)
@@ -1358,14 +1358,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2020,1,1),OR({cell}="A1",{cell}="NA")))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
-        en: Crown owned – exception 1 (discontinued as of 2020-01-01)
-        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2020-01-01)
+        en: Crown owned – exception 1 (discontinued as of 2022-01-01)
+        fr: Droits appartenant à l'État exception 1 (discontinué à partir de 2022-01-01)
         discontinued: true
       A2:
         en: Crown owned – exception 2
@@ -1400,8 +1400,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: No IP Terms in Contract
         fr: Aucune modalité sur les DPI indiquée au contrat
       NA:
-        en: Not Applicable (discontinued as of 2020-01-01)
-        fr: Sans objet (discontinué à partir de 2020-01-01)
+        en: Not Applicable (discontinued as of 2022-01-01)
+        fr: Sans objet (discontinué à partir de 2022-01-01)
         discontinued: true
 
   - datastore_id: potential_commercial_exploitation
@@ -1860,15 +1860,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
-          errors := errors || required_error(NEW.country_of_origin, 'country_of_origin');
+          errors := errors || required_error(NEW.country_of_vendor, 'country_of_vendor');
         END IF;
         NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
-        errors := errors || choice_error(NEW.country_of_origin,
-          {country_of_origin},
-          'country_of_origin');
+        errors := errors || choice_error(NEW.country_of_vendor,
+          {country_of_vendor},
+          'country_of_vendor');
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
@@ -1882,7 +1882,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
         END IF;
-        IF NEW.contract_date >= '2020-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           crval := choices_clean_error(NEW.limited_tendering_reason,
             array(SELECT c FROM(SELECT unnest({limited_tendering_reason}) as c) u
               WHERE NOT c = ANY('{{24,25,85,86,87,90}}')),
@@ -1911,7 +1911,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.trade_agreement_exceptions, 'trade_agreement_exceptions');
         END IF;
-        crval := choices_clean_error(NEW.trade_agreement_exceptions, {trade_agreement_exceptions}, 'trade_agreement_exceptions');
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          crval := choices_clean_error(NEW.trade_agreement_exceptions,
+            array_remove({trade_agreement_exceptions}, '04'),
+            'trade_agreement_exceptions');
+        END IF;
         errors := errors || crval.error;
         NEW.trade_agreement_exceptions = crval.clean;
 
@@ -1930,7 +1934,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
 
-        IF NEW.contract_date >= '2020-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || choice_error(NEW.intellectual_property,
               array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
               'intellectual_property');
@@ -2031,7 +2035,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       land_claims: ["NA"]
       commodity_type: "S"
       commodity_code: "K105"
-      country_of_origin: "CA"
+      country_of_vendor: "CA"
       solicitation_procedure: "OB"
       limited_tendering_reason: ["22", "71"]
       trade_agreement_exceptions: ["03", "05"]
@@ -2051,7 +2055,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       reporting_period: "2016-2017-Q3"
     filters:
       instrument_type: "N"
-      country_of_origin: "CA"
+      country_of_vendor: "CA"
     filter_one:
       reference_number: "C-2017-2018-Q1-00170"
     sort: contract_date desc
