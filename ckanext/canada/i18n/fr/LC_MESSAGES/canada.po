@@ -3293,6 +3293,18 @@ msgstr "Passer au contenu principal"
 msgid "Skip to site information"
 msgstr "Passer aux informations sur le site"
 
+msgid "Suggested Dataset"
+msgstr "Jeu de données suggéré"
+
+msgid "Suggested Datasets"
+msgstr "Jeux de données suggérés"
+
+msgid "Access the suggested datasets that your organization has received in order to provide a status update."
+msgstr "Veuillez accéder aux jeux de données proposés que votre organisation a reçus afin de faire le point sur ceux-ci."
+
+msgid "Suggested Datasets - Update Status"
+msgstr "Le point sur les jeux de données proposés"
+
 #: ckanext/canada/templates/internal/snippets/user.html:49
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
@@ -3388,3 +3400,8 @@ msgstr "Une fois que ce document est marqué comme étant prêt à publier, la d
 msgid "The following is a question related to the record {url} found on {site}"
 msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {site}"
 
+msgid "Suggestion Status"
+msgstr "État de la suggestion"
+
+msgid "The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly."
+msgstr "L’état a été ajouté/mis à jour pour cet ensemble de données suggéré. Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."

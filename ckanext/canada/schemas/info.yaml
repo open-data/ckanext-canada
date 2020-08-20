@@ -12,6 +12,37 @@ form_languages:
 - en
 - fr
 
+sidebar_show_fields:
+- creator
+- maintainer_email
+- keywords
+- subject
+- topic_category
+- audience
+- place_of_publication
+- homepage
+- series_title
+- series_issue_id
+- program_page_url
+- data_series_name
+- data_series_issue_identification
+- edition
+- series_publication_dates
+- digital_object_identifier
+- isbn
+- issn
+- gc_catalogue_number
+- frequency
+- issuance
+- issuance_frequency
+- spatial_representation_type
+- status
+- date_published
+- date_created
+- date_captured
+- date_modified
+
+
 
 #
 #   DATASET FIELDS

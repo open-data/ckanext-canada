@@ -111,6 +111,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaAdminController'
         )
         map.connect(
+            '/dataset/edit/{id}',
+            action='edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
+        map.connect(
             '/dataset/{id}/resource_edit/{resource_id}',
             action='resource_edit',
             controller='ckanext.canada.controller:CanadaDatasetController'
@@ -269,6 +274,7 @@ ckanext.canada:schemas/presets.yaml
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
+ckanext.canada:schemas/prop.yaml
 """
 
         # Enable our custom DCAT profile.
@@ -308,6 +314,7 @@ ckanext.canada:schemas/info.yaml
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
+            'status': _('Suggestion Status'),
             })
 
         return facets_dict
@@ -456,6 +463,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
             }
@@ -551,6 +564,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
+
+        status = data_dict.pop('status', None)  # suggested datasets
+        if status:
+            data_dict['status'] = status[-1]['reason']
+
         return data_dict
 
     def before_view(self, pkg_dict):
