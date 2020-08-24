@@ -529,7 +529,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     datastore_type: text
     excel_full_text_choices: false
     excel_column_width: 40
-    choice_order_expression: 'len(code), code'
+    choice_order_expression: 'value.get("discontinued", False), len(code), code'
     choices:
       "0":
         lookup: [NONE]
@@ -573,8 +573,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       N:
         lookup: [NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
-        en: NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
-        fr: ALENA / ALECC / ALECCo / ALECH / ALECPa
+        en: (discontinued) NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
+        fr: (discontinué) ALENA / ALECC / ALECCo / ALECH / ALECPa
+        discontinued: true
       I:
         conditional_lookup:
         - column: contract_date
@@ -597,8 +598,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           less_than: '2018-01-01'
           lookup: [NAFTA, AIT, CCFTA, CCoFTA, CHFTA, CPaFTA]
         - lookup: [NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA]
-        en: NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
-        fr: ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa
+        en: (discontinued) NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA
+        fr: (discontinué) ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa
+        discontinued: true
       S:
         conditional_lookup:
         - column: contract_date
@@ -617,8 +619,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       U:
         lookup: [CCFTA]
-        en: CCFTA
-        fr: ALECC
+        en: (discontinued) CCFTA
+        fr: (discontinué) ALECC
+        discontinued: true
       V:
         conditional_lookup:
         - column: contract_date
@@ -641,8 +644,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: AECG / AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AA:
         lookup: [CCFTA, CCoFTA, CHFTA, CPaFTA]
-        en: CCFTA / CCoFTA / CHFTA / CPaFTA
-        fr: ALECC / ALECCo / ALECH / ALECPa
+        en: (discontinued) CCFTA / CCoFTA / CHFTA / CPaFTA
+        fr: (discontinué) ALECC / ALECCo / ALECH / ALECPa
+        discontinued: true
       AB:
         lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CKFTA]
         en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CKFTA
@@ -657,8 +661,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCS
       AE:
         lookup: [CHFTA]
-        en: CHFTA
-        fr: ALECH
+        en: (discontinued) CHFTA
+        fr: (discontinué) ALECH
+        discontinued: true
       AF:
         lookup: [CFTA, CHFTA]
         en: CFTA / CHFTA
@@ -685,12 +690,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: PTPGP
       AL:
         lookup: [CFTA, CPTPP]
-        en: CFTA / CPTPP
-        fr: ALEC / PTPGP
+        en: (discontinued) CFTA / CPTPP
+        fr: (discontinué) ALEC / PTPGP
+        discontinued: true
       AM:
         lookup: [CFTA, CETA, CPTPP]
-        en: CFTA / CETA / CPTPP
-        fr: ALEC / AECG / PTPGP
+        en: (discontinued) CFTA / CETA / CPTPP
+        fr: (discontinué) ALEC / AECG / PTPGP
+        discontinued: true
       AN:
         lookup: [CFTA, CHFTA, CETA, CPTPP]
         en: CFTA / CHFTA / CETA / CPTPP
