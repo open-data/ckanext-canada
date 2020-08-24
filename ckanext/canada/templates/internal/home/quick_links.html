@@ -119,7 +119,7 @@
           </li>
           {% set org = orgs[0] %}
           <li>
-            <a href="{{ h.url_for('organization_read', id=org.name) }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search your Organization Records') }}</a>
+            <a href="{{ h.url_for('dataset_search', organization=org.name) }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search your Organization Records') }}</a>
             <a class="wb-lbx" href="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="search_org" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">

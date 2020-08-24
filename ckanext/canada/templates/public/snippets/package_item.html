@@ -9,13 +9,17 @@
   <article class="panel panel-default mrgn-bttm-sm relative">
     <header class="panel-heading">
     {% if package.type == 'dataset' %}
-      <span class="label label-default" style="float:right; border-color: #088; background: #fff">{{ _("Open Data") }}</span>
+      <span class="label label-default lb-open-data">{{ _("Open Data") }}</span>
     {% elif package.type == 'prop' %}
-      <span class="label label-default" style="float:right; border-color: #f80; background: #fff">{{ _("Suggested Dataset") }}</span>
+      <span class="label label-default lb-sug-datasets">{{ _("Suggested Dataset") }}</span>
+    {% elif package.collection in ('transition', 'transition_deputy', 'parliament_report', 'parliament_committee', 'parliament_committee_deputy') %}
+      <span class="label label-default lb-pd">{{ _("Proactive Disclosure") }}</span>
     {% elif package.type == 'info' or geno.portal_type == 'info' %}
-      <span class="label label-default" style="float:right; border-color: #44f; background: #fff">{{ _("Open Information") }}</span>
+      <span class="label label-default lb-open-info">{{ _("Open Information") }}</span>
     {% elif geno.portal_type == 'dialogue' %}
-      <span class="label label-default" style="float:right; border-color: #80f; background: #fff">{{ _("Open Dialogue") }}</span>
+      <span class="label label-default lb-open-dialogue">{{ _("Open Dialogue") }}</span>
+    {% elif geno %}
+      <span class="label label-default lb-pd">{{ _("Proactive Disclosure") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
