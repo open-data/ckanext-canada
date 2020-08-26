@@ -259,7 +259,7 @@ data in just in case something interrupted the migration.
 Load the migrated data back into the registry, capturing any validation errors:
 
 ```bash
-paster --plugin=ckanext-recombinant load-csv new/contracts.csv new/contracts-nil.csv -c $REGISTRY_INI 2>err/load-contracts.err
+paster --plugin=ckanext-recombinant recombinant load-csv new/contracts.csv new/contracts-nil.csv -c $REGISTRY_INI 2>err/load-contracts.err
 ls -al err/load-contracts.err
 ```
 

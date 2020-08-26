@@ -568,3 +568,7 @@ table#dtprv thead .sorting_desc {
     content: "\25BA\a0";
 }
 
+#usr-logged ul{
+    text-align: right;
+    margin-top: 18px;
+}
