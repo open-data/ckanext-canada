@@ -2,7 +2,7 @@
 
 {% macro menu_link(r_type) %}
 {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
-<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type) }}">{{ _(label) }}</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a></li>
 {% endmacro %}
 
 {% block sitesearch %}{% endblock %}
@@ -12,16 +12,16 @@
     <div class="container">
         <h2 class="wb-inv">Menu</h2>
         <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it.">
-            <span class="wb-inv">Main </span>Menu <span class="expicon glyphicon glyphicon-chevron-down"></span>
+            <span class="wb-inv">Main </span>Menu <i class="fa fa-chevron-down"></i></span>
         </button>
         <ul role="menu" aria-orientation="vertical">
             <li role="presentation"> <a role="menuitem" tabindex="-1" href="/{{ h.lang() }}/">{{ _('Home') }}</a></li>
             {% if h.check_access('package_create') %}
-            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-data" aria-expanded="false" href="#">{{ _('Open Data') }}</a>
+            <li role="presentation"> <a id="mn-open-data" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-data" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Data') }}</a>
                 <ul id="open-data" role="menu" aria-orientation="vertical">
                     <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Data') }}</li>
                     <li role="separator"></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Create an Open Data Record') }}</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a></li>
                     {{ menu_link('experiment') }}
                     {{ menu_link('nap') }}
                     {{ menu_link('inventory') }}
@@ -29,8 +29,8 @@
                     <li role="presentation"></li>
                 </ul>
             </li>
-            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
-            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="pd" aria-expanded="false" href="#">{{ _('Proactive Disclosure') }}</a>
+            <li role="presentation"> <a id="mn-open-info" role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Open Information') }}</a></li>
+            <li role="presentation"> <a id="mn-pd" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="pd" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Proactive Disclosure') }}</a>
                 <ul id="pd" role="menu" aria-orientation="vertical">
                     <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Proactive Disclosure') }}</li>
                     <li role="separator"></li>
@@ -44,32 +44,32 @@
                     {{ menu_link('hospitalityq') }}
                     {{ menu_link('reclassification') }}
                     {{ menu_link('qpnotes') }}
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report">{{ _('Reports Tabled in Parliament') }}</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a></li>
                     {{ menu_link('travelq') }}
                     {{ menu_link('travela') }}
                     <li role="separator" aria-orientation="horizontal"></li>
-                    <li role="presentation"> <a data-keep-expanded="md-min" href="#" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="brf-pkg" aria-expanded="true">{{ _('Briefing packages') }}</a>
+                    <li role="presentation">{{ _('Briefing packages') }}
                         <ul id="brf-pkg" role="menu" aria-orientation="vertical">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition"><i class="fa fa-folder-open"></i>{{ _('New or incoming ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition_deputy"><i class="fa fa-folder-open"></i>{{ _('New or incoming deputy heads') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for deputy heads') }}</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search', portal_type='prop') }}">{{ _('Suggested Datasets') }}</a></li>
-            <li role="presentation"> <a  role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-dialogue" aria-expanded="false" href="#">{{ _('Open Dialogue') }}</a>
+            <li role="presentation"> <a id="mn-sug-datasets" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment"></i>{{ _('Suggested Datasets') }}</a></li>
+            <li role="presentation"> <a id="mn-open-dialogue" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-dialogue" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Dialogue') }}</a>
                 <ul id="open-dialogue" role="menu" aria-orientation="vertical">
                     <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Dialogue') }}</li>
                     <li role="separator"></li>
                     {{ menu_link('consultations') }}
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/static/data/consultations.csv">{{ _('Consultations master dataset') }}</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a></li>
                     <li role="separator" aria-orientation="horizontal"></li>
                     <li role="presentation"></li>
                 </ul>
             </li>
-            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}">{{ _('Search') }}</a></li>
+            <li role="presentation"> <a id="mn-search" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search') }}</a></li>
             <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
             {% endif %}
             <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
