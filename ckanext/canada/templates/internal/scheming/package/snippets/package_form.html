@@ -26,10 +26,12 @@
             <label>{{_('Portal Type')}}</label>
             <input class="form-control" readonly
               value="
-                {%- if dataset_type=='dataset' -%}
+                {%- if dataset_type == 'dataset' -%}
                   {{- _('Open Data') -}}
-                {%- elif dataset_type=='info' -%}
+                {%- elif dataset_type == 'info' -%}
                   {{- _('Open Information') -}}
+                {%- elif dataset_type == 'prop' -%}
+                  {{- _('Suggested Dataset') -}}
                 {%- endif -%}
               " />
             <small class="text-info">{{_('The portal to which the metadata record belongs (Open Data or Open Information)')}}</small>
@@ -57,4 +59,15 @@
     </li>
   </ul>
   {{ super() }}
+{% endblock %}
+
+{% block form_actions %}
+{# custom hack for suggested datasets #}
+{% if dataset_type == 'prop' %}
+  <div class="form-actions mrgn-tp-lg">
+  <button class="btn btn-primary" type="submit" name="save">{{ _('Save') }}</button>
+  </div>
+{% else %}
+  {{ super() }}
+{% endif %}
 {% endblock %}

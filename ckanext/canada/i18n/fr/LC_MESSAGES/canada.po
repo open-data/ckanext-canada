@@ -2605,11 +2605,75 @@ msgstr ""
 msgid "Experimentation Inventory"
 msgstr "Répertoire d'expérimentation"
 
+msgid "This field must be populated with an NA if an amendment is disclosed under Instrument Type."
+msgstr "Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument."
+
+msgid "If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)"
+msgstr "Si N/A, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA)."
+
+msgid "If the value XX (none) is entered, then no other value can be entered in this field."
+msgstr "Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ."
+
+msgid "If the value NA (not applicable) is entered, then no other value can be entered in this field."
+msgstr "Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ."
+
+msgid "This field must be NA (not applicable) if the Trade Agreement field is not XX (none)."
+msgstr "Ce champ doit être NA (aucune) si les champs Accord commercial ne contiennent pas la valeur XX (aucun)."
+
+msgid "If the value 00 (none) is entered, then no other value can be entered in this field."
+msgstr "Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ."
+
+msgid "This field must contain the first three digits of a postal code in A1A format or the value \"NA\""
+msgstr "Ce champ doit contenir les trois premiers chiffres d’un code postal dans le format A1A ou la valeur « NA. »"
+
+msgid "This field must be N, No or Non, if the Agreement Type or Trade Agreement field is not 0 (none) or XX (none), as applicable."
+msgstr "Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas échéant."
+
+msgid "This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS."
+msgstr "Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS."
+
+msgid "This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
+msgstr "Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC)."
+
+msgid "If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field."
+msgstr "Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le champ Type d’instrument."
+
+msgid "If this field is populated, it must be with a 1,2,3,4 or 5 if the procurement was identified as Open Bidding (OB), Selective Tendering (ST) or Traditional Competitive (TC)."
+msgstr "Si Cette zone est remplie, il doit contenir un 1, 2, 3, 4 ou 5 si l’acquisition a été identifiée comme étant OB : Concurrentielle – Invitation ouverte à soumissionner (SEAOG), ST : Concurrentielle – Appel d’offres sélectif ou TC : Concurrentielle – Traditionnelle."
+
+msgid "Commodity Type of G for Goods which requires a Delivery Date and not a Contract Period Start Date. Please either change the Commodity Type to S or remove the date from the Contract Period Start Date field"
+msgstr "Type de produit G pour les biens, ce qui requière une Date de livraison et non une Date de début du marché. Prière de changer le Type de produit pour S ou de retirer la date du champ Date de début du marché"
+
+msgid "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None)."
+msgstr "Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle)."
+
+msgid "If “AC” (Advanced Contract Award Notice) or “TN” (Non-competitive) is selected, Award Criteria must have a value of “0” (Not applicable)."
+msgstr "Si les options « AC » (préavis d’attribution de contrat) ou « TN » (non concurrentielle) sont sélectionnées, le champ Critère de mérite doit avoir une valeur de « 0 » (sans objet)."
+
+msgid "If “OB” (Competitive – Open bidding), “ST” (Selective Tendering) or “TC” (Competitive – Traditional) is selected, section 6 Government Contracts Regulations Exceptions must have a value of “0”."
+msgstr "Si les options « OB » (Concurrentielle – appel d’offres ouvert), « ST » (mise en concurrence) ou « TC » (Concurrentielle – Traditionnelle) sont sélectionnées, la section 6 des exceptions au Règlement sur les marchés de l’État doit avoir une valeur de « 0 »."
+
+msgid ""
+"If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered."
+msgstr ""
+"Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée."
+
+msgid ""
+"This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST))."
+msgstr ""
+"Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST))."
+
 msgid ""
 "Access, upload and modify the Experimentation Inventory for your organization"
 msgstr ""
 "Accès, téléversement et modifier le répertoire d'expérimentation pour votre "
 "organisation"
+
+msgid "This field is limited to only 3 or 4 digits."
+msgstr "Ce champ est limité à 3 ou 4 caractères."
+
+msgid "The field is limited to eight alpha-numeric digits or less."
+msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #: ckanext/GCWeb/templates/error_document_template.html:11
 #: ckanext/wet_boew/templates/error_document_template.html:6
@@ -3293,6 +3357,18 @@ msgstr "Passer au contenu principal"
 msgid "Skip to site information"
 msgstr "Passer aux informations sur le site"
 
+msgid "Suggested Dataset"
+msgstr "Jeu de données suggéré"
+
+msgid "Suggested Datasets"
+msgstr "Jeux de données suggérés"
+
+msgid "Access the suggested datasets that your organization has received in order to provide a status update."
+msgstr "Veuillez accéder aux jeux de données proposés que votre organisation a reçus afin de faire le point sur ceux-ci."
+
+msgid "Suggested Datasets - Update Status"
+msgstr "Le point sur les jeux de données proposés"
+
 #: ckanext/canada/templates/internal/snippets/user.html:49
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
@@ -3388,3 +3464,8 @@ msgstr "Une fois que ce document est marqué comme étant prêt à publier, la d
 msgid "The following is a question related to the record {url} found on {site}"
 msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {site}"
 
+msgid "Suggestion Status"
+msgstr "État de la suggestion"
+
+msgid "The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly."
+msgstr "L’état a été ajouté/mis à jour pour cet ensemble de données suggéré. Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
