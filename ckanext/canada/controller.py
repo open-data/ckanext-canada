@@ -82,9 +82,6 @@ class CanadaController(BaseController):
     def links(self):
         return render('home/quick_links.html')
 
-    def registry_menu(self):
-        return render("menu.html")
-
     def view_guidelines(self):
         return render('guidelines.html')
 

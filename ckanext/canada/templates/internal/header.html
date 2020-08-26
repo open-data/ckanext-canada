@@ -1,7 +1,4 @@
 {% ckan_extends %}
-{# set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') #}
-{# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
-{% set lang = h.lang() %}
 
 {% macro menu_link(r_type) %}
 {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
