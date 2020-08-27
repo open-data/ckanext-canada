@@ -179,11 +179,18 @@ Search Facet Formatters
       {% set preset_choices = [
           {'value': 'dataset', 'label': _('Open Data')},
           {'value': 'info', 'label': _('Open Information')},
+          {'value': 'prop', 'label': _('Suggested Datasets')},
           ] %}
       {% for t in h.recombinant_get_types() %}
         {% do preset_choices.append({
           'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
       {% endfor %}
+    {% elif field=='status' %}
+      {% set preset_choices = h.scheming_field_by_name(
+        h.scheming_field_by_name(
+          h.scheming_get_dataset_schema('prop').dataset_fields,
+          'status').repeating_subfields,
+        'reason').choices %}
     {% else %}
       {% set preset_choices =
         (h.scheming_get_preset('canada_' + field) or {}).get('choices', []) %}

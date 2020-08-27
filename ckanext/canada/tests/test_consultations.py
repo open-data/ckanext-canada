@@ -54,7 +54,7 @@ class TestConsultations(FunctionalTestBase):
         err = ve.exception.error_dict['records'][0]
         expected = {
             'publishable': ['Invalid choice: "Q"'],
-            'subjects': ['Invalid choice: "MATH, GEO"'],
+            'subjects': ['Invalid choice: "GEO,MATH"'],
             'title_en': ['This field must not be empty'],
             'description_fr': ['This field must not be empty'],
             'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],

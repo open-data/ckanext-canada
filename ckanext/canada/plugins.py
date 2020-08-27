@@ -69,11 +69,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
-            '/menu',
-            action='registry_menu',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
             '/user/logged_in',
             action='logged_in',
             controller='ckanext.canada.controller:CanadaUserController'
@@ -109,6 +104,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='publish',
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
+        )
+        map.connect(
+            '/dataset/edit/{id}',
+            action='edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
         )
         map.connect(
             '/dataset/{id}/resource_edit/{resource_id}',
@@ -167,6 +167,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
+            'mail_to_with_params',
         ])
 
     def configure(self, config):
@@ -180,6 +181,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             except ValidationError as e:
                 # reformat tab-delimited error as dict
                 head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                rerr = rerr.rstrip('\n')
                 if head == 'TAB-DELIMITED' and sep:
                     out = {}
                     it = iter(rerr.split('\t'))
@@ -268,6 +270,7 @@ ckanext.canada:schemas/presets.yaml
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
+ckanext.canada:schemas/prop.yaml
 """
 
         # Enable our custom DCAT profile.
@@ -307,6 +310,7 @@ ckanext.canada:schemas/info.yaml
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
+            'status': _('Suggestion Status'),
             })
 
         return facets_dict
@@ -355,6 +359,7 @@ ckanext.canada:schemas/info.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'survey_js_url',
+            'mail_to_with_params',
         ])
 
 
@@ -455,6 +460,14 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
+            'no_future_date':
+                validators.no_future_date,
             }
 
 
@@ -548,6 +561,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
+
+        status = data_dict.pop('status', None)  # suggested datasets
+        if isinstance(status, list):
+            data_dict['status'] = status[-1]['reason']
+
         return data_dict
 
     def before_view(self, pkg_dict):
@@ -720,6 +738,7 @@ ckanext.canada:schemas/doc.yaml
             'get_translated_t',
             'language_text_t',
             'survey_js_url',
+            'mail_to_with_params',
             ]),
             )
 

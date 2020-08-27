@@ -82,9 +82,6 @@ class CanadaController(BaseController):
     def links(self):
         return render('home/quick_links.html')
 
-    def registry_menu(self):
-        return render("menu.html")
-
     def view_guidelines(self):
         return render('guidelines.html')
 
@@ -101,7 +98,7 @@ class CanadaController(BaseController):
             # Try to load FAQ text for the user's language.
             faq_text = _get_help_text(c.language)
         except IOError:
-            # Fall back to using English if no local langauge could be found.
+            # Fall back to using English if no local language could be found.
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
@@ -131,9 +128,14 @@ class CanadaController(BaseController):
             # Move the summary tag to the top of the details tag.
             details.insert(0, summary)
 
-            # We don't actaully want the FAQ headers to be headings, so strip
+            # We don't actually want the FAQ headers to be headings, so strip
             # the tags and just leave the text.
             faq_section.drop_tag()
+
+        # Get FAQ group header and set it as heading 2 to comply with
+        # accessible heading ranks
+        for faq_group in h.xpath('//h1'):
+            faq_group.tag = 'h2'
 
         return render('help.html', extra_vars={
             'faq_html': html.tostring(h),
@@ -186,10 +188,20 @@ class CanadaController(BaseController):
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
-        )
+        try:
+            unfiltered_response = lc.action.datastore_search(
+                resource_id=resource_id,
+                limit=1,
+            )
+        except NotAuthorized:
+            # datatables js can't handle any sort of error response
+            # return no records instead
+            return json.dumps({
+                'draw': draw,
+                'iTotalRecords': -1,  # with a hint that something is wrong
+                'iTotalDisplayRecords': -1,
+                'aaData': [],
+            })
 
         cols = [f['datastore_id'] for f in chromo['fields']]
         prefix_cols = 1 if chromo.get('edit_form', False) else 0
@@ -327,6 +339,15 @@ def datatablify(v, colname):
 
 
 class CanadaDatasetController(PackageController):
+    def edit(self, id, data=None, errors=None, error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).edit(
+                id, data, errors, error_summary)
+        except HTTPFound:
+            if c.pkg_dict['type'] == 'prop':
+                h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+            raise
+
     def resource_edit(self, id, resource_id, data=None, errors=None,
                       error_summary=None):
         try:
