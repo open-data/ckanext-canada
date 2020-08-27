@@ -505,12 +505,36 @@ footer {
     padding-left: 12px;
 }
 
-#ql-open-data { border-left: solid 3px #088; }
-#ql-sug-datasets { border-left: solid 3px #f80; }
-#ql-open-dialogue { border-left: solid 3px #f08; }
-#ql-open-info { border-left: solid 3px #80f; }
-#ql-search { border-left: solid 3px #888; }
-#ql-pd { border-left: solid 3px #44f; }
+#quick-links h2 { margin-top: 11.5px; }
+
+#ql-open-data { border-left: solid 3px #088; border-top: solid 1px #ddd; }
+#ql-open-data i { color: #088; margin-right: 10px; }
+#mn-open-data { border-left: solid 6px #088; }
+#open-data i { color: #088; }
+
+#ql-sug-datasets { border-left: solid 3px #f80; border-top: solid 1px #ddd; }
+#ql-sug-datasets i { color: #f88; margin-right: 10px; }
+#mn-sug-datasets { border-left: solid 6px #f80; }
+
+#ql-open-dialogue { border-left: solid 3px #f08; border-top: solid 1px #ddd; }
+#ql-open-dialogue i { color: #f08; margin-right: 10px; }
+#mn-open-dialogue { border-left: solid 6px #f08; }
+#open-dialogue i { color: #f08; }
+ul#brf-pkg { padding-left: 0; }
+#brf-pkg li { list-style: none; }
+
+#ql-open-info { border-left: solid 3px #80f; border-top: solid 1px #ddd; }
+#ql-open-info i { color: #80f; margin-right: 10px; }
+#mn-open-info { border-left: solid 6px #80f; }
+
+#ql-search { border-left: solid 3px #888; border-top: solid 1px #ddd; }
+#ql-search i { color: #888; margin-right: 10px; }
+#mn-search { border-left: solid 6px #888; }
+
+#ql-pd { border-left: solid 3px #44a; border-top: solid 1px #ddd; }
+#ql-pd i { color: #44a; margin-right: 10px; }
+#mn-pd { border-left: solid 6px #44a; }
+#pd i { color: #44a; }
 
 .label.dataset-private { display: none; }
 
@@ -557,7 +581,7 @@ footer {
     font-weight: 400;
 }
 
-.gcweb-menu [aria-haspopup]:not(button)::before {
-    content: "\25BA\a0";
+.gcweb-menu i {
+    margin-right: 10px;
 }
 
