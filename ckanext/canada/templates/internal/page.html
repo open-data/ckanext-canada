@@ -43,11 +43,10 @@
   {% if c.userobj %}
     <section id="timeout" class="mfp-hide modal-dialog modal-content overlay-def">
       <header class="modal-header">
-        <h2 class="modal-title">{{ _('Your user session has timed out due to inactivity') }}</h2>
+        <h2 class="modal-title">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
       </header>
       <div class="modal-body">
-        {{ _('If you are currently entering data on this page, you may lose it when submitting. You can click on the log in button
-        below to log in again in a new tab, without losing your progress. You can then keep working on this page.') }}
+        {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
       </div>
       <div class="modal-footer">
         <a href="{% url_for controller='user', action='login' %}" target="_blank" class="btn btn-default btn-sm">
