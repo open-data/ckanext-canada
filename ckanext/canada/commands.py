@@ -197,6 +197,7 @@ class CanadaCommand(CkanCommand):
             time.sleep(self.options.delay)
 
     def _portal_update(self, portal_ini, activity_date):
+        # determine activity date
         if activity_date:
             past = re.match(PAST_RE, activity_date)
             if past:
@@ -219,6 +220,7 @@ class CanadaCommand(CkanCommand):
         registry = LocalCKAN()
 
         def changed_package_id_runs(start_date):
+            # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = self._changed_packages_since(
                     registry, start_date)
@@ -227,6 +229,7 @@ class CanadaCommand(CkanCommand):
                 yield packages, next_date
                 start_date = next_date
 
+        # copy the changed packages to portal
         cmd = [
             sys.argv[0],
             'canada',
@@ -313,7 +316,30 @@ class CanadaCommand(CkanCommand):
         for result in data:
             package_id = result['data']['package']['id']
             try:
-                packages.append(json.dumps(registry.action.package_show(id=package_id)))
+                source_package = registry.action.package_show(id=package_id)
+                for source_resource in source_package['resources']:
+                    # check if resource exists in datastore
+                    source_table = registry.call_action('datastore_search',
+                                                        {'id': source_resource['id'], 'limit': 0})
+                    if source_table:
+                        from ckanext.datastore.helpers import datastore_dictionary
+                        import simplejson
+
+                        # fetch all records
+                        source_records = registry.call_action('datastore_search',
+                                                              {'id': source_resource['id'],
+                                                               'limit': source_table['total']})
+                        for record in source_records['records']:
+                            record.pop('_id', None)
+
+                        # add views, data dictionary and datastore values for each resource of the source package
+                        source_package[source_resource['id']] = {
+                            "views": registry.call_action('resource_view_list', {'id': source_resource['id']}),
+                            "data_dict": datastore_dictionary(source_resource['id']),
+                            "datastore_records": simplejson.dumps(source_records['records']),
+                        }
+
+                packages.append(json.dumps(source_package))
             except NotFound:
                 pass
 
@@ -408,6 +434,35 @@ class CanadaCommand(CkanCommand):
             else:
                 action = 'updated'
                 portal.action.package_update(**source_pkg)
+                # create datastore table and views for each resource
+                for src_res in source_pkg['resources']:
+                    res_id = src_res['id']
+                    if res_id in source_pkg.keys():
+                        # delete resource and recreate table to capture changes made to columns or data
+                        # it would also avoid appending records to an existing resource table by datastore_create
+                        try:
+                            portal.call_action('datastore_delete', {"id": res_id, "force": True})
+                        except NotFound:
+                            # not an issue, resource does not exist in datastore
+                            pass
+
+                        # create table and load data in target datastore
+                        portal.call_action('datastore_create',
+                                           {"resource_id": res_id,
+                                            "fields": source_pkg[res_id]['data_dict'],
+                                            "records": json.loads(source_pkg[res_id]['datastore_records']),
+                                            "force": True})
+
+                        # create or update views for each resource
+                        target_views = portal.call_action('resource_view_list', {'id': res_id})
+                        for src_view in source_pkg[res_id]['views']:
+                            view_action = 'resource_view_create'
+                            for target_view in target_views:
+                                if target_view['id'] == src_view['id']:
+                                    view_action = 'resource_view_update'
+                                    break
+
+                            portal.call_action(view_action, src_view)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
