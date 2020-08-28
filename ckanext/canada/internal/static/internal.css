@@ -596,3 +596,9 @@ ul#brf-pkg { padding-left: 0; }
     text-align: right;
     margin-top: 18px;
 }
+
+@media screen and (min-width: 995px) {
+    #user_nav {
+        margin-top: -57px;
+    }
+}
