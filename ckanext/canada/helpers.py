@@ -502,4 +502,4 @@ def mail_to_with_params(email_address, name, subject, body):
     return html
 
 def get_timeout_length():
-    return config.get('who.timeout')
+    return config.get('beaker.session.timeout')
