@@ -118,4 +118,10 @@ details.alert-error {
 .resource-tags {
     text-align: left;
     white-space: inherit;
+    word-break: break-word;
 }
+
+#resource-desc {
+    word-break: break-word;
+}
+
