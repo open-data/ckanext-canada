@@ -7,7 +7,7 @@
   {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
           <li>
-            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload mrgn-rght-sm"></i>{{ _(label) }}</a>
+            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
             <a class="wb-lbx" href="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="{{ r_type }}" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -34,7 +34,7 @@
         <h2 class="h5">{{ _('Open Data') }}</h2>
         <ul class="list-unstyled">
           <li>
-            <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create an Open Data Record') }}</a>
+            <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a>
             <a class="wb-lbx" href="#new_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="new_od" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -54,7 +54,7 @@
         <h2 class="h5">{{ _('Open Information') }}</h2>
         <ul class="list-unstyled">
           <li>
-            <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Create Information Asset') }}</a>
+            <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create Information Asset') }}</a>
             <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -71,7 +71,7 @@
         <h2 class="h5">{{ _('Suggested Datasets') }}</h2>
         <ul class="list-unstyled">
           <li>
-            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment mrgn-rght-sm"></i>{{ _('Update Status') }}</a>
+            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment"></i>{{ _('Update Status') }}</a>
             <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -89,7 +89,7 @@
         <ul class="list-unstyled">
           {{ quick_link('consultations') }}
           <li>
-            <a href="/static/data/consultations.csv"><i class="fa fa-download mrgn-rght-sm"></i>{{ _('Consultations master dataset') }}</a>
+            <a href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a>
             <a class="wb-lbx" href="#consultations_master"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="consultations_master" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -106,7 +106,7 @@
         <h2 class="h5">{{ _('Search') }}</h2>
         <ul class="list-unstyled">
           <li>
-            <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search All Records') }}</a>
+            <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search All Records') }}</a>
             <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -119,7 +119,7 @@
           </li>
           {% set org = orgs[0] %}
           <li>
-            <a href="{{ h.url_for('dataset_search', organization=org.name) }}"><i class="fa fa-search mrgn-rght-sm"></i>{{ _('Search your Organization Records') }}</a>
+            <a href="{{ h.url_for('dataset_search', organization=org.name) }}"><i class="fa fa-search"></i>{{ _('Search your Organization Records') }}</a>
             <a class="wb-lbx" href="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="search_org" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -131,7 +131,7 @@
             </section>
           </li>
           <li>
-            <a href="{{ h.url_for('organization_members', id=org.name) }}"><i class="fa fa-users mrgn-rght-sm"></i>{{ _('View Members of your Organization') }}</a>
+            <a href="{{ h.url_for('organization_members', id=org.name) }}"><i class="fa fa-users"></i>{{ _('View Members of your Organization') }}</a>
             <a class="wb-lbx" href="#view_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="view_org" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -159,7 +159,7 @@
           {{ quick_link('hospitalityq') }}
           {{ quick_link('reclassification') }}
           {{ quick_link('qpnotes') }}
-            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Reports Tabled in Parliament') }}</a>
+            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a>
             <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
@@ -173,7 +173,7 @@
           {{ quick_link('travelq') }}
           {{ quick_link('travela') }}
           <li>
-            <i class="fa fa-folder-open mrgn-rght-sm"></i>{{ _('Briefing packages') }}
+            <i class="fa fa-folder-open"></i>{{ _('Briefing packages') }}
             <ul class="small" style="list-style-type: disc">
               <li>
                 <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a>

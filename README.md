@@ -73,6 +73,8 @@ ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
 canada.portal_url = http://myserver.com
 
 adobe_analytics.js = //path to the js file needed to trigger Adobe Analytics
+
+foresee.survey_js_url = // path to the js file for adding a layer of Foresee survey for conducting user experience testing 
 ```
 
 Both servers need:

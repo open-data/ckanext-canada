@@ -69,11 +69,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
-            '/menu',
-            action='registry_menu',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
             '/user/logged_in',
             action='logged_in',
             controller='ckanext.canada.controller:CanadaUserController'
@@ -364,6 +359,7 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
             'adobe_analytics_js',
+            'survey_js_url',
             'mail_to_with_params',
         ])
 
@@ -568,7 +564,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['title_string'] = titles.get('en', '')
 
         status = data_dict.pop('status', None)  # suggested datasets
-        if status:
+        if isinstance(status, list):
             data_dict['status'] = status[-1]['reason']
 
         return data_dict
@@ -742,6 +738,7 @@ ckanext.canada:schemas/doc.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'survey_js_url',
             'mail_to_with_params',
             ]),
             )
