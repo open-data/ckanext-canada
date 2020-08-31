@@ -256,6 +256,16 @@
   <div data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
 {% endblock %}
 
+{% block more_like_this %}
+  <section class="panel panel-primary">
+    <header class="panel-heading">
+      <h5 class="panel-title">More Like This</h5>
+    </header>
+    <div data-ajax-replace="{{ h.search_url() }}/{{ h.lang() }}/od/mlt/{{ c.pkg_dict.id }}" class="panel-body">
+    </div>
+  </section>
+{% endblock %}
+
 {% block package_comments %}
   <a name="comments"></a>
   <section class="indent-large">
