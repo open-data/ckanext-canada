@@ -259,7 +259,7 @@
 {% block more_like_this %}
   <section class="panel panel-primary">
     <header class="panel-heading">
-      <h5 class="panel-title">More Like This</h5>
+      <h5 class="panel-title">{{ _('More datasets like this') }}</h5>
     </header>
     <div data-ajax-replace="{{ h.search_url() }}/{{ h.lang() }}/od/mlt/{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
