@@ -7,7 +7,7 @@
   {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
           <li>
-            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-import"></i>{{ _(label) }}</a>
+            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
             <a class="wb-lbx" href="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
             <section id="{{ r_type }}" class="mfp-hide modal-dialog modal-content overlay-def">
               <header class="modal-header">
