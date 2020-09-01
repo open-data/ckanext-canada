@@ -568,9 +568,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
 
-        status = data_dict.pop('status', None)  # suggested datasets
-        if isinstance(status, list):
-            data_dict['status'] = status[-1]['reason']
+        if data_dict['type'] == 'prop':
+            status = data_dict.get('status')
+            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
 
         return data_dict
 
