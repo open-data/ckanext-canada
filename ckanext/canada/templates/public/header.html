@@ -44,6 +44,8 @@
       </nav>
   {% endblock %}
 
+    {% block signed_on_off %}{% endblock %}
+
   {% block breadcrumb %}
     {% if breadcrumb_content() | trim %}
       <nav role="navigation" id="wb-bc" property="breadcrumb">
@@ -57,7 +59,5 @@
       </nav>
     {% endif %}
   {% endblock %}
-
-  {% block signed_on_off %}{% endblock %}
 </header>
 {% endblock %}
