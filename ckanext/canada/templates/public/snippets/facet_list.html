@@ -5,7 +5,7 @@
 
 
 {% block facet_list_heading %}
-  <div class="panel-heading"><span class="glyphicon glyphicon-filter"></span> {{ title or h.get_facet_title(name) }}</div>
+  <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i> {{ title or h.get_facet_title(name) }}</div>
 {% endblock %}
 
 {% block facet_list_item %}
@@ -47,19 +47,19 @@
                 {% if h.get_param_int('_%s_limit' % name) %}
                   <li><a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}"
                          title="{{_('Show more')}} {{facet_name}}">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
                     {{ _('Show more')}}</a></li>
                 {% else %}
                   <li><a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}"
                          title="{{_('Show less')}} {{facet_name}}">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
                     {{ _('Show less') }}</a></li>
                 {% endif %}
               {% endif %}
               <li>
                 <a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action small"
                      title="{{_('Clear All')}} {{facet_name}}">
-                  <span class="glyphicon glyphicon-remove"></span> {{ _('Clear All') }}</a></li>
+                  <i class="fa fa-times" aria-hidden="true"></i> {{ _('Clear All') }}</a></li>
                 </a>
               </li>
             </ul>
