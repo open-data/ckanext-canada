@@ -3402,3 +3402,7 @@ msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {s
 
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
+
+#: ckanext/canada/templates/internal/scheming/snippets/form_field.html
+msgid "Are you sure you want to delete this status?"
+msgstr "Voulez-vous vraiment supprimer ce statut?"
