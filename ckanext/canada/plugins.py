@@ -168,6 +168,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
             'mail_to_with_params',
+            'get_timeout_length',
         ])
 
     def configure(self, config):

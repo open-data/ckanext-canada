@@ -6,6 +6,45 @@
 {% endmacro %}
 
 {% block sitesearch %}{% endblock %}
+{% block user_logged %}
+    {% if c.userobj %}
+    <div id="usr-logged" class="col-md-6">
+        <ul class="list-inline">
+            <li>
+                {{ _('Signed in as') }}
+                <a href="{{ h.url_for(controller='user', action='dashboard') }}" class="image" title="{{ _('View profile') }}">
+                    {% if h.gravatar_show() %}
+                    {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
+                    {% endif %}
+                    <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+            </li>
+            {% block header_account_log_out_link %}
+            <li>
+                <a href="{{ h.url_for(controller='user', action='logout') }}" title="{{ _('Log out') }}" class="btn btn-primary">
+                    <span class="fa fa-sign-out"></span>
+                    <span class="text">{{ _('Log out') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+        </ul>
+    </div>
+    {% else %}
+    <div id="usr-logged" class="col-md-6">
+        <ul class="list-inline">
+            {% block header_account_notlogged %}
+            <li>
+                <a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">
+                    <span class="fa fa-sign-in"></span>
+                    <span class="text">{{ _('Log in') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
+
 
 {% block sitemenu %}
 <nav class="gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2">
@@ -96,13 +135,5 @@
 {% endblock %}
 
 {% block signed_on_off %}
-{%- if c.userobj -%}
-  <div class="container">
-      <div class="row">
-        {% block header_account_logged %}
           {% snippet 'snippets/user.html' %}
-        {% endblock %}
-      </div>
-  </div>
-{%- endif -%}
 {% endblock %}
