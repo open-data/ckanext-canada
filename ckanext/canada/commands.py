@@ -332,8 +332,9 @@ class CanadaCommand(CkanCommand):
                         for record in source_records['records']:
                             record.pop('_id', None)
 
-                        # add views, data dictionary and datastore values for each resource of the source package
+                        # add hash, views, data dictionary and datastore values for each resource of the source package
                         source_package[source_resource['id']] = {
+                            "hash": source_resource.get('hash'),
                             "views": registry.call_action('resource_view_list', {'id': source_resource['id']}),
                             "data_dict": datastore_dictionary(source_resource['id']),
                             "datastore_records": simplejson.dumps(source_records['records']),
@@ -433,36 +434,16 @@ class CanadaCommand(CkanCommand):
                 reason = 'no difference found'
             else:
                 action = 'updated'
+                target_hash = {}
+                for r in target_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
                 portal.action.package_update(**source_pkg)
                 # create datastore table and views for each resource
                 for src_res in source_pkg['resources']:
                     res_id = src_res['id']
                     if res_id in source_pkg.keys():
-                        # delete resource and recreate table to capture changes made to columns or data
-                        # it would also avoid appending records to an existing resource table by datastore_create
-                        try:
-                            portal.call_action('datastore_delete', {"id": res_id, "force": True})
-                        except NotFound:
-                            # not an issue, resource does not exist in datastore
-                            pass
-
-                        # create table and load data in target datastore
-                        portal.call_action('datastore_create',
-                                           {"resource_id": res_id,
-                                            "fields": source_pkg[res_id]['data_dict'],
-                                            "records": json.loads(source_pkg[res_id]['datastore_records']),
-                                            "force": True})
-
-                        # create or update views for each resource
-                        target_views = portal.call_action('resource_view_list', {'id': res_id})
-                        for src_view in source_pkg[res_id]['views']:
-                            view_action = 'resource_view_create'
-                            for target_view in target_views:
-                                if target_view['id'] == src_view['id']:
-                                    view_action = 'resource_view_update'
-                                    break
-
-                            portal.call_action(view_action, src_view)
+                        action = action + ' ' + _add_to_datastore(portal, src_res, source_pkg[res_id], target_hash)
+                        action = action + ' ' + _add_views(portal, src_res, source_pkg[res_id])
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -524,7 +505,7 @@ def _trim_package(pkg):
     for r in pkg['resources']:
         for k in ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
-                'webstore_last_updated', 'state', 'hash',
+                'webstore_last_updated', 'state',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
                 'last_modified', 'position']:
@@ -544,6 +525,46 @@ def _trim_package(pkg):
     for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
+
+
+def _add_to_datastore(portal, resource, resource_details, t_hash):
+    action = ''
+    try:
+        ds = portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
+        if t_hash.get(resource['id']) and t_hash.get(resource['id']) == resource.get('hash'):
+            return action
+        else:
+            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+            action += 'datastore-deleted ' + resource['id']
+    except NotFound:
+        # not an issue, resource does not exist in datastore
+        pass
+
+    portal.call_action('datastore_create',
+                       {"resource_id": resource['id'],
+                        "fields": resource_details['data_dict'],
+                        "records": json.loads(resource_details['datastore_records']),
+                        "force": True})
+
+    action += 'datastore-created ' + resource['id']
+    return action
+
+
+def _add_views(portal, resource, resource_details):
+    action = ''
+    target_views = portal.call_action('resource_view_list', {'id': resource['id']})
+    for src_view in resource_details['views']:
+
+        view_action = 'resource_view_create'
+        for target_view in target_views:
+            if target_view['id'] == src_view['id']:
+                view_action = None if target_view == src_view else 'resource_view_update'
+
+        if view_action:
+            portal.call_action(view_action, src_view)
+            action = action + view_action + ' ' + src_view['id']
+
+    return action
 
 
 @contextmanager
