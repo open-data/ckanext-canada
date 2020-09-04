@@ -560,7 +560,7 @@ resources:
           errors := errors || required_error(NEW.month, 'month');
           errors := errors || choice_error(NEW.month, {month}, 'month');
           IF NEW.year > date_part('year', CURRENT_DATE) THEN
-            errors := errors || ARRAY[['year', 'The year must be the current year or from past years.']];
+            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
           END IF;
           IF errors = '{{}}' THEN
             RETURN NEW;
