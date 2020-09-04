@@ -30,6 +30,10 @@ from ckanapi import (
     CKANAPIError
 )
 
+import ckanext.datastore.backend.postgres as datastore
+from ckanext.datastore.helpers import datastore_dictionary
+import subprocess
+
 PAST_RE = (
     r'^'
     # Days
@@ -54,7 +58,7 @@ class CanadaCommand(CkanCommand):
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-p <num>] [-m]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
-                      copy-datasets [-m]
+                      copy-datasets [-m] [-o <source url>]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
                       rebuild-external-search [-r | -f]
@@ -87,6 +91,7 @@ class CanadaCommand(CkanCommand):
                                     second Solr core
         -f/--freshen                When rebuilding the advanced search Solr core
                                     re-index all datasets, but do not purge the Solr core
+        -o/--source <source url>    source datastore url to copy datastore records
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -127,6 +132,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('--portal', dest='portal', action='store_true')
     parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
     parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
+    parser.add_option('-o', '--source', dest='src_ds_url', default=None)
 
     def command(self):
         '''
@@ -218,6 +224,7 @@ class CanadaCommand(CkanCommand):
             log = open(self.options.log, 'a')
 
         registry = LocalCKAN()
+        source_ds = str(datastore.get_write_engine().url)
 
         def changed_package_id_runs(start_date):
             # retrieve a list of changed packages from the registry
@@ -235,7 +242,9 @@ class CanadaCommand(CkanCommand):
             'canada',
             'copy-datasets',
             '-c',
-            portal_ini
+            portal_ini,
+            '-o',
+            source_ds,
         ]
         if self.options.mirror:
             cmd.append('-m')
@@ -322,22 +331,11 @@ class CanadaCommand(CkanCommand):
                     source_table = registry.call_action('datastore_search',
                                                         {'id': source_resource['id'], 'limit': 0})
                     if source_table:
-                        from ckanext.datastore.helpers import datastore_dictionary
-                        import simplejson
-
-                        # fetch all records
-                        source_records = registry.call_action('datastore_search',
-                                                              {'id': source_resource['id'],
-                                                               'limit': source_table['total']})
-                        for record in source_records['records']:
-                            record.pop('_id', None)
-
-                        # add hash, views, data dictionary and datastore values for each resource of the source package
+                        # add hash, views and data dictionary for each resource of the source package
                         source_package[source_resource['id']] = {
                             "hash": source_resource.get('hash'),
                             "views": registry.call_action('resource_view_list', {'id': source_resource['id']}),
                             "data_dict": datastore_dictionary(source_resource['id']),
-                            "datastore_records": simplejson.dumps(source_records['records']),
                         }
 
                 packages.append(json.dumps(source_package))
@@ -358,6 +356,8 @@ class CanadaCommand(CkanCommand):
         or 'unchanged'
         """
         portal = LocalCKAN()
+
+        source_ds = self.options.src_ds_url
 
         now = datetime.now()
 
@@ -442,7 +442,7 @@ class CanadaCommand(CkanCommand):
                 for src_res in source_pkg['resources']:
                     res_id = src_res['id']
                     if res_id in source_pkg.keys():
-                        action = action + ' ' + _add_to_datastore(portal, src_res, source_pkg[res_id], target_hash)
+                        action = action + ' ' + _add_to_datastore(portal, src_res, source_pkg[res_id], target_hash, source_ds)
                         action = action + ' ' + _add_views(portal, src_res, source_pkg[res_id])
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
@@ -527,7 +527,7 @@ def _trim_package(pkg):
             pkg[k] = ''
 
 
-def _add_to_datastore(portal, resource, resource_details, t_hash):
+def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url):
     action = ''
     try:
         ds = portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
@@ -535,7 +535,7 @@ def _add_to_datastore(portal, resource, resource_details, t_hash):
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
-            action += 'datastore-deleted ' + resource['id']
+            action += resource['id'] + ' datastore-deleted '
     except NotFound:
         # not an issue, resource does not exist in datastore
         pass
@@ -543,10 +543,16 @@ def _add_to_datastore(portal, resource, resource_details, t_hash):
     portal.call_action('datastore_create',
                        {"resource_id": resource['id'],
                         "fields": resource_details['data_dict'],
-                        "records": json.loads(resource_details['datastore_records']),
                         "force": True})
 
-    action += 'datastore-created ' + resource['id']
+    action += resource['id'] + ' datastore-created'
+
+    # load data
+    target_ds_url = str(datastore.get_write_engine().url)
+    cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
+    cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = cmd2.communicate()
+    action += ' data-loaded' if not result[1] else ' data-load-failed'
     return action
 
 
