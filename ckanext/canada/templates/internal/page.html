@@ -41,7 +41,7 @@
   {%- endblock -%}
 
   {%- block session_timeout_footer -%}
-  {% if c.userobj %}
+  {% if c.userobj and h.get_timeout_length() %}
     <section id="timeout" class="mfp-hide modal-dialog modal-content overlay-def">
       <header class="modal-header">
         <h2 class="modal-title">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
