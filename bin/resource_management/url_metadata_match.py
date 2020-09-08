@@ -31,7 +31,7 @@ with open(url_database) as csvfile:
         date = row["date"]
         response = row["response"]
         content_length = row["content-length"].encode('utf-8')
-        if response == 'N/A' in response:
+        if 'N/A' in response:
             broken_links[url] = [date, response]
         else:
             response_int = int(response.split('[')[1].split(']')[0])
