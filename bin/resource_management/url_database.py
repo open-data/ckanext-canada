@@ -11,6 +11,7 @@ batch_size - maximum number of URL's to test in parallel
 import sys
 import grequests
 import requests
+import requests_ftp
 import fileinput
 from datetime import datetime
 import json
@@ -30,6 +31,7 @@ batch_urls = []
 url_match = []
 responses = []
 date = []
+ftp_urls = []
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
 
 def check_for_connection():
@@ -47,12 +49,16 @@ print("Starting...")
 print("Reading and testing URL's")
 
 for i, dataset in enumerate(open(file), 1):
+    if i == 100:
+        break
     line = json.loads(dataset)
     resources = line["resources"]
     for l in range(len(resources)):
         url = resources[l]["url"].encode('utf-8')
         if url in urls:
             continue
+        elif 'ftp://' in url:
+            ftp_urls.append(url)
         else:
             urls.add(url)
             now = datetime.now()
@@ -85,7 +91,36 @@ responses.append(batch_response)
 for r in batch_response:
     if not r is None:
         r.close()
-dataset_urls = []
+
+#Testing FTP urls
+ftp_batch = []
+ftp_response = []
+
+requests_ftp.monkeypatch_session()
+
+for i, url in enumerate(ftp_urls):
+    sys.stderr.write("\r")
+    sys.stderr.write("Testing FTP {0} of {1}".format(i, len(ftp_urls)))
+    s = requests.Session()
+    try:
+        resp = s.head(url,timeout=120, headers=headers, verify=False, allow_redirects=True, stream=False)
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+        date.append(dt_string.encode('utf-8'))
+        ftp_batch.append(url)
+        ftp_response.append(resp)
+        if not resp is None:
+            s.close()
+        if i%batch_size == 0:
+            check_for_connection()
+    except requests.exceptions.RequestException as e:
+        print str(e)
+        ftp_batch.append(url)
+        ftp_response.append(None)
+        continue
+
+responses.append(ftp_response)
+url_match.append(ftp_batch)
 
 print("Fetching content data...")
 
