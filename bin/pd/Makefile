@@ -230,9 +230,10 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	@echo Rebuilding Contracts Quarterly...
-	@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
-	-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
+	# disable publishing contracts until search is deployed 2020-08-25
+	#@echo Rebuilding Contracts Quarterly...
+	#@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
+	#-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
@@ -240,11 +241,10 @@ $(workdir)/contracts.csv:
 $(workdir)/contracts-nil.csv:
 	$(paster) $(combine) contracts-nil -d $(workdir) -c $(registry_ini)
 
-# XXX: no tracking data on contracts records yet
 $(workdir)/filtered/contracts.csv: $(workdir)/contracts.csv
-	cp $< $@
+	$(fdir)/filter_contracts.py < $< > $@
 $(workdir)/filtered/contracts-nil.csv: $(workdir)/contracts-nil.csv
-	cp $< $@
+	$(fdir)/filter_contracts_nil.py < $< > $@
 
 ###
 ###  Aggregated Contracts
@@ -546,13 +546,14 @@ service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	@echo Uploading Service Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
-	> /dev/null
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
-	> /dev/null
+	# disable publishing service inventory as of 2020-06-08
+	# @echo Uploading Service Inventory...
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
+	# > /dev/null
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
+	# > /dev/null
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv

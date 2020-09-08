@@ -82,9 +82,6 @@ class CanadaController(BaseController):
     def links(self):
         return render('home/quick_links.html')
 
-    def registry_menu(self):
-        return render("menu.html")
-
     def view_guidelines(self):
         return render('guidelines.html')
 
@@ -191,10 +188,20 @@ class CanadaController(BaseController):
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
-        )
+        try:
+            unfiltered_response = lc.action.datastore_search(
+                resource_id=resource_id,
+                limit=1,
+            )
+        except NotAuthorized:
+            # datatables js can't handle any sort of error response
+            # return no records instead
+            return json.dumps({
+                'draw': draw,
+                'iTotalRecords': -1,  # with a hint that something is wrong
+                'iTotalDisplayRecords': -1,
+                'aaData': [],
+            })
 
         cols = [f['datastore_id'] for f in chromo['fields']]
         prefix_cols = 1 if chromo.get('edit_form', False) else 0
@@ -332,6 +339,15 @@ def datatablify(v, colname):
 
 
 class CanadaDatasetController(PackageController):
+    def edit(self, id, data=None, errors=None, error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).edit(
+                id, data, errors, error_summary)
+        except HTTPFound:
+            if c.pkg_dict['type'] == 'prop':
+                h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+            raise
+
     def resource_edit(self, id, resource_id, data=None, errors=None,
                       error_summary=None):
         try:

@@ -73,6 +73,8 @@ ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
 canada.portal_url = http://myserver.com
 
 adobe_analytics.js = //path to the js file needed to trigger Adobe Analytics
+
+foresee.survey_js_url = // path to the js file for adding a layer of Foresee survey for conducting user experience testing 
 ```
 
 Both servers need:
@@ -216,9 +218,61 @@ nltk.download('punkt')
 
 If not integrating, these settings may be omitted or `ckanext.canada.adv_search_enabled` may be set to `False`.
 
+## Migrating Proactive Disclosure (recombinant) data
+
+First extract the current version of the data from the registry for each table, e.g for contracts migrations
+we need contracts.csv and contracts-nil.csv:
+
+```bash
+mkdir migrate-contracts-2020-08-07  # a new working directory
+paster --plugin=ckanext-recombinant recombinant combine contracts contracts-nil -d migrate-contracts-2020-07-08 -c $REGISTRY_INI
+```
+
+Remove the old tables from the database so that tables with the new schema can be created when we load the migrated
+data, deleting contracts will delete both the contracts and contracts-nil tables:
+
+```bash
+paster --plugin=ckanext-recombinant recombinant delete contracts -c $REGISTRY_INI
+```
+
+Deploy the new version of the code, for our prod registry site that would be:
+
+```bash
+fab pull registry
+```
+
+Migrate the data with the script deployed as part of the changes. The output csv files need to have
+the same names as the input files for loading to work in the next step.
+
+```bash
+cd migrate-contracts-2020-08-07
+mkdir new err  # for migrated data and error logs
+.../ckanext-canada/bin/migrate/migrate_contracts_2019_11.py <contracts.csv >new/contracts.csv 2>err/contracts.err
+.../ckanext-canada/bin/migrate/migrate_contracts_nil_2019_11.py <contracts-nil.csv >new/contracts-nil.csv 2>err/contracts-nil.err
+ls -al err
+```
+
+Records removed in the data migration will appear in the error logs.
+Also check that the migrated data is comparable in size to the original
+data in just in case something interrupted the migration.
+
+Load the migrated data back into the registry, capturing any validation errors:
+
+```bash
+paster --plugin=ckanext-recombinant recombinant load-csv new/contracts.csv new/contracts-nil.csv -c $REGISTRY_INI 2>err/load-contracts.err
+ls -al err/load-contracts.err
+```
+
+If there are validation errors or records removed during migration, consider
+revising the migration script to allow more records to be migrated without manual intervention.
+
+Inform the business owner or source departments about all records that were removed as part of the
+final data migration or due to validation errors so that data can be corrected and re-imported.
+
+
 ## Proactive Disclosure Data Flow
 
-![data flow diagram](pd-data-flow.svg)
+![data flow diagram](docs/pd-data-flow.svg)
 
 1. ckanext-canada (this repository)
    - [PD yaml files](ckanext/canada/tables) are read by ckanext-recombinant and used to
@@ -256,3 +310,40 @@ If not integrating, these settings may be omitted or `ckanext.canada.adv_search_
    - data element profile
 6. [ogc_search](https://github.com/open-data/ogc_search)
    - advanced search
+
+## Suggest a Dataset Data Flow
+
+![data flow diagram](docs/suggest-dataset-dfd.svg)
+
+The "Suggest a Dataset" feature integrates CKAN with both Drupal and Django Search.
+
+1. Submit Suggestion: The process begins with external public users submitting the
+[Suggest a Dataset](https://open.canada.ca/en/forms/suggest-dataset) form on Drupal. As a result of submission,
+a new node of content type `suggested_dataset` is created by the
+[webform handler](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_webform/src/Plugin/WebformHandler/SuggestedDatasetFormHandler.php#L21).
+
+2. Moderate Suggestion: A registered user with role `comment_moderator` on Drupal updates and/or adds translation
+to the suggested dataset. The user may also choose to delete the suggestion if it is not relevant or a duplicate.
+Once translation is added, the user publishes the suggestion.
+
+3. Nightly Cron: A number of cron jobs are responsible for cross-integration.
+    - Suggested datasets are exported from Drupal as a CSV using a
+    [cron hook](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_cron/src/Utils/CronFunctions.php#L107)
+    - The exported CSV is used to
+    [load suggested datasets](https://github.com/open-data/ckanext-canada/blob/f7375feb2ac265e2beca939fd7b62a0298a62bce/ckanext/canada/commands.py#L452)
+    in the Registry
+    - Next, the status updates for all suggested datasets is exported from the Registry in a JSON file using
+    `ckanapi search datasets q=type:prop include_private=true`
+    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py) 
+    in the Solr index and emails are sent out to external public users for any new status updates
+    - New status updates exported as JSON are
+    [loaded into to the Solr index](https://github.com/open-data/ogc_search/blob/master/ogc_search/load_sd_to_solr.py)
+
+4. Provide status updates: Registry users can view a list of suggested datasets for their organization and can provide
+an update on progress.
+
+5. Search suggested datasets: External public users can [search](https://search.open.canada.ca/en/sd)
+a list of suggested datasets. Each suggested dataset has a details page which shows all the status updates for a
+suggestion. Users can [vote](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/voting_webform/src/Controller/VotingWebformController.php#L89)
+on a suggestion or [add comments](https://github.com/open-data/og/blob/master/modules/custom/external_comment/src/Controller/ExternalCommentController.php).
+The votes and comments are stored in Drupal.

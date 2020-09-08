@@ -1,22 +1,12 @@
 {% block header_user_snippet %}
-{%- if c.userobj -%}
     <section id="wb-so">
       <h2 class="wb-inv">Sign-on information</h2>
         <div class="container">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-offset-4 col-md-8"  id="user_nav">
           <ul class="list-inline">
     {% if c.userobj %}
         {% block header_account_logged %}
-        <li>
-            {{ _('Signed in as') }}
-            <a href="{{ h.url_for(controller='user', action='dashboard') }}" class="image" title="{{ _('View profile') }}">
-                {% if h.gravatar_show() %}
-                  {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
-                {% endif %}
-                <span class="username">{{ c.userobj.display_name }}</span>
-            </a>
-        </li>
         {% if c.userobj.sysadmin %}
         <li>
             <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default">
@@ -55,23 +45,6 @@
             </li>
             {% endblock %}
 
-            {% block header_account_log_out_link %}
-            <!-- This code is correct but we have to address a generic login not in the mega menu before we can re-enable
-            <li>
-                <a href="{{ h.url_for(controller='user', action='logout') }}" title="{{ _('Log out') }}" class="btn btn-primary">
-                    <span class="fa fa-sign-out"></span>
-                    <span class="text">{{ _('Log out') }}</span>
-                </a>
-            </li>
-            -->
-            {% endblock %}
-        {% endblock %}
-    {% else %}
-        {% block header_account_notlogged %}
-        {% if h.check_access('user_create') %}
-        <li><a href="{% url_for controller='user', action='register', class_='sub' %}" class="btn btn-default">{{ _('Register') }}</a></li>
-        {% endif %}
-        <li><a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">{{ _('Log in') }}</a></li>
         {% endblock %}
     {% endif %}
         </ul>
@@ -79,5 +52,4 @@
         </div>
       </div>
     </section>
-{%- endif -%}
 {% endblock %}

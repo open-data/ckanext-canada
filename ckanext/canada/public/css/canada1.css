@@ -115,4 +115,15 @@ details.alert-error {
     text-decoration: none;
 }
 
+.resource-tags {
+    text-align: left;
+    white-space: inherit;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+#resource-desc {
+    word-break: break-word;
+    word-wrap: break-word;
+}
 
