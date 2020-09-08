@@ -30,12 +30,13 @@ with open(url_database) as csvfile:
         url = row["url"]
         date = row["date"]
         response = row["response"]
-        content_type = row["content-type"].encode('utf-8')
         content_length = row["content-length"].encode('utf-8')
-        if response == 'N/A' or '404' in response:
+        if response == 'N/A' in response:
             broken_links[url] = [date, response]
-        if '/' in content_type:
-            content_type = (((content_type.split(';'))[0]).split('/'))[1]
+        else:
+            response_int = int(response.split('[')[1].split(']')[0])
+            if response_int == 404 or response_int > 405:
+                broken_links[url] = [date, response]
         file_sizes[url] = [date, content_length]
 
 
@@ -57,9 +58,11 @@ for dataset in open(metadata):
         if file_url in broken_links:
             data = broken_links.pop(file_url)
             broken_links_data.append(
-                [file_url, data[0], data[1],
-                 line["organization"]["title"].encode('utf-8'),
-                 line["title"].encode('utf-8'), line["id"], resources[l]["id"]])
+                [file_url.strip(), data[0].strip(), data[1].strip(),
+                 line["organization"]["title"].encode('utf-8').strip(),
+                 line["organization"]["name"].encode('utf-8').strip(),
+                 line["title"].encode('utf-8').strip(), line["id"].strip(),
+                 resources[l]["name_translated"]["en"].strip(), resources[l]["id"].strip()])
             if len(broken_links) == 0:
                 broken_links_flag = 1
             continue
@@ -83,7 +86,7 @@ print("Exporting to csv...")
 # Export tp CSV
 with open('broken_links_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date", "response", "organization", "title", "uuid", "resource_id"))
+    writer.writerow(("url", "date", "response", "organization_name", "org_code", "title", "uuid", "resource_name", "resource_id"))
     for row in broken_links_data:
         writer.writerow(row)
 f.close()
