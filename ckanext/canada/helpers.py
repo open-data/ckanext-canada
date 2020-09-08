@@ -29,8 +29,6 @@ ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
-SEARCH_URL_EN = 'https://search-staging.open.canada.ca'
-SEARCH_URL_FR = 'https://stadification-rechercher.ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
@@ -197,7 +195,7 @@ def portal_url():
     return str(config.get(PORTAL_URL_OPTION, url))
 
 def search_url():
-    return SEARCH_URL_FR if h.lang() == 'fr' else SEARCH_URL_EN
+    return str(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else str(config.get('ckanext.canada.adv_search_url_en'))
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
