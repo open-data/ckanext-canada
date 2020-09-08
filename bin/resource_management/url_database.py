@@ -49,8 +49,6 @@ print("Starting...")
 print("Reading and testing URL's")
 
 for i, dataset in enumerate(open(file), 1):
-    if i == 100:
-        break
     line = json.loads(dataset)
     resources = line["resources"]
     for l in range(len(resources)):
