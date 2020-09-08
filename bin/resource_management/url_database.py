@@ -32,6 +32,17 @@ responses = []
 date = []
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
 
+def check_for_connection():
+    url = "https://www.google.ca"
+    timeout = 5
+    connected = False
+    while(connected==False):
+        try:
+            request = requests.get(url, timeout=timeout)
+            connected=True
+        except (requests.ConnectionError, requests.Timeout) as exception:
+            print("No internet connection.")
+
 print("Starting...")
 print("Reading and testing URL's")
 
@@ -62,6 +73,7 @@ for i, dataset in enumerate(open(file), 1):
                     if not r is None:
                         r.close()
                 batch_urls = []
+                check_for_connection()
 
 # Check last urls not covered in loop
 url_match.append(batch_urls)
