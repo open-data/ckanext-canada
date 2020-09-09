@@ -3403,5 +3403,9 @@ msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {s
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
+#: ckanext/canada/templates/internal/scheming/snippets/form_field.html
+msgid "Are you sure you want to delete this status?"
+msgstr "Êtes-vous certain de vouloir supprimer cet état?"
+
 msgid "The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly."
 msgstr "L’état a été ajouté/mis à jour pour cet ensemble de données suggéré. Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
