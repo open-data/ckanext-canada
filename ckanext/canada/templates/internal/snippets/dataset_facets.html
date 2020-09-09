@@ -18,7 +18,12 @@
       h.scheming_field_by_name(
         h.scheming_get_dataset_schema('prop').dataset_fields,
         'status').repeating_subfields,
-      'reason').choices,
+      'reason').choices + [
+        {
+          'value': 'department_contacted',
+          'label': _('Request sent to data owner – awaiting response')
+        }
+      ],
     extras=extras %}
 {% endif %}
 
