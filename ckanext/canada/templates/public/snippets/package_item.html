@@ -94,6 +94,13 @@
             <div class="col-md-3"><em>{{ _('Date') }}:</em></div>
             <div class="col-md-9">{{ package.status[-1].date }}</div>
           </div>
+        {% else %}
+          <div class="row">
+            <div class="col-md-3"><em>{{ _('Status') }}:</em></div>
+            <div class="col-md-9">
+              {{ _('Request sent to data owner – awaiting response') }}
+            </div>
+          </div>
         {% endif %}
       {% else %}
         <div class="row">
