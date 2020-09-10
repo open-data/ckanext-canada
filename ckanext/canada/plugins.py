@@ -331,7 +331,7 @@ ckanext.canada:schemas/prop.yaml
             'get_license',
             'normalize_strip_accents',
             'portal_url',
-            'search_url',
+            'adv_search_url',
             'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
