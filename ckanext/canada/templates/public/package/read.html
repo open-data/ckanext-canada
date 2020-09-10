@@ -257,6 +257,7 @@
 {% endblock %}
 
 {% block more_like_this %}
+  {% if h.adv_search_url() %}
   <section class="panel panel-primary">
     <header class="panel-heading">
       <h5 class="panel-title">{{ _('More datasets like this') }}</h5>
@@ -264,6 +265,7 @@
     <div data-ajax-replace="{{ h.adv_search_url() }}/{{ h.lang() }}/od/mlt/{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
   </section>
+  {% endif %}
 {% endblock %}
 
 {% block package_comments %}

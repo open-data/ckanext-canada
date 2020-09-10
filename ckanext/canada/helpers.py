@@ -195,7 +195,7 @@ def portal_url():
     return str(config.get(PORTAL_URL_OPTION, url))
 
 def adv_search_url():
-    return str(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else str(config.get('ckanext.canada.adv_search_url_en'))
+    return config.get('ckanext.canada.adv_search_url_fr') if h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
