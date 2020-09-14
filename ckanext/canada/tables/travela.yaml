@@ -33,6 +33,7 @@ resources:
       fr: Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
     datastore_type: year
     form_required: true
+    excel_error_formula: '{cell}>YEAR(TODAY())'
 
   - datastore_id: mandate_description_en
     label:
