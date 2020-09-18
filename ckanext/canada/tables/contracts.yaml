@@ -1922,9 +1922,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           crval := choices_clean_error(NEW.trade_agreement_exceptions,
             array_remove({trade_agreement_exceptions}, '04'),
             'trade_agreement_exceptions');
+          errors := errors || crval.error;
+          NEW.trade_agreement_exceptions = crval.clean;
         END IF;
-        errors := errors || crval.error;
-        NEW.trade_agreement_exceptions = crval.clean;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
