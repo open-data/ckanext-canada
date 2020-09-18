@@ -21,6 +21,9 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+# use a generic user agent to detect services that render information pages instead of the actual data when a web browser user visits
+GENERIC_WEB_CLIENT_AGENT = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+
 def create_database(filename):
     with open(filename, "w") as f:
         writer = csv.writer(f)
@@ -31,8 +34,7 @@ def create_database(filename):
 def write_to_database(filename, rows):
     with open(filename, "a") as f:
         writer = csv.writer(f)
-        for row in rows:
-            writer.writerow(row)
+        writer.writerows(rows)
     f.close()
 
 def check_for_connection():
@@ -49,8 +51,7 @@ def check_for_connection():
 def get_batch_response(batch_urls, i, prev_i):
     sys.stderr.write("\r")
     sys.stderr.write("Testing Datasets {0} - {1}".format(prev_i, i))
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
-    rs = (grequests.head(u, timeout=60, headers=headers, verify=False, allow_redirects=True, stream=False) for u in
+    rs = (grequests.head(u, timeout=60, headers=GENERIC_WEB_CLIENT_AGENT, verify=False, allow_redirects=True, stream=False) for u in
           batch_urls)
     batch_response = grequests.map(rs)
     for j, r in enumerate(batch_response):
@@ -64,7 +65,6 @@ def get_batch_response_ftp(batch_urls):
     ftp_responses = []
     ftp_dates = []
     requests_ftp.monkeypatch_session()
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
     for i, url in enumerate(batch_urls):
         sys.stderr.write("\r")
         sys.stderr.write("Testing FTP {0} of {1}".format(i, len(batch_urls)))
@@ -73,7 +73,7 @@ def get_batch_response_ftp(batch_urls):
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
         ftp_dates.append(dt_string.encode('utf-8'))
         try:
-            resp = s.head(url, timeout=120, headers=headers, verify=False, allow_redirects=True, stream=False)
+            resp = s.head(url, timeout=120, headers=GENERIC_WEB_CLIENT_AGENT, verify=False, allow_redirects=True, stream=False)
 
             if not resp is None:
                 s.close()

@@ -16,7 +16,7 @@ import sys
 import fileinput
 import json
 import csv
-import codecs
+from openpyxl import Workbook
 
 metadata = sys.argv[1]
 url_database = sys.argv[2]
@@ -51,6 +51,7 @@ broken_links_data = []
 file_length_data = []
 broken_links_flag = 0
 file_length_flag = 0
+organizations = {}
 
 
 for dataset in open(metadata):
@@ -60,12 +61,17 @@ for dataset in open(metadata):
         file_url = resources[l]["url"]
         if file_url in broken_links:
             data = broken_links.pop(file_url)
-            broken_links_data.append(
-                [file_url.strip(), data[0].strip(), data[1].strip(),
+            row = [file_url.strip(), data[0].strip(), data[1].strip(),
                  line["organization"]["title"].strip(),
                  line["organization"]["name"].strip(),
                  line["title"].strip(), line["id"].strip(),
-                 resources[l]["name_translated"]["en"].strip(), resources[l]["id"].strip()])
+                 resources[l]["name_translated"]["en"].strip(), resources[l]["id"].strip()]
+            broken_links_data.append(row)
+            org_code = line["organization"]["name"].strip()
+            if not org_code in organizations:
+                organizations[org_code] = [row]
+            else:
+                organizations[org_code].append(row)
             if len(broken_links) == 0:
                 broken_links_flag = 1
             continue
@@ -84,21 +90,28 @@ for dataset in open(metadata):
         # stop searching when all broken links and incorrect filetypes are found
         break
 
+sortedorgs=sorted(organizations.keys(), key=lambda x:x.lower())
 
-print("Exporting to csv...")
-# Export tp CSV
-with open('reports/broken_links_report.csv', "w") as f:
-    writer = csv.writer(f)
-    writer.writerow(("url", "date", "response", "organization_name", "org_code", "title", "uuid", "resource_name", "resource_id"))
-    for row in broken_links_data:
-        try:
-            row = [str(x.encode('utf-8')) for x in row]
-            writer.writerow(row)
-        except:
-            row = [str(x.encode('utf-8')) for x in row]
-            print row
-            sys.exit(1)
-f.close()
+#Export xlsx
+print("Export Broken Links Report and File Size Report")
+wb = Workbook()
+ws = wb.create_sheet("all_broken_links")
+ws.append(["url", "date", "response", "organization_name", "org_code", "title", "uuid", "resource_name", "resource_id"])
+for row in broken_links_data:
+    row = [str(x.encode('utf-8')) for x in row]
+    ws.append(row)
+for org in sortedorgs:
+    ws = wb.create_sheet("{0}".format(org))
+    ws.append(["url", "date", "response", "organization_name", "org_code", "title", "uuid", "resource_name", "resource_id"])
+    for row in organizations[org]:
+        row = [str(x.encode('utf-8')) for x in row]
+        ws.append(row)
+try:
+    sheet1 = wb.get_sheet_by_name("Sheet")
+    wb.remove_sheet(sheet1)
+except:
+    pass
+wb.save('reports/broken_links_report.xlsx')
 
 with open('reports/incorrect_file_size_report.csv', "w") as f:
     writer = csv.writer(f)
