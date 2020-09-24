@@ -597,6 +597,9 @@ resources:
 
   triggers:
   - travela_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
         PERFORM not_empty(NEW.year, 'year');
         IF NEW.year >= 2018 THEN
@@ -621,7 +624,13 @@ resources:
         PERFORM not_empty(NEW.hospitality_kdollars, 'hospitality_kdollars');
         PERFORM not_empty(NEW.conference_fees_kdollars, 'conference_fees_kdollars');
         PERFORM not_empty(NEW.minister_kdollars, 'minister_kdollars');
-        RETURN NEW;
+        IF NEW.year > date_part('year', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
