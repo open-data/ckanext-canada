@@ -230,10 +230,8 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	# disable publishing contracts until search is deployed 2020-08-25
-	#@echo Rebuilding Contracts Quarterly...
-	#@$(paster)  --plugin=ckanext-canada contracts rebuild -c $(portal_ini) \
-	#-f "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
+	@echo Rebuilding Contracts Quarterly...
+	@$(ogc_search)/load_ct_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)

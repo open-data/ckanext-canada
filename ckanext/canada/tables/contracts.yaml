@@ -1085,7 +1085,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
     datastore_type: text
-    excel_error_formula: 'AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))'
+    excel_error_formula: 'AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1125,7 +1125,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00"))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
