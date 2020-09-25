@@ -46,3 +46,4 @@ class TestTravelA(FunctionalTestBase):
         }
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
+            
