@@ -29,3 +29,20 @@ class TestContractsA(FunctionalTestBase):
             lc.action.datastore_upsert,
             resource_id=self.resource_id,
             records=[{}])
+
+    def test_year(self):
+        lc = LocalCKAN()
+        record = dict(
+            get_chromo('contractsa')['examples']['record'],
+            year='2050')
+        with assert_raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.exception.error_dict['records'][0]
+        expected = {
+            'year': [
+                'This must list the year you are reporting on (not the fiscal year).'],
+        }
+        for k in set(err) | set(expected):
+            assert_equal(err.get(k), expected.get(k), (k, err))
