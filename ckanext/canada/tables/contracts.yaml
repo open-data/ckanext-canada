@@ -1365,7 +1365,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND({contract_date}>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1409,6 +1409,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       NA:
         en: Not Applicable (discontinued as of 2022-01-01)
         fr: Sans objet (discontinué à partir de 2022-01-01)
+        discontinued: true
+      A65:
+        en: Crown owned – exception 6.5 (discontinued as of 2017-01-01)
+        fr: Droits appartenant à l'État exception 6.5 (discontinué à partir de 2017-01-01)
+        discontinued: true
+      D:
+        en: >-
+          Organization Not Subject to IP Policy (discontinued as of 2017-01-01)
+        fr: >-
+          Organisation non assujettie à la Politique sur le titre de propriété
+          intellectuel (discontinué à partir de 2017-01-01)
         discontinued: true
 
   - datastore_id: potential_commercial_exploitation
@@ -1772,6 +1783,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
+        intellectual_property_choices text[] := {intellectual_property};
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
         errors := errors || required_error(NEW.contract_date, 'contract_date');
@@ -1941,15 +1953,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
 
-        IF NEW.contract_date >= '2022-01-01'::date THEN
-          errors := errors || choice_error(NEW.intellectual_property,
-              array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
-              'intellectual_property');
-        ELSE
-          errors := errors || choice_error(NEW.intellectual_property,
-              {intellectual_property},
-              'intellectual_property');
+        IF NEW.contract_date >= '2017-01-01'::date THEN
+          intellectual_property_choices := array_remove(array_remove(intellectual_property_choices, 'A65'), 'D');
         END IF;
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          intellectual_property_choices := array_remove(array_remove(intellectual_property_choices, 'A1'), 'NA');
+        END IF;
+        errors := errors || choice_error(NEW.intellectual_property,
+            intellectual_property_choices,
+            'intellectual_property');
 
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
