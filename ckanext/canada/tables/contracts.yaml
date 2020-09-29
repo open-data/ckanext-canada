@@ -1806,12 +1806,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
-          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
+          IF trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
             errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
           END IF;
         END IF;
 
-        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code);
+        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.economic_object_code);
         IF length(NEW.economic_object_code) > 4 THEN
           errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
         END IF;
@@ -1885,7 +1885,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_vendor, 'country_of_vendor');
         END IF;
-        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code);
+        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
