@@ -1102,17 +1102,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
     validation:
       en: |
-        Mandatory for contracts after 2019-01-01
+        Mandatory for contracts after 2022-01-01
 
-        If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+        If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None), for contracts after 2022-01-01.
       fr: |
-        Obligatoire pour les marchés conclus après le 2019-01-01
+        Obligatoire pour les marchés conclus après le 2022-01-01
 
-        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle).
+        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle), pour les marchés conclus après le 2022-01-01.
 
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     datastore_type: text
-    excel_error_formula: 'AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1140,19 +1140,19 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Il est recommandé de saisir dans cette zone l’une des raisons justifiant le recours à l’appel d’offres limité.
     validation:
       en: |
-        Mandatory for contracts after 2019-01-01.
+        Mandatory for contracts after 2022-01-01.
 
         If the value 00 (none) is entered, then no other value can be entered in this field.
 
-        If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+        If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered, for contracts after 2022-01-01.
       fr: |
-        Obligatoire pour les marchés conclus après le 2019-01-01.
+        Obligatoire pour les marchés conclus après le 2022-01-01.
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00"))'
+        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée, pour les marchés conclus après le 2022-01-01.
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00")))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1916,7 +1916,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           {country_of_vendor},
           'country_of_vendor');
 
-        IF NEW.contract_date >= '2019-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
         END IF;
         errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
@@ -1925,7 +1925,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           -- zero-pad numbers to match controlled list
           NEW.limited_tendering_reason = ARRAY['0' || array_to_string(NEW.limited_tendering_reason,'','')];
         END IF;
-        IF NEW.contract_date >= '2019-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
         END IF;
         IF NEW.contract_date >= '2022-01-01'::date THEN
@@ -1941,7 +1941,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' AND NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
           errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
         END IF;
