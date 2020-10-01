@@ -1112,7 +1112,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
     excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),{trade_agreement}<>"XX",OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
     excel_full_text_choices: false
     choices:
       AC:
