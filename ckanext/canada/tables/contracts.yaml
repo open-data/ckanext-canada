@@ -4,6 +4,10 @@ target_dataset: contracts
 title: Proactive Disclosure - Contracts over 10K (Quarterly)
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
+upload_info:
+  en: "The contracts over $10,000 quarterly template has recently been updated with new data fields and data validation rules per the Guidelines on the Proactive Disclosure of Contracts. Users should review the data validation rules in the reference tab of the template for each data field under “validation” for more information to ensure that the data can be uploaded to the registry. Note: Several validation rules have been included in the template but will not be activated until January 1, 2022."
+  fr: "Le modèle trimestriel des contrats de plus de 10 000 $ a récemment été mis à jour avec de nouveaux champs de données et des règles de validation des données conformément aux Lignes directrices sur la divulgation proactive des marchés. Les utilisateurs devraient examiner les règles de validation des données dans l’onglet de référence du modèle pour chaque champ de données sous « validation » pour plus d’informations afin de s’assurer que les données peuvent être téléchargées dans le registre. Remarque : Plusieurs règles de validation ont été incluses dans le modèle, mais elles ne seront pas activées avant le 1er janvier 2022"
+
 template_version: 3
 template_updated: 2020-08-25
 
@@ -40,7 +44,30 @@ front_matter:
     12. When more than one department is funding the contract, each department may disclose its portion of the contract. For a standing offer agreement or supply arrangement agreement, it is recommended that the agreement be reported by the department that authorizes the agreement.
     13. When the above posting dates fall on a weekend or statutory holiday, departments may post information by the last business day before the weekend or holiday in question.
     14. Departments are to provide a nil report for any quarter in which no contract or amendment is disclosed.  Departments are to populate the ‘Reporting Period’ and ‘Nil Report’ data elements within the Nil Reporting template.
-  fr: ''
+  fr: |
+    # Calendrier
+    1. Les organisations sont tenues de rendre publics dans le mois suivant la fin de chaque trimestre les marchés conclus d’un montant supérieur à 10 000 dollars et les modifications positives et négatives de plus de 10 000 dollars. 
+    2. Les organisations sont tenues de fournir à Services publics et Approvisionnement Canada (SPAC) des informations sur les marchés conclus et les modifications d’une valeur comprise entre -10 000 $ et 10 000 $. Elles doivent rendre compte annuellement de ces marchés et modifications au plus tard le 1er mars de l’année civile suivante. Par exemple, un marché conclu au cours de l’année civile 2017 doit faire l’objet d’un rapport au plus tard le 1er mars 2018. 
+    3. Les organisations sont tenues de rendre public chaque année civile un rapport distinct sur le volume et la valeur cumulative en dollars de chaque type de produit pour les marchés de 10 000 $ et moins et les modifications de -10 000 $ à 10 000 $. Par exemple, le rapport pour l’année civile 2017 doit être rendu public au plus tard le 1er mars 2018. De plus, les organisations doivent déclarer le volume et la valeur monétaire cumulative de toutes les opérations effectuées par carte d’achat, quelle que soit leur valeur monétaire. Se reporter au document *Système de publication centralisée pour la divulgation proactive - Profil des éléments de données : modèle des marchés annuels (de -10 000 $ à 10 000 $)* pour obtenir d’autres renseignements.
+    # Exigences générales
+    1. Le modèle des marchés trimestriels doit comprendre les marchés conclus de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $, y compris les marchés dont la valeur des modifications est supérieure à 10 000 dollars. 
+    2. Les marchés de 10 000 $ et moins et les modifications de -10 000 $ à 10 000 $ doivent être déclarés à SPAC dans un modèle des marchés trimestriels distinct par courriel à l’adresse [ncr.gwprs@gc.ca](mailto:ncr.gwprs@gc.ca). Ces informations permettront à SPAC de surveiller l’utilisation des offres à commandes et des arrangements en matière d’approvisionnement et seront utilisées pour satisfaire à d’autres obligations de déclaration du gouvernement. 
+    3. Les opérations par carte d’achat pour les marchés de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $ doivent être déclarées dans le modèle des marchés trimestriels. Le volume et la valeur cumulative de toutes les opérations par carte d’achat, peu importe le seuil en dollars, doivent être déclarés dans le modèle des marchés annuels. Les organisations qui ont besoin d’aide pour déterminer le volume et la valeur cumulative peuvent contacter le Secrétariat du Conseil du Trésor en envoyant un courriel à la boîte de réception électronique de la divulgation proactive des marchés à [ZZPDCDC@tbs-sct.gc.ca](mailto:ZZPDCDC@tbs-sct.gc.ca). 
+    4. Les organisations ne doivent pas déclarer les marchés ni les modifications non financières d’une valeur de 0 $, sauf s’il est dans l’intérêt public de le faire (par exemple, annulation d’un important achat militaire) ou lorsqu’elles divulguent une convention d’offre à commandes ou d’un arrangement en matière d’approvisionnement. 
+    5. Une convention d’offre à commandes et un arrangement en matière d’approvisionnement ne sont pas des marchés d’approvisionnement, mais doivent être déclarés à des fins de transparence par le ministère qui l’établit. Lorsqu’un ministère rend publiques des informations sur une convention d’offre à commandes ou un arrangement en matière d’approvisionnement sur un site Web distinct, il n’est pas tenu de faire état de la convention ou de l’arrangement dans son rapport. 
+    6. L’engagement du gouvernement est de divulguer tous les marchés ou les modifications, à quelques exceptions près, par exemple ceux liés à la sécurité nationale. Un ministère n’est pas tenu de publier des informations concernant les éléments suivants :
+        a) les protocoles d’entente avec d’autres ordres de gouvernement et des gouvernements étrangers; 
+        b) les ententes sur les niveaux de service entre les ministères fédéraux ou avec les sociétés d’État; 
+        c) les informations sur les marchés dont la divulgation proactive compromettrait les enquêtes criminelles, les litiges, la sécurité nationale ou la sécurité publique; 
+        d) les informations de tiers au sens de l’un ou l’autre des alinéas 20(1)a) à d) de la Loi sur l’accès à l’information, par exemple les informations confidentielles sur les prix d’un entrepreneur. 
+    7. Lorsqu’un ministère détermine que les informations relatives à un marché sont dispensées de l’obligation de divulgation, il devrait divulguer le marché ou la modification une fois que les informations ne sont plus classifiées. 
+    8. Un marché ou une modification qui n’a pas été déclaré au cours de la période de référence dans laquelle il a été attribué doit être ajouté à cette période de référence, dès que possible. Il faut indiquer clairement dans le champ de commentaires tout marché ou modification ajouté à une période de référence après sa publication (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés). 
+    9. Les informations publiées au cours d’une période de référence donnée ne peuvent être modifiées pour cette période de référence que si une erreur importante a été commise dans les données initialement déclarées. Cela doit être clairement indiqué comme tel dans le champ de données des commentaires (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés). 
+    10. L’utilisation de codes d’article économique précis est importante pour maintenir l’intégrité des Comptes publics du Canada. Les ministères doivent s’assurer que toutes les dépenses sont codées de manière appropriée conformément à la [Directive sur l’inscription des opérations financières dans les comptes du Canada](https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=15793). Une liste des codes d’article économique accompagnés d’une description se trouve sur le site du Plan comptable à l’échelle de l’administration fédérale (https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html).
+    11. Lorsque SPAC, Services partagés Canada (SPC) ou un autre ministère ou société d’État passe un marché au nom d’un ministère, c’est le ministère client qui doit déclarer le marché. SPAC aidera les ministères clients en leur fournissant toutes les informations dont il dispose sur ces marchés par l’entremise du Portail du gouvernement ouvert. SPC et tout autre ministère contractant aideront le ministère client à remplir ses obligations en matière de rapports en lui fournissant toute information dont ils disposent sur ces marchés, s’il y a lieu. De plus, l’autorité contractante de SPAC et de SPC doit fournir une copie de chaque marché ou modification au ministère client au moment de l’attribution.
+    12. Lorsque plus d’un ministère finance le marché, chaque ministère peut divulguer sa part du marché. Dans le cas d’une convention d’offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé que le ministère qui autorise la convention ou l’arrangement en fasse rapport.
+    13. Lorsque les dates d’affichage ci-dessus coïncident avec un jour de fin de semaine ou un jour férié, les ministères peuvent afficher l’information au plus tard le dernier jour ouvrable avant la fin de semaine ou le jour férié en question.
+    14. Les ministères doivent fournir un rapport « rien à signaler » nul pour tout trimestre au cours duquel aucun marché ou modification n’est divulgué.  Les ministères doivent remplir les champs « période de référence » et « rien à signaler » dans le modèle de rapport « rien à signaler ».
 
 
 resources:
@@ -1075,17 +1102,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
     validation:
       en: |
-        Mandatory for contracts after 2019-01-01
+        Mandatory for contracts after 2022-01-01
 
-        If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+        If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None), for contracts after 2022-01-01.
       fr: |
-        Obligatoire pour les marchés conclus après le 2019-01-01
+        Obligatoire pour les marchés conclus après le 2022-01-01
 
-        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle).
+        Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle), pour les marchés conclus après le 2022-01-01.
 
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
     datastore_type: text
-    excel_error_formula: 'AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1113,19 +1140,19 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Il est recommandé de saisir dans cette zone l’une des raisons justifiant le recours à l’appel d’offres limité.
     validation:
       en: |
-        Mandatory for contracts after 2019-01-01.
+        Mandatory for contracts after 2022-01-01.
 
         If the value 00 (none) is entered, then no other value can be entered in this field.
 
-        If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+        If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered, for contracts after 2022-01-01.
       fr: |
-        Obligatoire pour les marchés conclus après le 2019-01-01.
+        Obligatoire pour les marchés conclus après le 2022-01-01.
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée.
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00"))'
+        Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée, pour les marchés conclus après le 2022-01-01.
+    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),{trade_agreement}<>"XX",{cell}="00")))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1365,7 +1392,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")))'
+    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND({contract_date}>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1409,6 +1436,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       NA:
         en: Not Applicable (discontinued as of 2022-01-01)
         fr: Sans objet (discontinué à partir de 2022-01-01)
+        discontinued: true
+      A65:
+        en: Crown owned – exception 6.5 (discontinued as of 2017-01-01)
+        fr: Droits appartenant à l'État exception 6.5 (discontinué à partir de 2017-01-01)
+        discontinued: true
+      D:
+        en: >-
+          Organization Not Subject to IP Policy (discontinued as of 2017-01-01)
+        fr: >-
+          Organisation non assujettie à la Politique sur le titre de propriété
+          intellectuel (discontinué à partir de 2017-01-01)
         discontinued: true
 
   - datastore_id: potential_commercial_exploitation
@@ -1772,6 +1810,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
+        intellectual_property_choices text[] := {intellectual_property};
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
         errors := errors || required_error(NEW.contract_date, 'contract_date');
@@ -1790,12 +1829,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
-          IF trim(both E'\t\n\x0b\x0c\r ' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
+          IF trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
             errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
           END IF;
         END IF;
 
-        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.economic_object_code);
+        NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.economic_object_code);
         IF length(NEW.economic_object_code) > 4 THEN
           errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
         END IF;
@@ -1869,7 +1908,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || required_error(NEW.commodity_code, 'commodity_code');
           errors := errors || required_error(NEW.country_of_vendor, 'country_of_vendor');
         END IF;
-        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r ' from NEW.commodity_code);
+        NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
           errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
         END IF;
@@ -1877,7 +1916,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           {country_of_vendor},
           'country_of_vendor');
 
-        IF NEW.contract_date >= '2019-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.solicitation_procedure, 'solicitation_procedure');
         END IF;
         errors := errors || choice_error(NEW.solicitation_procedure, {solicitation_procedure}, 'solicitation_procedure');
@@ -1886,7 +1925,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           -- zero-pad numbers to match controlled list
           NEW.limited_tendering_reason = ARRAY['0' || array_to_string(NEW.limited_tendering_reason,'','')];
         END IF;
-        IF NEW.contract_date >= '2019-01-01'::date THEN
+        IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.limited_tendering_reason, 'limited_tendering_reason');
         END IF;
         IF NEW.contract_date >= '2022-01-01'::date THEN
@@ -1902,7 +1941,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
         END IF;
-        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' THEN
+        IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' AND NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
           errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
         END IF;
@@ -1941,15 +1980,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
           errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
 
-        IF NEW.contract_date >= '2022-01-01'::date THEN
-          errors := errors || choice_error(NEW.intellectual_property,
-              array_remove(array_remove({intellectual_property}, 'A1'), 'NA'),
-              'intellectual_property');
-        ELSE
-          errors := errors || choice_error(NEW.intellectual_property,
-              {intellectual_property},
-              'intellectual_property');
+        IF NEW.contract_date >= '2017-01-01'::date THEN
+          intellectual_property_choices := array_remove(array_remove(intellectual_property_choices, 'A65'), 'D');
         END IF;
+        IF NEW.contract_date >= '2022-01-01'::date THEN
+          intellectual_property_choices := array_remove(array_remove(intellectual_property_choices, 'A1'), 'NA');
+        END IF;
+        errors := errors || choice_error(NEW.intellectual_property,
+            intellectual_property_choices,
+            'intellectual_property');
 
         NEW.potential_commercial_exploitation := truthy_to_yn(NEW.potential_commercial_exploitation);
         IF NEW.contract_date >= '2019-01-01'::date AND NEW.intellectual_property <> 'C' AND NEW.intellectual_property <> 'NA' THEN
