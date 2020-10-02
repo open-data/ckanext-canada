@@ -1560,8 +1560,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
       fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
     validation:
-      en: This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
-      fr: Ce champ doit être rempli si une commande subséquente à une offre à commandes ou un arrangement en matière d’approvisionnement a été identifié comme PWSOSA ou SSCSOSA
+      en: |
+        This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
+        If this field is populated, the Contracting Entity data field must be populated.
+      fr: |
+        Ce champ doit être rempli si une commande subséquente à une offre à commandes ou un arrangement en matière d’approvisionnement a été identifié comme PWSOSA ou SSCSOSA
+        Si ce champ est rempli, le champ Entité contractante doit être rempli.
     datastore_type: text
     excel_required_formula: 'OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA")'
 
