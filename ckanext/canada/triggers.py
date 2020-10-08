@@ -215,16 +215,18 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'only_empty',
+        name=u'must_be_empty',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'numeric'},
             {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF value IS NOT NULL THEN
-                    RAISE EXCEPTION 'This field must be empty: %', field_name;
+                    RETURN ARRAY[[field_name, 'This field must be empty']];
                 END IF;
+                RETURN NULL;
             END;
         ''')
 
