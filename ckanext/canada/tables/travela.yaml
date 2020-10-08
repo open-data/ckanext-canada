@@ -610,14 +610,14 @@ resources:
           errors := errors || required_error(NEW.training_kdollars, 'training_kdollars');
           errors := errors || required_error(NEW.internal_governance_kdollars, 'internal_governance_kdollars');
           errors := errors || required_error(NEW.other_kdollars, 'other_kdollars');
-          errors := errors || must_be_blank(NEW.public_servants_kdollars, 'public_servants_kdollars');
-          errors := errors || must_be_blank(NEW.non_public_servants_kdollars, 'non_public_servants_kdollars');
+          errors := errors || must_be_empty(NEW.public_servants_kdollars, 'public_servants_kdollars');
+          errors := errors || must_be_empty(NEW.non_public_servants_kdollars, 'non_public_servants_kdollars');
         ELSE
-          errors := errors || must_be_blank(NEW.operational_activities_kdollars, 'operational_activities_kdollars');
-          errors := errors || must_be_blank(NEW.key_stakeholders_kdollars, 'key_stakeholders_kdollars');
-          errors := errors || must_be_blank(NEW.training_kdollars, 'training_kdollars');
-          errors := errors || must_be_blank(NEW.internal_governance_kdollars, 'internal_governance_kdollars');
-          errors := errors || must_be_blank(NEW.other_kdollars, 'other_kdollars');
+          errors := errors || must_be_empty(NEW.operational_activities_kdollars, 'operational_activities_kdollars');
+          errors := errors || must_be_empty(NEW.key_stakeholders_kdollars, 'key_stakeholders_kdollars');
+          errors := errors || must_be_empty(NEW.training_kdollars, 'training_kdollars');
+          errors := errors || must_be_empty(NEW.internal_governance_kdollars, 'internal_governance_kdollars');
+          errors := errors || must_be_empty(NEW.other_kdollars, 'other_kdollars');
           errors := errors || required_error(NEW.public_servants_kdollars, 'public_servants_kdollars');
           errors := errors || required_error(NEW.non_public_servants_kdollars, 'non_public_servants_kdollars');
         END IF;
