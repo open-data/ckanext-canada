@@ -146,90 +146,6 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF (value = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'date'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL OR value = '{}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'money'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'numeric'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
         name=u'must_be_empty',
         or_replace=True,
         arguments=[
@@ -285,21 +201,6 @@ def update_triggers():
             EXCEPTION
                 WHEN others THEN
                     RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'choice_one_of',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'choices', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF NOT ((value = '') IS NOT FALSE) AND NOT (value = ANY (choices)) THEN
-                    RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
-                END IF;
             END;
         ''')
 
