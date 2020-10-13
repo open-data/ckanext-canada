@@ -16,6 +16,7 @@ import sys
 import fileinput
 import json
 import csv
+from datetime import datetime
 from openpyxl import Workbook
 
 metadata = sys.argv[1]
@@ -91,7 +92,8 @@ for dataset in open(metadata):
         break
 
 sortedorgs=sorted(organizations.keys(), key=lambda x:x.lower())
-
+now = datetime.now()
+dt_string = now.strftime("%Y-%m-%d")
 #Export xlsx
 print("Export Broken Links Report and File Size Report")
 wb = Workbook()
@@ -111,9 +113,9 @@ try:
     wb.remove_sheet(sheet1)
 except:
     pass
-wb.save('reports/broken_links_report.xlsx')
+wb.save('reports/Broken_Resource_Links-{0}.xlsx'.format(dt_string))
 
-with open('reports/incorrect_file_size_report.csv', "w") as f:
+with open('reports/file_size_report-{0}.csv'.format(dt_string), "w") as f:
     writer = csv.writer(f)
     writer.writerow(("url", "date", "organization", "title", "uuid", "resource_id",
                      "found_file_size"))
