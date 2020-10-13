@@ -8,4 +8,4 @@ python url_metadata_match.py od-do-canada.jl data/url_database.csv
 rm od-do-canada.jl
 the_date=$(date +"%y-%m-%d")
 . recipients.config
-mail -s "Broken_Resource_Links-$the_date.xlsx" -a reports/Broken_Resource_Links-$the_date.xlsx $recipients < email_message.txt
+mail -s "Broken_Resource_Links-20$the_date.xlsx" -a reports/Broken_Resource_Links-20$the_date.xlsx $recipients < email_message.txt
