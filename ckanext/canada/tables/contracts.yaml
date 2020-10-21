@@ -9,7 +9,7 @@ upload_info:
   fr: "Le modèle trimestriel des contrats de plus de 10 000 $ a récemment été mis à jour avec de nouveaux champs de données et des règles de validation des données conformément aux Lignes directrices sur la divulgation proactive des marchés. Les utilisateurs devraient examiner les règles de validation des données dans l’onglet de référence du modèle pour chaque champ de données sous « validation » pour plus d’informations afin de s’assurer que les données peuvent être téléchargées dans le registre. Remarque : Plusieurs règles de validation ont été incluses dans le modèle, mais elles ne seront pas activées avant le 1er janvier 2022"
 
 template_version: 3
-template_updated: 2020-10-02
+template_updated: 2020-10-07
 
 portal_type: info
 collection: pd
@@ -133,10 +133,12 @@ resources:
     description:
       en: |
         i. This field should be populated with the first 3 digits of the postal code for the vendor identified in the contract.
-        ii. This field is to be populated with “NA” if the vendor is located outside of Canada.
+        ii. Alternatively, the vendor postal code may be the first three digits of the postal code identified in the procurement/financial system if this is the standard practice in the department.
+        iii. This field is to be populated with “NA” if the vendor is located outside of Canada.
       fr: |
         i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
-        ii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
+        ii. Sinon, le code postal du fournisseur peut être les trois premiers chiffres du code postal relevés dans le système d’approvisionnement/financier s’il s’agit de la pratique courante du ministère.
+        iii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
