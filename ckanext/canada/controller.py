@@ -82,6 +82,7 @@ class CanadaController(BaseController):
             action='links')
 
     def links(self):
+        response.headers['X-LogExtra'] = ' homepage'
         return render('home/quick_links.html')
 
     def view_guidelines(self):
