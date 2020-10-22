@@ -146,7 +146,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'must_be_empty',
+        name=u'must_be_empty_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'numeric'},
@@ -162,7 +162,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'no_surrounding_whitespace',
+        name=u'no_surrounding_whitespace_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
@@ -178,7 +178,7 @@ def update_triggers():
         ''')
 
     lc.action.datastore_function_create(
-        name=u'year_optional_month_day',
+        name=u'year_optional_month_day_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
@@ -312,13 +312,13 @@ def update_triggers():
                 crval RECORD;
             BEGIN
                 errors := errors || required_error(NEW.ref_number, 'ref_number');
-                errors := errors || no_surrounding_whitespace(NEW.ref_number, 'ref_number');
+                errors := errors || _error(NEW.ref_number, 'ref_number');
                 errors := errors || required_error(NEW.title_en, 'title_en');
                 errors := errors || required_error(NEW.title_fr, 'title_fr');
                 -- errors := errors || required_error(NEW.description_en, 'description_en');
                 -- errors := errors || required_error(NEW.description_fr, 'description_fr');
                 -- errors := errors || required_error(NEW.date_published, 'date_published');
-                -- errors := errors || year_optional_month_day(NEW.date_published, 'date_published');
+                -- errors := errors || year_optional_month_day_error(NEW.date_published, 'date_published');
                 -- errors := errors || required_error(NEW.language, 'language');
                 -- errors := errors || choice_error(NEW.language, {language}, 'language');
                 -- errors := errors || required_error(NEW.size, 'size');
@@ -328,7 +328,7 @@ def update_triggers():
                 -- errors := errors || required_error(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
                 -- errors := errors || required_error(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
                 -- errors := errors || required_error(NEW.date_released, 'date_released');
-                -- errors := errors || year_optional_month_day(NEW.date_released, 'date_released');
+                -- errors := errors || year_optional_month_day_error(NEW.date_released, 'date_released');
                 IF errors = '{{}}' THEN
                     RETURN NEW;
                 END IF;
@@ -390,7 +390,7 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'integer_or_na_nd',
+        name=u'integer_or_na_nd_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
