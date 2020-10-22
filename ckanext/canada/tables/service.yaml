@@ -942,7 +942,7 @@ resources:
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
         errors := errors || required_error(NEW.service_id, 'service_id');
-        errors := errors || no_surrounding_whitespace(NEW.service_id, 'service_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_id, 'service_id');
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
         errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
         errors := errors || required_error(NEW.external_internal, 'external_internal');
@@ -1455,9 +1455,9 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
         errors := errors || required_error(NEW.service_id, 'service_id');
-        errors := errors || no_surrounding_whitespace(NEW.service_id, 'service_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_id, 'service_id');
         errors := errors || required_error(NEW.service_std_id, 'service_std_id');
-        errors := errors || no_surrounding_whitespace(NEW.service_std_id, 'service_std_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_std_id, 'service_std_id');
         errors := errors || required_error(NEW.service_std_en, 'service_std_en');
         errors := errors || required_error(NEW.service_std_fr, 'service_std_fr');
         errors := errors || required_error(NEW.service_std_url_en, 'service_std_url_en');
