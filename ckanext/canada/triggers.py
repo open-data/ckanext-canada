@@ -312,7 +312,7 @@ def update_triggers():
                 crval RECORD;
             BEGIN
                 errors := errors || required_error(NEW.ref_number, 'ref_number');
-                errors := errors || _error(NEW.ref_number, 'ref_number');
+                errors := errors || no_surrounding_whitespace_error(NEW.ref_number, 'ref_number');
                 errors := errors || required_error(NEW.title_en, 'title_en');
                 errors := errors || required_error(NEW.title_fr, 'title_fr');
                 -- errors := errors || required_error(NEW.description_en, 'description_en');
