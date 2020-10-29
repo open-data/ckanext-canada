@@ -503,7 +503,7 @@ class LogExtraMiddleware(object):
                 extra = [(
                     'X-LogExtra', u'user={uid} {extra}'.format(
                         uid=c.user,
-                        extra=c.log_extra or u'')
+                        extra=c.log_extra or u'').encode('utf-8')
                     )
                 ]
             return start_response(
