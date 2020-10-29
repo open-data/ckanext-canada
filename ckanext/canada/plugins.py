@@ -236,7 +236,6 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
-    p.implements(p.IMiddleware, inherit=True)
 
     def update_config(self, config):
         # add our templates
@@ -402,13 +401,6 @@ ckanext.canada:schemas/prop.yaml
             action='server_error',
             controller='ckanext.canada.controller:CanadaController'
         )
-        map.connect(
-            '/api{ver:/3|}/action/{logic_function}',
-            ver='/3',
-            action='action',
-            controller='ckanext.canada.controller:CanadaApiController',
-            conditions={'method':['GET', 'POST']},
-        )
         return map
 
     def get_actions(self):
@@ -416,11 +408,6 @@ ckanext.canada:schemas/prop.yaml
 
     def get_auth_functions(self):
         return {'inventory_votes_show': auth.inventory_votes_show}
-
-    # IMiddleware
-
-    def make_middleware(self, app, config):
-        return LogExtraMiddleware(app, config)
 
 
 
@@ -488,30 +475,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'no_future_date':
                 validators.no_future_date,
             }
-
-
-class LogExtraMiddleware(object):
-    def __init__(self, app, config):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        def _start_response(status, response_headers, exc_info=None):
-            extra = []
-            if c.package:
-                assert 0
-            if c.user:
-                extra = [(
-                    'X-LogExtra', u'user={uid} {extra}'.format(
-                        uid=c.user,
-                        extra=c.log_extra or u'')
-                    )
-                ]
-            return start_response(
-                status,
-                response_headers + extra,
-                exc_info)
-
-        return self.app(environ, _start_response)
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
