@@ -108,7 +108,7 @@ resources:
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
 
   - datastore_id: vendor_name
@@ -121,7 +121,7 @@ resources:
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     form_attrs:
       size: 60
@@ -146,7 +146,7 @@ resources:
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir les trois premiers chiffres d’un code postal dans le format A1A ou la valeur « NA »
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'AND({cell}<>"NA",OR(CODE(LEFT({cell}&" ",1))<65,CODE(LEFT({cell}&" ",1))>90,NOT(ISNUMBER(VALUE(MID({cell}&"  ",2,1)))),CODE(MID({cell}&"   ",3,1))<65,CODE(MID({cell}&"   ",3,1))>90,LEN({cell})>3))'
     datastore_type: text
 
@@ -176,7 +176,7 @@ resources:
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument.
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
     datastore_type: text
     form_attrs:
@@ -231,7 +231,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Ce champ est limité à 3 ou 4 caractères.
         Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
     excel_error_formula: 'OR(LEN(TRIM({cell}))>4,AND(TRIM({cell})="NA",{instrument_type}<>"SOSA"))'
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
 
   - datastore_id: description_en
@@ -253,7 +253,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -278,7 +278,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -320,7 +320,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
         Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.
-    excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{commodity_type}<>"G")'
+    excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),{commodity_type}<>"G")'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -359,7 +359,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -388,7 +388,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
     validation: Mandatory for contracts after 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: money
     extract_double_sortable: true
 
@@ -432,7 +432,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: money
 
   - datastore_id: amendment_value
@@ -553,8 +553,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Obligatoire pour les marchés conclus après le 2019-01-01, sauf si on précise un accord commercial.
 
         Ce champ doit être vide si le champ Accord commercial n’est pas vide.
-    excel_required_formula: 'AND({contract_date}>=DATE(2019,1,1),{contract_date}<DATE(2022,1,1),ISBLANK({trade_agreement}))'
-    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),{contract_date}>=DATE(2022,1,1))'
+    excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),VALUE({contract_date})<DATE(2022,1,1),ISBLANK({trade_agreement}))'
+    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     excel_full_text_choices: false
     excel_column_width: 40
@@ -862,7 +862,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
         Ce champ doit être vide si le champ Type d’accord n’est pas vide.
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
     datastore_type: _text
     choices:
@@ -931,7 +931,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"))'
     datastore_type: _text
     choices:
@@ -1027,7 +1027,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1060,7 +1060,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         The field is limited to eight alpha-numeric digits or less.
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
           Ce champ est limité à 8 caractères alphanumériques.
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'LEN(TRIM({cell}))>8'
     datastore_type: text
 
@@ -1084,7 +1084,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     choices_file: choices/country.json
 
@@ -1112,9 +1112,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle), pour les marchés conclus après le 2022-01-01.
 
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
+    excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
     excel_full_text_choices: false
     choices:
       AC:
@@ -1153,8 +1153,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
 
         Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée, pour les marchés conclus après le 2022-01-01.
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00")))'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
+    excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00")))'
     datastore_type: _text
     excel_full_text_choices: false
     # accept single digit for backwards compat
@@ -1248,8 +1248,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Obligatoire pour les marchés conclus après le 2019-01-01
 
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND({contract_date}>=DATE(2022,1,1),{cell}="04"))'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),{cell}="04"))'
     datastore_type: _text
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
@@ -1326,7 +1326,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
 
-    excel_required_formula: '{contract_date}>=DATE(2022,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1364,7 +1364,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Obligatoire pour les marchés conclus après le 2019-01-01
 
         Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'AND(OR({aboriginal_business}="MS",{aboriginal_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
     datastore_type: text
     excel_full_text_choices: false
@@ -1393,8 +1393,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
-    excel_error_formula: 'OR({default_formula},AND({contract_date}>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND({contract_date}>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND(VALUE({contract_date})>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1499,7 +1499,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
@@ -1521,7 +1521,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
-    excel_required_formula: 'OR({standing_offer_number}<>"",{contract_date}>=DATE(2022,1,1))'
+    excel_required_formula: 'OR({standing_offer_number}<>"",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1587,7 +1587,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1618,7 +1618,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
-    excel_required_formula: '{contract_date}>=DATE(2019,6,21)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,6,21)'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
@@ -1784,7 +1784,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
-    excel_required_formula: '{contract_date}>=DATE(2019,1,1)'
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     format_type: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
