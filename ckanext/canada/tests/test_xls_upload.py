@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-import os
 import tempfile
 from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN
@@ -12,9 +11,6 @@ from ckanext.recombinant.controller import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
 from openpyxl import load_workbook, Workbook
-
-
-CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
 # testing the upload of PD template files
