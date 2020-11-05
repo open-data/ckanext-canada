@@ -71,7 +71,7 @@
 
 {% block primary_content_inner %}
 {% set rcsLang = h.lang() + "-CA" %}
-<div is="rv-map" class="fgpMap" id="open-data-map" rv-config="{{ h.url_for_static('static/config.rcs.{}.json'.format(rcsLang)) }}" rv-langs='["{{rcsLang}}"]' rv-restore-bookmark="bookmark" rv-service-endpoint="{{ h.fgp_url() }}" data-rv-wait="true">
+<div id="open-data-map" is="rv-map" rv-config="{{ h.url_for_static('static/config.rcs.{0}.json'.format( h.lang() + "-CA")) }}" class="fgpMap"></div> 
     <noscript>
         <p>{{ _('This interactive map requires JavaScript. To view this content please enable JavaScript in your browser or download a browser that supports it.') }}</p>
     </noscript>
@@ -80,20 +80,7 @@
 
 {% block scripts %}
   {{ super() }}
-  <script>
-    const needIePolyfills = [
-        'Promise' in window,
-        'TextDecoder' in window,
-        'findIndex' in Array.prototype,
-        'find' in Array.prototype,
-        'from' in Array,
-        'startsWith' in String.prototype,
-        'endsWith' in String.prototype
-    ].some(function(x) { return !x; });
-    if (needIePolyfills) {
-        document.write('<script src="/fgpv-vpgf/ie-polyfills.js"><\/script>');
-    }
-  </script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Object.entries,Object.values,Array.prototype.find,Array.prototype.findIndex,Array.prototype.values,Array.prototype.includes,HTMLCanvasElement.prototype.toBlob,String.prototype.repeat,String.prototype.codePointAt,String.fromCodePoint,NodeList.prototype.@@iterator,Promise,Promise.prototype.finally"></script>
   <script src="/fgpv-vpgf/rv-main.js"></script>
   <script>
     // https://css-tricks.com/snippets/javascript/get-url-variables/
@@ -116,7 +103,6 @@
         });
     }
     var keys = '{{ pkg_id }}'.split(',');
-    RV.getMap('open-data-map').restoreSession(keys);
   </script>
 
 <!-- OGS Map Shopping Cart -->
