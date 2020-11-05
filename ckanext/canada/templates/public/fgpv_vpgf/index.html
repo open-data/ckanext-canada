@@ -71,7 +71,7 @@
 
 {% block primary_content_inner %}
 {% set rcsLang = h.lang() + "-CA" %}
-<div id="open-data-map" is="rv-map" rv-config="{{ h.url_for_static('static/config.rcs.{0}.json'.format( h.lang() + "-CA")) }}" class="fgpMap"></div> 
+<div id="open-data-map" is="rv-map" rv-config="{{ h.url_for_static('static/config.rcs.{0}.json'.format( h.lang() + "-CA")) }}" class="fgpMap" data-rv-wait="true" rv-service-endpoint="{{ h.fgp_url() }}"></div> 
     <noscript>
         <p>{{ _('This interactive map requires JavaScript. To view this content please enable JavaScript in your browser or download a browser that supports it.') }}</p>
     </noscript>
@@ -81,6 +81,7 @@
 {% block scripts %}
   {{ super() }}
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Object.entries,Object.values,Array.prototype.find,Array.prototype.findIndex,Array.prototype.values,Array.prototype.includes,HTMLCanvasElement.prototype.toBlob,String.prototype.repeat,String.prototype.codePointAt,String.fromCodePoint,NodeList.prototype.@@iterator,Promise,Promise.prototype.finally"></script>
+  <script src="/fgpv-vpgf/legacy-api.js"></script>
   <script src="/fgpv-vpgf/rv-main.js"></script>
   <script>
     // https://css-tricks.com/snippets/javascript/get-url-variables/
@@ -103,6 +104,7 @@
         });
     }
     var keys = '{{ pkg_id }}'.split(',');
+    RV.getMap('open-data-map').restoreSession(keys);
   </script>
 
 <!-- OGS Map Shopping Cart -->
