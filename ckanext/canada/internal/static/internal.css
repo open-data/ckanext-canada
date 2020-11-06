@@ -334,3 +334,7 @@ div.dt-button-collection a.dt-button {display: inline-block}
 footer {
     margin-top: 15px;
 }
+
+.page-header .nav-tabs li.active a {
+    background-color: #2572b4;
+}
