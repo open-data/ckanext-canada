@@ -163,6 +163,7 @@ class CanadaController(BaseController):
             context['user_is_admin'] = c.userobj.sysadmin
 
         results = get_action('organization_list')(context, data_dict)
+        c.group_type = data_dict['type']
 
         def org_key(org):
             title = org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
