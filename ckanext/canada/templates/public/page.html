@@ -1,16 +1,5 @@
 {% ckan_extends %}
 
-{%- block custom_styles -%}
-  {{ super() }}
-  {# Temporary styles until the panels styles are resolved in GCWeb #}
-  <style>
-    .panel.panel-primary, .panel.panel-primary .panel-heading {border-color: #335075;}
-    .panel.panel-primary .panel-heading {background: #335075;}
-    .panel.panel-primary .panel-heading a {color: #fff}
-  </style>
-{% endblock %}
-
-
 {% block page %}
 
   {% block skip %}

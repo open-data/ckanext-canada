@@ -336,5 +336,11 @@ footer {
 }
 
 .page-header .nav-tabs li.active a {
-    background-color: #2572b4;
+    background-color: #335075;
+    color: #fff;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #335075;
 }

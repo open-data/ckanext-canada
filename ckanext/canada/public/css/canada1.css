@@ -206,3 +206,8 @@ table {
 button.dt-button, div.dt-button, a.dt-button{
     padding: 2px 10px;
 }
+
+.panel.panel-primary, .panel.panel-primary .panel-heading { border-color: #335075; }
+.panel.panel-primary .panel-heading { background: #335075; }
+.panel.panel-primary .panel-heading a { color: #fff }
+.panel-primary { overflow-wrap: break-word; }
