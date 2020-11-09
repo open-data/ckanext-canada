@@ -2,6 +2,8 @@
 import json
 import socket
 from logging import getLogger
+import decimal
+
 import webhelpers.feedgenerator
 from webob.exc import HTTPFound
 from pytz import timezone, utc
@@ -12,6 +14,7 @@ import lxml.html as html
 from ckan.lib.base import model, redirect
 from ckan.logic import schema
 from ckan.controllers.user import UserController
+from ckan.controllers.api import ApiController, DataError, NotFound, search
 from ckan.authz import is_sysadmin
 from ckan.lib.helpers import (
     Page,
@@ -53,6 +56,8 @@ from ckantoolkit import (
 
 from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from ckanext.recombinant.datatypes import canonicalize
+from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.errors import RecombinantException
 
 int_validator = get_validator('int_validator')
 
@@ -78,9 +83,6 @@ class CanadaController(BaseController):
     def links(self):
         return render('home/quick_links.html')
 
-    def registry_menu(self):
-        return render("menu.html")
-
     def view_guidelines(self):
         return render('guidelines.html')
 
@@ -97,7 +99,7 @@ class CanadaController(BaseController):
             # Try to load FAQ text for the user's language.
             faq_text = _get_help_text(c.language)
         except IOError:
-            # Fall back to using English if no local langauge could be found.
+            # Fall back to using English if no local language could be found.
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
@@ -127,9 +129,14 @@ class CanadaController(BaseController):
             # Move the summary tag to the top of the details tag.
             details.insert(0, summary)
 
-            # We don't actaully want the FAQ headers to be headings, so strip
+            # We don't actually want the FAQ headers to be headings, so strip
             # the tags and just leave the text.
             faq_section.drop_tag()
+
+        # Get FAQ group header and set it as heading 2 to comply with
+        # accessible heading ranks
+        for faq_group in h.xpath('//h1'):
+            faq_group.tag = 'h2'
 
         return render('help.html', extra_vars={
             'faq_html': html.tostring(h),
@@ -179,47 +186,69 @@ class CanadaController(BaseController):
         search_text = unicode(request.params['search[value]'])
         offset = int(request.params['start'])
         limit = int(request.params['length'])
-        sort_by_num = int(request.params['order[0][column]'])
-        sort_order = ('desc' if request.params['order[0][dir]'] == 'desc'
-                      else 'asc'
-                      )
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
-        )
+        try:
+            unfiltered_response = lc.action.datastore_search(
+                resource_id=resource_id,
+                limit=1,
+            )
+        except NotAuthorized:
+            # datatables js can't handle any sort of error response
+            # return no records instead
+            return json.dumps({
+                'draw': draw,
+                'iTotalRecords': -1,  # with a hint that something is wrong
+                'iTotalDisplayRecords': -1,
+                'aaData': [],
+            })
 
         cols = [f['datastore_id'] for f in chromo['fields']]
-        sort_str = cols[sort_by_num] + ' ' + sort_order
-        sort_str += ' NULLS LAST'
+        prefix_cols = 1 if chromo.get('edit_form', False) else 0
+
+        sort_list = []
+        i = 0
+        while True:
+            if u'order[%d][column]' % i not in request.params:
+                break
+            sort_by_num = int(request.params[u'order[%d][column]' % i])
+            sort_order = (
+                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc NULLS LAST')
+            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
+            i += 1
 
         response = lc.action.datastore_search(
             q=search_text,
             resource_id=resource_id,
             offset=offset,
             limit=limit,
-            sort=sort_str
+            sort=u', '.join(sort_list),
         )
 
         aadata = [
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
-        # XXX custom business logic hack
-        if resource_name == 'consultations':
+        if chromo.get('edit_form', False):
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
+            fids = [f['datastore_id'] for f in chromo['fields']]
+            pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             for row in aadata:
-                row[0] = u'<a href="{0}">{1}</a>'.format(
-                    h.url_for(
-                        controller='ckanext.canada.controller:PDUpdateController',
-                        action='update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=url_part_escape(row[0])),
-                    row[0])
+                row.insert(0, (
+                        u'<a href="{0}" aria-label"' + _("Edit") + '">'
+                        u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                        h.url_for(
+                            controller='ckanext.canada.controller:PDUpdateController',
+                            action='update_pd_record',
+                            owner_org=pkg['organization']['name'],
+                            resource_name=resource_name,
+                            pk=','.join(url_part_escape(row[i]) for i in pkids)
+                        )
+                    )
+                )
 
         return json.dumps({
             'draw': draw,
@@ -311,6 +340,15 @@ def datatablify(v, colname):
 
 
 class CanadaDatasetController(PackageController):
+    def edit(self, id, data=None, errors=None, error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).edit(
+                id, data, errors, error_summary)
+        except HTTPFound:
+            if c.pkg_dict['type'] == 'prop':
+                h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+            raise
+
     def resource_edit(self, id, resource_id, data=None, errors=None,
                       error_summary=None):
         try:
@@ -362,11 +400,11 @@ class CanadaUserController(UserController):
                 action='home',
                 locale=lang)
         else:
-            h.flash_error(_('Login failed. Bad username or password.'))
-            return h.redirect_to(
-                controller='user',
-                action='login', locale=lang
-            )
+            error_summary = _('Login failed. Bad username or password.')
+            # replace redirect with a direct call to login controller
+            # pass error_summary to controller as error
+            # so that it can be captured for GA events in our overridden templates
+            return UserController.login(self, error_summary)
 
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
@@ -533,15 +571,142 @@ class CanadaAdminController(PackageController):
         ).strftime("%Y-%m-%d %H:%M:%S")
 
         # get a list of package id's from the for POST data
+        count = 0
         for key, package_id in request.str_POST.iteritems():
             if key == 'publish':
                 lc.action.package_patch(
                     id=package_id,
                     portal_release_date=publish_date,
                 )
+                count += 1
+
+        # flash notice that records are published
+        h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
         redirect(h.url_for('ckanadmin_publish'))
+
+
+class CanadaApiController(ApiController):
+    def action(self, logic_function, ver=None):
+        # Copied from ApiController so we can log details of some API calls
+        # XXX: for later ckans look for a better hook
+        try:
+            function = get_action(logic_function)
+        except KeyError:
+            log.info('Can\'t find logic function: %s', logic_function)
+            return self._finish_bad_request(
+                _('Action name not known: %s') % logic_function)
+
+        context = {'model': model, 'session': model.Session, 'user': c.user,
+                   'api_version': ver, 'auth_user_obj': c.userobj}
+        model.Session()._context = context
+
+        return_dict = {'help': h.url_for(controller='api',
+                                         action='action',
+                                         logic_function='help_show',
+                                         ver=ver,
+                                         name=logic_function,
+                                         qualified=True,
+                                         )
+                       }
+        try:
+            side_effect_free = getattr(function, 'side_effect_free', False)
+            request_data = self._get_request_data(try_url_params=
+                                                  side_effect_free)
+        except ValueError, inst:
+            log.info('Bad Action API request data: %s', inst)
+            return self._finish_bad_request(
+                _('JSON Error: %s') % inst)
+        if not isinstance(request_data, dict):
+            # this occurs if request_data is blank
+            log.info('Bad Action API request data - not dict: %r',
+                     request_data)
+            return self._finish_bad_request(
+                _('Bad request data: %s') %
+                'Request data JSON decoded to %r but '
+                'it needs to be a dictionary.' % request_data)
+        # if callback is specified we do not want to send that to the search
+        if 'callback' in request_data:
+            del request_data['callback']
+            c.user = None
+            c.userobj = None
+            context['user'] = None
+            context['auth_user_obj'] = None
+        try:
+            result = function(context, request_data)
+            # XXX extra logging here
+            _log_api_access(context, request_data)
+            return_dict['success'] = True
+            return_dict['result'] = result
+        except DataError, e:
+            log.info('Format incorrect (Action API): %s - %s',
+                     e.error, request_data)
+            return_dict['error'] = {'__type': 'Integrity Error',
+                                    'message': e.error,
+                                    'data': request_data}
+            return_dict['success'] = False
+            return self._finish(400, return_dict, content_type='json')
+        except NotAuthorized, e:
+            return_dict['error'] = {'__type': 'Authorization Error',
+                                    'message': _('Access denied')}
+            return_dict['success'] = False
+
+            if unicode(e):
+                return_dict['error']['message'] += u': %s' % e
+
+            return self._finish(403, return_dict, content_type='json')
+        except NotFound, e:
+            return_dict['error'] = {'__type': 'Not Found Error',
+                                    'message': _('Not found')}
+            if unicode(e):
+                return_dict['error']['message'] += u': %s' % e
+            return_dict['success'] = False
+            return self._finish(404, return_dict, content_type='json')
+        except ValidationError, e:
+            error_dict = e.error_dict
+            error_dict['__type'] = 'Validation Error'
+            return_dict['error'] = error_dict
+            return_dict['success'] = False
+            # CS nasty_string ignore
+            log.info('Validation error (Action API): %r', str(e.error_dict))
+            return self._finish(409, return_dict, content_type='json')
+        except search.SearchQueryError, e:
+            return_dict['error'] = {'__type': 'Search Query Error',
+                                    'message': 'Search Query is invalid: %r' %
+                                    e.args}
+            return_dict['success'] = False
+            return self._finish(400, return_dict, content_type='json')
+        except search.SearchError, e:
+            return_dict['error'] = {'__type': 'Search Error',
+                                    'message': 'Search error: %r' % e.args}
+            return_dict['success'] = False
+            return self._finish(409, return_dict, content_type='json')
+        except search.SearchIndexError, e:
+            return_dict['error'] = {
+                '__type': 'Search Index Error',
+                'message': 'Unable to add package to search index: %s' %
+                           str(e)}
+            return_dict['success'] = False
+            return self._finish(500, return_dict, content_type='json')
+        return self._finish_ok(return_dict)
+
+
+def _log_api_access(context, data_dict):
+    if 'package' not in context:
+        if 'resource_id' not in data_dict:
+            return
+        res = model.Resource.get(data_dict['resource_id'])
+        pkg = res.package
+    else:
+        pkg = context['package']
+    org = model.Group.get(pkg.owner_org)
+    c.log_extra = u'org={o} type={t} id={i}'.format(
+        o=org.name,
+        t=pkg.type,
+        i=pkg.id)
+    if 'resource_id' in data_dict:
+        c.log_extra += u' rid={0}'.format(data_dict['resource_id'])
 
 
 def notice_no_access():
@@ -629,6 +794,93 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 class PDUpdateController(BaseController):
 
+    def create_pd_record(self, owner_org, resource_name):
+        lc = LocalCKAN(username=c.user)
+
+        try:
+            chromo = h.recombinant_get_chromo(resource_name)
+            rcomb = lc.action.recombinant_show(
+                owner_org=owner_org,
+                dataset_type=chromo['dataset_type'])
+            [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
+
+            check_access(
+                'datastore_upsert',
+                {'user': c.user, 'auth_user_obj': c.userobj},
+                {'resource_id': res['id']})
+        except NotAuthorized:
+            return abort(403, _('Unauthorized'))
+
+        choice_fields = {
+            f['datastore_id']: [
+                {'value': k, 'label': v} for (k, v) in f['choices']]
+            for f in h.recombinant_choice_fields(resource_name)}
+        pk_fields = aslist(chromo['datastore_primary_key'])
+
+        if request.method == 'POST':
+            post_data = parse_params(request.POST, ignore_keys=['save'])
+
+            if 'cancel' in post_data:
+                return redirect(h.url_for(
+                    controller='ckanext.recombinant.controller:UploadController',
+                    action='preview_table',
+                    resource_name=resource_name,
+                    owner_org=rcomb['owner_org'],
+                    ))
+
+            data, err = clean_check_type_errors(
+                post_data,
+                chromo['fields'],
+                pk_fields,
+                choice_fields)
+            try:
+                lc.action.datastore_upsert(
+                    resource_id=res['id'],
+                    method='insert',
+                    records=[{k: None if k in err else v for (k, v) in data.items()}],
+                    dry_run=bool(err))
+            except ValidationError as ve:
+                if 'records' in ve.error_dict:
+                    err = dict({
+                        k: [_(e) for e in v]
+                        for (k, v) in ve.error_dict['records'][0].items()
+                    }, **err)
+                elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
+                    err = dict({
+                        k: [_("This record already exists")]
+                        for k in pk_fields
+                    }, **err)
+
+            if err:
+                return render('recombinant/create_pd_record.html',
+                              extra_vars={
+                                  'data': data,
+                                  'resource_name': resource_name,
+                                  'chromo_title': chromo['title'],
+                                  'choice_fields': choice_fields,
+                                  'owner_org': rcomb['owner_org'],
+                                  'errors': err,
+                              })
+
+            h.flash_notice(_(u'Record Created'))
+
+            return redirect(h.url_for(
+                controller='ckanext.recombinant.controller:UploadController',
+                action='preview_table',
+                resource_name=resource_name,
+                owner_org=rcomb['owner_org'],
+            ))
+
+        return render('recombinant/create_pd_record.html',
+                      extra_vars={
+                          'data': {},
+                          'resource_name': resource_name,
+                          'chromo_title': chromo['title'],
+                          'choice_fields': choice_fields,
+                          'owner_org': rcomb['owner_org'],
+                          'errors': {},
+                      })
+
     def update_pd_record(self, owner_org, resource_name, pk):
         pk = [url_part_unescape(p) for p in pk.split(',')]
 
@@ -675,32 +927,28 @@ class PDUpdateController(BaseController):
                     owner_org=rcomb['owner_org'],
                     ))
 
-            data = {}
-            for f in chromo['fields']:
-                f_id = f['datastore_id']
-                if not f.get('import_template_include', True):
-                    continue
+            data, err = clean_check_type_errors(
+                post_data,
+                chromo['fields'],
+                pk_fields,
+                choice_fields)
+            # can't change pk fields
+            for f_id in data:
                 if f_id in pk_fields:
                     data[f_id] = record[f_id]
-                else:
-                    val = post_data.get(f['datastore_id'], '')
-                    if isinstance(val, list):
-                        val = u','.join(val)
-                    val = canonicalize(
-                        val,
-                        f['datastore_type'],
-                        primary_key=False,
-                        choice_field=f_id in choice_fields)
-                    data[f['datastore_id']] = val
             try:
                 lc.action.datastore_upsert(
                     resource_id=res['id'],
                     #method='update',    FIXME not raising ValidationErrors
-                    records=[data])
+                    records=[{k: None if k in err else v for (k, v) in data.items()}],
+                    dry_run=bool(err))
             except ValidationError as ve:
-                err = {
+                err = dict({
                     k: [_(e) for e in v]
-                    for (k, v) in ve.error_dict['records'][0].items()}
+                    for (k, v) in ve.error_dict['records'][0].items()
+                }, **err)
+
+            if err:
                 return render('recombinant/update_pd_record.html',
                     extra_vars={
                         'data': data,
@@ -738,3 +986,64 @@ class PDUpdateController(BaseController):
                 'owner_org': rcomb['owner_org'],
                 'errors': {},
                 })
+
+    def type_redirect(self, resource_name):
+        orgs = h.organizations_available('read')
+
+        if not orgs:
+            abort(404, _('No organizations found'))
+        try:
+            chromo = get_chromo(resource_name)
+        except RecombinantException:
+            abort(404, _('Recombinant resource_name not found'))
+
+        # custom business logic
+        if is_sysadmin(c.user):
+            return redirect(h.url_for('recombinant_resource',
+                                      resource_name=resource_name, owner_org='tbs-sct'))
+        return redirect(h.url_for('recombinant_resource',
+                                  resource_name=resource_name, owner_org=orgs[0]['name']))
+
+def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
+    """
+    clean posted data and check type errors, add type error messages
+    to errors dict returned. This is required because type errors on any
+    field prevent triggers from running so we don't get any other errors
+    from the datastore_upsert call.
+
+    :param post_data: form data
+    :param fields: recombinant fields
+    :param pk_fields: list of primary key field ids
+    :param choice_fields: {field id: choices, ...}
+    :return: cleaned data, errors
+    """
+    data = {}
+    err = {}
+
+    for f in fields:
+        f_id = f['datastore_id']
+        if not f.get('import_template_include', True):
+            continue
+        else:
+            val = post_data.get(f['datastore_id'], '')
+            if isinstance(val, list):
+                val = u','.join(val)
+            val = canonicalize(
+                val,
+                f['datastore_type'],
+                primary_key=f['datastore_id'] in pk_fields,
+                choice_field=f_id in choice_fields)
+            if val:
+                if f['datastore_type'] in ('money', 'numeric'):
+                    try:
+                        decimal.Decimal(val)
+                    except decimal.InvalidOperation:
+                        err[f['datastore_id']] = [_(u'Number required')]
+                elif f['datastore_type'] == 'int':
+                    try:
+                        int(val)
+                    except ValueError:
+                        err[f['datastore_id']] = [_(u'Integer required')]
+            data[f['datastore_id']] = val
+
+    return data, err

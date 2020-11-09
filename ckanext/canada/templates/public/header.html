@@ -1,3 +1,63 @@
 {% ckan_extends %}
-{% block signed_on_off %}
+{% set lang = h.lang() %}
+{% block header_wrapper %}
+<header role="banner">
+ <div id="wb-bnr" class="container">
+    {%- block languagetoggle -%}
+      {% snippet 'snippets/wet-boew/languagetoggle.html' %}
+    {%- endblock -%}
+    <div class="row">
+      {% block brand %}
+        {% snippet 'snippets/wet-boew/brand.html' %}
+      {% endblock %}
+      {% block sitesearch %}
+      <section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
+       <h2>{{ _("Search") }}</h2>
+        <form action="https://www.canada.ca/{{ h.lang() }}/sr/srb.html" method="get" name="cse-search-box" role="search" class="form-inline">
+          <div class="form-group">
+            <label for="wb-srch-q" class="wb-inv">{{ _('Search website') }}</label>
+
+            <input id="wb-srch-q" list="wb-srch-q-ac" class="wb-srch-q form-control" name="q" value="" size="34"
+                   maxlength="170" placeholder="{{ _('Search Canada.ca') }}" type="search">
+            <datalist id="wb-srch-q-ac"></datalist>
+          </div>
+          <div class="form-group submit">
+            <button type="submit" id="wb-srch-sub" class="btn btn-primary btn-small" name="wb-srch-sub"><span
+              class="glyphicon-search glyphicon"></span><span class="wb-inv">{{ _('Search') }}</span></button>
+
+          </div>
+        </form>
+      </section>
+      {% endblock %}
+      {% block user_logged %}{% endblock %}
+    </div>
+  </div>
+
+  {% block sitemenu %}
+    <nav class="gcweb-menu" typeof="SiteNavigationElement">
+        <div class="container">
+          <h2 class="wb-inv">Menu</h2>
+          <button type="button" aria-haspopup="true" aria-expanded="false">Menu<span class="wb-inv"> principal</span> <span class="expicon glyphicon glyphicon-chevron-down"></span></button>
+            <ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-en.html">
+            </ul>
+        </div>
+      </nav>
+  {% endblock %}
+
+    {% block signed_on_off %}{% endblock %}
+
+  {% block breadcrumb %}
+    {% if breadcrumb_content() | trim %}
+      <nav role="navigation" id="wb-bc" property="breadcrumb">
+        <h2>{{ _('You are here:') }}</h2>
+        <div class="container">
+            <ol class="breadcrumb">
+              {% snippet 'snippets/home_breadcrumb_item.html' %}
+              {{ breadcrumb_content() }}
+            </ol>
+        </div>
+      </nav>
+    {% endif %}
+  {% endblock %}
+</header>
 {% endblock %}

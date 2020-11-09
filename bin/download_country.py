@@ -33,5 +33,24 @@ def download_csv_filter_output(url):
 
 download_csv_filter_output(DATA_URL)
 
-json.dump(choices, open(OUTPUT_FILE, 'wb'))
+# OPEN-327 add Kosovo to country choices
+# XK used by European Commission and others until an ISO code is assigned
+choices['XK'] = {
+    'en': 'Kosovo',
+    'fr': 'Kosovo',
+}
+
+# OPN-510 add text for "TW" code
+choices['TW'] = {
+    'en': 'Taiwan',
+    'fr': 'Taiwan',
+}
+
+open(OUTPUT_FILE, 'wb').write(json.dumps(
+    choices,
+    indent=2,
+    separators=(',', ':'),
+    sort_keys=True,
+    ensure_ascii=False,
+).encode('utf-8'))
 sys.stderr.write('wrote %d items\n' % len(choices))

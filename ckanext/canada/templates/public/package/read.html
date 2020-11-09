@@ -18,6 +18,13 @@
           {% link_for _('Edit'), controller='package', action='edit', id=pkg.name, class_='btn btn-primary', icon="pencil" %}
           {% link_for _('History'), controller='package', action='history', id=pkg.name, class_='btn btn-default' %}
           {{ h.follow_button('dataset', pkg.name) }}
+          {% if pkg.portal_release_date %}
+            <a href="{{ h.portal_url() }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
+               title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+                <span class="fa fa-arrow-circle-right"></span>
+                <span class="text">{{ _('View on Portal') }}</span>
+            </a>
+          {% endif %}
           {% if pkg.state == "deleted" %}
             {% if h.check_access('package_update', {'id': pkg.id}) %}
               {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
@@ -57,13 +64,13 @@
           [{{ _('Draft') }}]
         {% endif %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       </h1>
-      <div>
+      <div id="resource-desc">
         {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
         {{ h.render_markdown(notes) }}
       </div>
@@ -75,11 +82,12 @@
     </section>
     {%- endblock -%}
 
-    {% if pkg.organization.name == 'ab' %}
+    {% if (pkg.organization.name == 'ab' or pkg.organization.name == 'qc' or pkg.organization.name == 'bc-cb') %}
+    {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
     <section>
       <details class="alert alert-info" id="alberta-content" open="open">
         <summary class="h4">
-	  <h4>{{ _('Made available by the Government of Alberta') }}</h4>
+	  <h4>{{ _('Made available by the ') + owner_org_title }}</h4>
 	</summary>
         {% trans %}<p>These resources are not under the control of the Government of Canada and the link is provided solely for the convenience of our website visitors. We are not responsible for the accuracy, currency or reliability of the content of this website. The Government of Canada does not offer any guarantee in that regard and is not responsible for the information found through this link.</p>
 
@@ -108,44 +116,33 @@
           "org_title_at_publication",
           "org_section",
           "contributor",
-          "license",
-        ] %}
-        {% for field in schema.dataset_fields if field.field_name in include_labels %}
+          "license_id",
+        ] + schema.get('detail_include_fields', []) %}
+        {% for field in schema.dataset_fields if field.field_name in include_labels and field.display_snippet is not none %}
           {% set field_title = h.scheming_language_text(field.label) %}
           {% if field_title %}
             {% set field_value = pkg[field.field_name] %}
             {% if pkg[field.field_name] is mapping %}
-            {% set field_value = h.scheming_language_text(field_value) %}
+              {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
             {% if field_value %}
-              {# FIXME: This special case needs to go; Ideally convince client of futility #}
               {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
-              {# FIXME: more special cases, embrace the futility! #}
-              {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
-              {% set field_title = _('Issued by') %}
-              {% endif %}
-              <li class="list-group-item">
-                <strong>{{ field_title }}:</strong>
-                {% snippet 'scheming/snippets/display_field.html',
-                  field=field,
-                  data=pkg,
-                  entity_type='dataset',
-                  object_type=pkg.type
-                %}
-              </li>
+                {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
+                  {% set field_title = _('Issued by') %}
+                {% endif %}
+                <li class="list-group-item">
+                  <strong>{{ field_title }}:</strong>
+                  {% snippet 'scheming/snippets/display_field.html',
+                    field=field,
+                    data=pkg,
+                    entity_type='dataset',
+                    object_type=pkg.type
+                  %}
+                </li>
               {% endif %}
             {% endif %}
           {% endif %}
         {% endfor %}
-        {# Some core CKAN fields not part of the schema. #}
-        <li class="list-group-item">
-          <strong>{{ _('Licence') }}:</strong>
-          {% if client_lang == 'fr' %}
-            <a href="{{ c.pkg.license.url_fra }}">{{ c.pkg.license.title_fra }}</a>
-          {% else %}
-            <a href="{{ pkg.license_url }}">{{ pkg.license_title }}</a>
-          {% endif %}
-        </li>
       </ul>
     </section>
 
@@ -238,8 +235,45 @@
   {% endif %}
 {% endblock contact_information %}
 
+{% block detail_fields %}
+  {% set show_fields = schema.get('detail_show_fields', []) %}
+  {% if show_fields %}
+    {% for field in schema.dataset_fields %}
+      {% if field.field_name in show_fields %}
+        {% snippet 'scheming/snippets/display_field.html',
+          field=field,
+          data=pkg,
+          entity_type='dataset',
+          object_type=pkg.type
+        %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+
+{% block package_rate %}
+  <a name="rate"></a>
+  <div data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+{% endblock %}
+
+{% block more_like_this %}
+  {% if h.adv_search_url() %}
+  <section class="panel panel-primary">
+    <header class="panel-heading">
+      <h5 class="panel-title">{{ _('Similar records') }}</h5>
+    </header>
+    <div data-ajax-replace="{{ h.adv_search_url() }}/{{ h.lang() }}/od/mlt/{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
+    </div>
+  </section>
+  {% endif %}
+{% endblock %}
+
 {% block package_comments %}
-{% include "package/comments.html" %}
+  <a name="comments"></a>
+  <section class="indent-large">
+    <div data-ajax-replace="/{{ h.lang() }}/external-comment/dataset/{{ c.pkg_dict.id }}"></div>
+  </section>
 {% endblock %}
 
   </div>
@@ -248,10 +282,11 @@
 {% block scripts %}
 {{ super() }}
 <!--[if gte IE 9 | !IE ]><!-->
-<script src="/geomapzoom.js" type="text/javascript"></script>
+<script src="{{ h.url_for_static('/static/js/geomapzoom.js') }}" type="text/javascript"></script>
 <!--<![endif]--><!--[if lt IE 9]>
-<script src="/geomapzoom.js"></script>
+<script src="{{ h.url_for_static('/static/js/geomapzoom.js') }}"></script>
 <![endif]-->
+<script src="{{ h.url_for_static('/static/js/more_like_this.js') }}"></script>
 {% endblock %}
 
 {% block package_license %}{% endblock %}
@@ -259,7 +294,6 @@
 
 {%- block custom_styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ h.url_for_static('/static/opendata_blog.css') }}" />
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 {% endblock %}
 

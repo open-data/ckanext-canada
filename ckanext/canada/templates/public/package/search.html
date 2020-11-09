@@ -121,5 +121,30 @@ $( document ).ready(function() {
 {% endblock %}
 
 
+{% block primary_content %}
+  {{ self.page_primary_action() }}
+
+  <div class="row">
+    <div class="col-md-12 mrgn-lft-sm mrgn-rght-sm">
+    {{ self.form() }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{ self.package_search_results_list() }}
+    </div>
+  </div>
+  <div class="col-md-12">{{ self.page_pagination() }}</div>
+  <div class="col-md-12">{{ self.package_search_results_api() }}</div>
+{% endblock %}
+
+{% block search_form_footer %}{% endblock %}
+
+{% block package_search_results_api %}
+  {{ self.package_search_results_api_inner() }}
+{% endblock %}
+
+
 
 

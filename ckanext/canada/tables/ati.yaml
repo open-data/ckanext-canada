@@ -10,11 +10,13 @@ template_updated: TBD
 portal_type: info
 collection: ati
 
-
 resources:
 - title: ATI Summaries
 
   resource_name: ati
+  create_form: true
+  edit_form: true
+
   fields:
 
   - datastore_id: year
@@ -23,37 +25,38 @@ resources:
     excel_required: true
     excel_column_width: 13
     choices:
-      2011: "2011"
-      2012: "2012"
-      2013: "2013"
-      2014: "2014"
-      2015: "2015"
-      2016: "2016"
-      2017: "2017"
-      2018: "2018"
-      2019: "2019"
-      2020: "2020"
-      2021: "2021"
+      "2011": "2011"
+      "2012": "2012"
+      "2013": "2013"
+      "2014": "2014"
+      "2015": "2015"
+      "2016": "2016"
+      "2017": "2017"
+      "2018": "2018"
+      "2019": "2019"
+      "2020": "2020"
+      "2021": "2021"
 
   - datastore_id: month
     label: Month (1-12)
     datastore_type: month
     excel_required: true
     excel_column_width: 18
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    choice_order_expression: 'len(code), code'
     choices:
-      01: January
-      02: February
-      03: March
-      04: April
-      05: May
-      06: June
-      07: July
-      08: August
-      09: September
-      10: October
-      11: November
-      12: December
+      "1": January
+      "2": February
+      "3": March
+      "4": April
+      "5": May
+      "6": June
+      "7": July
+      "8": August
+      "9": September
+      "10": October
+      "11": November
+      "12": December
 
   - datastore_id: request_number
     label: Request Number
@@ -77,7 +80,7 @@ resources:
     datastore_type: text
     excel_required: true
     excel_column_width: 39
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       DA:
         en: All disclosed
@@ -109,37 +112,66 @@ resources:
     datastore_type: int
     excel_column_width: 34
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: ATI Summaries
+    report_type_fr: Accès à l’information sommaires complétés
+
   datastore_primary_key: request_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF3f6c45
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFeeece1
   default_preview_sort: year desc, month desc
+
+  triggers:
+  - ati_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        errors := errors || choice_error(NEW.year, {year}, 'year');
+        errors := errors || required_error(NEW.month, 'month');
+        errors := errors || choice_error(NEW.month, {month}, 'month');
+        errors := errors || required_error(NEW.request_number, 'request_number');
+        errors := errors || required_error(NEW.summary_en, 'summary_en');
+        errors := errors || required_error(NEW.summary_fr, 'summary_fr');
+        errors := errors || required_error(NEW.disposition, 'disposition');
+        errors := errors || choice_error(NEW.disposition, {disposition}, 'disposition');
+      END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
-      disposition: Disclosed in part / Communication partielle
+      year: 2020
+      month: 10
+      request_number: A-2020-00516
       summary_fr: Copies des rapports de vérification et d’évaluation
                   du système de gestion de la sécurité
-      month: 10
-      request_number: A-2013-00516
       summary_en: Copies of the Safety Management System Audit and
                   Evaluation Reports
-      year: 2014
+      disposition: DP
       pages: 779
     filters:
       month: 10
-      year: 2014
+      year: 2020
     filter_one:
-      request_number: A-2013-00516
+      request_number: A-2020-00516
     sort: year desc, month desc
 
   # copy UMD Number field into output CSV for external ATI system
@@ -150,6 +182,9 @@ resources:
 - title: ATI Nothing to Report
 
   resource_name: ati-nil
+  create_form: true
+  edit_form: true
+
   fields:
 
   - datastore_id: year
@@ -157,54 +192,78 @@ resources:
     datastore_type: year
     excel_column_width: 5
     choices:
-      2007: "2007"
-      2008: "2008"
-      2009: "2009"
-      2010: "2010"
-      2011: "2011"
-      2012: "2012"
-      2013: "2013"
-      2014: "2014"
-      2015: "2015"
-      2016: "2016"
-      2017: "2017"
-      2018: "2018"
-      2019: "2019"
-      2020: "2020"
-      2021: "2021"
+      "2007": "2007"
+      "2008": "2008"
+      "2009": "2009"
+      "2010": "2010"
+      "2011": "2011"
+      "2012": "2012"
+      "2013": "2013"
+      "2014": "2014"
+      "2015": "2015"
+      "2016": "2016"
+      "2017": "2017"
+      "2018": "2018"
+      "2019": "2019"
+      "2020": "2020"
+      "2021": "2021"
 
   - datastore_id: month
     label: Month
     datastore_type: month
     excel_column_width: 4
+    full_text_choices: false
+    choice_order_expression: 'len(code), code'
     choices:
-      01: January
-      02: February
-      03: March
-      04: April
-      05: May
-      06: June
-      07: July
-      08: August
-      09: September
-      10: October
-      11: November
-      12: December
+      "1": January
+      "2": February
+      "3": March
+      "4": April
+      "5": May
+      "6": June
+      "7": July
+      "8": August
+      "9": September
+      "10": October
+      "11": November
+      "12": December
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF3f6c45
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFeeece1
   default_preview_sort: year desc, month desc
+
+  triggers:
+  - ati_nil_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        errors := errors || required_error(NEW.month, 'month');
+      END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
@@ -216,3 +275,17 @@ resources:
       month: 10
       year: 2014
     sort: year desc, month desc
+
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF3f6c45
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFeeece1
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFeeece1

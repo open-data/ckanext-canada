@@ -2,128 +2,290 @@ dataset_type: reclassification
 target_dataset: reclassification
 title: Proactive Disclosure - Position Reclassification
 notes: Access, upload and modify the position reclassification reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+
+template_version: 3
+template_updated: 2020-09-15
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
 resources:
 - title: Proactive Disclosure - Position Reclassification
   resource_name: reclassification
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: ref_number
-    label: Reference Number
     datastore_type: text
-    excel_column_width: 20
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   - datastore_id: job_number
-    label: Job Number
     datastore_type: text
-    excel_column_width: 20
+    label:
+      en: Job Number
+      fr: Numéro d'emploi
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   - datastore_id: pos_number
-    label: Position Number
     datastore_type: text
-    excel_column_width: 20
+    label:
+      en: Position Number
+      fr: Numéro du poste
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   - datastore_id: date
-    label: Date
     datastore_type: date
+    label:
+      en: Date
+      fr: Date
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    form_snippet: scheming/form_snippets/date.html
 
   - datastore_id: pos_title_en
-    label: Position Title (English)
     datastore_type: text
-    excel_column_width: 20
+    label:
+      en: Position Title (English)
+      fr: Titre du poste (anglais)
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   - datastore_id: pos_title_fr
-    label: Position Title (French)
     datastore_type: text
-    excel_column_width: 20
+    label:
+      en: Position Title (French)
+      fr: Titre du poste (français)
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
 
   - datastore_id: old_class_group_code
-    label: Previous Position Classification Group
     datastore_type: text
-    excel_column_width: 10
+    label:
+      en: Previous Position Classification Group
+      fr: Groupe de classification du poste antérieur
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    excel_full_text_choices: True
     choices_file: choices/classification_group.yaml
+    excel_error_formula: 'FALSE'
 
   - datastore_id: old_class_level
-    label: Previous Position Classification Level Number
     datastore_type: text
-    excel_column_width: 10
+    label:
+      en: Previous Position Classification Level Number
+      fr: Numéro de niveau de la classification du poste antérieur
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    excel_full_text_choices: True
     choices_file: choices/level_number.yaml
+    excel_error_formula: 'FALSE'
 
   - datastore_id: new_class_group_code
-    label: Reclassified Position Classification Group
     datastore_type: text
-    excel_column_width: 10
+    label:
+      en: Reclassified Position Classification Group
+      fr: Groupe de classification du poste reclassifié
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    excel_full_text_choices: True
     choices_file: choices/classification_group.yaml
+    excel_error_formula: 'FALSE'
 
   - datastore_id: new_class_level
-    label: Reclassified Position Classification Level Number
     datastore_type: text
-    excel_column_width: 10
+    label:
+      en: Reclassified Position Classification Level Number
+      fr: Numéro de niveau de la classification du poste reclassifié
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    excel_full_text_choices: True
     choices_file: choices/level_number.yaml
+    excel_error_formula: 'FALSE'
 
   - datastore_id: old_differential
-    label: Previous Supervisory Differential
     datastore_type: text
-    excel_column_width: 5
+    label:
+      en: Previous Supervisory Differential
+      fr: Ancienne prime de surveillance
+    format_type: Free Text
+    form_attrs:
+      size: 60
 
   - datastore_id: new_differential
-    label: Reclassified Supervisory Differential
     datastore_type: text
-    excel_column_width: 5
+    label:
+      en: Reclassified Supervisory Differential
+      fr: Prime de surveillance précédente
+    format_type: Free Text
+    form_attrs:
+      size: 60
 
   - datastore_id: reason_en
-    label: Reason for Reclassification (English)
     datastore_type: text
-    excel_column_width: 41
+    label:
+      en: Reason for Reclassification (English)
+      fr: Raison de la decision en anglais
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text
+    validation: This field must not be empty
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: reason_fr
-    label: Reason for Reclassification (French)
     datastore_type: text
-    excel_column_width: 41
+    label:
+      en: Reason for Reclassification (French)
+      fr: Raison de la decision en français
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text
+    validation: This field must not be empty
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: Position Reclassification
+    report_type_fr: Reclassifications de postes
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f1e26
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFd0e1f9
+
+  triggers:
+    - reclassification_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.ref_number, 'ref_number');
+          errors := errors || required_error(NEW.pos_number, 'pos_number');
+          errors := errors || required_error(NEW.date, 'date');
+          errors := errors || required_error(NEW.pos_title_en, 'pos_title_en');
+          errors := errors || required_error(NEW.pos_title_fr, 'pos_title_fr');
+          errors := errors || required_error(NEW.old_class_group_code, 'old_class_group_code');
+          errors := errors || choice_error(NEW.old_class_group_code, {old_class_group_code}, 'old_class_group_code');
+          errors := errors || required_error(NEW.old_class_level, 'old_class_level');
+          errors := errors || choice_error(NEW.old_class_level, {old_class_level}, 'old_class_level');
+          errors := errors || required_error(NEW.new_class_group_code, 'new_class_group_code');
+          errors := errors || choice_error(NEW.new_class_group_code, {new_class_group_code}, 'new_class_group_code');
+          errors := errors || required_error(NEW.new_class_level, 'new_class_level');
+          errors := errors || choice_error(NEW.new_class_level, {new_class_level}, 'new_class_level');
+          errors := errors || required_error(NEW.reason_en, 'reason_en');
+          errors := errors || required_error(NEW.reason_fr, 'reason_fr');
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:
-      ref_number: "1980198"
-      pos_number: "846763"
-      date: "2016-01-01"
+      ref_number: "PR-2019-Q1-00005"
+      pos_number: "14999"
+      date: "2019-03-01"
+      pos_title_en: "Chief, Facilities Services Management"
+      pos_title_fr: "Chef, Gestion des services aux immeubles"
+      old_class_group_code: "AS"
+      old_class_level: "03"
+      new_class_group_code: "AS"
+      new_class_level: "04"
+      reason_en: "Change of Duties"
+      reason_fr: "Changements des les fonctions de travail"
     filters:
-      pos_number: "846763"
+      pos_number: "14999"
     filter_one:
-      ref_number: "1980198"
+      ref_number: "PR-2019-Q1-00005"
     sort: date desc
 
 
 - title: Proactive Disclosure - Position Reclassification Nothing to Report
   resource_name: reclassification-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: year
-    label: Year
     datastore_type: year
+    label: Year
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
     choices:
@@ -155,9 +317,14 @@ resources:
       1995: "1995"
 
   - datastore_id: quarter
-    label: Quarter
     datastore_type: text
+    label: Quarter
     excel_column_width: 10
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    excel_full_text_choices: true
     choices:
       Q1:
         en: April 1 - June 30
@@ -172,23 +339,48 @@ resources:
         en: January 1 - March 31
         fr: 1 janvier - 31 mars
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
   solr_static_fields:
-    nothing_to_report_en: Nothing to report for this period
-    nothing_to_report_fr: Rien à signaler pour cette période
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
 
   datastore_primary_key: [year, quarter]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF1f1e26
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFd0e1f9
+
+  triggers:
+  - reclassification_nil_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        errors := errors || choice_error(NEW.year::text, {year}, 'year');
+        errors := errors || required_error(NEW.quarter, 'quarter');
+        errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
 
   examples:
     record:
@@ -200,3 +392,20 @@ resources:
       year: 2016
       quarter: Q2
     sort: year desc, quarter desc
+
+# https://design.gccollab.ca/component/colour "Green and Blue" colours 2, 3
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF4e4741
+  Font:
+    color: FFFFFF
+    size: 14
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF83c3f2
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF83c3f2

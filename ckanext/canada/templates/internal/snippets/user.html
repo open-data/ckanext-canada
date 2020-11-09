@@ -1,6 +1,55 @@
-{% ckan_extends %}
 {% block header_user_snippet %}
-{%- if c.userobj -%}
-{{ super() }}
-{%- endif -%}
+    <section id="wb-so">
+      <h2 class="wb-inv">Sign-on information</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-offset-4 col-md-8"  id="user_nav">
+          <ul class="list-inline">
+    {% if c.userobj %}
+        {% block header_account_logged %}
+        {% if c.userobj.sysadmin %}
+        <li>
+            <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default">
+                <i class="fa fa-gavel"></i>
+                <span class="text">{{ _('Admin') }}</span>
+            </a>
+        </li>
+        {% endif %}
+        {% set new_activities = h.new_activities() %}
+        <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
+            {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
+            <a href="{{ h.url_for(controller='user', action='dashboard') }}" title="{{ notifications_tooltip }}" class="btn btn-default">
+                <i class="fa fa-tachometer"></i>
+                <span class="text">{{ _('Dashboard') }}</span>
+                <span class="wb-inv">{{ _(': ') }}</span>
+                <span class="badge">{{ new_activities }}</span>
+            </a>
+        </li>
+            {% block header_account_settings_link %}
+            <li>
+                <a href="{{ h.url_for(controller='user', action='edit', id=c.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default">
+                    <span class="fa fa-cog"></span>
+                    <span class="text">{{ _('Edit Profile') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+
+            {% block header_get_help %}
+            <li>
+                <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}"
+                   title="{{ _('Get Help') }}" class="btn btn-warning"
+                   onclick="ga('send', 'event', 'Get Help', 'Help requested by {{ c.userobj.display_name }}', document.location.href);">
+                    <span class="fa fa-question"></span>
+                    <span class="text">{{ _('Get Help') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+
+        {% endblock %}
+    {% endif %}
+        </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 {% endblock %}

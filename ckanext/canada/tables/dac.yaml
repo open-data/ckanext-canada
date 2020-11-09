@@ -13,6 +13,8 @@ collection: pd
 resources:
 - title: Proactive Disclosure - Departmental Audit Committee
   resource_name: dac
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: reporting_period
@@ -23,6 +25,7 @@ resources:
       en: The current reporting period and fiscal year
       fr: La période de déclaration et l’exercice financier en cours.
     obligation: Mandatory
+    form_required: true
     datastore_type: text
     choices:
       2018-2019-Q1: 2018-2019-Q1
@@ -33,7 +36,11 @@ resources:
       2019-2020-Q2: 2019-2020-Q2
       2019-2020-Q3: 2019-2020-Q3
       2019-2020-Q4: 2019-2020-Q4
-
+      2020-2021-Q1: 2020-2021-Q1
+      2020-2021-Q2: 2020-2021-Q2
+      2020-2021-Q3: 2020-2021-Q3
+      2020-2021-Q4: 2020-2021-Q4
+      
   - datastore_id: line_number
     label:
       en: Line Number
@@ -42,6 +49,7 @@ resources:
       en: The line number of the disclosure.
       fr: Le numéro de ligne de la divulgation.
     obligation: Mandatory
+    form_required: true
     datastore_type: int
 
   - datastore_id: member_name
@@ -53,9 +61,12 @@ resources:
       fr: Le nom complet du membre.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
+    form_attrs:
+      size: 60
 
   - datastore_id: province
     label:
@@ -73,6 +84,7 @@ resources:
       fr: La province ou le territoire de la résidence principale du membre au moment où la rémunération et/ou les frais ont été engagés.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
@@ -129,6 +141,7 @@ resources:
       fr: Le rôle du membre au moment où la rémunération et/ou les frais ont été engagés (c’est-à-dire, « C-P » est pour président(e) et « M-M » est pour membre).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     excel_full_text_choices: true
     format_type: Controlled List
     datastore_type: text
@@ -156,6 +169,7 @@ resources:
       fr: "Le nombre d’heures où le membre a rencontré le comité en personne ou par téléconférence au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Decimal
     validation: This field must not be empty
     datastore_type: numeric
@@ -176,6 +190,7 @@ resources:
       fr: "Le nombre d’heures que le membre a consacré à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration."
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Decimal
     validation: This field must not be empty
     datastore_type: numeric
@@ -189,6 +204,7 @@ resources:
       fr: Le montant total payé au membre pour le temps consacré aux réunions, à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration (c’est-à-dire, taux journalier ÷ 7,5 heures x nombre d’heures travaillées).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     datastore_type: money
 
   - datastore_id: travel_expenses
@@ -200,6 +216,7 @@ resources:
       fr: Les frais de voyage totaux engagés par le membre au cours de la période de déclaration, y compris le transport, les repas, faux frais, etc.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     datastore_type: money
 
   - datastore_id: notes_en
@@ -211,6 +228,9 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: notes_fr
     label:
@@ -221,6 +241,9 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -244,23 +267,29 @@ resources:
   datastore_primary_key: [reporting_period, line_number]
   datastore_indexes: ""
 
-  excel_data_num_rows: 20
+  excel_data_num_rows: 100
 
   triggers:
   - dac_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.reporting_period, 'reporting_period');
-        PERFORM choice_one_of(NEW.reporting_period, {reporting_period}, 'reporting_period');
-        PERFORM not_empty(NEW.line_number, 'line_number');
-        PERFORM not_empty(NEW.member_name, 'member_name');
-        PERFORM not_empty(NEW.province, 'province');
-        PERFORM choice_one_of(NEW.province, {province}, 'province');
-        PERFORM not_empty(NEW.meeting_hours, 'meeting_hours');
-        PERFORM not_empty(NEW.other_hours, 'other_hours');
-        PERFORM not_empty(NEW.remuneration, 'remuneration');
-        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
-        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
-        RETURN NEW;
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || required_error(NEW.line_number, 'line_number');
+        errors := errors || required_error(NEW.member_name, 'member_name');
+        errors := errors || required_error(NEW.province, 'province');
+        errors := errors || choice_error(NEW.province, {province}, 'province');
+        errors := errors || required_error(NEW.meeting_hours, 'meeting_hours');
+        errors := errors || required_error(NEW.other_hours, 'other_hours');
+        errors := errors || required_error(NEW.remuneration, 'remuneration');
+        errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
+        errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 

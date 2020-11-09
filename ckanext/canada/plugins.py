@@ -5,6 +5,7 @@ import os.path
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
+import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
@@ -22,6 +23,10 @@ from ckanext.canada import search_integration
 from ckanext.extendedactivity.plugins import IActivity
 
 import json
+
+import ckan.lib.formatters as formatters
+from webhelpers.html import literal
+from pylons.i18n import gettext
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -51,6 +56,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             "ckan.user_list_limit": 4000
         })
 
+
     def before_map(self, map):
         map.connect(
             '/',
@@ -60,11 +66,6 @@ class DataGCCAInternal(p.SingletonPlugin):
         map.connect(
             '/links',
             action='links',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/menu',
-            action='registry_menu',
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
@@ -105,6 +106,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaAdminController'
         )
         map.connect(
+            '/dataset/edit/{id}',
+            action='edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
+        )
+        map.connect(
             '/dataset/{id}/resource_edit/{resource_id}',
             action='resource_edit',
             controller='ckanext.canada.controller:CanadaDatasetController'
@@ -117,11 +123,21 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='delete'
         )
         map.connect(
+            'create_pd_record',
+            '/create-pd-record/{owner_org}/{resource_name}',
+            controller='ckanext.canada.controller:PDUpdateController',
+            action='create_pd_record',
+        )
+        map.connect(
             'update_pd_record',
             '/update-pd-record/{owner_org}/{resource_name}/{pk}',
             controller='ckanext.canada.controller:PDUpdateController',
             action='update_pd_record',
         )
+        map.connect('recombinant_type',
+                    '/recombinant/{resource_name}',
+                    action='type_redirect',
+                    controller='ckanext.canada.controller:PDUpdateController')
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
@@ -150,7 +166,10 @@ class DataGCCAInternal(p.SingletonPlugin):
             'parse_release_date_facet',
             'is_ready_to_publish',
             'get_datapreview_recombinant',
-            ])
+            'recombinant_description_to_markup',
+            'mail_to_with_params',
+            'get_timeout_length',
+        ])
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
@@ -163,6 +182,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             except ValidationError as e:
                 # reformat tab-delimited error as dict
                 head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                rerr = rerr.rstrip('\n')
                 if head == 'TAB-DELIMITED' and sep:
                     out = {}
                     it = iter(rerr.split('\t'))
@@ -194,6 +214,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             ]}
 
 
+
 @chained_action
 def disabled_anon_action(up_func, context, data_dict):
     if context.get('user', 'visitor') in ('', 'visitor'):
@@ -215,6 +236,7 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
+    p.implements(p.IMiddleware, inherit=True)
 
     def update_config(self, config):
         # add our templates
@@ -224,6 +246,7 @@ class DataGCCAPublic(p.SingletonPlugin):
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/briefingt.yaml
+ckanext.canada:tables/qpnotes.yaml
 ckanext.canada:tables/contracts.yaml
 ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
@@ -237,6 +260,7 @@ ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/experiment.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -248,6 +272,7 @@ ckanext.canada:schemas/presets.yaml
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
+ckanext.canada:schemas/prop.yaml
 """
 
         # Enable our custom DCAT profile.
@@ -261,6 +286,12 @@ ckanext.canada:schemas/info.yaml
                 for folder, subs, files in os.walk(translations_dir):
                     for filename in files:
                         watch_file(os.path.join(folder, filename))
+
+        # monkey patch helpers.py pagination method
+        hlp.Page.pager = _wet_pager
+        hlp.SI_number_span = _SI_number_span_close
+
+        hlp.build_nav_main = build_nav_main
 
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
@@ -281,6 +312,7 @@ ckanext.canada:schemas/info.yaml
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
+            'status': _('Suggestion Status'),
             })
 
         return facets_dict
@@ -301,6 +333,7 @@ ckanext.canada:schemas/info.yaml
             'get_license',
             'normalize_strip_accents',
             'portal_url',
+            'adv_search_url',
             'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
@@ -314,11 +347,24 @@ ckanext.canada:schemas/info.yaml
             'linked_user',
             'json_loads',
             'catalogue_last_update_date',
-            'dataset_rating',
-            'dataset_comments',
             'get_translated_t',
             'language_text_t',
-            ])
+            'link_to_user',
+            'gravatar_show',
+            'get_datapreview',
+            'iso_to_goctime',
+            'geojson_to_wkt',
+            'url_for_wet_theme',
+            'url_for_wet',
+            'wet_jquery_offline',
+            'get_map_type',
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js',
+            'survey_js_url',
+            'mail_to_with_params',
+        ])
+
 
     def before_map(self, map):
         map.connect(
@@ -356,6 +402,13 @@ ckanext.canada:schemas/info.yaml
             action='server_error',
             controller='ckanext.canada.controller:CanadaController'
         )
+        map.connect(
+            '/api{ver:/3|}/action/{logic_function}',
+            ver='/3',
+            action='action',
+            controller='ckanext.canada.controller:CanadaApiController',
+            conditions={'method':['GET', 'POST']},
+        )
         return map
 
     def get_actions(self):
@@ -363,6 +416,13 @@ ckanext.canada:schemas/info.yaml
 
     def get_auth_functions(self):
         return {'inventory_votes_show': auth.inventory_votes_show}
+
+    # IMiddleware
+
+    def make_middleware(self, app, config):
+        return LogExtraMiddleware(app, config)
+
+
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
@@ -415,7 +475,39 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
+            'no_future_date':
+                validators.no_future_date,
             }
+
+
+class LogExtraMiddleware(object):
+    def __init__(self, app, config):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        def _start_response(status, response_headers, exc_info=None):
+            extra = []
+            if c.package:
+                assert 0
+            if c.user:
+                extra = [(
+                    'X-LogExtra', u'user={uid} {extra}'.format(
+                        uid=c.user,
+                        extra=c.log_extra or u'').encode('utf-8')
+                    )
+                ]
+            return start_response(
+                status,
+                response_headers + extra,
+                exc_info)
+
+        return self.app(environ, _start_response)
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
@@ -508,13 +600,18 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
+
+        if data_dict['type'] == 'prop':
+            status = data_dict.get('status')
+            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
+
         return data_dict
 
     def before_view(self, pkg_dict):
         return pkg_dict
 
     def after_create(self, context, data_dict):
-        search_integration.add_to_search_index(data_dict, in_bulk=False)
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
@@ -526,7 +623,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
-        search_integration.add_to_search_index(data_dict, in_bulk=False)
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):
@@ -679,9 +776,9 @@ ckanext.canada:schemas/doc.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'survey_js_url',
+            'mail_to_with_params',
             ]),
-            dataset_comments=helpers.dataset_comments_obd,
-            dataset_rating=helpers.dataset_rating_obd,
             )
 
     def before_map(self, map):
@@ -701,3 +798,42 @@ ckanext.canada:schemas/doc.yaml
             controller='ckanext.canada.controller:CanadaController',
         )
         return map
+
+
+def _wet_pager(self, *args, **kwargs):
+    ## a custom pagination method, because CKAN doesn't expose the pagination to the templates,
+    ## and instead hardcodes the pagination html in helpers.py
+
+    kwargs.update(
+        format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
+        symbol_previous=gettext('Previous').decode('utf-8'), symbol_next=gettext('Next').decode('utf-8'),
+        curpage_attr={'class': 'active'}
+    )
+
+    return super(hlp.Page, self).pager(*args, **kwargs)
+
+def _SI_number_span_close(number):
+    ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
+    number = int(number)
+    if number < 1000:
+        output = literal('<span>')
+    else:
+        output = literal('<span title="' + formatters.localised_number(number) + '">')
+    return output + formatters.localised_SI_number(number) + literal('</span>')
+
+
+# Monkey Patched to inlude the 'list-group-item' class
+# TODO: Clean up and convert to proper HTML templates
+def build_nav_main(*args):
+    ''' build a set of menu items.
+
+    args: tuples of (menu type, title) eg ('login', _('Login'))
+    outputs <li><a href="...">title</a></li>
+    '''
+    output = ''
+    for item in args:
+        menu_item, title = item[:2]
+        if len(item) == 3 and not hlp.check_access(item[2]):
+            continue
+        output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
+    return output

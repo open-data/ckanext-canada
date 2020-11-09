@@ -1,4 +1,5 @@
 import json
+import re
 from pylons import c, config
 from pylons.i18n import _
 from ckan.model import User, Package, Activity
@@ -6,20 +7,38 @@ import ckan.model as model
 import wcms
 import datetime
 import unicodedata
+import ckan as ckan
+import jinja2
 
 import ckanapi
 
 from ckantoolkit import h
+import ckan.lib.helpers as hlp
+import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
+import webhelpers.html as html
+from webhelpers.html.tags import link_to
+import dateutil.parser
+import geomet.wkt as wkt
+import json as json
+from markupsafe import Markup, escape
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
-PORTAL_URL_DEFAULT = 'http://data.statcan.gc.ca'
+PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
+PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
+GRAVATAR_SHOW_OPTION = 'ckan.gravatar_show'
+GRAVATAR_SHOW_DEFAULT = True
+WET_URL = config.get('wet_boew.url', '')
+WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
+WET_JQUERY_OFFLINE_DEFAULT = False
+GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
+GEO_MAP_TYPE_DEFAULT = 'static'
 
 
 
@@ -155,16 +174,6 @@ def remove_duplicates(a_list):
             
     return s
 
-
-def dataset_comments(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/external-entity/ckan-' + pkg_id + '?_wrapper_format=ajax'
-
-def dataset_comments_obd(pkg_id):
-    if config.get('ckanext.canada.drupal_url'):
-        return '/' + h.lang() + '/external-entity/ckan_obd-' + pkg_id + '?_wrapper_format=ajax'
-
-
 def get_license(license_id):
     return Package.get_license_register().get(license_id)
 
@@ -181,18 +190,27 @@ def normalize_strip_accents(s):
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
 
-def dataset_rating(package_id):
-    return wcms.dataset_rating(package_id)
-
-def dataset_rating_obd(package_id):
-    return wcms.dataset_rating_obd(package_id)
-
-
 def portal_url():
-    return str(config.get(PORTAL_URL_OPTION, PORTAL_URL_DEFAULT))
+    url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
+    return str(config.get(PORTAL_URL_OPTION, url))
+
+def adv_search_url():
+    return config.get('ckanext.canada.adv_search_url_fr') if h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
 
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
+
+def adobe_analytics_login_required(current_url):
+    return "2" #return 1 if page requires a login and 2 if page is public
+
+def adobe_analytics_lang():
+    if h.lang() == 'en':
+        return 'eng'
+    elif h.lang() == 'fr':
+        return 'fra'
+
+def adobe_analytics_js():
+    return str(config.get('adobe_analytics.js', ''))
     
 def loop11_key():
     return str(config.get('loop11.key', ''))
@@ -235,12 +253,6 @@ def get_datapreview_recombinant(resource_name, res_id):
     from ckanext.recombinant.tables import get_chromo
     chromo = get_chromo(resource_name)
     default_preview_args = {}
-
-    lc = ckanapi.LocalCKAN(username=c.user)
-    results = lc.action.datastore_search(
-        resource_id=res_id,
-        limit=0,
-        )
 
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
@@ -347,3 +359,144 @@ def linked_user(user, maxlength=0, avatar=20):
         )
 # FIXME: because ckan/lib/activity_streams is terrible
 h.linked_user = linked_user
+
+
+def link_to_user(user, maxlength=0):
+    """ Return the HTML snippet that returns a link to a user.  """
+
+    # Do not link to pseudo accounts
+    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
+        return user
+    if not isinstance(user, model.User):
+        user_name = unicode(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+
+    if user:
+        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
+        displayname = user.display_name
+        if maxlength and len(user.display_name) > maxlength:
+            displayname = displayname[:maxlength] + '...'
+        return html.tags.link_to(displayname,
+                       h.url_for(controller='user', action='read', id=_name))
+
+def gravatar_show():
+    return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
+
+def get_datapreview(res_id):
+
+    #import pdb; pdb.set_trace()
+    dsq_results = ckan.logic.get_action('datastore_search')({}, {'resource_id': res_id, 'limit' : 100})
+    return h.snippet('package/wet_datatable.html', ds_fields=dsq_results['fields'], ds_records=dsq_results['records'])
+
+def iso_to_goctime(isodatestr):
+    dateobj = dateutil.parser.parse(isodatestr)
+    return dateobj.strftime('%Y-%m-%d')
+
+def geojson_to_wkt(gjson_str):
+    ## Ths GeoJSON string should look something like:
+    ##  u'{"type": "Polygon", "coordinates": [[[-54, 46], [-54, 47], [-52, 47], [-52, 46], [-54, 46]]]}']
+    ## Convert this JSON into an object, and load it into a Shapely object. The Shapely library can
+    ## then output the geometry in Well-Known-Text format
+
+    try:
+        gjson = json.loads(gjson_str)
+        try:
+            gjson = _add_extra_longitude_points(gjson)
+        except:
+            # this is bad, but all we're trying to do is improve
+            # certain shapes and if that fails showing the original
+            # is good enough
+            pass
+        shape = gjson
+    except ValueError:
+        return None # avoid 500 error on bad geojson in DB
+
+    wkt_str = wkt.dumps(shape)
+    return wkt_str
+
+
+def url_for_wet_theme(*args):
+    file = args[0] or ''
+    return h.url_for_wet(file, theme=True)
+
+def url_for_wet(*args, **kw):
+    file = args[0] or ''
+    theme = kw.get('theme', False)
+
+    if not WET_URL:
+        return h.url_for_static_or_external(
+            ('GCWeb' if theme else 'wet-boew') + file
+        )
+
+    return WET_URL + '/' + ('GCWeb' if theme else 'wet-boew') + file
+
+
+def wet_jquery_offline():
+    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+
+
+def get_map_type():
+    return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
+
+
+def _add_extra_longitude_points(gjson):
+    """
+    Assume that sides of a polygon with the same latitude should
+    be rendered as curves following that latitude instead of
+    straight lines on the final map projection
+    """
+    import math
+    fuzz = 0.00001
+    if gjson[u'type'] != u'Polygon':
+        return gjson
+    coords = gjson[u'coordinates'][0]
+    plng, plat = coords[0]
+    out = [[plng, plat]]
+    for lng, lat in coords[1:]:
+        if plat - fuzz < lat < plat + fuzz:
+            parts = int(abs(lng-plng))
+            if parts > 300:
+                # something wrong with the data, give up
+                return gjson
+            for i in range(parts)[1:]:
+                out.append([(i*lng + (parts-i)*plng)/parts, lat])
+        out.append([lng, lat])
+        plng, plat = lng, lat
+    return {u'coordinates': [out], u'type': u'Polygon'}
+
+
+def recombinant_description_to_markup(text):
+    """
+    Return text as HTML escaped strings joined with '<br/>, links enabled'
+    """
+    # very lax, this is trusted text defined in a schema not user-provided
+    url_pattern = r'(https?:[^)\s"]{20,})'
+    markup = []
+    for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
+        if i % 2:
+            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
+        else:
+            markup.extend(jinja2.Markup('<br/>'.join(
+               jinja2.escape(t) for t in part.split('\n')
+            )))
+    # extra dict because language text expected and language text helper
+    # will cause plain markup to be escaped
+    return {'en': jinja2.Markup(''.join(markup))}
+
+
+def survey_js_url():
+    return str(config.get('foresee.survey_js_url')) if config.get('foresee.survey_js_url') else None
+
+
+def mail_to_with_params(email_address, name, subject, body):
+    email = escape(email_address)
+    author = escape(name)
+    mail_subject = escape(subject)
+    mail_body = escape(body)
+    html = Markup(u'<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(email, author, mail_subject, mail_body))
+    return html
+
+def get_timeout_length():
+    return config.get('beaker.session.timeout')

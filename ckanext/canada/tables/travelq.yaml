@@ -2,220 +2,332 @@ dataset_type: travelq
 target_dataset: travelq
 
 title: Proactive Disclosure - Travel Expenses
-notes: Access, upload and modify the quarterly travel expense reports for your organization
-upload_warn: 'Please be advised that we have experienced publishing issues with proactive disclosure templates that contain data that has been copied into the Excel spreadsheet with formulas attached. Please ensure that all data is entered into the template without formulas and all data is validated in the "Preview" section after it has been uploaded. For any questions, please contact the Open Government team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.'
+notes: Access, upload and modify the monthly travel expense reports for your organization
+
+template_version: 3
+template_updated: 2019-07-10
 
 portal_type: info
 collection: pd
 
-datastore_text_types: true
-
-upload_info: Please note – if you have downloaded a template before DECEMBER 19, 2016, please download the updated version before submitting your information.
 
 resources:
 - title: Proactive Disclosure - Travel Expenses
   resource_name: travelq
+  create_form: true
+  edit_form: true
   fields:
 
+  # 3.1
   - datastore_id: ref_number
-    label: Reference Number
+    datastore_type: text
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
+      en: This field is populated by the organization. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
       fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
-        en: "T-2015-Q1-00001 – this sequence will continue for each line item (i.e.: T-2015-Q1-00001, T-2015-Q1-00002, T-2015-Q1-00001….)"
-        fr: T-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2016-Q1-00001, T-2016-Q1-00002, T-2016-Q1-00003….)
-    datastore_type: text
-    excel_column_width: 20
+      en: "T-2019-P1-00001 – this sequence will continue for each line item (i.e.: T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003, etc.)"
+      fr: T-2019-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003….)
 
+  # 3.2
   - datastore_id: disclosure_group
-    label: Disclosure Group
+    datastore_type: text
+    label:
+      en: Disclosure Group
+      fr: Groupe de divulgation
     description:
-      en: This field will display the Group of the claimant.
-      fr: Ce champ indique le groupe du demandeur.
+      en: This field will display the group to which the individual belongs.
+      fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation: Optional
     format_type: Controlled List
-    datastore_type: text
-    excel_column_width: 15
     choices:
       MPSES:
-        en: Minister/Parliamentary Secretaries/Exempt Staff
-        fr: Ministres/Secrétaires parlementaires/Personnel exonéré
+        en: Minister/Ministerial adviser/Ministerial staff/Parliamentary Secretary/Exempt Staff
+        fr: Ministre/Conseiller ministériel/Personnel ministériel/Secrétaire parlementaires/Personnel exonéré
       SLE:
-        en: Senior Level Employees
-        fr: Employés de niveau supérieur
+        en: Senior officer or employee
+        fr: Cadre supérieur ou employé
 
-  - datastore_id: name
-    label: Name
-    description:
-      en: This field will display the name of the claimant.
-      fr: Ce champ affiche le nom du demandeur.
-    obligation: Mandatory
-    format_type: Free text
-    datastore_type: text
-    excel_column_width: 30
-
+  # 3.3
   - datastore_id: title_en
-    label: Title (English)
-    description:
-      en: This field will display the title of the claimant, in English
-      fr: Cette zone indique le titre du demandeur, en anglais.
-    obligation: Mandatory
-    format_type: Free text
     datastore_type: text
+    label:
+      en: Title (English)
+      fr: Titre (anglais)
+    description:
+      en: This field will display the position title of the person who travelled, in English
+      fr: Cette zone indique le titre du poste de la personne qui a voyagé, en anglais.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
     excel_column_width: 30
+    form_attrs:
+      size: 60
 
+  # 3.4
   - datastore_id: title_fr
-    label: Title (French)
-    description:
-      en: This field will display the title of the claimant, in French.
-      fr: Cette zone indique le titre du demandeur, en français.
-    obligation: Optional
-    format_type: Free text
     datastore_type: text
+    label:
+      en: Title (French)
+      fr: Titre (français)
+    description:
+      en: This field will display the position title of the person who travelled, in French.
+      fr: Cette zone indique le titre du poste de la personne qui a voyagé, en français.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
     excel_column_width: 30
+    form_attrs:
+      size: 60
 
+  # 3.5
+  - datastore_id: name
+    datastore_type: text
+    label:
+      en: Name
+      fr: Nom
+    description:
+      en: This field will display the name of the  person who travelled
+      fr: Ce champ affiche le nom de la personne qui a voyagé
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
+
+  # 3.6
   - datastore_id: purpose_en
-    label: Purpose of Travel (English)
-    description:
-      en: A description of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in English.
-      fr: Description de la raison du voyage, en anglais, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
-    obligation: Mandatory
-    format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    label:
+      en: Purpose of Travel (English)
+      fr: But du déplacement (anglais)
+    description:
+      en: A short description, in English, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: Brève description de la raison du voyage, en anglais. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    form_attrs:
+      size: 60
 
+  # 3.7
   - datastore_id: purpose_fr
-    label: Purpose of Travel (French)
-    description:
-      en: A description, in French, of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in French
-      fr: Description de la raison du voyage, en français, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
-    obligation: Mandatory
-    format_type: Free text
     datastore_type: text
-    excel_column_width: 30
+    label:
+      en: Purpose of Travel (French)
+      fr: But du déplacement (français)
+    description:
+      en: A short description, in French, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: Brève description de la raison du voyage, en français. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    format_type: Free text
+    form_attrs:
+      size: 60
 
+  # 3.8
   - datastore_id: start_date
-    label: Travel Start Date
+    datastore_type: date
+    label:
+      en: Travel Start Date
+      fr: Date de début du voyage
     description:
       en: To cover the date the travel started
-      fr: Date du début du voyage
+      fr: Date de début du voyage
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
-    datastore_type: date
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
     extract_date_clean: true
+    form_snippet: scheming/form_snippets/date.html
 
+  # 3.9
   - datastore_id: end_date
-    label: Travel End Date
+    datastore_type: date
+    label:
+      en: Travel End Date
+      fr: Date de fin du voyage
     description:
-      en: To cover the date the travel ended
+      en: To cover the date the travel ended (can be the same as travel start date)
       fr: Date de fin du voyage (peut être la même date que la date du début du voyage)
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type: Date (Please format the data as YYYY-MM-DD)
-    datastore_type: date
     excel_column_width: 20
+    form_snippet: scheming/form_snippets/date.html
 
+  # 3.10
   - datastore_id: destination_en
-    label: Destination (English)
+    datastore_type: text
+    label:
+      en: Places visited (English)
+      fr: Endroits visités (anglais)
     description:
-      en: To include names of all places visited to conduct government business during the trip in question, in English
-      fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+      en: To include names of all places visited during the trip in question, in English
+      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
       en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
       fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
+  # 3.11
   - datastore_id: destination_fr
-    label: Destination (French)
+    datastore_type: text
+    label:
+      en: Places visited (French)
+      fr: Endroits visités (français) 
     description:
-      en: To include names of all places visited to conduct government business during the trip in question, in French
-      fr: Cette zone indique, en français, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+      en: To include names of all places visited during the trip in question, in French
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
       en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
       fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
-    datastore_type: text
-    excel_column_width: 20
+    form_attrs:
+      size: 60
 
+  # 3.12
   - datastore_id: airfare
-    label: Airfare
+    datastore_type: money
+    label:
+      en: Airfare
+      fr: Tarif aérien
     description:
-      en: Total cost of the airline ticket, if applicable.
-      fr: Coût total du billet d’avion, s’il y a lieu.
+      en: Total cost of any airline tickets, if applicable.
+      fr: Coût total des billets d’avion, s’il y a lieu.
     obligation: Optional
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     excel_column_width: 20
+    form_attrs:
+      size: 40
 
+  # 3.13
   - datastore_id: other_transport
-    label: Other transportation
+    datastore_type: money
+    label:
+      en: Other transportation
+      fr: Autres moyens de transport
     description:
-      en: Total cost of all other forms of transportation, e.g. train, bus, vehicle rental, private vehicle, taxis, etc, if applicable.
-      fr: Coût total de tous les autres moyens de transport (p. ex., train, autobus, véhicule loué, véhicule particulier, taxis), s’il y a lieu.
+      en: Total cost of any other forms of transportation (for example, train, bus, vehicle rental, private vehicle, taxis, etc), if applicable.
+      fr: Coût total de toutes autres forme de transport (par exemple, train, autobus, véhicule loué, véhicule particulier, taxis), s’il y a lieu.
     obligation: Optional
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     excel_column_width: 20
+    form_attrs:
+      size: 40
 
-  - datastore_id: accomodation
-    label: Accommodation
+  # 3.14
+  - datastore_id: lodging
+    datastore_type: money
+    label:
+      en: Lodging
+      fr: Hébergement
     description:
-      en: Total cost of accommodation.
+      en: Total cost of accommodation
       fr: Coût total de l’hébergement
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     excel_column_width: 20
+    form_attrs:
+      size: 40
 
+  # 3.15
   - datastore_id: meals
-    label: Meals and incidentals
+    datastore_type: money
+    label:
+      en: Meals and incidentals
+      fr: Frais de repas et frais accessoires
     description:
-      en: Total cost of meals and incidentals.
+      en: Total cost of meals and incidentals expenses.
       fr: Total des frais de repas et accessoires
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     excel_column_width: 20
+    form_attrs:
+      size: 40
 
+  # 3.16
   - datastore_id: other_expenses
-    label: Other expenses
+    datastore_type: money
+    label:
+      en: Other expenses
+      fr: Autres dépenses
     description:
-      en: All other expenses incurred that are not reflected in the information fields above (e.g. cost of a special passport, visas, and associated photos, calls to the office or home, dependant care where applicable, etc.).
-      fr: Toutes les autres dépenses engagées qui ne sont pas comprises dans les zones ci‑dessus (p. ex., coût de passeport spécial, visas et photos associées, appels au bureau ou à la maison, garde des personnes à charge, le cas échéant)
+      en: Total cost of all other items that are not covered by the above fields (for example. special passport, visas, associated photos, calls to the office or home, dependant care where applicable, etc.).
+      fr: Coût total de tous les autres éléments qui ne sont pas couverts par les champs ci-dessus (par exemple, passeport spécial, visas, photos connexes, appels au bureau ou à la maison, soin aux personnes à charge, le cas échéant)
     obligation: Optional
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     excel_column_width: 20
+    form_attrs:
+      size: 40
 
+  # 3.17
   - datastore_id: total
-    label: Total Amount
+    datastore_type: money
+    label:
+      en: Total Amount
+      fr: Montant total
     description:
-      en: The total cost incurred for the trip in question.
-      fr: Total des dépenses engagées au titre du voyage
+      en: The total of the amount listed above.
+      fr: Le total des montants énumérés ci-dessus
     obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
-    datastore_type: money
     extract_double_sortable: true
     excel_column_width: 20
-
+    form_attrs:
+      size: 40
     solr_dollar_range_facet:
      - 0
      - 250
@@ -224,56 +336,114 @@ resources:
      - 5000
      - 25000
 
+  # 3.18
   - datastore_id: additional_comments_en
+    datastore_type: text
     label: Additional Comments English
     description:
       en: This field may be populated with additional comments in English.
       fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
     obligation: Optional
     format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
+  # 3.19
   - datastore_id: additional_comments_fr
+    datastore_type: text
     label: Additional Comments French
     description:
       en: This field may be populated with additional comments in French.
       fr: Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     format_type: Free text
-    datastore_type: text
-    excel_column_width: 20
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
 
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
+  solr_static_fields:
+    report_type_en: Travel Expenses
+    report_type_fr: Dépenses de voyage
 
   datastore_primary_key: [ref_number]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF323232
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFb19c7d
+
+  excel_example_height: 50
+
+  triggers:
+  - travelq_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        IF NEW.start_date >= '2019-06-21'::date THEN
+          errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
+          errors := errors || required_error(NEW.title_en, 'title_en');
+          errors := errors || required_error(NEW.title_fr, 'title_fr');
+          errors := errors || required_error(NEW.name, 'name');
+          errors := errors || required_error(NEW.purpose_en, 'purpose_en');
+          errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
+          errors := errors || required_error(NEW.end_date, 'end_date');
+          errors := errors || required_error(NEW.destination_en, 'destination_en');
+          errors := errors || required_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || required_error(NEW.lodging, 'lodging');
+          errors := errors || required_error(NEW.meals, 'meals');
+          errors := errors || required_error(NEW.total, 'total');
+        END IF;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
 
   examples:
     record:
-      ref_number: "1980198"
-      name: Jane Smith
+      ref_number: "T-2019-P3-0001"
       disclosure_group: SLE
-      date: "2016-01-01"
-      destination: Halifax
-      airfare: "600.00"
-      other_transport: "0"
-      other_expenses: "50.00"
-      total: "650.00"
+      title_en: "Vice-Chairperson, Deputy Minister, Parliamentary Secretary, Assistant Deputy Minister, Programs Branch"
+      title_fr: "Sous-Ministre, Sous- Ministre Adjoint, Chef de la Direction"
+      name: "Smith, John"
+      purpose_en: "Attend North American Free Trade Agreement trade mission, give presentation at the Ontario Chamber of Commerce, etc"
+      purpose_fr: "Participer à une mission commerciale dans le cadre de l’Accord de libre-échange nord-américain, donner une présentation à la chambre de commerce de l’Ontario, etc"
+      start_date: "2019-06-22"
+      end_date: "2019-06-23"
+      destination_en: "Montreal, Quebec, Canada"
+      destination_fr: "Montréal, Québec, Canada"
+      airfare: "1000.00"
+      other_transport: "50.00"
+      lodging: "300.00"
+      meals: "150.00"
+      other_expenses: "0.00"
+      total: "1500.00"
+      additional_comments_en: "Provide additional explanatory comments as required."
+      additional_comments_fr: "Fournir des commentaires explicatifs supplémentaires au besoin."
+
     filters:
-      name: Jane Smith
+      name: "Smith, John"
     filter_one:
-      ref_number: "1980198"
+      ref_number: "T-2019-P3-0001"
     sort: date desc
 
   solr_org_fields:
@@ -282,84 +452,143 @@ resources:
 
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
+  create_form: true
+  edit_form: true
   fields:
 
   - datastore_id: year
-    label: Year
     datastore_type: year
+    label: Year
+    description:
+      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
-    choices:
-      2020: "2020"
-      2019: "2019"
-      2018: "2018"
-      2017: "2017"
-      2016: "2016"
-      2015: "2015"
-      2014: "2014"
-      2013: "2013"
-      2012: "2012"
-      2011: "2011"
-      2010: "2010"
-      2009: "2009"
-      2008: "2008"
-      2007: "2007"
-      2006: "2006"
-      2005: "2005"
-      2004: "2004"
-      2003: "2003"
-      2002: "2002"
-      2001: "2001"
-      2000: "2000"
-      1999: "1999"
-      1998: "1998"
-      1997: "1997"
-      1996: "1996"
-      1995: "1995"
+    form_attrs:
+      size: 20
 
-  - datastore_id: quarter
-    label: Quarter
+  - datastore_id: month
     datastore_type: text
-    excel_column_width: 10
+    label:
+      en: Month
+      fr: mois
+    description:
+      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    excel_full_text_choices: true
     choices:
-      Q1:
-        en: March 2 - June 1
-        fr: 2 mars - 1 juin
-      Q2:
-        en: June 2 - September 1
-        fr: 2 juin - 1 septembre
-      Q3:
-        en: September 2 - December 1
-        fr: 2 septembre - 1 décembre
-      Q4:
-        en: December 2 - March 1
-        fr: 2 décembre - 1 mars
+      P01:
+        en: April
+        fr: avril
+      P02:
+        en: May
+        fr: mai
+      P03:
+        en: June
+        fr: juin
+      P04:
+        en: July
+        fr: juillet
+      P05:
+        en: August
+        fr: août
+      P06:
+        en: September
+        fr: septembre
+      P07:
+        en: October
+        fr: octobre
+      P08:
+        en: November
+        fr: novembre
+      P09:
+        en: December
+        fr: décembre
+      P10:
+        en: January
+        fr: janvier
+      P11:
+        en: February
+        fr: février
+      P12:
+        en: March
+        fr: mars
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    datastore_type: text
+    preview_class: bg-info
+
 
   solr_static_fields:
     nothing_to_report_en: Nothing to report for this period
     nothing_to_report_fr: Rien à signaler pour cette période
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
 
-  datastore_primary_key: [year, quarter]
+  datastore_primary_key: [year, month]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF323232
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFb19c7d
+
+  triggers:
+    - travelq_nil_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.year, 'year');
+          errors := errors || required_error(NEW.month, 'month');
+          errors := errors || choice_error(NEW.month, {month}, 'month');
+          IF NEW.year > date_part('year', CURRENT_DATE) THEN
+            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          END IF;
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:
-      year: 2016
-      quarter: Q2
+      year: 2019
+      month: P01
     filters:
-      year: 2016
+      year: 2019
     filter_one:
-      year: 2016
-      quarter: Q2
-    sort: year desc, quarter desc
+      year: 2019
+      month: P01
+    sort: year desc, month desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF323232
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFb19c7d
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFb19c7d

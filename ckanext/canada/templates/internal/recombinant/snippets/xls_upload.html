@@ -1,27 +1,40 @@
 {% ckan_extends %}
 
-{% block upload_submit %}
-  {{ super() }}
-  {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
-  {% if 'upload_info' in geno %}
-    <div class="alert alert-info" role="alert">
-      <p>{{ h.recombinant_language_text(geno.upload_info) | safe }}</p>
-    </div>
-  {% endif %}
+{% block form %}
+{% set chromo = h.recombinant_get_chromo(resource.name) %}
+{% if chromo.create_form %}
+  <a class="btn btn-default"
+     href="{% url_for controller='ckanext.canada.controller:PDUpdateController',
+     action='create_pd_record',
+     owner_org=pkg.owner_org,
+     resource_name=resource.name %}"><i class="glyphicon glyphicon-plus-sign"></i>
+    {{ _("Create Single Record") }}</a>
+  <h4>{{ _("Create and update multiple records") }}</h4>
+{% endif %}
+{{ super() }}
 {% endblock %}
 
-{% block file_input %}
+{% block messages %}
   {{ super() }}
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_warn' in geno %}
+  <div class="col-md-12">
     <div class="alert alert-danger" style="font-weight:bold;">
       <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
     </div>
+  </div>
+  {% endif %}
+  {% if 'upload_info' in geno %}
+  <div class="col-md-12">
+    <div class="alert alert-info" role="alert">
+      <p>{{ h.recombinant_language_text(geno.upload_info) | safe }}</p>
+    </div>
+  </div>
   {% endif %}
 {% endblock %}
 
 {% block errors %}
-    <div class="span-3 text-danger">
+    <div class="span-3 text-danger" id="upload-errors">
       {% for error in errors %}
         {% set error_message = error.partition(': ')[2] %}
         {% if error_message.startswith("This field must not be empty:") %}

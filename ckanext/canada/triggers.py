@@ -54,6 +54,51 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'money'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -63,7 +108,7 @@ def update_triggers():
         rettype=u'_text',
         definition=ur'''
             BEGIN
-                IF NOT (value = ANY (choices)) THEN
+                IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
                     RETURN ARRAY[[field_name, 'Invalid choice: "'
                         || replace(value, E'\t', ' ') || '"']];
@@ -86,8 +131,8 @@ def update_triggers():
         definition=ur'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
-                    SELECT unnest(value)
-                    EXCEPT SELECT unnest(choices)), ', ');
+                    SELECT c FROM(SELECT unnest(value) as c) u
+                    WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
                     -- \t is used when converting errors to string
@@ -96,159 +141,66 @@ def update_triggers():
                 END IF;
                 clean := ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
-                    WHERE c in (SELECT unnest(value)));
+                    WHERE c = ANY(value));
             END;
         ''')
 
     lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF (value = '') IS NOT FALSE THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'date'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL OR value = '{}' THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'int4'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'money'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'not_empty',
+        name=u'must_be_empty_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'numeric'},
             {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF value IS NULL THEN
-                    RAISE EXCEPTION 'This field must not be empty: %', field_name;
-                END IF;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'only_empty',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'numeric'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF value IS NOT NULL THEN
-                    RAISE EXCEPTION 'This field must be empty: %', field_name;
+                    RETURN ARRAY[[field_name, 'This field must be empty']];
                 END IF;
+                RETURN NULL;
             END;
         ''')
 
     lc.action.datastore_function_create(
-        name=u'no_surrounding_whitespace',
+        name=u'no_surrounding_whitespace_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=ur'''
+        rettype=u'_text',
+        definition=u'''
             BEGIN
                 IF trim(both E'\t\n\x0b\x0c\r ' from value) <> value THEN
-                    RAISE EXCEPTION 'This field must not have surrounding whitespace: %', field_name;
+                    RETURN ARRAY[[field_name, 'This field must not have surrounding whitespace']];
                 END IF;
+                RETURN NULL;
             END;
         ''')
 
     lc.action.datastore_function_create(
-        name=u'year_optional_month_day',
+        name=u'year_optional_month_day_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             DECLARE
                 ymd _text := regexp_matches(value,
                     '(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?');
             BEGIN
                 IF ymd IS NULL THEN
-                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
                 END IF;
                 IF ymd[3] IS NOT NULL THEN
                     PERFORM value::date;
                 ELSIF NOT ymd[2]::int BETWEEN 1 AND 12 THEN
-                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
+                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
                 END IF;
+                RETURN NULL;
             EXCEPTION
                 WHEN others THEN
-                    RAISE EXCEPTION 'Dates must be in YYYY-MM-DD format: %', field_name;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'choice_one_of',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'choices', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        definition=u'''
-            BEGIN
-                IF NOT (value = ANY (choices)) THEN
-                    RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, value;
-                END IF;
+                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
             END;
         ''')
 
@@ -263,15 +215,15 @@ def update_triggers():
         definition=u'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
-                    SELECT unnest(value)
-                    EXCEPT SELECT unnest(choices)), ', ');
+                    SELECT c FROM(SELECT unnest(value) as c) u
+                    WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
                     RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, bad_choices;
                 END IF;
                 RETURN ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
-                    WHERE c in (SELECT unnest(value)));
+                    WHERE c = ANY(value));
             END;
         ''')
 
@@ -355,26 +307,32 @@ def update_triggers():
         or_replace=True,
         rettype=u'trigger',
         definition=u'''
+            DECLARE
+                errors text[][] := '{{}}';
+                crval RECORD;
             BEGIN
-                PERFORM not_empty(NEW.ref_number, 'ref_number');
-                PERFORM no_surrounding_whitespace(NEW.ref_number, 'ref_number');
-                PERFORM not_empty(NEW.title_en, 'title_en');
-                PERFORM not_empty(NEW.title_fr, 'title_fr');
-                -- PERFORM not_empty(NEW.description_en, 'description_en');
-                -- PERFORM not_empty(NEW.description_fr, 'description_fr');
-                -- PERFORM not_empty(NEW.date_published, 'date_published');
-                -- PERFORM year_optional_month_day(NEW.date_published, 'date_published');
-                -- PERFORM not_empty(NEW.language, 'language');
-                -- PERFORM choice_one_of(NEW.language, {language}, 'language');
-                -- PERFORM not_empty(NEW.size, 'size');
+                errors := errors || required_error(NEW.ref_number, 'ref_number');
+                errors := errors || no_surrounding_whitespace_error(NEW.ref_number, 'ref_number');
+                errors := errors || required_error(NEW.title_en, 'title_en');
+                errors := errors || required_error(NEW.title_fr, 'title_fr');
+                -- errors := errors || required_error(NEW.description_en, 'description_en');
+                -- errors := errors || required_error(NEW.description_fr, 'description_fr');
+                -- errors := errors || required_error(NEW.date_published, 'date_published');
+                -- errors := errors || year_optional_month_day_error(NEW.date_published, 'date_published');
+                -- errors := errors || required_error(NEW.language, 'language');
+                -- errors := errors || choice_error(NEW.language, {language}, 'language');
+                -- errors := errors || required_error(NEW.size, 'size');
                 NEW.eligible_for_release := truthy_to_yn(NEW.eligible_for_release);
-                -- PERFORM not_empty(NEW.eligible_for_release, 'eligible_for_release');
-                -- PERFORM choice_one_of(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
-                -- PERFORM not_empty(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
-                -- PERFORM not_empty(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
-                -- PERFORM not_empty(NEW.date_released, 'date_released');
-                -- PERFORM year_optional_month_day(NEW.date_released, 'date_released');
-                RETURN NEW;
+                -- errors := errors || required_error(NEW.eligible_for_release, 'eligible_for_release');
+                -- errors := errors || choice_error(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
+                -- errors := errors || required_error(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
+                -- errors := errors || required_error(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
+                -- errors := errors || required_error(NEW.date_released, 'date_released');
+                -- errors := errors || year_optional_month_day_error(NEW.date_released, 'date_released');
+                IF errors = '{{}}' THEN
+                    RETURN NEW;
+                END IF;
+                RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
             END;
             '''.format(
                 language=pg_array(inventory_choices['language']),
@@ -432,108 +390,21 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'integer_or_na_nd',
+        name=u'integer_or_na_nd_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
         definition=u'''
             BEGIN
                 IF value <> 'NA' AND value <> 'ND' AND NOT value ~ '^[0-9]+$' THEN
-                    RAISE EXCEPTION 'This field must be NA or an integer: %', field_name;
+                    RETURN ARRAY[[field_name, 'This field must be NA or an integer']];
                 END IF;
+                RETURN NULL;
             END;
         ''')
 
-    grants_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('grants'))
-    lc.action.datastore_function_create(
-        name=u'grants_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.ref_number, 'ref_number');
-
-                PERFORM not_empty(NEW.amendment_number, 'amendment_number');
-                IF NEW.amendment_number <> 0 THEN
-                    PERFORM not_empty(NEW.amendment_date, 'amendment_date');
-                END IF;
-
-                IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
-                        NEW.foreign_currency_value IS NOT NULL THEN
-                    PERFORM not_empty(NEW.foreign_currency_type, 'foreign_currency_type');
-                    PERFORM choice_one_of(
-                        NEW.foreign_currency_type,
-                        {foreign_currency_type},
-                        'foreign_currency_type');
-                    PERFORM not_empty(NEW.foreign_currency_value, 'foreign_currency_value');
-                END IF;
-
-                PERFORM not_empty(NEW.agreement_value, 'agreement_value');
-
-                PERFORM not_empty(NEW.agreement_start_date, 'agreement_start_date');
-                IF NEW.agreement_start_date >= '2018-04-01'::date THEN
-                    PERFORM not_empty(NEW.agreement_type, 'agreement_type');
-                    PERFORM choice_one_of(
-                        NEW.agreement_type,
-                        {agreement_type},
-                        'agreement_type');
-                    IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
-                        PERFORM choice_one_of(
-                            NEW.recipient_type,
-                            {recipient_type},
-                            'recipient_type');
-                    END IF;
-                    PERFORM not_empty(NEW.recipient_legal_name, 'recipient_legal_name');
-                    PERFORM not_empty(NEW.recipient_country, 'recipient_country');
-                    PERFORM choice_one_of(
-                        NEW.recipient_country,
-                        {recipient_country},
-                        'recipient_country');
-                    IF NEW.recipient_country = 'CA' THEN
-                        PERFORM not_empty(NEW.recipient_province, 'recipient_province');
-                        PERFORM choice_one_of(
-                            NEW.recipient_province,
-                            {recipient_province},
-                            'recipient_province');
-                    END IF;
-                    PERFORM not_empty(NEW.recipient_city, 'recipient_city');
-                    PERFORM not_empty(NEW.description_en, 'description_en');
-                    PERFORM not_empty(NEW.description_fr, 'description_fr');
-                END IF;
-                RETURN NEW;
-            END;
-            '''.format(
-                agreement_type=pg_array(grants_choices['agreement_type']),
-                recipient_type=pg_array(grants_choices['recipient_type']),
-                recipient_country=pg_array(grants_choices['recipient_country']),
-                recipient_province=pg_array(grants_choices['recipient_province']),
-                foreign_currency_type=pg_array(grants_choices['foreign_currency_type']),
-            )
-        )
-
-    grants_nil_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('grants-nil'))
-    lc.action.datastore_function_create(
-        name=u'grants_nil_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            BEGIN
-                PERFORM not_empty(NEW.fiscal_year, 'fiscal_year');
-                PERFORM choice_one_of(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
-                PERFORM not_empty(NEW.quarter, 'quarter');
-                PERFORM choice_one_of(NEW.quarter, {quarter}, 'quarter');
-                RETURN NEW;
-            END;
-            '''.format(
-                fiscal_year=pg_array(grants_nil_choices['fiscal_year']),
-                quarter=pg_array(grants_nil_choices['quarter']),
-            )
-        )
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string

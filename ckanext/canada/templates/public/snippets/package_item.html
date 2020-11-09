@@ -1,13 +1,25 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
+
+{% set client_lang = h.lang() %}
+
 {% block package_item %}
+{% set geno = h.recombinant_get_geno(package.type) %}
 <li>
   <article class="panel panel-default mrgn-bttm-sm relative">
     <header class="panel-heading">
-    {% if package.jurisdiction == 'provincial' %}
-      <span class="label label-info" style="float:right">{{ _("Provincial") }}</span>
-    {% elif package.jurisdiction == 'federal' %}
-      <span class="label label-default" style="float:right; border-color: #f00; background: #fff">{{ _("Federal") }}</span>
+    {% if package.type == 'dataset' %}
+      <span class="label label-default lb-open-data">{{ _("Open Data") }}</span>
+    {% elif package.type == 'prop' %}
+      <span class="label label-default lb-sug-datasets">{{ _("Suggested Dataset") }}</span>
+    {% elif package.collection in ('transition', 'transition_deputy', 'parliament_report', 'parliament_committee', 'parliament_committee_deputy') %}
+      <span class="label label-default lb-pd">{{ _("Proactive Disclosure") }}</span>
+    {% elif package.type == 'info' or geno.portal_type == 'info' %}
+      <span class="label label-default lb-open-info">{{ _("Open Information") }}</span>
+    {% elif geno.portal_type == 'dialogue' %}
+      <span class="label label-default lb-open-dialogue">{{ _("Open Dialogue") }}</span>
+    {% elif geno %}
+      <span class="label label-default lb-pd">{{ _("Proactive Disclosure") }}</span>
     {% endif %}
     <h3 class="panel-title">
       {% block heading %}
@@ -23,7 +35,7 @@
           {{ super() }}
         {% endblock %}
         {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
         {% endif %}
       {% endblock %}
     </h3></header>
@@ -37,7 +49,7 @@
         {% if notes %}
           <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
             {% if machine_translated %}
-              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool (DeepL).  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
             {% endif %}
           </div>
         {% else %}
@@ -59,27 +71,62 @@
     {% endblock %}
 
     {% block resources_outer %}
-      <div class="row">
-        <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
-        <div class="col-md-9">
-          <ul class="list-inline list-unstyled">
-            {% for resource in h.dict_list_reduce(package.resources, 'format') %}
-              <li><span class="badge">{{ _(resource) }}</span></li>
-            {% endfor %}
-          </ul>
+      {% if package.type == 'prop' %}
+        {% set schema = h.scheming_get_dataset_schema(package.type) %}
+        <div class="row">
+          <div class="col-md-3"><em>{{ h.scheming_language_text(schema.dataset_fields[-3].label) }}:</em></div>
+          <div class="col-md-9">{% snippet 'scheming/snippets/display_field.html',
+            field=schema.dataset_fields[-3],
+            data=package,
+            entity_type='dataset',
+            object_type='prop' %}</div>
         </div>
-      </div>
-      {% if 'fgp_viewer' in package.get('display_flags', []) %}
-        <div>
-        <hr>
-        <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
-          class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
-          ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
-        <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
-          class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
-          ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
+        {% if package.status %}
+          <div class="row">
+            <div class="col-md-3"><em>{{ _('Status') }}:</em></div>
+            <div class="col-md-9">{% snippet 'scheming/snippets/display_field.html',
+              field=schema.dataset_fields[-1].repeating_subfields[1],
+              data=package.status[-1],
+              entity_type='dataset',
+              object_type='prop' %}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"><em>{{ _('Date') }}:</em></div>
+            <div class="col-md-9">{{ package.status[-1].date }}</div>
+          </div>
+        {% else %}
+          <div class="row">
+            <div class="col-md-3"><em>{{ _('Status') }}:</em></div>
+            <div class="col-md-9">
+              {{ _('Request sent to data owner – awaiting response') }}
+            </div>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="row">
+          <div class="col-md-3"><em>{{ _('Resource Formats') }}:</em></div>
+          <div class="col-md-9">
+            <ul class="list-inline list-unstyled">
+              {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                <li><span class="badge">{{ _(resource) }}</span></li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
       {% endif %}
+      {% block map_cart_buttons %}
+        {% if 'fgp_viewer' in package.get('display_flags', []) %}
+          <div>
+          <hr>
+          <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
+            class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
+            ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
+          <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
+            class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
+            ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
+          </div>
+        {% endif %}
+      {% endblock %}
     {% endblock %}
     </div>
   </article>

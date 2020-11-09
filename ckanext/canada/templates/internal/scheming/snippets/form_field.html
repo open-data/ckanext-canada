@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{% block removal_popup%}
+  {% set locale = h.dump_json({'content': _('Are you sure you want to delete this status?') }) %}
+  {% set template = [
+    '<div class="modal wb-overlay wb-popup-mid" id="mid-screen" tabindex="-1" role="dialog" aria-labelledby="mid-screenLabel" aria-hidden="true" style="max-height:185px;max-width:600px;">',
+      '<div class="modal-dialog" role="document" style="margin:auto;">',
+        '<div class="modal-content">',
+          '<div class="modal-header">',
+            '<h3 class="modal-title"></h3>',
+          '</div>',
+          '<div class="modal-body"></div>',
+          '<div class="modal-footer">',
+            '<button class="btn btn-cancel"></button>',
+            '<button class="btn btn-primary"></button>',
+          '</div>',
+        '</div>',
+      '</div>',
+    '</div>'
+    ]|join('\n') %}
+  <a class="btn btn-danger pull-left" name="repeating-remove" href="javascript:;" data-module="scheming-remove-subfields" data-module-i18n="{{ locale }}" data-module-template="{{ template }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+{% endblock %}
+
