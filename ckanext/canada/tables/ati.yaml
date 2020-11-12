@@ -4,50 +4,111 @@ target_dataset: ati
 title: ATI Summaries
 notes: Access, upload and modify the monthly ATI Summaries and ATI Nothing to Report for your organization
 
+template_version: 3
+template_updated: TBD
+
 portal_type: info
 collection: ati
-
-upload_info: ATI Summaries and ATI Nothing to Report templates have now been combined. Now, you will only need to download and submit one template (see the 2 tabs in the template). Please email <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with any questions.
 
 resources:
 - title: ATI Summaries
 
   resource_name: ati
+  create_form: true
+  edit_form: true
+
   fields:
 
   - datastore_id: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     datastore_type: year
+    form_attrs:
+      size: 10
+    excel_required: true
     excel_column_width: 13
 
   - datastore_id: month
-    label: Month (1-12)
+    label:
+      en: Month (1-12)
+      fr: Mois (1-12)
     datastore_type: month
+    form_attrs:
+      size: 5
+    excel_required: true
     excel_column_width: 18
 
   - datastore_id: request_number
-    label: Request Number
+    label:
+      en: Request Number
+      fr: Numero de la demande
     datastore_type: text
     excel_column_width: 38
 
   - datastore_id: summary_en
-    label: English Summary
+    label:
+      en: English Summary
+      fr: Sommaire de la demande en anglais
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+    excel_required: true
     excel_column_width: 41
 
   - datastore_id: summary_fr
-    label: French Summary
+    label:
+      en: French Summary
+      fr: Sommaire de la demande en français
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+    excel_required: true
     excel_column_width: 41
 
   - datastore_id: disposition
-    label: Disposition
+    label:
+      en: Disposition
+      fr: Disposition
     datastore_type: text
+    excel_required: true
     excel_column_width: 39
+    excel_full_text_choices: false
+    choices:
+      DA:
+        en: All disclosed
+        fr: Communication totale
+      DP:
+        en: Disclosed in part
+        fr: Communication partielle
+      EX:
+        en: All exempted
+        fr: Exception totale
+      EC:
+        en: All excluded
+        fr: Exclusion totale
+      NE:
+        en: No records exist
+        fr: Aucun document n’existe
+      RT:
+        en: Request transferred
+        fr: Demande transmise
+      RA:
+        en: Request abandoned
+        fr: Demande abandonnée
+      NC:
+        en: Neither confirmed nor denied
+        fr: Ni confirmée ni infirmée
 
   - datastore_id: pages
-    label: Number of Pages
+    label:
+      en: Number of Pages
+      fr: Nombre de pages
     datastore_type: int
+    form_attrs:
+      size: 10
     excel_column_width: 34
 
   - datastore_id: record_created
@@ -74,38 +135,50 @@ resources:
 
   datastore_primary_key: request_number
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF3f6c45
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFeeece1
   default_preview_sort: year desc, month desc
 
   triggers:
+  - ati_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        IF NEW.year < 2011 OR NEW.year > date_part('year', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['year', 'Please enter a valid year']];
+        END IF;
+        errors := errors || required_error(NEW.month, 'month');
+        IF NEW.month < 1 OR NEW.month > 12 THEN
+          errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
+        END IF;
+        errors := errors || required_error(NEW.request_number, 'request_number');
+        errors := errors || required_error(NEW.summary_en, 'summary_en');
+        errors := errors || required_error(NEW.summary_fr, 'summary_fr');
+        errors := errors || required_error(NEW.disposition, 'disposition');
+        errors := errors || choice_error(NEW.disposition, {disposition}, 'disposition');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
   - update_record_modified_created_trigger
 
   examples:
     record:
-      disposition: Disclosed in part / Communication partielle
+      year: 2020
+      month: 10
+      request_number: A-2020-00516
       summary_fr: Copies des rapports de vérification et d’évaluation
                   du système de gestion de la sécurité
-      month: 10
-      request_number: A-2013-00516
       summary_en: Copies of the Safety Management System Audit and
                   Evaluation Reports
-      year: 2014
+      disposition: DP
       pages: 779
     filters:
       month: 10
-      year: 2014
+      year: 2020
     filter_one:
-      request_number: A-2013-00516
+      request_number: A-2020-00516
     sort: year desc, month desc
 
   # copy UMD Number field into output CSV for external ATI system
@@ -116,17 +189,28 @@ resources:
 - title: ATI Nothing to Report
 
   resource_name: ati-nil
+  create_form: true
+  edit_form: true
+
   fields:
 
   - datastore_id: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     datastore_type: year
-    excel_column_width: 5
+    form_attrs:
+      size: 10
+    excel_column_width: 13
 
   - datastore_id: month
-    label: Month
+    label:
+      en: Month (1-12)
+      fr: Mois (1-12)
     datastore_type: month
-    excel_column_width: 4
+    form_attrs:
+      size: 5
+    excel_column_width: 18
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -152,20 +236,27 @@ resources:
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""
-  excel_organization_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FF3f6c45
-    Font:
-      color: FFFFFF
-      size: 14
-  excel_header_style:
-    PatternFill:
-      patternType: solid
-      fgColor: FFeeece1
   default_preview_sort: year desc, month desc
 
   triggers:
+  - ati_nil_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+      BEGIN
+        errors := errors || required_error(NEW.year, 'year');
+        IF NEW.year < 2011 OR NEW.year > date_part('year', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['year', 'Please enter a valid year']];
+        END IF;
+        errors := errors || required_error(NEW.month, 'month');
+        IF NEW.month < 1 OR NEW.month > 12 THEN
+          errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
+        END IF;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
   - update_record_modified_created_trigger
 
   examples:
@@ -178,3 +269,17 @@ resources:
       month: 10
       year: 2014
     sort: year desc, month desc
+
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF3f6c45
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFeeece1
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFeeece1
