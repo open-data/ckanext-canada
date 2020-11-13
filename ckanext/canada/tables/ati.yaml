@@ -23,11 +23,14 @@ resources:
     label:
       en: Year
       fr: Année
+    validation:
+      en: Must be not be in the future or before 2011
     datastore_type: year
     form_attrs:
       size: 10
     excel_required: true
     excel_column_width: 13
+    excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
 
   - datastore_id: month
     label:
@@ -38,6 +41,7 @@ resources:
       size: 5
     excel_required: true
     excel_column_width: 18
+    excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
 
   - datastore_id: request_number
     label:
@@ -198,10 +202,13 @@ resources:
     label:
       en: Year
       fr: Année
+    validation:
+      en: Must be not be in the future or before 2011
     datastore_type: year
     form_attrs:
       size: 10
     excel_column_width: 13
+    excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
 
   - datastore_id: month
     label:
@@ -211,6 +218,7 @@ resources:
     form_attrs:
       size: 5
     excel_column_width: 18
+    excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
 
   - datastore_id: record_created
     label: Record Creation Time
