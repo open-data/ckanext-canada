@@ -152,7 +152,7 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
-                self.copy_datasets(self.args[2:])
+                self.copy_datasets(self.args[2:], self.options.ckan_user)
 
         elif cmd == 'changed-datasets':
             self.changed_datasets(*self.args[1:])
@@ -246,7 +246,9 @@ class CanadaCommand(CkanCommand):
             'canada',
             'copy-datasets',
             '-c',
-            portal_ini
+            portal_ini,
+            '-u',
+            self.options.ckan_user
         ]
         if self.options.mirror:
             cmd.append('-m')
@@ -336,7 +338,7 @@ class CanadaCommand(CkanCommand):
 
         return packages, since_time
 
-    def copy_datasets(self, remote, package_ids=None):
+    def copy_datasets(self, remote, user, package_ids=None):
         """
         a process that accepts packages on stdin which are compared
         to the local version of the same package.  The local package is
@@ -344,7 +346,7 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        portal = LocalCKAN(username='open_canada_ouvert')
+        portal = LocalCKAN(username = user)
 
         now = datetime.now()
 
