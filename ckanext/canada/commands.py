@@ -344,7 +344,7 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        portal = LocalCKAN()
+        portal = LocalCKAN(username='open_canada_ouvert')
 
         now = datetime.now()
 
