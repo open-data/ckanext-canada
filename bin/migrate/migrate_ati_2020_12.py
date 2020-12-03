@@ -40,67 +40,19 @@ written = 0
 skipped_new = 0
 
 for line in in_csv:
-    errors = []
     try:
-        if not (2007 <= int(line['year']) <= 2020):
-            raise ValueError
+        line['month'] = '%d' % int(line['month'])
     except ValueError:
-        try:
-            line['year'] = line['request_number'].split('-')[1]
-            if not (2007 <= int(line['year']) <= 2020):
-                raise ValueError
-        except (IndexError, ValueError):
-            errors.append('invalid year ' + line['year'])
+        pass
 
-    try:
-        if not (1 <= int(float(line['month'])) <= 12):
-            raise ValueError
-    except ValueError:
-        errors.append('invalid month ' + line['month'])
-    else:
-        line['month'] = '%02f' % int(line['month'])
-
-    if not (
-            line['request_number'].strip() or
-            len(line['request_number']) > 40 or
-            '\r' in line['request_number'] or
-            '\n' in line['request_number']):
-        errors.append('invalid request_number')
-    line['request_number'] = line['request_number'].strip()
-
-    try:
-        if not line['pages']:
-            line['pages'] = '0'
-        if not (0 <= int(line['pages'])):
-            raise ValueError
-    except ValueError:
-        errors.append('invalid pages ' + line['pages'] )
+    if not line['pages']:
+        line['pages'] = '0'
 
     disp = ' '.join(line['disposition'].lower().split())
     for d, search in DISP_MATCH:
         if any(s in disp for s in search):
             disp = d
             break
-    else:
-
-        errors.append('invalid disposition ' + line['disposition'])
     line['disposition'] = disp
 
-    if errors:
-        for e in errors:
-            sys.stderr.write(
-                line['owner_org'] + ' ' +
-                json.dumps((line['year'], line['month'], line['request_number'])) +
-                '    ' + json.dumps(e) + '\n')
-        skipped += 1
-        try:
-            if int(line['year']) >= 2020:
-                skipped_new +=1
-        except ValueError:
-            pass
-
-    else:
-        out_csv.writerow(line)
-        written += 1
-
-sys.stderr.write('skipped: {0} written: {1} skipped_new: {2}'.format(skipped, written, skipped_new))
+    out_csv.writerow(line)
