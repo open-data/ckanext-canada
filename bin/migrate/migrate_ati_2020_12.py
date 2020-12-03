@@ -55,4 +55,7 @@ for line in in_csv:
             break
     line['disposition'] = disp
 
+    if not 'warehouse' in sys.argv and not line['user_modified']:
+        line['user_modified'] = '*'  # special "we don't know" value
+
     out_csv.writerow(line)
