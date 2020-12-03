@@ -38,12 +38,12 @@ skipped_new = 0
 for line in in_csv:
     errors = []
     try:
-        if not (2007 <= int(line['year']) <= 2019):
+        if not (2007 <= int(line['year']) <= 2020):
             raise ValueError
     except ValueError:
         try:
             line['year'] = line['request_number'].split('-')[1]
-            if not (2007 <= int(line['year']) <= 2019):
+            if not (2007 <= int(line['year']) <= 2020):
                 raise ValueError
         except (IndexError, ValueError):
             errors.append('invalid year ' + line['year'])
@@ -90,7 +90,7 @@ for line in in_csv:
                 '    ' + json.dumps(e) + '\n')
         skipped += 1
         try:
-            if int(line['year']) >= 2017:
+            if int(line['year']) >= 2020:
                 skipped_new +=1
         except ValueError:
             pass
