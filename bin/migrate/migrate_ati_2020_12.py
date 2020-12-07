@@ -8,7 +8,11 @@ import json
 assert sys.stdin.read(3) == codecs.BOM_UTF8
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
-out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
+if 'report' in sys.argv:
+    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=['old_disposition', 'new_disposition'])
+    seen = set()
+else:
+    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
 out_csv.writeheader()
 
 DISP_MATCH = [
@@ -53,6 +57,17 @@ for line in in_csv:
         if any(s in disp for s in search):
             disp = d
             break
+
+    if 'report' in sys.argv:
+        if disp != line['disposition'] and (disp, line['disposition']) not in seen:
+            out_csv.writerow({
+                    'old_disposition': line['disposition'],
+                    'new_disposition': disp,
+                }
+            )
+            seen.add((disp, line['disposition']))
+        continue
+
     line['disposition'] = disp
 
     if not 'warehouse' in sys.argv and not line['user_modified']:
