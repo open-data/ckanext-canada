@@ -160,15 +160,17 @@ resources:
         ii. For the establishment of a standing offer or supply arrangement agreement, it is recommended that this field be populated with the name of the buyer that issued the original standing offer or supply arrangement agreement.
         iii. For a call-up contract against a standing offer or supply arrangement, this field should be the name of the buyer identified in the original call-up contract.
         iv. For a contract with task authorizations, this field may be populated with the name of the buyer indicated in the original contract or in the individual task authorization.
-        v. For amendments, it is recommended that this field be populated with the value “NA”. The value “NA” for this field indicates not applicable.
-        vi. For contracts awarded by PSPC, SSC or another department on behalf of the client department, the buyer may be the name of the buyer indicated in the contract or individual responsible for the procurement at the client department.
+        v. The name format can be either “John Doe” or “Doe, John”.
+        vi. For amendments, it is recommended that this field be populated with the value “NA”. The value “NA” for this field indicates not applicable.
+        vii. For contracts awarded by PSPC, SSC or another department on behalf of the client department, the buyer may be the name of the buyer indicated in the contract or individual responsible for the procurement at the client department.
       fr: |
         i. Il est recommandé de saisir dans cette zone le nom de l’acheteur, qui est indiqué dans le contrat initial, ou, à titre subsidiaire, celui de la personne responsable de l’approvisionnement dans le ministère client.
         ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement initial en matière d’approvisionnement.
         iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, cette zone devrait indiquer le nom de l’acheteur désigné dans le contrat initial de travail sur convocation.
         iv. Dans le cas d’un marché assorti d’autorisations de tâches, on peut inscrire dans cette zone le nom de l’acheteur indiqué dans le marché initial ou dans l’autorisation de tâche individuelle.
-        v. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
-        vi. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
+        v. Le format du nom peut être soit « John Doe » soit « Doe, John ».
+        vi. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
+        vii. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
