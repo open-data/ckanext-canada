@@ -34,9 +34,6 @@ DISP_MATCH = [
             'no such record', 'no record exist', 'no information',
             'no record located', 'non record exist', 'no related record',
             'no responsive record', 'inexistant']),
-    ('RT', ['transferred', 'transfered', 'other institution', 'other party']),
-    ('RA', ['abandoned', 'abandonned']),
-    ('NC', ['neither confirmed nor den', 'confirm nor den']),
 ]
 
 skipped = 0
