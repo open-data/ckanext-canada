@@ -23,8 +23,12 @@ resources:
     label:
       en: Year
       fr: Année
+    description:
+      en: This field must be populated with the four-digit calendar year that the request was closed.
+      fr: Ce champ doit être complété avec l’année civile à quatre chiffres durant laquelle la demande a été complétée.
     validation:
       en: Must be not be in the future or before 2011
+      fr: Ne peux pas être dans le futur ni avant 2011
     datastore_type: year
     form_attrs:
       size: 10
@@ -37,6 +41,12 @@ resources:
     label:
       en: Month (1-12)
       fr: Mois (1-12)
+    description:
+      en: This field must be populated with a numerical representation of the month during which the request was closed.
+      fr: Ce champ doit être complété avec la représentation numérique du mois durant lequel la demande a été complétée.
+    validation:
+      en: Must be in the range of 1-12 (representing January-December).
+      fr: Doit être dans la gamme de 1-12 (représente janvier-décembre)
     datastore_type: month
     form_attrs:
       size: 5
@@ -49,6 +59,9 @@ resources:
     label:
       en: Request Number
       fr: Numero de la demande
+    description:
+      en: Your institution’s request file number of the completed Access to Information request.
+      fr: Numéro de dossier de demande de votre institution de la demande d’accès à l’information complétée.
     datastore_type: text
     excel_column_width: 38
     form_required: true
@@ -58,6 +71,9 @@ resources:
     label:
       en: English Summary
       fr: Sommaire de la demande en anglais
+    description:
+      en: A descriptive summary of the completed Access to Information request in English.
+      fr: Un résumé descriptif de la demande d’accès à l’information en anglais.
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -70,6 +86,9 @@ resources:
     label:
       en: French Summary
       fr: Sommaire de la demande en français
+    description:
+      en: A descriptive summary of the completed Access to Information request in French.
+      fr: Un résumé descriptif de la demande d’accès à l’information en français.
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -82,11 +101,14 @@ resources:
     label:
       en: Disposition
       fr: Disposition
+    description:
+      en: The response disposition of the completed Access to Information request
+      fr: La disposition de la réponse de la demande d’accès à l’information complétée.
     datastore_type: text
     form_required: true
     excel_required: true
     excel_column_width: 39
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices:
       DA:
         en: All disclosed
@@ -103,40 +125,57 @@ resources:
       NE:
         en: No records exist
         fr: Aucun document n’existe
-      RT:
-        en: Request transferred
-        fr: Demande transmise
-      RA:
-        en: Request abandoned
-        fr: Demande abandonnée
-      NC:
-        en: Neither confirmed nor denied
-        fr: Ni confirmée ni infirmée
 
   - datastore_id: pages
     label:
       en: Number of Pages
       fr: Nombre de pages
+    description:
+      en: The number of pages released in response to the completed Access to Information request. If no records were released, enter a value of “0”.
+      fr: Le nombre de pages publiées en réponse à la demande d’accès à l’information. Si aucun enregistrement n’a été publié, entrez la valeur « 0 ».
     datastore_type: int
+    form_required: true
+    excel_required: true
     form_attrs:
       size: 10
     excel_column_width: 34
 
+  - datastore_id: comments_en
+    label:
+      en: Comments English
+      fr: Commentaires en anglais
+    description:
+      en: This field may be populated with additional or contextual comments in English.
+      fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en anglais.
+    datastore_type: text
+
+  - datastore_id: comments_fr
+    label:
+      en: Comments French
+      fr: Commentaires en français
+    description:
+      en: This field may be populated with additional or contextual comments in French.
+      fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en français.
+    datastore_type: text
+
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -164,6 +203,7 @@ resources:
         errors := errors || required_error(NEW.request_number, 'request_number');
         errors := errors || required_error(NEW.summary_en, 'summary_en');
         errors := errors || required_error(NEW.summary_fr, 'summary_fr');
+        errors := errors || required_error(NEW.pages, 'pages');
         errors := errors || required_error(NEW.disposition, 'disposition');
         errors := errors || choice_error(NEW.disposition, {disposition}, 'disposition');
 
@@ -209,8 +249,12 @@ resources:
     label:
       en: Year
       fr: Année
+    description:
+      en: Four-digit calendar year of the month for which you are reporting no summaries to publish.
+      fr: Année civile a quatre chiffres du mois pour lequel vous ne signalez aucun résumé à publier.
     validation:
       en: Must be not be in the future or before 2011
+      fr: Ne peux pas être dans le futur ni avant 2011
     datastore_type: year
     form_attrs:
       size: 10
@@ -223,6 +267,12 @@ resources:
     label:
       en: Month (1-12)
       fr: Mois (1-12)
+    description:
+      en: A numerical representation of the month for which you are reporting no summaries to publish.
+      fr: Une représentation numérique du mois pour lequel vous ne signalez aucun résumé a publier.
+    validation:
+      en: Must be in the range of 1-12 (representing January-December).
+      fr: Doit être dans la gamme de 1-12 (représente janvier-décembre)
     datastore_type: month
     form_attrs:
       size: 5
@@ -234,18 +284,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
