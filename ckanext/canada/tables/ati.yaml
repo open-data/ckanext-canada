@@ -152,6 +152,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
     excel_column_width: 41
+    excel_required_formula: NOT(ISBLANK({comments_fr}))
 
   - datastore_id: comments_fr
     label:
@@ -165,6 +166,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
     excel_column_width: 41
+    excel_required_formula: NOT(ISBLANK({comments_en}))
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -216,6 +218,7 @@ resources:
         errors := errors || required_error(NEW.pages, 'pages');
         errors := errors || required_error(NEW.disposition, 'disposition');
         errors := errors || choice_error(NEW.disposition, {disposition}, 'disposition');
+        errors := errors || both_languages_error(NEW.comments_en, 'comments_en', NEW.comments_fr, 'comments_fr');
 
         IF errors = '{{}}' THEN
           RETURN NEW;
@@ -235,6 +238,8 @@ resources:
                   Evaluation Reports
       disposition: DP
       pages: 779
+      comments_en: The disclosure package also included audio recordings
+      comments_fr: Le dossier de divulgation comprend en plus des enregistrements audio
     filters:
       month: 10
       year: 2020

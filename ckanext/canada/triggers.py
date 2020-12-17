@@ -405,6 +405,28 @@ def update_triggers():
             END;
         ''')
 
+    lc.action.datastore_function_create(
+        name=u'both_languages_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value_en', u'argtype': u'text'},
+            {u'argname': u'field_name_en', u'argtype': u'text'},
+            {u'argname': u'value_fr', u'argtype': u'text'},
+            {u'argname': u'field_name_fr', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF (value_en = '') IS NOT FALSE AND NOT((value_fr = '') IS NOT FALSE) THEN
+                  RETURN ARRAY[[field_name_en, 'This text must be provided in both languages']];
+                END IF;
+                IF (value_fr = '') IS NOT FALSE AND NOT((value_en = '') IS NOT FALSE) THEN
+                  RETURN ARRAY[[field_name_fr, 'This text must be provided in both languages']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+
+
 
 def pg_array(choices):
     from ckanext.datastore.helpers import literal_string
