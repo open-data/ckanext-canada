@@ -108,7 +108,7 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 39
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices:
       DA:
         en: All disclosed
@@ -147,6 +147,7 @@ resources:
     description:
       en: This field may be populated with additional or contextual comments in English.
       fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en anglais.
+    datastore_type: text
 
   - datastore_id: comments_fr
     label:
@@ -155,22 +156,26 @@ resources:
     description:
       en: This field may be populated with additional or contextual comments in French.
       fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en français.
+    datastore_type: text
 
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -279,18 +284,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
