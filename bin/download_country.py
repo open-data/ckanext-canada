@@ -40,6 +40,12 @@ choices['XK'] = {
     'fr': 'Kosovo',
 }
 
+# OPN-510 add text for "TW" code
+choices['TW'] = {
+    'en': 'Taiwan',
+    'fr': 'Taiwan',
+}
+
 open(OUTPUT_FILE, 'wb').write(json.dumps(
     choices,
     indent=2,

@@ -71,7 +71,9 @@ def dump_dataset(headers, ds, csvfile):
         except:
             title = None
         if title:
-            rows.append([title['en'], title['fr'], org, id, ts])
+            title_en = ([title[k] for k in sorted(title) if k.startswith('en')] + [''])[0]
+            title_fr = ([title[k] for k in sorted(title) if k.startswith('fr')] + [''])[0]
+            rows.append([title_en, title_fr, org, id, ts])
         else:
             rows.append(['n/a', 'n/a', org, id, ts])
     write_csv(csvfile, rows)

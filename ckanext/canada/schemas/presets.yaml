@@ -220,10 +220,10 @@ presets:
         fr: Éditeur - Organisation - Nom de la section (français)
     fluent_help_text:
       en:
-        en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
+        en: The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multiple names by commas).
         fr: Noms anglais des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le jeu de données (séparer les multiples noms par des virgules)
       fr:
-        en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multuple names by commas).
+        en: The French names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multiple names by commas).
         fr: Noms français des groupes de travail, des unités de travail, des unités opérationnelles, etc. de l’organisation qui publie le jeu de données (séparer les multiples noms par des virgules)
 
     # copied from fluent_text preset
@@ -290,7 +290,7 @@ presets:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
-    display_snippet: email.html
+    display_snippet: email_with_parameters.html
 
 
 # Field = Description (English).
@@ -2037,7 +2037,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
@@ -2054,7 +2054,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required isodate
+    validators: scheming_required isodate no_future_date
 
 # Field = Date Expires.
 # Add a Calendar control to select a Date.
@@ -2072,6 +2072,23 @@ presets:
     form_snippet: date.html
     display_snippet: date.html
     validators: isodate
+
+# Field = Federated date modified.
+# Add a Calendar control to select a Date.
+# {The date on which the federated dataset was modified (YYYY-MM-DD)}
+- preset_name: canada_federated_date_modified
+  values:
+    field_name: federated_date_modified
+    label:
+      en: Federated Dateset Modified Date
+      fr: Date de modification de l'jeu de données fédérées
+    help_text:
+      en: The date on which the federated data partner's dataset was modified (YYYY-MM-DD)
+      fr: Date à laquelle le jeu de données du partenaire de données fédérées a été modifié (AAAA-MM-JJ)
+    # copied from date preset
+    form_snippet: null
+    display_snippet: date.html
+    validators: scheming_required isodate convert_to_json_if_date
 
 # Field = Usage Condition Type - Organization Section Name English.
 # {The English text for limitations or restrictions on how an information resource can be used (separate multiple names by commas).}
@@ -2276,6 +2293,7 @@ presets:
       en: The licence applied to the dataset
       fr: Licence s’appliquant au jeu de données
     required: true
+    display_snippet: canada_license.html
 
 #Field = Access Restrictions.
 #Default Value = Unrestricted.
@@ -2310,12 +2328,8 @@ presets:
   values:
     field_name: imso_approval
     label:
-      en: IMSO Approval
-      fr: Approbation de la CSGI
-    help_text:
-      en: Has IMSO approval been obtained? By selecting yes, you agree to release this dataset under the Open Government Licence – Canada, in an accessible format as specified in the Standard on Web Accessibility, and in both official languages in compliance with the Official Languages Act.
-      fr: L’approbation du CSGI a-t-elle été obtenue? En sélectionnant oui, vous acceptez de publier ce jeu de données sous la Licence du gouvernement ouvert – Canada, dans un format accessible tel que spécifié dans la norme sur l'accessibilité des sites Web, et dans les deux langues officielles, conformément à la Loi sur les langues officielles.
-
+      en: Approval
+      fr: Approbation
     required: true
     form_include_blank_choice: true
     choices:
@@ -2328,7 +2342,7 @@ presets:
         fr: Oui
       value: "true"
     # copied from select preset
-    form_snippet: select.html
+    form_snippet: imso_approval_select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
 
@@ -3155,10 +3169,15 @@ presets:
     - value: AIFF
       mimetype: audio/aiff
     - value: ASCII Grid
+      label:
+        en: ASCII Grid
+        fr: Grille ASCII
       mimetype: application/x-ascii-grid
       replaces: [ascii grid]
-    - label: Android Application
-      value: APK
+    - value: APK
+      label:
+        en: Android Application
+        fr: Application Android
     - value: AVI
       mimetype: video/vnd.avi
     - value: BAG
@@ -3172,8 +3191,10 @@ presets:
     - value: CDF
     - value: CDR
       replaces: [cdr]
-    - label: Blackberry Application
-      value: COD
+    - value: COD
+      label:
+        en: Blackberry Application
+        fr: Application Blackberry
     - value: CSV
       mimetype: text/csv
       openness_score: 3
@@ -3220,6 +3241,9 @@ presets:
       replaces: ["FGDB / GDB", "fgdb / gdb"]
       mimetype: application/x-filegdb
     - value: Flat raster binary
+      label:
+        en: Flat raster binary
+        fr: Binaire raster plat
       replaces: [flat raster binary]
     - value: GDB
       mimetype: application/x-filegdb
@@ -3259,8 +3283,10 @@ presets:
     - value: IATI
       mimetype: application/xml
       replaces: [iati]
-    - label: IOS Application
-      value: IPA
+    - value: IPA
+      label:
+        en: iOS Application
+        fr: Application iOS
     - value: JAR
       mimetype: application/java-archive
     - value: JFIF

@@ -935,70 +935,76 @@ resources:
 
   triggers:
   - service_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.fiscal_yr, 'fiscal_yr');
-        PERFORM choice_one_of(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
-        PERFORM not_empty(NEW.service_id, 'service_id');
-        PERFORM no_surrounding_whitespace(NEW.service_id, 'service_id');
-        PERFORM not_empty(NEW.service_name_en, 'service_name_en');
-        PERFORM not_empty(NEW.service_name_fr, 'service_name_fr');
-        PERFORM not_empty(NEW.external_internal, 'external_internal');
-        PERFORM choice_one_of(NEW.external_internal, {external_internal}, 'external_internal');
-        PERFORM not_empty(NEW.service_type, 'service_type');
-        PERFORM choice_one_of(NEW.service_type, {service_type}, 'service_type');
-        PERFORM not_empty(NEW.special_designations, 'special_designations');
-        PERFORM choice_one_of(NEW.special_designations, {special_designations}, 'special_designations');
-        PERFORM not_empty(NEW.service_description_en, 'service_description_en');
-        PERFORM not_empty(NEW.service_description_fr, 'service_description_fr');
-        PERFORM not_empty(NEW.authority_en, 'authority_en');
-        PERFORM not_empty(NEW.authority_fr, 'authority_fr');
-        PERFORM not_empty(NEW.program_name_en, 'program_name_en');
-        PERFORM not_empty(NEW.program_name_fr, 'program_name_fr');
-        PERFORM not_empty(NEW.program_id_code, 'program_id_code');
-        PERFORM not_empty(NEW.client_target_groups, 'client_target_groups');
+        errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
+        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || required_error(NEW.service_id, 'service_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_id, 'service_id');
+        errors := errors || required_error(NEW.service_name_en, 'service_name_en');
+        errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
+        errors := errors || required_error(NEW.external_internal, 'external_internal');
+        errors := errors || choice_error(NEW.external_internal, {external_internal}, 'external_internal');
+        errors := errors || required_error(NEW.service_type, 'service_type');
+        errors := errors || choice_error(NEW.service_type, {service_type}, 'service_type');
+        errors := errors || required_error(NEW.special_designations, 'special_designations');
+        errors := errors || choice_error(NEW.special_designations, {special_designations}, 'special_designations');
+        errors := errors || required_error(NEW.service_description_en, 'service_description_en');
+        errors := errors || required_error(NEW.service_description_fr, 'service_description_fr');
+        errors := errors || required_error(NEW.authority_en, 'authority_en');
+        errors := errors || required_error(NEW.authority_fr, 'authority_fr');
+        errors := errors || required_error(NEW.program_name_en, 'program_name_en');
+        errors := errors || required_error(NEW.program_name_fr, 'program_name_fr');
+        errors := errors || required_error(NEW.program_id_code, 'program_id_code');
+        errors := errors || required_error(NEW.client_target_groups, 'client_target_groups');
         NEW.client_target_groups := choices_from(
           NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
-        PERFORM not_empty(NEW.cra_business_number, 'cra_business_number');
-        PERFORM not_empty(NEW.service_fee, 'service_fee');
-        PERFORM choice_one_of(NEW.service_fee, {service_fee}, 'service_fee');
-        PERFORM choice_one_of(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
-        PERFORM not_empty(NEW.online_applications, 'online_applications');
-        PERFORM integer_or_na_nd(NEW.online_applications, 'online_applications');
-        PERFORM not_empty(NEW.calls_received, 'calls_received');
-        PERFORM integer_or_na_nd(NEW.calls_received, 'calls_received');
-        PERFORM not_empty(NEW.in_person_applications, 'in_person_applications');
-        PERFORM integer_or_na_nd(NEW.in_person_applications, 'in_person_applications');
-        PERFORM not_empty(NEW.postal_mail_applications, 'postal_mail_applications');
-        PERFORM integer_or_na_nd(NEW.postal_mail_applications, 'postal_mail_applications');
-        PERFORM not_empty(NEW.e_registration, 'e_registration');
-        PERFORM choice_one_of(NEW.e_registration, {e_registration}, 'e_registration');
-        PERFORM not_empty(NEW.e_authentication, 'e_authentication');
-        PERFORM choice_one_of(NEW.e_authentication, {e_authentication}, 'e_authentication');
-        PERFORM not_empty(NEW.e_application, 'e_application');
-        PERFORM choice_one_of(NEW.e_application, {e_application}, 'e_application');
-        PERFORM not_empty(NEW.e_decision, 'e_decision');
-        PERFORM choice_one_of(NEW.e_decision, {e_decision}, 'e_decision');
-        PERFORM not_empty(NEW.e_issuance, 'e_issuance');
-        PERFORM choice_one_of(NEW.e_issuance, {e_issuance}, 'e_issuance');
-        PERFORM not_empty(NEW.e_feedback, 'e_feedback');
-        PERFORM choice_one_of(NEW.e_feedback, {e_feedback}, 'e_feedback');
+        errors := errors || required_error(NEW.cra_business_number, 'cra_business_number');
+        errors := errors || required_error(NEW.service_fee, 'service_fee');
+        errors := errors || choice_error(NEW.service_fee, {service_fee}, 'service_fee');
+        errors := errors || choice_error(NEW.cra_business_number, {cra_business_number}, 'cra_business_number');
+        errors := errors || required_error(NEW.online_applications, 'online_applications');
+        errors := errors || integer_or_na_nd_error(NEW.online_applications, 'online_applications');
+        errors := errors || required_error(NEW.calls_received, 'calls_received');
+        errors := errors || integer_or_na_nd_error(NEW.calls_received, 'calls_received');
+        errors := errors || required_error(NEW.in_person_applications, 'in_person_applications');
+        errors := errors || integer_or_na_nd_error(NEW.in_person_applications, 'in_person_applications');
+        errors := errors || required_error(NEW.postal_mail_applications, 'postal_mail_applications');
+        errors := errors || integer_or_na_nd_error(NEW.postal_mail_applications, 'postal_mail_applications');
+        errors := errors || required_error(NEW.e_registration, 'e_registration');
+        errors := errors || choice_error(NEW.e_registration, {e_registration}, 'e_registration');
+        errors := errors || required_error(NEW.e_authentication, 'e_authentication');
+        errors := errors || choice_error(NEW.e_authentication, {e_authentication}, 'e_authentication');
+        errors := errors || required_error(NEW.e_application, 'e_application');
+        errors := errors || choice_error(NEW.e_application, {e_application}, 'e_application');
+        errors := errors || required_error(NEW.e_decision, 'e_decision');
+        errors := errors || choice_error(NEW.e_decision, {e_decision}, 'e_decision');
+        errors := errors || required_error(NEW.e_issuance, 'e_issuance');
+        errors := errors || choice_error(NEW.e_issuance, {e_issuance}, 'e_issuance');
+        errors := errors || required_error(NEW.e_feedback, 'e_feedback');
+        errors := errors || choice_error(NEW.e_feedback, {e_feedback}, 'e_feedback');
 
         IF NEW.fiscal_yr <> '2016-2017' THEN
-          PERFORM not_empty(NEW.service_url_en, 'service_url_en');
-          PERFORM not_empty(NEW.service_url_fr, 'service_url_fr');
-          PERFORM not_empty(NEW.use_of_sin, 'use_of_sin');
-          PERFORM choice_one_of(NEW.use_of_sin, {use_of_sin}, 'use_of_sin');
-          PERFORM not_empty(NEW.web_visits_info_service, 'web_visits_info_service');
-          PERFORM integer_or_na_nd(NEW.web_visits_info_service, 'web_visits_info_service');
-          PERFORM not_empty(NEW.email_applications, 'email_applications');
-          PERFORM integer_or_na_nd(NEW.email_applications, 'email_applications');
-          PERFORM not_empty(NEW.fax_applications, 'fax_applications');
-          PERFORM integer_or_na_nd(NEW.fax_applications, 'fax_applications');
-          PERFORM not_empty(NEW.client_feedback, 'client_feedback');
+          errors := errors || required_error(NEW.service_url_en, 'service_url_en');
+          errors := errors || required_error(NEW.service_url_fr, 'service_url_fr');
+          errors := errors || required_error(NEW.use_of_sin, 'use_of_sin');
+          errors := errors || choice_error(NEW.use_of_sin, {use_of_sin}, 'use_of_sin');
+          errors := errors || required_error(NEW.web_visits_info_service, 'web_visits_info_service');
+          errors := errors || integer_or_na_nd_error(NEW.web_visits_info_service, 'web_visits_info_service');
+          errors := errors || required_error(NEW.email_applications, 'email_applications');
+          errors := errors || integer_or_na_nd_error(NEW.email_applications, 'email_applications');
+          errors := errors || required_error(NEW.fax_applications, 'fax_applications');
+          errors := errors || integer_or_na_nd_error(NEW.fax_applications, 'fax_applications');
+          errors := errors || required_error(NEW.client_feedback, 'client_feedback');
           NEW.client_feedback := choices_from(
             NEW.client_feedback, {client_feedback}, 'client_feedback');
         END IF;
-        RETURN NEW;
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
@@ -1442,44 +1448,49 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
 
   triggers:
   - service_std_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.fiscal_yr, 'fiscal_yr');
-        PERFORM choice_one_of(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
-        PERFORM not_empty(NEW.service_id, 'service_id');
-        PERFORM no_surrounding_whitespace(NEW.service_id, 'service_id');
-        PERFORM not_empty(NEW.service_std_id, 'service_std_id');
-        PERFORM no_surrounding_whitespace(NEW.service_std_id, 'service_std_id');
-        PERFORM not_empty(NEW.service_std_en, 'service_std_en');
-        PERFORM not_empty(NEW.service_std_fr, 'service_std_fr');
-        PERFORM not_empty(NEW.service_std_url_en, 'service_std_url_en');
-        PERFORM not_empty(NEW.service_std_url_fr, 'service_std_url_fr');
+        errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
+        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || required_error(NEW.service_id, 'service_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_id, 'service_id');
+        errors := errors || required_error(NEW.service_std_id, 'service_std_id');
+        errors := errors || no_surrounding_whitespace_error(NEW.service_std_id, 'service_std_id');
+        errors := errors || required_error(NEW.service_std_en, 'service_std_en');
+        errors := errors || required_error(NEW.service_std_fr, 'service_std_fr');
+        errors := errors || required_error(NEW.service_std_url_en, 'service_std_url_en');
+        errors := errors || required_error(NEW.service_std_url_fr, 'service_std_url_fr');
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
         IF NEW.service_std_target < 0 OR NEW.service_std_target > 1 THEN
           RAISE EXCEPTION 'Please enter a decimal value between zero and one: %', 'service_std_target';
         END IF;
-        PERFORM not_empty(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
-        PERFORM choice_one_of(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
-        PERFORM not_empty(NEW.realtime_result_url_en, 'realtime_result_url_en');
-        PERFORM not_empty(NEW.realtime_result_url_fr, 'realtime_result_url_fr');
-        PERFORM not_empty(NEW.q1_performance_result, 'q1_performance_result');
-        PERFORM integer_or_na_nd(NEW.q1_performance_result, 'q1_performance_result');
-        PERFORM not_empty(NEW.q1_business_volume, 'q1_business_volume');
-        PERFORM integer_or_na_nd(NEW.q1_business_volume, 'q1_business_volume');
-        PERFORM not_empty(NEW.q2_performance_result, 'q2_performance_result');
-        PERFORM integer_or_na_nd(NEW.q2_performance_result, 'q2_performance_result');
-        PERFORM not_empty(NEW.q2_business_volume, 'q2_business_volume');
-        PERFORM integer_or_na_nd(NEW.q2_business_volume, 'q2_business_volume');
-        PERFORM not_empty(NEW.q3_performance_result, 'q3_performance_result');
-        PERFORM integer_or_na_nd(NEW.q3_performance_result, 'q3_performance_result');
-        PERFORM not_empty(NEW.q3_business_volume, 'q3_business_volume');
-        PERFORM integer_or_na_nd(NEW.q3_business_volume, 'q3_business_volume');
-        PERFORM not_empty(NEW.q4_performance_result, 'q4_performance_result');
-        PERFORM integer_or_na_nd(NEW.q4_performance_result, 'q4_performance_result');
-        PERFORM not_empty(NEW.q4_business_volume, 'q4_business_volume');
-        PERFORM integer_or_na_nd(NEW.q4_business_volume, 'q4_business_volume');
-
-        RETURN NEW;
+        errors := errors || required_error(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
+        errors := errors || choice_error(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
+        errors := errors || required_error(NEW.realtime_result_url_en, 'realtime_result_url_en');
+        errors := errors || required_error(NEW.realtime_result_url_fr, 'realtime_result_url_fr');
+        errors := errors || required_error(NEW.q1_performance_result, 'q1_performance_result');
+        errors := errors || integer_or_na_nd_error(NEW.q1_performance_result, 'q1_performance_result');
+        errors := errors || required_error(NEW.q1_business_volume, 'q1_business_volume');
+        errors := errors || integer_or_na_nd_error(NEW.q1_business_volume, 'q1_business_volume');
+        errors := errors || required_error(NEW.q2_performance_result, 'q2_performance_result');
+        errors := errors || integer_or_na_nd_error(NEW.q2_performance_result, 'q2_performance_result');
+        errors := errors || required_error(NEW.q2_business_volume, 'q2_business_volume');
+        errors := errors || integer_or_na_nd_error(NEW.q2_business_volume, 'q2_business_volume');
+        errors := errors || required_error(NEW.q3_performance_result, 'q3_performance_result');
+        errors := errors || integer_or_na_nd_error(NEW.q3_performance_result, 'q3_performance_result');
+        errors := errors || required_error(NEW.q3_business_volume, 'q3_business_volume');
+        errors := errors || integer_or_na_nd_error(NEW.q3_business_volume, 'q3_business_volume');
+        errors := errors || required_error(NEW.q4_performance_result, 'q4_performance_result');
+        errors := errors || integer_or_na_nd_error(NEW.q4_performance_result, 'q4_performance_result');
+        errors := errors || required_error(NEW.q4_business_volume, 'q4_business_volume');
+        errors := errors || integer_or_na_nd_error(NEW.q4_business_volume, 'q4_business_volume');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 

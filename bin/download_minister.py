@@ -86,7 +86,7 @@ def download_xml_from_source():
     # collect responses for both languages
     for langCode in lang_codes:
         try:
-            url = 'https://www.ourcommons.ca/Parliamentarians/' + langCode + '/ministries/Export?output=XML'
+            url = 'https://www.ourcommons.ca/Members/' + langCode + '/ministries/xml'
             response = requests.get(url, stream=True)
             xml_tree[langCode] = etree.fromstring(response.content)
             response.close()
@@ -125,7 +125,6 @@ def download_xml_from_source():
                        + ' (' + row_fr.xpath('PersonShortHonorific/text()')[0] + ')',
             'start_date': row_en.xpath('FromDateTime/text()')[0],
             'end_date': ''.join(row_en.xpath('ToDateTime/text()')),
-            'precedence': row_en.xpath('OrderOfPrecedence/text()')[0],
         }
 
         # add position to dict

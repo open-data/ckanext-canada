@@ -17,5 +17,7 @@ env:
     - CKAN_DATASTORE_POSTGRES_WRITE_USER=ckan_default
     - CKAN_DATASTORE_POSTGRES_READ_USER=datastore_default
     - CKAN_DATASTORE_POSTGRES_READ_PWD=pass
+  matrix:
+    - PGVERSION=9.6
 install: ./bin/travis-install
 script: ./bin/travis-script

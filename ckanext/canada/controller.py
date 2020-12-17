@@ -14,6 +14,7 @@ import lxml.html as html
 from ckan.lib.base import model
 from ckan.logic import schema
 from ckan.controllers.user import UserController
+from ckan.controllers.api import ApiController, DataError, NotFound, search
 from ckan.authz import is_sysadmin
 from ckan.lib.helpers import (
     Page,
@@ -82,9 +83,6 @@ class CanadaController(BaseController):
     def links(self):
         return render('home/quick_links.html')
 
-    def registry_menu(self):
-        return render("menu.html")
-
     def view_guidelines(self):
         return render('guidelines.html')
 
@@ -101,7 +99,7 @@ class CanadaController(BaseController):
             # Try to load FAQ text for the user's language.
             faq_text = _get_help_text(c.language)
         except IOError:
-            # Fall back to using English if no local langauge could be found.
+            # Fall back to using English if no local language could be found.
             faq_text = _get_help_text(u'en')
 
         # Convert the markdown to HTML ...
@@ -131,9 +129,14 @@ class CanadaController(BaseController):
             # Move the summary tag to the top of the details tag.
             details.insert(0, summary)
 
-            # We don't actaully want the FAQ headers to be headings, so strip
+            # We don't actually want the FAQ headers to be headings, so strip
             # the tags and just leave the text.
             faq_section.drop_tag()
+
+        # Get FAQ group header and set it as heading 2 to comply with
+        # accessible heading ranks
+        for faq_group in h.xpath('//h1'):
+            faq_group.tag = 'h2'
 
         return render('help.html', extra_vars={
             'faq_html': html.tostring(h),
@@ -187,10 +190,20 @@ class CanadaController(BaseController):
 
         chromo = h.recombinant_get_chromo(resource_name)
         lc = LocalCKAN(username=c.user)
-        unfiltered_response = lc.action.datastore_search(
-            resource_id=resource_id,
-            limit=1,
-        )
+        try:
+            unfiltered_response = lc.action.datastore_search(
+                resource_id=resource_id,
+                limit=1,
+            )
+        except NotAuthorized:
+            # datatables js can't handle any sort of error response
+            # return no records instead
+            return json.dumps({
+                'draw': draw,
+                'iTotalRecords': -1,  # with a hint that something is wrong
+                'iTotalDisplayRecords': -1,
+                'aaData': [],
+            })
 
         cols = [f['datastore_id'] for f in chromo['fields']]
         prefix_cols = 1 if chromo.get('edit_form', False) else 0
@@ -328,6 +341,15 @@ def datatablify(v, colname):
 
 
 class CanadaDatasetController(PackageController):
+    def edit(self, id, data=None, errors=None, error_summary=None):
+        try:
+            return super(CanadaDatasetController, self).edit(
+                id, data, errors, error_summary)
+        except HTTPFound:
+            if c.pkg_dict['type'] == 'prop':
+                h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+            raise
+
     def resource_edit(self, id, resource_id, data=None, errors=None,
                       error_summary=None):
         try:
@@ -564,6 +586,128 @@ class CanadaAdminController(PackageController):
 
         # return us to the publishing interface
         return h.redirect_to(h.url_for('ckanadmin_publish'))
+
+
+class CanadaApiController(ApiController):
+    def action(self, logic_function, ver=None):
+        # Copied from ApiController so we can log details of some API calls
+        # XXX: for later ckans look for a better hook
+        try:
+            function = get_action(logic_function)
+        except KeyError:
+            log.info('Can\'t find logic function: %s', logic_function)
+            return self._finish_bad_request(
+                _('Action name not known: %s') % logic_function)
+
+        context = {'model': model, 'session': model.Session, 'user': c.user,
+                   'api_version': ver, 'auth_user_obj': c.userobj}
+        model.Session()._context = context
+
+        return_dict = {'help': h.url_for(controller='api',
+                                         action='action',
+                                         logic_function='help_show',
+                                         ver=ver,
+                                         name=logic_function,
+                                         qualified=True,
+                                         )
+                       }
+        try:
+            side_effect_free = getattr(function, 'side_effect_free', False)
+            request_data = self._get_request_data(try_url_params=
+                                                  side_effect_free)
+        except ValueError, inst:
+            log.info('Bad Action API request data: %s', inst)
+            return self._finish_bad_request(
+                _('JSON Error: %s') % inst)
+        if not isinstance(request_data, dict):
+            # this occurs if request_data is blank
+            log.info('Bad Action API request data - not dict: %r',
+                     request_data)
+            return self._finish_bad_request(
+                _('Bad request data: %s') %
+                'Request data JSON decoded to %r but '
+                'it needs to be a dictionary.' % request_data)
+        # if callback is specified we do not want to send that to the search
+        if 'callback' in request_data:
+            del request_data['callback']
+            c.user = None
+            c.userobj = None
+            context['user'] = None
+            context['auth_user_obj'] = None
+        try:
+            result = function(context, request_data)
+            # XXX extra logging here
+            _log_api_access(context, request_data)
+            return_dict['success'] = True
+            return_dict['result'] = result
+        except DataError, e:
+            log.info('Format incorrect (Action API): %s - %s',
+                     e.error, request_data)
+            return_dict['error'] = {'__type': 'Integrity Error',
+                                    'message': e.error,
+                                    'data': request_data}
+            return_dict['success'] = False
+            return self._finish(400, return_dict, content_type='json')
+        except NotAuthorized, e:
+            return_dict['error'] = {'__type': 'Authorization Error',
+                                    'message': _('Access denied')}
+            return_dict['success'] = False
+
+            if unicode(e):
+                return_dict['error']['message'] += u': %s' % e
+
+            return self._finish(403, return_dict, content_type='json')
+        except NotFound, e:
+            return_dict['error'] = {'__type': 'Not Found Error',
+                                    'message': _('Not found')}
+            if unicode(e):
+                return_dict['error']['message'] += u': %s' % e
+            return_dict['success'] = False
+            return self._finish(404, return_dict, content_type='json')
+        except ValidationError, e:
+            error_dict = e.error_dict
+            error_dict['__type'] = 'Validation Error'
+            return_dict['error'] = error_dict
+            return_dict['success'] = False
+            # CS nasty_string ignore
+            log.info('Validation error (Action API): %r', str(e.error_dict))
+            return self._finish(409, return_dict, content_type='json')
+        except search.SearchQueryError, e:
+            return_dict['error'] = {'__type': 'Search Query Error',
+                                    'message': 'Search Query is invalid: %r' %
+                                    e.args}
+            return_dict['success'] = False
+            return self._finish(400, return_dict, content_type='json')
+        except search.SearchError, e:
+            return_dict['error'] = {'__type': 'Search Error',
+                                    'message': 'Search error: %r' % e.args}
+            return_dict['success'] = False
+            return self._finish(409, return_dict, content_type='json')
+        except search.SearchIndexError, e:
+            return_dict['error'] = {
+                '__type': 'Search Index Error',
+                'message': 'Unable to add package to search index: %s' %
+                           str(e)}
+            return_dict['success'] = False
+            return self._finish(500, return_dict, content_type='json')
+        return self._finish_ok(return_dict)
+
+
+def _log_api_access(context, data_dict):
+    if 'package' not in context:
+        if 'resource_id' not in data_dict:
+            return
+        res = model.Resource.get(data_dict['resource_id'])
+        pkg = res.package
+    else:
+        pkg = context['package']
+    org = model.Group.get(pkg.owner_org)
+    c.log_extra = u'org={o} type={t} id={i}'.format(
+        o=org.name,
+        t=pkg.type,
+        i=pkg.id)
+    if 'resource_id' in data_dict:
+        c.log_extra += u' rid={0}'.format(data_dict['resource_id'])
 
 
 def notice_no_access():

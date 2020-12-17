@@ -207,6 +207,18 @@ button.dt-button, div.dt-button, a.dt-button{
     padding: 2px 10px;
 }
 
+.resource-tags {
+    text-align: left;
+    white-space: inherit;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+#resource-desc {
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
 .panel.panel-primary, .panel.panel-primary .panel-heading { border-color: #335075; }
 .panel.panel-primary .panel-heading { background: #335075; }
 .panel.panel-primary .panel-heading a { color: #fff }

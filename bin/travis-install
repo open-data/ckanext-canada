@@ -4,7 +4,8 @@ set -e
 
 # Install postgres and solr
 sudo apt-get update -qq
-sudo apt-get install solr-jetty libgeos-c1
+sudo apt-get purge postgresql-9.2
+sudo apt-get install solr-jetty postgresql-$PGVERSION libgeos-c1
 
 mkdir dl
 cd dl
