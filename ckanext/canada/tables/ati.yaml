@@ -148,6 +148,10 @@ resources:
       en: This field may be populated with additional or contextual comments in English.
       fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en anglais.
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+    excel_column_width: 41
 
   - datastore_id: comments_fr
     label:
@@ -157,6 +161,10 @@ resources:
       en: This field may be populated with additional or contextual comments in French.
       fr: Ce champ peut être rempli avec des commentaires supplémentaires ou contextuels en français.
     datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+    excel_column_width: 41
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -186,6 +194,8 @@ resources:
   datastore_primary_key: request_number
   datastore_indexes: ""
   default_preview_sort: year desc, month desc
+
+  excel_example_height: 32
 
   triggers:
   - ati_trigger: |
