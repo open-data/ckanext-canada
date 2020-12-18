@@ -48,6 +48,18 @@
           {{ quick_link('experiment') }}
           {{ quick_link('nap') }}
           {{ quick_link('inventory') }}
+          <li>
+            <a href="/aia-eia-js/?lang={{h.lang()}}"><i class="fa fa-folder-open"></i>{{ _('AIA Assessment') }}</a>
+            <a class="wb-lbx" href="#aia"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="aia" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{  _('AIA Assessment')}}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('A tool that helps identify the impact level of your automated decision system under the Directive on Automated Decision-Making.') }}
+              </div>
+            </section>
+          </li>
         </ul>
       </section>
       <section id="ql-open-info">
