@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 import hashlib
 import requests
@@ -10,100 +11,113 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-
-def get_row_tuple(row):
-    new_row={}
-    for key, value in row.items():
-        new_key = key.decode("utf-8-sig").encode("utf-8")
-        n_value = value.decode("utf-8-sig").encode("utf-8")
-        new_row[new_key] = n_value
-    org_tuple = (new_row['owner_org'], new_row['owner_org_title'])
-    # del row['owner_org']
-    del new_row['owner_org_title']
-    pk_tuple = tuple([new_row[key] for key in pk_fields[0]])
-    h = hashlib.md5(repr(list(new_row.values())).encode('utf8')).digest()
-    row_tuple = (pk_tuple, org_tuple, h)
-    return row_tuple
-
-
-def collect_existing_rows(prev_csv):
-    '''
-    return a set of hashes for rows in previous_dir/filtered/csv_name,
-    excluding the organization fields to avoid counting org changes
-    as row changes
-    '''
-    existing = set()
-    with open(prev_csv) as f:
-        hashcsv = csv.DictReader(f)
+def get_file_keys(csv_file, primary_keys):
+    pk_list = {}
+    with open(csv_file) as f:
+        hashcsv = csv.DictReader(codecs.EncodedFile(f, 'utf-8', 'utf-8-sig'), delimiter=",")
         for row in hashcsv:
-            row_tuple = get_row_tuple(row)
-            existing.add(row_tuple)
-    return existing
+            primary_fields = [str(row[t]) for t in primary_keys]
+            uid = '-'.join(primary_fields)
+            pk_list[uid]=''
+    f.close()
+    return pk_list
 
+def find_removed_and_created_keys(prev, curr):
+    """
 
-def compare(current_csv, existing_rows):
-    '''
-    Check if a record in current_csv is also in prev_csv. If it isn't, append it to altered records list. If it is, then remove it from existing_rows.
-    Returns three lists:
-        created_rows contains records that were created since prev_csv
-        modified_rows contains records that were modified since prev_csv
-        deleted_rows contains hashes of records that were deleted since prev_csv
-    '''
-    created_rows = []
-    modified_rows = []
-    deleted_rows = existing_rows
-    i=0
-    with open(current_csv) as f:
-        hashcsv = csv.DictReader(f)
-        for row in hashcsv:
-            print(i, '\n')
-            i = i + 1
-            row_tuple = get_row_tuple(row)
-            for t in existing_rows:
-                if row_tuple[2] == t[2]:
-                    deleted_rows.remove(t)
-                    break
-                elif row_tuple[0] == t[0] and row_tuple[1] == t[1]:
-                    modified_rows.append(row)
+    :param prev: Older CSV
+    :param curr: Newer CSV
+    :return: The keys that were removed/added between the 2 CSVs, and the keys which MAY be modified
+    """
+    removed_keys = {}
+    added_keys = {}
+    mod_keys = {}
 
-                    break
-            else:
-                created_rows.append(row)
+    for key in prev:
+        if not key in curr:
+            removed_keys[key] = ''
+    for key in curr:
+        if not key in prev:
+            added_keys[key]=''
+        else:
+            mod_keys[key]=''
 
-    return created_rows, modified_rows, deleted_rows
+    return removed_keys, added_keys, mod_keys
 
+def get_mod_keys(prev, curr, modkeys, primary_keys):
+    """
+    Get modified keys
+    :param prev: The old CSV used for comparison
+    :param curr: The newer CSV for comparison
+    :param modkeys: The keys which may indicate modification in row
+    :param primary_keys: Primary keys of PD type
+    :return: The keys of rows which are modified between the old and new CSVs
+    """
+    res = {}
+    with open(curr) as cf:
+        currcsv = csv.DictReader(codecs.EncodedFile(cf, 'utf-8', 'utf-8-sig'), delimiter=",")
+        for row in currcsv:
+            primary_fields = [str(row[t]) for t in primary_keys]
+            uid = '-'.join(primary_fields)
+            if uid in modkeys:
+                modkeys[uid]=row
+    cf.close()
+    with open(prev) as pf:
+        prevcsv = csv.DictReader(codecs.EncodedFile(pf, 'utf-8', 'utf-8-sig'), delimiter=",")
+        for row in prevcsv:
+            primary_fields = [str(row[t]) for t in primary_keys]
+            uid = '-'.join(primary_fields)
+            if uid in modkeys:
+                for field in row:
+                    if row[field] != modkeys[uid][field]:
+                        res[uid]=''
+                        break
+    pf.close()
+    return res
 
-def add_metadata_fields(created_rows, modified_rows, deleted_rows, prev_csv, datestamp):
-    results = []
-    for cr in created_rows:
-        cr['log_date'] = datestamp
-        cr['log_activity'] = 'C'
-        results.append(cr)
-
-    for mr in modified_rows:
-        mr['log_date'] = datestamp
-        mr['log_activity'] = 'M'
-        results.append(mr)
-
-    with open(prev_csv) as f:
-        pcsv = csv.DictReader(f)
-        for t in deleted_rows:
-            for row in pcsv:
-                row_tuple = get_row_tuple(row)
-                if t[0] == row_tuple[0] and t[1] == row_tuple[1]:
-                    row['log_date'] = datestamp
-                    row['log_activity'] = 'D'
-                    results.append(row)
-                    break
-    return results
-
-
-def get_fieldnames(fields):
-    fieldnames = ",".join([f['id'] for f in fields])+",owner_org,log_date,log_activity"
-    return fieldnames
-
+def write_warehouse(out, csvfile, primary_keys, write_keys, writehead, fields, log_activity, date):
+    """
+    Write to warehouse CSV file in such a way that does not load entire CSV files to memory.
+    :param out: warehouse file to write to
+    :param csvfile: the CSV file used for reading/writing data to warehouse
+    :param primary_keys: primary keys of PD type
+    :param write_keys: the keys to be written (added keys, removed keys, modified keys)
+    :param writehead: boolean to either write or ignore header
+    :param fields: fields to be written to warehouse
+    :param log_activity: C = created, D = deleted, M = modified
+    :param date: date of comparison
+    :return: None
+    """
+    with open(out, 'a') as f:
+        warehouse = csv.DictWriter(f, fieldnames=fields, delimiter=',', restval='')
+        if not exists_flag:
+            warehouse.writeheader()
+        with open(csvfile) as cf:
+            hashcsv = csv.DictReader(codecs.EncodedFile(cf, 'utf-8', 'utf-8-sig'), delimiter=",")
+            for row in hashcsv:
+                primary_fields = [str(row[t]) for t in primary_keys]
+                uid = '-'.join(primary_fields)
+                if uid in write_keys:
+                    res = row
+                    res["log_date"] = date
+                    res["log_activity"] = log_activity
+                    l = list(res.keys())
+                    for g in l:
+                        if g not in fields:
+                            del res[g]
+                    warehouse.writerow(res)
+        cf.close()
+    f.close()
 
 prev_csv, current_csv, endpoint, datestamp, outfile = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+"""
+prev_csv = Older CSV being compared
+current_csv = newer CSV being compared
+endpoint = http address of fields and primary keys of current PD type
+datestamp = current date of comparison
+outfile = warehouse file for output
+"""
+
 field_info = requests.get(endpoint, timeout=100, verify=False).json()
 
 # Grab the primary key fields from the datatype reference endpoint
@@ -114,31 +128,28 @@ else:
     pk_fields = [f['primary_key'] for f in field_info['resources'] if 'nil' not in f['resource_name']]
     fields = [f['fields'] for f in field_info['resources'] if 'nil' not in f['resource_name']]
 
-fieldnames = get_fieldnames(fields[0]).split(",")
-existing_rows = collect_existing_rows(prev_csv)
-print("Comparing...")
-created_rows, modified_rows, deleted_rows = compare(current_csv, existing_rows)
-results = add_metadata_fields(created_rows, modified_rows, deleted_rows, prev_csv, datestamp)
+pk_fields.append('owner_org')
 
-print("writing")
-exists_flag = 0
-if os.path.isfile(outfile):
-    exists_flag=1
-if results:
-    with open(outfile, 'a') as f:
-        warehouse = csv.DictWriter(f, fieldnames=fieldnames, delimiter=',', restval='')
-        if exists_flag==0:
-            warehouse.writeheader()
-        for result_row in results:
-            for key in result_row.keys():
-                if key not in fieldnames:
-                    result_row.pop(key)
-                if key == 'record_created':
-                    result_row['record_created'] = (result_row['record_created'].split('T')[0]).replace('/', '-')
-                if key == 'record_modified':
-                    result_row['record_modified'] = (result_row['record_modified'].split('T')[0]).replace('/', '-')
-            print(result_row)
-            warehouse.writerow(result_row)
+#Get Primary Keys for all rows in prev and curr CSV
+old_csv_keys = get_file_keys(prev_csv, pk_fields)
+new_csv_keys = get_file_keys(current_csv, pk_fields)
 
+#Compare keys to find Removed and Created Primary Keys and Candidate Mod keys
+removed_keys, added_keys, mod_keys = find_removed_and_created_keys(old_csv_keys, new_csv_keys)
+
+#Compare rows of mod_keys to confirm that rows were modified
+mod_keys = get_mod_keys(prev_csv, current_csv, mod_keys, pk_fields)
+
+if len(added_keys)==0 and len(removed_keys)==0 and len(mod_keys)==0:
+    print("No changes detected between files")
 else:
     print("No changes detected between files")
+    exists_flag = os.path.isfile(outfile)
+    #write created keys to warehouse file
+    write_warehouse(outfile, current_csv, pk_fields, added_keys, exists_flag, fieldnames, "C", datestamp)
+    exists_flag = True
+    #write modified keys to warehouse file
+    write_warehouse(outfile, current_csv, pk_fields, mod_keys, exists_flag, fieldnames, "M", datestamp)
+    #write deleted keys to warehouse file
+    write_warehouse(outfile, prev_csv, pk_fields, removed_keys, exists_flag, fieldnames, "D", datestamp)
+
