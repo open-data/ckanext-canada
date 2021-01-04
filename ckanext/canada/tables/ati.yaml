@@ -54,6 +54,7 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
+    solr_month_names: true
 
   - datastore_id: request_number
     label:
@@ -193,6 +194,12 @@ resources:
     report_type_en: ATI Summaries
     report_type_fr: Accès à l’information sommaires complétés
 
+  solr_legacy_ati_ids: true
+
+  solr_org_fields:
+  - ati_email
+
+
   datastore_primary_key: request_number
   datastore_indexes: ""
   default_preview_sort: year desc, month desc
@@ -295,6 +302,7 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
+    solr_month_names: true
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -320,6 +328,10 @@ resources:
   solr_static_fields:
     report_type_en: Nothing to report
     report_type_fr: Rien à signaler
+    nothing_to_report_en: Nothing to report this month
+    nothing_to_report_fr: Rien à signaler pour cette période
+
+  solr_legacy_ati_ids: true
 
   datastore_primary_key: [year, month]
   datastore_indexes: ""

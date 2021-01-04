@@ -12,7 +12,10 @@ if 'report' in sys.argv:
     out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=['old_disposition', 'new_disposition'])
     seen = set()
 else:
-    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
+    out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=[
+        u'year', u'month', u'request_number', u'summary_en', u'summary_fr',
+        u'disposition', u'pages', u'comments_en', u'comments_fr', u'record_created',
+        u'record_modified', u'user_modified', u'umd_number', u'owner_org', u'owner_org_title'], encoding='utf-8')
 out_csv.writeheader()
 
 DISP_MATCH = [
@@ -70,4 +73,6 @@ for line in in_csv:
     if not 'warehouse' in sys.argv and not line['user_modified']:
         line['user_modified'] = '*'  # special "we don't know" value
 
+    line['comments_en'] = ''
+    line['comments_fr'] = ''
     out_csv.writerow(line)
