@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import hashlib
+import calendar
 import time
 from babel.numbers import format_currency, format_decimal
 
@@ -18,6 +19,7 @@ from ckanext.recombinant.helpers import (
     recombinant_language_text)
 
 from ckanext.canada.dataset import (
+    MONTHS_FR,
     solr_connection,
     data_batch,
     safe_for_solr)
@@ -249,6 +251,11 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
 
     for r in records:
         unique, friendly, partial = unique_id(r)
+        if chromo.get('solr_legacy_ati_ids', False):
+            # for compatibility with existing urls
+            unique = hashlib.md5(orghash
+                + r.get('request_number', repr((int(r['year']), int(r['month'])))
+                ).encode('utf-8')).hexdigest()
 
         solrrec = {
             'id': unique,
@@ -331,6 +338,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 else:
                     choice = choices.get(value, {})
                     _add_choice(solrrec, key, r, choice, f)
+
+            if f.get('solr_month_names', False):
+                solrrec[key + '_name_en'] = calendar.month_name[int(value)]
+                solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
         solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
 
