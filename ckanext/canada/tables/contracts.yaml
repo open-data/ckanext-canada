@@ -668,6 +668,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CETA / CFTA
         fr: AECG / ALEC
       E:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
@@ -675,6 +676,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CETA / WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       F:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CETA, TCA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
@@ -695,6 +697,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AD:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CKFTA]
@@ -711,6 +714,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CHFTA
         fr: ALEC / ALECH
       AG:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CETA, TCA, CFTA, CHFTA]
@@ -739,6 +743,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: (discontinué) ALEC / PTPGP
         discontinued: true
       AM:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CETA, TCA, CPTPP]
@@ -747,6 +752,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: (discontinué) ALEC / AECG / PTPGP
         discontinued: true
       AN:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CHFTA, CETA, TCA, CPTPP]
@@ -758,6 +764,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CKFTA / WTO-AGP / CPTPP
         fr: ALEC / ALECC / ALECCS / AMP-OMC / PTPGP
       AP:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
@@ -765,6 +772,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / CPTPP
         fr: ALEC / ALENA / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / AECG / PTPGP
       AQ:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
@@ -784,6 +792,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CKFTA
         fr: ALEC / ALECC / ALECCS
       AU:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
@@ -799,6 +808,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CPTPP
         fr: ALEC / ALECC / PTPGP
       AX:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA]
@@ -806,6 +816,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CKFTA / WTO-AGP / CETA
         fr: ALEC / ALECCS / AMP-OMC / AECG
       AY:
+        conditional_lookup:
         - column: contract_date
           less_than: '2021-01-01'
           lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
