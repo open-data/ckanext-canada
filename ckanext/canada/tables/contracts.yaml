@@ -660,15 +660,25 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CKFTA
         fr: ALEC / ALECC / ALECCS
       D:
-        lookup: [CETA, CFTA]
+        conditional_lookup:
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CETA, TCA, CFTA]
+        - lookup: [CETA, CFTA]
         en: CETA / CFTA
         fr: AECG / ALEC
       E:
-        lookup: [CETA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - lookup: [CETA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: CETA / WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       F:
-        lookup: [CETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CETA, TCA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
+        - lookup: [CETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: CETA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: AECG / AMP-OMC / ALENA / ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AA:
@@ -685,7 +695,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
         fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS
       AD:
-        lookup: [CETA, WTO-AGP, CFTA, CCFTA, CKFTA]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CKFTA]
+        - lookup: [CETA, WTO-AGP, CFTA, CCFTA, CKFTA]
         en: CETA / WTO-AGP / CFTA / CCFTA / CKFTA
         fr: AECG / AMP-OMC / ALEC / ALECC / ALECCS
       AE:
@@ -698,7 +711,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CHFTA
         fr: ALEC / ALECH
       AG:
-        lookup: [CETA, CFTA, CHFTA]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CETA, TCA, CFTA, CHFTA]
+        - lookup: [CETA, CFTA, CHFTA]
         en: CETA / CFTA / CHFTA
         fr: AECG / ALEC / ALECH
       AH:
@@ -723,12 +739,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         fr: (discontinué) ALEC / PTPGP
         discontinued: true
       AM:
-        lookup: [CFTA, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CETA, TCA, CPTPP]
+        - lookup: [CFTA, CETA, CPTPP]
         en: (discontinued) CFTA / CETA / CPTPP
         fr: (discontinué) ALEC / AECG / PTPGP
         discontinued: true
       AN:
-        lookup: [CFTA, CHFTA, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CHFTA, CETA, TCA, CPTPP]
+        - lookup: [CFTA, CHFTA, CETA, CPTPP]
         en: CFTA / CHFTA / CETA / CPTPP
         fr: ALEC / ALECH / AECG / PTPGP
       AO:
@@ -736,11 +758,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CKFTA / WTO-AGP / CPTPP
         fr: ALEC / ALECC / ALECCS / AMP-OMC / PTPGP
       AP:
-        lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
+        - lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         en: CFTA / NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / CPTPP
         fr: ALEC / ALENA / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / AECG / PTPGP
       AQ:
-        lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
+        - lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / CPTPP
         fr: ALEC / ALECC / ALECCo / ALECH / ALECPa / ALECP / ALECCS / AMP-OMC / AECG / PTPGP
       AR:
@@ -756,7 +784,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CKFTA
         fr: ALEC / ALECC / ALECCS
       AU:
-        lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
+        - lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         en: CFTA / CCFTA / CKFTA / WTO-AGP / CETA / CPTPP
         fr: ALEC / ALECC / ALECCS / AMP-OMC / AECG / PTPGP
       AV:
@@ -768,11 +799,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: CFTA / CCFTA / CPTPP
         fr: ALEC / ALECC / PTPGP
       AX:
-        lookup: [CFTA, CKFTA, WTO-AGP, CETA]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA]
+        - lookup: [CFTA, CKFTA, WTO-AGP, CETA]
         en: CFTA / CKFTA / WTO-AGP / CETA
         fr: ALEC / ALECCS / AMP-OMC / AECG
       AY:
-        lookup: [CFTA, CKFTA, WTO-AGP, CETA, CPTPP]
+        - column: contract_date
+          less_than: '2021-01-01'
+          lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
+        - lookup: [CFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         en: CFTA / CKFTA / WTO-AGP / CETA / CPTPP
         fr: ALEC / ALECCS / AMP-OMC / AECG / PTPGP
       AZ:
