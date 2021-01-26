@@ -283,7 +283,7 @@ resources:
   fields:
 
   - datastore_id: year
-    datastore_type: year
+    datastore_type: text
     label: Year
     obligation: Mandatory
     excel_required: true
