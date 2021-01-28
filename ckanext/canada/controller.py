@@ -589,6 +589,7 @@ class CanadaAdminController(PackageController):
 
 class CanadaApiController(ApiController):
     def action(self, logic_function, ver=None):
+        log = getLogger('ckanext')
         # Copied from ApiController so we can log details of some API calls
         # XXX: for later ckans look for a better hook
         try:
