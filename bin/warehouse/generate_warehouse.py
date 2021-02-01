@@ -44,7 +44,8 @@ def run_migrations(fpath, temp_dir):
     for csvfile in os.listdir(fpath):
         print("Migrating {0} from directory {1}".format(csvfile, fpath))
         proc = subprocess.Popen(['python', 'migrate_all.py', fpath+'/'+csvfile, temp_dir+'/'+fpath+'m_'+csvfile])
-        proc.wait()
+        if proc.wait() == 1:
+            sys.exit()
 
 def csv_diff(prev_csv, curr_csv, endpoint, outfile):
     now = datetime.now()
@@ -53,7 +54,8 @@ def csv_diff(prev_csv, curr_csv, endpoint, outfile):
     print("Getting difference between {0} and {1}".format(prev_csv, curr_csv))
     proc = subprocess.Popen(['python', 'csv_diff.py', temp_dir+'/'+prev_csv, temp_dir+'/'+curr_csv, endpoint,
                              dt_string, outfile])
-    proc.wait()
+    if proc.wait() == 1:
+            sys.exit()
 
 
 if not os.path.exists('warehouse_reports'):
