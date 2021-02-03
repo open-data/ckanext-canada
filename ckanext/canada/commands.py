@@ -547,26 +547,15 @@ class CanadaCommand(CkanCommand):
 
             if uuid in existing_suggestions:
                 need_patch = None
-                updated_status = None
                 # compare record
                 for key in record:
-                    if record[key] and key not in ['status', 'date_forwarded', 'owner_org']:
-                        if record[key] != existing_suggestions[uuid][key]:
+                    if record[key] and key not in ['status', 'date_forwarded']:
+                        existing_value = existing_suggestions[uuid][key]
+                        if key == 'owner_org':
+                            existing_value = existing_suggestions[uuid]['organization']['name']
+                        if record[key] != existing_value:
                             need_patch = True
                             break
-                    elif key == 'owner_org' and record[key] != existing_suggestions[uuid]['organization']['name']:
-                        updated_status = {
-                            "reason": 'transferred',
-                            "date": today,
-                            "comments": {
-                                u'en': u'This suggestion is transferred from '
-                                       + existing_suggestions[uuid]['organization']['title'].split(' | ')[0],
-                                u'fr': u'Cette suggestion est transférée de '
-                                       + existing_suggestions[uuid]['organization']['title'].split(' | ')[1]
-                            }
-                        }
-                        need_patch = True
-                        break
 
                 # patch if needed
                 if need_patch:
@@ -574,8 +563,18 @@ class CanadaCommand(CkanCommand):
                     record['status'] = existing_suggestions[uuid]['status'] \
                         if existing_suggestions[uuid].get('status') \
                         else record['status']
-                    if updated_status:
+                    if record['owner_org'] != existing_suggestions[uuid]['organization']['name']:
+                        existing_org = existing_suggestions[uuid]['organization']['title'].split(' | ')
+                        updated_status = {
+                            "reason": 'transferred',
+                            "date": today,
+                            "comments": {
+                                u'en': u'This suggestion is transferred from ' + existing_org[0],
+                                u'fr': u'Cette suggestion est transférée de ' + existing_org[1]
+                            }
+                        }
                         record['status'].append(updated_status)
+
                     try:
                         registry.action.package_patch(**record)
                         print uuid + ' suggested dataset patched'
