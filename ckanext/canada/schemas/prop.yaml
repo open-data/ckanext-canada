@@ -180,6 +180,10 @@ dataset_fields:
         en: Data owner unable to publish dataset
         fr: Le propriétaire des données ne peut pas publier un ensemble de données
       value: unable
+    - label:
+        en: Dataset transferred to new data owner
+        fr: Ensemble de données transféré au nouveau propriétaire des données
+      value: transferred
 
   - field_name: comments
     label:
