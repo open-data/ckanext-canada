@@ -351,7 +351,6 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.year, 'year');
-        errors := errors || choice_error(NEW.year::text, {year}, 'year');
         errors := errors || required_error(NEW.quarter, 'quarter');
         errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
