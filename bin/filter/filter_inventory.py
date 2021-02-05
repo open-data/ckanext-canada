@@ -9,15 +9,20 @@ import csv
 import sys
 
 FILTER_COLUMN = "eligible_for_release"
+REMOVE_COLUMN = "user_votes"
+
 
 def main():
     reader = csv.DictReader(sys.stdin)
-    writer = csv.DictWriter(sys.stdout, reader.fieldnames)
-    writer.writerow(dict(zip(reader.fieldnames, reader.fieldnames)))
+    outnames = [f for f in reader.fieldnames if f != REMOVE_COLUMN]
+    writer = csv.DictWriter(sys.stdout, outnames)
+    writer.writeheader()
     for row in reader:
         try:
             if asbool(row[FILTER_COLUMN]):
                 row[FILTER_COLUMN] = 'Y'
+                if REMOVE_COLUMN in row:
+                    del row[REMOVE_COLUMN]
                 writer.writerow(row)
         except ValueError:
             pass

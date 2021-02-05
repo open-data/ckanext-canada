@@ -49,15 +49,17 @@ def get_filter_output():
                         # case: same position with new minister in choices, then add new minister to existing position
                         # and update end date as today for existing ministers
                         for minister in existing_choices[row]['ministers']:
-                            if minister['name'] != choices[row]['ministers'][0]['name']:
+                            if minister['name'] != choices[row]['ministers'][0]['name'] and not minister['end_date']:
                                 minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
                         else:
-                            existing_choices[row]['ministers'].insert(0, choices[row]['ministers'][0])
+                            if existing_choices[row]['ministers'][0] != choices[row]['ministers'][0]:
+                                existing_choices[row]['ministers'].insert(0, choices[row]['ministers'][0])
             else:
                 # case: position found in existing choices but now in choices,
                 # update end date as today for all ministers
                 for minister in existing_choices[row]['ministers']:
-                    minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                    if not minister['end_date']:
+                        minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
 
         for row in choices:
             if not [d for d in existing_choices if existing_choices[d]['en'] == choices[row]['en']]:
