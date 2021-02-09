@@ -570,7 +570,7 @@ class CanadaCommand(CkanCommand):
                             "date": today,
                             "comments": {
                                 u'en': u'This suggestion is transferred from ' + existing_org[0],
-                                u'fr': u'Cette suggestion est transférée de ' + existing_org[1]
+                                u'fr': u'Cette proposition a été transférée de la part de ' + existing_org[1]
                             }
                         }
                         record['status'].append(updated_status)
