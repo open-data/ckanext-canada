@@ -2159,7 +2159,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
   datastore_indexes: ""
 
   triggers:
-  - update_record_modified_created_trigger
+    - contracts_nil_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:
