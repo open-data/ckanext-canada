@@ -179,7 +179,7 @@ resources:
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
-    excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
+    excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     form_attrs:
       size: 60
