@@ -2119,7 +2119,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 - title: Proactive Disclosure - Contracts Nothing to Report
   resource_name: contracts-nil
   create_form: true
-  edit_form: true
+  edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: reporting_period
