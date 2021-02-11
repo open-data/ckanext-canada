@@ -70,12 +70,9 @@ field_info = requests.get(endpoint, timeout=100, verify=False).json()
 
 
 # Grab the primary key fields from the datatype reference endpoint
-if 'nil' in current_csv:
-    pk_fields = [f['primary_key'][0] for f in field_info['resources'] if 'nil' in f['resource_name']]
-    fields = [f['fields'] for f in field_info['resources'] if 'nil' in f['resource_name']]
-else:
-    pk_fields = [f['primary_key'][0] for f in field_info['resources'] if 'nil' not in f['resource_name']]
-    fields = [f['fields'] for f in field_info['resources'] if 'nil' not in f['resource_name']]
+current_csv_resource = current_csv.split('_')[-1].replace('.csv','')
+pk_fields = [f['primary_key'][0] for f in field_info['resources'] if current_csv_resource == f['resource_name']]
+fields = [f['fields'] for f in field_info['resources'] if current_csv_resource == f['resource_name']]
 fieldnames = get_fieldnames(fields[0]).split(",")
 
 pk_fields.append('owner_org')
