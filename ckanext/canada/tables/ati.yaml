@@ -134,6 +134,9 @@ resources:
     description:
       en: The number of pages released in response to the completed Access to Information request. If no records were released, enter a value of “0”.
       fr: Le nombre de pages publiées en réponse à la demande d’accès à l’information. Si aucun enregistrement n’a été publié, entrez la valeur « 0 ».
+    validation:
+      en: The number of pages released must not be negative
+      fr: Le nombre de pages publiées ne doit pas être négatif
     datastore_type: int
     form_required: true
     excel_required: true
@@ -218,6 +221,9 @@ resources:
         errors := errors || required_error(NEW.month, 'month');
         IF NEW.month < 1 OR NEW.month > 12 THEN
           errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
+        END IF;
+        IF NEW.pages < 0 THEN
+          errors := errors || ARRAY[['pages', 'The number of pages released must not be negative']];
         END IF;
         errors := errors || required_error(NEW.request_number, 'request_number');
         errors := errors || required_error(NEW.summary_en, 'summary_en');
@@ -373,12 +379,12 @@ resources:
 excel_edge_style:
   PatternFill:
     patternType: solid
-    fgColor: FF3f6c45
+    fgColor: FF7815bf
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FFeeece1
+    fgColor: FFbc83d8
 excel_column_heading_style:
   PatternFill:
     patternType: solid
-    fgColor: FFeeece1
+    fgColor: FFc3c1c3
