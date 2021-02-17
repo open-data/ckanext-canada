@@ -135,15 +135,15 @@ resources:
       en: The number of pages released in response to the completed Access to Information request. If no records were released, enter a value of “0”.
       fr: Le nombre de pages publiées en réponse à la demande d’accès à l’information. Si aucun enregistrement n’a été publié, entrez la valeur « 0 ».
     validation:
-      en: The number of pages released must not be negative
-      fr: Le nombre de pages publiées ne doit pas être négatif
+      en: This value must not be negative
+      fr: Cette valeur ne doit pas être négatif
     datastore_type: int
     form_required: true
     excel_required: true
     form_attrs:
       size: 10
     excel_column_width: 34
-    excel_error_formula: 'OR({default_formula},{cell}>=0)'
+    excel_error_formula: 'OR({default_formula},{cell}<=0)'
 
   - datastore_id: comments_en
     label:
@@ -224,7 +224,7 @@ resources:
           errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
         END IF;
         IF NEW.pages < 0 THEN
-          errors := errors || ARRAY[['pages', 'The number of pages released must not be negative']];
+          errors := errors || ARRAY[['pages', 'This value must not be negative']];
         END IF;
         errors := errors || required_error(NEW.request_number, 'request_number');
         errors := errors || required_error(NEW.summary_en, 'summary_en');
