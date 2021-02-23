@@ -160,6 +160,7 @@ dataset_fields:
     preset: select
     form_include_blank_choice: true
     form_snippet: ro_select_option_disable.html
+    disable_field_value: 'transferred'
     choices:
     - label:
         en: Data owner is evaluating the request

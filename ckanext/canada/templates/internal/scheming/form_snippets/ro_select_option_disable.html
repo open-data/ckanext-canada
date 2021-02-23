@@ -22,6 +22,11 @@
 {%- else -%}
   {%- set option_selected = None -%}
 {%- endif -%}
+{%- set attributes = dict({"class": "form-control"}, **(field.get('form_attrs', {}))) -%}
+{%- if field.disable_field_value == data[field.field_name] -%}
+	{%- do attributes.update({'disabled':'disabled'}) -%}
+{%- endif -%}
+
 
 {% call form.select(
     field.field_name,
@@ -31,7 +36,7 @@
     selected=option_selected,
     error=errors[field.field_name],
     classes=['control-medium'],
-    attrs=dict({"class": "form-control"}, **(field.get('form_attrs', {}))),
+    attrs=attributes,
     is_required=h.scheming_field_required(field)
     )
 %}

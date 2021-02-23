@@ -70,7 +70,7 @@ def user_read_only(key, data, errors, context):
 
     if hasattr(package, key[0]):
         data[key] = getattr(package, key[0])
-    else:
+    elif package:
         data[key] = package.extras.get(key[0], '')
 
 
