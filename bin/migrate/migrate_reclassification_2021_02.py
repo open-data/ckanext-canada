@@ -15,8 +15,17 @@ out_csv.writeheader()
 
 try:
     for line in in_csv:
-        if 'warehouse' not in sys.argv[1:]:
+        try:
+            line['old_class_level'] = '%02d' % int(line['old_class_level'])
+        except ValueError:
+            pass
+        try:
+            line['new_class_level'] = '%02d' % int(line['new_class_level'])
+        except ValueError:
+            pass
+        if 'warehouse' not in sys.argv[1:] and not line['user_modified']:
             line['user_modified'] = '*'  # special "we don't know" value
+
         out_csv.writerow(line)
 
 except KeyError:
