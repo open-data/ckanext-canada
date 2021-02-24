@@ -159,6 +159,8 @@ dataset_fields:
     required: true
     preset: select
     form_include_blank_choice: true
+    form_snippet: ro_select_option_disable.html
+    disable_field_value: 'transferred'
     choices:
     - label:
         en: Data owner is evaluating the request
@@ -180,6 +182,11 @@ dataset_fields:
         en: Data owner unable to publish dataset
         fr: Le propriétaire des données ne peut pas publier un ensemble de données
       value: unable
+    - label:
+        en: Request transferred to new data owner
+        fr: Cette demande a été transféré au nouveau propriétaire des données
+      value: transferred
+      attr: 'disabled'
 
   - field_name: comments
     label:
