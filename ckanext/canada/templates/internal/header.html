@@ -1,66 +1,122 @@
 {% ckan_extends %}
-{# set menu = h.url_for(controller='ckanext.canada.controller:CanadaController', action='registry_menu', __no_cache__='True') #}
-{# FIXME: This is a quick fix to get rid of WETs annoying behavior. #}
-{% set lang = h.lang() %}
 
+{% macro menu_link(r_type) %}
+{% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
+<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a></li>
+{% endmacro %}
 
 {% block sitesearch %}{% endblock %}
+{% block user_logged %}
+    {% if c.userobj %}
+    <div id="usr-logged" class="col-md-6">
+        <ul class="list-inline">
+            <li>
+                {{ _('Signed in as') }}
+                <a href="{{ h.url_for(controller='user', action='dashboard') }}" class="image" title="{{ _('View profile') }}">
+                    {% if h.gravatar_show() %}
+                    {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
+                    {% endif %}
+                    <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+            </li>
+            {% block header_account_log_out_link %}
+            <li>
+                <a href="{{ h.url_for(controller='user', action='logout') }}" title="{{ _('Log out') }}" class="btn btn-primary">
+                    <span class="fa fa-sign-out"></span>
+                    <span class="text">{{ _('Log out') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+        </ul>
+    </div>
+    {% else %}
+    <div id="usr-logged" class="col-md-6">
+        <ul class="list-inline">
+            {% block header_account_notlogged %}
+            <li>
+                <a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">
+                    <span class="fa fa-sign-in"></span>
+                    <span class="text">{{ _('Log in') }}</span>
+                </a>
+            </li>
+            {% endblock %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
+
 
 {% block sitemenu %}
-    <nav role="navigation" id="wb-sm" class="visible-md visible-lg" typeof="SiteNavigationElement">
-        <div class="container navbar">
-            <h2>Topics menu</h2>
-            <div class="row">
-                <ul class="list-inline menu">
-                    {% block header_site_navigation_tabs %}
-                <li role="presentation"><a role="menuitem"  href="{{ _('http://open.canada.ca') }}">{{ _('Open.Canada.ca') }}</a></li>
-                {% if h.check_access('package_create') %}
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ _('Add to Portal') }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}">{{ _('Open Data') }}</a></li>
-                        <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}">{{ _('Open Information') }}</a></li>
-                        {%- for r_type in [
-                          'ati',
-                          'contracts',
-                          'contractsa',
-                          'hospitalityq',
-                          'travelq',
-                          'travela',
-                          'grants',
-                          'reclassification',
-                          'wrongdoing',
-                          'briefingt',
-                          'consultations',
-                          'inventory',
-                          'dac',
-                          'nap',
-                          'experiment',
-                          'qpnotes',
-                          ] -%}
-                          {# XXX bit of a hack: we "know" that our dataset types have
-                             resource names with the same values #}
-                          <li class="dropdown-item"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type)
-                            }}">{{ _(h.recombinant_get_geno(r_type).title) }}</a></li>
-                        {%- endfor -%}
-                    </ul>
-                </li>
-                {% endif %}
-                <li role="presentation"><a href="{{ h.url_for(controller='package', action='search') }}">{{ _('Search') }}</a></li>
-                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
-                <li role="presentation"><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
-                {% if c.userobj %}
-                <li role="presentation"><a role="menuitem"  href="{{ h.url_for(controller='user', action='logout') }}">{{ _('Log out') }}</a></li>
-                {% else %}
-                <li role="presentation"><a role="menuitem"  href="{% url_for controller='user', action='login' %}">{{ _('Log in') }}</a></li>
-                {% endif %}
-            {% endblock %}
+<nav class="gcweb-menu wb-init gcweb-menu-inited" typeof="SiteNavigationElement" id="wb-auto-2">
+    <div class="container">
+        <h2 class="wb-inv">Menu</h2>
+        <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it.">
+            <span class="wb-inv">Main </span>Menu <i class="fa fa-chevron-down"></i></span>
+        </button>
+        <ul role="menu" aria-orientation="vertical">
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="/{{ h.lang() }}/">{{ _('Home') }}</a></li>
+            {% if h.check_access('package_create') %}
+            <li role="presentation"> <a id="mn-open-data" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-data" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Data') }}</a>
+                <ul id="open-data" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Data') }}</li>
+                    <li role="separator"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a></li>
+                    {{ menu_link('experiment') }}
+                    {{ menu_link('nap') }}
+                    {{ menu_link('inventory') }}
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation"></li>
                 </ul>
-            </div>
-        </div>
-        </div>
-    </nav>
+            </li>
+            <li role="presentation"> <a id="mn-open-info" role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Open Information') }}</a></li>
+            <li role="presentation"> <a id="mn-pd" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="pd" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Proactive Disclosure') }}</a>
+                <ul id="pd" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Proactive Disclosure') }}</li>
+                    <li role="separator"></li>
+                    {{ menu_link('wrongdoing') }}
+                    {{ menu_link('contractsa') }}
+                    {{ menu_link('ati') }}
+                    {{ menu_link('briefingt') }}
+                    {{ menu_link('contracts') }}
+                    {{ menu_link('dac') }}
+                    {{ menu_link('grants') }}
+                    {{ menu_link('hospitalityq') }}
+                    {{ menu_link('reclassification') }}
+                    {{ menu_link('qpnotes') }}
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a></li>
+                    {{ menu_link('travelq') }}
+                    {{ menu_link('travela') }}
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation">{{ _('Briefing packages') }}
+                        <ul id="brf-pkg" role="menu" aria-orientation="vertical">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition"><i class="fa fa-folder-open"></i>{{ _('New or incoming ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition_deputy"><i class="fa fa-folder-open"></i>{{ _('New or incoming deputy heads') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for ministers') }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for deputy heads') }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li role="presentation"> <a id="mn-sug-datasets" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment"></i>{{ _('Suggested Datasets') }}</a></li>
+            <li role="presentation"> <a id="mn-open-dialogue" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-dialogue" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Dialogue') }}</a>
+                <ul id="open-dialogue" role="menu" aria-orientation="vertical">
+                    <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Dialogue') }}</li>
+                    <li role="separator"></li>
+                    {{ menu_link('consultations') }}
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a></li>
+                    <li role="separator" aria-orientation="horizontal"></li>
+                    <li role="presentation"></li>
+                </ul>
+            </li>
+            <li role="presentation"> <a id="mn-search" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search') }}</a></li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='organization_index') }}">{{ _('Organizations') }}</a></li>
+            {% endif %}
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
+        </ul>
+    </div>
+</nav>
 {% endblock %}
+
 
 {% block breadcrumb %}
 {% if breadcrumb_content() | trim %}
@@ -79,13 +135,5 @@
 {% endblock %}
 
 {% block signed_on_off %}
-{%- if c.userobj -%}
-  <div class="container">
-      <div class="row">
-        {% block header_account_logged %}
           {% snippet 'snippets/user.html' %}
-        {% endblock %}
-      </div>
-  </div>
-{%- endif -%}
 {% endblock %}

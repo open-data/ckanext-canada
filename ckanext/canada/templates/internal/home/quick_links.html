@@ -1,22 +1,27 @@
 {% extends "page.html" %}
-{% block subtitle %}{{ _("Quick Links") }}{% endblock %}
+{% block subtitle %}{{ _("Open Government Registry") }}{% endblock %}
 
 {% block toolbar %}{% endblock %}
 
 {% macro quick_link(r_type) %}
-  <section>
-    {#- XXX bit of a hack: we "know" that our dataset types have
-       resource names with the same values #}
-    {%- set geno = h.recombinant_get_geno(r_type) -%}
-    <h2 class="h5"><a href="{{
-      h.url_for('recombinant_type', resource_name=r_type) }}">{{
-        _(geno.title) }}</a></h2>
-    <p>{{ h.render_markdown(h.recombinant_language_text(geno.notes)) }}</p>
-  </section>
+  {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
+  {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
+          <li>
+            <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
+            <a class="wb-lbx" href="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="{{ r_type }}" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _(label) }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ description }}
+              </div>
+            </section>
+          </li>
 {% endmacro %}
 
 {% block primary_content %}
-<div class="row">
+<div class="row" id="quick-links">
   <div class="col-md-12">
     <section>
       <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
@@ -25,53 +30,203 @@
   {% set orgs = h.organizations_available('read') %}
   {% if orgs %}
     <div class="col-md-6">
-      <section>
-        <h2 class="h5"><a href="{{ h.url_for('dataset_new') }}">{{ _('Open Data Records') }}</a></h2>
-        <p>{{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}</p>
+      <section id="ql-open-data">
+        <h2 class="h5">{{ _('Open Data') }}</h2>
+        <ul class="list-unstyled">
+          <li>
+            <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a>
+            <a class="wb-lbx" href="#new_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="new_od" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Create an Open Data Record') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}
+              </div>
+            </section>
+          </li>
+          {{ quick_link('experiment') }}
+          {{ quick_link('nap') }}
+          {{ quick_link('inventory') }}
+        </ul>
       </section>
-      <section>
-        <h2 class="h5"><a href="{{ h.url_for('info_new') }}">{{ _('Open Information Records') }}</a></h2>
-        <p>{{ _('Add information about government programs, activities and publications.') }}</p>
+      <section id="ql-open-info">
+        <h2 class="h5">{{ _('Open Information') }}</h2>
+        <ul class="list-unstyled">
+          <li>
+            <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create Information Asset') }}</a>
+            <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Create Information Asset') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add information about government programs, activities and publications.') }}
+              </div>
+            </section>
+          </li>
+        </ul>
       </section>
-      {{ quick_link('ati') }}
-      {{ quick_link('contracts') }}
-      {{ quick_link('contractsa') }}
-      {{ quick_link('hospitalityq') }}
-      {{ quick_link('travelq') }}
-      {{ quick_link('travela') }}
-      {{ quick_link('grants') }}
-      {{ quick_link('reclassification') }}
+      <section id="ql-sug-datasets">
+        <h2 class="h5">{{ _('Suggested Datasets') }}</h2>
+        <ul class="list-unstyled">
+          <li>
+            <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment"></i>{{ _('Update Status') }}</a>
+            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}
+              </div>
+            </section>
+          </li>
+        </ul>
+      </section>
+      <section id="ql-open-dialogue">
+        <h2 class="h5">{{ _('Open Dialogue') }}</h2>
+        <ul class="list-unstyled">
+          {{ quick_link('consultations') }}
+          <li>
+            <a href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a>
+            <a class="wb-lbx" href="#consultations_master"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="consultations_master" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Consultations master dataset') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Acces the the dataset that consolidates all the consultations reports submitted by federal institutions.') }}
+              </div>
+            </section>
+          </li>
+        </ul>
+      </section>
+      <section id="ql-search">
+        <h2 class="h5">{{ _('Search') }}</h2>
+        <ul class="list-unstyled">
+          <li>
+            <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search All Records') }}</a>
+            <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Search All Records') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Add all Open Data and Information records in the Registry.') }}
+              </div>
+            </section>
+          </li>
+          {% set org = orgs[0] %}
+          <li>
+            <a href="{{ h.url_for('dataset_search', organization=org.name) }}"><i class="fa fa-search"></i>{{ _('Search your Organization Records') }}</a>
+            <a class="wb-lbx" href="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="search_org" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Search your Organization Records') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Search all records in the Registry, for your Organization.') }}
+              </div>
+            </section>
+          </li>
+          <li>
+            <a href="{{ h.url_for('organization_members', id=org.name) }}"><i class="fa fa-users"></i>{{ _('View Members of your Organization') }}</a>
+            <a class="wb-lbx" href="#view_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="view_org" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('View Members of your Organization') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('View the list of members linked to your organization.') }}
+              </div>
+            </section>
+          </li>
+        </ul>
+      </section>
     </div>
     <div class="col-md-6">
-      {{ quick_link('wrongdoing') }}
-      {{ quick_link('briefingt') }}
-      {{ quick_link('qpnotes') }}
-      {{ quick_link('consultations') }}
-      {{ quick_link('inventory') }}
-      {{ quick_link('dac') }}
-      {{ quick_link('nap') }}
-      {{ quick_link('experiment') }}
-      {% set org = orgs[0] %}
-      <section>
-        <h2 class="h5"><a href="{{
-          h.url_for('organization_read', id=org.name) }}">{{
-            _('Search your Organization Records') }}</a></h2>
-        <p>{{ _('Search all records in the Registry, for your Organization.') }}</p>
+      <section id="ql-pd">
+        <h2 class="h5">{{ _('Proactive Disclosure') }}</h2>
+        <ul class="list-unstyled">
+          {{ quick_link('wrongdoing') }}
+          {{ quick_link('contractsa') }}
+          {{ quick_link('ati') }}
+          {{ quick_link('briefingt') }}
+          {{ quick_link('contracts') }}
+          {{ quick_link('dac') }}
+          {{ quick_link('grants') }}
+          {{ quick_link('hospitalityq') }}
+          {{ quick_link('reclassification') }}
+          {{ quick_link('qpnotes') }}
+            <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a>
+            <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title">{{ _('Reports Tabled in Parliament') }}</h2>
+              </header>
+              <div class="modal-body">
+                {{ _('Access, add or modify your reports tabled in Parliament.') }}
+              </div>
+            </section>
+          </li>
+          {{ quick_link('travelq') }}
+          {{ quick_link('travela') }}
+          <li>
+            <i class="fa fa-folder-open"></i>{{ _('Briefing packages') }}
+            <ul class="small" style="list-style-type: disc">
+              <li>
+                <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a>
+                <a class="wb-lbx" href="#new_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="new_min" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('New or incoming ministers') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing package information for your new or incoming minister.') }}
+                  </div>
+                </section>
+              </li>
+              <li>
+                <a href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a>
+                <a class="wb-lbx" href="#min_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="min_dep" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('New or incoming deputy heads') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing package information for your new or incoming deputy head.') }}
+                  </div>
+                </section>
+              </li>
+              <li>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a>
+                <a class="wb-lbx" href="#par_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="par_min" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for ministers') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.') }}
+                  </div>
+                </section>
+              </li>
+              <li>
+                <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a>
+                <a class="wb-lbx" href="#par_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <section id="par_dep" class="mfp-hide modal-dialog modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for deputy heads') }}</h2>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.') }}
+                  </div>
+                </section>
+              </li>
+            </ul>
+          <li>
+        </ul>
       </section>
-      <section>
-        <h2 class="h5"><a href="{{ h.url_for('dataset_search') }}">{{
-          _('Search All Records') }}</a></h2>
-        <p>{{ _('Add all Open Data and Information records in the Registry.') }}</p>
-      </section>
-      <section>
-        <h2 class="h5"><a href="{{
-            h.url_for('organization_members', id=org.name) }}">{{ _('View Members of your Organization') }}</a></h2>
-        <p>{{ _('View the list of members linked to your organization.') }}</p>
-      </section>
-      {#<section>
-        <h2 class="h5"><a href="#">{{ _('View Reports') }}</a></h2>
-        <p>{{ _('View and download the organizational reports.') }}</p>
-      </section>#}
     </div>
   {% endif %}
 </div>

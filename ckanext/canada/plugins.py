@@ -69,11 +69,6 @@ class DataGCCAInternal(p.SingletonPlugin):
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
-            '/menu',
-            action='registry_menu',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
             '/user/logged_in',
             action='logged_in',
             controller='ckanext.canada.controller:CanadaUserController'
@@ -109,6 +104,11 @@ class DataGCCAInternal(p.SingletonPlugin):
             action='publish',
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
+        )
+        map.connect(
+            '/dataset/edit/{id}',
+            action='edit',
+            controller='ckanext.canada.controller:CanadaDatasetController'
         )
         map.connect(
             '/dataset/{id}/resource_edit/{resource_id}',
@@ -167,6 +167,8 @@ class DataGCCAInternal(p.SingletonPlugin):
             'is_ready_to_publish',
             'get_datapreview_recombinant',
             'recombinant_description_to_markup',
+            'mail_to_with_params',
+            'get_timeout_length',
         ])
 
     def configure(self, config):
@@ -180,6 +182,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             except ValidationError as e:
                 # reformat tab-delimited error as dict
                 head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                rerr = rerr.rstrip('\n')
                 if head == 'TAB-DELIMITED' and sep:
                     out = {}
                     it = iter(rerr.split('\t'))
@@ -234,6 +237,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation)
+    # p.implements(p.IMiddleware, inherit=True)
 
     def i18n_domain(self):
         return 'ckanext-canada'
@@ -272,6 +276,7 @@ ckanext.canada:schemas/presets.yaml
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
+ckanext.canada:schemas/prop.yaml
 """
 
         # Enable our custom DCAT profile.
@@ -311,6 +316,7 @@ ckanext.canada:schemas/info.yaml
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
+            'status': _('Suggestion Status'),
             })
 
         return facets_dict
@@ -331,6 +337,7 @@ ckanext.canada:schemas/info.yaml
             'get_license',
             'normalize_strip_accents',
             'portal_url',
+            'adv_search_url',
             'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
@@ -357,7 +364,9 @@ ckanext.canada:schemas/info.yaml
             'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
-            'adobe_analytics_js'
+            'adobe_analytics_js',
+            'survey_js_url',
+            'mail_to_with_params',
         ])
 
 
@@ -397,6 +406,13 @@ ckanext.canada:schemas/info.yaml
             action='server_error',
             controller='ckanext.canada.controller:CanadaController'
         )
+        map.connect(
+            '/api{ver:/3|}/action/{logic_function}',
+            ver='/3',
+            action='action',
+            controller='ckanext.canada.controller:CanadaApiController',
+            conditions={'method':['GET', 'POST']},
+        )
         return map
 
     def get_actions(self):
@@ -404,6 +420,11 @@ ckanext.canada:schemas/info.yaml
 
     def get_auth_functions(self):
         return {'inventory_votes_show': auth.inventory_votes_show}
+
+    # IMiddleware
+
+    def make_middleware(self, app, config):
+        return LogExtraMiddleware(app, config)
 
 
 
@@ -458,7 +479,39 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_non_related_required,
             'if_empty_set_to':
                 validators.if_empty_set_to,
+            'user_read_only':
+                validators.user_read_only,
+            'user_read_only_json':
+                validators.user_read_only_json,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
+            'no_future_date':
+                validators.no_future_date,
             }
+
+
+class LogExtraMiddleware(object):
+    def __init__(self, app, config):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        def _start_response(status, response_headers, exc_info=None):
+            extra = []
+            if c.package:
+                assert 0
+            if c.user:
+                extra = [(
+                    'X-LogExtra', u'user={uid} {extra}'.format(
+                        uid=c.user,
+                        extra=c.log_extra or u'').encode('utf-8')
+                    )
+                ]
+            return start_response(
+                status,
+                response_headers + extra,
+                exc_info)
+
+        return self.app(environ, _start_response)
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
@@ -551,6 +604,11 @@ class DataGCCAPackageController(p.SingletonPlugin):
         titles = json.loads(data_dict.get('title_translated', '{}'))
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
+
+        if data_dict['type'] == 'prop':
+            status = data_dict.get('status')
+            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
+
         return data_dict
 
     def before_view(self, pkg_dict):
@@ -726,6 +784,8 @@ ckanext.canada:schemas/doc.yaml
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
+            'survey_js_url',
+            'mail_to_with_params',
             ]),
             )
 

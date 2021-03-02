@@ -365,18 +365,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -525,18 +528,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -559,6 +565,9 @@ resources:
           errors := errors || required_error(NEW.year, 'year');
           errors := errors || required_error(NEW.month, 'month');
           errors := errors || choice_error(NEW.month, {month}, 'month');
+          IF NEW.year > date_part('year', CURRENT_DATE) THEN
+            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          END IF;
           IF errors = '{{}}' THEN
             RETURN NEW;
           END IF;

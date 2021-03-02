@@ -34,9 +34,8 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: YYYY
-    datastore_type: int
-    choices_file: choices/year.yaml
+    datastore_type: year
+    excel_error_formula: '{cell}>YEAR(TODAY())'
 
   # 2.
   - datastore_id: contract_goods_number_of
@@ -296,18 +295,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -320,26 +322,29 @@ resources:
   triggers:
   - contractsa_trigger: |
       DECLARE
-      errors text[][] := '{{}}';
-      crval RECORD;
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-      errors := errors || required_error(NEW.year, 'year');
-      errors := errors || required_error(NEW.contract_goods_number_of, 'contract_goods_number_of');
-      errors := errors || required_error(NEW.contracts_goods_original_value, 'contracts_goods_original_value');
-      errors := errors || required_error(NEW.contracts_goods_amendment_value, 'contracts_goods_amendment_value');
-      errors := errors || required_error(NEW.contract_service_number_of, 'contract_service_number_of');
-      errors := errors || required_error(NEW.contracts_service_original_value, 'contracts_service_original_value');
-      errors := errors || required_error(NEW.contracts_service_amendment_value, 'contracts_service_amendment_value');
-      errors := errors || required_error(NEW.contract_construction_number_of, 'contract_construction_number_of');
-      errors := errors || required_error(NEW.contracts_construction_original_value, 'contracts_construction_original_value');
-      errors := errors || required_error(NEW.contracts_construction_amendment_value, 'contracts_construction_amendment_value');
-      errors := errors || required_error(NEW.acquisition_card_transactions_number_of, 'acquisition_card_transactions_number_of');
-      errors := errors || required_error(NEW.acquisition_card_transactions_total_value, 'acquisition_card_transactions_total_value');
+        errors := errors || required_error(NEW.year, 'year');
+        errors := errors || required_error(NEW.contract_goods_number_of, 'contract_goods_number_of');
+        errors := errors || required_error(NEW.contracts_goods_original_value, 'contracts_goods_original_value');
+        errors := errors || required_error(NEW.contracts_goods_amendment_value, 'contracts_goods_amendment_value');
+        errors := errors || required_error(NEW.contract_service_number_of, 'contract_service_number_of');
+        errors := errors || required_error(NEW.contracts_service_original_value, 'contracts_service_original_value');
+        errors := errors || required_error(NEW.contracts_service_amendment_value, 'contracts_service_amendment_value');
+        errors := errors || required_error(NEW.contract_construction_number_of, 'contract_construction_number_of');
+        errors := errors || required_error(NEW.contracts_construction_original_value, 'contracts_construction_original_value');
+        errors := errors || required_error(NEW.contracts_construction_amendment_value, 'contracts_construction_amendment_value');
+        errors := errors || required_error(NEW.acquisition_card_transactions_number_of, 'acquisition_card_transactions_number_of');
+        errors := errors || required_error(NEW.acquisition_card_transactions_total_value, 'acquisition_card_transactions_total_value');
+        IF NEW.year > date_part('year', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+        END IF;
 
-      IF errors = '{{}}' THEN
-      RETURN NEW;
-      END IF;
-      RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 

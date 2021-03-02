@@ -3,7 +3,7 @@
 <ul class='list-inline'>
   {%- for choice in field.choices -%}
     {%- if choice.value in values -%}
-      <li class="label label-default mrgn-rght-sm"> {{ h.scheming_language_text(choice.label) }}</li>
+      <li class="label label-default mrgn-rght-sm resource-tags"> {{ h.scheming_language_text(choice.label) }}</li>
     {%- endif -%}
   {%- endfor -%}
 </ul>

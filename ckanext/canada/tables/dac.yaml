@@ -1,9 +1,7 @@
 dataset_type: dac
 target_dataset: dac
 title: Proactive Disclosure - Departmental Audit Committee
-notes:
-  en: "Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses."
-  fr: "Accès, téléversement et modification de la rémunération et des dépenses des membres de votre Comité ministériel d’audit."
+notes: Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses.
 
 template_version: 3
 
@@ -248,18 +246,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -271,19 +272,25 @@ resources:
 
   triggers:
   - dac_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
       BEGIN
-        PERFORM not_empty(NEW.reporting_period, 'reporting_period');
-        PERFORM choice_one_of(NEW.reporting_period, {reporting_period}, 'reporting_period');
-        PERFORM not_empty(NEW.line_number, 'line_number');
-        PERFORM not_empty(NEW.member_name, 'member_name');
-        PERFORM not_empty(NEW.province, 'province');
-        PERFORM choice_one_of(NEW.province, {province}, 'province');
-        PERFORM not_empty(NEW.meeting_hours, 'meeting_hours');
-        PERFORM not_empty(NEW.other_hours, 'other_hours');
-        PERFORM not_empty(NEW.remuneration, 'remuneration');
-        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
-        PERFORM not_empty(NEW.travel_expenses, 'travel_expenses');
-        RETURN NEW;
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || required_error(NEW.line_number, 'line_number');
+        errors := errors || required_error(NEW.member_name, 'member_name');
+        errors := errors || required_error(NEW.province, 'province');
+        errors := errors || choice_error(NEW.province, {province}, 'province');
+        errors := errors || required_error(NEW.meeting_hours, 'meeting_hours');
+        errors := errors || required_error(NEW.other_hours, 'other_hours');
+        errors := errors || required_error(NEW.remuneration, 'remuneration');
+        errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
+        errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
