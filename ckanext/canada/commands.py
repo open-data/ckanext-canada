@@ -491,7 +491,6 @@ class CanadaCommand(CkanCommand):
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
-
     def resource_size_update(self, size_report):
         registry = LocalCKAN()
         size_report = open(size_report, "r")
@@ -739,4 +738,3 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
-            

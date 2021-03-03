@@ -237,6 +237,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
+    # p.implements(p.IMiddleware, inherit=True)
 
     def i18n_domain(self):
         return 'ckanext-canada'

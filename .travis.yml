@@ -1,13 +1,9 @@
 dist: trusty
-
+group: deprecated-2017Q4
 language: python
 sudo: required
 python:
   - "2.7"
-services:
-  - postgresql
-addons:
-  postgresql: "9.5"
 env:
   global:
     - CKAN_POSTGRES_DB=ckan_test

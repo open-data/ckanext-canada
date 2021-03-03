@@ -1,9 +1,7 @@
 dataset_type: dac
 target_dataset: dac
 title: Proactive Disclosure - Departmental Audit Committee
-notes:
-  en: "Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses."
-  fr: "Accès, téléversement et modification de la rémunération et des dépenses des membres de votre Comité ministériel d’audit."
+notes: Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses.
 
 template_version: 3
 
@@ -248,18 +246,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
