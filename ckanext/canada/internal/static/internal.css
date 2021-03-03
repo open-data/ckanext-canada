@@ -601,3 +601,11 @@ ul#brf-pkg { padding-left: 0; }
         margin-top: -57px;
     }
 }
+
+.table-striped tbody tr:nth-child(even) td, .table-striped tbody tr:nth-child(even) th {
+    background-color: #fff;
+}
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: relative;
+    margin-left: 0;
+}
