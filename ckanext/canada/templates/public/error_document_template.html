@@ -2,28 +2,13 @@
 
 {% block page_heading %}
   {% block subtitle %}
-    {{ _("Open Government Registry") }}
+    {% if code[0] == '404' %}
+      {{ _('We couldn\'t find that Web page') }}
+    {% else %}
+      {{ _('We encountered an error') }}
+    {% endif %}
   {% endblock %}
 {% endblock %}
 
 {% block primary %}
-  <div class="row">
-    <div class="col-md-12">
-      {% if code[0] == '403' %}
-        <p class="mrgn-tp-lg">{{ _('Access denied') }}</p>
-        {% if not c.userobj %}
-        <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry. Click on the log in button below to log in.') }}</p>
-        <p><a href="{% url_for controller='user', action='login' %}" class="btn btn-primary">
-              <span class="fa fa-sign-in"></span><span class="text">{{ _('Log in') }}</span>
-            </a></p>
-        {% endif %}
-      {% elif code[0] == '404' %}
-        <p class="mrgn-tp-lg">{{ _('We couldn\'t find that Web page') }}</p>
-      {% elif code[0] == '500' %}
-        <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.') | safe }}</p>
-      {% else %}
-        <p class="mrgn-tp-lg">{{ _('We encountered an error') }}</p>
-      {% endif %}
-    </div>
-  </div>
 {% endblock %}
