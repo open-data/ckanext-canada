@@ -3375,6 +3375,8 @@ presets:
       mimetype: text/rtf
       replaces: [rtf]
     - value: SAR
+    - value: SAS
+      mimetype: application/x-sas
     - value: SAV
     - value: SEGY
       replaces: [segy]

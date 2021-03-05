@@ -945,10 +945,13 @@ class PDUpdateController(BaseController):
                     records=[{k: None if k in err else v for (k, v) in data.items()}],
                     dry_run=bool(err))
             except ValidationError as ve:
-                err = dict({
-                    k: [_(e) for e in v]
-                    for (k, v) in ve.error_dict['records'][0].items()
-                }, **err)
+                try:
+                    err = dict({
+                        k: [_(e) for e in v]
+                        for (k, v) in ve.error_dict['records'][0].items()
+                    }, **err)
+                except AttributeError as e:
+                    raise ve
 
             if err:
                 return render('recombinant/update_pd_record.html',
