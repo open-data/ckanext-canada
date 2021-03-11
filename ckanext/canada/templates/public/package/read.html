@@ -51,15 +51,6 @@
 
     {% block package_item_title %}
     <section class="module-content indent-large">
-      {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
-      <h1>{{ title or pkg.name }}
-        {% if pkg.state.startswith('draft') %}
-          [{{ _('Draft') }}]
-        {% endif %}
-        {% if machine_translated %}
-          <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
-        {% endif %}
-      </h1>
       <div id="resource-desc">
         {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
         {% if machine_translated %}
