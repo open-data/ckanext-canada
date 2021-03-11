@@ -253,13 +253,13 @@
 {% endblock primary_content_inner %}
 
 {% block scripts %}
-{{ super() }}
 <!--[if gte IE 9 | !IE ]><!-->
 <script src="{{ h.url_for_static('/static/js/geomapzoom.js') }}" type="text/javascript"></script>
 <!--<![endif]--><!--[if lt IE 9]>
 <script src="{{ h.url_for_static('/static/js/geomapzoom.js') }}"></script>
 <![endif]-->
 <script src="{{ h.url_for_static('/static/js/more_like_this.js') }}"></script>
+{{ super() }}
 {% endblock %}
 
 {% block package_license %}{% endblock %}
