@@ -223,3 +223,21 @@ button.dt-button, div.dt-button, a.dt-button {
 .panel.panel-primary .panel-heading { background: #335075; }
 .panel.panel-primary .panel-heading a { color: #fff }
 .panel-primary { overflow-wrap: break-word; }
+
+.page-header .content_action {
+    margin-top: 3px;
+}
+.page-header.module-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.label.lb-open-data { float:right; border-color: #088; background: #fff }
+.label.lb-sug-datasets { float:right; border-color: #f80; background: #fff }
+.label.lb-open-dialogue { float:right; border-color: #f08; background: #fff }
+.label.lb-open-info { float:right; border-color: #80f; background: #fff }
+.label.lb-pd { float:right; border-color: #44f; background: #fff }
+
+a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-submit  {
+    width: auto;
+    top: auto;
+}
