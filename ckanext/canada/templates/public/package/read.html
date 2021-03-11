@@ -22,20 +22,7 @@
     {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
   {% endif %}
   <div class="module">
-    <section class="resources module-content indent-large">
-      {% if pkg.portal_release_date %}
-        <a href="{{ h.portal_url() }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
-           title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
-            <span class="fa fa-arrow-circle-right"></span>
-            <span class="text">{{ _('View on Portal') }}</span>
-        </a>
-      {% endif %}
-      {% if pkg.state == "deleted" %}
-      <div class="module-alert alert alert-danger">
-        <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
-      </div>
-      {% endif %}
-    </section>
+    {% block internal_actions %}{% endblock %}
 
     {% block package_archive_notice %}
     {% if c.is_activity_archive %}
