@@ -89,11 +89,11 @@
 
 
 {% block scripts %}
-  {{ super() }}
   {% snippet 'snippets/wet-boew/footerresources.html' %}
   <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
   {% block adobe_analytics_footer %}
     <script type="text/javascript">_satellite.pageBottom();</script>
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
+  {{ super() }}
 {% endblock %}

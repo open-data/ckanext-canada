@@ -1,6 +1,21 @@
 {% ckan_extends %}
 
-{% block package_comments %}{% endblock %}
+{% block internal_actions %}
+  <section class="resources module-content indent-large">
+    {% if pkg.portal_release_date %}
+      <a href="{{ h.portal_url() }}/data/{{ client_lang }}/dataset/{{ pkg.name }}"
+         title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+          <span class="fa fa-arrow-circle-right"></span>
+          <span class="text">{{ _('View on Portal') }}</span>
+      </a>
+    {% endif %}
+    {% if pkg.state == "deleted" %}
+    <div class="module-alert alert alert-danger">
+      <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
+    </div>
+    {% endif %}
+  </section>
+{% endblock internal_actions %}
 
 {% block openness %}
 <li class="list-group-item"><a
@@ -19,3 +34,5 @@
         class="image-actual margin-bottom-none openness-rating-stars" />
 </li>
 {% endblock %}
+
+{% block more_like_this %}{% endblock %}

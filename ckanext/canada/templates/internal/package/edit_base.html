@@ -8,6 +8,6 @@
 {% endblock %}
 
 {% block scripts %}
-  {{ super() }}
   <script type="text/javascript" src="{{ h.url_for_static('/registry_package_edit.js') }}" ></script>
+  {{ super() }}
 {% endblock %}
