@@ -219,6 +219,10 @@ button.dt-button, div.dt-button, a.dt-button {
     word-wrap: break-word;
 }
 
+#resources_nav {
+    font-size: initial;
+}
+
 .panel.panel-primary, .panel.panel-primary .panel-heading { border-color: #335075; }
 .panel.panel-primary .panel-heading { background: #335075; }
 .panel.panel-primary .panel-heading a { color: #fff }
