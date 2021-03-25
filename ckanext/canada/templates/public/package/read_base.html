@@ -11,6 +11,15 @@ Remove the markdown_extract call because our notes is a dict not a string:
 <meta property="og:title" content="{{ h.dataset_display_name(pkg) }} - {{ g.site_title }}">
 {% endblock %}
 
+{%- block adobe_analytics_creator -%}
+  {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
+  <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat') }}"
+  {%- if 'org_section' in pkg and h.scheming_language_text(pkg.org_section) %}
+    data-gc-analytics-owner="{{ owner_org_title }}|{{ h.scheming_language_text(pkg.org_section) }}|N/A|N/A"
+  {%- else %}
+    data-gc-analytics-owner="{{ owner_org_title }}|N/A|N/A|N/A"
+  {%- endif -%}/>
+{%- endblock -%}
 
 {% block page_header %}{% endblock %}
 
