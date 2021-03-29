@@ -11,6 +11,8 @@ from pylons import config
 import functools
 
 from ckanext.canada.wcms import inventory_votes
+from sqlalchemy import func
+from sqlalchemy import or_
 
 
 def limit_api_logic():
@@ -70,11 +72,11 @@ def limit_api_logic():
 
 @side_effect_free
 def changed_packages_activity_list_since(context, data_dict):
-    '''Return the activity stream of all recently added or changed packages.
+    '''Return the package_id and timestamp of all recently added or changed packages.
 
     :param since_time: starting date/time
 
-    Limited to 31 records (configurable via the
+    Limited to 63 records (configurable via the
     ckan.activity_list_hard_limit setting) but may be called repeatedly
     with the timestamp of the last record to collect all activities.
 
@@ -90,9 +92,8 @@ def changed_packages_activity_list_since(context, data_dict):
     # hard limit this api to reduce opportunity for abuse
     limit = int(config.get('ckan.activity_list_hard_limit', 63))
 
-    activity_objects = _changed_packages_activity_list_since(
-        since_time, limit)
-    return model_dictize.activity_list_dictize(activity_objects, context)
+    return _changed_packages_activity_list_since(since_time, limit)
+
 
 @side_effect_free
 def activity_list_from_user_since(context, data_dict):
@@ -103,9 +104,9 @@ def activity_list_from_user_since(context, data_dict):
     Limited to 31 records (configurable via the
     ckan.activity_list_hard_limit setting) but may be called repeatedly
     with the timestamp of the last record to collect all activities.
-       
+
     :param user_id:  the user of the requested activity list
-    
+
     :rtype: list of dictionaries
     '''
 
@@ -123,18 +124,26 @@ def activity_list_from_user_since(context, data_dict):
         since_time, limit,user_id)
     return model_dictize.activity_list_dictize(activity_objects, context)
 
-def _changed_packages_activity_list_since(since, limit):
-    '''Return the site-wide stream of changed package activities since a given
-    date.
 
-    This activity stream includes recent 'new package', 'changed package' and
-    'deleted package' activities for the whole site.
+def _changed_packages_activity_list_since(since, limit):
+    '''Return package_ids and last activity date of changed package
+    activities since a given date.
+
+    This activity stream includes recent 'new package', 'changed package',
+    'deleted package', 'new resource view', 'changed resource view' and
+    'deleted resource view' activities for the whole site.
 
     '''
-    q = model.activity._changed_packages_activity_query()
-    q = q.order_by(model.Activity.timestamp)
+    q = model.Session.query(model.Activity.object_id.label('object_id'),
+                            func.max(model.Activity.timestamp).label(
+                                'timestamp'))
+    q = q.filter(or_(model.Activity.activity_type.endswith('package'),
+                     model.Activity.activity_type.endswith('package')))
     q = q.filter(model.Activity.timestamp > since)
+    q = q.group_by(model.Activity.object_id)
+    q = q.order_by('timestamp')
     return q.limit(limit)
+
 
 def _activities_from_user_list_since(since, limit,user_id):
     '''Return the site-wide stream of changed package activities since a given
@@ -144,7 +153,7 @@ def _activities_from_user_list_since(since, limit,user_id):
     'deleted package' activities for that user.
 
     '''
-    
+
     q = model.activity._activities_from_user_query(user_id)
     q = q.order_by(model.Activity.timestamp)
     q = q.filter(model.Activity.timestamp > since)

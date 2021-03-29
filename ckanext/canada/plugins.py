@@ -687,7 +687,7 @@ def datastore_delete(up_func, context, data_dict):
         act.datastore_activity_create(context,
                                       {'count': res.get('total', 0),
                                        'activity_type': 'deleted datastore',
-                                       'resource_id': data_dict['resource_id']}
+                                       'resource_id': res_id}
                                       )
     return result
 

@@ -61,6 +61,7 @@ class CanadaCommand(CkanCommand):
         paster canada portal-update <portal.ini>
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-p <num>] [-m]
+                                    [-u <user>]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
                       copy-datasets [-m] [-o <source url>]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
@@ -334,32 +335,37 @@ class CanadaCommand(CkanCommand):
         data = registry.action.changed_packages_activity_list_since(
             since_time=since_time.isoformat())
 
-        if not data:
+        if data.count() == 0:
             return None, None
 
         packages = []
         for result in data:
-            package_id = result['data']['package']['id']
-            try:
-                source_package = registry.action.package_show(id=package_id)
-                for source_resource in source_package['resources']:
-                    # check if resource exists in datastore
-                    source_table = registry.call_action('datastore_search',
-                                                        {'id': source_resource['id'], 'limit': 0})
-                    if source_table:
-                        # add hash, views and data dictionary for each resource of the source package
-                        source_package[source_resource['id']] = {
-                            "hash": source_resource.get('hash'),
-                            "views": registry.call_action('resource_view_list', {'id': source_resource['id']}),
-                            "data_dict": datastore_dictionary(source_resource['id']),
-                        }
+            package_id = result.object_id
+            source_package = registry.action.package_show(id=package_id)
+            for source_resource in source_package['resources']:
+                # check if resource exists in datastore
+                if source_resource['datastore_active']:
+                    try:
+                        source_table = registry.call_action('datastore_search',
+                                                            {'id': source_resource['id'], 'limit': 0})
+                        if source_table:
+                            # add hash, views and data dictionary
+                            source_package[source_resource['id']] = {
+                                "hash": source_resource.get('hash'),
+                                "views": registry.call_action('resource_view_list',{'id': source_resource['id']}),
+                                "data_dict": datastore_dictionary(source_resource['id']),
+                            }
+                    except NotFound:
+                        pass
+                else:
+                    source_resource_views = registry.call_action('resource_view_list', {'id': source_resource['id']})
+                    if source_resource_views:
+                        source_package[source_resource['id']] = {"views": source_resource_views}
 
-                packages.append(json.dumps(source_package))
-            except NotFound:
-                pass
+            packages.append(json.dumps(source_package))
 
-        if data:
-            since_time = isodate(data[-1]['timestamp'], None)
+        if data.count():
+            since_time = isodate(data[-1].timestamp, None)
 
         return packages, since_time
 
@@ -374,7 +380,6 @@ class CanadaCommand(CkanCommand):
         portal = LocalCKAN(username = user)
 
         source_ds = self.options.src_ds_url
-
         now = datetime.now()
 
         packages = iter(sys.stdin.readline, '')
@@ -408,6 +413,7 @@ class CanadaCommand(CkanCommand):
                     # portal packages published public
                     source_pkg['private'] = False
 
+            target_pkg = None
             if action != 'skip':
                 try:
                     target_pkg = portal.call_action('package_show', {
@@ -430,6 +436,7 @@ class CanadaCommand(CkanCommand):
 
                 _trim_package(target_pkg)
 
+            target_hash = {}
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
@@ -442,24 +449,20 @@ class CanadaCommand(CkanCommand):
             elif target_pkg is None:
                 action = 'created'
                 portal.action.package_create(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif source_pkg is None:
                 action = 'deleted'
                 portal.action.package_delete(id=package_id)
+                # remove datastore and views
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
             else:
                 action = 'updated'
-                target_hash = {}
                 for r in target_pkg['resources']:
                     target_hash[r['id']] = r.get('hash')
                 portal.action.package_update(**source_pkg)
-                # create datastore table and views for each resource
-                for src_res in source_pkg['resources']:
-                    res_id = src_res['id']
-                    if res_id in source_pkg.keys():
-                        action = action + ' ' + _add_to_datastore(portal, src_res, source_pkg[res_id], target_hash, source_ds)
-                        action = action + ' ' + _add_views(portal, src_res, source_pkg[res_id])
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -683,15 +686,28 @@ def _trim_package(pkg):
             pkg[k] = ''
 
 
+def _add_datastore_and_views(package, portal, res_hash, ds):
+    # create datastore table and views for each resource of the package
+    action = ''
+    for resource in package['resources']:
+        res_id = resource['id']
+        if res_id in package.keys():
+            if 'data_dict' in package[res_id].keys():
+                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds)
+            if 'views' in package[res_id].keys():
+                action += _add_views(portal, resource, package[res_id])
+    return action
+
+
 def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url):
     action = ''
     try:
-        ds = portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
+        portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
         if t_hash.get(resource['id']) and t_hash.get(resource['id']) == resource.get('hash'):
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
-            action += resource['id'] + ' datastore-deleted '
+            action += '\n  datastore-deleted for ' + resource['id']
     except NotFound:
         # not an issue, resource does not exist in datastore
         pass
@@ -701,7 +717,7 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url)
                         "fields": resource_details['data_dict'],
                         "force": True})
 
-    action += resource['id'] + ' datastore-created'
+    action += '\n  datastore-created for ' + resource['id']
 
     # load data
     target_ds_url = str(datastore.get_write_engine().url)
@@ -716,15 +732,18 @@ def _add_views(portal, resource, resource_details):
     action = ''
     target_views = portal.call_action('resource_view_list', {'id': resource['id']})
     for src_view in resource_details['views']:
-
         view_action = 'resource_view_create'
         for target_view in target_views:
             if target_view['id'] == src_view['id']:
                 view_action = None if target_view == src_view else 'resource_view_update'
 
         if view_action:
-            portal.call_action(view_action, src_view)
-            action = action + view_action + ' ' + src_view['id']
+            try:
+                portal.call_action(view_action, src_view)
+                action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+            except ValidationError as e:
+                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
+                pass
 
     return action
 
