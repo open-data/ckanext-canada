@@ -445,14 +445,15 @@ class CanadaCommand(CkanCommand):
                 action = 'updated'
                 reason = 'undeleting on target'
                 portal.action.package_update(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif target_pkg is None:
                 action = 'created'
                 portal.action.package_create(**source_pkg)
                 action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif source_pkg is None:
                 action = 'deleted'
+                action += _delete_datastore_and_views(target_pkg, portal)
                 portal.action.package_delete(id=package_id)
-                # remove datastore and views
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
@@ -695,6 +696,24 @@ def _add_datastore_and_views(package, portal, res_hash, ds):
                 action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds)
             if 'views' in package[res_id].keys():
                 action += _add_views(portal, resource, package[res_id])
+    return action
+
+
+def _delete_datastore_and_views(package, portal):
+    # remove datastore table and views for each resource of the package
+    action = ''
+    for resource in package['resources']:
+        res_id = resource['id']
+        try:
+            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+            action += '\n  datastore-deleted for ' + resource['id']
+        except NotFound:
+            action += '\n  failed to delete datastore for ' + resource['id']
+        try:
+            portal.call_action('resource_view_clear', {"id": resource['id'], "force": True})
+            action += '\n  views-deleted for ' + resource['id']
+        except NotFound:
+            action += '\n  failed to delete all views for ' + resource['id']
     return action
 
 

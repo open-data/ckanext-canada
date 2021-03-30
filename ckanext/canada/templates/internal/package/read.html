@@ -10,8 +10,11 @@
       </a>
     {% endif %}
     {% if pkg.state == "deleted" %}
-    <div class="module-alert alert alert-danger">
+    <div class="module-alert alert alert-danger mrgn-tp-sm">
       <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
+      {% if h.check_access('package_update', {'id': pkg.id}) %}
+        {% link_for _('Undelete'), controller='ckanext.canada.controller:CanadaController', action='package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
+      {% endif %}
     </div>
     {% endif %}
   </section>
