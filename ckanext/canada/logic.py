@@ -69,14 +69,13 @@ def limit_api_logic():
     return out
 
 
-
 @side_effect_free
-def changed_packages_activity_list_since(context, data_dict):
+def changed_packages_activity_timestamp_since(context, data_dict):
     '''Return the package_id and timestamp of all recently added or changed packages.
 
     :param since_time: starting date/time
 
-    Limited to 63 records (configurable via the
+    Limited to 10,000 records (configurable via the
     ckan.activity_list_hard_limit setting) but may be called repeatedly
     with the timestamp of the last record to collect all activities.
 
@@ -90,9 +89,14 @@ def changed_packages_activity_list_since(context, data_dict):
         raise ValidationError({'since_time':e.error})
 
     # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_list_hard_limit', 63))
+    limit = int(config.get('ckan.activity_list_hard_limit', 10000))
 
-    return _changed_packages_activity_list_since(since_time, limit)
+    package_timestamp_list = []
+    for row in _changed_packages_activity_timestamp_since(since_time, limit):
+        package_timestamp_list.append({
+            'package_id': row.object_id,
+            'timestamp': row.timestamp})
+    return package_timestamp_list
 
 
 @side_effect_free
@@ -125,7 +129,7 @@ def activity_list_from_user_since(context, data_dict):
     return model_dictize.activity_list_dictize(activity_objects, context)
 
 
-def _changed_packages_activity_list_since(since, limit):
+def _changed_packages_activity_timestamp_since(since, limit):
     '''Return package_ids and last activity date of changed package
     activities since a given date.
 
@@ -138,7 +142,7 @@ def _changed_packages_activity_list_since(since, limit):
                             func.max(model.Activity.timestamp).label(
                                 'timestamp'))
     q = q.filter(or_(model.Activity.activity_type.endswith('package'),
-                     model.Activity.activity_type.endswith('package')))
+                     model.Activity.activity_type.endswith('view')))
     q = q.filter(model.Activity.timestamp > since)
     q = q.group_by(model.Activity.object_id)
     q = q.order_by('timestamp')

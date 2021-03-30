@@ -58,10 +58,9 @@ class CanadaCommand(CkanCommand):
 
     Usage::
 
-        paster canada portal-update <portal.ini>
+        paster canada portal-update <portal.ini> -u <user>
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-p <num>] [-m]
-                                    [-u <user>]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
                       copy-datasets [-m] [-o <source url>]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
@@ -332,15 +331,15 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        data = registry.action.changed_packages_activity_list_since(
+        data = registry.action.changed_packages_activity_timestamp_since(
             since_time=since_time.isoformat())
 
-        if data.count() == 0:
+        if len(data) == 0:
             return None, None
 
         packages = []
         for result in data:
-            package_id = result.object_id
+            package_id = result['package_id']
             source_package = registry.action.package_show(id=package_id)
             for source_resource in source_package['resources']:
                 # check if resource exists in datastore
@@ -364,8 +363,8 @@ class CanadaCommand(CkanCommand):
 
             packages.append(json.dumps(source_package))
 
-        if data.count():
-            since_time = isodate(data[-1].timestamp, None)
+        if len(data):
+            since_time = isodate(data[-1]['timestamp'], None)
 
         return packages, since_time
 
