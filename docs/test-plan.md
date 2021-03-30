@@ -1,7 +1,15 @@
 ## Test Plan
 
+|icon | interaction method |
+| --- | --- |
+| ⚫ | console server access |
+| 🔴 | sysadmin user web |
+| 🔵 | admin user web |
+| ⚪ | editor user web |
+
 ### Registry
 
+- [ ] ⚫ create/update organizations with `ckanapi load organizations -I transitional_orgs.jsonl`
 - [ ] :white_square_button: create/update organizations with `ckanapi load organizations -I transitional_orgs.jsonl`
 - [ ] :white_square_button: create/set :wrench: sysadmin user with `ckan --plugin=ckan sysadmin add <user>`
 
