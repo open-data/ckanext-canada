@@ -334,7 +334,7 @@ class CanadaCommand(CkanCommand):
         data = registry.action.changed_packages_activity_timestamp_since(
             since_time=since_time.isoformat())
 
-        if len(data) == 0:
+        if not data:
             return None, None
 
         packages = []
@@ -363,7 +363,7 @@ class CanadaCommand(CkanCommand):
 
             packages.append(json.dumps(source_package))
 
-        if len(data):
+        if data:
             since_time = isodate(data[-1]['timestamp'], None)
 
         return packages, since_time
@@ -445,6 +445,8 @@ class CanadaCommand(CkanCommand):
                 action = 'updated'
                 reason = 'undeleting on target'
                 portal.action.package_update(**source_pkg)
+                for r in source_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
                 action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif target_pkg is None:
                 action = 'created'
@@ -452,7 +454,6 @@ class CanadaCommand(CkanCommand):
                 action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif source_pkg is None:
                 action = 'deleted'
-                action += _delete_datastore_and_views(target_pkg, portal)
                 portal.action.package_delete(id=package_id)
             elif source_pkg == target_pkg:
                 action = 'unchanged'

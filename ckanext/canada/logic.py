@@ -76,7 +76,7 @@ def changed_packages_activity_timestamp_since(context, data_dict):
     :param since_time: starting date/time
 
     Limited to 10,000 records (configurable via the
-    ckan.activity_list_hard_limit setting) but may be called repeatedly
+    ckan.activity_timestamp_since_limit setting) but may be called repeatedly
     with the timestamp of the last record to collect all activities.
 
     :rtype: list of dictionaries
@@ -89,7 +89,7 @@ def changed_packages_activity_timestamp_since(context, data_dict):
         raise ValidationError({'since_time':e.error})
 
     # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_list_hard_limit', 10000))
+    limit = int(config.get('ckan.activity_timestamp_since_limit', 10000))
 
     package_timestamp_list = []
     for row in _changed_packages_activity_timestamp_since(since_time, limit):
