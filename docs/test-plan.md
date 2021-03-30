@@ -5,7 +5,7 @@
 | ⚫ | console server access |
 | 🔴 | sysadmin user web |
 | 🔵 | admin user web |
-| ⚪ | editor user web |
+| 🔘 | editor user web |
 
 ### Registry
 
