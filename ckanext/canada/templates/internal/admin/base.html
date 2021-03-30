@@ -1,8 +1,9 @@
 {% ckan_extends %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('admin.index', _('Sysadmins'), icon='gavel') }}
+  {{ h.build_nav_icon('ckanadmin_listusers', _('Users')) }}
   {#{ h.build_nav_icon('admin.config', _('Config'), icon='check-square-o') }#}
   {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash-o') }}
+  {{ h.build_nav_icon('ckanadmin_publish', _('Publish Records')) }}
   {{ h.build_extra_admin_nav() }}
 {% endblock %}
