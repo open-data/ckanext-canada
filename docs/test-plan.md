@@ -1,4 +1,4 @@
-## Test Plan
+# Test Plan
 
 |icon | interaction method |
 | --- | --- |
@@ -7,9 +7,9 @@
 | 🔵 | admin user web |
 | 🔘 | editor user web |
 
-### Registry
+## 1. Registry
 
-#### Initializing an empty db (not required for existing sites)
+### 1.1 Initializing an empty db (not required for existing sites)
 
 - [ ] ⚫ create/update organizations with `ckanapi load organizations -I transitional_orgs.jsonl`
 - [ ] ⚫ create/set 🔴 sysadmin user with `ckan --plugin=ckan sysadmin add <user>`
@@ -19,7 +19,7 @@
 
 - [ ] ⚫ load datasets with `ckanapi load datasets -zI od-do-canada.jsonl.gz`
 
-#### Account sign-up and approval
+### 1.2 Account sign-up and approval
 
 - [ ] 🔵 new admin visit front page then fills request account form
   - [ ] 🔵 retrieves confirmation email
@@ -34,7 +34,7 @@
   - [ ] 🔘 retrieve reset email and follow link
   - [ ] 🔘 log in with new password
 
-#### Asset creation, editing and publishing
+### 1.3 Asset creation, editing and publishing
 
 - [ ] 🔘 editor user creates new dataset
   - [ ] 🔘 submit dataset form with missing values, verify all required fields marked as errors
@@ -59,7 +59,7 @@
   - [ ] 🔴 visit the dataset publishing page to confirm that the dataset reappears
   - [ ] PORTAL: wait for publishing job and verify that dataset was removed from the portal
 
-#### Suggested dataset updates
+### 1.4 Suggested dataset updates
 
 - [ ] 🔘 editor user add multiple status updates to a suggestion
   - [ ] 🔘 verify that updates are re-sorted into correct date order on save
@@ -67,7 +67,7 @@
   - [ ] 🔘 remove some updates and check that they are properly removed
   - [ ] PORTAL: wait for publishing job and verify that status updates are displayed
 
-#### Organization changes
+### 1.5 Organization changes
 
 - [ ] 🔴 sysadmin create a new organization, verify that it appears in org list
 - [ ] 🔵 admin user edit details of their organization
@@ -75,7 +75,7 @@
   - [ ] ⚫ reindex datasets for this organization with `paster --plugin=ckan search-index rebuild -r -e`
   - [ ] 🔵 verify that org title change has been applied to datasets
 
-#### Proactive disclosure
+### 1.6 Proactive disclosure
 
 - [ ] 🔘 editor user visit one of the PD types with enforced validation (e.g. consultations or contracts)
   - [ ] 🔘 download excel template and fill see that errors and missing fields are hilighted as text is entered
@@ -87,7 +87,7 @@
   - [ ] ⚫ publish changes to search and exported csv file with e.g. `make -f bin/pd/Makefile consultations`
   - [ ] PORTAL: verify updated records visible on search and exported csv
 
-### Portal
+## 2. Portal
 
 - [ ] view dataset and resource pages
   - [ ] verify formatting and display of all fields
