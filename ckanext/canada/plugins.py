@@ -210,7 +210,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'package_activity_list',
             'recently_changed_packages_activity_list',
             'dashboard_activity_list',
-            'changed_packages_activity_list_since',
+            'changed_packages_activity_timestamp_since',
             ]}
 
 
@@ -446,7 +446,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     def get_actions(self):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
-            'changed_packages_activity_list_since',
+            'changed_packages_activity_timestamp_since',
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
@@ -687,7 +687,7 @@ def datastore_delete(up_func, context, data_dict):
         act.datastore_activity_create(context,
                                       {'count': res.get('total', 0),
                                        'activity_type': 'deleted datastore',
-                                       'resource_id': data_dict['resource_id']}
+                                       'resource_id': res_id}
                                       )
     return result
 
