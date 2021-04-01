@@ -13,10 +13,8 @@
 
 - [ ] ⚫ create/update organizations with `ckanapi load organizations -I transitional_orgs.jsonl`
 - [ ] ⚫ create/set 🔴 sysadmin user with `ckan --plugin=ckan sysadmin add <user>`
-
 - [ ] ⚫ export organizations with `ckanapi dump organizations | bin/transitional_org_filter.py > exported_orgs.jsonl`
   - [ ] ⚫ verify no differences with imported `transitional_orgs.jsonl` file
-
 - [ ] ⚫ load datasets with `ckanapi load datasets -zI od-do-canada.jsonl.gz`
 
 ### 1.2 Account sign-up and approval
@@ -26,10 +24,8 @@
   - [ ] 🔵 log in and see limited home page with no access to records (yet)
 - [ ] 🔴 sysadmin received an email notification of the new account request
 - [ ] 🔴 sysadmin user assigns 🔵 admin user to an existing organization as an Admin
-
 - [ ] 🔘 editor user signs up as above
 - [ ] 🔵 admin user assigns 🔘 editor user to an organization as an Editor
-
 - [ ] 🔘 editor user resets password with password reset form
   - [ ] 🔘 retrieve reset email and follow link
   - [ ] 🔘 log in with new password
@@ -43,7 +39,6 @@
   - [ ] 🔘 fill and submit complete resource with uploaded file, proceed to add another resource
   - [ ] 🔘 fill and submit complete related item, save dataset
   - [ ] 🔘 verify dataset, resource and related items display as expected
-
 - [ ] 🔘 editor user creates new information asset
   - [ ] 🔘 submit asset form with missing values, verify all required fields marked as errors
   - [ ] 🔘 fill and submit complete asset marked ready to publish, proceed to add a resource
@@ -51,7 +46,6 @@
   - [ ] 🔘 fill and submit complete resource with uploaded file, proceed to add another resource
   - [ ] 🔘 fill and submit complete related item, save asset
   - [ ] 🔘 verify asset, resource and related items display as expected
-
 - [ ] 🔴 sysadmin views publish datasets page and sees one dataset and one information asset
   - [ ] 🔴 publish both and see no more datasets to publish
   - [ ] PORTAL: wait for publishing job and verify published dataset and information asset are now on the portal
