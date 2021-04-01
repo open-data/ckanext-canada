@@ -37,6 +37,7 @@ from ckanapi import (
 import ckanext.datastore.backend.postgres as datastore
 from ckanext.datastore.helpers import datastore_dictionary
 import subprocess
+import ckan.plugins.toolkit as toolkit
 
 PAST_RE = (
     r'^'
@@ -341,26 +342,7 @@ class CanadaCommand(CkanCommand):
         for result in data:
             package_id = result['package_id']
             source_package = registry.action.package_show(id=package_id)
-            for source_resource in source_package['resources']:
-                # check if resource exists in datastore
-                if source_resource['datastore_active']:
-                    try:
-                        source_table = registry.call_action('datastore_search',
-                                                            {'id': source_resource['id'], 'limit': 0})
-                        if source_table:
-                            # add hash, views and data dictionary
-                            source_package[source_resource['id']] = {
-                                "hash": source_resource.get('hash'),
-                                "views": registry.call_action('resource_view_list',{'id': source_resource['id']}),
-                                "data_dict": datastore_dictionary(source_resource['id']),
-                            }
-                    except NotFound:
-                        pass
-                else:
-                    source_resource_views = registry.call_action('resource_view_list', {'id': source_resource['id']})
-                    if source_resource_views:
-                        source_package[source_resource['id']] = {"views": source_resource_views}
-
+            source_package = get_datastore_and_views(source_package, registry)
             packages.append(json.dumps(source_package))
 
         if data:
@@ -433,6 +415,7 @@ class CanadaCommand(CkanCommand):
                     target_pkg = None
                     target_deleted = True
 
+                target_pkg = get_datastore_and_views(target_pkg, portal)
                 _trim_package(target_pkg)
 
             target_hash = {}
@@ -671,6 +654,9 @@ def _trim_package(pkg):
                 'last_modified', 'position']:
             if k in r:
                 del r[k]
+        if 'datastore_contains_all_records_of_source_file' in r:
+            r['datastore_contains_all_records_of_source_file'] = \
+                toolkit.asbool(r['datastore_contains_all_records_of_source_file'])
         if r.get('url_type') == 'upload' and r['url']:
             r['url'] = r['url'].rsplit('/', 1)[-1]
         for k in ['name', 'size']:
@@ -765,6 +751,34 @@ def _add_views(portal, resource, resource_details):
                 pass
 
     return action
+
+
+def get_datastore_and_views(package, ckan_instance):
+    if package and 'resources' in package:
+        for resource in package['resources']:
+            # check if resource exists in datastore
+            if resource['datastore_active']:
+                try:
+                    table = ckan_instance.call_action('datastore_search',
+                                                             {'id': resource['id'],
+                                                              'limit': 0})
+                    if table:
+                        # add hash, views and data dictionary
+                        package[resource['id']] = {
+                            "hash": resource.get('hash'),
+                            "views": ckan_instance.call_action('resource_view_list',
+                                                               {'id': resource['id']}),
+                            "data_dict": datastore_dictionary(resource['id']),
+                        }
+                except NotFound:
+                    pass
+            else:
+                resource_views = ckan_instance.call_action('resource_view_list',
+                                                           {'id': resource['id']})
+                if resource_views:
+                    package[resource['id']] = {
+                        "views": resource_views}
+    return package
 
 
 @contextmanager
