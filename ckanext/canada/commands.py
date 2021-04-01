@@ -436,6 +436,7 @@ class CanadaCommand(CkanCommand):
                 _trim_package(target_pkg)
 
             target_hash = {}
+
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
@@ -455,7 +456,7 @@ class CanadaCommand(CkanCommand):
             elif source_pkg is None:
                 action = 'deleted'
                 portal.action.package_delete(id=package_id)
-            elif source_pkg == target_pkg:
+            elif compare_packages(target_pkg, source_pkg):
                 action = 'unchanged'
                 reason = 'no difference found'
             else:
@@ -765,6 +766,32 @@ def _add_views(portal, resource, resource_details):
                 pass
 
     return action
+
+
+def compare_packages(a, b):
+    for key in a:
+        if key not in b:
+            return False
+        if a[key] != b[key]:
+            if key != 'resources':
+                return False
+            else:
+                for res1 in a['resources']:
+                    res2 = None
+                    for res2 in b['resources']:
+                        if res2['id'] == res1['id']:
+                            break
+                    if not res2:
+                        return False
+                    for res_key in res1:
+                        if res_key not in res2:
+                            return False
+                        if res1[res_key] != res2[res_key]:
+                            if res_key != 'datastore_contains_all_records_of_source_file':
+                                return False
+                            elif str(res1[res_key]) != str(res2[res_key]):
+                                return False
+    return True
 
 
 @contextmanager
