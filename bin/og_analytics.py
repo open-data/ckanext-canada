@@ -33,14 +33,27 @@ import traceback
 
 import openpyxl
 import heapq
+import re
+from openpyxl.utils.exceptions import IllegalCharacterError
+
+def cleanup_illegal_characters(rows):
+    for row in rows:
+        for cell in rows:
+            if (isinstance(cell, str)):
+                cell = re.sub(r'[\000-\010]|[\013-\014]|[\016-\037]', '', cell)
+    return rows
 
 def write_xls(filename, sheets):
     book = openpyxl.Workbook()
 
     for sheet in sheets:
         ws = book.create_sheet(title=sheet.get('name', 'sheet 1'))
-        for row in sheet.get('data',[]):
-            ws.append(row)
+        try:
+            for row in sheet.get('data',[]):
+                ws.append(row)
+        except IllegalCharacterError as e:
+            pass
+
         cols =  [col for col in ws.columns]
         widths = sheet.get('col_width', {})
         for k,v in widths.iteritems():
@@ -334,6 +347,7 @@ class DatasetDownload():
                           org_title[0], org_title[1], count])
         rows.append([])
         rows.append([self.start_date, self.end_date])
+        rows = cleanup_illegal_characters(rows)
         sheet1 = {'name':'Top 20 Information',
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
@@ -401,6 +415,7 @@ class DatasetDownload():
                         "Number of downloads / Nombre de téléchargements"])
         if isVisit:
             rows[0][3] = "Number of visits / Nombre de visites"
+        rows = cleanup_illegal_characters(rows)
         sheet1 = {'name':'Summary by departments',
                   'data': rows,
                    'col_width':{0:26, 1:50, 2:50, 3:40}  # col:width
@@ -431,6 +446,7 @@ class DatasetDownload():
             org_title = [x.strip() for x in org_title]
             rows.append( [rec_id, rec_title['en'], rec_title['fr'],
                           org_title[0], org_title[1], count])
+        rows = cleanup_illegal_characters(rows)
         sheet2 = {'name':'Top 100 Datasets',
                   'data': rows,
                    'col_width':{0:40, 1:50, 2:50, 3:50, 4:50, 5:40}  # col:width
@@ -458,6 +474,7 @@ class DatasetDownload():
             if isVisit:
                 rows[0][3] = "Number of visits / Nombre de visites"
             rows.append(['total','','', org_stats.get(org_id)])
+            rows = cleanup_illegal_characters(rows)
             sheets.append({'name':title,
                            'data': rows,
                            'col_width':{0:40, 1:50, 2:50, 3:40}
@@ -980,6 +997,7 @@ class DatasetDownload():
             link_fr = 'http://ouvert.canada.ca//data/fr/dataset?organization=' + name
             rows.append([title_en, title_fr, link_en, link_fr, count])
         rows.sort(key=lambda x: x[0])
+        rows = cleanup_illegal_characters(rows)
         write_csv(csv_file, rows, header)
 
     def by_org_month(self, end, csv_month_file, csv_file):

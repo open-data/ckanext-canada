@@ -183,6 +183,10 @@ dataset_fields:
         fr: Le propriétaire des données ne peut pas publier un ensemble de données
       value: unable
     - label:
+        en: Provincial or territorial dataset request
+        fr: Jeu de données provincial ou territorial
+      value: provincial
+    - label:
         en: Request transferred to new data owner
         fr: Cette demande a été transféré au nouveau propriétaire des données
       value: transferred
