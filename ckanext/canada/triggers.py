@@ -334,10 +334,7 @@ def update_triggers():
                 END IF;
                 RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
             END;
-            '''.format(
-                language=pg_array(inventory_choices['language']),
-                eligible_for_release=pg_array(inventory_choices['eligible_for_release']),
-            )
+            ''',
         )
 
     lc.action.datastore_function_create(
@@ -425,10 +422,3 @@ def update_triggers():
                 RETURN NULL;
             END;
         ''')
-
-
-
-def pg_array(choices):
-    from ckanext.datastore.helpers import literal_string
-    return u'ARRAY[' + u','.join(
-        literal_string(unicode(c[0])) for c in choices) + u']'

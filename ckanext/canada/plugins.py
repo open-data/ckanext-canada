@@ -4,7 +4,7 @@ import os
 import os.path
 from pylons.i18n import _
 import ckan.plugins as p
-from ckan.lib.plugins import DefaultDatasetForm
+from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
@@ -173,7 +173,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
-        from ckanext.datastore import db
+        from ckanext.datastore.backend import postgres as db
         original_upsert_data = db.upsert_data
         def patched_upsert_data(context, data_dict):
             logic.datastore_create_temp_user_table(context)
@@ -210,7 +210,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'package_activity_list',
             'recently_changed_packages_activity_list',
             'dashboard_activity_list',
-            'changed_packages_activity_list_since',
+            'changed_packages_activity_timestamp_since',
             ]}
 
 
@@ -225,7 +225,7 @@ disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
 
 
 
-class DataGCCAPublic(p.SingletonPlugin):
+class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     """
     Plugin for public-facing version of Open Government site, aka the "portal"
     This plugin requires the DataGCCAForms plugin
@@ -236,7 +236,11 @@ class DataGCCAPublic(p.SingletonPlugin):
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
-    p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.ITranslation, inherit=True)
+    # p.implements(p.IMiddleware, inherit=True)
+
+    def i18n_domain(self):
+        return 'ckanext-canada'
 
     def update_config(self, config):
         # add our templates
@@ -415,7 +419,12 @@ ckanext.canada:schemas/prop.yaml
         return {'inventory_votes_show': logic.inventory_votes_show}
 
     def get_auth_functions(self):
-        return {'inventory_votes_show': auth.inventory_votes_show}
+        return {
+            'inventory_votes_show': auth.inventory_votes_show,
+            'resource_view_create': auth.resource_view_create,
+            'resource_view_update': auth.resource_view_update,
+            'resource_view_delete': auth.resource_view_delete,
+        }
 
     # IMiddleware
 
@@ -437,7 +446,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     def get_actions(self):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
-            'changed_packages_activity_list_since',
+            'changed_packages_activity_timestamp_since',
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
@@ -669,17 +678,21 @@ def datastore_upsert(up_func, context, data_dict):
 @chained_action
 def datastore_delete(up_func, context, data_dict):
     lc = ckanapi.LocalCKAN(username=c.user)
+    res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
     res = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
+        resource_id=res_id,
         filters=data_dict.get('filters'),
         limit=1,
     )
     result = up_func(context, data_dict)
-    act.datastore_activity_create(context,
-                                  {'count':res.get('total', 0),
-                                   'activity_type': 'deleted datastore',
-                                   'resource_id': data_dict['resource_id']}
-                                  )
+
+    # no need to log activity for x-loader initiated deleting
+    if context.get('agent') != 'xloader':
+        act.datastore_activity_create(context,
+                                      {'count': res.get('total', 0),
+                                       'activity_type': 'deleted datastore',
+                                       'resource_id': res_id}
+                                      )
     return result
 
 

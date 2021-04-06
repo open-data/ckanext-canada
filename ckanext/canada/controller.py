@@ -11,7 +11,7 @@ from pytz import timezone, utc
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
-from ckan.lib.base import model, redirect
+from ckan.lib.base import model
 from ckan.logic import schema
 from ckan.controllers.user import UserController
 from ckan.controllers.api import ApiController, DataError, NotFound, search
@@ -168,6 +168,7 @@ class CanadaController(BaseController):
             context['user_is_admin'] = c.userobj.sysadmin
 
         results = get_action('organization_list')(context, data_dict)
+        c.group_type = data_dict['type']
 
         def org_key(org):
             title = org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
@@ -216,8 +217,8 @@ class CanadaController(BaseController):
                 break
             sort_by_num = int(request.params[u'order[%d][column]' % i])
             sort_order = (
-                u'desc NULLS LAST' if request.params[u'order[%d][dir]' % i] == u'desc'
-                else u'asc NULLS LAST')
+                u'desc' if request.params[u'order[%d][dir]' % i] == u'desc'
+                else u'asc')
             sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
             i += 1
 
@@ -586,7 +587,7 @@ class CanadaAdminController(PackageController):
         h.flash_notice(str(count) + _(u' record(s) published.'))
 
         # return us to the publishing interface
-        redirect(h.url_for('ckanadmin_publish'))
+        return h.redirect_to(h.url_for('ckanadmin_publish'))
 
 
 class CanadaApiController(ApiController):
@@ -824,7 +825,7 @@ class PDUpdateController(BaseController):
             post_data = parse_params(request.POST, ignore_keys=['save'])
 
             if 'cancel' in post_data:
-                return redirect(h.url_for(
+                return h.redirect_to(h.url_for(
                     controller='ckanext.recombinant.controller:UploadController',
                     action='preview_table',
                     resource_name=resource_name,
@@ -867,7 +868,7 @@ class PDUpdateController(BaseController):
 
             h.flash_notice(_(u'Record Created'))
 
-            return redirect(h.url_for(
+            return h.redirect_to(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
                 resource_name=resource_name,
@@ -923,7 +924,7 @@ class PDUpdateController(BaseController):
             post_data = parse_params(request.POST, ignore_keys=['save'] + pk_fields)
 
             if 'cancel' in post_data:
-                return redirect(h.url_for(
+                return h.redirect_to(h.url_for(
                     controller='ckanext.recombinant.controller:UploadController',
                     action='preview_table',
                     resource_name=resource_name,
@@ -968,7 +969,7 @@ class PDUpdateController(BaseController):
 
             h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
-            return redirect(h.url_for(
+            return h.redirect_to(h.url_for(
                 controller='ckanext.recombinant.controller:UploadController',
                 action='preview_table',
                 resource_name=resource_name,
@@ -1005,9 +1006,9 @@ class PDUpdateController(BaseController):
 
         # custom business logic
         if is_sysadmin(c.user):
-            return redirect(h.url_for('recombinant_resource',
+            return h.redirect_to(h.url_for('recombinant_resource',
                                       resource_name=resource_name, owner_org='tbs-sct'))
-        return redirect(h.url_for('recombinant_resource',
+        return h.redirect_to(h.url_for('recombinant_resource',
                                   resource_name=resource_name, owner_org=orgs[0]['name']))
 
 def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):

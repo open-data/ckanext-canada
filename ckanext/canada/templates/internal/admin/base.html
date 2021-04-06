@@ -2,7 +2,8 @@
 
 {% block content_primary_nav %}
   {{ h.build_nav_icon('ckanadmin_listusers', _('Users')) }}
-  {#{{ h.build_nav_icon('ckanadmin_config', _('Config')) }}#}
-  {{ h.build_nav_icon('ckanadmin_trash', _('Trash')) }}
+  {#{ h.build_nav_icon('admin.config', _('Config'), icon='check-square-o') }#}
+  {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash-o') }}
   {{ h.build_nav_icon('ckanadmin_publish', _('Publish Records')) }}
+  {{ h.build_extra_admin_nav() }}
 {% endblock %}

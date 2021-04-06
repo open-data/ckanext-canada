@@ -12,9 +12,6 @@ font-size: 30px;
 ol.breadcrumb {
 margin-bottom: 0px;
 }
-#wb-cont {
-font-size: 24px;
-}
 #wb-info a {
 text-decoration: none;
 }
@@ -80,12 +77,12 @@ details.alert-error {
 }
 
 .form-control.select2-container {
-    display: block;
+    display: contents;
 }
 .form-control.select2-offscreen,
 .form-control.select2-offscreen:focus {
     /* Keep original element in the same spot
-       So that HTML5 valiation message appear in the correct position */
+       So that HTML5 validation message appear in the correct position */
     left: auto !important;
     top: auto !important;
 }
@@ -345,6 +342,15 @@ table#dtprv thead .sorting_desc {
     background-image: none;
 }
 
+.page-header .nav-tabs li.active a {
+    background-color: #335075;
+    color: #fff;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #335075;
+}
 #menu-bar {
     background-color: #256EB8;
     margin-bottom: 15px;
@@ -545,12 +551,6 @@ ul#brf-pkg { padding-left: 0; }
 
 .label.dataset-private { display: none; }
 
-.label.lb-open-data { float:right; border-color: #088; background: #fff }
-.label.lb-sug-datasets { float:right; border-color: #f80; background: #fff }
-.label.lb-open-dialogue { float:right; border-color: #f08; background: #fff }
-.label.lb-open-info { float:right; border-color: #80f; background: #fff }
-.label.lb-pd { float:right; border-color: #44f; background: #fff }
-
 #quick-links .fa-question-circle-o {
     color: lightslategray;
 }
@@ -601,4 +601,12 @@ ul#brf-pkg { padding-left: 0; }
     #user_nav {
         margin-top: -57px;
     }
+}
+
+.table-striped tbody tr:nth-child(even) td, .table-striped tbody tr:nth-child(even) th {
+    background-color: #fff;
+}
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: relative;
+    margin-left: 0;
 }

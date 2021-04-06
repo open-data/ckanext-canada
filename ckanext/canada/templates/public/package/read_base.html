@@ -6,9 +6,13 @@
 {% set client_lang = h.lang() %}
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 
-Remove the markdown_extract call because our notes is a dict not a string:
+{# Remove the markdown_extract call because our notes is a dict not a string: #}
 {% block head_extras %}
-<meta property="og:title" content="{{ h.dataset_display_name(pkg) }} - {{ g.site_title }}">
+  <meta property="og:title" content="{{ h.dataset_display_name(pkg) }} - {{ g.site_title }}">
+{% endblock %}
+
+{% block adobe_analytics_title %}
+  <meta property="dcterms:title" content="{% set title, mt = h.get_translated_t(pkg, 'title') %}{{ title or pkg.name }} - {{ g.site_title }}" />
 {% endblock %}
 
 {%- block adobe_analytics_creator -%}
@@ -21,15 +25,12 @@ Remove the markdown_extract call because our notes is a dict not a string:
   {%- endif -%}/>
 {%- endblock -%}
 
-{% block page_header %}{% endblock %}
-
-{% block content_primary_nav %}{% endblock %}
-
 {% set page_title  = _('{record_title} - Open Data Portal - Open Data') %}
 {% block title %}{% set title, mt = h.get_translated_t(pkg, 'title') %}{{ title or pkg.name }} - {{ super() }}{% endblock %}
 
-{% block adobe_analytics_title %}
-      <meta property="dcterms:title" content="{% set title, mt = h.get_translated_t(pkg, 'title') %}{{ title or pkg.name }} - {{ g.site_title }}" />
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
 {% endblock %}
 
 {% block secondary_content %}

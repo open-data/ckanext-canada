@@ -82,7 +82,7 @@ Render a choice field where the choice['key'] is the value stored
 Choose the most appropriate display name for a resource
 #}
 {%- macro resource_display_name(res, client_lang) -%}
-  {%- set name = res.name.fr if client_lang == 'fr' else res.name.en -%}
+  {%- set name = res.name_translated.fr if client_lang == 'fr' else res.name_translated.en -%}
   {%- if name -%}
     {{- name -}}
   {%- else -%}
@@ -170,7 +170,7 @@ Search Facet Formatters
         ))
       }}
     {%- endif %}
-    <span class="glyphicon glyphicon-remove"></span>
+    <i class="fa fa-times" aria-hidden="true"></i>
   </a>
 {% endmacro %}
 

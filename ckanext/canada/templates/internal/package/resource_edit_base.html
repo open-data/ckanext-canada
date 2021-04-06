@@ -10,6 +10,7 @@
 
 
 {% block content_primary_nav %}
+  {{ super() }}
   {% if 'datapusher' in g.plugins %}
     {{ h.build_nav_icon('resource_data', _('DataStore'), id=pkg.name, resource_id=res.id) }}
   {% endif %}

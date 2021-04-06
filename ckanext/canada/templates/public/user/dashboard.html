@@ -6,7 +6,7 @@
 
 {% block primary_content_inner %}
   <div data-module="dashboard" class="col-md-12">
-    {% snippet 'user/snippets/followee_dropdown.html', context=c.dashboard_activity_stream_context, followees=c.followee_list %}
+    {% snippet 'user/snippets/followee_dropdown.html', context=dashboard_activity_stream_context, followees=followee_list %}
     <div data-module="dashboard" class="panel">
       <div class="panel-heading">
         <h3 class="panel-title">{% block page_heading %}{{ _('News feed') }}{% endblock %}</h3>
@@ -23,10 +23,10 @@
 
 
 {% block secondary_content %}
-  {% if not c.dashboard_activity_stream_context.dict == None %}
+  {% if dashboard_activity_stream_context.dict %}
     <div class="panel panel-info">
       <span class="arrow"></span>
-      {% snippet 'snippets/context.html', type=c.dashboard_activity_stream_context.filter_type, dict=c.dashboard_activity_stream_context.dict %}
+      {% snippet 'snippets/context.html', type=dashboard_activity_stream_context.filter_type, dict=dashboard_activity_stream_context.dict %}
     </div>
   {% endif %}
   <div class="panel panel-info mrgn-bttm-md" >
@@ -44,7 +44,7 @@
           </li>
         {% endfor %}
       </ul>
-    {% else %}>
+    {% else %}
       <span>{{ _('You do not have any datasets') }}</span>
     {% endif %}
     </div>
@@ -64,8 +64,8 @@
 {% block page_header %}
   <div class="col-md-12">
     <ul class="nav nav-pills">
-      {{ h.build_nav_icon('user_dashboard', _('News feed')) }}
-      {{ h.build_nav_icon('user_dashboard_datasets', _('My Datasets')) }}
+      {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
+      {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
     </ul>
   </div>
 {% endblock %}

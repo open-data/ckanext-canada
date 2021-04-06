@@ -12,7 +12,7 @@
         <ul class="list-inline">
             <li>
                 {{ _('Signed in as') }}
-                <a href="{{ h.url_for(controller='user', action='dashboard') }}" class="image" title="{{ _('View profile') }}">
+                 <a href="{{ h.url_for('dashboard.index') }}" class="image" title="{{ _('View profile') }}">
                     {% if h.gravatar_show() %}
                     {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
                     {% endif %}

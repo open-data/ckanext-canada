@@ -34,6 +34,11 @@ from ckanapi import (
     CKANAPIError
 )
 
+import ckanext.datastore.backend.postgres as datastore
+from ckanext.datastore.helpers import datastore_dictionary
+import subprocess
+import ckan.plugins.toolkit as toolkit
+
 PAST_RE = (
     r'^'
     # Days
@@ -54,11 +59,11 @@ class CanadaCommand(CkanCommand):
 
     Usage::
 
-        paster canada portal-update <portal.ini>
+        paster canada portal-update <portal.ini> -u <user>
                                     [<last activity date> | [<k>d][<k>h][<k>m]]
                                     [-p <num>] [-m]
                                     [-l <log file>] [-t <num> [-d <seconds>]]
-                      copy-datasets [-m]
+                      copy-datasets [-m] [-o <source url>]
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
                       load-suggested [--use-created-date] <suggested-datasets.csv>
@@ -94,6 +99,7 @@ class CanadaCommand(CkanCommand):
                                     second Solr core
         -f/--freshen                When rebuilding the advanced search Solr core
                                     re-index all datasets, but do not purge the Solr core
+        -o/--source <source url>    source datastore url to copy datastore records
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -134,6 +140,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('--portal', dest='portal', action='store_true')
     parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
     parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
+    parser.add_option('-o', '--source', dest='src_ds_url', default=None)
     parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
 
     def command(self):
@@ -211,6 +218,7 @@ class CanadaCommand(CkanCommand):
             time.sleep(self.options.delay)
 
     def _portal_update(self, portal_ini, activity_date):
+        # determine activity date
         if activity_date:
             past = re.match(PAST_RE, activity_date)
             if past:
@@ -231,8 +239,10 @@ class CanadaCommand(CkanCommand):
             log = open(self.options.log, 'a')
 
         registry = LocalCKAN()
+        source_ds = str(datastore.get_write_engine().url)
 
         def changed_package_id_runs(start_date):
+            # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = self._changed_packages_since(
                     registry, start_date)
@@ -241,12 +251,15 @@ class CanadaCommand(CkanCommand):
                 yield packages, next_date
                 start_date = next_date
 
+        # copy the changed packages to portal
         cmd = [
             sys.argv[0],
             'canada',
             'copy-datasets',
             '-c',
             portal_ini,
+            '-o',
+            source_ds,
             '-u',
             self.options.ckan_user
         ]
@@ -319,7 +332,7 @@ class CanadaCommand(CkanCommand):
         this is different than when no more changes found and (None, None)
         is returned.
         """
-        data = registry.action.changed_packages_activity_list_since(
+        data = registry.action.changed_packages_activity_timestamp_since(
             since_time=since_time.isoformat())
 
         if not data:
@@ -327,11 +340,10 @@ class CanadaCommand(CkanCommand):
 
         packages = []
         for result in data:
-            package_id = result['data']['package']['id']
-            try:
-                packages.append(json.dumps(registry.action.package_show(id=package_id)))
-            except NotFound:
-                pass
+            package_id = result['package_id']
+            source_package = registry.action.package_show(id=package_id)
+            source_package = get_datastore_and_views(source_package, registry)
+            packages.append(json.dumps(source_package))
 
         if data:
             since_time = isodate(data[-1]['timestamp'], None)
@@ -348,6 +360,7 @@ class CanadaCommand(CkanCommand):
         """
         portal = LocalCKAN(username = user)
 
+        source_ds = self.options.src_ds_url
         now = datetime.now()
 
         packages = iter(sys.stdin.readline, '')
@@ -381,6 +394,7 @@ class CanadaCommand(CkanCommand):
                     # portal packages published public
                     source_pkg['private'] = False
 
+            target_pkg = None
             if action != 'skip':
                 try:
                     target_pkg = portal.call_action('package_show', {
@@ -401,8 +415,10 @@ class CanadaCommand(CkanCommand):
                     target_pkg = None
                     target_deleted = True
 
+                target_pkg = get_datastore_and_views(target_pkg, portal)
                 _trim_package(target_pkg)
 
+            target_hash = {}
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
@@ -412,9 +428,13 @@ class CanadaCommand(CkanCommand):
                 action = 'updated'
                 reason = 'undeleting on target'
                 portal.action.package_update(**source_pkg)
+                for r in source_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif target_pkg is None:
                 action = 'created'
                 portal.action.package_create(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
             elif source_pkg is None:
                 action = 'deleted'
                 portal.action.package_delete(id=package_id)
@@ -423,7 +443,10 @@ class CanadaCommand(CkanCommand):
                 reason = 'no difference found'
             else:
                 action = 'updated'
+                for r in target_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
                 portal.action.package_update(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source_ds)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -454,7 +477,6 @@ class CanadaCommand(CkanCommand):
 
     def rebuild_external_search(self):
         search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
-
 
     def resource_size_update(self, size_report):
         registry = LocalCKAN()
@@ -626,12 +648,15 @@ def _trim_package(pkg):
     for r in pkg['resources']:
         for k in ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
-                'webstore_last_updated', 'state', 'hash',
+                'webstore_last_updated', 'state',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
                 'last_modified', 'position']:
             if k in r:
                 del r[k]
+        if 'datastore_contains_all_records_of_source_file' in r:
+            r['datastore_contains_all_records_of_source_file'] = \
+                toolkit.asbool(r['datastore_contains_all_records_of_source_file'])
         if r.get('url_type') == 'upload' and r['url']:
             r['url'] = r['url'].rsplit('/', 1)[-1]
         for k in ['name', 'size']:
@@ -646,6 +671,114 @@ def _trim_package(pkg):
     for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
+
+
+def _add_datastore_and_views(package, portal, res_hash, ds):
+    # create datastore table and views for each resource of the package
+    action = ''
+    for resource in package['resources']:
+        res_id = resource['id']
+        if res_id in package.keys():
+            if 'data_dict' in package[res_id].keys():
+                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds)
+            if 'views' in package[res_id].keys():
+                action += _add_views(portal, resource, package[res_id])
+    return action
+
+
+def _delete_datastore_and_views(package, portal):
+    # remove datastore table and views for each resource of the package
+    action = ''
+    for resource in package['resources']:
+        res_id = resource['id']
+        try:
+            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+            action += '\n  datastore-deleted for ' + resource['id']
+        except NotFound:
+            action += '\n  failed to delete datastore for ' + resource['id']
+        try:
+            portal.call_action('resource_view_clear', {"id": resource['id'], "force": True})
+            action += '\n  views-deleted for ' + resource['id']
+        except NotFound:
+            action += '\n  failed to delete all views for ' + resource['id']
+    return action
+
+
+def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url):
+    action = ''
+    try:
+        portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
+        if t_hash.get(resource['id']) and t_hash.get(resource['id']) == resource.get('hash'):
+            return action
+        else:
+            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+            action += '\n  datastore-deleted for ' + resource['id']
+    except NotFound:
+        # not an issue, resource does not exist in datastore
+        pass
+
+    portal.call_action('datastore_create',
+                       {"resource_id": resource['id'],
+                        "fields": resource_details['data_dict'],
+                        "force": True})
+
+    action += '\n  datastore-created for ' + resource['id']
+
+    # load data
+    target_ds_url = str(datastore.get_write_engine().url)
+    cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
+    cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = cmd2.communicate()
+    action += ' data-loaded' if not result[1] else ' data-load-failed'
+    return action
+
+
+def _add_views(portal, resource, resource_details):
+    action = ''
+    target_views = portal.call_action('resource_view_list', {'id': resource['id']})
+    for src_view in resource_details['views']:
+        view_action = 'resource_view_create'
+        for target_view in target_views:
+            if target_view['id'] == src_view['id']:
+                view_action = None if target_view == src_view else 'resource_view_update'
+
+        if view_action:
+            try:
+                portal.call_action(view_action, src_view)
+                action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+            except ValidationError as e:
+                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
+                pass
+
+    return action
+
+
+def get_datastore_and_views(package, ckan_instance):
+    if package and 'resources' in package:
+        for resource in package['resources']:
+            # check if resource exists in datastore
+            if resource['datastore_active']:
+                try:
+                    table = ckan_instance.call_action('datastore_search',
+                                                             {'id': resource['id'],
+                                                              'limit': 0})
+                    if table:
+                        # add hash, views and data dictionary
+                        package[resource['id']] = {
+                            "hash": resource.get('hash'),
+                            "views": ckan_instance.call_action('resource_view_list',
+                                                               {'id': resource['id']}),
+                            "data_dict": datastore_dictionary(resource['id']),
+                        }
+                except NotFound:
+                    pass
+            else:
+                resource_views = ckan_instance.call_action('resource_view_list',
+                                                           {'id': resource['id']})
+                if resource_views:
+                    package[resource['id']] = {
+                        "views": resource_views}
+    return package
 
 
 @contextmanager
@@ -692,4 +825,3 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
-            

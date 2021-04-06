@@ -1,7 +1,7 @@
 import json
 import re
 from pylons import c, config
-from pylons.i18n import _
+from ckan.common import _
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import wcms
@@ -504,4 +504,4 @@ def mail_to_with_params(email_address, name, subject, body):
     return html
 
 def get_timeout_length():
-    return config.get('beaker.session.timeout')
+    return int(config.get('beaker.session.timeout'))

@@ -69,7 +69,7 @@
 
 {%- block custom_styles %}
   {% snippet 'snippets/wet-boew/headresources.html' %}
-  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=2') }}" type="text/css" />
 {%- endblock -%}
 
 
@@ -79,10 +79,6 @@
 <html class="no-js lt-ie9" lang="{{ lang }}" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
 <html class="no-js" lang="{{ lang }}" dir="ltr"> <!--<![endif]-->
 {%- endblock -%}
-
-
-{%- block styles %}{% endblock %}
-
 
 {%- block title -%}
   {%- block subtitle_2 %}{% endblock -%}
