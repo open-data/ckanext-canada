@@ -66,6 +66,8 @@
 - [ ] 🔴 sysadmin create a new organization, verify that it appears in org list
 - [ ] 🔵 admin user edit details of their organization
   - [ ] 🔵 verify that title change appears in org list
+  - [ ] 🔵 create a new proactive disclosure record with the new organization
+  - [ ] 🔵 create a new dataset with the new organization
   - [ ] ⚫ reindex datasets for this organization with `paster --plugin=ckan search-index rebuild -r -e`
   - [ ] 🔵 verify that org title change has been applied to datasets
 
