@@ -90,5 +90,6 @@
   - [ ] verify display of map (e.g. for the [open data portal catalogue](https://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7))
   - [ ] verify similar records are shown and appropriate
   - [ ] verify rate this dataset links to Drupal rating page and shows ratings
+  - [ ] verify the comments feature works and links to Drupal
 - [ ] download an uploaded resource from a dataset page
 - [ ] follow link to an external resource from a dataset page
