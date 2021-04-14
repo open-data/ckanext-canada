@@ -7,9 +7,10 @@ import sys
 import codecs
 import glob
 import io
-import os
+import os, errno
 import subprocess
 import shutil
+
 
 def run_scripts(infile, outfile, matching_files):
     # Remove any dead procedures from previous calls to this method
@@ -36,9 +37,15 @@ def run_scripts(infile, outfile, matching_files):
 
     infile.seek(0)
 
-    for chunk in iter(lambda: infile.read(1000), ''):
-        proc_array[0].stdin.write(chunk)
-    proc_array[0].stdin.close()
+    try:
+    # writing, flushing, whatever goes here
+        for chunk in iter(lambda: infile.read(1000), ''):
+            proc_array[0].stdin.write(chunk)
+        proc_array[0].stdin.close()
+    except IOError as e:
+        # skip if it's just a SIGPIPE signal exception
+        if e.errno != errno.EPIPE:
+            raise 
 
     while proc_array[0].poll() is None:
         pass

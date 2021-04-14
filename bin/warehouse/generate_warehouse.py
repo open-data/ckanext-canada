@@ -15,6 +15,8 @@ import tempfile
 from datetime import datetime
 import argparse
 
+
+
 parser = argparse.ArgumentParser(description="Run warehouse script. By default, it runs on the last 2 backups.")
 parser.add_argument("fname", help="directory of archived backups")
 parser.add_argument("-a", "--all", action='store_true', help="compare all backups.")
@@ -55,7 +57,7 @@ def csv_diff(prev_csv, curr_csv, endpoint, outfile):
     proc = subprocess.Popen(['python', 'csv_diff.py', temp_dir+'/'+prev_csv, temp_dir+'/'+curr_csv, endpoint,
                              dt_string, outfile])
     if proc.wait():
-            sys.exit(1)
+        sys.exit(1)
 
 
 if not os.path.exists('warehouse_reports'):
