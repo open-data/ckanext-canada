@@ -1,13 +1,19 @@
 # Test Plan
 
+## 0. Writing awesome bug reports
+
+- include screenshot(s) before bug occurs with URL and login name visible
+- include screenshot after bug occurs with URL visible, add arrow(s) to screenshot if necessary
+- description of bug can be brief if problem is clear in screenshot(s) 
+
+## 1. Registry
+
 |icon | interaction method |
 | --- | --- |
 | ⚫ | console server access |
 | 🔴 | sysadmin user web |
 | 🔵 | admin user web |
 | 🔘 | editor user web |
-
-## 1. Registry
 
 ### 1.1 Initializing an empty db (not required for existing sites)
 
