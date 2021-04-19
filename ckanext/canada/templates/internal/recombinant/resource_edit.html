@@ -33,41 +33,6 @@
 {% block primary %}
   {{ super() }}
   {% if resource %}
-    {{ h.get_datapreview_recombinant(resource.name, resource.id) }}
+    {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
   {% endif %}
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-  <script>
-    wb.doc.on("wb-ready.wb-tables", function() {
-      Modernizr.load( {
-        load: [
-          "https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons" + wb.getMode() + ".js",
-          "https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis" + wb.getMode() + ".js",
-        ],
-        complete: function() {
-          var selector = "#dtprv", table;
-          if ($.fn.DataTable.isDataTable( selector ) ) {
-            table = $( selector ).DataTable()
-            new $.fn.dataTable.Buttons( table, {
-              buttons: [ {
-                extend: 'colvis',
-                text: '{{ _("Column visibility") }}'
-              }  ]
-            });
-
-            table.buttons().container()
-              .appendTo( $( table.table().container() ).find( ".top" ) );
-
-          }
-        }
-      });
-     });
-  </script>
-{% endblock %}
-
-{%- block styles %}
-  {{ super() }}
-  <link rel="stylesheet"  href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
 {% endblock %}

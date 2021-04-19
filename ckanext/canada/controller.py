@@ -63,6 +63,8 @@ int_validator = get_validator('int_validator')
 
 ottawa_tz = timezone('America/Montreal')
 
+log = getLogger(__name__)
+
 class IntentionalServerError(Exception):
     pass
 
@@ -228,6 +230,7 @@ class CanadaController(BaseController):
         )
 
         aadata = [
+            [u'<input type="checkbox">'] +
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
@@ -237,15 +240,15 @@ class CanadaController(BaseController):
             fids = [f['datastore_id'] for f in chromo['fields']]
             pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
             for row in aadata:
-                row.insert(0, (
-                        u'<a href="{0}" aria-label"' + _("Edit") + '">'
+                row.insert(1, (
+                        u'<a href="{0}" aria-label="' + _("Edit") + '">'
                         u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
                         h.url_for(
                             controller='ckanext.canada.controller:PDUpdateController',
                             action='update_pd_record',
                             owner_org=pkg['organization']['name'],
                             resource_name=resource_name,
-                            pk=','.join(url_part_escape(row[i]) for i in pkids)
+                            pk=','.join(url_part_escape(row[i+1]) for i in pkids)
                         )
                     )
                 )
@@ -409,7 +412,6 @@ class CanadaUserController(UserController):
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
            or POST the form data to actually do the user registration.
-
            The bulk of this code is pulled directly from
            ckan/controlllers/user.py
         '''
@@ -1014,7 +1016,6 @@ def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
     to errors dict returned. This is required because type errors on any
     field prevent triggers from running so we don't get any other errors
     from the datastore_upsert call.
-
     :param post_data: form data
     :param fields: recombinant fields
     :param pk_fields: list of primary key field ids
