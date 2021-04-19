@@ -177,7 +177,7 @@ resources:
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
-    excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A")'
+    excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     form_attrs:
       size: 60
@@ -1138,8 +1138,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Limited Tendering Reason
       fr: Raisons justifiant le recours à l’appel d’offres limité
     description:
-      en: This field should be populated with the reason for a given contract not being awarded through a competitive solicitation.
-      fr: Il est recommandé de saisir dans cette zone l’une des raisons justifiant le recours à l’appel d’offres limité.
+      en: It is recommended this field be populated with one or more of the limited tendering reasons listed below.
+      fr:  Il est recommandé de saisir dans cette zone une ou plusieurs raisons justifiant le recours à l’appel d’offres limité parmi celles qui sont énumérées ci-dessous.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01.
@@ -1792,18 +1792,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -2116,7 +2119,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 - title: Proactive Disclosure - Contracts Nothing to Report
   resource_name: contracts-nil
   create_form: true
-  edit_form: true
+  edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: reporting_period
@@ -2130,18 +2133,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -2153,7 +2159,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
   datastore_indexes: ""
 
   triggers:
-  - update_record_modified_created_trigger
+    - contracts_nil_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
 
   examples:
     record:

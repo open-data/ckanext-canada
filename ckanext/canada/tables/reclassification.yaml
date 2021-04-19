@@ -203,18 +203,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -238,12 +241,14 @@ resources:
           errors := errors || required_error(NEW.pos_title_fr, 'pos_title_fr');
           errors := errors || required_error(NEW.old_class_group_code, 'old_class_group_code');
           errors := errors || choice_error(NEW.old_class_group_code, {old_class_group_code}, 'old_class_group_code');
-          errors := errors || required_error(NEW.old_class_level, 'old_class_level');
-          errors := errors || choice_error(NEW.old_class_level, {old_class_level}, 'old_class_level');
           errors := errors || required_error(NEW.new_class_group_code, 'new_class_group_code');
           errors := errors || choice_error(NEW.new_class_group_code, {new_class_group_code}, 'new_class_group_code');
+          errors := errors || required_error(NEW.old_class_level, 'old_class_level');
           errors := errors || required_error(NEW.new_class_level, 'new_class_level');
-          errors := errors || choice_error(NEW.new_class_level, {new_class_level}, 'new_class_level');
+          -- some tables have the wrong type, convert for now, clean the data next
+          errors := errors || choice_error(lpad(NEW.old_class_level::text, 2, '0'), {old_class_level}, 'old_class_level');
+          errors := errors || choice_error(lpad(NEW.new_class_level::text, 2, '0'), {new_class_level}, 'new_class_level');
+          --
           errors := errors || required_error(NEW.reason_en, 'reason_en');
           errors := errors || required_error(NEW.reason_fr, 'reason_fr');
           IF errors = '{{}}' THEN
@@ -276,7 +281,7 @@ resources:
 - title: Proactive Disclosure - Position Reclassification Nothing to Report
   resource_name: reclassification-nil
   create_form: true
-  edit_form: true
+  edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: year
@@ -288,33 +293,7 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
-    choices:
-      2020: "2020"
-      2019: "2019"
-      2018: "2018"
-      2017: "2017"
-      2016: "2016"
-      2015: "2015"
-      2014: "2014"
-      2013: "2013"
-      2012: "2012"
-      2011: "2011"
-      2010: "2010"
-      2009: "2009"
-      2008: "2008"
-      2007: "2007"
-      2006: "2006"
-      2005: "2005"
-      2004: "2004"
-      2003: "2003"
-      2002: "2002"
-      2001: "2001"
-      2000: "2000"
-      1999: "1999"
-      1998: "1998"
-      1997: "1997"
-      1996: "1996"
-      1995: "1995"
+    excel_error_formula: '{cell}>YEAR(TODAY())'
 
   - datastore_id: quarter
     datastore_type: text
@@ -342,18 +321,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -371,9 +353,12 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.year, 'year');
-        errors := errors || choice_error(NEW.year::text, {year}, 'year');
         errors := errors || required_error(NEW.quarter, 'quarter');
         errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
+        IF NEW.year > date_part('year', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+        END IF;
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;

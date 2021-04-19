@@ -11,6 +11,13 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+# FGP viewer
+msgid "This interactive map requires JavaScript. To view this content please enable JavaScript in your browser or download a browser that supports it."
+msgstr "Cette carte interactive nécessite le JavaScript. Pour visualiser ce contenu, veuillez activer JavaScript dans votre navigateur ou télécharger un navigateur qui le supporte."
+
+msgid "We’re sorry, your browser version is not supported by Open Maps"
+msgstr "Nous sommes désolés que votre version du navigateur n'est pas supporté par Cartes ouvertes"
+
 # SHOPPING CART
 # # Main shopping cart menu
 msgid "List Cart Items"
@@ -1073,6 +1080,9 @@ msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
 
 msgid "Proactive Disclosure - Departmental Audit Committee"
 msgstr "Divulgation proactive - Comités ministériels d’audit"
+
+msgid "Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses."
+msgstr "Accès, téléversement et modification de la rémunération et des dépenses des membres de votre Comité ministériel d’audit."
 
 msgid ""
 "Access, upload and modify the Grants and Contributions reports for your "
@@ -2349,6 +2359,16 @@ msgstr "Je n’accepte pas"
 
 msgid "Made available by the "
 msgstr "Rendus disponibles par l’entremise du "
+
+msgid ""
+"You're currently viewing an old version of this dataset. Some resources may "
+"no longer exist or the dataset may not display correctly. To see the current "
+"version, click <a href=\"%(url)s\">here</a>."
+msgstr ""
+"Vous consultez actuellement une ancienne version de ce jeu de données. Il se "
+"peut que certaines ressources n’existent plus ou que le jeu de données ne "
+"s’affiche pas correctement. Pour voir la version actuelle, cliquez "
+"<a href=\"%(url)s\">ici</a>."
 
 msgid ""
 "<p>These resources are not under the control of the Government of Canada and "

@@ -2,14 +2,16 @@
 
 {% block subfield_display %}
   {% for field_data in fields %}
-    <div class="panel panel-default">
       {% if loop.index == fields|length %}
+      <div class="panel panel-default mrgn-tp-md mrgn-bttm-md">
         <header class="panel-heading">
-          {{ h.scheming_language_text(field.label) }} {{ loop.index }}
+          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
         </header>
       {%- else -%}
-        <details>
-          <summary class="panel-heading">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</summary>
+      <details class="mrgn-tp-md mrgn-bttm-md">
+        <summary>
+          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
+        </summary>
       {%- endif -%}
       <div class="panel-body">
         <dl class="scheming-subfield-list">
@@ -30,7 +32,8 @@
       </div>
       {% if loop.index != fields|length %}
         </details>
+      {% else %}
+        </div>
       {%- endif -%}
-    </div>
   {% endfor %}
 {% endblock %}

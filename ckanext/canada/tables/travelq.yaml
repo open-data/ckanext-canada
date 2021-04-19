@@ -365,18 +365,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 
@@ -453,7 +456,7 @@ resources:
 - title: Proactive Disclosure - Travel Expenses Nothing to Report
   resource_name: travelq-nil
   create_form: true
-  edit_form: true
+  edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: year
@@ -525,18 +528,21 @@ resources:
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
     label: Last Record Modification Time
     import_template_include: false
+    visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
     label: User Last Modified Record
     import_template_include: false
+    visible_to_public: false
     datastore_type: text
     preview_class: bg-info
 

@@ -152,7 +152,7 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'copy-datasets':
             with _quiet_int_pipe():
-                self.copy_datasets(self.args[2:])
+                self.copy_datasets(self.args[2:], self.options.ckan_user)
 
         elif cmd == 'changed-datasets':
             self.changed_datasets(*self.args[1:])
@@ -246,7 +246,9 @@ class CanadaCommand(CkanCommand):
             'canada',
             'copy-datasets',
             '-c',
-            portal_ini
+            portal_ini,
+            '-u',
+            self.options.ckan_user
         ]
         if self.options.mirror:
             cmd.append('-m')
@@ -336,7 +338,7 @@ class CanadaCommand(CkanCommand):
 
         return packages, since_time
 
-    def copy_datasets(self, remote, package_ids=None):
+    def copy_datasets(self, remote, user, package_ids=None):
         """
         a process that accepts packages on stdin which are compared
         to the local version of the same package.  The local package is
@@ -344,7 +346,7 @@ class CanadaCommand(CkanCommand):
         outputs that action as a string 'created', 'updated', 'deleted'
         or 'unchanged'
         """
-        portal = LocalCKAN()
+        portal = LocalCKAN(username = user)
 
         now = datetime.now()
 
@@ -501,8 +503,6 @@ class CanadaCommand(CkanCommand):
 
         for row in csv_reader:
             uuid = row['uuid']
-            if uuid in existing_suggestions:
-                continue
 
             if use_created_date:
                 today = row['date_created']
@@ -513,23 +513,23 @@ class CanadaCommand(CkanCommand):
                 "state": "active",
                 "id": uuid,
                 "title_translated": {
-                    "en": row['title_en'],
-                    "fr": row['title_fr']
+                    u'en': unicode(row['title_en'], 'utf-8'),
+                    u'fr': unicode(row['title_fr'], 'utf-8')
                 },
                 "owner_org": row['organization'],
                 "notes_translated": {
-                    "en": row['description_en'],
-                    "fr": row['description_fr'],
+                    u'en': unicode(row['description_en'], 'utf-8'),
+                    u'fr': unicode(row['description_fr'], 'utf-8')
                 },
                 "comments": {
-                    "en": row['additional_comments_and_feedback_en'],
-                    "fr": row['additional_comments_and_feedback_fr']
+                    u'en': unicode(row['additional_comments_and_feedback_en'], 'utf-8'),
+                    u'fr': unicode(row['additional_comments_and_feedback_fr'], 'utf-8')
                 },
                 "reason": row['reason'],
                 "subject": row['subject'].split(',') if row['subject'] else ['information_and_communications'],
                 "keywords": {
-                    "en": row['keywords_en'].split(',') if row['keywords_en'] else ['dataset'],
-                    "fr": row['keywords_fr'].split(',') if row['keywords_fr'] else ['Jeu de données'],
+                    u'en': unicode(row['keywords_en'], 'utf-8').split(',') if row['keywords_en'] else [u'dataset'],
+                    u'fr': unicode(row['keywords_fr'], 'utf-8').split(',') if row['keywords_fr'] else [u'Jeu de données'],
                 },
                 "date_submitted": row['date_created'],
                 "date_forwarded": today,
@@ -538,25 +538,62 @@ class CanadaCommand(CkanCommand):
                         "reason": row['dataset_suggestion_status'],
                         "date": row['dataset_released_date'] if row['dataset_released_date'] else today,
                         "comments": {
-                            "en": row['dataset_suggestion_status_link'] or u'Status imported from previous ‘suggest a dataset’ system',
-                            "fr": row['dataset_suggestion_status_link'] or u'État importé du système précédent « Proposez un jeu de données »',
+                            u'en': unicode(row['dataset_suggestion_status_link'], 'utf-8') or u'Status imported from previous ‘suggest a dataset’ system',
+                            u'fr': unicode(row['dataset_suggestion_status_link'], 'utf-8') or u'État importé du système précédent « Proposez un jeu de données »',
                         }
                     }
                 ]
             }
 
-            try:
-                registry.action.package_create(**record)
-                print uuid + ' suggested dataset created'
-            except ValidationError as e:
-                if 'id' in e.error_dict:
+            if uuid in existing_suggestions:
+                need_patch = None
+                # compare record
+                for key in record:
+                    if record[key] and key not in ['status', 'date_forwarded']:
+                        existing_value = existing_suggestions[uuid][key]
+                        if key == 'owner_org':
+                            existing_value = existing_suggestions[uuid]['organization']['name']
+                        if record[key] != existing_value:
+                            need_patch = True
+                            break
+
+                # patch if needed
+                if need_patch:
+                    record['date_forwarded'] = existing_suggestions[uuid]['date_forwarded']
+                    record['status'] = existing_suggestions[uuid]['status'] \
+                        if existing_suggestions[uuid].get('status') \
+                        else record['status']
+                    if record['owner_org'] != existing_suggestions[uuid]['organization']['name']:
+                        existing_org = existing_suggestions[uuid]['organization']['title'].split(' | ')
+                        updated_status = {
+                            "reason": 'transferred',
+                            "date": today,
+                            "comments": {
+                                u'en': u'This suggestion is transferred from ' + existing_org[0],
+                                u'fr': u'Cette proposition a été transférée de la part de ' + existing_org[1]
+                            }
+                        }
+                        record['status'].append(updated_status)
+
                     try:
-                        registry.action.package_update(**record)
-                        print uuid + ' suggested dataset update deleted'
+                        registry.action.package_patch(**record)
+                        print uuid + ' suggested dataset patched'
                     except ValidationError as e:
-                        print uuid + ' (update deleted) ' + str(e)
-                else:
-                    print uuid + ' ' + str(e)
+                        print uuid + ' suggested dataset cannot be patched ' + str(e)
+
+            else:
+                try:
+                    registry.action.package_create(**record)
+                    print uuid + ' suggested dataset created'
+                except ValidationError as e:
+                    if 'id' in e.error_dict:
+                        try:
+                            registry.action.package_update(**record)
+                            print uuid + ' suggested dataset update deleted'
+                        except ValidationError as e:
+                            print uuid + ' (update deleted) ' + str(e)
+                    else:
+                        print uuid + ' ' + str(e)
         csv_file.close()
 
 

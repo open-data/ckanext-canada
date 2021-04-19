@@ -493,7 +493,7 @@ upload-inventory: $(workdir)/filtered/inventory.csv
 .PHONY: rebuild-inventory
 rebuild-inventory: $(workdir)/filtered/inventory.csv
 	@echo Rebuilding Open Data Inventory...
-	$(paster) --plugin=ckanext-canada inventory rebuild -c $(portal_ini) \
+	$(paster) --plugin=ckanext-canada inventory rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/inventory.csv"
 
 $(workdir)/inventory.csv:
