@@ -1,13 +1,19 @@
 # Test Plan
 
+## 0. Writing awesome bug reports
+
+- include screenshot(s) before bug occurs with URL and login name visible
+- include screenshot after bug occurs with URL visible, add arrow(s) to screenshot if necessary
+- description of bug can be brief if problem is clear in screenshot(s) 
+
+## 1. Registry
+
 |icon | interaction method |
 | --- | --- |
 | ⚫ | console server access |
 | 🔴 | sysadmin user web |
 | 🔵 | admin user web |
 | 🔘 | editor user web |
-
-## 1. Registry
 
 ### 1.1 Initializing an empty db (not required for existing sites)
 
@@ -66,6 +72,8 @@
 - [ ] 🔴 sysadmin create a new organization, verify that it appears in org list
 - [ ] 🔵 admin user edit details of their organization
   - [ ] 🔵 verify that title change appears in org list
+  - [ ] 🔵 create a new proactive disclosure record with the new organization
+  - [ ] 🔵 create a new dataset with the new organization
   - [ ] ⚫ reindex datasets for this organization with `paster --plugin=ckan search-index rebuild -r -e`
   - [ ] 🔵 verify that org title change has been applied to datasets
 
@@ -88,5 +96,6 @@
   - [ ] verify display of map (e.g. for the [open data portal catalogue](https://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7))
   - [ ] verify similar records are shown and appropriate
   - [ ] verify rate this dataset links to Drupal rating page and shows ratings
+  - [ ] verify the comments feature works and links to Drupal
 - [ ] download an uploaded resource from a dataset page
 - [ ] follow link to an external resource from a dataset page

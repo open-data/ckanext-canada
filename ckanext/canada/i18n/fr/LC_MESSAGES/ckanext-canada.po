@@ -782,6 +782,15 @@ msgstr ""
 msgid "ATI Nothing to Report"
 msgstr "Accès à l’information rien à signaler"
 
+msgid "Please enter a valid year"
+msgstr "Veuillez entrer une année valide"
+
+msgid "Please enter a month number from 1-12"
+msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
+
+msgid "This value must not be negative"
+msgstr "Cette valeur ne doit pas être négatif"
+
 msgid ""
 "IMPORTANT: New or updated inventories / rows will be published on open."
 "canada.ca daily. IMSO approval must be obtained and sent to <a href=\"mailto:"
@@ -820,21 +829,6 @@ msgstr "Année"
 
 msgid "Month"
 msgstr "Mois"
-
-msgid "Month (1-12)"
-msgstr "Mois (1-12)"
-
-msgid "Request Number"
-msgstr "Numero de la demande"
-
-msgid "English Summary"
-msgstr "Sommaire de la demande en anglais"
-
-msgid "French Summary"
-msgstr "Sommaire de la demande en français"
-
-msgid "Number of Pages"
-msgstr "Nombre de pages"
 
 msgid "Proactive Disclosure - Travel Expenses"
 msgstr "Divulgation proactive – Dépenses de voyage"
@@ -3486,4 +3480,5 @@ msgstr "Nous sommes désolés que votre version du navigateur n'est pas support�
 msgid "Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses."
 msgstr "Accès, téléversement et modification de la rémunération et des dépenses des membres de votre Comité ministériel d’audit."
 
-
+msgid "This text must be provided in both languages"
+msgstr "Ce texte doit être fourni dans les deux langues"
