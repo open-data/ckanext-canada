@@ -32,8 +32,8 @@ setup(
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
-    ati=ckanext.canada.ati:ATICommand
 
+    ati=ckanext.canada.pd:PDNilCommand
     contracts=ckanext.canada.pd:PDNilCommand
     grants=ckanext.canada.pd:PDNilCommand
     reclassification=ckanext.canada.pd:PDNilCommand
