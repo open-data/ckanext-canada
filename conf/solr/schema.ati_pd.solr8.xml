@@ -116,9 +116,9 @@
     <!-- catchall field, containing all other searchable text fields (implemented
          via copyField further on in this schema  -->
     <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
-    <field name="i18n_content_fr" type="text_fr" multiValued="true" indexed="true" stored="true" termVectors="true"/>
-    <field name="i18n_content_en" type="text" multiValued="true" indexed="true" stored="true" termVectors="true"/>
-
+    <field name="text_fr" type="text" indexed="true" stored="false" multiValued="true"/>
+    <dunamicField name="doubl_*" type="double" indexed="true" stored="true" />
+    <dynamicField name="multi_*" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="true"/>
 </fields>
 
@@ -127,33 +127,7 @@
 <solrQueryParser q.op="AND"/>
 
 <copyField source="*_en" dest="text"/>
-<copyField source="*_fr" dest="text"/>
-    <!-- BEGIN ATI -->
-
-    <copyField source="i18n_ts_en_ati_request_summary" dest="i18n_content_en" />
-
-    <copyField source="i18n_ts_en_ati_request_number" dest="i18n_content_en" />
-
-    <copyField source="ss_ati_organization_en" dest="i18n_content_en" />
-
-	<copyField source="ss_ati_monthname_en" dest="i18n_content_en" />
-
-	<copyField source="ss_ati_email_en" dest="i18n_content_en" />
-
-    
-
-    <copyField source="i18n_ts_fr_ati_request_summary" dest="i18n_content_fr" />
-
-    <copyField source="i18n_ts_fr_ati_request_number" dest="i18n_content_fr" />
-
-    <copyField source="ss_ati_organization_fr" dest="i18n_content_fr" />
-
-	<copyField source="ss_ati_monthname_fr" dest="i18n_content_fr" />
-
-	<copyField source="ss_ati_email_fr" dest="i18n_content_fr" />
-
-      <!-- END ATI -->
-
+<copyField source="*_fr" dest="text_fr"/>
 
 
 </schema>
