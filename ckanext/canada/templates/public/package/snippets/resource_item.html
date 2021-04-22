@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% block resource_item_title %}
+  {{ super() }}
+  {% for language in res.language %}
+    &nbsp;
+    <span class="badge"> 
+      {{ language | replace("en", _('English')) | replace("fr", _('French')) }}
+    </span>
+  {% endfor %}
+{% endblock %}
