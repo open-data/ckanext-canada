@@ -30,11 +30,13 @@
 
 {%- block scripts %}
   {{ super() }}
-    <script src="{{ h.url_for_static('base/vendor/select2/select2.min.js') }}"></script>
+  <script src="https://rawgit.com/select2/select2/master/dist/js/select2.min.js" defer></script>
+  <script src="{{ h.url_for_static('base/vendor/select2/select2.min.js') }}"></script>
 {% endblock %}
 
 {% block custom_styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2-bootstrap.css') }}" />
+    <link href="https://rawgit.com/select2/select2/master/dist/css/select2.min.css" rel="stylesheet"/>
 {% endblock %}
