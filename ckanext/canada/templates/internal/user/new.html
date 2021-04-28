@@ -28,6 +28,11 @@
   </div>
 {% endblock %}
 
+{%- block scripts %}
+  {{ super() }}
+    <script src="{{ h.url_for_static('base/vendor/select2/select2.min.js') }}"></script>
+{% endblock %}
+
 {% block custom_styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2.css') }}" />
