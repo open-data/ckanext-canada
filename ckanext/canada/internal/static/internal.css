@@ -335,6 +335,16 @@ footer {
     margin-top: 15px;
 }
 
+.page-header .nav-tabs li.active a {
+    background-color: #335075;
+    color: #fff;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #335075;
+}
+
 /* The styling below hides the native sort buttons provided by Datatables */
 table#dtprv thead .sorting,
 table#dtprv thead .sorting_asc,

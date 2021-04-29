@@ -58,6 +58,8 @@ for line in in_csv:
             disp = d
             break
 
+    disp = disp.upper()
+
     if 'report' in sys.argv:
         if disp != line['disposition'] and (disp, line['disposition']) not in seen:
             out_csv.writerow({

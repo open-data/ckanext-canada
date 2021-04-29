@@ -1,0 +1,53 @@
+{% ckan_extends %}
+
+{% block resource_item_title %}
+  {{ super() }}
+  {% for language in res.language %}
+    &nbsp;
+    <span class="badge"> 
+      {{ language | replace("en", _('English')) | replace("fr", _('French')) }}
+    </span>
+  {% endfor %}
+{% endblock %}
+
+{% block resource_item_description %}{% endblock %}
+
+{% block resource_item_explore %}
+  {% if not url_is_edit %}
+  <div style="float: right">
+    <ul class="list-inline lst-spcd">
+      {% block resource_item_explore_links %}
+        <li>
+          {% if res.has_views %}
+            <a href="{{ url }}" class="btn btn-default btn-sm">
+                <i class="fa fa-bar-chart-o"></i>
+                {{ _('Preview') }}
+            </a>
+          {% endif %}
+        </li>
+        {% if res.url and h.is_url(res.url) %}
+        <li>
+          <a href="{{ res.url }}" class="btn btn-primary btn-sm resource-url-analytics" target="_blank">
+            {% if res.has_views or res.url_type == 'upload' %}
+              <i class="fa fa-arrow-circle-o-down"></i>
+              {{ _('Download') }}
+            {% else %}
+              <i class="fa fa-external-link"></i>
+              {{ _('Go to resource') }}
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% if can_edit %}
+        <li>
+          <a href="{{ h.url_for(controller='package', action='resource_edit', id=pkg.name, resource_id=res.id) }}" class="btn btn-primary btn-sm">
+            <i class="fa fa-pencil-square-o"></i>
+            {{ _('Edit') }}
+          </a>
+        </li>
+        {% endif %}
+      {% endblock %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endblock %}

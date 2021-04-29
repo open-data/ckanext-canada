@@ -1,24 +1,29 @@
 {% ckan_extends %}
 
-
 {% block content %}
   {% if c.userobj and h.get_timeout_length() %}
-    <section id="timeout" class="mfp-hide modal-dialog modal-content overlay-def">
-      <header class="modal-header">
-        <h2 class="modal-title">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
-      </header>
-      <div class="modal-body">
-        {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
+    <div class="modal fade" id="timeout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overlay-def">
+          <header class="modal-header">
+            <h2 class="modal-title" id="modalLabel">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
+            <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </header>
+          <div class="modal-body">
+            {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
+          </div>
+          <div class="modal-footer">
+            <a href="{% url_for controller='user', action='login' %}" target="_blank" class="btn btn-default btn-sm">
+              <span class="fa fa-sign-in"></span>
+              <span class="text">{{ _('Log in') }}</span>
+            </a>
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <a href="{% url_for controller='user', action='login' %}" target="_blank" class="btn btn-default btn-sm">
-          <span class="fa fa-sign-in"></span>
-          <span class="text">{{ _('Log in') }}</span>
-        </a>
-        <button type="button" class="btn btn-sm btn-primary pull-left popup-modal-dismiss" title="Close overlay">Close<span class="wb-inv">Close overlay</span></button>
-      </div>
-      <button title="Close overlay (escape key)" type="button" class="mfp-close">×<span class="wb-inv"> Close overlay (escape key)</span></button>
-    </section>
+    </div>
   {% endif %}
 
   <div class="container"><div class="row">
@@ -65,8 +70,7 @@
   {%- block session_timeout -%}
     {% if c.userobj and h.get_timeout_length() %}
       <script>
-        setTimeout(function(){
-          wb.doc.trigger( "open.wb-lbx", [[{ src: "#timeout", type: "inline"}], true]); },
+        setTimeout(function(){ $('#timeout').modal('show'); },
                 {{ h.get_timeout_length() }} * 1000);
       </script>
     {% endif %}

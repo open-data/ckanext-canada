@@ -2,14 +2,14 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {% block breadcrumb_content %}
-  {{ h.build_nav('user_index', _('Users')) }}
-  {{ h.build_nav('user_datasets', user.display_name|truncate(35), id=user.name) }}
+  {{ h.build_nav('user.index', _('Users')) }}
+  {{ h.build_nav('user.read', user.display_name|truncate(35), id=user.name) }}
 {% endblock %}
 
 {% block content_primary_nav %}
   {{ super () }}
   {% if h.check_access('user_update', {'id': user.name}) %}
-    {{ h.build_nav_icon('user_edit', _('Edit User'), id=user.name) }}
+    {{ h.build_nav_icon('user.edit', _('Edit User'), id=user.name) }}
   {% endif %}
 {% endblock %}
 
