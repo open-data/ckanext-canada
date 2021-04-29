@@ -17,11 +17,11 @@ Examples:
   {{ form.input('title', label=_('Title'), value=data.title, error=errors.title) }}
 
 #}
-{% macro input(name, id='', label='', value='', placeholder='', type='text', error="", classes=[], attrs={}, is_required=false) %}
+{% macro input(name, id='', label='', value='', placeholder='', type='text', error="", classes=[], attrs={}, is_required=false, is_select2=false) %}
   {%- set extra_html = caller() if caller -%}
 
   {% call input_block(id or name, label or name, error, classes, extra_html=extra_html, is_required=is_required) %}
-    <input id="{{ id or name }}" class="form-control" type="{{ type }}" name="{{ name }}" value="{{ value | empty_and_escape }}" {% if placeholder != '' %} placeholder="{{ placeholder }}" {% endif %} {% if is_required %}required="required"{% endif %} {{ attributes(attrs) }} />
+    <input id="{{ id or name }}" class="{% if is_select2 %}control-medium{% else %}form-control{% endif %}" type="{{ type }}" name="{{ name }}" value="{{ value | empty_and_escape }}" {% if placeholder != '' %} placeholder="{{ placeholder }}" {% endif %} {% if is_required %}required="required"{% endif %} {{ attributes(attrs) }} />
   {% endcall %}
 {% endmacro %}
 
