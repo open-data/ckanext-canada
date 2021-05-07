@@ -8,15 +8,23 @@
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
           <li>
             <a href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
-            <a class="wb-lbx" href="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="{{ r_type }}" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _(label) }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ description }}
+            <a href="" data-toggle="modal" data-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="{{ r_type }}" tabindex="-1" role="dialog" aria-labelledby="{{ r_type }}Label" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="{{ r_type }}Label">{{ _(label) }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ description }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
 {% endmacro %}
 
@@ -35,15 +43,23 @@
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a>
-            <a class="wb-lbx" href="#new_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="new_od" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Create an Open Data Record') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}
+            <a href="" data-toggle="modal" data-target="#new_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="new_od" tabindex="-1" role="dialog" aria-labelledby="new_odLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="new_odLabel">{{ _('Create an Open Data Record') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
           {{ quick_link('experiment') }}
           {{ quick_link('nap') }}
@@ -55,15 +71,23 @@
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create Information Asset') }}</a>
-            <a class="wb-lbx" href="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="new_oi" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Create Information Asset') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Add information about government programs, activities and publications.') }}
+            <a href="" data-toggle="modal" data-target="#new_oi"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="new_oi" tabindex="-1" role="dialog" aria-labelledby="new_oiLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="new_oiLabel">{{ _('Create Information Asset') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Add information about government programs, activities and publications.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
         </ul>
       </section>
@@ -72,15 +96,23 @@
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('dataset_search', portal_type='prop') }}"><i class="fa fa-comment"></i>{{ _('Update Status') }}</a>
-            <a class="wb-lbx" href="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="sug_dataset" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Suggested Datasets - Update Status') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}
+            <a href="" data-toggle="modal" data-target="#sug_dataset"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="sug_dataset" tabindex="-1" role="dialog" aria-labelledby="sug_datasetLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="sug_datasetLabel">{{ _('Suggested Datasets - Update Status') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access the suggested datasets that your organization has received in order to provide a status update.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
         </ul>
       </section>
@@ -90,15 +122,23 @@
           {{ quick_link('consultations') }}
           <li>
             <a href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a>
-            <a class="wb-lbx" href="#consultations_master"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="consultations_master" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Consultations master dataset') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Acces the the dataset that consolidates all the consultations reports submitted by federal institutions.') }}
+            <a href="" data-toggle="modal" data-target="#consultations_master"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="consultations_master" tabindex="-1" role="dialog" aria-labelledby="consultations_masterLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="consultations_masterLabel">{{ _('Consultations master dataset') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Acces the the dataset that consolidates all the consultations reports submitted by federal institutions.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
         </ul>
       </section>
@@ -107,40 +147,64 @@
         <ul class="list-unstyled">
           <li>
             <a href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search All Records') }}</a>
-            <a class="wb-lbx" href="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="search_od" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Search All Records') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Add all Open Data and Information records in the Registry.') }}
+            <a href="" data-toggle="modal" data-target="#search_od"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="search_od" tabindex="-1" role="dialog" aria-labelledby="search_odLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="search_odLabel">{{ _('Search All Records') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Add all Open Data and Information records in the Registry.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
           {% set org = orgs[0] %}
           <li>
             <a href="{{ h.url_for('dataset_search', organization=org.name) }}"><i class="fa fa-search"></i>{{ _('Search your Organization Records') }}</a>
-            <a class="wb-lbx" href="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="search_org" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Search your Organization Records') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Search all records in the Registry, for your Organization.') }}
+            <a href="" data-toggle="modal" data-target="#search_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="search_org" tabindex="-1" role="dialog" aria-labelledby="search_orgLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="search_orgLabel">{{ _('Search your Organization Records') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Search all records in the Registry, for your Organization.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
           <li>
             <a href="{{ h.url_for('organization_members', id=org.name) }}"><i class="fa fa-users"></i>{{ _('View Members of your Organization') }}</a>
-            <a class="wb-lbx" href="#view_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="view_org" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('View Members of your Organization') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('View the list of members linked to your organization.') }}
+            <a href="" data-toggle="modal" data-target="#view_org"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="view_org" tabindex="-1" role="dialog" aria-labelledby="view_orgLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="view_orgLabel">{{ _('View Members of your Organization') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('View the list of members linked to your organization.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
         </ul>
       </section>
@@ -160,15 +224,23 @@
           {{ quick_link('reclassification') }}
           {{ quick_link('qpnotes') }}
             <a href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a>
-            <a class="wb-lbx" href="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <section id="tab_par" class="mfp-hide modal-dialog modal-content overlay-def">
-              <header class="modal-header">
-                <h2 class="modal-title">{{ _('Reports Tabled in Parliament') }}</h2>
-              </header>
-              <div class="modal-body">
-                {{ _('Access, add or modify your reports tabled in Parliament.') }}
+            <a href="" data-toggle="modal" data-target="#tab_par"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+            <div class="modal" id="tab_par" tabindex="-1" role="dialog" aria-labelledby="tab_parLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content overlay-def">
+                  <header class="modal-header">
+                    <h2 class="modal-title" id="tab_parLabel">{{ _('Reports Tabled in Parliament') }}</h2>
+                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                  </header>
+                  <div class="modal-body">
+                    {{ _('Access, add or modify your reports tabled in Parliament.') }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </li>
           {{ quick_link('travelq') }}
           {{ quick_link('travela') }}
@@ -177,51 +249,83 @@
             <ul class="small" style="list-style-type: disc">
               <li>
                 <a href="{{ h.url_for('info_new') }}?collection=transition">{{ _('New or incoming ministers') }}</a>
-                <a class="wb-lbx" href="#new_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-                <section id="new_min" class="mfp-hide modal-dialog modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title">{{ _('New or incoming ministers') }}</h2>
-                  </header>
-                  <div class="modal-body">
-                    {{ _('Access, add or modify briefing package information for your new or incoming minister.') }}
+                <a href="" data-toggle="modal" data-target="#new_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <div class="modal" id="new_min" tabindex="-1" role="dialog" aria-labelledby="new_minLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content overlay-def">
+                      <header class="modal-header">
+                        <h2 class="modal-title" id="new_minLabel">{{ _('New or incoming ministers') }}</h2>
+                        <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                      </header>
+                      <div class="modal-body">
+                        {{ _('Access, add or modify briefing package information for your new or incoming minister.') }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
                   </div>
-                </section>
+                </div>
               </li>
               <li>
                 <a href="{{ h.url_for('info_new') }}?collection=transition_deputy">{{ _('New or incoming deputy heads') }}</a>
-                <a class="wb-lbx" href="#min_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-                <section id="min_dep" class="mfp-hide modal-dialog modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title">{{ _('New or incoming deputy heads') }}</h2>
-                  </header>
-                  <div class="modal-body">
-                    {{ _('Access, add or modify briefing package information for your new or incoming deputy head.') }}
+                <a href="" data-toggle="modal" data-target="#min_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <div class="modal" id="min_dep" tabindex="-1" role="dialog" aria-labelledby="min_depLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content overlay-def">
+                      <header class="modal-header">
+                        <h2 class="modal-title" id="min_depLabel">{{ _('New or incoming deputy heads') }}</h2>
+                        <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                      </header>
+                      <div class="modal-body">
+                        {{ _('Access, add or modify briefing package information for your new or incoming deputy head.') }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
                   </div>
-                </section>
+                </div>
               </li>
               <li>
                 <a href="{{ h.url_for('info_new') }}?collection=parliament_committee">{{ _('Parliamentary Committee appearances for ministers') }}</a>
-                <a class="wb-lbx" href="#par_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-                <section id="par_min" class="mfp-hide modal-dialog modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for ministers') }}</h2>
-                  </header>
-                  <div class="modal-body">
-                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.') }}
+                <a href="" data-toggle="modal" data-target="#par_min"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <div class="modal" id="par_min" tabindex="-1" role="dialog" aria-labelledby="par_minLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content overlay-def">
+                      <header class="modal-header">
+                        <h2 class="modal-title" id="par_minLabel">{{ _('Parliamentary Committee appearances for ministers') }}</h2>
+                        <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                      </header>
+                      <div class="modal-body">
+                        {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.') }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
                   </div>
-                </section>
+                </div>
               </li>
               <li>
                 <a href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy">{{ _('Parliamentary Committee appearances for deputy heads') }}</a>
-                <a class="wb-lbx" href="#par_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-                <section id="par_dep" class="mfp-hide modal-dialog modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title">{{ _('Parliamentary Committee appearances for deputy heads') }}</h2>
-                  </header>
-                  <div class="modal-body">
-                    {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.') }}
+                <a href="" data-toggle="modal" data-target="#par_dep"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                <div class="modal" id="par_dep" tabindex="-1" role="dialog" aria-labelledby="par_depLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content overlay-def">
+                      <header class="modal-header">
+                        <h2 class="modal-title" id="par_depLabel">{{ _('Parliamentary Committee appearances for deputy heads') }}</h2>
+                        <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+                      </header>
+                      <div class="modal-body">
+                        {{ _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.') }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
                   </div>
-                </section>
+                </div>
               </li>
             </ul>
           <li>
