@@ -1,0 +1,13 @@
+{% ckan_extends %}
+
+{% block endpoints %}
+  <tr>
+    <th scope="row">{{ _('Create') }}</th>
+    <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_create', qualified=True) }}</code></td>
+  </tr>
+  <tr>
+    <th scope="row">{{ _('Update / Insert') }}</th>
+    <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_upsert', qualified=True) }}</code></td>
+  </tr>
+  {{ super() }}
+{% endblock %}
