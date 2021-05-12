@@ -1,4 +1,4 @@
-
+ 
 scheming_presets_version: 1
 
 about: scheming presets for ckanext-canada schemas
@@ -3331,6 +3331,7 @@ presets:
     - value: NetCDF
       mimetype: application/x-netcdf
       replaces: [netcdf]
+      openness_score: 3
     - value: ODP
       mimetype: application/vnd.oasis.opendocument.presentation
       replaces: [odp]
