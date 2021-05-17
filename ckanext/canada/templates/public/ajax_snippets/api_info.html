@@ -11,7 +11,7 @@
         </div>
         <div{% if not embedded %} class="modal-body"{% endif %}>
           <p><strong>{{ _('Access resource data via a web API with powerful query support') }}</strong>.
-            {{ _('Further information in the') }} <a href="http://docs.ckan.org/en/latest/maintaining/datastore.html" target="_blank">{{ _('main CKAN Data API and DataStore documentation') }}</a>.</p>
+            {% trans %}Further information in the <a href="http://docs.ckan.org/en/latest/maintaining/datastore.html" target="_blank">main CKAN Data API and DataStore documentation</a>.</p>{% endtrans %}
           <div class="panel-group" id="accordion2">
           <div class="panel panel-default">
             <div class="panel-heading">

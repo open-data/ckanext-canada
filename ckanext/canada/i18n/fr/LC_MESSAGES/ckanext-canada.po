@@ -3485,61 +3485,12 @@ msgstr "Accès, téléversement et modification de la rémunération et des dép
 msgid "This text must be provided in both languages"
 msgstr "Ce texte doit être fourni dans les deux langues"
 
-# Data API info
-msgid "CKAN Data API"
-msgstr "API de données CKAN"
-
-msgid "Access resource data via a web API with powerful query support"
-msgstr ""
-"Accédez aux données de la ressource via une API web supportant des requêtes "
-"puissantes "
-
-msgid "Endpoints"
-msgstr "Points d'accès"
-
+#: ckanext/canada/templates/public/ajax_snippets/api_info.html:14
 msgid ""
-"The Data API can be accessed via the following actions of the CKAN action "
-"API."
+"Further information in the <a "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">main CKAN Data API and DataStore documentation</a>.</p>"
 msgstr ""
-"L'API pour les données peut être accédée via les actions suivantes de l'API "
-"CKAN."
-
-msgid "Further information in the"
-msgstr "Plus d'information dans la"
-
-msgid "main CKAN Data API and DataStore documentation"
-msgstr "documentation de l'API CKAN et de l'extension Datastore"
-
-msgid "Create"
-msgstr "Créer"
-
-msgid "Update / Insert"
-msgstr "Modifier / Insérer"
-
-msgid "Query"
-msgstr "Requête"
-
-msgid "Query (via SQL)"
-msgstr "Requête (via SQL)"
-
-msgid "Querying"
-msgstr "Interrogation"
-
-msgid "Query example (first 5 results)"
-msgstr "Exemple de requête (5 premiers résultats)"
-
-msgid "Query example (results containing 'jones')"
-msgstr "Exemple de requête (résultats contenant 'jones')"
-
-msgid "Query example (via SQL statement)"
-msgstr "Exemple de requête (via commande SQL)"
-
-msgid "Example: Javascript"
-msgstr "Exemple : Javascript"
-
-msgid "A simple ajax (JSONP) request to the data API using jQuery."
-msgstr ""
-"Une requête ajax simple (JSONP) à l'API des données en utilisant jQuery."
-
-msgid "Example: Python"
-msgstr "Exemple : Python"
+"Plus d'informations dans la <a "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">documentation principale de l'API CKAN pour les données et du magasin de données</a>.</p>"
