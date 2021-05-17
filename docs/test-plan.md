@@ -89,6 +89,10 @@
   - [ ] ⚫ publish changes to search and exported csv file with e.g. `make -f bin/pd/Makefile consultations`
   - [ ] PORTAL: verify updated records visible on search and exported csv
 
+### 1.7 User management
+ - [ ] 🔘 editor user click the View Members of your Organization link, see list of users but unable to make changes
+ - [ ] 🔵 admin user click the View Members of your Organization link, see list of users with option to make changes
+
 ## 2. Portal
 
 - [ ] view dataset and resource pages
