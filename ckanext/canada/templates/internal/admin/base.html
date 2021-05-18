@@ -1,5 +1,9 @@
 {% ckan_extends %}
 
+{% block breadcrumb_content %}
+{{ h.build_nav('admin.index', _('Admin')) }}
+{% endblock %}
+
 {% block content_primary_nav %}
   {{ h.build_nav_icon('ckanadmin_listusers', _('Users')) }}
   {#{ h.build_nav_icon('admin.config', _('Config'), icon='check-square-o') }#}
