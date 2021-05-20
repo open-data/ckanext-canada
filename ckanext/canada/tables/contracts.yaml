@@ -662,7 +662,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       D:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CETA, CFTA]
         - lookup: [CETA, TCA, CFTA]
         en: CETA / TCA / CFTA
@@ -670,7 +670,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       E:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CETA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         - lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: CETA / TCA / WTO-AGP / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
@@ -678,7 +678,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       F:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CETA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         - lookup: [CETA, TCA, WTO-AGP, NAFTA, CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA]
         en: CETA / TCA / WTO-AGP / NAFTA / CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA
@@ -699,7 +699,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AD:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CETA, WTO-AGP, CFTA, CCFTA, CKFTA]
         - lookup: [CETA, TCA, WTO-AGP, CFTA, CCFTA, CKFTA]
         en: CETA / TCA / WTO-AGP / CFTA / CCFTA / CKFTA
@@ -716,7 +716,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AG:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CETA, CFTA, CHFTA]
         - lookup: [CETA, TCA, CFTA, CHFTA]
         en: CETA / TCA / CFTA / CHFTA
@@ -745,7 +745,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AM:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CETA, CPTPP]
         - lookup: [CFTA, CETA, TCA, CPTPP]
         en: (discontinued) CFTA / CETA / TCA / CPTPP
@@ -754,7 +754,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AN:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CHFTA, CETA, CPTPP]
         - lookup: [CFTA, CHFTA, CETA, TCA, CPTPP]
         en: CFTA / CHFTA / CETA / TCA / CPTPP
@@ -766,7 +766,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AP:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         - lookup: [CFTA, NAFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
         en: CFTA / NAFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / TCA / CPTPP
@@ -774,7 +774,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AQ:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         - lookup: [CFTA, CCFTA, CCoFTA, CHFTA, CPaFTA, CPFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
         en: CFTA / CCFTA / CCoFTA / CHFTA / CPaFTA / CPFTA / CKFTA / WTO-AGP / CETA / TCA / CPTPP
@@ -794,7 +794,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AU:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         - lookup: [CFTA, CCFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
         en: CFTA / CCFTA / CKFTA / WTO-AGP / CETA / TCA / CPTPP
@@ -810,7 +810,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AX:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CKFTA, WTO-AGP, CETA]
         - lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA]
         en: CFTA / CKFTA / WTO-AGP / CETA / TCA
@@ -818,7 +818,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       AY:
         conditional_lookup:
         - column: contract_date
-          less_than: '2021-01-01'
+          less_than: '2021-04-01'
           lookup: [CFTA, CKFTA, WTO-AGP, CETA, CPTPP]
         - lookup: [CFTA, CKFTA, WTO-AGP, CETA, TCA, CPTPP]
         en: CFTA / CKFTA / WTO-AGP / CETA / TCA / CPTPP
