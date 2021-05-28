@@ -361,7 +361,6 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
             'adobe_analytics_js',
-            'survey_js_url',
             'mail_to_with_params',
         ])
 
