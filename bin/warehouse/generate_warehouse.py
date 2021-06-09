@@ -94,16 +94,19 @@ while tar_array:
         prev_array = [a for a in csv_array if prev_base in a]
         curr_array = [a for a in csv_array if curr_base in a]
 
-        for i in range(len(prev_array)):
+        for curr_csv in curr_array:
             now = datetime.now()
             dt_string = now.strftime("%H:%M:%s")
             print(dt_string,'\n')
-            pdtype = prev_array[i].split('_')[1].split('.')[0]
+            pdfile = curr_csv.split('_')[1]
+            pdtype = pdfile.split('.')[0]
             schema = pdtype
             if 'nil' in pdtype or 'std' in pdtype:
                 schema = schema.split('-')[0]
-            csv_diff(prev_array[i], curr_array[i],
-                'http://open.canada.ca/data/en/recombinant-schema/{0}.json'.format(schema),
-                'warehouse_reports/{0}_warehouse.csv'.format(pdtype))
+            prev_csv_matches = [string for string in prev_array if pdfile in string]
+            if prev_csv_matches:
+                csv_diff(prev_csv_matches[0], curr_csv,
+                    'http://open.canada.ca/data/en/recombinant-schema/{0}.json'.format(schema),
+                    'warehouse_reports/{0}_warehouse.csv'.format(pdtype))
 
 

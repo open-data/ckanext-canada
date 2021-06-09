@@ -38,12 +38,6 @@
 {% endif %}
 {%- endblock -%}
 
-{% block feedback_survey %}
-  {% if h.survey_js_url() %}
-    <script src="{{ h.survey_js_url() }}" defer="" async=""></script>
-  {% endif %}
-{%- endblock -%}
-
 {% set loop11_key = h.loop11_key() %}
 {% if loop11_key %}
   <script type="text/javascript">

@@ -208,7 +208,7 @@ class CanadaController(BaseController):
             })
 
         cols = [f['datastore_id'] for f in chromo['fields']]
-        prefix_cols = 1 if chromo.get('edit_form', False) else 0
+        prefix_cols = 2 if chromo.get('edit_form', False) else 1  # Select | (Edit) | ...
 
         sort_list = []
         i = 0

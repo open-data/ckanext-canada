@@ -369,8 +369,6 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	mkdir -p $(workdir)/amendments
 	$(registry_python) $(fdir)/amendment_delta_records.py \
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
-	$(paster) --plugin=ckanext-canada grants rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/amendments/grants.csv" "$(workdir)/filtered/grants-nil.csv"
 	$(ogc_search)/load_gc_to_solr.py "$(workdir)/amendments/grants.csv" "$(workdir)/filtered/grants-nil.csv"
 
 $(workdir)/grants.csv:
