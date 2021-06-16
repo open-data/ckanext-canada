@@ -273,7 +273,7 @@ consultations: upload-consultations rebuild-consultations
 
 .PHONY: upload-consultations 
 upload-consultations: $(workdir)/filtered/consultations.csv \
-		$(workdir)/consultations_open.csv \
+		$(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations.csv \
 		$(workdir)/filtered/current_consultations_open.csv
 	@echo Publishing Consultations to registry and portal...
