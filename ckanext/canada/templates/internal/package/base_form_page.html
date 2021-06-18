@@ -1,5 +1,9 @@
 {% ckan_extends %}
 
+{% block breadcrumb_content %}
+  {{ h.build_nav('dataset_new', _('Create Dataset')) }}
+{% endblock %}
+
 {% block secondary_content %}
 {% endblock %}
 

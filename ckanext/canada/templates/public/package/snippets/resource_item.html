@@ -28,12 +28,12 @@
         {% if res.url and h.is_url(res.url) %}
         <li>
           <a href="{{ res.url }}" class="btn btn-primary btn-sm resource-url-analytics" target="_blank">
-            {% if res.has_views or res.url_type == 'upload' %}
-              <i class="fa fa-arrow-circle-o-down"></i>
-              {{ _('Download') }}
-            {% else %}
+            {% if res.format == 'HTML' %}
               <i class="fa fa-external-link"></i>
               {{ _('Go to resource') }}
+            {% else %}
+              <i class="fa fa-arrow-circle-o-down"></i>
+              {{ _('Download') }}
             {% endif %}
           </a>
         </li>

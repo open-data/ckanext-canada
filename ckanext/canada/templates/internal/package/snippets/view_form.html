@@ -1,0 +1,22 @@
+{% import 'macros/form.html' as form %}
+
+{% set data = data or {} %}
+{% set errors = errors or {} %}
+
+{{ form.errors(error_summary) }}
+
+{{ form.input('title', id='field-title', label=_('Title (English)'), value=data.title, error=errors.title, classes=['control-full', 'control-large'], is_required=true) }}
+{{ form.input('title_fr', id='field-title_fr', label=_('Title (French)'), value=data.title_fr, error=errors.title_fr, classes=['control-full', 'control-large'], is_required=true) }}
+{{ form.markdown('description', id='field-description', label=_('Description (English)'), value=data.description, error=errors.description) }}
+{{ form.markdown('description_fr', id='field-description_fr', label=_('Description (French)'), value=data.description_fr, error=errors.description_fr) }}
+
+{% block view_form_filters %}
+  {% snippet 'package/snippets/view_form_filters.html', resource=resource, resource_view=resource_view %}
+{% endblock %}
+
+{# form template is defined in ResouceView extention point #}
+
+{% if form_template %}
+  {% include form_template %}
+{% endif %}
+

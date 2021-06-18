@@ -3265,11 +3265,6 @@ msgstr ""
 msgid "API Endpoint"
 msgstr ""
 
-#: ckanext/wet_boew/templates/package/resource_read.html:26
-#: ckanext/wet_boew/templates/package/snippets/resource_item.html:21
-msgid "Go to resource"
-msgstr ""
-
 #: ckanext/wet_boew/templates/package/resource_read.html:28
 msgid "Download"
 msgstr ""
@@ -3286,10 +3281,6 @@ msgstr ""
 
 #: ckanext/wet_boew/templates/package/resource_read.html:81
 msgid "There're no views created for this resource yet."
-msgstr ""
-
-#: ckanext/wet_boew/templates/package/resource_views.html:10
-msgid "New view"
 msgstr ""
 
 #: ckanext/wet_boew/templates/package/resource_views.html:28
@@ -3534,3 +3525,13 @@ msgstr "Nous sommes désolés que votre version du navigateur n'est pas support�
 
 msgid "Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses."
 msgstr "Accès, téléversement et modification de la rémunération et des dépenses des membres de votre Comité ministériel d’audit."
+
+#: ckanext/canada/templates/public/ajax_snippets/api_info.html:14
+msgid ""
+"Further information in the <a "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">main CKAN Data API and DataStore documentation</a>.</p>"
+msgstr ""
+"Plus d'informations dans la <a "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">documentation principale de l'API CKAN pour les données et du magasin de données</a>.</p>"

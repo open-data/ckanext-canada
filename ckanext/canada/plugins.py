@@ -206,12 +206,18 @@ class DataGCCAInternal(p.SingletonPlugin):
         pkg.private = True
 
     def get_actions(self):
-        return {k: disabled_anon_action for k in [
-            'package_activity_list',
-            'recently_changed_packages_activity_list',
-            'dashboard_activity_list',
-            'changed_packages_activity_timestamp_since',
-            ]}
+        return dict(
+            {
+                k: disabled_anon_action for k in [
+                    'package_activity_list',
+                    'recently_changed_packages_activity_list',
+                    'dashboard_activity_list',
+                    'changed_packages_activity_timestamp_since',
+                ]
+            },
+            resource_view_update=resource_view_update_bilingual,
+            resource_view_create=resource_view_create_bilingual,
+        )
 
 
 
@@ -223,6 +229,44 @@ def disabled_anon_action(up_func, context, data_dict):
 disabled_anon_action.side_effect_free = True
 disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
 
+
+@chained_action
+def resource_view_create_bilingual(up_func, context, data_dict):
+    from ckan.logic.schema import default_create_resource_view_schema_filtered
+    # FIXME: assuming all resource views we used are filtered
+    s = default_create_resource_view_schema_filtered()
+    return up_func(
+        dict(
+            context,
+            schema=dict(
+                s,
+                title_fr=list(s['title']),
+                description_fr=list(s['description']),
+            ),
+        ),
+        data_dict
+    )
+
+@chained_action
+def resource_view_update_bilingual(up_func, context, data_dict):
+    from ckan.logic.schema import (
+        default_create_resource_view_schema_filtered,
+        default_update_resource_view_schema_changes,
+    )
+    # FIXME: assuming all resource views we used are filtered
+    s = default_create_resource_view_schema_filtered()
+    s.update(default_update_resource_view_schema_changes())
+    return up_func(
+        dict(
+            context,
+            schema=dict(
+                s,
+                title_fr=list(s['title']),
+                description_fr=list(s['description']),
+            ),
+        ),
+        data_dict
+    )
 
 
 class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
@@ -365,7 +409,6 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
             'adobe_analytics_js',
-            'survey_js_url',
             'mail_to_with_params',
         ])
 
