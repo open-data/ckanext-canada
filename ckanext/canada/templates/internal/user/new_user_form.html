@@ -4,17 +4,23 @@
   {{ form.errors(error_summary) }}
   {% set valid_dict1={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')"} %}
   {% set valid_dict2={ 'oninvalid': "setCustomValidity('"+_("Please enter a valid email address.")+"')", 'onchange':"setCustomValidity('')"} %}
-  {% call form.input("name", id="field-username", label=_("Username"), placeholder="username", value=data.name, error=errors.name, attrs=valid_dict1, is_required=true)  %}
-    {{ form.info(_('Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_)')) }}
+  {% call form.input("name", id="field-username", label=_("Username"), value=data.name, error=errors.name, attrs=valid_dict1, is_required=true)  %}
+    {{ form.info(_('Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_). Example: joe-bloggs')) }}
   {% endcall %}
-  {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder="Joe Bloggs", value=data.fullname, error=errors.fullname, attrs=valid_dict1, is_required=true) }}
-  {{ form.input("email", id="field-email", label=_("Email"), type="email", placeholder="joe.bloggs@tbs-sct.gc.ca", value=data.email, error=errors.email, attrs=valid_dict2, is_required=true) }}
+  {% call form.input("fullname", id="field-fullname", label=_("Full Name"), value=data.fullname, error=errors.fullname, attrs=valid_dict1, is_required=true) %}
+    {{ form.info(_('Example: Joe Bloggs')) }}
+  {% endcall %}
+  {% call form.input("email", id="field-email", label=_("Email"), type="email", value=data.email, error=errors.email, attrs=valid_dict2, is_required=true) %}
+    {{ form.info(_('Example: joe.bloggs@tbs-sct.gc.ca')) }}
+  {% endcall %}
   {% set format_attrs = {'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-key': 'title'} %}
   {% do format_attrs.update(valid_dict1) %}
   {{ form.input('department', id='field-department', label=_('Organization'), placeholder=_('Treasury Board Secretariat'), value=data.department, error=errors.department, attrs=format_attrs, is_required=true, is_select2=true) }}
-  {{ form.input("phoneno", id="field-phoneno", label=_("Phone Number"), placeholder="000 000 0000", value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) }}
-  {{ form.input("password1", id="field-password", label=_("Password"), type="password", placeholder="••••••••", value=data.password1, error=errors.password1, attrs=valid_dict1, is_required=true) }}
-  {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", placeholder="••••••••", value=data.password2, error=errors.password1, attrs=valid_dict1, is_required=true) }}
+  {% call form.input("phoneno", id="field-phoneno", label=_("Phone Number"), value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) %}
+    {{ form.info(_('Example: 000 000 0000')) }}
+  {% endcall %}
+  {{ form.input("password1", id="field-password", label=_("Password"), type="password", value=data.password1, error=errors.password1, attrs=valid_dict1, is_required=true) }}
+  {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", value=data.password2, error=errors.password1, attrs=valid_dict1, is_required=true) }}
 
   <div class="terms-and-conditions">
     {% trans %}

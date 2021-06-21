@@ -27,7 +27,7 @@
       <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
     </div>
     {% endblock %}
-    {% if c.is_myself == false %}
+    {% if is_myself == false %}
       {% block user_follow %}
       <div class="follow_button">
         {{ h.follow_button('user', user.id) }}</li>
@@ -44,7 +44,7 @@
         <div class="col-md-6 left-center">{{ user.name }}</div>
       {% endif %}
       </div>
-      {% if c.is_myself %}
+      {% if is_myself %}
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('Email') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
@@ -55,7 +55,7 @@
         <div class="col-md-12 left-center"><strong>{{ _('Member Since') }}</strong></div>
         <div class="col-md-12 left-center">{{ h.render_datetime(user.created) }}</div>
       </div>
-      {% if c.is_myself %}
+      {% if is_myself %}
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('API Key') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
