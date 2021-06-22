@@ -169,6 +169,7 @@ class DataGCCAInternal(p.SingletonPlugin):
             'recombinant_description_to_markup',
             'mail_to_with_params',
             'get_timeout_length',
+            'security_disable_totp',
         ])
 
     def configure(self, config):
