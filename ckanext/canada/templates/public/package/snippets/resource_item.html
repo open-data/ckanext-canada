@@ -1,13 +1,27 @@
 {% ckan_extends %}
 
 {% block resource_item_title %}
-  {{ super() }}
-  {% for language in res.language %}
-    &nbsp;
-    <span class="badge"> 
-      {{ language | replace("en", _('English')) | replace("fr", _('French')) }}
+  <div style="display: inline-block">
+    {{ super() }}
+    {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
+    <div>
+    {% for language in res.language %}
+      {% for option in language_options %}
+        {% if option.value == language %}
+        <span class="badge res-tag res-tag-lang"> 
+            {{ option.label[h.lang()] }}
+          </span>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    <span class="badge res-tag"> 
+      {{ res.resource_type }}
     </span>
-  {% endfor %}
+    <span class="badge res-tag"> 
+      {{ res.format }}
+    </span>
+    </div>
+  </div>
 {% endblock %}
 
 {% block resource_item_description %}{% endblock %}
