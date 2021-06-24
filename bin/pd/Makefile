@@ -33,7 +33,7 @@ portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
 yyyy_mmdd := $(shell date "+%Y %m%d")
 yyyy := $(word 1,$(yyyy_mmdd))
 yyyymmdd := $(word 1,$(yyyy_mmdd))$(word 2,$(yyyy_mmdd))
-isodate := $(shell date "+%FT%T.%N")
+isodate := $(shell TZ=UTC date "+%FT%T.%N")
 
 ifneq ($(backupsuffix),)
 _backupsuffix := -$(backupsuffix)
