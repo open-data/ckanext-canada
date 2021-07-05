@@ -14,12 +14,16 @@
         {% endif %}
       {% endfor %}
     {% endfor %}
+    {% if res.resource_type %}
     <span class="badge res-tag"> 
       {{ res.resource_type }}
     </span>
+    {% endif %}
+    {% if res.format %}
     <span class="badge res-tag"> 
       {{ res.format }}
     </span>
+    {% endif %}
     </div>
   </div>
 {% endblock %}
