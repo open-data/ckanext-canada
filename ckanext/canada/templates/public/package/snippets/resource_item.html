@@ -1,8 +1,14 @@
 {% ckan_extends %}
 
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
+
 {% block resource_item_title %}
-  <div style="display: inline-block">
-    {{ super() }}
+  <div id="resource_title">
+    <a class="heading resource-heading" href="{{ url }}" title="{{ h.resource_display_name(res) or res.description }}">
+      {{ h.resource_display_name(res) }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
+      {{ h.popular('views', res.tracking_summary.total, min=10) }}
+    </a>
     {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
     <div>
     {% for language in res.language %}
