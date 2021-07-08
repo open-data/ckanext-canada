@@ -120,7 +120,7 @@ python $GA_OG_ANALYTICS \
     $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY visit \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-TMPFILE=$GA_TMP_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
+TMPFILE=$GA_ARCHIVE_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=c14ba36b-0af5-4c59-a5fd-26ca6a1ef6db upload@"${TMPFILE}"
 
@@ -130,7 +130,7 @@ python $GA_OG_ANALYTICS \
     $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY download \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-TMPFILE=$GA_TMP_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
+TMPFILE=$GA_ARCHIVE_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=4ebc050f-6c3c-4dfd-817e-875b2caf3ec6 upload@"${TMPFILE}"
 echo 'visits downloads done' >> "$GA_LOG_FILE"
