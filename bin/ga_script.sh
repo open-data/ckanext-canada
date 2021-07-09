@@ -142,3 +142,12 @@ $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${UPLOADFILE}"
 echo 'deleted datasets done' >> "$GA_LOG_FILE"
 
+#upload archive
+cd $GA_ARCHIVE_ROOT
+cd ..
+zip -r $GA_TMP_DIR/archive.zip analytics
+UPLOADFILE=$GA_TMP_DIR/archive.zip
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
+	id=8debb421-e9cb-49de-98b0-6ce0f421597b upload@"${UPLOADFILE}"
+echo 'archived updates done' >> "$GA_LOG_FILE"
+
