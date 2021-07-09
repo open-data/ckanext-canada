@@ -120,9 +120,9 @@ python $GA_OG_ANALYTICS \
     $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY visit \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-TMPFILE=$GA_TMP_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
+UPLOADFILE=$GA_ARCHIVE_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
-	id=c14ba36b-0af5-4c59-a5fd-26ca6a1ef6db upload@"${TMPFILE}"
+	id=c14ba36b-0af5-4c59-a5fd-26ca6a1ef6db upload@"${UPLOADFILE}"
 
 rm -f $GA_TMP_DIR/od_ga_downloads.xls
 python $GA_OG_ANALYTICS \
@@ -130,15 +130,15 @@ python $GA_OG_ANALYTICS \
     $STARTYR-$CURMTH-01 $PRVYR-$PRVMTH-$LASTDY download \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-TMPFILE=$GA_TMP_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
+UPLOADFILE=$GA_ARCHIVE_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
-	id=4ebc050f-6c3c-4dfd-817e-875b2caf3ec6 upload@"${TMPFILE}"
+	id=4ebc050f-6c3c-4dfd-817e-875b2caf3ec6 upload@"${UPLOADFILE}"
 echo 'visits downloads done' >> "$GA_LOG_FILE"
 
 #delete datasets
-TMPFILE=$GA_TMP_DIR/deletedportalds-$PRVMTH$PRVYR.csv
+UPLOADFILE=$GA_TMP_DIR/deletedportalds-$PRVMTH$PRVYR.csv
 python $GA_DELETE_DS $GA_PORTAL_INI $TMPFILE
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
-	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${TMPFILE}"
+	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${UPLOADFILE}"
 echo 'deleted datasets done' >> "$GA_LOG_FILE"
 
