@@ -9,6 +9,7 @@
 # GA_ARCHIVE_ROOT path to base archive driectory
 # GA_STATIC_DIR path to the directory where static files as stored for the web server
 # GA_VENV_SCRIPT path to script to activate the python virtual environment for this script
+# GA_PORTAL_CKANAPI path to ckanapi within portal environment
 # GA_OG_ANALYTICS path to the analytics scripts in the CKAN Canada extension
 # GA_TMP_DIR temporary directory used by this script and og_analytics.py
 # GA_DELETE_DS path to the get_deleted_datasets.py script in the CKAN Canada extension
@@ -120,7 +121,7 @@ python $GA_OG_ANALYTICS \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 TMPFILE=$GA_TMP_DIR/visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-ckanapi action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=c14ba36b-0af5-4c59-a5fd-26ca6a1ef6db upload@"${TMPFILE}"
 
 rm -f $GA_TMP_DIR/od_ga_downloads.xls
@@ -130,14 +131,14 @@ python $GA_OG_ANALYTICS \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 TMPFILE=$GA_TMP_DIR/downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-ckanapi action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=4ebc050f-6c3c-4dfd-817e-875b2caf3ec6 upload@"${TMPFILE}"
 echo 'visits downloads done' >> "$GA_LOG_FILE"
 
 #delete datasets
 TMPFILE=$GA_TMP_DIR/deletedportalds-$PRVMTH$PRVYR.csv
 python $GA_DELETE_DS $GA_PORTAL_INI $TMPFILE
-ckanapi action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${TMPFILE}"
 echo 'deleted datasets done' >> "$GA_LOG_FILE"
 
