@@ -3240,6 +3240,9 @@ presets:
       openness_score: 3
       replaces: ["FGDB / GDB", "fgdb / gdb"]
       mimetype: application/x-filegdb
+    - value: FITS
+      openness_score: 3
+      mimetype: application/fits
     - value: Flat raster binary
       label:
         en: Flat raster binary

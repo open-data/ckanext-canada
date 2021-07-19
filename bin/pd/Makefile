@@ -26,6 +26,7 @@ registry_ini := $(REGISTRY_INI)
 portal_ini := $(PORTAL_INI)
 ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
+oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
@@ -73,6 +74,8 @@ else ifeq ($(ckanapi),)
 $(error REGISTRY_CKANAPI_COMMAND is undefined)
 else ifeq ($(ogc_search),)
 $(error OGC_SEARCH_COMMAND is undefined)
+else ifeq ($(oc_search),)
+$(error OC_SEARCH_COMMAND is undefined)
 else ifeq ($(backup_dir),)
 $(error PD_BACKUP_DIRECTORY is undefined)
 else ifeq ($(registry_static),)
@@ -448,6 +451,8 @@ rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil
 	@echo Rebuilding Travel Expenses...
 	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
 $(workdir)/travelq.csv:
 	$(paster) $(combine) travelq -d $(workdir) -c $(registry_ini)
@@ -596,6 +601,7 @@ rebuild-travela: $(workdir)/filtered/travela.csv
 	@echo Rebuilding Annual Travel, Hospitality and Conferences...
 	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travela.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:
 	$(paster) $(combine) travela -d $(workdir) -c $(registry_ini)

@@ -23,9 +23,7 @@ import codecs
 from collections import defaultdict
 
 import ckanapi
-import ckan
 from ckanapi.errors import CKANAPIError
-from ckan.logic import (NotAuthorized, NotFound)
 
 import configparser
 import psycopg2
