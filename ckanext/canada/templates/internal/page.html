@@ -32,6 +32,9 @@
     {% endblock flash %}
     {% block maintag %}<main role="main" property="mainContentOfPage" class="container">{% endblock %}
     {% block page_title %}
+    <div id="ie_warning" class="alert alert-warning" style="display: none">
+      <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
+    </div>
       {{ super() }}
     {% endblock %}
     {% block pre_primary %}
@@ -76,4 +79,14 @@
     {% endif %}
   {%- endblock -%}
 
+  {% block ie_browser_warning %}
+    <script>
+      if (navigator.appName == 'Microsoft Internet Explorer' ||
+          !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
+          (typeof $.browser !== "undefined" && $.browser.msie == 1))
+      {
+        document.getElementById("ie_warning").style.display = "block";
+      }
+    </script>
+  {% endblock %}
 {%- endblock -%}

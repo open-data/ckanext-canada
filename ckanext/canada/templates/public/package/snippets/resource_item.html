@@ -1,13 +1,37 @@
 {% ckan_extends %}
 
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
+
 {% block resource_item_title %}
-  {{ super() }}
-  {% for language in res.language %}
-    &nbsp;
-    <span class="badge"> 
-      {{ language | replace("en", _('English')) | replace("fr", _('French')) }}
+  <div id="resource_title">
+    <a class="heading resource-heading" href="{{ url }}" title="{{ h.resource_display_name(res) or res.description }}">
+      {{ h.resource_display_name(res) }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
+      {{ h.popular('views', res.tracking_summary.total, min=10) }}
+    </a>
+    {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
+    <div>
+    {% for language in res.language %}
+      {% for option in language_options %}
+        {% if option.value == language %}
+        <span class="badge res-tag res-tag-lang"> 
+            {{ option.label[h.lang()] }}
+          </span>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% if res.resource_type %}
+    <span class="badge res-tag"> 
+      {{ res.resource_type }}
     </span>
-  {% endfor %}
+    {% endif %}
+    {% if res.format %}
+    <span class="badge res-tag"> 
+      {{ res.format }}
+    </span>
+    {% endif %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block resource_item_description %}{% endblock %}

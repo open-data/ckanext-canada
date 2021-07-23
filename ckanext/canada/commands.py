@@ -750,6 +750,17 @@ def _add_views(portal, resource, resource_details):
                 action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
                 pass
 
+    for target_view in target_views:
+        to_delete = True
+        for src_view in resource_details['views']:
+            if target_view['id'] == src_view['id']:
+                to_delete = False
+                break
+        if to_delete:
+            view_action = 'resource_view_delete'
+            portal.call_action(view_action, {'id':target_view['id']})
+            action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+
     return action
 
 

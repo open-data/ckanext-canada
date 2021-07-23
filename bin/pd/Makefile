@@ -26,6 +26,7 @@ registry_ini := $(REGISTRY_INI)
 portal_ini := $(PORTAL_INI)
 ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
+oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
@@ -33,6 +34,7 @@ portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
 yyyy_mmdd := $(shell date "+%Y %m%d")
 yyyy := $(word 1,$(yyyy_mmdd))
 yyyymmdd := $(word 1,$(yyyy_mmdd))$(word 2,$(yyyy_mmdd))
+isodate := $(shell TZ=UTC date "+%FT%T")
 
 ifneq ($(backupsuffix),)
 _backupsuffix := -$(backupsuffix)
@@ -72,6 +74,8 @@ else ifeq ($(ckanapi),)
 $(error REGISTRY_CKANAPI_COMMAND is undefined)
 else ifeq ($(ogc_search),)
 $(error OGC_SEARCH_COMMAND is undefined)
+else ifeq ($(oc_search),)
+$(error OC_SEARCH_COMMAND is undefined)
 else ifeq ($(backup_dir),)
 $(error PD_BACKUP_DIRECTORY is undefined)
 else ifeq ($(registry_static),)
@@ -278,11 +282,20 @@ upload-consultations: $(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations_open.csv
 	@echo Publishing Consultations to registry and portal...
 	cp $(workdir)/consultations.csv $(registry_static)
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=897d3008-b258-4a68-8c02-3e3c099a42c8 last_modified=$(isodate) \
+	> /dev/null
 	cp $(workdir)/filtered/consultations.csv $(registry_static)/consultations_open.csv
 	cp $(workdir)/filtered/consultations.csv $(portal_static)/consultations_open.csv
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=92bec4b7-6feb-4215-a5f7-61da342b2354 last_modified=$(isodate) \
+	> /dev/null
 	cp $(workdir)/filtered/current_consultations.csv $(registry_static)
 	cp $(workdir)/filtered/current_consultations_open.csv $(registry_static)
 	cp $(workdir)/filtered/current_consultations_open.csv $(portal_static)
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=aa606d25-4387-4bc6-89eb-12d66f5e9044 last_modified=$(isodate)\
+	> /dev/null
 
 .PHONY: rebuild-consultations
 rebuild-consultations:
@@ -438,6 +451,8 @@ rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil
 	@echo Rebuilding Travel Expenses...
 	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
 $(workdir)/travelq.csv:
 	$(paster) $(combine) travelq -d $(workdir) -c $(registry_ini)
@@ -586,6 +601,7 @@ rebuild-travela: $(workdir)/filtered/travela.csv
 	@echo Rebuilding Annual Travel, Hospitality and Conferences...
 	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travela.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:
 	$(paster) $(combine) travela -d $(workdir) -c $(registry_ini)
