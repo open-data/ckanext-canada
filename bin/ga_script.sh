@@ -137,7 +137,7 @@ echo 'visits downloads done' >> "$GA_LOG_FILE"
 
 #delete datasets
 UPLOADFILE=$GA_TMP_DIR/deletedportalds-$PRVMTH$PRVYR.csv
-python $GA_DELETE_DS $GA_PORTAL_INI $TMPFILE
+python $GA_DELETE_DS $GA_PORTAL_INI $UPLOADFILE
 $GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
 	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${UPLOADFILE}"
 echo 'deleted datasets done' >> "$GA_LOG_FILE"
