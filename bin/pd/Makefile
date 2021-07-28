@@ -451,7 +451,7 @@ rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil
 	@echo Rebuilding Travel Expenses...
 	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
 $(workdir)/travelq.csv:
