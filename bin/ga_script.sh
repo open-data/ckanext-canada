@@ -6,6 +6,7 @@
 #
 # GA_CLIENT_SECRET path to GA secrets file
 # GA_PORTAL_INI path to the CKAN portal ini file
+# GA_REGISTRY_INI path to the CKAN registry ini file
 # GA_ARCHIVE_ROOT path to base archive driectory
 # GA_STATIC_DIR path to the directory where static files as stored for the web server
 # GA_VENV_SCRIPT path to script to activate the python virtual environment for this script
@@ -121,7 +122,7 @@ python $GA_OG_ANALYTICS \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/openDataPortal.siteAnalytics.visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 UPLOADFILE=$GA_ARCHIVE_DIR/openDataPortal.siteAnalytics.visits-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_REGISTRY_INI \
 	id=c14ba36b-0af5-4c59-a5fd-26ca6a1ef6db upload@"${UPLOADFILE}"
 
 rm -f $GA_TMP_DIR/od_ga_downloads.xls
@@ -131,14 +132,14 @@ python $GA_OG_ANALYTICS \
     >> $GA_LOG_FILE 2>&1
 mv $GA_TMP_DIR/od_ga_downloads.xls $GA_ARCHIVE_DIR/openDataPortal.siteAnalytics.downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
 UPLOADFILE=$GA_ARCHIVE_DIR/openDataPortal.siteAnalytics.downloads-$PRVMTH$STARTYR-$PRVMTH$PRVYR.xls
-$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_REGISTRY_INI \
 	id=4ebc050f-6c3c-4dfd-817e-875b2caf3ec6 upload@"${UPLOADFILE}"
 echo 'visits downloads done' >> "$GA_LOG_FILE"
 
 #delete datasets
 UPLOADFILE=$GA_TMP_DIR/deletedportalds-$PRVMTH$PRVYR.csv
 python $GA_DELETE_DS $GA_PORTAL_INI $UPLOADFILE
-$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_REGISTRY_INI \
 	id=d22d2aca-155b-4978-b5c1-1d39837e1993 upload@"${UPLOADFILE}"
 echo 'deleted datasets done' >> "$GA_LOG_FILE"
 
@@ -147,7 +148,7 @@ cd $GA_ARCHIVE_ROOT
 cd ..
 zip -r $GA_TMP_DIR/archive.zip analytics/????-??-??/openDataPortal.siteAnalytics.*.{csv,xls}
 UPLOADFILE=$GA_TMP_DIR/archive.zip
-$GA_PORTAL_CKANAPI action resource_patch -c $GA_PORTAL_INI \
+$GA_PORTAL_CKANAPI action resource_patch -c $GA_REGISTRY_INI \
 	id=8debb421-e9cb-49de-98b0-6ce0f421597b upload@"${UPLOADFILE}"
 echo 'archived updates done' >> "$GA_LOG_FILE"
 
