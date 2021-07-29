@@ -59,7 +59,16 @@
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('API Key') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
-        <div class="col-md-12 left-center"><code>{{ user.apikey }}</code></div>
+        <div class="col-md-12 left-center"><a href="#apikey_popup" class="wb-lbx">{{ _('Show API Key') }}</a>
+          <section id="apikey_popup" class="mfp-hide modal-dialog modal-content overlay-def">
+            <header class="modal-header">
+              <h3 class="modal-title">{{ _('API Key') }}</h3>
+            </header>
+            <div class="modal-body">
+              <code>{{ user.apikey }}</code>
+            </div>
+          </section>
+        </div>
       </div>
       {% endif %}
       {% endblock %}
