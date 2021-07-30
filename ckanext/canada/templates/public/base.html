@@ -10,7 +10,8 @@
     {%- endblock -%}
     <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
     {%- block adobe_analytics_creator -%}
-    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat') }}"/>
+    {# remove encode when moving from fanstatic - applied as a fix for OPEN-1566 #}
+    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat').encode('ascii', 'xmlcharrefreplace') | safe }}"/>
     {%- endblock -%}
     <meta property="dcterms:service" content="OG-GO" />
     <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
