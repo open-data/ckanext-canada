@@ -59,16 +59,26 @@
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('API Key') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
-        <div class="col-md-12 left-center"><a href="#apikey_popup" class="wb-lbx">{{ _('Show API Key') }}</a>
-          <section id="apikey_popup" class="mfp-hide modal-dialog modal-content overlay-def">
-            <header class="modal-header">
-              <h3 class="modal-title">{{ _('API Key') }}</h3>
-            </header>
-            <div class="modal-body">
-              <code>{{ user.apikey }}</code>
+        <div class="col-md-12 left-center">
+          <a href="" data-toggle="modal" data-target="#api_modal">{{ _('Show API Key') }}</a>
+          <div class="modal" id="api_modal" tabindex="-1" role="dialog" aria-labelledby="api_modal_label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content overlay-def">
+                <header class="modal-header">
+                  <h2 class="modal-title" id="api_modal_label">{{ _('API Key') }}</h2>
+                  <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                </header>
+                <div class="modal-body">
+                  <code>{{ user.apikey }}</code>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+              </div>
             </div>
-          </section>
+          </div>
         </div>
+
       </div>
       {% endif %}
       {% endblock %}
