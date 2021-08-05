@@ -297,11 +297,8 @@ class DatasetDownload():
             response = self.getRawReport(start)
             data, start = self.parseReport(response)
             for [url, count] in data:
-                id = url.split('/')[-1]
-                id = id.split('&')[0]
-                # added by Rabia 2020-01-29 - removes querystring parameters
-                id = id.split('?')[0]
-                id = id.strip()
+                id = url.split('/dataset/')[-1]
+                id = id.split('/')[0]
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
             if len(data)==0 or not start:
