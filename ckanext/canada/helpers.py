@@ -166,7 +166,38 @@ class EST(datetime.tzinfo):
 
     def dst(self, dt):
         return datetime.timedelta(0)
-        
+
+# copied from ckan 2.6 branch
+# https://github.com/open-data/ckan/blob/ee0a94c97f8988e78c9b1f92f92adb5c26884841/ckan/lib/helpers.py#L1245
+def canada_date_str_to_datetime(date_str):
+    '''Convert ISO-like formatted datestring to datetime object.
+    This function converts ISO format date- and datetime-strings into
+    datetime objects.  Times may be specified down to the microsecond.  UTC
+    offset or timezone information may **not** be included in the string.
+    Note - Although originally documented as parsing ISO date(-times), this
+           function doesn't fully adhere to the format.  This function will
+           throw a ValueError if the string contains UTC offset information.
+           So in that sense, it is less liberal than ISO format.  On the
+           other hand, it is more liberal of the accepted delimiters between
+           the values in the string.  Also, it allows microsecond precision,
+           despite that not being part of the ISO format.
+    '''
+
+    time_tuple = re.split('[^\d]+', date_str, maxsplit=5)
+
+    # Extract seconds and microseconds
+    if len(time_tuple) >= 6:
+        m = re.match('(?P<seconds>\d{2})(\.(?P<microseconds>\d+))?$',
+                     time_tuple[5])
+        if not m:
+            raise ValueError('Unable to parse %s as seconds.microseconds' %
+                             time_tuple[5])
+        seconds = int(m.groupdict().get('seconds'))
+        microseconds = int((str(m.groupdict(0).get('microseconds')) + '00000')[0:6])
+        time_tuple = time_tuple[:5] + [seconds, microseconds]
+
+    return datetime.datetime(*map(int, time_tuple))
+
 def remove_duplicates(a_list):
     s = set()
     for i in a_list:
@@ -500,3 +531,4 @@ def mail_to_with_params(email_address, name, subject, body):
 
 def get_timeout_length():
     return int(config.get('beaker.session.timeout'))
+
