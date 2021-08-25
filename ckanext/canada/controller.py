@@ -33,7 +33,7 @@ import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
 from ckan.logic import parse_params
 
-from ckanext.canada.helpers import normalize_strip_accents
+from ckanext.canada.helpers import normalize_strip_accents, canada_date_str_to_datetime
 from ckanext.canada.urlsafe import url_part_escape, url_part_unescape
 from pylons.i18n import _
 from pylons import config, session
@@ -338,7 +338,7 @@ def datatablify(v, colname):
     if isinstance(v, list):
         return u', '.join(unicode(e) for e in v)
     if colname in ('record_created', 'record_modified') and v:
-        return h.date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
+        return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
     return unicode(v)
 
