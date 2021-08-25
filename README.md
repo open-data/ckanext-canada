@@ -80,8 +80,6 @@ Both servers need:
 ```ini
 licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
-ckan.i18n_directory = <path to this extension>/build
-
 ckan.auth.create_dataset_if_not_in_organization = false
 
 ckan.activity_streams_email_notifications = false
@@ -90,6 +88,9 @@ ckan.datasets_per_page = 10
 
 googleanalytics.id = UA-1010101-1 (your analytics account id)
 googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+
+# Internationalisation Settings
+ckan.locales_offered = en fr
 ```
 
 ## OD Configuration: Adding WET Resource files
