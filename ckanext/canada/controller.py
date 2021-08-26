@@ -219,7 +219,7 @@ class CanadaController(BaseController):
             sort_order = (
                 u'desc' if request.params[u'order[%d][dir]' % i] == u'desc'
                 else u'asc')
-            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order)
+            sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order + u' nulls last')
             i += 1
 
         response = lc.action.datastore_search(
