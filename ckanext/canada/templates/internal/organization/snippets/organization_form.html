@@ -46,7 +46,7 @@
       {% block delete_button %}
         {% if h.check_access('organization_delete', {'id': data.id})  %}
           {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Organization?')}) %}
-          <button class="btn btn-danger" href="{% url_for controller='organization', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</button>
+          <a class="btn btn-danger" href="{% url_for controller='organization', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}" data-module-content="{{ _('Are you sure you want to delete this Organization? Note*: Deleting cannot be performed while public or private datasets belong to this organization.') }}">{{ _('Delete') }}</a>
         {% endif %}
       {% endblock %}
       <button class="btn btn-primary" name="save" type="submit" >{% block save_text %}{{ _('Save Organization') }}{% endblock %}</button>
