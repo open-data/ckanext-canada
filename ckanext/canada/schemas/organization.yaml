@@ -1,0 +1,58 @@
+scheming_version: 2
+organization_type: organization
+
+about: 'open.canada.ca: Organization metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+
+form_languages:
+- en
+- fr
+
+#
+#   ORGANIZATION FIELDS
+#
+fields:
+
+- field_name: title
+  label: Title
+  validators: ignore_missing unicode
+  form_snippet: large_text.html
+  form_attrs:
+    data-module: slug-preview-target
+
+- field_name: name
+  label: URL
+  validators: not_empty unicode name_validator group_name_validator
+  form_snippet: slug.html
+  form_placeholder: my-organization
+
+- field_name: notes
+  label: Description
+  help_text:
+    en: "A little information about my organization..."
+    fr: "Un peu d'information au sujet de mon organisation..."
+  form_snippet: markdown.html
+
+- field_name: shortform
+  label: shortform
+  form_snippet: large_text.html
+
+- field_name: shortform_fr
+  label: shortform_fr
+  form_snippet: large_text.html
+
+- field_name: department_number
+  label: department_number
+  form_snippet: large_text.html
+
+- field_name: umd_number
+  label: umd_number
+  form_snippet: large_text.html
+
+- field_name: ati_email
+  label: ati_email
+  form_snippet: large_text.html
+
+- field_name: opengov_email
+  label: opengov_email
+  form_snippet: large_text.html

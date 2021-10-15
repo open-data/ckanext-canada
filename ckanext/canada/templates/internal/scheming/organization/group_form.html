@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block save_text %}
+  {%- if action == "edit" -%}
+    {{ _('Update Organization') }}
+  {%- else -%}
+    {{ _('Create Organization') }}
+  {%- endif -%}
+{% endblock %}
