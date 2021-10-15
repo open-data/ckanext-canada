@@ -281,7 +281,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
-    # p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.IMiddleware, inherit=True)
 
     def i18n_domain(self):
         return 'ckanext-canada'
@@ -322,6 +322,7 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
+        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
@@ -549,15 +550,15 @@ class LogExtraMiddleware(object):
     def __call__(self, environ, start_response):
         def _start_response(status, response_headers, exc_info=None):
             extra = []
-            if c.package:
-                assert 0
             if c.user:
+                log_extra = c.log_extra if hasattr(c, 'log_extra') else u''
                 extra = [(
                     'X-LogExtra', u'user={uid} {extra}'.format(
                         uid=c.user,
-                        extra=c.log_extra or u'').encode('utf-8')
+                        extra=log_extra).encode('utf-8')
                     )
                 ]
+
             return start_response(
                 status,
                 response_headers + extra,
