@@ -1,0 +1,330 @@
+dataset_type: admin_aircraft
+target_dataset: admin_aircraft
+
+title: Proactive Disclosure - Government Administrative Aircraft Use
+notes: Access, upload and modify 
+
+template_version: 3
+
+portal_type: info
+collection: admin_aircraft
+
+resources:
+- title: Proactive Disclosure - Government Administrative Aircraft Use
+  resource_name: admin_aircraft
+  create_form: true
+  edit_form: true
+  fields:
+
+  # 3.1
+  - datastore_id: reference_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: This field is populated by the user with the reference number of the Question Period Note. This number is a mandatory system requirement when publishing a template.
+      fr: Ce champ est rempli par l’utilisateur avec le numéro de référence de la note pour la période de questions. Le numéro est une exigence de système obligatoire pour la publication d’un modèle.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+# 3.2
+  - datastore_id: minister
+    label:
+      en: Title of Minister
+      fr: Titre du ministre
+    description:
+      en: This field will display the title of the Minister for whom the Question Period Note was created.
+      fr: Ce champ affichera le titre du ministre pour qui la note pour la période de questions a été créée.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: True
+    choices_file: choices/minister.json
+    excel_error_formula: 'FALSE'
+
+  # 3.3
+  - datastore_id: purpose_en
+    label:
+      en: Purpose of the trip (English)
+      fr: But du voyage (anglais)
+    description:
+      en: A description of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in English.
+      fr: Description de la raison du voyage, en anglais, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
+
+  # 3.4
+  - datastore_id: purpose_fr
+    label:
+      en: Purpose of the trip (French)
+      fr: But du voyage (français)
+    description:
+      en: A description, in French, of the reason for the government trip in question. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided, in French
+      fr: Description de la raison du voyage, en français, en service commandé visé. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 30
+    form_attrs:
+      size: 60
+
+  # 3.5
+  - datastore_id: start_date
+    label:
+      en: Travel start date
+      fr: Date du début du voyage
+    description:
+      en: The date the travel started.
+      fr: Date du début du voyage.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
+
+# 3.6
+  - datastore_id: end_date
+    label:
+      en: Travel end date
+      fr: Date de fin du voyage
+    description:
+      en: The date the travel ended (can be the same as travel start date).
+      fr: Date de fin du voyage (peut être la même date que la date du début du voyage).
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.7
+  - datastore_id: locations_en
+    label:
+      en: Location(s) visited (English)
+      fr: Endroit(s) visité (anglais)
+    description:
+      en: To include names of all places visited to conduct government business during the trip in question, in English.
+      fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (Note, use full city/region, province/state and country name where possible)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+# 3.8
+  - datastore_id: locations_fr
+    label:
+      en: Location(s) visited (French)
+      fr: Endroit(s) visité (français)
+    description:
+      en: To include names of all places visited to conduct government business during the trip in question, in french.
+      fr: Cette zone indique, en français, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free Text (Note, use full city/region, province/state and country name where possible)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.9
+  - datastore_id: hours
+    label:
+      en: Number of hours flown
+      fr: Le nombre d’heures de vol
+    description:
+      en: The number of hours flown. 
+      fr: Le nombre d’heures de vol.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Decimal
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: numeric
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+# 3.10
+  - datastore_id: passengers
+    label:
+      en: Passenger names
+      fr: Nom des passagers
+    description:
+      en: Full list of flight passengers.
+      fr: Liste complète des passagers du vol.
+    obligation: Mandatory
+    format_type: Free Text 
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.11
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (anglais)
+    description:
+      en: This field will display any additional information, as deemed necessary, in English.
+      fr: Ce champ affichera tout renseignement supplémentaire, en anglais, selon les besoins.
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.12
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (français)
+    description:
+      en: This field will display any additional information, as deemed necessary, in French.
+      fr: Ce champ affichera tout renseignement supplémentaire, en français, selon les besoins.
+    obligation: Optional
+    format_type: Free Text (separate paragraphs with two blank lines)
+    validation: None
+    visible_to_public: Yes
+    occurrence: Repeatable
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # audit trail
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: reference_number
+  datastore_indexes: ""
+
+  default_preview_sort: reference_number
+
+  excel_example_height: 100
+  excel_data_num_rows: 500
+
+  triggers:
+  - admin_aircraft_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        errors := errors || required_error(NEW.minister, 'minister');
+        errors := errors || required_error(NEW.purpose_en, 'purpose_en');
+        errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
+        errors := errors || required_error(NEW.start_date, 'start_date');
+        errors := errors || required_error(NEW.end_date, 'end_date');
+        errors := errors || required_error(NEW.locations_en, 'locations_en');
+        errors := errors || required_error(NEW.locations_fr, 'locations_fr');
+        errors := errors || required_error(NEW.hours, 'hours');
+        errors := errors || required_error(NEW.passengers, 'passengers');
+        errors := errors || choice_error(NEW.minister, {minister}, 'minister');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      reference_number: "T-2019-Q3-00001"
+      minister: "PTB"
+      purpose_en: "travel to someplace to do something"
+      purpose_fr: "voyager a quelque place"
+      start_date: "2019-11-25"
+      end_date: "2019-11-26"
+      locations_en: "1. Vancouver, British Columbia, Canada\n 2. Whitehorse, Yukon, Canada\n 3. Ottawa, Ontario, Canada"
+      locations_fr: "1. Vancouver, Colombie-Britannique, Canada\n 2. Whitehorse, Yukon, Canada\n 3. Ottawa, Ontario, Canada"
+      hours: "11.5"
+      passengers: "John Smith, Martha Smith, LGen Robert Jones, Thomas Cruise"
+      additional_information_en: "This trip was really fun, I'm glad we went."
+      additional_information_fr: "Ce voyage a ete tres amusant, je suis content que j'ai allez. "
+    filter_one:
+      reference_number: DND-2019-QP-00001
+    sort: date_received desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF6832e3
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFF0C5EE
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEFEFEF
