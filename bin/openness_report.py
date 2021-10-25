@@ -73,17 +73,14 @@ class Records():
         reports = defaultdict(list)
         for records in self.download():
             for record in records:
-              try:
                 id = record['id']
                 score = openness_score(record)
                 report = reports[record['organization']['title']]
                 title = record["title_translated"]
-                title = title['en'] + ' | ' + title['fr']
+                title = title.get('en', title.get('en-t-fr', '')) + ' | ' + title.get('fr', title.get('fr-t-en', ''))
                 url = ''.join(['http://open.canada.ca/data/en/dataset/', id, ' | ',
                       'http://ouvert.canada.ca/data/fr/dataset/', id])
                 report.append([title, url, score])
-              except:
-                  import pdb; pdb.set_trace()
 
         orgs = list(reports)
         orgs.sort()
