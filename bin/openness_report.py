@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
 Usage:
@@ -29,7 +29,7 @@ import ckanapi
 import ckan
 from ckanapi.errors import CKANAPIError
 
-proxy= os.environ['http_proxy']
+proxy= os.environ.get('http_proxy', '')
 
 
 class Records():
