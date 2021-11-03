@@ -1,0 +1,463 @@
+dataset_type: suppliervax
+target_dataset: suppliervax
+
+title: Reporting on COVID-19 Vaccination Requirement for Supplier Personnel 
+notes: Access, upload and modify the COVID-19 Vaccination Requirement for Supplier Personnel reporting for your organization
+
+
+upload_warn:
+  en: "placeholder if required"
+  fr: "placeholder if required"
+
+
+
+template_version: 3
+
+portal_type: info
+collection: pd
+
+resources:
+- title: Contract Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
+  resource_name: contract_data
+  create_form: true
+  edit_form: true
+  fields:
+
+  # 3.1
+  - datastore_id: c_report_date
+    label:
+      en: Report Date
+      fr: Numéro de suivi
+    description:
+      en: This is the date of the report.
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    excel_column_width: 28
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.2
+  - datastore_id: c_active
+    label:
+      en: Total number of active contracts within scope of Policy where certifcation occurs after contract award
+      fr: text
+    description:
+      en: |
+        Total number of active contracts within scope of Policy where certifcation occurs after contract award.
+        Contract Data:
+        a.	An initial report to be submitted by November 26, 2021 on information collected as of November 15, 2021. 
+        b.	An updated report to be submitted by January 14, 2022 with updated information as of December 15, 2021.
+        c.	If the previous report includes one or more contracts where the supplier certification status is pending, a monthly update is required until all active contracts subject to the Policy as of November 15, 2021 are accounted for. 
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+
+  # 3.3
+  - datastore_id: c_refuse
+    label:
+      en: Total number of active contracts where certification occurs after contract award and supplier was unable/refuse to certify
+      fr: text
+    description:
+      en: Total number of active contracts where certification occurs after contract award and supplier was unable/refuse to certify
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+  # 3.4
+  - datastore_id: c_accommodations
+    label:
+      en: Total number of active contracts where accomodations were made per Policy
+      fr: text
+    description:
+      en: Total number of active contracts where accomodations were made per Policy
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+   # 3.5
+  - datastore_id: c_pending
+    label:
+      en: Total number of active contracts where accomodations were made per Policy
+      fr: text
+    description:
+      en: Total number of active contracts where accomodations were made per Policy
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+  # 3.6
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (en anglais)
+    description:
+      en: This field will display any additional information/comments for the Briefing Note, in English.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
+    obligation: Optional
+    excel_required: false
+    format_type: Free text
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.2
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (en français)
+    description:
+      en: This field will display any additional information/comments for the Briefing Note, in French.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
+    obligation: Optional
+    excel_required: false
+    format_type: Free text
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: c_report_date
+  datastore_indexes: ""
+
+  default_preview_sort: c_report_date
+
+  excel_example_height: 32
+  excel_data_height: 32
+  excel_data_num_rows: 500
+
+  triggers:
+  - briefingt_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.c_report_date, 'c_report_date');
+        errors := errors || required_error(NEW.c_active, 'c_active');
+        errors := errors || required_error(NEW.c_refuse, 'c_refuse');
+        errors := errors || required_error(NEW.c_accommodations, 'c_accommodations');
+        errors := errors || required_error(NEW.c_pending, 'c_pending');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      c_report_date: 2021-11-26
+      c_active: 19
+      c_refuse: 2
+      c_accommodations: 1
+      c_pending: 3
+      additional_information_en: optional additional information goes here
+      additional_information_fr: text
+    filters:
+      c_report_date: 2021-11-26
+    filter_one:
+      c_report_date: 2021-11-26
+    sort: c_report_date desc
+
+- title: Verification Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
+  resource_name: verification_data
+  create_form: true
+  edit_form: true
+  fields:
+
+  # 3.1
+  - datastore_id: v_report_date
+    label:
+      en: Report Date
+      fr: Numéro de suivi
+    description:
+      en: This is the date of the report
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: date
+    excel_column_width: 28
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.2
+  - datastore_id: v_total
+    label:
+      en: Total number of verifications of certifications undertaken
+      fr: text
+    description:
+      en: |
+        Total number of verifications of certifications undertaken.
+        Verification Data:
+        a.	An initial report to be submitted by February 14, 2022 with information as of January 31, 2022. 
+        b.	A monthly update of the report is to be provided within 14 calendar days after the end of the month. 
+        c.	A close-out report with an updated total is required within 30 calendar days after the policy is rescinded.
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+
+  # 3.3
+  - datastore_id: v_actions
+    label:
+      en: Total number of verifications of certifications that resulted in action against a supplier
+      fr: text
+    description:
+      en: Total number of verifications of certifications that resulted in action against a supplier
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+  # 3.4
+  - datastore_id: v_new_contracts
+    label:
+      en: Total number of verifications of new solicitations issued and contracts awarded after November 15, 2021
+      fr: text
+    description:
+      en: Total number of verifications of new solicitations issued and contracts awarded after November 15, 2021
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+   # 3.5
+  - datastore_id: v_site_inspections
+    label:
+      en: Total number of site inspections to verify vaccination status of supplier personnel
+      fr: text
+    description:
+      en: Total number of site inspections to verify vaccination status of supplier personnel
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
+
+  # 3.6
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (en anglais)
+    description:
+      en: This field will display any additional information/comments for the Briefing Note, in English.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
+    obligation: Optional
+    excel_required: false
+    format_type: Free text
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  # 3.2
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (en français)
+    description:
+      en: This field will display any additional information/comments for the Briefing Note, in French.
+      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
+    obligation: Optional
+    excel_required: false
+    format_type: Free text
+    validation: None
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_column_width: 35
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: v_report_date
+  datastore_indexes: ""
+
+  default_preview_sort: v_report_date
+
+  excel_example_height: 32
+  excel_data_height: 32
+  excel_data_num_rows: 500
+
+  triggers:
+  - briefingt_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.v_report_date, 'v_report_date');
+        errors := errors || required_error(NEW.v_total, 'v_total');
+        errors := errors || required_error(NEW.v_actions, 'v_actions');
+        errors := errors || required_error(NEW.v_new_contracts, 'v_new_contracts');
+        errors := errors || required_error(NEW.v_site_inspections, 'v_site_inspections');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      v_report_date: 2022-02-14
+      v_total: 19
+      v_actions: 2
+      v_new_contracts: 6
+      V_site_inspections: 3
+      additional_information_en: optional additional information goes here
+      additional_information_fr: text
+    filters:
+      c_report_date: 2022-02-14
+    filter_one:
+      c_report_date: 2022-02-14
+    sort: v_report_date desc
+
+excel_edge_style:
+  PatternFill:
+    fgColor: FF3d4647
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF84acb6
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF84acb6
