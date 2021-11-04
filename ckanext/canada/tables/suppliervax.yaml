@@ -234,19 +234,6 @@ resources:
       c_report_date: 2021-11-26
     sort: c_report_date desc
 
-excel_edge_style:
-  PatternFill:
-    fgColor: FF3d4647
-    patternType: solid
-excel_header_style:
-  PatternFill:
-    patternType: solid
-    fgColor: FF1cff6b
-excel_column_heading_style:
-  PatternFill:
-    patternType: solid
-    fgColor: FF1cff6b
-
 - title: Verification Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
   resource_name: verification-data
   create_form: true
