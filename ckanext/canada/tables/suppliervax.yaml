@@ -261,7 +261,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 28
+    excel_column_width: 15
     form_snippet: scheming/form_snippets/date.html
 
   # 3.2
@@ -401,9 +401,7 @@ resources:
     record:
       v_report_date: 2022-02-14
       v_total: 19
-      v_actions: 2
-      v_new_contracts: 6
-      V_site_inspections: 3
+      v_terminations: 3
       additional_information_en: optional additional information goes here
       additional_information_fr: text
     filters:
