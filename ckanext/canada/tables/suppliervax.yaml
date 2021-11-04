@@ -29,7 +29,12 @@ resources:
       en: Report Date
       fr: Numéro de suivi
     description:
-      en: This is the date of the report.
+      en: |
+        This is the date of the report
+
+        a.	An initial report to be submitted by November 26, 2021 on information collected as of November 15, 2021. 
+        b.	An updated report to be submitted by January 14, 2022 with updated information as of December 15, 2021.
+        c.	If the previous report includes one or more contracts where the supplier certification status is pending, a monthly update is required until all active contracts subject to the Policy as of November 15, 2021 are accounted for.
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -39,7 +44,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: date
-    excel_column_width: 28
+    excel_column_width: 15
     form_snippet: scheming/form_snippets/date.html
 
   # 3.2
@@ -50,10 +55,6 @@ resources:
     description:
       en: |
         Total number of active contracts within scope of Policy where certifcation occurs after contract award.
-        Contract Data:
-        a.	An initial report to be submitted by November 26, 2021 on information collected as of November 15, 2021. 
-        b.	An updated report to be submitted by January 14, 2022 with updated information as of December 15, 2021.
-        c.	If the previous report includes one or more contracts where the supplier certification status is pending, a monthly update is required until all active contracts subject to the Policy as of November 15, 2021 are accounted for. 
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -63,7 +64,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: int
-    excel_column_width: 28
+    excel_column_width: 35
     form_attrs:
       size: 60
 
@@ -134,8 +135,8 @@ resources:
       en: Additional Information (English)
       fr: Renseignements supplémentaires (en anglais)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in English.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
+      en: This field will display any additional information/comments, in English.
+      fr: Ce champ affichera de plus amples renseignements/commentaires, en anglais.
     obligation: Optional
     excel_required: false
     format_type: Free text
@@ -154,8 +155,8 @@ resources:
       en: Additional Information (French)
       fr: Renseignements supplémentaires (en français)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in French.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
+      en: This field will display any additional information/comments, in French.
+      fr: Ce champ affichera de plus amples renseignements/commentaires, en français.
     obligation: Optional
     excel_required: false
     format_type: Free text
@@ -233,6 +234,19 @@ resources:
       c_report_date: 2021-11-26
     sort: c_report_date desc
 
+excel_edge_style:
+  PatternFill:
+    fgColor: FF3d4647
+    patternType: solid
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF1cff6b
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF1cff6b
+
 - title: Verification Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
   resource_name: verification-data
   create_form: true
@@ -245,7 +259,12 @@ resources:
       en: Report Date
       fr: Numéro de suivi
     description:
-      en: This is the date of the report
+      en: |
+        This is the date of the report
+        
+        a.	An initial report to be submitted by February 14, 2022 with information as of January 31, 2022. 
+        b.	A monthly update of the report is to be provided within 14 calendar days after the end of the month. 
+        c.	A close-out report with an updated total is required within 30 calendar days after the policy is rescinded.
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -261,15 +280,12 @@ resources:
   # 3.2
   - datastore_id: v_total
     label:
-      en: Total number of verifications of certifications undertaken
+      en: Total number of contracts with verifications undertaken
       fr: text
     description:
       en: |
-        Total number of verifications of certifications undertaken.
-        Verification Data:
-        a.	An initial report to be submitted by February 14, 2022 with information as of January 31, 2022. 
-        b.	A monthly update of the report is to be provided within 14 calendar days after the end of the month. 
-        c.	A close-out report with an updated total is required within 30 calendar days after the policy is rescinded.
+        Total number of contracts with verifications undertaken
+        
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -285,12 +301,12 @@ resources:
 
 
   # 3.3
-  - datastore_id: v_actions
+  - datastore_id: v_terminations
     label:
-      en: Total number of verifications of certifications that resulted in action against a supplier
+      en: Total number of contracts terminated due to non-compliance with Policy following verification
       fr: text
     description:
-      en: Total number of verifications of certifications that resulted in action against a supplier
+      en: Total number of contracts terminated due to non-compliance with Policy following verification
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -305,46 +321,6 @@ resources:
       size: 60
 
   # 3.4
-  - datastore_id: v_new_contracts
-    label:
-      en: Total number of verifications of new solicitations issued and contracts awarded after November 15, 2021
-      fr: text
-    description:
-      en: Total number of verifications of new solicitations issued and contracts awarded after November 15, 2021
-      fr: text
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    format_type: Numeric only
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: int
-    excel_column_width: 28
-    form_attrs:
-      size: 60
-
-   # 3.5
-  - datastore_id: v_site_inspections
-    label:
-      en: Total number of site inspections to verify vaccination status of supplier personnel
-      fr: text
-    description:
-      en: Total number of site inspections to verify vaccination status of supplier personnel
-      fr: text
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    format_type: Numeric only
-    validation: This field must not be empty
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: int
-    excel_column_width: 28
-    form_attrs:
-      size: 60
-
-  # 3.6
   - datastore_id: additional_information_en
     label:
       en: Additional Information (English)
@@ -364,7 +340,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.2
+  # 3.5
   - datastore_id: additional_information_fr
     label:
       en: Additional Information (French)
@@ -456,8 +432,8 @@ excel_edge_style:
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FF84acb6
+    fgColor: FF4ad7f0
 excel_column_heading_style:
   PatternFill:
     patternType: solid
-    fgColor: FF84acb6
+    fgColor: FF4ad7f0
