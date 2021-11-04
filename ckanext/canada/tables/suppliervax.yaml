@@ -221,7 +221,7 @@ resources:
 
   examples:
     record:
-      c_report_date: 2021-11-26
+      c_report_date: "2021-11-26"
       c_active: 19
       c_refuse: 2
       c_accommodations: 1
@@ -229,9 +229,9 @@ resources:
       additional_information_en: optional additional information goes here
       additional_information_fr: text
     filters:
-      c_report_date: 2021-11-26
+      c_report_date: "2021-11-26"
     filter_one:
-      c_report_date: 2021-11-26
+      c_report_date: "2021-11-26"
     sort: c_report_date desc
 
 - title: Verification Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
@@ -397,15 +397,15 @@ resources:
 
   examples:
     record:
-      v_report_date: 2022-02-14
+      v_report_date: "2022-02-14"
       v_total: 19
       v_terminations: 3
       additional_information_en: optional additional information goes here
       additional_information_fr: text
     filters:
-      v_report_date: 2022-02-14
+      v_report_date: "2022-02-14"
     filter_one:
-      v_report_date: 2022-02-14
+      v_report_date: "2022-02-14"
     sort: v_report_date desc
 
 excel_edge_style:
