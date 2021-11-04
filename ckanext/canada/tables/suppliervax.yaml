@@ -202,7 +202,7 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-  - briefingt_trigger: |
+  - contract-data_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
@@ -313,8 +313,8 @@ resources:
       en: Additional Information (English)
       fr: Renseignements supplémentaires (en anglais)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in English.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
+      en: This field will display any additional information/comments, in English.
+      fr: Ce champ affichera de plus amples renseignements/commentaires, en anglais.
     obligation: Optional
     excel_required: false
     format_type: Free text
@@ -333,8 +333,8 @@ resources:
       en: Additional Information (French)
       fr: Renseignements supplémentaires (en français)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in French.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
+      en: This field will display any additional information/comments, in French.
+      fr: Ce champ affichera de plus amples renseignements/commentaires, en français.
     obligation: Optional
     excel_required: false
     format_type: Free text
@@ -380,7 +380,7 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-  - briefingt_trigger: |
+  - verification-data_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
