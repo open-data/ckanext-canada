@@ -387,9 +387,7 @@ resources:
       BEGIN
         errors := errors || required_error(NEW.v_report_date, 'v_report_date');
         errors := errors || required_error(NEW.v_total, 'v_total');
-        errors := errors || required_error(NEW.v_actions, 'v_actions');
-        errors := errors || required_error(NEW.v_new_contracts, 'v_new_contracts');
-        errors := errors || required_error(NEW.v_site_inspections, 'v_site_inspections');
+        errors := errors || required_error(NEW.v_terminations, 'v_terminations');
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
@@ -405,9 +403,9 @@ resources:
       additional_information_en: optional additional information goes here
       additional_information_fr: text
     filters:
-      c_report_date: 2022-02-14
+      v_report_date: 2022-02-14
     filter_one:
-      c_report_date: 2022-02-14
+      v_report_date: 2022-02-14
     sort: v_report_date desc
 
 excel_edge_style:
