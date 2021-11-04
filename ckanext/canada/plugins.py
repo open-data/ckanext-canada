@@ -309,6 +309,7 @@ ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
+ckanext.canada:tables/suppliervax.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -322,6 +323,7 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
+        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
@@ -531,6 +533,10 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.user_read_only,
             'user_read_only_json':
                 validators.user_read_only_json,
+            'no_future_date':
+                validators.no_future_date,
+            'canada_sort_prop_status':
+                validators.canada_sort_prop_status,
             'canada_sort_prop_status':
                 validators.canada_sort_prop_status,
             'no_future_date':
