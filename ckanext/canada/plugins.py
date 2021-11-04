@@ -533,10 +533,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.user_read_only,
             'user_read_only_json':
                 validators.user_read_only_json,
-            'no_future_date':
-                validators.no_future_date,
-            'canada_sort_prop_status':
-                validators.canada_sort_prop_status,
             'canada_sort_prop_status':
                 validators.canada_sort_prop_status,
             'no_future_date':
