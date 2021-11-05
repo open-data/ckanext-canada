@@ -316,6 +316,7 @@ ckanext.canada:tables/experiment.yaml
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
+ckanext.validation:presets.json
 """
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
