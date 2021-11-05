@@ -641,10 +641,10 @@ $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
 ###  Supplier Vaccination
 ###
 .PHONY: suppliervax
-contracts: upload-suppliervax rebuild-suppliervax
+suppliervax: upload-suppliervax rebuild-suppliervax
 
 .PHONY: upload-suppliervax
-upload-contracts: $(workdir)/filtered/contract-data.csv $(workdir)/filtered/verification-data.csv
+upload-suppliervax: $(workdir)/filtered/contract-data.csv $(workdir)/filtered/verification-data.csv
 	@echo Uploading Supplier Vaccination...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=5334e05b-5c48-4cba-b5e3-cf755ef43dd3 upload@"$(workdir)/filtered/contract-data.csv" \
@@ -654,7 +654,7 @@ upload-contracts: $(workdir)/filtered/contract-data.csv $(workdir)/filtered/veri
 	> /dev/null
 
 .PHONY: rebuild-suppliervax
-rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
+rebuild-suppliervax: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	# no search for suppliervax
 
 $(workdir)/contract-data.csv:
