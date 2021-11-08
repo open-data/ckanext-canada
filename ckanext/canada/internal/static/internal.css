@@ -644,3 +644,7 @@ ul#brf-pkg { padding-left: 0; }
     text-align: left;
     vertical-align: middle;
 }
+
+.nav-item.active > a span, .nav-aside li.active a span {
+    white-space: inherit;
+}

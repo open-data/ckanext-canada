@@ -209,16 +209,14 @@ def canada_non_related_required(key, data, errors, context):
     return ignore_missing(key, data, errors, context)
 
 
-def if_empty_set_to(default_value):
+def canada_maintainer_email_default(key, data, errors, context):
     """
-    Provide a default value when not given by user
+    Set to open-ouvert@tbs-sct.gc.ca if not given and no contact form given
     """
-    def validator(value):
-        if not value or value is missing:
-            return default_value
-        return value
-
-    return validator
+    em = data[key]
+    cf = data[('maintainer_contact_form',)]
+    if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
+        data[key] = 'open-ouvert@tbs-sct.gc.ca'
 
 
 def no_future_date(key, data, errors, context):
