@@ -525,8 +525,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_copy_from_org_name,
             'canada_non_related_required':
                 validators.canada_non_related_required,
-            'if_empty_set_to':
-                validators.if_empty_set_to,
+            'canada_maintainer_email_default':
+                validators.canada_maintainer_email_default,
             'user_read_only':
                 validators.user_read_only,
             'user_read_only_json':
