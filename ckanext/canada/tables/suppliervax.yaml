@@ -4,12 +4,9 @@ target_dataset: suppliervax
 title: Reporting on COVID-19 Vaccination Requirement for Supplier Personnel 
 notes: Access, upload and modify the COVID-19 Vaccination Requirement for Supplier Personnel reporting for your organization
 
-
 upload_warn:
   en: "placeholder if required"
   fr: "placeholder if required"
-
-
 
 template_version: 3
 
@@ -32,14 +29,14 @@ resources:
       en: |
         This is the date of the report
 
-        The timelines for reporting on ongoing contracts as of November 15, 2021 are:
+        The timelines for reporting on ongoing contracts as of November 15, 2021 are
         a.	An initial report to be submitted by November 26, 2021 on information collected as of November 15, 2021 
         b.	A 2nd updated report to be submitted by December 15, 2021 on information collected as of November 30, 2021. 
         c.	A 3rd updated report to be submitted by January 15, 2022 on information collected as of December 31, 2021. 
         d.	A 4th updated report to be submitted by February 15, 2022 with updated information as of January 31, 2022.
         e.	If the previous report includes one or more contracts where the supplier certification status is pending, a monthly update is required until all pending contracts are accounted for. 
 
-        Note: For columns x, x and x, departments are not required to report on contracts that require the inclusion of a vaccination certification requirement prior to contract award.
+        Note For columns x, x and x, departments are not required to report on contracts that require the inclusion of a vaccination certification requirement prior to contract award.
 
       fr: text
     obligation: Mandatory
@@ -93,7 +90,6 @@ resources:
     excel_column_width: 35
     form_attrs:
       size: 60
-
 
   # 3.4
   - datastore_id: accommodations
@@ -213,7 +209,7 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.report_date, 'report_date');
-        errors := errors || required_error(NEW.total, 'total);
+        errors := errors || required_error(NEW.total, 'total');
         errors := errors || required_error(NEW.refused, 'refused');
         errors := errors || required_error(NEW.accommodations, 'accommodations');
         errors := errors || required_error(NEW.pending, 'pending');
@@ -231,8 +227,8 @@ resources:
       refused: 2
       accommodations: 1
       pending: 3
-      additional_information_en: optional additional information goes here
-      additional_information_fr: text
+      additional_information_en: "optional additional information goes here"
+      additional_information_fr: "text"
     filters:
       report_date: "2021-11-26"
     filter_one:
@@ -254,12 +250,11 @@ resources:
       en: |
         This is the date of the report
         
-        The timelines for reporting on the verification data are:
+        The timelines for reporting on the verification data are
         a.	An initial report to be submitted by December 15, 2021 with information as of November 30, 2021. 
         b.	A monthly update of the report is to be provided within 15 calendar days after the end of the month. 
         c.	A close-out report with an updated total of the data elements is required within 30 calendar days after the policy is rescinded.
-
-        Note: Departments are to indicate “0” in the report if any of the data elements is “0” by the reporting timelines specified in 3.1.8.
+        
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -430,8 +425,8 @@ resources:
       total: 19
       admin_action: 3
       enforcement_action: 1
-      additional_information_en: optional additional information goes here
-      additional_information_fr: text
+      additional_information_en: "optional additional information goes here"
+      additional_information_fr: "text"
     filters:
       report_date: "2022-02-14"
     filter_one:
