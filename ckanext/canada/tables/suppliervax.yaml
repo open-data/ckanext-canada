@@ -54,45 +54,45 @@ resources:
     form_snippet: scheming/form_snippets/date.html
 
   # 3.2
-    - datastore_id: total
-      label:
-        en: Total number of contracts
-        fr: text
-      description:
-        en: Total number of contracts.
-        fr: text
-      obligation: Mandatory
-      excel_required: true
-      form_required: true
-      format_type: Numeric only
-      validation: This field must not be empty
-      visible_to_public: Yes
-      occurrence: Single
-      datastore_type: int
-      excel_column_width: 28
-      form_attrs:
-        size: 60
+  - datastore_id: total
+    label:
+      en: Total number of contracts
+      fr: text
+    description:
+      en: Total number of contracts.
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 28
+    form_attrs:
+      size: 60
 
   # 3.3
-    - datastore_id: refused
-      label:
-        en: Total number of contracts where the supplier was unable/refused to certify 
-        fr: text
-      description:
-        en: |
-          Total number of contracts where the supplier was unable/refused to certify.
-        fr: text
-      obligation: Mandatory
-      excel_required: true
-      form_required: true
-      format_type: Numeric only
-      validation: This field must not be empty
-      visible_to_public: Yes
-      occurrence: Single
-      datastore_type: int
-      excel_column_width: 35
-      form_attrs:
-        size: 60
+  - datastore_id: refused
+    label:
+      en: Total number of contracts where the supplier was unable/refused to certify 
+      fr: text
+    description:
+      en: |
+        Total number of contracts where the supplier was unable/refused to certify.
+      fr: text
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    validation: This field must not be empty
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: int
+    excel_column_width: 35
+    form_attrs:
+      size: 60
 
 
   # 3.4
@@ -315,7 +315,7 @@ resources:
     form_attrs:
       size: 60
 
-# 3.11
+  # 3.11
   - datastore_id: enforcement_action
     label:
       en: Total number of contracts that require contract enforcement action due to non-compliance with Policy following verification
