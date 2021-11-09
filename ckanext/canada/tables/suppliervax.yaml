@@ -14,7 +14,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Contract Data
+- title: Contract Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
   resource_name: contract-data
   create_form: true
   edit_form: true
@@ -256,7 +256,7 @@ resources:
       report_date: "2021-11-26"
     sort: report_date desc
 
-- title: Verification Data
+- title: Verification Data - Reporting on COVID-19 Vaccination Requirement for Supplier Personnel
   resource_name: verification-data
   create_form: true
   edit_form: true
