@@ -36,7 +36,7 @@ resources:
         d.	A 4th updated report to be submitted by February 15, 2022 with updated information as of January 31, 2022.
         e.	If the previous report includes one or more contracts where the supplier certification status is pending, a monthly update is required until all pending contracts are accounted for. 
 
-        Note For columns x, x and x, departments are not required to report on contracts that require the inclusion of a vaccination certification requirement prior to contract award.
+        Note For columns E, F and G, departments are not required to report on contracts that require the inclusion of a vaccination certification requirement prior to contract award.
 
       fr: text
     obligation: Mandatory
@@ -75,6 +75,12 @@ resources:
     label:
       en: Total number of contracts where the supplier was unable/refused to certify 
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts where
+        the supplier was unable/refused to certify
+      fr: |
+        placeholder text
     description:
       en: |
         Total number of contracts where the supplier was unable/refused to certify.
@@ -96,6 +102,14 @@ resources:
     label:
       en: Total number of contracts where accommodations were made in accordance with the Policy
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts 
+        where accommodations were 
+        made in accordance with the
+        Policy
+      fr: |
+        placeholder text
     description:
       en: Total number of contracts where accommodations were made in accordance with the Policy.
       fr: text
@@ -116,6 +130,13 @@ resources:
     label:
       en: Total number of contracts where the supplier certification status is pending
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts
+        where the supplier certification
+        status is pending
+      fr: |
+        placeholder text
     description:
       en: Total number of contracts where the supplier certification status is pending
       fr: text
@@ -254,6 +275,8 @@ resources:
         a.	An initial report to be submitted by December 15, 2021 with information as of November 30, 2021. 
         b.	A monthly update of the report is to be provided within 15 calendar days after the end of the month. 
         c.	A close-out report with an updated total of the data elements is required within 30 calendar days after the policy is rescinded.
+
+        Note Departments are to indicate “0” in the report if any of the data elements is “0” by the reporting timelines specified in 3.1.8.
         
       fr: text
     obligation: Mandatory
@@ -272,10 +295,15 @@ resources:
     label:
       en: Total number of contracts with verifications undertaken
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts with
+        verifications undertaken
+      fr: |
+        placeholder text
     description:
       en: |
         Total number of contracts with verifications undertaken
-        
       fr: text
     obligation: Mandatory
     excel_required: true
@@ -295,6 +323,15 @@ resources:
     label:
       en: Total number of contracts that require further administrative action due to non-compliance with Policy following verification
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts that
+        require further administrative
+        action due to non-compliance
+        with Policy following
+        verification
+      fr: |
+        placeholder text
     description:
       en: Total number of contracts that require further administrative action due to non-compliance with Policy following verification
       fr: text
@@ -315,6 +352,15 @@ resources:
     label:
       en: Total number of contracts that require contract enforcement action due to non-compliance with Policy following verification
       fr: text
+    excel_heading:
+      en: |
+        Total number of contracts that
+        require contract enforcement
+        action due to non-compliance
+        with Policy following
+        verification
+      fr: |
+        placeholder text
     description:
       en: Total number of contracts that require contract enforcement action due to non-compliance with Policy following verification
       fr: text
