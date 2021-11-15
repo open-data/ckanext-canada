@@ -15,10 +15,11 @@ fields:
 
 - field_name: title
   label: Title
-  validators: ignore_missing unicode
+  validators: unicode scheming_required
   form_snippet: large_text.html
   form_attrs:
     data-module: slug-preview-target
+  required: true
 
 - field_name: name
   label: URL
@@ -36,10 +37,14 @@ fields:
 - field_name: shortform
   label: shortform
   form_snippet: large_text.html
+  required: true
+  validators: scheming_required
 
 - field_name: shortform_fr
   label: shortform_fr
   form_snippet: large_text.html
+  required: true
+  validators: scheming_required
 
 - field_name: department_number
   label: department_number
