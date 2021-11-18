@@ -412,15 +412,11 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
+            'canada_search_domain',
         ])
 
 
     def before_map(self, map):
-        map.connect(
-            '/fgpv_vpgf/{pkg_id}',
-            action='fgpv_vpgf',
-            controller='ckanext.canada.controller:CanadaController'
-        )
         map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',
@@ -469,6 +465,9 @@ ckanext.canada:schemas/prop.yaml
             'resource_view_create': auth.resource_view_create,
             'resource_view_update': auth.resource_view_update,
             'resource_view_delete': auth.resource_view_delete,
+            'datastore_create': auth.datastore_create,
+            'datastore_delete': auth.datastore_delete,
+            'datastore_upsert': auth.datastore_upsert,
         }
 
     # IMiddleware

@@ -214,7 +214,7 @@ def canada_maintainer_email_default(key, data, errors, context):
     Set to open-ouvert@tbs-sct.gc.ca if not given and no contact form given
     """
     em = data[key]
-    cf = data[('maintainer_contact_form',)]
+    cf = data.get(('maintainer_contact_form',), '')
     if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
         data[key] = 'open-ouvert@tbs-sct.gc.ca'
 
