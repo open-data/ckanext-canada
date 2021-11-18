@@ -410,15 +410,11 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
+            'canada_search_domain',
         ])
 
 
     def before_map(self, map):
-        map.connect(
-            '/fgpv_vpgf/{pkg_id}',
-            action='fgpv_vpgf',
-            controller='ckanext.canada.controller:CanadaController'
-        )
         map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',

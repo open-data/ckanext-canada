@@ -532,3 +532,8 @@ def mail_to_with_params(email_address, name, subject, body):
 def get_timeout_length():
     return int(config.get('beaker.session.timeout'))
 
+
+def canada_search_domain():
+    if 'staging' in config.get('ckan.site_url', ''):
+        return _('search-staging.open.canada.ca')
+    return _('search.open.canada.ca')
