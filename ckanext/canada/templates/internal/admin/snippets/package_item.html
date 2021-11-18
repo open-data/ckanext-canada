@@ -2,7 +2,6 @@
 
 {% block resources_outer %}
   {{ super() }}
-{% block map_cart_buttons %}{% endblock %}
   {% if h.is_ready_to_publish(package) %}
     <div class="col-md-3 pull-right">
       <label class="form-checkbox">
