@@ -24,4 +24,11 @@ steps:
     archiveType: 'tar'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ckanext_canada_package.tgz'
     replaceExistingArchive: true
-  displayName: 'Create a tar file of the source and '
+  displayName: 'Create a tar file of the source and python packages'
+  
+- task: PublishBuildArtifacts@1
+  inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'SourceOfflinePackage'
+      publishLocation: 'Container'
+  displayName: 'Publish ckan artifact'
