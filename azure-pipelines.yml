@@ -22,6 +22,6 @@ steps:
     rootFolderOrFile: '$(Build.SourcesDirectory)'
     includeRootFolder: true
     archiveType: 'tar'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/SourceOfflinePackage/OGC_Search_SourcePackage.tgz'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ckanext_canada_package.tgz'
     replaceExistingArchive: true
   displayName: 'Create a tar file of the source and '
