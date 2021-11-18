@@ -3,39 +3,19 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
+# Run manually for now
+trigger: none
+
+pr: none
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- script: |
-    python -m pip install --upgrade pip setuptools wheel
-    pip install -r requirements.txt
-  displayName: 'Install prerequisites'
-
-- script: |
-    pip download -d $(Build.ArtifactStagingDirectory)/Staging/Dependencies -r requirements.txt
+    pip download -d $(Build.ArtifactStagingDirectory)/Dependencies -r requirements.txt
   displayName: 'Download Dependencies for Offline Install'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/Staging' 
-    includeRootFolder: true
-    archiveType: 'tar'
-    tarCompression: 'gz'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/OfflinePackage/Ckanext_Canada_DeploymentPackage.tar.gz' 
-    replaceExistingArchive: true 
-  displayName: 'Create OfflinePackage (tarball)'
 
 - task: ArchiveFiles@2
   inputs:
@@ -44,4 +24,4 @@ steps:
     archiveType: 'tar'
     archiveFile: '$(Build.ArtifactStagingDirectory)/SourceOfflinePackage/OGC_Search_SourcePackage.tgz'
     replaceExistingArchive: true
-  displayName: 'Create binaries tarball'
+  displayName: 'Create a tar file of the source and '
