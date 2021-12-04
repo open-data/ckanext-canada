@@ -717,6 +717,9 @@ def datastore_upsert(up_func, context, data_dict):
 
 @chained_action
 def datastore_delete(up_func, context, data_dict):
+    if context.get('agent') == 'xloader':
+        return up_func(context, data_dict)
+
     lc = ckanapi.LocalCKAN(username=c.user)
     res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
     res = lc.action.datastore_search(
@@ -724,15 +727,14 @@ def datastore_delete(up_func, context, data_dict):
         filters=data_dict.get('filters'),
         limit=1,
     )
+
     result = up_func(context, data_dict)
 
-    # no need to log activity for x-loader initiated deleting
-    if context.get('agent') != 'xloader':
-        act.datastore_activity_create(context,
-                                      {'count': res.get('total', 0),
-                                       'activity_type': 'deleted datastore',
-                                       'resource_id': res_id}
-                                      )
+    act.datastore_activity_create(context,
+                                  {'count': res.get('total', 0),
+                                   'activity_type': 'deleted datastore',
+                                   'resource_id': res_id}
+                                  )
     return result
 
 
