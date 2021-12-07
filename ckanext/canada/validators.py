@@ -219,6 +219,16 @@ def canada_maintainer_email_default(key, data, errors, context):
         data[key] = 'open-ouvert@tbs-sct.gc.ca'
 
 
+def no_future_date(key, data, errors, context):
+    ready = data.get(('ready_to_publish',))
+    if not ready or ready == 'false':
+        return
+    value = data.get(key)
+    if value and value > datetime.today():
+        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
+    return value
+
+
 def canada_sort_prop_status(key, data, errors, context):
     """
     sort the status composite values by date in ascending order
@@ -244,13 +254,3 @@ def canada_sort_prop_status(key, data, errors, context):
             move[f] = data[f]
     for f in move:
         data[('status', newmap[f[1]]) + f[2:]] = move[f]
-
-
-def no_future_date(key, data, errors, context):
-    ready = data.get(('ready_to_publish',))
-    if not ready or ready == 'false':
-        return
-    value = data.get(key)
-    if value and value > datetime.today():
-        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
-    return value

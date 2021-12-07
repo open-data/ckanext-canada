@@ -1,5 +1,6 @@
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing admin_aircraft
+	nap reclassification service travela travelq wrongdoing admin_aircraft suppliervax
+
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv \
@@ -18,7 +19,9 @@ csv_files := \
         travela.csv \
         travelq.csv travelq-nil.csv \
         wrongdoing.csv \
-		admin_aircraft.csv
+		admin_aircraft.csv \
+		contract-data.csv verification-data.csv
+
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
@@ -637,6 +640,36 @@ $(workdir)/wrongdoing.csv:
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
 	$(fdir)/filter_wrongdoing.py < $< > $@
 
+###
+###  Supplier Vaccination
+###
+.PHONY: suppliervax
+suppliervax: upload-suppliervax rebuild-suppliervax
+
+.PHONY: upload-suppliervax
+upload-suppliervax: $(workdir)/filtered/contract-data.csv $(workdir)/filtered/verification-data.csv
+	@echo Uploading Supplier Vaccination...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=5334e05b-5c48-4cba-b5e3-cf755ef43dd3 upload@"$(workdir)/filtered/contract-data.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0d10f492-fcc3-467e-bd22-98492226569e upload@"$(workdir)/filtered/verification-data.csv" \
+	> /dev/null
+
+.PHONY: rebuild-suppliervax
+rebuild-suppliervax: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
+	# no search for suppliervax
+
+$(workdir)/contract-data.csv:
+	$(paster) $(combine) contract-data -d $(workdir) -c $(registry_ini)
+
+$(workdir)/verification-data.csv:
+	$(paster) $(combine) verification-data -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/contract-data.csv: $(workdir)/contract-data.csv
+	$(fdir)/filter_suppliervax.py < $< > $@
+$(workdir)/filtered/verification-data.csv: $(workdir)/verification-data.csv
+	$(fdir)/filter_suppliervax.py < $< > $@
 
 ###
 ###  Government Administrative Aircraft Use
