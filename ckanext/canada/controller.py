@@ -1048,3 +1048,25 @@ def clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
             data[f['datastore_id']] = val
 
     return data, err
+
+
+class CanadaDatastoreController(BaseController):
+    def delete_datastore_table(self, id, resource_id):
+        if request.method == 'POST':
+            lc = LocalCKAN(username=c.user)
+
+            try:
+                lc.action.datastore_delete(
+                    resource_id=resource_id,
+                    force=True,  # FIXME: check url_type first?
+                )
+            except NotAuthorized:
+                return abort(403, _('Unauthorized'))
+        # FIXME else: render confirmation page for non-JS users
+        return h.redirect_to(
+            controller='ckanext.xloader.controllers:ResourceDataController',
+            action='resource_data',
+            id=id,
+            resource_id=resource_id
+        )
+
