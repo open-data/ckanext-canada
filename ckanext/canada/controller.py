@@ -1066,7 +1066,7 @@ class CanadaDatastoreController(BaseController):
                     force=True,  # FIXME: check url_type first?
                 )
             except NotAuthorized:
-                return abort(403, ('Unauthorized'))
+                return abort(403, _('Unauthorized'))
         # FIXME else: render confirmation page for non-JS users
         return h.redirect_to(
             controller='ckanext.xloader.controllers:ResourceDataController',
