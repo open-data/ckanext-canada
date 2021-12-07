@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Run manually for now
+trigger: none
+
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- script: |
+    pip download -d $(Build.ArtifactStagingDirectory)/Dependencies -r requirements.txt
+  displayName: 'Download Dependencies for Offline Install'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: true
+    archiveType: 'tar'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ckanext_canada_package.tgz'
+    replaceExistingArchive: true
+  displayName: 'Create a tar file of the source and python packages'
+  
+- task: PublishBuildArtifacts@1
+  inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'SourceOfflinePackage'
+      publishLocation: 'Container'
+  displayName: 'Publish ckan artifact'

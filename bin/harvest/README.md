@@ -11,4 +11,4 @@ The following scripts were used to perform the meta data harvest.
 _Note:_ Because it is machine translated, and may not have been reviewed by a human translator, it's important to set a different language code for text that was translated by an AI program. 
 
  - `en-t-fr`: English text machine translated from French
- - `fr-t-en`: French text machine translated from Englisj 
+ - `fr-t-en`: French text machine translated from English 
