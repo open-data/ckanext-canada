@@ -311,10 +311,10 @@ resources:
       hours: "11.5"
       passengers: "John Smith, Martha Smith, LGen Robert Jones, Thomas Cruise"
       additional_information_en: "A large focus of the 2021 G7 was resolving to work together to beat COVID-19 and rebuild."
-      additional_information_fr: "L'un des principaux objectifs du G7 de 2021 était de travailler ensemble pour vaincre le COVID-19 et reconstruire."
+      additional_information_fr: "Un des principaux objectifs du G7 de 2021 était de travailler ensemble pour vaincre le COVID-19 et reconstruire."
     filter_one:
-      reference_number: DND-2019-QP-00001
-    sort: date_received desc
+      reference_number: T-2019-Q3-00001
+    sort: start_date desc
 
 excel_edge_style:
   PatternFill:
