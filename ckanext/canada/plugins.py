@@ -141,6 +141,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
+        map.connect(
+            'delete_datastore_table',
+            '/dataset/{id}/delete-datastore-table/{resource_id}',
+            controller='ckanext.canada.controller:CanadaDatastoreController',
+            action='delete_datastore_table',
+        )
+
         return map
 
     def after_map(self, map):
@@ -281,7 +288,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
-    # p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.IMiddleware, inherit=True)
 
     def i18n_domain(self):
         return 'ckanext-canada'
@@ -467,6 +474,9 @@ ckanext.canada:schemas/prop.yaml
             'resource_view_create': auth.resource_view_create,
             'resource_view_update': auth.resource_view_update,
             'resource_view_delete': auth.resource_view_delete,
+            'datastore_create': auth.datastore_create,
+            'datastore_delete': auth.datastore_delete,
+            'datastore_upsert': auth.datastore_upsert,
         }
 
     # IMiddleware
@@ -525,8 +535,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_copy_from_org_name,
             'canada_non_related_required':
                 validators.canada_non_related_required,
-            'if_empty_set_to':
-                validators.if_empty_set_to,
+            'canada_maintainer_email_default':
+                validators.canada_maintainer_email_default,
             'user_read_only':
                 validators.user_read_only,
             'user_read_only_json':
@@ -545,15 +555,15 @@ class LogExtraMiddleware(object):
     def __call__(self, environ, start_response):
         def _start_response(status, response_headers, exc_info=None):
             extra = []
-            if c.package:
-                assert 0
             if c.user:
+                log_extra = c.log_extra if hasattr(c, 'log_extra') else u''
                 extra = [(
                     'X-LogExtra', u'user={uid} {extra}'.format(
                         uid=c.user,
-                        extra=c.log_extra or u'').encode('utf-8')
+                        extra=log_extra).encode('utf-8')
                     )
                 ]
+
             return start_response(
                 status,
                 response_headers + extra,

@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import unicodecsv
-import requests
 import json
 import sys
 import os.path
-from lxml import etree
-from operator import itemgetter
 from datetime import date
+from urllib import urlopen
+from bs4 import BeautifulSoup
+import re
 
 OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
                            '../ckanext/canada/tables/choices/minister.json')
 lang_codes = ["en", "fr"]
+all_mp_urls = []
 
 
 def get_filter_output():
@@ -30,7 +30,7 @@ def get_filter_output():
                 return False
 
     # generate choices from external source
-    choices = download_xml_from_source()
+    choices = download_from_source()
 
     # if existing choices file does not exist
     if not existing_choices and choices:
@@ -47,19 +47,19 @@ def get_filter_output():
                     # position found in both
                     if existing_choices[row] != choices[row]:
                         # case: same position with new minister in choices, then add new minister to existing position
-                        # and update end date as today for existing ministers
+                        # and update end date for existing ministers
                         for minister in existing_choices[row]['ministers']:
                             if minister['name'] != choices[row]['ministers'][0]['name'] and not minister['end_date']:
-                                minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                                minister['end_date'] = get_end_date(minister['name'], existing_choices[row]['en'])
                         else:
                             if existing_choices[row]['ministers'][0] != choices[row]['ministers'][0]:
                                 existing_choices[row]['ministers'].insert(0, choices[row]['ministers'][0])
             else:
-                # case: position found in existing choices but now in choices,
-                # update end date as today for all ministers
+                # case: position found in existing choices but not in choices,
+                # update end date for all ministers
                 for minister in existing_choices[row]['ministers']:
                     if not minister['end_date']:
-                        minister['end_date'] = date.today().strftime("%Y-%m-%dT%H:%M:%S")
+                        minister['end_date'] = get_end_date(minister['name'], existing_choices[row]['en'])
 
         for row in choices:
             if not [d for d in existing_choices if existing_choices[d]['en'] == choices[row]['en']]:
@@ -78,35 +78,16 @@ def get_filter_output():
         return False
 
 
-def download_xml_from_source():
-    """
-    Read XML from external source to generate JSON choices for ministers
-    """
+def download_from_source():
     choices = {}
-    xml_tree = {}
+    ministers_list = get_ministries_list()
 
-    # collect responses for both languages
-    for langCode in lang_codes:
-        try:
-            url = 'https://www.ourcommons.ca/Members/' + langCode + '/ministries/xml'
-            response = requests.get(url, stream=True)
-            xml_tree[langCode] = etree.fromstring(response.content)
-            response.close()
-        except requests.exceptions.RequestException:
-            return False
-
-    iter_fr = iter(xml_tree['fr'].xpath('Minister'))
-
-    for row_en in xml_tree['en'].xpath('Minister'):
-        row_fr = next(iter_fr)
-        # set name
-        name = row_en.xpath('PersonOfficialFirstName/text()')[0] + ' ' + \
-               row_en.xpath('PersonOfficialLastName/text()')[0]
-
+    # set position code with position initials
+    for p in ministers_list:
         # set position code with position initials
-        min_title = row_en.xpath('Title/text()')[0].split(' ')
+        position_title = p['title_en'].split(' ')
         position_code = ''
-        for initial in min_title:
+        for initial in position_title:
             if initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
                 position_code += initial[0].upper()
 
@@ -116,27 +97,94 @@ def download_xml_from_source():
             i += 1
             position_code = position_code + str(i)
 
-        # set minister
-        minister = {
-            'name': name,
-            'name_en': row_en.xpath('PersonOfficialLastName/text()')[0] + ', '
-                       + row_en.xpath('PersonOfficialFirstName/text()')[0]
-                       + ' (' + row_en.xpath('PersonShortHonorific/text()')[0] + ')',
-            'name_fr': row_fr.xpath('PersonOfficialLastName/text()')[0] + ', '
-                       + row_fr.xpath('PersonOfficialFirstName/text()')[0]
-                       + ' (' + row_fr.xpath('PersonShortHonorific/text()')[0] + ')',
-            'start_date': row_en.xpath('FromDateTime/text()')[0],
-            'end_date': ''.join(row_en.xpath('ToDateTime/text()')),
-        }
-
         # add position to dict
         choices[position_code] = {
-            'en': row_en.xpath('Title/text()')[0],
-            'fr': row_fr.xpath('Title/text()')[0],
-            'ministers': [minister],
+            u'en': p['title_en'],
+            u'fr': p['title_fr'],
+            u'ministers': [{
+                u'name': p['name'],
+                u'name_en': p['name_en'],
+                u'name_fr': p['name_fr'],
+                u'start_date': p['start_date'],
+                u'end_date': p['end_date'],
+            }],
         }
-
     return choices
+
+
+def get_ministries_list():
+    cabinet_ministers_list = []
+    url = 'https://www.ourcommons.ca/Members/en/ministries'
+    page = urlopen(url)
+    html = page.read().decode('utf-8')
+    soup = BeautifulSoup(html, 'html.parser')
+    for minister in soup.find_all(id=re.compile("^mp-tile-person-id")):
+        minister_url = minister.find('a')['href']
+        minister_positions = []
+        positions = minister.find_all('div', class_='')
+        for position in positions:
+            minister_positions.append(position.text)
+        minister_positions = filter(None, minister_positions)
+        current_positions = get_parliamentary_position_roles('https://www.ourcommons.ca' + minister_url + '/roles/xml', minister_positions)
+        cabinet_ministers_list.extend(current_positions)
+    return cabinet_ministers_list
+
+
+def get_parliamentary_position_roles(url, positions=None):
+    print url, positions
+    url_fr = url.replace('/en/', '/fr/')
+    member_roles = []
+
+    page = urlopen(url)
+    page_fr = urlopen(url_fr)
+    xml = page.read().decode('utf-8')
+    xml_fr = page_fr.read().decode('utf-8')
+    soup = BeautifulSoup(xml, 'xml')
+    soup_fr = BeautifulSoup(xml_fr, 'xml')
+
+    hon = soup.find('PersonShortHonorific').text
+    hon_fr = soup_fr.find('PersonShortHonorific').text
+    firstname = soup.find('PersonOfficialFirstName').text
+    lastname = soup.find('PersonOfficialLastName').text
+
+    for role in soup.find_all('ParliamentaryPositionRole'):
+        member_roles.append({
+            u'title_en': role.find('Title').text,
+            u'name': firstname + ' ' + lastname,
+            u'name_en': lastname + ', ' + firstname + ' (' + hon + ')',
+            u'name_fr': lastname + ', ' + firstname + ' (' + hon_fr + ')',
+            u'start_date': role.find('FromDateTime').text,
+            u'end_date': role.find('ToDateTime').text,
+        })
+    i = 0
+    for role_fr in soup_fr.find_all('ParliamentaryPositionRole'):
+        member_roles[i]['title_fr'] = next(role_fr.children).text.capitalize()
+        i += 1
+
+    if positions:
+        current_positions = [p for p in member_roles if p['title_en'] in positions and not p['end_date']]
+        return current_positions
+
+    return member_roles
+
+
+def get_end_date(name, position):
+    global all_mp_urls
+    if not len(all_mp_urls):
+        # get url for all mps
+        all_mps_page = urlopen(
+            'https://www.ourcommons.ca/Members/en/search?parliament=all&caucusId=all&province=all&gender=all')
+        all_mps_html = all_mps_page.read().decode('utf-8')
+        all_mps_soup = BeautifulSoup(all_mps_html, 'html.parser')
+        all_mp_urls = all_mps_soup.find_all(class_='ce-mip-mp-tile')
+
+    for m in all_mp_urls:
+        if m.find(class_='ce-mip-mp-name', text=name):
+            roles = get_parliamentary_position_roles('https://www.ourcommons.ca' + m['href'] + '/roles/xml')
+            for r in roles:
+                if r['title_en'] == position:
+                    return r['end_date']
+    return date.today().strftime("%Y-%m-%dT%H:%M:%S")
 
 
 # get choices and write to OUTPUT file as JSON
