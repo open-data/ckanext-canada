@@ -679,7 +679,7 @@ admin_aircraft: upload-admin_aircraft rebuild-admin_aircraft
 
 .PHONY: upload-admin_aircraft
 upload-admin_aircraft: $(workdir)/filtered/admin_aircraft.csv $(workdir)/admin_aircraft.csv
-	@echo Uploading Departmental Audit Committee...
+	@echo Uploading Administrative Aircraft...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/admin_aircraft.csv" \
 	> /dev/null
