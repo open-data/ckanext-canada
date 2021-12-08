@@ -1,5 +1,5 @@
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing admin_aircraft suppliervax
+	nap reclassification service travela travelq wrongdoing adminaircraft suppliervax
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -19,7 +19,7 @@ csv_files := \
         travela.csv \
         travelq.csv travelq-nil.csv \
         wrongdoing.csv \
-		admin_aircraft.csv \
+		adminaircraft.csv \
 		contract-data.csv verification-data.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
