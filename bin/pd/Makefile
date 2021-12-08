@@ -685,8 +685,8 @@ upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv
 	> /dev/null
 
 .PHONY: rebuild-adminaircraft
-rebuild-admin_aircraft: $(workdir)/filtered/adminaircraft.csv
-	# no search for admin_aircraft
+rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
+	# no search for adminaircraft
 
 $(workdir)/adminaircraft.csv:
 	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
