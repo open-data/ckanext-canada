@@ -675,7 +675,7 @@ $(workdir)/filtered/verification-data.csv: $(workdir)/verification-data.csv
 ###  Government Administrative Aircraft Use
 ###
 .PHONY: adminaircraft
-admin_aircraft: upload-adminaircraft rebuild-adminaircraft
+adminaircraft: upload-adminaircraft rebuild-adminaircraft
 
 .PHONY: upload-adminaircraft
 upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv
