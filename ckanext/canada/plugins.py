@@ -316,7 +316,7 @@ ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
-ckanext.canada:tables/admin_aircraft.yaml
+ckanext.canada:tables/adminaircraft.yaml
 ckanext.canada:tables/suppliervax.yaml
 
 """

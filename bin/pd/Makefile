@@ -674,25 +674,25 @@ $(workdir)/filtered/verification-data.csv: $(workdir)/verification-data.csv
 ###
 ###  Government Administrative Aircraft Use
 ###
-.PHONY: admin_aircraft
-admin_aircraft: upload-admin_aircraft rebuild-admin_aircraft
+.PHONY: adminaircraft
+admin_aircraft: upload-adminaircraft rebuild-adminaircraft
 
-.PHONY: upload-admin_aircraft
-upload-admin_aircraft: $(workdir)/filtered/admin_aircraft.csv
+.PHONY: upload-adminaircraft
+upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv
 	@echo Uploading Administrative Aircraft...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/admin_aircraft.csv" \
+	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/adminaircraft.csv" \
 	> /dev/null
 
-.PHONY: rebuild-admin_aircraft
-rebuild-admin_aircraft: $(workdir)/filtered/admin_aircraft.csv
+.PHONY: rebuild-adminaircraft
+rebuild-admin_aircraft: $(workdir)/filtered/adminaircraft.csv
 	# no search for admin_aircraft
 
-$(workdir)/admin_aircraft.csv:
-	$(paster) $(combine) admin_aircraft -d $(workdir) -c $(registry_ini)
+$(workdir)/adminaircraft.csv:
+	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
 
-$(workdir)/filtered/admin_aircraft.csv: $(workdir)/admin_aircraft.csv
-	$(fdir)/filter_admin_aircraft.py < $< > $@
+$(workdir)/filtered/adminaircraft.csv: $(workdir)/adminaircraft.csv
+	$(fdir)/filter_adminaircraft.py < $< > $@
 
 
 endif

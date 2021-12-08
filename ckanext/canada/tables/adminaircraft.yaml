@@ -1,5 +1,5 @@
-dataset_type: admin_aircraft
-target_dataset: admin_aircraft
+dataset_type: adminaircraft
+target_dataset: adminaircraft
 
 title: Proactive Disclosure - Government Administrative Aircraft Use
 notes: Access, upload and modify 
@@ -11,7 +11,7 @@ collection: pd
 
 resources:
 - title: Proactive Disclosure - Government Administrative Aircraft Use
-  resource_name: admin_aircraft
+  resource_name: adminaircraft
   create_form: true
   edit_form: true
   fields:
@@ -274,7 +274,7 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-  - admin_aircraft_trigger: |
+  - adminaircraft_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
