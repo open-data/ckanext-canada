@@ -13,46 +13,109 @@ form_languages:
 #
 fields:
 
-- field_name: title
-  label: Title
-  validators: ignore_missing unicode
-  form_snippet: large_text.html
-  form_attrs:
-    data-module: slug-preview-target
+# Field = Title.
+# {The organization's title}
+- field_name: title_translated
+  label:
+    en: Title
+    fr: Titre
+  fluent_form_label:
+    en:
+      en: "Title (English)"
+      fr: "Titre (anglais)"
+    fr:
+      en: "Title (French)"
+      fr: "Titre (français)"
+  fluent_help_text:
+    en:
+      en: The English name by which the organization is known
+      fr: pending translation
+    fr:
+      en: The French name by which the organization is known
+      fr: pending translation
+  required: true
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  validators: fluent_text unicode scheming_required
+  output_validators: canada_org_title_translated_output
 
+# Field = Short Form.
+# {The organization's short form}
+- field_name: shortform
+  label:
+    en: Abbreviation
+    fr: Abréviation
+  fluent_form_label:
+    en:
+      en: "Abbreviation (English)"
+      fr: "Abréviation (anglais)"
+    fr:
+      en: "Abbreviation (French)"
+      fr: "Abréviation (français)"
+  fluent_help_text:
+    en:
+      en: The English abbreviation by which the organization is known
+      fr: pending translation
+    fr:
+      en: The French abbreviation by which the organization is known
+      fr: pending translation
+  required: true
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  validators: fluent_text scheming_required
+  output_validators: fluent_text_output
+
+# Field = URL.
+# {The organization's URL}
 - field_name: name
   label: URL
-  validators: not_empty unicode name_validator group_name_validator
-  form_snippet: slug.html
-  form_placeholder: my-organization
-
-- field_name: notes
-  label: Description
   help_text:
-    en: "A little information about my organization..."
-    fr: "Un peu d'information au sujet de mon organisation..."
-  form_snippet: markdown.html
+    en: The department identifier used for linking to the department e.g. "tbs-sct"
+        is used to create URL https://registry.open.canada.ca/en/organization/tbs-sct.
+        If the department has a common abbreviation for both English and French
+        languages then use it once, e.g. for "statcan" the URL is created as https://registry.open.canada.ca/en/organization/statcan
+    fr: pending translation
+  required: true
+  validators: not_empty unicode name_validator group_name_validator
 
-- field_name: shortform
-  label: shortform
-  form_snippet: large_text.html
-
-- field_name: shortform_fr
-  label: shortform_fr
-  form_snippet: large_text.html
-
+# Field = Department Number.
+# {The organization's Department Number}
 - field_name: department_number
-  label: department_number
-  form_snippet: large_text.html
+  label:
+    en: "Department number"
+    fr: "Numéro de ministère"
 
+# Field = UMD Number.
+# {The organization's UMD Number}
 - field_name: umd_number
-  label: umd_number
-  form_snippet: large_text.html
+  label:
+    en: "UMD Number"
+    fr: "Numéro de UMD"
 
+# Field = ATI Email.
+# {The organization's email for access to information}
 - field_name: ati_email
-  label: ati_email
-  form_snippet: large_text.html
+  label:
+    en: "ATI Email"
+    fr: "Courriel - Demande d'accès à l'information"
+  help_text:
+    en: The email for access to information completed request summaries
+    fr: Courriel de la accès à l’information sommaires de demandes complétées
+  validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
+  display_snippet: email_with_parameters.html
 
+# Field = Opengov Email.
+# {The organization's email for open government}
 - field_name: opengov_email
-  label: opengov_email
-  form_snippet: large_text.html
+  label:
+    en: "Open government Email"
+    fr: "Courriel - Gouvernement ouvert"
+  help_text:
+    en: The email for open government
+    fr: Courriel de la gouvernement ouvert
+  validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
+  display_snippet: email_with_parameters.html
