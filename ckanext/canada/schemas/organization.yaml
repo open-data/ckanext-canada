@@ -41,33 +41,6 @@ fields:
   validators: fluent_text unicode scheming_required
   output_validators: canada_org_title_translated_output
 
-# Field = Description.
-# {The organization's description}
-- field_name: notes_translated
-  label:
-    en: Description
-    fr: Description
-  fluent_form_label:
-    en:
-      en: "Description (English)"
-      fr: "Description (anglais)"
-    fr:
-      en: "Description (French)"
-      fr: "Description (français)"
-  fluent_help_text:
-    en:
-      en: A little information about the organization in English
-      fr: pending translation
-    fr:
-      en: A little information about the organization in English
-      fr: pending translation
-  # copied from fluent_markdown preset
-  form_snippet: fluent_markdown.html
-  display_snippet: fluent_markdown.html
-  error_snippet: fluent_text.html
-  validators: fluent_text
-  output_validators: fluent_core_translated_output
-
 # Field = Short Form.
 # {The organization's short form}
 - field_name: shortform_translated
