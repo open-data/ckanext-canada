@@ -39,7 +39,7 @@ fields:
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
   validators: fluent_text unicode scheming_required
-  output_validators: fluent_core_translated_output
+  output_validators: canada_org_title_translated_output
 
 # Field = Description.
 # {The organization's description}
