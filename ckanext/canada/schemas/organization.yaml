@@ -74,7 +74,10 @@ fields:
 - field_name: name
   label: URL
   help_text:
-    en: The department identifier used for linking to the department e.g. "tbs-sct" is used to create URL registry.open.canada.ca/en/organization/tbs-sct
+    en: The department identifier used for linking to the department e.g. "tbs-sct"
+        is used to create URL https://registry.open.canada.ca/en/organization/tbs-sct.
+        If the department has a common abbreviation for both English and French
+        languages then use it once, e.g. for "statcan" the URL is created as https://registry.open.canada.ca/en/organization/statcan
     fr: pending translation
   required: true
   validators: not_empty unicode name_validator group_name_validator
