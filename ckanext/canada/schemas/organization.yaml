@@ -43,7 +43,7 @@ fields:
 
 # Field = Short Form.
 # {The organization's short form}
-- field_name: shortform_translated
+- field_name: shortform
   label:
     en: Abbreviation
     fr: Abréviation
@@ -67,7 +67,7 @@ fields:
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
   validators: fluent_text scheming_required
-  output_validators: fluent_core_translated_output
+  output_validators: fluent_text_output
 
 # Field = URL.
 # {The organization's URL}
