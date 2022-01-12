@@ -105,7 +105,7 @@ fields:
   help_text:
     en: The email for access to information completed request summaries
     fr: Courriel de la accès à l’information sommaires de demandes complétées
-  validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
+  validators: canada_maintainer_email_default email_validator
   display_snippet: email_with_parameters.html
 
 # Field = Opengov Email.
@@ -117,5 +117,5 @@ fields:
   help_text:
     en: The email for open government
     fr: Courriel de la gouvernement ouvert
-  validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
+  validators: canada_maintainer_email_default email_validator
   display_snippet: email_with_parameters.html
