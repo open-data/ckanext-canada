@@ -4,7 +4,12 @@ $(function () {
         $field_url = $('#field-name');
     if (!$field_url.val()) {
         $field_en.on('input', function () {
-            $field_url.val($field_en.val());
+            if ($field_en.val() != $field_fr.val()) {
+                $field_url.val($field_en.val() + '-' + $field_fr.val());
+            } else {
+                $field_url.val($field_en.val());
+            }
+
         });
         $field_fr.on('input', function () {
             if ($field_en.val() != $field_fr.val()) {
