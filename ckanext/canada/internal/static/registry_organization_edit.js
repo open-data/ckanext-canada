@@ -1,22 +1,27 @@
 $(function () {
-    var $field_en = $('#field-shortform-en'),
-        $field_fr = $('#field-shortform-fr'),
-        $field_url = $('#field-name');
-    if (!$field_url.val()) {
-        $field_en.on('input', function () {
-            if ($field_en.val() != $field_fr.val()) {
-                $field_url.val($field_en.val() + '-' + $field_fr.val());
-            } else {
-                $field_url.val($field_en.val());
-            }
+    let $field_url = $('#field-name');
 
+    function format_url(en,fr) {
+        // return URL in the form en-fr
+        let $value_en = (en) ? $.url.slugify(en, true) : '',
+            $value_fr = (fr) ? $.url.slugify(fr, true) : '';
+
+        if ($value_en && !$value_fr)
+            return $value_en;
+        if (!$value_en && $value_fr)
+            return $value_fr;
+        if ($value_en == $value_fr)
+            return $value_en;
+
+        return ($value_en + '-' + $value_fr);
+    }
+
+    if (!$field_url.val()) {
+        $('#field-shortform-en').on('input', function () {
+            $field_url.val(format_url($('#field-shortform-en').val(), $('#field-shortform-fr').val()));
         });
-        $field_fr.on('input', function () {
-            if ($field_en.val() != $field_fr.val()) {
-                $field_url.val($field_en.val() + '-' + $field_fr.val());
-            } else {
-                $field_url.val($field_en.val());
-            }
+        $('#field-shortform-fr').on('input', function () {
+            $field_url.val(format_url($('#field-shortform-en').val(), $('#field-shortform-fr').val()));
       });
     }
 });
