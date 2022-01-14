@@ -32,3 +32,8 @@
   </div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="{{ h.url_for_static('/registry_organization_edit.js') }}" ></script>
+{% endblock %}
