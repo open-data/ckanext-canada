@@ -651,7 +651,7 @@ def _trim_package(pkg):
                 'webstore_last_updated', 'state',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'last_modified', 'position']:
+                'position']:
             if k in r:
                 del r[k]
         if 'datastore_contains_all_records_of_source_file' in r:
