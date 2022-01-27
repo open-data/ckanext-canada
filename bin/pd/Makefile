@@ -186,7 +186,7 @@ upload-briefingt: $(workdir)/filtered/briefingt.csv
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv
 	@echo Rebuilding Briefing Note Titles...
-	@$(ogc_search)/load_bn_to_solr.py "$(workdir)/filtered/briefingt.csv"
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
 
 $(workdir)/briefingt.csv:
@@ -211,7 +211,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
 	@echo Rebuilding Question Period Notes...
-	@$(ogc_search)/load_qp_to_solr.py "$(workdir)/filtered/qpnotes.csv"
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
 
 $(workdir)/qpnotes.csv:
