@@ -908,7 +908,7 @@ def build_nav_main(*args):
 
 def remove_outdated_resource_from_datastore(resource_id):
     from ckan import model
-    context = {'model': model, 'ignore_auth': True, 'agent': 'xloader'}
+    context = {'model': model, 'ignore_auth': True}
     try:
         res = p.toolkit.get_action(u'resource_show')(context, {'id': resource_id})
     except ObjectNotFound:
