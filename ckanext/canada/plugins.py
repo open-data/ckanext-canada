@@ -916,7 +916,7 @@ def remove_outdated_resource_from_datastore(resource_id):
         return
 
     # remove outdated validation report for linked resources
-    if h.is_url(res['url']) and h.validation_status(res['id']) != 'unknown':
+    if res['url_type'] != 'upload' and h.validation_status(res['id']) != 'unknown':
         try:
             p.toolkit.get_action(u'resource_validation_delete')(
                 context, {'resource_id': res['id']})
@@ -925,7 +925,7 @@ def remove_outdated_resource_from_datastore(resource_id):
             log.error('Validation report for resource %s does not exist' % res['id'])
 
     # remove outdated datastore table for linked resources
-    if h.is_url(res['url']) and 'datastore_active' in res and res['datastore_active']:
+    if res['url_type'] != 'upload' and 'datastore_active' in res and res['datastore_active']:
         try:
             p.toolkit.get_action(u'datastore_delete')(
                 context, {'resource_id': res['id'], 'force': True})
