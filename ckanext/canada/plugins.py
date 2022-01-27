@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import os.path
+import logging
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
@@ -10,7 +11,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action, side_effect_free, ValidationError
+from ckantoolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound
 import ckanapi
 from ckan.lib.base import c
 
@@ -35,6 +36,8 @@ try:
 except ImportError:
     pass
 
+log = logging.getLogger(__name__)
+
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -47,6 +50,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IResourceUrlChange)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -157,6 +161,10 @@ class DataGCCAInternal(p.SingletonPlugin):
                 action='datatable'
             )
         return map
+
+    # IResourceUrlChange
+    def notify(self, resource):
+        p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -896,3 +904,31 @@ def build_nav_main(*args):
             continue
         output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
     return output
+
+
+def remove_outdated_resource_from_datastore(resource_id):
+    from ckan import model
+    context = {'model': model, 'ignore_auth': True, 'agent': 'xloader'}
+    try:
+        res = p.toolkit.get_action(u'resource_show')(context, {'id': resource_id})
+    except ObjectNotFound:
+        log.error('Resource %s does not exist.' % res['id'])
+        return
+
+    # remove outdated validation report for linked resources
+    if h.is_url(res['url']) and h.validation_status(res['id']) != 'unknown':
+        try:
+            p.toolkit.get_action(u'resource_validation_delete')(
+                context, {'resource_id': res['id']})
+            log.info('Validation report deleted for resource %s' % res['id'])
+        except ObjectNotFound:
+            log.error('Validation report for resource %s does not exist' % res['id'])
+
+    # remove outdated datastore table for linked resources
+    if h.is_url(res['url']) and 'datastore_active' in res and res['datastore_active']:
+        try:
+            p.toolkit.get_action(u'datastore_delete')(
+                context, {'resource_id': res['id'], 'force': True})
+            log.info('Datastore table dropped for resource %s' % res['id'])
+        except ObjectNotFound:
+            log.error('Datastore table for resource %s does not exist' % res['id'])
