@@ -505,8 +505,8 @@ class CanadaCommand(CkanCommand):
     def resource_https_update(self, https_report, https_alt_report):
         """
         This function updates all broken http links into https links.
-        https_report: the report with all of the links.
-        https_alt_report: the report with links where alternates exist.
+        https_report: the report with all of the links (a .json file).
+        https_alt_report: the report with links where alternates exist (a .json 	file).
         """
         alt_file = open(https_alt_report, "r")
         alt_data = json.load(alt_file)
