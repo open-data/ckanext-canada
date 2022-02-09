@@ -70,6 +70,7 @@ class CanadaCommand(CkanCommand):
                       rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
+                      update-resource-url-https <https_report> <https_alt_report>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -181,6 +182,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'load-suggested':
             self.load_suggested(self.options.use_created_date, *self.args[1:])
+
+        elif cmd == 'update-resource-url-https':
+            self.resource_https_update(*self.args[1:])
 
         else:
             print self.__doc__
@@ -497,6 +501,37 @@ class CanadaCommand(CkanCommand):
             except NotFound as e:
                 print("{0} dataset not found".format(uuid))
         size_report.close()
+
+    def resource_https_update(self, https_report, https_alt_report):
+        alt_file = open(https_alt_report, "r")
+        alt_data = json.load(alt_file)
+
+        https_file = open(https_report, "r")
+        data = json.load(https_file)
+
+        def check_https(check_url, check_org, check_data):
+            for organization in check_data:
+                if organization['org'] == check_org:
+                    for url in organization['urls']:
+                        if check_url == url:
+                            return True
+            return False
+
+        local_ckan = LocalCKAN()
+
+        for org in data:
+            for res in data[org]:
+                if check_https(res['url'], org, alt_data) and res['url_type'] == 'http':
+                    try:
+                        https_url = res['url'].replace('http://', 'https://')
+                        local_ckan.call_action('resource_show', {'id': res['id']})
+                        local_ckan.call_action('resource_patch',
+                                               {'id': res['id'],
+                                                'url': res['url'].replace(
+                                                    'http://', 'https://')})
+                        print('Url for resource ' + res['id'] + ' updated ' + https_url)
+                    except NotFound:
+                        print('Resource ' + res['id'] + ' not found')
 
     def load_suggested(self, use_created_date, filename):
         """
@@ -836,3 +871,4 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
+
