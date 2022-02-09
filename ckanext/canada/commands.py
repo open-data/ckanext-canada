@@ -503,6 +503,11 @@ class CanadaCommand(CkanCommand):
         size_report.close()
 
     def resource_https_update(self, https_report, https_alt_report):
+        """
+        This function updates all broken http links into https links.
+        https_report: the report with all of the links.
+        https_alt_report: the report with links where alternates exist.
+        """
         alt_file = open(https_alt_report, "r")
         alt_data = json.load(alt_file)
 
@@ -521,14 +526,18 @@ class CanadaCommand(CkanCommand):
 
         for org in data:
             for res in data[org]:
-                if check_https(res['url'], org, alt_data) and res['url_type'] == 'http':
+                if org == 'Statistics Canada | Statistique Canada':
+                    https_exist = True
+                else:
+                    https_exist = check_https(res['url'], org, alt_data)
+
+                if https_exist and res['url_type'] == 'http':
                     try:
                         https_url = res['url'].replace('http://', 'https://')
                         local_ckan.call_action('resource_show', {'id': res['id']})
                         local_ckan.call_action('resource_patch',
                                                {'id': res['id'],
-                                                'url': res['url'].replace(
-                                                    'http://', 'https://')})
+                                                'url': https_url})
                         print('Url for resource ' + res['id'] + ' updated ' + https_url)
                     except NotFound:
                         print('Resource ' + res['id'] + ' not found')
