@@ -9,7 +9,7 @@ Features:
 Installation:
 
 * Use [open-data fork of CKAN](https://github.com/open-data/ckan>),
-  branch canada-v2.6
+  branch canada-v2.8
 
 From a clean database you must run:
 
@@ -45,7 +45,7 @@ before loading any data.
 
 Project | Github group/repo | Branch | Plugins
 --- | --- | --- | ---
-CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.6 | N/A
+CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.8 | N/A
 canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | master | see above
 Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | scheming_datasets
 Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent>) | master | N/A
@@ -170,7 +170,7 @@ import_xml2obd.py de-dup <site_url>
 
 ## Configuration: Solr
 
-This extension uses a custom Solr schema based on the ckan 2.6 schema. You can find the schema in the root directory of the project.
+This extension uses a custom Solr schema based on the ckan 2.8 schema. You can find the schema in the root directory of the project.
 Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using:

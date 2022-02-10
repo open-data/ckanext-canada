@@ -1,0 +1,22 @@
+{% ckan_extends %}
+
+{% block activity_stream %}
+    {{ super() }}
+    {% set current = h.current_url().split('/')[-1] if h.current_url().split('/')[-1]|int != 0 else '' %}
+    {% set activities_length = activity_stream|length %}
+    {% set limit = g.activity_list_limit|int %}
+    <ul class="pager">
+        {% if current %}
+        {% set new_offset = current|int - limit|int %}
+        {% set prev_offset = '/' + new_offset|string if new_offset > 0 else '' %}
+        {% set activities_prev_path = h.url_for('/user/activity/') + name + prev_offset %}
+        <li class="previous"><a href='{{activities_prev_path}}' rel="prev">{{ _('Previous') }}</a></li>
+        {% endif %}
+        {% if limit < activities_length %}
+        {% set new_offset = current|int + limit|int %}
+        {% set next_offset = '/' + (new_offset|string if current else limit|string) %}
+        {% set activities_next_path = h.url_for('/user/activity/') + name + next_offset %}
+        <li class="next"><a href='{{activities_next_path}}' rel="next">{{ _('Next') }}</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}

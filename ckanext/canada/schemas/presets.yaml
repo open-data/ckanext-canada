@@ -3193,6 +3193,9 @@ presets:
     - value: AVI
       mimetype: video/vnd.avi
     - value: BAG
+    - value: BAM
+      mimetype: application/octet-stream
+      openness_score: 3
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
@@ -3390,6 +3393,9 @@ presets:
     - value: RTF
       mimetype: text/rtf
       replaces: [rtf]
+    - value: SAM
+      mimetype: text/plain
+      openness_score: 3
     - value: SAR
     - value: SAS
       mimetype: application/x-sas

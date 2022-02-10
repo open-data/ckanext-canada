@@ -250,7 +250,6 @@ resources:
       fgColor: FFb9c4c9
 
   triggers:
-  - inventory_trigger
   - protect_user_votes_trigger
 
   examples:

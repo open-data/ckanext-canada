@@ -340,6 +340,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
+                solrrec[key] = value.zfill(2)
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
