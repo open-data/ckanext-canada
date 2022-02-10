@@ -507,7 +507,8 @@ class CanadaCommand(CkanCommand):
         This function updates all broken http links into https links.
         https_report: the report with all of the links (a .json file).
         https_alt_report: the report with links where alternates exist (a .json 	file).
-        """
+        For more specifications about the files in use please visit, https://git	hub.com/open-data/opengov-orgs-http.
+	"""
         alt_file = open(https_alt_report, "r")
         alt_data = json.load(alt_file)
 
