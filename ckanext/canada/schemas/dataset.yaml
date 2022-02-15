@@ -470,16 +470,4 @@ resource_fields:
 - preset: canada_resource_url
 - preset: canada_resource_data_quality
 
-- field_name: schema
-  label: Schema
-  preset: hidden_in_form
-- field_name: validation_options
-  label: Validation options
-  preset: hidden_in_form
-- field_name: validation_status
-  label: Validation status
-  preset: hidden_in_form
-- field_name: validation_timestamp
-  label: Validation timestamp
-  preset: hidden_in_form
-  display_snippet: validation_timestamp.html
+
