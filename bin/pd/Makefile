@@ -22,6 +22,7 @@ csv_files := \
 		adminaircraft.csv \
 		contract-data.csv verification-data.csv
 
+
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
@@ -188,6 +189,7 @@ upload-briefingt: $(workdir)/filtered/briefingt.csv
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv
 	@echo Rebuilding Briefing Note Titles...
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
 
 $(workdir)/briefingt.csv:
@@ -212,6 +214,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
 	@echo Rebuilding Question Period Notes...
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
 
 $(workdir)/qpnotes.csv:
@@ -676,15 +679,15 @@ $(workdir)/filtered/verification-data.csv: $(workdir)/verification-data.csv
 adminaircraft: upload-adminaircraft rebuild-adminaircraft
 
 .PHONY: upload-adminaircraft
-upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv
+upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)/adminaircraft.csv
 	@echo Uploading Administrative Aircraft...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/adminaircraft.csv" \
 	> /dev/null
 
 .PHONY: rebuild-adminaircraft
-rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
-	# no search for adminaircraft
+rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)adminaircraft.csv
+  #search not yet setup for adminaircraft
 
 $(workdir)/adminaircraft.csv:
 	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)

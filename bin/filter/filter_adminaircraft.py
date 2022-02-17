@@ -9,7 +9,7 @@ REMOVE_COLUMNS = [
     'record_modified',
     'user_modified',
     'owner_org',
-    'owner_org_title',
+    'owner_org_title'
 ]
 
 def main():

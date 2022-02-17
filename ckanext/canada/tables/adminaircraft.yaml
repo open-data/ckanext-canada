@@ -1,16 +1,22 @@
 dataset_type: adminaircraft
 target_dataset: adminaircraft
 
-title: Proactive Disclosure - Government Administrative Aircraft Use
-notes: Access, upload and modify 
+
+title: Proactive Disclosure - Use of Administrative Aircraft
+notes: Access, upload and modify government administrative aircraft use
+
 
 template_version: 3
 
 portal_type: info
+
+resources:
+- title: Proactive Disclosure - Use of Administrative Aircraft
+
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Government Administrative Aircraft Use
+- title: Proactive Disclosure - Use of Administrative Aircraft
   resource_name: adminaircraft
   create_form: true
   edit_form: true
@@ -50,7 +56,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: True
-    choices_file: choices/minister.json
+    choices_file: choices/aircraft_minister.json
     excel_error_formula: 'FALSE'
 
   # 3.3
@@ -135,8 +141,9 @@ resources:
       en: Location(s) visited (English)
       fr: Endroit(s) visité (anglais)
     description:
-      en: To include names of all places visited to conduct government business during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+      en: To include names of all places visited to conduct government business during the trip in question, in English. (separate multiple locations with semicolons)
+      fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement. (séparer plusieurs emplacements avec des points-virgules)
+
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -155,8 +162,8 @@ resources:
       en: Location(s) visited (French)
       fr: Endroit(s) visité (français)
     description:
-      en: To include names of all places visited to conduct government business during the trip in question, in french.
-      fr: Cette zone indique, en français, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement.
+      en: To include names of all places visited to conduct government business during the trip in question, in french. (separate multiple locations with semicolons)
+      fr: Cette zone indique, en français, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement. (séparer plusieurs emplacements avec des points-virgules)
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -195,10 +202,10 @@ resources:
       en: Passenger names
       fr: Nom des passagers
     description:
-      en: Full list of flight passengers.
-      fr: Liste complète des passagers du vol.
+      en: Full list of flight passengers. (Comma seperated)
+      fr: Liste complète des passagers du vol. (séparées par des virgules)
     obligation: Mandatory
-    format_type: Free Text 
+    format_type: Free Text (separated by commas)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
