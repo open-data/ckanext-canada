@@ -1,13 +1,19 @@
 dataset_type: adminaircraft
 target_dataset: adminaircraft
 
+
 title: Proactive Disclosure - Use of Administrative Aircraft
 notes: Access, upload and modify government administrative aircraft use
+
 
 template_version: 3
 
 portal_type: info
-collection: adminaircraft
+
+resources:
+- title: Proactive Disclosure - Use of Administrative Aircraft
+
+collection: pd
 
 resources:
 - title: Proactive Disclosure - Use of Administrative Aircraft
@@ -137,6 +143,7 @@ resources:
     description:
       en: To include names of all places visited to conduct government business during the trip in question, in English. (separate multiple locations with semicolons)
       fr: Cette zone indique, en anglais, le nom de tous les lieux qui ont été visités dans le cadre du voyage en question réalisé pour le compte du gouvernement. (séparer plusieurs emplacements avec des points-virgules)
+
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -274,7 +281,7 @@ resources:
   excel_data_num_rows: 500
 
   triggers:
-  - admin_aircraft_trigger: |
+  - adminaircraft_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;

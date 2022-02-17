@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"filter for adminaircraft.csv"
+"filter for contract-data.csv and verification-data.csv"
 
 import csv
 import sys
@@ -8,8 +8,6 @@ REMOVE_COLUMNS = [
     'record_created',
     'record_modified',
     'user_modified',
-    'owner_org',
-    'owner_org_title'
 ]
 
 def main():

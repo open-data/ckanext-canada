@@ -17,6 +17,7 @@ from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckantoolkit import get_validator, Invalid, missing
+from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -219,6 +220,16 @@ def canada_maintainer_email_default(key, data, errors, context):
         data[key] = 'open-ouvert@tbs-sct.gc.ca'
 
 
+def no_future_date(key, data, errors, context):
+    ready = data.get(('ready_to_publish',))
+    if not ready or ready == 'false':
+        return
+    value = data.get(key)
+    if value and value > datetime.today():
+        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
+    return value
+
+
 def canada_sort_prop_status(key, data, errors, context):
     """
     sort the status composite values by date in ascending order
@@ -254,3 +265,16 @@ def no_future_date(key, data, errors, context):
     if value and value > datetime.today():
         raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
     return value
+
+
+def canada_org_title_translated_output(key, data, errors, context):
+    """
+    Return a value for the title field in organization schema using a multilingual dict in the form EN | FR.
+    """
+    data[key] = fluent_text_output(data[key])
+
+    k = key[-1]
+    new_key = key[:-1] + (k[:-len(LANG_SUFFIX)],)
+
+    if new_key in data:
+        data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']

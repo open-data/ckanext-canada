@@ -141,6 +141,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
+        map.connect(
+            'delete_datastore_table',
+            '/dataset/{id}/delete-datastore-table/{resource_id}',
+            controller='ckanext.canada.controller:CanadaDatastoreController',
+            action='delete_datastore_table',
+        )
+
         return map
 
     def after_map(self, map):
@@ -309,6 +316,9 @@ ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
+ckanext.canada:tables/adminaircraft.yaml
+ckanext.canada:tables/suppliervax.yaml
+
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -322,6 +332,7 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
+        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
@@ -410,15 +421,11 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
+            'canada_search_domain',
         ])
 
 
     def before_map(self, map):
-        map.connect(
-            '/fgpv_vpgf/{pkg_id}',
-            action='fgpv_vpgf',
-            controller='ckanext.canada.controller:CanadaController'
-        )
         map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',
@@ -538,6 +545,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'canada_org_title_translated_output':
+                validators.canada_org_title_translated_output,
             }
 
 

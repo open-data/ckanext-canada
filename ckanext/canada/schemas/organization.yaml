@@ -1,0 +1,124 @@
+scheming_version: 2
+organization_type: organization
+
+about: 'open.canada.ca: Organization metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+
+form_languages:
+- en
+- fr
+
+#
+#   ORGANIZATION FIELDS
+#
+fields:
+
+# Field = Title.
+# {The organization's title}
+- field_name: title_translated
+  label:
+    en: Title
+    fr: Titre
+  fluent_form_label:
+    en:
+      en: "Title (English)"
+      fr: "Titre (anglais)"
+    fr:
+      en: "Title (French)"
+      fr: "Titre (français)"
+  fluent_help_text:
+    en:
+      en: Title for the organization. Should be an applied title if one exists.
+      fr: Titre de l'organisation. Devrait être un titre appliqué s'il en existe un.
+    fr:
+      en: Title for the organization. Should be an applied title if one exists.
+      fr: Titre de l'organisation. Devrait être un titre appliqué s'il en existe un.
+  required: true
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  validators: fluent_text unicode scheming_required
+  output_validators: canada_org_title_translated_output
+
+# Field = Short Form.
+# {The organization's short form}
+- field_name: shortform
+  label:
+    en: Abbreviation
+    fr: Abréviation
+  fluent_form_label:
+    en:
+      en: "Abbreviation (English)"
+      fr: "Abréviation (anglais)"
+    fr:
+      en: "Abbreviation (French)"
+      fr: "Abréviation (français)"
+  fluent_help_text:
+    en:
+      en: Consult registry of applied titles to find the abbreviation
+      fr: Consultez le registre des titres d'usage pour trouver l'abréviation
+    fr:
+      en: Consult registry of applied titles to find the abbreviation
+      fr: Consultez le registre des titres d'usage pour trouver l'abréviation
+  required: true
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  validators: fluent_text scheming_required
+  output_validators: fluent_text_output
+
+# Field = URL.
+# {The organization's URL}
+- field_name: name
+  label: URL
+  help_text:
+    en: The department identifier used for linking to the department e.g. "tbs-sct"
+        is used to create URL https://registry.open.canada.ca/en/organization/tbs-sct.
+        If the department has a common abbreviation for both English and French
+        languages then use it once, e.g. for "statcan" the URL is created as https://registry.open.canada.ca/en/organization/statcan
+    fr: L'identifiant du département utilisé pour établir un lien avec le département, par ex. "tbs-sct"
+        est utilisé pour créer l'URL https://registry.open.canada.ca/en/organization/tbs-sct.
+        Si le ministère a une abréviation commune pour l'anglais et le français
+        langues puis l'utiliser une fois, par ex. pour "statcan", l'URL est créée sous la forme https://registry.open.canada.ca/en/organization/statcan
+  required: true
+  validators: not_empty unicode name_validator group_name_validator
+
+# Field = Department Number.
+# {The organization's Department Number}
+- field_name: department_number
+  label:
+    en: "Department number"
+    fr: "Numéro de ministère"
+
+# Field = UMD Number.
+# {The organization's UMD Number}
+- field_name: umd_number
+  label:
+    en: "UMD Number"
+    fr: "Numéro de UMD"
+
+# Field = ATI Email.
+# {The organization's email for access to information}
+- field_name: ati_email
+  label:
+    en: "ATI Email"
+    fr: "Courriel - Demande d'accès à l'information"
+  help_text:
+    en: The email for access to information completed request summaries
+    fr: Courriel de la accès à l’information sommaires de demandes complétées
+  validators: canada_maintainer_email_default email_validator
+  display_snippet: email_with_parameters.html
+
+# Field = Opengov Email.
+# {The organization's email for open government}
+- field_name: opengov_email
+  label:
+    en: "Open government Email"
+    fr: "Courriel - Gouvernement ouvert"
+  help_text:
+    en: The email for open government
+    fr: Courriel de la gouvernement ouvert
+  validators: canada_maintainer_email_default email_validator
+  display_snippet: email_with_parameters.html
