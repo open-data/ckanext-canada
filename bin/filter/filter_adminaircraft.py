@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"filter for admin_aircraft.csv"
+"filter for adminaircraft.csv"
 
 import csv
 import sys
