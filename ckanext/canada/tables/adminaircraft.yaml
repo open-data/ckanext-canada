@@ -1,8 +1,8 @@
 dataset_type: adminaircraft
 target_dataset: adminaircraft
 
-title: Proactive Disclosure - Government Administrative Aircraft Use
-notes: Access, upload and modify 
+title: Proactive Disclosure - Use of Administrative Aircraft
+notes: Access, upload and modify government administrative aircraft use
 
 template_version: 3
 
@@ -10,7 +10,7 @@ portal_type: info
 collection: adminaircraft
 
 resources:
-- title: Proactive Disclosure - Government Administrative Aircraft Use
+- title: Proactive Disclosure - Use of Administrative Aircraft
   resource_name: adminaircraft
   create_form: true
   edit_form: true
