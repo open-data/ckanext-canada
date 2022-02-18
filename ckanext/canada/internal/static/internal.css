@@ -551,6 +551,10 @@ ul#brf-pkg { padding-left: 0; }
 #mn-pd { border-left: solid 6px #44a; }
 #pd i { color: #44a; }
 
+#ql-suppliervax { border-left: solid 3px #7e0c33; border-top: solid 1px #ddd; }
+#ql-suppliervax i { color: #7e0c33; margin-right: 10px; }
+#mn-suppliervax { border-left: solid 6px #7e0c33; }
+
 .label.dataset-private { display: none; }
 
 #quick-links .fa-question-circle-o {
