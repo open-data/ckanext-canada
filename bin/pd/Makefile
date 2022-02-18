@@ -1,5 +1,6 @@
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing
+	nap reclassification service travela travelq wrongdoing adminaircraft
+
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv \
@@ -17,7 +18,9 @@ csv_files := \
 	service.csv service-std.csv \
         travela.csv \
         travelq.csv travelq-nil.csv \
-        wrongdoing.csv
+        wrongdoing.csv \
+		adminaircraft.csv
+
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
@@ -633,6 +636,31 @@ $(workdir)/wrongdoing.csv:
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
 	$(fdir)/filter_wrongdoing.py < $< > $@
+
+
+
+###
+###  Government Administrative Aircraft Use
+###
+.PHONY: adminaircraft
+adminaircraft: upload-adminaircraft rebuild-adminaircraft
+
+.PHONY: upload-adminaircraft
+upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)/adminaircraft.csv
+	@echo Uploading Administrative Aircraft...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/adminaircraft.csv" \
+	> /dev/null
+
+.PHONY: rebuild-adminaircraft
+rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
+  #search not yet setup for adminaircraft
+
+$(workdir)/adminaircraft.csv:
+	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/adminaircraft.csv: $(workdir)/adminaircraft.csv
+	$(fdir)/filter_adminaircraft.py < $< > $@
 
 
 endif
