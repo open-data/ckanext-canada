@@ -70,6 +70,7 @@ class CanadaCommand(CkanCommand):
                       rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
+                      update-resource-url-https <https_report> <https_alt_report>
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -181,6 +182,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'load-suggested':
             self.load_suggested(self.options.use_created_date, *self.args[1:])
+
+        elif cmd == 'update-resource-url-https':
+            self.resource_https_update(*self.args[1:])
 
         else:
             print self.__doc__
@@ -497,6 +501,47 @@ class CanadaCommand(CkanCommand):
             except NotFound as e:
                 print("{0} dataset not found".format(uuid))
         size_report.close()
+
+    def resource_https_update(self, https_report, https_alt_report):
+        """
+        This function updates all broken http links into https links.
+        https_report: the report with all of the links (a .json file) ex. https:	//github.com/open-data/opengov-orgs-http/blob/main/orgs_http_data.json.
+        https_alt_report: the report with links where alternates exist (a .json 	file) ex. https://github.com/open-data/opengov-orgs-http/blob/main/https	_alternative_count.json.
+        For more specifications about the files in use please visit, https://git	hub.com/open-data/opengov-orgs-http.
+	"""
+        alt_file = open(https_alt_report, "r")
+        alt_data = json.load(alt_file)
+
+        https_file = open(https_report, "r")
+        data = json.load(https_file)
+
+        def check_https(check_url, check_org, check_data):
+            for organization in check_data:
+                if organization['org'] == check_org:
+                    for url in organization['urls']:
+                        if check_url == url:
+                            return True
+            return False
+
+        local_ckan = LocalCKAN()
+
+        for org in data:
+            for res in data[org]:
+                if org == 'Statistics Canada | Statistique Canada':
+                    https_exist = True
+                else:
+                    https_exist = check_https(res['url'], org, alt_data)
+
+                if https_exist and res['url_type'] == 'http':
+                    try:
+                        https_url = res['url'].replace('http://', 'https://')
+                        local_ckan.call_action('resource_show', {'id': res['id']})
+                        local_ckan.call_action('resource_patch',
+                                               {'id': res['id'],
+                                                'url': https_url})
+                        print('Url for resource ' + res['id'] + ' updated ' + https_url)
+                    except NotFound:
+                        print('Resource ' + res['id'] + ' not found')
 
     def load_suggested(self, use_created_date, filename):
         """
@@ -836,3 +881,4 @@ def update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
+
