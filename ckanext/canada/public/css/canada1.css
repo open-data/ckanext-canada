@@ -307,3 +307,6 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 .goodtables-ui-report .result {
     margin: 0;
 }
+.goodtables-ui-report .result .error-details .error-list .error-list-heading {
+    display: none;
+}
