@@ -518,6 +518,7 @@ class CanadaCommand(CkanCommand):
 
         https_file = open(https_report, "r")
         data = json.load(https_file)
+        log = open("error.log", "w")
 
         def check_https(check_url, check_org, check_data):
             for organization in check_data:
@@ -533,20 +534,28 @@ class CanadaCommand(CkanCommand):
             for res in data[org]:
                 if org == 'Statistics Canada | Statistique Canada':
                     https_exist = True
+                elif res['collection'] in ['fgp', 'federated']:
+                    https_exist = False
                 else:
                     https_exist = check_https(res['url'], org, alt_data)
 
                 if https_exist and res['url_type'] == 'http':
                     try:
                         https_url = res['url'].replace('http://', 'https://')
-                        resource = local_ckan.call_action('resource_show', {'id': res['id']})
+                        resource = local_ckan.call_action('resource_show',
+                                                          {'id': res['id']})
                         if urlparse(resource['url']).scheme == 'http':
                             local_ckan.call_action('resource_patch',
                                                    {'id': res['id'],
                                                     'url': https_url})
-                            print('Url for resource ' + res['id'] + ' updated ' + https_url)
+                            log.write('Url for resource %s updated %s\n'
+                                      % (res['id']), https_url)
                     except NotFound:
-                        print('Resource ' + res['id'] + ' not found')
+                        log.write('Resource %s not found\n' % res['id'])
+                    except ValidationError as e:
+                        log.write('Resource %s failed validation %s\n'
+                                  % (res['id'], str(e.error_dict)))
+        log.close()
 
     def load_suggested(self, use_created_date, filename):
         """
