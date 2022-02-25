@@ -654,7 +654,7 @@ upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)/adminairc
 
 .PHONY: rebuild-adminaircraft
 rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
-  #search not yet setup for adminaircraft
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/adminaircraft.csv" --search adminaircraft
 
 $(workdir)/adminaircraft.csv:
 	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
