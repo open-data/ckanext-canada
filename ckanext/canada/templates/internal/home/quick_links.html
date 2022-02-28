@@ -204,7 +204,11 @@
               )}}
             </ul>
           <li>
-          {{ quick_link_pd('adminaircraft') }}
+
+          {% if h.canada_check_access('98abeb62-7c76-4dfb-a134-1551f55ede55') %}
+            {{ quick_link_pd('adminaircraft') }}
+          {% endif %}
+
         </ul>
       </section>
     </div>
