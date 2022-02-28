@@ -318,7 +318,6 @@ ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
 ckanext.canada:tables/adminaircraft.yaml
 ckanext.canada:tables/suppliervax.yaml
-
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list

@@ -22,7 +22,6 @@ csv_files := \
 		adminaircraft.csv \
 		contract-data.csv verification-data.csv
 
-
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
@@ -686,8 +685,8 @@ upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)/adminairc
 	> /dev/null
 
 .PHONY: rebuild-adminaircraft
-rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)adminaircraft.csv
-  #search not yet setup for adminaircraft
+rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/adminaircraft.csv" --search adminaircraft
 
 $(workdir)/adminaircraft.csv:
 	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
