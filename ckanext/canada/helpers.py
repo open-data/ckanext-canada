@@ -11,7 +11,7 @@ import ckan as ckan
 import jinja2
 
 import ckanapi
-
+from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
@@ -538,3 +538,10 @@ def canada_search_domain():
     if 'staging' in config.get('ckan.site_url', ''):
         return _('search-staging.open.canada.ca')
     return _('search.open.canada.ca')
+
+
+def canada_check_access(package_id):
+    try:
+        return h.check_access('package_update', {'id': package_id})
+    except NotFound:
+        return False
