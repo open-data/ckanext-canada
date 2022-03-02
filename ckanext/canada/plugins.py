@@ -59,6 +59,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         config.update({
             "ckan.user_list_limit": 4000
         })
+        # registry includes validation so use real validation presets
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+ckanext.validation:presets.json
+"""
 
 
     def before_map(self, map):
@@ -324,6 +331,8 @@ ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
+ckanext.canada:tables/adminaircraft.yaml
+
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -331,7 +340,7 @@ ckanext.canada:tables/experiment.yaml
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
-ckanext.validation:presets.json
+ckanext.canada:schemas/validation_placeholder_presets.yaml
 """
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml

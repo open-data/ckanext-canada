@@ -18,6 +18,7 @@ import csv
 import time
 import sys
 import urllib2
+from urlparse import urlparse
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
@@ -505,15 +506,19 @@ class CanadaCommand(CkanCommand):
     def resource_https_update(self, https_report, https_alt_report):
         """
         This function updates all broken http links into https links.
-        https_report: the report with all of the links (a .json file) ex. https:	//github.com/open-data/opengov-orgs-http/blob/main/orgs_http_data.json.
-        https_alt_report: the report with links where alternates exist (a .json 	file) ex. https://github.com/open-data/opengov-orgs-http/blob/main/https	_alternative_count.json.
-        For more specifications about the files in use please visit, https://git	hub.com/open-data/opengov-orgs-http.
-	"""
+        https_report: the report with all of the links (a .json file)
+        ex. https://github.com/open-data/opengov-orgs-http/blob/main/orgs_http_data.json.
+        https_alt_report: the report with links where alternates exist (a .json file)
+        ex. https://github.com/open-data/opengov-orgs-http/blob/main/https_alternative_count.json.
+        For more specifications about the files in use please visit,
+        https://github.com/open-data/opengov-orgs-http.
+        """
         alt_file = open(https_alt_report, "r")
         alt_data = json.load(alt_file)
 
         https_file = open(https_report, "r")
         data = json.load(https_file)
+        log = open("error.log", "w")
 
         def check_https(check_url, check_org, check_data):
             for organization in check_data:
@@ -529,19 +534,28 @@ class CanadaCommand(CkanCommand):
             for res in data[org]:
                 if org == 'Statistics Canada | Statistique Canada':
                     https_exist = True
+                elif res['collection'] in ['fgp', 'federated']:
+                    https_exist = False
                 else:
                     https_exist = check_https(res['url'], org, alt_data)
 
                 if https_exist and res['url_type'] == 'http':
                     try:
                         https_url = res['url'].replace('http://', 'https://')
-                        local_ckan.call_action('resource_show', {'id': res['id']})
-                        local_ckan.call_action('resource_patch',
-                                               {'id': res['id'],
-                                                'url': https_url})
-                        print('Url for resource ' + res['id'] + ' updated ' + https_url)
+                        resource = local_ckan.call_action('resource_show',
+                                                          {'id': res['id']})
+                        if urlparse(resource['url']).scheme == 'http':
+                            local_ckan.call_action('resource_patch',
+                                                   {'id': res['id'],
+                                                    'url': https_url})
+                            log.write('Url for resource %s updated %s\n'
+                                      % (res['id']), https_url)
                     except NotFound:
-                        print('Resource ' + res['id'] + ' not found')
+                        log.write('Resource %s not found\n' % res['id'])
+                    except ValidationError as e:
+                        log.write('Resource %s failed validation %s\n'
+                                  % (res['id'], str(e.error_dict)))
+        log.close()
 
     def load_suggested(self, use_created_date, filename):
         """

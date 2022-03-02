@@ -1,5 +1,7 @@
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 {% set name_field = h.scheming_field_by_name(schema.resource_fields, 'name_translated') %}
 
-<li><a href="{{ res.url }}">{% snippet 'scheming/snippets/display_field.html',
-  field=name_field, data=res, entity_type='dataset', object_type=pkg.type %}</a></li>
+<li><a href="{{ res.url }}" data-gc-analytics="manualDownload">{%
+  snippet 'scheming/snippets/display_field.html',
+  field=name_field, data=res, entity_type='dataset', object_type=pkg.type
+%}</a></li>
