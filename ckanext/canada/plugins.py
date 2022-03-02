@@ -329,7 +329,7 @@ ckanext.canada:tables/adminaircraft.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
-        if 'validation' not in config.get['scheming.presets']:
+        if 'validation' not in config.get('scheming.presets', ''):
             config['scheming.presets'] = """
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
