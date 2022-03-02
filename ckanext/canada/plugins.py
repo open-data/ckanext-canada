@@ -317,6 +317,8 @@ ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/experiment.yaml
+ckanext.canada:tables/adminaircraft.yaml
+
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
@@ -476,6 +478,9 @@ ckanext.canada:schemas/prop.yaml
             'resource_view_create': auth.resource_view_create,
             'resource_view_update': auth.resource_view_update,
             'resource_view_delete': auth.resource_view_delete,
+            'datastore_create': auth.datastore_create,
+            'datastore_delete': auth.datastore_delete,
+            'datastore_upsert': auth.datastore_upsert,
         }
 
     # IMiddleware
@@ -534,8 +539,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_copy_from_org_name,
             'canada_non_related_required':
                 validators.canada_non_related_required,
-            'if_empty_set_to':
-                validators.if_empty_set_to,
+            'canada_maintainer_email_default':
+                validators.canada_maintainer_email_default,
             'user_read_only':
                 validators.user_read_only,
             'user_read_only_json':

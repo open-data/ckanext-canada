@@ -289,8 +289,21 @@ presets:
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
-    validators: if_empty_set_to(open-ouvert@tbs-sct.gc.ca) email_validator
+    validators: canada_maintainer_email_default strip_value email_validator
     display_snippet: email_with_parameters.html
+
+- preset_name: canada_maintainer_contact_form
+  values:
+    field_name: maintainer_contact_form
+    label:
+      en: "Contact Form"
+      fr: "Formulaire de contact"
+    form_snippet: null
+    display_snippet: fluent_link.html
+    # copied from fluent_text preset
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
 
 
 # Field = Description (English).
@@ -3180,6 +3193,9 @@ presets:
     - value: AVI
       mimetype: video/vnd.avi
     - value: BAG
+    - value: BAM
+      mimetype: application/octet-stream
+      openness_score: 3
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
@@ -3377,6 +3393,9 @@ presets:
     - value: RTF
       mimetype: text/rtf
       replaces: [rtf]
+    - value: SAM
+      mimetype: text/plain
+      openness_score: 3
     - value: SAR
     - value: SAS
       mimetype: application/x-sas
