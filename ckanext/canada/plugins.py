@@ -329,7 +329,8 @@ ckanext.canada:tables/adminaircraft.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
-        config['scheming.presets'] = """
+        if 'scheming.presets' not in config:
+            config['scheming.presets'] = """
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
