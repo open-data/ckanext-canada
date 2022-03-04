@@ -10,3 +10,29 @@
 
 {% block secondary_content %}{% endblock %}
 
+{% block resource_content %}
+          {% block resource_read_title %}<h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>{% endblock %}
+          {% block resource_read_url %}
+            {% if res.url and h.is_url(res.url) %}
+              <p class="text-muted ellipsis">{{ _('URL:') }} <a class="resource-url-analytics" href="{{ res.url }}" title="{{ res.url }}">{{ res.url }}</a></p>
+            {% elif res.url %}
+              <p class="text-muted break-word">{{ _('URL:') }} {{ res.url }}</p>
+            {% endif %}
+          {% endblock %}
+{% endblock %}
+{% block resource_data_dictionary %}
+       <div class="module-content">
+        <a href="#data-dictionary"><h2 id="data-dictionary">{{ _('Data Dictionary') }}</h2></a>
+         <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
+               <thead>
+                 {% block resouce_data_dictionary_headers %}
+                       {{ super() }}
+                 {% endblock %}
+               </thead>
+               {% block resource_data_dictionary_data %}
+                 {{ super() }}
+               {% endblock %}
+         </table>
+       </div>
+{% endblock %}
+
