@@ -11,7 +11,7 @@ import ckan as ckan
 import jinja2
 
 import ckanapi
-
+from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
@@ -532,3 +532,9 @@ def mail_to_with_params(email_address, name, subject, body):
 def get_timeout_length():
     return int(config.get('beaker.session.timeout'))
 
+
+def canada_check_access(package_id):
+    try:
+        return h.check_access('package_update', {'id': package_id})
+    except NotFound:
+        return False
