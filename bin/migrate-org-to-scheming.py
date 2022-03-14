@@ -40,19 +40,29 @@ def main(argv):
     output = codecs.open(outfile, 'w', encoding='utf-8')
     ckan_instance = RemoteCKAN(server)
     orgs = ckan_instance.call_action('organization_list',
-                                     {'all_fields': True})
+                                     {'all_fields': True,
+                                      'include_extras': True})
     for org in orgs:
+        # split title in fluent fields
         if org.get('title'):
-            title_translated = org[u'title'].split(' | ')
-            org[u'title_translated'] = {
-                u'en': title_translated[0],
-                u'fr': title_translated[1]
-                if len(title_translated) > 1 else '',
-            }
-        if org.get('extras') and \
-                org[u'extras'][0][u'key'] == 'shortform_fr':
-            org[u'shortform']['fr'] = org[u'extras'][0][u'value']
-            org.pop('extras')
+            title_translated = org[u'title'].split('|')
+            org[u'title_translated'] = {u'en': title_translated[0].strip()}
+            if len(title_translated) > 1:
+                org[u'title_translated'][u'fr'] = title_translated[1].strip()
+
+        # format shortform_fr extra field as shortform fluent field
+        if org.get('extras'):
+            for extra in org[u'extras']:
+                if extra[u'key'] == 'shortform_fr':
+                    org[u'shortform'][u'fr'] = extra[u'value']
+                    org[u'extras'].pop(org[u'extras'].index(extra))
+
+            if len(org[u'extras']) == 0:
+                org.pop('extras')
+
+        # set default ati_email field
+        if not org.get('ati_email'):
+            org[u'ati_email'] = 'open-ouvert@tbs-sct.gc.ca'
 
         output.write(json.dumps(org, ensure_ascii=False))
         output.write('\n')
