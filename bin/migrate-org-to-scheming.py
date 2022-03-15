@@ -15,6 +15,7 @@ import sys
 import json
 import codecs
 import getopt
+import re
 from ckanapi import RemoteCKAN
 
 
@@ -60,8 +61,23 @@ def main(argv):
             if len(org[u'extras']) == 0:
                 org.pop('extras')
 
+        if not org[u'shortform'][u'en'] or not org[u'shortform'][u'fr']:
+            shortform = org[u'name'].split('-')
+            org[u'shortform'][u'en'] = shortform[0]
+            org[u'shortform'][u'fr'] = shortform[1] \
+                if len(shortform) > 1 else shortform[0]
+
         # set default ati_email field
-        if not org.get('ati_email'):
+        # copied from ckan.logic.validators
+        email_pattern = re.compile(
+            r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]"
+            r"(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]"
+            r"(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+
+        if org.get('ati_email'):
+            org[u'ati_email'] = org[u'ati_email'].strip()
+
+        if not org.get('ati_email') or not email_pattern.match(org[u'ati_email']):
             org[u'ati_email'] = 'open-ouvert@tbs-sct.gc.ca'
 
         output.write(json.dumps(org, ensure_ascii=False))
