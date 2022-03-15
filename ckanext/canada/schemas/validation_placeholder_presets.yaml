@@ -1,0 +1,16 @@
+scheming_presets_version: 1
+about: Placeholder presets to allow schema to work without ckanext-validation on portal
+about_url: ''
+presets:
+- preset_name: resource_schema
+  values:
+    validators: ignore_missing scheming_valid_json_object
+    output_validators: scheming_load_json
+    display_snippet: json.html
+- preset_name: validation_options
+  values:
+    validators: ignore_missing scheming_valid_json_object
+    output_validators: scheming_load_json
+    display_snippet: json.html
+- preset_name: hidden_in_form
+  values: {}

@@ -472,10 +472,10 @@ resource_fields:
 
 - field_name: schema
   label: Schema
-  preset: hidden_in_form
+  preset: resource_schema
 - field_name: validation_options
   label: Validation options
-  preset: hidden_in_form
+  preset: validation_options
 - field_name: validation_status
   label: Validation status
   preset: hidden_in_form
