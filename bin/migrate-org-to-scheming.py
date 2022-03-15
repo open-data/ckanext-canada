@@ -63,9 +63,9 @@ def main(argv):
 
         if not org[u'shortform'][u'en'] or not org[u'shortform'][u'fr']:
             shortform = org[u'name'].split('-')
-            org[u'shortform'][u'en'] = shortform[0]
-            org[u'shortform'][u'fr'] = shortform[1] \
-                if len(shortform) > 1 else shortform[0]
+            org[u'shortform'][u'en'] = shortform[0].upper()
+            org[u'shortform'][u'fr'] = shortform[1].upper() \
+                if len(shortform) > 1 else shortform[0].upper()
 
         # set default ati_email field
         # copied from ckan.logic.validators
