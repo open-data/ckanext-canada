@@ -1,7 +1,17 @@
 {% extends 'package/snippets/package_form.html' %}
+
 {% set form_style = c.form_style or c.action %}
+
 {% block delete_button %}
   {% if c.pkg_dict and h.check_access('package_delete', {'id': c.pkg_dict.id}) %}
     {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block save_button_text %}
+  {% if form_style != 'edit' %}
+    {{ super() }}
+  {% else %}
+    {{ _('Update Dataset') }}
   {% endif %}
 {% endblock %}
