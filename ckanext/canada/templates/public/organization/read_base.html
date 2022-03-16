@@ -5,7 +5,13 @@
   <li>{% link_for _('Organizations'), controller='organization', action='index' %}</li>
 {% endblock %}
 
-{% block subtitle %}{{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}{% endblock %}
+{% block subtitle %}
+  {% if h.lang() == 'fr' %}
+    {{ c.group_dict.title_translated.fr }}
+  {% else %}
+    {{ c.group_dict.title_translated.en }}
+  {% endif %}
+{% endblock %}
 
 {% block primary_content %}
 <div class="row">
