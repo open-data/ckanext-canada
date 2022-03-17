@@ -483,9 +483,6 @@ ckanext.canada:schemas/prop.yaml
     def get_auth_functions(self):
         return {
             'inventory_votes_show': auth.inventory_votes_show,
-            'resource_view_create': auth.resource_view_create,
-            'resource_view_update': auth.resource_view_update,
-            'resource_view_delete': auth.resource_view_delete,
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
