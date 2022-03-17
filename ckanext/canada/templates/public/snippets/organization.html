@@ -15,13 +15,7 @@ Example:
 
 {% with truncate=truncate or 0, url=h.url_for(controller='organization', action='read', id=organization.name) %}
 <div class="panel panel-info">
-  <div class="panel-heading text-center">
-    {% if h.lang() == 'fr' %}
-      {{ organization.title_translated.fr }}
-    {% else %}
-      {{ organization.title_translated.en }}
-    {% endif %}
-  </div>
+  <div class="panel-heading text-center">{{ h.get_translated(organization, 'title') }}</div>
   <div class="panel-body">
     {% if organization.description %}
     <p>

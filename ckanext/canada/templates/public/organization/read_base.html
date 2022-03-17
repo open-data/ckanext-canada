@@ -5,13 +5,7 @@
   <li>{% link_for _('Organizations'), controller='organization', action='index' %}</li>
 {% endblock %}
 
-{% block subtitle %}
-  {% if h.lang() == 'fr' %}
-    {{ c.group_dict.title_translated.fr }}
-  {% else %}
-    {{ c.group_dict.title_translated.en }}
-  {% endif %}
-{% endblock %}
+{% block subtitle %}{{ h.get_translated(c.group_dict, 'title') }}{% endblock %}
 
 {% block primary_content %}
 <div class="row">
