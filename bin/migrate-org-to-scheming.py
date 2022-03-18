@@ -67,18 +67,9 @@ def main(argv):
             org[u'shortform'][u'fr'] = shortform[1].upper() \
                 if len(shortform) > 1 else shortform[0].upper()
 
-        # set default ati_email field
-        # copied from ckan.logic.validators
-        email_pattern = re.compile(
-            r"^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9]"
-            r"(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]"
-            r"(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-
+        # strip whitespaces from ati_email field
         if org.get('ati_email'):
             org[u'ati_email'] = org[u'ati_email'].strip()
-
-        if not org.get('ati_email') or not email_pattern.match(org[u'ati_email']):
-            org[u'ati_email'] = 'open-ouvert@tbs-sct.gc.ca'
 
         output.write(json.dumps(org, ensure_ascii=False))
         output.write('\n')

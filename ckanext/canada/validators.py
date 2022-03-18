@@ -268,3 +268,21 @@ def canada_org_title_translated_output(key, data, errors, context):
 
     if new_key in data:
         data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']
+
+
+def protect_is_federal(key, data, errors, context):
+    """
+    Ensure the is_federal flag is not changed by an unauthorized user.
+    """
+    if not is_sysadmin(context['user']):
+        errors[key].append("is_federal field can only be changed by sysadmin")
+        raise StopOnError
+
+
+def ati_email_validate(key, data, errors, context):
+    """
+    If is_federal flag is true, ati_email field becomes mandatory
+    """
+    if data[key] and not data[('ati_email',)]:
+        errors[('ati_email',)].append("ATI email is required for federal organizations")
+        raise StopOnError
