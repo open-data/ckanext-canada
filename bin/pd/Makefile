@@ -386,8 +386,8 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	$(registry_python) $(fdir)/amendment_delta_records.py \
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
 	$(ogc_search)/load_gc_to_solr.py "$(workdir)/amendments/grants.csv" "$(workdir)/filtered/grants-nil.csv"
-        @$(oc_search) import_data_csv --csv "$(workdir)/amendments/grants.csv" --search grants --quiet
-        @$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --quiet --nothing_to_report
+	@$(oc_search) import_data_csv --csv "$(workdir)/amendments/grants.csv" --search grants --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --quiet --nothing_to_report
 
 $(workdir)/grants.csv:
 	$(paster) $(combine) grants -d $(workdir) -c $(registry_ini)
