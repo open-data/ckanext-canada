@@ -555,6 +555,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'isodate':
+                validators.isodate,
             }
 
 

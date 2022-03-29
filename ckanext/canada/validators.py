@@ -16,6 +16,7 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
+from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 
 not_empty = get_validator('not_empty')
@@ -254,3 +255,14 @@ def no_future_date(key, data, errors, context):
     if value and value > datetime.today():
         raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
     return value
+
+def isodate(value, context):
+    if isinstance(value, datetime):
+        return value
+    if value == '':
+        return None
+    try:
+        date = date_str_to_datetime(value)
+    except (TypeError, ValueError) as e:
+        raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
+    return date
