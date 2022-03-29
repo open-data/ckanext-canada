@@ -16,6 +16,7 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
+from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 
@@ -278,3 +279,19 @@ def canada_org_title_translated_output(key, data, errors, context):
 
     if new_key in data:
         data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']
+
+def isodate(value, context):
+    """
+    Override of ckan/ckan/logic/validators.isodate
+    Basically the exact same method, but changes the error message.
+    Had to override the method because of issues with English strings not working in po/mo files.
+    """
+    if isinstance(value, datetime):
+        return value
+    if value == '':
+        return None
+    try:
+        date = date_str_to_datetime(value)
+    except (TypeError, ValueError) as e:
+        raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD.'))
+    return date

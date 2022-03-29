@@ -4132,8 +4132,11 @@ msgstr "Keep me logged in"
 #~ msgid "Must be a postive integer"
 #~ msgstr ""
 
-#~ msgid "Date format incorrect"
-#~ msgstr ""
+msgid "Date format incorrect"
+msgstr "Date format incorrect. Expecting YYYY-MM-DD."
+
+msgid "Date format incorrect. Expecting YYYY-MM-DD."
+msgstr "Date format incorrect. Expecting YYYY-MM-DD."
 
 #~ msgid "No links are allowed in the log_message."
 #~ msgstr ""
