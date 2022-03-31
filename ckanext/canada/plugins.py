@@ -544,8 +544,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.no_future_date,
             'canada_org_title_translated_output':
                 validators.canada_org_title_translated_output,
-            'protect_is_federal':
-                validators.protect_is_federal,
+            'protect_reporting_requirements':
+                validators.protect_reporting_requirements,
             'ati_email_validate':
                 validators.ati_email_validate,
             }

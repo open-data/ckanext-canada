@@ -71,6 +71,9 @@ def main(argv):
         if org.get('ati_email'):
             org[u'ati_email'] = org[u'ati_email'].strip()
 
+        # set default value as NA for faa_schedule
+        org[u'faa_schedule'] = 'NA'
+
         output.write(json.dumps(org, ensure_ascii=False))
         output.write('\n')
 
