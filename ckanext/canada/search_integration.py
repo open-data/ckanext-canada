@@ -81,6 +81,7 @@ def add_to_search_index(data_dict_id, in_bulk=False):
         resource_fmt = []
         resource_title_en = []
         resource_title_fr = []
+        dsa = False
         for r in data_dict['resources']:
             resource_type_en.append(
                 resource_type_codes['en'][r['resource_type']]
@@ -100,6 +101,11 @@ def add_to_search_index(data_dict_id, in_bulk=False):
                 resource_title_fr.append(resource_name['fr'].strip())
             elif 'fr-t-en' in resource_name:
                 resource_title_fr.append(resource_name['fr-t-en'].strip())
+
+            if 'datastore_active' in r:
+                if r['datastore_active']:
+                    dsa = True
+
         display_options = []
         if 'display_flags' in data_dict:
             for d in data_dict['display_flags']:
@@ -177,7 +183,14 @@ def add_to_search_index(data_dict_id, in_bulk=False):
         else:
             od_obj['data_series_issue_ident_en'] = '-'
             od_obj['data_series_issue_ident_fr'] = '-'
-            
+
+        if dsa:
+            od_obj['datastore_active_en_s'] = "Yes"
+            od_obj['datastore_active_fr_s'] = "Oui"
+        else:
+            od_obj['datastore_active_en_s'] = "No"
+            od_obj['datastore_active_fr_s'] = "Non"
+
         solr = pysolr.Solr(od_search_solr_url)
         if in_bulk:
             solr.add([od_obj])
@@ -226,6 +239,7 @@ def rebuild_search_index(portal, unindexed_only=False, refresh_index=False):
             row_counter += 1
             if row_counter % SEARCH_INTEGRATION_LOADING_PAGESIZE == 0:
                 print("{0} Records Indexed".format(row_counter))
+                search_solr.commit()
         search_solr.commit()
         print("Total {0} Records Indexed".format(row_counter))
     except Exception as x:
