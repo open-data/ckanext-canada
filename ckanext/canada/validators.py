@@ -280,8 +280,8 @@ def protect_reporting_requirements(key, data, errors, context):
     original = ''
     org = context.get('group')
     if org:
-        original = org.extras.get('reporting_requirements', '')
-    value = data.get(key, '')
+        original = org.extras.get('reporting_requirements', [])
+    value = data.get(key, [])
 
     if not value:
         data[key] = original
