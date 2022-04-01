@@ -4,6 +4,8 @@ import logging
 import nltk
 import pysolr
 import simplejson as json
+import sys
+import traceback
 from pylons import config
 from ckanext.scheming.helpers import scheming_get_preset
 
@@ -200,6 +202,8 @@ def add_to_search_index(data_dict_id, in_bulk=False):
             solr.commit()
     except Exception as x:
         log.error("Exception: {} {}".format(x.message, x.args))
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stderr)
 
 
 def delete_from_search_index(id):
@@ -244,5 +248,6 @@ def rebuild_search_index(portal, unindexed_only=False, refresh_index=False):
         print("Total {0} Records Indexed".format(row_counter))
     except Exception as x:
         log.error("Exception: {} {}".format(x.message, x.args))
-
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stderr)
 
