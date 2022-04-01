@@ -134,7 +134,7 @@ fields:
       fr: "Annexe III"
     value: "3"
   form_snippet: radio.html
-  display_snippet: radio.html
+  display_snippet: select.html
   validators: scheming_required scheming_choices
 
 # Field = reporting_requirements.
