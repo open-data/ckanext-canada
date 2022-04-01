@@ -117,6 +117,7 @@ dataset_fields:
     en: Contact Information
     fr: Information contact
   form_snippet: null
+  validators: string_safe
 - field_name: topic_category
   label:
     en: Topic category
@@ -240,6 +241,7 @@ dataset_fields:
     en: Reference System Information
     fr: Information système référence
   form_snippet: null
+  validators: string_safe
 - field_name: distributor
   label:
     en: Distributor
@@ -285,7 +287,7 @@ dataset_fields:
     value: proposed
   # copied from select preset
   display_snippet: select.html
-  validators: scheming_required scheming_choices
+  validators: string_safe scheming_required scheming_choices
 
 - field_name: association_type
   label:

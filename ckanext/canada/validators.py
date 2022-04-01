@@ -3,6 +3,8 @@
 import re
 import unicodedata
 
+from six import text_type
+
 from pylons.i18n import _
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
@@ -266,3 +268,38 @@ def isodate(value, context):
     except (TypeError, ValueError) as e:
         raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
     return date
+
+def string_safe(value, context):
+    if isinstance(value, text_type):
+        return value
+    elif isinstance(value, bytes):
+        # bytes only arrive when core ckan or plugins call
+        # actions from Python code
+        try:
+            return value.decode(u'utf8')
+        except UnicodeDecodeError:
+            return value.decode(u'cp1252')
+    else:
+        raise Invalid(_('Must be a Unicode string value'))
+
+def string_safe_stop(key, data, errors, context):
+    value = data.get(key)
+    if isinstance(value, text_type):
+        return value
+    elif isinstance(value, bytes):
+        # bytes only arrive when core ckan or plugins call
+        # actions from Python code
+        try:
+            return value.decode(u'utf8')
+        except UnicodeDecodeError:
+            return value.decode(u'cp1252')
+    else:
+        errors[key].append(_('Must be a Unicode string value'))
+        raise StopOnError
+
+def json_string(value, context):
+    try:
+        json.loads(value)
+    except ValueError:
+        raise Invalid(_('Must be a JSON string'))
+    return value

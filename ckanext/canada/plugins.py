@@ -557,6 +557,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.no_future_date,
             'isodate':
                 validators.isodate,
+            'string_safe':
+                validators.string_safe,
+            'string_safe_stop':
+                validators.string_safe_stop,
+            'json_string':
+                validators.json_string,
             }
 
 
