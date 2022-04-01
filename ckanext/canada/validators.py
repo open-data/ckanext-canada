@@ -274,8 +274,24 @@ def protect_reporting_requirements(key, data, errors, context):
     """
     Ensure the reporting_requirements field is not changed by an unauthorized user.
     """
-    if not is_sysadmin(context['user']):
-        errors[key].append("reporting_requirements field can only be changed by sysadmin")
+    if is_sysadmin(context['user']):
+        return
+
+    original = ''
+    org = context.get('group')
+    if org:
+        original = org.extras.get('reporting_requirements', '')
+    value = data.get(key, '')
+
+    if not value:
+        data[key] = original
+        return
+    elif value == original:
+        return
+    else:
+        errors[key].append("Cannot change value of reporting_requirements field"
+                           " from '%s' to '%s'. This field is read-only." %
+                           (original, value))
         raise StopOnError
 
 

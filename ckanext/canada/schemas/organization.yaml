@@ -147,58 +147,58 @@ fields:
   - label:
       en: "Acts of Founded Wrongdoing"
       fr: "Dossiers sur les actes répréhensibles fondés"
-    value: wrongdoing
+    value: "wrongdoing"
   - label:
       en: "Aggregated Contracts from -$10K to $10K"
       fr: "Contrats agrégés de -10 000$ à 10 000$"
-    value: contractsa
+    value: "contractsa"
   - label:
       en: "ATI Summaries"
       fr: "Accès à l'information sommaires complétés"
-    value: ati
+    value: "ati"
   - label:
       en: "Briefing Note Titles and Numbers"
       fr: "Titres et numéros des notes d'information"
-    value: briefingt
+    value: "briefingt"
   - label:
       en: "Contracts over 10K (Quarterly)"
       fr: "Contrats attribués de plus de 10 000 $ (trimestriels)"
-    value: contracts
+    value: "contracts"
   - label:
       en: "Departmental Audit Committee"
       fr: "Comités ministériels d'audit"
-    value: dac
+    value: "dac"
   - label:
       en: "Grants and Contributions"
       fr: "Subventions et les contributions"
-    value: grants
+    value: "grants"
   - label:
       en: "Hospitality Expenses"
       fr: "Dépenses d'accueil"
-    value: hospitalityq
+    value: "hospitalityq"
   - label:
       en: "Position Reclassification"
       fr: "Reclassifications de postes"
-    value: reclassification
+    value: "reclassification"
   - label:
       en: "Question Period Notes"
       fr: "Notes pour la période des questions"
-    value: qpnotes
+    value: "qpnotes"
   - label:
       en: "Travel Expenses"
       fr: "Dépenses de voyage"
-    value: travelq
+    value: "travelq"
   - label:
       en: "Annual Travel, Hospitality and Conferences"
       fr: "Dépenses annuelles de voyages, d'accueil, de conférences et d'événements"
-    value: travela
+    value: "travela"
   - label:
       en: "Use of Administrative Aircraft"
       fr: "Utilisation des avions d'affaires"
-    value: adminaircraft
+    value: "adminaircraft"
   form_snippet: multiple_checkbox.html
   display_snippet: multiple_choice.html
-  validators: protect_reporting_requirements scheming_multiple_choice ati_email_validate
+  validators: scheming_multiple_choice protect_reporting_requirements ati_email_validate
   output_validators: scheming_multiple_choice_output
 
 # Field = ATI Email.
