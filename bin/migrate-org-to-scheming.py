@@ -5,45 +5,32 @@
 Generates a JSON lines file which can be used to migrate existing
 organizations to use schema defined in organization.yaml
 
-Usage:
-migrate-org-to-scheming.py
-    -s/--server http://registry.open.canada.ca
-    -o/--output outfile.jsonl
-"""
+Usage: ckanapi dump organizations --all -c $CONFIG_INI | python
+bin/migrate-org-to-scheming.py -o/--output outfile.jsonl """
 
 import sys
 import json
 import codecs
 import getopt
-import re
-from ckanapi import RemoteCKAN
 
 
 def main(argv):
     try:
-        server = ''
         outfile = ''
-        opts, args = getopt.getopt(argv, "s:o:", ["server=", "output="])
+        opts, args = getopt.getopt(argv, "o:", ["output="])
         for opt, arg in opts:
-            if opt in ['-s', '--server']:
-                server = arg
             if opt in ['-o', '--output']:
                 outfile = arg
-        if not server or not outfile:
-            raise ValueError()
 
     except Exception:
-        print 'USAGE: migrate-org-to-scheming.py ' \
-              '-s/--server <remote server> ' \
-              '-o/--output outfile.jsonl'
+        print 'Usage: ckanapi dump organizations --all -c $CONFIG_INI | ' \
+              'python bin/migrate-org-to-scheming.py -o/--output ' \
+              'outfile.jsonl '
         sys.exit(1)
 
     output = codecs.open(outfile, 'w', encoding='utf-8')
-    ckan_instance = RemoteCKAN(server)
-    orgs = ckan_instance.call_action('organization_list',
-                                     {'all_fields': True,
-                                      'include_extras': True})
-    for org in orgs:
+    for line in sys.stdin.readlines():
+        org = json.loads(line)
         # split title in fluent fields
         if org.get('title'):
             title_translated = org[u'title'].split('|')
