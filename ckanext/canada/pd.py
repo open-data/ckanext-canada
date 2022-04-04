@@ -262,15 +262,15 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             'unique_id': friendly,
             'partial_id': partial,
             'org_name_code': org_detail['name'],
-            'org_name_en': org_detail['title'].split(' | ', 1)[0],
-            'org_name_fr': org_detail['title'].split(' | ', 1)[-1],
+            'org_name_en': org_detail['title_translated']['en'],
+            'org_name_fr': org_detail['title_translated']['fr'],
             }
 
         org_fields = chromo.get('solr_org_fields')
         if org_fields:
-            for e in org_detail['extras']:
-                if e['key'] in org_fields:
-                    solrrec[e['key']] = e['value']
+            for e in org_fields:
+                if e in org_detail:
+                    solrrec[e] = org_detail[e]
 
         for f in chromo['fields']:
             key = f['datastore_id']

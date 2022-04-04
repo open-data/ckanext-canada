@@ -278,3 +278,37 @@ def canada_org_title_translated_output(key, data, errors, context):
 
     if new_key in data:
         data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']
+
+
+def protect_reporting_requirements(key, data, errors, context):
+    """
+    Ensure the reporting_requirements field is not changed by an unauthorized user.
+    """
+    if is_sysadmin(context['user']):
+        return
+
+    original = ''
+    org = context.get('group')
+    if org:
+        original = org.extras.get('reporting_requirements', [])
+    value = data.get(key, [])
+
+    if not value:
+        data[key] = original
+        return
+    elif value == original:
+        return
+    else:
+        errors[key].append("Cannot change value of reporting_requirements field"
+                           " from '%s' to '%s'. This field is read-only." %
+                           (original, value))
+        raise StopOnError
+
+
+def ati_email_validate(key, data, errors, context):
+    """
+    If ATI is checked for the reporting_requirements field, ati_email field becomes mandatory
+    """
+    if 'ati' in data[key] and not data[('ati_email',)]:
+        errors[('ati_email',)].append("ATI email is required for organizations with ATI selected as a reporting requirement")
+        raise StopOnError

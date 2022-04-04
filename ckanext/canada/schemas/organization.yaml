@@ -36,6 +36,8 @@ fields:
   required: true
   # copied from fluent_text preset
   form_snippet: fluent_text.html
+  form_attrs:
+    size: 75
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
   validators: fluent_text unicode scheming_required
@@ -99,6 +101,106 @@ fields:
     en: "UMD Number"
     fr: "Numéro de UMD"
 
+# Field = FAA Schedule
+# Default value = Not applicable.
+# {The FAA Schedule that applies to the organization}
+- field_name: faa_schedule
+  label:
+    en: Financial Administration Act Schedule
+    fr: Annex de la loi sur la gestion des finances publiques
+  help_text:
+    en: "The FAA Schedule that applies to the organization. More details on https://laws-lois.justice.gc.ca/eng/acts/f-11/"
+    fr: "placeholder french help text for FAA Schedule"
+  required: true
+  choices:
+  - label:
+      en: "Not applicable"
+      fr: "Non applicable"
+    value: "NA"
+  - label:
+      en: "Schedule I"
+      fr: "Annexe I"
+    value: "1"
+  - label:
+      en: "Schedule I.1"
+      fr: "Annexe I.1"
+    value: "1.1"
+  - label:
+      en: "Schedule II"
+      fr: "Annexe II"
+    value: "2"
+  - label:
+      en: "Schedule III"
+      fr: "Annexe III"
+    value: "3"
+  form_snippet: radio.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+
+# Field = reporting_requirements.
+# {Reporting requirements for the organization. If 'ATI Summaries' is checked then ati_email field is mandatory}
+- field_name: reporting_requirements
+  label:
+    en: "Select reporting requirements for the organization"
+    fr: "french placeholder for reporting requirements"
+  choices:
+  - label:
+      en: "Acts of Founded Wrongdoing"
+      fr: "Dossiers sur les actes répréhensibles fondés"
+    value: "wrongdoing"
+  - label:
+      en: "Aggregated Contracts from -$10K to $10K"
+      fr: "Contrats agrégés de -10 000$ à 10 000$"
+    value: "contractsa"
+  - label:
+      en: "ATI Summaries"
+      fr: "Accès à l'information sommaires complétés"
+    value: "ati"
+  - label:
+      en: "Briefing Note Titles and Numbers"
+      fr: "Titres et numéros des notes d'information"
+    value: "briefingt"
+  - label:
+      en: "Contracts over 10K (Quarterly)"
+      fr: "Contrats attribués de plus de 10 000 $ (trimestriels)"
+    value: "contracts"
+  - label:
+      en: "Departmental Audit Committee"
+      fr: "Comités ministériels d'audit"
+    value: "dac"
+  - label:
+      en: "Grants and Contributions"
+      fr: "Subventions et les contributions"
+    value: "grants"
+  - label:
+      en: "Hospitality Expenses"
+      fr: "Dépenses d'accueil"
+    value: "hospitalityq"
+  - label:
+      en: "Position Reclassification"
+      fr: "Reclassifications de postes"
+    value: "reclassification"
+  - label:
+      en: "Question Period Notes"
+      fr: "Notes pour la période des questions"
+    value: "qpnotes"
+  - label:
+      en: "Travel Expenses"
+      fr: "Dépenses de voyage"
+    value: "travelq"
+  - label:
+      en: "Annual Travel, Hospitality and Conferences"
+      fr: "Dépenses annuelles de voyages, d'accueil, de conférences et d'événements"
+    value: "travela"
+  - label:
+      en: "Use of Administrative Aircraft"
+      fr: "Utilisation des avions d'affaires"
+    value: "adminaircraft"
+  form_snippet: multiple_checkbox.html
+  display_snippet: multiple_choice.html
+  validators: scheming_multiple_choice protect_reporting_requirements ati_email_validate
+  output_validators: scheming_multiple_choice_output
+
 # Field = ATI Email.
 # {The organization's email for access to information}
 - field_name: ati_email
@@ -108,7 +210,7 @@ fields:
   help_text:
     en: The email for access to information completed request summaries
     fr: Courriel de la accès à l’information sommaires de demandes complétées
-  validators: canada_maintainer_email_default email_validator
+  validators: email_validator
   display_snippet: email_with_parameters.html
 
 # Field = Opengov Email.
@@ -120,5 +222,5 @@ fields:
   help_text:
     en: The email for open government
     fr: Courriel de la gouvernement ouvert
-  validators: canada_maintainer_email_default email_validator
+  validators: email_validator
   display_snippet: email_with_parameters.html

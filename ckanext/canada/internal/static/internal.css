@@ -648,3 +648,13 @@ ul#brf-pkg { padding-left: 0; }
 .nav-item.active > a span, .nav-aside li.active a span {
     white-space: inherit;
 }
+
+/* TO-DO: remove when switching from composite to master branch for ckanext-scheming */
+/* remove ":" after form label */
+.radio-group label::after {
+  content: none;
+}
+
+.radio-group label {
+  font-weight: normal;
+}
