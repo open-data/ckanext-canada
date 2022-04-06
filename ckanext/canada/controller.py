@@ -696,6 +696,8 @@ def _log_api_access(context, data_dict):
         if 'resource_id' not in data_dict:
             return
         res = model.Resource.get(data_dict['resource_id'])
+        if not res:
+            return
         pkg = res.package
     else:
         pkg = context['package']
