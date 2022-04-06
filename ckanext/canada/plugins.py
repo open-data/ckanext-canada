@@ -559,6 +559,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.isodate,
             'string_safe':
                 validators.string_safe,
+            'string_list_safe':
+                validators.string_list_safe,
             'string_safe_stop':
                 validators.string_safe_stop,
             'json_string':

@@ -107,7 +107,7 @@ presets:
       value: federated
     form_snippet: select.html
     display_snippet: select.html
-    validators: string_safe scheming_required scheming_choices
+    validators: scheming_required string_safe scheming_choices
 
 # Field = Title English.
 # {The English name by which the dataset is known}
@@ -289,7 +289,7 @@ presets:
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
-    validators: canada_maintainer_email_default string_safe strip_value email_validator
+    validators: string_safe canada_maintainer_email_default strip_value email_validator
     display_snippet: email_with_parameters.html
 
 - preset_name: canada_maintainer_contact_form
@@ -391,7 +391,7 @@ presets:
     required: true
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
-    validators: string_safe scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
     choices:
@@ -505,7 +505,7 @@ presets:
       fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
-    validators: scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
     choices:
@@ -1890,7 +1890,7 @@ presets:
     # copied from multiple_select preset
     form_snippet: multiple_select.html
     display_snippet: multiple_choice.html
-    validators: string_safe scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
 
@@ -2287,7 +2287,7 @@ presets:
       value: user
     form_snippet: select.html
     display_snippet: select.html
-    validators: string_safe scheming_required scheming_choices
+    validators: scheming_required string_safe scheming_choices
 
 # Field = Licence.
 # Populate the list box with the licence options from the Registry.
@@ -2332,7 +2332,7 @@ presets:
     # copied from select preset
     form_snippet: select.html
     display_snippet: select.html
-    validators: string_safe scheming_required scheming_choices
+    validators: scheming_required string_safe scheming_choices
 
 
 # Field = IMSO Approval.
@@ -2358,7 +2358,7 @@ presets:
     # copied from select preset
     form_snippet: imso_approval_select.html
     display_snippet: select.html
-    validators: string_safe scheming_required scheming_choices
+    validators: scheming_required string_safe scheming_choices
 
 # Field = Ready to Publish.
 # List box options are Yes and No.
@@ -2386,7 +2386,7 @@ presets:
     # copied from select preset
     form_snippet: select.html
     display_snippet: select.html
-    validators: string_safe scheming_required scheming_choices
+    validators: scheming_required string_safe scheming_choices
 
 # Field = Portal Release Date.
 # Available only for an Admin user.
@@ -2428,7 +2428,7 @@ presets:
       fr: Catégorie thématique
     form_snippet: null
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     choices:
       - label:
@@ -2516,7 +2516,7 @@ presets:
       fr: Type représentation spatiale
     form_snippet: null
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     choices:
     - label:
@@ -3914,7 +3914,7 @@ presets:
 
     # copied from multiple_select preset
     form_snippet: multiple_select.html
-    validators: scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
 # Field = Download URL.
@@ -3973,5 +3973,5 @@ presets:
       value: data_includes_links
     form_snippet: multiple_checkbox.html
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: string_list_safe scheming_multiple_choice
     output_validators: scheming_multiple_choice_output

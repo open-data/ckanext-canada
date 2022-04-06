@@ -21,6 +21,10 @@ from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 
+import logging
+
+log = logging.getLogger(__name__)
+
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
 
@@ -261,8 +265,8 @@ def no_future_date(key, data, errors, context):
 def isodate(value, context):
     if isinstance(value, datetime):
         return value
-    if value == '':
-        return None
+    if value is None or value == '' or value is missing:
+        return
     try:
         date = date_str_to_datetime(value)
     except (TypeError, ValueError) as e:
@@ -270,6 +274,8 @@ def isodate(value, context):
     return date
 
 def string_safe(value, context):
+    if value is None or value == '' or value is missing:
+        return
     if isinstance(value, text_type):
         return value
     elif isinstance(value, bytes):
@@ -282,8 +288,33 @@ def string_safe(value, context):
     else:
         raise Invalid(_('Must be a Unicode string value'))
 
+def string_list_safe(value, context):
+    #TODO: loop through list if it is a list and make sure all values are strings...
+    # transfer single unicode values into a one item list...
+    if value is None or value == '' or value is missing:
+        return []
+    if type(value) != list:
+        log.info("DEBUG")
+        log.info(value)
+        log.info(type(value).__name__)
+        raise Invalid(_('expecting list of strings'))
+    for i in value:
+        if isinstance(i, text_type):
+            continue
+        elif isinstance(i, bytes):
+            # bytes only arrive when core ckan or plugins call
+            # actions from Python code
+            try:
+                i = i.decode(u'utf8')
+            except UnicodeDecodeError:
+                i = i.decode(u'cp1252')
+        else:
+            raise Invalid(_('List must only contain unicode string values'))
+
 def string_safe_stop(key, data, errors, context):
     value = data.get(key)
+    if value is None or value == '' or value is missing:
+        return
     if isinstance(value, text_type):
         return value
     elif isinstance(value, bytes):
@@ -298,6 +329,8 @@ def string_safe_stop(key, data, errors, context):
         raise StopOnError
 
 def json_string(value, context):
+    if value is None or value == '' or value is missing:
+        return
     try:
         json.loads(value)
     except ValueError:

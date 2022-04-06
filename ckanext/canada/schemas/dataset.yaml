@@ -287,7 +287,7 @@ dataset_fields:
     value: proposed
   # copied from select preset
   display_snippet: select.html
-  validators: string_safe scheming_required scheming_choices
+  validators: scheming_required string_safe scheming_choices
 
 - field_name: association_type
   label:
