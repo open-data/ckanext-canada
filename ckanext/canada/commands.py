@@ -696,8 +696,8 @@ class CanadaCommand(CkanCommand):
         for line in sys.stdin.readlines():
             package = json.loads(line)
             for resource in package['resources']:
+                # remove any non-validated resources from datastore
                 if resource['datastore_active']:
-                    # remove any non-validated resources from datastore
                     if resource.get('validation_status', '') != 'success':
                         try:
                             toolkit.get_action(u'datastore_search')(
@@ -705,7 +705,8 @@ class CanadaCommand(CkanCommand):
                             toolkit.get_action(u'datastore_delete')(
                                 {'agent': 'xloader'},
                                 {'resource_id': resource['id'],
-                                 'ignore_auth': True})
+                                 'ignore_auth': True,
+                                 'force': True})
                             datastore_removed += 1
                             log.write("\nRemoving resource %s from datastore" %
                                       resource['id'])
@@ -713,23 +714,23 @@ class CanadaCommand(CkanCommand):
                             log.write("\n[ERROR]: Unable to remove resource "
                                       "%s from datastore - Resource not found"
                                       % resource['id'])
-                else:
-                    # validate CSV resources which are uploaded to cloudstorage
-                    if resource.get('format', '').upper() == 'CSV' \
-                            and resource.get('url_type') == 'upload':
-                        try:
-                            toolkit.get_action(u'resource_validation_run')(
-                                {}, {'resource_id': resource['id'],
-                                     'async': True,
-                                     'ignore_auth': True})
-                            validation_queue += 1
-                            log.write("\nResource %s sent to the validation "
-                                      "queue" %
-                                      resource['id'])
-                        except NotFound:
-                            log.write("\n[ERROR]: Unable to send resource %s "
-                                      "to validation queue - Resource not "
-                                      "found" % resource['id'])
+
+                # validate CSV resources which are uploaded to cloudstorage
+                if resource.get('format', '').upper() == 'CSV' \
+                        and resource.get('url_type') == 'upload':
+                    try:
+                        toolkit.get_action(u'resource_validation_run')(
+                            {}, {'resource_id': resource['id'],
+                                 'async': True,
+                                 'ignore_auth': True})
+                        validation_queue += 1
+                        log.write("\nResource %s sent to the validation "
+                                  "queue" %
+                                  resource['id'])
+                    except NotFound:
+                        log.write("\n[ERROR]: Unable to send resource %s "
+                                  "to validation queue - Resource not "
+                                  "found" % resource['id'])
 
         log.write("\n\nTotal resources removed from datastore: " +
                   str(datastore_removed))
