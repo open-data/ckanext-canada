@@ -682,15 +682,19 @@ class CanadaCommand(CkanCommand):
         csv_file.close()
 
     def bulk_validate(self):
+        """
+        Usage: ckanapi search datasets include_private=true -c $CONFIG_INI |
+        paster canada bulk-validate -c $CONFIG_INI
+
+        Use this command to bulk validate the resources. Any resources which
+        are already in datastore but not validated will be removed.
+        """
         log = open("bulk_validate.log", "w")
         datastore_removed = 0
         validation_queue = 0
 
-        packages = toolkit.get_action(u'package_search')(
-            {}, {'include_private': True})
-        log.write("Total packages: " + str(packages.get('count', 0)))
-
-        for package in packages.get('results'):
+        for line in sys.stdin.readlines():
+            package = json.loads(line)
             for resource in package['resources']:
                 if resource['datastore_active']:
                     # remove any non-validated resources from datastore
@@ -706,9 +710,9 @@ class CanadaCommand(CkanCommand):
                             log.write("\nRemoving resource %s from datastore" %
                                       resource['id'])
                         except NotFound:
-                            log.write("\nUnable to remove resource %s from "
-                                      "datastore - Resource not found" %
-                                      resource['id'])
+                            log.write("\n[ERROR]: Unable to remove resource "
+                                      "%s from datastore - Resource not found"
+                                      % resource['id'])
                 else:
                     # validate CSV resources which are uploaded to cloudstorage
                     if resource.get('format', '').upper() == 'CSV' \
@@ -723,9 +727,9 @@ class CanadaCommand(CkanCommand):
                                       "queue" %
                                       resource['id'])
                         except NotFound:
-                            log.write("\nUnable to send resource %s to the "
-                                      "validation queue - Resource not found" %
-                                      resource['id'])
+                            log.write("\n[ERROR]: Unable to send resource %s "
+                                      "to validation queue - Resource not "
+                                      "found" % resource['id'])
 
         log.write("\n\nTotal resources removed from datastore: " +
                   str(datastore_removed))
