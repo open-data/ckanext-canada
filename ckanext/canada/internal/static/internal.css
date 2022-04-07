@@ -658,3 +658,12 @@ ul#brf-pkg { padding-left: 0; }
 .radio-group label {
   font-weight: normal;
 }
+
+.scheming-subfield-group-panel-heading {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center;
+}
