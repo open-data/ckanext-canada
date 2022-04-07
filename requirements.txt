@@ -13,3 +13,9 @@ azure-storage==0.33.0
 configparser>=3.5.0
 nltk==3.4.5
 openpyxl==2.6.4
+
+# requirements related to our fork of ckanext-validation
+pip==19.3.1
+datapackage==1.15.2
+statistics==1.0.3.5
+simpleeval==0.9.11
