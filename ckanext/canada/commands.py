@@ -697,23 +697,24 @@ class CanadaCommand(CkanCommand):
             package = json.loads(line)
             for resource in package['resources']:
                 # remove any non-validated resources from datastore
-                if resource['datastore_active']:
-                    if resource.get('validation_status', '') != 'success':
-                        try:
-                            toolkit.get_action(u'datastore_search')(
-                                {}, {'resource_id': resource['id']})
-                            toolkit.get_action(u'datastore_delete')(
-                                {'agent': 'xloader'},
-                                {'resource_id': resource['id'],
-                                 'ignore_auth': True,
-                                 'force': True})
-                            datastore_removed += 1
-                            log.write("\nRemoving resource %s from datastore" %
-                                      resource['id'])
-                        except NotFound:
-                            log.write("\n[ERROR]: Unable to remove resource "
-                                      "%s from datastore - Resource not found"
-                                      % resource['id'])
+                if resource.get('url_type') != 'datastore' \
+                        and resource['datastore_active'] \
+                        and resource.get('validation_status', '') != 'success':
+                    try:
+                        toolkit.get_action(u'datastore_search')(
+                            {}, {'resource_id': resource['id']})
+                        toolkit.get_action(u'datastore_delete')(
+                            {'agent': 'xloader'},
+                            {'resource_id': resource['id'],
+                             'ignore_auth': True,
+                             'force': True})
+                        datastore_removed += 1
+                        log.write("\nRemoving resource %s from datastore" %
+                                  resource['id'])
+                    except NotFound:
+                        log.write("\n[ERROR]: Unable to remove resource "
+                                  "%s from datastore - Resource not found"
+                                  % resource['id'])
 
                 # validate CSV resources which are uploaded to cloudstorage
                 if resource.get('format', '').upper() == 'CSV' \
