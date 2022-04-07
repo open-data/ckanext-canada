@@ -915,7 +915,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
 
         Ce champ doit être vide si le champ Type d’accord n’est pas vide.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
-    excel_error_formula: 'OR({default_formula},NOT(ISBLANK({agreement_type_code})),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
+    excel_error_formula: 'OR({default_formula},NOT({agreement_type_code}=""),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
     datastore_type: _text
     choices:
       XX:
@@ -1714,7 +1714,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: |
         Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
-    excel_error_formula: 'OR({default_formula},AND({cell}<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
+    excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
   - datastore_id: article_6_exceptions
     label:
       en: Section 6 Government Contracts Regulations Exceptions
