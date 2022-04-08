@@ -8,18 +8,7 @@
 
 {% block primary_content_inner %}
   {% if pkg.type != 'prop' %}
-    {% if pkg.resources %}
-      <ul class="resource-list"{% if has_reorder %} data-module="resource-reorder" data-module-id="{{ pkg.id }}"{% endif %}>
-        {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
-        {% for resource in pkg.resources %}
-          {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, url_is_edit=true, can_edit=can_edit %}
-        {% endfor %}
-      </ul>
-    {% else %}
-      {% trans url=h.url_for(controller='package', action='new_resource', id=pkg.name) %}
-        <p class="empty">This dataset has no data, <a href="{{ url }}">why not add some?</a></p>
-      {% endtrans %}
-    {% endif %}
+    {{ super() }}
   {% endif %}
 {% endblock %}
 
