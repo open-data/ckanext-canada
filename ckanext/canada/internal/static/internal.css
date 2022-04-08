@@ -635,3 +635,12 @@ ul#brf-pkg { padding-left: 0; }
 .nav-item.active > a span, .nav-aside li.active a span {
     white-space: inherit;
 }
+
+.scheming-subfield-group-panel-heading {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center;
+}

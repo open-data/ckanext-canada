@@ -113,7 +113,9 @@
     </section>
 
   {% block package_resources %}
-    {{ super() }}
+    {% if pkg.type != 'prop' %}
+      {{ super() }}
+    {% endif %}
   {% endblock %}
 
 {% block package_item_apps %}
