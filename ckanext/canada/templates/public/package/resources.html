@@ -1,7 +1,15 @@
 {% ckan_extends %}
 
 {% block subtitle %}
-{{ _('Resources') }} - {{ h.get_translated(pkg, 'title') }}
+  {% if pkg.type != 'prop' %}
+    {{ _('Resources') }} - {{ h.get_translated(pkg, 'title') }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  {% if pkg.type != 'prop' %}
+    {{ super() }}
+  {% endif %}
 {% endblock %}
 
 {% block secondary_content %}
