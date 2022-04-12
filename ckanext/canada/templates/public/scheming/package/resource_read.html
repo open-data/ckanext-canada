@@ -5,3 +5,18 @@
 {% block resource_license %}{% endblock %}
 
 {% block additional_info_heading %}<a href="#additional-info"><h2 id="additional-info">{{ _('Additional Information') }}</h2></a>{% endblock %}
+
+{% block additional_info_table_head %}{% endblock %}
+
+{%- block resource_last_updated -%}
+    <tr>
+        <th scope="row">{{ _('Last updated') }}</th>
+        <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.created) or _('unknown') }}</td>
+    </tr>
+{%- endblock -%}
+
+{% block resource_metadata_last_updated %}{% endblock %}
+
+{% block resource_more_items %}{% endblock %}
+
+{% block resource_fields %}{% endblock %}
