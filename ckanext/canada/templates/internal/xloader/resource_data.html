@@ -11,3 +11,12 @@
   {% endif %}
   {{ super() }}
 {% endblock %}
+{% block upload_ds_button %}
+  {% if h.validation_status(resource_id=res.id) == 'success' %}
+    <form method="post" action="{{ action }}" class="datapusher-form">
+      <button class="btn btn-primary" name="save" type="submit">
+        <i class="fa fa-cloud-upload"></i> {{ _('Upload to DataStore') }}
+      </button>
+    </form>
+  {% endif %}
+{% endblock %}

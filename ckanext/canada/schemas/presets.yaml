@@ -289,7 +289,7 @@ presets:
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
-    validators: canada_maintainer_email_default email_validator
+    validators: canada_maintainer_email_default unicode_safe strip_value email_validator
     display_snippet: email_with_parameters.html
 
 - preset_name: canada_maintainer_contact_form
@@ -3193,6 +3193,9 @@ presets:
     - value: AVI
       mimetype: video/vnd.avi
     - value: BAG
+    - value: BAM
+      mimetype: application/octet-stream
+      openness_score: 3
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
@@ -3390,6 +3393,9 @@ presets:
     - value: RTF
       mimetype: text/rtf
       replaces: [rtf]
+    - value: SAM
+      mimetype: text/plain
+      openness_score: 3
     - value: SAR
     - value: SAS
       mimetype: application/x-sas
