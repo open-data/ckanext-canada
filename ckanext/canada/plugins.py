@@ -152,6 +152,13 @@ ckanext.validation:presets.json
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
+        map.connect(
+            'delete_datastore_table',
+            '/dataset/{id}/delete-datastore-table/{resource_id}',
+            controller='ckanext.canada.controller:CanadaDatastoreController',
+            action='delete_datastore_table',
+        )
+
         return map
 
     def after_map(self, map):
