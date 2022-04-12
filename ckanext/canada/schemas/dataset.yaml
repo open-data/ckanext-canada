@@ -78,21 +78,25 @@ dataset_fields:
     en: Parent identifier
     fr: Identifiant parent
   form_snippet: null
+  validators: string_safe
 - field_name: hierarchy_level
   label:
     en: Hierarchy level
     fr: Portée hiérarchique
   form_snippet: null
+  validators: string_safe
 - field_name: file_id
   label:
     en: File Identifier
     fr: Identifiant métadonnées
   form_snippet: null
+  validators: string_safe
 - field_name: short_key
   label:
     en: Short Key
     fr: Identifiant court
   form_snippet: null
+  validators: string_safe
 
 - preset: canada_title
 - preset: canada_owner_org
@@ -112,12 +116,13 @@ dataset_fields:
     en: Role
     fr: Rôle
   form_snippet: null
+  validators: string_safe
 - field_name: contact_information
   label:
     en: Contact Information
     fr: Information contact
   form_snippet: null
-  validators: string_safe
+  validators: json_string_has_en_fr_keys
 - field_name: topic_category
   label:
     en: Topic category
@@ -247,6 +252,7 @@ dataset_fields:
     en: Distributor
     fr: Distributeur
   form_snippet: null
+  validators: json_string_has_en_fr_keys
 - field_name: status
   label:
     en: Status
@@ -326,6 +332,7 @@ dataset_fields:
     en: Aggregate dataset identifier
     fr: Identifiant jeu données aggrégées
   form_snippet: null
+  validators: string_safe
 - preset: canada_spatial_representation_type
 
 
