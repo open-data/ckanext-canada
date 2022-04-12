@@ -72,6 +72,7 @@ class CanadaCommand(CkanCommand):
                       update-triggers
                       update-inventory-votes <votes.json>
                       update-resource-url-https <https_report> <https_alt_report>
+                      bulk-validate
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -186,6 +187,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'update-resource-url-https':
             self.resource_https_update(*self.args[1:])
+
+        elif cmd == 'bulk-validate':
+            self.bulk_validate()
 
         else:
             print self.__doc__
@@ -676,6 +680,64 @@ class CanadaCommand(CkanCommand):
                     else:
                         print uuid + ' ' + str(e)
         csv_file.close()
+
+    def bulk_validate(self):
+        """
+        Usage: ckanapi search datasets include_private=true -c $CONFIG_INI |
+        paster canada bulk-validate -c $CONFIG_INI
+
+        Use this command to bulk validate the resources. Any resources which
+        are already in datastore but not validated will be removed.
+        """
+        log = open("bulk_validate.log", "w")
+        datastore_removed = 0
+        validation_queue = 0
+
+        for line in sys.stdin.readlines():
+            package = json.loads(line)
+            for resource in package['resources']:
+                if resource.get('url_type') == 'upload':
+                    # remove any non-validated resources from datastore
+                    if resource['datastore_active'] and \
+                            resource.get('validation_status', '') != 'success':
+                        try:
+                            toolkit.get_action(u'datastore_search')(
+                                {}, {'resource_id': resource['id']})
+                            toolkit.get_action(u'datastore_delete')(
+                                {'agent': 'xloader'},
+                                {'resource_id': resource['id'],
+                                 'ignore_auth': True,
+                                 'force': True})
+                            datastore_removed += 1
+                            log.write("\nRemoving resource %s from datastore" %
+                                      resource['id'])
+                        except NotFound:
+                            log.write("\n[ERROR]: Unable to remove resource "
+                                      "%s from datastore - Resource not found"
+                                      % resource['id'])
+
+                    # validate CSV resources which are uploaded to cloudstorage
+                    if resource.get('format', '').upper() == 'CSV':
+                        try:
+                            toolkit.get_action(u'resource_validation_run')(
+                                {}, {'resource_id': resource['id'],
+                                     'async': True,
+                                     'ignore_auth': True})
+                            validation_queue += 1
+                            log.write("\nResource %s sent to the validation "
+                                      "queue" %
+                                      resource['id'])
+                        except NotFound:
+                            log.write("\n[ERROR]: Unable to send resource %s "
+                                      "to validation queue - Resource not "
+                                      "found" % resource['id'])
+
+        log.write("\n\nTotal resources removed from datastore: " +
+                  str(datastore_removed))
+        log.write("\nTotal resources sent to validation queue: " +
+                  str(validation_queue))
+
+        log.close()
 
 
 def _trim_package(pkg):
