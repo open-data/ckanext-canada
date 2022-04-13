@@ -553,7 +553,7 @@ class CanadaCommand(CkanCommand):
                                                    {'id': res['id'],
                                                     'url': https_url})
                             log.write('Url for resource %s updated %s\n'
-                                      % (res['id']), https_url)
+                                      % (res['id'], https_url))
                     except NotFound:
                         log.write('Resource %s not found\n' % res['id'])
                     except ValidationError as e:
