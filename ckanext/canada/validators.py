@@ -20,6 +20,7 @@ from datetime import datetime
 from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
+from ckan.lib import base
 
 import logging
 
@@ -265,17 +266,22 @@ def no_future_date(key, data, errors, context):
 def isodate(value, context):
     if isinstance(value, datetime):
         return value
-    if value is None or value is missing:
-        return
     try:
         date = date_str_to_datetime(value)
     except (TypeError, ValueError) as e:
         raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
     return date
 
+def licence_choices(value, context):
+    licenseIDs = []
+    licenses = base.model.Package.get_license_register()
+    for license in licenses.values():
+        licenseIDs.append(license.id)
+    if value in licenseIDs:
+        return value
+    raise Invalid(_('Invalid licence'))
+
 def string_safe(value, context):
-    if value is None or value is missing:
-        return
     if isinstance(value, text_type):
         return value
     elif isinstance(value, bytes):
@@ -290,8 +296,6 @@ def string_safe(value, context):
 
 def string_safe_stop(key, data, errors, context):
     value = data.get(key)
-    if value is None or value is missing:
-        return
     if isinstance(value, text_type):
         return value
     elif isinstance(value, bytes):
@@ -306,8 +310,6 @@ def string_safe_stop(key, data, errors, context):
         raise StopOnError
 
 def json_string(value, context):
-    if value is None or value is missing:
-        return
     try:
         json.loads(value)
     except ValueError:
@@ -315,8 +317,6 @@ def json_string(value, context):
     return value
 
 def json_string_has_en_fr_keys(value, context):
-    if value is None or value is missing:
-        return
     try:
         decodedValue = json.loads(value)
         if "en" not in decodedValue:
