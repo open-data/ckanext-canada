@@ -14,6 +14,7 @@ USAGE: python download_dac.py -o/--output outfile.yaml
 import codecs
 import getopt
 import json
+import yaml
 import sys
 from urllib import urlopen
 
@@ -28,10 +29,7 @@ def main(argv):
         if not outfile:
             raise ValueError
 
-    except ValueError:
-        print 'USAGE: python download_dac.py -o/--output outfile.yaml'
-        sys.exit(1)
-    except getopt.GetoptError:
+    except (ValueError, getopt.GetoptError):
         print 'USAGE: python download_dac.py -o/--output outfile.yaml'
         sys.exit(1)
 
@@ -47,11 +45,9 @@ def main(argv):
     results = json.loads(response.read().decode('utf-8'))
     records = sorted(results['result']['records'],
                      key=lambda k: k['CONTACT_NAME'].lower())
-
     for record in records:
-        output.write('\"' + record['CONTACT_NAME'] + '\": ' +
-                     '\"' + record['CONTACT_NAME'] + '\"\n')
-
+        contact = {record['CONTACT_NAME']: record['CONTACT_NAME']}
+        output.write(yaml.safe_dump(contact, encoding='utf-8', allow_unicode=True).decode('utf-8'))
     output.close()
 
 
