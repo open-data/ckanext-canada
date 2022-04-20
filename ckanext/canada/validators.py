@@ -22,10 +22,6 @@ from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckan.lib import base
 
-import logging
-
-log = logging.getLogger(__name__)
-
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
 
@@ -273,11 +269,8 @@ def isodate(value, context):
     return date
 
 def licence_choices(value, context):
-    licenseIDs = []
-    licenses = base.model.Package.get_license_register()
-    for license in licenses.values():
-        licenseIDs.append(license.id)
-    if value in licenseIDs:
+    licences = base.model.Package.get_license_register()
+    if value in licences:
         return value
     raise Invalid(_('Invalid licence'))
 
