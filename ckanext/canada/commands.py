@@ -212,6 +212,8 @@ class CanadaCommand(CkanCommand):
         and apply the package updates to the portal instance for all
         packages with published_date set to any time in the past.
         """
+        if self.options.ckan_user is None:
+            raise ValueError('--ckan-user is required for portal_update')
         tries = self.options.tries
         self._portal_update_completed = False
         self._portal_update_activity_date = activity_date
