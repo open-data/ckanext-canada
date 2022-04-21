@@ -262,6 +262,8 @@ def no_future_date(key, data, errors, context):
 def isodate(value, context):
     if isinstance(value, datetime):
         return value
+    if value == '':
+        return None
     try:
         date = date_str_to_datetime(value)
     except (TypeError, ValueError) as e:
