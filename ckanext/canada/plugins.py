@@ -565,6 +565,18 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_reporting_requirements,
             'ati_email_validate':
                 validators.ati_email_validate,
+            'isodate':
+                validators.isodate,
+            'licence_choices':
+                validators.licence_choices,
+            'string_safe':
+                validators.string_safe,
+            'string_safe_stop':
+                validators.string_safe_stop,
+            'json_string':
+                validators.json_string,
+            'json_string_has_en_fr_keys':
+                validators.json_string_has_en_fr_keys,
             }
 
 

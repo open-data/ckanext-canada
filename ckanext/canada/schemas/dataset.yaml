@@ -78,21 +78,25 @@ dataset_fields:
     en: Parent identifier
     fr: Identifiant parent
   form_snippet: null
+  validators: scheming_required string_safe
 - field_name: hierarchy_level
   label:
     en: Hierarchy level
     fr: Portée hiérarchique
   form_snippet: null
+  validators: scheming_required string_safe
 - field_name: file_id
   label:
     en: File Identifier
     fr: Identifiant métadonnées
   form_snippet: null
+  validators: scheming_required string_safe
 - field_name: short_key
   label:
     en: Short Key
     fr: Identifiant court
   form_snippet: null
+  validators: scheming_required string_safe
 
 - preset: canada_title
 - preset: canada_owner_org
@@ -112,11 +116,13 @@ dataset_fields:
     en: Role
     fr: Rôle
   form_snippet: null
+  validators: scheming_required string_safe
 - field_name: contact_information
   label:
     en: Contact Information
     fr: Information contact
   form_snippet: null
+  validators: scheming_required json_string_has_en_fr_keys
 - field_name: topic_category
   label:
     en: Topic category
@@ -240,11 +246,13 @@ dataset_fields:
     en: Reference System Information
     fr: Information système référence
   form_snippet: null
+  validators: scheming_required string_safe
 - field_name: distributor
   label:
     en: Distributor
     fr: Distributeur
   form_snippet: null
+  validators: scheming_required json_string_has_en_fr_keys
 - field_name: status
   label:
     en: Status
@@ -285,7 +293,7 @@ dataset_fields:
     value: proposed
   # copied from select preset
   display_snippet: select.html
-  validators: scheming_required scheming_choices
+  validators: scheming_required string_safe scheming_choices
 
 - field_name: association_type
   label:
@@ -324,6 +332,7 @@ dataset_fields:
     en: Aggregate dataset identifier
     fr: Identifiant jeu données aggrégées
   form_snippet: null
+  validators: scheming_required string_safe
 - preset: canada_spatial_representation_type
 
 

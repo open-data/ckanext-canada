@@ -3187,7 +3187,7 @@ msgstr ""
 
 #: ckanext/wet_boew/templates/macros/form.html:308
 msgid "The form contains invalid entries:"
-msgstr ""
+msgstr "Le formulaire contient des entrées non valides :"
 
 #: ckanext/wet_boew/templates/macros/form.html:413
 msgid "http://example.com/my-image.jpg"
@@ -3583,3 +3583,9 @@ msgstr "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire 
 
 msgid "Delete DataStore table"
 msgstr "Supprimer la table DataStore"
+
+msgid "Date format incorrect. Expecting YYYY-MM-DD"
+msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
+
+msgid "Invalid licence"
+msgstr "Licence non valide"

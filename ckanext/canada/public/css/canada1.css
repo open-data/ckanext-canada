@@ -304,3 +304,23 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 .goodtables-ui-report .result .error-details .error-list .error-list-heading {
     display: none;
 }
+
+.clear-both {
+    clear: both;
+}
+
+.float-none {
+    float: none;
+}
+
+.geographic-region-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.geographic-region-wrapper > div{
+    padding-left: 0;
+}
