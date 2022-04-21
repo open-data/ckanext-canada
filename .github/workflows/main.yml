@@ -20,7 +20,7 @@ jobs:
       - name: download DAC members list
         run: |
           python bin/download_dac.py -o ckanext/canada/tables/choices/dac_members.yaml
-          cat dac_members.yaml
+          cat ckanext/canada/tables/choices/dac_members.yaml
 
       - name: set git config
         run: |
