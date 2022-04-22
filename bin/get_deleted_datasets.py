@@ -80,8 +80,8 @@ def dump_dataset(headers, ds, csvfile):
 
 
 def main():
-    ds = get_deleted_dataset(sys.argv[2])
-    csvfile = sys.argv[3]
+    ds = get_deleted_dataset(sys.argv[1])
+    csvfile = sys.argv[2]
     headers= [u'Title (English) / Titre (anglais)',
               u'Title (French) / Titre (français)',
               u'Organization / Organisation',
