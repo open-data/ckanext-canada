@@ -22,8 +22,8 @@ def run_scripts(infile, outfile, matching_files):
         proc_array.append(subprocess.Popen(["python", matching_files[0], 'warehouse'], stdin=subprocess.PIPE, stdout=outfile))
 
     else:
-        for matching_file in matching_files:
-            print("Starting process: {0} with {1}".format(matching_files.index(matching_file), matching_file))
+        for i, matching_file in enumerate(matching_files):
+            print("Starting process: {0} with {1}".format(i, matching_file))
             if len(proc_array) == 0:
                 proc_array.append(subprocess.Popen(['python', matching_file, 'warehouse'], stdin=subprocess.PIPE, stdout=subprocess.PIPE))
             elif matching_file == matching_files[-1]:
@@ -37,15 +37,10 @@ def run_scripts(infile, outfile, matching_files):
 
     infile.seek(0)
 
-    try:
     # writing, flushing, whatever goes here
-        for chunk in iter(lambda: infile.read(1000), ''):
-            proc_array[0].stdin.write(chunk)
-        proc_array[0].stdin.close()
-    except IOError as e:
-        # skip if it's just a SIGPIPE signal exception
-        if e.errno != errno.EPIPE:
-            raise 
+    for chunk in iter(lambda: infile.read(1000), ''):
+        proc_array[0].stdin.write(chunk)
+    proc_array[0].stdin.close()
 
     while proc_array[0].poll() is None:
         pass

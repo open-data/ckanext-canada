@@ -21,7 +21,7 @@ try:
 
         out_csv.writerow(line)
 
-except KeyError:
+except (KeyError, ValueError):
     if 'warehouse' in sys.argv:
         sys.exit(85)
     else:

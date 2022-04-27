@@ -77,4 +77,10 @@ for line in in_csv:
 
     line['comments_en'] = ''
     line['comments_fr'] = ''
-    out_csv.writerow(line)
+    try:
+        out_csv.writerow(line)
+    except (KeyError, ValueError):
+        if 'warehouse' in sys.argv:
+            sys.exit(85)
+        else:
+            raise

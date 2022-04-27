@@ -19,59 +19,66 @@ out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf
 out_csv.writeheader()
 
 
-for line in in_csv:
-    line['vendor_postal_code'] = ''
-    line['buyer_name'] = ''
-    line['contract_value'] = line['contract_value'].replace('$','').replace(',','')
-    line['original_value'] = line['original_value'].replace('$','').replace(',','')
-    line['amendment_value'] = line['amendment_value'].replace('$','').replace(',','')
-    line['trade_agreement'] = ''
-    line['land_claims'] = ''
-    line['commodity_type'] = line.pop('commodity_type_code')
-    line['solicitation_procedure'] = line.pop('solicitation_procedure_code')
-    line['limited_tendering_reason'] = line.pop('limited_tendering_reason_code')
-    line['trade_agreement_exceptions'] = line.pop('exemption_code')
-    line['aboriginal_business_incidental'] = line.pop('aboriginal_business')
-    line['aboriginal_business'] = ''
-    line['intellectual_property'] = line.pop('intellectual_property_code')
-    line['contracting_entity'] = line.pop('standing_offer')
-    line['instrument_type'] = line.pop('document_type_code')
-    line['country_of_vendor'] = line.pop('country_of_origin')
-    line['number_of_bids'] = ''
-    line['article_6_exceptions'] = ''
-    line['award_criteria'] = ''
-    line['socioeconomic_indicator'] = ''
-    line['user_modified'] = '*'  # special "we don't know" value
+try:
+    for line in in_csv:
+        line['vendor_postal_code'] = ''
+        line['buyer_name'] = ''
+        line['contract_value'] = line['contract_value'].replace('$','').replace(',','')
+        line['original_value'] = line['original_value'].replace('$','').replace(',','')
+        line['amendment_value'] = line['amendment_value'].replace('$','').replace(',','')
+        line['trade_agreement'] = ''
+        line['land_claims'] = ''
+        line['commodity_type'] = line.pop('commodity_type_code')
+        line['solicitation_procedure'] = line.pop('solicitation_procedure_code')
+        line['limited_tendering_reason'] = line.pop('limited_tendering_reason_code')
+        line['trade_agreement_exceptions'] = line.pop('exemption_code')
+        line['aboriginal_business_incidental'] = line.pop('aboriginal_business')
+        line['aboriginal_business'] = ''
+        line['intellectual_property'] = line.pop('intellectual_property_code')
+        line['contracting_entity'] = line.pop('standing_offer')
+        line['instrument_type'] = line.pop('document_type_code')
+        line['country_of_vendor'] = line.pop('country_of_origin')
+        line['number_of_bids'] = ''
+        line['article_6_exceptions'] = ''
+        line['award_criteria'] = ''
+        line['socioeconomic_indicator'] = ''
+        line['user_modified'] = '*'  # special "we don't know" value
 
-    # clean up some common mistakes
-    if line['contracting_entity'] == 'PSPCSOSA':  # code changed in 2016!
-        line['contracting_entity'] = 'PWSOSA'
-    if line['contracting_entity'] in ('N/A', 'N', 'NUL'):
-        line['contracting_entity'] = ''
-    line['country_of_vendor'] = line['country_of_vendor'].upper().strip()
-    if line['country_of_vendor'].startswith('CAN'):
-        line['country_of_vendor'] = 'CA'
-    if line['country_of_vendor'].startswith('USA'):
-        line['country_of_vendor'] = 'US'
-    line['instrument_type'] = line['instrument_type'].upper().strip()
-    line['intellectual_property'] = line['intellectual_property'].upper().strip()
-    if ':' in line['intellectual_property']:
-        line['intellectual_property'] = line['intellectual_property'].split(':')[0]
-    if line['intellectual_property'] == 'N/A':
-        line['intellectual_property'] = 'NA'
-    line['commodity_type'] = line['commodity_type'].upper().strip()
-    if line['commodity_type'].startswith('GOOD'):
-        line['commodity_type'] = 'G'
-    if line['commodity_type'].startswith('SERVICE'):
-        line['commodity_type'] = 'S'
-    if ':' in line['commodity_type']:
-        line['commodity_type'] = line['commodity_type'].split(':')[0]
-    line['solicitation_procedure'] = line['solicitation_procedure'].upper().strip()
-    if ':' in line['solicitation_procedure']:
-        line['solicitation_procedure'] = line['solicitation_procedure'].split(':')[0]
-    if line['solicitation_procedure'].startswith('NON-COMPET'):
-        line['solicitation_procedure'] = 'TN'
-    if ':' in line['limited_tendering_reason']:
-        line['limited_tendering_reason'] = line['limited_tendering_reason'].split(':')[0]
+        # clean up some common mistakes
+        if line['contracting_entity'] == 'PSPCSOSA':  # code changed in 2016!
+            line['contracting_entity'] = 'PWSOSA'
+        if line['contracting_entity'] in ('N/A', 'N', 'NUL'):
+            line['contracting_entity'] = ''
+        line['country_of_vendor'] = line['country_of_vendor'].upper().strip()
+        if line['country_of_vendor'].startswith('CAN'):
+            line['country_of_vendor'] = 'CA'
+        if line['country_of_vendor'].startswith('USA'):
+            line['country_of_vendor'] = 'US'
+        line['instrument_type'] = line['instrument_type'].upper().strip()
+        line['intellectual_property'] = line['intellectual_property'].upper().strip()
+        if ':' in line['intellectual_property']:
+            line['intellectual_property'] = line['intellectual_property'].split(':')[0]
+        if line['intellectual_property'] == 'N/A':
+            line['intellectual_property'] = 'NA'
+        line['commodity_type'] = line['commodity_type'].upper().strip()
+        if line['commodity_type'].startswith('GOOD'):
+            line['commodity_type'] = 'G'
+        if line['commodity_type'].startswith('SERVICE'):
+            line['commodity_type'] = 'S'
+        if ':' in line['commodity_type']:
+            line['commodity_type'] = line['commodity_type'].split(':')[0]
+        line['solicitation_procedure'] = line['solicitation_procedure'].upper().strip()
+        if ':' in line['solicitation_procedure']:
+            line['solicitation_procedure'] = line['solicitation_procedure'].split(':')[0]
+        if line['solicitation_procedure'].startswith('NON-COMPET'):
+            line['solicitation_procedure'] = 'TN'
+        if ':' in line['limited_tendering_reason']:
+            line['limited_tendering_reason'] = line['limited_tendering_reason'].split(':')[0]
 
-    out_csv.writerow(line)
+        out_csv.writerow(line)
+
+except KeyError:
+    if 'warehouse' in sys.argv:
+        sys.exit(85)
+    else:
+        raise
