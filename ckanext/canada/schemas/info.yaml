@@ -93,14 +93,20 @@ dataset_fields:
  
 # Field = Contributor English.
 # {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
-# Field = Contributor English.
+# Field = Contributor French.
 # {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 - preset: canada_contributor
   
 # Field = Contact Email.
 # {The contact person's email for the information asset}
 - preset: canada_maintainer_email
- 
+
+# Field = Credit English.
+# {The English names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset.}
+# Field = Crédit English.
+# {The French names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset.}
+- preset: canada_credit
+
 # Field = Description English
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in English. A description may include abstract, table of contents or a free-text.}
