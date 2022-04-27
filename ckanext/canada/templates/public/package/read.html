@@ -119,7 +119,7 @@
   {% endblock %}
 
 {% block package_item_apps %}
-  <div class="span-6 margin-top-medium">
+  <div class="span-6 margin-top-medium clear-both">
     {% set apps = [] %}
     {% for resource in pkg.resources %}
       {% if resource.format == 'app' %}
@@ -129,7 +129,7 @@
   </div>
 
   {% if apps|length > 0 %}
-    <div class="span-6 margin-top-medium">
+    <div class="span-6 margin-top-medium clear-both">
       <h4>{{ _('Related Items') }}</h4>
       <ul class="list-unstyled">
       {% for resource in apps %}
@@ -146,7 +146,7 @@
 
 {% block package_item_geo_preview %}
 {% if pkg.geographic_region or pkg.spatial %}
-<div class="span-6 margin-top-medium">
+<div class="span-6 margin-top-medium clear-both">
   <h4>{{ _('Geographic Information') }}</h4>
   {% if pkg.spatial %}
     {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
@@ -162,13 +162,15 @@
     {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
     {% set geo_region = h.scheming_field_by_name(schema.dataset_fields,
       'geographic_region') %}
-    <div class="col-md-4">
-      <h4>{{
-      h.scheming_language_text(geo_region.label) }}: </h4>
-    </div>
-    <div class="col-md-8">
-      {% snippet 'scheming/snippets/display_field.html',
-        field=geo_region, data=pkg, entity_type='dataset', object_type=pkg.type %}
+    <div class="geographic-region-wrapper clear-both">
+      <div class="col-md-4 float-none">
+        <h4>{{
+        h.scheming_language_text(geo_region.label) }}: </h4>
+      </div>
+      <div class="col-md-8 float-none">
+        {% snippet 'scheming/snippets/display_field.html',
+          field=geo_region, data=pkg, entity_type='dataset', object_type=pkg.type %}
+      </div>
     </div>
 
   {% endif %}
@@ -179,7 +181,7 @@
 {% block contact_information %}
   {% set info = h.contact_information(pkg.get('contact_information')) %}
   {% if info %}
-    <div class="span-6 margin-top-medium">
+    <div class="span-6 margin-top-medium clear-both">
       <h4>{{ _('Contact Information') }}</h4>
       {% if 'delivery_point' in info %}
         <p>{{ _('Delivery Point') }}: {{ info['delivery_point'] }}</p>
