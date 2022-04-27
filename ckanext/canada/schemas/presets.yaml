@@ -323,20 +323,6 @@ presets:
     label:
       en: Credit
       fr: Crédit
-    fluent_form_label:
-      en:
-        en: Credit (English)
-        fr: Crédit (anglais)
-      fr:
-        en: Credit (French)
-        fr: Crédit (français)
-    fluent_help_text:
-      en:
-        en: The English names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset
-        fr: placeholder
-      fr:
-        en: The French names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset
-        fr: placeholder
 
     repeating_subfields:
 
@@ -351,6 +337,13 @@ presets:
         fr:
           en: Name (in French)
           fr: Nom (en français)
+      fluent_help_text:
+        en:
+          en: The English names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset
+          fr: placeholder
+        fr:
+          en: The French names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset
+          fr: placeholder
       # copied from fluent_text preset
       form_snippet: fluent_text.html
       display_snippet: fluent_text.html
