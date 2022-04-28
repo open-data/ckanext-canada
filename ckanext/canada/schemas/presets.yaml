@@ -4,6 +4,12 @@ scheming_presets_version: 1
 about: scheming presets for ckanext-canada schemas
 about_url: http://github.com/open-data/ckanext-canada
 
+detail_include_fields:
+- credit_name
+
+detail_show_fields:
+- credit
+
 presets:
 
 # We generate IDs here because we use that ID as our name field as well
@@ -249,7 +255,7 @@ presets:
 
 # Field = Contributor English.
 # {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).}
-# Field = Contributor English.
+# Field = Contributor French.
 # {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the dataset (separate multiple entities by commas).}
 - preset_name: canada_contributor
   values:
@@ -260,7 +266,7 @@ presets:
     fluent_form_label:
       en:
         en: Contributor (English)
-        fr: Contributor (anglais)
+        fr: Contributeur (anglais)
       fr:
         en: Contributor (French)
         fr: Contributeur (français)
@@ -305,6 +311,39 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+
+
+# Field = Credit English.
+# {Recognition of those who contributed to the resource(s) in English.}
+# Field = Reconnaissance French.
+# {Recognition of those who contributed to the resource(s) in French}
+- preset_name: canada_credit
+  values:
+    field_name: credit
+    label:
+      en: Credit
+      fr: Reconnaissance
+    display_snippet: credit_name.html
+
+    repeating_subfields:
+
+    - field_name: credit_name
+      label:
+        en: Name
+        fr: Nom
+      fluent_form_label:
+        en:
+          en: Recognition of those who contributed to the resource(s) (English)
+          fr: Reconnaissance de ceux qui ont contribué à la ou aux ressources (anglais)
+        fr:
+          en: Recognition of those who contributed to the resource(s) (French)
+          fr: Reconnaissance de ceux qui ont contribué à la ou aux ressources (français)
+      # copied from fluent_text preset
+      form_snippet: fluent_text.html
+      display_snippet: fluent_text.html
+      error_snippet: fluent_text.html
+      validators: fluent_text
+      output_validators: fluent_text_output
 
 
 # Field = Description (English).
