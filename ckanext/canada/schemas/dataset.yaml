@@ -22,6 +22,7 @@ sidebar_show_fields:
 - creator
 - maintainer_email
 - maintainer_contact_form
+- credit
 - keywords
 - subject
 - topic_category
@@ -212,6 +213,7 @@ dataset_fields:
 - preset: canada_contributor
 - preset: canada_maintainer_email
 - preset: canada_maintainer_contact_form
+- preset: canada_credit
 - preset: canada_notes
 - preset: canada_keywords
 - preset: canada_subject
