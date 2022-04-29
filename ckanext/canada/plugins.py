@@ -696,6 +696,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
             status = data_dict.get('status')
             data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
 
+        if data_dict.get('credit'):
+            for cr in data_dict['credit']:
+                cr.pop('__extras')
+
         return data_dict
 
     def before_view(self, pkg_dict):
