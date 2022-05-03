@@ -6,6 +6,7 @@ import codecs
 import json
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 if 'report' in sys.argv:

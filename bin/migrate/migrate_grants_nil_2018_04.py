@@ -11,6 +11,7 @@ from openpyxl.utils.datetime import from_excel
 FIELDNAMES = 'fiscal_year,quarter,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')

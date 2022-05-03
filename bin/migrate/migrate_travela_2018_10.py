@@ -9,6 +9,7 @@ from decimal import Decimal, InvalidOperation
 FIELDNAMES = ['year', 'mandate_description_en', 'mandate_description_fr', 'operational_activities_kdollars', 'key_stakeholders_kdollars', 'training_kdollars', 'other_kdollars', 'internal_governance_kdollars', 'non_public_servants_kdollars', 'public_servants_kdollars', 'hospitality_kdollars', 'conference_fees_kdollars', 'minister_kdollars', 'travel_compared_fiscal_year_en', 'travel_compared_fiscal_year_fr', 'hospitality_compared_fiscal_year_en', 'hospitality_compared_fiscal_year_fr', 'conference_fees_compared_fiscal_year_en', 'conference_fees_compared_fiscal_year_fr', 'minister_compared_fiscal_year_en', 'minister_compared_fiscal_year_fr', 'record_created', 'record_modified', 'user_modified', 'owner_org', 'owner_org_title']
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
