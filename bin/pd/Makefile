@@ -144,13 +144,21 @@ rebuild-all: $(targets:%=rebuild-%)
 ati: upload-ati rebuild-ati
 
 .PHONY: upload-ati
-upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
+upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv \
+		$(workdir)/filtered/ati-full.csv $(workdir)/filtered/ati-nil-full.csv
 	@echo Uploading ATI Summaries...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati.csv" \
 	> /dev/null
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=5a1386a5-ba69-4725-8338-2f26004d7382 upload@"$(workdir)/filtered/ati-nil.csv" \
+	> /dev/null
+
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=ae8ac5ec-9adc-430d-a2cd-3df6df88ddbb upload@"$(workdir)/filtered/ati-full.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=199e0ec8-c10f-49f2-adab-a4fbfdc76bbe upload@"$(workdir)/filtered/ati-nil-full.csv" \
 	> /dev/null
 
 .PHONY: rebuild-ati
@@ -170,6 +178,12 @@ $(workdir)/filtered/ati.csv: $(workdir)/ati.csv
 
 $(workdir)/filtered/ati-nil.csv: $(workdir)/ati-nil.csv
 	$(fdir)/filter_ati.py < $< > $@
+
+$(workdir)/filtered/ati-full.csv: $(workdir)/ati.csv
+	$(fdir)/filter_modified_created.py < $< > $@
+
+$(workdir)/filtered/ati-nil-full.csv: $(workdir)/ati-nil.csv
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Briefing Note Titles
