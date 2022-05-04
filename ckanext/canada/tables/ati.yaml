@@ -18,7 +18,7 @@ collection: ati
 resources:
 - title: ATI Summaries
 
-  resource_name: ati-last-two-years
+  resource_name: ati
   create_form: true
   edit_form: true
 
@@ -273,7 +273,7 @@ resources:
 
 - title: ATI Nothing to Report
 
-  resource_name: ati-nil-last-two-years
+  resource_name: ati-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
 
