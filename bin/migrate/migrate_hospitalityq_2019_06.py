@@ -76,7 +76,7 @@ try:
             line['start_date'] = norm_date(
                 line['start_date'],
                 ORG_PREFER_FORMAT.get(line['owner_org']))
-            if line['start_date'] >= datetime(2019, 6, 21):
+            if 'warehouse' not in sys.argv and line['start_date'] >= datetime(2019, 6, 21):
                 error('start_date in the future', line['start_date'])
                 continue
         except ValueError:
