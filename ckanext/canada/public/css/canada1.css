@@ -274,7 +274,7 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 #resource_title {
     display: inline-block;
-    width: 60%;
+    width: 50%;
 }
 
 .resource-heading {
@@ -290,4 +290,43 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 .geomap-progress:after {
      content: none;
+}
+
+.goodtables-ui-report .file-heading .file-name {
+  display: none;
+}
+.goodtables-ui-report .file-heading .file-count {
+  display: none;
+}
+.goodtables-ui-report .file-heading .inner::before {
+    content: none;
+}
+.goodtables-ui-report .passed-tests li .badge.badge-success {
+  display: none;
+}
+.goodtables-ui-report .result {
+    margin: 0;
+}
+.goodtables-ui-report .result .error-details .error-list .error-list-heading {
+    display: none;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.float-none {
+    float: none;
+}
+
+.geographic-region-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.geographic-region-wrapper > div{
+    padding-left: 0;
 }

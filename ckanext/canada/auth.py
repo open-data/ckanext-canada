@@ -8,16 +8,6 @@ def inventory_votes_show(context, data_dict):
     '''
     return {'success': False}
 
-# resource view editing for sysadmin only, for now
-def resource_view_create(context, data_dict):
-    return {'success': False}
-
-def resource_view_update(context, data_dict):
-    return {'success': False}
-
-def resource_view_delete(context, data_dict):
-    return {'success': False}
-
 # block datastore-modifying APIs on the portal
 @chained_auth_function
 def datastore_create(up_func, context, data_dict):

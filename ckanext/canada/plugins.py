@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import os.path
+import logging
 from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
@@ -10,7 +11,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action, side_effect_free, ValidationError
+from ckantoolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound
 import ckanapi
 from ckan.lib.base import c
 
@@ -35,6 +36,8 @@ try:
 except ImportError:
     pass
 
+log = logging.getLogger(__name__)
+
 
 class DataGCCAInternal(p.SingletonPlugin):
     """
@@ -47,6 +50,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IResourceUrlChange)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -55,6 +59,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         config.update({
             "ckan.user_list_limit": 4000
         })
+        # registry includes validation so use real validation presets
+        config['scheming.presets'] = """
+ckanext.scheming:presets.json
+ckanext.fluent:presets.json
+ckanext.canada:schemas/presets.yaml
+ckanext.validation:presets.json
+"""
 
 
     def before_map(self, map):
@@ -141,6 +152,13 @@ class DataGCCAInternal(p.SingletonPlugin):
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
+        map.connect(
+            'delete_datastore_table',
+            '/dataset/{id}/delete-datastore-table/{resource_id}',
+            controller='ckanext.canada.controller:CanadaDatastoreController',
+            action='delete_datastore_table',
+        )
+
         return map
 
     def after_map(self, map):
@@ -157,6 +175,10 @@ class DataGCCAInternal(p.SingletonPlugin):
                 action='datatable'
             )
         return map
+
+    # IResourceUrlChange
+    def notify(self, resource):
+        p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -315,10 +337,12 @@ ckanext.canada:tables/adminaircraft.yaml
 """
         config['ckan.search.show_all_types'] = True
         config['search.facets.limit'] = 200  # because org list
-        config['scheming.presets'] = """
+        if 'validation' not in config.get('scheming.presets', ''):
+            config['scheming.presets'] = """
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
+ckanext.canada:schemas/validation_placeholder_presets.yaml
 """
         config['scheming.dataset_schemas'] = """
 ckanext.canada:schemas/dataset.yaml
@@ -468,9 +492,6 @@ ckanext.canada:schemas/prop.yaml
     def get_auth_functions(self):
         return {
             'inventory_votes_show': auth.inventory_votes_show,
-            'resource_view_create': auth.resource_view_create,
-            'resource_view_update': auth.resource_view_update,
-            'resource_view_delete': auth.resource_view_delete,
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
@@ -548,6 +569,18 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_reporting_requirements,
             'ati_email_validate':
                 validators.ati_email_validate,
+            'isodate':
+                validators.isodate,
+            'licence_choices':
+                validators.licence_choices,
+            'string_safe':
+                validators.string_safe,
+            'string_safe_stop':
+                validators.string_safe_stop,
+            'json_string':
+                validators.json_string,
+            'json_string_has_en_fr_keys':
+                validators.json_string_has_en_fr_keys,
             }
 
 
@@ -670,6 +703,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
             status = data_dict.get('status')
             data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
 
+        if data_dict.get('credit'):
+            for cr in data_dict['credit']:
+                cr.pop('__extras', None)
+
         return data_dict
 
     def before_view(self, pkg_dict):
@@ -729,6 +766,9 @@ def datastore_upsert(up_func, context, data_dict):
 
 @chained_action
 def datastore_delete(up_func, context, data_dict):
+    if context.get('agent') == 'xloader':
+        return up_func(context, data_dict)
+
     lc = ckanapi.LocalCKAN(username=c.user)
     res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
     res = lc.action.datastore_search(
@@ -736,15 +776,14 @@ def datastore_delete(up_func, context, data_dict):
         filters=data_dict.get('filters'),
         limit=1,
     )
+
     result = up_func(context, data_dict)
 
-    # no need to log activity for x-loader initiated deleting
-    if context.get('agent') != 'xloader':
-        act.datastore_activity_create(context,
-                                      {'count': res.get('total', 0),
-                                       'activity_type': 'deleted datastore',
-                                       'resource_id': res_id}
-                                      )
+    act.datastore_activity_create(context,
+                                  {'count': res.get('total', 0),
+                                   'activity_type': 'deleted datastore',
+                                   'resource_id': res_id}
+                                  )
     return result
 
 
@@ -906,3 +945,31 @@ def build_nav_main(*args):
             continue
         output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
     return output
+
+
+def remove_outdated_resource_from_datastore(resource_id):
+    from ckan import model
+    context = {'model': model, 'ignore_auth': True}
+    try:
+        res = p.toolkit.get_action(u'resource_show')(context, {'id': resource_id})
+    except ObjectNotFound:
+        log.error('Resource %s does not exist.' % res['id'])
+        return
+
+    # remove outdated validation report for linked resources
+    if res['url_type'] != 'upload' and h.validation_status(res['id']) != 'unknown':
+        try:
+            p.toolkit.get_action(u'resource_validation_delete')(
+                context, {'resource_id': res['id']})
+            log.info('Validation report deleted for resource %s' % res['id'])
+        except ObjectNotFound:
+            log.error('Validation report for resource %s does not exist' % res['id'])
+
+    # remove outdated datastore table for linked resources
+    if res['url_type'] != 'upload' and 'datastore_active' in res and res['datastore_active']:
+        try:
+            p.toolkit.get_action(u'datastore_delete')(
+                context, {'resource_id': res['id'], 'force': True})
+            log.info('Datastore table dropped for resource %s' % res['id'])
+        except ObjectNotFound:
+            log.error('Datastore table for resource %s does not exist' % res['id'])
