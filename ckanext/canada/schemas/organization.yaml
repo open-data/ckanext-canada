@@ -110,7 +110,7 @@ fields:
     fr: Annex de la loi sur la gestion des finances publiques
   help_text:
     en: "The FAA Schedule that applies to the organization. More details on https://laws-lois.justice.gc.ca/eng/acts/f-11/"
-    fr: "placeholder french help text for FAA Schedule"
+    fr: "L'annexe de la FAA qui s'applique à l'organisation. Plus de détails sur https://laws-lois.justice.gc.ca/fra/lois/f-11/"
   required: true
   choices:
   - label:
@@ -142,7 +142,7 @@ fields:
 - field_name: reporting_requirements
   label:
     en: "Select reporting requirements for the organization"
-    fr: "french placeholder for reporting requirements"
+    fr: "Sélectionner les exigences en matière de rapports pour l'organisation"
   choices:
   - label:
       en: "Acts of Founded Wrongdoing"
