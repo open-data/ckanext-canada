@@ -270,6 +270,7 @@ def no_future_date(key, data, errors, context):
         raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
     return value
 
+
 def canada_org_title_translated_output(key, data, errors, context):
     """
     Return a value for the title field in organization schema using a multilingual dict in the form EN | FR.

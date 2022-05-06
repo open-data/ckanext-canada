@@ -701,7 +701,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
 
         if data_dict.get('credit'):
             for cr in data_dict['credit']:
-                cr.pop('__extras')
+                cr.pop('__extras', None)
 
         return data_dict
 
