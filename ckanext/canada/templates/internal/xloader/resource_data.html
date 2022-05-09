@@ -11,7 +11,6 @@
   {% endif %}
   {{ super() }}
 {% endblock %}
-
 {% block upload_ds_button %}
   {% if h.validation_status(resource_id=res.id) == 'success' %}
     <form method="post" action="{{ action }}" class="datapusher-form">

@@ -349,6 +349,7 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
+        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
@@ -562,6 +563,24 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'canada_org_title_translated_output':
+                validators.canada_org_title_translated_output,
+            'protect_reporting_requirements':
+                validators.protect_reporting_requirements,
+            'ati_email_validate':
+                validators.ati_email_validate,
+            'isodate':
+                validators.isodate,
+            'licence_choices':
+                validators.licence_choices,
+            'string_safe':
+                validators.string_safe,
+            'string_safe_stop':
+                validators.string_safe_stop,
+            'json_string':
+                validators.json_string,
+            'json_string_has_en_fr_keys':
+                validators.json_string_has_en_fr_keys,
             }
 
 
@@ -683,6 +702,10 @@ class DataGCCAPackageController(p.SingletonPlugin):
         if data_dict['type'] == 'prop':
             status = data_dict.get('status')
             data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
+
+        if data_dict.get('credit'):
+            for cr in data_dict['credit']:
+                cr.pop('__extras', None)
 
         return data_dict
 

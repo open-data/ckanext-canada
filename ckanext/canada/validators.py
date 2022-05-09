@@ -3,6 +3,8 @@
 import re
 import unicodedata
 
+from six import text_type
+
 from pylons.i18n import _
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
@@ -16,7 +18,10 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
+from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
+from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
+from ckan.lib import base
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -253,4 +258,114 @@ def no_future_date(key, data, errors, context):
     value = data.get(key)
     if value and value > datetime.today():
         raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
+    return value
+
+
+def canada_org_title_translated_output(key, data, errors, context):
+    """
+    Return a value for the title field in organization schema using a multilingual dict in the form EN | FR.
+    """
+    data[key] = fluent_text_output(data[key])
+
+    k = key[-1]
+    new_key = key[:-1] + (k[:-len(LANG_SUFFIX)],)
+
+    if new_key in data:
+        data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']
+
+
+def protect_reporting_requirements(key, data, errors, context):
+    """
+    Ensure the reporting_requirements field is not changed by an unauthorized user.
+    """
+    if is_sysadmin(context['user']):
+        return
+
+    original = ''
+    org = context.get('group')
+    if org:
+        original = org.extras.get('reporting_requirements', [])
+    value = data.get(key, [])
+
+    if not value:
+        data[key] = original
+        return
+    elif value == original:
+        return
+    else:
+        errors[key].append("Cannot change value of reporting_requirements field"
+                           " from '%s' to '%s'. This field is read-only." %
+                           (original, value))
+        raise StopOnError
+
+
+def ati_email_validate(key, data, errors, context):
+    """
+    If ATI is checked for the reporting_requirements field, ati_email field becomes mandatory
+    """
+    if 'ati' in data[key] and not data[('ati_email',)]:
+        errors[('ati_email',)].append("ATI email is required for organizations with ATI selected as a reporting requirement")
+        raise StopOnError
+
+def isodate(value, context):
+    if isinstance(value, datetime):
+        return value
+    if value == '':
+        return None
+    try:
+        date = date_str_to_datetime(value)
+    except (TypeError, ValueError) as e:
+        raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
+    return date
+
+def licence_choices(value, context):
+    licences = base.model.Package.get_license_register()
+    if value in licences:
+        return value
+    raise Invalid(_('Invalid licence'))
+
+def string_safe(value, context):
+    if isinstance(value, text_type):
+        return value
+    elif isinstance(value, bytes):
+        # bytes only arrive when core ckan or plugins call
+        # actions from Python code
+        try:
+            return value.decode(u'utf8')
+        except UnicodeDecodeError:
+            return value.decode(u'cp1252')
+    else:
+        raise Invalid(_('Must be a Unicode string value'))
+
+def string_safe_stop(key, data, errors, context):
+    value = data.get(key)
+    if isinstance(value, text_type):
+        return value
+    elif isinstance(value, bytes):
+        # bytes only arrive when core ckan or plugins call
+        # actions from Python code
+        try:
+            return value.decode(u'utf8')
+        except UnicodeDecodeError:
+            return value.decode(u'cp1252')
+    else:
+        errors[key].append(_('Must be a Unicode string value'))
+        raise StopOnError
+
+def json_string(value, context):
+    try:
+        json.loads(value)
+    except ValueError:
+        raise Invalid(_('Must be a JSON string'))
+    return value
+
+def json_string_has_en_fr_keys(value, context):
+    try:
+        decodedValue = json.loads(value)
+        if "en" not in decodedValue:
+            raise Invalid(_('JSON object must contain \"en\" key'))
+        if "fr" not in decodedValue:
+            raise Invalid(_('JSON object must contain \"fr\" key'))
+    except ValueError:
+        raise Invalid(_('Must be a JSON string'))
     return value

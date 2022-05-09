@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 """
 Script that converts the CKAN organization list generated with
@@ -24,6 +25,7 @@ COLS = [
     'open_canada_id',
 ]
 
+
 def main():
     sys.stdout.write(codecs.BOM_UTF8)
 
@@ -32,21 +34,17 @@ def main():
 
     for line in sys.stdin:
         org = json.loads(line)
-        titles = org['title'].encode('utf-8').split(' | ')
         row = {
-            'uuid': org['id'].lower(),
-            'title_en': titles[0].strip(),
-            'title_fr': titles[-1].strip(),
-            'open_canada_id': org['name'],
+            u'uuid': org[u'id'].lower(),
+            u'title_en': org[u'title_translated'][u'en'].encode('utf-8').strip(),
+            u'title_fr': org[u'title_translated'][u'fr'].encode('utf-8').strip(),
+            u'short_form_en': org[u'shortform'][u'en'].strip(),
+            u'short_form_fr': org[u'shortform'][u'fr'].strip(),
+            u'department_number': org[u'department_number'].strip(),
+            u'umd_number': org[u'umd_number'].strip(),
+            u'open_canada_id': org[u'name'].strip(),
         }
-        for e in org['extras']:
-            if e['key'] == 'shortform':
-                row['short_form_en'] = e['value'].strip()
-            if e['key'] == 'shortform_fr':
-                row['short_form_fr'] = e['value'].strip()
-            elif e['key'] in COLS:
-                row[e['key']] = e['value'].strip()
-
         writer.writerow(row)
+
 
 main()

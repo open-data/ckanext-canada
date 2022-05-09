@@ -15,9 +15,7 @@ Example:
 
 {% with truncate=truncate or 0, url=h.url_for(controller='organization', action='read', id=organization.name) %}
 <div class="panel panel-info">
-  <div class="panel-heading text-center">{{cr.split_bilingual_field(organization.title or organization.name,
-    h.lang())}}
-  </div>
+  <div class="panel-heading text-center">{{ h.get_translated(organization, 'title') }}</div>
   <div class="panel-body">
     {% if organization.description %}
     <p>

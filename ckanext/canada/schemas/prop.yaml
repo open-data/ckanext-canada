@@ -41,7 +41,7 @@ dataset_fields:
     en: Organization Name
     fr: Nom de l’organisation
   form_snippet: ro_org.html
-  validators: user_read_only owner_org_validator unicode
+  validators: user_read_only string_safe owner_org_validator
 
 - preset: canada_notes
   form_snippet: ro_fluent_markdown.html
