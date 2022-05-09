@@ -9,6 +9,10 @@ assert sys.stdin.read(3) == codecs.BOM_UTF8
 sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
+
+if 'warehouse' in sys.argv and 'comments_en' in in_csv.fieldnames:
+    sys.exit(85)
+
 if 'report' in sys.argv:
     out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=['old_disposition', 'new_disposition'])
     seen = set()
