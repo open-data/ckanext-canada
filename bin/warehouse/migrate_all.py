@@ -44,7 +44,11 @@ def run_scripts(infile, outfile, matching_files):
         proc_array[0].stdin.write(chunk)
     proc_array[0].stdin.close()
 
-    for p in proc_array:
+    if proc_array[0].wait() == 85:
+        # sometimes IOError needs a little help
+        raise IOError
+
+    for p in proc_array[1:]:
         p.wait()
 
 
