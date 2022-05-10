@@ -13,6 +13,8 @@ assert sys.stdin.read(3) == codecs.BOM_UTF8
 sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
+if not in_csv.fieldnames and 'warehouse' in sys.argv:
+    sys.exit(85)
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
 out_csv.writeheader()
 
