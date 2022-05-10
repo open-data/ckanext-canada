@@ -20,6 +20,7 @@ from datetime import datetime
 from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
+from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
 
 not_empty = get_validator('not_empty')
@@ -258,6 +259,53 @@ def no_future_date(key, data, errors, context):
     if value and value > datetime.today():
         raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
     return value
+
+
+def canada_org_title_translated_output(key, data, errors, context):
+    """
+    Return a value for the title field in organization schema using a multilingual dict in the form EN | FR.
+    """
+    data[key] = fluent_text_output(data[key])
+
+    k = key[-1]
+    new_key = key[:-1] + (k[:-len(LANG_SUFFIX)],)
+
+    if new_key in data:
+        data[new_key] = data[key]['en'] + ' | ' + data[key]['fr']
+
+
+def protect_reporting_requirements(key, data, errors, context):
+    """
+    Ensure the reporting_requirements field is not changed by an unauthorized user.
+    """
+    if is_sysadmin(context['user']):
+        return
+
+    original = ''
+    org = context.get('group')
+    if org:
+        original = org.extras.get('reporting_requirements', [])
+    value = data.get(key, [])
+
+    if not value:
+        data[key] = original
+        return
+    elif value == original:
+        return
+    else:
+        errors[key].append("Cannot change value of reporting_requirements field"
+                           " from '%s' to '%s'. This field is read-only." %
+                           (original, value))
+        raise StopOnError
+
+
+def ati_email_validate(key, data, errors, context):
+    """
+    If ATI is checked for the reporting_requirements field, ati_email field becomes mandatory
+    """
+    if 'ati' in data[key] and not data[('ati_email',)]:
+        errors[('ati_email',)].append("ATI email is required for organizations with ATI selected as a reporting requirement")
+        raise StopOnError
 
 def isodate(value, context):
     if isinstance(value, datetime):

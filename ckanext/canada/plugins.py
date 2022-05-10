@@ -349,6 +349,7 @@ ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
+        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
@@ -562,6 +563,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'canada_org_title_translated_output':
+                validators.canada_org_title_translated_output,
+            'protect_reporting_requirements':
+                validators.protect_reporting_requirements,
+            'ati_email_validate':
+                validators.ati_email_validate,
             'isodate':
                 validators.isodate,
             'licence_choices':
