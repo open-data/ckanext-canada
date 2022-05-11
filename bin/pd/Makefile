@@ -1,5 +1,5 @@
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing adminaircraft suppliervax
+	nap reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
