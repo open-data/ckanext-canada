@@ -43,7 +43,7 @@ if sys.argv[1:]:
     error_csv.writeheader()
 
 # get DAC member names
-dac_member_yaml = open("../../ckanext/canada/tables/choices/dac_members.yaml", "r")
+dac_member_yaml = open("choices/dac_members_2022_05.yaml", "r")
 members = yaml.safe_load(dac_member_yaml)
 
 try:
