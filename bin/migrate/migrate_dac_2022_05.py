@@ -3,6 +3,7 @@
 
 import codecs
 from decimal import Decimal
+import os
 from re import sub
 import sys
 import unicodecsv
@@ -43,7 +44,9 @@ if sys.argv[1:]:
     error_csv.writeheader()
 
 # get DAC member names
-dac_member_yaml = open("choices/dac_members_2022_05.yaml", "r")
+dac_member_yaml = open(
+    os.path.join(os.path.dirname(__file__),
+                 "choices/dac_members_2022_05.yaml"), "r")
 members = yaml.safe_load(dac_member_yaml)
 
 try:
