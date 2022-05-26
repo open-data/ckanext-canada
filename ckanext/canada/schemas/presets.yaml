@@ -3336,6 +3336,9 @@ presets:
       label: GeoSoftGrids
     - value: GRIB1
     - value: GRIB2
+    - value: GZ
+      mimetype: application/gzip
+      label: Gzip
     - value: HDF
       mimetype: application/x-hdf
       replaces: ["GNU Zipped HDF", "hdf"]

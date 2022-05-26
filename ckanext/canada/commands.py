@@ -375,7 +375,6 @@ class CanadaCommand(CkanCommand):
         now = datetime.now()
 
         packages = iter(sys.stdin.readline, '')
-
         for package in packages:
             source_pkg = json.loads(package)
             package_id = source_pkg['id']
@@ -430,6 +429,7 @@ class CanadaCommand(CkanCommand):
                 _trim_package(target_pkg)
 
             target_hash = {}
+
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
@@ -831,7 +831,9 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url)
     action = ''
     try:
         portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
-        if t_hash.get(resource['id']) and t_hash.get(resource['id']) == resource.get('hash'):
+        if t_hash.get(resource['id']) \
+                and t_hash.get(resource['id']) == resource.get('hash')\
+                and datastore_dictionary(resource['id']) == resource_details['data_dict']:
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
