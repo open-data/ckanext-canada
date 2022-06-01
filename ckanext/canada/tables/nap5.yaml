@@ -1,0 +1,870 @@
+dataset_type: nap
+
+title: 5th National Action Plan on Open Government Tracker
+notes: |
+  Access, upload and modify the National Action Plan on Open Government Tracker for your organization
+
+template_version: 3
+
+portal_type: info
+collection: pd
+
+resources:
+- title: National Action Plan on Open Government Tracker
+  resource_name: nap
+
+  fields:
+  - datastore_id: reporting_period
+    label:
+      en: Reporting Period
+      fr: Période de déclaration
+    description:
+      en: .
+      fr: .
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    choices:
+      2022-03: 2022-03
+      2022-06: 2022-06
+      2022-09: 2022-09
+      2022-12: 2022-12
+      2023-03: 2023-03
+      2023-06: 2023-06
+      2023-09: 2023-09
+      2023-12: 2023-12
+      2024-03: 2024-03
+      2024-06: 2024-06
+      2024-09: 2024-09
+      2024-12: 2024-12
+
+  - datastore_id: commitments
+    label:
+      en: Commitments
+      fr: Engagements
+    description:
+      en: The 5 commitments in the 2022-2024 National Action Plan on Open Government
+      fr: Les 5 engagements dans le Plan d’action national du Canada pour un gouvernement ouvert de 2022-2024
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      C01:
+        en: Climate Change and Sustainable Growth
+        fr: Changements climatiques et croissance durable
+      C02:
+        en: Democracy and Civic Space
+        fr: Démocratie et espace civique
+      C03:
+        en: Fiscal, Financial and Corporate Transparency
+        fr: Transparence fiscale, financière et des entreprises
+      C04:
+        en: Justice
+        fr: Justice
+      C05:
+        en: Open Data for Results
+        fr: Données ouvertes aux fins des résultats
+      
+  - datastore_id: milestones
+    label:
+      en: Milestones
+      fr: Jalons
+    description:
+      en: This list contains milestones that correspond to the chosen commitment
+      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # choices based on commitments value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
+
+    choices:
+      C01.1:
+        en: Through the Open Science and Data Platform make information related to cumulative effects, including climate change and sustainable growth, easier for people in Canada to find and understand
+        fr: Grâce à la Plateforme de science et de données ouvertes, rendre l’information relative aux effets cumulatifs, y compris les changements climatiques et la croissance durable, plus facile à trouver et à comprendre pour les personnes au Canada
+      C01.2:
+        en: Improve and expand information on energy use and greenhouse gas emissions through the Physical Flow Accounts as part of the Canadian Centre for Energy Information (CCEI)
+        fr: Améliorer et élargir l’information sur la consommation d’énergie et les émissions de GES au moyen des comptes de flux physiques et par l’intermédiaire du Centre canadien d’information sur l’énergie (CCEI)
+      C01.3:
+        en: Making climate change science more open and accessible
+        fr: Rendre la science des changements climatiques plus ouverte et accessible
+      C01.4:
+        en: Provide accessible, reliable, and practical climate data and information to support adaptation decision-making and help people of Canada, across all sectors and regions, build their resilience to climate change
+        fr: Fournir des données et de l’information climatiques accessibles, fiables et pratiques pour faciliter la prise de décisions en matière d’adaptation et aider les personnes au Canada dans l’ensemble des secteurs et des régions à renforcer leur résilience face aux changements climatiques
+      C02.1:
+        en: Take action to address the rising spread of disinformation in Canada and its consequences on the health of our democracy
+        fr: Prendre des mesures pour s’attaquer à la propagation croissante de la désinformation au Canada et aux conséquences qui en découlent pour la santé de notre démocratie
+      C02.2:
+        en: Continue protecting democracy at home and abroad and safeguarding Canada’s electoral and democracy processes by combatting foreign threats to democracy
+        fr: Continuer à protéger la démocratie au pays et à l’étranger et le processus électoral et démocratique du Canada tout en luttant contre les menaces étrangères pour la démocratie
+      C02.3:
+        en: Take steps towards strengthening trust, inclusion, and social cohesion in Canada
+        fr: Prendre des mesures pour renforcer la confiance, l’inclusion et la cohésion sociale au Canada
+      C02.4:
+        en: Advance digital inclusion at home and abroad with a focus on shaping global norms, empowering multistakeholder engagement and boosting communication and outreach
+        fr: Faire progresser l’inclusion numérique au pays et à l’étranger, principalement en définissant les normes mondiales, en favorisant la mobilisation multi-intervenants et en améliorant les efforts de communication et de sensibilisation
+      C03.1:
+        en: Pursuant to the Budget 2021 commitment the Government of Canada will undertake technical and operational studies to lay the groundwork for the implementation of a publicly accessible corporate registry by 2025
+        fr: Conformément à l’engagement qu’il a pris dans le budget 2022, le gouvernement du Canada mettra en place un registre public et consultable des bénéficiaires effectifs d’ici la fin de 2023. Le registre visera les sociétés sous réglementation fédérale et pourra être élargi pour permettre l’accès aux données sur la propriété effective détenues par les provinces et les territoires qui acceptent de participer à un registre national
+      C03.2:
+        en: Engage federal, provincial and territorial partners to support coordinated implementation and a harmonized approach to ultimate beneficial ownership
+        fr: Mobiliser les partenaires fédéraux, provinciaux et territoriaux pour faciliter une mise en œuvre coordonnée du registre et l’adoption d’une approche harmonisée visant la propriété effective
+      C03.3:
+        en: Monitor the strategic management of procurement of technology and software within the Government of Canada
+        fr: Surveiller la gestion stratégique des achats de technologies et de logiciels au sein du gouvernement du Canada
+      C04.1:
+        en: Collect and share data, including disaggregated data
+        fr: Collecter et partager les données, y compris les données désagrégées
+      C04.2:
+        en: Identify and share promising practices
+        fr: Relever les pratiques prometteuses et les partager
+      C04.3:
+        en: Advance Legal literacy and empowerment
+        fr: Améliorer les connaissances juridiques et l’autonomisation juridique
+      C04.4:
+        en: Foster Partnerships and Collaborate to Advance Access to Justice
+        fr: Renforcer les partenariats et la collaboration pour faire progresser l’accès à la justice
+      C04.5:
+        en: A multi-year roadmap for Open Government at the RCMP
+        fr: Une feuille de route pluriannuelle pour un gouvernement ouvert à la GRC
+      C05.1:
+        en: Open and strategic management of data and information
+        fr: Assurer une gestion ouverte et stratégique des données et de l’information
+      C05.2:
+        en: Build an open government and open data ecosystem
+        fr: Bâtir un gouvernement ouvert et un écosystème de données ouvertes
+      C05.3:
+        en: A roadmap toward a more inclusive barrier-free Canada
+        fr: Créer une feuille de route vers un Canada plus inclusif et exempt d’obstacles
+      
+
+  - datastore_id: indicators
+    label:
+      en: Indicators
+      fr: Indicateurs
+    description:
+      en: The indicators related to the chosen milestone
+      fr: Les indicateurs liés au jalon choisi
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    excel_column_width: 80
+    # choices based on milestones value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
+
+    choices:
+      C01.1.1:
+        en: Add content and features to the Open Science and Data Platform, using user engagement and feedback, both internal and external to government to set priorities for additions
+        fr: Ajouter du contenu et des fonctionnalités à la Plateforme de science et de données ouvertes, en mobilisant les utilisateurs et en obtenant leurs commentaires, tant à l’intérieur qu’à l’extérieur du gouvernement, pour établir des priorités
+        due_date: 2023-12
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.1.2:
+        en: Provide accessible science-based educational content on 10 key topics (air, biodiversity, climate, cumulative effects, development activities, economy and industry, health, land, society and culture, and water), which may be supported by interactive maps
+        fr: Fournir un contenu éducatif axé sur les sciences en langage accessible sur dix sujets clés (air, biodiversité, climat, effets cumulatifs, activités de développement, économie et industrie, santé, terre, société et culture, et eau), qui peut être complété par des cartes interactives
+        due_date: 2023-12
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.1.3:
+        en: Engage with governments, Indigenous Peoples, and external groups (e.g. industry, environmental non – government organizations) to verify that cumulative effects are better understood, new content is identified (data, publications) and overall use of the platform is increased
+        fr: Mobiliser les gouvernements, les peuples autochtones et les groupes externes (par exemple, industrie et organisations non gouvernementales environnementales) pour vérifier s’ils comprennent mieux les effets cumulatifs, s’ils ont repéré de nouveaux contenus (données et publications) et s’ils utilisent davantage la plateforme dans son ensemble
+        due_date: 2023-12
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.2.1:
+        en: Disseminate an infographic and datasets related to greenhouse gas (GHG) emissions embedded in goods and services purchased by households. Link and disseminate environmental data on energy consumption and GHG emission physical flow accounts with economic satellite accounts on tourism, clean technologies, natural resources
+        fr: Diffuser une infographie et des jeux de données relatifs aux émissions de GES intégrées aux biens et services achetés par les ménages. Partager les données environnementales des comptes de flux physiques pour la consommation d’énergie et les émissions de GES et établir un lien entre celles-ci et les données des comptes satellites économiques pour le tourisme, les technologies propres et les ressources naturelles
+        due_date: 2024-06
+        lead_dept: "statcan"
+        s4d: false 
+      C01.2.2:
+        en: Develop an “Energy and Environment” webpage for the Canadian Centre for Energy Information portal that will include detailed GHG information from both Statistics Canada and Environment and Climate Change Canada, including several data visualization dashboards and indicators
+        fr: Créer une page Web « Énergie et environnement » pour le portail du CCEI, qui comprendra de l’information détaillée sur les GES provenant de StatCan et d’ECCC, y compris plusieurs indicateurs et tableaux de bord de visualisation des données
+        due_date: 2022-12
+        lead_dept: "statcan"
+        s4d: false
+      C01.2.3:
+        en: Link and disseminate environmental data on energy consumption and GHG emission Physical Flow Accounts with economic satellite accounts on transportation and agriculture
+        fr: Partager les données environnementales des comptes de flux physiques pour la consommation d’énergie et les émissions de GES et établir un lien entre celles-ci et les données des comptes satellites économiques pour le transport et l’agriculture
+        due_date: 2022-06
+        lead_dept: "statcan"
+        s4d: false
+      C01.3.1:
+        en: New metric to be designed and included in yearly reports to assess open access of climate change science publication using data from an abstract and citation database
+        fr: Concevoir une nouvelle mesure à inclure dans les rapports annuels pour évaluer le libre accès aux publications scientifiques sur les changements climatiques en utilisant les données d’une base de données de résumés et de citations
+        due_date: 2022-06
+        lead_dept: "ec"
+        s4d: false
+      C01.3.2:
+        en: Yearly reports on progress against existing metrics measuring implementation of open science by Science-Based Departments and Agencies, with a focus on open access metrics and diverse types of open access, to be released in the open
+        fr: Établir des rapports annuels sur les progrès réalisés en fonction des indicateurs existants qui mesurent la façon dont les ministères et organismes à vocation scientifique mettent en œuvre la science ouverte, en mettant l’accent sur les indicateurs de libre accès et les divers types de libre accès, et les mettre à disposition du public
+        due_date: 2022-06
+        lead_dept: "ec"
+        s4d: false
+      C01.3.3:
+        en: Support 10 climate change innovation research projects as well as 10 master’s students focused on the intersection of machine learning and climate change in Sub-Saharan Africa and promote knowledge exchange with Canadian scholars
+        fr: Appuyer dix projets de recherche sur l’innovation en matière de changement climatique et les travaux de dix étudiants à la maîtrise qui seront axés sur les recoupements entre l’apprentissage automatique et les changements climatiques en Afrique subsaharienne et promouvoir l’échange de connaissances avec des chercheurs canadiens
+        due_date: 2024-12
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C01.3.4:
+        en: Work with Lacuna Fund to support the creation, aggregation, and maintenance of open datasets for the training and evaluation of machine learning models by and for local communities most affected by climate change around the world
+        fr: Collaborer avec Lacuna Fund pour contribuer à la création, au regroupement et à mise à jour de jeux de données ouvertes pour des projets de formation et d’évaluation sur les modèles d’apprentissage automatique visant les communautés locales les plus touchées par les changements climatiques dans le monde
+        due_date: 2023-03
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C01.4.1:
+        en: Increase the number of clients accessing climate information through Canadian Centre for Climate Services (CCCS) services by 10% by 2023 from 2021 baseline, by working to increase climate data and addressing information gaps driven by user needs
+        fr: Augmenter de 10 % le nombre de clients ayant accès à l’information climatique par l’intermédiaire du Centre canadien des services climatiques (CCSC) d’ici 2023 par rapport au niveau de référence de 2021, en s’efforçant d’accroître la quantité de données climatiques et de combler les lacunes en matière d’information d’après les besoins des utilisateurs
+        due_date: 2023-03
+        lead_dept: "ec"
+        s4d: false
+      C01.4.2:
+        en: Publish two sector-based modules on Climate Data by 2023 to provide relevant climate projections and information for users in the buildings and transportation sectors
+        fr: Publier deux modules sectoriels sur Données climatiques d’ici 2023, afin de fournir des projections et de l’information pertinentes sur le climat aux utilisateurs des secteurs du bâtiment et du transport
+        due_date: 2023-03
+        lead_dept: "ec"
+        s4d: false
+      C01.4.3:
+        en: Respond to at least 300 user enquiries via the Canadian Centre for Climate Services support desk each year to continue to provide high-level quality of support, and use their feedback to help us advance our mandate to help users understand and become more resilient to climate change
+        fr: Répondre à au moins 300 demandes de renseignements des utilisateurs chaque année par l’intermédiaire du bureau de service du CCSC afin de continuer à fournir un soutien de grande qualité et d’utiliser les commentaires de ceux ci pour remplir notre mandat qui consiste à les aider à mieux comprendre les changements climatiques et à devenir plus résilients face à ceux-ci
+        due_date: 2023-03
+        lead_dept: "ec"
+        s4d: false
+      C02.1.1:
+        en: Projects are supported by the Digital Citizen Contribution Program with a focus of combatting online disinformation and other harms in a Canadian context to better understand the origins, impacts and potential response to online disinformation
+        fr: les projets sont appuyés par le Programme de contributions en matière de citoyenneté numérique et ont pour objectif premier de lutter contre la désinformation en ligne et d’autres préjudices dans un contexte canadien afin de mieux comprendre les origines, les répercussions et les mesures d’intervention possibles pour lutter contre la désinformation en ligne
+        due_date: 2023-03
+        lead_dept: "pch"
+        s4d: true
+      C02.1.2:
+        en: Projects are supported by Canadian Heritage’s Joint Initiative with Social Sciences and Humanities Research Council with a focus on combatting online disinformation and other harms in a Canadian context
+        fr: les projets sont appuyés par l’initiative conjointe de Patrimoine canadien et du Conseil de recherches en sciences humaines et visent à combattre la désinformation en ligne et d’autres préjudices dans un contexte canadien
+        due_date: 2023-03
+        lead_dept: "pch"
+        s4d: true
+      C02.1.3:
+        en: Annual Digital Citizen Initiative conferences are held, bringing together stakeholders for capacity building and knowledge dissemination (by February 2022 and February 2023)
+        fr: des conférences annuelles sur l’initiative de citoyenneté numérique sont organisées, réunissant des intervenants afin de renforcer les capacités et de favoriser le transfert de connaissances
+        due_date: 2023-02
+        lead_dept: "pch"
+        s4d: true
+      C02.1.4:
+        en: New models are explored that enable private giving and philanthropic support for trusted, professional, non-profit journalism and local news
+        fr: de nouveaux modèles sont explorés pour permettre les dons privés et un soutien philanthropique pour un journalisme et des nouvelles locales de confiance, professionnels et à but non lucratif
+        due_date: 2024-03
+        lead_dept: "pch"
+        s4d: true
+      C02.1.5:
+        en: The Local Journalism Initiative supports the hiring of journalists to provide coverage for underserved communities across Canada to support a healthy, diverse, and reliable news ecosystem
+        fr: l’Initiative sur le journalisme local soutient l’embauche de journalistes pour fournir une couverture médiatique aux communautés mal desservies à travers le Canada et favoriser un écosystème de nouvelles sain, diversifié et fiable
+        due_date: 2024-03
+        lead_dept: "pch"
+        s4d: true
+      C02.1.6:
+        en: Lead a multi-stakeholder working group to develop and advance international priorities related to Diversity of Content Online
+        fr: Diriger un groupe de travail multi-intervenants pour définir des priorités internationales liées à la diversité des contenus en ligne, et en assurer la concrétisation
+        due_date: 2024-03
+        lead_dept: "pch"
+        s4d: false
+      C02.1.7:
+        en: Finalize voluntary actions in line with the guiding principles on diversity of content online
+        fr: Mettre la touche finale à des actions volontaires en tenant compte des principes directeurs s’appliquant à la diversité des contenus en ligne
+        due_date: 2022-12
+        lead_dept: "pch"
+        s4d: false
+      C02.1.8:
+        en: Countries, private sector, and civil society organizations sign on to the Guiding Principles and commit to advance voluntary actions
+        fr: Les pays, le secteur privé et les organisations de la société civile adhèrent aux principes directeurs et s’engagent à faire progresser des actions volontaires
+        due_date: 2023-03
+        lead_dept: "pch"
+        s4d: false
+      C02.1.9:
+        en: During its tenure as Chair of the International Institute for Democracy and Electoral Assistance (IDEA) in 2022, Canada will engage partners on the challenges created by disinformation, particularly those affecting governments and marginalized and vulnerable groups, and its impact on democratic processes, including participation and representation
+        fr: pendant son mandat de président de l’Institut international pour la démocratie et l’assistance électorale en 2022, le Canada fera appel à des partenaires pour s’attaquer aux défis liés à la désinformation, en particulier ceux qui touchent les gouvernements et les groupes marginalisés et vulnérables, et leurs répercussions sur les processus démocratiques, y compris la participation et la représentation
+        due_date: 2022-12
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.1.10:
+        en: Publish an educational document for Canadians that would raise awareness on what the national security community does, why they do it and how, with specific reference to national security efforts to combat mis- and disinformation meant to undermine our democratic system and social cohesion
+        fr: Publier un document éducatif à l’intention des Canadiens pour les sensibiliser à ce que fait la communauté de la sécurité nationale, pourquoi elle le fait et comment elle le fait, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation et la mésinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        due_date: 2022-09
+        lead_dept: "ps-sp"
+        s4d: false
+      C02.1.11:
+        en: Launch an online engagement tool to foster dialogue with Canadians on national security transparency issues, with specific reference to national security efforts to combat mis- and disinformation meant to undermine our democratic system and social cohesion
+        fr: Lancer un outil de mobilisation en ligne pour favoriser le dialogue avec les Canadiens sur les questions de transparence en matière de sécurité nationale, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation et la mésinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        due_date: 2022-06
+        lead_dept: "ps-sp"
+        s4d: false
+      C02.2.1:
+        en: Release an annual G7 Rapid Response Mechanism public report aimed at raising awareness of and strengthening societal resilience to foreign interference, including state sponsored disinformation, by keeping publics in the G7 member states informed about the latest threats and countermeasures
+        fr: publier un rapport public annuel sur le mécanisme de réponse rapide du G7 visant à sensibiliser la société à l’ingérence étrangère, notamment la désinformation parrainée par l’État – et à renforcer la résilience de la société face à celle-ci, en informant la population des États membres du G7 des dernières menaces et contre-mesures
+        due_date: 2022-05
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.2.2:
+        en: Share Canada’s experience implementing its Plan to Protect Democracy, such as the Critical Election Incident Public Protocol and the Declaration, with domestic and international partners
+        fr: partager avec les partenaires nationaux et internationaux l’expérience du Canada dans la mise en œuvre de son plan de protection de la démocratie, comme le Protocole public en cas d’incident électoral majeur et la Déclaration du Canada sur l’intégrité électorale en ligne
+        due_date: 2022-09
+        lead_dept: "pco-bcp"
+        s4d: true
+      C03.1.1:
+        en: Amendments made to the Canada Business Corporations Act
+        fr: Modifications apportées à la Loi canadienne sur les sociétés par actions
+        full_text:
+          en: Amendments made to the Canada Business Corporations Act (July 2019)
+          fr: Modifications apportées à la Loi canadienne sur les sociétés par actions. (Juillet 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-31
+          fr: /fr/engagements/commentaires-jalons-31
+        due_date: 2019-07
+      C03.2.1:
+        en: Consultations with stakeholders are held to discuss issues relating to beneficial ownership information
+        fr: Des consultations avec les intervenants ont lieu pour discuter de questions relatives aux renseignements sur la propriété bénéficiaire
+        full_text:
+          en: Consultations, framed by a discussion document, with stakeholders from civil society, private sector, academia and other sectors are held to discuss issues relating to beneficial ownership information, including emerging best practices in other jurisdictions (July 2019)
+          fr: Des consultations, encadrées par un document de discussion, avec les intervenants de la société civile, le secteur privé, le milieu universitaire et les autres secteurs ont lieu pour discuter de questions relatives aux renseignements sur la propriété bénéficiaire, y compris les nouvelles pratiques exemplaires dans d’autres administrations. (Juillet 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-32
+          fr: /fr/engagements/commentaires-jalons-32
+        due_date: 2019-07
+      C03.2.2:
+        en: Federal recommendations are provided to provincial and territorial governments on improving timely access to beneficial ownership information
+        fr: Des recommandations fédérales sont offertes aux gouvernements provinciaux et territoriaux sur l’amélioration de l’accès rapide aux renseignements sur la propriété bénéficiaire
+        full_text:
+          en: Federal recommendations are provided to provincial and territorial governments on improving timely access to beneficial ownership information (August 2019)
+          fr: Des recommandations fédérales sont offertes aux gouvernements provinciaux et territoriaux sur l’amélioration de l’accès rapide aux renseignements sur la propriété bénéficiaire. (Août 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-32
+          fr: /fr/engagements/commentaires-jalons-32
+        due_date: 2019-08
+      C03.3.1:
+        en: All elements of the Agreement are implemented by the federal government
+        fr: Tous les éléments de l’Entente sont mis en œuvre par le gouvernement fédéral
+        full_text:
+          en: All elements of the Agreement are implemented by the federal government (August 2020)
+          fr: Tous les éléments de l’Entente sont mis en œuvre par le gouvernement fédéral. (Août 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-33
+          fr: /fr/engagements/commentaires-jalons-33
+        due_date: 2020-08
+      C04.1.1:
+        en: Canadians are engaged on the development of a Treasury Board digital policy
+        fr: Les Canadiens sont engagés dans l’élaboration d’une Politique sur le numérique du Conseil du Trésor
+        full_text:
+          en: Canadians are engaged on the development of a Treasury Board digital policy. Public input is solicited and accepted via online platforms (July 2019)
+          fr: Les Canadiens sont engagés dans l’élaboration d’une Politique sur le numérique du Conseil du Trésor. La participation du public est sollicitée et acceptée par l’entremise des plateformes en ligne. (Juin 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-41
+          fr: /fr/engagements/commentaires-jalons-41
+        due_date: 2019-06
+      C04.1.2:
+        en: Input received is included in a summary report to be released publicly
+        fr: Les commentaires reçus sont inclus dans un rapport sommaire à être publié
+        full_text:
+          en: Input received is included in a summary report to be released publicly (November 2018)
+          fr: Les commentaires reçus sont inclus dans un rapport sommaire à être publié. (Novembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-41
+          fr: /fr/engagements/commentaires-jalons-41
+        due_date: 2018-11
+      C04.1.3:
+        en: A Treasury Board digital policy is published
+        fr: Une Politique sur le numérique du Conseil du Trésor sera publiée
+        full_text:
+          en: A Treasury Board digital policy is published. The policy will integrate requirements with respect to service, information technology, information management and data, as well as components of cybersecurity (June 2019)
+          fr: Une Politique sur le numérique du Conseil du Trésor sera publiée. La Politique intégrera les exigences en matière de service, de technologie de l’information, de gestion de l’information et de données, ainsi que les composantes de la cybersécurité. (Juin 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-41
+          fr: /fr/engagements/commentaires-jalons-41
+        due_date: 2019-06
+      C04.2.1:
+        en: A data strategy roadmap is developed for the federal public service
+        fr: Une feuille de route de la Stratégie relative aux données a été élaborée pour la fonction publique fédérale
+        full_text:
+          en: A data strategy roadmap is developed for the federal public service to strengthen the government’s management and use of data for decision‑making (December 2018)
+          fr: 'Une feuille de route de la Stratégie relative aux données a été élaborée pour la fonction publique fédérale afin de renforcer la gestion et l’utilisation des données par le gouvernement pour la prise de décisions. La Stratégie : favorisera la confiance dans la régie des données du gouvernement; démontrera aux Canadiens que le gouvernement utilise des données pour prendre des décisions qui peuvent améliorer leur vie. (Décembre 2018)'
+        cmt_url:
+          en: /en/commitment/comments-milestone-42
+          fr: /fr/engagements/commentaires-jalons-42
+        due_date: 2018-12
+      C04.3.1:
+        en: Canadians are informed and engaged through online forums and at least 25 in‑person events
+        fr: Les Canadiens sont informés et mobilisés grâce à des forums en ligne et au moins 25 activités en personne
+        full_text:
+          en: Canadians are informed and engaged, offering bold ideas through online forums and at least 25 in‑person events. (December 2018)
+          fr: Les Canadiens sont informés et mobilisés, offrant des idées audacieuses grâce à des forums en ligne et au moins 25 activités en personne. (Décembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-43
+          fr: /fr/engagements/commentaires-jalons-43
+        due_date: 2018-12
+      C04.3.2:
+        en: Feedback from diverse stakeholders helps to inform future policy work
+        fr: La rétroaction de divers intervenants aide à informer les futurs travaux politiques
+        full_text:
+          en: Feedback from diverse stakeholders helps to inform future policy work. (December 2018)
+          fr: La rétroaction de divers intervenants aide à informer les futurs travaux politiques. (Décembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-43
+          fr: /fr/engagements/commentaires-jalons-43
+        due_date: 2018-12
+      C04.4.1:
+        en: Data on service delivery performance for all major service departments is collected and published
+        fr: Les données sur le rendement de la prestation de services pour tous les principaux ministères de service sont recueillies et publiées
+        full_text:
+          en: Data on service delivery performance for all major service departments is collected and published via a dashboard on open.canada.ca (December 2019)
+          fr: 'Les données sur le rendement de la prestation de services pour tous les principaux ministères de service sont recueillies et publiées par l’entremise d’un tableau de bord qui est accessible à partir du site ouvert.canada.ca. (Décembre 2019)'
+        cmt_url:
+          en: /en/commitment/comments-milestone-44
+          fr: /fr/engagements/commentaires-jalons-44
+        due_date: 2019-12
+      C04.4.2:
+        en: The dashboard indicates which services are available online, and specifies service standards, fees, volumetric data, and performance results
+        fr: Le tableau de bord indique les services disponibles en ligne et précise les normes relatives aux services, les frais, les données volumétriques et les résultats de rendement
+        full_text:
+          en: The dashboard indicates which services are available online, and specifies service standards, fees, volumetric data, and performance results (December 2019)
+          fr: Le tableau de bord indique les services disponibles en ligne et précise les normes relatives aux services, les frais, les données volumétriques et les résultats de rendement. (Décembre 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-44
+          fr: /fr/engagements/commentaires-jalons-44
+        due_date: 2019-12
+      C04.5.1:
+        en: Analytics are understandable and available and for public review
+        fr: Les analyses sont compréhensibles et disponibles et pour examen public
+        full_text:
+          en: As a first phase, analytics are understandable and available and for public review for the top pages on the Canada.ca site and key service portals (June 2019)
+          fr: Dans une première phase, les analyses sont compréhensibles et disponibles et pour examen public pour les pages principales du site canada.ca et les portails de services clés. (Juin 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-45
+          fr: /fr/engagements/commentaires-jalons-45
+        due_date: 2019-06
+      C04.6.1:
+        en: Code for all new projects presented to the EARB is publicly released
+        fr: Code pour tous les nouveaux projets présentés au CEAI est publié
+        full_text:
+          en: Code for all new projects presented to the Enterprise Architecture Review Board (EARB) is publicly released within 6 months of launch, or a justification is published (March 2019)
+          fr: Code pour tous les nouveaux projets présentés au Conseil d’examen de l’architecture intégrée (CEAI) est publié dans les 6 mois de lancement, ou une justification est publiée. (Mars 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2019-03
+      C04.6.2:
+        en: Guidance is provided to departments on how to remove barriers for developers by publishing source code under open licenses
+        fr: Conseils aux ministères sur la façon d’éliminer les obstacles pour les développeurs en publiant le code source en vertu de licences ouvertes.
+        full_text:
+          en: Guidance is provided to departments on how to remove barriers for developers by publishing source code under open licenses (March 2019)
+          fr: Conseils aux ministères sur la façon d’éliminer les obstacles pour les développeurs en publiant le code source en vertu de licences ouvertes. (Mars 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2019-03
+      C04.6.3:
+        en: Guidance is provided to departments on the use of open standards
+        fr: Conseils aux ministères sur l’utilisation de normes ouvertes
+        full_text:
+          en: Guidance is provided to departments on the use of open standards (March 2019)
+          fr: Conseils aux ministères sur l’utilisation de normes ouvertes. (Mars 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2019-03
+      C04.6.4:
+        en: A business case for Open Source is published
+        fr: Une étude de cas pour des sources ouvertes est publiée
+        full_text:
+          en: A business case for Open Source is published (September 2018)
+          fr: Une étude de cas pour des sources ouvertes est publiée. (Septembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2018-09
+      C04.6.5:
+        en: A registry of open source code and open source software is established
+        fr: Un registre de code source ouvert et de logiciel source ouvert est établi
+        full_text:
+          en: A registry of open source code and open source software is established to provide consolidated access to government open source resources (September 2018)
+          fr: Un registre de code source ouvert et de logiciel source ouvert est établi en vue de fournir l’accès consolidé aux ressources à source ouverte du gouvernement. (Septembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2018-09
+      C04.6.6:
+        en: Source code used in LAC’s Co‑Lab crowdsourcing tool is opened up and available publicly
+        fr: Le code source utilisé dans l’outil d’externalisation ouvert Co-Lab de BAC est ouvert et accessible au public
+        full_text:
+          en: Source code used in LAC’s Co-Lab crowdsourcing tool is opened up and available publicly for other institutions to use (March 2019)
+          fr: Le code source utilisé dans l’outil d’externalisation ouvert Co-Lab de BAC est ouvert et accessible au public pour utilisation par d’autres institutions. (Mars 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2019-03
+      C04.6.7:
+        en: An open source day event is organized
+        fr: Une journée thématique sur les codes sources ouverts est organisée
+        full_text:
+          en: An open source day event is organized (September 2018)
+          fr: Une journée thématique sur les codes sources ouverts est organisée. (Septembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-46
+          fr: /fr/engagements/commentaires-jalons-46
+        due_date: 2018-09
+      C04.7.1:
+        en: AI supply arrangements and other procurement vehicles are available
+        fr: Des dispositions en matière d’approvisionnement de l’IA et d’autres moyens d’approvisionnement sont élaborées
+        full_text:
+          en: AI supply arrangements and other procurement vehicles are available to support departments in experimentation and innovation (September 2018)
+          fr: Des dispositions en matière d’approvisionnement de l’IA et d’autres moyens d’approvisionnement sont élaborées pour appuyer les ministères dans l’expérimentation et l’innovation. (Septembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+        due_date: 2018-09
+      C04.7.2:
+        en: A Treasury Board directive on decision support systems is developed
+        fr: Une directive du Conseil du Trésor sur les systèmes d’aide à la prise de décisions est élaborée
+        full_text:
+          en: A Treasury Board directive on decision support systems is developed to set rules on how departments can use AI ethically to make decisions (January 2019)
+          fr: Une directive du Conseil du Trésor sur les systèmes d’aide à la prise de décisions est élaborée afin d’établir des règles sur la façon dont les ministères peuvent utiliser l’IA du point de vue éthique pour prendre des décisions. (Janvier 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+        due_date: 2019-01
+      C04.7.3:
+        en: An algorithmic impact assessment tool is available
+        fr: Un outil d’évaluation de l’impact algorithmique est élaboré
+        full_text:
+          en: An algorithmic impact assessment tool is available to help institutions better understand and mitigate the risks associated with automated decision-making systems (July 2019)
+          fr: Un outil d’évaluation de l'impact algorithmique est élaboré pour aider les institutions à mieux comprendre et à atténuer les risques associés aux systèmes automatiques de prise de décisions. (Juillet 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+        due_date: 2019-07
+      C04.7.4:
+        en: An international conference on AI is hosted
+        fr: Une conférence internationale sur l’IA est organisée
+        full_text:
+          en: An international conference on AI is hosted by Canada in fall 2018. The Summit will focus on themes of the G7 Statement on AI, in particular, enabling environments that facilitate responsible adoption of AI (December 2018)
+          fr: Une conférence internationale sur l’IA est organisée par le Canada à l’automne 2018. Le Sommet sera axé sur les thèmes inclus lors de la déclaration du G7 sur l’IA, en particulier les environnements propices facilitant une adoption responsable de l’IA (Décembre 2018)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+        due_date: 2018-12
+      C04.7.5:
+        en: An AI curriculum is established at the Canada School of Public Service
+        fr: Un programme d’études de l’IA est établi à l’École de la fonction publique du Canada
+        full_text:
+          en: Through the CSPS Digital Academy, an AI curriculum is established at the Canada School of Public Service to help build literacy on AI among federal public servants. Curriculum will support the data analyst community, raise awareness of AI supported public services across the government, and help to reach common nomenclature aligned with existing best practices (January 2019)
+          fr: Par l’entremise de l’Académie numérique de SPAC, un programme d’études de l’IA est établi à l’École de la fonction publique du Canada pour aider à construire l’alphabétisation sur l’IA chez les fonctionnaires fédéraux. Le programme appuiera la collectivité des analystes des données, accroîtra la sensibilisation par rapport aux services publics appuyés par l’IA à l’échelle du gouvernement, et permettra d’instaurer une nomenclature commune en harmonie avec les pratiques exemplaires. (Janvier 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+        due_date: 2019-01
+      C04.7.6:
+        en: Workshops, conferences, and AI days are organized
+        fr: Des ateliers, des conférences et des journées d’IA sont organisés
+        full_text:
+          en: Workshops, conferences, and AI days are organized to increase awareness and assist public service to skill-up on AI and other emerging technologies. Where possible, events will be open to other sectors and to the public. (Ongoing)
+          fr: Des ateliers, des conférences et des journées d’IA sont organisés afin d’accroître la sensibilisation et d’aider la fonction publique à se perfectionner sur l’IA et d’autres nouvelles technologies. Dans la mesure du possible, les événements seront ouverts à d’autres secteurs et au public. (En cours)
+        cmt_url:
+          en: /en/commitment/comments-milestone-47
+          fr: /fr/engagements/commentaires-jalons-47
+      #  due_date: ?????
+      C05.1.1:
+        en: A Canada open science roadmap is developed
+        fr: Une feuille de route canadienne pour la science ouverte a été élaborée
+        full_text:
+          en: A Canada open science roadmap is developed to provide a plan for greater openness in federal science and research activities. It is shared with the science-based departments and agencies (SBDAs) (July 2019)
+          fr: Une feuille de route canadienne pour la science ouverte a été élaborée pour fournir un plan pour une plus grande transparence dans les activités de science et de recherche fédérales. Elle est partagée avec les ministères et organismes à vocation scientifique (MOVS). (Juillet 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-51
+          fr: /fr/engagements/commentaires-jalons-51
+        due_date: 2019-07
+      C05.1.2:
+        en: SBDAs have released their action plans in keeping with the Canada open science roadmap
+        fr: MOVS ont publié leurs plans d’action conformément à la feuille de route canadienne pour la science ouverte
+        full_text:
+          en: Science-based departments and agencies (SBDAs) have released their action plans in keeping with the Canada open science roadmap (March 2020)
+          fr: Les ministères et organismes à vocation scientifique (MOVS) ont publié leurs plans d’action conformément à la feuille de route canadienne pour la science ouverte. (Mars 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-51
+          fr: /fr/engagements/commentaires-jalons-51
+        due_date: 2020-03
+      C05.2.1:
+        en: A roadmap for the future of the Canadian Federal Science Repository prototype is published
+        fr: Publication d’une feuille de route pour l’avenir du prototype du Dépôt scientifique fédéral canadien
+        full_text:
+          en: A roadmap for the future of the Canadian Federal Science Repository prototype is published, including post-pilot next steps (August 2019)
+          fr: Publication d’une feuille de route pour l’avenir du prototype du Dépôt scientifique fédéral canadien, y compris les prochaines étapes suivant le projet-pilote. (Août 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-52
+          fr: /fr/engagements/commentaires-jalons-52
+        due_date: 2019-08
+      C05.2.2:
+        en: A pilot portal for open access federal science publications is launched
+        fr: Lancement d’un projet-pilote de portail d’accès ouvert aux publications scientifiques fédérales
+        full_text:
+          en: A pilot portal for open access federal science publications is launched (March 2020)
+          fr: Lancement d’un projet-pilote de portail d’accès ouvert aux publications scientifiques fédérales. (Mars 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-52
+          fr: /fr/engagements/commentaires-jalons-52
+        due_date: 2020-03
+      C05.2.3:
+        en: Report on options for integrating federally funded open science into the pilot portal
+        fr: Rapport sur les options pour l’intégration de la science ouverte financée par le gouvernement fédéral dans le portail-pilote
+        full_text:
+          en: Report on options for integrating federally funded open science into the pilot portal (June 2020)
+          fr: Rapport sur les options pour l’intégration de la science ouverte financée par le gouvernement fédéral dans le portail-pilote. (Juin 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-52
+          fr: /fr/engagements/commentaires-jalons-52
+        due_date: 2020-06
+      C05.3.1:
+        en: An online, searchable directory of NRC scientists that other departments can join is in operation
+        fr: Un répertoire accessible en ligne de scientifiques du CNRC est en place et d’autres ministères peuvent y participer
+        full_text:
+          en: An online, searchable directory of NRC scientists that other departments can join is in operation by fiscal year 2019 to 2020 (March 2020)
+          fr: Un répertoire accessible en ligne de scientifiques du CNRC est en place d’ici l'exercice financier de 2019 à 2020 et d’autres ministères peuvent y participer. (Mars 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-53
+          fr: /fr/engagements/commentaires-jalons-53
+        due_date: 2020-03
+      C05.3.2:
+        en: The platform leverages existing digital identification systems
+        fr: La plateforme tire parti des systèmes d’identification numérique
+        full_text:
+          en: The platform leverages existing digital identification systems, such as ORCID iD (March 2020)
+          fr: La plateforme tire parti des systèmes d’identification numérique, comme ORCID iD. (Mars 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-53
+          fr: /fr/engagements/commentaires-jalons-53
+        due_date: 2020-03
+      C05.3.3:
+        en: Options are explored to link the NRC directory to the existing Government of Canada directory
+        fr: Les options sont étudiées pour relier le répertoire du CNRC au Répertoire du gouvernement du Canada actuel
+        full_text:
+          en: Options are explored to link the NRC directory to the existing Government of Canada directory, which is led by Innovation, Science and Economic Development Canada (May 2020)
+          fr: Les options sont étudiées pour relier le répertoire du CNRC au Répertoire du gouvernement du Canada actuel, qui est dirigé par Innovation, Sciences et Développement économique Canada. (Mai 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-53
+          fr: /fr/engagements/commentaires-jalons-53
+        due_date: 2020-05
+      C05.4.1:
+        en: 10 open science engagement sessions held
+        fr: 10 séances d’engagement en matière de science ouverte tenues
+        full_text:
+          en: 10 open science engagement sessions held with federal scientists and invited stakeholders across Canada (5 by June 2019; 10 by June 2020)
+          fr: 10 séances d’engagement en matière de science ouverte tenues avec des scientifiques fédéraux et des intervenants invités de partout au Canada. (5 d’ici juin 2019; 10 d’ici juin 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-54
+          fr: /fr/engagements/commentaires-jalons-54
+        due_date: 2020-06
+      C05.4.2:
+        en: A report on identified user needs is published
+        fr: Un rapport sur les besoins des utilisateurs identifiés est publié
+        full_text:
+          en: A report on identified user needs is published and used to inform ongoing and future open science efforts (June 2020)
+          fr: Un rapport sur les besoins des utilisateurs identifiés est publié et permet d’éclairer les efforts actuels et futurs liés aux sciences ouvertes. (Juin 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-54
+          fr: /fr/engagements/commentaires-jalons-54
+        due_date: 2020-06
+      C05.5.1:
+        en: Indicators for measuring the benefits of open science for Canadians are developed and published
+        fr: Élaboration et publication des indicateurs permettant de mesurer les avantages de la science ouverte pour les Canadiens
+        full_text:
+          en: Indicators for measuring the benefits of open science for Canadians are developed and published (June 2019)
+          fr: Élaboration et publication des indicateurs permettant de mesurer les avantages de la science ouverte pour les Canadiens. (Juin 2019)
+        cmt_url:
+          en: /en/commitment/comments-milestone-55
+          fr: /fr/engagements/commentaires-jalons-55
+        due_date: 2019-06
+      C05.5.2:
+        en: Indicators report on the benefits of open science
+        fr: Publication du rapport sur les indicateurs relatifs aux avantages de la science ouverte
+        full_text:
+          en: Indicators report on the benefits of open science for Canadians is published (June 2020)
+          fr: Publication du rapport sur les indicateurs relatifs aux avantages de la science ouverte pour les Canadiens. (Juin 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-55
+          fr: /fr/engagements/commentaires-jalons-55
+        due_date: 2020-06
+      C05.5.3:
+        en: Yearly reporting on progress against existing metrics measuring implementation of open science by SBDAs
+        fr: Rapports annuels sur les progrès réalisés par rapport aux paramètres de mesure de la mise en œuvre de la science ouverte par les MOVS
+        full_text:
+          en: Yearly reporting on progress against existing metrics measuring implementation of open science by SBDAs (Reports released in June 2019 and June 2020)
+          fr: Rapports annuels sur les progrès réalisés par rapport aux paramètres de mesure de la mise en œuvre de la science ouverte par les MOVS. (Rapports publiés en juin 2019 et en juin 2020)
+        cmt_url:
+          en: /en/commitment/comments-milestone-55
+          fr: /fr/engagements/commentaires-jalons-55
+        due_date: 2020-06
+     
+  - datastore_id: status
+    label:
+      en: Status
+      fr: État
+    description:
+      en: Indicate the current status of the commitment
+      fr: Indiquer l’état actuel de l'engagement
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NS:
+        en: Not started
+        fr: Non commencé
+      LP:
+        en: Limited progress
+        fr: Progrès limité
+      SP:
+        en: Substantial progress
+        fr: Progrès important
+      C:
+        en: Complete
+        fr: Réalisé
+
+
+  - datastore_id: progress_en
+    label:
+      en: Progress during previous quarter (English)
+      fr: Progrès au cours du trimestre précédent (anglais)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NIL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+
+  - datastore_id: progress_fr
+    label:
+      en: Progress during previous quarter (French)
+      fr: Progrès au cours du trimestre précédent (français)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NUL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+    obligation: Mandatory
+    excel_required: true
+    datastore_type: text
+
+  - datastore_id: evidence_en
+    label:
+      en: Evidence of progress (English)
+      fr: Preuve de progrès (anglais)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: evidence_fr
+    label:
+      en: Evidence of progress (French)
+      fr: Preuve de progrès (français)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: challenges_en
+    label:
+      en: Challenges (English)
+      fr: Défis (anglais)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: challenges_fr
+    label:
+      en: Challenges (French)
+      fr: Défis (français)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: [reporting_period, indicators]
+  datastore_indexes: ""
+
+  default_preview_sort: reporting_period desc, indicators
+
+  triggers:
+  - nap_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || required_error(NEW.commitments, 'commitments');
+        errors := errors || choice_error(NEW.commitments, {commitments}, 'commitments');
+        errors := errors || required_error(NEW.milestones, 'milestones');
+        errors := errors || choice_error(NEW.milestones,
+          array(SELECT unnest from unnest({milestones}) where left(unnest, length(NEW.commitments)) = NEW.commitments),
+          'milestones');
+        errors := errors || required_error(NEW.indicators, 'indicators');
+        errors := errors || choice_error(NEW.indicators,
+          array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
+          'indicators');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      reporting_period: "2019-03"
+      commitments: C01
+      milestones: C01.1
+      indicators: C01.1.1
+      status: SP
+      progress_en: |
+        - Open government learning materials for teachers have been drafted
+        - Initiating call for proposals to find contractor who can ensure materials are presented in a useful format for teachers and educators
+      progress_fr: |
+        - Des matériels d'apprentissage sur le gouvernement ouvert pour les enseignants ont été rédigés
+        - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
+      evidence_en: Materials are still being drafted and not yet available publicly
+      evidence_fr: Le matériel est toujours en cours de rédaction et n'est pas encore disponible publiquement
+      challenges_en: What sorts of open government learning materials would you like to see? Which formats are most useful for learning purposes?
+      challenges_fr: Quels types de matériels d'apprentissage du gouvernement ouvert aimeriez-vous voir? Quels formats sont les plus utiles à des fins d'apprentissage?
+    filters:
+      commitments: C01
+    filter_one:
+      reporting_period: "2019-03"
+      indicators: C01.1.1
+    sort: reporting_period desc, indicators
