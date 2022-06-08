@@ -10,7 +10,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: National Action Plan on Open Government Tracker
+- title: 5th National Action Plan on Open Government Tracker (draft)
   resource_name: nap5
   create_form: true
   edit_form: true
@@ -965,6 +965,8 @@ resources:
   datastore_indexes: ""
 
   default_preview_sort: reporting_period desc, indicators
+
+  excel_example_height: 50
 
   triggers:
   - nap_trigger: |
