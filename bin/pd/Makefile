@@ -530,7 +530,7 @@ upload-dac: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 rebuild-dac: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 	# no search for nap5 yet
 
-$(workdir)/dac.csv:
+$(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
