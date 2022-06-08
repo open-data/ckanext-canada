@@ -1,5 +1,5 @@
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing adminaircraft
+	nap nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -14,6 +14,7 @@ csv_files := \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
 	nap.csv \
+	nap5.csv \
         reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
         travela.csv \
@@ -492,6 +493,29 @@ $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/nap.csv: $(workdir)/nap.csv
+	$(fdir)/filter_modified_created.py < $< > $@
+
+###
+###  National Action Plan 5
+###
+.PHONY: nap5
+dac: upload-nap5 rebuild-nap5
+
+.PHONY: upload-nap5
+upload-dac: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
+	@echo Uploading 5th NAP...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0305a157-9d10-4ec2-8ca4-e39ab2b34396 upload@"$(workdir)/filtered/nap5.csv" \
+	> /dev/null
+
+.PHONY: rebuild-nap5
+rebuild-dac: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
+	# no search for nap5 yet
+
+$(workdir)/dac.csv:
+	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
 	$(fdir)/filter_modified_created.py < $< > $@
 
 ###

@@ -331,6 +331,7 @@ ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/nap5.yaml
 ckanext.canada:tables/experiment.yaml
 ckanext.canada:tables/adminaircraft.yaml
 
