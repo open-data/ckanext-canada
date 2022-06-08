@@ -502,6 +502,7 @@ def _add_extra_longitude_points(gjson):
     return {u'coordinates': [out], u'type': u'Polygon'}
 
 
+
 def recombinant_description_to_markup(text):
     """
     Return text as HTML escaped strings joined with '<br/>, links enabled'
@@ -531,6 +532,12 @@ def mail_to_with_params(email_address, name, subject, body):
 
 def get_timeout_length():
     return int(config.get('beaker.session.timeout'))
+
+
+def canada_search_domain():
+    if 'staging' in config.get('ckan.site_url', ''):
+        return _('search-staging.open.canada.ca')
+    return _('search.open.canada.ca')
 
 
 def canada_check_access(package_id):

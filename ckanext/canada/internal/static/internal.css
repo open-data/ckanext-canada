@@ -352,6 +352,15 @@ table#dtprv thead .sorting_desc {
     background-image: none;
 }
 
+.page-header .nav-tabs li.active a {
+    background-color: #335075;
+    color: #fff;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #335075;
+}
 #menu-bar {
     background-color: #256EB8;
     margin-bottom: 15px;
@@ -551,6 +560,10 @@ ul#brf-pkg { padding-left: 0; }
 #mn-pd { border-left: solid 6px #44a; }
 #pd i { color: #44a; }
 
+#ql-suppliervax { border-left: solid 3px #7e0c33; border-top: solid 1px #ddd; }
+#ql-suppliervax i { color: #7e0c33; margin-right: 10px; }
+#mn-suppliervax { border-left: solid 6px #7e0c33; }
+
 .label.dataset-private { display: none; }
 
 #quick-links .fa-question-circle-o {
@@ -640,7 +653,7 @@ ul#brf-pkg { padding-left: 0; }
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; 
-    justify-content: space-between; 
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
 }
