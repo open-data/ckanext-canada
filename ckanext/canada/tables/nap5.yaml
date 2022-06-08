@@ -1,4 +1,4 @@
-dataset_type: nap
+dataset_type: nap5
 
 title: 5th National Action Plan on Open Government Tracker
 notes: |
@@ -11,7 +11,9 @@ collection: pd
 
 resources:
 - title: National Action Plan on Open Government Tracker
-  resource_name: nap
+  resource_name: nap5
+  create_form: true
+  edit_form: true
 
   fields:
   - datastore_id: reporting_period
