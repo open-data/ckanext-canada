@@ -67,7 +67,7 @@ class TestContracts(FunctionalTestBase):
             trade_agreement='',
             agreement_type_code='Z',
             land_claims=None,
-            aboriginal_business='',
+            indigenous_business='',
         )
         with assert_raises(ValidationError) as ve:
             lc.action.datastore_upsert(
@@ -80,7 +80,7 @@ class TestContracts(FunctionalTestBase):
             'trade_agreement': ['This field must not be empty'],
             'agreement_type_code': ['Discontinued as of 2022-01-01'],
             'land_claims': ['This field must not be empty'],
-            'aboriginal_business': ['This field must not be empty'],
+            'indigenous_business': ['This field must not be empty'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
