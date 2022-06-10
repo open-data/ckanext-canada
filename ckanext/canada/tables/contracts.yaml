@@ -9,7 +9,7 @@ upload_info:
   fr: "Le modèle trimestriel des contrats de plus de 10 000 $ a récemment été mis à jour avec de nouveaux champs de données et des règles de validation des données conformément aux Lignes directrices sur la divulgation proactive des marchés. Les utilisateurs devraient examiner les règles de validation des données dans l’onglet de référence du modèle pour chaque champ de données sous « validation » pour plus d’informations afin de s’assurer que les données peuvent être téléchargées dans le registre. Remarque : Plusieurs règles de validation ont été incluses dans le modèle, mais elles ne seront pas activées avant le 1er janvier 2022"
 
 template_version: 3
-template_updated: 2022-04-11
+template_updated: 2022-06-09
 
 portal_type: info
 collection: pd
@@ -1360,19 +1360,19 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Research and development services (applies to all trade agreements except for CFTA)
         fr: Services de recherche et de développement (s’applique à tous les accords commerciaux autres que l’ALEC)
 
-  - datastore_id: aboriginal_business
+  - datastore_id: indigenous_business
     label:
-      en: Procurement Strategy for Aboriginal Business
+      en: Procurement Strategy for Indigenous Business
       fr: Stratégie d’approvisionnement auprès des entreprises autochtones
     excel_heading:
       en: |
         Procurement Strategy
-        for Aboriginal Business
+        for Indigenous Business
       fr: |
         Stratégie d’approvisionnement
         auprès des entreprises autochtones
     description:
-      en: It is recommended for this field to indicate whether the Procurement Strategy for Aboriginal Business mandatory or voluntary set-aside applies to the procurement transaction.
+      en: It is recommended for this field to indicate whether the Procurement Strategy for Indigenous Business mandatory or voluntary set-aside applies to the procurement transaction.
       fr: Il est recommandé pour cette zone d’indiquer si le marché réservé aux entreprises autochtones, obligatoire ou facultatif dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones, s’applique à la transaction liée à l’approvisionnement
     validation:
       en: |
@@ -1395,32 +1395,32 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Voluntary Set-Aside
         fr: Contrat réservé facultatif
 
-  - datastore_id: aboriginal_business_incidental
+  - datastore_id: indigenous_business_excluding_psib
     label:
-      en: Procurement Strategy for Aboriginal Business Incidental Indicator
-      fr: Stratégie d’approvisionnement auprès des entreprises autochtones
+      en: Indigenous Business excluding PSIB
+      fr: Entreprises autochtones excluant le marché réservé en vertu de la SAEA
     excel_heading:
       en: |
-        Procurement Strategy for Aboriginal
-        Business Incidental Indicator
+        Indigenous Business
+        excluding PSIB
       fr: |
-        Stratégie d’approvisionnement auprès
-        des entreprises autochtones
+        Entreprises autochtones excluant
+        le marché réservé en vertu de la SAEA
     description:
       en: |
-        This field should be populated with a flag indicating whether an Aboriginal Business is awarded a contract on an incidental basis.
-      fr: Il est recommandé pour cette zone d’indiquer si un marché est attribué comme adjudication incidente à une entreprise autochtone.
+        This field should be populated with a flag indicating whether an Indigenous Business is awarded a contract excluding contracts awarded under a Procurement Strategy for Indigenous Business set-aside.
+      fr: Ce champ devrait avoir un indicateur pour préciser si un marché a été octroyé à une entreprise autochtone, à l’exception des marchés attribués au moyen de marchés réservés dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
 
-        This field must be N, No or Non if the Procurement Strategy for Aboriginal Business field is MS or VS.
+        This field must be N, No or Non if the Procurement Strategy for Indigenous Business field is MS or VS.
       fr: |
         Obligatoire pour les marchés conclus après le 2019-01-01
 
         Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
-    excel_error_formula: 'AND(OR({aboriginal_business}="MS",{aboriginal_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
+    excel_error_formula: 'AND(OR({indigenous_business}="MS",{indigenous_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
     datastore_type: text
     excel_full_text_choices: false
     choices:
@@ -1571,8 +1571,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Contracting Entity
       fr: Entité contractante
     description:
-      en: It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
-      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
+      en: |
+        i. It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
+        ii. If PSPC awards a contract against a PSPC SOSA on behalf of a client department, it is recommended that the contract be reported as “PWC”.
+        iii. If SSC awards a contract against a SSC SOSA on behalf of a client department, it is recommended that the contract be reported as “SSCC”.
+        iv. If a department awards a contract against a PSPC or SSC SOSA, it is recommended that the contract be reported as “PWSOSA” or “SSCSOSA” as applicable.
+
+      fr: |
+        i. Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
+        ii. Si SPAC attribue un marché dans le cadre des OCAMA de SPAC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « PWC ».
+        iii. Si SPC attribue un marché dans le cadre des OCAMA des SPC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « SSCC ».
+        iv. Si un ministère attribue un marché dans le cadre des OCAMA de SPAC ou de SPC, il est recommandé que le marché soit déclaré comme « PWSOSA » ou « SSCSOSA », selon le cas.
+
     validation:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
@@ -1581,11 +1591,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     excel_full_text_choices: false
     choices:
       PWC:
-        en: Contract awarded by PSPC on behalf of the client department.
-        fr: Marché attribué par SPAC au nom du ministère client.
+        en: Contract or Call-up awarded by PSPC on behalf of the client department.
+        fr: Marché ou commande subséquente attribué par SPAC au nom du ministère client.
       SSCC:
-        en: Contract awarded by SSC on behalf of the client department.
-        fr: Marché attribué par SPC au nom du ministère client.
+        en: Contract awarded or Call-up by SSC on behalf of the client department.
+        fr: Marché ou commande subséquente attribué par SPC au nom du ministère client.
       OGDC:
         en: Contract awarded by another department on behalf of the client department.
         fr: Marché attribué par un autre ministère au nom du ministère client.
@@ -1593,11 +1603,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Contract awarded by the department.
         fr: Marché attribué par le ministère
       PWSOSA:
-        en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
-        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC.
+        en: Call-up or Contract awarded by client department against a Standing Offer or Supply Arrangement Agreement established by Public Services and Procurement Canada
+        fr: Commande attribué par le ministère client par rapport subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPAC.
       SSCSOSA:
-        en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by Shared Services Canada
-        fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPC.
+        en: Call-up or Contract awarded by client department against a Standing Offer or Supply Arrangement Agreement established by Shared Services Canada
+        fr: Commande attribué par le ministère client par rapport subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par SPC.
       DSOSA:
         en: Call-up or Contract Against a Standing Offer or Supply Arrangement Agreement established by the department
         fr: commande subséquente ou marché subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement conclu par le ministère.
@@ -1694,20 +1704,24 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         It is recommended that this field be populated with the total number of compliant and non-compliant bids received in the procurement.
 
         i. For a competitive contract, it is recommended for this field to be the number of bids received pursuant to a bid solicitation.
-        ii. For a call-up contract against a standing offer agreement, it is recommended that a value of “0” be entered for this field. In this instance, the value of “0” represents not applicable.
-        iii. If the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements, it is recommended that a value of “1” be entered for this field.
+        ii. For a call-up contract against a standing offer agreement established under a competitive process, it is recommended that a value of “0” be entered for this field. In this instance, the value of “0” represents not applicable.
+        iii. For a contract with task authorizations, the number of bids of the contract may be disclosed if this value is known when the task authorization is issued. If the number of bids is unknown, the department may input a value of 0 to indicate it is not applicable.
+        iv. If the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements, it is recommended that a value of “1” be entered for this field.
         iv. For non-competitive contract, it is recommended that a value of “1” be entered for this field.
-        v. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received.
-        vi. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+        vi. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received. If the standing offer was established under a non-competitive or an ACAN procurement process where it was determined that there were no statements of capabilities that meet the ACAN requirements, it is recommended that a value of “1” be entered for this field for subsequent contracts awarded under the standing offer.
+        vii. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+
       fr: |
         Il est recommandé de saisir dans cette zone le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre de l’approvisionnement.
 
         i. Pour un marché concurrentiel, il est recommandé que cette zone indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
-        ii. Dans le cas d’un contrat de travail sur convocation subséquent à une offre à commandes, il est recommandé de saisir la valeur « 0 » dans cette zone. En pareil cas, la valeur « 0 » signifie sans objet.
-        iii. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        iv. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        v. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement.
-        vi. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+        ii. Dans le cas d’un contrat de travail sur convocation subséquent à une offre à commandes établi dans le cadre d’un processus concurrentiel, il est recommandé de saisir la valeur « 0 » dans cette zone. En pareil cas, la valeur « 0 » signifie sans objet.
+        iii. Pour un marché avec des autorisations de tâches, le nombre de soumissions pour le marché peut être divulgué si cette donnée est connue au moment d’émettre l’autorisation de tâches. Si le nombre de soumissions est inconnu, le ministère peut saisir la valeur « 0 ». En pareil cas, la valeur « 0 » signifie sans objet.
+        iv. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans cette zone.
+        v. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
+        vi. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement. Si l’offre à commandes a été établie dans le cadre d’un processus d’approvisionnement non concurrentiel ou d’un PAC et qu’il a été déterminé qu’il n’y avait pas d’énoncés de capacités qui répondent aux exigences du PAC, il est recommandé qu’une valeur de « 1 » soit inscrite dans cette zone pour les marches subséquents attribués en fonction de l’offre à commandes.
+        vii. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+
     validation:
       en: |
         This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
