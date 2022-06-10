@@ -2044,18 +2044,18 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
-          errors := errors || required_error(NEW.aboriginal_business, 'aboriginal_business');
+          errors := errors || required_error(NEW.indigenous_business, 'indigenous_business');
         END IF;
-        errors := errors || choice_error(NEW.aboriginal_business, {aboriginal_business}, 'aboriginal_business');
+        errors := errors || choice_error(NEW.indigenous_business, {indigenous_business}, 'indigenous_business');
 
-        NEW.aboriginal_business_incidental := truthy_to_yn(NEW.aboriginal_business_incidental);
+        NEW.indigenous_business_excluding_psib := truthy_to_yn(NEW.indigenous_business_excluding_psib);
         IF NEW.contract_date >= '2019-01-01'::date THEN
-          errors := errors || required_error(NEW.aboriginal_business_incidental, 'aboriginal_business_incidental');
+          errors := errors || required_error(NEW.indigenous_business_excluding_psib, 'indigenous_business_excluding_psib');
           errors := errors || required_error(NEW.intellectual_property, 'intellectual_property');
         END IF;
-        IF NEW.aboriginal_business_incidental <> '' AND NEW.aboriginal_business_incidental <> 'N' AND (
-            NEW.aboriginal_business = 'MS' OR NEW.aboriginal_business = 'VS') THEN
-          errors := errors || ARRAY[['aboriginal_business_incidental', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
+        IF NEW.indigenous_business_excluding_psib <> '' AND NEW.indigenous_business_excluding_psib <> 'N' AND (
+            NEW.indigenous_business = 'MS' OR NEW.indigenous_business = 'VS') THEN
+          errors := errors || ARRAY[['indigenous_business_excluding_psib', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
         END IF;
 
         IF NEW.contract_date >= '2017-01-01'::date THEN
@@ -2163,8 +2163,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       solicitation_procedure: "OB"
       limited_tendering_reason: ["22", "71"]
       trade_agreement_exceptions: ["03", "05"]
-      aboriginal_business: "NA"
-      aboriginal_business_incidental: "N"
+      indigenous_business: "NA"
+      indigenous_business_excluding_psib: "N"
       intellectual_property: "A2"
       potential_commercial_exploitation: "N"
       former_public_servant: "Y"
