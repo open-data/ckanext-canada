@@ -38,7 +38,7 @@ yyyy_mmdd := $(shell date "+%Y %m%d")
 yyyy := $(word 1,$(yyyy_mmdd))
 yyyymmdd := $(word 1,$(yyyy_mmdd))$(word 2,$(yyyy_mmdd))
 isodate := $(shell TZ=UTC date "+%FT%T")
-echo_date := echo $(isodate)
+echo_date := echo $(isodate):
 
 ifneq ($(backupsuffix),)
 _backupsuffix := -$(backupsuffix)
