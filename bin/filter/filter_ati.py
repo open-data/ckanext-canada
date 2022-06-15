@@ -10,7 +10,7 @@ import csv
 import sys
 import codecs
 
-WINDOW_YEARS = 2
+#WINDOW_YEARS = 2
 
 REMOVE_COLUMNS = [
     'record_created',
@@ -26,8 +26,8 @@ def main():
     assert bom == codecs.BOM_UTF8
     sys.stdout.write(codecs.BOM_UTF8)
 
-    today = datetime.datetime.today()
-    start_year_month = (today.year - WINDOW_YEARS, today.month)
+    #today = datetime.datetime.today()
+    start_year_month = (int('2020'), int('01'))
 
     reader = csv.DictReader(sys.stdin)
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
