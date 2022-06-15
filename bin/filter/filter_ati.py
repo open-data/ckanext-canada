@@ -10,7 +10,7 @@ import csv
 import sys
 import codecs
 
-#WINDOW_YEARS = 2
+start_year_month = 2020, 1  # publicly accessible records
 
 REMOVE_COLUMNS = [
     'record_created',
