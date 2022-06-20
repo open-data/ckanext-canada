@@ -538,3 +538,10 @@ def canada_check_access(package_id):
         return h.check_access('package_update', {'id': package_id})
     except NotFound:
         return False
+
+
+def user_in_organization(user):
+    u = User.get(user['name'])
+    group_ids = u.get_group_ids(group_type="organization")
+
+    return u.is_in_groups(group_ids)

@@ -44,7 +44,7 @@
         <div class="col-md-6 left-center">{{ user.name }}</div>
       {% endif %}
       </div>
-      {% if is_myself %}
+      {% if is_myself or h.user_in_organization(user) %}
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('Email') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
