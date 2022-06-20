@@ -324,3 +324,21 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 .geographic-region-wrapper > div{
     padding-left: 0;
 }
+
+.module-resource .module-content > .actions{
+
+    z-index: 2;
+
+}
+
+.module-resource .module-content > .resource-view .actions{
+
+    z-index: 1;
+
+}
+
+.modal .modal-dialog .modal-content .modal-header{
+
+    background-color: #e5e5e5;
+
+}
