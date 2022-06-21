@@ -9,21 +9,24 @@
 {# we want a wide display for the table #}
 {% block secondary_content %}{% endblock %}
 
+{% block notices %}
+  {% if dataset_type == 'ati' %}
+    {% if organization.ati_email %}
+      <div class="dataset-alert alert alert-info">
+        <p>{{ _('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe % (organization.ati_email) }}</p>
+      </div>
+    {% else %}
+      <div class="dataset-alert alert alert-danger">
+        <p>{{ _('Your organization does not have an Access to Information email on file. Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with the email for your organization\'s Access to Information Coordinator.') | safe }}</p>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
 {% block primary_content %}
   <div class="row">
     <div class="col-md-9">
       {{ super() }}
-      {% block ati_email_notice %}
-        {% if organization.ati_email %}
-          <div class="alert alert-info">
-            <p>{{ _('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe % (organization.ati_email) }}</p>
-          </div>
-        {% else %}
-          <div class="alert alert-danger">
-            <p>{{ _('Your organization does not have an Access to Information email on file. Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with the email for your organization\'s Access to Information Coordinator.') | safe }}</p>
-          </div>
-        {% endif %}
-      {% endblock %}
     </div>
     <aside class="col-md-3">
       <div class="panel panel-primary">
