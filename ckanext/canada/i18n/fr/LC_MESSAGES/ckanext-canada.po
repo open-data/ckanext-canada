@@ -3598,3 +3598,28 @@ msgstr "Licence non valide"
 
 msgid "Data Validation"
 msgstr "Validation des données"
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:19
+#, python-format
+msgid ""
+"Informal Requests for ATI Records Previously Released are being sent to "
+"<strong>%s.</strong> Please contact <a href=\"mailto:open-ouvert@tbs-"
+"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer "
+"valid."
+msgstr ""
+"Les demandes informelle d'enregistrements ATI précédemment publiés sont envoyées à "
+"<strong>%s.</strong> Veuillez contacter <a href=\"mailto:open-ouvert@tbs-"
+"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> si cette adresse n'est plus "
+"valide."
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:23
+msgid ""
+"Your organization does not have an Access to Information email on file. "
+"Please contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
+"@tbs-sct.gc.ca</a> with the email for your organization's Access to "
+"Information Coordinator."
+msgstr ""
+"Votre organisation n'a pas d'adresse électronique d'accès à l'information dans ses dossiers. "
+"Veuillez contacter <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
+"@tbs-sct.gc.ca</a> avec l'adresse électronique du coordinateur de l'accès à l'information de "
+"votre organisation."
