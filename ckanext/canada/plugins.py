@@ -192,7 +192,6 @@ ckanext.validation:presets.json
             'mail_to_with_params',
             'get_timeout_length',
             'canada_check_access',
-            'user_in_organization',
         ])
 
     def configure(self, config):
