@@ -6138,3 +6138,20 @@ msgstr ""
 
 msgid "Invalid licence"
 msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:19
+#, python-format
+msgid ""
+"Informal Requests for ATI Records Previously Released are being sent to "
+"<strong>%s.</strong> Please contact <a href=\"mailto:open-ouvert@tbs-"
+"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer "
+"valid."
+msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:23
+msgid ""
+"Your organization does not have an Access to Information email on file. "
+"Please contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
+"@tbs-sct.gc.ca</a> with the email for your organization's Access to "
+"Information Coordinator."
+msgstr ""
