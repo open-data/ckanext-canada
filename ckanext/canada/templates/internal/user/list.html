@@ -16,7 +16,7 @@
       </thead>
       <tbody>
       {% block users_list_inner %}
-        {% for user in c.page.items %}
+        {% for user in page.items %}
         <tr>
           <td>
             <a href="{{ h.url_for(controller='user', action='read', id=user['name']) }}">
