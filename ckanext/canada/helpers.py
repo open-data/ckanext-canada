@@ -549,7 +549,7 @@ def get_user_email(user_id):
     org_ids = [o['id'] for o in orgs]
 
     if not u.is_in_groups(org_ids):
-        return False
+        return ""
 
     context = {'model': model,
                'session': model.Session,
@@ -562,4 +562,4 @@ def get_user_email(user_id):
         return user_dict['email']
 
     except NotFound as e:
-        return False
+        return ""
