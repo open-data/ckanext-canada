@@ -545,3 +545,28 @@ def canada_check_access(package_id):
         return h.check_access('package_update', {'id': package_id})
     except NotFound:
         return False
+
+
+def get_user_email(user_id):
+    '''
+    Return user email address if belong to the same organization
+    '''
+    u = User.get(user_id)
+    orgs = h.organizations_available()
+    org_ids = [o['id'] for o in orgs]
+
+    if not u.is_in_groups(org_ids):
+        return ""
+
+    context = {'model': model,
+               'session': model.Session,
+               'keep_email': True}
+
+    try:
+        data_dict = {'id': user_id}
+        user_dict = ckan.logic.get_action('user_show')(context, data_dict)
+
+        return user_dict['email']
+
+    except NotFound as e:
+        return ""
