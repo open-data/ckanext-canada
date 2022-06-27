@@ -107,7 +107,7 @@ $(shell mkdir -p $(workdir)/filtered)
 .DELETE_ON_ERROR:
 
 .PHONY: nightly
-nightly: dump-all filter-all backup-all upload-all rebuild-all
+nightly: filter-all backup-all upload-all rebuild-all
 
 
 .PHONY: dump-all
