@@ -1,3 +1,5 @@
+.DELETE_ON_ERROR:
+
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
 	nap reclassification service travela travelq wrongdoing adminaircraft
 
@@ -102,9 +104,6 @@ else
 
 # needed by multiple filter rules, always create
 $(shell mkdir -p $(workdir)/filtered)
-
-# for filter scripts that > $@ their output so errors can be retried
-.DELETE_ON_ERROR:
 
 .PHONY: nightly
 nightly: filter-all backup-all upload-all rebuild-all
