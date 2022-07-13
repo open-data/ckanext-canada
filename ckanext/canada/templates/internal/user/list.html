@@ -6,6 +6,7 @@
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
     {% endif %}
     {% block users_list %}
+    {% snippet 'user/snippets/user_search.html', q=q %}
     <table class="wb-tables" data-wb-tables='{"pageLength": 25}' style="width:100%">
       <thead>
         <tr>
@@ -31,6 +32,7 @@
       </tbody>
     </table>
     {% endblock %}
+    {{ c.page.pager(q=q, order_by=order_by) }}
 {% endblock %}
 
 {% block scripts %}

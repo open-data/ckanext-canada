@@ -1,0 +1,10 @@
+<section class="module module-narrow module-shallow simple-input">
+    <h2 class="wb-inv">{{ _('Search Users') }}</h2>
+    <form action="{% url_for 'user.index' %}" method="get" id="user-search-form">
+      <div class="field">
+        <label for="field-user-search">{{ _('Search Users') }}</label>
+        <input id="field-user-search" value="{{ q }}" class="field form-control" name="q" placeholder="{{ _('Search Users') }}" />
+        <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </form>
+  </section>  
