@@ -1,8 +1,28 @@
-{% extends 'admin/base.html' %}
+{% if c.userobj and c.userobj.sysadmin %}
+  {% extends 'admin/base.html' %}
+{% else %}
+  {% extends 'page.html' %}
+{% endif %}
+
+{% block breadcrumb_content %}
+  {% if c.userobj and not c.userobj.sysadmin %}
+    {{ h.build_nav('user.index', _('Users')) }}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  {% if c.userobj and not c.userobj.sysadmin %}
+    {{ _('Users') }}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
 
 {% block primary_content_inner %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
-    {% if c.userobj.sysadmin %}
+    {% if c.userobj and c.userobj.sysadmin %}
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
     {% endif %}
     {% block users_list %}
@@ -19,17 +39,19 @@
         </thead>
         <tbody>
         {% block users_list_inner %}
-          {% if c.page %}
-            {% for user in c.page.items %}
-            <tr>
-              <td>
-                <a href="{{ h.url_for(controller='user', action='read', id=user['name']) }}">
-                  {{ user['name'] }}
-                </a>
-              </td>
-              <td>{{ user['fullname'] or ' ' }}</td>
-              <td>{{ _('Sysadmin') if user[0].sysadmin else _('Member') }}</td>
-            </tr>
+          {% if page.items %}
+            {% for user in page.items %}
+              {% if user.name %}
+                <tr>
+                  <td>
+                    <a href="{{ h.url_for(controller='user', action='read', id=user.name) }}">
+                      {{ user['name'] }}
+                    </a>
+                  </td>
+                  <td>{{ user['fullname'] or ' ' }}</td>
+                  <td>{{ _('Sysadmin') if user[0].sysadmin else _('Member') }}</td>
+                </tr>
+              {% endif %}
             {% endfor %}
           {% endif %}
         {% endblock %}
@@ -37,17 +59,37 @@
       </table>
     {% endblock %}
     {% block page_pagination %}
-      {% if c.page %}
-        {{ c.page.pager(q=q) }}
+      {% if page.pager %}
+        {{ page.pager(q=q or '') }}
       {% endif %}
     {% endblock %}
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+      <header class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-info-circle"></i>
+          {{ _('Users') }}
+        </h3>
+      </header>
+      <div class="panel-body">
+        {% if c.userobj and not c.userobj.sysadmin %}
+          <p>{{ _("Search and view users.") }}</p>
+        {% else %}
+          <p>{{ _("Search and manage users.") }}</p>
+        {% endif %}
+      </div>
+  </section>
 {% endblock %}
 
 {% block scripts %}
   {% snippet 'snippets/wet-boew/footerresources.html' %}
   <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
   {% block adobe_analytics_footer %}
-    <script type="text/javascript">_satellite.pageBottom();</script>
+    <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
+  {{ super() }}
 {% endblock %}
+
