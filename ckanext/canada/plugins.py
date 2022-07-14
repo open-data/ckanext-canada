@@ -97,13 +97,6 @@ ckanext.validation:presets.json
             ckan_icon='bar-chart-o'
         )
         map.connect(
-            'ckanadmin_listusers',
-            '/ckan-admin',
-            action='index',
-            controller='user',
-            ckan_icon='user'
-        )
-        map.connect(
             'ckanadmin_publish',
             '/ckan-admin/publish',
             action='search',
@@ -912,7 +905,7 @@ def _wet_pager(self, *args, **kwargs):
 
     kwargs.update(
         format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
-        symbol_previous=gettext('Previous').decode('utf-8'), symbol_next=gettext('Next').decode('utf-8'),
+        symbol_previous=hlp._('Previous').decode('utf-8'), symbol_next=hlp._('Next').decode('utf-8'),
         curpage_attr={'class': 'active'}
     )
 
