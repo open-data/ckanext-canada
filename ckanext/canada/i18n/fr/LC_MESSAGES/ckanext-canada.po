@@ -3624,12 +3624,14 @@ msgstr ""
 "@tbs-sct.gc.ca</a> avec l'adresse électronique du coordinateur de l'accès à l'information de "
 "votre organisation."
 
+#: ckanext/canada/templates/internal/user/snippets/search.html:2
 msgid "Search Users"
 msgstr "Rechercher des utilisateurs"
 
+#: ckanext/canada/templates/internal/user/list.html:80
 msgid "Search and manage users."
 msgstr "Rechercher et gérer les utilisateurs."
 
+#: ckanext/canada/templates/internal/user/snippets/search.html:78
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
-

@@ -27,7 +27,6 @@ import json
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
-from pylons.i18n import gettext
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -905,7 +904,7 @@ def _wet_pager(self, *args, **kwargs):
 
     kwargs.update(
         format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
-        symbol_previous=hlp._('Previous').decode('utf-8'), symbol_next=hlp._('Next').decode('utf-8'),
+        symbol_previous=hlp._('Previous'), symbol_next=hlp._('Next'),
         curpage_attr={'class': 'active'}
     )
 
