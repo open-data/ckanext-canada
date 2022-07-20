@@ -319,11 +319,6 @@ class CanadaController(BaseController):
             'title': _org_key(o)
         } for o in organization_list]
 
-    def fgpv_vpgf(self, pkg_id):
-        return render('fgpv_vpgf/index.html', extra_vars={
-            'pkg_id': pkg_id,
-        })
-
 
 def datatablify(v, colname):
     '''
@@ -817,10 +812,18 @@ class PDUpdateController(BaseController):
         except NotAuthorized:
             return abort(403, _('Unauthorized'))
 
-        choice_fields = {
-            f['datastore_id']: [
-                {'value': k, 'label': v} for (k, v) in f['choices']]
-            for f in h.recombinant_choice_fields(resource_name)}
+        choice_fields = {}
+        for f in h.recombinant_choice_fields(resource_name):
+            for r in chromo['fields']:
+                if r['datastore_id'] == f['datastore_id'] and \
+                        r.get('form_full_text_choices', False):
+                    choice_fields[f['datastore_id']] = [{'value': k,
+                                                         'label': k + ': ' + v}
+                                                        for (k, v) in f['choices']]
+            if f['datastore_id'] not in choice_fields:
+                choice_fields[f['datastore_id']] = [{'value': k, 'label': v}
+                                                    for (k, v) in f['choices']]
+
         pk_fields = aslist(chromo['datastore_primary_key'])
 
         if request.method == 'POST':
@@ -906,10 +909,18 @@ class PDUpdateController(BaseController):
         except NotAuthorized:
             abort(403, _('Unauthorized'))
 
-        choice_fields = {
-            f['datastore_id']: [
-                {'value': k, 'label': v} for (k, v) in f['choices']]
-            for f in h.recombinant_choice_fields(resource_name)}
+        choice_fields = {}
+        for f in h.recombinant_choice_fields(resource_name):
+            for r in chromo['fields']:
+                if r['datastore_id'] == f['datastore_id'] and \
+                        r.get('form_full_text_choices', False):
+                    choice_fields[f['datastore_id']] = [{'value': k,
+                                                         'label': k + ': ' + v}
+                                                        for (k, v) in f['choices']]
+            if f['datastore_id'] not in choice_fields:
+                choice_fields[f['datastore_id']] = [{'value': k, 'label': v}
+                                                    for (k, v) in f['choices']]
+
         pk_fields = aslist(chromo['datastore_primary_key'])
         pk_filter = dict(zip(pk_fields, pk))
 
