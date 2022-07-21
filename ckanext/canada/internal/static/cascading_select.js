@@ -56,9 +56,8 @@ $(document).ready(function(){
 
       // add new select choices based on selected value of parent field
       let options = all_options[element.name][selected_option];
-      let sorted_options = Object.entries(options).sort();
       element.options.add(new Option("", ""));
-      sorted_options.forEach(function(opt) {
+      Object.entries(options).forEach(function(opt) {
           element.options.add(new Option(opt[1], opt[0]));
       });
     }
