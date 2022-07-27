@@ -5850,8 +5850,9 @@ msgstr "Keep me logged in"
 #~ msgid "No followers"
 #~ msgstr ""
 
-#~ msgid "Search Users"
-#~ msgstr ""
+#: ckanext/canada/templates/internal/user/snippets/search.html:2
+msgid "Search Users"
+msgstr ""
 
 #~ msgid "Complete"
 #~ msgstr ""
@@ -6137,4 +6138,29 @@ msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
 msgid "Invalid licence"
+msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:19
+#, python-format
+msgid ""
+"Informal Requests for ATI Records Previously Released are being sent to "
+"<strong>%s.</strong> Please contact <a href=\"mailto:open-ouvert@tbs-"
+"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer "
+"valid."
+msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:23
+msgid ""
+"Your organization does not have an Access to Information email on file. "
+"Please contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
+"@tbs-sct.gc.ca</a> with the email for your organization's Access to "
+"Information Coordinator."
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/list.html:80
+msgid "Search and manage users."
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/snippets/search.html:78
+msgid "Search and view users."
 msgstr ""
