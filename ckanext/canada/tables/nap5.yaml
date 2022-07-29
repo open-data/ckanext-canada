@@ -5,13 +5,13 @@ notes: |
   Access, upload and modify the National Action Plan on Open Government Tracker for your organization
 
 template_version: 3
-template_updated: 2022-06-08
+template_updated: 2022-07-29
 
 portal_type: info
 collection: pd
 
 resources:
-- title: 5th National Action Plan on Open Government Tracker (draft)
+- title: 5th National Action Plan on Open Government Tracker
   resource_name: nap5
   create_form: true
   edit_form: true
@@ -22,8 +22,8 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: .
-      fr: .
+      en: Year and month of the update
+      fr: Année et mois de la mise à jour
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -116,7 +116,7 @@ resources:
         en: Advance digital inclusion at home and abroad with a focus on shaping global norms, empowering multistakeholder engagement and boosting communication and outreach
         fr: Faire progresser l’inclusion numérique au pays et à l’étranger, principalement en définissant les normes mondiales, en favorisant la mobilisation multi-intervenants et en améliorant les efforts de communication et de sensibilisation
       C03.1:
-        en: Pursuant to the Budget 2021 commitment the Government of Canada will undertake technical and operational studies to lay the groundwork for the implementation of a publicly accessible corporate registry by 2025
+        en: Pursuant to the Budget 2022 commitment the Government of Canada will undertake technical and operational studies to lay the groundwork for the implementation of a publicly accessible corporate registry by 2023
         fr: Conformément à l’engagement qu’il a pris dans le budget 2022, le gouvernement du Canada mettra en place un registre public et consultable des bénéficiaires effectifs d’ici la fin de 2023. Le registre visera les sociétés sous réglementation fédérale et pourra être élargi pour permettre l’accès aux données sur la propriété effective détenues par les provinces et les territoires qui acceptent de participer à un registre national
       C03.2:
         en: Engage federal, provincial and territorial partners to support coordinated implementation and a harmonized approach to ultimate beneficial ownership
@@ -131,22 +131,22 @@ resources:
         en: Identify and share promising practices
         fr: Relever les pratiques prometteuses et les partager
       C04.3:
-        en: Advance Legal literacy and empowerment
+        en: Advance legal literacy and empowerment
         fr: Améliorer les connaissances juridiques et l’autonomisation juridique
       C04.4:
-        en: Foster Partnerships and Collaborate to Advance Access to Justice
+        en: Foster partnerships and collaborate to advance access to justice
         fr: Renforcer les partenariats et la collaboration pour faire progresser l’accès à la justice
       C04.5:
         en: A multi-year roadmap for Open Government at the RCMP
         fr: Une feuille de route pluriannuelle pour un gouvernement ouvert à la GRC
       C05.1:
-        en: Open and strategic management of data and information
+        en: Ensure open and strategic management of data and information
         fr: Assurer une gestion ouverte et stratégique des données et de l’information
       C05.2:
         en: Build an open government and open data ecosystem
         fr: Bâtir un gouvernement ouvert et un écosystème de données ouvertes
       C05.3:
-        en: A roadmap toward a more inclusive barrier-free Canada
+        en: Create a roadmap toward a more inclusive barrier-free Canada
         fr: Créer une feuille de route vers un Canada plus inclusif et exempt d’obstacles
       
 
@@ -306,7 +306,7 @@ resources:
         lead_dept: "pch"
         s4d: true
       C02.1.03:
-        en: Annual Digital Citizen Initiative conferences are held, bringing together stakeholders for capacity building and knowledge dissemination (by February 2022 and February 2023)
+        en: Annual Digital Citizen Initiative conferences are held, bringing together stakeholders for capacity building and knowledge dissemination
         fr: des conférences annuelles sur l’initiative de citoyenneté numérique sont organisées, réunissant des intervenants afin de renforcer les capacités et de favoriser le transfert de connaissances
         due_date: 2022-02
         deadline:
@@ -342,7 +342,7 @@ resources:
         lead_dept: "pch"
         s4d: false
       C02.1.07:
-        en: Finalize voluntary actions in line with the guiding principles on diversity of content online
+        en: Finalize voluntary actions in line with the Guiding Principles on diversity of content online
         fr: Mettre la touche finale à des actions volontaires en tenant compte des principes directeurs s’appliquant à la diversité des contenus en ligne
         due_date: 2022-12
         deadline:
@@ -369,8 +369,8 @@ resources:
         lead_dept: "dfatd-maecd"
         s4d: true
       C02.1.10:
-        en: Publish an educational document for Canadians that would raise awareness on what the national security community does, why they do it and how, with specific reference to national security efforts to combat mis- and disinformation meant to undermine our democratic system and social cohesion
-        fr: Publier un document éducatif à l’intention des Canadiens pour les sensibiliser à ce que fait la communauté de la sécurité nationale, pourquoi elle le fait et comment elle le fait, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation et la mésinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        en: Publish an educational document for Canadians that would raise awareness on what the national security community does, why they do it and how, with specific reference to national security efforts to combat disinformation meant to undermine our democratic system and social cohesion
+        fr: Publier un document éducatif à l’intention des Canadiens pour les sensibiliser à ce que fait la communauté de la sécurité nationale, pourquoi elle le fait et comment elle le fait, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
         due_date: 2022-09
         deadline:
           en: "By September 2022"
@@ -378,8 +378,8 @@ resources:
         lead_dept: "ps-sp"
         s4d: false
       C02.1.11:
-        en: Launch an online engagement tool to foster dialogue with Canadians on national security transparency issues, with specific reference to national security efforts to combat mis- and disinformation meant to undermine our democratic system and social cohesion
-        fr: Lancer un outil de mobilisation en ligne pour favoriser le dialogue avec les Canadiens sur les questions de transparence en matière de sécurité nationale, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation et la mésinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        en: Launch an online engagement tool to foster dialogue with Canadians on national security transparency issues, with specific reference to national security efforts to combat disinformation meant to undermine our democratic system and social cohesion
+        fr: Lancer un outil de mobilisation en ligne pour favoriser le dialogue avec les Canadiens sur les questions de transparence en matière de sécurité nationale, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
         due_date: 2022-06
         deadline:
           en: "By June 2022"
@@ -486,8 +486,8 @@ resources:
         lead_dept: "dfatd-maecd"
         s4d: true
       C02.4.2:
-        en: Conduct a landscape study and a mapping on misinformation in the four global South regions - Middle East and North Africa, Latin America, Sub-Saharan Africa, Asia; examine policies and actors; and build an agenda to work together to reduce misinformation
-        fr: Réaliser une étude du paysage de la désinformation et de la mésinformation et en établir la cartographie dans les quatre régions du Sud (Moyen-Orient et Afrique du Nord, Amérique latine, Afrique subsaharienne et Asie), examiner les politiques et les acteurs et élaborer un programme de collaboration pour réduire la désinformation et la mésinformation
+        en: Conduct a landscape study and a mapping on disinformation in the four global south regions - Middle East and North Africa, Latin America, sub-Saharan Africa, Asia; examine policies and actors; and build an agenda to work together to reduce disinformation
+        fr: Réaliser une étude du paysage de la désinformation et en établir la cartographie dans les quatre régions du Sud (Moyen-Orient et Afrique du Nord, Amérique latine, Afrique subsaharienne et Asie), examiner les politiques et les acteurs et élaborer un programme de collaboration pour réduire la désinformation
         due_date: 2022-05
         deadline:
           en: "By spring 2022"
