@@ -3420,8 +3420,6 @@ presets:
     - value: PPT
       mimetype: application/vnd.ms-powerpoint
       replaces: [ppt]
-    - value: QLR
-      mimetype: application/x-qgis-layer-definition
     - value: PPTX
       mimetype: application/vnd.openxmlformats-officedocument.presentationml.presentation
     - value: RDF
@@ -3470,10 +3468,6 @@ presets:
     - value: TRIX
     - value: TFW
       replaces: [tiff world file]
-    - value: TSV
-      mimetype: text/tab-separated-values
-      openness_score: 3
-      replaces: [tab]
     - value: TXT
       mimetype: text/plain
       replaces: ["ASCII", "text", "TXT"]

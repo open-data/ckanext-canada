@@ -27,6 +27,7 @@ import json
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
+from pylons.i18n import gettext
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -56,7 +57,7 @@ class DataGCCAInternal(p.SingletonPlugin):
         p.toolkit.add_public_directory(config, 'internal/static')
 
         config.update({
-            "ckan.user_list_limit": 250
+            "ckan.user_list_limit": 4000
         })
         # registry includes validation so use real validation presets
         config['scheming.presets'] = """
@@ -94,6 +95,13 @@ ckanext.validation:presets.json
             action='reports',
             controller='ckanext.canada.controller:CanadaUserController',
             ckan_icon='bar-chart-o'
+        )
+        map.connect(
+            'ckanadmin_listusers',
+            '/ckan-admin',
+            action='index',
+            controller='user',
+            ckan_icon='user'
         )
         map.connect(
             'ckanadmin_publish',
@@ -184,7 +192,6 @@ ckanext.validation:presets.json
             'mail_to_with_params',
             'get_timeout_length',
             'canada_check_access',
-            'get_user_email',
         ])
 
     def configure(self, config):
@@ -904,7 +911,7 @@ def _wet_pager(self, *args, **kwargs):
 
     kwargs.update(
         format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
-        symbol_previous=hlp._('Previous'), symbol_next=hlp._('Next'),
+        symbol_previous=gettext('Previous').decode('utf-8'), symbol_next=gettext('Next').decode('utf-8'),
         curpage_attr={'class': 'active'}
     )
 

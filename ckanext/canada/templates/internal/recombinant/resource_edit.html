@@ -9,39 +9,25 @@
 {# we want a wide display for the table #}
 {% block secondary_content %}{% endblock %}
 
-{% block notices %}
-  {% if dataset_type == 'ati' %}
-    {% if organization.ati_email %}
-      <div class="dataset-alert alert alert-info">
-        <p>{{ _('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe % (organization.ati_email) }}</p>
-      </div>
-    {% else %}
-      <div class="dataset-alert alert alert-danger">
-        <p>{{ _('Your organization does not have an Access to Information email on file. Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with the email for your organization\'s Access to Information Coordinator.') | safe }}</p>
-      </div>
-    {% endif %}
-  {% endif %}
-{% endblock %}
-
 {% block primary_content %}
-  <div class="row">
-    <div class="col-md-9">
-      {{ super() }}
-    </div>
-    <aside class="col-md-3">
-      <div class="panel panel-primary">
-        <div class="panel-heading">{{ _("Guide") }}</div>
-        <div class="panel-body">
-          {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
-              'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
-          %}
-          <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
-          {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
-            'sidebar_extra_content', ''))) }}
-        </div>
-      </div>
-    </aside>
+<div class="row">
+  <div class="col-md-9">
+    {{ super() }}
   </div>
+  <aside class="col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{ _("Guide") }}</div>
+      <div class="panel-body">
+        {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
+             'gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') )
+        %}
+        <p>{% trans gclink=gcpedialink %}For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>{% endtrans %}</p>
+        {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get(
+          'sidebar_extra_content', ''))) }}
+      </div>
+    </div>
+  </aside>
+</div>
 {% endblock %}
 
 {% block primary %}

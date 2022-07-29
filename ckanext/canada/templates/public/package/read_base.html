@@ -36,36 +36,36 @@
   {% block ds_socialmedia %} 
   {% include "package/snippets/socialmedia.html" %}
   {% endblock ds_socialmedia %}
-  {% if schema %}
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <div class="panel-title">
-          {{ _('Additional Information') }}
-        </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">
+        {{ _('Additional Information') }}
       </div>
-      <ul class="list-group">
-        {% set include_labels = schema.get('sidebar_show_fields', []) %}
-        {% for field_to_show in include_labels %}
-          {% set field = h.scheming_field_by_name(schema.dataset_fields, field_to_show) %}
-          {% set field_title = h.scheming_language_text(field.label) %}
-          {% if field_title %}
-            {% set field_value = pkg[field.field_name] %}
-            {% if pkg[field.field_name] is mapping %}
-            {% set field_value = h.scheming_language_text(field_value) %}
-            {% endif %}
-            {% if field_value %}
-              <li class="list-group-item resource-tags">
-                <strong>{{ field_title }}:</strong>
-                {% snippet 'scheming/snippets/display_field.html',
-                  field=field,
-                  data=pkg,
-                  entity_type='dataset',
-                  object_type=pkg.type
-                %}
-              </li>
-            {% endif %}
+    </div>
+    <ul class="list-group">
+      {% set include_labels = schema.get('sidebar_show_fields', []) %}
+      {% for field_to_show in include_labels %}
+        {% set field = h.scheming_field_by_name(schema.dataset_fields, field_to_show) %}
+        {% set field_title = h.scheming_language_text(field.label) %}
+        {% if field_title %}
+          {% set field_value = pkg[field.field_name] %}
+          {% if pkg[field.field_name] is mapping %}
+          {% set field_value = h.scheming_language_text(field_value) %}
           {% endif %}
-        {% endfor %}
+          {% if field_value %}
+            <li class="list-group-item resource-tags">
+              <strong>{{ field_title }}:</strong>
+              {% snippet 'scheming/snippets/display_field.html',
+                field=field,
+                data=pkg,
+                entity_type='dataset',
+                object_type=pkg.type
+              %}
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
       {%- set start_date = cr.date_field({"id":"time_period_coverage_start"}, pkg) -%}
       {%- set end_date = cr.date_field({"id":"time_period_coverage_end"}, pkg) -%}
       {% if start_date or end_date %}
@@ -100,9 +100,8 @@
         </li>
         {% endblock %}
       {% endif %}
-      </ul>
-    </div>
-  {% endif %}
+    </ul>
+  </div>
 
   <div class="panel panel-primary">
     <div class="panel-heading">

@@ -9,7 +9,7 @@
         {% block header_account_logged %}
         {% if c.userobj.sysadmin %}
         <li>
-            <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default">
+            <a href="{{ h.url_for('ckanadmin_listusers') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default">
                 <i class="fa fa-gavel"></i>
                 <span class="text">{{ _('Admin') }}</span>
             </a>

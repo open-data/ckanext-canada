@@ -1,5 +1,3 @@
-.DELETE_ON_ERROR:
-
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
 nap nap5 reclassification service travela travelq wrongdoing adminaircraft suppliervax
 
@@ -43,7 +41,6 @@ yyyy_mmdd := $(shell date "+%Y %m%d")
 yyyy := $(word 1,$(yyyy_mmdd))
 yyyymmdd := $(word 1,$(yyyy_mmdd))$(word 2,$(yyyy_mmdd))
 isodate := $(shell TZ=UTC date "+%FT%T")
-echo_date := echo $(isodate):
 
 ifneq ($(backupsuffix),)
 _backupsuffix := -$(backupsuffix)
@@ -108,8 +105,11 @@ else
 # needed by multiple filter rules, always create
 $(shell mkdir -p $(workdir)/filtered)
 
+# for filter scripts that > $@ their output so errors can be retried
+.DELETE_ON_ERROR:
+
 .PHONY: nightly
-nightly: filter-all backup-all upload-all rebuild-all
+nightly: dump-all filter-all backup-all upload-all rebuild-all
 
 
 .PHONY: dump-all
@@ -149,7 +149,7 @@ ati: upload-ati rebuild-ati
 .PHONY: upload-ati
 upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv \
 		$(workdir)/filtered/ati-last2yrs.csv $(workdir)/filtered/ati-nil-last2yrs.csv
-	@$(echo_date) Uploading ATI Summaries...
+	@echo Uploading ATI Summaries...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati.csv" \
 	> /dev/null
@@ -166,7 +166,7 @@ upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv \
 
 .PHONY: rebuild-ati
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
-	@$(echo_date) Rebuilding ATI Summaries...
+	@echo Rebuilding ATI Summaries...
 	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
 
@@ -196,14 +196,15 @@ briefingt: upload-briefingt rebuild-briefingt
 
 .PHONY: upload-briefingt
 upload-briefingt: $(workdir)/filtered/briefingt.csv
-	@$(echo_date) Uploading Briefing Note Titles...
+	@echo Uploading Briefing Note Titles...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
 	> /dev/null
 
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv
-	@$(echo_date) Rebuilding Briefing Note Titles...
+	@echo Rebuilding Briefing Note Titles...
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
 
 $(workdir)/briefingt.csv:
@@ -220,14 +221,15 @@ qpnotes: upload-qpnotes rebuild-qpnotes
 
 .PHONY: upload-qpnotes
 upload-qpnotes: $(workdir)/filtered/qpnotes.csv
-	@$(echo_date) Uploading Question Period Notes...
+	@echo Uploading Question Period Notes...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
 	> /dev/null
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
-	@$(echo_date) Rebuilding Question Period Notes...
+	@echo Rebuilding Question Period Notes...
+	
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
 
 $(workdir)/qpnotes.csv:
@@ -244,7 +246,7 @@ contracts: upload-contracts rebuild-contracts
 
 .PHONY: upload-contracts
 upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	@$(echo_date) Uploading Contracts Quarterly...
+	@echo Uploading Contracts Quarterly...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=fac950c0-00d5-4ec1-a4d3-9cbebf98a305 upload@"$(workdir)/filtered/contracts.csv" \
 	> /dev/null
@@ -254,7 +256,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	@$(echo_date) Rebuilding Contracts Quarterly...
+	@echo Rebuilding Contracts Quarterly...
 	@$(ogc_search)/load_ct_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
 
 $(workdir)/contracts.csv:
@@ -276,7 +278,7 @@ contractsa: upload-contractsa rebuild-contractsa
 
 .PHONY: upload-contractsa
 upload-contractsa: $(workdir)/filtered/contractsa.csv
-	@$(echo_date) Uploading Aggregated Contracts...
+	@echo Uploading Aggregated Contracts...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=2e9a82e2-bb18-4bff-a61e-59af3b429672 upload@"$(workdir)/filtered/contractsa.csv" \
 	> /dev/null
@@ -300,7 +302,7 @@ upload-consultations: $(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations.csv \
 		$(workdir)/filtered/current_consultations_open.csv
-	@$(echo_date) Publishing Consultations to registry and portal...
+	@echo Publishing Consultations to registry and portal...
 	cp $(workdir)/consultations.csv $(registry_static)
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=897d3008-b258-4a68-8c02-3e3c099a42c8 last_modified=$(isodate) \
@@ -342,7 +344,7 @@ dac: upload-dac rebuild-dac
 
 .PHONY: upload-dac
 upload-dac: $(workdir)/filtered/dac.csv $(workdir)/dac.csv
-	@$(echo_date) Uploading Departmental Audit Committee...
+	@echo Uploading Departmental Audit Committee...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=499383b6-cd2a-466a-9fcf-910d3e427700 upload@"$(workdir)/filtered/dac.csv" \
 	> /dev/null
@@ -365,7 +367,7 @@ experiment: upload-experiment rebuild-experiment
 
 .PHONY: upload-experiment
 upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	@$(echo_date) Uploading Experimental Inventory...
+	@echo Uploading Experimental Inventory...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv" \
 	> /dev/null
@@ -388,7 +390,7 @@ grants: upload-grants rebuild-grants
 
 .PHONY: upload-grants
 upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
-	@$(echo_date) Uploading Grants and Contributions...
+	@echo Uploading Grants and Contributions...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=1d15a62f-5656-49ad-8c88-f40ce689d831 upload@"$(workdir)/filtered/grants.csv" \
 	> /dev/null
@@ -398,7 +400,7 @@ upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
 
 .PHONY: rebuild-grants
 rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
-	@$(echo_date) Rebuilding Grants and Contributions...
+	@echo Rebuilding Grants and Contributions...
 	mkdir -p $(workdir)/amendments
 	$(registry_python) $(fdir)/amendment_delta_records.py \
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
@@ -425,7 +427,7 @@ hospitalityq: upload-hospitalityq rebuild-hospitalityq
 
 .PHONY: upload-hospitalityq
 upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
-	@$(echo_date) Uploading Hospitality Expenses..
+	@echo Uploading Hospitality Expenses..
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed upload@"$(workdir)/filtered/hospitalityq.csv" \
 	> /dev/null
@@ -435,7 +437,7 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
-	@$(echo_date) Rebuilding Hospitality Expenses...
+	@echo Rebuilding Hospitality Expenses...
 	$(paster) --plugin=ckanext-canada hospitalityq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/hospitalityq.csv" "$(workdir)/filtered/hospitalityq-nil.csv"
 
@@ -459,7 +461,7 @@ travelq: upload-travelq rebuild-travelq
 
 .PHONY: upload-travelq
 upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
-	@$(echo_date) Uploading Travel Expenses..
+	@echo Uploading Travel Expenses..
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=8282db2a-878f-475c-af10-ad56aa8fa72c upload@"$(workdir)/filtered/travelq.csv" \
 	> /dev/null
@@ -469,7 +471,7 @@ upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.
 
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
-	@$(echo_date) Rebuilding Travel Expenses...
+	@echo Rebuilding Travel Expenses...
 	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
@@ -495,14 +497,14 @@ nap: upload-nap rebuild-nap
 
 .PHONY: upload-nap
 upload-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Uploading National Action Plan..
+	@echo Uploading National Action Plan..
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
 	cp $(workdir)/filtered/nap.csv $(registry_static)/nap.csv
 
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Rebuilding National Action Plan...
+	@echo Rebuilding National Action Plan...
 	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
@@ -542,14 +544,14 @@ inventory: upload-inventory rebuild-inventory
 
 .PHONY: upload-inventory
 upload-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Uploading Open Data Inventory...
+	@echo Uploading Open Data Inventory...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=d0df95a8-31a9-46c9-853b-6952819ec7b4 upload@"$(workdir)/filtered/inventory.csv" \
 	> /dev/null
 
 .PHONY: rebuild-inventory
 rebuild-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Rebuilding Open Data Inventory...
+	@echo Rebuilding Open Data Inventory...
 	$(paster) --plugin=ckanext-canada inventory rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/inventory.csv"
 
@@ -567,7 +569,7 @@ reclassification: upload-reclassification rebuild-reclassification
 
 .PHONY: upload-reclassification
 upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
-	@$(echo_date) Uploading Position Reclassification...
+	@echo Uploading Position Reclassification...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=bdaa5515-3782-4e5c-9d44-c25e032addb7 upload@"$(workdir)/filtered/reclassification.csv" \
 	> /dev/null
@@ -577,7 +579,7 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
-	@$(echo_date) Rebuilding Position Reclassification...
+	@echo Rebuilding Position Reclassification...
 	$(paster) --plugin=ckanext-canada reclassification rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/reclassification.csv" "$(workdir)/filtered/reclassification-nil.csv"
 
@@ -602,7 +604,7 @@ service: upload-service rebuild-service
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
 	# disable publishing service inventory as of 2020-06-08
-	# @$(echo_date) Uploading Service Inventory...
+	# @echo Uploading Service Inventory...
 	# @$(ckanapi) action resource_patch -c $(registry_ini) \
 	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
 	# > /dev/null
@@ -635,14 +637,14 @@ travela: upload-travela rebuild-travela
 
 .PHONY: upload-travela
 upload-travela: $(workdir)/filtered/travela.csv
-	@$(echo_date) Uploading Annual Travel, Hospitality and Conferences...
+	@echo Uploading Annual Travel, Hospitality and Conferences...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=a811cac0-2a2a-4440-8a81-2994fc753171 upload@"$(workdir)/filtered/travela.csv" \
 	> /dev/null
 
 .PHONY: rebuild-travela
 rebuild-travela: $(workdir)/filtered/travela.csv
-	@$(echo_date) Rebuilding Annual Travel, Hospitality and Conferences...
+	@echo Rebuilding Annual Travel, Hospitality and Conferences...
 	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/travela.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
@@ -661,14 +663,14 @@ wrongdoing: upload-wrongdoing rebuild-wrongdoing
 
 .PHONY: upload-wrongdoing
 upload-wrongdoing: $(workdir)/filtered/wrongdoing.csv
-	@$(echo_date) Uploading Acts of Founded Wrongdoing...
+	@echo Uploading Acts of Founded Wrongdoing...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=84a77a58-6bce-4bfb-ad67-bbe452523b14 upload@"$(workdir)/filtered/wrongdoing.csv" \
 	> /dev/null
 
 .PHONY: rebuild-wrongdoing
 rebuild-wrongdoing: $(workdir)/filtered/wrongdoing.csv
-	@$(echo_date) Rebuilding Acts of Founded Wrongdoing...
+	@echo Rebuilding Acts of Founded Wrongdoing...
 	$(paster) --plugin=ckanext-canada wrongdoing rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/wrongdoing.csv"
 
@@ -717,7 +719,7 @@ adminaircraft: upload-adminaircraft rebuild-adminaircraft
 
 .PHONY: upload-adminaircraft
 upload-adminaircraft: $(workdir)/filtered/adminaircraft.csv $(workdir)/adminaircraft.csv
-	@$(echo_date) Uploading Administrative Aircraft...
+	@echo Uploading Administrative Aircraft...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=1495406e-338c-43ec-9995-ec8d8c90d17e upload@"$(workdir)/filtered/adminaircraft.csv" \
 	> /dev/null
