@@ -1,0 +1,1336 @@
+dataset_type: nap5
+
+title: 5th National Action Plan on Open Government Tracker
+notes: |
+  Access, upload and modify the National Action Plan on Open Government Tracker for your organization
+
+template_version: 3
+template_updated: 2022-07-29
+
+portal_type: info
+collection: pd
+
+resources:
+- title: 5th National Action Plan on Open Government Tracker
+  resource_name: nap5
+  create_form: true
+  edit_form: true
+
+  fields:
+  - datastore_id: reporting_period
+    label:
+      en: Reporting Period
+      fr: Période de déclaration
+    description:
+      en: Year and month of the update
+      fr: Année et mois de la mise à jour
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    choices:
+      2022-03: 2022-03
+      2022-06: 2022-06
+      2022-09: 2022-09
+      2022-12: 2022-12
+      2023-03: 2023-03
+      2023-06: 2023-06
+      2023-09: 2023-09
+      2023-12: 2023-12
+      2024-03: 2024-03
+      2024-06: 2024-06
+      2024-09: 2024-09
+      2024-12: 2024-12
+
+  - datastore_id: commitments
+    label:
+      en: Commitments
+      fr: Engagements
+    description:
+      en: The 5 commitments in the 2022-2024 National Action Plan on Open Government
+      fr: Les 5 engagements dans le Plan d’action national du Canada pour un gouvernement ouvert de 2022-2024
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    form_full_text_choices: true
+    choices:
+      C01:
+        en: Climate Change and Sustainable Growth
+        fr: Changements climatiques et croissance durable
+      C02:
+        en: Democracy and Civic Space
+        fr: Démocratie et espace civique
+      C03:
+        en: Fiscal, Financial and Corporate Transparency
+        fr: Transparence fiscale, financière et des entreprises
+      C04:
+        en: Justice
+        fr: Justice
+      C05:
+        en: Open Data for Results
+        fr: Données ouvertes aux fins des résultats
+      
+  - datastore_id: milestones
+    label:
+      en: Milestones
+      fr: Jalons
+    description:
+      en: This list contains milestones that correspond to the chosen commitment
+      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    form_full_text_choices: true
+    excel_column_width: 80
+    # choices based on commitments value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
+    form_attrs:
+      cascading_select_field: commitments
+
+    choices:
+      C01.1:
+        en: Through the Open Science and Data Platform make information related to cumulative effects, including climate change and sustainable growth, easier for people in Canada to find and understand
+        fr: Grâce à la Plateforme de science et de données ouvertes, rendre l’information relative aux effets cumulatifs, y compris les changements climatiques et la croissance durable, plus facile à trouver et à comprendre pour les personnes au Canada
+      C01.2:
+        en: Improve and expand information on energy use and greenhouse gas emissions through the Physical Flow Accounts as part of the Canadian Centre for Energy Information (CCEI)
+        fr: Améliorer et élargir l’information sur la consommation d’énergie et les émissions de GES au moyen des comptes de flux physiques et par l’intermédiaire du Centre canadien d’information sur l’énergie (CCEI)
+      C01.3:
+        en: Making climate change science more open and accessible
+        fr: Rendre la science des changements climatiques plus ouverte et accessible
+      C01.4:
+        en: Provide accessible, reliable, and practical climate data and information to support adaptation decision-making and help people of Canada, across all sectors and regions, build their resilience to climate change
+        fr: Fournir des données et de l’information climatiques accessibles, fiables et pratiques pour faciliter la prise de décisions en matière d’adaptation et aider les personnes au Canada dans l’ensemble des secteurs et des régions à renforcer leur résilience face aux changements climatiques
+      C02.1:
+        en: Take action to address the rising spread of disinformation in Canada and its consequences on the health of our democracy
+        fr: Prendre des mesures pour s’attaquer à la propagation croissante de la désinformation au Canada et aux conséquences qui en découlent pour la santé de notre démocratie
+      C02.2:
+        en: Continue protecting democracy at home and abroad and safeguarding Canada’s electoral and democracy processes by combatting foreign threats to democracy
+        fr: Continuer à protéger la démocratie au pays et à l’étranger et le processus électoral et démocratique du Canada tout en luttant contre les menaces étrangères pour la démocratie
+      C02.3:
+        en: Take steps towards strengthening trust, inclusion, and social cohesion in Canada
+        fr: Prendre des mesures pour renforcer la confiance, l’inclusion et la cohésion sociale au Canada
+      C02.4:
+        en: Advance digital inclusion at home and abroad with a focus on shaping global norms, empowering multistakeholder engagement and boosting communication and outreach
+        fr: Faire progresser l’inclusion numérique au pays et à l’étranger, principalement en définissant les normes mondiales, en favorisant la mobilisation multi-intervenants et en améliorant les efforts de communication et de sensibilisation
+      C03.1:
+        en: Pursuant to the Budget 2022 commitment the Government of Canada will undertake technical and operational studies to lay the groundwork for the implementation of a publicly accessible corporate registry by 2023
+        fr: Conformément à l’engagement qu’il a pris dans le budget 2022, le gouvernement du Canada mettra en place un registre public et consultable des bénéficiaires effectifs d’ici la fin de 2023. Le registre visera les sociétés sous réglementation fédérale et pourra être élargi pour permettre l’accès aux données sur la propriété effective détenues par les provinces et les territoires qui acceptent de participer à un registre national
+      C03.2:
+        en: Engage federal, provincial and territorial partners to support coordinated implementation and a harmonized approach to ultimate beneficial ownership
+        fr: Mobiliser les partenaires fédéraux, provinciaux et territoriaux pour faciliter une mise en œuvre coordonnée du registre et l’adoption d’une approche harmonisée visant la propriété effective
+      C03.3:
+        en: Monitor the strategic management of procurement of technology and software within the Government of Canada
+        fr: Surveiller la gestion stratégique des achats de technologies et de logiciels au sein du gouvernement du Canada
+      C04.1:
+        en: Collect and share data, including disaggregated data
+        fr: Collecter et partager les données, y compris les données désagrégées
+      C04.2:
+        en: Identify and share promising practices
+        fr: Relever les pratiques prometteuses et les partager
+      C04.3:
+        en: Advance legal literacy and empowerment
+        fr: Améliorer les connaissances juridiques et l’autonomisation juridique
+      C04.4:
+        en: Foster partnerships and collaborate to advance access to justice
+        fr: Renforcer les partenariats et la collaboration pour faire progresser l’accès à la justice
+      C04.5:
+        en: A multi-year roadmap for Open Government at the RCMP
+        fr: Une feuille de route pluriannuelle pour un gouvernement ouvert à la GRC
+      C05.1:
+        en: Ensure open and strategic management of data and information
+        fr: Assurer une gestion ouverte et stratégique des données et de l’information
+      C05.2:
+        en: Build an open government and open data ecosystem
+        fr: Bâtir un gouvernement ouvert et un écosystème de données ouvertes
+      C05.3:
+        en: Create a roadmap toward a more inclusive barrier-free Canada
+        fr: Créer une feuille de route vers un Canada plus inclusif et exempt d’obstacles
+      
+
+  - datastore_id: indicators
+    label:
+      en: Indicators
+      fr: Indicateurs
+    description:
+      en: The indicators related to the chosen milestone
+      fr: Les indicateurs liés au jalon choisi
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    form_full_text_choices: true
+    excel_column_width: 80
+    # choices based on milestones value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
+    form_attrs:
+      cascading_select_field: milestones
+
+    choices:
+      C01.1.1:
+        en: Add content and features to the Open Science and Data Platform, using user engagement and feedback, both internal and external to government to set priorities for additions
+        fr: Ajouter du contenu et des fonctionnalités à la Plateforme de science et de données ouvertes, en mobilisant les utilisateurs et en obtenant leurs commentaires, tant à l’intérieur qu’à l’extérieur du gouvernement, pour établir des priorités
+        due_date: 2023-12
+        deadline:
+          en: "By 2023"
+          fr: "D'ici 2023"
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.1.2:
+        en: Provide accessible science-based educational content on 10 key topics (air, biodiversity, climate, cumulative effects, development activities, economy and industry, health, land, society and culture, and water), which may be supported by interactive maps
+        fr: Fournir un contenu éducatif axé sur les sciences en langage accessible sur dix sujets clés (air, biodiversité, climat, effets cumulatifs, activités de développement, économie et industrie, santé, terre, société et culture, et eau), qui peut être complété par des cartes interactives
+        due_date: 2023-12
+        deadline:
+          en: "By 2023"
+          fr: "D'ici 2023"
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.1.3:
+        en: Engage with governments, Indigenous Peoples, and external groups (e.g. industry, environmental non – government organizations) to verify that cumulative effects are better understood, new content is identified (data, publications) and overall use of the platform is increased
+        fr: Mobiliser les gouvernements, les peuples autochtones et les groupes externes (par exemple, industrie et organisations non gouvernementales environnementales) pour vérifier s’ils comprennent mieux les effets cumulatifs, s’ils ont repéré de nouveaux contenus (données et publications) et s’ils utilisent davantage la plateforme dans son ensemble
+        due_date: 2023-12
+        deadline:
+          en: "By 2023"
+          fr: "D'ici 2023"
+        lead_dept: "nrcan-rncan"
+        s4d: false
+      C01.2.1:
+        en: Disseminate an infographic and datasets related to greenhouse gas (GHG) emissions embedded in goods and services purchased by households. Link and disseminate environmental data on energy consumption and GHG emission physical flow accounts with economic satellite accounts on tourism, clean technologies, natural resources
+        fr: Diffuser une infographie et des jeux de données relatifs aux émissions de GES intégrées aux biens et services achetés par les ménages. Partager les données environnementales des comptes de flux physiques pour la consommation d’énergie et les émissions de GES et établir un lien entre celles-ci et les données des comptes satellites économiques pour le tourisme, les technologies propres et les ressources naturelles
+        due_date: 2024-06
+        deadline:
+          en: "By June 2024"
+          fr: "D'ici juin 2024"
+        lead_dept: "statcan"
+        s4d: false 
+      C01.2.2:
+        en: Develop an “Energy and Environment” webpage for the Canadian Centre for Energy Information portal that will include detailed GHG information from both Statistics Canada and Environment and Climate Change Canada, including several data visualization dashboards and indicators
+        fr: Créer une page Web « Énergie et environnement » pour le portail du CCEI, qui comprendra de l’information détaillée sur les GES provenant de StatCan et d’ECCC, y compris plusieurs indicateurs et tableaux de bord de visualisation des données
+        due_date: 2022-12
+        deadline:
+          en: "By 2022"
+          fr: "D'ici 2022"
+        lead_dept: "statcan"
+        s4d: false
+      C01.2.3:
+        en: Link and disseminate environmental data on energy consumption and GHG emission Physical Flow Accounts with economic satellite accounts on transportation and agriculture
+        fr: Partager les données environnementales des comptes de flux physiques pour la consommation d’énergie et les émissions de GES et établir un lien entre celles-ci et les données des comptes satellites économiques pour le transport et l’agriculture
+        due_date: 2024-06
+        deadline:
+          en: "By June 2024"
+          fr: "D'ici juin 2024"
+        lead_dept: "statcan"
+        s4d: false
+      C01.3.1:
+        en: New metric to be designed and included in yearly reports to assess open access of climate change science publication using data from an abstract and citation database
+        fr: Concevoir une nouvelle mesure à inclure dans les rapports annuels pour évaluer le libre accès aux publications scientifiques sur les changements climatiques en utilisant les données d’une base de données de résumés et de citations
+        due_date: 2022-06
+        deadline:
+          en: "By June 2022"
+          fr: "D'ici juin 2022"
+        lead_dept: "ec"
+        s4d: false
+      C01.3.2:
+        en: Yearly reports on progress against existing metrics measuring implementation of open science by Science-Based Departments and Agencies, with a focus on open access metrics and diverse types of open access, to be released in the open
+        fr: Établir des rapports annuels sur les progrès réalisés en fonction des indicateurs existants qui mesurent la façon dont les ministères et organismes à vocation scientifique mettent en œuvre la science ouverte, en mettant l’accent sur les indicateurs de libre accès et les divers types de libre accès, et les mettre à disposition du public
+        due_date: 2022-06
+        deadline:
+          en: "By June 2022 for reporting year 2022, and June 2023 for reporting year 2023"
+          fr: "D’ici juin 2022 pour le rapport de 2022, et juin 2023 pour le rapport de 2023"
+        lead_dept: "ec"
+        s4d: false
+      C01.3.3:
+        en: Support 10 climate change innovation research projects as well as 10 master’s students focused on the intersection of machine learning and climate change in Sub-Saharan Africa and promote knowledge exchange with Canadian scholars
+        fr: Appuyer dix projets de recherche sur l’innovation en matière de changement climatique et les travaux de dix étudiants à la maîtrise qui seront axés sur les recoupements entre l’apprentissage automatique et les changements climatiques en Afrique subsaharienne et promouvoir l’échange de connaissances avec des chercheurs canadiens
+        due_date: 2024-12
+        deadline:
+          en: "By December 2024"
+          fr: "D’ici décembre 2024"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C01.3.4:
+        en: Work with Lacuna Fund to support the creation, aggregation, and maintenance of open datasets for the training and evaluation of machine learning models by and for local communities most affected by climate change around the world
+        fr: Collaborer avec Lacuna Fund pour contribuer à la création, au regroupement et à mise à jour de jeux de données ouvertes pour des projets de formation et d’évaluation sur les modèles d’apprentissage automatique visant les communautés locales les plus touchées par les changements climatiques dans le monde
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C01.4.1:
+        en: Increase the number of clients accessing climate information through Canadian Centre for Climate Services (CCCS) services by 10% by 2023 from 2021 baseline, by working to increase climate data and addressing information gaps driven by user needs
+        fr: Augmenter de 10 % le nombre de clients ayant accès à l’information climatique par l’intermédiaire du Centre canadien des services climatiques (CCSC) d’ici 2023 par rapport au niveau de référence de 2021, en s’efforçant d’accroître la quantité de données climatiques et de combler les lacunes en matière d’information d’après les besoins des utilisateurs
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "ec"
+        s4d: false
+      C01.4.2:
+        en: Publish two sector-based modules on Climate Data by 2023 to provide relevant climate projections and information for users in the buildings and transportation sectors
+        fr: Publier deux modules sectoriels sur Données climatiques d’ici 2023, afin de fournir des projections et de l’information pertinentes sur le climat aux utilisateurs des secteurs du bâtiment et du transport
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "ec"
+        s4d: false
+      C01.4.3:
+        en: Respond to at least 300 user enquiries via the Canadian Centre for Climate Services support desk each year to continue to provide high-level quality of support, and use their feedback to help us advance our mandate to help users understand and become more resilient to climate change
+        fr: Répondre à au moins 300 demandes de renseignements des utilisateurs chaque année par l’intermédiaire du bureau de service du CCSC afin de continuer à fournir un soutien de grande qualité et d’utiliser les commentaires de ceux ci pour remplir notre mandat qui consiste à les aider à mieux comprendre les changements climatiques et à devenir plus résilients face à ceux-ci
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "ec"
+        s4d: false
+      C02.1.01:
+        en: Projects are supported by the Digital Citizen Contribution Program with a focus of combatting online disinformation and other harms in a Canadian context to better understand the origins, impacts and potential response to online disinformation
+        fr: les projets sont appuyés par le Programme de contributions en matière de citoyenneté numérique et ont pour objectif premier de lutter contre la désinformation en ligne et d’autres préjudices dans un contexte canadien afin de mieux comprendre les origines, les répercussions et les mesures d’intervention possibles pour lutter contre la désinformation en ligne
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "pch"
+        s4d: true
+      C02.1.02:
+        en: Projects are supported by Canadian Heritage’s Joint Initiative with Social Sciences and Humanities Research Council with a focus on combatting online disinformation and other harms in a Canadian context
+        fr: les projets sont appuyés par l’initiative conjointe de Patrimoine canadien et du Conseil de recherches en sciences humaines et visent à combattre la désinformation en ligne et d’autres préjudices dans un contexte canadien
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "pch"
+        s4d: true
+      C02.1.03:
+        en: Annual Digital Citizen Initiative conferences are held, bringing together stakeholders for capacity building and knowledge dissemination
+        fr: des conférences annuelles sur l’initiative de citoyenneté numérique sont organisées, réunissant des intervenants afin de renforcer les capacités et de favoriser le transfert de connaissances
+        due_date: 2022-02
+        deadline:
+          en: "By February 2022 and February 2023"
+          fr: "D’ici février 2022 et février 2023"
+        lead_dept: "pch"
+        s4d: true
+      C02.1.04:
+        en: New models are explored that enable private giving and philanthropic support for trusted, professional, non-profit journalism and local news
+        fr: de nouveaux modèles sont explorés pour permettre les dons privés et un soutien philanthropique pour un journalisme et des nouvelles locales de confiance, professionnels et à but non lucratif
+        due_date: 2024-03
+        deadline:
+          en: "By March 2024"
+          fr: "D’ici mars 2024"
+        lead_dept: "pch"
+        s4d: true
+      C02.1.05:
+        en: The Local Journalism Initiative supports the hiring of journalists to provide coverage for underserved communities across Canada to support a healthy, diverse, and reliable news ecosystem
+        fr: l’Initiative sur le journalisme local soutient l’embauche de journalistes pour fournir une couverture médiatique aux communautés mal desservies à travers le Canada et favoriser un écosystème de nouvelles sain, diversifié et fiable
+        due_date: 2024-03
+        deadline:
+          en: "By March 2024"
+          fr: "D’ici mars 2024"
+        lead_dept: "pch"
+        s4d: true
+      C02.1.06:
+        en: Lead a multi-stakeholder working group to develop and advance international priorities related to Diversity of Content Online
+        fr: Diriger un groupe de travail multi-intervenants pour définir des priorités internationales liées à la diversité des contenus en ligne, et en assurer la concrétisation
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "pch"
+        s4d: false
+      C02.1.07:
+        en: Finalize voluntary actions in line with the Guiding Principles on diversity of content online
+        fr: Mettre la touche finale à des actions volontaires en tenant compte des principes directeurs s’appliquant à la diversité des contenus en ligne
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "pch"
+        s4d: false
+      C02.1.08:
+        en: Countries, private sector, and civil society organizations sign on to the Guiding Principles and commit to advance voluntary actions
+        fr: Les pays, le secteur privé et les organisations de la société civile adhèrent aux principes directeurs et s’engagent à faire progresser des actions volontaires
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "pch"
+        s4d: false
+      C02.1.09:
+        en: During its tenure as Chair of the International Institute for Democracy and Electoral Assistance (IDEA) in 2022, Canada will engage partners on the challenges created by disinformation, particularly those affecting governments and marginalized and vulnerable groups, and its impact on democratic processes, including participation and representation
+        fr: pendant son mandat de président de l’Institut international pour la démocratie et l’assistance électorale en 2022, le Canada fera appel à des partenaires pour s’attaquer aux défis liés à la désinformation, en particulier ceux qui touchent les gouvernements et les groupes marginalisés et vulnérables, et leurs répercussions sur les processus démocratiques, y compris la participation et la représentation
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.1.10:
+        en: Publish an educational document for Canadians that would raise awareness on what the national security community does, why they do it and how, with specific reference to national security efforts to combat disinformation meant to undermine our democratic system and social cohesion
+        fr: Publier un document éducatif à l’intention des Canadiens pour les sensibiliser à ce que fait la communauté de la sécurité nationale, pourquoi elle le fait et comment elle le fait, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        due_date: 2022-09
+        deadline:
+          en: "By September 2022"
+          fr: "D’ici septembre 2022"
+        lead_dept: "ps-sp"
+        s4d: false
+      C02.1.11:
+        en: Launch an online engagement tool to foster dialogue with Canadians on national security transparency issues, with specific reference to national security efforts to combat disinformation meant to undermine our democratic system and social cohesion
+        fr: Lancer un outil de mobilisation en ligne pour favoriser le dialogue avec les Canadiens sur les questions de transparence en matière de sécurité nationale, en faisant particulièrement référence aux efforts déployés par la communauté de la sécurité nationale pour lutter contre la désinformation qui visent à porter atteinte à notre système démocratique et à notre cohésion sociale
+        due_date: 2022-06
+        deadline:
+          en: "By June 2022"
+          fr: "D’ici juin 2022"
+        lead_dept: "ps-sp"
+        s4d: false
+      C02.2.1:
+        en: Release an annual G7 Rapid Response Mechanism public report aimed at raising awareness of and strengthening societal resilience to foreign interference, including state sponsored disinformation, by keeping publics in the G7 member states informed about the latest threats and countermeasures
+        fr: publier un rapport public annuel sur le mécanisme de réponse rapide du G7 visant à sensibiliser la société à l’ingérence étrangère, notamment la désinformation parrainée par l’État – et à renforcer la résilience de la société face à celle-ci, en informant la population des États membres du G7 des dernières menaces et contre-mesures
+        due_date: 2022-05
+        deadline:
+          en: "By May 2022"
+          fr: "D’ici mai 2022"
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.2.2:
+        en: Share Canada’s experience implementing its Plan to Protect Democracy, such as the Critical Election Incident Public Protocol and the Declaration, with domestic and international partners
+        fr: partager avec les partenaires nationaux et internationaux l’expérience du Canada dans la mise en œuvre de son plan de protection de la démocratie, comme le Protocole public en cas d’incident électoral majeur et la Déclaration du Canada sur l’intégrité électorale en ligne
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.2.3:
+        en: Engage provincial and territorial officials on threat awareness including countering cyber threats and disinformation in electoral processes
+        fr: mobiliser des représentants provinciaux et territoriaux pour les sensibiliser aux menaces, notamment à la lutte contre les cybermenaces et la désinformation dans les processus électoraux
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.2.4:
+        en: Implement the Declaration for Electoral Integrity Online commitment to enhance the circulation of authoritative and verifiable government information in the Internet ecosystem, including ensuring that electoral management bodies are identified as the leading source of information online for where, when, and how to vote
+        fr: réaliser l’engagement pris au titre de la Déclaration du Canada sur l’intégrité électorale en ligne afin d’améliorer la circulation d’informations gouvernementales officielles et vérifiables dans l’écosystème Internet, notamment veiller à ce que les organismes de gestion électorale soient désignés comme la principale source d’information en ligne sur le lieu, la date du scrutin et la manière de voter
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.2.5:
+        en: Work with social media companies on the next iteration of the Declaration
+        fr: collaborer avec les entreprises de médias sociaux concernant la prochaine version de la Déclaration du Canada sur l’intégrité électorale en ligne
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.2.6:
+        en: Canada will establish a new centre to expand the availability of Canadian expertise and assistance to those seeking to build peace, advance justice, promote human rights, inclusion and democracy, and deliver good governance
+        fr: le Canada établira un nouveau centre qui mettra l’aide et l’expertise du Canada à la disposition de tous ceux qui aspirent à consolider la paix, à faire avancer la justice, à promouvoir les droits de la personne et la démocratie, et à favoriser la bonne gouvernance
+        due_date: 2024-03
+        deadline:
+          en: "By fiscal year 2023-24"
+          fr: "D’ici l’exercice 2023-2024"
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.2.7:
+        en: As co-chairs of the Media Freedom Coalition in 2022, Canada will take positive steps towards strengthening capacity to defend journalists around the world and protect the right to freedom of expression, public interest media, and the safety of journalists
+        fr: en tant que coprésident de la Coalition pour la liberté des médias en 2022, le Canada prendra des mesures positives pour renforcer sa capacité à défendre les journalistes dans le monde entier et à protéger le droit à la liberté d’expression, les médias d’intérêt public et la sécurité des journalistes
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.3.1:
+        en: Monitor trends on trust in government and identify lessons learned from other countries through the OECD’s work and survey on the drivers of trust and how it can foster greater social cohesion
+        fr: surveiller les tendances dans la confiance à l’égard du gouvernement, et relever les leçons retenues des autres pays en consultant les travaux et les résultats des enquêtes de l’OCDE sur les facteurs de confiance et la manière ils peuvent favoriser une plus grande cohésion sociale
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.3.2:
+        en: Support research to better understand the state of civic discourse (both online and offline) and social cohesion in Canada
+        fr: soutenir la recherche pour mieux comprendre l’état du discours civique (en ligne et hors ligne) et la cohésion sociale au Canada
+        due_date: 2022-11
+        deadline:
+          en: "By fall 2022"
+          fr: "D’ici l’automne 2022"
+        lead_dept: "pco-bcp"
+        s4d: true
+      C02.3.3:
+        en: Canada will launch its first-ever federal LGBTQ2 Action Plan with a view to advance the health, social and economic outcomes of LGBTQ2 people in Canada and the human rights of LGBTQ2 individuals internationally
+        fr: le Canada lancera son tout premier plan d’action fédéral pour les communautés LGBTQ2 en vue d’améliorer les résultats des communautés LGBTQ2 au Canada sur les plans social, économique et de la santé et de faire progresser les droits de leurs membres à l’échelle internationale
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "wage"
+        s4d: true
+      C02.4.1:
+        en: Launch a program of action for 2022 Canada’s chairship of the Freedom Online Coalition to advance digital inclusion that will foster meaningful participation in society online and offline, at home and abroad, with a focus on shaping global norms and expanding diplomatic networks, promoting multi-stakeholder engagement, and ramping up advocacy, communication and outreach
+        fr: lancer un programme d’action pour la présidence canadienne de la Coalition pour la liberté en ligne 2022 afin de promouvoir l’inclusion numérique et, ainsi, favoriser une participation significative à la société en ligne et hors ligne, au pays et à l’étranger, en mettant l’accent sur l’élaboration de normes mondiales et l’expansion des réseaux diplomatiques, la promotion de la mobilisation multi-intervenants et l’intensification des activités de défense, de communication et de sensibilisation
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "dfatd-maecd"
+        s4d: true
+      C02.4.2:
+        en: Conduct a landscape study and a mapping on disinformation in the four global south regions - Middle East and North Africa, Latin America, sub-Saharan Africa, Asia; examine policies and actors; and build an agenda to work together to reduce disinformation
+        fr: Réaliser une étude du paysage de la désinformation et en établir la cartographie dans les quatre régions du Sud (Moyen-Orient et Afrique du Nord, Amérique latine, Afrique subsaharienne et Asie), examiner les politiques et les acteurs et élaborer un programme de collaboration pour réduire la désinformation
+        due_date: 2022-05
+        deadline:
+          en: "By spring 2022"
+          fr: "D’ici le printemps 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C02.4.3:
+        en: Support research in 18 countries on the extent of technology facilitated Gender-based violence (GBV)
+        fr: Appuyer des projets de recherche dans 18 pays sur la façon dont la technologie a facilité la violence fondée sur le sexe (VFS)
+        due_date: 2022-05
+        deadline:
+          en: "By spring 2022"
+          fr: "D’ici le printemps 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C02.4.4:
+        en: Conduct research on fostering a feminist Internet - infrastructure, data, discourse from artificial intelligence to LGBTQI+ (lesbian, gay, bisexual, transgender, queer and intersex, plus) to labour to Gender-based violence (GBV)
+        fr: Mener des recherches sur la promotion d’un Internet féministe - infrastructure, données, discours, de l’IA aux communautés LGBTQI+ (lesbiennes, gaies, bisexuelles, transgenres, queers et intersexuées plus), en passant par le travail et la VFS
+        due_date: 2022-06
+        deadline:
+          en: "By June 2022"
+          fr: "D’ici juin 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C02.4.5:
+        en: Support 2 countries in the global south to advance legal and gender transformative approaches to countering sexist hate speech online [India and Brazil]
+        fr: Offrir un soutien à deux pays du Sud de la planète afin de promouvoir des approches transformatrices juridiques et en matière de genre pour mettre fin aux discours sexistes haineux en ligne (Inde et Brésil)
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C03.1.1:
+        en: The Government is equipped with the necessary technical and operational information to prepare legislation and implementing mechanisms for a made-in-Canada approach to beneficial ownership disclosure, that balances the need for accurate and up-to-date data on the individuals who own and control corporations with appropriate safeguards for the privacy and competitiveness of Canadian corporations and entrepreneurs
+        fr: L’approche du gouvernement en matière de divulgation de la propriété effective repose sur les points de vue des intervenants portant sur les spécifications d’une solution proprement canadienne
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "ic"
+        s4d: true
+      C03.1.2:
+        en: The Government’s approach to beneficial ownership disclosures is informed by stakeholders’ views on specifications for a made-in-Canada solution
+        fr: Les dispositions législatives fédérales nécessaires à la mise en œuvre du registre national des bénéficiaires effectifs sont en place en temps opportun, afin de soutenir le lancement du registre
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "ic"
+        s4d: false
+      C03.1.3:
+        en: The registry is publically accessible by the end of 2023
+        fr: Le registre sera accessible au public d’ici la fin de 2023
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "ic"
+        s4d: false
+      C03.2.1:
+        en: Alignment with provinces and territories is crucial for the success and benefits of a publicly accessible registry of beneficial ownership. ISED and Finance Canada will continue to engage in discussions on beneficial ownership transparency with provincial and territorial counterparts including with regards to the technical and operational feasibility studies, and to share up-to-date considerations and international developments
+        fr: Des consultations régulières ont lieu avec les partenaires et les homologues fédéraux, provinciaux et territoriaux afin de discuter d’une solution harmonisée proprement canadienne, qui peut être élargie et qui peut faciliter la participation des provinces et des territoires
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "ic"
+        s4d: true
+      C03.2.2:
+        en: Canada consults with international counterparts to acquire lessons learned and best practices for implementing a publicly accessible beneficial ownership registry
+        fr: Le Canada consulte ses homologues internationaux afin d’obtenir des leçons apprises et des pratiques exemplaires pour la mise en œuvre d’un registre des bénéficiaires effectifs accessible au public
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "ic"
+        s4d: false
+      C03.3.1:
+        en: Subject to data availability, release the aggregate details of applications used by the Government of Canada
+        fr: Selon la disponibilité des données, publier des renseignements agrégés sur les applications utilisées par le gouvernement du Canada
+        due_date: 2024-06
+        deadline:
+          en: "By June 2024"
+          fr: "D’ici juin 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C03.3.2:
+        en: Work towards developing policy instruments around the ethical use of information technology in the Government of Canada
+        fr: Travailler à l’élaboration d’instruments de politique concernant l’utilisation éthique des technologies de l’information au sein du gouvernement du Canada
+        due_date: 2024-06
+        deadline:
+          en: "By June 2024"
+          fr: "D’ici juin 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C04.1.1:
+        en: Completion of Canadian Legal Problems Survey (CLPS) and sharing of results, including Public Use Microdata File (PUMF)
+        fr: Répondre à l’Enquête canadienne sur les problèmes juridiques (ECPJ) et partager les résultats, y compris le fichier de microdonnées à grande diffusion (FMGD)
+        due_date: 2022-02
+        deadline:
+          en: "By February 2022"
+          fr: "D’ici février 2022"
+        lead_dept: "jus"
+        s4d: false
+      C04.1.2:
+        en: Completion and sharing of findings of Qualitative Studies on LGBTQ2S+ populations, Black Canadians, persons with disabilities, immigrants and Indigenous peoples, to complement the CLPS quantitative data 
+        fr: Mener à bien des études qualitatives sur les populations LGBTQ2S, les Canadiens noirs, les personnes en situation de handicap, les immigrants et les peuples autochtones, et en partager les résultats, afin de compléter les données quantitatives de l’ECPJ
+        due_date: 2022-05
+        deadline:
+          en: "By spring 2022"
+          fr: "D’ici le printemps 2022"
+        lead_dept: "jus"
+        s4d: false
+      C04.1.3:
+        en: Preparing and publishing Legal Aid Reports (annually)
+        fr: Préparer et publier les Rapports sur l’aide juridique
+        due_date: 2024-12
+        deadline:
+          en: "Annually"
+          fr: "Chaque année"
+        lead_dept: "jus"
+        s4d: false
+      C04.1.4:
+        en: Updating and maintaining the State of the Criminal Justice System Report and Dashboard (annually)
+        fr: Tenir à jour le Rapport et le Tableau de bord sur l’État du système de justice pénale
+        due_date: 2024-12
+        deadline:
+          en: "Annually"
+          fr: "Chaque année"
+        lead_dept: "jus"
+        s4d: false
+      C04.1.5:
+        en: Collecting and releasing high value data related to various policing activities, workforce composition and more
+        fr: Collecter des données de grande valeur concernant, entre autres, les diverses activités de maintien de l’ordre et la composition de la main-d’œuvre, et les communiquer
+        due_date: 2023-05
+        deadline:
+          en: "May 2023 and ongoing"
+          fr: "Mai 2023 et en cours"
+        lead_dept: "rcmp-grc"
+        s4d: false
+      C04.2.1:
+        en: Collaboration with Council of Canadian Administrative Tribunals (CCAT) to support delivery of workshops to better understand and promote good practices 
+        fr: Collaborer avec le Conseil des tribunaux administratifs canadiens (CTAC) pour appuyer la tenue d’ateliers ayant pour but d’assurer une meilleure compréhension des bonnes pratiques et d’en faire la promotion
+        due_date: 2022-06
+        deadline:
+          en: "By June 2022"
+          fr: "D’ici juin 2022"
+        lead_dept: "jus"
+        s4d: false
+      C04.2.2:
+        en: Support development of Community Justice Centres as a promising practice (ongoing)
+        fr: Soutenir le développement de centres de justice communautaires en tant que pratique prometteuse
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.2.3:
+        en: Publish promising practices from evaluations, annual reports and Federal, Provincial, Territorial work, as appropriate (ongoing)
+        fr: Publier les pratiques prometteuses issues des évaluations, des rapports annuels et des travaux effectués par les gouvernements fédéral, provinciaux et territoriaux, le cas échéant
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.1:
+        en: Regularly update Charterpedia on the Justice website (ongoing)
+        fr: Assurer la mise à jour régulière de Chartepédia sur le site du ministère de la Justice
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.2:
+        en: Publication of geo-spatial mapping of services funded by Indigenous Justice Program (ongoing)
+        fr: Publier une cartographie géospatiale des services financés par le Programme de la justice applicable aux Autochtones
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.3:
+        en: Release Five forthcoming online courses on Bill C-78 (family violence, relocation, family dispute resolution and the duties of the parties, parenting and, interjurisdictional support)
+        fr: Diffuser Cinq cours en ligne à venir sur le projet de loi C-78 (violence familiale, réinstallation, règlement des différends familiaux et obligations des parties, rôle parental et exécution réciproque des ordonnances alimentaires)
+        due_date: 2023-08
+        deadline:
+          en: "By Summer 2023"
+          fr: "D’ici l’été 2023"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.4:
+        en: Develop a Children’s Rights Impact Assessment (CRIA) tool, and accompanying online course on the United Nations Convention on the Rights of the Child and how to use the CRIA tool
+        fr: Mettre au point un outil d’évaluation de l’incidence sur les droits de l’enfant et un guide sur la façon d’utiliser cet outil, ainsi que le cours en ligne connexe sur la Convention relative aux droits de l’enfant des Nations Unies
+        due_date: 2022-05
+        deadline:
+          en: "By May 2022"
+          fr: "D’ici mai 2022"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.5:
+        en: Support for a network of legal information hubs providing free services to Official Language Minority Communities (ongoing)
+        fr: Assurer le soutien à un réseau de centres d’information juridique offrant des services gratuits aux communautés de langues officielles en situation minoritaire
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.3.6:
+        en: Communications activities to support legal literacy
+        fr: Mener des activités de communication pour appuyer l’amélioration des connaissances juridiques
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.4.1:
+        en: Work in concert with Provincial and Territorial partners
+        fr: Collaborer avec les partenaires provinciaux et territoriaux
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.4.2:
+        en: Participation on OGP Coalition on Justice
+        fr: Participer à la Coalition du PGO pour la justice
+        due_date: 2022-05
+        deadline:
+          en: "By spring 2022"
+          fr: "D’ici le printemps 2022"
+        lead_dept: "jus"
+        s4d: false
+      C04.4.3:
+        en: Collaboration with Action Committee on Access to Justice in Civil and Family Matters
+        fr: Collaborer avec le Comité d’action sur l’accès à la justice en matière civile et familiale
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.4.4:
+        en: Fostering international partnerships including the Organisation for Economic Co-operation and Development (OECD) and Pathfinders
+        fr: Encourager les partenariats internationaux, y compris ceux avec l’OCDE et Pathfinders
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "jus"
+        s4d: false
+      C04.5.1:
+        en: Develop an RCMP Open Government strategy with multi-year action plan (Released publicly)
+        fr: Élaborer une stratégie de gouvernement ouvert pour la GRC et un plan d’action pluriannuel connexe (rendu public)
+        due_date: 2022-08
+        deadline:
+          en: "By August 2022"
+          fr: "D’ici août 2022"
+        lead_dept: "rcmp-grc"
+        s4d: false
+      C04.5.2:
+        en: Establish an Open Government Office with resources dedicated to the advancement of openness and transparency across the RCMP
+        fr: Établir un bureau pour un gouvernement ouvert comprenant des ressources consacrées à la promotion de l’ouverture et de la transparence à la GRC
+        due_date: 2022-08
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "rcmp-grc"
+        s4d: false
+      C04.5.3:
+        en: Establish an RCMP Open Government Working Group comprised of key stakeholders across the RCMP to identify and release data and information as well as advance a culture of openness, transparency and accountability based on open government principles and practices. In addition, the RCMP will be an active participant in interdepartmental working groups/efforts around Justice and Justice related topics of transparency and Open Government
+        fr: Créer un Groupe de travail sur le gouvernement ouvert pour la GRC regroupant des intervenants clés provenant de l’ensemble de la GRC, à qui il appartiendra de trouver des données et de l’information, et de les publier, et de promouvoir une culture d’ouverture, de transparence et de responsabilisation fondée sur les principes et les pratiques d’un gouvernement ouvert. De plus, la GRC participera activement aux initiatives et aux groupes de travail interministériels sur la justice et les questions connexes à la justice portant sur la transparence et le gouvernement ouvert
+        due_date: 2022-08
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "rcmp-grc"
+        s4d: false
+      C04.5.4:
+        en: Establish an RCMP Multi-Stakeholder Forum (ex. non-governmental organizations, other government departments, private sector, academia, community representatives including Indigenous Peoples, LBGTQ, youth, etc..) to help engage in discussions around priorities and areas of focus for openness and transparency in the RCMP
+        fr: Créer un Forum multi intervenants à la GRC (p. ex., organisations non gouvernementales, autres ministères, secteur privé, milieu universitaire, représentants de la collectivité, notamment les peuples autochtones, les communautés LGBTQ et les jeunes) pour faciliter l’entretien de discussions sur les priorités et les domaines d’intérêt pour favoriser l’ouverture et la transparence à la GRC
+        due_date: 2022-08
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "rcmp-grc"
+        s4d: false
+      C05.1.1:
+        en: Develop a roadmap identifying and prioritizing federal data standards 
+        fr: Élaborer une feuille de route indiquant, en ordre de priorité, les normes de données fédérales
+        due_date: 2022-12
+        deadline:
+          en: "By end of 2022"
+          fr: "D’ici la fin de 2022"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.1.2:
+        en: Create a protocol for the development and management of federal data standards
+        fr: Créer un protocole pour l’élaboration et la gestion des normes de données fédérales
+        due_date: 2023-12
+        deadline:
+          en: "By 2023"
+          fr: "D’ici 2023"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.1.3:
+        en: Establish a data and information governance framework to support a holistic approach to governance and inform direction and decision-making on federal data and information initiatives
+        fr: Établir un cadre de gouvernance des données et de l’information à l’appui d’une approche holistique de la gouvernance et éclairer l’orientation et la prise de décisions concernant les initiatives fédérales en matière de données et d’information
+        due_date: 2022-12
+        deadline:
+          en: "By end of 2022"
+          fr: "D’ici la fin de 2022"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.1.4:
+        en: Define a federal data quality framework to build a common understanding of data quality and harmonize approaches to optimizing the quality of data assets in the Government of Canada 
+        fr: Définir un cadre fédéral sur la qualité des données afin de parvenir à une compréhension commune de la qualité des données et d’harmoniser les approches visant à optimiser la qualité des ressources de données au sein du gouvernement du Canada
+        due_date: 2023-08
+        deadline:
+          en: "By Summer 2023"
+          fr: "D’ici l’été 2023"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.1.5:
+        en: Develop a new standard for systems that manage information and data in the Government of Canada, anchored in principles and business outcomes, to provide an enterprise approach for all federal records management and business systems 
+        fr: Élaborer une nouvelle norme relative aux systèmes qui gèrent l’information et les données au sein du gouvernement du Canada, qui repose sur les principes et les résultats opérationnels, afin de fournir une approche intégrée pour tous les systèmes de gestion des documents et les systèmes opérationnels fédéraux
+        due_date: 2022-12
+        deadline:
+          en: "By end of 2022"
+          fr: "D’ici la fin de 2022"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.1.6:
+        en: Develop an assessment and reporting framework that supports implementation of the standard for systems that manage information and data and enables decision making in the Government of Canada
+        fr: Mettre au point un cadre d’évaluation et de production de rapports qui soutient la mise en œuvre de la norme relative aux systèmes qui gèrent l’information et les données et qui facilite la prise de décision au sein du gouvernement du Canada
+        due_date: 2022-12
+        deadline:
+          en: "By end of 2022"
+          fr: "D’ici la fin de 2022"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.01:
+        en: As part of the development of an Open Government Strategy, include a robust open data pillar 
+        fr: Prévoir un pilier solide en matière de données ouvertes lors de l’élaboration d’une stratégie pour un gouvernement ouvert
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.02:
+        en: Establish an internal and external stakeholder open data advisory working group to help inform open data priorities, help inform the establishment of public reporting on open data release progress, identify open data users and experts, and report publicly on the work and deliberations of the working group and impact of open data
+        fr: Créer un groupe de travail consultatif sur les données ouvertes, composé d’intervenants internes et externes, à qui il appartiendra de contribuer à la définition des priorités en matière de données ouvertes et à la production de rapports publics sur les progrès réalisés à l’égard de la publication des données ouvertes, de trouver les utilisateurs et les experts en matière de données ouvertes et de rendre compte publiquement de ses travaux et de ses délibérations et de l’incidence des données ouvertes
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.03:
+        en: As part of the OG Strategy and open data pillar, prioritize the development of a dedicated open data plan to expand on key open data activities, including but not limited to inclusive engagement
+        fr: Dans le cadre de la stratégie pour un gouvernement ouvert et du pilier des données ouvertes, accorder la priorité à l’élaboration d’un plan consacré aux données ouvertes afin de développer les activités clés en matière de données ouvertes, y compris, mais sans s’y limiter, la participation inclusive
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.04:
+        en: Consult on and develop service standards for prioritizing and releasing open data and using the portal as part of the open data plan
+        fr: Mener des consultations en vue de l’élaboration de normes de service sur l’établissement de l’ordre de priorité des données ouvertes et la publication de celles-ci, et l’utilisation du portail dans le cadre du plan de données ouvertes
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.05:
+        en: Using existing maturity models, develop a maturity model for open data for the Government of Canada
+        fr: Au moyen des modèles de maturité existants, mettre au point un modèle de maturité pour les données ouvertes pour le gouvernement du Canada
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.06:
+        en: Equip departments with criteria and a template so they can develop Implementation Plans to align themselves to the Strategy and maturity models to optimize their efforts for growth, as well as self-assessment and annual reporting tools to monitor progress and outcomes
+        fr: Fournir aux ministères des critères et un modèle pour qu’ils puissent élaborer des plans de mise en œuvre et s’aligner sur la stratégie pour un gouvernement ouvert et les modèles de maturité, et, ainsi, optimiser leurs efforts de croissance, ainsi que des outils d’auto-évaluation et de production de rapports annuels pour suivre les progrès et les résultats
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "tbs-sct"
+        s4d: false
+      C05.2.07:
+        en: Expand the federated open data search to include open data from all thirteen jurisdictions thereby providing Canadians with access to open and discoverable data in one place 
+        fr: Élargir la capacité de recherche fédérée de données ouvertes pour tenir compte des données ouvertes des treize administrations, offrant ainsi aux Canadiens un accès aux données ouvertes et repérables en un seul endroit
+        due_date: 2024-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "nrcan-rncan"
+        supt_sept: "tbs-sct"
+        s4d: false
+      C05.2.08:
+        en: Working in collaboration with Indigenous Peoples and internal and external stakeholders, create a data sharing policy that would facilitate data sharing with Indigenous governments and organizations and their partners, while addressing key data governance issues such as protecting the confidentiality of community-level information
+        fr: En collaboration avec les peuples autochtones et les intervenants internes et externes, créer une politique de partage des données qui faciliterait le partage des données avec les gouvernements et organisations autochtones et leurs partenaires, tout en abordant des questions clés de gouvernance des données comme la protection de la confidentialité des renseignements au niveau de la collectivité
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "isc-sac"
+        s4d: false
+      C05.2.09:
+        en: Develop and test an infrastructure, with supporting governance, to facilitate uptake of citizen science in a health research context [this may include, but is not limited to, research in environmental health (e.g., air, water, chemicals, radiation), COVID-19, or other health-related topics]
+        fr: Développer une infrastructure, dont une structure de gouvernance de soutien, et la mettre à l’essai, pour faciliter l’adoption de la science citoyenne dans un contexte de recherche sur la santé (il peut s’agir, entre autres, de la recherche sur la santé environnementale [air, eau, produits chimiques et radiations], la COVID-19, ou d’autres sujets liés à la santé)
+        due_date: 2024-12
+        deadline:
+          en: "By 2024"
+          fr: "D’ici 2024"
+        lead_dept: "hc-sc"
+        s4d: false
+      C05.2.10:
+        en: Support the Global Data Barometer and disclose comparative analysis on data in 100+ countries 
+        fr: Appuyer le Baromètre mondial des données et communiquer des analyses comparatives sur les données dans plus de 100 pays 
+        due_date: 2022-05
+        deadline:
+          en: "By spring 2022"
+          fr: "D’ici le printemps 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C05.2.11:
+        en: Increase the number of new women’s rights groups engaged in open government practices and data production consultations around the world (at least 15)
+        fr: Augmenter le nombre de nouveaux groupes de défense des droits des femmes qui ont adopté des pratiques de gouvernement ouvert et qui participent à des consultations sur la production de données partout dans le monde (au moins 15)
+        due_date: 2022-10
+        deadline:
+          en: "By October 2022"
+          fr: "D’ici octobre 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C05.2.12:
+        en: Support organizations in at least 15 OGP countries in developing regions to advance open, fair and efficient use of data to strengthen their democracies 
+        fr: Soutenir les organisations d’au moins 15 pays membres du PGO dans les régions en développement afin de promouvoir l’utilisation ouverte, équitable et efficace des données pour renforcer leur démocratie
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "idrc-crdi"
+        s4d: false        
+      C05.2.13:
+        en: Produce a series of synthesis reports, case studies and in-person events that support the global open data community, including the work with the Government of Kenya to co-host the International Open Data Conference 
+        fr: Produire une série de rapports de synthèse, d’études de cas et d’activités en personne qui soutiennent la communauté mondiale des données ouvertes, notamment le travail accompli avec le gouvernement du Kenya pour co-organiser la Conférence internationale sur les données ouvertes
+        due_date: 2023-06
+        deadline:
+          en: "By June 2023"
+          fr: "D’ici juin 2023"
+        lead_dept: "idrc-crdi"
+        s4d: false
+      C05.2.14:
+        en: Plan and develop a central online hub to facilitate public access to GBA Plus data, information and resources, and to provide a space for learning and participation
+        fr: Planifier et développer une plateforme centrale en ligne pour faciliter l’accès du public aux données, à l’information et aux ressources sur l’ACS+, et offrir un espace d’apprentissage et de participation 
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "wage"
+        s4d: false
+      C05.3.01:
+        en: Disaggregated Data Action Plan Developmental Phase - Develop a collection strategy for major surveys, survey design for new surveys, terms and conditions for collaborations with partners on the acquisition of new data, establishment and promotion of statistical standards for disaggregated data, exploration of existing data sources, start of release of new data and new indicators 
+        fr: Phase d’élaboration du plan d’action sur les données désagrégées - élaborer une stratégie de collecte pour les grands sondages et une conception pour les nouveaux sondages; définir des modalités de collaboration avec les partenaires pour l’acquisition de nouvelles données; établir des normes statistiques pour les données désagrégées, et en faire la promotion; explorer les sources de données existantes; lancer la publication de nouvelles données et de nouveaux indicateurs
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.02:
+        en: Disaggregated Data Action Plan Implementation Phase I - Launch of enhanced surveys, a collaborative analysis space, and an intersectional, population-level platform; further exploration of existing data sources and release of survey data, new indicators, and new analytical studies 
+        fr: Phase I de la mise en œuvre du plan d’action sur les données désagrégées - lancer les sondages améliorés, un espace d’analyse collaborative et une plateforme intersectionnelle au niveau de la population; poursuivre l’exploration des sources de données existantes et la publication des données des sondages, des nouveaux indicateurs et des résultats des nouvelles analyses
+        due_date: 2023-03
+        deadline:
+          en: "By March 2023"
+          fr: "D’ici mars 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.03:
+        en: Disaggregated Data Action Plan Implementation Phase II - Continued release of new indicators, survey data, and analyses; enhancement of the portal of the Centre for Gender, Diversity and Inclusion Statistics, enhanced data integration 
+        fr: Phase II de la mise en œuvre du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; améliorer le portail du Centre pour les statistiques sur le genre, la diversité et l’inclusion, et l’intégration des données
+        due_date: 2024-03
+        deadline:
+          en: "By March 2024"
+          fr: "D’ici mars 2024"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.04:
+        en: Disaggregated Data Action Plan Monitoring Phase - Continued release of new indicators, survey data, and analyses; completion of the evaluation framework; course correction 
+        fr: Phase de suivi du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; achever le cadre d’évaluation; apporter des corrections, au besoin
+        due_date: 2024-12
+        deadline:
+          en: "Completion by March 2025; report initial progress by 2024"
+          fr: "Achèvement d’ici mars 2025; rapport sur les progrès initiaux réalisés d’ici 2024"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.05:
+        en: Disaggregated Data Action Plan Evaluation Phase - Continued release of new indicators, survey data, and analyses; evaluation report and recommendations for ongoing data collection and dissemination
+        fr: Phase d’évaluation du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; élaborer un rapport d’évaluation et des recommandations pour la collecte et la diffusion continues des données
+        due_date: 2024-12
+        deadline:
+          en: "Completion by March 2026; report initial progress by 2024"
+          fr: "Achèvement d’ici mars 2026; rapport sur les progrès initiaux réalisés d’ici 2024"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.06:
+        en: Disaggregated Data Action Plan Continuous Improvement and Monitoring Phase - Continued release of new indicators, survey data, and analyses; monitoring of data gaps and emerging needs that should be covered, adherence to diversity data standards (in collaboration with TBS where appropriate) at the agency and all levels of government, flow of data to the agency and statistics from the agency and use of statistics in policymaking 
+        fr: Phase de suivi et d’amélioration continue du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; faire un suivi des lacunes dans les données et des besoins émergents qui devraient être pris en considération; satisfaire aux normes de données sur la diversité (en collaboration avec le SCT, le cas échéant) au sein de l’organisation et à tous les ordres de gouvernement; gérer le flux de données vers l’organisation et les statistiques provenant de celle-ci; utiliser les statistiques dans l’élaboration des politiques
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.07:
+        en: 2022 Canadian Survey on Disability data collection 
+        fr: Collecter les données de l’Enquête canadienne sur l’incapacité 2022
+        due_date: 2022-09
+        deadline:
+          en: "By September 2022"
+          fr: "D’ici septembre 2022"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.08:
+        en: 2022 Canadian Survey on Disability data initial results available
+        fr: Mettre à disposition les résultats initiaux de l’Enquête canadienne sur l’incapacité 2022
+        due_date: 2023-10
+        deadline:
+          en: "By October 2023"
+          fr: "D’ici octobre 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.09:
+        en: Disability screening questions included in future cycles of the General Social Survey, Canadian Income Survey, and Indigenous Peoples Survey
+        fr: Inclure les questions d’identification des personnes en situation de handicap dans les prochains cycles de l’Enquête sociale générale, de l’Enquête canadienne sur le revenu et de l’Enquête auprès des peuples autochtones
+        due_date: 2023-10
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.10:
+        en: 2017 Canadian Survey on Disabilities data integrated with Canada Recovery Benefits data accessible in Federal Research Data Centre
+        fr: Intégrer les données de l’Enquête canadienne sur l’incapacité de 2017 aux données sur la Prestation canadienne de la relance économique accessibles dans le Centre fédéral de données de recherche
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.11:
+        en: First set of UN Convention on the Rights of Persons with Disabilities (CRPD) and Sustainable Development Goals indicators available
+        fr: Publier la première série d’indicateurs de la Convention des Nations Unies relative aux droits des personnes handicapées (CDPH) et des objectifs de développement durable disponibles
+        due_date: 2023-09
+        deadline:
+          en: "By September 2023"
+          fr: "D’ici septembre 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.12:
+        en: Develop a methodology to better understand Chronic Wasting Disease in Canada (CWD)
+        fr: Élaborer une méthodologie pour mieux comprendre les maladies débilitantes chroniques (MDC) au Canada
+        due_date: 2023-08
+        deadline:
+          en: "By Summer 2023"
+          fr: "D’ici l’été 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.13:
+        en: Development of a new survey on children with disabilities 
+        fr: Élaborer une nouvelle enquête sur les enfants en situation de handicap
+        due_date: 2023-11
+        deadline:
+          en: "By fall 2023"
+          fr: "D’ici l’automne 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.14:
+        en: Launch of the Accessibility Statistics Data Hub in June 2021, and ongoing updates
+        fr: Lancer le Carrefour de données statistiques sur l’accessibilité en juin 2021, et faire des mises à jour continues
+        due_date: 2024-12
+        deadline:
+          en: "Ongoing"
+          fr: "En cours"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.15:
+        en: Analyze and publish the data on the Survey on Accessibility in Federal Sector Organizations (SAFSO)
+        fr: Analyser et publier les données du Sondage sur l’accessibilité dans les organisations du secteur public (SAOSP)
+        due_date: 2022-03
+        deadline:
+          en: "By March 2022"
+          fr: "D’ici mars 2022"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.16:
+        en: Publish the 2019-20 public opinion research on the Accessibility Statistics Data Hub
+        fr: Publier les résultats de recherche sur l’opinion publique de 2019-2020 sur le Carrefour de données statistiques sur l’accessibilité
+        due_date: 2022-03
+        deadline:
+          en: "By March 2022"
+          fr: "D’ici mars 2022"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.17:
+        en: Conduct additional public opinion research to address further data gaps
+        fr: Mener des recherches supplémentaires sur l’opinion publique pour combler d’autres lacunes dans les données
+        due_date: 2022-12
+        deadline:
+          en: "By December 2022"
+          fr: "D’ici décembre 2022"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+      C05.3.18:
+        en: Publish additional Canada Pension Plan Disability datasets on the Open Government Portal
+        fr: Publier d’autres jeux de données sur le Programme de prestations d’invalidité du Canada sur le Portail du gouvernement ouvert
+        due_date: 2023-12
+        deadline:
+          en: "By December 2023"
+          fr: "D’ici décembre 2023"
+        lead_dept: "esdc-edsc"
+        supt_sept: "statcan"
+        s4d: false
+
+  - datastore_id: status
+    label:
+      en: Status
+      fr: État
+    description:
+      en: Indicate the current status of the commitment
+      fr: Indiquer l’état actuel de l'engagement
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    excel_full_text_choices: true
+    choices:
+      NS:
+        en: Not started
+        fr: Non commencé
+      LP:
+        en: Limited progress
+        fr: Progrès limité
+      SP:
+        en: Substantial progress
+        fr: Progrès important
+      C:
+        en: Complete
+        fr: Réalisé
+
+
+  - datastore_id: progress_en
+    label:
+      en: Progress during previous quarter (English)
+      fr: Progrès au cours du trimestre précédent (anglais)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NIL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: progress_fr
+    label:
+      en: Progress during previous quarter (French)
+      fr: Progrès au cours du trimestre précédent (français)
+    description:
+      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NUL"
+      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: evidence_en
+    label:
+      en: Evidence of progress (English)
+      fr: Preuve de progrès (anglais)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: evidence_fr
+    label:
+      en: Evidence of progress (French)
+      fr: Preuve de progrès (français)
+    description:
+      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
+      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
+    obligation: Optional
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: challenges_en
+    label:
+      en: Challenges (English)
+      fr: Défis (anglais)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: challenges_fr
+    label:
+      en: Challenges (French)
+      fr: Défis (français)
+    description:
+      en: Describe any challenges faced
+      fr: Décrivez les défis rencontrés
+    obligation: Optional
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: [reporting_period, indicators]
+  datastore_indexes: ""
+
+  default_preview_sort: reporting_period desc, indicators
+
+  cascading_select_fields: true
+
+  excel_example_height: 50
+
+  triggers:
+  - nap_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+        errors := errors || required_error(NEW.commitments, 'commitments');
+        errors := errors || choice_error(NEW.commitments, {commitments}, 'commitments');
+        errors := errors || required_error(NEW.milestones, 'milestones');
+        errors := errors || choice_error(NEW.milestones,
+          array(SELECT unnest from unnest({milestones}) where left(unnest, length(NEW.commitments)) = NEW.commitments),
+          'milestones');
+        errors := errors || required_error(NEW.indicators, 'indicators');
+        errors := errors || choice_error(NEW.indicators,
+          array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
+          'indicators');
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      reporting_period: "2022-03"
+      commitments: C01
+      milestones: C01.1
+      indicators: C01.1.1
+      status: SP
+      progress_en: |
+        - Open government learning materials for teachers have been drafted
+        - Initiating call for proposals to find contractor who can ensure materials are presented in a useful format for teachers and educators
+      progress_fr: |
+        - Des matériels d'apprentissage sur le gouvernement ouvert pour les enseignants ont été rédigés
+        - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
+      evidence_en: Materials are still being drafted and not yet available publicly
+      evidence_fr: Le matériel est toujours en cours de rédaction et n'est pas encore disponible publiquement
+      challenges_en: What sorts of open government learning materials would you like to see? Which formats are most useful for learning purposes?
+      challenges_fr: Quels types de matériels d'apprentissage du gouvernement ouvert aimeriez-vous voir? Quels formats sont les plus utiles à des fins d'apprentissage?
+    filters:
+      commitments: C01
+    filter_one:
+      reporting_period: "2022-03"
+      indicators: C01.1.1
+    sort: reporting_period desc, indicators
