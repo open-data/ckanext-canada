@@ -433,20 +433,16 @@ class CanadaUserController(UserController):
                 # redirected after successful user create
                 import ckan.lib.mailer
                 # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
-                if hasattr( ckan.lib.mailer, "notify_ckan_user_create" ):
-                  ckan.lib.mailer.notify_ckan_user_create(
-                    email=request.params.get('email', ''),
-                    fullname=request.params.get('fullname', ''),
-                    username=request.params.get('name', ''),
-                    phoneno=request.params.get('phoneno', ''),
-                    dept=request.params.get('department', ''))
-                else:
-                  notify_ckan_user_create(
-                      email=request.params.get('email', ''),
-                      fullname=request.params.get('fullname', ''),
-                      username=request.params.get('name', ''),
-                      phoneno=request.params.get('phoneno', ''),
-                      dept=request.params.get('department', ''))
+                getattr(
+                  ckan.lib.mailer,
+                  "notify_ckan_user_create",
+                  notify_ckan_user_create
+                )(
+                  email=request.params.get('email', ''),
+                  fullname=request.params.get('fullname', ''),
+                  username=request.params.get('name', ''),
+                  phoneno=request.params.get('phoneno', ''),
+                  dept=request.params.get('department', ''))
                 notice_no_access()
                 raise
 
