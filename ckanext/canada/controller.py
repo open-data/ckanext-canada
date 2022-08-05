@@ -431,12 +431,18 @@ class CanadaUserController(UserController):
                 return self._save_new(context)
             except HTTPFound:
                 # redirected after successful user create
-                notify_ckan_user_create(
-                    email=request.params.get('email', ''),
-                    fullname=request.params.get('fullname', ''),
-                    username=request.params.get('name', ''),
-                    phoneno=request.params.get('phoneno', ''),
-                    dept=request.params.get('department', ''))
+                import ckan.lib.mailer
+                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                getattr(
+                  ckan.lib.mailer,
+                  "notify_ckan_user_create",
+                  notify_ckan_user_create
+                )(
+                  email=request.params.get('email', ''),
+                  fullname=request.params.get('fullname', ''),
+                  username=request.params.get('name', ''),
+                  phoneno=request.params.get('phoneno', ''),
+                  dept=request.params.get('department', ''))
                 notice_no_access()
                 raise
 
