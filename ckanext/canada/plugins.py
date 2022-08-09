@@ -515,12 +515,9 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
-            'revision_list',
-            'package_revision_list',
             'user_list',
             'user_activity_list',
             'member_list',
-            'group_revision_list',
             #'user_show',  FIXME: required for password reset
             'package_autocomplete',
             'format_autocomplete',
@@ -528,7 +525,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'group_activity_list',
             'organization_activity_list',
             'group_package_show',
-            'activity_detail_list',
             ]})
         return actions
 
