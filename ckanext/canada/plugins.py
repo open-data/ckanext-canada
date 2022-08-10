@@ -3,7 +3,6 @@
 import os
 import os.path
 import logging
-from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -11,7 +10,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound, _
 import ckanapi
 from ckan.lib.base import c
 
@@ -620,12 +619,13 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
-        # We're going to group portal_release_date into two bins - to today and
-        # after today.
-        search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
-        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
-        search_params['facet.range.gap'] = '+100YEARS'
+        # FIXME: ckan 2.9 not supported?
+        ## We're going to group portal_release_date into two bins - to today and
+        ## after today.
+        #search_params['facet.range'] = 'portal_release_date'
+        #search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        #search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        #search_params['facet.range.gap'] = '+100YEARS'
 
         # FIXME: so terrible. hack out WET4 wbdisable parameter
         try:

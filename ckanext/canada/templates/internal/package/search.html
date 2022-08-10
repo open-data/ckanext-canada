@@ -3,13 +3,13 @@
 {# internal theme has title already visible above #}
 {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
 {% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_('Datasets'), controller='package', action='search', highlight_actions = 'new index') }}</li>
+  <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
 {% endblock %}
 
 
 {% block extra_facets %}
-
+{# ckan 2.9 not supported?
   {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
     name='ready_to_publish', facet_range=c.facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
-
+#}
 {% endblock %}
