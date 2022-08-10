@@ -619,13 +619,12 @@ class DataGCCAPackageController(p.SingletonPlugin):
         pass
 
     def before_search(self, search_params):
-        # FIXME: ckan 2.9 not supported?
-        ## We're going to group portal_release_date into two bins - to today and
-        ## after today.
-        #search_params['facet.range'] = 'portal_release_date'
-        #search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
-        #search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
-        #search_params['facet.range.gap'] = '+100YEARS'
+        # We're going to group portal_release_date into two bins - to today and
+        # after today.
+        search_params['facet.range'] = 'portal_release_date'
+        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        search_params['facet.range.gap'] = '+100YEARS'
 
         # FIXME: so terrible. hack out WET4 wbdisable parameter
         try:
