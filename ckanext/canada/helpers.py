@@ -530,7 +530,7 @@ def mail_to_with_params(email_address, name, subject, body):
     return html
 
 def get_timeout_length():
-    return int(config.get('beaker.session.timeout'))
+    return int(config.get('beaker.session.timeout', 0))
 
 
 def canada_check_access(package_id):
