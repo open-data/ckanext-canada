@@ -20,7 +20,6 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.canada import search_integration
-from ckanext.extendedactivity.plugins import IActivity
 
 import json
 
@@ -773,7 +772,6 @@ def datastore_delete(up_func, context, data_dict):
 
 class CanadaActivity(p.SingletonPlugin):
     p.implements(p.IActions)
-    p.implements(IActivity)
 
     def get_actions(self):
         return ({'datastore_upsert':datastore_upsert,
