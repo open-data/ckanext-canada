@@ -1,7 +1,6 @@
 import json
 import re
-from pylons import c, config
-from ckan.common import _
+from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import wcms
