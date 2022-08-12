@@ -770,29 +770,6 @@ def datastore_delete(up_func, context, data_dict):
     return result
 
 
-class CanadaActivity(p.SingletonPlugin):
-    p.implements(p.IActions)
-
-    def get_actions(self):
-        return ({'datastore_upsert':datastore_upsert,
-                'datastore_delete': datastore_delete})
-
-    def string_icons(self, string_icons):
-        pass
-
-    def snippet_functions(self, snippet_functions):
-        pass
-
-    def string_functions(self, string_functions):
-        pass
-
-    def actions_obj_id_validator(self, obj_id_validators):
-        obj_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
-                })
-
-
 class CanadaOpenByDefault(p.SingletonPlugin):
     """
     Plugin for public-facing version of Open By Default site
