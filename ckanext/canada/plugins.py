@@ -25,6 +25,7 @@ import json
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
+from flask import Blueprint
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -48,6 +49,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
+    p.implements(p.IBlueprint)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -63,6 +65,43 @@ ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
 ckanext.validation:presets.json
 """
+
+
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+
+        from ckan.views.dataset import dataset
+        from ckan.views.resource import resource, prefixed_resource
+        from ckanext.canada.view import (
+            CanadaDatasetEditView,
+            CanadaResourceEditView
+        )
+
+        #FIXME: override Flask Views.
+
+        dataset.add_url_rule(
+            u'/edit/<id>',
+            view_func=CanadaDatasetEditView.as_view(str(u'_edit')),
+            alias='edit'
+        )
+
+        resource.add_url_rule(
+            u'/<resource_id>/edit',
+            view_func=CanadaResourceEditView.as_view(str(u'_edit')),
+            alias='edit'
+        )
+
+        prefixed_resource.add_url_rule(
+            u'/<resource_id>/edit',
+            view_func=CanadaResourceEditView.as_view(str(u'_edit')),
+            alias='edit'
+        )
+
+        return [
+            dataset,
+            resource,
+            prefixed_resource
+        ]
 
 
     def before_map(self, map):
@@ -105,16 +144,6 @@ ckanext.validation:presets.json
             action='publish',
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
-        )
-        map.connect(
-            '/dataset/edit/{id}',
-            action='edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
-        )
-        map.connect(
-            '/dataset/{id}/resource_edit/{resource_id}',
-            action='resource_edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
         )
         # reset to regular delete controller for internal site
         map.connect(

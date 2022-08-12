@@ -343,27 +343,6 @@ def datatablify(v, colname):
     return unicode(v)
 
 
-class CanadaDatasetController(PackageController):
-    def edit(self, id, data=None, errors=None, error_summary=None):
-        try:
-            return super(CanadaDatasetController, self).edit(
-                id, data, errors, error_summary)
-        except HTTPFound:
-            if c.pkg_dict['type'] == 'prop':
-                h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
-            raise
-
-    def resource_edit(self, id, resource_id, data=None, errors=None,
-                      error_summary=None):
-        try:
-            return super(CanadaDatasetController, self).resource_edit(
-                id, resource_id, data, errors, error_summary)
-        except HTTPFound:
-            h.flash_success(_(u'Resource updated.'))
-            # resource read page is unfinished, return to dataset page
-            h.redirect_to(controller='package', action='read', id=id)
-
-
 class CanadaUserController(UserController):
     def logged_in(self):
         # we need to set the language via a redirect
