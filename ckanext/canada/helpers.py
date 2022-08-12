@@ -12,7 +12,6 @@ import jinja2
 import ckanapi
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
-import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
@@ -22,6 +21,8 @@ import dateutil.parser
 import geomet.wkt as wkt
 import json as json
 from markupsafe import Markup, escape
+from ckan.lib.helpers import core_helper
+from ckan.plugins.core import plugin_loaded
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -562,3 +563,6 @@ def get_user_email(user_id):
 
     except NotFound as e:
         return ""
+
+
+core_helper(plugin_loaded)
