@@ -70,38 +70,28 @@ ckanext.validation:presets.json
     def get_blueprint(self):
         # type: () -> list[Blueprint]
 
-        from ckan.views.dataset import dataset
-        from ckan.views.resource import resource, prefixed_resource
+        from flask import request, current_app
         from ckanext.canada.view import (
             CanadaDatasetEditView,
             CanadaResourceEditView
         )
 
-        #FIXME: override Flask Views.
+        canada = Blueprint(u'canada', __name__)
 
-        dataset.add_url_rule(
-            u'/edit/<id>',
-            view_func=CanadaDatasetEditView.as_view(str(u'_edit')),
-            alias='edit'
-        )
+        #FIXME: Currently `load_canada_views` fires on all flask.app requests.
+        #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
+        #       However, IBlueprint implementations are loaded before the above, so changes to them
+        #       in the `get_blueprint` hook would be overridden by the view class states.
+        def load_canada_views():
+            if request.endpoint == 'dataset.edit':
+                return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
+            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'resource.edit':
+                return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
 
-        resource.add_url_rule(
-            u'/<resource_id>/edit',
-            view_func=CanadaResourceEditView.as_view(str(u'_edit')),
-            alias='edit'
-        )
 
-        prefixed_resource.add_url_rule(
-            u'/<resource_id>/edit',
-            view_func=CanadaResourceEditView.as_view(str(u'_edit')),
-            alias='edit'
-        )
+        canada.before_app_request(load_canada_views)
 
-        return [
-            dataset,
-            resource,
-            prefixed_resource
-        ]
+        return [canada]
 
 
     def before_map(self, map):
