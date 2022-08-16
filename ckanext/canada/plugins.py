@@ -25,6 +25,7 @@ import json
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
+from flask import Blueprint
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -48,6 +49,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
+    p.implements(p.IBlueprint)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -63,6 +65,33 @@ ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
 ckanext.validation:presets.json
 """
+
+
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+
+        from flask import request, current_app
+        from ckanext.canada.view import (
+            CanadaDatasetEditView,
+            CanadaResourceEditView
+        )
+
+        canada = Blueprint(u'canada', __name__)
+
+        #FIXME: Currently `load_canada_views` fires on all flask.app requests.
+        #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
+        #       However, IBlueprint implementations are loaded before the above, so changes to them
+        #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
+        def load_canada_views():
+            if request.endpoint == 'dataset.edit':
+                return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
+            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'resource.edit':
+                return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
+
+
+        canada.before_app_request(load_canada_views)
+
+        return [canada]
 
 
     def before_map(self, map):
@@ -105,16 +134,6 @@ ckanext.validation:presets.json
             action='publish',
             conditions=dict(method=['POST']),
             controller='ckanext.canada.controller:CanadaAdminController'
-        )
-        map.connect(
-            '/dataset/edit/{id}',
-            action='edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
-        )
-        map.connect(
-            '/dataset/{id}/resource_edit/{resource_id}',
-            action='resource_edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
         )
         # reset to regular delete controller for internal site
         map.connect(

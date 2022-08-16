@@ -345,6 +345,18 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 .modal .modal-dialog .modal-content .modal-header{
 
-    background-color: #e5e5e5;
+    background-color: #2e5274;
+
+}
+
+.modal .modal-dialog .modal-content .modal-title{
+
+    color: white;
+
+}
+
+.modal .modal-dialog .modal-content button.close span{
+
+    color: white;
 
 }
