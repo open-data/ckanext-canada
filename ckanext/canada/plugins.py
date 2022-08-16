@@ -406,11 +406,15 @@ ckanext.canada:schemas/prop.yaml
 
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
+        if group_type == 'organization':
+            return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
+
+    
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -789,6 +793,21 @@ def datastore_delete(up_func, context, data_dict):
     return result
 
 
+class CanadaActivity(p.SingletonPlugin):
+    p.implements(p.IActions)
+    p.implements(p.IConfigurer)
+
+    def get_actions(self):
+        return ({'datastore_upsert':datastore_upsert,
+                'datastore_delete': datastore_delete})
+
+    def update_config(self, config):
+        logic_validators.object_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+        })
+
+
 class CanadaOpenByDefault(p.SingletonPlugin):
     """
     Plugin for public-facing version of Open By Default site
@@ -833,6 +852,8 @@ ckanext.canada:schemas/doc.yaml
 
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
+        if group_type == 'organization':
+            return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type,
