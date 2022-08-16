@@ -81,7 +81,7 @@ ckanext.validation:presets.json
         #FIXME: Currently `load_canada_views` fires on all flask.app requests.
         #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
         #       However, IBlueprint implementations are loaded before the above, so changes to them
-        #       in the `get_blueprint` hook would be overridden by the view class states.
+        #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
         def load_canada_views():
             if request.endpoint == 'dataset.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
