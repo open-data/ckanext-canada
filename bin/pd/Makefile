@@ -515,7 +515,7 @@ $(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
-	$(fdir)/filter_modified_created.py < $< > $@
+	$(fdir)/filter_nap5.py < $< > $@
 
 ###
 ###  Open Data Inventory
