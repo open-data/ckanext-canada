@@ -50,7 +50,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
     p.implements(p.IBlueprint)
-    p.implements(p.IOrganizationController)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -232,22 +231,13 @@ ckanext.validation:presets.json
         """
         All datasets on registry should now be marked private
         """
-        from ckan.model.group import Group
-        if isinstance(pkg, Group):
-            try:
-                title_tranlated = pkg._extras['title_translated'].value
-                pkg.title = title_tranlated['en'] + " | " + title_tranlated['fr']
-            except TypeError:
-                title_tranlated = json.loads(pkg._extras['title_translated'].value)
-                pkg.title = title_tranlated['en'] + " | " + title_tranlated['fr']
-        else:
-            pkg.private = True
+        pkg.private = True
 
     def edit(self, pkg):
         """
         All datasets on registry should now be marked private
         """
-        self.create(pkg)
+        pkg.private = True
 
     def get_actions(self):
         return dict(

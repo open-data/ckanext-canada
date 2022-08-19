@@ -1,7 +1,8 @@
 {% ckan_extends %}
 
 {% block organization_option %}
-  <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ organization.title }}</option>
+  {% set title = h.get_translated(organization, 'title') %}
+  <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ title }}</option>
 {% endblock %}
 
 {% block package_metadata_fields_visibility %}

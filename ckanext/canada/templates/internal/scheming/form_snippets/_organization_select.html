@@ -1,0 +1,4 @@
+{% ckan_extends %}
+
+{% set organizations_available = h.organizations_available('create_dataset', include_translated=True) %}
+{{ super() }}
