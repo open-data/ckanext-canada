@@ -50,6 +50,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
     p.implements(p.IBlueprint)
+    p.implements(p.IOrganizationController)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -87,6 +88,7 @@ ckanext.validation:presets.json
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'resource.edit':
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
+            #TODO: add group view class to flash group_type updated message
 
 
         canada.before_app_request(load_canada_views)
@@ -230,13 +232,22 @@ ckanext.validation:presets.json
         """
         All datasets on registry should now be marked private
         """
-        pkg.private = True
+        from ckan.model.group import Group
+        if isinstance(pkg, Group):
+            try:
+                title_tranlated = pkg._extras['title_translated'].value
+                pkg.title = title_tranlated['en'] + " | " + title_tranlated['fr']
+            except TypeError:
+                title_tranlated = json.loads(pkg._extras['title_translated'].value)
+                pkg.title = title_tranlated['en'] + " | " + title_tranlated['fr']
+        else:
+            pkg.private = True
 
     def edit(self, pkg):
         """
         All datasets on registry should now be marked private
         """
-        pkg.private = True
+        self.create(pkg)
 
     def get_actions(self):
         return dict(
