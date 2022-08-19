@@ -404,6 +404,7 @@ ckanext.canada:schemas/prop.yaml
 
         return facets_dict
 
+    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
         if group_type == 'organization':
@@ -850,6 +851,7 @@ ckanext.canada:schemas/doc.yaml
 
         return facets_dict
 
+    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
         if group_type == 'organization':
