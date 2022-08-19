@@ -20,7 +20,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.canada import search_integration
-
+from ckanext.xloader.interfaces import IXloader
 import json
 
 import ckan.lib.formatters as formatters
@@ -50,6 +50,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
     p.implements(p.IBlueprint)
+    p.implements(IXloader)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -238,6 +239,8 @@ ckanext.validation:presets.json
         """
         pkg.private = True
 
+    # IActions
+
     def get_actions(self):
         return dict(
             {
@@ -252,6 +255,40 @@ ckanext.validation:presets.json
             resource_view_create=resource_view_create_bilingual,
         )
 
+    # IXloader
+
+    def can_upload(self, resource_id):
+
+        # check if file is uploded
+        try:
+            res = p.toolkit.get_action(u'resource_show')({'ignore_auth': True},
+                                                         {'id': resource_id})
+
+            if res.get('url_type', None) != 'upload':
+                log.error(
+                    'Only uploaded resources can be added to the Data Store.')
+                return False
+
+        except ObjectNotFound:
+            log.error('Resource %s does not exist.' % resource_id)
+            return False
+
+        # check if validation report exists
+        try:
+            validation = p.toolkit.get_action(u'resource_validation_show')(
+                {'ignore_auth': True},
+                {'resource_id': res['id']})
+            if validation.get('status', None) != 'success':
+                log.error(
+                    'Only validated resources can be added to the Data Store.')
+                return False
+
+        except ObjectNotFound:
+            log.error('No validation report exists for resource %s' %
+                      resource_id)
+            return False
+
+        return True
 
 
 @chained_action
