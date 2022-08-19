@@ -380,6 +380,12 @@ ckanext.canada:schemas/prop.yaml
 
         hlp.build_nav_main = build_nav_main
 
+        # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+        logic_validators.object_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+        })
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
@@ -497,8 +503,11 @@ ckanext.canada:schemas/prop.yaml
         )
         return map
 
+    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
-        return {'inventory_votes_show': logic.inventory_votes_show}
+        return {'inventory_votes_show': logic.inventory_votes_show,
+                'datastore_upsert': datastore_upsert,
+                'datastore_delete': datastore_delete}
 
     def get_auth_functions(self):
         return {
@@ -792,21 +801,6 @@ def datastore_delete(up_func, context, data_dict):
                                    'resource_id': res_id}
                                   )
     return result
-
-
-class CanadaActivity(p.SingletonPlugin):
-    p.implements(p.IActions)
-    p.implements(p.IConfigurer)
-
-    def get_actions(self):
-        return ({'datastore_upsert':datastore_upsert,
-                'datastore_delete': datastore_delete})
-
-    def update_config(self, config):
-        logic_validators.object_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
-        })
 
 
 class CanadaOpenByDefault(p.SingletonPlugin):
