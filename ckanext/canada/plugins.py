@@ -805,7 +805,7 @@ def datastore_upsert(up_func, context, data_dict):
 
 @chained_action
 def datastore_delete(up_func, context, data_dict):
-    if context.get('agent') == 'xloader':
+    if data_dict.get('url_type', None) == 'upload':
         return up_func(context, data_dict)
 
     lc = ckanapi.LocalCKAN(username=c.user)
