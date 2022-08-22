@@ -453,8 +453,6 @@ upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
 	@$(echo_date) Rebuilding Travel Expenses...
-	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
@@ -626,8 +624,6 @@ upload-travela: $(workdir)/filtered/travela.csv
 .PHONY: rebuild-travela
 rebuild-travela: $(workdir)/filtered/travela.csv
 	@$(echo_date) Rebuilding Annual Travel, Hospitality and Conferences...
-	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travela.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:
