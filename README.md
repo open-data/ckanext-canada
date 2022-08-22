@@ -60,8 +60,8 @@ The CKAN ini file needs the following settings for the registry server:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public canada_package canada_activity datastore recombinant
-        scheming_datasets fluent extendedactivity
+        canada_public canada_package datastore recombinant
+        scheming_datasets fluent
 ```
 
 For the public server use only:
