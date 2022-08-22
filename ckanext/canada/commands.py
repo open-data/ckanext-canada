@@ -706,7 +706,7 @@ class CanadaCommand(CkanCommand):
                             toolkit.get_action(u'datastore_search')(
                                 {}, {'resource_id': resource['id']})
                             toolkit.get_action(u'datastore_delete')(
-                                {'agent': 'xloader'},
+                                {},
                                 {'resource_id': resource['id'],
                                  'ignore_auth': True,
                                  'force': True})
