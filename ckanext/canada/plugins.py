@@ -380,6 +380,12 @@ ckanext.canada:schemas/prop.yaml
 
         hlp.build_nav_main = build_nav_main
 
+        # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+        logic_validators.object_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+        })
+
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
@@ -404,13 +410,18 @@ ckanext.canada:schemas/prop.yaml
 
         return facets_dict
 
+    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
+        if group_type == 'organization':
+            return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
+
+    
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -492,8 +503,11 @@ ckanext.canada:schemas/prop.yaml
         )
         return map
 
+    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
-        return {'inventory_votes_show': logic.inventory_votes_show}
+        return {'inventory_votes_show': logic.inventory_votes_show,
+                'datastore_upsert': datastore_upsert,
+                'datastore_delete': datastore_delete}
 
     def get_auth_functions(self):
         return {
@@ -831,8 +845,11 @@ ckanext.canada:schemas/doc.yaml
 
         return facets_dict
 
+    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
+        if group_type == 'organization':
+            return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
     def organization_facets(self, facets_dict, organization_type,

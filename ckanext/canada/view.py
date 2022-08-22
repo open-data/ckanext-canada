@@ -29,6 +29,6 @@ class CanadaResourceEditView(ResourceEditView):
         response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                 h.flash_success(_(u'Resource updated.'))
+                h.flash_success(_(u'Resource updated.'))
         return response
 
