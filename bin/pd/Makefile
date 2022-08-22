@@ -1,30 +1,28 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-nap nap5 reclassification service travela travelq wrongdoing adminaircraft suppliervax
-
+	nap nap5 reclassification service travela travelq wrongdoing adminaircraft suppliervax
 
 csv_files := \
-	ati.csv ati-nil.csv \
-	briefingt.csv \
-	qpnotes.csv \
-        contractsa.csv \
-        contracts.csv contracts-nil.csv \
-	consultations.csv \
-	dac.csv \
-	experiment.csv \
-        grants.csv grants-nil.csv \
-        hospitalityq.csv hospitalityq-nil.csv \
-	inventory.csv \
-	nap.csv \
-	nap5.csv \
-        reclassification.csv reclassification-nil.csv \
-	service.csv service-std.csv \
-        travela.csv \
-        travelq.csv travelq-nil.csv \
-        wrongdoing.csv \
-		adminaircraft.csv \
-		contract-data.csv verification-data.csv
+    ati.csv ati-nil.csv \
+    briefingt.csv \
+    qpnotes.csv \
+    contractsa.csv \
+    contracts.csv contracts-nil.csv \
+    consultations.csv \
+    dac.csv \
+    experiment.csv \
+    grants.csv grants-nil.csv \
+    hospitalityq.csv hospitalityq-nil.csv \
+    inventory.csv \
+    nap.csv nap5.csv \
+    reclassification.csv reclassification-nil.csv \
+    service.csv service-std.csv \
+    travela.csv \
+    travelq.csv travelq-nil.csv \
+    wrongdoing.csv \
+    adminaircraft.csv \
+    contract-data.csv verification-data.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
@@ -470,8 +468,6 @@ upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
 	@$(echo_date) Rebuilding Travel Expenses...
-	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
@@ -643,8 +639,6 @@ upload-travela: $(workdir)/filtered/travela.csv
 .PHONY: rebuild-travela
 rebuild-travela: $(workdir)/filtered/travela.csv
 	@$(echo_date) Rebuilding Annual Travel, Hospitality and Conferences...
-	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travela.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:
