@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block organization_option %}
-  {% set title = h.get_translated(organization, 'title') %}
+  {% set title = h.get_translated(organization, 'title')[:70] %}
   <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ title }}</option>
 {% endblock %}
 
