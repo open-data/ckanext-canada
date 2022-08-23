@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% block breadcrumb_content %}
   {{ h.build_nav('user.index', _('Users')) }}
@@ -22,7 +21,7 @@
         <dd><ul>
           {% for org in h.user_organizations(user) %}
             {% set url = h.url_for(org.type ~ '_read', action='read', id=org.name) %}
-            <li><a href="{{ url }}">{{cr.split_bilingual_field(org.title, h.lang())}}</a></li>
+            <li><a href="{{ url }}">{{ h.get_translated(org, 'title') }}</a></li>
           {% endfor %}
         </ul></dd>
       </dl>

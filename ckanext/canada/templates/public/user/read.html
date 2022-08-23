@@ -17,7 +17,6 @@
 {% endblock %}
 
 
-{% import 'macros/canada_read.html' as cr %}
 
 {%- block other_info -%}
   <h3>{{_('Organizations')}}</h3>
@@ -25,7 +24,7 @@
 
   {% for org in h.user_organizations(user) %}
     {% set url = h.url_for(org.type ~ '_read', action='read', id=org.name) %}
-    <li><a href="{{ url }}">{{cr.split_bilingual_field(org.title, h.lang())}}</a></li>
+    <li><a href="{{ url }}">{{ h.get_translated(org, 'title') }}</a></li>
   {% endfor %}
   </ul>
 {%- endblock -%}

@@ -16,7 +16,7 @@
 {% endblock %}
 
 {%- block adobe_analytics_creator -%}
-  {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
+  {% set owner_org_title = h.get_translated(pkg.organization, 'title') %}
   {# remove encode when moving from fanstatic - applied as a fix for OPEN-1566 #}
   <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat').encode('ascii', 'xmlcharrefreplace') | safe }}"
   {%- if 'org_section' in pkg and h.scheming_language_text(pkg.org_section) %}

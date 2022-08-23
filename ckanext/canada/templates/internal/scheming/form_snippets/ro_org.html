@@ -5,7 +5,7 @@
 <div class="col-md-8">
 {% if data[field.field_name] %}
 {% set org = h.get_organization(data[field.field_name]) %}
-{{cr.split_bilingual_field(org.title or org.name, h.lang())}}
+{{ h.get_translated(org, 'title') }}
 {% endif %}
 </div>
 </div>
