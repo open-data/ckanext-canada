@@ -40,7 +40,7 @@ fields:
     size: 75
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
-  validators: fluent_text unicode scheming_required
+  validators: fluent_text unicode scheming_required canada_org_title_translated_save
   output_validators: canada_org_title_translated_output
 
 # Field = Short Form.
@@ -198,7 +198,7 @@ fields:
     value: "adminaircraft"
   form_snippet: multiple_checkbox.html
   display_snippet: multiple_choice.html
-  validators: scheming_multiple_choice protect_reporting_requirements ati_email_validate
+  validators: scheming_required scheming_multiple_choice protect_reporting_requirements ati_email_validate
   output_validators: scheming_multiple_choice_output
 
 # Field = ATI Email.
@@ -210,7 +210,7 @@ fields:
   help_text:
     en: The email for access to information completed request summaries
     fr: Courriel de la accès à l’information sommaires de demandes complétées
-  validators: email_validator
+  validators: scheming_required email_validator
   display_snippet: email_with_parameters.html
 
 # Field = Opengov Email.
@@ -222,5 +222,5 @@ fields:
   help_text:
     en: The email for open government
     fr: Courriel de la gouvernement ouvert
-  validators: email_validator
+  validators: scheming_required email_validator
   display_snippet: email_with_parameters.html

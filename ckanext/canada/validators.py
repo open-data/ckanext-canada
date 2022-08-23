@@ -261,6 +261,14 @@ def no_future_date(key, data, errors, context):
     return value
 
 
+def canada_org_title_translated_save(key, data, errors, context):
+    try:
+        title_translated = fluent_text_output(data[key])
+        data[('title',)] = title_translated['en'] + ' | ' + title_translated['fr']
+    except KeyError:
+        raise StopOnError
+
+
 def canada_org_title_translated_output(key, data, errors, context):
     """
     Return a value for the title field in organization schema using a multilingual dict in the form EN | FR.
