@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{%- block datatable_column_label -%}
+  {%- set label = 'label_' + h.lang() -%}
+  {%- if label in field.info and field.info[label] -%}
+    {{ field.info[label] }}
+  {%- else -%}
+    {{ field.id }}
+  {%- endif -%}
+{%- endblock -%}
+
