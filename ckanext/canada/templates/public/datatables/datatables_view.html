@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{%- block datatable_column_label -%}
+  {%- set label = 'label_' + h.lang() -%}
+  {%- if label in field.info and field.info[label] -%}
+    {# remove encode when upgrading to CKAN 2.9 - applied as a fix for OPEN-2054 #}
+    {{ field.info[label].encode('ascii', 'xmlcharrefreplace') | safe }}
+  {%- else -%}
+    {{ field.id }}
+  {%- endif -%}
+{%- endblock -%}
+
