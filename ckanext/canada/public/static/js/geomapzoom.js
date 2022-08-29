@@ -1,5 +1,5 @@
 window.addEventListener('load', function(){
-    b.doc.on( "wb-ready.wb-geomap", "#dataset_map", function( event, map ) {
+    wb.doc.on( "wb-ready.wb-geomap", "#dataset_map", function( event, map ) {
         // Get the map to use in zoomFeature function
         var myMap = map;
         var layer;
