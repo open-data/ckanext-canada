@@ -522,7 +522,8 @@ upload-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 
 .PHONY: rebuild-nap5
 rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
-	# no search for nap5 yet
+	@$(oc_search) nap5_preprocess_csv --csv "$(workdir)/filtered/nap5.csv" --out "$(workdir)/filtered/nap5_search.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap5_search.csv" --search nap5
 
 $(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
