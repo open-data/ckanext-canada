@@ -290,6 +290,8 @@
 
             setTimeout(function(){
 
+              if( votingWrapper.getElementsByTagName('form').length == 0 ){ return; }
+
               if( ! hasLoadedVotingScripts ){
 
                 votingScripts.forEach(function(_scriptSource){
@@ -347,7 +349,7 @@
     }
 
   }
-  
+
   load_voting_scripts();
 </script>
 {{ super() }}
