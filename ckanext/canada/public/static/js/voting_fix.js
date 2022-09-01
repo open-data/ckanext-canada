@@ -53,6 +53,8 @@ function load_voting_scripts(){
           }
           votingWrapper.style.pointerEvents = 'all';
 
+          observer.disconnect();
+
         },750);
 
         //fallback if 750ms was not enough time for the form to be inserted into the dom tree
