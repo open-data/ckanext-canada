@@ -48,10 +48,22 @@ function load_voting_scripts(){
 
           hasLoadedVotingScripts = true;
 
-          votingWrapper.classList.add('og-fade-in');
+          if( ! votingWrapper.classList.contains('og-fade-in') ){
+            votingWrapper.classList.add('og-fade-in');
+          }
           votingWrapper.style.pointerEvents = 'all';
 
         },750);
+
+        //fallback if 750ms was not enough time for the form to be inserted into the dom tree
+        setTimeout(function(){
+
+          if( ! votingWrapper.classList.contains('og-fade-in') ){
+            votingWrapper.classList.add('og-fade-in');
+          }
+          votingWrapper.style.pointerEvents = 'all';
+
+        },1500);
 
       }
 
