@@ -280,6 +280,42 @@
         '/modules/contrib/webform/css/webform.element.rating.css'
       ];
 
+      function insert_voting_scripts(){
+
+        setTimeout(function(){
+
+          if( hasLoadedVotingScripts ){ return; }
+
+          if( votingWrapper.getElementsByTagName('form').length == 0 ){ return; }
+
+          votingScripts.forEach(function(_scriptSource){
+
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = _scriptSource;
+            document.head.appendChild(script);
+
+          });
+
+          votingStyles.forEach(function(_styleSource){
+
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.media = 'all';
+            link.href = _styleSource;
+            document.head.appendChild(link);
+
+          });
+
+          hasLoadedVotingScripts = true;
+
+          votingWrapper.classList.add('og-fade-in');
+          votingWrapper.style.pointerEvents = 'all';
+
+        },750);
+
+      }
+
       const observer = new MutationObserver(function(_mutations){
 
         _mutations.forEach(function(_mutation){
@@ -288,52 +324,7 @@
 
           if( attributeValue.includes('wb-data-ajax-replace-inited') ){
 
-            setTimeout(function(){
-
-              if( votingWrapper.getElementsByTagName('form').length == 0 ){ return; }
-
-              if( ! hasLoadedVotingScripts ){
-
-                votingScripts.forEach(function(_scriptSource){
-
-                  var script = document.createElement('script');
-                  script.type = 'text/javascript';
-                  script.src = _scriptSource;
-                  document.head.appendChild(script);
-
-                });
-
-                votingStyles.forEach(function(_styleSource){
-
-                  var link = document.createElement('link');
-                  link.rel = 'stylesheet';
-                  link.media = 'all';
-                  link.href = _styleSource;
-                  document.head.appendChild(link);
-
-                });
-
-              }
-
-              hasLoadedVotingScripts = true;
-
-              var fadeInVotingWrapper = setInterval(function(){
-
-                currentOpacity = parseFloat(votingWrapper.style.opacity);
-
-                if( currentOpacity >= 1 ){
-
-                  clearInterval(fadeInVotingWrapper);
-                  fadeInVotingWrapper = false;
-                  votingWrapper.style.pointerEvents = 'all';
-
-                }
-
-                votingWrapper.style.opacity = currentOpacity + 0.325;
-
-              },100);
-
-            },750);
+            insert_voting_scripts();
 
           }
 
