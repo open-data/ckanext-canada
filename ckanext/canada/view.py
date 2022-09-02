@@ -5,6 +5,14 @@ from ckantoolkit import h
 from ckan.views.dataset import EditView as DatasetEditView
 from ckan.views.resource import EditView as ResourceEditView
 
+from flask import Blueprint
+
+canada_views = Blueprint('canada', __name__)
+
+
+class IntentionalServerError(Exception):
+    pass
+
 
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type, id):
@@ -32,3 +40,7 @@ class CanadaResourceEditView(ResourceEditView):
                 h.flash_success(_(u'Resource updated.'))
         return response
 
+
+@canada_views.route('/500', methods=['GET'])
+def fivehundred():
+    raise IntentionalServerError()

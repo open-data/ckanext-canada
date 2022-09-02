@@ -74,10 +74,11 @@ ckanext.validation:presets.json
         from flask import request, current_app
         from ckanext.canada.view import (
             CanadaDatasetEditView,
-            CanadaResourceEditView
+            CanadaResourceEditView,
+            canada_views,
         )
 
-        canada = Blueprint(u'canada', __name__)
+        canada_dynamic = Blueprint(u'canada_dynamic', __name__)
 
         #FIXME: Currently `load_canada_views` fires on all flask.app requests.
         #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
@@ -90,9 +91,9 @@ ckanext.validation:presets.json
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
 
 
-        canada.before_app_request(load_canada_views)
+        canada_dynamic.before_app_request(load_canada_views)
 
-        return [canada]
+        return [canada_dynamic, canada_views]
 
 
     def before_map(self, map):
@@ -525,11 +526,6 @@ ckanext.canada:schemas/prop.yaml
             '/organization/autocomplete',
             action='organization_autocomplete',
             controller='ckanext.canada.controller:CanadaController',
-        )
-        map.connect(
-            '/500',
-            action='server_error',
-            controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
             '/api{ver:/3|}/action/{logic_function}',
