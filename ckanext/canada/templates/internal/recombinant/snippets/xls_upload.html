@@ -4,8 +4,8 @@
 {% set chromo = h.recombinant_get_chromo(resource.name) %}
 {% if chromo.create_form %}
   <a class="btn btn-default"
-     href="{% url_for controller='ckanext.canada.controller:PDUpdateController',
-     action='create_pd_record',
+     href="{% url_for
+     'canada.create_pd_record',
      owner_org=pkg.owner_org,
      resource_name=resource.name %}"><i class="glyphicon glyphicon-plus-sign"></i>
     {{ _("Create Single Record") }}</a>

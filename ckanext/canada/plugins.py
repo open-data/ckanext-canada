@@ -144,22 +144,6 @@ ckanext.validation:presets.json
             controller='package',
             action='delete'
         )
-        map.connect(
-            'create_pd_record',
-            '/create-pd-record/{owner_org}/{resource_name}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='create_pd_record',
-        )
-        map.connect(
-            'update_pd_record',
-            '/update-pd-record/{owner_org}/{resource_name}/{pk}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='update_pd_record',
-        )
-        map.connect('recombinant_type',
-                    '/recombinant/{resource_name}',
-                    action='type_redirect',
-                    controller='ckanext.canada.controller:PDUpdateController')
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
 
