@@ -291,7 +291,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurer)
-    p.implements(p.IActions)
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
@@ -480,12 +479,8 @@ ckanext.canada:schemas/prop.yaml
         )
         return map
 
-    def get_actions(self):
-        return {'inventory_votes_show': logic.inventory_votes_show}
-
     def get_auth_functions(self):
         return {
-            'inventory_votes_show': auth.inventory_votes_show,
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
