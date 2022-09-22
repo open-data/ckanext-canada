@@ -8,15 +8,17 @@ function load_voting_scripts(){
       votingWrapper.style.opacity = 0;
       votingWrapper.style.pointerEvents = 'none';
 
+      const cacheVersion = 1
+
       const votingScripts = [
         'https://cdn.jsdelivr.net/gh/gjunge/rateit.js@1.1.2/scripts/jquery.rateit.min.js',
-        '/modules/contrib/webform/js/webform.element.rating.js?v=8.7.5'
+        '/modules/contrib/webform/js/webform.element.rating.js?cv=' + cacheVersion
       ];
 
       const votingStyles = [
-        '/profiles/og/modules/custom/voting_webform/css/rating.css',
+        '/profiles/og/modules/custom/voting_webform/css/rating.css?cv=' + cacheVersion,
         'https://cdn.jsdelivr.net/gh/gjunge/rateit.js@1.1.2/scripts/rateit.css',
-        '/modules/contrib/webform/css/webform.element.rating.css'
+        '/modules/contrib/webform/css/webform.element.rating.css?cv=' + cacheVersion
       ];
 
       function insert_voting_scripts(){
