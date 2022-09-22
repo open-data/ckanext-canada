@@ -23,11 +23,11 @@ function success_message {
 
 }
 
-config_file=${PORTAL_INI};
+config_file=${REGISTRY_INI};
 
 if [[ -z "${config_file}" ]]; then
 
-    error_message '[PORTAL_INI|REGISTRY_INI] environment variable not set.';
+    error_message 'REGISTRY_INI environment variable not set.';
 
 fi
 
@@ -43,17 +43,11 @@ if [[ ! -d "/opt/tbs/tmp" ]]; then
 
 fi
 
-generated_file='/opt/tbs/wcms/smb/portal/files/ati-informal-requests-analytics.csv';
+generated_file='/opt/tbs/ckan/smb_portal/portal/public/ati-informal-requests-analytics.csv';
 
 if [[ ! -f "${generated_file}" ]]; then
 
-    generated_file='/opt/tbs/drupal/smb/portal/files/ati-informal-requests-analytics.csv';
-
-    if [[ ! -f "${generated_file}" ]]; then
-
-        error_message '/opt/tbs/[wcms|drupal]/smb/portal/files/ati-informal-requests-analytics.csv does not exist.';
-
-    fi
+    error_message '/opt/tbs/ckan/smb_portal/portal/public/ati-informal-requests-analytics.csv does not exist.';
 
 fi
 
