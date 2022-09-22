@@ -95,5 +95,9 @@
     <script type="text/javascript">_satellite.pageBottom();</script>
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
+  {% block invitation_manager_scripts %}
+    <script src="{{ h.url_for_static('/invitation-manager/Overlay.js') }}"></script>
+    <script src="{{ h.url_for_static('/invitation-manager/InvitationManager.js') }}"></script>
+  {%- endblock -%}
   {{ super() }}
 {% endblock %}

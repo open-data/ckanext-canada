@@ -67,6 +67,7 @@
 {%- block scripts -%}
   {{ super() }}
   {%- block adobe_analytics_footer -%}{%- endblock -%}
+  {% block invitation_manager_scripts %}{%- endblock -%}
   {%- block google_analytics_footer -%}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
   {%- endblock -%}

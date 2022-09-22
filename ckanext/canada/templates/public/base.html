@@ -65,6 +65,9 @@
 {%- block custom_styles %}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=7') }}" type="text/css" />
+  {%- block invitation_manager_styles -%}
+    <link rel="stylesheet" href="{{ h.url_for_static('/invitation-manager/Overlay.css') }}" type="text/css">
+  {%- endblock -%}
 {%- endblock -%}
 
 
