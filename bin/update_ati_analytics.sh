@@ -47,7 +47,13 @@ generated_file='/opt/tbs/wcms/smb/portal/files/ati-informal-requests-analytics.c
 
 if [[ ! -f "${generated_file}" ]]; then
 
-    error_message '/opt/tbs/wcms/smb/portal/files/ati-informal-requests-analytics.csv does not exist.';
+    generated_file='/opt/tbs/drupal/smb/portal/files/ati-informal-requests-analytics.csv';
+
+    if [[ ! -f "${generated_file}" ]]; then
+
+        error_message '/opt/tbs/[wcms|drupal]/smb/portal/files/ati-informal-requests-analytics.csv does not exist.';
+
+    fi
 
 fi
 
