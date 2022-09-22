@@ -23,11 +23,11 @@ function success_message {
 
 }
 
-registry_ini=${REGISTRY_INI};
+config_file=${PORTAL_INI};
 
-if [[ -z "${registry_ini}" ]]; then
+if [[ -z "${config_file}" ]]; then
 
-    error_message 'REGISTRY_INI environment variable not set.';
+    error_message '[PORTAL_INI|REGISTRY_INI] environment variable not set.';
 
 fi
 
@@ -61,7 +61,7 @@ tmp_file='/opt/tbs/tmp/ati-informal-requests-analytics.csv';
 cp ${generated_file} ${tmp_file};
 
 resource_id='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e';
-ckanapi action resource_patch -c ${registry_ini} id=${resource_id} upload@"${tmp_file}";
+ckanapi action resource_patch -c ${config_file} id=${resource_id} upload@"${tmp_file}";
 
 if [[ -f "${tmp_file}" ]]; then
 
