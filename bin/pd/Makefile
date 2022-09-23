@@ -253,7 +253,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts Quarterly...
-	@$(ogc_search)/load_ct_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
