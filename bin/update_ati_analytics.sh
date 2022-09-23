@@ -57,15 +57,23 @@ if [[ ! -f "${generated_file}" ]]; then
 
 fi
 
-tmp_file='/opt/tbs/tmp/ati-informal-requests-analytics.csv';
+tmp_dir=$(mktemp -p /opt/tbs/tmp -d);
+tmp_file="${tmp_dir}/ati-informal-requests-analytics.csv";
+
+if [[ ! -d "${tmp_dir}" ]]; then
+
+    error_message 'Failed to create temporary file directory.';
+
+fi
+
 cp ${generated_file} ${tmp_file};
 
 resource_id='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e';
 ckanapi action resource_patch -c ${config_file} id=${resource_id} upload@"${tmp_file}";
 
-if [[ -f "${tmp_file}" ]]; then
+if [[ -d "${tmp_dir}" ]]; then
 
-    rm -rf ${tmp_file};
+    rm -rf ${tmp_dir};
 
 fi
 
