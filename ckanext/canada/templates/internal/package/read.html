@@ -39,3 +39,10 @@
 {% endblock %}
 
 {% block more_like_this %}{% endblock %}
+{% if (c.pkg_dict.organization.name == 'psc-cfp') %}
+    {%- block invitation_manager_scripts -%}{%- endblock -%}
+{% endif %}
+
+{% if (c.pkg_dict.organization.name == 'psc-cfp') %}
+    {%- block invitation_manager_styles -%}{%- endblock -%}
+{% endif %}
