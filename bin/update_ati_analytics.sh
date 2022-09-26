@@ -51,7 +51,13 @@ if [[ ! -f "${generated_file}" ]]; then
 
     if [[ ! -f "${generated_file}" ]]; then
 
-        error_message '/opt/tbs/ckan/[smb_portal|smb]/portal/public/ati-informal-requests-analytics.csv does not exist.';
+        generated_file='/opt/tbs/ckan/smb/portal/public/static/ati-informal-requests-analytics.csv';
+
+        if [[ ! -f "${generated_file}" ]]; then
+
+            error_message '/opt/tbs/ckan/[smb_portal|smb]/portal/public/[static/]ati-informal-requests-analytics.csv does not exist.';
+
+        fi
 
     fi
 
