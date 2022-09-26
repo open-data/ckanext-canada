@@ -51,11 +51,17 @@ if [[ ! -f "${generated_file}" ]]; then
 
     if [[ ! -f "${generated_file}" ]]; then
 
-        generated_file='/opt/tbs/ckan/smb/portal/public/static/ati-informal-requests-analytics.csv';
+        generated_file='/opt/tbs/ckan/smb_portal/portal/public/static/ati-informal-requests-analytics.csv';
 
         if [[ ! -f "${generated_file}" ]]; then
 
-            error_message '/opt/tbs/ckan/[smb_portal|smb]/portal/public/[static/]ati-informal-requests-analytics.csv does not exist.';
+            generated_file='/opt/tbs/ckan/smb/portal/public/static/ati-informal-requests-analytics.csv';
+
+            if [[ ! -f "${generated_file}" ]]; then
+
+                error_message '/opt/tbs/ckan/[smb_portal|smb]/portal/public/[static/]ati-informal-requests-analytics.csv does not exist.';
+
+            fi
 
         fi
 
