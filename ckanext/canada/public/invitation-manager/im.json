@@ -1,11 +1,18 @@
-﻿{
+{
   "settings":
   {
     "duration-delay": 15,
     "page-probability": 0.7,
     "site-probability": 0.3,
-    "blacklist": [],
-    "whitelist": [{ "url" : "^open.canada.ca\/" }]
+    "blacklist": [{ "url": "" }],
+    "whitelist": [
+        { "url" : "^staging.open.canada.ca\/" },
+        { "url" : "^stadification.ouvert.canada.ca\/" },
+        { "url" : "^test.open.canada.ca\/" },
+        { "url" : "^essai.ouvert.canada.ca\/" },
+        { "url" : "^open.canada.ca\/" },
+        { "url" : "^ouvert.canada.ca\/" }
+    ]
   },
   "surveys" : [
   {
@@ -16,10 +23,10 @@
     "body-fr" : "Description ...",
     "link-en" : "https://forms.office.com/r/h8Y8c2Jegh",
     "link-fr" : "https://forms.office.com/r/h8Y8c2Jegh",
-    "start-on" : "2022-09-22",
-    "end-on" : "2023-09-22",
-    "type" : "Page",
-    "probability" : 0.7,
+    "start-on" : "2022-09-22T00:00:00",
+    "end-on" : "2025-09-22T23:59:00",
+    "type" : "Entire site",
+    "probability" : 0.25,
     "yes-en" : "<strong>Yes,  <span class='wb-inv'>I will take the exit survey </span> after my visit.</strong>",
     "yes-fr" : "<strong>Oui, <span class='wb-inv'>je vais participer au sondage de départ </span> après ma visite.</strong>",
     "no-en" : "No, <span class='wb-inv'>I do not want to take the exit survey, </span> thank you.",
@@ -28,7 +35,7 @@
     "close-fr" : "Fermer : Sondage de fin de visite (touche d&apos;échappement)",
     "name" : "Test_Survey",
     "survey-urls" : [
-      { "url" : "^open.canada.ca\/" }
+      { "url" : "^(staging.|test.)*open.canada.ca" }
     ]
   }
   ]
