@@ -35,7 +35,7 @@
     "close-fr" : "Fermer : Sondage de fin de visite (touche d&apos;échappement)",
     "name" : "Test_Survey",
     "survey-urls" : [
-      { "url" : "^(staging.|test.)*open.canada.ca" }
+      { "site" : "^(staging.|test.)*open.canada.ca" }
     ]
   }
   ]
