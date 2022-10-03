@@ -75,6 +75,7 @@ ckanext.validation:presets.json
         from ckanext.canada.view import (
             CanadaDatasetEditView,
             CanadaResourceEditView,
+            CanadaResourceCreateView,
             canada_views,
         )
 
@@ -89,6 +90,8 @@ ckanext.validation:presets.json
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'resource.edit':
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
+            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'resource.new':
+                return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
 
 
         canada_dynamic.before_app_request(load_canada_views)
