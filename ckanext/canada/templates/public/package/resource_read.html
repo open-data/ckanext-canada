@@ -25,13 +25,17 @@
     <ul class="dropdown-menu">
       <li>
         <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, bom=True) }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"><span>CSV</span></a>
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>CSV</span></a>
         <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='tsv', bom=True) }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"><span>TSV</span></a>
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
         <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='json') }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"><span>JSON</span></a>
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
         <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='xml')}}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"><span>XML</span></a>
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
     </ul>
   {%endif%}
