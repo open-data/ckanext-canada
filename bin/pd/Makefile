@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap nap5 reclassification service travela travelq wrongdoing adminaircraft
+	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -484,7 +484,7 @@ upload-nap: $(workdir)/filtered/nap.csv
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
 	@$(echo_date) Rebuilding National Action Plan...
-	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+	# $(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
