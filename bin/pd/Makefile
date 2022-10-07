@@ -15,7 +15,7 @@ csv_files := \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
-	nap.csv nap5.csv \
+	nap5.csv \
         reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
         travela.csv \
