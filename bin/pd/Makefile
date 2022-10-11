@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap nap5 reclassification service travela travelq wrongdoing adminaircraft
+	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -15,7 +15,7 @@ csv_files := \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
-	nap.csv nap5.csv \
+	nap5.csv \
         reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
         travela.csv \
@@ -238,7 +238,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts Quarterly...
-	@$(ogc_search)/load_ct_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
@@ -484,7 +484,7 @@ upload-nap: $(workdir)/filtered/nap.csv
 .PHONY: rebuild-nap
 rebuild-nap: $(workdir)/filtered/nap.csv
 	@$(echo_date) Rebuilding National Action Plan...
-	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+	# $(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
 
 $(workdir)/nap.csv:
 	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
@@ -507,7 +507,8 @@ upload-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 
 .PHONY: rebuild-nap5
 rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
-	# no search for nap5 yet
+	@$(oc_search) nap5_preprocess_csv --csv "$(workdir)/filtered/nap5.csv" --out "$(workdir)/filtered/nap5_search.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap5_search.csv" --search nap5
 
 $(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)

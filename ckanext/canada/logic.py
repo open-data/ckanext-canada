@@ -10,7 +10,6 @@ from ckan.authz import is_sysadmin
 from pylons import config
 import functools
 
-from ckanext.canada.wcms import inventory_votes
 from sqlalchemy import func
 from sqlalchemy import or_
 
@@ -187,8 +186,3 @@ def datastore_create_temp_user_table(context):
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
 
-
-@side_effect_free
-def inventory_votes_show(context, data_dict):
-    check_access('inventory_votes_show', context, data_dict)
-    return inventory_votes()

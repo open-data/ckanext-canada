@@ -330,7 +330,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurer)
-    p.implements(p.IActions)
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
@@ -522,13 +521,12 @@ ckanext.canada:schemas/prop.yaml
 
     # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
-        return {'inventory_votes_show': logic.inventory_votes_show,
+        return {
                 'datastore_upsert': datastore_upsert,
                 'datastore_delete': datastore_delete}
 
     def get_auth_functions(self):
         return {
-            'inventory_votes_show': auth.inventory_votes_show,
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,

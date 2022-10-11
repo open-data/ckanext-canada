@@ -3,7 +3,6 @@ import re
 from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
 import ckan.model as model
-import wcms
 import datetime
 import unicodedata
 import ckan as ckan
