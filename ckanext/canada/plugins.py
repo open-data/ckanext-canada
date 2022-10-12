@@ -75,6 +75,7 @@ ckanext.validation:presets.json
         from ckanext.canada.view import (
             CanadaDatasetEditView,
             CanadaResourceEditView,
+            CanadaResourceCreateView,
             canada_views,
         )
 
@@ -85,10 +86,12 @@ ckanext.validation:presets.json
         #       However, IBlueprint implementations are loaded before the above, so changes to them
         #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
         def load_canada_views():
-            if request.endpoint == 'dataset.edit':
+            if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'resource.edit':
+            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit':
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
+            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new':
+                return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
 
 
         canada_dynamic.before_app_request(load_canada_views)

@@ -4,6 +4,7 @@ from ckan.plugins.toolkit import (
 
 from ckan.views.dataset import EditView as DatasetEditView
 from ckan.views.resource import EditView as ResourceEditView
+from ckan.views.resource import CreateView as ResourceCreateView
 from ckan.authz import is_sysadmin
 from ckan.logic import parse_params
 
@@ -48,6 +49,15 @@ class CanadaResourceEditView(ResourceEditView):
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource updated.'))
+        return response
+
+
+class CanadaResourceCreateView(ResourceCreateView):
+    def post(self, package_type, id):
+        response = super(CanadaResourceCreateView, self).post(package_type, id)
+        if hasattr(response, 'status_code'):
+            if response.status_code == 200 or response.status_code == 302:
+                h.flash_success(_(u'Resource added.'))
         return response
 
 
