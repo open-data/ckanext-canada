@@ -10,7 +10,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckan.plugins.toolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound, _
+from ckan.plugins.toolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound, _, get_validator
 import ckanapi
 from ckan.lib.base import c
 
@@ -88,9 +88,9 @@ ckanext.validation:presets.json
         def load_canada_views():
             if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit':
+            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new':
+            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new' or request.endpoint == 'resource.new':
                 return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
 
 
@@ -298,7 +298,8 @@ def resource_view_create_bilingual(up_func, context, data_dict):
             context,
             schema=dict(
                 s,
-                title_fr=list(s['title']),
+                title=[get_validator('default')('View'), get_validator('unicode_safe')],
+                title_fr=[get_validator('default')('Voir'), get_validator('unicode_safe')],
                 description_fr=list(s['description']),
             ),
         ),
