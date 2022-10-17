@@ -299,8 +299,9 @@ def resource_view_create_bilingual(up_func, context, data_dict):
             schema=dict(
                 s,
                 title=[get_validator('default')('View'), get_validator('unicode_safe')],
-                title_fr=[get_validator('default')('Voir'), get_validator('unicode_safe')],
-                description_fr=list(s['description']),
+                title_fr=[get_validator('default')('Vue'), get_validator('unicode_safe')],
+                description=[get_validator('default')(''), get_validator('unicode_safe')],
+                description_fr=[get_validator('default')(''), get_validator('unicode_safe')],
             ),
         ),
         data_dict
