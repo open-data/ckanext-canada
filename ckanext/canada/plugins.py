@@ -63,9 +63,10 @@ class DataGCCAInternal(p.SingletonPlugin):
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
-ckanext.validation:presets.json
-"""
-
+""" + (
+	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
+	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
+)
 
     def before_map(self, map):
         map.connect(
