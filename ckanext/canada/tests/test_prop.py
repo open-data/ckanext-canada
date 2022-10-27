@@ -2,6 +2,7 @@
 from ckan.tests.helpers import FunctionalTestBase, call_action
 from ckan.tests import factories
 import ckan.lib.search as search
+from ckanext.canada.tests.factories import Canada_Organization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
 import json
@@ -67,7 +68,7 @@ class TestSuggestedDataset(FunctionalTestBase):
 
     def test_simple_suggestion(self):
         lc = LocalCKAN()
-        org = factories.Organization()
+        org = Organization()
         resp = lc.action.package_create(
             owner_org=org['name'],
             **SIMPLE_SUGGESTION)
@@ -77,7 +78,7 @@ class TestSuggestedDataset(FunctionalTestBase):
     def test_normal_user_cant_create(self):
         user = factories.User()
         lc = LocalCKAN(username=user['name'])
-        org = factories.Organization(users=[
+        org = Organization(users=[
                 {
                     'name': user['name'],
                     'capacity': 'editor',
@@ -93,7 +94,7 @@ class TestSuggestedDataset(FunctionalTestBase):
         user = factories.User()
         slc = LocalCKAN()
         ulc = LocalCKAN(username=user['name'])
-        org = factories.Organization(users=[
+        org = Organization(users=[
                 {
                     'name': user['name'],
                     'capacity': 'editor',
@@ -112,7 +113,7 @@ class TestSuggestedDataset(FunctionalTestBase):
 
     def test_responses_ordered(self):
         lc = LocalCKAN()
-        org = factories.Organization()
+        org = Organization()
         resp = lc.action.package_create(
             owner_org=org['name'],
             **UPDATED_SUGGESTION)
