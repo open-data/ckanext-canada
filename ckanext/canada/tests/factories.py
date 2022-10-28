@@ -1,6 +1,6 @@
 from ckan.tests.factories import Organization
 
-class Canada_Organization(Organization):
+class CanadaOrganization(Organization):
     shortform = {
         'en': 'Test Org Shortform',
         'fr': 'Test FR Org Shortform'
