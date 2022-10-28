@@ -5,6 +5,7 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 from ckan.plugins.toolkit import Invalid
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
 import json
@@ -54,8 +55,10 @@ class TestNAVLSchema(FunctionalTestBase):
     def setup(self):
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
-        self.org = factories.Organization(
-            title='en org name | fr org name')
+        self.org = Organization(title_translated = {
+            'en': 'en org name',
+            'fr': 'fr org name'
+        })
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action
