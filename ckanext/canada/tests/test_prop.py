@@ -2,7 +2,7 @@
 from ckan.tests.helpers import FunctionalTestBase, call_action
 from ckan.tests import factories
 import ckan.lib.search as search
-from ckanext.canada.tests.factories import Canada_Organization as Organization
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
 import json

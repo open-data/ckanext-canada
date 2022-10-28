@@ -5,7 +5,7 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 from ckan.plugins.toolkit import Invalid
-from ckanext.canada.tests.factories import Canada_Organization as Organization
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
 import json
