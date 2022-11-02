@@ -23,7 +23,7 @@ jobs:
     name: CKAN ${{ matrix.ckan-version }}
     runs-on: ubuntu-20.04
     container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+      image: openknowledge/ckan-dev:2.8
     services:
       solr:
         image: opendatacanada/solr
