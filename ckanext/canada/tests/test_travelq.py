@@ -3,7 +3,7 @@ from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
 from ckan.tests.helpers import FunctionalTestBase
-from ckan.tests.factories import Organization
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 

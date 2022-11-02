@@ -64,9 +64,10 @@ class DataGCCAInternal(p.SingletonPlugin):
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
-ckanext.validation:presets.json
-"""
-
+""" + (
+	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
+	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
+)
 
     def get_blueprint(self):
         # type: () -> list[Blueprint]
@@ -366,7 +367,6 @@ ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
-ckanext.canada:tables/nap.yaml
 ckanext.canada:tables/nap5.yaml
 ckanext.canada:tables/experiment.yaml
 ckanext.canada:tables/adminaircraft.yaml
