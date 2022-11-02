@@ -17,7 +17,7 @@ jobs:
     # needs: lint
     strategy:
       matrix:
-        ckan-version: [2.8]
+        ckan-version: [2.9]
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
@@ -57,16 +57,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set CKAN to open-data/ckan@canada-v2.8
+    - name: Set CKAN to open-data/ckan@canada-v2.9
       run: |
         pip uninstall -y ckan
         git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ remote add canada https://github.com/open-data/ckan.git 
-        git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-v2.8
-        git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-v2.8 canada/canada-v2.8
+        git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-v2.9
+        git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-v2.9 canada/canada-v2.9
         git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ pull
     - name: Install requirements
       run: |
-        pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
+        pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements-py2.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
         pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
         pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
         pip install -e 'git+https://github.com/open-data/ckanext-extendedactivity.git#egg=ckanext-extendedactivity'
@@ -77,8 +77,8 @@ jobs:
         pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
         pip install -e 'git+https://github.com/open-data/goodtables.git@canada#egg=goodtables' -r 'https://raw.githubusercontent.com/open-data/goodtables/canada/requirements.txt'
         pip install -e 'git+https://github.com/open-data/ckanext-wet-boew.git#egg=ckanext-wet-boew' -r 'https://raw.githubusercontent.com/open-data/ckanext-wet-boew/master/requirements.txt'
-    - name: Setup extension (CKAN 2.8)
-      if: ${{ matrix.ckan-version == '2.8' }}
+    - name: Setup extension (CKAN 2.9)
+      if: ${{ matrix.ckan-version == '2.9' }}
       run: |
         ln -s \/srv\/app\/src\/ckan\/test-core.ini .\/links\/test-core.ini
         ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini
@@ -87,8 +87,8 @@ jobs:
         python2 setup.py develop
         . .\/links\/ckan\/bin\/postgres_init\/1_create_ckan_db.sh
         . .\/links\/ckan\/bin\/postgres_init\/2_create_ckan_datastore_db.sh
-        paster --plugin=ckan db init -c test-core.ini
-        paster --plugin=ckan datastore set-permissions -c test-core.ini | psql -U postgres --set ON_ERROR_STOP=1
+        ckan -c test-core.ini db init
+        ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
         paster --plugin=ckanext-canada canada update-triggers -c test-core.ini
         python2 .\/bin\/download_country.py
     - name: Run all tests
