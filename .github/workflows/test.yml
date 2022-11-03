@@ -71,7 +71,6 @@ jobs:
         pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements-py2.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
         pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
         pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
-        pip install -e 'git+https://github.com/open-data/ckanext-extendedactivity.git#egg=ckanext-extendedactivity'
         pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
         pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
         pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
