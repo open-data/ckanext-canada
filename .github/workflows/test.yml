@@ -96,4 +96,4 @@ jobs:
         python2 .\/bin\/download_country.py
     - name: Run all tests
       run: |
-        nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests
+        pytest --ckan-ini=test-core.ini ckanext/canada/tests
