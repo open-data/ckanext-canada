@@ -1,11 +1,13 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
+from ckan.tests.helpers import call_action
 from ckan.tests import factories
 import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+
+import pytest
 
 from ckanapi import LocalCKAN, ValidationError
 import json
@@ -49,10 +51,10 @@ class TestCanadaTags(object):
     def test_separator(self):
         assert_raises(Invalid, canada_tags, u'one line\u2028two', {})
 
+@pytest.mark.usefixtures('clean_db')
+class TestNAVLSchema(object):
 
-class TestNAVLSchema(FunctionalTestBase):
-
-    def setup(self):
+    def __init__(self):
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
         self.org = Organization(title_translated = {

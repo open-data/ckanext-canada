@@ -3,7 +3,7 @@ import tempfile
 from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo, get_geno
@@ -15,9 +15,9 @@ from openpyxl import load_workbook, Workbook
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
-class TestXlsUpload(FunctionalTestBase):
-    def setup(self):
-        super(TestXlsUpload, self).setup()
+@pytest.mark.usefixtures('clean_db')
+class TestXlsUpload(object):
+    def __init__(self):
         self.org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=self.org['name'])

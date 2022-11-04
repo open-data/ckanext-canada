@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
+from ckan.tests.helpers import call_action
 from ckan.tests import factories
 import ckan.lib.search as search
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+
+import pytest
 
 from ckanapi import LocalCKAN, ValidationError
 import json
@@ -64,7 +66,8 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     ]
 )
 
-class TestSuggestedDataset(FunctionalTestBase):
+@pytest.mark.usefixtures('clean_db')
+class TestSuggestedDataset(object):
 
     def test_simple_suggestion(self):
         lc = LocalCKAN()

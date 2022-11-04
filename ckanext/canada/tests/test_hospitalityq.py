@@ -2,14 +2,14 @@
 from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestHospitalityQ(FunctionalTestBase):
-    def setup(self):
-        super(TestHospitalityQ, self).setup()
+@pytest.mark.usefixtures('clean_db')
+class TestHospitalityQ(object):
+    def __init__(self):
         org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='hospitalityq', owner_org=org['name'])
@@ -31,9 +31,9 @@ class TestHospitalityQ(FunctionalTestBase):
             records=[{}])
 
 
-class TestHospitalityQNil(FunctionalTestBase):
-    def setup(self):
-        super(TestHospitalityQNil, self).setup()
+@pytest.mark.usefixtures('clean_db')
+class TestHospitalityQNil(object):
+    def __init__(self):
         org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='hospitalityq', owner_org=org['name'])

@@ -9,9 +9,10 @@ from ckan.tests import *
 import ckan.model as model
 from ckan.lib.create_test_data import CreateTestData
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
 
-class TestNew(FunctionalTestBase):
+@pytest.mark.usefixtures('clean_db')
+class TestNew(object):
     pkg_names = []
 
     def test_new_required_fields(self):

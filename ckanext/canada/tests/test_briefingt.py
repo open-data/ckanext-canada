@@ -2,14 +2,14 @@
 from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestBriefingT(FunctionalTestBase):
-    def setup(self):
-        super(TestBriefingT, self).setup()
+@pytest.mark.usefixtures('clean_db')
+class TestBriefingT(object):
+    def __init__(self):
         org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='briefingt', owner_org=org['name'])
