@@ -9,7 +9,7 @@ from ckanext.recombinant.tables import get_chromo
 
 @pytest.mark.usefixtures('clean_db')
 class TestConsultations(object):
-    def __inti__(self):
+    def __init__(self):
         org = Organization()
         lc = LocalCKAN()
         lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])

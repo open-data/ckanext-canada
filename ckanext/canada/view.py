@@ -17,12 +17,43 @@ from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from flask import Blueprint
 
 from ckanext.canada.urlsafe import url_part_unescape
+from ckanext.canada.controller import notice_no_access
 
 canada_views = Blueprint('canada', __name__)
 
-
 class IntentionalServerError(Exception):
     pass
+
+
+def login():
+    from ckan.views.user import _get_repoze_handler
+
+    came_from = h.url_for(u'canada.logged_in')
+    c.login_handler = h.url_for(
+        _get_repoze_handler(u'login_handler_path'), came_from=came_from)
+    return render(u'user/login.html', {})
+
+
+def logged_in():
+    if c.user:
+        user_dict = get_action('user_show')(None, {'id': c.user})
+
+        h.flash_success(
+            _('<strong>Note</strong><br>{0} is now logged in').format(
+                user_dict['display_name']
+            ),
+            allow_html=True
+        )
+
+        notice_no_access()
+
+        return h.redirect_to(
+            controller='ckanext.canada.controller:CanadaController',
+            action='home')
+    else:
+        err = _(u'Login failed. Bad username or password.')
+        h.flash_error(err)
+        return h.redirect_to('user.login')
 
 
 class CanadaDatasetEditView(DatasetEditView):
@@ -342,3 +373,6 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
             data[f['datastore_id']] = val
 
     return data, err
+
+
+canada_views.add_url_rule(u'/logged_in', view_func=logged_in)

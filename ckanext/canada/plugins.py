@@ -20,6 +20,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.canada import search_integration
+from ckanext.canada.controller import notice_no_access
 from ckanext.xloader.interfaces import IXloader
 import json
 
@@ -78,6 +79,7 @@ ckanext.canada:schemas/presets.yaml
             CanadaResourceEditView,
             CanadaResourceCreateView,
             canada_views,
+            login,
         )
 
         canada_dynamic = Blueprint(u'canada_dynamic', __name__)
@@ -87,6 +89,8 @@ ckanext.canada:schemas/presets.yaml
         #       However, IBlueprint implementations are loaded before the above, so changes to them
         #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
         def load_canada_views():
+            if request.endpoint == 'user.login':
+                return current_app.finalize_request(login(**request.view_args))
             if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
@@ -94,11 +98,9 @@ ckanext.canada:schemas/presets.yaml
             if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new' or request.endpoint == 'resource.new':
                 return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
 
-
         canada_dynamic.before_app_request(load_canada_views)
 
         return [canada_dynamic, canada_views]
-
 
     def before_map(self, map):
         map.connect(
@@ -682,7 +684,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 'wbdisable:"false"', '')
         except Exception:
             pass
-        from pylons import c
+        from ckan.plugins.toolkit import c
         try:
             c.fields_grouped.pop('wbdisable', None)
         except Exception:

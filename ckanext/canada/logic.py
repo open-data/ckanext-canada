@@ -4,10 +4,9 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, check_access, chained_action)
+    get_or_bust, ValidationError, side_effect_free, check_access, chained_action, config)
 from ckan.authz import is_sysadmin
 
-from pylons import config
 import functools
 
 from sqlalchemy import func

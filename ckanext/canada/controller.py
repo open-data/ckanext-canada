@@ -33,8 +33,7 @@ from ckan.controllers.package import PackageController
 
 from ckanext.canada.helpers import normalize_strip_accents, canada_date_str_to_datetime
 from ckanext.canada.urlsafe import url_part_escape, url_part_unescape
-from pylons.i18n import _
-from pylons import config, session
+from ckan.plugins.toolkit import _, config
 
 from ckantoolkit import (
     c,
@@ -332,51 +331,6 @@ def datatablify(v, colname):
 
 
 class CanadaUserController(UserController):
-    def logged_in(self):
-        # we need to set the language via a redirect
-
-        # Lang is not being retrieved properly by the Babel i18n lib in
-        # this redirect, so using this clunky workaround for now.
-        lang = session.pop('lang', None)
-        if lang is None:
-            came_from = request.params.get('came_from', '')
-            if came_from.startswith('/fr'):
-                lang = 'fr'
-            else:
-                lang = 'en'
-
-        session.save()
-
-        # we need to set the language explicitly here or the flash
-        # messages will not be translated.
-        i18n.set_lang(lang)
-
-        if c.user:
-            context = None
-            data_dict = {'id': c.user}
-
-            user_dict = get_action('user_show')(context, data_dict)
-
-            h.flash_success(
-                _('<strong>Note</strong><br>{0} is now logged in').format(
-                    user_dict['display_name']
-                ),
-                allow_html=True
-            )
-
-            notice_no_access()
-
-            return h.redirect_to(
-                controller='ckanext.canada.controller:CanadaController',
-                action='home',
-                locale=lang)
-        else:
-            error_summary = _('Login failed. Bad username or password.')
-            # replace redirect with a direct call to login controller
-            # pass error_summary to controller as error
-            # so that it can be captured for GA events in our overridden templates
-            return UserController.login(self, error_summary)
-
     def register(self, data=None, errors=None, error_summary=None):
         '''GET to display a form for registering a new user.
            or POST the form data to actually do the user registration.
