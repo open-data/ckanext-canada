@@ -20,7 +20,6 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.canada import search_integration
-from ckanext.canada.controller import notice_no_access
 from ckanext.xloader.interfaces import IXloader
 import json
 
