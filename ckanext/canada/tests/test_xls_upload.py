@@ -6,7 +6,7 @@ import pytest
 from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
 
 from ckanext.recombinant.tables import get_chromo, get_geno
-from ckanext.recombinant.controller import _process_upload_file
+from ckanext.recombinant.views import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
 from openpyxl import load_workbook, Workbook
