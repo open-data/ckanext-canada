@@ -74,15 +74,24 @@ class TestCanadaTags(object):
 
 
 @pytest.mark.usefixtures('clean_db', 'prepare_org_editor_member')
+@pytest.mark.parametrize(
+    'prepare_org_editor_member',
+    [{
+        'sysadmin_user': 'test_sysadmin_validation',
+        'normal_user': 'test_user_validation',
+        'org_name': 'test_org_validation',
+    }],
+    indirect=True)
 class TestNAVLSchema(object):
     @classmethod
     def setup_class(self):
-        self.sysadmin_user = factories.Sysadmin()
-        self.normal_user = factories.User()
-        self.org = Organization(title_translated = {
-            'en': 'en org name',
-            'fr': 'fr org name'
-        })
+        self.sysadmin_user = factories.Sysadmin(name = 'test_sysadmin_validation')
+        self.normal_user = factories.User(name = 'test_user_validation')
+        self.org = Organization(
+            name = 'test_org_validation',
+            title_translated = {
+                'en': 'en org name',
+                'fr': 'fr org name'})
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action

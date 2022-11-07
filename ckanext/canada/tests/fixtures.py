@@ -1,6 +1,6 @@
 import pytest
 from ckanapi import LocalCKAN
-from ckan.tests.factories import Sysadmin, User
+from ckan.tests.factories import Sequence
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 import logging
@@ -36,17 +36,17 @@ def prepare_dataset_type_with_resources(request):
 
 @pytest.fixture
 def prepare_org_editor_member(request):
-    sysadmin_user = Sysadmin()
-    normal_user = User()
-    org = Organization()
+    sysadmin_user = request.param.get('sysadmin_user', Sequence(lambda n: "test_sysadmin_{0:02d}".format(n)))
+    normal_user = request.param.get('normal_user', Sequence(lambda n: "test_user_{0:02d}".format(n)))
+    org_name = request.param.get('org_name', Sequence(lambda n: "test_org_{0:02d}".format(n)))
 
     sysadmin_action = LocalCKAN(
-        username=sysadmin_user['name']).action
+        username=sysadmin_user).action
 
     sysadmin_action.organization_member_create(
-        username=normal_user['name'],
-        id=org['name'],
+        username=normal_user,
+        id=org_name,
         role='editor')
 
-    log.info('Creating member with username: {}'.format(normal_user['name']))
-    log.info('Adding member as an editor to orginaztion: {}'.format(org['name']))
+    log.info('Creating member with username: {}'.format(normal_user))
+    log.info('Adding member as an editor to orginaztion: {}'.format(org_name))
