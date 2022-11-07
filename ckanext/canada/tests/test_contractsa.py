@@ -1,48 +1,49 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
 
 from ckanext.recombinant.tables import get_chromo
 
-@pytest.mark.usefixtures('clean_db')
-class TestContractsA(object):
-    def __init__(self):
-        org = Organization()
-        lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='contractsa', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='contractsa', owner_org=org['name'])
-        self.resource_id = rval['resources'][0]['id']
 
-    def test_example(self):
+@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
+@pytest.mark.parametrize(
+    'prepare_dataset_type_with_resources',
+    [{'dataset_type': 'contractsa'}],
+    indirect=True)
+class TestContractsA(object):
+    def test_example(self, request):
         lc = LocalCKAN()
         record = get_chromo('contractsa')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=self.resource_id,
+            resource_id=request.config.cache.get("resource_id", None),
             records=[record])
 
-    def test_blank(self):
-        lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
-            records=[{}])
 
-    def test_year(self):
+    def test_blank(self, request):
+        lc = LocalCKAN()
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=request.config.cache.get("resource_id", None),
+                records=[{}])
+        assert ve is not None
+
+
+    def test_year(self, request):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contractsa')['examples']['record'],
             year='2050')
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=self.resource_id,
+                resource_id=request.config.cache.get("resource_id", None),
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'year': [
                 'This must list the year you are reporting on (not the fiscal year).'],
         }
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]

@@ -1,40 +1,40 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
 
 from ckanext.recombinant.tables import get_chromo
 
-@pytest.mark.usefixtures('clean_db')
-class TestConsultations(object):
-    def __init__(self):
-        org = Organization()
-        lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
-        self.resource_id = rval['resources'][0]['id']
 
-    def test_example(self):
+@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
+@pytest.mark.parametrize(
+    'prepare_dataset_type_with_resources',
+    [{'dataset_type': 'consultations'}],
+    indirect=True)
+class TestConsultations(object):
+    def test_example(self, request):
         lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=self.resource_id,
+            resource_id=request.config.cache.get("resource_id", None),
             records=[record])
 
-    def test_blank(self):
-        lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
-            records=[{}])
 
-    def test_multiple_errors(self):
+    def test_blank(self, request):
         lc = LocalCKAN()
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=self.resource_id,
+                resource_id=request.config.cache.get("resource_id", None),
+                records=[{}])
+        assert ve is not None
+
+
+    def test_multiple_errors(self, request):
+        lc = LocalCKAN()
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=request.config.cache.get("resource_id", None),
                 records=[{
                     'registration_number': 'CCC0249',
                     'publishable': 'Q',
@@ -51,7 +51,7 @@ class TestConsultations(object):
                     'high_profile': "Y",
                     'report_available_online': "N",
                     }])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'publishable': ['Invalid choice: "Q"'],
             'subjects': ['Invalid choice: "GEO,MATH"'],
@@ -63,17 +63,19 @@ class TestConsultations(object):
             'rationale': ['This field must not be empty'],
             }
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
 
-    def test_not_going_forward_unpublished(self):
+
+    def test_not_going_forward_unpublished(self, request):
         lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=self.resource_id,
+                resource_id=request.config.cache.get("resource_id", None),
                 records=[dict(record, publishable='Y', status='NF')])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
             }
-        assert_equal(err, expected)
+        assert err == expected

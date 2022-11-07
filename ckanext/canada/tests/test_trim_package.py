@@ -3,12 +3,13 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 
+import pytest
+
 from ckanapi import TestAppCKAN, ValidationError
 import json
-from nose.plugins.skip import SkipTest
+
 
 class TestTrimPackage(WsgiAppCase, CheckMethods):
-
     @classmethod
     def setup_class(cls):
         cls.example_pkg = [
@@ -16,11 +17,12 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
 
 
     def test_identify_unchanged(self):
-        raise SkipTest('XXX: trim package needs to be updated for our new schemas')
+        pytest.skip('XXX: trim package needs to be updated for our new schemas')
         for p in self.example_pkg:
             resp = self.sysadmin_action.package_create(**p)
 
             self._trim_compare(p, resp)
+
 
     def _trim_compare(self, original, existing):
         "make a copy of original so that it is not modified"

@@ -1,4 +1,5 @@
 from ckan.tests.factories import Organization
+from uuid import uuid4
 
 class CanadaOrganization(Organization):
     shortform = {
@@ -10,3 +11,4 @@ class CanadaOrganization(Organization):
         'fr': 'Test FR Org Title'
     }
     faa_schedule = 'NA'
+    name = uuid4().hex

@@ -8,7 +8,7 @@ import pytest
 
 from ckanapi import LocalCKAN, ValidationError
 import json
-from nose.tools import assert_raises, assert_equal
+
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -32,6 +32,7 @@ SIMPLE_SUGGESTION = {
     'status': [],
 }
 
+
 COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
         {
@@ -44,6 +45,7 @@ COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
         },
     ]
 )
+
 
 UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
@@ -66,9 +68,9 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     ]
 )
 
+
 @pytest.mark.usefixtures('clean_db')
 class TestSuggestedDataset(object):
-
     def test_simple_suggestion(self):
         lc = LocalCKAN()
         org = Organization()
@@ -77,6 +79,7 @@ class TestSuggestedDataset(object):
             **SIMPLE_SUGGESTION)
 
         assert 'status' not in resp
+
 
     def test_normal_user_cant_create(self):
         user = factories.User()
@@ -88,10 +91,12 @@ class TestSuggestedDataset(object):
                 }
             ]
         )
-        assert_raises(ValidationError,
-            lc.action.package_create,
-            owner_org=org['name'],
-            **SIMPLE_SUGGESTION)
+        with pytest.raises(ValidationError) as ve:
+            lc.action.package_create(
+                owner_org=org['name'],
+                **SIMPLE_SUGGESTION)
+        assert ve is not None
+
 
     def test_normal_user_can_update(self):
         user = factories.User()
@@ -113,6 +118,7 @@ class TestSuggestedDataset(object):
             **COMPLETE_SUGGESTION)
 
         assert resp['status'][0]['reason'] == 'under_review'
+
 
     def test_responses_ordered(self):
         lc = LocalCKAN()

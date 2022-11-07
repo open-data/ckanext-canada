@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
 import tempfile
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN
 
 import pytest
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
 
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.controller import _process_upload_file
@@ -15,34 +14,33 @@ from openpyxl import load_workbook, Workbook
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
-@pytest.mark.usefixtures('clean_db')
+@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
+@pytest.mark.parametrize(
+    'prepare_dataset_type_with_resources',
+    [{
+        'dataset_type': 'wrongdoing',
+        'cache_variables': ['org', 'pkg_id']
+    }],
+    indirect=True)
 class TestXlsUpload(object):
-    def __init__(self):
-        self.org = Organization()
+    def test_upload_empty(self, request):
         lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=self.org['name'])
-        rval = lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=self.org['name'])
-        self.pkg_id = rval['id']
-
-    
-    def test_upload_empty(self):
-        lc = LocalCKAN()
-        wb = excel_template('wrongdoing', self.org)
+        wb = excel_template('wrongdoing', request.config.cache.get("org", None))
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
-        with assert_raises(BadExcelData) as e:
+        with pytest.raises(BadExcelData) as e:
             _process_upload_file(
                 lc,
-                lc.action.package_show(id=self.pkg_id),
+                lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
                 f.name,
                 get_geno('wrongdoing'),
                 True)
-        assert_equal('The template uploaded is empty', e.exception.message)
+        assert e.value.message == 'The template uploaded is empty'
 
 
-    def test_upload_example(self):
+    def test_upload_example(self, request):
         lc = LocalCKAN()
-        wb = excel_template('wrongdoing', self.org)
+        wb = excel_template('wrongdoing', request.config.cache.get("org", None))
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
 
         # Enter the example record into the excel template
@@ -52,29 +50,22 @@ class TestXlsUpload(object):
 
         _process_upload_file(
             lc,
-            lc.action.package_show(id=self.pkg_id),
+            lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
             f.name,
             get_geno('wrongdoing'),
             True)
 
 
-    def test_upload_wrong_type(self):
+    def test_upload_wrong_type(self, request):
         lc = LocalCKAN()
-        wb = excel_template('travela', self.org)
+        wb = excel_template('travela', request.config.cache.get("org", None))
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
-        with assert_raises(BadExcelData) as e:
+        with pytest.raises(BadExcelData) as e:
             _process_upload_file(
                 lc,
-                lc.action.package_show(id=self.pkg_id),
+                lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
                 f.name,
                 get_geno('wrongdoing'),
                 True)
-        assert_equal('Invalid file for this data type. Sheet must be labeled "wrongdoing", but you supplied a sheet labeled "travela"',
-            e.exception.message)
-
-        
-        
-
-    
-            
+        assert e.value.message == 'Invalid file for this data type. Sheet must be labeled "wrongdoing", but you supplied a sheet labeled "travela"'

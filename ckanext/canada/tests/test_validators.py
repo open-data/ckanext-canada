@@ -8,11 +8,10 @@ from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 import pytest
+from ckanext.canada.tests.fixtures import prepare_org_editor_member
 
 from ckanapi import LocalCKAN, ValidationError
 import json
-from nose.plugins.skip import SkipTest
-from nose.tools import assert_raises, assert_equal
 
 from ckanext.canada.validators import canada_tags
 
@@ -21,40 +20,63 @@ class TestCanadaTags(object):
     def test_simple(self):
         canada_tags(u'hello', {})
 
+
     def test_too_short(self):
-        assert_raises(Invalid, canada_tags, u'h', {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags(u'h', {})
+        assert ie is not None
+
 
     def test_too_long(self):
-        assert_raises(Invalid, canada_tags, u'z' * 141, {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags(u'z' * 141, {})
+        assert ie is not None
+
 
     def test_barely_fits(self):
         canada_tags(u'z' * 140, {})
 
+
     def test_comma(self):
-        assert_raises(Invalid, canada_tags, u'who,me', {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags(u'who,me', {})
+        assert ie is not None
+
 
     def test_strip_whitespace(self):
-        assert_equal(canada_tags(u'  hello world\n ', {}), u'hello world')
+        assert canada_tags(u'  hello world\n ', {}) == u'hello world'
+
 
     def test_consecutive_spaces(self):
-        assert_raises(Invalid, canada_tags, u'hello  world', {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags( u'hello  world', {})
+        assert ie is not None
+
 
     def test_punctuation(self):
         canada_tags(u'yes we accept this ´‘’– —:;.!', {})
 
+
     def test_symbols(self):
         canada_tags(u'₩₮¬× this is fine too', {})
 
+
     def test_control(self):
-        assert_raises(Invalid, canada_tags, u'hey\bthere', {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags(u'hey\bthere', {})
+        assert ie is not None
+
 
     def test_separator(self):
-        assert_raises(Invalid, canada_tags, u'one line\u2028two', {})
+        with pytest.raises(Invalid) as ie:
+            canada_tags(u'one line\u2028two', {})
+        assert ie is not None
 
-@pytest.mark.usefixtures('clean_db')
+
+@pytest.mark.usefixtures('clean_db', 'prepare_org_editor_member')
 class TestNAVLSchema(object):
-
-    def __init__(self):
+    @classmethod
+    def setup_class(self):
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
         self.org = Organization(title_translated = {
@@ -67,11 +89,6 @@ class TestNAVLSchema(object):
         self.normal_action = LocalCKAN(
             username=self.normal_user['name']).action
         self.action = LocalCKAN().action
-
-        self.sysadmin_action.organization_member_create(
-            username=self.normal_user['name'],
-            id=self.org['name'],
-            role='editor')
 
         self.incomplete_pkg = {
             'type': 'dataset',
@@ -104,10 +121,13 @@ class TestNAVLSchema(object):
             keywords={'en': [u'book'], 'fr': [u'livre']},
             )
 
+
     def test_basic_package(self):
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            name='12345678-9abc-def0-1234-56789abcdef0', **self.incomplete_pkg)
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(
+                name='12345678-9abc-def0-1234-56789abcdef0',
+                **self.incomplete_pkg)
+        assert ve is not None
 
         resp = self.normal_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
@@ -116,25 +136,30 @@ class TestNAVLSchema(object):
         resp = self.action.package_show(id=resp['id'])
         assert resp['title_translated']['fr'] == u'Un novel par Tolstoy'
 
+
     def test_keyword_validation(self):
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **dict(self.complete_pkg,
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**dict(
+                self.complete_pkg,
                 keywords={'en':['test'], 'fr':['not  ok']}))
+        assert ve is not None
 
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **dict(self.complete_pkg,
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**dict(
+                self.complete_pkg,
                 keywords={'en':['test'], 'fr':['one too short', 'q']}))
+        assert ve is not None
 
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **dict(self.complete_pkg,
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**dict(
+                self.complete_pkg,
                 keywords={'en':['this is much too long' * 50], 'fr':['test']}))
+        assert ve is not None
 
         self.normal_action.package_create(
             **dict(self.complete_pkg,
                 keywords={'en':['these', 'ones', 'are', 'a-ok'], 'fr':['test']}))
+
 
     def test_custom_dataset_id(self):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
@@ -146,21 +171,28 @@ class TestNAVLSchema(object):
         assert resp['id'] == norm_uuid
         assert resp['name'] == '02345678-9abc-def0-1234-56789abcdef0'
 
-        assert_raises(ValidationError,
-            self.sysadmin_action.package_create,
-            name='12345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.package_create(
+                name='12345678-9abc-def0-1234-56789abcdef0',
+                id=my_uuid,
+                **self.complete_pkg)
+        assert ve is not None
 
-        assert_raises(ValidationError,
-            self.sysadmin_action.package_create,
-            id='my-custom-id', **self.complete_pkg)
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.package_create(
+                id='my-custom-id',
+                **self.complete_pkg)
+        assert ve is not None
+
 
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
         del raw_pkg['title_translated']
 
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **raw_pkg)
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**raw_pkg)
+        assert ve is not None
+
 
     def test_tag_extras_bug(self):
         resp = self.normal_action.package_create(
@@ -169,45 +201,48 @@ class TestNAVLSchema(object):
         resp = self.action.package_show(id=resp['id'])
         assert 'subject' not in [e['key'] for e in resp.get('extras',[])]
 
+
     def test_keywords_with_apostrophe(self):
         self.normal_action.package_create(
             **dict(self.complete_pkg, keywords=
                 {'en': ['test'], 'fr': ["emissions de l'automobile"]}))
 
+
     def test_invalid_resource_size(self):
-        assert_raises(ValidationError,
-            self.normal_action.package_create,
-            **dict(self.complete_pkg,
-                resources = [dict(self.complete_pkg['resources'][0],
-                    size='10M',
-                    )],
-                )
-            )
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**dict(
+                self.complete_pkg,
+                resources=[dict(
+                    self.complete_pkg['resources'][0],
+                    size='10M',)]))
+        assert ve is not None
+
 
     def test_copy_org_name(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
-        assert_equal(sorted(pkg['org_title_at_publication']), ['en', 'fr'])
-        assert_equal(pkg['org_title_at_publication']['en'], 'en org name')
-        assert_equal(pkg['org_title_at_publication']['fr'], 'fr org name')
+        assert sorted(pkg['org_title_at_publication']) == ['en', 'fr']
+        assert pkg['org_title_at_publication']['en'] == 'en org name'
+        assert pkg['org_title_at_publication']['fr'] == 'fr org name'
+
 
     def test_dont_copy_org_name(self):
         pkg = self.normal_action.package_create(**dict(
             self.complete_pkg, org_title_at_publication={'en':'a', 'fr':'b'}))
 
-        assert_equal(pkg['org_title_at_publication']['en'], 'a')
-        assert_equal(pkg['org_title_at_publication']['fr'], 'b')
+        assert pkg['org_title_at_publication']['en'] == 'a'
+        assert pkg['org_title_at_publication']['fr'] == 'b'
+
 
     def test_generated_fields(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
         # not generated, we set this one but later tests depend on it
-        assert_equal(pkg['license_id'], 'ca-ogl-lgo')
+        assert pkg['license_id'] == 'ca-ogl-lgo'
         # this one is generated in the bowels of CKAN's model_dictize
-        assert_equal(pkg['license_title'],
-            'Open Government Licence - Canada')
+        assert pkg['license_title'] == 'Open Government Licence - Canada'
 
-        raise SkipTest('XXX: not generating fields yet')
+        pytest.skip('XXX: not generating fields yet')
         # some we actually generate ourselves
         assert_equal(pkg['license_title_fra'],
             'Licence du gouvernement ouvert - Canada')
@@ -215,8 +250,9 @@ class TestNAVLSchema(object):
 
         assert pkg['department_number']
 
+
     def test_portal_release_date(self):
-        raise SkipTest('XXX: portal_release_date not implemented yet')
+        pytest.skip('XXX: portal_release_date not implemented yet')
         release_pkg = dict(self.complete_pkg,
             portal_release_date='2012-01-01')
 
@@ -228,8 +264,9 @@ class TestNAVLSchema(object):
 
         self.sysadmin_action.package_create(**release_pkg)
 
+
     def test_spatial(self):
-        raise SkipTest('XXX: spatial not implemented in raw schema')
+        pytest.skip('XXX: spatial not implemented in raw schema')
         spatial_pkg = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": '
                 '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
@@ -264,9 +301,10 @@ class TestNAVLSchema(object):
             self.normal_action.package_create,
             **bad_spatial_pkg4)
 
+
     def test_dont_change_portal_release_date(self):
         "normal users should not be able to reset the portal release date"
-        raise SkipTest('XXX portal_release_date not yet implemented')
+        pytest.skip('XXX portal_release_date not yet implemented')
 
         resp = self.sysadmin_action.package_create(
             portal_release_date='2012-01-01',
@@ -280,4 +318,3 @@ class TestNAVLSchema(object):
 
         assert_equal(resp['portal_release_date'],
             resp2.get('portal_release_date'))
-
