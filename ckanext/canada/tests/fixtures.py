@@ -7,7 +7,7 @@ import logging
 log = logging.getLogger(__name__)
 
 @pytest.fixture
-def prepare_dataset_type_with_resource(request):
+def prepare_dataset_type_with_resources(request):
     dataset_type = request.param.get('dataset_type', None)
     resource_key = request.param.get('resource_key', 0)
     cache_variables = request.param.get('cache_variables', ['resource_id'])

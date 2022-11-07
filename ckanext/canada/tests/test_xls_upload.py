@@ -3,7 +3,7 @@ import tempfile
 from ckanapi import LocalCKAN
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
+from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resources
 
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.views import _process_upload_file

@@ -2,7 +2,7 @@
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resource
+from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resources
 
 from ckanext.recombinant.tables import get_chromo
 
