@@ -46,7 +46,9 @@ def prepare_org_editor_member(request):
 
     lc = LocalCKAN(username=sysadmin_user)
 
-    context = {'user': sysadmin_user}
+    context = {
+        'user': sysadmin_user,
+        'ignore_auth': True}
     data_dict = {
         'username': normal_user,
         'id': org_name,
