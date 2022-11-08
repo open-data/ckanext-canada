@@ -52,13 +52,8 @@ def prepare_org_editor_member(request):
         'ignore_auth': True}
 
     sysadmin = Sysadmin(name = sysadmin_user)
-    lc.call_action('user_create', context=context, data_dict=sysadmin)
-
     org = Organization(name = org_name, title_translated = org_title_translated) if org_title_translated is not None else Organization(name = org_name)
-    lc.call_action('organization_create', context=context, data_dict=org)
-
     user = User(name = normal_user)
-    lc.call_action('user_create', context=context, data_dict=user)
     
     data_dict = {
         'username': normal_user,
