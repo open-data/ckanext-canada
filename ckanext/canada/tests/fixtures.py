@@ -1,4 +1,5 @@
 import pytest
+from ckan.tests.helpers import reset_db
 from ckanapi import LocalCKAN
 from factory import Sequence
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
@@ -9,6 +10,7 @@ log = logging.getLogger(__name__)
 
 @pytest.fixture
 def prepare_dataset_type_with_resources(request):
+    reset_db()
     dataset_type = request.param.get('dataset_type', None)
     resource_key = request.param.get('resource_key', 0)
     cache_variables = request.param.get('cache_variables', ['resource_id'])
@@ -37,6 +39,7 @@ def prepare_dataset_type_with_resources(request):
 
 @pytest.fixture
 def prepare_org_editor_member(request):
+    reset_db()
     sysadmin_user = request.param.get('sysadmin_user', Sequence(lambda n: "test_sysadmin_{0:02d}".format(n)))
     normal_user = request.param.get('normal_user', Sequence(lambda n: "test_user_{0:02d}".format(n)))
     org_name = request.param.get('org_name', Sequence(lambda n: "test_org_{0:02d}".format(n)))
