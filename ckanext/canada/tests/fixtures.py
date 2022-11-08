@@ -44,8 +44,7 @@ def prepare_org_editor_member(request):
     normal_user = request.param.get('normal_user', Sequence(lambda n: "test_user_{0:02d}".format(n)))
     org_name = request.param.get('org_name', Sequence(lambda n: "test_org_{0:02d}".format(n)))
 
-    sysadmin_action = LocalCKAN(
-        username=sysadmin_user).action
+    lc = LocalCKAN(username=sysadmin_user)
 
     context = {'user': sysadmin_user}
     data_dict = {
@@ -53,7 +52,7 @@ def prepare_org_editor_member(request):
         'id': org_name,
         'role': 'editor'}
 
-    sysadmin_action.organization_member_create(context, data_dict)
+    lc.call_action('organization_member_create', context=context, data_dict=data_dict)
 
     log.info('Creating member with username: {}'.format(normal_user))
     log.info('Adding member as an editor to orginaztion: {}'.format(org_name))
