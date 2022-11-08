@@ -47,10 +47,13 @@ def prepare_org_editor_member(request):
     sysadmin_action = LocalCKAN(
         username=sysadmin_user).action
 
-    sysadmin_action.organization_member_create(
-        username=normal_user,
-        id=org_name,
-        role='editor')
+    context = {'user': sysadmin_user}
+    data_dict = {
+        'username': normal_user,
+        'id': org_name,
+        'role': 'editor'}
+
+    sysadmin_action.organization_member_create(context, data_dict)
 
     log.info('Creating member with username: {}'.format(normal_user))
     log.info('Adding member as an editor to orginaztion: {}'.format(org_name))
