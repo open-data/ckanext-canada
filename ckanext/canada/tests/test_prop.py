@@ -95,6 +95,9 @@ class TestSuggestedDataset(object):
             lc.action.package_create(
                 owner_org=org['name'],
                 **SIMPLE_SUGGESTION)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 

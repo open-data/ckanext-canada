@@ -27,6 +27,9 @@ class TestHospitalityQ(object):
             lc.action.datastore_upsert(
                 resource_id=request.config.cache.get("resource_id", None),
                 records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
             
 
@@ -53,4 +56,7 @@ class TestHospitalityQNil(object):
             lc.action.datastore_upsert(
                 resource_id=request.config.cache.get("resource_id", None),
                 records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None

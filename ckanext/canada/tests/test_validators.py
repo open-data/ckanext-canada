@@ -24,12 +24,18 @@ class TestCanadaTags(object):
     def test_too_short(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'h', {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
     def test_too_long(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'z' * 141, {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
@@ -40,6 +46,9 @@ class TestCanadaTags(object):
     def test_comma(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'who,me', {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
@@ -50,6 +59,9 @@ class TestCanadaTags(object):
     def test_consecutive_spaces(self):
         with pytest.raises(Invalid) as ie:
             canada_tags( u'hello  world', {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
@@ -64,12 +76,18 @@ class TestCanadaTags(object):
     def test_control(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'hey\bthere', {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
     def test_separator(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'one line\u2028two', {})
+        err = ie.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ie is not None
 
 
@@ -136,6 +154,9 @@ class TestNAVLSchema(object):
             self.normal_action.package_create(
                 name='12345678-9abc-def0-1234-56789abcdef0',
                 **self.incomplete_pkg)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
         resp = self.normal_action.package_create(
@@ -151,18 +172,27 @@ class TestNAVLSchema(object):
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en':['test'], 'fr':['not  ok']}))
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en':['test'], 'fr':['one too short', 'q']}))
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en':['this is much too long' * 50], 'fr':['test']}))
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
         self.normal_action.package_create(
@@ -185,12 +215,18 @@ class TestNAVLSchema(object):
                 name='12345678-9abc-def0-1234-56789abcdef0',
                 id=my_uuid,
                 **self.complete_pkg)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.package_create(
                 id='my-custom-id',
                 **self.complete_pkg)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 
@@ -200,6 +236,9 @@ class TestNAVLSchema(object):
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**raw_pkg)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 
@@ -224,6 +263,9 @@ class TestNAVLSchema(object):
                 resources=[dict(
                     self.complete_pkg['resources'][0],
                     size='10M',)]))
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 

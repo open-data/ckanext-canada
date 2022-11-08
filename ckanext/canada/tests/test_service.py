@@ -27,6 +27,9 @@ class TestService(object):
             lc.action.datastore_upsert(
                 resource_id=request.config.cache.get("resource_id", None),
                 records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 
@@ -53,6 +56,9 @@ class TestStdService(object):
             lc.action.datastore_upsert(
                 resource_id=request.config.cache.get("resource_id", None),
                 records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
 
 
@@ -81,10 +87,16 @@ class TestStdService(object):
             lc.action.datastore_upsert(
                 resource_id=resource_id,
                 records=[record])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
         record['service_std_target'] = 1.01
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=resource_id,
                 records=[record])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
         assert ve is not None
