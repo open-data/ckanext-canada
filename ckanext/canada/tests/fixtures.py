@@ -1,5 +1,6 @@
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.tests.factories import User
 from ckanapi import LocalCKAN
 from factory import Sequence
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
@@ -43,17 +44,23 @@ def prepare_org_editor_member(request):
     sysadmin_user = request.param.get('sysadmin_user', Sequence(lambda n: "test_sysadmin_{0:02d}".format(n)))
     normal_user = request.param.get('normal_user', Sequence(lambda n: "test_user_{0:02d}".format(n)))
     org_name = request.param.get('org_name', Sequence(lambda n: "test_org_{0:02d}".format(n)))
+    org_title_translated = request.param.get('org_title_translated', None)
 
     lc = LocalCKAN(username=sysadmin_user)
-
     context = {
         'user': sysadmin_user,
         'ignore_auth': True}
+
+    org = Organization(name = org_name, title_translated = org_title_translated) if org_title_translated is not None else Organization(name = org_name)
+    lc.call_action('organization_create', context=context, data_dict=org)
+
+    user = User(name = 'test_user_validation')
+    lc.call_action('user_create', context=context, data_dict=user)
+    
     data_dict = {
         'username': normal_user,
         'id': org_name,
         'role': 'editor'}
-
     lc.call_action('organization_member_create', context=context, data_dict=data_dict)
 
     log.info('Creating member with username: {}'.format(normal_user))

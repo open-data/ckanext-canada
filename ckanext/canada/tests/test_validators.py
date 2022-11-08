@@ -24,7 +24,7 @@ class TestCanadaTags(object):
     def test_too_short(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'h', {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -33,7 +33,7 @@ class TestCanadaTags(object):
     def test_too_long(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'z' * 141, {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -46,7 +46,7 @@ class TestCanadaTags(object):
     def test_comma(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'who,me', {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -59,7 +59,7 @@ class TestCanadaTags(object):
     def test_consecutive_spaces(self):
         with pytest.raises(Invalid) as ie:
             canada_tags( u'hello  world', {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -76,7 +76,7 @@ class TestCanadaTags(object):
     def test_control(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'hey\bthere', {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -85,7 +85,7 @@ class TestCanadaTags(object):
     def test_separator(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'one line\u2028two', {})
-        err = ie.value.error_dict
+        err = ie.value
         expected = {}
         #TODO: assert the expected error
         assert ie is not None
@@ -98,6 +98,9 @@ class TestCanadaTags(object):
         'sysadmin_user': 'test_sysadmin_validation',
         'normal_user': 'test_user_validation',
         'org_name': 'test_org_validation',
+        'org_title_translated': {
+            'en': 'en org name',
+            'fr': 'fr org name'}
     }],
     indirect=True)
 class TestNAVLSchema(object):
