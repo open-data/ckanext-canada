@@ -1,10 +1,11 @@
 import pytest
 from ckanapi import LocalCKAN
-from ckan.tests.factories import Sequence
+from factory import Sequence
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 import logging
 log = logging.getLogger(__name__)
+
 
 @pytest.fixture
 def prepare_dataset_type_with_resources(request):
