@@ -26,7 +26,7 @@ class TestXlsUpload(object):
         """
         reset_db()
 
-        log.info('Running setup for {}'.format(self.__class__.__name__))
+        log.info('Running setup for {}'.format(self.__name__))
 
         org = Organization()
         lc = LocalCKAN()
