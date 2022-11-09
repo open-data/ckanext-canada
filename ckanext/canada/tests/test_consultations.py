@@ -33,14 +33,6 @@ class TestConsultations(object):
         self.resource_id = rval['resources'][0]['id']
 
 
-    def test_example(self):
-        lc = LocalCKAN()
-        record = get_chromo('consultations')['examples']['record']
-        lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
-
-
     def test_blank(self):
         lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
@@ -88,6 +80,14 @@ class TestConsultations(object):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
+
+
+    def test_example(self):
+        lc = LocalCKAN()
+        record = get_chromo('consultations')['examples']['record']
+        lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
 
 
     def test_not_going_forward_unpublished(self):
