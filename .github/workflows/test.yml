@@ -15,14 +15,10 @@ jobs:
 
   test:
     # needs: lint
-    strategy:
-      matrix:
-        ckan-version: [2.9]
-      fail-fast: false
-
-    name: CKAN ${{ matrix.ckan-version }}
+    name: CKAN 2.9
     runs-on: ubuntu-20.04
     container:
+      #INFO: Using 2.8 image because of python2 dependancies
       image: openknowledge/ckan-dev:2.8
     services:
       solr:
@@ -81,7 +77,6 @@ jobs:
         pip install -e 'git+https://github.com/open-data/ckanext-wet-boew.git#egg=ckanext-wet-boew' -r 'https://raw.githubusercontent.com/open-data/ckanext-wet-boew/master/requirements.txt'
         find \/srv\/app\/ -name '*.pyc' -delete
     - name: Setup extension (CKAN 2.9)
-      if: ${{ matrix.ckan-version == '2.9' }}
       run: |
         ln -s \/srv\/app\/src\/ckan\/test-core.ini .\/links\/test-core.ini
         ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini

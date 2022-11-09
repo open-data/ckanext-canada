@@ -2,30 +2,50 @@
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resources
+from ckan.tests.helpers import reset_db
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
+import logging
+log = logging.getLogger(__name__)
 
-@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
-@pytest.mark.parametrize(
-    'prepare_dataset_type_with_resources',
-    [{'dataset_type': 'contracts'}],
-    indirect=True)
+
 class TestContracts(object):
-    def test_example(self, request):
+    @classmethod
+    def setup_class(self):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        log.info('Running setup for {}'.format(self.__name__))
+
+        org = Organization()
+        lc = LocalCKAN()
+
+        log.info('Creating organization with id: {}'.format(org['name']))
+        log.info('Setting organization dataset type to {}'.format('contracts'))
+
+        lc.action.recombinant_create(dataset_type='contracts', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='contracts', owner_org=org['name'])
+
+        self.resource_id = rval['resources'][0]['id']
+
+
+    def test_example(self):
         lc = LocalCKAN()
         record = get_chromo('contracts')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=request.config.cache.get("resource_id", None),
+            resource_id=self.resource_id,
             records=[record])
 
 
-    def test_blank(self, request):
+    def test_blank(self):
         lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
             records=[{}])
         err = ve.value.error_dict
         expected = {}
@@ -33,7 +53,7 @@ class TestContracts(object):
         assert ve is not None
 
 
-    def test_ministers_office_missing(self, request):
+    def test_ministers_office_missing(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -41,7 +61,7 @@ class TestContracts(object):
             ministers_office=None)
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
@@ -52,18 +72,18 @@ class TestContracts(object):
             assert err[k] == expected[k]
 
 
-    def test_ministers_office(self, request):
+    def test_ministers_office(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             contract_date='2019-06-21',
             ministers_office='N')
         lc.action.datastore_upsert(
-            resource_id=request.config.cache.get("resource_id", None),
+            resource_id=self.resource_id,
             records=[record])
 
 
-    def test_2022_fields(self, request):
+    def test_2022_fields(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -77,7 +97,7 @@ class TestContracts(object):
         )
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
@@ -94,7 +114,7 @@ class TestContracts(object):
             assert err[k] == expected[k]
 
 
-    def test_multi_field_errors(self, request):
+    def test_multi_field_errors(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -105,7 +125,7 @@ class TestContracts(object):
         )
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
@@ -128,7 +148,7 @@ class TestContracts(object):
             assert err[k] == expected[k]
 
 
-    def test_inter_field_errors(self, request):
+    def test_inter_field_errors(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -143,7 +163,7 @@ class TestContracts(object):
         )
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
@@ -163,7 +183,7 @@ class TestContracts(object):
             assert err[k] == expected[k]
 
 
-    def test_field_length_errors(self, request):
+    def test_field_length_errors(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -172,7 +192,7 @@ class TestContracts(object):
         )
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
@@ -185,14 +205,14 @@ class TestContracts(object):
             assert err[k] == expected[k]
 
 
-    def test_postal_code(self, request):
+    def test_postal_code(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             vendor_postal_code='1A1')
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {

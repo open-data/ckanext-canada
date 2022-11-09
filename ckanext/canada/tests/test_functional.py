@@ -8,7 +8,7 @@ from ckan.lib.create_test_data import CreateTestData
 
 import pytest
 
-@pytest.mark.usefixtures('clean_db')
+
 class TestNew(object):
     pkg_names = []
 

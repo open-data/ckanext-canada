@@ -13,7 +13,7 @@ class TestDollarRangeFacet(object):
 
     def test_top_bucket(self):
         assert dollar_range_facet('foo', [100, 500, 1000], 5000) == {
-           'foo_range': u'2',
+            'foo_range': u'2',
             'foo_en': u'A: $1,000.00+',
             'foo_fr': u'A: 1\u202f000,00\xa0$ +'}
 
