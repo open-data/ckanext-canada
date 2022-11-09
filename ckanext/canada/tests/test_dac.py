@@ -2,30 +2,50 @@
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resources
+from ckan.tests.helpers import reset_db
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
+import logging
+log = logging.getLogger(__name__)
 
-@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
-@pytest.mark.parametrize(
-    'prepare_dataset_type_with_resources',
-    [{'dataset_type': 'dac'}],
-    indirect=True)
+
 class TestDAC(object):
-    def test_example(self, request):
+    @classmethod
+    def setup_class(self):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        log.info('Running setup for {}'.format(self.__class__.__name__))
+
+        org = Organization()
+        lc = LocalCKAN()
+
+        log.info('Creating organization with id: {}'.format(org['name']))
+        log.info('Setting organization dataset type to {}'.format('dac'))
+
+        lc.action.recombinant_create(dataset_type='dac', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='dac', owner_org=org['name'])
+
+        self.resource_id = rval['resources'][0]['id']
+
+
+    def test_example(self):
         lc = LocalCKAN()
         record = get_chromo('dac')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=request.config.cache.get("resource_id", None),
+            resource_id=self.resource_id,
             records=[record])
 
 
-    def test_blank(self, request):
+    def test_blank(self):
         lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
-                resource_id=request.config.cache.get("resource_id", None),
+                resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
         expected = {}

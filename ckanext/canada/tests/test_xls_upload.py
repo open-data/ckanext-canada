@@ -3,7 +3,8 @@ import tempfile
 from ckanapi import LocalCKAN
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_dataset_type_with_resources
+from ckan.tests.helpers import reset_db
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.views import _process_upload_file
@@ -11,36 +12,53 @@ from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
 from openpyxl import load_workbook, Workbook
 
+import logging
+log = logging.getLogger(__name__)
+
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
-@pytest.mark.usefixtures('clean_db', 'prepare_dataset_type_with_resources')
-@pytest.mark.parametrize(
-    'prepare_dataset_type_with_resources',
-    [{
-        'dataset_type': 'wrongdoing',
-        'cache_variables': ['org', 'pkg_id']
-    }],
-    indirect=True)
 class TestXlsUpload(object):
-    def test_upload_empty(self, request):
+    @classmethod
+    def setup_class(self):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        log.info('Running setup for {}'.format(self.__class__.__name__))
+
+        org = Organization()
         lc = LocalCKAN()
-        wb = excel_template('wrongdoing', request.config.cache.get("org", None))
+
+        log.info('Creating organization with id: {}'.format(org['name']))
+        log.info('Setting organization dataset type to {}'.format('wrongdoing'))
+
+        lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])
+
+        self.org = org
+        self.pkg_id = rval['id']
+
+
+    def test_upload_empty(self):
+        lc = LocalCKAN()
+        wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
                 lc,
-                lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
+                lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)
         assert e.value.message == 'The template uploaded is empty'
 
 
-    def test_upload_example(self, request):
+    def test_upload_example(self):
         lc = LocalCKAN()
-        wb = excel_template('wrongdoing', request.config.cache.get("org", None))
+        wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
 
         # Enter the example record into the excel template
@@ -50,21 +68,21 @@ class TestXlsUpload(object):
 
         _process_upload_file(
             lc,
-            lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
+            lc.action.package_show(id=self.pkg_id),
             f.name,
             get_geno('wrongdoing'),
             True)
 
 
-    def test_upload_wrong_type(self, request):
+    def test_upload_wrong_type(self):
         lc = LocalCKAN()
-        wb = excel_template('travela', request.config.cache.get("org", None))
+        wb = excel_template('travela', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
                 lc,
-                lc.action.package_show(id=request.config.cache.get("pkg_id", None)),
+                lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)

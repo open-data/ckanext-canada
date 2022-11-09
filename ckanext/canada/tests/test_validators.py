@@ -5,15 +5,18 @@ import ckan.lib.search as search
 from ckan.lib.create_test_data import CreateTestData
 import ckan.model as model
 from ckan.plugins.toolkit import Invalid
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 import pytest
-from ckanext.canada.tests.fixtures import prepare_org_editor_member
+from ckan.tests.helpers import reset_db
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
 import json
 
 from ckanext.canada.validators import canada_tags
+
+import logging
+log = logging.getLogger(__name__)
 
 
 class TestCanadaTags(object):
@@ -91,34 +94,39 @@ class TestCanadaTags(object):
         assert ie is not None
 
 
-@pytest.mark.usefixtures('clean_db', 'prepare_org_editor_member')
-@pytest.mark.parametrize(
-    'prepare_org_editor_member',
-    [{
-        'sysadmin_user': 'test_sysadmin_validation',
-        'normal_user': 'test_user_validation',
-        'org_name': 'test_org_validation',
-        'org_title_translated': {
-            'en': 'en org name',
-            'fr': 'fr org name'}
-    }],
-    indirect=True)
 class TestNAVLSchema(object):
     @classmethod
     def setup_class(self):
-        self.sysadmin_user = factories.Sysadmin(name = 'test_sysadmin_validation')
-        self.normal_user = factories.User(name = 'test_user_validation')
-        self.org = Organization(
-            name = 'test_org_validation',
-            title_translated = {
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        log.info('Running setup for {}'.format(self.__class__.__name__))
+
+        self.sysadmin_user = factories.Sysadmin()
+        self.normal_user = factories.User()
+        self.org = Organization(title_translated = {
                 'en': 'en org name',
                 'fr': 'fr org name'})
+
+        log.info('Creating SysAdmin User with id: {}'.format(self.sysadmin_user['name']))
+        log.info('Creating User with id: {}'.format(self.normal_user['name']))
+        log.info('Creating organization with id: {}'.format(self.org['name']))
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action
         self.normal_action = LocalCKAN(
             username=self.normal_user['name']).action
         self.action = LocalCKAN().action
+
+        self.sysadmin_action.organization_member_create(
+            username=self.normal_user['name'],
+            id=self.org['name'],
+            role='editor')
+
+        log.info('Assigning user {} as an editor for the organization {}'.format(
+            self.normal_user['name'], self.org['name']))
 
         self.incomplete_pkg = {
             'type': 'dataset',
