@@ -93,7 +93,7 @@ class TestCanadaTags(object):
 
 class TestNAVLSchema(object):
     @classmethod
-    def setup_class(self):
+    def setup_method(self, method):
         """Method is called at class level before all test methods of the class are called.
         Setup any state specific to the execution of the given class (which usually contains tests).
         """
