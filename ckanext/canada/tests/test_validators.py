@@ -15,9 +15,6 @@ import json
 
 from ckanext.canada.validators import canada_tags
 
-import logging
-log = logging.getLogger(__name__)
-
 
 class TestCanadaTags(object):
     def test_simple(self):
@@ -102,17 +99,11 @@ class TestNAVLSchema(object):
         """
         reset_db()
 
-        log.info('Running setup for {}'.format(self.__name__))
-
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
         self.org = Organization(title_translated = {
                 'en': 'en org name',
                 'fr': 'fr org name'})
-
-        log.info('Creating SysAdmin User with id: {}'.format(self.sysadmin_user['name']))
-        log.info('Creating User with id: {}'.format(self.normal_user['name']))
-        log.info('Creating organization with id: {}'.format(self.org['name']))
 
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin_user['name']).action
@@ -124,9 +115,6 @@ class TestNAVLSchema(object):
             username=self.normal_user['name'],
             id=self.org['name'],
             role='editor')
-
-        log.info('Assigning user {} as an editor for the organization {}'.format(
-            self.normal_user['name'], self.org['name']))
 
         self.incomplete_pkg = {
             'type': 'dataset',

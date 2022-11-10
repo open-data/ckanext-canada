@@ -7,9 +7,6 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-import logging
-log = logging.getLogger(__name__)
-
 
 class TestConsultations(object):
     @classmethod
@@ -19,18 +16,21 @@ class TestConsultations(object):
         """
         reset_db()
 
-        log.info('Running setup for {}'.format(self.__name__))
-
         org = Organization()
         lc = LocalCKAN()
-
-        log.info('Creating organization with id: {}'.format(org['name']))
-        log.info('Setting organization dataset type to {}'.format('consultations'))
 
         lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
 
         self.resource_id = rval['resources'][0]['id']
+
+
+    def test_example(self):
+        lc = LocalCKAN()
+        record = get_chromo('consultations')['examples']['record']
+        lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
 
 
     def test_blank(self):
@@ -80,14 +80,6 @@ class TestConsultations(object):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-
-
-    def test_example(self):
-        lc = LocalCKAN()
-        record = get_chromo('consultations')['examples']['record']
-        lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
 
 
     def test_not_going_forward_unpublished(self):
