@@ -12,27 +12,19 @@ from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
 from openpyxl import load_workbook, Workbook
 
-import logging
-log = logging.getLogger(__name__)
-
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
 class TestXlsUpload(object):
     @classmethod
-    def setup_class(self):
+    def setup_method(self, method):
         """Method is called at class level before all test methods of the class are called.
         Setup any state specific to the execution of the given class (which usually contains tests).
         """
         reset_db()
 
-        log.info('Running setup for {}'.format(self.__name__))
-
         org = Organization()
         lc = LocalCKAN()
-
-        log.info('Creating organization with id: {}'.format(org['name']))
-        log.info('Setting organization dataset type to {}'.format('wrongdoing'))
 
         lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])

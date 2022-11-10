@@ -7,25 +7,17 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-import logging
-log = logging.getLogger(__name__)
-
 
 class TestDAC(object):
     @classmethod
-    def setup_class(self):
+    def setup_method(self, method):
         """Method is called at class level before all test methods of the class are called.
         Setup any state specific to the execution of the given class (which usually contains tests).
         """
         reset_db()
 
-        log.info('Running setup for {}'.format(self.__name__))
-
         org = Organization()
         lc = LocalCKAN()
-
-        log.info('Creating organization with id: {}'.format(org['name']))
-        log.info('Setting organization dataset type to {}'.format('dac'))
 
         lc.action.recombinant_create(dataset_type='dac', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='dac', owner_org=org['name'])
