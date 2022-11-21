@@ -86,6 +86,9 @@ fields:
         langues puis l'utiliser une fois, par ex. pour "statcan", l'URL est créée sous la forme https://registry.open.canada.ca/en/organization/statcan
   required: true
   validators: not_empty unicode name_validator group_name_validator
+  form_attrs:
+    readonly: true
+    size: 45
 
 # Field = Department Number.
 # {The organization's Department Number}
