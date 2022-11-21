@@ -15,7 +15,7 @@ import json
 
 filtered_fields = {u'id', u'name', u'title', u'title_translated',
                    u'department_number', u'umd_number', u'shortform',
-                   u'ati_email', u'opengov_email'}
+                   u'ati_email', u'opengov_email', u'faa_schedule'}
 
 users = '--users' in sys.argv
 

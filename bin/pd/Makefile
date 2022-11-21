@@ -1,28 +1,27 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap nap5 reclassification service travela travelq wrongdoing adminaircraft suppliervax
+	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
-    ati.csv ati-nil.csv \
-    briefingt.csv \
-    qpnotes.csv \
-    contractsa.csv \
-    contracts.csv contracts-nil.csv \
-    consultations.csv \
-    dac.csv \
-    experiment.csv \
-    grants.csv grants-nil.csv \
-    hospitalityq.csv hospitalityq-nil.csv \
-    inventory.csv \
-    nap.csv nap5.csv \
-    reclassification.csv reclassification-nil.csv \
-    service.csv service-std.csv \
-    travela.csv \
-    travelq.csv travelq-nil.csv \
-    wrongdoing.csv \
-    adminaircraft.csv \
-    contract-data.csv verification-data.csv
+	ati.csv ati-nil.csv \
+	briefingt.csv \
+	qpnotes.csv \
+        contractsa.csv \
+        contracts.csv contracts-nil.csv \
+	consultations.csv \
+	dac.csv \
+	experiment.csv \
+        grants.csv grants-nil.csv \
+        hospitalityq.csv hospitalityq-nil.csv \
+	inventory.csv \
+	nap5.csv \
+        reclassification.csv reclassification-nil.csv \
+	service.csv service-std.csv \
+        travela.csv \
+        travelq.csv travelq-nil.csv \
+        wrongdoing.csv \
+		adminaircraft.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
@@ -481,30 +480,6 @@ $(workdir)/filtered/travelq.csv: $(workdir)/travelq.csv
 	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/travelq-nil.csv: $(workdir)/travelq-nil.csv
-	$(fdir)/filter_modified_created.py < $< > $@
-
-###
-###  National Action Plan
-###
-.PHONY: nap
-nap: upload-nap rebuild-nap
-
-.PHONY: upload-nap
-upload-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Uploading National Action Plan..
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
-	cp $(workdir)/filtered/nap.csv $(registry_static)/nap.csv
-
-.PHONY: rebuild-nap
-rebuild-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Rebuilding National Action Plan...
-	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
-
-$(workdir)/nap.csv:
-	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
-
-$(workdir)/filtered/nap.csv: $(workdir)/nap.csv
 	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
