@@ -1,20 +1,29 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
+from ckan.tests.helpers import reset_db
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestContracts(FunctionalTestBase):
-    def setup(self):
-        super(TestContracts, self).setup()
+
+class TestContracts(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
         org = Organization()
         lc = LocalCKAN()
+
         lc.action.recombinant_create(dataset_type='contracts', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='contracts', owner_org=org['name'])
+
         self.resource_id = rval['resources'][0]['id']
+
 
     def test_example(self):
         lc = LocalCKAN()
@@ -23,12 +32,18 @@ class TestContracts(FunctionalTestBase):
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
         lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
             records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
 
     def test_ministers_office_missing(self):
         lc = LocalCKAN()
@@ -36,16 +51,18 @@ class TestContracts(FunctionalTestBase):
             get_chromo('contracts')['examples']['record'],
             contract_date='2019-06-21',
             ministers_office=None)
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'ministers_office': ['This field must not be empty'],
         }
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_ministers_office(self):
         lc = LocalCKAN()
@@ -56,6 +73,7 @@ class TestContracts(FunctionalTestBase):
         lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
 
     def test_2022_fields(self):
         lc = LocalCKAN()
@@ -69,11 +87,11 @@ class TestContracts(FunctionalTestBase):
             land_claims=None,
             indigenous_business='',
         )
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'vendor_postal_code': ['This field must not be empty'],
             'buyer_name': ['This field must not be empty'],
@@ -84,7 +102,9 @@ class TestContracts(FunctionalTestBase):
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_multi_field_errors(self):
         lc = LocalCKAN()
@@ -95,11 +115,11 @@ class TestContracts(FunctionalTestBase):
             limited_tendering_reason=['00', '05'],
             trade_agreement_exceptions=['00', '01'],
         )
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'trade_agreement': [
                 'If the value XX (none) is entered, then no other value '
@@ -116,7 +136,9 @@ class TestContracts(FunctionalTestBase):
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_inter_field_errors(self):
         lc = LocalCKAN()
@@ -131,11 +153,11 @@ class TestContracts(FunctionalTestBase):
             award_criteria='0',
             solicitation_procedure='TN',
         )
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'buyer_name': [
                 'This field must be populated with an NA '
@@ -149,7 +171,9 @@ class TestContracts(FunctionalTestBase):
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_field_length_errors(self):
         lc = LocalCKAN()
@@ -158,33 +182,36 @@ class TestContracts(FunctionalTestBase):
             economic_object_code='467782',
             commodity_code='K23HG367BU',
         )
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'economic_object_code': ['This field is limited to only 3 or 4 digits.'],
             'commodity_code': ['The field is limited to eight alpha-numeric digits or less.'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_postal_code(self):
         lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             vendor_postal_code='1A1')
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'vendor_postal_code': [
                 'This field must contain the first three digits of a postal code '
                 'in A1A format or the value "NA"'],
         }
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]

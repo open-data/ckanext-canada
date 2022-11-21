@@ -1,5 +1,4 @@
-from ckan.plugins.toolkit import chained_auth_function
-from pylons import config
+from ckan.plugins.toolkit import chained_auth_function, config
 
 
 # block datastore-modifying APIs on the portal

@@ -1,20 +1,29 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
+from ckan.tests.helpers import reset_db
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestConsultations(FunctionalTestBase):
-    def setup(self):
-        super(TestConsultations, self).setup()
+
+class TestConsultations(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
         org = Organization()
         lc = LocalCKAN()
+
         lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
+
         self.resource_id = rval['resources'][0]['id']
+
 
     def test_example(self):
         lc = LocalCKAN()
@@ -23,16 +32,22 @@ class TestConsultations(FunctionalTestBase):
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
         lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
-            records=[{}])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
 
     def test_multiple_errors(self):
         lc = LocalCKAN()
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{
@@ -51,7 +66,7 @@ class TestConsultations(FunctionalTestBase):
                     'high_profile': "Y",
                     'report_available_online': "N",
                     }])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             'publishable': ['Invalid choice: "Q"'],
             'subjects': ['Invalid choice: "GEO,MATH"'],
@@ -63,17 +78,19 @@ class TestConsultations(FunctionalTestBase):
             'rationale': ['This field must not be empty'],
             }
         for k in set(err) | set(expected):
-            assert_equal(err.get(k), expected.get(k), (k, err))
+            assert k in err
+            assert err[k] == expected[k]
+
 
     def test_not_going_forward_unpublished(self):
         lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
-        with assert_raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
-        err = ve.exception.error_dict['records'][0]
+        err = ve.value.error_dict['records'][0]
         expected = {
             u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
             }
-        assert_equal(err, expected)
+        assert err == expected

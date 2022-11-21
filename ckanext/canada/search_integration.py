@@ -6,7 +6,7 @@ import pysolr
 import simplejson as json
 import sys
 import traceback
-from pylons import config
+from ckan.plugins.toolkit import config
 from ckanext.scheming.helpers import scheming_get_preset
 
 SEARCH_INTEGRATION_ENABLED_OPTION = "ckanext.canada.adv_search_enabled"

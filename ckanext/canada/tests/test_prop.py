@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
+from ckan.tests.helpers import call_action
 from ckan.tests import factories
 import ckan.lib.search as search
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
+import pytest
+
 from ckanapi import LocalCKAN, ValidationError
 import json
-from nose.tools import assert_raises, assert_equal
+
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -30,6 +32,7 @@ SIMPLE_SUGGESTION = {
     'status': [],
 }
 
+
 COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
         {
@@ -42,6 +45,7 @@ COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
         },
     ]
 )
+
 
 UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
@@ -64,8 +68,9 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     ]
 )
 
-class TestSuggestedDataset(FunctionalTestBase):
 
+@pytest.mark.usefixtures('clean_db')
+class TestSuggestedDataset(object):
     def test_simple_suggestion(self):
         lc = LocalCKAN()
         org = Organization()
@@ -74,6 +79,7 @@ class TestSuggestedDataset(FunctionalTestBase):
             **SIMPLE_SUGGESTION)
 
         assert 'status' not in resp
+
 
     def test_normal_user_cant_create(self):
         user = factories.User()
@@ -85,10 +91,15 @@ class TestSuggestedDataset(FunctionalTestBase):
                 }
             ]
         )
-        assert_raises(ValidationError,
-            lc.action.package_create,
-            owner_org=org['name'],
-            **SIMPLE_SUGGESTION)
+        with pytest.raises(ValidationError) as ve:
+            lc.action.package_create(
+                owner_org=org['name'],
+                **SIMPLE_SUGGESTION)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
 
     def test_normal_user_can_update(self):
         user = factories.User()
@@ -110,6 +121,7 @@ class TestSuggestedDataset(FunctionalTestBase):
             **COMPLETE_SUGGESTION)
 
         assert resp['status'][0]['reason'] == 'under_review'
+
 
     def test_responses_ordered(self):
         lc = LocalCKAN()

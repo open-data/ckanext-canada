@@ -1,43 +1,86 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
+from ckan.tests.helpers import reset_db
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestService(FunctionalTestBase):
-    def setup(self):
-        super(TestService, self).setup()
+
+class TestService(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
         org = Organization()
         lc = LocalCKAN()
+
         lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
-        self.service_id = rval['resources'][0]['id']
-        self.service_std_id = rval['resources'][1]['id']
+
+        self.resource_id = rval['resources'][0]['id']
+
 
     def test_example(self):
         lc = LocalCKAN()
         record = get_chromo('service')['examples']['record']
         lc.action.datastore_upsert(
-            resource_id=self.service_id,
+            resource_id=self.resource_id,
             records=[record])
-        record = get_chromo('service-std')['examples']['record']
-        lc.action.datastore_upsert(
-            resource_id=self.service_std_id,
-            records=[record])
+
 
     def test_blank(self):
         lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.service_id,
-            records=[{}])
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.service_std_id,
-            records=[{}])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
+
+class TestStdService(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        org = Organization()
+        lc = LocalCKAN()
+
+        lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
+        rval = lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
+
+        self.resource_id = rval['resources'][1]['id']
+
+
+    def test_example(self):
+        lc = LocalCKAN()
+        record = get_chromo('service-std')['examples']['record']
+        lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
+
+    def test_blank(self):
+        lc = LocalCKAN()
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
 
     def test_service_std_target(self):
         lc = LocalCKAN()
@@ -45,35 +88,34 @@ class TestService(FunctionalTestBase):
             get_chromo('service-std')['examples']['record'],
             service_std_target='0.99999')
         lc.action.datastore_upsert(
-            resource_id=self.service_std_id,
+            resource_id=self.resource_id,
             records=[record])
-        assert_equal(
-            lc.action.datastore_search(resource_id=self.service_std_id)
-                ['records'][0]['service_std_target'],
-            0.99999)
+        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.99999
         record['service_std_target'] = 0.5
         lc.action.datastore_upsert(
-            resource_id=self.service_std_id,
+            resource_id=self.resource_id,
             records=[record])
-        assert_equal(
-            lc.action.datastore_search(resource_id=self.service_std_id)
-                ['records'][0]['service_std_target'],
-            0.5)
+        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.5
         record['service_std_target'] = None
         lc.action.datastore_upsert(
-            resource_id=self.service_std_id,
+            resource_id=self.resource_id,
             records=[record])
-        assert_equal(
-            lc.action.datastore_search(resource_id=self.service_std_id)
-                ['records'][0]['service_std_target'],
-            None)
+        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == None
         record['service_std_target'] = -0.01
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.service_std_id,
-            records=[record])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
         record['service_std_target'] = 1.01
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.service_std_id,
-            records=[record])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None

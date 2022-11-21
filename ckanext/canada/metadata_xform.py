@@ -4,7 +4,6 @@ Transform metadata .jsonl file from CKAN 2.1 alignment to 2.3
 import logging
 import sys
 
-# from pylons.i18n import _
 import simplejson
 
 from ckanapi import LocalCKAN

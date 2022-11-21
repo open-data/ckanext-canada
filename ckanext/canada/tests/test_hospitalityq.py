@@ -1,20 +1,29 @@
 # -*- coding: UTF-8 -*-
-from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
+import pytest
+from ckan.tests.helpers import reset_db
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-class TestHospitalityQ(FunctionalTestBase):
-    def setup(self):
-        super(TestHospitalityQ, self).setup()
+
+class TestHospitalityQ(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
         org = Organization()
         lc = LocalCKAN()
+
         lc.action.recombinant_create(dataset_type='hospitalityq', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='hospitalityq', owner_org=org['name'])
+
         self.resource_id = rval['resources'][0]['id']
+
 
     def test_example(self):
         lc = LocalCKAN()
@@ -23,22 +32,35 @@ class TestHospitalityQ(FunctionalTestBase):
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
         lc = LocalCKAN()
-        assert_raises(ValidationError,
-            lc.action.datastore_upsert,
-            resource_id=self.resource_id,
-            records=[{}])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+            
 
+class TestHospitalityQNil(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
 
-class TestHospitalityQNil(FunctionalTestBase):
-    def setup(self):
-        super(TestHospitalityQNil, self).setup()
         org = Organization()
         lc = LocalCKAN()
+
         lc.action.recombinant_create(dataset_type='hospitalityq', owner_org=org['name'])
         rval = lc.action.recombinant_show(dataset_type='hospitalityq', owner_org=org['name'])
+
         self.resource_id = rval['resources'][1]['id']
+
 
     def test_example(self):
         lc = LocalCKAN()
@@ -47,9 +69,14 @@ class TestHospitalityQNil(FunctionalTestBase):
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
         lc = LocalCKAN()
-        assert_raises(ValidationError,
-                      lc.action.datastore_upsert,
-                      resource_id=self.resource_id,
-                      records=[{}])
+        with pytest.raises(ValidationError) as ve:
+            lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
