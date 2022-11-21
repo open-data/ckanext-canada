@@ -88,6 +88,7 @@
     <field name="author_email" type="textgen" indexed="true" stored="true" />
     <field name="maintainer" type="textgen" indexed="true" stored="true" />
     <field name="maintainer_email" type="textgen" indexed="true" stored="true" />
+    <field name="credit" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="license" type="string" indexed="true" stored="true" />
     <field name="license_id" type="string" indexed="true" stored="true" />
     <field name="ratings_count" type="int" indexed="true" stored="false" />
@@ -157,8 +158,9 @@
 </fields>
 
 <uniqueKey>index_id</uniqueKey>
-<defaultSearchField>text</defaultSearchField>
-<solrQueryParser defaultOperator="AND"/>
+
+<df>text</df>
+<solrQueryParser q.op="AND"/>
 
 <copyField source="url" dest="urls"/>
 <copyField source="ckan_url" dest="urls"/>
