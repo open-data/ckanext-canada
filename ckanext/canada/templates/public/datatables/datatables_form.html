@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{%- block dict_field_label -%}
+  {%- set label = 'label_' + h.lang() -%}
+  {{ f.get('info', {})[label] }}
+{%- endblock -%}

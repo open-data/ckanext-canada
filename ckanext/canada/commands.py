@@ -352,9 +352,13 @@ class CanadaCommand(CkanCommand):
         packages = []
         for result in data:
             package_id = result['package_id']
-            source_package = registry.action.package_show(id=package_id)
-            source_package = get_datastore_and_views(source_package, registry)
-            packages.append(json.dumps(source_package))
+            try:
+                source_package = registry.action.package_show(id=package_id)
+            except NotFound:
+                print package_id + " not found in database."
+            else:
+                source_package = get_datastore_and_views(source_package, registry)
+                packages.append(json.dumps(source_package))
 
         if data:
             since_time = isodate(data[-1]['timestamp'], None)

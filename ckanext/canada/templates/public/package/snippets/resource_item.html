@@ -56,7 +56,8 @@
         {% if res.url and h.is_url(res.url) %}
         <li>
           <a href="{{ res.url }}" class="btn btn-primary btn-sm resource-url-analytics"
-             target="_blank" data-gc-analytics="manualDownload">
+             target="_blank" data-gc-analytics="manualDownload"
+             data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
             {% if res.format == 'HTML' %}
               <i class="fa fa-external-link"></i>
               {{ _('Go to resource') }}

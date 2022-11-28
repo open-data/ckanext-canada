@@ -63,9 +63,10 @@ class DataGCCAInternal(p.SingletonPlugin):
 ckanext.scheming:presets.json
 ckanext.fluent:presets.json
 ckanext.canada:schemas/presets.yaml
-ckanext.validation:presets.json
-"""
-
+""" + (
+	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
+	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
+)
 
     def before_map(self, map):
         map.connect(
@@ -291,7 +292,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     This plugin requires the DataGCCAForms plugin
     """
     p.implements(p.IConfigurer)
-    p.implements(p.IActions)
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
@@ -323,7 +323,7 @@ ckanext.canada:tables/inventory.yaml
 ckanext.canada:tables/consultations.yaml
 ckanext.canada:tables/service.yaml
 ckanext.canada:tables/dac.yaml
-ckanext.canada:tables/nap.yaml
+ckanext.canada:tables/nap5.yaml
 ckanext.canada:tables/experiment.yaml
 ckanext.canada:tables/adminaircraft.yaml
 
@@ -479,12 +479,8 @@ ckanext.canada:schemas/prop.yaml
         )
         return map
 
-    def get_actions(self):
-        return {'inventory_votes_show': logic.inventory_votes_show}
-
     def get_auth_functions(self):
         return {
-            'inventory_votes_show': auth.inventory_votes_show,
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
@@ -556,6 +552,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'canada_org_title_translated_save':
+                validators.canada_org_title_translated_save,
             'canada_org_title_translated_output':
                 validators.canada_org_title_translated_output,
             'protect_reporting_requirements':

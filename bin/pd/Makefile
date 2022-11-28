@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
-	nap reclassification service travela travelq wrongdoing adminaircraft
+	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -15,7 +15,7 @@ csv_files := \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
 	inventory.csv \
-	nap.csv \
+	nap5.csv \
         reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
         travela.csv \
@@ -238,7 +238,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts Quarterly...
-	@$(ogc_search)/load_ct_to_solr.py "$(workdir)/filtered/contracts.csv" "$(workdir)/filtered/contracts-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
@@ -356,6 +356,7 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 .PHONY: rebuild-experiment
 rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	$(ogc_search)/load_ei_to_solr.py "$(workdir)/filtered/experiment.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/experiment.csv" --search experiment --quiet
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -453,8 +454,6 @@ upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
 	@$(echo_date) Rebuilding Travel Expenses...
-	$(paster) --plugin=ckanext-canada travelq rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travelq.csv" "$(workdir)/filtered/travelq-nil.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
@@ -471,28 +470,28 @@ $(workdir)/filtered/travelq-nil.csv: $(workdir)/travelq-nil.csv
 	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
-###  National Action Plan
+###  National Action Plan 5
 ###
-.PHONY: nap
-nap: upload-nap rebuild-nap
+.PHONY: nap5
+nap5: upload-nap5 rebuild-nap5
 
-.PHONY: upload-nap
-upload-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Uploading National Action Plan..
+.PHONY: upload-nap5
+upload-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
+	@echo Uploading 5th NAP...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=0da69302-fbf9-4026-9e71-656744046acc upload@"$(workdir)/filtered/nap.csv"
-	cp $(workdir)/filtered/nap.csv $(registry_static)/nap.csv
+	id=0305a157-9d10-4ec2-8ca4-e39ab2b34396 upload@"$(workdir)/filtered/nap5.csv" \
+	> /dev/null
 
-.PHONY: rebuild-nap
-rebuild-nap: $(workdir)/filtered/nap.csv
-	@$(echo_date) Rebuilding National Action Plan...
-	$(ogc_search)/load_ap_to_solr.py "$(workdir)/filtered/nap.csv"
+.PHONY: rebuild-nap5
+rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
+	@$(oc_search) nap5_preprocess_csv --csv "$(workdir)/filtered/nap5.csv" --out "$(workdir)/filtered/nap5_search.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap5_search.csv" --search nap5
 
-$(workdir)/nap.csv:
-	$(paster) $(combine) nap -d $(workdir) -c $(registry_ini)
+$(workdir)/nap5.csv:
+	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
 
-$(workdir)/filtered/nap.csv: $(workdir)/nap.csv
-	$(fdir)/filter_modified_created.py < $< > $@
+$(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
+	$(fdir)/filter_nap5.py < $< > $@
 
 ###
 ###  Open Data Inventory
@@ -603,8 +602,6 @@ upload-travela: $(workdir)/filtered/travela.csv
 .PHONY: rebuild-travela
 rebuild-travela: $(workdir)/filtered/travela.csv
 	@$(echo_date) Rebuilding Annual Travel, Hospitality and Conferences...
-	$(paster) --plugin=ckanext-canada travela rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/travela.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:

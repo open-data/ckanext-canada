@@ -431,12 +431,18 @@ class CanadaUserController(UserController):
                 return self._save_new(context)
             except HTTPFound:
                 # redirected after successful user create
-                notify_ckan_user_create(
-                    email=request.params.get('email', ''),
-                    fullname=request.params.get('fullname', ''),
-                    username=request.params.get('name', ''),
-                    phoneno=request.params.get('phoneno', ''),
-                    dept=request.params.get('department', ''))
+                import ckan.lib.mailer
+                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                getattr(
+                  ckan.lib.mailer,
+                  "notify_ckan_user_create",
+                  notify_ckan_user_create
+                )(
+                  email=request.params.get('email', ''),
+                  fullname=request.params.get('fullname', ''),
+                  username=request.params.get('name', ''),
+                  phoneno=request.params.get('phoneno', ''),
+                  dept=request.params.get('department', ''))
                 notice_no_access()
                 raise
 
@@ -800,6 +806,13 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 class PDUpdateController(BaseController):
 
+    def get_form_full_text_choices(self, field_name, chromo):
+        for field in chromo['fields']:
+            if field['datastore_id'] == field_name and \
+                    field.get('form_full_text_choices', False):
+                return True
+        return False
+
     def create_pd_record(self, owner_org, resource_name):
         lc = LocalCKAN(username=c.user)
 
@@ -819,8 +832,11 @@ class PDUpdateController(BaseController):
 
         choice_fields = {
             f['datastore_id']: [
-                {'value': k, 'label': v} for (k, v) in f['choices']]
+                {'value': k,
+                 'label': k + ': ' + v if self.get_form_full_text_choices(f['datastore_id'], chromo) else v
+                 } for (k, v) in f['choices']]
             for f in h.recombinant_choice_fields(resource_name)}
+
         pk_fields = aslist(chromo['datastore_primary_key'])
 
         if request.method == 'POST':
@@ -908,8 +924,11 @@ class PDUpdateController(BaseController):
 
         choice_fields = {
             f['datastore_id']: [
-                {'value': k, 'label': v} for (k, v) in f['choices']]
+                {'value': k,
+                 'label': k + ': ' + v if self.get_form_full_text_choices(f['datastore_id'], chromo) else v
+                 } for (k, v) in f['choices']]
             for f in h.recombinant_choice_fields(resource_name)}
+
         pk_fields = aslist(chromo['datastore_primary_key'])
         pk_filter = dict(zip(pk_fields, pk))
 

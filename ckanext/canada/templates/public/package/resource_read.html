@@ -16,6 +16,31 @@
             {{ super() }}
           {% endblock %}
 {% endblock %}
+
+{% block download_resource_button %}
+  {%if res.datastore_active %}
+    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, bom=True) }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>CSV</span></a>
+        <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='tsv', bom=True) }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
+        <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='json') }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
+        <a href="{{ h.url_for(controller='ckanext.datastore.controller:DatastoreController', action='dump', resource_id=res.id, format='xml')}}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
+        </li>
+    </ul>
+  {%endif%}
+{% endblock %}
+
 {% block resource_data_dictionary %}
        <div class="module-content">
         <a href="#data-dictionary"><h2 id="data-dictionary">{{ _('Data Dictionary') }}</h2></a>

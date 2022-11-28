@@ -46,7 +46,6 @@ ROWS_PD_TYPE_COLUMNS = {
     'dac.csv': 'rows:dac',
     'briefingt.csv': 'rows:briefingt',
     'qpnotes.csv': 'rows:qpnotes',
-    'nap.csv': 'rows:nap',
 }
 
 COLUMNS = sorted(

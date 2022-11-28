@@ -226,7 +226,7 @@
 
 {% block package_rate %}
   <a name="rate"></a>
-  <div data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
 {% endblock %}
 
 {% block more_like_this %}
@@ -258,6 +258,7 @@
 <script src="{{ h.url_for_static('/static/js/geomapzoom.js') }}"></script>
 <![endif]-->
 <script src="{{ h.url_for_static('/static/js/more_like_this.js') }}"></script>
+<script src="{{ h.url_for_static('/static/js/voting_fix.js?cv=1') }}"></script>
 {{ super() }}
 {% endblock %}
 

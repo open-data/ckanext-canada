@@ -1,12 +1,6 @@
 from ckan.plugins.toolkit import chained_auth_function
 from pylons import config
 
-def inventory_votes_show(context, data_dict):
-    '''
-    this endpoint is sysadmin only
-    nightly data is published as part of inventory csv
-    '''
-    return {'success': False}
 
 # block datastore-modifying APIs on the portal
 @chained_auth_function
