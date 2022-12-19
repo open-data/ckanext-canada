@@ -298,8 +298,6 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_t
             out['priority'] = priority
             priority += 1
         fields.append(out)
-
-    chromo['edit_form'] = h.check_access('resource_update', {'id': resource_id})
     
     fids = [f['datastore_id'] for f in chromo['fields']]
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]

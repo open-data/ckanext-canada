@@ -207,8 +207,9 @@ class CanadaController(BaseController):
                 'aaData': [],
             })
 
+        can_edit = h.check_access('resource_update', {'id': resource_id})
         cols = [f['datastore_id'] for f in chromo['fields']]
-        prefix_cols = 2 if chromo.get('edit_form', False) else 1  # Select | (Edit) | ...
+        prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
 
         sort_list = []
         i = 0
@@ -235,7 +236,7 @@ class CanadaController(BaseController):
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
-        if chromo.get('edit_form', False):
+        if chromo.get('edit_form', False) and can_edit:
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
             fids = [f['datastore_id'] for f in chromo['fields']]
