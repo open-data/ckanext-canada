@@ -16,7 +16,7 @@ sub_orgs = [ 'ghl-lgc',
              'mdi-mid',
              'miga-maig',
              'dpm-vmp',
-             'pqcc-pcprc',
+             'pkcc-pcprc',
              'ql-lq',
              'srp-rsp',
              ]
