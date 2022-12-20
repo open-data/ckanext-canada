@@ -15,7 +15,7 @@ sub_orgs = [ 'ghl-lgc',
              'iga-aig',
              'mdi-mid',
              'miga-maig',
-             'dpm-vmp',
+             'dpm-vpm',
              'pkcc-pcprc',
              'ql-lq',
              'srp-rsp',
@@ -31,6 +31,5 @@ out_csv.writeheader()
 
 for line in in_csv:
     if line['owner_org'] in sub_orgs:
-        line['owner_org'] = PCO['owner_org']
-        line['owner_org_title'] = PCO['owner_org_title']
+        line.update(PCO)
     out_csv.writerow(line)
