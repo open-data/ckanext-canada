@@ -2,7 +2,7 @@
 # coding=utf-8
 
 """
-migration script to copy all qpnotes records
+migration script to copy all travelq records
 for PCO sub-organizations into PCO organization
 """
 
