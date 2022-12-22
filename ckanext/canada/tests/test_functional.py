@@ -15,6 +15,7 @@ class TestNew(FunctionalTestBase):
     pkg_names = []
 
     def test_new_required_fields(self):
+        #TODO: bring in this test
         raise SkipTest('XXX: need to update for new forms')
         offset = url_for(controller='package', action='new')
         res = self.app.get(offset, extra_environ=self.extra_environ_tester)
@@ -53,6 +54,7 @@ class TestNew(FunctionalTestBase):
         assert not 'Error' in res, res
 
     def test_new_missing_fields(self):
+        #TODO: bring in this test
         raise SkipTest('XXX: need to update for new forms')
         offset = url_for(controller='package', action='new')
         res = self.app.get(offset, extra_environ=self.extra_environ_tester)

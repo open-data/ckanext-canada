@@ -205,6 +205,7 @@ class TestNAVLSchema(FunctionalTestBase):
         assert_equal(pkg['license_title'],
             'Open Government Licence - Canada')
 
+        #TODO: bring in this test
         raise SkipTest('XXX: not generating fields yet')
         # some we actually generate ourselves
         assert_equal(pkg['license_title_fra'],
@@ -214,6 +215,7 @@ class TestNAVLSchema(FunctionalTestBase):
         assert pkg['department_number']
 
     def test_portal_release_date(self):
+        #TODO: bring in this test
         raise SkipTest('XXX: portal_release_date not implemented yet')
         release_pkg = dict(self.complete_pkg,
             portal_release_date='2012-01-01')
@@ -227,6 +229,7 @@ class TestNAVLSchema(FunctionalTestBase):
         self.sysadmin_action.package_create(**release_pkg)
 
     def test_spatial(self):
+        #TODO: bring in this test
         raise SkipTest('XXX: spatial not implemented in raw schema')
         spatial_pkg = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": '
@@ -263,6 +266,7 @@ class TestNAVLSchema(FunctionalTestBase):
             **bad_spatial_pkg4)
 
     def test_dont_change_portal_release_date(self):
+        #TODO: bring in this test
         "normal users should not be able to reset the portal release date"
         raise SkipTest('XXX portal_release_date not yet implemented')
 

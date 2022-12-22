@@ -16,6 +16,7 @@ class TestTrimPackage(WsgiAppCase, CheckMethods):
 
 
     def test_identify_unchanged(self):
+        #TODO: bring in this test
         raise SkipTest('XXX: trim package needs to be updated for our new schemas')
         for p in self.example_pkg:
             resp = self.sysadmin_action.package_create(**p)
