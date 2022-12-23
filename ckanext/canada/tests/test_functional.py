@@ -1,27 +1,41 @@
-import cgi
-import datetime
-
-from nose.tools import assert_equal
+from nose.tools import assert_equal, assert_raises
 from nose.plugins.skip import SkipTest
 
-from ckan import plugins
-from ckan.tests import *
-import ckan.model as model
 from ckan.lib.create_test_data import CreateTestData
+from ckan.lib.helpers import url_for
 
+import ckan.tests.factories as factories
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckan.tests.helpers import FunctionalTestBase
 
+
 class TestNew(FunctionalTestBase):
-    pkg_names = []
+    def setup(self):
+        super(TestNew, self).setup()
+        CreateTestData.create()
+        self.sysadmin = factories.Sysadmin()
+        self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.org = Organization()
+
+    def teardown(self):
+        CreateTestData.delete()
 
     def test_new_required_fields(self):
-        #TODO: bring in this test
-        raise SkipTest('XXX: need to update for new forms')
+        self.app = self._get_test_app()
+
         offset = url_for(controller='package', action='new')
         res = self.app.get(offset, extra_environ=self.extra_environ_tester)
-        assert 'Create dataset' in res
+        with open('debug.txt', 'a') as f:
+            f.write(res.body)
+        # test if the page has the Create Dataset heading or title
+        assert 'Create Dataset' in res.body
+        # test if the page has the create org warning
+        assert 'Before you can create a dataset you need to create an organization' not in res.body
+
+        #TODO: continue writing test
+        raise SkipTest('XXX: need to update for new forms')
         fv = res.forms['dataset-form']
-        fv['owner_org'] = '9391E0A2-9717-4755-B548-4499C21F917B' # nrcan
+        fv['owner_org'] = self.org['name']
         fv['title'] = 'english title'
         fv['title_fra'] = 'french title'
         fv['notes'] = 'english description'
@@ -33,12 +47,10 @@ class TestNew(FunctionalTestBase):
         fv['maintenance_and_update_frequency'] = 'As Needed | Au besoin'
         # Submit
         res = fv.submit('save', extra_environ=self.extra_environ_tester)
-
         # Check dataset page
         assert not 'Error' in res, res
 
-        res = self.app.get(res.header('Location'),
-            extra_environ=self.extra_environ_tester)
+        res = self.app.get(res.header('Location'), extra_environ=self.extra_environ_tester)
         fv = res.forms['dataset-form']
         fv['name'] = 'english resource name'
         fv['name_fra'] = 'french resource name'
@@ -47,9 +59,7 @@ class TestNew(FunctionalTestBase):
         fv['format'] = 'TXT'
         fv['language'] = 'zxx; CAN'
         # Submit
-        res = fv.submit('save', 2,
-            extra_environ=self.extra_environ_tester)
-
+        res = fv.submit('save', 2, extra_environ=self.extra_environ_tester)
         # Check resource page
         assert not 'Error' in res, res
 
