@@ -1,7 +1,7 @@
+# -*- coding: UTF-8 -*-
 from ckan.tests.helpers import FunctionalTestBase
 from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
-    CanadaOrganization as Organization,
     CanadaResource as Resource)
 
 from ckanext.canada.commands import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
@@ -10,10 +10,9 @@ from ckanext.canada.commands import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE
 class TestTrimPackage(FunctionalTestBase):
     def setup(self):
         super(TestTrimPackage, self).setup()
-        self.org = Organization()
-        self.example_pkg = Dataset(owner_org=self.org['id'])
+        self.example_pkg = Dataset()
         resources = []
-        for _i in range(6):
+        for _ in range(6):
             resources.append(Resource(
                 package_id=self.example_pkg['id']))
         self.example_pkg['resources'] = resources

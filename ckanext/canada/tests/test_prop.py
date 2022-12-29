@@ -1,12 +1,11 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
-from ckan.tests import factories
-import ckan.lib.search as search
+from ckan.tests.helpers import FunctionalTestBase
+from ckan.tests.factories import User
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
+from ckan.model import Session
 from ckanapi import LocalCKAN, ValidationError
-import json
-from nose.tools import assert_raises, assert_equal
+from nose.tools import assert_raises
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -64,59 +63,51 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     ]
 )
 
+
 class TestSuggestedDataset(FunctionalTestBase):
+    def setup(self):
+        super(TestSuggestedDataset, self).setup()
+        user = User()
+        self.slc = LocalCKAN()
+        self.ulc = LocalCKAN(username=user['name'])
+        self.simple_org = Organization()
+        self.editor_org = Organization(users=[{
+                    'name': user['name'],
+                    'capacity': 'editor'}])
+
 
     def test_simple_suggestion(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        resp = self.slc.action.package_create(
+            owner_org=self.simple_org['name'],
             **SIMPLE_SUGGESTION)
 
         assert 'status' not in resp
 
+
     def test_normal_user_cant_create(self):
-        user = factories.User()
-        lc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
         assert_raises(ValidationError,
-            lc.action.package_create,
-            owner_org=org['name'],
+            self.ulc.action.package_create,
+            owner_org=self.editor_org['name'],
             **SIMPLE_SUGGESTION)
 
+
     def test_normal_user_can_update(self):
-        user = factories.User()
-        slc = LocalCKAN()
-        ulc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
-        resp = slc.action.package_create(
-            owner_org=org['name'],
+        resp = self.slc.action.package_create(
+            owner_org=self.editor_org['name'],
             **SIMPLE_SUGGESTION)
-        resp = ulc.action.package_update(
-            owner_org=org['name'],
+        resp = self.ulc.action.package_update(
+            owner_org=self.editor_org['name'],
             id=resp['id'],
             **COMPLETE_SUGGESTION)
 
         assert resp['status'][0]['reason'] == 'under_review'
 
+
     def test_responses_ordered(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        resp = self.slc.action.package_create(
+            owner_org=self.simple_org['name'],
             **UPDATED_SUGGESTION)
 
         # first update will be moved to end based on date field
         assert resp['status'][1]['reason'] == 'released'
+

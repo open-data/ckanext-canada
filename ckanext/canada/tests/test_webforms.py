@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from ckan.lib.create_test_data import CreateTestData
 from ckan.lib.helpers import url_for
 

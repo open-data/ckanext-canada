@@ -1,15 +1,10 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
+from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests import factories
-import ckan.lib.search as search
-from ckan.lib.create_test_data import CreateTestData
-import ckan.model as model
 from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanapi import LocalCKAN, ValidationError
-import json
-from nose.plugins.skip import SkipTest
 from nose.tools import assert_raises, assert_equal
 
 from ckanext.canada.validators import canada_tags
@@ -51,8 +46,8 @@ class TestCanadaTags(object):
 
 
 class TestNAVLSchema(FunctionalTestBase):
-
     def setup(self):
+        super(TestNAVLSchema, self).setup()
         self.sysadmin_user = factories.Sysadmin()
         self.normal_user = factories.User()
         self.org = Organization(title_translated = {
@@ -102,6 +97,7 @@ class TestNAVLSchema(FunctionalTestBase):
             keywords={'en': [u'book'], 'fr': [u'livre']},
             )
 
+
     def test_basic_package(self):
         assert_raises(ValidationError,
             self.normal_action.package_create,
@@ -113,6 +109,7 @@ class TestNAVLSchema(FunctionalTestBase):
 
         resp = self.action.package_show(id=resp['id'])
         assert resp['title_translated']['fr'] == u'Un novel par Tolstoy'
+
 
     def test_keyword_validation(self):
         assert_raises(ValidationError,
@@ -134,6 +131,7 @@ class TestNAVLSchema(FunctionalTestBase):
             **dict(self.complete_pkg,
                 keywords={'en':['these', 'ones', 'are', 'a-ok'], 'fr':['test']}))
 
+
     def test_custom_dataset_id(self):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
         norm_uuid = '30569200-43b9-43f1-a1fb-9e7974cbb997'
@@ -152,6 +150,7 @@ class TestNAVLSchema(FunctionalTestBase):
             self.sysadmin_action.package_create,
             id='my-custom-id', **self.complete_pkg)
 
+
     def test_raw_required(self):
         raw_pkg = dict(self.complete_pkg)
         del raw_pkg['title_translated']
@@ -160,6 +159,7 @@ class TestNAVLSchema(FunctionalTestBase):
             self.normal_action.package_create,
             **raw_pkg)
 
+
     def test_tag_extras_bug(self):
         resp = self.normal_action.package_create(
             **self.complete_pkg)
@@ -167,10 +167,12 @@ class TestNAVLSchema(FunctionalTestBase):
         resp = self.action.package_show(id=resp['id'])
         assert 'subject' not in [e['key'] for e in resp.get('extras',[])]
 
+
     def test_keywords_with_apostrophe(self):
         self.normal_action.package_create(
             **dict(self.complete_pkg, keywords=
                 {'en': ['test'], 'fr': ["emissions de l'automobile"]}))
+
 
     def test_invalid_resource_size(self):
         assert_raises(ValidationError,
@@ -182,12 +184,14 @@ class TestNAVLSchema(FunctionalTestBase):
                 )
             )
 
+
     def test_copy_org_name(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
         assert_equal(sorted(pkg['org_title_at_publication']), ['en', 'fr'])
         assert_equal(pkg['org_title_at_publication']['en'], 'en org name')
         assert_equal(pkg['org_title_at_publication']['fr'], 'fr org name')
+
 
     def test_dont_copy_org_name(self):
         pkg = self.normal_action.package_create(**dict(
@@ -196,7 +200,8 @@ class TestNAVLSchema(FunctionalTestBase):
         assert_equal(pkg['org_title_at_publication']['en'], 'a')
         assert_equal(pkg['org_title_at_publication']['fr'], 'b')
 
-    def test_generated_fields(self):
+
+    def test_license_fields(self):
         pkg = self.normal_action.package_create(**self.complete_pkg)
 
         # not generated, we set this one but later tests depend on it
@@ -205,18 +210,8 @@ class TestNAVLSchema(FunctionalTestBase):
         assert_equal(pkg['license_title'],
             'Open Government Licence - Canada')
 
-        #TODO: bring in this test
-        raise SkipTest('XXX: not generating fields yet')
-        # some we actually generate ourselves
-        assert_equal(pkg['license_title_fra'],
-            'Licence du gouvernement ouvert - Canada')
-        assert pkg['license_url_fra']
-
-        assert pkg['department_number']
 
     def test_portal_release_date(self):
-        #TODO: bring in this test
-        raise SkipTest('XXX: portal_release_date not implemented yet')
         release_pkg = dict(self.complete_pkg,
             portal_release_date='2012-01-01')
 
@@ -224,13 +219,10 @@ class TestNAVLSchema(FunctionalTestBase):
             self.normal_action.package_create,
             **release_pkg)
 
-        self.publisher_action.package_create(**release_pkg)
-
         self.sysadmin_action.package_create(**release_pkg)
 
+
     def test_spatial(self):
-        #TODO: bring in this test
-        raise SkipTest('XXX: spatial not implemented in raw schema')
         spatial_pkg = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": '
                 '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
@@ -254,22 +246,20 @@ class TestNAVLSchema(FunctionalTestBase):
             **bad_spatial_pkg2)
 
         bad_spatial_pkg3 = dict(self.complete_pkg,
-            spatial='{"type": "Polygon"}')
-        self.assert_raises(ValidationError,
+            spatial='{"type": "Polygon", "coordinates": ''}')
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg3)
 
         bad_spatial_pkg4 = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
-        self.assert_raises(ValidationError,
+        assert_raises(ValidationError,
             self.normal_action.package_create,
             **bad_spatial_pkg4)
 
-    def test_dont_change_portal_release_date(self):
-        #TODO: bring in this test
-        "normal users should not be able to reset the portal release date"
-        raise SkipTest('XXX portal_release_date not yet implemented')
 
+    def test_dont_change_portal_release_date(self):
+        "normal users should not be able to reset the portal release date"
         resp = self.sysadmin_action.package_create(
             portal_release_date='2012-01-01',
             **self.complete_pkg)

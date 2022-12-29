@@ -7,37 +7,38 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
+
 class TestContracts(FunctionalTestBase):
     def setup(self):
         super(TestContracts, self).setup()
         org = Organization()
-        lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='contracts', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='contracts', owner_org=org['name'])
+        self.lc = LocalCKAN()
+        self.lc.action.recombinant_create(dataset_type='contracts', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='contracts', owner_org=org['name'])
         self.resource_id = rval['resources'][0]['id']
 
+
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('contracts')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
-        lc = LocalCKAN()
         assert_raises(ValidationError,
-            lc.action.datastore_upsert,
+            self.lc.action.datastore_upsert,
             resource_id=self.resource_id,
             records=[{}])
 
+
     def test_ministers_office_missing(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             contract_date='2019-06-21',
             ministers_office=None)
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -47,18 +48,18 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_ministers_office(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             contract_date='2019-06-21',
             ministers_office='N')
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_2022_fields(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             contract_date='2022-01-01',
@@ -70,7 +71,7 @@ class TestContracts(FunctionalTestBase):
             indigenous_business='',
         )
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -86,8 +87,8 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_multi_field_errors(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             trade_agreement=['XX', 'NA'],
@@ -96,7 +97,7 @@ class TestContracts(FunctionalTestBase):
             trade_agreement_exceptions=['00', '01'],
         )
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -118,8 +119,8 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_inter_field_errors(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             contract_date='2022-01-01',
@@ -132,7 +133,7 @@ class TestContracts(FunctionalTestBase):
             solicitation_procedure='TN',
         )
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -151,15 +152,15 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_field_length_errors(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             economic_object_code='467782',
             commodity_code='K23HG367BU',
         )
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -171,13 +172,13 @@ class TestContracts(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_postal_code(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contracts')['examples']['record'],
             vendor_postal_code='1A1')
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.exception.error_dict['records'][0]
@@ -188,3 +189,4 @@ class TestContracts(FunctionalTestBase):
         }
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
+

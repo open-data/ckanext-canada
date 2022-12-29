@@ -1,4 +1,6 @@
-from ckan.tests.factories import Organization, Dataset, Resource
+# -*- coding: UTF-8 -*-
+from ckan.tests.factories import Organization, Dataset, Resource, ResourceView
+from factory import LazyAttribute
 
 
 class CanadaOrganization(Organization):
@@ -11,7 +13,13 @@ class CanadaOrganization(Organization):
     faa_schedule = 'NA'
 
 
+class CanadaResourceView(ResourceView):
+    resource_id = LazyAttribute(lambda _: CanadaResource()['id'])
+    title_fr = 'Test FR Resource View'
+
+
 class CanadaResource(Resource):
+    package_id = LazyAttribute(lambda _: CanadaDataset()['id'])
     name_translated = {
         'en': 'Test Resource',
         'fr': 'Test FR Resource'}
@@ -21,6 +29,7 @@ class CanadaResource(Resource):
 
 
 class CanadaDataset(Dataset):
+    owner_org = LazyAttribute(lambda _: CanadaOrganization()['id'])
     name = None
     collection = 'primary'
     title_translated = {
@@ -40,4 +49,5 @@ class CanadaDataset(Dataset):
     jurisdiction = 'federal'
     restrictions = 'unrestricted'
     imso_approval = 'true'
+    create_datastore_views = 'false'
 
