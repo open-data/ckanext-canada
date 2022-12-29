@@ -2,7 +2,9 @@
 from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests import factories
 from ckan.plugins.toolkit import Invalid
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.factories import (
+    CanadaOrganization as Organization,
+    CanadaResource as Resource)
 
 from ckanapi import LocalCKAN, ValidationError
 from nose.tools import assert_raises, assert_equal
@@ -272,4 +274,16 @@ class TestNAVLSchema(FunctionalTestBase):
 
         assert_equal(resp['portal_release_date'],
             resp2.get('portal_release_date'))
+
+
+    def test_resource_view(self):
+        "creating a resource view should require the field `title_fr`"
+        resource_view_data = dict(
+            resource_id=Resource()['id'],
+            view_type='image_view',
+            title='Test Resource View')
+
+        assert_raises(ValidationError,
+            self.sysadmin_action.resource_view_create,
+            **resource_view_data)
 

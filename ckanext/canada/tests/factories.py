@@ -49,5 +49,4 @@ class CanadaDataset(Dataset):
     jurisdiction = 'federal'
     restrictions = 'unrestricted'
     imso_approval = 'true'
-    create_datastore_views = 'false'
 
