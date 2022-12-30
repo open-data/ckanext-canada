@@ -2,7 +2,7 @@
 from ckan.lib.create_test_data import CreateTestData
 from ckan.lib.helpers import url_for
 
-import ckan.tests.factories as factories
+from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckan.tests.helpers import FunctionalTestBase
 
@@ -11,7 +11,7 @@ class TestWebForms(FunctionalTestBase):
     def setup(self):
         super(TestWebForms, self).setup()
         CreateTestData.create()
-        self.sysadmin = factories.Sysadmin()
+        self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
         self.app = self._get_test_app()

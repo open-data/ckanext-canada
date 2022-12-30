@@ -1,10 +1,11 @@
 # -*- coding: UTF-8 -*-
 from ckan.tests.helpers import FunctionalTestBase
-from ckan.tests import factories
+from ckan.tests.factories import Sysadmin
 from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
-    CanadaResource as Resource)
+    CanadaResource as Resource,
+    CanadaUser as User)
 
 from ckanapi import LocalCKAN, ValidationError
 from nose.tools import assert_raises, assert_equal
@@ -50,23 +51,23 @@ class TestCanadaTags(object):
 class TestNAVLSchema(FunctionalTestBase):
     def setup(self):
         super(TestNAVLSchema, self).setup()
-        self.sysadmin_user = factories.Sysadmin()
-        self.normal_user = factories.User()
-        self.org = Organization(title_translated = {
-            'en': 'en org name',
-            'fr': 'fr org name'
-        })
+        sysadmin_user = Sysadmin()
+        normal_user = User()
+        self.org = Organization(
+            title_translated={
+                'en': 'en org name',
+                'fr': 'fr org name'},
+            users=[{
+                'name': sysadmin_user['name'],
+                'capacity': 'admin'},
+                {'name': normal_user['name'],
+                'capacity': 'editor'}])
 
         self.sysadmin_action = LocalCKAN(
-            username=self.sysadmin_user['name']).action
+            username=sysadmin_user['name']).action
         self.normal_action = LocalCKAN(
-            username=self.normal_user['name']).action
+            username=normal_user['name']).action
         self.action = LocalCKAN().action
-
-        self.sysadmin_action.organization_member_create(
-            username=self.normal_user['name'],
-            id=self.org['name'],
-            role='editor')
 
         self.incomplete_pkg = {
             'type': 'dataset',
