@@ -51,42 +51,6 @@
   {% endif %}
 {% endblock %}
 
-{% block scripts %}
-  {% snippet 'snippets/wet-boew/footerresources.html' %}
-  <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
-  {%- block adobe_analytics_footer -%}{%- endblock -%}
-  {%- block google_analytics_footer -%}
-    <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
-  {%- endblock -%}
-  <script type="text/javascript" src="{{ h.url_for_static('base/vendor/bootstrap/js/bootstrap.js') }}"></script>
-  <script>
-    wb.doc.on("wb-ready.wb-tables", function() {
-      Modernizr.load( {
-        load: [
-          "https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons" + wb.getMode() + ".js",
-          "https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis" + wb.getMode() + ".js",
-        ],
-        complete: function() {
-          var selector = "#dtprv", table;
-          if ($.fn.DataTable.isDataTable( selector ) ) {
-            table = $( selector ).DataTable()
-            new $.fn.dataTable.Buttons( table, {
-              buttons: [ {
-                extend: 'colvis',
-                text: '{{ _("Column visibility") }}'
-              }  ]
-            });
-
-            table.buttons().container()
-              .appendTo( $( table.table().container() ).find( ".top" ) );
-
-          }
-        }
-      });
-     });
-  </script>
-{% endblock %}
-
 {%- block styles %}
   <link rel="stylesheet"  href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
   <link rel="stylesheet" type="text/css" href="{{ h.url_for_static('base/vendor/font-awesome/css/font-awesome.css') }}" />
