@@ -10,7 +10,7 @@ Features:
 
 Installation:
 
-* Use [open-data fork of CKAN](https://github.com/open-data/ckan>),
+* Use [open-data fork of CKAN](https://github.com/open-data/ckan),
   branch canada-v2.8
 
 From a clean database you must run:
@@ -34,7 +34,7 @@ before loading any data.
 
 `canada_internal`
   templates for internal site and registration (requires
-  `canada_forms`` and `canada_public``)
+  `canada_forms` and `canada_public`)
 
 `canada_package`
   package processing between CKAN and Solr
@@ -50,9 +50,9 @@ Project | Github group/repo | Branch | Plugins
 CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.8 | N/A
 canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | master | see above
 Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | scheming_datasets
-Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent>) | master | N/A
-ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi>) | master | N/A
-ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics>) | master | googleanalytics
+Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent) | master | N/A
+ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | master | N/A
+ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | master | googleanalytics
 Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | master | recombinant
 
 
@@ -131,7 +131,7 @@ wet_boew.url = http://domain.com/wet-boew/v4.0.31
 
 ### Additional Configuration:
 
-Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](http://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html) to use. Set this to either 'static' or 'dynamic':
+Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](https://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html) to use. Set this to either 'static' or 'dynamic':
 
 ```ini
 wet_theme.geo_map_type = static
@@ -209,7 +209,7 @@ ckanext.canada.adv_search_solr_core = http://127.0.0.1:8983/solr/core_od_search
 The first setting must to set to true to enable the integration, and the second setting provides the URL to the
 custom OGC Search core.
 
-The Django search code uses the NLTK toolkit (http://www.nltk.org/) to extract a summarized description. To install
+The Django search code uses the NLTK toolkit (https://www.nltk.org/) to extract a summarized description. To install
 the NLTK parsers, run the following python commands after activating the virtual environment:
 
 ```ini

@@ -1,5 +1,6 @@
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
-{% if chromo.edit_form %}
+{% set can_edit = h.check_access('resource_update', {'id': resource_id}) %}
+{% if chromo.edit_form and can_edit %}
 {% set offset = 2 %}
 {% else %}
 {% set offset = 1 %}
@@ -14,7 +15,7 @@
     <thead>
     <tr class="font-small">
       <th scope="col" data-priority="dtprv-1000">{{ _('Select') }}</th>
-      {% if chromo.edit_form %}
+      {% if chromo.edit_form and can_edit %}
       <th scope="col" data-priority="dtprv-999">{{ _('Edit') }}</th>
       {% endif %}
       {% set magic_priority_no_field_should_be_below = 2 %}
@@ -61,7 +62,7 @@
     "order": [[1, "asc"]],
     columns: [
       {"className":"checkboxes","orderable":false,"targets":0},
-      {% if chromo.edit_form %}
+      {% if chromo.edit_form and can_edit %}
       {"className": "bg-info", "orderable": false, "targets": "no-sort"},
       {% endif %}
       {% for f in chromo.fields %}
