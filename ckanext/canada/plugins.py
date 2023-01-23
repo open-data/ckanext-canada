@@ -149,9 +149,6 @@ ckanext.canada:schemas/presets.yaml
             controller='package',
             action='delete'
         )
-        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
-            m.connect('/feeds/organization/{id}.atom', action='organization')
-
         map.connect(
             'delete_datastore_table',
             '/dataset/{id}/delete-datastore-table/{resource_id}',
@@ -341,6 +338,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes, inherit=True)
+    p.implements(p.IBlueprint)
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
 
@@ -497,11 +495,6 @@ ckanext.canada:schemas/prop.yaml
             controller='ckanext.canada.controller:CanadaController'
         )
         map.connect(
-            'general', '/feeds/dataset.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
-        )
-        map.connect(
             '/dataset/delete/{pkg_id}',
             controller='ckanext.canada.controller:CanadaController',
             action='package_delete'
@@ -524,6 +517,12 @@ ckanext.canada:schemas/prop.yaml
             conditions={'method':['GET', 'POST']},
         )
         return map
+
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        from ckanext.canada.view import canada_feeds
+
+        return [canada_feeds]
 
     # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
@@ -908,11 +907,6 @@ ckanext.canada:schemas/doc.yaml
             )
 
     def before_map(self, map):
-        map.connect(
-            'general', '/feeds/dataset.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
-        )
         map.connect(
             '/organization/autocomplete',
             action='organization_autocomplete',

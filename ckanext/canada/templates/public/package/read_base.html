@@ -155,7 +155,7 @@
       </li>
       {% endif %}
       <li class="list-group-item">
-        <a href="{{ h.url_for(action='history', controller='package', id=pkg.id) }}?format=atom" title="RSS">
+        <a href="{{ h.url_for('canada_feeds.dataset_feed', pkg_id=pkg.id) }}" title="RSS">
           <span class="fa fa-rss-square"></span> {{_('Atom Feed')}}
         </a>
       </li>
