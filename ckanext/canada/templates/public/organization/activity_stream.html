@@ -7,7 +7,7 @@
 {% block primary_content_inner %}
   {% block activity_stream %}
   <div align="right">
-  <a href="{{ h.url_for(controller='feed', action='organization', id=c.group_dict['id']) }}" title="RSS">
+  <a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaFeedController', action='organization', id=c.group_dict['id']) }}" title="RSS">
           <span class="fa fa-rss-square"></span>{{ _('Atom Feed') }}
         </a>
         </div>

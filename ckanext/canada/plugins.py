@@ -446,9 +446,9 @@ ckanext.canada:schemas/prop.yaml
             action='organization_index',
         )
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/dataset/delete/{pkg_id}',
@@ -887,9 +887,9 @@ ckanext.canada:schemas/doc.yaml
             action='organization_index',
         )
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/organization/autocomplete',
