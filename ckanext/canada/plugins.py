@@ -142,9 +142,6 @@ ckanext.canada:schemas/presets.yaml
                     '/recombinant/{resource_name}',
                     action='type_redirect',
                     controller='ckanext.canada.controller:PDUpdateController')
-        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
-            m.connect('/feeds/organization/{id}.atom', action='organization')
-
         map.connect(
             'delete_datastore_table',
             '/dataset/{id}/delete-datastore-table/{resource_id}',
@@ -445,10 +442,12 @@ ckanext.canada:schemas/prop.yaml
             controller='ckanext.canada.controller:CanadaController',
             action='organization_index',
         )
+        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
+            m.connect('/feeds/organization/{id}.atom', action='organization')
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/dataset/delete/{pkg_id}',
@@ -887,9 +886,9 @@ ckanext.canada:schemas/doc.yaml
             action='organization_index',
         )
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/organization/autocomplete',
