@@ -237,7 +237,7 @@ ckanext.canada:schemas/presets.yaml
 
 @chained_action
 def disabled_anon_action(up_func, context, data_dict):
-    if context.get('user', 'visitor') in ('', 'visitor'):
+    if not context.get('ignore_auth', False) and context.get('user', 'visitor') in ('', 'visitor'):
         return []
     return up_func(context, data_dict)
 disabled_anon_action.side_effect_free = True
