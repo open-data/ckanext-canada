@@ -21,8 +21,7 @@
         <dt>{{ _('Organizations') }}</dt>
         <dd><ul>
           {% for org in h.user_organizations(user) %}
-            {% set url = h.url_for(org.type ~ '_read', action='read', id=org.name) %}
-            <li><a href="{{ url }}">{{cr.split_bilingual_field(org.title, h.lang())}}</a></li>
+            <li><a href="{% url_for org.type + '.read', id=org.name %}">{{cr.split_bilingual_field(org.title, h.lang())}}</a></li>
           {% endfor %}
         </ul></dd>
       </dl>

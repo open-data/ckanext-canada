@@ -360,3 +360,23 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
     color: white;
 
 }
+
+.user-image-wrapper > .image { 
+    position: relative;
+    padding-top: calc(100% + 10px);
+}
+@media all and (max-width: 992px){
+    .user-image-wrapper > .image { 
+        position: relative;
+        padding-top: 250px;
+    }
+}
+.user-image-wrapper img.user-image {
+    position: absolute;
+    max-height: 100%;
+    max-width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

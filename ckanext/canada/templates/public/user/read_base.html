@@ -10,7 +10,9 @@
     <div class="panel-body">
       {% if h.gravatar_show() %}
         {% block user_image %}
-          {{ super () }}
+          <div class="user-image-wrapper">
+            <div class="image">{{ h.user_image(user.id, size=230) }}</div>
+          </div>
         {% endblock %}
       {% endif %}
     {% block user_about %}
