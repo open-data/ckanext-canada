@@ -30,6 +30,7 @@ from ckan.controllers.feed import (
 from ckan.lib import i18n
 import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
+from ckan.logic import parse_params, NotFound
 
 from ckanext.canada.helpers import normalize_strip_accents, canada_date_str_to_datetime
 from ckanext.canada.urlsafe import url_part_escape, url_part_unescape
@@ -195,8 +196,9 @@ class CanadaController(BaseController):
                 'aaData': [],
             })
 
+        can_edit = h.check_access('resource_update', {'id': resource_id})
         cols = [f['datastore_id'] for f in chromo['fields']]
-        prefix_cols = 2 if chromo.get('edit_form', False) else 1  # Select | (Edit) | ...
+        prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
 
         sort_list = []
         i = 0
@@ -223,7 +225,7 @@ class CanadaController(BaseController):
             [datatablify(row.get(colname, u''), colname) for colname in cols]
             for row in response['records']]
 
-        if chromo.get('edit_form', False):
+        if chromo.get('edit_form', False) and can_edit:
             res = lc.action.resource_show(id=resource_id)
             pkg = lc.action.package_show(id=res['package_id'])
             fids = [f['datastore_id'] for f in chromo['fields']]
@@ -424,6 +426,46 @@ class CanadaFeedController(FeedController):
             feed_link=alternate_url,
             feed_guid=_create_atom_id(
                 u'/feeds/dataset.atom'),
+            feed_url=feed_url,
+            navigation_urls=navigation_urls
+        )
+
+    def dataset(self, pkg_id):
+        try:
+            context = {'model': model, 'session': model.Session,
+                       'user': c.user, 'auth_user_obj': c.userobj}
+            get_action('package_show')(context,
+                                        {'id': pkg_id})
+        except NotFound:
+            abort(404, _('Dataset not found'))
+
+        data_dict, params = self._parse_url_params()
+
+        data_dict['fq'] = '{0}:"{1}"'.format('id', pkg_id)
+
+        item_count, results = _package_search(data_dict)
+
+        navigation_urls = self._navigation_urls(params,
+                                                item_count=item_count,
+                                                limit=data_dict['rows'],
+                                                controller='feed',
+                                                action='dataset',
+                                                id=pkg_id)
+
+        feed_url = self._feed_url(params,
+                                  controller='feed',
+                                  action='dataset',
+                                  id=pkg_id)
+
+        alternate_url = self._alternate_url(params, id=pkg_id)
+
+        return self.output_feed(
+            results,
+            feed_title=_(u'Open Government Dataset Feed'),
+            feed_description='',
+            feed_link=alternate_url,
+            feed_guid=_create_atom_id(
+                u'/feeds/dataset/{0}.atom'.format(pkg_id)),
             feed_url=feed_url,
             navigation_urls=navigation_urls
         )
