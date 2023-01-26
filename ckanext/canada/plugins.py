@@ -509,11 +509,6 @@ ckanext.canada:schemas/prop.yaml
             action='fgpv_vpgf',
             controller='ckanext.canada.controller:CanadaController'
         )
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
         map.connect(
@@ -928,11 +923,6 @@ ckanext.canada:schemas/doc.yaml
             )
 
     def before_map(self, map):
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
         map.connect(
             'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
