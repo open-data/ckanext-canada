@@ -123,15 +123,15 @@ class CanadaUserRegisterView(UserRegisterView):
                 import ckan.lib.mailer
                 # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
                 getattr(
-                  ckan.lib.mailer,
-                  "notify_ckan_user_create",
-                  notify_ckan_user_create
+                    ckan.lib.mailer,
+                    "notify_ckan_user_create",
+                    notify_ckan_user_create
                 )(
-                  email=email,
-                  fullname=fullname,
-                  username=username,
-                  phoneno=phoneno,
-                  dept=dept)
+                    email=email,
+                    fullname=fullname,
+                    username=username,
+                    phoneno=phoneno,
+                    dept=dept)
                 notice_no_access()
         return response
 
