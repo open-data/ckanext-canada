@@ -110,6 +110,12 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 class CanadaUserRegisterView(UserRegisterView):
     def post(self):
+        params = parse_params(request.form)
+        email=params.get('email', '')
+        fullname=params.get('fullname', '')
+        username=params.get('name', '')
+        phoneno=params.get('phoneno', '')
+        dept=params.get('department', '')
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -121,13 +127,12 @@ class CanadaUserRegisterView(UserRegisterView):
                   "notify_ckan_user_create",
                   notify_ckan_user_create
                 )(
-                  email=request.params.get('email', ''),
-                  fullname=request.params.get('fullname', ''),
-                  username=request.params.get('name', ''),
-                  phoneno=request.params.get('phoneno', ''),
-                  dept=request.params.get('department', ''))
+                  email=email,
+                  fullname=fullname,
+                  username=username,
+                  phoneno=phoneno,
+                  dept=dept)
                 notice_no_access()
-                raise
         return response
 
 
