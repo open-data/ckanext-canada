@@ -9,19 +9,13 @@ from ckan.plugins.toolkit import (
     request,
     render
 )
-from ckan.lib.base import model
-from ckan.logic import NotFound
 
 from ckan.views.dataset import EditView as DatasetEditView
 from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
-from ckan.views.user import (
-    EditView as UserEditView,
-    RegisterView as UserRegisterView,
-    _extra_template_variables as user_extra_template_variables
-)
+from ckan.views.user import RegisterView as UserRegisterView
 
 from ckan.authz import is_sysadmin
 from ckan.logic import parse_params
@@ -135,37 +129,6 @@ class CanadaUserRegisterView(UserRegisterView):
                 notice_no_access()
                 raise
         return response
-
-
-@canada_views.route('/user/reports/<id>', methods=['GET'])
-def user_reports(id=None):
-    context = {'model': model, 'session': model.Session,
-               'user': c.user or c.author, 'auth_user_obj': c.userobj,
-               'for_view': True}
-    data_dict = {'id': id,
-                 'user_obj': c.userobj,
-                 'include_datasets': True,
-                 'include_num_followers': True}
-
-    context['with_related'] = True
-
-    c.is_sysadmin = is_sysadmin(c.user)
-    try:
-        user_dict = get_action('user_show')(context, data_dict)
-    except NotFound:
-        abort(404, _('User not found'))
-    except NotAuthorized:
-        abort(403, _('Not authorized to see this page'))
-
-    c.user_dict = user_dict
-    c.is_myself = user_dict['name'] == c.user
-    c.about_formatted = h.render_markdown(user_dict['about'])
-
-    extra_vars = user_extra_template_variables(context, data_dict)
-
-    if c.is_myself:
-        return render('user/reports.html', extra_vars)
-    abort(403)
 
 
 @canada_views.route('/500', methods=['GET'])
