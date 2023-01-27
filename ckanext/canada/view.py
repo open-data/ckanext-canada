@@ -1,10 +1,28 @@
 from ckan.plugins.toolkit import (
-    get_action, _, h, c, check_access, aslist, request, render
+    abort,
+    get_action,
+    _,
+    h,
+    c,
+    check_access,
+    aslist,
+    request,
+    render
 )
+from ckan.lib.base import model
+from ckan.logic import NotFound
 
 from ckan.views.dataset import EditView as DatasetEditView
-from ckan.views.resource import EditView as ResourceEditView
-from ckan.views.resource import CreateView as ResourceCreateView
+from ckan.views.resource import (
+    EditView as ResourceEditView,
+    CreateView as ResourceCreateView
+)
+from ckan.views.user import (
+    EditView as UserEditView,
+    RegisterView as UserRegisterView,
+    _extra_template_variables as user_extra_template_variables
+)
+
 from ckan.authz import is_sysadmin
 from ckan.logic import parse_params
 
@@ -17,9 +35,12 @@ from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from flask import Blueprint
 
 from ckanext.canada.urlsafe import url_part_unescape
-from ckanext.canada.controller import notice_no_access
+from ckanext.canada.controller import notice_no_access, notify_ckan_user_create
+
+
 
 canada_views = Blueprint('canada', __name__)
+
 
 class IntentionalServerError(Exception):
     pass
@@ -34,6 +55,7 @@ def login():
     return render(u'user/login.html', {})
 
 
+@canada_views.route('/logged_in', methods=['GET'])
 def logged_in():
     if c.user:
         user_dict = get_action('user_show')(None, {'id': c.user})
@@ -92,10 +114,63 @@ class CanadaResourceCreateView(ResourceCreateView):
         return response
 
 
+class CanadaUserRegisterView(UserRegisterView):
+    def post(self):
+        response = super(CanadaUserRegisterView, self).post()
+        if hasattr(response, 'status_code'):
+            if response.status_code == 200 or response.status_code == 302:
+                # redirected after successful user create
+                import ckan.lib.mailer
+                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                getattr(
+                  ckan.lib.mailer,
+                  "notify_ckan_user_create",
+                  notify_ckan_user_create
+                )(
+                  email=request.params.get('email', ''),
+                  fullname=request.params.get('fullname', ''),
+                  username=request.params.get('name', ''),
+                  phoneno=request.params.get('phoneno', ''),
+                  dept=request.params.get('department', ''))
+                notice_no_access()
+                raise
+        return response
+
+
+@canada_views.route('/user/reports/<id>', methods=['GET'])
+def user_reports(id=None):
+    context = {'model': model, 'session': model.Session,
+               'user': c.user or c.author, 'auth_user_obj': c.userobj,
+               'for_view': True}
+    data_dict = {'id': id,
+                 'user_obj': c.userobj,
+                 'include_datasets': True,
+                 'include_num_followers': True}
+
+    context['with_related'] = True
+
+    c.is_sysadmin = is_sysadmin(c.user)
+    try:
+        user_dict = get_action('user_show')(context, data_dict)
+    except NotFound:
+        abort(404, _('User not found'))
+    except NotAuthorized:
+        abort(403, _('Not authorized to see this page'))
+
+    c.user_dict = user_dict
+    c.is_myself = user_dict['name'] == c.user
+    c.about_formatted = h.render_markdown(user_dict['about'])
+
+    extra_vars = user_extra_template_variables(context, data_dict)
+
+    if c.is_myself:
+        return render('user/reports.html', extra_vars)
+    abort(403)
+
+
 @canada_views.route('/500', methods=['GET'])
 def fivehundred():
     raise IntentionalServerError()
-
 
 
 def _get_form_full_text_choices(field_name, chromo):
@@ -374,5 +449,3 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
     return data, err
 
-
-canada_views.add_url_rule(u'/logged_in', view_func=logged_in)
