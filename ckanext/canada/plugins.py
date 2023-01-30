@@ -77,9 +77,7 @@ ckanext.canada:schemas/presets.yaml
             CanadaDatasetEditView,
             CanadaResourceEditView,
             CanadaResourceCreateView,
-            CanadaUserRegisterView,
             canada_views,
-            login,
         )
 
         canada_dynamic = Blueprint(u'canada_dynamic', __name__)
@@ -89,10 +87,6 @@ ckanext.canada:schemas/presets.yaml
         #       However, IBlueprint implementations are loaded before the above, so changes to them
         #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
         def load_canada_views():
-            if request.endpoint == 'user.login':
-                return current_app.finalize_request(login(**request.view_args))
-            if request.endpoint == 'user.register':
-                return current_app.finalize_request(CanadaUserRegisterView.as_view(str(u'register'))(**request.view_args))
             if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
