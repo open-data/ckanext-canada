@@ -77,6 +77,7 @@ ckanext.canada:schemas/presets.yaml
             CanadaDatasetEditView,
             CanadaResourceEditView,
             CanadaResourceCreateView,
+            CanadaUserRegisterView,
             canada_views,
             login,
         )
@@ -90,6 +91,8 @@ ckanext.canada:schemas/presets.yaml
         def load_canada_views():
             if request.endpoint == 'user.login':
                 return current_app.finalize_request(login(**request.view_args))
+            if request.endpoint == 'user.register':
+                return current_app.finalize_request(CanadaUserRegisterView.as_view(str(u'register'))(**request.view_args))
             if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
                 return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
@@ -111,23 +114,6 @@ ckanext.canada:schemas/presets.yaml
             '/links',
             action='links',
             controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/user/logged_in',
-            action='logged_in',
-            controller='ckanext.canada.controller:CanadaUserController'
-        )
-        map.connect(
-            '/user/register',
-            action='register',
-            controller='ckanext.canada.controller:CanadaUserController'
-        )
-        map.connect(
-            'user_reports',
-            '/user/reports/{id}',
-            action='reports',
-            controller='ckanext.canada.controller:CanadaUserController',
-            ckan_icon='bar-chart-o'
         )
         map.connect(
             'ckanadmin_publish',
@@ -387,6 +373,7 @@ ckanext.canada:tables/adminaircraft.yaml
 
 """
         config['ckan.search.show_all_types'] = True
+        config['ckan.gravatar_default'] = 'disabled'
         config['search.facets.limit'] = 200  # because org list
         if 'validation' not in config.get('scheming.presets', ''):
             config['scheming.presets'] = """
@@ -488,7 +475,6 @@ ckanext.canada:schemas/prop.yaml
             'get_translated_t',
             'language_text_t',
             'link_to_user',
-            'gravatar_show',
             'get_datapreview',
             'iso_to_goctime',
             'geojson_to_wkt',
@@ -508,11 +494,6 @@ ckanext.canada:schemas/prop.yaml
             '/fgpv_vpgf/{pkg_id}',
             action='fgpv_vpgf',
             controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
         )
         with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
             m.connect('/feeds/organization/{id}.atom', action='organization')
@@ -928,11 +909,6 @@ ckanext.canada:schemas/doc.yaml
             )
 
     def before_map(self, map):
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
         map.connect(
             'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',

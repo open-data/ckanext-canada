@@ -1,10 +1,22 @@
 from ckan.plugins.toolkit import (
-    get_action, _, h, c, check_access, aslist, request, render
+    abort,
+    get_action,
+    _,
+    h,
+    c,
+    check_access,
+    aslist,
+    request,
+    render
 )
 
 from ckan.views.dataset import EditView as DatasetEditView
-from ckan.views.resource import EditView as ResourceEditView
-from ckan.views.resource import CreateView as ResourceCreateView
+from ckan.views.resource import (
+    EditView as ResourceEditView,
+    CreateView as ResourceCreateView
+)
+from ckan.views.user import RegisterView as UserRegisterView
+
 from ckan.authz import is_sysadmin
 from ckan.logic import parse_params
 
@@ -17,9 +29,12 @@ from ckanapi import LocalCKAN, NotAuthorized, ValidationError
 from flask import Blueprint
 
 from ckanext.canada.urlsafe import url_part_unescape
-from ckanext.canada.controller import notice_no_access
+from ckanext.canada.controller import notice_no_access, notify_ckan_user_create
+
+
 
 canada_views = Blueprint('canada', __name__)
+
 
 class IntentionalServerError(Exception):
     pass
@@ -34,6 +49,7 @@ def login():
     return render(u'user/login.html', {})
 
 
+@canada_views.route('/logged_in', methods=['GET'])
 def logged_in():
     if c.user:
         user_dict = get_action('user_show')(None, {'id': c.user})
@@ -92,10 +108,37 @@ class CanadaResourceCreateView(ResourceCreateView):
         return response
 
 
+class CanadaUserRegisterView(UserRegisterView):
+    def post(self):
+        params = parse_params(request.form)
+        email=params.get('email', '')
+        fullname=params.get('fullname', '')
+        username=params.get('name', '')
+        phoneno=params.get('phoneno', '')
+        dept=params.get('department', '')
+        response = super(CanadaUserRegisterView, self).post()
+        if hasattr(response, 'status_code'):
+            if response.status_code == 200 or response.status_code == 302:
+                # redirected after successful user create
+                import ckan.lib.mailer
+                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                getattr(
+                    ckan.lib.mailer,
+                    "notify_ckan_user_create",
+                    notify_ckan_user_create
+                )(
+                    email=email,
+                    fullname=fullname,
+                    username=username,
+                    phoneno=phoneno,
+                    dept=dept)
+                notice_no_access()
+        return response
+
+
 @canada_views.route('/500', methods=['GET'])
 def fivehundred():
     raise IntentionalServerError()
-
 
 
 def _get_form_full_text_choices(field_name, chromo):
@@ -374,5 +417,3 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
     return data, err
 
-
-canada_views.add_url_rule(u'/logged_in', view_func=logged_in)

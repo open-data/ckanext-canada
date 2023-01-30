@@ -31,8 +31,6 @@ PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
-GRAVATAR_SHOW_OPTION = 'ckan.gravatar_show'
-GRAVATAR_SHOW_DEFAULT = True
 WET_URL = config.get('wet_boew.url', '')
 WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
@@ -415,8 +413,6 @@ def link_to_user(user, maxlength=0):
         return html.tags.link_to(displayname,
                        h.url_for(controller='user', action='read', id=_name))
 
-def gravatar_show():
-    return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
 
 def get_datapreview(res_id):
 

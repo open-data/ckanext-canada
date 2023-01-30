@@ -2,7 +2,7 @@
 
 {% macro menu_link(r_type) %}
 {% set label = h.recombinant_get_geno(r_type).title.replace('Proactive Disclosure - ','').replace('Open Dialogue - ','') %}
-<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant_type', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a></li>
 {% endmacro %}
 
 {% block sitesearch %}{% endblock %}
@@ -13,9 +13,6 @@
             <li>
                 {{ _('Signed in as') }}
                  <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
-                    {% if h.gravatar_show() %}
-                    {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
-                    {% endif %}
                     <span class="username">{{ c.userobj.display_name }}</span>
                 </a>
             </li>

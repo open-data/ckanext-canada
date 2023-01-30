@@ -15,6 +15,7 @@ from ckan.lib.base import model
 from ckan.logic import schema
 from ckan.controllers.user import UserController
 from ckan.controllers.api import ApiController, DataError, NotFound, search
+from ckan.authz import is_sysadmin
 from ckan.lib.helpers import (
     Page,
     date_str_to_datetime,
@@ -138,40 +139,6 @@ class CanadaController(BaseController):
             'faq_text': faq_text
         })
 
-    def organization_index(self):
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author, 'for_view': True,
-                   'with_private': False}
-
-        data_dict = {'all_fields': True}
-
-        try:
-            check_access('site_read', context)
-        except NotAuthorized:
-            abort(401, _('Not authorized to see this page'))
-
-        # pass user info to context as needed to view private datasets of
-        # orgs correctly
-        if c.userobj:
-            context['user_id'] = c.userobj.id
-            context['user_is_admin'] = c.userobj.sysadmin
-
-        results = get_action('organization_list')(context, data_dict)
-        c.group_type = data_dict['type']
-
-        def org_key(org):
-            title = org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
-            return normalize_strip_accents(title)
-
-        results.sort(key=org_key)
-
-        c.page = Page(
-            collection=results,
-            page=request.params.get('page', 1),
-            url=h.pager_url,
-            items_per_page=1000
-        )
-        return render('organization/index.html')
 
     def datatable(self, resource_name, resource_id):
         draw = int(request.params['draw'])
@@ -330,74 +297,6 @@ def datatablify(v, colname):
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
     return unicode(v)
-
-
-class CanadaUserController(UserController):
-    def register(self, data=None, errors=None, error_summary=None):
-        '''GET to display a form for registering a new user.
-           or POST the form data to actually do the user registration.
-           The bulk of this code is pulled directly from
-           ckan/controlllers/user.py
-        '''
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': schema.user_new_form_schema(),
-                   'save': 'save' in request.params}
-
-        try:
-            check_access('user_create', context)
-        except NotAuthorized:
-            abort(401, _('Unauthorized to create a user'))
-
-        if context['save'] and not data:
-            try:
-                return self._save_new(context)
-            except HTTPFound:
-                # redirected after successful user create
-                import ckan.lib.mailer
-                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
-                getattr(
-                  ckan.lib.mailer,
-                  "notify_ckan_user_create",
-                  notify_ckan_user_create
-                )(
-                  email=request.params.get('email', ''),
-                  fullname=request.params.get('fullname', ''),
-                  username=request.params.get('name', ''),
-                  phoneno=request.params.get('phoneno', ''),
-                  dept=request.params.get('department', ''))
-                notice_no_access()
-                raise
-
-        if c.user and not data and not is_sysadmin(c.user):
-            # #1799 Don't offer the registration form if already logged in
-            return render('user/logout_first.html')
-
-        data = data or {}
-        errors = errors or {}
-        error_summary = error_summary or {}
-
-        d = {'data': data, 'errors': errors, 'error_summary': error_summary}
-        c.is_sysadmin = is_sysadmin(c.user)
-        c.form = render('user/new_user_form.html', extra_vars=d)
-        return render('user/new.html')
-
-    def reports(self, id=None):
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author, 'auth_user_obj': c.userobj,
-                   'for_view': True}
-        data_dict = {'id': id,
-                     'user_obj': c.userobj,
-                     'include_datasets': True,
-                     'include_num_followers': True}
-
-        context['with_related'] = True
-
-        self._setup_template_variables(context, data_dict)
-
-        if c.is_myself:
-            return render('user/reports.html')
-        abort(403)
 
 
 class CanadaFeedController(FeedController):

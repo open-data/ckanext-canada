@@ -8,11 +8,6 @@
     {% block secondary_content_inner %}
     {% block user_heading %}{% endblock %}
     <div class="panel-body">
-      {% if h.gravatar_show() %}
-        {% block user_image %}
-          {{ super () }}
-        {% endblock %}
-      {% endif %}
     {% block user_about %}
       {{ super() }}
     {% endblock %}
