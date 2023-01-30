@@ -65,12 +65,12 @@ log = getLogger(__name__)
 class CanadaController(BaseController):
     def home(self):
         if not c.user:
-            h.redirect_to(controller='user', action='login')
+            h.redirect_to('user.login')
 
         is_new = not h.check_access('package_create')
 
         if is_new:
-            return h.redirect_to(controller='package', action='search')
+            return h.redirect_to('package.search')
         return h.redirect_to(
             controller='ckanext.canada.controller:CanadaController',
             action='links')
@@ -230,10 +230,7 @@ class CanadaController(BaseController):
         lc = LocalCKAN(username=c.user)
         lc.action.package_delete(id=pkg_id)
 
-        return h.redirect_to(
-            controller='package',
-            action='search'
-        )
+        return h.redirect_to('package.search')
 
     def package_undelete(self, pkg_id):
         h.flash_success(_(
@@ -247,11 +244,8 @@ class CanadaController(BaseController):
             state='active'
         )
 
-        return h.redirect_to(
-            controller='package',
-            action='read',
-            id=pkg_id
-        )
+        return h.redirect_to('package.read',
+            id=pkg_id)
 
     @jsonp.jsonpify
     def organization_autocomplete(self):
@@ -395,7 +389,7 @@ class CanadaFeedController(FeedController):
         for pkg in results:
             feed.add_item(
                 title= h.get_translated(pkg, 'title'),
-                link=h.url_for(controller='package', action='read', id=pkg['id']),
+                link=h.url_for('package.read', id=pkg['id']),
                 description= h.get_translated(pkg, 'notes'),
                 updated=date_str_to_datetime(pkg.get('metadata_modified')),
                 published=date_str_to_datetime(pkg.get('metadata_created')),
@@ -474,14 +468,11 @@ class CanadaApiController(ApiController):
                    'api_version': ver, 'auth_user_obj': c.userobj}
         model.Session()._context = context
 
-        return_dict = {'help': h.url_for(controller='api',
-                                         action='action',
+        return_dict = {'help': h.url_for('api.action',
                                          logic_function='help_show',
                                          ver=ver,
                                          name=logic_function,
-                                         qualified=True,
-                                         )
-                       }
+                                         qualified=True)}
         try:
             side_effect_free = getattr(function, 'side_effect_free', False)
             request_data = self._get_request_data(try_url_params=
@@ -680,8 +671,7 @@ class CanadaDatastoreController(BaseController):
                 return abort(403, _('Unauthorized'))
         # FIXME else: render confirmation page for non-JS users
         return h.redirect_to(
-            controller='ckanext.xloader.controllers:ResourceDataController',
-            action='resource_data',
+            'xloader.resource_data',
             id=id,
             resource_id=resource_id
         )

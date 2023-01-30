@@ -5,8 +5,7 @@
 
 {% block breadcrumb_content %}
   <li>{% link_for h.recombinant_language_text(chromo_title),
-    controller='ckanext.recombinant.controller:UploadController',
-    action='preview_table',
+    'recombinant.preview_table',
     resource_name=resource_name,
     owner_org=owner_org %}</li>
   <li>{{ _("Create Record") }}</li>

@@ -27,10 +27,10 @@ Render a list of keywords for the client language
       <li>
         <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
           {%- if client_lang == 'fr' -%}
-            {%- url_for controller='package', action='search',
+            {%- url_for 'package.search',
               keywords_fra=tag.strip() -%}
           {%- else -%}
-            {%- url_for controller='package', action='search',
+            {%- url_for 'package.search',
               keywords=tag.strip() -%}
           {%- endif -%}
           " title="{{ _('Keyword') ~ ' ' ~ tag.strip() }}">{{ tag.strip() }}</a>
@@ -229,9 +229,9 @@ Search Facet Formatters
 {% macro pd_link(h, activity) %}
 {% set resource_name = activity.data.resource_name %}
 {% set org_name = activity.data.owner_org %}
-{% set resource_link=h.url_for(resource_name=resource_name,owner_org=org_name,
-                      action='preview_table',
-                      controller='ckanext.recombinant.controller:UploadController') %}
+{% set resource_link=h.url_for('recombinant.preview_table',
+                      resource_name=resource_name,
+                      owner_org=org_name) %}
 {% set resource_name= _(h.recombinant_get_chromo(resource_name)['title'])  %}
 <span class="datastore">
  <a href="{{ resource_link }}">{{ resource_name }}</a>

@@ -36,7 +36,7 @@ Example:
         {# stage 1 #}
         <a><button class="btn-link highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>
       {% else %}
-        {% link_for _('Add data'), controller='package', action='new', class_="highlight" %}
+        {% link_for _('Add data'), 'package.new', class_="highlight" %}
       {% endif %}
     {% endif %}
   </li>

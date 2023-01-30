@@ -12,7 +12,7 @@
       <p class="empty">
         {{ _('There are currently no organizations for this site') }}.
         {% if h.check_access('organization_create') %}
-          {% link_for _('How about creating one?'), controller='organization', action='new' %}</a>.
+          {% link_for _('How about creating one?'), 'organization.new' %}</a>.
         {% endif %}
       </p>
     {% endif %}

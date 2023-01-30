@@ -23,7 +23,7 @@
 {% block primary_content_inner %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
     {% if c.userobj and c.userobj.sysadmin %}
-      <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for(controller='user', action='register') }}">{{ _('Create an Account') }}</a>
+      <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
     {% endif %}
     {% block users_list %}
       {% block users_search %}
@@ -44,7 +44,7 @@
               {% if user.name %}
                 <tr>
                   <td>
-                    <a href="{{ h.url_for(controller='user', action='read', id=user.name) }}">
+                    <a href="{{ h.url_for('user.read', id=user.name) }}">
                       {{ user['name'] }}
                     </a>
                   </td>

@@ -132,14 +132,14 @@
           </li>
           {% if h.plugin_loaded('dcat_json_interface') %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld" rel="nofollow">
+            <a href="{{ h.url_for('package.read', id=pkg.id) }}.jsonld" rel="nofollow">
               {{ _('DCAT (JSON-LD)') }}
             </a>
           </li>
           {% endif %}
           {% if h.plugin_loaded('dcat') %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml" rel="nofollow">
+            <a href="{{ h.url_for('package.read', id=pkg.id) }}.xml" rel="nofollow">
               {{ _('DCAT (XML)') }}
             </a>
           </li>
