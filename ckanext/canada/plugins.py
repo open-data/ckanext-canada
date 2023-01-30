@@ -86,9 +86,8 @@ ckanext.canada:schemas/presets.yaml
         #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
         #       However, IBlueprint implementations are loaded before the above, so changes to them
         #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
+        #TODO: move the remaining calls into the view script as url_rules
         def load_canada_views():
-            if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
-                return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
                 return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
             if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new' or request.endpoint == 'resource.new':
