@@ -67,7 +67,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/edit/<id>',
-            view_func=CanadaDatasetEditView.as_view(str(u'edit'))
+            endpoint='canada_edit',
+            view_func=CanadaDatasetEditView.as_view(str(u'edit'),
+            methods=['GET', 'POST'])
         )
         return blueprint
 
@@ -75,13 +77,18 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     #IDatasetForm
     def prepare_resource_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
+        #FIXME: views not working...
         blueprint.add_url_rule(
-            u'/<id>/resource/<resource_id>/edit',
-            view_func=CanadaResourceEditView.as_view(str(u'edit'))
+            u'/<resource_id>/edit',
+            endpoint='canada_edit',
+            view_func=CanadaResourceEditView.as_view(str(u'edit'),
+            methods=['GET', 'POST'])
         )
         blueprint.add_url_rule(
-            u'/<id>/resource/new',
-            view_func=CanadaResourceCreateView.as_view(str(u'new'))
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaResourceCreateView.as_view(str(u'new'),
+            methods=['GET', 'POST'])
         )
         return blueprint
 
