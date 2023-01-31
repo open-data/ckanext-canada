@@ -26,7 +26,13 @@ import json
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
-from ckanext.canada.view import canada_views
+from ckanext.scheming.plugins import SchemingDatasetsPlugin
+from ckanext.canada.view import (
+    canada_views,
+    CanadaDatasetEditView,
+    CanadaResourceEditView,
+    CanadaResourceCreateView
+)
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -36,6 +42,48 @@ except ImportError:
     pass
 
 log = logging.getLogger(__name__)
+
+
+class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
+    """
+    Plugin for dataset and resource
+    """
+    p.implements(p.IDatasetForm, inherit=True)
+
+    #IDatasetForm
+    def is_fallback(self):
+        # type: () -> bool
+        return False
+
+
+    #IDatasetForm
+    def package_types(self):
+        # type: () -> list[str]
+        return ['dataset','info','prop']
+
+
+    #IDatasetForm
+    def prepare_dataset_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/edit/<id>',
+            view_func=CanadaDatasetEditView.as_view(str(u'edit'))
+        )
+        return blueprint
+
+
+    #IDatasetForm
+    def prepare_resource_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/<id>/resource/<resource_id>/edit',
+            view_func=CanadaResourceEditView.as_view(str(u'edit'))
+        )
+        blueprint.add_url_rule(
+            u'/<id>/resource/new',
+            view_func=CanadaResourceCreateView.as_view(str(u'new'))
+        )
+        return blueprint
 
 
 class DataGCCAInternal(p.SingletonPlugin):
