@@ -1,6 +1,6 @@
 {% ckan_extends %}
 
-{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url_action = 'resource.edit' if url_is_edit and can_edit else 'resource.read' %}
 {% set url = h.url_for('package.' + url_action, id=pkg.name, resource_id=res.id) %}
 
 {% block resource_item_title %}

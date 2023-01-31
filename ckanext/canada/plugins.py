@@ -26,6 +26,7 @@ import json
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
+from ckanext.canada.view import canada_views
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -69,33 +70,12 @@ ckanext.canada:schemas/presets.yaml
 	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
 )
 
+
+    # IBlueprint
     def get_blueprint(self):
         # type: () -> list[Blueprint]
+        return [canada_views]
 
-        from flask import request, current_app
-        from ckanext.canada.view import (
-            CanadaDatasetEditView,
-            CanadaResourceEditView,
-            CanadaResourceCreateView,
-            canada_views,
-        )
-
-        canada_dynamic = Blueprint(u'canada_dynamic', __name__)
-
-        #FIXME: Currently `load_canada_views` fires on all flask.app requests.
-        #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
-        #       However, IBlueprint implementations are loaded before the above, so changes to them
-        #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
-        #TODO: move the remaining calls into the view script as url_rules
-        def load_canada_views():
-            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
-                return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new' or request.endpoint == 'resource.new':
-                return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
-
-        canada_dynamic.before_app_request(load_canada_views)
-
-        return [canada_dynamic, canada_views]
 
     def before_map(self, map):
         map.connect(

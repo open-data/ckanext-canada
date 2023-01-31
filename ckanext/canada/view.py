@@ -420,9 +420,19 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
 
 canada_views.add_url_rule(
-    u'/user/register', view_func=CanadaUserRegisterView.as_view(str(u'register'))
+    u'/user/register',
+    view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
 canada_views.add_url_rule(
-    u'/<package_type>/edit/<id>', view_func=CanadaDatasetEditView.as_view(str(u'edit'))
+    u'/<package_type>/edit/<id>',
+    view_func=CanadaDatasetEditView.as_view(str(u'edit'))
+)
+canada_views.add_url_rule(
+    u'/<package_type>/<id>/resource/<resource_id>/edit',
+    view_func=CanadaResourceEditView.as_view(str(u'edit'))
+)
+canada_views.add_url_rule(
+    u'/<package_type>/<id>/resource/new',
+    view_func=CanadaResourceCreateView.as_view(str(u'new'))
 )
 
