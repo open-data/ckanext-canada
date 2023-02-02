@@ -68,8 +68,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         blueprint.add_url_rule(
             u'/edit/<id>',
             endpoint='canada_edit',
-            view_func=CanadaDatasetEditView.as_view(str(u'edit'),
-            methods=['GET', 'POST'])
+            view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
         )
         return blueprint
 
@@ -77,18 +77,17 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     #IDatasetForm
     def prepare_resource_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
-        #FIXME: views not working...
         blueprint.add_url_rule(
             u'/<resource_id>/edit',
             endpoint='canada_edit',
-            view_func=CanadaResourceEditView.as_view(str(u'edit'),
-            methods=['GET', 'POST'])
+            view_func=CanadaResourceEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
             endpoint='canada_new',
-            view_func=CanadaResourceCreateView.as_view(str(u'new'),
-            methods=['GET', 'POST'])
+            view_func=CanadaResourceCreateView.as_view(str(u'new')),
+            methods=['GET', 'POST']
         )
         return blueprint
 
@@ -476,7 +475,7 @@ ckanext.canada:schemas/prop.yaml
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
-    
+
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
