@@ -18,7 +18,7 @@
 
 {% block secondary_content %}
 
-    <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('package.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
+    <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
 
     {% snippet 'snippets/dataset_facets.html',
       organization_facet=h.snippet(

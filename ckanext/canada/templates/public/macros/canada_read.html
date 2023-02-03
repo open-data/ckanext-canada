@@ -27,10 +27,10 @@ Render a list of keywords for the client language
       <li>
         <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
           {%- if client_lang == 'fr' -%}
-            {%- url_for 'package.search',
+            {%- url_for pkg.type + '.search',
               keywords_fra=tag.strip() -%}
           {%- else -%}
-            {%- url_for 'package.search',
+            {%- url_for pkg.type + '.search',
               keywords=tag.strip() -%}
           {%- endif -%}
           " title="{{ _('Keyword') ~ ' ' ~ tag.strip() }}">{{ tag.strip() }}</a>

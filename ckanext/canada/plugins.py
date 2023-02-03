@@ -51,18 +51,6 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     p.implements(p.IDatasetForm, inherit=True)
 
     #IDatasetForm
-    def is_fallback(self):
-        # type: () -> bool
-        return False
-
-
-    #IDatasetForm
-    def package_types(self):
-        # type: () -> list[str]
-        return ['dataset','info','prop']
-
-
-    #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
