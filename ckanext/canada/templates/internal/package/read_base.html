@@ -1,6 +1,6 @@
 {% ckan_extends %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset.read', _('Dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon(pkg.type + '.read', _('Dataset'), id=pkg.name) }}
   {{ h.build_nav_icon('dataset.activity', _('Activity Stream'), id=pkg.name) }}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block site_title %}
-<a href="{{ h.url_for(controller='package', action='search') }}"
+<a href="{{ h.url_for('dataset.search') }}"
     >{{ _('Open Data Registry') }}</a>
 {% endblock %}
 

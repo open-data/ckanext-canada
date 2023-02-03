@@ -72,8 +72,7 @@ class CanadaDCATProfile(RDFProfile):
         _add(DCAT.keyword, 'keywords')
         g.add((dataset_ref, DCAT.landing_page, Literal(
             url_for(
-                controller='package',
-                action='read',
+                'package.read',
                 id=dataset_dict['id'],
                 qualified=True
             )
@@ -89,8 +88,7 @@ class CanadaDCATProfile(RDFProfile):
 
         for resource_dict in dataset_dict.get('resources', []):
             resource = URIRef(url_for(
-                controller='package',
-                action='resource_read',
+                'package.resource_read',
                 id=resource_dict['id'],
                 qualified=True
             ))

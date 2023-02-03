@@ -5,7 +5,7 @@
 {% set user = c.user_dict %}
 
 {% block primary_content_inner %}
-  {% link_for _('Back to all members'), controller='organization', action='members', id=organization.name, class_='btn btn-default pull-right', icon='arrow-left', named_route=group_type + '_members' %}
+  {% link_for _('Back to all members'), 'organization.members', id=organization.name, class_='btn btn-default pull-right', icon='arrow-left', named_route=group_type + '_members' %}
   <h2>{{ _('Edit Member') if user else _('Add Member') }}</h2>
   {% block form %}
   <form class="dataset-form add-member-form" method='post'>

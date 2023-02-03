@@ -40,7 +40,7 @@
         {% for package in c.user_dict['datasets'][0:10] %}
           {% set title = package.title or package.name %}
           <li class="list-group-item">
-            {{ h.link_to(h.truncate(title, 80), h.url_for(controller='package', action='read', id=package.name)) }}
+            {{ h.link_to(h.truncate(title, 80), h.url_for(package.type + '.read', id=package.name)) }}
           </li>
         {% endfor %}
       </ul>
@@ -50,14 +50,14 @@
     </div>
   </div>
 
-  <a href="{{ h.url_for(controller='package', action='new') }}" class="btn btn-primary">
+  <a href="{{ h.url_for(package.type + '.new') }}" class="btn btn-primary">
     {{ _('Add Dataset') }}
   </a>
 {% endblock %}
 
 {% block add_action_content %}
   {% if h.check_access('package_create') %}
-    <li>{% link_for _('Add Dataset'), controller='package', action='new', class_="btn btn-primary", icon="plus-square" %}</li>
+    <li>{% link_for _('Add Dataset'), package.type + '.new', class_="btn btn-primary", icon="plus-square" %}</li>
   {% endif %}
 {% endblock %}
 

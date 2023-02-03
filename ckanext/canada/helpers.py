@@ -386,7 +386,7 @@ def linked_user(user, maxlength=0, avatar=20):
 
         return h.literal(h.link_to(
                 displayname,
-                h.url_for(controller='user', action='read', id=name)
+                h.url_for('user.read', id=name)
             )
         )
 # FIXME: because ckan/lib/activity_streams is terrible
@@ -411,7 +411,7 @@ def link_to_user(user, maxlength=0):
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
         return html.tags.link_to(displayname,
-                       h.url_for(controller='user', action='read', id=_name))
+                       h.url_for('user.read', id=_name))
 
 
 def get_datapreview(res_id):

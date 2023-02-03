@@ -40,6 +40,7 @@ class IntentionalServerError(Exception):
     pass
 
 
+@canada_views.route('/user/login', methods=['GET'])
 def login():
     from ckan.views.user import _get_repoze_handler
 
@@ -355,7 +356,6 @@ def update_pd_record(owner_org, resource_name, pk):
             })
 
 
-
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
 def type_redirect(resource_name):
     orgs = h.organizations_available('read')
@@ -373,6 +373,7 @@ def type_redirect(resource_name):
                                   resource_name=resource_name, owner_org='tbs-sct'))
     return h.redirect_to(h.url_for('recombinant.preview_table',
                               resource_name=resource_name, owner_org=orgs[0]['name']))
+
 
 def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
     """
@@ -416,4 +417,10 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
             data[f['datastore_id']] = val
 
     return data, err
+
+
+canada_views.add_url_rule(
+    u'/user/register',
+    view_func=CanadaUserRegisterView.as_view(str(u'register'))
+)
 

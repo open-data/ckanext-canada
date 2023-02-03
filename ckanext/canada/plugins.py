@@ -26,6 +26,13 @@ import json
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
+from ckanext.scheming.plugins import SchemingDatasetsPlugin
+from ckanext.canada.view import (
+    canada_views,
+    CanadaDatasetEditView,
+    CanadaResourceEditView,
+    CanadaResourceCreateView
+)
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -35,6 +42,42 @@ except ImportError:
     pass
 
 log = logging.getLogger(__name__)
+
+
+class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
+    """
+    Plugin for dataset and resource
+    """
+    p.implements(p.IDatasetForm, inherit=True)
+
+    #IDatasetForm
+    def prepare_dataset_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/edit/<id>',
+            endpoint='canada_edit',
+            view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        return blueprint
+
+
+    #IDatasetForm
+    def prepare_resource_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/<resource_id>/edit',
+            endpoint='canada_edit',
+            view_func=CanadaResourceEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaResourceCreateView.as_view(str(u'new')),
+            methods=['GET', 'POST']
+        )
+        return blueprint
 
 
 class DataGCCAInternal(p.SingletonPlugin):
@@ -69,40 +112,12 @@ ckanext.canada:schemas/presets.yaml
 	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
 )
 
+
+    # IBlueprint
     def get_blueprint(self):
         # type: () -> list[Blueprint]
+        return [canada_views]
 
-        from flask import request, current_app
-        from ckanext.canada.view import (
-            CanadaDatasetEditView,
-            CanadaResourceEditView,
-            CanadaResourceCreateView,
-            CanadaUserRegisterView,
-            canada_views,
-            login,
-        )
-
-        canada_dynamic = Blueprint(u'canada_dynamic', __name__)
-
-        #FIXME: Currently `load_canada_views` fires on all flask.app requests.
-        #       Preferably it would only fire on ckan.views.dataset and ckan.views.resource.
-        #       However, IBlueprint implementations are loaded before the above, so changes to them
-        #       in the `get_blueprint` hook would be overridden by the view class states created in the as_view calls.
-        def load_canada_views():
-            if request.endpoint == 'user.login':
-                return current_app.finalize_request(login(**request.view_args))
-            if request.endpoint == 'user.register':
-                return current_app.finalize_request(CanadaUserRegisterView.as_view(str(u'register'))(**request.view_args))
-            if request.endpoint == 'dataset.edit' or request.endpoint == 'info.edit':
-                return current_app.finalize_request(CanadaDatasetEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.edit' or request.endpoint == 'info_resource.edit' or request.endpoint == 'resource.edit':
-                return current_app.finalize_request(CanadaResourceEditView.as_view(str(u'edit'))(**request.view_args))
-            if request.endpoint == 'dataset_resource.new' or request.endpoint == 'info_resource.new' or request.endpoint == 'resource.new':
-                return current_app.finalize_request(CanadaResourceCreateView.as_view(str(u'new'))(**request.view_args))
-
-        canada_dynamic.before_app_request(load_canada_views)
-
-        return [canada_dynamic, canada_views]
 
     def before_map(self, map):
         map.connect(
@@ -448,7 +463,7 @@ ckanext.canada:schemas/prop.yaml
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
-    
+
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [

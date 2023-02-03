@@ -61,7 +61,7 @@
         {%- for keyword in h.get_translated(data.keywords, h.lang()) -%}
             <span property="keywords">{{ keyword }}</span>
         {%- endfor -%}
-        <span property="sameAs" value="{{ h.url_for(controller='package', action='read', id=data.id) }}"></span>
+        <span property="sameAs" value="{{ h.url_for(c.pkg.type + '.read', id=data.id) }}"></span>
           {%- if data.resources -%}
             {%- set nonapps = [] -%}
             {%- for resource in data.resources -%}
