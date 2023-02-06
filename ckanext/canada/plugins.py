@@ -27,7 +27,7 @@ import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
-from ckanext.canada.view import (
+from ckanext.canada.views import (
     canada_views,
     CanadaDatasetEditView,
     CanadaResourceEditView,
@@ -49,6 +49,7 @@ class DataGCCADatasets(SchemingDatasetsPlugin):
     Plugin for dataset and resource
     """
     p.implements(p.IDatasetForm, inherit=True)
+    p.implements(p.IPackageController, inherit=True)
 
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
@@ -78,6 +79,110 @@ class DataGCCADatasets(SchemingDatasetsPlugin):
             methods=['GET', 'POST']
         )
         return blueprint
+
+
+    # IPackageController
+    def before_search(self, search_params):
+        # We're going to group portal_release_date into two bins - to today and
+        # after today.
+        search_params['facet.range'] = 'portal_release_date'
+        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        search_params['facet.range.gap'] = '+100YEARS'
+
+        # FIXME: so terrible. hack out WET4 wbdisable parameter
+        try:
+            search_params['fq'] = search_params['fq'].replace(
+                'wbdisable:"true"', '').replace(
+                'wbdisable:"false"', '')
+        except Exception:
+            pass
+        from ckan.plugins.toolkit import c
+        try:
+            c.fields_grouped.pop('wbdisable', None)
+        except Exception:
+            pass
+
+        return search_params
+
+
+    # IPackageController
+    def after_search(self, search_results, search_params):
+        for result in search_results.get('results', []):
+            for extra in result.get('extras', []):
+                if extra.get('key') in ['title_fra', 'notes_fra']:
+                    result[extra['key']] = extra['value']
+
+        return search_results
+
+
+    # IPackageController
+    def before_index(self, data_dict):
+        kw = json.loads(data_dict.get('extras_keywords', '{}'))
+        data_dict['keywords'] = kw.get('en', [])
+        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
+        data_dict['catalog_type'] = data_dict.get('type', '')
+
+        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
+        data_dict['topic_category'] = json.loads(data_dict.get(
+            'topic_category', '[]'))
+        try:
+            data_dict['spatial_representation_type'] = json.loads(
+                data_dict.get('spatial_representation_type')
+            )
+        except (TypeError, ValueError):
+            data_dict['spatial_representation_type'] = []
+
+        if data_dict.get('portal_release_date'):
+            data_dict.pop('ready_to_publish', None)
+        elif data_dict.get('ready_to_publish') == 'true':
+            data_dict['ready_to_publish'] = 'true'
+        else:
+            data_dict['ready_to_publish'] = 'false'
+
+        try:
+            geno = h.recombinant_get_geno(data_dict['type']) or {}
+        except AttributeError:
+            pass
+        else:
+            data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
+            if 'collection' in geno:
+                data_dict['collection'] = geno['collection']
+
+        if 'fgp_viewer' in data_dict.get('display_flags', []):
+            data_dict['fgp_viewer'] = 'map_view'
+
+        titles = json.loads(data_dict.get('title_translated', '{}'))
+        data_dict['title_fr'] = titles.get('fr', '')
+        data_dict['title_string'] = titles.get('en', '')
+
+        if data_dict['type'] == 'prop':
+            status = data_dict.get('status')
+            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
+
+        if data_dict.get('credit'):
+            for cr in data_dict['credit']:
+                cr.pop('__extras', None)
+
+        return data_dict
+
+
+    # IPackageController
+    def after_create(self, context, data_dict):
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
+        return data_dict
+
+
+    # IPackageController
+    def after_update(self, context, data_dict):
+        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
+        return data_dict
+
+
+    # IPackageController
+    def after_delete(self, context, data_dict):
+        search_integration.delete_from_search_index(data_dict['id'])
+        return data_dict
 
 
 class DataGCCAInternal(p.SingletonPlugin):
@@ -675,138 +780,6 @@ class LogExtraMiddleware(object):
                 exc_info)
 
         return self.app(environ, _start_response)
-
-
-class DataGCCAPackageController(p.SingletonPlugin):
-    #TODO: put this code into DataGCCADatasets (???)
-    p.implements(p.IPackageController)
-
-    def read(self, entity):
-        pass
-
-    def create(self, entity):
-        pass
-
-    def edit(self, entity):
-        pass
-
-    def authz_add_role(self, object_role):
-        pass
-
-    def authz_remove_role(self, object_role):
-        pass
-
-    def delete(self, entity):
-        pass
-
-    def before_search(self, search_params):
-        # We're going to group portal_release_date into two bins - to today and
-        # after today.
-        search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
-        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
-        search_params['facet.range.gap'] = '+100YEARS'
-
-        # FIXME: so terrible. hack out WET4 wbdisable parameter
-        try:
-            search_params['fq'] = search_params['fq'].replace(
-                'wbdisable:"true"', '').replace(
-                'wbdisable:"false"', '')
-        except Exception:
-            pass
-        from ckan.plugins.toolkit import c
-        try:
-            c.fields_grouped.pop('wbdisable', None)
-        except Exception:
-            pass
-
-        return search_params
-
-    def after_search(self, search_results, search_params):
-        for result in search_results.get('results', []):
-            for extra in result.get('extras', []):
-                if extra.get('key') in ['title_fra', 'notes_fra']:
-                    result[extra['key']] = extra['value']
-
-        return search_results
-
-    def before_index(self, data_dict):
-        kw = json.loads(data_dict.get('extras_keywords', '{}'))
-        data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
-        data_dict['catalog_type'] = data_dict.get('type', '')
-
-        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
-        data_dict['topic_category'] = json.loads(data_dict.get(
-            'topic_category', '[]'))
-        try:
-            data_dict['spatial_representation_type'] = json.loads(
-                data_dict.get('spatial_representation_type')
-            )
-        except (TypeError, ValueError):
-            data_dict['spatial_representation_type'] = []
-
-        if data_dict.get('portal_release_date'):
-            data_dict.pop('ready_to_publish', None)
-        elif data_dict.get('ready_to_publish') == 'true':
-            data_dict['ready_to_publish'] = 'true'
-        else:
-            data_dict['ready_to_publish'] = 'false'
-
-        try:
-            geno = h.recombinant_get_geno(data_dict['type']) or {}
-        except AttributeError:
-            pass
-        else:
-            data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
-            if 'collection' in geno:
-                data_dict['collection'] = geno['collection']
-
-        if 'fgp_viewer' in data_dict.get('display_flags', []):
-            data_dict['fgp_viewer'] = 'map_view'
-
-        titles = json.loads(data_dict.get('title_translated', '{}'))
-        data_dict['title_fr'] = titles.get('fr', '')
-        data_dict['title_string'] = titles.get('en', '')
-
-        if data_dict['type'] == 'prop':
-            status = data_dict.get('status')
-            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
-
-        if data_dict.get('credit'):
-            for cr in data_dict['credit']:
-                cr.pop('__extras', None)
-
-        return data_dict
-
-    def before_view(self, pkg_dict):
-        return pkg_dict
-
-    def after_create(self, context, data_dict):
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
-        return data_dict
-
-    def after_update(self, context, data_dict):
-        # FIXME: flash_success makes no sense if this was an API call
-        # consider moving this to an overridden controller method instead
-        if context.get('allow_state_change') and data_dict.get(
-                'state') == 'active':
-            h.flash_success(
-                _("Your record %s has been saved.")
-                % data_dict['id']
-            )
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
-        return data_dict
-
-    def after_delete(self, context, data_dict):
-        search_integration.delete_from_search_index(data_dict['id'])
-        return data_dict
-
-    def after_show(self, context, data_dict):
-        return data_dict
-
-    def update_facet_titles(self, facet_titles):
-        return facet_titles
 
 
 @chained_action
