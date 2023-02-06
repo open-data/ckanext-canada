@@ -10,7 +10,7 @@ from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckan.plugins.toolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound, _, get_validator
+from ckan.plugins.toolkit import h, chained_action, ValidationError, ObjectNotFound, _, get_validator
 import ckanapi
 from ckan.lib.base import c
 
@@ -44,7 +44,7 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
+class DataGCCADatasets(SchemingDatasetsPlugin):
     """
     Plugin for dataset and resource
     """
@@ -95,6 +95,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IBlueprint)
     p.implements(IXloader)
 
+    # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
         p.toolkit.add_public_directory(config, 'internal/static')
@@ -119,6 +120,7 @@ ckanext.canada:schemas/presets.yaml
         return [canada_views]
 
 
+    # IRoutes
     def before_map(self, map):
         map.connect(
             '/',
@@ -175,6 +177,7 @@ ckanext.canada:schemas/presets.yaml
 
         return map
 
+    # IRoutes
     def after_map(self, map):
         mapper = SubMapper(
             map,
@@ -194,6 +197,7 @@ ckanext.canada:schemas/presets.yaml
     def notify(self, resource):
         p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
 
+    # ITemplateHelpers
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'may_publish_datasets',
@@ -209,6 +213,7 @@ ckanext.canada:schemas/presets.yaml
             'get_user_email',
         ])
 
+    # IConfigurable
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
         from ckanext.datastore.backend import postgres as db
@@ -231,12 +236,14 @@ ckanext.canada:schemas/presets.yaml
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
 
+    # IPackageController
     def create(self, pkg):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
 
+    # IPackageController
     def edit(self, pkg):
         """
         All datasets on registry should now be marked private
@@ -358,9 +365,11 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
 
+    # DefaultTranslation, ITranslation
     def i18n_domain(self):
         return 'ckanext-canada'
 
+    # IConfigurer
     def update_config(self, config):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
@@ -428,6 +437,7 @@ ckanext.canada:schemas/prop.yaml
             'deleted datastore': logic_validators.package_id_exists,
         })
 
+    # IFacets
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
@@ -452,6 +462,7 @@ ckanext.canada:schemas/prop.yaml
 
         return facets_dict
 
+    # IFacets
     #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
@@ -459,12 +470,13 @@ ckanext.canada:schemas/prop.yaml
             return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
+    # IFacets
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
 
-
+    # ITemplateHelpers
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
@@ -504,6 +516,7 @@ ckanext.canada:schemas/prop.yaml
         ])
 
 
+    # IRoutes
     def before_map(self, map):
         map.connect(
             '/fgpv_vpgf/{pkg_id}',
@@ -547,6 +560,7 @@ ckanext.canada:schemas/prop.yaml
                 'datastore_upsert': datastore_upsert,
                 'datastore_delete': datastore_delete}
 
+    # IAuthFunctions
     def get_auth_functions(self):
         return {
             'datastore_create': auth.datastore_create,
@@ -578,7 +592,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
-            'user_list',
+            'user_list', #FIXME: required for password reset w/ email
             'user_activity_list',
             'member_list',
             #'user_show',  FIXME: required for password reset
@@ -664,6 +678,7 @@ class LogExtraMiddleware(object):
 
 
 class DataGCCAPackageController(p.SingletonPlugin):
+    #TODO: put this code into DataGCCADatasets (???)
     p.implements(p.IPackageController)
 
     def read(self, entity):
@@ -840,101 +855,6 @@ def datastore_delete(up_func, context, data_dict):
                                    'resource_id': res_id}
                                   )
     return result
-
-
-class CanadaOpenByDefault(p.SingletonPlugin):
-    """
-    Plugin for public-facing version of Open By Default site
-    This plugin requires the DataGCCAForms plugin
-    """
-    p.implements(p.IConfigurer)
-    p.implements(p.IFacets)
-    p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
-
-    def update_config(self, config):
-        # add our templates
-        p.toolkit.add_template_directory(config, 'templates/obd')
-        p.toolkit.add_template_directory(config, 'templates/public')
-        p.toolkit.add_public_directory(config, 'public')
-        p.toolkit.add_resource('public/static/js', 'js')
-        config['ckan.search.show_all_types'] = True
-        config['ckan.extra_resource_fields'] = 'language'
-        config['search.facets.limit'] = 200  # because org list
-        config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-"""
-        config['scheming.dataset_schemas'] = """
-ckanext.canada:schemas/doc.yaml
-"""
-
-    def dataset_facets(self, facets_dict, package_type):
-        ''' Update the facets_dict and return it. '''
-
-        facets_dict.update({
-            'organization': _('Organization'),
-            'keywords': _('Keywords'),
-            'keywords_fra': _('Keywords'),
-            'res_format': _('Format'),
-            'res_type': _('Resource Type'),
-            'res_extras_language': _('Resource Language'),
-            })
-
-        return facets_dict
-
-    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
-    def group_facets(self, facets_dict, group_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        if group_type == 'organization':
-            return self.dataset_facets(facets_dict, package_type)
-        return facets_dict
-
-    def organization_facets(self, facets_dict, organization_type,
-                            package_type):
-        return self.dataset_facets(facets_dict, package_type)
-
-    def get_helpers(self):
-        return dict(((h, getattr(helpers, h)) for h in [
-            'user_organizations',
-            'openness_score',
-            'remove_duplicates',
-            'get_license',
-            'normalize_strip_accents',
-            'portal_url',
-            'googleanalytics_id',
-            'loop11_key',
-            'drupal_session_present',
-            'fgp_url',
-            'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
-            'show_openinfo_facets',
-            'gravatar',
-            'linked_gravatar',
-            'linked_user',
-            'json_loads',
-            'catalogue_last_update_date',
-            'get_translated_t',
-            'language_text_t',
-            'survey_js_url',
-            'mail_to_with_params',
-            ]),
-            )
-
-    def before_map(self, map):
-        map.connect(
-            'general', '/feeds/dataset/{pkg_id}.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='dataset',
-        )
-        map.connect(
-            '/organization/autocomplete',
-            action='organization_autocomplete',
-            controller='ckanext.canada.controller:CanadaController',
-        )
-        return map
 
 
 def _wet_pager(self, *args, **kwargs):
