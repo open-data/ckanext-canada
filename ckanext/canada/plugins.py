@@ -44,7 +44,7 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
-class DataGCCADatasets(SchemingDatasetsPlugin):
+class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     Plugin for dataset and resource
     """
@@ -697,7 +697,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
-            'user_list', #FIXME: required for password reset w/ email
+            'user_list',
             'user_activity_list',
             'member_list',
             #'user_show',  FIXME: required for password reset
