@@ -469,6 +469,8 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.IActions)
+
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -659,6 +661,7 @@ ckanext.canada:schemas/prop.yaml
         )
         return map
 
+    # IActions
     # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
         return {
