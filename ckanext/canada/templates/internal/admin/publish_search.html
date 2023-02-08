@@ -69,7 +69,7 @@
   {%- block api_access_info -%}
     <!-- We want this block to be empty in the canada extension -->
   {%- endblock -%}
-  
+
 {% endblock %}
 
 {% block extra_facets %}
@@ -78,7 +78,7 @@
 
 {% block secondary_content %}
 <div class="filters">
-  <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for(controller='ckanext.canada.controller:CanadaAdminController', action='search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
+  <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
     {% snippet 'snippets/dataset_facets.html',
       organization_facet=h.snippet(

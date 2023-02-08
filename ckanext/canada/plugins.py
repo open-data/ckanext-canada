@@ -7,7 +7,6 @@ import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
-from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
 from ckan.plugins.toolkit import h, chained_action, ValidationError, ObjectNotFound, _, get_validator
@@ -193,7 +192,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
@@ -224,79 +222,6 @@ ckanext.canada:schemas/presets.yaml
         # type: () -> list[Blueprint]
         return [canada_views]
 
-
-    # IRoutes
-    def before_map(self, map):
-        map.connect(
-            '/',
-            action='home',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/links',
-            action='links',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            'ckanadmin_publish',
-            '/ckan-admin/publish',
-            action='search',
-            controller='ckanext.canada.controller:CanadaAdminController',
-            ckan_icon='cloud-upload'
-        )
-        map.connect(
-            '/ckan_admin/publish_datasets',
-            action='publish',
-            conditions=dict(method=['POST']),
-            controller='ckanext.canada.controller:CanadaAdminController'
-        )
-        # reset to regular delete controller for internal site
-        map.connect(
-            'dataset_delete',
-            '/dataset/delete/{id}',
-            controller='package',
-            action='delete'
-        )
-        map.connect(
-            'create_pd_record',
-            '/create-pd-record/{owner_org}/{resource_name}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='create_pd_record',
-        )
-        map.connect(
-            'update_pd_record',
-            '/update-pd-record/{owner_org}/{resource_name}/{pk}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='update_pd_record',
-        )
-        map.connect('recombinant_type',
-                    '/recombinant/{resource_name}',
-                    action='type_redirect',
-                    controller='ckanext.canada.controller:PDUpdateController')
-        map.connect(
-            'delete_datastore_table',
-            '/dataset/{id}/delete-datastore-table/{resource_id}',
-            controller='ckanext.canada.controller:CanadaDatastoreController',
-            action='delete_datastore_table',
-        )
-
-        return map
-
-    # IRoutes
-    def after_map(self, map):
-        mapper = SubMapper(
-            map,
-            controller='ckanext.canada.controller:CanadaController'
-        )
-
-        with mapper as m:
-            m.connect('/guidelines', action='view_guidelines')
-            m.connect('/help', action='view_help')
-            m.connect(
-                '/datatable/{resource_name}/{resource_id}',
-                action='datatable'
-            )
-        return map
 
     # IResourceUrlChange
     def notify(self, resource):
@@ -466,7 +391,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
@@ -620,46 +544,8 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
+            'is_registry',
         ])
-
-
-    # IRoutes
-    def before_map(self, map):
-        map.connect(
-            '/fgpv_vpgf/{pkg_id}',
-            action='fgpv_vpgf',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
-            m.connect('/feeds/organization/{id}.atom', action='organization')
-        map.connect(
-            'general', '/feeds/dataset/{pkg_id}.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='dataset',
-        )
-        map.connect(
-            '/dataset/delete/{pkg_id}',
-            controller='ckanext.canada.controller:CanadaController',
-            action='package_delete'
-        )
-        map.connect(
-            '/dataset/undelete/{pkg_id}',
-            controller='ckanext.canada.controller:CanadaController',
-            action='package_undelete'
-        )
-        map.connect(
-            '/organization/autocomplete',
-            action='organization_autocomplete',
-            controller='ckanext.canada.controller:CanadaController',
-        )
-        map.connect(
-            '/api{ver:/3|}/action/{logic_function}',
-            ver='/3',
-            action='action',
-            controller='ckanext.canada.controller:CanadaApiController',
-            conditions={'method':['GET', 'POST']},
-        )
-        return map
 
     # IActions
     # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022

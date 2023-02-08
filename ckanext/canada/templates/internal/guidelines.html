@@ -1,13 +1,11 @@
-{% extends 'page_wet.html' %}
+{% extends 'page.html' %}
 
-{% block content %}
-  <div role="main">
-      {{ self.flash() }}
-      {{ self.primary_content() }}
-  </div>
-  <div>
-      {{ self.secondary_content() }}
-  </div>
+{% block page_title %}
+  {% if h.lang() == 'en' %}
+    <h1>Open Data - Guidelines</h1>
+  {% else %}
+    <h1>Données ouvertes – Lignes directrices</h1>
+  {% endif %}
 {% endblock %}
 
 {% block primary_content %}
@@ -15,7 +13,6 @@
 <div class="span-6">
   <div class="module-poster indent-large">
   {% if h.lang() == 'en' %}
-    <h1>Open Data - Guidelines</h1>
     <p>The following criteria have been established for preparing datasets for publication to the
     Government of Canada’s Open Data Portal.</p>
 
@@ -46,8 +43,6 @@
     <p>Review the <a href="/static/Open_Data_Portal_Metadata_Implementation_Guide_-_2nd_edition.doc">Open Data Portal Metadata Implementation Guide</a>.</p>
   
   {% else %}
-    <h1>Données ouvertes – Lignes directrices</h1>
-    
     <p>Les critères suivants ont été établis pour les jeux de données qui doivent être publiés dans le Portail de données ouvertes du gouvernement du Canada.</p>
     
     <ol>

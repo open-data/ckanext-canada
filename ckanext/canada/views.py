@@ -1,39 +1,76 @@
+import json
+import decimal
+import pkg_resources
+import lxml.etree as ET
+import lxml.html as html
+from pytz import timezone, utc
+from socket import error as socket_error
+from logging import getLogger
+
 from ckan.plugins.toolkit import (
     abort,
     get_action,
     _,
     h,
     c,
+    config,
     check_access,
     aslist,
     request,
     render
 )
+from ckan.lib.base import model
+import ckan.lib.jsonp as jsonp
+from ckan.lib.helpers import (
+    date_str_to_datetime,
+    render_markdown
+)
+from ckan.lib.navl.dictization_functions import DataError
+from ckan.lib.search import (
+    SearchError,
+    SearchIndexError,
+    SearchQueryError
+)
 
-from ckan.views.dataset import EditView as DatasetEditView
+from ckan.views.dataset import (
+    EditView as DatasetEditView,
+    search as dataset_search
+)
 from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
 from ckan.views.user import RegisterView as UserRegisterView
+from ckan.views.api import(
+    API_DEFAULT_VERSION,
+    _finish_bad_request,
+    _get_request_data,
+    _finish_ok,
+    _finish
+)
 
 from ckan.authz import is_sysadmin
-from ckan.logic import parse_params
+from ckan.logic import (
+    parse_params,
+    ValidationError,
+    NotFound,
+    NotAuthorized
+)
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException
 
-from ckanapi import LocalCKAN, NotAuthorized, ValidationError
+from ckanapi import LocalCKAN
 
 from flask import Blueprint
 
-from ckanext.canada.urlsafe import url_part_unescape
-from ckanext.canada.controller import notice_no_access, notify_ckan_user_create
-
+from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
+from ckanext.canada.helpers import canada_date_str_to_datetime, is_registry
 
 
 canada_views = Blueprint('canada', __name__)
+ottawa_tz = timezone('America/Montreal')
 
 
 class IntentionalServerError(Exception):
@@ -64,9 +101,7 @@ def logged_in():
 
         notice_no_access()
 
-        return h.redirect_to(
-            controller='ckanext.canada.controller:CanadaController',
-            action='home')
+        return h.redirect_to('canada.home')
     else:
         err = _(u'Login failed. Bad username or password.')
         h.flash_error(err)
@@ -431,6 +466,513 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
             data[f['datastore_id']] = val
 
     return data, err
+
+
+@canada_views.route('/', methods=['GET'])
+def home():
+    if not is_registry():
+        return h.redirect_to('dataset.search')
+    if not c.user:
+        return h.redirect_to('user.login')
+
+    is_new = not h.check_access('package_create')
+
+    if is_new:
+        return h.redirect_to('dataset.search')
+    return h.redirect_to('canada.links')
+
+
+@canada_views.route('/links', methods=['GET'])
+def links():
+    if not is_registry():
+        return h.redirect_to('dataset.search')
+    return render('home/quick_links.html')
+
+
+@canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])
+def ckanadmin_publish():
+    #TODO: load 'admin/publish_search.html' (_admin_search_template)...
+    #TODO: figure out how the _admin_guess_package_type translates to a view func...
+    return dataset_search('dataset')
+
+
+@canada_views.route('/ckan-admin/publish_datasets', methods=['GET', 'POST'])
+def ckanadmin_publish_datasets():
+    lc = LocalCKAN(username=c.user)
+
+    publish_date = date_str_to_datetime(
+        request.str_POST['publish_date']
+    ).strftime("%Y-%m-%d %H:%M:%S")
+
+    # get a list of package id's from the for POST data
+    count = 0
+    for key, package_id in request.str_POST.iteritems():
+        if key == 'publish':
+            lc.action.package_patch(
+                id=package_id,
+                portal_release_date=publish_date,
+            )
+            count += 1
+
+    # flash notice that records are published
+    h.flash_notice(str(count) + _(u' record(s) published.'))
+
+    # return us to the publishing interface
+    return h.redirect_to(h.url_for('canada.ckanadmin_publish'))
+
+
+def _admin_search_template():
+    return 'admin/publish_search.html'
+
+
+def _admin_guess_package_type():
+    # this is a bit unortodox, but this method allows us to conveniently
+    # alter the search method without much code duplication.
+    if not is_sysadmin(c.user):
+        abort(401, _('Not authorized to see this page'))
+
+    # always set ready_to_publish to true for the publishing interface
+    request.GET['ready_to_publish'] = u'true'
+    request.GET['imso_approval'] = u'true'
+
+    # This MUST be None, otherwise the default filtering will apply and
+    # restrict to just dataset_type=dataset.
+    return None
+
+
+@canada_views.route('/dataset/{id}/delete-datastore-table/{resource_id}', methods=['GET', 'POST'])
+def delete_datastore_table(id, resource_id):
+    if request.method == 'POST':
+        lc = LocalCKAN(username=c.user)
+
+        try:
+            lc.action.datastore_delete(
+                resource_id=resource_id,
+                force=True,  # FIXME: check url_type first?
+            )
+        except NotAuthorized:
+            return abort(403, _('Unauthorized'))
+        # FIXME else: render confirmation page for non-JS users
+        return h.redirect_to(
+            'xloader.resource_data',
+            id=id,
+            resource_id=resource_id
+        )
+
+
+@canada_views.route('/guidelines', methods=['GET'])
+def view_guidelines():
+    return render('guidelines.html')
+
+
+@canada_views.route('/help', methods=['GET'])
+def view_help():
+    def _get_help_text(language):
+        return pkg_resources.resource_string(
+            __name__,
+            '/'.join(['public', 'static', 'faq_{language}.md'.format(
+                language=language
+            )])
+        )
+
+    try:
+        # Try to load FAQ text for the user's language.
+        faq_text = _get_help_text(c.language)
+    except IOError:
+        # Fall back to using English if no local language could be found.
+        faq_text = _get_help_text(u'en')
+
+    # Convert the markdown to HTML ...
+    faq_html = render_markdown(faq_text.decode("utf-8"), allow_html=True)
+    h = html.fromstring(faq_html)
+
+    # Get every FAQ point header.
+    for faq_section in h.xpath('.//h2'):
+
+        details = ET.Element('details')
+        summary = ET.Element('summary')
+
+        # Place the new details tag where the FAQ section header used to
+        # be.
+        faq_section.addprevious(details)
+
+        # Get all the text that follows the FAQ header.
+        while True:
+            next_node = faq_section.getnext()
+            if next_node is None or next_node.tag in ('h1', 'h2'):
+                break
+            # ... and add it to the details.
+            details.append(next_node)
+
+        # Move the FAQ header to the top of the summary tag.
+        summary.insert(0, faq_section)
+        # Move the summary tag to the top of the details tag.
+        details.insert(0, summary)
+
+        # We don't actually want the FAQ headers to be headings, so strip
+        # the tags and just leave the text.
+        faq_section.drop_tag()
+
+    # Get FAQ group header and set it as heading 2 to comply with
+    # accessible heading ranks
+    for faq_group in h.xpath('//h1'):
+        faq_group.tag = 'h2'
+
+    return render('help.html', extra_vars={
+        'faq_html': html.tostring(h),
+        # For use with the inline debugger.
+        'faq_text': faq_text
+    })
+
+
+@canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET'])
+def datatable(resource_name, resource_id):
+    draw = int(request.params['draw'])
+    search_text = unicode(request.params['search[value]'])
+    offset = int(request.params['start'])
+    limit = int(request.params['length'])
+
+    chromo = h.recombinant_get_chromo(resource_name)
+    lc = LocalCKAN(username=c.user)
+    try:
+        unfiltered_response = lc.action.datastore_search(
+            resource_id=resource_id,
+            limit=1,
+        )
+    except NotAuthorized:
+        # datatables js can't handle any sort of error response
+        # return no records instead
+        return json.dumps({
+            'draw': draw,
+            'iTotalRecords': -1,  # with a hint that something is wrong
+            'iTotalDisplayRecords': -1,
+            'aaData': [],
+        })
+
+    can_edit = h.check_access('resource_update', {'id': resource_id})
+    cols = [f['datastore_id'] for f in chromo['fields']]
+    prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
+
+    sort_list = []
+    i = 0
+    while True:
+        if u'order[%d][column]' % i not in request.params:
+            break
+        sort_by_num = int(request.params[u'order[%d][column]' % i])
+        sort_order = (
+            u'desc' if request.params[u'order[%d][dir]' % i] == u'desc'
+            else u'asc')
+        sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order + u' nulls last')
+        i += 1
+
+    response = lc.action.datastore_search(
+        q=search_text,
+        resource_id=resource_id,
+        offset=offset,
+        limit=limit,
+        sort=u', '.join(sort_list),
+    )
+
+    aadata = [
+        [u'<input type="checkbox">'] +
+        [datatablify(row.get(colname, u''), colname) for colname in cols]
+        for row in response['records']]
+
+    if chromo.get('edit_form', False) and can_edit:
+        res = lc.action.resource_show(id=resource_id)
+        pkg = lc.action.package_show(id=res['package_id'])
+        fids = [f['datastore_id'] for f in chromo['fields']]
+        pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
+        for row in aadata:
+            row.insert(1, (
+                    u'<a href="{0}" aria-label="' + _("Edit") + '">'
+                    u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                    h.url_for(
+                        'canada.update_pd_record',
+                        owner_org=pkg['organization']['name'],
+                        resource_name=resource_name,
+                        pk=','.join(url_part_escape(row[i+1]) for i in pkids)
+                    )
+                )
+            )
+
+    return json.dumps({
+        'draw': draw,
+        'iTotalRecords': unfiltered_response.get('total', 0),
+        'iTotalDisplayRecords': response.get('total', 0),
+        'aaData': aadata,
+    })
+
+
+def datatablify(v, colname):
+    '''
+    format value from datastore v for display in a datatable preview
+    '''
+    if v is None:
+        return u''
+    if v is True:
+        return u'TRUE'
+    if v is False:
+        return u'FALSE'
+    if isinstance(v, list):
+        return u', '.join(unicode(e) for e in v)
+    if colname in ('record_created', 'record_modified') and v:
+        return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
+            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+    return unicode(v)
+
+
+@canada_views.route('/fgpv_vpgf/<pkg_id>', methods=['GET'])
+def fgpv_vpgf(pkg_id):
+    return render('fgpv_vpgf/index.html', extra_vars={
+        'pkg_id': pkg_id,
+    })
+
+
+@canada_views.route('/dataset/undelete/<pkg_id>', methods=['GET', 'POST'])
+def package_undelete(pkg_id):
+    h.flash_success(_(
+        '<strong>Note</strong><br> The record has been restored.'),
+        allow_html=True
+    )
+
+    lc = LocalCKAN(username=c.user)
+    lc.action.package_patch(
+        id=pkg_id,
+        state='active'
+    )
+
+    return h.redirect_to('dataset.read',
+        id=pkg_id)
+
+
+@jsonp.jsonpify
+@canada_views.route('/organization/autocomplete', methods=['GET'])
+def organization_autocomplete():
+    q = request.params.get('q', '')
+    limit = request.params.get('limit', 20)
+    organization_list = []
+
+    if q:
+        context = {'user': c.user, 'model': model}
+        data_dict = {'q': q, 'limit': limit}
+        organization_list = get_action(
+            'organization_autocomplete'
+        )(context, data_dict)
+
+    def _org_key(org):
+        return org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+
+    return [{
+        'id': o['id'],
+        'name': _org_key(o),
+        'title': _org_key(o)
+    } for o in organization_list]
+
+
+@canada_views.route('/api/<int(min=1, max=2):ver>/action/<logic_function>', methods=['GET', 'POST'])
+def action(logic_function, ver=API_DEFAULT_VERSION):
+    log = getLogger('ckanext')
+    # Copied from ApiController so we can log details of some API calls
+    # XXX: for later ckans look for a better hook
+    try:
+        function = get_action(logic_function)
+    except KeyError:
+        log.info('Can\'t find logic function: %s', logic_function)
+        return _finish_bad_request(
+            _('Action name not known: %s') % logic_function)
+
+    context = {'model': model, 'session': model.Session, 'user': c.user,
+                'api_version': ver, 'auth_user_obj': c.userobj}
+    model.Session()._context = context
+
+    return_dict = {'help': h.url_for('api.action',
+                                        logic_function='help_show',
+                                        ver=ver,
+                                        name=logic_function,
+                                        qualified=True)}
+    try:
+        side_effect_free = getattr(function, 'side_effect_free', False)
+        request_data = _get_request_data(try_url_params=
+                                                side_effect_free)
+    except ValueError as inst:
+        log.info('Bad Action API request data: %s', inst)
+        return _finish_bad_request(
+            _('JSON Error: %s') % inst)
+    if not isinstance(request_data, dict):
+        # this occurs if request_data is blank
+        log.info('Bad Action API request data - not dict: %r',
+                    request_data)
+        return _finish_bad_request(
+            _('Bad request data: %s') %
+            'Request data JSON decoded to %r but '
+            'it needs to be a dictionary.' % request_data)
+    # if callback is specified we do not want to send that to the search
+    if 'callback' in request_data:
+        del request_data['callback']
+        c.user = None
+        c.userobj = None
+        context['user'] = None
+        context['auth_user_obj'] = None
+    try:
+        result = function(context, request_data)
+        # XXX extra logging here
+        _log_api_access(context, request_data)
+        return_dict['success'] = True
+        return_dict['result'] = result
+    except DataError as e:
+        log.info('Format incorrect (Action API): %s - %s',
+                    e.error, request_data)
+        return_dict['error'] = {'__type': 'Integrity Error',
+                                'message': e.error,
+                                'data': request_data}
+        return_dict['success'] = False
+        return _finish(400, return_dict, content_type='json')
+    except NotAuthorized as e:
+        return_dict['error'] = {'__type': 'Authorization Error',
+                                'message': _('Access denied')}
+        return_dict['success'] = False
+
+        if unicode(e):
+            return_dict['error']['message'] += u': %s' % e
+
+        return _finish(403, return_dict, content_type='json')
+    except NotFound as e:
+        return_dict['error'] = {'__type': 'Not Found Error',
+                                'message': _('Not found')}
+        if unicode(e):
+            return_dict['error']['message'] += u': %s' % e
+        return_dict['success'] = False
+        return _finish(404, return_dict, content_type='json')
+    except ValidationError as e:
+        error_dict = e.error_dict
+        error_dict['__type'] = 'Validation Error'
+        return_dict['error'] = error_dict
+        return_dict['success'] = False
+        # CS nasty_string ignore
+        log.info('Validation error (Action API): %r', str(e.error_dict))
+        return _finish(409, return_dict, content_type='json')
+    except SearchQueryError as e:
+        return_dict['error'] = {'__type': 'Search Query Error',
+                                'message': 'Search Query is invalid: %r' %
+                                e.args}
+        return_dict['success'] = False
+        return _finish(400, return_dict, content_type='json')
+    except SearchError as e:
+        return_dict['error'] = {'__type': 'Search Error',
+                                'message': 'Search error: %r' % e.args}
+        return_dict['success'] = False
+        return _finish(409, return_dict, content_type='json')
+    except SearchIndexError as e:
+        return_dict['error'] = {
+            '__type': 'Search Index Error',
+            'message': 'Unable to add package to search index: %s' %
+                        str(e)}
+        return_dict['success'] = False
+        return _finish(500, return_dict, content_type='json')
+    return _finish_ok(return_dict)
+
+
+def _log_api_access(context, data_dict):
+    if 'package' not in context:
+        if 'resource_id' not in data_dict:
+            return
+        res = model.Resource.get(data_dict['resource_id'])
+        if not res:
+            return
+        pkg = res.package
+    else:
+        pkg = context['package']
+    org = model.Group.get(pkg.owner_org)
+    c.log_extra = u'org={o} type={t} id={i}'.format(
+        o=org.name,
+        t=pkg.type,
+        i=pkg.id)
+    if 'resource_id' in data_dict:
+        c.log_extra += u' rid={0}'.format(data_dict['resource_id'])
+
+
+def notice_no_access():
+    '''flash_notice if logged-in user can't actually do anything yet'''
+    if h.check_access('package_create'):
+        return
+
+    h.flash_notice(
+        '<strong>' + _('Account Created') +
+        '</strong><br>' +
+        _('Thank you for creating your account for the Open '
+          'Government registry. Although your account is active, '
+          'it has not yet been linked to your department. Until '
+          'the account is linked to your department you will not '
+          'be able to create or modify datasets in the '
+          'registry.') +
+        '<br><br>' +
+        _('You should receive an email within the next business '
+          'day once the account activation process has been '
+          'completed. If you require faster processing of the '
+          'account, please send the request directly to: '
+          '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
+          'open-ouvert@tbs-sct.gc.ca</a>'), True)
+
+
+def notify_ckan_user_create(email, fullname, username, phoneno, dept):
+    """
+    Send an e-mail notification about new users that register on the site to
+    the configured recipient and to the new user
+    """
+    import ckan.lib.mailer
+
+    try:
+        if 'canada.notification_new_user_email' in config:
+            xtra_vars = {
+                'email': email,
+                'fullname': fullname,
+                'username': username,
+                'phoneno': phoneno,
+                'dept': dept
+            }
+            ckan.lib.mailer.mail_recipient(
+                config.get(
+                    'canada.notification_new_user_name',
+                    config['canada.notification_new_user_email']
+                ),
+                config['canada.notification_new_user_email'],
+                (
+                    u'New Registry Account Created / Nouveau compte'
+                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+                ),
+                render(
+                    'user/new_user_email.html',
+                    extra_vars=xtra_vars
+                )
+            )
+    except ckan.lib.mailer.MailerException as m:
+        log = getLogger('ckanext')
+        log.error(m.message)
+
+    try:
+        xtra_vars = {
+            'email': email,
+            'fullname': fullname,
+            'username': username,
+            'phoneno': phoneno,
+            'dept': dept
+        }
+        ckan.lib.mailer.mail_recipient(
+            fullname or email,
+            email,
+            (
+                u'Welcome to the Open Government Registry / '
+                u'Bienvenue au Registre de Gouvernement Ouvert'
+            ),
+            render(
+                'user/user_welcome_email.html',
+                extra_vars=xtra_vars
+            )
+        )
+    except (ckan.lib.mailer.MailerException, socket_error) as m:
+        log = getLogger('ckanext')
+        log.error(m.message)
 
 
 canada_views.add_url_rule(
