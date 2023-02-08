@@ -560,11 +560,6 @@ def delete_datastore_table(id, resource_id):
         )
 
 
-@canada_views.route('/guidelines', methods=['GET'])
-def view_guidelines():
-    return render('guidelines.html')
-
-
 @canada_views.route('/help', methods=['GET'])
 def view_help():
     def _get_help_text(language):
