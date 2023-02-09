@@ -69,7 +69,7 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-@pytest.mark.usefixtures('clean_db')
+@pytest.mark.usefixtures('with_request_context', 'clean_db')
 class TestSuggestedDataset(object):
     def test_simple_suggestion(self):
         lc = LocalCKAN()
