@@ -15,7 +15,7 @@ function cleanCart()
 	// Overage?
 	// I'm not removing them anymore, this can get sorted now
 	//while(OGSMapsChecked_ids.length > OGSMapsMaxCart) { OGSMapsChecked_ids.pop() }
-	
+
 	// Adapt for the cookie
 	if(OGSMapsChecked_ids.length === 0)
 	{ OGSMapsChecked_ids = [] }
@@ -82,9 +82,9 @@ function updateCartUI()
 		if(OGSMapsChecked_ids.indexOf(id) > -1) { cart_has = true }
 
 		if(type == 'OGSCartAdd')
-		{ 
+		{
 			if(cart_has)
-			{ 
+			{
 				$(this).hide()
 				// IE 9 adaptation, can't hide them so we disable
 				$(this).attr("disabled", "disabled");
@@ -172,7 +172,7 @@ function viewOnMap()
 	{ alert('Select an item to view on RAMP first') }
 	else
 	{
-		location.href='/data/'+wb.lang+'/fgpv_vpgf/'+OGSMapsChecked_ids.join(',')
+		location.href='/data/'+wb.lang+'/fgpv-vpgf/'+OGSMapsChecked_ids.join(',')
 		//alert('/ramp/ramp-'+OGSMapsCart_lang+'-ckan.html?keys_disabled='+OGSMapsChecked_ids.join(','))
 	}
 }

@@ -700,9 +700,8 @@ def datatablify(v, colname):
     return unicode(v)
 
 
-@canada_views.route('/fgpv_vpgf/<pkg_id>', methods=['GET'])
+@canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
 def fgpv_vpgf(pkg_id):
-    #TODO: refactor fgpv_vpgf -> fgpv-vpgf
     return render('fgpv_vpgf/index.html', extra_vars={
         'pkg_id': pkg_id,
     })

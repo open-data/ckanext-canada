@@ -92,7 +92,7 @@ $( document ).ready(function() {
     type = action[0]
     id = action[1]
 
-    location.href='https://open.canada.ca/data/en/fgpv_vpgf/'+id
+    location.href='https://open.canada.ca/data/en/fgpv-vpgf/'+id
     return false
   });
 
@@ -104,13 +104,13 @@ $( document ).ready(function() {
     // Action
     if(type == 'OGSCartAdd')    { addCartItem(id)    }
     if(type == 'OGSCartRemove') { removeCartItem(id) }
-    updateCartUI()  
+    updateCartUI()
   });
 
   // Changes to the cart in another tab/window should be accounted for
   $(window).focus(function() {
     initCart()
-    updateCartUI() 
+    updateCartUI()
   });
 
 <!-- End Cart -->
