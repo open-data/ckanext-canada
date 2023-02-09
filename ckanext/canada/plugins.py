@@ -9,7 +9,16 @@ import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from paste.reloader import watch_file
 
-from ckan.plugins.toolkit import h, chained_action, ValidationError, ObjectNotFound, _, get_validator
+from ckan.plugins.toolkit import (
+    c,
+    h,
+    chained_action,
+    ValidationError,
+    ObjectNotFound,
+    _,
+    get_validator,
+    request
+)
 import ckanapi
 from ckan.lib.base import c
 
@@ -96,11 +105,19 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 'wbdisable:"false"', '')
         except Exception:
             pass
-        from ckan.plugins.toolkit import c
+
         try:
             c.fields_grouped.pop('wbdisable', None)
         except Exception:
             pass
+
+        # search extras for ckan-admin/publish route.
+        # we only want to show ready to publish,
+        # approved datasets without a release date.
+        if 'ckan-admin/publish' in request.url:
+            search_params['extras']['ready_to_publish'] = u'true'
+            search_params['extras']['imso_approval'] = u'true'
+            search_params['fq'] += '-portal_release_date:*'
 
         return search_params
 

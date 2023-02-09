@@ -274,7 +274,7 @@ def parse_release_date_facet(facet_results):
 
 def is_ready_to_publish(package):
     portal_release_date = package.get('portal_release_date')
-    ready_to_publish = package['ready_to_publish']
+    ready_to_publish = package.get('ready_to_publish')
 
     if ready_to_publish == 'true' and not portal_release_date:
         return True

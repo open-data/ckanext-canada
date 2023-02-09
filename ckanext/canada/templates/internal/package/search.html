@@ -1,13 +1,20 @@
-{% ckan_extends %}
+{% if 'ckan-admin/publish' in request.url %}
 
-{# internal theme has title already visible above #}
-{% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
-{% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
-{% endblock %}
+  {% include 'admin/publish_search.html' %}
 
+{% else %}
 
-{% block extra_facets %}
-  {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
-    name='ready_to_publish', facet_range=facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
-{% endblock %}
+  {% ckan_extends %}
+
+  {# internal theme has title already visible above #}
+  {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+  {% block breadcrumb_content %}
+    <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
+  {% endblock %}
+
+  {% block extra_facets %}
+    {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
+      name='ready_to_publish', facet_range=facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
+  {% endblock %}
+
+{% endif %}

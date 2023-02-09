@@ -66,7 +66,7 @@ from ckanapi import LocalCKAN
 from flask import Blueprint
 
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
-from ckanext.canada.helpers import canada_date_str_to_datetime, is_registry
+from ckanext.canada.helpers import canada_date_str_to_datetime
 
 
 canada_views = Blueprint('canada', __name__)
@@ -470,7 +470,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
 @canada_views.route('/', methods=['GET'])
 def home():
-    if not is_registry():
+    if not h.is_registry():
         return h.redirect_to('dataset.search')
     if not c.user:
         return h.redirect_to('user.login')
@@ -484,29 +484,31 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not is_registry():
+    if not h.is_registry():
         return h.redirect_to('dataset.search')
     return render('home/quick_links.html')
 
 
 @canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])
 def ckanadmin_publish():
-    #TODO: load 'admin/publish_search.html' (_admin_search_template)...
-    #TODO: figure out how the _admin_guess_package_type translates to a view func...
+    if not is_sysadmin(c.user):
+        abort(401, _('Not authorized to see this page'))
+
     return dataset_search('dataset')
 
 
-@canada_views.route('/ckan-admin/publish_datasets', methods=['GET', 'POST'])
+@canada_views.route('/ckan-admin/publish-datasets', methods=['GET', 'POST'])
 def ckanadmin_publish_datasets():
     lc = LocalCKAN(username=c.user)
+    params = parse_params(request.form)
 
     publish_date = date_str_to_datetime(
-        request.str_POST['publish_date']
+        params.get('publish_date')
     ).strftime("%Y-%m-%d %H:%M:%S")
 
     # get a list of package id's from the for POST data
     count = 0
-    for key, package_id in request.str_POST.iteritems():
+    for key, package_id in params.iteritems():
         if key == 'publish':
             lc.action.package_patch(
                 id=package_id,
@@ -519,25 +521,6 @@ def ckanadmin_publish_datasets():
 
     # return us to the publishing interface
     return h.redirect_to(h.url_for('canada.ckanadmin_publish'))
-
-
-def _admin_search_template():
-    return 'admin/publish_search.html'
-
-
-def _admin_guess_package_type():
-    # this is a bit unortodox, but this method allows us to conveniently
-    # alter the search method without much code duplication.
-    if not is_sysadmin(c.user):
-        abort(401, _('Not authorized to see this page'))
-
-    # always set ready_to_publish to true for the publishing interface
-    request.GET['ready_to_publish'] = u'true'
-    request.GET['imso_approval'] = u'true'
-
-    # This MUST be None, otherwise the default filtering will apply and
-    # restrict to just dataset_type=dataset.
-    return None
 
 
 @canada_views.route('/dataset/{id}/delete-datastore-table/{resource_id}', methods=['GET', 'POST'])
@@ -719,6 +702,7 @@ def datatablify(v, colname):
 
 @canada_views.route('/fgpv_vpgf/<pkg_id>', methods=['GET'])
 def fgpv_vpgf(pkg_id):
+    #TODO: refactor fgpv_vpgf -> fgpv-vpgf
     return render('fgpv_vpgf/index.html', extra_vars={
         'pkg_id': pkg_id,
     })
