@@ -8,6 +8,7 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.recombinant.tables import get_chromo
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestWrongdoing(object):
     @classmethod
     def setup_method(self, method):

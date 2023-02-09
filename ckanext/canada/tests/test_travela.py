@@ -8,6 +8,7 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.recombinant.tables import get_chromo
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestTravelA(object):
     @classmethod
     def setup_method(self, method):
@@ -62,4 +63,3 @@ class TestTravelA(object):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-            

@@ -15,6 +15,7 @@ from openpyxl import load_workbook, Workbook
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
+@pytest.mark.usefixtures('with_request_context')
 class TestXlsUpload(object):
     @classmethod
     def setup_method(self, method):

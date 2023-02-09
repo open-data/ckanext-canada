@@ -91,6 +91,7 @@ class TestCanadaTags(object):
         assert ie is not None
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestNAVLSchema(object):
     @classmethod
     def setup_method(self, method):

@@ -8,6 +8,7 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.recombinant.tables import get_chromo
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestHospitalityQ(object):
     @classmethod
     def setup_method(self, method):
@@ -43,8 +44,9 @@ class TestHospitalityQ(object):
         expected = {}
         #TODO: assert the expected error
         assert ve is not None
-            
 
+
+@pytest.mark.usefixtures('with_request_context')
 class TestHospitalityQNil(object):
     @classmethod
     def setup_method(self, method):

@@ -9,6 +9,7 @@ from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestWebForms(object):
     @classmethod
     def setup_method(self, method):
