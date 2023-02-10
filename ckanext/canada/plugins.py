@@ -20,7 +20,6 @@ from ckan.plugins.toolkit import (
     request
 )
 import ckanapi
-from ckan.lib.base import c
 
 from ckanext.canada import validators
 from ckanext.canada import logic
@@ -114,10 +113,13 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # search extras for ckan-admin/publish route.
         # we only want to show ready to publish,
         # approved datasets without a release date.
-        if 'ckan-admin/publish' in request.url:
-            search_params['extras']['ready_to_publish'] = u'true'
-            search_params['extras']['imso_approval'] = u'true'
-            search_params['fq'] += '-portal_release_date:*'
+        try:
+            if 'ckan-admin/publish' in request.url:
+                search_params['extras']['ready_to_publish'] = u'true'
+                search_params['extras']['imso_approval'] = u'true'
+                search_params['fq'] += '-portal_release_date:*'
+        except TypeError:
+            pass
 
         return search_params
 
