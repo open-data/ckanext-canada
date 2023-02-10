@@ -15,12 +15,11 @@ from openpyxl import load_workbook, Workbook
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
-@pytest.mark.usefixtures('with_request_context')
 class TestXlsUpload(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
 

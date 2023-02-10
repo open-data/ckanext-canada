@@ -2,8 +2,7 @@
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckan.tests.helpers import reset_db, _get_test_app
-from ckan.tests.pytest_ckan.fixtures import test_request_context
+from ckan.tests.helpers import reset_db
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -12,8 +11,8 @@ from ckanext.recombinant.tables import get_chromo
 class TestAti(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
 
@@ -46,12 +45,11 @@ class TestAti(object):
         assert ve is not None
 
 
-@pytest.mark.usefixtures('with_request_context')
 class TestAtiNil(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
 

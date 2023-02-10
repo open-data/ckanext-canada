@@ -70,12 +70,11 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-@pytest.mark.usefixtures('with_request_context')
 class TestSuggestedDataset(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
 

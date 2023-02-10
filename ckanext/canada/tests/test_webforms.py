@@ -9,12 +9,11 @@ from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 
-@pytest.mark.usefixtures('with_request_context')
 class TestWebForms(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
         self.sysadmin = Sysadmin()
