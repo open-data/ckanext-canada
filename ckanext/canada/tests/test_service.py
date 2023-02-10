@@ -18,26 +18,24 @@ class TestService(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
 
         self.resource_id = rval['resources'][0]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('service')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
@@ -56,26 +54,24 @@ class TestStdService(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
 
         self.resource_id = rval['resources'][1]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('service-std')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
@@ -85,27 +81,26 @@ class TestStdService(object):
 
 
     def test_service_std_target(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('service-std')['examples']['record'],
             service_std_target='0.99999')
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.99999
+        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.99999
         record['service_std_target'] = 0.5
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.5
+        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.5
         record['service_std_target'] = None
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-        assert lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == None
+        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == None
         record['service_std_target'] = -0.01
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
@@ -114,7 +109,7 @@ class TestStdService(object):
         assert ve is not None
         record['service_std_target'] = 1.01
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict

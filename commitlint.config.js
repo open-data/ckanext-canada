@@ -51,6 +51,7 @@ const Configuration = {
         'commands',
         'gitflow',
         'dev',
+        'tests',
       ]
     ],
     'subject-full-stop': [

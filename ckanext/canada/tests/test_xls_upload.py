@@ -25,24 +25,23 @@ class TestXlsUpload(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])
 
         self.org = org
         self.pkg_id = rval['id']
 
 
     def test_upload_empty(self):
-        lc = LocalCKAN()
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
-                lc,
-                lc.action.package_show(id=self.pkg_id),
+                self.lc,
+                self.lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)
@@ -50,7 +49,6 @@ class TestXlsUpload(object):
 
 
     def test_upload_example(self):
-        lc = LocalCKAN()
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
 
@@ -60,22 +58,21 @@ class TestXlsUpload(object):
         wb.save(f.name)
 
         _process_upload_file(
-            lc,
-            lc.action.package_show(id=self.pkg_id),
+            self.lc,
+            self.lc.action.package_show(id=self.pkg_id),
             f.name,
             get_geno('wrongdoing'),
             True)
 
 
     def test_upload_wrong_type(self):
-        lc = LocalCKAN()
         wb = excel_template('travela', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
-                lc,
-                lc.action.package_show(id=self.pkg_id),
+                self.lc,
+                self.lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)

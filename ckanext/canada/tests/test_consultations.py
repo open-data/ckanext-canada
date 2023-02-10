@@ -18,26 +18,24 @@ class TestConsultations(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
 
         self.resource_id = rval['resources'][0]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
@@ -47,9 +45,8 @@ class TestConsultations(object):
 
 
     def test_multiple_errors(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{
                     'registration_number': 'CCC0249',
@@ -68,6 +65,7 @@ class TestConsultations(object):
                     'report_available_online': "N",
                     }])
         err = ve.value.error_dict['records'][0]
+        #TODO: simplify expected
         expected = {
             'publishable': ['Invalid choice: "Q"'],
             'subjects': ['Invalid choice: "GEO,MATH"'],
@@ -84,13 +82,13 @@ class TestConsultations(object):
 
 
     def test_not_going_forward_unpublished(self):
-        lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
         err = ve.value.error_dict['records'][0]
+        #TODO: siimplify expected
         expected = {
             u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
             }

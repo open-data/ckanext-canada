@@ -2,13 +2,13 @@
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckan.tests.helpers import reset_db
+from ckan.tests.helpers import reset_db, _get_test_app
+from ckan.tests.pytest_ckan.fixtures import test_request_context
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
 
-@pytest.mark.usefixtures('with_request_context')
 class TestAti(object):
     @classmethod
     def setup_method(self, method):
@@ -18,26 +18,24 @@ class TestAti(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='ati', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='ati', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='ati', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='ati', owner_org=org['name'])
 
         self.resource_id = rval['resources'][0]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('ati')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
@@ -58,26 +56,24 @@ class TestAtiNil(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='ati', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='ati', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='ati', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='ati', owner_org=org['name'])
 
         self.resource_id = rval['resources'][1]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('ati-nil')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict

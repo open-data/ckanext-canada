@@ -1,13 +1,14 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import call_action
-from ckan.tests import factories
-import ckan.lib.search as search
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckan.tests.factories import Sysadmin
+from ckanext.canada.tests.factories import (
+    CanadaOrganization as Organization,
+    CanadaUser as User
+)
 
 import pytest
+from ckan.tests.helpers import reset_db
 
-from ckanapi import LocalCKAN, ValidationError
-import json
+from ckanapi import LocalCKAN, ValidationError, NotAuthorized
 
 
 SIMPLE_SUGGESTION = {
@@ -69,31 +70,44 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-@pytest.mark.usefixtures('with_request_context', 'clean_db')
+@pytest.mark.usefixtures('with_request_context')
 class TestSuggestedDataset(object):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before all test methods of the class are called.
+        Setup any state specific to the execution of the given class (which usually contains tests).
+        """
+        reset_db()
+
+        member = User()
+        editor = User()
+        sysadmin = Sysadmin()
+        self.member_lc = LocalCKAN(username=member['name'])
+        self.editor_lc = LocalCKAN(username=editor['name'])
+        self.system_lc = LocalCKAN(username=sysadmin['name'])
+        self.org = Organization(users=[{
+            'name': member['name'],
+            'capacity': 'member'},
+            {'name': editor['name'],
+             'capacity': 'editor'},
+            {'name': sysadmin['name'],
+             'capacity': 'admin'}])
+
+
     def test_simple_suggestion(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        "System should be able to create suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
 
-        assert 'status' not in resp
+        assert 'status' not in response
 
 
     def test_normal_user_cant_create(self):
-        user = factories.User()
-        lc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
+        "Member users cannot create suggested datasets"
         with pytest.raises(ValidationError) as ve:
-            lc.action.package_create(
-                owner_org=org['name'],
+            self.member_lc.action.package_create(
+                owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
         err = ve.value.error_dict
         expected = {}
@@ -101,33 +115,52 @@ class TestSuggestedDataset(object):
         assert ve is not None
 
 
-    def test_normal_user_can_update(self):
-        user = factories.User()
-        slc = LocalCKAN()
-        ulc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
-        resp = slc.action.package_create(
-            owner_org=org['name'],
+    def test_normal_user_cant_update(self):
+        "Member users cannot update suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
-        resp = ulc.action.package_update(
-            owner_org=org['name'],
-            id=resp['id'],
+
+        with pytest.raises(NotAuthorized) as e:
+            self.member_lc.action.package_update(
+                owner_org=self.org['name'],
+                id=response['id'],
+                **COMPLETE_SUGGESTION)
+        err = e.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert e is not None
+
+
+    def test_editor_user_cant_create(self):
+        "Editor users cannot create suggested datasets"
+        with pytest.raises.raises(ValidationError) as ve:
+            self.editor_lc.action.package_create(
+                owner_org=self.org['name'],
+                **SIMPLE_SUGGESTION)
+        err = ve.value.error_dict
+        expected = {}
+        #TODO: assert the expected error
+        assert ve is not None
+
+
+    def test_editor_user_can_update(self):
+        "Editors should be able to update suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
+            **SIMPLE_SUGGESTION)
+
+        response = self.editor_lc.action.package_update(
+            owner_org=self.org['name'],
+            id=response['id'],
             **COMPLETE_SUGGESTION)
 
-        assert resp['status'][0]['reason'] == 'under_review'
+        assert response['status'][0]['reason'] == 'under_review'
 
 
     def test_responses_ordered(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        resp = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **UPDATED_SUGGESTION)
 
         # first update will be moved to end based on date field

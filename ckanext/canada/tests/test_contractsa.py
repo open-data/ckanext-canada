@@ -18,26 +18,24 @@ class TestContractsA(object):
         reset_db()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='contractsa', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='contractsa', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='contractsa', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='contractsa', owner_org=org['name'])
 
         self.resource_id = rval['resources'][0]['id']
 
 
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('contractsa')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
 
     def test_blank(self):
-        lc = LocalCKAN()
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
@@ -47,15 +45,15 @@ class TestContractsA(object):
 
 
     def test_year(self):
-        lc = LocalCKAN()
         record = dict(
             get_chromo('contractsa')['examples']['record'],
             year='2050')
         with pytest.raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict['records'][0]
+        #TODO: simplify expected
         expected = {
             'year': [
                 'This must list the year you are reporting on (not the fiscal year).'],
