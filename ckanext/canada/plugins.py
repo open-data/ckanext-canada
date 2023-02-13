@@ -3,6 +3,7 @@
 import os
 import os.path
 import logging
+from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -113,13 +114,10 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # search extras for ckan-admin/publish route.
         # we only want to show ready to publish,
         # approved datasets without a release date.
-        try:
-            if 'ckan-admin/publish' in request.url:
-                search_params['extras']['ready_to_publish'] = u'true'
-                search_params['extras']['imso_approval'] = u'true'
-                search_params['fq'] += '-portal_release_date:*'
-        except TypeError:
-            pass
+        if has_request_context() and 'ckan-admin/publish' in request.url:
+            search_params['extras']['ready_to_publish'] = u'true'
+            search_params['extras']['imso_approval'] = u'true'
+            search_params['fq'] += '-portal_release_date:*'
 
         return search_params
 
