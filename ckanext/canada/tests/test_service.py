@@ -3,6 +3,7 @@ from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,6 +16,7 @@ class TestService(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -38,9 +40,9 @@ class TestService(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'fiscal_yr, service_id'
+        assert 'key' in err
+        assert expected in err['key'][0]
 
 
 class TestStdService(object):
@@ -50,6 +52,7 @@ class TestStdService(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -73,9 +76,9 @@ class TestStdService(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'fiscal_yr, service_id, service_std_id'
+        assert 'key' in err
+        assert expected in err['key'][0]
 
 
     def test_service_std_target(self):
@@ -102,15 +105,15 @@ class TestStdService(object):
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'service_std_target'
+        assert 'records' in err
+        assert expected in err['records'][0]
         record['service_std_target'] = 1.01
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'service_std_target'
+        assert 'records' in err
+        assert expected in err['records'][0]

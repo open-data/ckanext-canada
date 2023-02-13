@@ -7,6 +7,7 @@ from ckanext.canada.tests.factories import (
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
 
@@ -77,6 +78,7 @@ class TestSuggestedDataset(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         member = User()
         editor = User()
@@ -104,14 +106,13 @@ class TestSuggestedDataset(object):
 
     def test_normal_user_cant_create(self):
         "Member users cannot create suggested datasets"
-        with pytest.raises(ValidationError) as ve:
+        with pytest.raises(NotAuthorized) as e:
             self.member_lc.action.package_create(
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
-        err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        err = str(e.value)
+        expected = 'not authorized to create packages'
+        assert expected in err
 
 
     def test_normal_user_cant_update(self):
@@ -125,22 +126,21 @@ class TestSuggestedDataset(object):
                 owner_org=self.org['name'],
                 id=response['id'],
                 **COMPLETE_SUGGESTION)
-        err = e.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert e is not None
+        err = str(e.value)
+        expected = 'not authorized to edit package'
+        assert expected in err
 
 
     def test_editor_user_cant_create(self):
         "Editor users cannot create suggested datasets"
-        with pytest.raises.raises(ValidationError) as ve:
+        with pytest.raises(ValidationError) as ve:
             self.editor_lc.action.package_create(
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'Only sysadmin may set this value'
+        for e in err:
+            assert [m for m in err[e] if expected in m]
 
 
     def test_editor_user_can_update(self):

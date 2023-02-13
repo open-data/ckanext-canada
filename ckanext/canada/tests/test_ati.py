@@ -3,6 +3,7 @@ from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,6 +16,7 @@ class TestAti(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -38,11 +40,9 @@ class TestAti(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {
-            u'key': [u'fields "request_number" are missingfields "request_number" are missing but needed as key']
-            }
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'request_number'
+        assert 'key' in err
+        assert expected in err['key'][0]
 
 
 class TestAtiNil(object):
@@ -52,6 +52,7 @@ class TestAtiNil(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -75,6 +76,6 @@ class TestAtiNil(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert err is not None
+        expected = 'year, month'
+        assert 'key' in err
+        assert expected in err['key'][0]

@@ -4,6 +4,7 @@ from ckanapi import LocalCKAN
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo, get_geno
@@ -22,6 +23,7 @@ class TestXlsUpload(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()

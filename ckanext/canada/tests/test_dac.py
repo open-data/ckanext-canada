@@ -3,6 +3,7 @@ from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,6 +16,7 @@ class TestDAC(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -38,6 +40,6 @@ class TestDAC(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'reporting_period, line_number'
+        assert 'key' in err
+        assert expected in err['key'][0]

@@ -3,6 +3,7 @@ from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,6 +16,7 @@ class TestContractsA(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -38,9 +40,9 @@ class TestContractsA(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'year'
+        assert 'key' in err
+        assert expected in err['key'][0]
 
 
     def test_year(self):
@@ -51,12 +53,7 @@ class TestContractsA(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.value.error_dict['records'][0]
-        #TODO: simplify expected
-        expected = {
-            'year': [
-                'This must list the year you are reporting on (not the fiscal year).'],
-        }
-        for k in set(err) | set(expected):
-            assert k in err
-            assert err[k] == expected[k]
+        err = ve.value.error_dict
+        expected = 'year'
+        assert 'records' in err
+        assert expected in err['records'][0]

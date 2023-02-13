@@ -4,6 +4,7 @@ import pytest
 from ckan.lib.helpers import url_for
 
 from ckan.tests.helpers import reset_db, _get_test_app
+from ckan.lib.search import clear_all
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
@@ -16,6 +17,7 @@ class TestWebForms(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()

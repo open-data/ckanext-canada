@@ -3,6 +3,7 @@ from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,6 +16,7 @@ class TestConsultations(object):
         Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -38,9 +40,9 @@ class TestConsultations(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = {}
-        #TODO: assert the expected error
-        assert ve is not None
+        expected = 'registration_number'
+        assert 'key' in err
+        assert expected in err['key'][0]
 
 
     def test_multiple_errors(self):
@@ -63,21 +65,18 @@ class TestConsultations(object):
                     'high_profile': "Y",
                     'report_available_online': "N",
                     }])
-        err = ve.value.error_dict['records'][0]
-        #TODO: simplify expected
-        expected = {
-            'publishable': ['Invalid choice: "Q"'],
-            'subjects': ['Invalid choice: "GEO,MATH"'],
-            'title_en': ['This field must not be empty'],
-            'description_fr': ['This field must not be empty'],
-            'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
-            'start_date': ['This field must not be empty'],
-            'partner_departments': ['Invalid choice: "DARN"'],
-            'rationale': ['This field must not be empty'],
-            }
-        for k in set(err) | set(expected):
-            assert k in err
-            assert err[k] == expected[k]
+        err = ve.value.error_dict
+        expected = ['publishable',
+                    'subjects',
+                    'title_en',
+                    'description_fr',
+                    'target_participants_and_audience',
+                    'start_date',
+                    'partner_departments',
+                    'rationale']
+        assert 'records' in err
+        for k in set(err['records'][0]):
+            assert k in expected
 
 
     def test_not_going_forward_unpublished(self):
@@ -86,9 +85,7 @@ class TestConsultations(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
-        err = ve.value.error_dict['records'][0]
-        #TODO: siimplify expected
-        expected = {
-            u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
-            }
-        assert err == expected
+        err = ve.value.error_dict
+        expected = 'status'
+        assert 'records' in err
+        assert expected in err['records'][0]
