@@ -95,11 +95,6 @@ class CanadaCommand(CkanCommand):
                                     default: ckan system user
         --use-created-date          use date_created field for date forwarded to data
                                     owner and other statuses instead of today's date
-        -r/--rebuild-unindexed-only When rebuilding the advanced search Solr core
-                                    only index datasets not already present in the
-                                    second Solr core
-        -f/--freshen                When rebuilding the advanced search Solr core
-                                    re-index all datasets, but do not purge the Solr core
         -o/--source <source url>    source datastore url to copy datastore records
     """
     summary = __doc__.split('\n')[0]
@@ -139,8 +134,6 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
     parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
     parser.add_option('--portal', dest='portal', action='store_true')
-    parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
-    parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
     parser.add_option('-o', '--source', dest='src_ds_url', default=None)
     parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
 
