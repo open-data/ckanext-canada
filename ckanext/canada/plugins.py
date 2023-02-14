@@ -20,7 +20,6 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
-from ckanext.canada import search_integration
 from ckanext.extendedactivity.plugins import IActivity
 
 import json
@@ -703,7 +702,6 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return pkg_dict
 
     def after_create(self, context, data_dict):
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
@@ -715,11 +713,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):
-        search_integration.delete_from_search_index(data_dict['id'])
         return data_dict
 
     def after_show(self, context, data_dict):
