@@ -111,8 +111,9 @@ class TestSuggestedDataset(object):
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
         err = str(e.value)
-        expected = 'not authorized to create packages'
-        assert expected in err
+        expected = 'not authorized to add dataset'
+        fallback = 'not authorized to create packages'
+        assert expected in err or fallback in err
 
 
     def test_normal_user_cant_update(self):
