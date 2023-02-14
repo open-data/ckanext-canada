@@ -22,7 +22,6 @@ from urlparse import urlparse
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
-from ckanext.canada import search_integration
 from ckanext.canada.metadata_xform import metadata_xform
 from ckanext.canada.triggers import update_triggers
 
@@ -68,7 +67,6 @@ class CanadaCommand(CkanCommand):
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
                       load-suggested [--use-created-date] <suggested-datasets.csv>
-                      rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
                       update-resource-url-https <https_report> <https_alt_report>
@@ -175,9 +173,6 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'update-inventory-votes':
             update_inventory_votes(*self.args[1:])
-
-        elif cmd == 'rebuild-external-search':
-            self.rebuild_external_search()
 
         elif cmd == 'resource-size-update':
             self.resource_size_update(*self.args[1:])
@@ -489,9 +484,6 @@ class CanadaCommand(CkanCommand):
                 print i
             if not self.options.brief:
                 print "# {0}".format(since_date.isoformat())
-
-    def rebuild_external_search(self):
-        search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
 
     def resource_size_update(self, size_report):
         registry = LocalCKAN()
