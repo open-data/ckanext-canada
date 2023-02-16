@@ -83,16 +83,19 @@ class TestContracts(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.value.error_dict
-        expected = ['vendor_postal_code',
-                    'buyer_name',
-                    'trade_agreement',
-                    'agreement_type_code',
-                    'land_claims',
-                    'indigenous_business']
-        assert 'records' in err
-        for k in set(err['records'][0]):
-            assert k in expected
+        err = ve.value.error_dict['records'][0]
+        expected = {
+            'vendor_postal_code': ['This field must not be empty'],
+            'buyer_name': ['This field must not be empty'],
+            'trade_agreement': ['This field must not be empty'],
+            'agreement_type_code': ['Discontinued as of 2022-01-01'],
+            'land_claims': ['This field must not be empty'],
+            'indigenous_business': ['This field must not be empty'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_multi_field_errors(self):
@@ -107,14 +110,25 @@ class TestContracts(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.value.error_dict
-        expected = ['trade_agreement',
-                    'land_claims',
-                    'limited_tendering_reason',
-                    'trade_agreement_exceptions']
-        assert 'records' in err
-        for k in set(err['records'][0]):
-            assert k in expected
+        err = ve.value.error_dict['records'][0]
+        expected = {
+            'trade_agreement': [
+                'If the value XX (none) is entered, then no other value '
+                'can be entered in this field.'],
+            'land_claims': [
+                'If the value NA (not applicable) is entered, then no other '
+                'value can be entered in this field.'],
+            'limited_tendering_reason': [
+                'If the value 00 (none) is entered, then no other value can '
+                'be entered in this field.'],
+            'trade_agreement_exceptions': [
+                'If the value 00 (none) is entered, then no other value can '
+                'be entered in this field.'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_inter_field_errors(self):
@@ -133,13 +147,22 @@ class TestContracts(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.value.error_dict
-        expected = ['buyer_name',
-                    'economic_object_code',
-                    'number_of_bids']
-        assert 'records' in err
-        for k in set(err['records'][0]):
-            assert k in expected
+        err = ve.value.error_dict['records'][0]
+        expected = {
+            'buyer_name': [
+                'This field must be populated with an NA '
+                'if an amendment is disclosed under Instrument Type'],
+            'economic_object_code': [
+                'If N/A, then Instrument Type must be identified '
+                'as a standing offer/supply arrangement (SOSA)'],
+            'number_of_bids':[
+                'This field must be populated with a 1 if the solicitation procedure is '
+                'identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_field_length_errors(self):
@@ -152,12 +175,15 @@ class TestContracts(object):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
-        err = ve.value.error_dict
-        expected = ['economic_object_code',
-                    'commodity_code']
-        assert 'records' in err
-        for k in set(err['records'][0]):
-            assert k in expected
+        err = ve.value.error_dict['records'][0]
+        expected = {
+            'economic_object_code': ['This field is limited to only 3 or 4 digits.'],
+            'commodity_code': ['The field is limited to eight alpha-numeric digits or less.'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_postal_code(self):

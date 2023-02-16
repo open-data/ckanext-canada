@@ -64,18 +64,20 @@ class TestConsultations(object):
                     'high_profile': "Y",
                     'report_available_online': "N",
                     }])
-        err = ve.value.error_dict
-        expected = ['publishable',
-                    'subjects',
-                    'title_en',
-                    'description_fr',
-                    'target_participants_and_audience',
-                    'start_date',
-                    'partner_departments',
-                    'rationale']
-        assert 'records' in err
-        for k in set(err['records'][0]):
-            assert k in expected
+        err = ve.value.error_dict['records'][0]
+        expected = {
+            'publishable': ['Invalid choice: "Q"'],
+            'subjects': ['Invalid choice: "GEO,MATH"'],
+            'title_en': ['This field must not be empty'],
+            'description_fr': ['This field must not be empty'],
+            'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
+            'start_date': ['This field must not be empty'],
+            'partner_departments': ['Invalid choice: "DARN"'],
+            'rationale': ['This field must not be empty'],
+            }
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_not_going_forward_unpublished(self):
