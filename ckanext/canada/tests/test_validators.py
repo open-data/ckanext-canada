@@ -30,16 +30,14 @@ class TestCanadaTags(object):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'h', {})
         err = str(ie.value)
-        expected = 'length is less than minimum'
-        assert expected in err
+        assert 'length is less than minimum' in err
 
 
     def test_too_long(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'z' * 141, {})
         err = str(ie.value)
-        expected = 'length is more than maximum'
-        assert expected in err
+        assert 'length is more than maximum' in err
 
 
     def test_barely_fits(self):
@@ -50,8 +48,7 @@ class TestCanadaTags(object):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'who,me', {})
         err = str(ie.value)
-        expected = 'may not contain commas'
-        assert expected in err
+        assert 'may not contain commas' in err
 
 
     def test_strip_whitespace(self):
@@ -62,8 +59,7 @@ class TestCanadaTags(object):
         with pytest.raises(Invalid) as ie:
             canada_tags( u'hello  world', {})
         err = str(ie.value)
-        expected = 'may not contain consecutive spaces'
-        assert expected in err
+        assert 'may not contain consecutive spaces' in err
 
 
     def test_punctuation(self):
@@ -78,16 +74,14 @@ class TestCanadaTags(object):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'hey\bthere', {})
         err = str(ie.value)
-        expected = 'may not contain unprintable character'
-        assert expected in err
+        assert 'may not contain unprintable character' in err
 
 
     def test_separator(self):
         with pytest.raises(Invalid) as ie:
             canada_tags(u'one line\u2028two', {})
         err = str(ie.value)
-        expected = 'may not contain separator charater'
-        assert expected in err
+        assert 'may not contain separator charater' in err
 
 
 class TestNAVLSchema(object):
@@ -180,27 +174,24 @@ class TestNAVLSchema(object):
                 self.complete_pkg,
                 keywords={'en':['test'], 'fr':['not  ok']}))
         err = ve.value.error_dict
-        expected = 'may not contain consecutive spaces'
         assert 'keywords' in err
-        assert expected in err['keywords'][0]
+        assert 'may not contain consecutive spaces' in err['keywords'][0]
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en':['test'], 'fr':['one too short', 'q']}))
         err = ve.value.error_dict
-        expected = 'length is less than minimum'
         assert 'keywords' in err
-        assert expected in err['keywords'][0]
+        assert 'length is less than minimum' in err['keywords'][0]
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en':['this is much too long' * 50], 'fr':['test']}))
         err = ve.value.error_dict
-        expected = 'length is more than maximum'
         assert 'keywords' in err
-        assert expected in err['keywords'][0]
+        assert 'length is more than maximum' in err['keywords'][0]
 
         self.normal_action.package_create(
             **dict(self.complete_pkg,
@@ -223,18 +214,16 @@ class TestNAVLSchema(object):
                 id=my_uuid,
                 **self.complete_pkg)
         err = ve.value.error_dict
-        expected = 'Dataset id already exists'
         assert 'id' in err
-        assert expected in err['id'][0]
+        assert 'Dataset id already exists' in err['id'][0]
 
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.package_create(
                 id='my-custom-id',
                 **self.complete_pkg)
         err = ve.value.error_dict
-        expected = 'Badly formed hexadecimal UUID string'
         assert 'id' in err
-        assert expected in err['id'][0]
+        assert 'Badly formed hexadecimal UUID string' in err['id'][0]
 
 
     def test_raw_required(self):
@@ -272,9 +261,8 @@ class TestNAVLSchema(object):
                     self.complete_pkg['resources'][0],
                     size='10M',)]))
         err = ve.value.error_dict
-        expected = 'size'
         assert 'resources' in err
-        assert expected in err['resources'][0]
+        assert 'size' in err['resources'][0]
 
 
     def test_copy_org_name(self):
@@ -309,9 +297,8 @@ class TestNAVLSchema(object):
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**release_pkg)
         err = ve.value.error_dict
-        expected = 'This key is read-only'
         assert 'portal_release_date' in err
-        assert expected in err['portal_release_date'][0]
+        assert 'This key is read-only' in err['portal_release_date'][0]
 
         self.sysadmin_action.package_create(**release_pkg)
 
@@ -332,36 +319,32 @@ class TestNAVLSchema(object):
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg)
         err = ve.value.error_dict
-        expected = 'Invalid GeoJSON'
         assert 'spatial' in err
-        assert expected in err['spatial'][0]
+        assert 'Invalid GeoJSON' in err['spatial'][0]
 
         bad_spatial_pkg2 = dict(self.complete_pkg,
             spatial='forty')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg2)
         err = ve.value.error_dict
-        expected = 'Invalid GeoJSON'
         assert 'spatial' in err
-        assert expected in err['spatial'][0]
+        assert 'Invalid GeoJSON' in err['spatial'][0]
 
         bad_spatial_pkg3 = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": ''}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg3)
         err = ve.value.error_dict
-        expected = 'Invalid GeoJSON'
         assert 'spatial' in err
-        assert expected in err['spatial'][0]
+        assert 'Invalid GeoJSON' in err['spatial'][0]
 
         bad_spatial_pkg4 = dict(self.complete_pkg,
             spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg4)
         err = ve.value.error_dict
-        expected = 'Invalid GeoJSON'
         assert 'spatial' in err
-        assert expected in err['spatial'][0]
+        assert 'Invalid GeoJSON' in err['spatial'][0]
 
 
     def test_dont_change_portal_release_date(self):

@@ -40,9 +40,8 @@ class TestTravelA(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'year'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'year' in err['key'][0]
 
 
     def test_year(self):
@@ -54,6 +53,5 @@ class TestTravelA(object):
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        expected = 'year'
         assert 'records' in err
-        assert expected in err['records'][0]
+        assert 'year' in err['records'][0]

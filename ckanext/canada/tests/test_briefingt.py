@@ -40,6 +40,5 @@ class TestBriefingT(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'tracking_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'tracking_number' in err['key'][0]

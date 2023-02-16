@@ -111,9 +111,8 @@ class TestSuggestedDataset(object):
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
         err = str(e.value)
-        expected = 'not authorized to add dataset'
-        fallback = 'not authorized to create packages'
-        assert expected in err or fallback in err
+        assert 'not authorized to add dataset' in err or \
+               'not authorized to create packages' in err
 
 
     def test_normal_user_cant_update(self):
@@ -128,8 +127,7 @@ class TestSuggestedDataset(object):
                 id=response['id'],
                 **COMPLETE_SUGGESTION)
         err = str(e.value)
-        expected = 'not authorized to edit package'
-        assert expected in err
+        assert 'not authorized to edit package' in err
 
 
     def test_editor_user_cant_create(self):
@@ -139,9 +137,8 @@ class TestSuggestedDataset(object):
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
         err = ve.value.error_dict
-        expected = 'Only sysadmin may set this value'
         for e in err:
-            assert [m for m in err[e] if expected in m]
+            assert [m for m in err[e] if 'Only sysadmin may set this value' in m]
 
 
     def test_editor_user_can_update(self):

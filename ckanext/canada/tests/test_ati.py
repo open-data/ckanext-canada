@@ -40,9 +40,8 @@ class TestAti(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'request_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'request_number' in err['key'][0]
 
 
 class TestAtiNil(object):
@@ -76,6 +75,5 @@ class TestAtiNil(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'year, month'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'year, month' in err['key'][0]

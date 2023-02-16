@@ -40,9 +40,8 @@ class TestGrants(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'ref_number, amendment_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'ref_number, amendment_number' in err['key'][0]
 
 
     def test_empty_string_instead_of_null(self):

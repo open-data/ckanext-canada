@@ -40,6 +40,5 @@ class TestDAC(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'reporting_period, line_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'reporting_period, line_number' in err['key'][0]

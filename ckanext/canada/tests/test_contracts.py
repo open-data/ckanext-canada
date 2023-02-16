@@ -40,9 +40,8 @@ class TestContracts(object):
                 resource_id=self.resource_id,
             records=[{}])
         err = ve.value.error_dict
-        expected = 'reference_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'reference_number' in err['key'][0]
 
 
     def test_ministers_office_missing(self):
@@ -55,9 +54,8 @@ class TestContracts(object):
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        expected = 'ministers_office'
         assert 'records' in err
-        assert expected in err['records'][0]
+        assert 'ministers_office' in err['records'][0]
 
 
     def test_ministers_office(self):
@@ -171,6 +169,5 @@ class TestContracts(object):
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        expected = 'vendor_postal_code'
         assert 'records' in err
-        assert expected in err['records'][0]
+        assert 'vendor_postal_code' in err['records'][0]

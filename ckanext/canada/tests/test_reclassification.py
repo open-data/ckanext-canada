@@ -40,9 +40,8 @@ class TestReclassification(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'ref_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'ref_number' in err['key'][0]
 
 
 class TestReclassificationNil(object):
@@ -76,6 +75,5 @@ class TestReclassificationNil(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'year, quarter'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'year, quarter' in err['key'][0]

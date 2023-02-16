@@ -40,9 +40,8 @@ class TestConsultations(object):
                 resource_id=self.resource_id,
                 records=[{}])
         err = ve.value.error_dict
-        expected = 'registration_number'
         assert 'key' in err
-        assert expected in err['key'][0]
+        assert 'registration_number' in err['key'][0]
 
 
     def test_multiple_errors(self):
@@ -86,6 +85,5 @@ class TestConsultations(object):
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
         err = ve.value.error_dict
-        expected = 'status'
         assert 'records' in err
-        assert expected in err['records'][0]
+        assert 'status' in err['records'][0]
