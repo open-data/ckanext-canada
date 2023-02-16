@@ -21,7 +21,7 @@ class TestTrimPackage(object):
 
         self.example_pkg = Dataset()
         resources = []
-        for _ in range(6):
+        for _i in range(6):
             resources.append(Resource(
                 package_id=self.example_pkg['id']))
         self.example_pkg['resources'] = resources
@@ -35,7 +35,7 @@ class TestTrimPackage(object):
         assert 'name' in self.example_pkg and self.example_pkg['name'] is not None
         assert 'state' in self.example_pkg
 
-    
+
     def test_trimmed_resources(self):
         for resource in self.example_pkg['resources']:
             for field in RESOURCE_TRIM_FIELDS:
