@@ -148,17 +148,21 @@ class TestNAVLSchema(object):
                 name='12345678-9abc-def0-1234-56789abcdef0',
                 **self.incomplete_pkg)
         err = ve.value.error_dict
-        expected = ['notes_translated-en',
-                    'frequency',
-                    'subject',
-                    'notes_translated-fr',
-                    'keywords-en',
-                    'title_translated',
-                    'date_published',
-                    'keywords-fr',
-                    'owner_org']
-        for k in set(err):
-            assert k in expected
+        expected = {
+            'notes_translated-en': ['Missing value'],
+            'frequency': ['Missing value'],
+            'subject': ['Select at least one'],
+            'notes_translated-fr': ['Missing value'],
+            'keywords-en': ['Missing value'],
+            'title_translated': ['Required language "fr" missing'],
+            'date_published': ['Missing value'],
+            'keywords-fr': ['Missing value'],
+            'owner_org': ['Missing value'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
         resp = self.normal_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
@@ -233,10 +237,14 @@ class TestNAVLSchema(object):
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**raw_pkg)
         err = ve.value.error_dict
-        expected = ['title_translated-fr',
-                    'title_translated-en']
-        for k in set(err):
-            assert k in expected
+        expected = {
+            'title_translated-fr': ['Missing value'],
+            'title_translated-en': ['Missing value'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
 
     def test_tag_extras_bug(self):

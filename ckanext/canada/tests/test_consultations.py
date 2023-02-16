@@ -74,7 +74,7 @@ class TestConsultations(object):
             'start_date': ['This field must not be empty'],
             'partner_departments': ['Invalid choice: "DARN"'],
             'rationale': ['This field must not be empty'],
-            }
+        }
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
