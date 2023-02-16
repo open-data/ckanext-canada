@@ -4,6 +4,7 @@ from ckanapi import LocalCKAN
 
 import pytest
 from ckan.tests.helpers import reset_db
+from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo, get_geno
@@ -18,30 +19,30 @@ from openpyxl import load_workbook, Workbook
 class TestXlsUpload(object):
     @classmethod
     def setup_method(self, method):
-        """Method is called at class level before all test methods of the class are called.
-        Setup any state specific to the execution of the given class (which usually contains tests).
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
         """
         reset_db()
+        clear_all()
 
         org = Organization()
-        lc = LocalCKAN()
+        self.lc = LocalCKAN()
 
-        lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])
+        self.lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=org['name'])
 
         self.org = org
         self.pkg_id = rval['id']
 
 
     def test_upload_empty(self):
-        lc = LocalCKAN()
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
-                lc,
-                lc.action.package_show(id=self.pkg_id),
+                self.lc,
+                self.lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)
@@ -49,7 +50,6 @@ class TestXlsUpload(object):
 
 
     def test_upload_example(self):
-        lc = LocalCKAN()
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
 
@@ -59,22 +59,21 @@ class TestXlsUpload(object):
         wb.save(f.name)
 
         _process_upload_file(
-            lc,
-            lc.action.package_show(id=self.pkg_id),
+            self.lc,
+            self.lc.action.package_show(id=self.pkg_id),
             f.name,
             get_geno('wrongdoing'),
             True)
 
 
     def test_upload_wrong_type(self):
-        lc = LocalCKAN()
         wb = excel_template('travela', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
         with pytest.raises(BadExcelData) as e:
             _process_upload_file(
-                lc,
-                lc.action.package_show(id=self.pkg_id),
+                self.lc,
+                self.lc.action.package_show(id=self.pkg_id),
                 f.name,
                 get_geno('wrongdoing'),
                 True)

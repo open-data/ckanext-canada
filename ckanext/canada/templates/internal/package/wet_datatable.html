@@ -50,9 +50,7 @@
       "serverSide": true,
       "processing": true,
       "ajax": {
-        "url": "{{ h.url_for(
-        controller='ckanext.canada.controller:CanadaController',
-        action='datatable',
+        "url": "{{ h.url_for('canada.datatable',
         resource_name=resource_name,
         resource_id=resource_id,
     ) }}",

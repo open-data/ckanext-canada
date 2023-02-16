@@ -36,11 +36,9 @@ before loading any data.
   templates for internal site and registration (requires
   `canada_forms` and `canada_public`)
 
-`canada_package`
-  package processing between CKAN and Solr
-
-`canada_obd`
-  Open By Default site plugin
+`canada_datasets`
+  package processing between CKAN and Solr (requires
+  `Scheming extension`, see below)
 
 
 ## Requirements
@@ -49,7 +47,7 @@ Project | Github group/repo | Branch | Plugins
 --- | --- | --- | ---
 CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.8 | N/A
 canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | master | see above
-Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | scheming_datasets
+Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | canada_datasets, scheming_organizations
 Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent) | master | N/A
 ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | master | N/A
 ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | master | googleanalytics
@@ -62,15 +60,15 @@ The CKAN ini file needs the following settings for the registry server:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public canada_package datastore recombinant
-        scheming_datasets fluent
+        canada_public datastore recombinant
+        canada_datasets scheming_organizations fluent
 ```
 
 For the public server use only:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_public canada_package scheming_datasets fluent
+        canada_public canada_datasets scheming_organizations fluent
 
 canada.portal_url = http://myserver.com
 
@@ -135,39 +133,6 @@ Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](https
 
 ```ini
 wet_theme.geo_map_type = static
-```
-
-
-## OBD Configuration
-
-We use a different list of plugins for Open By Default:
-
-```ini
-ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_obd canada_package wet_boew_gcweb scheming_datasets
-        fluent cloudstorage
-
-ckan.extra_resource_fields = language
-```
-
-Update OBD documents (example):
-
-```bash
-touch /tmp/marker
-import_xml2obd.py  pull ./production.ini ./obd-repo  > /tmp/pull.log
-find ./obd-repo -type f -newer /tmp/marker > ./new.txt
-import_xml2obd.py ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan ./new.txt >  ./data/obd-20170704.jsonl
-import_xml2obd.py upload  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key> ./data/obd-20170704.jsonl ./obd-repo
-
-Delete OBD documents (only change the dataset state):
-import_xml2obd.py delete ./to_delete.csv ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key>
-
-Verify OBD documents:
-# check resource exists
-import_xml2obd.py <site_url> azure_user azure_key azure_container
-
-# check duplicates
-import_xml2obd.py de-dup <site_url>
 ```
 
 ## Configuration: Solr

@@ -108,7 +108,7 @@
             <li role="presentation"> <a id="mn-search" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search') }}</a></li>
             <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('organization.index') }}">{{ _('Organizations') }}</a></li>
             {% endif %}
-            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for(controller='ckanext.canada.controller:CanadaController', action='view_help') }}">{{ _('FAQ') }}</a></li>
+            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('canada.view_help') }}">{{ _('FAQ') }}</a></li>
         </ul>
     </div>
 </nav>
