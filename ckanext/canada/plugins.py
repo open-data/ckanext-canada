@@ -35,7 +35,7 @@ import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
-from ckanext.canada.views import (
+from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
     CanadaResourceEditView,
