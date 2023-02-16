@@ -1,6 +1,7 @@
 import json
 import decimal
 import pkg_resources
+import webhelpers.feedgenerator
 import lxml.etree as ET
 import lxml.html as html
 from pytz import timezone, utc
@@ -49,6 +50,17 @@ from ckan.views.api import(
     _finish_ok,
     _finish
 )
+from ckan.views.feed import (
+    _alternate_url,
+    BASE_URL,
+    _feed_url,
+    CKANFeed,
+    _create_atom_id,
+    _navigation_urls,
+    _package_search,
+    _parse_url_params,
+    SITE_TITLE
+)
 
 from ckan.authz import is_sysadmin
 from ckan.logic import (
@@ -64,7 +76,7 @@ from ckanext.recombinant.errors import RecombinantException
 
 from ckanapi import LocalCKAN
 
-from flask import Blueprint
+from flask import Blueprint, make_response
 
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
@@ -748,7 +760,7 @@ def organization_autocomplete():
         'name': _org_key(o),
         'title': _org_key(o)
     } for o in organization_list]
-    
+
     return _finish_ok(return_list)
 
 
@@ -955,6 +967,170 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket_error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
+
+
+@canada_views.route('/feeds/general.atom', methods=['GET'])
+def general_feed():
+    data_dict, params = _parse_url_params()
+    data_dict['q'] = '*:*'
+
+    item_count, results = _package_search(data_dict)
+    # FIXME: url generation for Views
+    navigation_urls = _navigation_urls(params,
+                                       item_count=item_count,
+                                       limit=data_dict['rows'],
+                                       controller='canada_feeds',
+                                       action='general')
+    # FIXME: url generation for Views
+    feed_url = _feed_url(params,
+                         controller='canada_feeds',
+                         action='general')
+    # FIXME: url generation for Views
+    alternate_url = _alternate_url(params)
+
+    guid = _create_atom_id( u'/feeds/dataset.atom')
+
+    return _output_feed(
+        results,
+        feed_title=_(u'Open Government Dataset Feed'),
+        feed_description='',
+        feed_link=alternate_url,
+        feed_guid=guid,
+        feed_url=feed_url,
+        navigation_urls=navigation_urls)
+
+
+@canada_views.route('/feeds/organization/<id>.atom', methods=['GET'])
+def organization_feed(id):
+    try:
+        context = {'model': model, 'session': model.Session,
+                    'user': g.user, 'auth_user_obj': g.userobj}
+        org_obj = get_action('organization_show')(context,
+                                                  {'id': id})
+    except NotFound:
+        abort(404, _('Organization not found'))
+
+    data_dict, params = _parse_url_params()
+
+    data_dict['fq'] = u'{0}: "{1}"'.format('owner_org', org_obj['id'])
+
+    item_count, results = _package_search(data_dict)
+    # FIXME: url generation for Views
+    navigation_urls = _navigation_urls(params,
+                                       item_count=item_count,
+                                       limit=data_dict['rows'],
+                                       controller=u'canada_feeds',
+                                       action='organization',
+                                       id=org_obj['name'])
+    # FIXME: url generation for Views
+    feed_url = _feed_url(
+        params, controller=u'canada_feeds', action='organization', id=org_obj['name'])
+    # FIXME: url generation for Views
+    alternate_url = _alternate_url(params, organization=org_obj['name'])
+
+    guid = _create_atom_id(
+            u'feeds/organization/%s.atom' % org_obj['name'])
+
+    desc = u'Recently created or updated datasets on %s '\
+            'by organization: "%s"' % (SITE_TITLE, org_obj['title'])
+
+    title = u'%s - Organization: "%s"' % (SITE_TITLE, org_obj['title'])
+
+    return _output_feed(
+        results,
+        feed_title=title,
+        feed_description=desc,
+        feed_link=alternate_url,
+        feed_guid=guid,
+        feed_url=feed_url,
+        navigation_urls=navigation_urls)
+
+
+@canada_views.route('/feeds/dataset/<id>.atom', methods=['GET'])
+def dataset_feed(id):
+    try:
+        context = {'model': model, 'session': model.Session,
+                    'user': g.user, 'auth_user_obj': g.userobj}
+        get_action('package_show')(context,
+                                   {'id': id})
+    except NotFound:
+        abort(404, _('Dataset not found'))
+
+    data_dict, params = _parse_url_params()
+
+    data_dict['fq'] = '{0}:"{1}"'.format('id', id)
+
+    item_count, results = _package_search(data_dict)
+    # FIXME: url generation for Views
+    navigation_urls = _navigation_urls(params,
+                                       item_count=item_count,
+                                       limit=data_dict['rows'],
+                                       controller='canada_feeds',
+                                       action='dataset',
+                                       id=id)
+    # FIXME: url generation for Views
+    feed_url = _feed_url(params,
+                         controller='canada_feeds',
+                         action='dataset',
+                         id=id)
+    # FIXME: url generation for Views
+    alternate_url = _alternate_url(params,
+                                   id=id)
+
+    guid = _create_atom_id(u'/feeds/dataset/{0}.atom'.format(id))
+
+    return _output_feed(
+        results,
+        feed_title=_(u'Open Government Dataset Feed'),
+        feed_description='',
+        feed_link=alternate_url,
+        feed_guid=guid,
+        feed_url=feed_url,
+        navigation_urls=navigation_urls)
+
+
+def _output_feed(results, feed_title, feed_description,
+                feed_link, feed_url, navigation_urls, feed_guid):
+
+    author_name = config.get('ckan.feeds.author_name', '').strip() or \
+        config.get('ckan.site_id', '').strip()
+
+    feed = CKANFeed(
+        feed_title=feed_title,
+        feed_link=feed_link,
+        feed_description=feed_description,
+        language=u'en',
+        author_name=author_name,
+        feed_guid=feed_guid,
+        feed_url=feed_url,
+        previous_page=navigation_urls['previous'],
+        next_page=navigation_urls['next'],
+        first_page=navigation_urls['first'],
+        last_page=navigation_urls['last']
+    )
+
+    for pkg in results:
+        feed.add_item(
+            title= h.get_translated(pkg, 'title'),
+            link=h.url_for(controller='package', action='read', id=pkg['id']),
+            description= h.get_translated(pkg, 'notes'),
+            updated=date_str_to_datetime(pkg.get('metadata_modified')),
+            published=date_str_to_datetime(pkg.get('metadata_created')),
+            unique_id=_create_atom_id(u'/dataset/%s' % pkg['id']),
+            author_name=pkg.get('author', ''),
+            author_email=pkg.get('author_email', ''),
+            categories=''.join(e['value']
+                                for e in pkg.get('extras', [])
+                                if e['key'] == lx('keywords')).split(','),
+            enclosure=webhelpers.feedgenerator.Enclosure(
+                BASE_URL + url(str(
+                    '/api/action/package_show?id=%s' % pkg['name'])),
+                unicode(len(json.dumps(pkg))),   # TODO fix this
+                u'application/json'))
+
+    response = make_response(feed.writeString(u'utf-8'), 200)
+    response.headers['Content-Type'] = u'application/atom+xml'
+    return response
 
 
 canada_views.add_url_rule(
