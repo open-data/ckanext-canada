@@ -155,7 +155,7 @@
       </li>
       {% endif %}
       <li class="list-group-item">
-        <a href="{{ h.url_for(action='dataset', controller='ckanext.canada.controller:CanadaFeedController', pkg_id=pkg.id) }}" title="RSS">
+        <a href="{{ h.url_for('feeds.general', id=pkg.id) }}" title="RSS">
           <span class="fa fa-rss-square"></span> {{_('Atom Feed')}}
         </a>
       </li>
