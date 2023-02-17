@@ -38,7 +38,8 @@ from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
     CanadaResourceEditView,
-    CanadaResourceCreateView
+    CanadaResourceCreateView,
+    CanadaFeed
 )
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
@@ -392,6 +393,12 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IFeed)
+
+
+    # IFeed
+    def get_feed_class(self):
+        return CanadaFeed
 
 
     # DefaultTranslation, ITranslation
