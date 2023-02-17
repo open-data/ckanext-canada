@@ -568,7 +568,7 @@ def view_help():
 
     try:
         # Try to load FAQ text for the user's language.
-        faq_text = _get_help_text(g.language)
+        faq_text = _get_help_text(lang())
     except IOError:
         # Fall back to using English if no local language could be found.
         faq_text = _get_help_text(u'en')
