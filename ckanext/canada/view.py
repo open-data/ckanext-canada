@@ -979,12 +979,12 @@ def general_feed():
     navigation_urls = _navigation_urls(params,
                                        item_count=item_count,
                                        limit=data_dict['rows'],
-                                       controller='canada_feeds',
-                                       action='general')
+                                       controller='canada',
+                                       action='general_feed')
     # FIXME: url generation for Views
     feed_url = _feed_url(params,
-                         controller='canada_feeds',
-                         action='general')
+                         controller='canada',
+                         action='general_feed')
     # FIXME: url generation for Views
     alternate_url = _alternate_url(params)
 
@@ -1019,12 +1019,12 @@ def organization_feed(id):
     navigation_urls = _navigation_urls(params,
                                        item_count=item_count,
                                        limit=data_dict['rows'],
-                                       controller=u'canada_feeds',
-                                       action='organization',
+                                       controller=u'canada',
+                                       action='organization_feed',
                                        id=org_obj['name'])
     # FIXME: url generation for Views
     feed_url = _feed_url(
-        params, controller=u'canada_feeds', action='organization', id=org_obj['name'])
+        params, controller=u'canada', action='organization_feed', id=org_obj['name'])
     # FIXME: url generation for Views
     alternate_url = _alternate_url(params, organization=org_obj['name'])
 
@@ -1065,13 +1065,13 @@ def dataset_feed(id):
     navigation_urls = _navigation_urls(params,
                                        item_count=item_count,
                                        limit=data_dict['rows'],
-                                       controller='canada_feeds',
-                                       action='dataset',
+                                       controller='canada',
+                                       action='dataset_feed',
                                        id=id)
     # FIXME: url generation for Views
     feed_url = _feed_url(params,
-                         controller='canada_feeds',
-                         action='dataset',
+                         controller='canada',
+                         action='dataset_feed',
                          id=id)
     # FIXME: url generation for Views
     alternate_url = _alternate_url(params,
