@@ -68,8 +68,8 @@ resources:
       en: Amendment Date
       fr: Date de modification
     description:
-      en: This field is populated by departments and indicates the date on which an amendment (or amendments) took place.
-      fr: Ce champ est rempli par les ministères et indique la date à laquelle une modification (ou des modifications) a été apportée.
+      en: This field is populated by departments and indicates the date on which an amendment (or amendments) took place. If the amendment number is not zero, this field is required.
+      fr: Ce champ est rempli par les ministères et indique la date à laquelle une modification (ou des modifications) a été apportée. Obligatoire si le numéro de modification est défini.
     obligation:
       en: Mandatory if amendment number set
       fr: Obligatoire si le numéro de modification est défini
