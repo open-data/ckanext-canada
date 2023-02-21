@@ -652,14 +652,3 @@ ul#brf-pkg { padding-left: 0; }
 
 }
 
-/*
-Hover states for the #wb-so (Wet Boew Sign On)
-section in templates/internal/snippets/user.html
-*/
-body a.btn.og-btn-hover-light:hover{
-    color: white;
-}
-body a.btn.og-btn-hover-light:hover .badge{
-    background-color: white;
-    color: #335075;
-}
