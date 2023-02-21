@@ -20,7 +20,7 @@
     {{ form.info(_('Example: 000 000 0000')) }}
   {% endcall %}
   {{ form.input("password1", id="field-password", label=_("Password"), type="password", value=data.password1, error=errors.password1, attrs=valid_dict1, is_required=true) }}
-  {{ form.input("password2", id="field-confirm-password", label=_("Confirm Password"), type="password", value=data.password2, error=errors.password1, attrs=valid_dict1, is_required=true) }}
+  {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", value=data.password2, error=errors.password1, attrs=valid_dict1, is_required=true) }}
 
   <div class="terms-and-conditions">
     {% trans %}
