@@ -401,6 +401,14 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         return CanadaFeed
 
 
+    # IFeed
+    def get_item_additional_fields(self, pkg):
+        #TODO: figure out keywords
+        return {'keywords': ''.join(e['value']
+                            for e in pkg.get('extras', [])
+                            if e['key'] == lx('keywords')).split(',')}
+
+
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
         return 'ckanext-canada'

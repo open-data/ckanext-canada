@@ -3,7 +3,6 @@ import decimal
 import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
-from feedgen.feed import FeedGenerator
 from pytz import timezone, utc
 from dateutil.tz import tzutc
 from socket import error as socket_error
@@ -997,24 +996,122 @@ class CanadaFeed(CKANFeed):
         first_page,
         last_page,
     ):
-        super(CanadaFeed, self).__init__(feed_title,
-                                         feed_link,
-                                         feed_description,
-                                         language,
-                                         author_name,
-                                         feed_guid,
-                                         feed_url,
-                                         previous_page,
-                                         next_page,
-                                         first_page,
-                                         last_page)
+        super(CKANFeed, self).__init__()
+
+        from logging import getLogger
+        self.log = getLogger(__name__)
+
+        self.include_private = True
+        self.title(feed_title)
+        self.description(feed_description)
+        self.id(feed_guid)
+        self.link(href=feed_link, rel=u"alternate")
+        self.link(href=feed_url, rel=u"self")
+        self.language(lang())
+        self.author({u"name": config.get('ckan.feeds.author_name', '').strip() or \
+                              config.get('ckan.site_id', '').strip(),
+                     u"uri":  config.get('ckan.feeds.author_link', '').strip() or \
+                              config.get('ckan.site_url', '').strip()})
+        self.paging_links = ((u"prev", previous_page),
+                             (u"next", next_page),
+                             (u"first", first_page),
+                             (u"last", last_page))
+
+        if 'feeds/organization' in feed_guid:
+            self.org_init()
+        elif 'feeds/dataset' in feed_guid:
+            self.package_init()
+
+        for rel, href in self.paging_links:
+            if not href:
+                continue
+            self.link(href=href, rel=rel)
+
+
+    def org_init(self):
+        id = request.view_args.get('id')
+        context = {u'model': model, u'session': model.Session,
+                   u'user': g.user, u'auth_user_obj': g.userobj}
+        org_dict = get_action(u'organization_show')(context, {u'id': id})
+        data_dict, params = _parse_url_params()
+        data_dict['fq'] = u'{0}:"{1}"'.format('owner_org', id)
+        data_dict['include_private'] = self.include_private
+        item_count, results = _package_search(data_dict)
+
+        translated_title = h.get_translated(org_dict, 'title')
+
+        self.title(u'%s - Organization: "%s"' % (SITE_TITLE, translated_title))
+
+        self.description(u'Recently created or updated datasets on %s '\
+                          'by organization: "%s"' % (SITE_TITLE, translated_title))
+
+        self.id(_create_atom_id(u'/feeds/organization/%s.atom' % id))
+
+        self_url = h.url_for(u'feeds.organization', id=id, _external=True, **params)
+        self.link(href=self_url, rel=u"self", replace=True)
+
+        alternate_url = h.url_for(u'dataset.search', organization=id, _external=True, **params)
+        self.link(href=alternate_url, rel=u"alternate")
+
+        navigation_urls = _navigation_urls(params,
+                                           item_count=item_count,
+                                           limit=data_dict['rows'],
+                                           controller=u'feeds',
+                                           action='organization',
+                                           id=id,
+                                           _external=True)
+        self.paging_links = ((u"prev", navigation_urls['previous']),
+                             (u"next", navigation_urls['next']),
+                             (u"first", navigation_urls['first']),
+                             (u"last", navigation_urls['last']))
+
+
+    def package_init(self):
+        id = request.view_args.get('id')
+        context = {u'model': model, u'session': model.Session,
+                   u'user': g.user, u'auth_user_obj': g.userobj}
+        pkg_dict = get_action('package_show')(context, {'id': id})
+        data_dict, params = _parse_url_params()
+        data_dict['fq'] = u'{0}:"{1}"'.format('id', id)
+        data_dict['include_private'] = self.include_private
+        item_count, results = _package_search(data_dict)
+
+        self.title(u'%s - Dataset: "%s"' % (SITE_TITLE, h.get_translated(pkg_dict, 'title')))
+
+        self.id(_create_atom_id(u'/feeds/dataset/%s.atom' % id))
+
+        self_url = h.url_for(u'canada.dataset_feed', id=id, _external=True)
+        self.link(href=self_url, rel=u"self", replace=True)
+
+        alternate_url = h.url_for(u'dataset.search', id=id, _external=True)
+        self.link(href=alternate_url, rel=u"alternate")
+
+        navigation_urls = _navigation_urls(params,
+                                           item_count=item_count,
+                                           limit=data_dict['rows'],
+                                           controller=u'canada',
+                                           action='dataset_feed',
+                                           id=id,
+                                           _external=True)
+        self.paging_links = ((u"prev", navigation_urls['previous']),
+                             (u"next", navigation_urls['next']),
+                             (u"first", navigation_urls['first']),
+                             (u"last", navigation_urls['last']))
+
+
+    def fix_paging_links(self, params):
+        for rel, href in self.paging_links:
+            if not href:
+                continue
+            return
+            #TODO: split query, and then loop in params as just normal query params...add in page param somehow??
 
 
     def add_item(self, **kwargs):
         entry = self.add_entry()
         for key, value in kwargs.items():
             if key in {u"published", u"updated"} and not value.tzinfo:
-                value = value.replace(tzinfo=tzutc())
+                value = date_str_to_datetime(value)
             elif key == u'unique_id':
                 key = u'id'
             elif key == u'categories':
