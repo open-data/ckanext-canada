@@ -403,10 +403,11 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
 
     # IFeed
     def get_item_additional_fields(self, pkg):
-        #TODO: figure out keywords
-        return {'keywords': ''.join(e['value']
-                            for e in pkg.get('extras', [])
-                            if e['key'] == lx('keywords')).split(',')}
+        extras = {e["key"]: e["value"] for e in pkg["extras"]}
+
+        keywords = ''.join(extras.get('keywords').split(','))
+
+        return {'keywords': keywords}
 
 
     # DefaultTranslation, ITranslation

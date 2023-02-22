@@ -51,16 +51,13 @@ from ckan.views.api import(
     _finish
 )
 from ckan.views.feed import (
-    _alternate_url,
-    BASE_URL,
-    _feed_url,
     CKANFeed,
     _create_atom_id,
     _navigation_urls,
     _package_search,
     _parse_url_params,
     SITE_TITLE,
-    general as general_feed
+    output_feed
 )
 
 from ckan.authz import is_sysadmin
@@ -198,6 +195,12 @@ class CanadaUserRegisterView(UserRegisterView):
                     dept=dept)
                 notice_no_access()
         return response
+
+
+canada_views.add_url_rule(
+    u'/user/register',
+    view_func=CanadaUserRegisterView.as_view(str(u'register'))
+)
 
 
 @canada_views.route('/500', methods=['GET'])
@@ -972,13 +975,89 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 @canada_views.route('/feeds/dataset/<id>.atom', methods=['GET'])
 def dataset_feed(id):
-    return general_feed()
+    context = {u'model': model, u'session': model.Session,
+                   u'user': g.user, u'auth_user_obj': g.userobj}
+
+    try:
+        pkg_dict = get_action('package_show')(context, {'id': id})
+    except NotFound:
+        abort(404, _('Dataset not found'))
+
+    data_dict, params = _parse_url_params()
+    data_dict['fq'] = u'{0}:"{1}"'.format('id', id)
+    data_dict['include_private'] = True
+    item_count, results = _package_search(data_dict)
+
+    title = u'%s - Dataset: "%s"' % (SITE_TITLE, h.get_translated(pkg_dict, 'title'))
+
+    guid = _create_atom_id(u'/feeds/dataset/%s.atom' % id)
+
+    self_url = h.url_for(u'canada.dataset_feed', id=id, _external=True)
+
+    alternate_url = h.url_for(u'dataset.search', id=id, _external=True)
+
+    navigation_urls = _navigation_urls(params,
+                                       item_count=item_count,
+                                       limit=data_dict['rows'],
+                                       controller=u'canada',
+                                       action='dataset_feed',
+                                       id=id,
+                                       _external=True)
+
+    #TODO: fix nav links...
+    return output_feed(results,
+                       feed_title=title,
+                       feed_description='',
+                       feed_link=alternate_url,
+                       feed_guid=guid,
+                       feed_url=self_url,
+                       navigation_urls=navigation_urls)
 
 
-canada_views.add_url_rule(
-    u'/user/register',
-    view_func=CanadaUserRegisterView.as_view(str(u'register'))
-)
+@canada_views.route('/feeds/organization/<id>.atom', methods=['GET'])
+def organization_feed(id):
+    context = {u'model': model, u'session': model.Session,
+               u'user': g.user, u'auth_user_obj': g.userobj}
+
+    try:
+        org_dict = get_action(u'organization_show')(context, {u'id': id})
+    except NotFound:
+        abort(404, _('Organization not found'))
+
+    data_dict, params = _parse_url_params()
+    data_dict['fq'] = u'{0}:"{1}"'.format('owner_org', id)
+    data_dict['include_private'] = True
+    item_count, results = _package_search(data_dict)
+
+    translated_title = h.get_translated(org_dict, 'title')
+
+    title = u'%s - Organization: "%s"' % (SITE_TITLE, translated_title)
+
+    description = u'Recently created or updated datasets on %s '\
+                   'by organization: "%s"' % (SITE_TITLE, translated_title)
+
+    guid = _create_atom_id(u'/feeds/organization/%s.atom' % id)
+
+    self_url = h.url_for(u'feeds.organization', id=id, _external=True, **params)
+
+    alternate_url = h.url_for(u'dataset.search', organization=id, _external=True, **params)
+
+    navigation_urls = _navigation_urls(params,
+                                       item_count=item_count,
+                                       limit=data_dict['rows'],
+                                       controller=u'canada',
+                                       action='organization_feed',
+                                       id=id,
+                                       _external=True)
+
+    #TODO: fix nav links...
+    return output_feed(results,
+                       feed_title=title,
+                       feed_description=description,
+                       feed_link=alternate_url,
+                       feed_guid=guid,
+                       feed_url=self_url,
+                       navigation_urls=navigation_urls)
 
 
 class CanadaFeed(CKANFeed):
@@ -998,10 +1077,6 @@ class CanadaFeed(CKANFeed):
     ):
         super(CKANFeed, self).__init__()
 
-        from logging import getLogger
-        self.log = getLogger(__name__)
-
-        self.include_private = True
         self.title(feed_title)
         self.description(feed_description)
         self.id(feed_guid)
@@ -1012,99 +1087,14 @@ class CanadaFeed(CKANFeed):
                               config.get('ckan.site_id', '').strip(),
                      u"uri":  config.get('ckan.feeds.author_link', '').strip() or \
                               config.get('ckan.site_url', '').strip()})
-        self.paging_links = ((u"prev", previous_page),
-                             (u"next", next_page),
-                             (u"first", first_page),
-                             (u"last", last_page))
-
-        if 'feeds/organization' in feed_guid:
-            self.org_init()
-        elif 'feeds/dataset' in feed_guid:
-            self.package_init()
-
-        for rel, href in self.paging_links:
+        paging_links = ((u"prev", previous_page),
+                        (u"next", next_page),
+                        (u"first", first_page),
+                        (u"last", last_page))
+        for rel, href in paging_links:
             if not href:
                 continue
             self.link(href=href, rel=rel)
-
-
-    def org_init(self):
-        id = request.view_args.get('id')
-        context = {u'model': model, u'session': model.Session,
-                   u'user': g.user, u'auth_user_obj': g.userobj}
-        org_dict = get_action(u'organization_show')(context, {u'id': id})
-        data_dict, params = _parse_url_params()
-        data_dict['fq'] = u'{0}:"{1}"'.format('owner_org', id)
-        data_dict['include_private'] = self.include_private
-        item_count, results = _package_search(data_dict)
-
-        translated_title = h.get_translated(org_dict, 'title')
-
-        self.title(u'%s - Organization: "%s"' % (SITE_TITLE, translated_title))
-
-        self.description(u'Recently created or updated datasets on %s '\
-                          'by organization: "%s"' % (SITE_TITLE, translated_title))
-
-        self.id(_create_atom_id(u'/feeds/organization/%s.atom' % id))
-
-        self_url = h.url_for(u'feeds.organization', id=id, _external=True, **params)
-        self.link(href=self_url, rel=u"self", replace=True)
-
-        alternate_url = h.url_for(u'dataset.search', organization=id, _external=True, **params)
-        self.link(href=alternate_url, rel=u"alternate")
-
-        navigation_urls = _navigation_urls(params,
-                                           item_count=item_count,
-                                           limit=data_dict['rows'],
-                                           controller=u'feeds',
-                                           action='organization',
-                                           id=id,
-                                           _external=True)
-        self.paging_links = ((u"prev", navigation_urls['previous']),
-                             (u"next", navigation_urls['next']),
-                             (u"first", navigation_urls['first']),
-                             (u"last", navigation_urls['last']))
-
-
-    def package_init(self):
-        id = request.view_args.get('id')
-        context = {u'model': model, u'session': model.Session,
-                   u'user': g.user, u'auth_user_obj': g.userobj}
-        pkg_dict = get_action('package_show')(context, {'id': id})
-        data_dict, params = _parse_url_params()
-        data_dict['fq'] = u'{0}:"{1}"'.format('id', id)
-        data_dict['include_private'] = self.include_private
-        item_count, results = _package_search(data_dict)
-
-        self.title(u'%s - Dataset: "%s"' % (SITE_TITLE, h.get_translated(pkg_dict, 'title')))
-
-        self.id(_create_atom_id(u'/feeds/dataset/%s.atom' % id))
-
-        self_url = h.url_for(u'canada.dataset_feed', id=id, _external=True)
-        self.link(href=self_url, rel=u"self", replace=True)
-
-        alternate_url = h.url_for(u'dataset.search', id=id, _external=True)
-        self.link(href=alternate_url, rel=u"alternate")
-
-        navigation_urls = _navigation_urls(params,
-                                           item_count=item_count,
-                                           limit=data_dict['rows'],
-                                           controller=u'canada',
-                                           action='dataset_feed',
-                                           id=id,
-                                           _external=True)
-        self.paging_links = ((u"prev", navigation_urls['previous']),
-                             (u"next", navigation_urls['next']),
-                             (u"first", navigation_urls['first']),
-                             (u"last", navigation_urls['last']))
-
-
-    def fix_paging_links(self, params):
-        for rel, href in self.paging_links:
-            if not href:
-                continue
-            return
-            #TODO: split query, and then loop in params as just normal query params...add in page param somehow??
 
 
     def add_item(self, **kwargs):
