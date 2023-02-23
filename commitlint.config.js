@@ -99,6 +99,16 @@ const Configuration = {
           if ( ! parsed.body ){ return [true, ''] }
           return [parsed.body.startsWith(value), 'body must start with `' + value + '`']
         },
+        'scope-enum': (parsed, behaviour, value) => {
+          if ( ! parsed.scope ){ return [true, ''] }
+          scopes = parsed.scope.split(',')
+          for( let i = 0; i < scopes.length; i++ ){
+            if ( ! value.includes(scopes[i]) ){
+              return [false, 'scope must be one of `' + value.join(', ') + '`']
+            }
+          }
+          return [true, '']
+        },
       },
     },
   ],

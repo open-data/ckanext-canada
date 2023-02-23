@@ -393,7 +393,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
 
-
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
         return 'ckanext-canada'
@@ -404,6 +403,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
+        config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/briefingt.yaml

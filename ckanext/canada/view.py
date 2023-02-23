@@ -4,6 +4,7 @@ import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
 from pytz import timezone, utc
+from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
 
@@ -12,7 +13,7 @@ from ckan.plugins.toolkit import (
     get_action,
     _,
     h,
-    c,
+    g,
     config,
     check_access,
     aslist,
@@ -23,7 +24,8 @@ from ckan.lib.base import model
 import ckan.lib.jsonp as jsonp
 from ckan.lib.helpers import (
     date_str_to_datetime,
-    render_markdown
+    render_markdown,
+    lang
 )
 from ckan.lib.navl.dictization_functions import DataError
 from ckan.lib.search import (
@@ -82,15 +84,15 @@ def login():
     from ckan.views.user import _get_repoze_handler
 
     came_from = h.url_for(u'canada.logged_in')
-    c.login_handler = h.url_for(
+    g.login_handler = h.url_for(
         _get_repoze_handler(u'login_handler_path'), came_from=came_from)
     return render(u'user/login.html', {})
 
 
 @canada_views.route('/logged_in', methods=['GET'])
 def logged_in():
-    if c.user:
-        user_dict = get_action('user_show')(None, {'id': c.user})
+    if g.user:
+        user_dict = get_action('user_show')(None, {'id': g.user})
 
         h.flash_success(
             _('<strong>Note</strong><br>{0} is now logged in').format(
@@ -186,6 +188,12 @@ class CanadaUserRegisterView(UserRegisterView):
         return response
 
 
+canada_views.add_url_rule(
+    u'/user/register',
+    view_func=CanadaUserRegisterView.as_view(str(u'register'))
+)
+
+
 @canada_views.route('/500', methods=['GET'])
 def fivehundred():
     raise IntentionalServerError()
@@ -201,7 +209,7 @@ def _get_form_full_text_choices(field_name, chromo):
 
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>', methods=['GET', 'POST'])
 def create_pd_record(owner_org, resource_name):
-    lc = LocalCKAN(username=c.user)
+    lc = LocalCKAN(username=g.user)
 
     try:
         chromo = h.recombinant_get_chromo(resource_name)
@@ -212,7 +220,7 @@ def create_pd_record(owner_org, resource_name):
 
         check_access(
             'datastore_upsert',
-            {'user': c.user, 'auth_user_obj': c.userobj},
+            {'user': g.user, 'auth_user_obj': g.userobj},
             {'resource_id': res['id']})
     except NotAuthorized:
         return abort(403, _('Unauthorized'))
@@ -295,7 +303,7 @@ def create_pd_record(owner_org, resource_name):
 def update_pd_record(owner_org, resource_name, pk):
     pk = [url_part_unescape(p) for p in pk.split(',')]
 
-    lc = LocalCKAN(username=c.user)
+    lc = LocalCKAN(username=g.user)
 
     try:
         chromo = h.recombinant_get_chromo(resource_name)
@@ -306,7 +314,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
         check_access(
             'datastore_upsert',
-            {'user': c.user, 'auth_user_obj': c.userobj},
+            {'user': g.user, 'auth_user_obj': g.userobj},
             {'resource_id': res['id']})
     except NotAuthorized:
         abort(403, _('Unauthorized'))
@@ -417,7 +425,7 @@ def type_redirect(resource_name):
         abort(404, _('Recombinant resource_name not found'))
 
     # custom business logic
-    if is_sysadmin(c.user):
+    if is_sysadmin(g.user):
         return h.redirect_to(h.url_for('recombinant.preview_table',
                                   resource_name=resource_name, owner_org='tbs-sct'))
     return h.redirect_to(h.url_for('recombinant.preview_table',
@@ -472,7 +480,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 def home():
     if not h.is_registry():
         return h.redirect_to('dataset.search')
-    if not c.user:
+    if not g.user:
         return h.redirect_to('user.login')
 
     is_new = not h.check_access('package_create')
@@ -491,7 +499,7 @@ def links():
 
 @canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])
 def ckanadmin_publish():
-    if not is_sysadmin(c.user):
+    if not is_sysadmin(g.user):
         abort(401, _('Not authorized to see this page'))
 
     return dataset_search('dataset')
@@ -499,7 +507,7 @@ def ckanadmin_publish():
 
 @canada_views.route('/ckan-admin/publish-datasets', methods=['GET', 'POST'])
 def ckanadmin_publish_datasets():
-    lc = LocalCKAN(username=c.user)
+    lc = LocalCKAN(username=g.user)
     params = parse_params(request.form)
 
     publish_date = date_str_to_datetime(
@@ -526,7 +534,7 @@ def ckanadmin_publish_datasets():
 @canada_views.route('/dataset/{id}/delete-datastore-table/{resource_id}', methods=['GET', 'POST'])
 def delete_datastore_table(id, resource_id):
     if request.method == 'POST':
-        lc = LocalCKAN(username=c.user)
+        lc = LocalCKAN(username=g.user)
 
         try:
             lc.action.datastore_delete(
@@ -555,7 +563,7 @@ def view_help():
 
     try:
         # Try to load FAQ text for the user's language.
-        faq_text = _get_help_text(c.language)
+        faq_text = _get_help_text(lang())
     except IOError:
         # Fall back to using English if no local language could be found.
         faq_text = _get_help_text(u'en')
@@ -603,15 +611,16 @@ def view_help():
     })
 
 
-@canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET'])
+@canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET', 'POST'])
 def datatable(resource_name, resource_id):
-    draw = int(request.params['draw'])
-    search_text = unicode(request.params['search[value]'])
-    offset = int(request.params['start'])
-    limit = int(request.params['length'])
+    params = parse_params(request.form)
+    draw = int(params['draw'])
+    search_text = unicode(params['search[value]'])
+    offset = int(params['start'])
+    limit = int(params['length'])
 
     chromo = h.recombinant_get_chromo(resource_name)
-    lc = LocalCKAN(username=c.user)
+    lc = LocalCKAN(username=g.user)
     try:
         unfiltered_response = lc.action.datastore_search(
             resource_id=resource_id,
@@ -634,11 +643,11 @@ def datatable(resource_name, resource_id):
     sort_list = []
     i = 0
     while True:
-        if u'order[%d][column]' % i not in request.params:
+        if u'order[%d][column]' % i not in params:
             break
-        sort_by_num = int(request.params[u'order[%d][column]' % i])
+        sort_by_num = int(params[u'order[%d][column]' % i])
         sort_order = (
-            u'desc' if request.params[u'order[%d][dir]' % i] == u'desc'
+            u'desc' if params[u'order[%d][dir]' % i] == u'desc'
             else u'asc')
         sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order + u' nulls last')
         i += 1
@@ -714,7 +723,7 @@ def package_undelete(pkg_id):
         allow_html=True
     )
 
-    lc = LocalCKAN(username=c.user)
+    lc = LocalCKAN(username=g.user)
     lc.action.package_patch(
         id=pkg_id,
         state='active'
@@ -727,25 +736,27 @@ def package_undelete(pkg_id):
 @jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
-    q = request.params.get('q', '')
-    limit = request.params.get('limit', 20)
+    q = request.args.get('q', '')
+    limit = request.args.get('limit', 20)
     organization_list = []
 
     if q:
-        context = {'user': c.user, 'model': model}
+        context = {'user': g.user, 'model': model}
         data_dict = {'q': q, 'limit': limit}
         organization_list = get_action(
             'organization_autocomplete'
         )(context, data_dict)
 
     def _org_key(org):
-        return org['title'].split(' | ')[-1 if c.language == 'fr' else 0]
+        return org['title'].split(' | ')[-1 if lang() == 'fr' else 0]
 
-    return [{
+    return_list = [{
         'id': o['id'],
         'name': _org_key(o),
         'title': _org_key(o)
     } for o in organization_list]
+
+    return _finish_ok(return_list)
 
 
 @canada_views.route('/api/<int(min=1, max=2):ver>/action/<logic_function>', methods=['GET', 'POST'])
@@ -760,8 +771,8 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         return _finish_bad_request(
             _('Action name not known: %s') % logic_function)
 
-    context = {'model': model, 'session': model.Session, 'user': c.user,
-                'api_version': ver, 'auth_user_obj': c.userobj}
+    context = {'model': model, 'session': model.Session, 'user': g.user,
+                'api_version': ver, 'auth_user_obj': g.userobj}
     model.Session()._context = context
 
     return_dict = {'help': h.url_for('api.action',
@@ -788,8 +799,8 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     # if callback is specified we do not want to send that to the search
     if 'callback' in request_data:
         del request_data['callback']
-        c.user = None
-        c.userobj = None
+        g.user = None
+        g.userobj = None
         context['user'] = None
         context['auth_user_obj'] = None
     try:
@@ -862,12 +873,12 @@ def _log_api_access(context, data_dict):
     else:
         pkg = context['package']
     org = model.Group.get(pkg.owner_org)
-    c.log_extra = u'org={o} type={t} id={i}'.format(
+    g.log_extra = u'org={o} type={t} id={i}'.format(
         o=org.name,
         t=pkg.type,
         i=pkg.id)
     if 'resource_id' in data_dict:
-        c.log_extra += u' rid={0}'.format(data_dict['resource_id'])
+        g.log_extra += u' rid={0}'.format(data_dict['resource_id'])
 
 
 def notice_no_access():
@@ -951,10 +962,4 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
     except (ckan.lib.mailer.MailerException, socket_error) as m:
         log = getLogger('ckanext')
         log.error(m.message)
-
-
-canada_views.add_url_rule(
-    u'/user/register',
-    view_func=CanadaUserRegisterView.as_view(str(u'register'))
-)
 
