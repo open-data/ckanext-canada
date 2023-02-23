@@ -38,8 +38,7 @@ from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
     CanadaResourceEditView,
-    CanadaResourceCreateView,
-    CanadaFeed
+    CanadaResourceCreateView
 )
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
@@ -393,22 +392,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IFeed)
-
-
-    # IFeed
-    def get_feed_class(self):
-        return CanadaFeed
-
-
-    # IFeed
-    def get_item_additional_fields(self, pkg):
-        extras = {e["key"]: e["value"] for e in pkg["extras"]}
-
-        keywords = ''.join(extras.get('keywords').split(','))
-
-        return {'keywords': keywords}
-
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):

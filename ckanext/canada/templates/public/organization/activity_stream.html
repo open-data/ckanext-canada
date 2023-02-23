@@ -7,7 +7,7 @@
 {% block primary_content_inner %}
   {% block activity_stream %}
   <div align="right">
-  <a href="{{ h.url_for('canada.organization_feed', id=c.group_dict['name']) }}" title="RSS">
+  <a href="{{ h.url_for('feeds.organization', id=c.group_dict['name']) }}" title="RSS">
           <span class="fa fa-rss-square"></span>{{ _('Atom Feed') }}
         </a>
         </div>
