@@ -143,7 +143,7 @@ Overwrite the default CKAN Solr schema with this one in order to enable search f
 You will need to rebuild your search index using:
 
 ```bash
-paster --plugin ckan search-index rebuild
+ckan search-index rebuild
 ```
 
 ## Compiling the updated French localization strings
@@ -274,7 +274,7 @@ Once translation is added, the user publishes the suggestion.
     in the Registry
     - Next, the status updates for all suggested datasets is exported from the Registry in a JSON file using
     `ckanapi search datasets q=type:prop include_private=true`
-    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py) 
+    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py)
     in the Solr index and emails are sent out to external public users for any new status updates
     - New status updates exported as JSON are
     [loaded into to the Solr index](https://github.com/open-data/ogc_search/blob/master/ogc_search/load_sd_to_solr.py)
