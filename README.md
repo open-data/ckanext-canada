@@ -46,7 +46,7 @@ before loading any data.
 ## Related Open Source Repos
 
 Project | Github group/repo | Our Contribution
---- | --- | --- | ---
+--- | --- | ---
 CKAN | [open-data/ckan](https://github.com/open-data/ckan) | important contributor
 canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | sole maintainer
 Scheming extension | [ckan/ckanext-scheming](https://github.com/ckan/ckanext-scheming) | primary
