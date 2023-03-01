@@ -21,6 +21,11 @@ sub_orgs = [ 'ghl-lgc',
              'pkcc-pcprc',
              'ql-lq',
              'srp-rsp',
+             'nsira-ossnr',
+             'ocsec-bccst',
+             'snsicp-scpssnr',
+             'sirc-csars',
+             'jfpc-cfp',
              ]
 PCO = { 'owner_org': 'pco-bcp',
         'owner_org_title': 'Privy Council Office | Bureau du Conseil privé' }
