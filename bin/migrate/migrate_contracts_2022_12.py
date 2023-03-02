@@ -2,10 +2,8 @@
 # coding=utf-8
 
 """
-migration script to copy all hospitalityq-nil records
-for PCO sub-organizations into PCO organization.
-Duplicate records from sub-orgnizations for (year,month)
-will be ignored
+migration script to copy all contracts records
+for PCO sub-organizations into PCO organization
 """
 
 import unicodecsv
@@ -36,23 +34,7 @@ in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
 out_csv.writeheader()
 
-data = []
-
-def report_exists(year, month, owner_org):
-    for row in data:
-        if row['year'] == year and \
-                row['month'] == month and \
-                row['owner_org'] == owner_org:
-            return True
-    return False
-
 for line in in_csv:
     if line['owner_org'] in sub_orgs:
-        if not report_exists(line['year'], line['month'], PCO['owner_org']):
-            line.update(PCO)
-            data.append(line)
-    else:
-        data.append(line)
-
-for line in data:
+        line.update(PCO)
     out_csv.writerow(line)
