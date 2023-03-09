@@ -223,14 +223,14 @@ $(workdir)/filtered/qpnotes.csv: $(workdir)/qpnotes.csv
 	$(fdir)/filter_qpnotes.py < $< > $@
 
 ###
-###  Contracts Quarterly
+###  Contracts
 ###
 .PHONY: contracts
 contracts: upload-contracts rebuild-contracts
 
 .PHONY: upload-contracts
 upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	@$(echo_date) Uploading Contracts Quarterly...
+	@$(echo_date) Uploading Contracts...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=fac950c0-00d5-4ec1-a4d3-9cbebf98a305 upload@"$(workdir)/filtered/contracts.csv" \
 	> /dev/null
@@ -240,7 +240,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
-	@$(echo_date) Rebuilding Contracts Quarterly...
+	@$(echo_date) Rebuilding Contracts...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
