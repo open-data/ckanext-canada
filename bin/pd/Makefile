@@ -144,17 +144,17 @@ rebuild-all: $(targets:%=rebuild-%)
 ati: upload-ati rebuild-ati
 
 .PHONY: upload-ati
-upload-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
+upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 	@$(echo_date) Uploading ATI Summaries...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati.csv" \
+	id=19383ca2-b01a-487d-88f7-e1ffbc7d39c2 upload@"$(workdir)/filtered/ati-all.csv" \
 	> /dev/null
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=5a1386a5-ba69-4725-8338-2f26004d7382 upload@"$(workdir)/filtered/ati-nil.csv" \
 	> /dev/null
 
 .PHONY: rebuild-ati
-rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
+rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv 
 	@$(echo_date) Rebuilding ATI Summaries...
 	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
@@ -167,6 +167,9 @@ $(workdir)/ati-nil.csv:
 
 $(workdir)/filtered/ati.csv: $(workdir)/ati.csv
 	$(fdir)/filter_ati.py < $< > $@
+
+$(workdir)/filtered/ati-all.csv: $(workdir)/ati.csv
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/ati-nil.csv: $(workdir)/ati-nil.csv
 	$(fdir)/filter_ati.py < $< > $@

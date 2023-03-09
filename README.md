@@ -43,17 +43,21 @@ before loading any data.
   Open By Default site plugin
 
 
-## Requirements
+## Related Open Source Repos
 
-Project | Github group/repo | Branch | Plugins
---- | --- | --- | ---
-CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.8 | N/A
-canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | master | see above
-Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | scheming_datasets
-Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent) | master | N/A
-ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | master | N/A
-ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | master | googleanalytics
-Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | master | recombinant
+Project | Github group/repo | Our Contribution
+--- | --- | ---
+CKAN | [open-data/ckan](https://github.com/open-data/ckan) | important contributor
+canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | sole maintainer
+Scheming extension | [ckan/ckanext-scheming](https://github.com/ckan/ckanext-scheming) | primary
+Fluent extension | [ckan/ckanext-fluent](https://github.com/ckan/ckanext-fluent) | primary
+ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | primary
+ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | user
+Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | sole maintainer
+Cloudstorage extension | [open-data/ckanext-cloudstorage](https://github.com/open-data/ckanext-cloudstorage) | original author, user
+Security extension | [open-data/ckanext-security](https://github.com/open-data/ckanext-security) | minor contributor
+Xloader extension | [open-data/ckanext-xloader](https://github.com/open-data/ckanext-xloader) | user, minor customizations
+Validation extension | [open-data/ckanext-validation](https://github.com/open-data/ckanext-validation/) | user, minor customization
 
 
 ## OD Configuration: development.ini or production.ini
