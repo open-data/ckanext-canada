@@ -1,7 +1,7 @@
 dataset_type: contracts
 target_dataset: contracts
 
-title: Proactive Disclosure - Contracts over 10K (Quarterly)
+title: Proactive Disclosure - Contracts over 10K
 notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
 
 upload_info:
@@ -80,7 +80,7 @@ front_matter:
 
 
 resources:
-- title: Proactive Disclosure - Contracts over 10K (Quarterly)
+- title: Proactive Disclosure - Contracts over 10K
   resource_name: contracts
 
   excel_data_num_rows: 5000
