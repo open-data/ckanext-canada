@@ -3,7 +3,7 @@ import pytest
 from urlparse import urlparse
 from ckan.lib.helpers import url_for
 
-from ckan.tests.helpers import reset_db
+from ckan.tests.helpers import reset_db, body_contains
 from ckan.lib.search import clear_all
 
 from ckan.tests.factories import Sysadmin
@@ -30,8 +30,8 @@ class TestWebForms(object):
         offset = url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        assert 'Create Dataset' in response.body
-        assert 'Before you can create a dataset you need to create an organization' not in response.body
+        assert body_contains(response, 'Create Dataset')
+        assert not body_contains(response, 'Before you can create a dataset you need to create an organization')
 
         response = app.post(offset,
                             data=self._filled_dataset_form(),
@@ -41,22 +41,22 @@ class TestWebForms(object):
         offset = self._get_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        assert 'Add data to the dataset' in response.body
+        assert body_contains(response, 'Add data to the dataset')
 
         response = app.post(offset,
                             data=self._filled_resource_form(),
                             extra_environ=self.extra_environ_tester,
                             follow_redirects=True)
 
-        assert 'Resource added' in response.body
+        assert body_contains(response, 'Resource added')
 
 
     def test_new_dataset_missing_fields(self, app):
         offset = url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        assert 'Create Dataset' in response.body
-        assert 'Before you can create a dataset you need to create an organization' not in response.body
+        assert body_contains(response, 'Create Dataset')
+        assert not body_contains(response, 'Before you can create a dataset you need to create an organization')
 
         incomplete_dataset_form = {
             'id': self.dataset_id,
@@ -68,20 +68,20 @@ class TestWebForms(object):
                             extra_environ=self.extra_environ_tester,
                             follow_redirects=True)
 
-        assert 'Errors in form' in response.body
-        assert 'Title (French):' in response.body
-        assert 'Publisher - Current Organization Name:' in response.body
-        assert 'Subject:' in response.body
-        assert 'Title (English):' in response.body
-        assert 'Description (English):' in response.body
-        assert 'Description (French):' in response.body
-        assert 'Keywords (English):' in response.body
-        assert 'Keywords (French):' in response.body
-        assert 'Date Published:' in response.body
-        assert 'Frequency:' in response.body
-        assert 'Approval:' in response.body
-        assert 'Date Published:' in response.body
-        assert 'Ready to Publish:' in response.body
+        assert body_contains(response, 'Errors in form')
+        assert body_contains(response, 'Title (French):')
+        assert body_contains(response, 'Publisher - Current Organization Name:')
+        assert body_contains(response, 'Subject:')
+        assert body_contains(response, 'Title (English):')
+        assert body_contains(response, 'Description (English):')
+        assert body_contains(response, 'Description (French):')
+        assert body_contains(response, 'Keywords (English):')
+        assert body_contains(response, 'Keywords (French):')
+        assert body_contains(response, 'Date Published:')
+        assert body_contains(response, 'Frequency:')
+        assert body_contains(response, 'Approval:')
+        assert body_contains(response, 'Date Published:')
+        assert body_contains(response, 'Ready to Publish:')
 
         response = app.post(offset,
                             data=self._filled_dataset_form(),
@@ -91,7 +91,7 @@ class TestWebForms(object):
         offset = self._get_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        assert 'Add data to the dataset' in response.body
+        assert body_contains(response, 'Add data to the dataset')
 
         incomplete_resource_form = {
             'id': '',
@@ -104,11 +104,11 @@ class TestWebForms(object):
                             extra_environ=self.extra_environ_tester,
                             follow_redirects=True)
 
-        assert 'Errors in form' in response.body
-        assert 'Title (English):' in response.body
-        assert 'Title (French):' in response.body
-        assert 'Resource Type:' in response.body
-        assert 'Format:' in response.body
+        assert body_contains(response, 'Errors in form')
+        assert body_contains(response, 'Title (English):')
+        assert body_contains(response, 'Title (French):')
+        assert body_contains(response, 'Resource Type:')
+        assert body_contains(response, 'Format:')
 
 
     def _filled_dataset_form(self):
