@@ -51,7 +51,7 @@
         <div class="col-md-12 left-center"><strong>{{ _('Member Since') }}</strong></div>
         <div class="col-md-12 left-center">{{ h.render_datetime(user.created) }}</div>
       </div>
-      {% if is_myself %}
+      {% if is_myself and user.apikey %}
       <div class="row mrgn-tp-md">
         <div class="col-md-12 left-center"><strong>{{ _('API Key') }} <span
             class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
