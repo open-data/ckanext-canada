@@ -47,7 +47,10 @@
         name='organization') %}
 
     {% block extra_facets %}
-
+      {% if is_registry %}
+        {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
+          name='ready_to_publish', facet_range=facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
+      {% endif %}
     {% endblock %}
 
     {% set license = h.get_license('ca-ogl-lgo') %}
@@ -67,15 +70,6 @@
   {% block search_title %}
     {% if not no_title %}
       {% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}
-    {% endif %}
-  {% endblock %}
-
-  {% block extra_facets %}
-    {% if is_registry %}
-      {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
-        name='ready_to_publish', facet_range=facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
-    {% else %}
-      {{ super() }}
     {% endif %}
   {% endblock %}
 

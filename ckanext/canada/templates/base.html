@@ -10,14 +10,11 @@
 {% endblock %}
 
 {# Remove when WET v4.0.21 is out #}
-{%- block custom_styles %}
-  {% if is_regsitry %}
-    {{ super() }}
-    <link rel="stylesheet" href="/internal.css?x=9" type="text/css" />
-  {% endif %}
+{% block custom_styles %}
   {% snippet 'snippets/wet-boew/headresources.html' %}
-  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=7') }}" type="text/css" />
-{%- endblock -%}
+  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=8') }}" type="text/css" />
+  {{ super() }}
+{% endblock %}
 
 {%- block links -%}
 {{super()}}

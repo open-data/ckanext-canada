@@ -11,14 +11,10 @@
 {% endblock %}
 
 {% block header %}
-  {% if is_registry %}
-    {{ super() }}
-  {% else %}
-    {% macro breadcrumb_content() %}
-      {% block breadcrumb_content %}{% endblock %}
-    {% endmacro %}
-    {% include "header.html" with context %}
-  {% endif %}
+  {% macro breadcrumb_content() %}
+    {% block breadcrumb_content %}{% endblock %}
+  {% endmacro %}
+  {% include "header.html" with context %}
 {% endblock %}
 
 {% block content %}
@@ -49,17 +45,13 @@
 
   <div class="container"><div class="row">
     {% block flash %}
-      {% if is_registry %}
-        {{ super() }}
-      {% else %}
-        <aside class="container">
-        {% for message in h.flash.pop_messages() | list %}
-          <div class="row alert fade in {{ message.category }}">
-            <p>{{ h.literal(message) }}</p>
-          </div>
-        {% endfor %}
-        </aside>
-      {% endif %}
+      <aside class="container">
+      {% for message in h.flash.pop_messages() | list %}
+        <div class="row alert fade in {{ message.category }}">
+          <p>{{ h.literal(message) }}</p>
+        </div>
+      {% endfor %}
+      </aside>
     {% endblock flash %}
     {% block maintag %}<main role="main" property="mainContentOfPage" class="container">{% endblock %}
     {% block page_title %}
@@ -67,16 +59,14 @@
         <div id="ie_warning" class="alert alert-warning" style="display: none">
           <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
         </div>
-        {{ super() }}
-      {% else %}
-        <h1 property="name" id="wb-cont">
-          {%- block page_heading -%}
-            {% set subtitle_2 = self.subtitle_2()|trim %}
-            {%- block subtitle %}{{ _('About') }}{% endblock -%}
-            {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
-          {%- endblock -%}
-        </h1>
       {% endif %}
+      <h1 property="name" id="wb-cont">
+        {%- block page_heading -%}
+          {% set subtitle_2 = self.subtitle_2()|trim %}
+          {%- block subtitle %}{{ _('About') }}{% endblock -%}
+          {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
+        {%- endblock -%}
+      </h1>
     {% endblock %}
     {% block pre_primary %}
       <div class="row">
@@ -126,9 +116,7 @@
 {% endblock content %}
 
 {%- block scripts -%}
-  {% if not is_registry %}
-    {% snippet 'snippets/wet-boew/footerresources.html' %}
-  {% endif %}
+  {% snippet 'snippets/wet-boew/footerresources.html' %}
   {{ super() }}
   {%- block adobe_analytics_footer -%}
     {% if not is_registry %}

@@ -2,13 +2,19 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set translated_title = h.get_translated(c.group_dict, 'title') %}
+{% set client_lang = h.lang() %}
 
 {% block subtitle %}
-  {% if is_registry %}
-    {{ super() }}
-  {% else %}
-    {{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}
-  {% endif %}
+  {{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Organizations'), named_route=group_type + '.index' %}</li>
+  {% block breadcrumb_content_inner %}
+    <li>{% link_for translated_title, named_route=group_type+'.read', id=c.group_dict.name %}</li>
+    <li class="active">{% link_for _('Manage'), named_route=group_type+'.edit', id=c.group_dict.name %}</li>
+  {% endblock %}
 {% endblock %}
 
 {% block content_primary_nav %}
@@ -35,7 +41,7 @@
               {% endif %}
               {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
                 <li class="{% if c.action == 'edit' %}active{% endif %}">
-                  <a href="{% url_for 'organization' if c.group_dict.is_organization else 'group' + '.edit', id=c.group_dict.id %}">{{ _('Edit') }}</a>
+                  <a href="{{h.url('organization.edit', id=c.group_dict.name)}}">{{ _('Edit') }}</a>
                 </li>
               {% endif %}
           </ul>
