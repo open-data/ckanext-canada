@@ -1,20 +1,41 @@
 {% ckan_extends %}
 
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{% block site_title %}
+  {% if is_registry %}
+    <a href="{{ h.url_for('dataset.search') }}"
+        >{{ _('Open Data Registry') }}</a>
+  {% endif %}
+{% endblock %}
+
+{# Remove when WET v4.0.21 is out #}
+{%- block custom_styles %}
+  {% if is_regsitry %}
+    {{ super() }}
+    <link rel="stylesheet" href="/internal.css?x=9" type="text/css" />
+  {% endif %}
+  {% snippet 'snippets/wet-boew/headresources.html' %}
+  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=7') }}" type="text/css" />
+{%- endblock -%}
+
 {%- block links -%}
 {{super()}}
 {%- block meta -%}
   {{ super() }}
   {% block adobe_analytics_meta %}
-    {%- block adobe_analytics_title -%}
-    <meta property="dcterms:title" content="{{ g.site_title }}" />
-    {%- endblock -%}
-    <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
-    {%- block adobe_analytics_creator -%}
-    {# remove encode when moving from fanstatic - applied as a fix for OPEN-1566 #}
-    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat').encode('ascii', 'xmlcharrefreplace') | safe }}"/>
-    {%- endblock -%}
-    <meta property="dcterms:service" content="OG-GO" />
-    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+    {% if not is_registry %}
+      {%- block adobe_analytics_title -%}
+      <meta property="dcterms:title" content="{{ g.site_title }}" />
+      {%- endblock -%}
+      <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
+      {%- block adobe_analytics_creator -%}
+      {# remove encode when moving from fanstatic - applied as a fix for OPEN-1566 #}
+      <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat').encode('ascii', 'xmlcharrefreplace') | safe }}"/>
+      {%- endblock -%}
+      <meta property="dcterms:service" content="OG-GO" />
+      <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+    {% endif %}
   {%- endblock -%}
 {%- endblock -%}
 {%- block google_analytics -%}
@@ -34,7 +55,7 @@
 {%- endblock -%}
 
 {% block adobe_analytics %}
-{% if h.adobe_analytics_js() %}
+{% if not is_registry and h.adobe_analytics_js() %}
   <script src="{{ h.adobe_analytics_js() }}"></script>
 {% endif %}
 {%- endblock -%}
@@ -58,15 +79,6 @@
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer1'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer1','GTM-TLGQ9K');</script>
   <!-- End Google Tag Manager -->
 {%- endblock -%}
-
-{%- block wet_scripts -%}
-{%- endblock -%}
-
-{%- block custom_styles %}
-  {% snippet 'snippets/wet-boew/headresources.html' %}
-  <link rel="stylesheet" href="{{ h.url_for_static('/css/canada1.css?x=7') }}" type="text/css" />
-{%- endblock -%}
-
 
 {%- block htmltag -%}
 {% set lang = h.lang() %}
