@@ -1,6 +1,37 @@
 {% ckan_extends %}
 
-{# restore the original Edit button replaced on the public site #}
-{% block actions_content_inner %}
-  {{ super.super() }}
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+
+{% block package_notes %}
+  {%- if not dataset_type -%}
+    <p>
+    dataset_type not passed to template. your version of CKAN
+    might not be compatible with ckanext-scheming
+    </p>
+  {%- endif -%}
+  {% if h.scheming_field_by_name(schema.dataset_fields, 'notes') and
+    pkg.notes%}
+    <div class="notes embedded-content">
+      {{ h.render_markdown(pkg.notes) }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block package_additional_info %}{% endblock %}
+
+{% block actions_content %}
+  <ul class="nav nav-pills">
+      {% if h.check_access('package_update', {'id':pkg.id }) %}
+        {% block actions_content_inner %}
+          {% if is_registry %}
+            {# original Edit button #}
+            {{ super.super() }}
+          {% else %}
+            <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
+          {% endif %}
+        {% endblock %}
+      {% endif %}
+  </ul>
 {% endblock %}

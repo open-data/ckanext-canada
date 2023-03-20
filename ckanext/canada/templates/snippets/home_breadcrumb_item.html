@@ -1,2 +1,16 @@
 {# Used to insert the home icon into a breadcrumb #}
-<li><a href="/{{ h.lang() }}/">{{ _('Registry Home') }}</a></li>
+
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set lang = h.lang() %}
+
+{% if is_registry %}
+  <li><a href="/{{ lang }}/">{{ _('Registry Home') }}</a></li>
+{% else %}
+  {% if lang == 'en' %}
+    <li><a href="https://www.canada.ca/en.html">Canada.ca</a></li>
+    <li><a href="/en">Open Government</a></li>
+  {% else %}
+    <li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
+    <li><a href="/fr">Gouvernement ouvert</a></li>
+  {% endif %}
+{% endif %}

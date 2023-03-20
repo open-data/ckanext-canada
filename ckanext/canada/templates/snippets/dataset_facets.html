@@ -1,16 +1,27 @@
-{% set type_choices = [
-  {'value': 'dataset', 'label': _('Open Data')},
-  {'value': 'dialogue', 'label': _('Open Dialogue')},
-  {'value': 'info', 'label': _('Open Information')},
-  {'value': 'prop', 'label': _('Suggested Datasets')},
-  ] %}
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{% if is_registry %}
+  {% set type_choices = [
+    {'value': 'dataset', 'label': _('Open Data')},
+    {'value': 'dialogue', 'label': _('Open Dialogue')},
+    {'value': 'info', 'label': _('Open Information')},
+    {'value': 'prop', 'label': _('Suggested Datasets')},
+    ] %}
+{% else %}
+  {% set type_choices = [
+    {'value': 'dataset', 'label': _('Open Data')},
+    {'value': 'info', 'label': _('Open Information')},
+    {'value': 'prop', 'label': _('Suggested Datasets')},
+    ] %}
+{% endif %}
+
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['portal_type'],
   name='portal_type',
   scheming_choices=type_choices,
   extras=extras %}
 
-{% if 'status' in request.params or ('portal_type', 'prop') in request.params.items() %}
+{% if is_registry and 'status' in request.params or ('portal_type', 'prop') in request.params.items() %}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['status'],
     name='status',
@@ -27,20 +38,36 @@
     extras=extras %}
 {% endif %}
 
-{% set collection_choices =
-  h.scheming_get_preset('canada_collection').choices + [
-  {'value': 'pd', 'label': _('Proactive Disclosure')},
-  ] %}
-{% for t in h.recombinant_get_types() %}
-  {% do collection_choices.append({
-    'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
-{% endfor %}
-{% snippet 'snippets/facet_list.html',
-  title=c.facet_titles['collection'],
-  name='collection',
-  scheming_choices=collection_choices,
-  extras=extras,
-  unlimit=True %}
+{% if is_registry %}
+  {% set collection_choices =
+    h.scheming_get_preset('canada_collection').choices + [
+    {'value': 'pd', 'label': _('Proactive Disclosure')},
+    ] %}
+  {% for t in h.recombinant_get_types() %}
+    {% do collection_choices.append({
+      'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+  {% endfor %}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['collection'],
+    name='collection',
+    scheming_choices=collection_choices,
+    extras=extras,
+    unlimit=True %}
+{% else %}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['collection'],
+    name='collection',
+    scheming_choices=h.scheming_get_preset('canada_collection').choices,
+    extras=extras %}
+{% endif %}
+
+{% if not is_registry %}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['jurisdiction'],
+    name='jurisdiction',
+    scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
+    extras=extras %}
+{% endif %}
 
 {{ organization_facet }}
 
@@ -52,13 +79,47 @@
   name='keywords_fra', extras=extras %}
 {% endif %}
 
-{# Hide subject on maps search #}
-{% if c.facets.collection|length != 1 or 'fgp' not in c.facets.collection %}
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['subject'],
-    name='subject',
-    scheming_choices=h.scheming_get_preset('canada_subject').choices,
-    extras=extras %}
+{% if is_registry %}
+  {# Hide subject on maps search #}
+  {% if c.facets.collection|length != 1 or 'fgp' not in c.facets.collection %}
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['subject'],
+      name='subject',
+      scheming_choices=h.scheming_get_preset('canada_subject').choices,
+      extras=extras %}
+  {% endif %}
+{% else %}
+  {% if h.show_subject_facet() %}
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['subject'],
+      name='subject',
+      scheming_choices=h.scheming_get_preset('canada_subject').choices,
+      extras=extras %}
+  {% endif %}
+{% endif %}
+
+{% if not is_registry %}
+  {% if h.show_fgp_facets() %}
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['topic_category'],
+      name='topic_category',
+      scheming_choices=h.scheming_get_preset('canada_topic_category').choices,
+      extras=extras %}
+
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['spatial_representation_type'],
+      name='spatial_representation_type',
+      scheming_choices=h.scheming_get_preset('canada_spatial_representation_type').choices,
+      extras=extras %}
+
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['fgp_viewer'],
+      name='fgp_viewer',
+      scheming_choices=[
+        {'value': 'map_view', 'label': _('Viewable on Map')},
+        ],
+      extras=extras %}
+  {% endif %}
 {% endif %}
 
 {% snippet 'snippets/facet_list.html',

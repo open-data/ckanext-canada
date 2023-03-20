@@ -1,16 +1,38 @@
 {% ckan_extends %}
 
-{% block subtitle %}{% block page_heading %}{{ _('Request an Account') }}{% endblock %}{% endblock %}
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{% block subtitle %}
+  {% block page_heading %}
+    {% if is_registry %}
+      {{ _('Request an Account') }}
+    {% endif %}
+  {% endblock %}
+  {% if not is_registry %}{{ super() }}{% endif %}
+{% endblock %}
 
 {% block breadcrumb_content %}
   <li class="active">{{ h.nav_link(_('Registration'), 'user.register') }}</li>
 {% endblock %}
 
 {% block primary_content %}
+  {% if is_registry %}
+    <div class="row col-md-12">
+      {{ form | safe }}
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="panel panel-default">
+      {{ self.primary_content_inner() }}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
 
-  <div class="row col-md-12">
-    {{ form | safe }}
-  </div>
+{% block help %}
+  <section class="panel panel-default">
+    {{ self.help_inner() }}
+  </section>
 {% endblock %}
 
 {% block secondary_content %}

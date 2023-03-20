@@ -1,4 +1,11 @@
 {% ckan_extends %}
 
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
 {% block page_primary_action %}
+  {% if not is_registry %}
+    <div class="col-md-12">
+      {{ super() }}
+    </div>
+  {% endif %}
 {% endblock %}

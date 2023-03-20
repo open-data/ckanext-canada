@@ -1,39 +1,56 @@
 {% ckan_extends %}
+{% import 'macros/canada_read.html' as cr %}
+
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{% block subtitle %}
+  {% if is_registry %}
+    {{ super() }}
+  {% else %}
+    {{ cr.split_bilingual_field(c.group_dict.display_name, client_lang) }}
+  {% endif %}
+{% endblock %}
 
 {% block content_primary_nav %}
-<div class="row">
-  <div class="col-md-12 mrgn-bttm-md">
-    <header>
-      {% if c.action != 'new' %}
-        <ul class="nav nav-pills">
-          <li class="{% if c.action == 'read' %}active{% endif %}">
-            <a href="{{h.url('organization.read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
-          </li>
-          <li class="{% if c.action == 'activity' %}active{% endif %}">
-            <a href="{{h.url('organization.activity', id=c.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
-          </li>
-          {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
-            {# FIXME: orgs are copied from original registry for now
-            <li class="{% if c.action == 'edit' %}active{% endif %}">
-              <a href="{{h.url('organization.edit', id=c.group_dict.name)}}">{{_('Edit Organization')}}</a>
-            </li>#}
-            <li class="{% if c.action == 'members' %}active{% endif %}">
-              <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
-            </li>
+  {% if is_registry %}
+    <div class="row">
+      <div class="col-md-12 mrgn-bttm-md">
+        <header>
+          {% if c.action != 'new' %}
+            <ul class="nav nav-pills">
+              <li class="{% if c.action == 'read' %}active{% endif %}">
+                <a href="{{h.url('organization.read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
+              </li>
+              <li class="{% if c.action == 'activity' %}active{% endif %}">
+                <a href="{{h.url('organization.activity', id=c.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
+              </li>
+              {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
+                {# FIXME: orgs are copied from original registry for now
+                <li class="{% if c.action == 'edit' %}active{% endif %}">
+                  <a href="{{h.url('organization.edit', id=c.group_dict.name)}}">{{_('Edit Organization')}}</a>
+                </li>#}
+                <li class="{% if c.action == 'members' %}active{% endif %}">
+                  <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
+                </li>
+              {% endif %}
+              {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
+                <li class="{% if c.action == 'edit' %}active{% endif %}">
+                  <a href="{% url_for 'organization' if c.group_dict.is_organization else 'group' + '.edit', id=c.group_dict.id %}">{{ _('Edit') }}</a>
+                </li>
+              {% endif %}
+          </ul>
           {% endif %}
-          {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
-            <li class="{% if c.action == 'edit' %}active{% endif %}">
-              <a href="{% url_for 'organization' if c.group_dict.is_organization else 'group' + '.edit', id=c.group_dict.id %}">{{ _('Edit') }}</a>
-            </li>
-          {% endif %}
-	    </ul>
-      {% endif %}
-    </header>
-  </div>
-</div>
+        </header>
+      </div>
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}
   {{ super() }}
-  <script type="text/javascript" src="{{ h.url_for_static('/registry_organization_edit.js') }}" ></script>
+  {% if is_registry %}
+    <script type="text/javascript" src="{{ h.url_for_static('/registry_organization_edit.js') }}" ></script>
+  {% endif %}
 {% endblock %}

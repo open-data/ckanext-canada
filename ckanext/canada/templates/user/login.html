@@ -1,5 +1,6 @@
 {% ckan_extends %}
 
+{% set is_registry = h.plugin_loaded('canada_internal') %}
 {% set reset_link = h.url_for('user.request_reset') %}
 
 {% block secondary_content %}
@@ -28,15 +29,43 @@
 {% endblock %}
 
 {% block primary_content %}
-  <div class="panel">
-    {% trans %}login welcome text{% endtrans %}
+  {% if is_registry %}
+    <div class="panel">
+      {% trans %}login welcome text{% endtrans %}
 
-    {% block form %}
-      {{ super() }}
-    {% endblock %}
+      {% block form %}
+        {{ super() }}
+      {% endblock %}
 
-    <div class="text-info">
-      {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
+      <div class="text-info">
+        {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
+      </div>
     </div>
+  {% else %}
+    <div class="row">
+      <div class="col-md-12">
+        {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block help_register %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_register_inner() }}</div>
   </div>
+{% endblock %}
+
+{% block help_register_button %}
+  <a class="btn btn-default" href="{{ h.url_for('user.register') }}">{{ _(' Create an Account') }}</a>
+{% endblock %}
+
+{% block help_forgotten %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_forgotten_inner() }}</div>
+  </div>
+{% endblock %}
+
+{% block help_forgotten_button %}
+  <a class="btn btn-default" href="{{ h.url_for('user.request_reset') }}">{{ _('Forgot your password?') }}</a>
 {% endblock %}

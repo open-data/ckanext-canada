@@ -1,1 +1,8 @@
-{% block share_widget %}{% endblock %}
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
+{% block share_widget %}
+  {% if not is_registry %}
+    <div class="wet-boew-share span-5 margin-bottom-none" data-wet-boew='{"sites":["facebook","google", "twitter"]}'></div>
+    <div class="clear"></div>
+  {% endif %}
+{% endblock %}

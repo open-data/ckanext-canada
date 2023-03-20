@@ -1,29 +1,48 @@
 {% ckan_extends %}
 
+{% set is_registry = h.plugin_loaded('canada_internal') %}
+
 {% block primary_content %}
-<div class="row">
-  <div class="col-md-12">
-    <section class="alert alert-info">
-      <p>
-        {{ h.render_markdown(_(
-'1. Passwords must contain characters from at least 3 of the following 4 classes:\n'
-'    * Upper Case Letters: A, B, C, … Z\n'
-'    * Lower Case Letters: a, b, c, … z\n'
-'    * Westernised Arabic Numerals: 0, 1, 2, … 9\n'
-'    * Special characters: ({}[],.<>;:\'"?/|\\`~!@#$%%^&*()_-+=).\n'
-'2. No accented characters are permitted.\n'
-'3. All passwords must be at least 8 characters long.\n')) }}
-      </p>
-    </section>
-    <section>
-      {% block primary_content_inner %}
-      <div class="module-content">
-        {% block form %}
-          {{ super() }}
-        {% endblock %}
+  {% if is_registry %}
+    <div class="row">
+      <div class="col-md-12">
+        <section class="alert alert-info">
+          <p>
+            {{ h.render_markdown(_(
+    '1. Passwords must contain characters from at least 3 of the following 4 classes:\n'
+    '    * Upper Case Letters: A, B, C, … Z\n'
+    '    * Lower Case Letters: a, b, c, … z\n'
+    '    * Westernised Arabic Numerals: 0, 1, 2, … 9\n'
+    '    * Special characters: ({}[],.<>;:\'"?/|\\`~!@#$%%^&*()_-+=).\n'
+    '2. No accented characters are permitted.\n'
+    '3. All passwords must be at least 8 characters long.\n')) }}
+          </p>
+        </section>
+        <section>
+          {% block primary_content_inner %}
+          <div class="module-content">
+            {% block form %}
+              {{ super() }}
+            {% endblock %}
+          </div>
+          {% endblock %}
+        </section>
       </div>
-      {% endblock %}
-    </section>
-  </div>
-</div>
+    </div>
+  {% else %}
+    {{ self.primary_content_inner() }}
+  {% endif %}
+{% endblock %}
+
+{% block form_button %}
+  <button class="button button-accent" type="submit" name="save">{{ _("Update Password") }}</button>
+{% endblock %}
+
+{% block help %}
+  <section class="module module-info span-2">
+    {{ self.help_inner() }}
+  </section>
+{% endblock %}
+
+{% block secondary_content %}
 {% endblock %}

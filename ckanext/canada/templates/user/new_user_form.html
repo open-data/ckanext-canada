@@ -72,3 +72,7 @@
     <button class="btn btn-default" type="reset">{{ _("I do not agree") }}</button>
   </div>
 </form>
+
+{% block form_actions %}
+  <button class="btn btn-primary" type="submit" name="save">{{ _("Create Account") }}</button>
+{% endblock %}
