@@ -83,6 +83,9 @@ class IntentionalServerError(Exception):
 def login():
     from ckan.views.user import _get_repoze_handler
 
+    if not h.is_registry():
+        return abort(403, _('Unauthorized'))
+
     came_from = h.url_for(u'canada.logged_in')
     g.login_handler = h.url_for(
         _get_repoze_handler(u'login_handler_path'), came_from=came_from)

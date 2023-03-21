@@ -29,7 +29,6 @@
 {% endblock %}
 
 {% block primary_content %}
-  {% if is_registry %}
     <div class="panel">
       {% trans %}login welcome text{% endtrans %}
 
@@ -41,13 +40,6 @@
         {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
       </div>
     </div>
-  {% else %}
-    <div class="row">
-      <div class="col-md-12">
-        {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
-      </div>
-    </div>
-  {% endif %}
 {% endblock %}
 
 {% block help_register %}

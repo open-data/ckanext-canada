@@ -558,6 +558,7 @@ ckanext.canada:schemas/prop.yaml
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
+            'request_reset': auth.request_reset,
         }
 
     # IMiddleware
