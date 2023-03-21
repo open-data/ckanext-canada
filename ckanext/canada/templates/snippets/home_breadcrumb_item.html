@@ -1,6 +1,6 @@
 {# Used to insert the home icon into a breadcrumb #}
 
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 {% set lang = h.lang() %}
 
 {% if is_registry %}

@@ -2,7 +2,7 @@
 
 {% import 'macros/canada_read.html' as cr %}
 
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}

@@ -1,7 +1,7 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 {% set translated_title = h.get_translated(c.group_dict, 'title') %}
 {% set client_lang = h.lang() %}
 

@@ -1,4 +1,4 @@
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 
 {% if is_registry %}
   {% set type_choices = [

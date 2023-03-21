@@ -1,6 +1,6 @@
 {% import 'macros/canada_read.html' as cr %}
 
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 
 {% if is_registry %}
   <li class="item {{ activity.activity_type|replace(' ', '-')|lower }}">

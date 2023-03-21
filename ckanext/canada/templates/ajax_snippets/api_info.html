@@ -1,6 +1,6 @@
 {% set resource_id = h.sanitize_id(resource_id) %}
 {% set sql_example_url = h.url_for('api.action', ver=3, logic_function='datastore_search_sql', qualified=True) + '?sql=SELECT * from "' + resource_id + '" WHERE title LIKE \'jones\'' %}
-{% set is_registry = h.plugin_loaded('canada_internal') %}
+{% set is_registry = h.is_registry() %}
 {# not urlencoding the sql because its clearer #}
 <div{% if not embedded %} class="modal fade"{% endif %}>
   <div class="modal-dialog">

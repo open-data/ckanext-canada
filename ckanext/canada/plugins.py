@@ -193,7 +193,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
-    p.implements(p.IBlueprint)
     p.implements(IXloader)
 
     # IConfigurer
@@ -212,12 +211,6 @@ ckanext.canada:schemas/presets.yaml
 	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
 	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
 )
-
-
-    # IBlueprint
-    def get_blueprint(self):
-        # type: () -> list[Blueprint]
-        return [canada_views]
 
 
     # IResourceUrlChange
@@ -391,6 +384,14 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IBlueprint)
+
+
+    # IBlueprint
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        return [canada_views]
+
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
