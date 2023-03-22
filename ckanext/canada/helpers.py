@@ -227,6 +227,9 @@ def portal_url():
 def adv_search_url():
     return config.get('ckanext.canada.adv_search_url_fr') if h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
 
+def adv_search_mlt_root():
+    return "{0}/donneesouvertes/similaire/".format(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else "{0}/opendata/similar/".format(config.get('ckanext.canada.adv_search_url_en'))
+
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
 

@@ -2059,9 +2059,13 @@ presets:
         fr: Triennal
       value: P3Y
     - label:
+        en: Every four years
+        fr: Quadriennal
+      value: P4Y
+    - label:
         en: Every five years
         fr: Quinquennal
-      value: P4Y
+      value: P5Y
     - label:
         en: Irregular
         fr: Irrégulier
@@ -2619,11 +2623,11 @@ presets:
       fr: Titre
     fluent_form_label:
       en:
-        en: "Title English"
-        fr: "Titre anglais"
+        en: "Title (English)"
+        fr: "Titre (anglais)"
       fr:
-        en: "Title French"
-        fr: "Titre français"
+        en: "Title (French)"
+        fr: "Titre (français)"
 
     fluent_help_text:
       en:

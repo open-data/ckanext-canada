@@ -4,21 +4,8 @@
   <div class="panel">
 
       {% block primary_content_inner %}
-
       {% block form %}
-        <form action="" method="post">
-          <div class="form-group">
-          <label for="field-username">{{ _('Username') }}</label>
-          <input class="form-control" id="field-username" name="user" value="" />
-
-          {% block form_button %}
-
-          <button class="btn btn-large btn-primary mrgn-tp-md" type="submit" name="reset">{{ _("Request Reset") }}</button>
-
-          {% endblock %}
-          </div>
-
-        </form>
+        {{ super() }}
       {% endblock %}
       {% endblock %}
 

@@ -617,7 +617,7 @@ ul#brf-pkg { padding-left: 0; }
     text-align: center;
     padding: 0!important;
 }
-  
+
 .modal:before {
     content: '';
     display: inline-block;
@@ -640,8 +640,8 @@ ul#brf-pkg { padding-left: 0; }
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; 
-    justify-content: space-between; 
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -651,3 +651,4 @@ ul#brf-pkg { padding-left: 0; }
     margin-top: 23px;
 
 }
+

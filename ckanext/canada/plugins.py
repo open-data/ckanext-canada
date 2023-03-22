@@ -20,7 +20,6 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
-from ckanext.canada import search_integration
 from ckanext.extendedactivity.plugins import IActivity
 
 import json
@@ -142,9 +141,6 @@ ckanext.canada:schemas/presets.yaml
                     '/recombinant/{resource_name}',
                     action='type_redirect',
                     controller='ckanext.canada.controller:PDUpdateController')
-        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
-            m.connect('/feeds/organization/{id}.atom', action='organization')
-
         map.connect(
             'delete_datastore_table',
             '/dataset/{id}/delete-datastore-table/{resource_id}',
@@ -240,7 +236,7 @@ ckanext.canada:schemas/presets.yaml
 
 @chained_action
 def disabled_anon_action(up_func, context, data_dict):
-    if context.get('user', 'visitor') in ('', 'visitor'):
+    if not context.get('ignore_auth', False) and context.get('user', 'visitor') in ('', 'visitor'):
         return []
     return up_func(context, data_dict)
 disabled_anon_action.side_effect_free = True
@@ -403,6 +399,7 @@ ckanext.canada:schemas/prop.yaml
             'normalize_strip_accents',
             'portal_url',
             'adv_search_url',
+            'adv_search_mlt_root',
             'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
@@ -445,10 +442,12 @@ ckanext.canada:schemas/prop.yaml
             controller='ckanext.canada.controller:CanadaController',
             action='organization_index',
         )
+        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
+            m.connect('/feeds/organization/{id}.atom', action='organization')
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/dataset/delete/{pkg_id}',
@@ -704,7 +703,6 @@ class DataGCCAPackageController(p.SingletonPlugin):
         return pkg_dict
 
     def after_create(self, context, data_dict):
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_update(self, context, data_dict):
@@ -716,11 +714,9 @@ class DataGCCAPackageController(p.SingletonPlugin):
                 _("Your record %s has been saved.")
                 % data_dict['id']
             )
-        search_integration.add_to_search_index(data_dict['id'], in_bulk=False)
         return data_dict
 
     def after_delete(self, context, data_dict):
-        search_integration.delete_from_search_index(data_dict['id'])
         return data_dict
 
     def after_show(self, context, data_dict):
@@ -887,9 +883,9 @@ ckanext.canada:schemas/doc.yaml
             action='organization_index',
         )
         map.connect(
-            'general', '/feeds/dataset.atom',
+            'general', '/feeds/dataset/{pkg_id}.atom',
             controller='ckanext.canada.controller:CanadaFeedController',
-            action='general',
+            action='dataset',
         )
         map.connect(
             '/organization/autocomplete',

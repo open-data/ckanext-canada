@@ -10,7 +10,7 @@ Features:
 
 Installation:
 
-* Use [open-data fork of CKAN](https://github.com/open-data/ckan>),
+* Use [open-data fork of CKAN](https://github.com/open-data/ckan),
   branch canada-v2.8
 
 From a clean database you must run:
@@ -34,7 +34,7 @@ before loading any data.
 
 `canada_internal`
   templates for internal site and registration (requires
-  `canada_forms`` and `canada_public``)
+  `canada_forms` and `canada_public`)
 
 `canada_package`
   package processing between CKAN and Solr
@@ -43,17 +43,21 @@ before loading any data.
   Open By Default site plugin
 
 
-## Requirements
+## Related Open Source Repos
 
-Project | Github group/repo | Branch | Plugins
---- | --- | --- | ---
-CKAN | [open-data/ckan](https://github.com/open-data/ckan) | canada-v2.8 | N/A
-canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | master | see above
-Scheming extension | [open-data/ckanext-scheming](https://github.com/open-data/ckanext-scheming) | master | scheming_datasets
-Fluent extension | [open-data/ckanext-fluent](https://github.com/open-data/ckanext-fluent>) | master | N/A
-ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi>) | master | N/A
-ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics>) | master | googleanalytics
-Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | master | recombinant
+Project | Github group/repo | Our Contribution
+--- | --- | ---
+CKAN | [open-data/ckan](https://github.com/open-data/ckan) | important contributor
+canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | sole maintainer
+Scheming extension | [ckan/ckanext-scheming](https://github.com/ckan/ckanext-scheming) | primary
+Fluent extension | [ckan/ckanext-fluent](https://github.com/ckan/ckanext-fluent) | primary
+ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | primary
+ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | user
+Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | sole maintainer
+Cloudstorage extension | [open-data/ckanext-cloudstorage](https://github.com/open-data/ckanext-cloudstorage) | original author, user
+Security extension | [open-data/ckanext-security](https://github.com/open-data/ckanext-security) | minor contributor
+Xloader extension | [open-data/ckanext-xloader](https://github.com/open-data/ckanext-xloader) | user, minor customizations
+Validation extension | [open-data/ckanext-validation](https://github.com/open-data/ckanext-validation/) | user, minor customization
 
 
 ## OD Configuration: development.ini or production.ini
@@ -131,7 +135,7 @@ wet_boew.url = http://domain.com/wet-boew/v4.0.31
 
 ### Additional Configuration:
 
-Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](http://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html) to use. Set this to either 'static' or 'dynamic':
+Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](https://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html) to use. Set this to either 'static' or 'dynamic':
 
 ```ini
 wet_theme.geo_map_type = static
@@ -192,32 +196,6 @@ bin/build-combined-ckan-mo.sh
 
 This script overwrites the ckan French translations by combining it with
 ours.
-
-# Integrating with OGC Django Search App
-
-Optionally the extension can integrate with the OGC Search application by updating the
-custom Solr core used by the search application in addition to the regular CKAN Solr core.
-When enabled, the extension will update the second Solr core after a package update or delete.
-The hooks for this are set in the DataGCCAPackageController. For this to happen, two configuration values
-need to be set:
-
-```ini
-ckanext.canada.adv_search_enabled = True
-ckanext.canada.adv_search_solr_core = http://127.0.0.1:8983/solr/core_od_search
-```
-
-The first setting must to set to true to enable the integration, and the second setting provides the URL to the
-custom OGC Search core.
-
-The Django search code uses the NLTK toolkit (http://www.nltk.org/) to extract a summarized description. To install
-the NLTK parsers, run the following python commands after activating the virtual environment:
-
-```ini
-import nltk
-nltk.download('punkt')
-```
-
-If not integrating, these settings may be omitted or `ckanext.canada.adv_search_enabled` may be set to `False`.
 
 ## Migrating Proactive Disclosure (recombinant) data
 

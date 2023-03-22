@@ -7,33 +7,34 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
+
 class TestConsultations(FunctionalTestBase):
     def setup(self):
         super(TestConsultations, self).setup()
         org = Organization()
-        lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
-        rval = lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
+        self.lc = LocalCKAN()
+        self.lc.action.recombinant_create(dataset_type='consultations', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='consultations', owner_org=org['name'])
         self.resource_id = rval['resources'][0]['id']
 
+
     def test_example(self):
-        lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
-        lc.action.datastore_upsert(
+        self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
+
     def test_blank(self):
-        lc = LocalCKAN()
         assert_raises(ValidationError,
-            lc.action.datastore_upsert,
+            self.lc.action.datastore_upsert,
             resource_id=self.resource_id,
             records=[{}])
 
+
     def test_multiple_errors(self):
-        lc = LocalCKAN()
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{
                     'registration_number': 'CCC0249',
@@ -65,11 +66,11 @@ class TestConsultations(FunctionalTestBase):
         for k in set(err) | set(expected):
             assert_equal(err.get(k), expected.get(k), (k, err))
 
+
     def test_not_going_forward_unpublished(self):
-        lc = LocalCKAN()
         record = get_chromo('consultations')['examples']['record']
         with assert_raises(ValidationError) as ve:
-            lc.action.datastore_upsert(
+            self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
         err = ve.exception.error_dict['records'][0]
@@ -77,3 +78,4 @@ class TestConsultations(FunctionalTestBase):
             u'status': [u'If Status is set to: Not Going Forward, Publish Record must be set to No']
             }
         assert_equal(err, expected)
+

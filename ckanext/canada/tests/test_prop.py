@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase, call_action
-from ckan.tests import factories
-import ckan.lib.search as search
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckan.tests.helpers import FunctionalTestBase
+from ckan.tests.factories import Sysadmin
+from ckanext.canada.tests.factories import (
+    CanadaOrganization as Organization,
+    CanadaUser as User)
 
-from ckanapi import LocalCKAN, ValidationError
-import json
-from nose.tools import assert_raises, assert_equal
+from ckanapi import LocalCKAN, ValidationError, NotAuthorized
+from nose.tools import assert_raises
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -64,59 +64,82 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     ]
 )
 
+
 class TestSuggestedDataset(FunctionalTestBase):
+    def setup(self):
+        super(TestSuggestedDataset, self).setup()
+        member = User()
+        editor = User()
+        sysadmin = Sysadmin()
+        self.member_lc = LocalCKAN(username=member['name'])
+        self.editor_lc = LocalCKAN(username=editor['name'])
+        self.system_lc = LocalCKAN(username=sysadmin['name'])
+        self.org = Organization(users=[{
+            'name': member['name'],
+            'capacity': 'member'},
+            {'name': editor['name'],
+             'capacity': 'editor'},
+            {'name': sysadmin['name'],
+             'capacity': 'admin'}])
+
 
     def test_simple_suggestion(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        "System should be able to create suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
 
-        assert 'status' not in resp
+        assert 'status' not in response
+
 
     def test_normal_user_cant_create(self):
-        user = factories.User()
-        lc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
-        assert_raises(ValidationError,
-            lc.action.package_create,
-            owner_org=org['name'],
+        "Member users cannot create suggested datasets"
+        assert_raises(NotAuthorized,
+            self.member_lc.action.package_create,
+            owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
 
-    def test_normal_user_can_update(self):
-        user = factories.User()
-        slc = LocalCKAN()
-        ulc = LocalCKAN(username=user['name'])
-        org = Organization(users=[
-                {
-                    'name': user['name'],
-                    'capacity': 'editor',
-                }
-            ]
-        )
-        resp = slc.action.package_create(
-            owner_org=org['name'],
+
+    def test_normal_user_cant_update(self):
+        "Member users cannot update suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
-        resp = ulc.action.package_update(
-            owner_org=org['name'],
-            id=resp['id'],
+
+        assert_raises(NotAuthorized,
+            self.member_lc.action.package_update,
+            owner_org=self.org['name'],
+            id=response['id'],
             **COMPLETE_SUGGESTION)
 
-        assert resp['status'][0]['reason'] == 'under_review'
+
+    def test_editor_user_cant_create(self):
+        "Editor users cannot create suggested datasets"
+        assert_raises(ValidationError,
+            self.editor_lc.action.package_create,
+            owner_org=self.org['name'],
+            **SIMPLE_SUGGESTION)
+
+
+    def test_editor_user_can_update(self):
+        "Editors should be able to update suggested datasets"
+        response = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
+            **SIMPLE_SUGGESTION)
+
+        response = self.editor_lc.action.package_update(
+            owner_org=self.org['name'],
+            id=response['id'],
+            **COMPLETE_SUGGESTION)
+
+        assert response['status'][0]['reason'] == 'under_review'
+
 
     def test_responses_ordered(self):
-        lc = LocalCKAN()
-        org = Organization()
-        resp = lc.action.package_create(
-            owner_org=org['name'],
+        resp = self.system_lc.action.package_create(
+            owner_org=self.org['name'],
             **UPDATED_SUGGESTION)
 
         # first update will be moved to end based on date field
         assert resp['status'][1]['reason'] == 'released'
+

@@ -22,7 +22,6 @@ from urlparse import urlparse
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 
-from ckanext.canada import search_integration
 from ckanext.canada.metadata_xform import metadata_xform
 from ckanext.canada.triggers import update_triggers
 
@@ -68,7 +67,6 @@ class CanadaCommand(CkanCommand):
                       changed-datasets [<since date>] [-s <remote server>] [-b]
                       metadata-xform [--portal]
                       load-suggested [--use-created-date] <suggested-datasets.csv>
-                      rebuild-external-search [-r | -f]
                       update-triggers
                       update-inventory-votes <votes.json>
                       update-resource-url-https <https_report> <https_alt_report>
@@ -97,11 +95,6 @@ class CanadaCommand(CkanCommand):
                                     default: ckan system user
         --use-created-date          use date_created field for date forwarded to data
                                     owner and other statuses instead of today's date
-        -r/--rebuild-unindexed-only When rebuilding the advanced search Solr core
-                                    only index datasets not already present in the
-                                    second Solr core
-        -f/--freshen                When rebuilding the advanced search Solr core
-                                    re-index all datasets, but do not purge the Solr core
         -o/--source <source url>    source datastore url to copy datastore records
     """
     summary = __doc__.split('\n')[0]
@@ -141,8 +134,6 @@ class CanadaCommand(CkanCommand):
     parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
     parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
     parser.add_option('--portal', dest='portal', action='store_true')
-    parser.add_option('-r', '--rebuild-unindexed-only', dest='unindexed_only', action='store_true')
-    parser.add_option('-f', '--freshen', dest='refresh_index', action='store_true')
     parser.add_option('-o', '--source', dest='src_ds_url', default=None)
     parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
 
@@ -175,9 +166,6 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'update-inventory-votes':
             update_inventory_votes(*self.args[1:])
-
-        elif cmd == 'rebuild-external-search':
-            self.rebuild_external_search()
 
         elif cmd == 'resource-size-update':
             self.resource_size_update(*self.args[1:])
@@ -490,9 +478,6 @@ class CanadaCommand(CkanCommand):
             if not self.options.brief:
                 print "# {0}".format(since_date.isoformat())
 
-    def rebuild_external_search(self):
-        search_integration.rebuild_search_index(LocalCKAN(), self.options.unindexed_only, self.options.refresh_index)
-
     def resource_size_update(self, size_report):
         registry = LocalCKAN()
         size_report = open(size_report, "r")
@@ -746,16 +731,7 @@ class CanadaCommand(CkanCommand):
         log.close()
 
 
-def _trim_package(pkg):
-    """
-    remove keys from pkg that we don't care about when comparing
-    or updating/creating packages.  Also try to convert types and
-    create missing fields that will be present in package_show.
-    """
-    # XXX full of custom hacks and deep knowledge of our schema :-(
-    if not pkg:
-        return
-    for k in ['extras', 'metadata_modified', 'metadata_created',
+PACKAGE_TRIM_FIELDS = ['extras', 'metadata_modified', 'metadata_created',
             'revision_id', 'revision_timestamp', 'organization',
             'version', 'tracking_summary',
             'tags', # just because we don't use them
@@ -768,17 +744,29 @@ def _trim_package(pkg):
             # FIXME: remove these when we can:
             'resource_type',
             # new in 2.3:
-            'creator_user_id',
-            ]:
-        if k in pkg:
-            del pkg[k]
-    for r in pkg['resources']:
-        for k in ['package_id', 'revision_id',
+            'creator_user_id']
+
+RESOURCE_TRIM_FIELDS = ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
                 'webstore_last_updated', 'state',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'position']:
+                'position']
+
+def _trim_package(pkg):
+    """
+    remove keys from pkg that we don't care about when comparing
+    or updating/creating packages.  Also try to convert types and
+    create missing fields that will be present in package_show.
+    """
+    # XXX full of custom hacks and deep knowledge of our schema :-(
+    if not pkg:
+        return
+    for k in PACKAGE_TRIM_FIELDS:
+        if k in pkg:
+            del pkg[k]
+    for r in pkg['resources']:
+        for k in RESOURCE_TRIM_FIELDS:
             if k in r:
                 del r[k]
         if 'datastore_contains_all_records_of_source_file' in r:
@@ -789,7 +777,7 @@ def _trim_package(pkg):
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
-    if 'name' not in pkg:
+    if 'name' not in pkg or not pkg['name']:
         pkg['name'] = pkg['id']
     if 'type' not in pkg:
         pkg['type'] = 'dataset'
