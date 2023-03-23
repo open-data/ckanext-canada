@@ -12,7 +12,7 @@ class CanadaUser(User):
             assert False, "Positional args aren't supported, use keyword args."
 
         # The ckan.tests.factories.User does not add the user to a session
-        # so we need to override the _create method to add the user to the 
+        # so we need to override the _create method to add the user to the
         # session to prevent DetachedInstanceError execptions from being raised
         user = target_class(**dict(kwargs, sysadmin=False))
         Session.add(user)
@@ -68,6 +68,7 @@ class CanadaDataset(Dataset):
         'en': ['Test', 'Keywords'],
         'fr': ['Test', 'FR', 'Keywords']}
     date_published = '2000-01-01'
+    portal_release_date = '2000-01-01'
     ready_to_publish = 'false'
     frequency = 'as_needed'
     jurisdiction = 'federal'

@@ -1,24 +1,24 @@
 dataset_type: contracts
 target_dataset: contracts
 
-title: Proactive Disclosure - Contracts over 10K (Quarterly)
-notes: Access, upload and modify the quarterly Contracts over 10K reports for your organization
+title: Proactive Disclosure - Contracts over 10K
+notes: Access, upload and modify the Contracts over 10K reports for your organization
 
 upload_info:
   en: |
-    The contracts over $10,000 quarterly template has recently been updated with new data fields and data validation rules
+    The contracts over $10,000 template has recently been updated with new data fields and data validation rules
     per the Guidelines on the Proactive Disclosure of Contracts. Users should review the data validation rules in the
     reference tab of the template for each data field under “validation” for more information to ensure that the data can
     be uploaded to the registry.
   fr: |
-    Le modèle trimestriel des contrats de plus de 10 000 $ a récemment été mis à jour avec de nouveaux champs de données
+    Le modèle des contrats de plus de 10 000 $ a récemment été mis à jour avec de nouveaux champs de données
     et des règles de validation des données conformément aux Lignes directrices sur la divulgation proactive des marchés.
     Les utilisateurs devraient examiner les règles de validation des données dans l’onglet de référence du modèle pour
     chaque champ de données sous « validation » pour plus d’informations afin de s’assurer que les données peuvent être
     téléchargées dans le registre.
 
 template_version: 3
-template_updated: 2022-09-21
+template_updated: 2023-03-14
 
 portal_type: info
 collection: pd
@@ -80,7 +80,7 @@ front_matter:
 
 
 resources:
-- title: Proactive Disclosure - Contracts over 10K (Quarterly)
+- title: Proactive Disclosure - Contracts over 10K
   resource_name: contracts
 
   excel_data_num_rows: 5000
@@ -1259,6 +1259,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       "32":
         en: Subscriptions to newspapers, magazines, or other periodicals (for contracts that are only covered by the CFTA)
         fr: Abonnements à des journaux, des magazines ou d’autres périodiques (pour les marchés qui sont visés par l’ALEC seulement)
+      "33":
+        en: Goods regarding matters of a confidential or privileged nature (for contracts that are only covered by the CFTA)
+        fr: Biens concernant des questions de nature confidentielle ou privilégiée (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
         en: Exclusive Rights
         fr: Droits exclusifs

@@ -515,6 +515,7 @@ ckanext.canada:schemas/prop.yaml
             'normalize_strip_accents',
             'portal_url',
             'adv_search_url',
+            'adv_search_mlt_root',
             'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
