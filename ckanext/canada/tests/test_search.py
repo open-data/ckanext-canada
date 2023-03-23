@@ -36,37 +36,37 @@ class TestRegistrySearch(FunctionalTestBase):
         # 3 will not have a portal release date
         # datasets belong to self.org
         #
-        for _i in range(0, 4):  # 0-3
+        for i in range(0, 4):  # 0-3
             Dataset(
                 owner_org=self.org['id'],
                 title_translated={
-                    'en': 'Test Dataset %s' % _i,
-                    'fr': 'Test FR Dataset %s' % _i},
+                    'en': 'Test Dataset %s' % i,
+                    'fr': 'Test FR Dataset %s' % i},
                 notes_translated = {
-                    'en': 'Test Notes %s' % _i,
-                    'fr': 'Test FR Notes %s' % _i},
+                    'en': 'Test Notes %s' % i,
+                    'fr': 'Test FR Notes %s' % i},
                 keywords = {
-                    'en': ['Test %s' % _i, 'Keywords'],
-                    'fr': ['Test %s' % _i, 'FR', 'Keywords']},
-                ready_to_publish=str(_i == 1 or _i == 3).lower(),
-                portal_release_date=None if _i == 3 else '2000-01-01')
+                    'en': ['Test %s' % i, 'Keywords'],
+                    'fr': ['Test %s' % i, 'FR', 'Keywords']},
+                ready_to_publish=str(i == 1 or i == 3).lower(),
+                portal_release_date=None if i == 3 else '2000-01-01')
         self.org2 = Organization()
         #
         # Datasets 4 and 5
         # datasets belong to org2
         #
-        for _i in range(4, 6):  # 4-5
+        for i in range(4, 6):  # 4-5
             Dataset(
                 owner_org=self.org2['id'],
                 title_translated={
-                    'en': 'Test Dataset %s' % _i,
-                    'fr': 'Test FR Dataset %s' % _i},
+                    'en': 'Test Dataset %s' % i,
+                    'fr': 'Test FR Dataset %s' % i},
                 notes_translated = {
-                    'en': 'Test Notes %s' % _i,
-                    'fr': 'Test FR Notes %s' % _i},
+                    'en': 'Test Notes %s' % i,
+                    'fr': 'Test FR Notes %s' % i},
                 keywords = {
-                    'en': ['Test %s' % _i, 'Keywords'],
-                    'fr': ['Test %s' % _i, 'FR', 'Keywords']},
+                    'en': ['Test %s' % i, 'Keywords'],
+                    'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
 
@@ -134,33 +134,33 @@ class TestPortalSearch(FunctionalTestBase):
         self.include_private = False
         self.org = Organization()
         self.lc = LocalCKAN()
-        for _i in range(0, 4):  # 0-3
+        for i in range(0, 4):  # 0-3
             Dataset(
                 owner_org=self.org['id'],
                 title_translated={
-                    'en': 'Test Dataset %s' % _i,
-                    'fr': 'Test FR Dataset %s' % _i},
+                    'en': 'Test Dataset %s' % i,
+                    'fr': 'Test FR Dataset %s' % i},
                 notes_translated = {
-                    'en': 'Test Notes %s' % _i,
-                    'fr': 'Test FR Notes %s' % _i},
+                    'en': 'Test Notes %s' % i,
+                    'fr': 'Test FR Notes %s' % i},
                 keywords = {
-                    'en': ['Test %s' % _i, 'Keywords'],
-                    'fr': ['Test %s' % _i, 'FR', 'Keywords']},
+                    'en': ['Test %s' % i, 'Keywords'],
+                    'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
         self.org2 = Organization()
-        for _i in range(4, 6):  # 4-5
+        for i in range(4, 6):  # 4-5
             Dataset(
                 owner_org=self.org2['id'],
                 title_translated={
-                    'en': 'Test Dataset %s' % _i,
-                    'fr': 'Test FR Dataset %s' % _i},
+                    'en': 'Test Dataset %s' % i,
+                    'fr': 'Test FR Dataset %s' % i},
                 notes_translated = {
-                    'en': 'Test Notes %s' % _i,
-                    'fr': 'Test FR Notes %s' % _i},
+                    'en': 'Test Notes %s' % i,
+                    'fr': 'Test FR Notes %s' % i},
                 keywords = {
-                    'en': ['Test %s' % _i, 'Keywords'],
-                    'fr': ['Test %s' % _i, 'FR', 'Keywords']},
+                    'en': ['Test %s' % i, 'Keywords'],
+                    'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
 
