@@ -1,5 +1,6 @@
 import json
 import re
+from ckan.plugins import plugin_loaded
 from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
 import ckan.model as model
@@ -40,7 +41,7 @@ GEO_MAP_TYPE_DEFAULT = 'static'
 
 def is_registry():
     # type: () -> bool
-    return 'canada_internal' in config.get('ckan.plugins', [])
+    return plugin_loaded('canada_internal')
 
 
 def get_translated_t(data_dict, field):
