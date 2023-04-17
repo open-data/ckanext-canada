@@ -935,19 +935,23 @@ def build_nav_main(*args):
 
 
 def remove_outdated_resource_from_datastore(resource_id):
-    from ckan import model
-    context = {'model': model, 'ignore_auth': True}
+    lc = ckanapi.LocalCKAN()
     try:
-        res = p.toolkit.get_action(u'resource_show')(context, {'id': resource_id})
+        res = lc.action.resource_show(id=resource_id)
+        pkg = lc.action.package_show(id=res['package_id'])
     except ObjectNotFound:
         log.error('Resource %s does not exist.' % res['id'])
+        return
+
+    # only plain datasets will have validation applied to resources
+    # this avoids accidental deletion of PD datastore tables
+    if pkg['type'] != 'dataset':
         return
 
     # remove outdated validation report for linked resources
     if res['url_type'] != 'upload' and h.validation_status(res['id']) != 'unknown':
         try:
-            p.toolkit.get_action(u'resource_validation_delete')(
-                context, {'resource_id': res['id']})
+            lc.action.resource_validation_delete(resource_id=res['id'])
             log.info('Validation report deleted for resource %s' % res['id'])
         except ObjectNotFound:
             log.error('Validation report for resource %s does not exist' % res['id'])
@@ -955,8 +959,7 @@ def remove_outdated_resource_from_datastore(resource_id):
     # remove outdated datastore table for linked resources
     if res['url_type'] != 'upload' and 'datastore_active' in res and res['datastore_active']:
         try:
-            p.toolkit.get_action(u'datastore_delete')(
-                context, {'resource_id': res['id'], 'force': True})
+            lc.action.datastore_delete(resource_id=res['id'], force=True)
             log.info('Datastore table dropped for resource %s' % res['id'])
         except ObjectNotFound:
             log.error('Datastore table for resource %s does not exist' % res['id'])
