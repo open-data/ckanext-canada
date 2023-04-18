@@ -118,9 +118,10 @@ def may_publish_datasets(userobj=None):
 
 def openness_score(pkg):
     score = 1
-    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+
+    fmt_scores = scheming_get_preset('canada_resource_format')['openness_scores']
     resource_formats = set(r['format'] for r in pkg['resources'])
-    for f in fmt_choices:
+    for f in fmt_scores:
         if 'openness_score' not in f:
             continue
         if f['value'] not in resource_formats:
