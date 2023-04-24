@@ -128,41 +128,41 @@ class TestPackageWebForms(FunctionalTestBase):
         return resource_form
 
 
-class TestRegistrationWebForms(FunctionalTestBase):
+class TestNewUserWebForms(FunctionalTestBase):
     def setup(self):
-        super(TestRegistrationWebForms, self).setup()
+        super(TestNewUserWebForms, self).setup()
         self.org = Organization()
         self.app = self._get_test_app()
 
 
-    def test_new_user_register_required_fields(self):
+    def test_new_user_required_fields(self):
         offset = url_for(controller='user', action='register')
 
         # test form, registering new user account
         response = self.app.get(offset)
-        # test if the page has the Register heading or title
+        # test if the page has the Request an Account heading or title
         assert 'Request an Account' in response.body
 
-        regitration_form = self.filled_registration_form(response)
+        new_user_form = self.filled_new_user_form(response)
         # Submit
-        response = regitration_form.submit('save')
+        response = new_user_form.submit('save')
 
         # Check response page
         assert not 'Error' in response
 
 
-    def test_new_user_register_missing_fields(self):
+    def test_new_user_missing_fields(self):
         offset = url_for(controller='user', action='register')
 
         # test form, registering new user account
         response = self.app.get(offset)
-        # test if the page has the Register heading or title
+        # test if the page has the Request an Account heading or title
         assert 'Request an Account' in response.body
 
-        registration_form = response.forms['user-register-form']
-        registration_form['phoneno'] = '1234567890'
+        new_user_form = response.forms['user-register-form']
+        new_user_form['phoneno'] = '1234567890'
         # Submit
-        response = registration_form.submit('save')
+        response = new_user_form.submit('save')
 
         assert 'The form contains invalid entries' in response
         assert 'Name: Missing value' in response
@@ -170,16 +170,16 @@ class TestRegistrationWebForms(FunctionalTestBase):
         assert 'Password: Please enter both passwords' in response
 
 
-    def filled_registration_form(self, response):
-        registration_form = response.forms['user-register-form']
-        registration_form['name'] = 'newusername'
-        registration_form['fullname'] = 'New User'
-        registration_form['email'] = 'newuser@example.com'
-        registration_form['department'] = self.org['id']
-        registration_form['phoneno'] = '1234567890'
-        registration_form['password1'] = 'thisisapassword'
-        registration_form['password2'] = 'thisisapassword'
-        return registration_form
+    def filled_new_user_form(self, response):
+        new_user_form = response.forms['user-register-form']
+        new_user_form['name'] = 'newusername'
+        new_user_form['fullname'] = 'New User'
+        new_user_form['email'] = 'newuser@example.com'
+        new_user_form['department'] = self.org['id']
+        new_user_form['phoneno'] = '1234567890'
+        new_user_form['password1'] = 'thisisapassword'
+        new_user_form['password2'] = 'thisisapassword'
+        return new_user_form
 
 
 class TestRecombinantWebForms(FunctionalTestBase):
@@ -208,9 +208,9 @@ class TestRecombinantWebForms(FunctionalTestBase):
                          resource_name=self.pd_type,
                          owner_org=self.org['name'])
 
-        # test form, registering new user account
+        # test form, initializing new pd resource
         response = self.app.get(offset)
-        # test if the page has the Register heading or title
+        # test if the page has the Create and update records heading or title
         #FIXME: assert headings...
         assert 'Create and update records' in response
 
