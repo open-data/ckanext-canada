@@ -3,22 +3,20 @@ from ckan.lib.create_test_data import CreateTestData
 from ckan.lib.helpers import url_for
 
 from ckan.tests.factories import Sysadmin
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.factories import (
+    CanadaOrganization as Organization,
+    CanadaUser as User
+)
 from ckan.tests.helpers import FunctionalTestBase
 
 
-class TestWebForms(FunctionalTestBase):
+class TestPackageWebForms(FunctionalTestBase):
     def setup(self):
-        super(TestWebForms, self).setup()
-        CreateTestData.create()
+        super(TestPackageWebForms, self).setup()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
         self.app = self._get_test_app()
-
-
-    def teardown(self):
-        CreateTestData.delete()
 
 
     def test_new_dataset_required_fields(self):
@@ -129,3 +127,56 @@ class TestWebForms(FunctionalTestBase):
         resource_form['language'] = 'en'
         return resource_form
 
+
+class TestRegistrationWebForms(FunctionalTestBase):
+    def setup(self):
+        super(TestRegistrationWebForms, self).setup()
+        self.org = Organization()
+        self.app = self._get_test_app()
+
+
+    def test_new_user_register_required_fields(self):
+        offset = url_for(controller='user', action='register')
+
+        # test form, registering new user account
+        response = self.app.get(offset)
+        # test if the page has the Register heading or title
+        assert 'Request an Account' in response.body
+
+        regitration_form = self.filled_registration_form(response)
+        # Submit
+        response = regitration_form.submit('save')
+
+        # Check response page
+        assert not 'Error' in response
+
+
+    def test_new_user_register_missing_fields(self):
+        offset = url_for(controller='user', action='register')
+
+        # test form, registering new user account
+        response = self.app.get(offset)
+        # test if the page has the Register heading or title
+        assert 'Request an Account' in response.body
+
+        registration_form = response.forms['user-register-form']
+        registration_form['phoneno'] = '1234567890'
+        # Submit
+        response = registration_form.submit('save')
+
+        assert 'The form contains invalid entries' in response
+        assert 'Name: Missing value' in response
+        assert 'Email: Missing value' in response
+        assert 'Password: Please enter both passwords' in response
+
+
+    def filled_registration_form(self, response):
+        registration_form = response.forms['user-register-form']
+        registration_form['name'] = 'newusername'
+        registration_form['fullname'] = 'New User'
+        registration_form['email'] = 'newuser@example.com'
+        registration_form['department'] = self.org['id']
+        registration_form['phoneno'] = '1234567890'
+        registration_form['password1'] = 'thisisapassword'
+        registration_form['password2'] = 'thisisapassword'
+        return registration_form
