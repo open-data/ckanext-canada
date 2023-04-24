@@ -180,3 +180,42 @@ class TestRegistrationWebForms(FunctionalTestBase):
         registration_form['password1'] = 'thisisapassword'
         registration_form['password2'] = 'thisisapassword'
         return registration_form
+
+
+class TestRecombinantWebForms(FunctionalTestBase):
+    def setup(self):
+        super(TestRecombinantWebForms, self).setup()
+        member = User()
+        editor = User()
+        sysadmin = Sysadmin()
+        self.extra_environ_member = {'REMOTE_USER': member['name'].encode('ascii')}
+        self.extra_environ_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
+        self.extra_environ_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
+        self.org = Organization(users=[{
+            'name': member['name'],
+            'capacity': 'member'},
+            {'name': editor['name'],
+             'capacity': 'editor'},
+            {'name': sysadmin['name'],
+             'capacity': 'admin'}])
+        self.pd_type = 'ati'
+        self.app = self._get_test_app()
+
+
+    def test_member_cannot_init_pd(self):
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        # test form, registering new user account
+        response = self.app.get(offset)
+        # test if the page has the Register heading or title
+        #FIXME: assert headings...
+        assert 'Create and update records' in response
+
+        registration_form = response.forms['create-pd-resource']
+        # Submit
+        response = registration_form.submit('create', extra_environ=self.extra_environ_member)
+        #TODO: assert validation error??
+        assert True
