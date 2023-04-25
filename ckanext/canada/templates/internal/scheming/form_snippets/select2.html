@@ -1,0 +1,26 @@
+{% import 'macros/form.html' as form %}
+
+{% set name = field.get('field_name') %}
+{% set field_id = 'field-' ~ name %}
+{% set field_attributes = field.get('form_attrs') %}
+{% set classes = field.get('classes', ["control-medium"]) %}
+{% set label = h.scheming_language_text(field.get('label')) %}
+{% set placeholder = h.scheming_language_text(field.get('form_placeholder')) %}
+{% set is_required = field.get('required') %}
+{% set current_value = data.get(name) %}
+{% set current_errors = errors.get(name) %}
+
+{% call form.input(
+          name,
+          id=field_id,
+          label=label,
+          placeholder=placeholder,
+          classes=classes,
+          value=current_value,
+          error=current_errors,
+          attrs=field_attributes,
+          is_required=is_required,
+          is_select2=true)
+%}
+  {%- snippet 'scheming/form_snippets/help_text.html', field=field %}
+{% endcall %}

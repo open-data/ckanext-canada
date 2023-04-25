@@ -7,7 +7,10 @@ from pylons.i18n import _
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
-from ckan.logic import validators as logic_validators
+from ckan.logic import (
+    validators as logic_validators,
+    check_access
+)
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
@@ -21,6 +24,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.extendedactivity.plugins import IActivity
+from ckanext.scheming.helpers import scheming_get_preset
 
 import json
 
@@ -230,6 +234,7 @@ ckanext.canada:schemas/presets.yaml
             },
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
+            format_autocomplete=schema_format_autocomplete,
         )
 
 
@@ -280,6 +285,36 @@ def resource_view_update_bilingual(up_func, context, data_dict):
         ),
         data_dict
     )
+
+
+@chained_action
+def schema_format_autocomplete(func, context, data_dict):
+    '''Return a list of resource formats whose names contain a string.
+
+    :param q: the string to search for
+    :type q: string
+    :param limit: the maximum number of resource formats to return (optional,
+        default: ``5``)
+    :type limit: int
+
+    :rtype: list of strings
+
+    '''
+    check_access('format_autocomplete', context, data_dict)
+
+    q = data_dict['q']
+    limit = data_dict.get('limit', 5)
+
+    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+
+    choices = []
+    for f in fmt_choices:
+        if len(choices) >= limit:
+            return choices
+        if q.lower() in f['value'].lower():
+            choices.append(f['value'])
+
+    return choices
 
 
 class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
@@ -571,6 +606,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
+            'resource_format_replacements':
+                validators.resource_format_replacements,
             }
 
 

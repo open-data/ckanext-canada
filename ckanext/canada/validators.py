@@ -22,6 +22,7 @@ from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
+from ckanext.scheming.helpers import scheming_get_preset
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -376,4 +377,14 @@ def json_string_has_en_fr_keys(value, context):
             raise Invalid(_('JSON object must contain \"fr\" key'))
     except ValueError:
         raise Invalid(_('Must be a JSON string'))
+    return value
+
+
+def resource_format_replacements(value, context):
+    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+    for f in fmt_choices:
+        if 'replaces' in f:
+            for r in f['replaces']:
+                if value.lower() == r.lower():
+                    return f['value']
     return value

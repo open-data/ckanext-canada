@@ -3220,55 +3220,304 @@ presets:
     label:
       en: "Format"
       fr: "Format"
-    # TODO: make a guess_format validator to always do format checks.
-    # e.g. if a user changes the resource to a link or clears the upload.
-    validators: if_empty_guess_format clean_format unicode_safe canada_non_related_required
+    form_placeholder:
+      en: "eg. CSV, XML or JSON"
+      fr: "par exemple CSV, XML ou JSON"
+    validators: if_empty_guess_format clean_format unicode_safe canada_non_related_required resource_format_replacements scheming_choices
     form_attrs:
-      readonly: ''
+      data-module: "autocomplete"
+      data-module-source: "/api/2/util/resource/format_autocomplete?incomplete=?"
     required: false
     form_panel: resource
-    display_snippet: text.html
-    openness_scores:
+    form_snippet: select2.html
+    choices:
+    - value: AAC
+      mimetype: audio/mp4
+    - value: AIFF
+      mimetype: audio/aiff
+    - value: ASCII Grid
+      label:
+        en: ASCII Grid
+        fr: Grille ASCII
+      mimetype: application/x-ascii-grid
+      replaces: [ascii grid]
+    - value: APK
+      label:
+        en: Android Application
+        fr: Application Android
+    - value: AVI
+      mimetype: video/vnd.avi
+    - value: BAG
     - value: BAM
+      mimetype: application/octet-stream
       openness_score: 3
+    - value: BMP
+      mimetype: image/bmp
+      replaces: [bmp]
+    - value: BWF
+    - value: CCT
+    - value: CDED ASCII
+      replaces: [cded ascii]
+    - value: CDF
+    - value: CDR
+      replaces: [cdr]
+    - value: COD
+      label:
+        en: Blackberry Application
+        fr: Application Blackberry
     - value: CSV
+      mimetype: text/csv
       openness_score: 3
+    - value: DBD
+    - value: DBF
+      mimetype: application/dbf
+    - value: DICOM
+      mimetype: application/dicom
+    - value: DNG
+      mimetype: image/dng
+    - value: DOC
+      mimetype: application/msword
+      replaces: [doc]
+    - value: DOCX
+      mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      replaces: [docx]
+    - value: DXF
+      mimetype: image/vnd.dxf
+      replaces: [dxf]
+    - value: E00
+      replaces: [e00]
+    - value: ECW
+      mimetype: application/x-ecw
+      replaces: [ecw]
+    - value: EDI
+      replaces: [edi]
+    - value: EMF
+      mimetype: image/emf
+      replaces: [emf]
+    - value: EPUB3
+      mimetype: application/epub+zip
+      replaces: [epub3]
+    - value: EPUB2
+      mimetype: application/epub+zip
+    - value: EPS
+      mimetype: application/postscript
+      replaces: [eps]
+    - value: ESRI REST
     - value: FGDB/GDB
       openness_score: 3
+      replaces: ["FGDB / GDB", "fgdb / gdb"]
+      mimetype: application/x-filegdb
     - value: FITS
       openness_score: 3
+      mimetype: application/fits
+    - value: Flat raster binary
+      label:
+        en: Flat raster binary
+        fr: Binaire raster plat
+      replaces: [flat raster binary]
+    - value: GDB
+      mimetype: application/x-filegdb
+      label: GeoSoftDatabases
+    - value: GeoPDF
+      mimetype: application/pdf
+      replaces: [geopdf]
+    - value: GeoRSS
+      mimetype: application/rss+xml
+      replaces: [georss]
+    - value: GeoTIF
+      mimetype: image/tiff
+      replaces: [geotif]
+    - value: GEOJSON
+      mimetype: application/geo+json
     - value: GPKG
+      label: GeoPackage
+      mimetype: application/geopackage+vnd.sqlite3
       openness_score: 3
+    - value: GIF
+      mimetype: image/gif
+      replaces: [gif]
     - value: GML
+      mimetype: application/gml+xml
       openness_score: 3
+      replaces: [gml]
+    - value: GRD
+      mimetype: application/x-filegrd
+      label: GeoSoftGrids
+    - value: GRIB1
+    - value: GRIB2
+    - value: GZ
+      mimetype: application/gzip
+      label: Gzip
+    - value: HDF
+      mimetype: application/x-hdf
+      replaces: ["GNU Zipped HDF", "hdf"]
+    - value: HTML
+      mimetype: text/html
+    - value: IATI
+      mimetype: application/xml
+      replaces: [iati]
+    - value: IPA
+      label:
+        en: iOS Application
+        fr: Application iOS
+    - value: JAR
+      mimetype: application/java-archive
+    - value: JFIF
+      mimetype: image/jpeg
+    - value: JP2
+      mimetype: image/jp2
+      replaces: [jpeg 2000]
+    - value: JPG
+      mimetype: image/jpeg
+      replaces: ["jpg", "jpeg"]
     - value: JSON
+      mimetype: application/json
       openness_score: 3
+    - label: JSON-LD
+      value: JSONLD
     - value: JSONL
+      mimetype: application/json-l
       openness_score: 3
+      replaces: [jsonl]
     - value: KML
+      mimetype: application/vnd.google-earth.kml+xml
+      replaces: ["kml / kmz"]
       openness_score: 3
     - value: KMZ
       openness_score: 3
+      mimetype: application/vnd.google-earth.kmz
+    - value: LAS
+    - value: LYR
+    - label: MapInfo
+      value: TAB
+    - value: MFX
+      mimetype: application/mxf
+    - value: MOV
+      mimetype: video/mov
+    - value: MPEG
+      mimetype: video/mpeg
+    - value: MPEG-1
+      mimetype: video/mpeg
+    - value: MP3
+      mimetype: audio/mpeg
+    - value: MXD
     - value: NetCDF
+      mimetype: application/x-netcdf
+      replaces: [netcdf]
       openness_score: 3
+    - value: ODP
+      mimetype: application/vnd.oasis.opendocument.presentation
+      replaces: [odp]
     - value: ODS
+      mimetype: application/vnd.oasis.opendocument.spreadsheet
       openness_score: 2
+      replaces: [ods]
+    - value: ODT
+      mimetype: application/vnd.oasis.opendocument.text
+      replaces: [odt]
+    - value: PDF
+      mimetype: application/pdf
+    - value: PDF/A-1
+      mimetype: application/pdf
+    - value: PDF/A-2
+      mimetype: application/pdf
+    - value: PDF/UA
+      mimetype: application/pdf
+    - value: PNG
+      mimetype: image/png
+      replaces: [png]
+    - value: PPT
+      mimetype: application/vnd.ms-powerpoint
+      replaces: [ppt]
+    - value: QLR
+      mimetype: application/x-qgis-layer-definition
+    - value: PPTX
+      mimetype: application/vnd.openxmlformats-officedocument.presentationml.presentation
     - value: RDF
+      mimetype: application/rdf+xml
       openness_score: 4
+    - label: RDF Turtle
+      value: TTL
+    - label: RDF n-triples
+      value: NT
     - value: RDFa
+      mimetype: text/html
       openness_score: 4
+      replaces: [rdfa]
+    - value: RSS
+      mimetype: application/rss+xml
+      replaces: [rss]
+    - value: RTF
+      mimetype: text/rtf
+      replaces: [rtf]
     - value: SAM
+      mimetype: text/plain
       openness_score: 3
+    - value: SAR
+    - value: SAS
+      mimetype: application/x-sas
+    - value: SAV
+    - value: SEGY
+      replaces: [segy]
+    - value: SHP
+      mimetype: application/x-shapefile
+      replaces: [SHAPE]
+    - value: SQL
+      mimetype: application/sql
+      replaces: [sql]
+    - label: SQL Lite3
+      value: SQLITE3
+    - label: SQL Lite
+      value: SQLITE
+    - value: SVG
+      mimetype: image/svg+xml
+      replaces: [svg]
+    - value: TIFF
+      mimetype: image/tiff
+      replaces: [tiff]
+    - value: TRIG
+    - value: TRIX
+    - value: TFW
+      replaces: [tiff world file]
     - value: TSV
+      mimetype: text/tab-separated-values
       openness_score: 3
+      replaces: [tab]
+    - value: TXT
+      mimetype: text/plain
+      replaces: ["ASCII", "text", "TXT"]
+    - value: VPF
+    - value: WAV
+      mimetype: audio/wav
+    - value: WCS
+      mimetype: application/xml
     - value: WFS
+      mimetype: text/xml
       openness_score: 3
+      replaces: [wfs]
     - value: WMS
+      mimetype: application/vnd.ogc.wms_xml
       openness_score: 3
+      replaces: [wms]
+    - value: WMTS
+      mimetype: application/xml
+      replaces: [wmts]
+    - value: WMV
+      mimetype: video/x-ms-wmv
+    - value: WPS
     - value: XML
+      mimetype: application/xml
       openness_score: 3
     - value: XLS
+      mimetype: application/vnd.ms-excel
       openness_score: 2
+    - value: XLSM
+    - value: XLSX
+    - value: ZIP
+    - label:
+        en: Other
+        fr: Autre
+      value: other
 
 # Field = Size.
 # {The [estimated] size of a distribution in kilobytes}
