@@ -1,6 +1,11 @@
 # -*- coding: UTF-8 -*-
-from ckan.lib.create_test_data import CreateTestData
+from nose.tools import assert_raises
+from nose import SkipTest
 from ckan.lib.helpers import url_for
+from ckanapi import (
+    LocalCKAN,
+    NotAuthorized
+)
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
@@ -197,7 +202,8 @@ class TestRecombinantWebForms(FunctionalTestBase):
             {'name': editor['name'],
              'capacity': 'editor'},
             {'name': sysadmin['name'],
-             'capacity': 'admin'}])
+             'capacity': 'admin'}],
+            ati_email='test@example.com')
         self.pd_type = 'ati'
         self.app = self._get_test_app()
 
@@ -209,13 +215,116 @@ class TestRecombinantWebForms(FunctionalTestBase):
                          owner_org=self.org['name'])
 
         # test form, initializing new pd resource
-        response = self.app.get(offset)
+        response = self.app.get(offset, extra_environ=self.extra_environ_member)
         # test if the page has the Create and update records heading or title
-        #FIXME: assert headings...
-        assert 'Create and update records' in response
+        assert 'Create and update records' in response.body
 
         registration_form = response.forms['create-pd-resource']
         # Submit
-        response = registration_form.submit('create', extra_environ=self.extra_environ_member)
-        #TODO: assert validation error??
-        assert True
+        assert_raises(NotAuthorized,
+                      registration_form.submit,
+                      'create',
+                      extra_environ=self.extra_environ_member)
+
+
+    def test_editor_can_init_pd(self):
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        # test form, initializing new pd resource
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        # test if the page has the Create and update records heading or title
+        assert 'Create and update records' in response.body
+
+        registration_form = response.forms['create-pd-resource']
+        # Submit
+        response = registration_form.submit('create', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'Create and update multiple records' in response.body
+
+
+    def test_admin_can_init_pd(self):
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        # test form, initializing new pd resource
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        # test if the page has the Create and update records heading or title
+        assert 'Create and update records' in response.body
+
+        registration_form = response.forms['create-pd-resource']
+        # Submit
+        response = registration_form.submit('create', extra_environ=self.extra_environ_system)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
+        assert 'Create and update multiple records' in response.body
+
+
+    def test_ati_email_notice(self):
+        lc = LocalCKAN()
+        no_ati_email_org = Organization(ati_email=None)
+        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=no_ati_email_org['name'])
+        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=self.org['name'])
+
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=no_ati_email_org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Your organization does not have an Access to Information email on file' in response.body
+
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Your organization does not have an Access to Information email on file' not in response.body
+        assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
+
+
+    def test_create_single_record(self):
+        raise SkipTest("TODO: Implement test for creating single record. Do we need this for each PD type??")
+        # ckanext.canada.controller:PDUpdateController -> create_pd_record
+        # (owner_org, resource_name)
+        # forms['create_pd_record'] ->
+        #   ['year']
+        #   ['month']
+        #   ['request_number']
+        #   ['summary_en']
+        #   ['summary_fr']
+        #   ['disposition']
+        #   ['pages'] -> 'save'
+
+
+    def test_download_template(self):
+        raise SkipTest("TODO: Implement test for downloading template file.")
+        # ckanext.recombinant.controller:UploadController -> template
+        # (dataset_type, lang, owner_org)
+
+
+    def test_upload_multiple(self):
+        raise SkipTest("TODO: Implement test for uploading filled template file.")
+        # ckanext.recombinant.controller:UploadController -> preview_table
+        # (resource_name, owner_org)
+        # forms['dataset-form'] -> ['xls_update'] -> 'upload'
+
+
+    def test_upload_validation(self):
+        raise SkipTest("TODO: Implement test for validating filled template file.")
+        # ckanext.recombinant.controller:UploadController -> preview_table
+        # (resource_name, owner_org)
+        # forms['dataset-form'] -> ['xls_update'] -> 'validate'
+
+
+    def test_delete_records(self):
+        raise SkipTest("TODO: Implement test for deleting records.")
+        # ckanext.recombinant.controller:UploadController -> preview_table
+        # (resource_name, owner_org)
+        # forms['delete-form'] -> ['bulk-delete'] -> ''
