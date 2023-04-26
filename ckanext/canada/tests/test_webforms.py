@@ -14,6 +14,8 @@ from ckanext.canada.tests.factories import (
 )
 from ckan.tests.helpers import FunctionalTestBase
 
+from ckanext.recombinant.tables import get_chromo
+
 
 class TestPackageWebForms(FunctionalTestBase):
     def setup(self):
@@ -205,7 +207,22 @@ class TestRecombinantWebForms(FunctionalTestBase):
              'capacity': 'admin'}],
             ati_email='test@example.com')
         self.pd_type = 'ati'
+        self.example_record = get_chromo(self.pd_type)['examples']['record']
         self.app = self._get_test_app()
+
+
+    def lc_init_pd(self, org):
+        lc = LocalCKAN()
+        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=org['name'])
+
+
+    def lc_create_pd_record(self, org):
+        lc = LocalCKAN()
+        self.lc_init_pd(org=org)
+        rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
+        resource_id = rval['resources'][0]['id']
+        lc.action.datastore_upsert(resource_id=resource_id, records=[self.example_record])
+        return self.example_record['request_number']
 
 
     def test_member_cannot_init_pd(self):
@@ -266,10 +283,9 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_ati_email_notice(self):
-        lc = LocalCKAN()
         no_ati_email_org = Organization(ati_email=None)
-        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=no_ati_email_org['name'])
-        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=self.org['name'])
+        self.lc_init_pd(org=no_ati_email_org)
+        self.lc_init_pd(org=self.org)
 
         offset = url_for(controller='ckanext.recombinant.controller:UploadController',
                          action='preview_table',
@@ -289,24 +305,158 @@ class TestRecombinantWebForms(FunctionalTestBase):
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
 
 
-    def test_create_single_record(self):
-        raise SkipTest("TODO: Implement test for creating single record. Do we need this for each PD type??")
-        # ckanext.canada.controller:PDUpdateController -> create_pd_record
-        # (owner_org, resource_name)
-        # forms['create_pd_record'] ->
-        #   ['year']
-        #   ['month']
-        #   ['request_number']
-        #   ['summary_en']
-        #   ['summary_fr']
-        #   ['disposition']
-        #   ['pages'] -> 'save'
+    def test_member_cannot_create_single_record(self):
+        self.lc_init_pd(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='create_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        # members should not be able to acces create_pd_record endpoint
+        response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
+        assert 'Access was denied to this resource' in response.body
+
+        # use sysadmin to get page for permission reasons
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create Record' in response.body
+
+        pd_record_form = self.filled_create_single_record_form(response)
+        # Submit as member
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_member, status=403)
+        assert 'Access was denied to this resource' in response.body
+
+
+    def test_editor_can_create_single_record(self):
+        self.lc_init_pd(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='create_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        assert 'Create Record' in response.body
+
+        pd_record_form = self.filled_create_single_record_form(response)
+        # Submit
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'Record Created' in response.body
+
+
+    def test_admin_can_create_single_record(self):
+        self.lc_init_pd(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='create_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create Record' in response.body
+
+        pd_record_form = self.filled_create_single_record_form(response)
+        # Submit
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_system)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
+        assert 'Record Created' in response.body
+
+
+    def test_member_cannot_update_single_record(self):
+        rid = self.lc_create_pd_record(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='update_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'],
+                         pk=rid)
+
+        # members should not be able to acces update_pd_record endpoint
+        response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
+        assert 'Access was denied to this resource' in response.body
+
+        # use sysadmin to get page for permission reasons
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Update Record' in response.body
+
+        pd_record_form = response.forms['update_pd_record']
+        pd_record_form['summary_en'] = 'New Summary EN'
+        pd_record_form['summary_fr'] = 'New Summary FR'
+        # Submit as member
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_member, status=403)
+        assert 'Access was denied to this resource' in response.body
+
+
+    def test_editor_can_update_single_record(self):
+        rid = self.lc_create_pd_record(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='update_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'],
+                         pk=rid)
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        assert 'Update Record' in response.body
+
+        pd_record_form = response.forms['update_pd_record']
+        pd_record_form['summary_en'] = 'New Summary EN'
+        pd_record_form['summary_fr'] = 'New Summary FR'
+        # Submit
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'Record {} Updated'.format(rid) in response.body
+
+
+    def test_admin_can_update_single_record(self):
+        rid = self.lc_create_pd_record(org=self.org)
+
+        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
+                         action='update_pd_record',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'],
+                         pk=rid)
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Update Record' in response.body
+
+        pd_record_form = response.forms['update_pd_record']
+        pd_record_form['summary_en'] = 'New Summary EN'
+        pd_record_form['summary_fr'] = 'New Summary FR'
+        # Submit
+        response = pd_record_form.submit('save', extra_environ=self.extra_environ_system)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
+        assert 'Record {} Updated'.format(rid) in response.body
+
+
+    def filled_create_single_record_form(self, response):
+        pd_record_form = response.forms['create_pd_record']
+        pd_record_form['year'] = self.example_record['year']
+        pd_record_form['month'] = self.example_record['month']
+        pd_record_form['request_number'] = self.example_record['request_number']
+        pd_record_form['summary_en'] = self.example_record['summary_en']
+        pd_record_form['summary_fr'] = self.example_record['summary_fr']
+        pd_record_form['disposition'] = self.example_record['disposition']
+        pd_record_form['pages'] = self.example_record['pages']
+        return pd_record_form
 
 
     def test_download_template(self):
         raise SkipTest("TODO: Implement test for downloading template file.")
         # ckanext.recombinant.controller:UploadController -> template
         # (dataset_type, lang, owner_org)
+        from logging import getLogger
+        from pprint import pprint
+        log = getLogger(__name__)
+        log.info("    ")
+        log.info("DEBUGGING::")
+        log.info("")
+        log.info("    ")
 
 
     def test_upload_multiple(self):
