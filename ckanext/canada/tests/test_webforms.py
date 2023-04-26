@@ -1,10 +1,12 @@
 # -*- coding: UTF-8 -*-
+from StringIO import StringIO
 from nose.tools import assert_raises
 from nose import SkipTest
 from ckan.lib.helpers import url_for
 from ckanapi import (
     LocalCKAN,
-    NotAuthorized
+    NotAuthorized,
+    ValidationError
 )
 
 from ckan.tests.factories import Sysadmin
@@ -15,6 +17,7 @@ from ckanext.canada.tests.factories import (
 from ckan.tests.helpers import FunctionalTestBase
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.read_excel import read_excel
 
 
 class TestPackageWebForms(FunctionalTestBase):
@@ -207,22 +210,33 @@ class TestRecombinantWebForms(FunctionalTestBase):
              'capacity': 'admin'}],
             ati_email='test@example.com')
         self.pd_type = 'ati'
-        self.example_record = get_chromo(self.pd_type)['examples']['record']
+        self.nil_type = 'ati-nil'
+        self.chromo = get_chromo(self.pd_type)
+        self.nil_chromo = get_chromo(self.nil_type)
+        self.fields = self.chromo['fields']
+        self.nil_fields = self.nil_chromo['fields']
+        self.example_record = self.chromo['examples']['record']
+        self.example_nil_record = self.nil_chromo['examples']['record']
         self.app = self._get_test_app()
 
 
-    def lc_init_pd(self, org):
+    def lc_init_pd(self, org=None):
         lc = LocalCKAN()
-        lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=org['name'])
+        org = org if org else self.org
+        try:
+            lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=org['name'])
+        except ValidationError:
+            pass
 
 
-    def lc_create_pd_record(self, org):
+    def lc_create_pd_record(self, org=None, is_nil=False):
         lc = LocalCKAN()
+        org = org if org else self.org
         self.lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
-        resource_id = rval['resources'][0]['id']
-        lc.action.datastore_upsert(resource_id=resource_id, records=[self.example_record])
-        return self.example_record['request_number']
+        resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
+        record = self.example_nil_record if is_nil else self.example_record
+        lc.action.datastore_upsert(resource_id=resource_id, records=[record])
 
 
     def test_member_cannot_init_pd(self):
@@ -285,7 +299,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_ati_email_notice(self):
         no_ati_email_org = Organization(ati_email=None)
         self.lc_init_pd(org=no_ati_email_org)
-        self.lc_init_pd(org=self.org)
+        self.lc_init_pd()
 
         offset = url_for(controller='ckanext.recombinant.controller:UploadController',
                          action='preview_table',
@@ -306,7 +320,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_member_cannot_create_single_record(self):
-        self.lc_init_pd(org=self.org)
+        self.lc_init_pd()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='create_pd_record',
@@ -328,7 +342,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_editor_can_create_single_record(self):
-        self.lc_init_pd(org=self.org)
+        self.lc_init_pd()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='create_pd_record',
@@ -347,7 +361,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_admin_can_create_single_record(self):
-        self.lc_init_pd(org=self.org)
+        self.lc_init_pd()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='create_pd_record',
@@ -366,13 +380,13 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_member_cannot_update_single_record(self):
-        rid = self.lc_create_pd_record(org=self.org)
+        self.lc_create_pd_record()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='update_pd_record',
                          resource_name=self.pd_type,
                          owner_org=self.org['name'],
-                         pk=rid)
+                         pk=self.example_record['request_number'])
 
         # members should not be able to acces update_pd_record endpoint
         response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
@@ -391,13 +405,13 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_editor_can_update_single_record(self):
-        rid = self.lc_create_pd_record(org=self.org)
+        self.lc_create_pd_record()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='update_pd_record',
                          resource_name=self.pd_type,
                          owner_org=self.org['name'],
-                         pk=rid)
+                         pk=self.example_record['request_number'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Update Record' in response.body
@@ -409,17 +423,17 @@ class TestRecombinantWebForms(FunctionalTestBase):
         response = pd_record_form.submit('save', extra_environ=self.extra_environ_editor)
 
         response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
-        assert 'Record {} Updated'.format(rid) in response.body
+        assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
 
     def test_admin_can_update_single_record(self):
-        rid = self.lc_create_pd_record(org=self.org)
+        self.lc_create_pd_record()
 
         offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
                          action='update_pd_record',
                          resource_name=self.pd_type,
                          owner_org=self.org['name'],
-                         pk=rid)
+                         pk=self.example_record['request_number'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Update Record' in response.body
@@ -431,7 +445,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
         response = pd_record_form.submit('save', extra_environ=self.extra_environ_system)
 
         response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
-        assert 'Record {} Updated'.format(rid) in response.body
+        assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
 
     def filled_create_single_record_form(self, response):
@@ -447,16 +461,34 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_download_template(self):
-        raise SkipTest("TODO: Implement test for downloading template file.")
-        # ckanext.recombinant.controller:UploadController -> template
-        # (dataset_type, lang, owner_org)
-        from logging import getLogger
-        from pprint import pprint
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::")
-        log.info("")
-        log.info("    ")
+        self.lc_create_pd_record()
+        self.lc_create_pd_record(is_nil=True)
+
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='template',
+                         dataset_type=self.pd_type,
+                         lang='en',
+                         owner_org=self.org['name'])
+        
+        # members should be able to download template
+        response = self.app.get(offset, extra_environ=self.extra_environ_member)
+        template_file = StringIO()
+        template_file.write(response.body)
+        # produces: (sheet-name, org-name, column_names, data_rows_generator)
+        #   note: data_rows_generator excludes the example row
+        template_file = list(read_excel(template_file))
+        # pd workbook
+        assert template_file[0][0] == self.pd_type  # check sheet name
+        assert template_file[0][1] == self.org['name']  # check org name
+        for f in self.fields:
+            if f.get('import_template_include', True):  # only check fields included in template
+                assert f['datastore_id'] in template_file[0][2]  # check each field id is in column names
+        # nil workbook 
+        assert template_file[1][0] == self.nil_type  # check sheet name
+        assert template_file[1][1] == self.org['name']  # check org name
+        for f in self.nil_fields:
+            if f.get('import_template_include', True):  # only check fields included in template
+                assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
 
 
     def test_upload_multiple(self):
@@ -464,6 +496,15 @@ class TestRecombinantWebForms(FunctionalTestBase):
         # ckanext.recombinant.controller:UploadController -> preview_table
         # (resource_name, owner_org)
         # forms['dataset-form'] -> ['xls_update'] -> 'upload'
+        # Your file was successfully uploaded into the central system.
+
+        from logging import getLogger
+        from pprint import pprint
+        log = getLogger(__name__)
+        log.info("    ")
+        log.info("DEBUGGING::")
+        log.info(pprint(template_file[0]))
+        log.info("    ")
 
 
     def test_upload_validation(self):
@@ -471,6 +512,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
         # ckanext.recombinant.controller:UploadController -> preview_table
         # (resource_name, owner_org)
         # forms['dataset-form'] -> ['xls_update'] -> 'validate'
+        # No errors found.
+        # year: Please enter a valid year
+        # month: Please enter a month number from 1-12
+        # pages: This value must not be negative
 
 
     def test_delete_records(self):
